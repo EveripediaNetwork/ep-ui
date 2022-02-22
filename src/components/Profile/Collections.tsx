@@ -1,3 +1,4 @@
+import { Collected } from '@/components/Profile/Collected'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Tabs,
@@ -16,12 +17,13 @@ import {
 import { isDefined } from '@chakra-ui/utils'
 import React from 'react'
 import { BsArrowDownLeft, BsArrowUpRight } from 'react-icons/bs'
-import { FaHeart, FaPaintRoller } from 'react-icons/fa'
+import { FaPaintRoller } from 'react-icons/fa'
+import { TiDocumentAdd } from 'react-icons/ti'
 import { RiHeartLine, RiMenuLine, RiTimer2Line } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 
 const SECTIONS = [
-  { label: 'Collections', icon: FaHeart, count: 22 },
+  { label: 'Collected', icon: TiDocumentAdd, count: 22, component: Collected },
   { label: 'Created', icon: FaPaintRoller, count: 0 },
   { label: 'Favorited', icon: RiHeartLine, count: 6 },
   { label: 'Activity', icon: RiTimer2Line },
@@ -84,15 +86,11 @@ export const Collections = () => (
     </TabList>
 
     <TabPanels>
-      <TabPanel>
-        <p>one!</p>
-      </TabPanel>
-      <TabPanel>
-        <p>two!</p>
-      </TabPanel>
-      <TabPanel>
-        <p>three!</p>
-      </TabPanel>
+      {SECTIONS.map((section, sid) => (
+        <TabPanel key={sid} p="0">
+          <chakra.div as={section.component} />
+        </TabPanel>
+      ))}
     </TabPanels>
   </Tabs>
 )
