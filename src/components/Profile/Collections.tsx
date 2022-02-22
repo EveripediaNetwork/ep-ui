@@ -28,7 +28,7 @@ const SECTIONS = [
 ]
 
 export const Collections = () => (
-  <Tabs alignSelf="self-start" w="full">
+  <Tabs alignSelf="self-start" w="full" mt="6">
     <TabList>
       {SECTIONS.map((section, sid) => (
         <CustomTab key={sid} fontWeight="semibold">

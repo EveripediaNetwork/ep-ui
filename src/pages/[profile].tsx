@@ -1,6 +1,6 @@
 import { Image } from '@/components/Elements/Image/Image'
-import { Collections } from '@/pages/[profile]/Collections'
-import UserInfo from '@/pages/[profile]/UserInfo'
+import { Collections } from '@/components/Profile/Collections'
+import UserInfo from '@/components/Profile/UserInfo'
 import { Flex } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
