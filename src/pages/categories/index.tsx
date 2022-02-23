@@ -4,62 +4,7 @@ import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import CategoryCard from '@/components/Categories/CategoryCard'
-
-export const sampleCategories: {
-  id: string
-  img: string
-  label: string
-  description: string
-  url: string
-  icon?: string
-}[] = [
-  {
-    id: '1',
-    img: 'https://storage.googleapis.com/opensea-prod.appspot.com/static/promocards/tezuka-promocard.png',
-    label: 'First Category',
-    description: 'Nulla vitae elit libero, a pharetra augue mollis interdum.',
-    url: '/categories/1',
-    icon: 'https://storage.opensea.io/static/promocards/overseers-promocard.png',
-  },
-  {
-    id: '2',
-    img: 'https://storage.opensea.io/static/promocards/overseers-promocard.png',
-    label: 'Second Category',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    url: '/categories/2',
-    icon: 'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-  },
-  {
-    id: '3',
-    img: 'https://storage.opensea.io/static/promocards/hip-promocard.jpeg',
-    label: 'Third Category',
-    description:
-      'Praesent commodo cursus magna, vel scelerisque nisl consectetur.',
-    url: '/categories/3',
-    icon: 'https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-  },
-  {
-    id: '4',
-    img: 'https://lh3.googleusercontent.com/jSniiLwosYg4YNa5ZJg4S115fP-vZ570m5Mrup117XaGUKiN2VW_vK4tYPXmaYJ1ku3pQqeMNdZWdXAvCXpH6QAckALelFdTGtgcDbY=s550',
-    label: 'Fourth Category',
-    description: 'Nulla vitae elit libero, a pharetra augue mollis interdum.',
-    url: '/categories/4',
-  },
-  {
-    id: '5',
-    img: 'https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    label: 'Fifth Category',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    url: '/categories/5',
-  },
-  {
-    id: '6',
-    img: 'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    label: 'Sixth Category',
-    description: 'Nulla vitae elit libero, a pharetra augue mollis interdum.',
-    url: '/categories/6',
-  },
-]
+import { sampleCategories } from '@/data/CategoriesData'
 
 const Categories: NextPage = () => (
   <Box mt="-12" bgColor="pageBg" pb={12}>
@@ -85,11 +30,11 @@ const Categories: NextPage = () => (
       >
         {sampleCategories.map(category => (
           <CategoryCard
-            key={category.id}
-            coverImg={category.img}
-            title={category.label}
+            key={category.slug}
+            imageCard={category.imageCard}
+            title={category.title}
             brief={category.description}
-            categoryUrl={category.url}
+            categoryUrl={category.slug}
             coverIcon={category.icon}
           />
         ))}

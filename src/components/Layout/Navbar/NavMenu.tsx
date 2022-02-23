@@ -6,6 +6,7 @@ import {
   MenuList,
   MenuItem,
   Divider,
+  Box,
 } from '@chakra-ui/react'
 import Link from '@/components/Elements/Link/Link'
 import { NavItem } from '@/types/NavItemType'
@@ -49,33 +50,31 @@ const NavMenu = ({
         mt={!labelIsIcon ? 4 : 1.5}
       >
         {navItem.subItem?.map((item, key) => (
-          <React.Fragment key={key}>
+          <Link
+            href={item.href}
+            _hover={{
+              textDecoration: 'none',
+              color: 'linkHoverColor',
+            }}
+            color="linkColor"
+            key={key}
+          >
             <MenuItem minH="48px" bg="subMenuBg">
               {item.hasImage && (
                 <Icon
                   cursor="pointer"
                   fontSize="4xl"
-                  color="linkColor"
                   fontWeight={600}
                   as={item.icon}
                   pr={3}
                 />
               )}
-              <Link
-                href={item.href}
-                fontSize="md"
-                fontWeight={600}
-                color="linkColor"
-                _hover={{
-                  textDecoration: 'none',
-                  color: 'linkHoverColor',
-                }}
-              >
+              <Box fontSize="md" fontWeight={600} color="linkColor">
                 {item.label}
-              </Link>
+              </Box>
             </MenuItem>
             {navItem.subItem?.length !== key + 1 && <Divider />}
-          </React.Fragment>
+          </Link>
         ))}
         {children}
       </MenuList>

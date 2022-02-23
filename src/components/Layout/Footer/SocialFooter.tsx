@@ -11,6 +11,7 @@ const SocialFooter = () => (
     <SimpleGrid columns={{ base: 3, lg: 7 }}>
       {Socials.map(social => (
         <SocialIcon
+          key={social.href}
           link={social.href}
           Icon={<Icon as={social.icon} w={6} h={7} />}
         />

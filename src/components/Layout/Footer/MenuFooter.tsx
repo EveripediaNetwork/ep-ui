@@ -46,7 +46,7 @@ const MenuFooter = () => (
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">Everipedia</Heading>
-            <Link href="/">About Us</Link>
+            <Link href="/static/about">About Us</Link>
             <Link href="/">Press</Link>
             <Link href="/">Careers</Link>
             <Link href="/">Contact Us</Link>

@@ -21,7 +21,14 @@ const MobileNavItem = ({
   const { onToggle } = useDisclosure()
 
   return (
-    <Stack direction="column" spacing={4} onClick={onToggle}>
+    <Stack
+      direction="column"
+      spacing={4}
+      onClick={() => {
+        onToggle()
+        handleClick(navItem)
+      }}
+    >
       <Flex
         py={5}
         as={Link}
@@ -33,17 +40,17 @@ const MobileNavItem = ({
         }}
         fontSize="lg"
       >
-        <HStack onClick={() => handleClick(navItem)}>
+        <HStack>
           <Icon
             cursor="pointer"
             fontSize="4xl"
-            color="color"
+            color="linkColor"
             fontWeight={600}
             as={navItem.icon}
             pr={3}
           />
 
-          <Text fontWeight={600} color="color">
+          <Text fontWeight={600} color="linkColor">
             {navItem.label}
           </Text>
         </HStack>

@@ -6,19 +6,22 @@ import {
   Box,
   LinkBox,
   LinkOverlay,
+  Icon,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import { IconType } from 'react-icons/lib'
 import { Image } from '../Elements/Image/Image'
 
 interface CategoryCardProps {
-  coverImg: string
-  coverIcon?: string
+  imageCard: string
+  coverIcon?: IconType
   title: string
   brief: string
   categoryUrl: string
 }
+
 const CategoryCard = ({
-  coverImg,
+  imageCard,
   coverIcon,
   title,
   brief,
@@ -27,7 +30,8 @@ const CategoryCard = ({
   <LinkBox
     as="article"
     bgColor="cardBg"
-    border="1px solid #2222222a"
+    borderWidth="1px"
+    borderColor="dimColor"
     _hover={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}
     overflow="hidden"
     borderRadius="12px"
@@ -41,17 +45,20 @@ const CategoryCard = ({
 ;"
     >
       <Box w="100%" position="relative">
-        <Image src={coverImg} width="100%" height="150px" alt={title} />
+        <Image src={imageCard} width="100%" height="150px" alt={title} />
         <Box position="absolute" bottom="0" left="50%">
-          <Image
+          <Icon
             transform="translateX(-50%) translateY(50%)"
-            src={coverIcon || coverImg}
+            as={coverIcon}
             borderRadius="100px"
             overflow="hidden"
             borderWidth="5px"
+            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
+            color="#0000002f"
             borderColor="cardBg"
             width="60px"
             height="60px"
+            padding={2}
           />
         </Box>
       </Box>

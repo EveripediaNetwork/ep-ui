@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\" --loglevel warn",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
+    "postinstall": "yarn gen:theme-typings"
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^1.4.1",
@@ -28,6 +30,7 @@
     "@fontsource/poppins": "^4.5.0",
     "@reduxjs/toolkit": "^1.7.1",
     "@rtk-query/graphql-request-base-query": "^1.0.3",
+    "@types/react-slick": "^0.23.8",
     "axios": "^0.26.0",
     "boring-avatars": "^1.6.1",
     "contracts": "*",
@@ -45,15 +48,19 @@
     "react-editor-js": "^2.0.4",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
+    "react-slick": "^0.28.1",
+    "slick-carousel": "^1.8.1",
     "wagmi": "^0.2.6",
     "walletlink": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
+    "@chakra-ui/cli": "^1.8.1",
     "@storybook/addon-actions": "^6.4.12",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/react": "^6.4.12",
+    "@svgr/webpack": "^6.2.1",
     "@types/node": "^17.0.0",
     "@types/react": "^17.0.37",
     "@typescript-eslint/eslint-plugin": "^5.10.2",

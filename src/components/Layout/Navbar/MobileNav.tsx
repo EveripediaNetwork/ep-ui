@@ -10,6 +10,7 @@ import {
   Center,
   VStack,
   Divider,
+  Menu,
   Text,
 } from '@chakra-ui/react'
 import {
@@ -24,6 +25,7 @@ import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
+import { ColorModeToggle } from './ColorModeToggle'
 
 type MobileNavType = {
   toggleWalletDrawer: () => void
@@ -54,7 +56,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
       justify="space-between"
       align="stretch"
       backgroundColor="subMenuBg"
-      h="calc(100vh - 70px)"
+      h="calc((100vh - 0px) - 72px)"
     >
       <Box>
         <InputGroup
@@ -88,27 +90,36 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
             pb={6}
             display={{ lg: 'flex', xl: 'none' }}
           >
-            <Box>
-              {NAV_ITEMS.map(navItem => (
+            {NAV_ITEMS.map(navItem => (
+              <MobileNavItem
+                handleClick={item => handleClick(item)}
+                key={navItem.label}
+                navItem={navItem}
+              />
+            ))}
+            <Menu>
+              <Box mx="-8" pt={2}>
+                <ColorModeToggle isInMobileMenu />
+              </Box>
+            </Menu>
+            {accountData && (
+              <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
                 <MobileNavItem
-                  handleClick={item => handleClick(item)}
-                  key={navItem.label}
-                  navItem={navItem}
+                  handleClick={handleWalletButtonClick}
+                  key={mobileWalletDetails.label}
+                  navItem={mobileWalletDetails}
                 />
-              ))}
-              {accountData && (
-                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
-                  <MobileNavItem
-                    handleClick={handleWalletButtonClick}
-                    key={mobileWalletDetails.label}
-                    navItem={mobileWalletDetails}
-                  />
-                </Box>
-              )}
-            </Box>
+              </Box>
+            )}
           </Stack>
         ) : (
-          <MobileSubNav handleClick={setShowSubNav} activeMenu={currentMenu} />
+          <Box h="calc(100vh - 220px)">
+            <MobileSubNav
+              setHamburger={setHamburger}
+              handleClick={setShowSubNav}
+              activeMenu={currentMenu}
+            />
+          </Box>
         )}
       </Box>
       <Box display={{ lg: 'block', xl: 'none' }}>

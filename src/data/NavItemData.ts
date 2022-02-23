@@ -1,7 +1,5 @@
 import {
   RiGridFill,
-  RiPaletteFill,
-  RiFootballFill,
   RiSettings5Fill,
   RiAccountCircleFill,
   RiCompass3Fill,
@@ -11,6 +9,7 @@ import {
   RiWallet2Line,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
+import { sampleCategories } from './CategoriesData'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -26,18 +25,15 @@ export const NAV_ITEMS: NavItem[] = [
         hasImage: true,
         icon: RiGridFill,
       },
-      {
-        label: 'NFTs',
-        href: '/categories/nfts',
-        hasImage: true,
-        icon: RiPaletteFill,
-      },
-      {
-        label: 'Crypto Celebrities',
-        href: '/categories/crypto-celebrities',
-        hasImage: true,
-        icon: RiFootballFill,
-      },
+      // destructure sample categories and add to subItem by mapping and take first 9
+      ...sampleCategories
+        .map(({ title, slug, icon }) => ({
+          label: title,
+          href: slug,
+          hasImage: true,
+          icon,
+        }))
+        .slice(0, 9),
     ],
   },
   {

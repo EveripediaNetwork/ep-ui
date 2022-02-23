@@ -18,3 +18,7 @@ export type ParamsType = {
   addressOrName: string
   token?: string | undefined
 }
+export type TokenDetailsType = {
+  price: number
+  token: string | undefined
+} | null

@@ -8,6 +8,7 @@ import {
   Button,
   LinkBox,
   LinkOverlay,
+  DarkMode,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
@@ -170,14 +171,17 @@ export const NotableDrops = () => {
                   </Box>
                 </Box>
                 <Flex justifyContent="center" p={4}>
-                  <Button
-                    color="white"
-                    variant="outline"
-                    size="sm"
-                    w="fit-content"
-                  >
-                    Live
-                  </Button>
+                  <DarkMode>
+                    <Button
+                      color="white"
+                      variant="outline"
+                      size="sm"
+                      w="fit-content"
+                      fontWeight="medium"
+                    >
+                      Live
+                    </Button>
+                  </DarkMode>
                 </Flex>
               </Flex>
             </LinkBox>

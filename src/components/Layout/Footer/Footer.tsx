@@ -9,14 +9,14 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  Link,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import {
   MenuFooter,
   Newsletter,
   SocialFooter,
 } from '@/components/Layout/Footer'
+
+import Link from '@/components/Elements/Link/Link'
 
 const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
@@ -46,16 +46,8 @@ const Footer = () => {
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
             <Flex>
-              <NextLink href="/static/privacy" passHref>
-                <Link href="passRef" py={3} px="4">
-                  Privacy Policy
-                </Link>
-              </NextLink>
-              <NextLink href="/static/terms" passHref>
-                <Link href="passRef" py={3}>
-                  Terms of Service
-                </Link>
-              </NextLink>
+              <Link href="/static/privacy" py={3} px={5}>Privacy Policy</Link>
+              <Link href="/static/terms" py={3}>Terms of Service</Link>
             </Flex>
           </Stack>
         </SimpleGrid>

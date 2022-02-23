@@ -10,6 +10,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'primary',
       _dark: 'brand.900',
     },
+    dimColor: {
+      default: '#0000002a',
+    },
     linkColor: {
       default: 'gray.600',
       _dark: 'grey.200',
@@ -30,6 +33,26 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'gray.600',
     },
+    homeCardBg: {
+      default: 'white',
+      _dark: 'gray.700',
+    },
+    toolTipBg: {
+      default: 'black',
+      _dark: 'gray.500',
+    },
+    cardBg: {
+      default: 'white',
+      _dark: 'gray.600',
+    },
+    carouselArrowBg: {
+      default: 'white',
+      _dark: 'gray.600',
+    },
+    carouselArrowBorderColor: {
+      default: 'gray.300',
+      _dark: 'gray.600',
+    },
     mobileMenuBorderColor: {
       default: 'gray.300',
       _dark: 'gray.700',
@@ -42,13 +65,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.400',
       _dark: 'gray.700',
     },
-    homeCardBg: {
-      default: 'white',
-      _dark: 'gray.700',
-    },
-    cardBg: {
-      default: 'white',
-      _dark: 'gray.600',
+    socialIconColor: {
+      default: 'gray.700',
+      _dark: 'gray.100',
     },
   },
 }

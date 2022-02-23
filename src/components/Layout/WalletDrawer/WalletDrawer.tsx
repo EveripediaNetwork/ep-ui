@@ -129,12 +129,6 @@ const WalletDrawer = ({
         </DrawerHeader>
         <Divider />
         <DrawerBody shadow="sm">
-          <Box mb="6" color="gray.500" mt="3" w="90%">
-            <Text fontWeight="medium" fontSize="lg">
-              {!accountData &&
-                'Connect with one of our available wallet providers or create a new one.'}
-            </Text>
-          </Box>
           <Connectors />
         </DrawerBody>
       </DrawerContent>
