@@ -41,6 +41,7 @@ module.exports = {
   },
   rules: {
     '@next/next/no-html-link-for-pages': ['error', './src'],
+    'arrow-body-style': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -85,11 +86,5 @@ module.exports = {
       extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
     },
   ],
-  ignorePatterns: [
-    '**/*.js',
-    '**/*.json',
-    'node_modules',
-    '.next',
-    'public',
-  ],
+  ignorePatterns: ['**/*.js', '**/*.json', 'node_modules', '.next', 'public'],
 }

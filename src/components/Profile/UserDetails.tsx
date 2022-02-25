@@ -11,15 +11,17 @@ import {
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { Image } from '@/components/Elements/Image/Image'
+import { useProfileContext } from '@/components/Profile/utils'
 
-export type UserDetailsProps = { stickyHeader: boolean; hide?: boolean }
+export type UserDetailsProps = { hide?: boolean }
 
 const ethAddress = '0x9feab70f3c4a944b97b7565bac4991df5b7a69ff'
 
 export const UserDetails = (props: UserDetailsProps) => {
-  const { stickyHeader, hide } = props
+  const { hide } = props
+  const { headerIsSticky } = useProfileContext()
   const { hasCopied, onCopy } = useClipboard(ethAddress)
-  const isSticky = stickyHeader && hide
+  const isSticky = headerIsSticky && hide
   return (
     <>
       <br />

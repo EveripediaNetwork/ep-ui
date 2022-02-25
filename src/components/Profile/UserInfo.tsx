@@ -1,23 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 
 import { Flex } from '@chakra-ui/react'
 import { UserDetails } from '@/components/Profile/UserDetails'
+import { useProfileContext } from '@/components/Profile/utils'
 
 const UserInfo = () => {
-  const [stickyHeader, setStickyHeader] = useState<boolean>(false)
-
-  const headerRef = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    const onScroll = () => {
-      if (!headerRef?.current) return
-      const headerIsSticky = window.pageYOffset > headerRef?.current?.offsetTop
-      setStickyHeader(headerIsSticky)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    // clean up code
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [stickyHeader])
+  const { headerIsSticky, headerRef } = useProfileContext()
 
   return (
     <>
@@ -32,11 +20,10 @@ const UserInfo = () => {
         bg="white"
         zIndex="sticky"
         shadow="lg"
-        // display={stickyHeader ? 'flex' : 'none'}
-        opacity={stickyHeader ? 1 : 0}
+        opacity={headerIsSticky ? 1 : 0}
         transition="all .03s ease"
       >
-        <UserDetails stickyHeader={stickyHeader} hide />
+        <UserDetails hide />
       </Flex>
       <Flex
         align="center"
@@ -46,7 +33,7 @@ const UserInfo = () => {
         px="6"
         ref={headerRef}
       >
-        <UserDetails stickyHeader={stickyHeader} />
+        <UserDetails />
       </Flex>
     </>
   )
