@@ -1,6 +1,6 @@
 import { Image } from '@/components/Elements/Image/Image'
 import { FilterLayout } from '@/components/Profile/FilterLayout'
-import { chakra, Divider, Flex, Icon, SimpleGrid, Wrap } from '@chakra-ui/react'
+import { chakra, Divider, Flex, Icon, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import { FaEthereum } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
