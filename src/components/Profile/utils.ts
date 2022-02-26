@@ -17,10 +17,10 @@ type FilterSidebarSize =
   typeof FILTER_SIDEBAR_SIZE[keyof typeof FILTER_SIDEBAR_SIZE]
 
 export type ProfileContext = {
-  // headerIsSticky: boolean
-  // headerRef: MutableRefObject<HTMLDivElement | null>
-  // filterSidebarIsSticky: boolean
-  // filterSidebarRef: MutableRefObject<HTMLDivElement | null>
+  headerIsSticky: boolean
+  headerRef: MutableRefObject<HTMLDivElement | null>
+  filterSidebarIsSticky: boolean
+  filterSidebarRef: MutableRefObject<HTMLDivElement | null>
   filterSidebarIsOpen: boolean
   setFilterSidebarIsOpen: Dispatch<SetStateAction<boolean>>
   filterSidebarSize: FilterSidebarSize

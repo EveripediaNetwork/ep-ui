@@ -15,10 +15,10 @@ export const useProfile = (): ProfileContext => {
     : FILTER_SIDEBAR_SIZE.CLOSE
 
   return {
-    // headerRef,
-    // headerIsSticky: keepHeaderSticky,
-    // filterSidebarRef,
-    // filterSidebarIsSticky,
+    headerRef,
+    headerIsSticky: keepHeaderSticky,
+    filterSidebarRef,
+    filterSidebarIsSticky,
     filterSidebarIsOpen,
     setFilterSidebarIsOpen,
     filterSidebarSize,

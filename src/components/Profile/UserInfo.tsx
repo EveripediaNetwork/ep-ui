@@ -25,14 +25,7 @@ const UserInfo = () => {
       >
         <UserDetails hide />
       </Flex>
-      <Flex
-        align="center"
-        justify="space-between"
-        flex="auto"
-        w="full"
-        px="6"
-        ref={headerRef}
-      >
+      <Flex flex="auto" w="full" direction="column" ref={headerRef}>
         <UserDetails />
       </Flex>
     </>
