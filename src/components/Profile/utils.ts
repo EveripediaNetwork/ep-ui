@@ -1,20 +1,19 @@
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { createContext } from '@chakra-ui/react-utils'
 
 export const FILTER_SIDEBAR_SIZE = {
-  OPEN: 40,
+  OPEN: 85,
   CLOSE: 15,
 } as const
 
 type FilterSidebarSize =
   typeof FILTER_SIDEBAR_SIZE[keyof typeof FILTER_SIDEBAR_SIZE]
+
+type BooleanSwitch = {
+  readonly on: () => void
+  readonly off: () => void
+  readonly toggle: () => void
+}
 
 export type ProfileContext = {
   headerIsSticky: boolean
@@ -22,7 +21,7 @@ export type ProfileContext = {
   filterSidebarIsSticky: boolean
   filterSidebarRef: MutableRefObject<HTMLDivElement | null>
   filterSidebarIsOpen: boolean
-  setFilterSidebarIsOpen: Dispatch<SetStateAction<boolean>>
+  filterSidebarSwitch: BooleanSwitch
   filterSidebarSize: FilterSidebarSize
 }
 

@@ -1,6 +1,6 @@
 import { Image } from '@/components/Elements/Image/Image'
 import { FilterLayout } from '@/components/Profile/FilterLayout'
-import { chakra, Divider, Flex, Icon, SimpleGrid } from '@chakra-ui/react'
+import { chakra, Divider, Flex, Icon, SimpleGrid, Wrap } from '@chakra-ui/react'
 import React from 'react'
 import { FaEthereum } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
@@ -12,7 +12,7 @@ const COLLECTION = {
 
 export const Collected = () => (
   <FilterLayout>
-    <SimpleGrid columns={4} spacing="4">
+    <SimpleGrid minChildWidth="320px" w="full" spacing="4">
       {Array.from({ length: 6 }).map((_, i) => (
         <Flex
           key={i}
@@ -23,7 +23,7 @@ export const Collected = () => (
           overflow="hidden"
           _dark={{ bg: '#303339' }}
         >
-          <Image src={COLLECTION.image} boxSize="80" />
+          <Image src={COLLECTION.image} h="80" />
           <Flex
             direction="column"
             px="3"

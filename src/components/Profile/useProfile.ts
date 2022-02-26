@@ -3,13 +3,13 @@ import {
   ProfileContext,
   useStickyElement,
 } from '@/components/Profile/utils'
-import { useState } from 'react'
+import { useBoolean } from '@chakra-ui/react'
 
 export const useProfile = (): ProfileContext => {
   const [headerRef, headerIsSticky] = useStickyElement()
   const [filterSidebarRef, filterSidebarIsSticky] = useStickyElement()
   const keepHeaderSticky = headerIsSticky && !filterSidebarIsSticky
-  const [filterSidebarIsOpen, setFilterSidebarIsOpen] = useState(false)
+  const [filterSidebarIsOpen, filterSidebarSwitch] = useBoolean(false)
   const filterSidebarSize = filterSidebarIsOpen
     ? FILTER_SIDEBAR_SIZE.OPEN
     : FILTER_SIDEBAR_SIZE.CLOSE
@@ -20,7 +20,7 @@ export const useProfile = (): ProfileContext => {
     filterSidebarRef,
     filterSidebarIsSticky,
     filterSidebarIsOpen,
-    setFilterSidebarIsOpen,
+    filterSidebarSwitch,
     filterSidebarSize,
   }
 }

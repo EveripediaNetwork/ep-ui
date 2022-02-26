@@ -18,7 +18,7 @@ const UserInfo = () => {
         pos="fixed"
         top="70px"
         bg="white"
-        zIndex="sticky"
+        zIndex={headerIsSticky ? 'sticky' : -1}
         shadow="lg"
         opacity={headerIsSticky ? 1 : 0}
         transition="all .03s ease"
