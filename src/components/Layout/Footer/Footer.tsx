@@ -46,8 +46,12 @@ const Footer = () => {
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
             <Flex>
-              <Link href="/static/privacy" py={3} px={5}>Privacy Policy</Link>
-              <Link href="/static/terms" py={3}>Terms of Service</Link>
+              <Link href="/static/privacy" py={3} px={5}>
+                Privacy Policy
+              </Link>
+              <Link href="/static/terms" py={3}>
+                Terms of Service
+              </Link>
             </Flex>
           </Stack>
         </SimpleGrid>

@@ -24,12 +24,7 @@ export const UserDetails = (props: UserDetailsProps) => {
   const isSticky = headerIsSticky && hide
   return (
     <>
-      <Flex
-        align="center"
-        justify="space-between"
-        w="full"
-        px="6"
-      >
+      <Flex align="center" justify="space-between" w="full" px="6">
         <chakra.span flex="1" />
 
         <Flex
@@ -73,13 +68,7 @@ export const UserDetails = (props: UserDetailsProps) => {
       </Flex>
 
       {!isSticky && (
-        <Flex
-          gap="3"
-          direction="column"
-          px="6"
-          w="full"
-          align="center"
-        >
+        <Flex gap="3" direction="column" px="6" w="full" align="center">
           <Flex align="center" gap="2" color="gray.500">
             <chakra.span fontWeight="medium">kesar.eth</chakra.span>
             <Button
