@@ -1,13 +1,28 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { createContext } from '@chakra-ui/react-utils'
+
+type TypeValue<T> = T[keyof T]
 
 export const FILTER_SIDEBAR_SIZE = {
   OPEN: 85,
   CLOSE: 15,
 } as const
 
-type FilterSidebarSize =
-  typeof FILTER_SIDEBAR_SIZE[keyof typeof FILTER_SIDEBAR_SIZE]
+type FilterSidebarSize = TypeValue<typeof FILTER_SIDEBAR_SIZE>
+
+export const COLLECTIONS_DISPLAY_SIZES = {
+  LARGE: '320px',
+  SMALL: '207px',
+} as const
+
+export type CollectionDisplaySize = TypeValue<typeof COLLECTIONS_DISPLAY_SIZES>
 
 type BooleanSwitch = {
   readonly on: () => void
@@ -23,6 +38,8 @@ export type ProfileContext = {
   filterSidebarIsOpen: boolean
   filterSidebarSwitch: BooleanSwitch
   filterSidebarSize: FilterSidebarSize
+  displaySize: CollectionDisplaySize
+  setDisplaySize: Dispatch<SetStateAction<CollectionDisplaySize>>
 }
 
 export const useStickyElement = () => {

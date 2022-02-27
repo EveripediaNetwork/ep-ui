@@ -1,4 +1,5 @@
 import { SidebarFilter } from '@/components/Profile/SidebarFilter'
+import { TopBarFilter } from '@/components/Profile/TopBarFilter'
 import { useProfileContext } from '@/components/Profile/utils'
 import { chakra } from '@chakra-ui/react'
 import React from 'react'
@@ -18,9 +19,10 @@ export const FilterLayout = (props: FilterLayoutProps) => {
         display="flex"
         flexDir="column"
         p="4"
+        gap="8"
         ml={filterSidebarIsSticky ? filterSidebarSize : 0}
       >
-        <chakra.div>t</chakra.div>
+        <TopBarFilter />
         {children}
       </chakra.div>
     </chakra.div>

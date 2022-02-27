@@ -1,9 +1,12 @@
 import {
+  CollectionDisplaySize,
+  COLLECTIONS_DISPLAY_SIZES,
   FILTER_SIDEBAR_SIZE,
   ProfileContext,
   useStickyElement,
 } from '@/components/Profile/utils'
 import { useBoolean } from '@chakra-ui/react'
+import { useState } from 'react'
 
 export const useProfile = (): ProfileContext => {
   const [headerRef, headerIsSticky] = useStickyElement()
@@ -14,6 +17,10 @@ export const useProfile = (): ProfileContext => {
     ? FILTER_SIDEBAR_SIZE.OPEN
     : FILTER_SIDEBAR_SIZE.CLOSE
 
+  const [displaySize, setDisplaySize] = useState<CollectionDisplaySize>(
+    COLLECTIONS_DISPLAY_SIZES.LARGE,
+  )
+
   return {
     headerRef,
     headerIsSticky: keepHeaderSticky,
@@ -22,5 +29,7 @@ export const useProfile = (): ProfileContext => {
     filterSidebarIsOpen,
     filterSidebarSwitch,
     filterSidebarSize,
+    displaySize,
+    setDisplaySize,
   }
 }
