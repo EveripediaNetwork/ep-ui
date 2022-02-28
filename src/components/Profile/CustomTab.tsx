@@ -20,6 +20,9 @@ export const CustomTab = React.forwardRef<
       pos="relative"
       {...(isSelected && {
         color: 'black',
+        _dark: {
+          color: 'white',
+        },
         _after: {
           transition: 'background-color 0.4s ease 0s',
           bg: 'blue.400',

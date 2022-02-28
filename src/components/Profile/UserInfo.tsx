@@ -18,6 +18,7 @@ const UserInfo = () => {
         pos="fixed"
         top="70px"
         bg="white"
+        _dark={{ bg: 'gray.800' }}
         zIndex={headerIsSticky ? 'sticky' : -1}
         shadow="lg"
         opacity={headerIsSticky ? 1 : 0}
