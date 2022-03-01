@@ -6,15 +6,17 @@ import {
   chakra,
   AccordionPanel as ChakraAccordionPanel,
   AccordionPanelProps as ChakraAccordionPanelProps,
+  useAccordionItemState,
 } from '@chakra-ui/react'
 
 export type AccordionButtonProps = ChakraAccordionButtonProps
 
 export const AccordionButton = (props: AccordionButtonProps) => {
   const { children, ...rest } = props
+  const { isOpen } = useAccordionItemState()
   return (
     <ChakraAccordionButton
-      borderWidth={1}
+      borderBottomWidth={isOpen ? 1 : 0}
       h="15"
       fontWeight="semibold"
       {...rest}

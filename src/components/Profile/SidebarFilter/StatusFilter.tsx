@@ -12,6 +12,7 @@ import {
   useStyleConfig,
   chakra,
 } from '@chakra-ui/react'
+import { StringOrNumber } from '@chakra-ui/utils'
 import React from 'react'
 
 type StatusFilterButtonProps = UseCheckboxProps
@@ -37,7 +38,7 @@ const StatusFilterButton = (props: StatusFilterButtonProps) => {
         _dark: { borderColor: 'black' },
       }}
     >
-      <chakra.input {...getInputProps()} w="5" border="solid 10px black" />
+      <chakra.input {...getInputProps()} hidden />
 
       <chakra.span {...getLabelProps()}>{value}</chakra.span>
     </chakra.label>
@@ -51,11 +52,14 @@ export const StatusFilter = () => {
     defaultValue: [],
   })
 
+  // Useless; it's just here to satisfy the compiler till we handle actual data
+  const hide = (a: StringOrNumber[]) => a
+  hide(value)
+
   return (
     <AccordionItem>
       <AccordionButton>Status</AccordionButton>
       <AccordionPanel>
-        {value.join(' and ')}
         <SimpleGrid columns={2} spacing="2">
           {options.map(option => (
             <StatusFilterButton

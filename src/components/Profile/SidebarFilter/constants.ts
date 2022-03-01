@@ -19,4 +19,3 @@ export const CURRENCIES = {
   DOLLAR: 'United States Dollar (USD)',
   ETHER: 'Ether (ETH)',
 } as const
-

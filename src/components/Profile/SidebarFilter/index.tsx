@@ -4,6 +4,7 @@ import { chakra, HTMLChakraProps, Accordion } from '@chakra-ui/react'
 
 import { StatusFilter } from '@/components/Profile/SidebarFilter/StatusFilter'
 import { PriceFilter } from '@/components/Profile/SidebarFilter/PriceFilter'
+import { CollectionsFilter } from '@/components/Profile/SidebarFilter/CollectionsFilter'
 import { Header } from './Header'
 
 export const SidebarFilter = () => {
@@ -38,6 +39,7 @@ export const SidebarFilter = () => {
           <Accordion allowMultiple>
             <StatusFilter />
             <PriceFilter />
+            <CollectionsFilter />
           </Accordion>
         </chakra.div>
       </chakra.div>
