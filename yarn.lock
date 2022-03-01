@@ -2320,6 +2320,14 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@ipld/dag-cbor@^6.0.3":
+  version "6.0.15"
+  resolved "https://registry.yarnpkg.com/@ipld/dag-cbor/-/dag-cbor-6.0.15.tgz#aebe7a26c391cae98c32faedb681b1519e3d2372"
+  integrity sha512-Vm3VTSTwlmGV92a3C5aeY+r2A18zbH2amehNhsX8PBa3muXICaWrN8Uri85A5hLH7D7ElhE8PdjxD6kNqUmTZA==
+  dependencies:
+    cborg "^1.5.4"
+    multiformats "^9.5.4"
+
 "@ipld/dag-cbor@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@ipld/dag-cbor/-/dag-cbor-7.0.0.tgz#afd777fcc2f0f26359c31e5fe957433637f62906"
@@ -3690,10 +3698,37 @@
     "@svgr/plugin-jsx" "^6.2.1"
     "@svgr/plugin-svgo" "^6.2.0"
 
+"@szmarczak/http-timer@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
+  integrity sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==
+  dependencies:
+    defer-to-connect "^1.0.1"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
+
+"@tsconfig/node10@^1.0.7":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.8.tgz#c1e4e80d6f964fbecb3359c43bd48b40f7cadad9"
+  integrity sha512-6XFfSQmMgq0CFLY1MslA/CPUfhIL919M1rMsa5lP2P097N2Wd1sSX0tx1u4olM16fLNhtHZpRhedZJphNJqmZg==
+
+"@tsconfig/node12@^1.0.7":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node12/-/node12-1.0.9.tgz#62c1f6dee2ebd9aead80dc3afa56810e58e1a04c"
+  integrity sha512-/yBMcem+fbvhSREH+s14YJi18sp7J9jpuhYByADT2rypfajMZZN4WQ6zBGgBKp53NKmqI36wFYDb3yaMPurITw==
+
+"@tsconfig/node14@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node14/-/node14-1.0.1.tgz#95f2d167ffb9b8d2068b0b235302fafd4df711f2"
+  integrity sha512-509r2+yARFfHHE7T6Puu2jjkoycftovhXRqW328PDXTVGKihlb1P8Z9mMZH04ebyajfRY7dedfGynlrFHJUQCg==
+
+"@tsconfig/node16@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
+  integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
 "@types/bn.js@^4.11.3":
   version "4.11.6"
@@ -4418,13 +4453,6 @@ JSV@3.5.0:
   resolved "https://registry.yarnpkg.com/JSV/-/JSV-3.5.0.tgz#f017ec75629e8c89b8359dc79a2ceee92ef9471e"
   integrity sha1-8BfsdWKejIm4NZ3Hmizu6S75Rx4=
 
-abort-controller@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
-  integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
-  dependencies:
-    event-target-shim "^5.0.0"
-
 accepts@~1.3.5, accepts@~1.3.8:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
@@ -4581,14 +4609,6 @@ ansi-to-html@^0.6.11:
   integrity sha512-28ijx2aHJGdzbs+O5SNQF65r6rrKYnkuwTYm8lZlChuoJ9P1vVzIpWO20sQTqTPDXYp6NFwk326vApTtLVFXpQ==
   dependencies:
     entities "^2.0.0"
-
-any-signal@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/any-signal/-/any-signal-2.1.2.tgz#8d48270de0605f8b218cf9abe8e9c6a0e7418102"
-  integrity sha512-B+rDnWasMi/eWcajPcCWSlYc7muXOrcYrqgyzcdKisl2H/WTlQ0gip1KyQfr0ZlxJdsuWCj/LWwQm7fhyhRfIQ==
-  dependencies:
-    abort-controller "^3.0.0"
-    native-abort-controller "^1.0.3"
 
 any-signal@^3.0.0:
   version "3.0.0"
@@ -6233,6 +6253,14 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
+dag-jose@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dag-jose/-/dag-jose-1.0.0.tgz#52e42d70cb5bee31ae4e8e3ab860615568d7ad73"
+  integrity sha512-U0b/YsIPBp6YZNTFrVjwLZAlY3qGRxZTIEcM/CcQmrVrCWq9MWQq9pheXVSPLIhF4SNwzp2SikPva4/BIrJY+g==
+  dependencies:
+    "@ipld/dag-cbor" "^6.0.3"
+    multiformats "^9.0.2"
+
 damerau-levenshtein@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
@@ -7276,11 +7304,6 @@ ethjs-util@0.1.6, ethjs-util@^0.1.3:
   dependencies:
     is-hex-prefixed "1.0.0"
     strip-hex-prefix "1.0.0"
-
-event-target-shim@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
-  integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
 eventemitter3@4.0.7, eventemitter3@^4.0.7:
   version "4.0.7"
@@ -8547,26 +8570,26 @@ ipaddr.js@1.9.1:
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
-ipfs-core-types@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.9.0.tgz#cb201ff7a9470651ba14c4e7fae56661a55bf37e"
-  integrity sha512-VJ8vJSHvI1Zm7/SxsZo03T+zzpsg8pkgiIi5hfwSJlsrJ1E2v68QPlnLshGHUSYw89Oxq0IbETYl2pGTFHTWfg==
+ipfs-core-types@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.10.1.tgz#53c60f589e4e54c2d566f0c856c2fcf0ea4a5577"
+  integrity sha512-s5+kXXcjkIdWPHblrE0TyiKxROQdL7zfkVI7FpEEwv5rtHCjpI0I4vKSzziZLLzLXf3a2F1qtscOnlaT0ruWBw==
   dependencies:
     interface-datastore "^6.0.2"
     multiaddr "^10.0.0"
-    multiformats "^9.4.13"
+    multiformats "^9.5.1"
 
-ipfs-core-utils@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.13.0.tgz#8f0ec9aaa7c24f6f307e6e76e7bdc1cefd829894"
-  integrity sha512-HP5EafxU4/dLW3U13CFsgqVO5Ika8N4sRSIb/dTg16NjLOozMH31TXV0Grtu2ZWo1T10ahTzMvrfT5f4mhioXw==
+ipfs-core-utils@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.14.1.tgz#b2d66f929ca853fc0525dec4043546ebaaa3a627"
+  integrity sha512-Zm5Ou6zd5W5COaVpE2v7a7QS0KhlYJ4CakxVgoIJWWXSdexLt0M3Z3dTWMlFygWu6QRaKyOURZPdOlPWfqBThQ==
   dependencies:
-    any-signal "^2.1.2"
+    any-signal "^3.0.0"
     blob-to-it "^1.0.1"
     browser-readablestream-to-it "^1.0.1"
     debug "^4.1.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.9.0"
+    ipfs-core-types "^0.10.1"
     ipfs-unixfs "^6.0.3"
     ipfs-utils "^9.0.2"
     it-all "^1.0.4"
@@ -8576,33 +8599,32 @@ ipfs-core-utils@^0.13.0:
     merge-options "^3.0.4"
     multiaddr "^10.0.0"
     multiaddr-to-uri "^8.0.0"
-    multiformats "^9.4.13"
+    multiformats "^9.5.1"
     nanoid "^3.1.23"
     parse-duration "^1.0.0"
-    timeout-abort-controller "^2.0.0"
+    timeout-abort-controller "^3.0.0"
     uint8arrays "^3.0.0"
 
-ipfs-http-client@^55.0.0:
-  version "55.0.0"
-  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-55.0.0.tgz#8b713c5fa318e873b7d7ad099a4eb14320a5b0ce"
-  integrity sha512-GpvEs7C7WL9M6fN/kZbjeh4Y8YN7rY8b18tVWZnKxRsVwM25cIFrRI8CwNt3Ugin9yShieI3i9sPyzYGMrLNnQ==
+ipfs-http-client@^56.0.1:
+  version "56.0.1"
+  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-56.0.1.tgz#aaa40a1bf3e3d07f5a49fadefd8b6017b91e3fb9"
+  integrity sha512-U0sUyGZndcIluMJL3gDdCSgF7RwShDklJJxfDf9IRcbO72hqSJsib4amYzqcqfetft6vYa8uRIoJFEIWndHwrg==
   dependencies:
     "@ipld/dag-cbor" "^7.0.0"
     "@ipld/dag-json" "^8.0.1"
     "@ipld/dag-pb" "^2.1.3"
-    abort-controller "^3.0.0"
-    any-signal "^2.1.2"
+    any-signal "^3.0.0"
+    dag-jose "^1.0.0"
     debug "^4.1.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.9.0"
-    ipfs-core-utils "^0.13.0"
+    ipfs-core-types "^0.10.1"
+    ipfs-core-utils "^0.14.1"
     ipfs-utils "^9.0.2"
     it-first "^1.0.6"
     it-last "^1.0.4"
     merge-options "^3.0.4"
     multiaddr "^10.0.0"
-    multiformats "^9.4.13"
-    native-abort-controller "^1.0.3"
+    multiformats "^9.5.1"
     parse-duration "^1.0.0"
     stream-to-it "^0.2.2"
     uint8arrays "^3.0.0"
@@ -10042,7 +10064,7 @@ multiaddr@^10.0.0:
     uint8arrays "^3.0.0"
     varint "^6.0.0"
 
-multiformats@^9.4.13, multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.5.4:
+multiformats@^9.0.2, multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.5.1, multiformats@^9.5.4:
   version "9.6.4"
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.6.4.tgz#5dce1f11a407dbb69aa612cb7e5076069bb759ca"
   integrity sha512-fCCB6XMrr6CqJiHNjfFNGT0v//dxOBMrOMqUIzpPc/mmITweLEyhvMpY9bF+jZ9z3vaMAau5E8B68DW77QMXkg==
@@ -10073,11 +10095,6 @@ nanomatch@^1.2.9:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
-
-native-abort-controller@^1.0.3, native-abort-controller@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/native-abort-controller/-/native-abort-controller-1.0.4.tgz#39920155cc0c18209ff93af5bc90be856143f251"
-  integrity sha512-zp8yev7nxczDJMoP6pDxyD20IU0T22eX8VwN2ztDccKvSZhRaV33yP1BGwKSZfXuqWUzsXopVFjBdau9OOAwMQ==
 
 native-fetch@^3.0.0:
   version "3.0.0"
@@ -12753,13 +12770,11 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-timeout-abort-controller@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/timeout-abort-controller/-/timeout-abort-controller-2.0.0.tgz#d6a59209132e520413092dd4b4d71eaaf5887feb"
-  integrity sha512-2FAPXfzTPYEgw27bQGTHc0SzrbmnU2eso4qo172zMLZzaGqeu09PFa5B2FCUHM1tflgRqPgn5KQgp6+Vex4uNA==
+timeout-abort-controller@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/timeout-abort-controller/-/timeout-abort-controller-3.0.0.tgz#dd57ffca041652c03769904f8d95afd93fb95595"
+  integrity sha512-O3e+2B8BKrQxU2YRyEjC/2yFdb33slI22WRdUaDx6rvysfi9anloNZyR2q0l6LnePo5qH7gSM7uZtvvwZbc2yA==
   dependencies:
-    abort-controller "^3.0.0"
-    native-abort-controller "^1.0.4"
     retimer "^3.0.0"
 
 timers-browserify@^2.0.4:
