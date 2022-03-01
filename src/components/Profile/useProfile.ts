@@ -1,7 +1,9 @@
 import {
-  CollectionDisplaySize,
   COLLECTIONS_DISPLAY_SIZES,
   FILTER_SIDEBAR_SIZE,
+} from '@/components/Profile/SidebarFilter/constants'
+import {
+  CollectionDisplaySize,
   ProfileContext,
   useStickyElement,
 } from '@/components/Profile/utils'

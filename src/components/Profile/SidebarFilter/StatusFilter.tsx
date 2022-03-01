@@ -1,3 +1,4 @@
+import { STATUS_FILTERS } from '@/components/Profile/SidebarFilter/constants'
 import {
   AccordionButton,
   AccordionPanel,
@@ -12,13 +13,6 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import React from 'react'
-
-const STATUS_FILTERS = {
-  BUY_NOW: 'Buy Now',
-  ON_AUCTION: 'On Auction',
-  NEW: 'New',
-  HAS_OFFERS: 'Has Offers',
-} as const
 
 type StatusFilterButtonProps = UseCheckboxProps
 const StatusFilterButton = (props: StatusFilterButtonProps) => {
@@ -61,7 +55,7 @@ export const StatusFilter = () => {
     <AccordionItem>
       <AccordionButton>Status</AccordionButton>
       <AccordionPanel>
-        {value.sort().join(' and ')}
+        {value.join(' and ')}
         <SimpleGrid columns={2} spacing="2">
           {options.map(option => (
             <StatusFilterButton

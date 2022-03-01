@@ -3,6 +3,7 @@ import { useProfileContext } from '@/components/Profile/utils'
 import { chakra, HTMLChakraProps, Accordion } from '@chakra-ui/react'
 
 import { StatusFilter } from '@/components/Profile/SidebarFilter/StatusFilter'
+import { PriceFilter } from '@/components/Profile/SidebarFilter/PriceFilter'
 import { Header } from './Header'
 
 export const SidebarFilter = () => {
@@ -36,6 +37,7 @@ export const SidebarFilter = () => {
         <chakra.div display={filterSidebarIsOpen ? 'initial' : 'none'}>
           <Accordion allowMultiple>
             <StatusFilter />
+            <PriceFilter />
           </Accordion>
         </chakra.div>
       </chakra.div>

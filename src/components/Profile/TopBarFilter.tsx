@@ -1,7 +1,5 @@
-import {
-  COLLECTIONS_DISPLAY_SIZES,
-  useProfileContext,
-} from '@/components/Profile/utils'
+import { COLLECTIONS_DISPLAY_SIZES } from '@/components/Profile/SidebarFilter/constants'
+import { useProfileContext } from '@/components/Profile/utils'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Button,
