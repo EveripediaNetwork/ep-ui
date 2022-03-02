@@ -30,8 +30,8 @@ import {
   MData,
   Wiki,
 } from '@/types/Wiki'
-import FlexRow from '../FlexRow/FlexRow'
 import { sampleCategories } from '@/data/CategoriesData'
+import FlexRow from '../FlexRow/FlexRow'
 
 const pageTypeOptions: Array<string> = [
   'Person',
@@ -41,9 +41,7 @@ const pageTypeOptions: Array<string> = [
   'List / Ranking',
   'Product / Merchandise',
   'Electronics / Software',
-  'Medical / Biology',
   'Creative Work / Art',
-  'Science / Academia / Humanities',
   'Other',
   'None',
 ]
@@ -144,12 +142,13 @@ const HighlightsModal = ({
         </FlexRow>
 
         <Select
-          onChange={event =>
-            handleSetWikiMetadata({
-              id: 'page-type',
-              value: event.target.value,
-            })
-          }
+          onChange={event => {
+            if (event.target.value)
+              handleSetWikiMetadata({
+                id: 'page-type',
+                value: event.target.value,
+              })
+          }}
           value={String(
             wiki.content.metadata.find((m: MData) => m.id === 'page-type')
               ?.value,
@@ -168,7 +167,9 @@ const HighlightsModal = ({
         </FlexRow>
 
         <Select
-          onChange={event => handleAddCategory(event.target.value)}
+          onChange={event => {
+            if (event.target.value) handleAddCategory(event.target.value)
+          }}
           placeholder="Choose categories"
         >
           {categoryOptions.map(o => (

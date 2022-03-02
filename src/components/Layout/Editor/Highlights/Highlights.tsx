@@ -140,7 +140,9 @@ const Highlights = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <Button onClick={onOpen}>Edit</Button>
+          <Button variant="outline" onClick={onOpen}>
+            Edit
+          </Button>
         </Flex>
       </Flex>
       <HighlightsModal isOpen={isOpen} onClose={onClose} />
