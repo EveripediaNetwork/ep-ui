@@ -26,7 +26,7 @@ const SettingNavButton = ({
       bgColor={isActive ? 'brand.700' : 'transparent'}
       color={isActive ? 'white' : 'linkColor'}
       p={4}
-      _hover={{ color: 'linkHoverColor' }}
+      _hover={!isActive ? { color: 'linkHoverColor' } : {}}
       width="300px"
       borderRadius="lg"
     >
