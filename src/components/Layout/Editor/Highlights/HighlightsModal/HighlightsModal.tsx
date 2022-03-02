@@ -24,13 +24,14 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
-  Category,
+  BaseCategory,
   Languages,
   LanguagesISOEnum,
   MData,
   Wiki,
 } from '@/types/Wiki'
 import FlexRow from '../FlexRow/FlexRow'
+import { sampleCategories } from '@/data/CategoriesData'
 
 const pageTypeOptions: Array<string> = [
   'Person',
@@ -47,13 +48,7 @@ const pageTypeOptions: Array<string> = [
   'None',
 ]
 
-const categoryOptions: Array<string> = [
-  'NFTs',
-  'Person',
-  'Athlete',
-  'Politics',
-  'Miscellaneous',
-]
+const categoryOptions = sampleCategories.map(c => c.title)
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -100,7 +95,9 @@ const HighlightsModal = ({
   const handleAddCategory = (category: string) => {
     if (!category) return
 
-    if (!wiki.content.categories.find((c: Category) => c.title === category))
+    if (
+      !wiki.content.categories.find((c: BaseCategory) => c.title === category)
+    )
       setWiki((prev: Wiki) => ({
         ...prev,
         content: {
@@ -120,7 +117,7 @@ const HighlightsModal = ({
       content: {
         ...wiki.content,
         categories: wiki.content.categories.filter(
-          (c: Category) => c.title !== category,
+          (c: BaseCategory) => c.title !== category,
         ),
       },
     })
@@ -186,7 +183,7 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {wiki.content.categories.map((c: Category) => (
+          {wiki.content.categories.map((c: BaseCategory) => (
             <Badge
               variant="outline"
               display="flex"

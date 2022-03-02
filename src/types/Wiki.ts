@@ -1,4 +1,4 @@
-export interface Category {
+export interface BaseCategory {
   id: string
   title: string
 }
@@ -24,7 +24,7 @@ export interface User {
 export interface Content {
   title: string
   content: string
-  categories: Category[]
+  categories: BaseCategory[]
   tags: Tag[]
   images: Image[]
   metadata: MData[]
