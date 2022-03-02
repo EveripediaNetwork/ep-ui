@@ -54,7 +54,7 @@ const ChainFilterItem = (props: ChainFilterItemProps) => {
       display="flex"
       alignItems="center"
     >
-      <chakra.input {...getInputProps()} w="5" border="solid 10px black" />
+      <chakra.input {...getInputProps()} />
       {state.isChecked ? (
         checkIcon
       ) : (

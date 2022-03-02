@@ -7,6 +7,7 @@ import { PriceFilter } from '@/components/Profile/SidebarFilter/PriceFilter'
 import { CollectionsFilter } from '@/components/Profile/SidebarFilter/CollectionsFilter'
 import { ChainsFilter } from '@/components/Profile/SidebarFilter/ChainsFilter'
 import { CategoriesFilter } from '@/components/Profile/SidebarFilter/CategoriesFilter'
+import { OnSaleInFilter } from '@/components/Profile/SidebarFilter/OnSaleInFilter'
 import { Header } from './Header'
 
 export const SidebarFilter = () => {
@@ -44,6 +45,7 @@ export const SidebarFilter = () => {
             <CollectionsFilter />
             <ChainsFilter />
             <CategoriesFilter />
+            <OnSaleInFilter />
           </Accordion>
         </chakra.div>
       </chakra.div>
