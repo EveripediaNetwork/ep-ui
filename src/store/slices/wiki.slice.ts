@@ -13,10 +13,6 @@ const initialState: Wiki = {
     images: [],
     metadata: [
       {
-        id: 'adult-content',
-        value: true,
-      },
-      {
         id: 'page-type',
         value: 'Place / Location',
       },

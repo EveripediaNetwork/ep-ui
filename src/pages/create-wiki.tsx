@@ -156,11 +156,7 @@ const CreateWiki = () => {
       h={['1350px', '1450px', '1450px', '1100px']}
       my="15px"
     >
-      <GridItem
-        h={[300, 400, 400, 500]}
-        rowSpan={[1, 1, 1, 2]}
-        colSpan={[3, 3, 3, 2, 2]}
-      >
+      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
         <Editor
           initialValue={initialEditorValue}
           onChange={handleOnEditorChanges}

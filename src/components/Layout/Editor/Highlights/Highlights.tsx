@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import {
   RiFolder3Fill,
-  RiGobletLine,
   RiTranslate2,
   RiSurveyFill,
 } from 'react-icons/ri'
@@ -94,16 +93,6 @@ const Highlights = () => {
             <RiFolder3Fill /> <Text>Page Type</Text>
           </FlexRow>
           <Text>{getWikiMetadataById(currentWiki, 'page-type')?.value}</Text>
-        </FlexRowContainer>
-        <FlexRowContainer>
-          <FlexRow>
-            <RiGobletLine /> <Text>Adult Content</Text>
-          </FlexRow>
-          <Text>
-            {getWikiMetadataById(currentWiki, 'adult-content')?.value === true
-              ? 'Yes'
-              : 'No'}
-          </Text>
         </FlexRowContainer>
         <FlexRowContainer>
           <FlexRow>

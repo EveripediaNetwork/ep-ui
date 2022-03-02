@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Badge,
   Button,
-  Checkbox,
   CloseButton,
   Divider,
   Flex,
@@ -14,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import {
   RiFolder3Fill,
-  RiGobletLine,
   RiTranslate2,
   RiSurveyFill,
 } from 'react-icons/ri'
@@ -22,7 +20,6 @@ import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
   BaseCategory,
   Languages,
@@ -203,23 +200,6 @@ const HighlightsModal = ({
             </Badge>
           ))}
         </Flex>
-        <CustomDivider />
-
-        <FlexRow>
-          <RiGobletLine /> <Text>Adult Content</Text>
-        </FlexRow>
-        <Checkbox
-          defaultChecked={
-            getWikiMetadataById(currentWiki, 'adult-content')?.value === true
-          }
-          onChange={event =>
-            handleSetWikiMetadata({
-              id: 'adult-content',
-              value: event.target.checked,
-            })
-          }
-        />
-
         <CustomDivider />
 
         <FlexRow>
