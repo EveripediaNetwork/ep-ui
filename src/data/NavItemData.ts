@@ -64,7 +64,8 @@ export const NAV_ITEMS: NavItem[] = [
   {
     id: 4,
     label: 'Create Wiki',
-    href: '/create',
+    hasSubItem: false,
+    href: '/create-wiki',
     icon: RiAddBoxFill,
   },
 ]
@@ -77,7 +78,7 @@ export const NAV_ICON: NavItem = {
   subItem: [
     {
       label: 'Profile',
-      href: '#',
+      href: '/user/profile',
       hasImage: true,
       icon: RiAccountCircleFill,
     },

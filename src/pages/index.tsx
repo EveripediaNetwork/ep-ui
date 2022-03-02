@@ -1,7 +1,6 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { Flex } from '@chakra-ui/react'
-import wrapper from '@/store/store'
 import {
   getRunningOperationPromises,
   getWikis,
@@ -11,6 +10,7 @@ import WikiListCard from '@/components/Wiki/WikiListCard/WikiListCard'
 import { Hero } from '@/components/Landing/Hero'
 import { NotableDrops } from '@/components/Landing/NotableDrops'
 import CategoriesList from '@/components/Landing/CategoriesList'
+import { store } from '@/store/store'
 
 export const Home: NextPage = () => {
   const result = useGetWikisQuery()
@@ -35,15 +35,12 @@ export const Home: NextPage = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  store => async () => {
-    store.dispatch(getWikis.initiate())
-    await Promise.all(getRunningOperationPromises())
-
-    return {
-      props: {},
-    }
-  },
-)
+export async function getServerSideProps() {
+  store.dispatch(getWikis.initiate())
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
+}
 
 export default Home

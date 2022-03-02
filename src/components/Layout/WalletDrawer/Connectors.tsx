@@ -18,41 +18,40 @@ import {
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
 } from '@/utils/fetchWalletBalance'
-import {
-  BalanceType,
-  ErrorType,
-  TokenDetailsType,
-} from '@/types/WalletBalanceType'
 import config from '@/config'
-import WalletDetails from './WalletDetails'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  updateBalanceBreakdown,
+  updateTotalBalance,
+  updateUserDetails,
+  updateWalletDetails,
+} from '@/store/slices/user-slice'
+import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
+import { RootState } from '@/store/store'
 
 const Connectors = () => {
   const [{ data }, connect] = useConnect()
-
   const [{ data: accountData }] = useAccount({
     fetchEns: true,
   })
   const address = accountData ? accountData.address : null
   const [, getBalance] = useBalance()
-
-  const [walletDetails, setWalletDetails] = useState<
-    (BalanceType | ErrorType)[] | null
-  >(null)
-
-  const [totalBalance, setTotalBalance] = useState<number | null | undefined>(
-    null,
+  const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
+    (state: RootState) => state.user,
   )
+  const dispatch = useDispatch()
   const dollarUSLocale = Intl.NumberFormat('en-US')
-
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
 
-  const [balanceBreakdown, setBalanceBreakDown] = useState<
-    TokenDetailsType[] | null
-  >(null)
-
   useEffect(() => {
-    if (address) {
+    if (address && !walletDetails) {
+      const payload = {
+        address,
+        connector: undefined,
+        ens: accountData?.ens,
+      }
+      dispatch(updateUserDetails(payload))
       fetchWalletBalance(getBalance, [
         {
           addressOrName: address,
@@ -62,7 +61,7 @@ const Connectors = () => {
           addressOrName: address,
         },
       ]).then(response => {
-        setWalletDetails(response)
+        dispatch(updateWalletDetails(response))
       })
     }
   }, [address, getBalance])
@@ -70,12 +69,12 @@ const Connectors = () => {
   useEffect(() => {
     if (walletDetails) {
       fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
-        setTotalBalance(calculateTotalBalance(result))
-        setBalanceBreakDown(result)
+        dispatch(updateTotalBalance(calculateTotalBalance(result)))
+        dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
       })
     }
-  }, [walletDetails])
+  }, [walletDetails, dispatch])
 
   const bg = useColorModeValue('primary', 'brand.900')
   const tooltipText =

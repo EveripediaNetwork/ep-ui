@@ -45,7 +45,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
       setShowSubNav(true)
     }
   }
-
   const handleWalletButtonClick = () => {
     setHamburger(false)
     toggleWalletDrawer()
@@ -95,6 +94,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                 handleClick={item => handleClick(item)}
                 key={navItem.label}
                 navItem={navItem}
+                setHamburger={setHamburger}
               />
             ))}
             <Menu>
@@ -108,6 +108,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                   handleClick={handleWalletButtonClick}
                   key={mobileWalletDetails.label}
                   navItem={mobileWalletDetails}
+                  setHamburger={setHamburger}
                 />
               </Box>
             )}

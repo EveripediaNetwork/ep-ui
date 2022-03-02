@@ -10,16 +10,21 @@ import {
 import { RiArrowRightSLine } from 'react-icons/ri'
 import Link from '@/components/Elements/Link/Link'
 import { NavItem } from '@/types/NavItemType'
+import { useRouter } from 'next/router'
+
+interface MobileNavItemProps {
+  navItem: NavItem
+  handleClick: (item: NavItem) => void
+  setHamburger: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 const MobileNavItem = ({
   navItem,
   handleClick,
-}: {
-  navItem: NavItem
-  handleClick: (item: NavItem) => void
-}) => {
+  setHamburger,
+}: MobileNavItemProps) => {
   const { onToggle } = useDisclosure()
-
+  const router = useRouter()
   return (
     <Stack
       direction="column"
@@ -27,6 +32,10 @@ const MobileNavItem = ({
       onClick={() => {
         onToggle()
         handleClick(navItem)
+        if (!navItem.hasSubItem) {
+          router.push(navItem.href)
+          setHamburger(false)
+        }
       }}
     >
       <Flex
@@ -49,7 +58,6 @@ const MobileNavItem = ({
             as={navItem.icon}
             pr={3}
           />
-
           <Text fontWeight={600} color="linkColor">
             {navItem.label}
           </Text>

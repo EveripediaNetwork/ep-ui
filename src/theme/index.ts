@@ -1,5 +1,6 @@
 import { extendTheme, ThemeConfig, ColorMode } from '@chakra-ui/react'
 
+import { Dict } from '@chakra-ui/utils/src/types'
 import { components } from './components'
 import { foundations } from './foundations'
 import { semanticTokens } from './semantic-tokens'
@@ -17,11 +18,11 @@ const config: ThemeConfig = {
   cssVarPrefix: 'chakra',
 }
 
-export const theme = {
+const theme: Dict = extendTheme({
   components,
   config,
   ...foundations,
   semanticTokens,
-}
+})
 
-export default extendTheme(theme)
+export default theme

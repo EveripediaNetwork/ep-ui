@@ -8,7 +8,7 @@ import {
   Tag,
   Text,
 } from '@chakra-ui/react'
-import { Wiki, Tag as TagType } from '@/types'
+import { Wiki, Tag as TagType } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 
 import shortenAccount from '@/utils/shortenAccount'
@@ -123,7 +123,7 @@ const WikiCard = ({ wiki }: WikiCardProps) => (
         {wiki.content.content}
       </Text>
       <BlogAuthor
-        name={shortenAccount(wiki.content.user.id)}
+        name={shortenAccount(wiki?.content?.user?.id || '')}
         date={new Date('2021-04-06T19:01:27Z')}
       />
     </Box>

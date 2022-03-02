@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import Link from '@/components/Elements/Link/Link'
 import { NavItem } from '@/types/NavItemType'
+import { useRouter } from 'next/router'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -26,60 +27,66 @@ const NavMenu = ({
   children,
   labelIsIcon,
   label,
-}: NavMenuType) => (
-  <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
-    <MenuButton
-      pr={4}
-      fontSize="lg"
-      fontWeight={600}
-      color="linkColor"
-      _hover={{
-        textDecoration: 'none',
-        color: 'linkHoverColor',
-      }}
-      whiteSpace="nowrap"
-      onMouseEnter={() => setVisibleMenu(navItem.id)}
-      onClick={() => setVisibleMenu(visibleMenu ? null : navItem.id)}
-    >
-      {label}
-    </MenuButton>
-    {navItem.hasSubItem && (
-      <MenuList
-        bg="subMenuBg"
+}: NavMenuType) => {
+  const router = useRouter()
+  return (
+    <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
+      <MenuButton
+        pr={4}
+        fontSize="lg"
+        fontWeight={600}
+        color="linkColor"
+        _hover={{
+          textDecoration: 'none',
+          color: 'linkHoverColor',
+        }}
+        whiteSpace="nowrap"
         onMouseEnter={() => setVisibleMenu(navItem.id)}
-        mt={!labelIsIcon ? 4 : 1.5}
+        onClick={() =>
+          navItem.hasSubItem
+            ? setVisibleMenu(visibleMenu ? null : navItem.id)
+            : router.push(navItem.href)
+        }
       >
-        {navItem.subItem?.map((item, key) => (
-          <Link
-            href={item.href}
-            _hover={{
-              textDecoration: 'none',
-              color: 'linkHoverColor',
-            }}
-            color="linkColor"
-            key={key}
-          >
-            <MenuItem minH="48px" bg="subMenuBg">
-              {item.hasImage && (
-                <Icon
-                  cursor="pointer"
-                  fontSize="4xl"
-                  fontWeight={600}
-                  as={item.icon}
-                  pr={3}
-                />
-              )}
-              <Box fontSize="md" fontWeight={600} color="linkColor">
-                {item.label}
-              </Box>
-            </MenuItem>
-            {navItem.subItem?.length !== key + 1 && <Divider />}
-          </Link>
-        ))}
-        {children}
-      </MenuList>
-    )}
-  </Menu>
-)
-
+        {label}
+      </MenuButton>
+      {navItem.hasSubItem && (
+        <MenuList
+          bg="subMenuBg"
+          onMouseEnter={() => setVisibleMenu(navItem.id)}
+          mt={!labelIsIcon ? 4 : 1.5}
+        >
+          {navItem.subItem?.map((item, key) => (
+            <Link
+              href={item.href}
+              _hover={{
+                textDecoration: 'none',
+                color: 'linkHoverColor',
+              }}
+              color="linkColor"
+              key={key}
+            >
+              <MenuItem minH="48px" bg="subMenuBg">
+                {item.hasImage && (
+                  <Icon
+                    cursor="pointer"
+                    fontSize="4xl"
+                    fontWeight={600}
+                    as={item.icon}
+                    pr={3}
+                  />
+                )}
+                <Box fontSize="md" fontWeight={600} color="linkColor">
+                  {item.label}
+                </Box>
+              </MenuItem>
+              {navItem.subItem?.length !== key + 1 && <Divider />}
+            </Link>
+          ))}
+          {children}
+        </MenuList>
+      )}
+    </Menu>
+  )
+}
 export default NavMenu

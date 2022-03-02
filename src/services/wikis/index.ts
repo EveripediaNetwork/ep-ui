@@ -6,7 +6,7 @@ import {
   GET_WIKI_BY_ID,
   GET_WIKIS,
 } from '@/services/wikis/queries'
-import { Content, Wiki } from '@/types'
+import { Content, Wiki } from '@/types/Wiki'
 import config from '@/config'
 
 type GetWikisResponse = {

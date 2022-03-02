@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Container, VStack } from '@chakra-ui/react'
-import { Wiki } from '@/types'
+import { Wiki } from '@/types/Wiki'
 import WikiCard from '@/components/Wiki/WikiCard/WikiCard'
 
 interface WikiListCardProps {

@@ -6,11 +6,11 @@ import {
   getUserWikis,
   useGetUserWikisQuery,
 } from '@/services/wikis'
-import wrapper from '@/store/store'
+import { store } from '@/store/store'
+import { GetServerSideProps } from 'next'
 
 const User = () => {
   const router = useRouter()
-
   const { address } = router.query
   const result = useGetUserWikisQuery(
     typeof address === 'string' ? address : skipToken,
@@ -29,19 +29,15 @@ const User = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  store => async context => {
-    const address = context.params?.address
-    if (typeof address === 'string') {
-      store.dispatch(getUserWikis.initiate(address))
-    }
-
-    await Promise.all(getRunningOperationPromises())
-
-    return {
-      props: {},
-    }
-  },
-)
+export const getServerSideProps: GetServerSideProps = async context => {
+  const address = context.params?.address
+  if (typeof address === 'string') {
+    store.dispatch(getUserWikis.initiate(address))
+  }
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
+}
 
 export default User

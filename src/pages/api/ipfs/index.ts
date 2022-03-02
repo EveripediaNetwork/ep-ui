@@ -1,15 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import axios from 'axios'
 import { create } from 'ipfs-http-client'
-import { Wiki } from '@/types'
+import axios from 'axios'
+import { Wiki } from '@/types/Wiki'
 
-const pinToPinata = async (wiki: Wiki): Promise<string> => {
+const pinToPinata = async (payload: Wiki): Promise<string> => {
   const body = {
     pinataMetadata: {
-      name: wiki.content.title,
+      name:
+        (<Wiki>payload).content !== undefined ? payload.content.title : 'image',
     },
     pinataContent: {
-      ...wiki,
+      ...payload,
     },
   }
   const resp = await axios.post(
@@ -31,16 +32,16 @@ const pinToPinata = async (wiki: Wiki): Promise<string> => {
   return data.IpfsHash
 }
 
-const pinToIPFS = async (wiki: Wiki): Promise<string> => {
+const pinToIPFS = async (payload: Wiki | Partial<Wiki>): Promise<string> => {
   const ipfs = create({ host: 'localhost', port: 5001, protocol: 'http' })
-  const { cid } = await ipfs.add(JSON.stringify(wiki))
+  const { cid } = await ipfs.add(JSON.stringify(payload))
   return cid.toString()
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const wiki = req.body as Wiki
   const IpfsHash = process.env.PROD
-    ? await pinToPinata(wiki)
-    : await pinToIPFS(wiki)
-  res.status(200).json({ IpfsHash })
+    ? await pinToPinata(req.body)
+    : await pinToIPFS(req.body)
+
+  res.status(200).json({ ipfs: IpfsHash })
 }

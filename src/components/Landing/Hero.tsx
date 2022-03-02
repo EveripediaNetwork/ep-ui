@@ -1,45 +1,43 @@
 import React from 'react'
 import { Avatar, ButtonGroup, chakra, Flex, Image } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
+import { featuredArticle } from '@/data/FeaturesArticleData'
 
-type HeroCardProps = {
-  image: string
-  avatarImage: string
-  username: string
-  title: string
-}
+const HeroCard = () => {
+  const { image, avatarImage, username, title } = featuredArticle
 
-const HeroCard = ({ image, avatarImage, username, title }: HeroCardProps) => (
-  <Flex
-    alignSelf="center"
-    direction="column"
-    shadow="lg"
-    rounded="lg"
-    bg="white"
-    color="black"
-    cursor="pointer"
-    _hover={{ shadow: '2xl' }}
-    maxW={{ base: '90vw', md: '96', lg: 'xl' }}
-    w="full"
-  >
-    <Image
-      src={image}
-      alt={title}
-      fit="cover"
-      bg="gray.100"
-      loading="lazy"
-      roundedTop="lg"
-      h={{ base: 80, lg: 'sm' }}
-    />
-    <Flex p="3" align="center" gap={4}>
-      <Avatar boxSize={10} src={avatarImage} />
-      <Flex direction="column" justify="space-between" fontWeight="semibold">
-        <chakra.span>{title}</chakra.span>
-        <chakra.span color="blue">{username}</chakra.span>
+  return (
+    <Flex
+      alignSelf="center"
+      direction="column"
+      shadow="lg"
+      rounded="lg"
+      bg="white"
+      color="black"
+      cursor="pointer"
+      _hover={{ shadow: '2xl' }}
+      maxW={{ base: '90vw', md: '96', lg: 'xl' }}
+      w="full"
+    >
+      <Image
+        src={image}
+        alt={title}
+        fit="cover"
+        bg="gray.100"
+        loading="lazy"
+        roundedTop="lg"
+        h={{ base: 80, lg: 'sm' }}
+      />
+      <Flex p="3" align="center" gap={4}>
+        <Avatar boxSize={10} src={avatarImage} />
+        <Flex direction="column" justify="space-between" fontWeight="semibold">
+          <chakra.span>{title}</chakra.span>
+          <chakra.span color="blue">{username}</chakra.span>
+        </Flex>
       </Flex>
     </Flex>
-  </Flex>
-)
+  )
+}
 
 export const Hero = () => (
   <Flex pos="relative" direction="column">
@@ -84,12 +82,7 @@ export const Hero = () => (
           </LinkButton>
         </ButtonGroup>
       </Flex>
-      <HeroCard
-        image="https://lh3.googleusercontent.com/uBIIhl5iCZViJ133SnvHJg7aQdF2Qa-qJIoezA6sevODQXSx2igYea8jC_adwYtGbppFFdNVg8oVbwLsMBfO-SPKTJU7zjUGajRQ=s550"
-        avatarImage="https://lh3.googleusercontent.com/wgcZwtqicGBzmbt21J4cEMNg_64kFwwgHLB703Ma1_TgNpDZPiJzTuYgZBP_5NVqOVQuhEHW-0ft3uRROmeyPcSMKgSj-JFuSFy1=s80"
-        username="kesar.eth"
-        title="Framework Ventures"
-      />
+      <HeroCard />
     </Flex>
     <LinkButton
       href="/static/about"

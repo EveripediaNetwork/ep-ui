@@ -61,6 +61,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.300',
       _dark: 'gray.600',
     },
+    pageBorderColor: {
+      default: 'gray.300',
+      _dark: 'gray.600',
+    },
     borderColorHover: {
       default: 'gray.400',
       _dark: 'gray.700',

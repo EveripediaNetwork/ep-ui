@@ -1,4 +1,4 @@
-import React, { memo, RefObject } from 'react'
+import React, { memo, RefObject, useState } from 'react'
 import {
   Box,
   Divider,
@@ -16,8 +16,10 @@ import {
   Image,
   MenuList,
   MenuItem,
+  Spinner,
+  createStandaloneToast,
 } from '@chakra-ui/react'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import {
   RiArrowLeftSLine,
@@ -29,6 +31,25 @@ import shortenAccount from '@/utils/shortenAccount'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { fetchWalletBalance } from '@/utils/fetchWalletBalance'
+import config from '@/config'
+import { useDispatch } from 'react-redux'
+import {
+  setStateToDefault,
+  updateWalletDetails,
+} from '@/store/slices/user-slice'
+import { ToastDataType } from '@/types/ToastDataType'
+import chakraTheme from '@/theme'
+import { removeStateFromStorage } from '@/utils/browserStorage'
+
+const toastProperties: ToastDataType = {
+  description: 'Account successfully refreshed',
+  status: 'success',
+  duration: 4000,
+  isClosable: true,
+  position: 'bottom-right',
+  variant: 'left-accent',
+}
 
 type WalletDrawerType = {
   isOpen: boolean
@@ -46,10 +67,41 @@ const WalletDrawer = ({
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true,
   })
+  const [accountRefreshLoading, setAccountRefreshLoader] =
+    useState<boolean>(false)
+  const toast = createStandaloneToast({ theme: chakraTheme })
+  const [, getBalance] = useBalance()
+  const address = accountData ? accountData.address : null
+  const dispatch = useDispatch()
 
   const handleNavigation = () => {
     onClose()
     setHamburger(true)
+  }
+
+  const handleAccountRefresh = () => {
+    if (address) {
+      setAccountRefreshLoader(true)
+      fetchWalletBalance(getBalance, [
+        {
+          addressOrName: address,
+          token: config.iqAddress,
+        },
+        {
+          addressOrName: address,
+        },
+      ]).then(response => {
+        dispatch(updateWalletDetails(response))
+        setAccountRefreshLoader(false)
+        toast(toastProperties)
+      })
+    }
+  }
+
+  const handleLogOut = () => {
+    disconnect()
+    dispatch(setStateToDefault())
+    removeStateFromStorage()
   }
 
   return (
@@ -100,18 +152,26 @@ const WalletDrawer = ({
                     </MenuItem>
                     <Divider />
                     <MenuItem
-                      onClick={disconnect}
+                      onClick={handleAccountRefresh}
+                      closeOnSelect={false}
+                      py={3}
+                      icon={<RiRefreshLine size={25} />}
+                    >
+                      <Flex>
+                        <Text flex="1" fontSize="small" fontWeight="bold">
+                          Refresh
+                        </Text>
+                        {accountRefreshLoading && <Spinner size="sm" />}
+                      </Flex>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      onClick={handleLogOut}
                       py={3}
                       icon={<RiLogoutBoxRLine size={25} />}
                     >
                       <Text fontSize="small" fontWeight="bold">
                         Logout
-                      </Text>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem py={3} icon={<RiRefreshLine size={25} />}>
-                      <Text fontSize="small" fontWeight="bold">
-                        Refresh
                       </Text>
                     </MenuItem>
                   </MenuList>

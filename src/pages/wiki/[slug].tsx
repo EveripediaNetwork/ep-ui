@@ -6,7 +6,8 @@ import {
   getWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
-import wrapper from '@/store/store'
+import { store } from '@/store/store'
+import { GetServerSideProps } from 'next'
 import WikiPage from '@/components/Wiki/WikiPage/WikiPage'
 
 const Wiki = () => {
@@ -27,19 +28,15 @@ const Wiki = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  store => async context => {
-    const slug = context.params?.slug
-    if (typeof slug === 'string') {
-      store.dispatch(getWiki.initiate(slug))
-    }
-
-    await Promise.all(getRunningOperationPromises())
-
-    return {
-      props: {},
-    }
-  },
-)
+export const getServerSideProps: GetServerSideProps = async context => {
+  const slug = context.params?.slug
+  if (typeof slug === 'string') {
+    store.dispatch(getWiki.initiate(slug))
+  }
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
+}
 
 export default Wiki

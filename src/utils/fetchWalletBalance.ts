@@ -4,6 +4,7 @@ import {
   ParamsType,
   ErrorType,
   TokenDetailsType,
+  ConvertedBalanceType,
 } from '@/types/WalletBalanceType'
 
 export const fetchWalletBalance = async (
@@ -14,8 +15,15 @@ export const fetchWalletBalance = async (
   arrayOfAddresses.forEach(addr => {
     results.push(getBalance(addr))
   })
-
-  return Promise.all(results)
+  const response = await Promise.all(results)
+  const convertedResult: ConvertedBalanceType[] = response.map(res => ({
+    data: {
+      formatted: res.data?.formatted,
+      symbol: res.data?.symbol,
+    },
+    error: res.error,
+  }))
+  return convertedResult
 }
 
 const fetchRate = async (tokenName: string) => {
@@ -26,7 +34,7 @@ const fetchRate = async (tokenName: string) => {
 }
 
 export const fetchRateAndCalculateTotalBalance = async (
-  walletDetails: (BalanceType | ErrorType)[],
+  walletDetails: ConvertedBalanceType[],
 ) => {
   const prices = walletDetails.map(async wallet => {
     try {
@@ -40,8 +48,7 @@ export const fetchRateAndCalculateTotalBalance = async (
         }
       }
     } catch (err) {
-      // eslint-disable-next-line
-      console.error(err)
+      return null
     }
     return null
   })

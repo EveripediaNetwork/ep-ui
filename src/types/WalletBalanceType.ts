@@ -6,7 +6,15 @@ export type BalanceType = {
     symbol: string
     value: BigNumber
   }
-  error: undefined
+  error: Error | undefined
+}
+
+export type ConvertedBalanceType = {
+  data?: {
+    formatted: string | undefined
+    symbol: string | undefined
+  }
+  error: Error | undefined
 }
 
 export type ErrorType = {
