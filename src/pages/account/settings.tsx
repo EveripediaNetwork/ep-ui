@@ -17,7 +17,13 @@ const Settings = () => {
 
   return (
     <HStack bgColor="pageBg" align="flex-start" my={8} mt={-8} mb={-8} pb={8}>
-      <Box p={12} borderRightWidth="1px" borderColor="borderColor" pr={8}>
+      <Box
+        display={{ base: 'none', lg: 'block' }}
+        p={{ base: 8, lg: 12 }}
+        borderRightWidth="1px"
+        borderColor="borderColor"
+        pr={8}
+      >
         <Text
           fontSize="sm"
           letterSpacing="wide"
@@ -54,7 +60,12 @@ const Settings = () => {
           />
         </VStack>
       </Box>
-      <VStack p={12} pt={'24'} spacing={8} align="left">
+      <VStack
+        p={{ base: 4, lg: 12 }}
+        pt={{ base: 14, lg: 24 }}
+        spacing={8}
+        align="left"
+      >
         <Heading textTransform="capitalize">{tab} Settings</Heading>
         {tab === 'profile' && <ProfileSettings />}
         {tab === 'notifications' && <NotificationSettings />}

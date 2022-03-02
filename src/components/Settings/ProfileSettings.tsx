@@ -1,7 +1,5 @@
 import React from 'react'
 
-const ProfileSettings = () => {
-  return <div>ProfileSettings</div>
-}
+const ProfileSettings = () => <div>ProfileSettings</div>
 
 export default ProfileSettings
