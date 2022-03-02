@@ -11,10 +11,10 @@ export const loadState = () => {
 }
 
 export function saveState(state: any) {
-    if (typeof window !== "undefined") {
-        const serializedState = JSON.stringify(state)
-        localStorage.setItem(storageKey, serializedState)
-    }
+  if (typeof window !== 'undefined') {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem(storageKey, serializedState)
+  }
 }
 
 export function removeStateFromStorage() {
