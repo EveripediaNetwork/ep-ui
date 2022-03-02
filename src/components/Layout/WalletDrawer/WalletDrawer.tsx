@@ -34,6 +34,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { fetchWalletBalance } from '@/utils/fetchWalletBalance'
 import config from '@/config'
 import { useDispatch } from 'react-redux'
+
 import {
   setStateToDefault,
   updateWalletDetails,
@@ -41,6 +42,7 @@ import {
 import { ToastDataType } from '@/types/ToastDataType'
 import chakraTheme from '@/theme'
 import { removeStateFromStorage } from '@/utils/browserStorage'
+import AddNetworkDetails from './AddNetworkDetails'
 
 const toastProperties: ToastDataType = {
   description: 'Account successfully refreshed',
@@ -190,6 +192,9 @@ const WalletDrawer = ({
         <Divider />
         <DrawerBody shadow="sm">
           <Connectors />
+          <Box mt="5">
+            <AddNetworkDetails />
+          </Box>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
