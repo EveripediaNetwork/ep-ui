@@ -8,11 +8,7 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react'
-import {
-  RiFolder3Fill,
-  RiTranslate2,
-  RiSurveyFill,
-} from 'react-icons/ri'
+import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'

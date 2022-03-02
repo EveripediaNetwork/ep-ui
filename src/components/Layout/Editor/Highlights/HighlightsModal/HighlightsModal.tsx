@@ -11,11 +11,7 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import {
-  RiFolder3Fill,
-  RiTranslate2,
-  RiSurveyFill,
-} from 'react-icons/ri'
+import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
