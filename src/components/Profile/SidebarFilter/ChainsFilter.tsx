@@ -31,9 +31,9 @@ const CHAINS = [
   },
 ]
 
-type CollectionFilterItemProps = UseCheckboxProps
+type ChainFilterItemProps = UseCheckboxProps
 
-const CollectionFilterItem = (props: CollectionFilterItemProps) => {
+const ChainFilterItem = (props: ChainFilterItemProps) => {
   const { value } = props
   const { state, getInputProps, getLabelProps, htmlProps } = useCheckbox(props)
 
@@ -82,7 +82,7 @@ export const ChainsFilter = () => {
       <AccordionPanel>
         <List mt="4" h="72" overflowY="scroll">
           {CHAINS.map((chain, cid) => (
-            <CollectionFilterItem
+            <ChainFilterItem
               key={cid}
               {...getCheckboxProps({ value: chain.name })}
             />
