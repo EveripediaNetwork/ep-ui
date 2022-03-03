@@ -19,10 +19,10 @@ import axios from 'axios'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
-import { getAccount } from '@/utils/getAccount'
 import { Modal } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { WikiAbi } from '../abi/Wiki.abi'
+import shortenAccount from '@/utils/shortenAccount'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -112,7 +112,8 @@ const CreateWiki = () => {
   }
 
   const saveOnIpfs = async () => {
-    setSubmittingWiki(true)
+    if(accountData){
+      setSubmittingWiki(true)
     const imageHash = await saveImage()
 
     let tmp = { ...wiki }
@@ -124,7 +125,7 @@ const CreateWiki = () => {
         ...tmp.content,
         content: String(md),
         user: {
-          id: getAccount(accountData),
+          id: accountData.ens? accountData.ens.name :  shortenAccount(accountData.address),
         },
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       },
@@ -135,6 +136,7 @@ const CreateWiki = () => {
     } = await axios.post('/api/ipfs', tmp)
 
     if (ipfs) saveHashInTheBlockchain(ipfs)
+    }
   }
 
   const disableSaveButton = () =>
@@ -192,13 +194,13 @@ const CreateWiki = () => {
             </Alert>
           )}
           <Button
-            isLoading={submittingWiki}
-            loadingText="Loading"
-            disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
-          >
-            Save
-          </Button>
+              isLoading={submittingWiki}
+              loadingText="Loading"
+              disabled={disableSaveButton()}
+              onClick={saveOnIpfs}
+            >
+              Save
+            </Button>
         </Flex>
       </GridItem>
       <Modal
