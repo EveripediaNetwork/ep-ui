@@ -5,8 +5,6 @@ import axios from 'axios'
 import Image from 'next/image'
 import buffer from 'buffer'
 
-
-
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
   setImage: (f: string | ArrayBuffer | null) => void
@@ -46,7 +44,7 @@ const ImageInput = ({
           alignItems="center"
           gap={4}
         >
-          <Image src={imgSrc} alt="input"/>
+          <Image src={imgSrc} alt="input" />
           <Button
             w="25%"
             shadow="md"

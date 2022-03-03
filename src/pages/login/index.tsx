@@ -16,7 +16,7 @@ const Login = () => {
         router.push('/')
       }
     }
-  }, [user])
+  }, [user, router])
 
   return (
     <Container centerContent mt="8" mb="24">
