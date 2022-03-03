@@ -167,7 +167,7 @@ const CreateWiki = () => {
           <Highlights />
         </Center>
       </GridItem>
-      <GridItem rowSpan={1} colSpan={3}>
+      <GridItem mt="3" rowSpan={1} colSpan={3}>
         <Flex direction="column" justifyContent="center" alignItems="center">
           {txError.opened && (
             <Alert status="error" maxW="md" mb="3">
@@ -193,7 +193,7 @@ const CreateWiki = () => {
             disabled={disableSaveButton()}
             onClick={saveOnIpfs}
           >
-            Save
+            Publish Wiki
           </Button>
         </Flex>
       </GridItem>
