@@ -2,7 +2,10 @@ import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input } from '@chakra-ui/react'
 import { RiCloseLine } from 'react-icons/ri'
 import axios from 'axios'
+import Image from 'next/image'
 import buffer from 'buffer'
+
+
 
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
@@ -43,7 +46,7 @@ const ImageInput = ({
           alignItems="center"
           gap={4}
         >
-          <img src={imgSrc} alt="input" />
+          <Image src={imgSrc} alt="input"/>
           <Button
             w="25%"
             shadow="md"
