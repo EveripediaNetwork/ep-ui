@@ -22,7 +22,8 @@ import config from '@/config'
 import { getAccount } from '@/utils/getAccount'
 import { Modal } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
-import { WikiAbi } from '../abi/Wiki.abi'
+import { WikiAbi } from '../../abi/Wiki.abi'
+import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -234,4 +235,4 @@ const CreateWiki = () => {
   )
 }
 
-export default CreateWiki
+export default authenticatedRoute(CreateWiki)
