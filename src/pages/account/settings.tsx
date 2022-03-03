@@ -1,9 +1,11 @@
+import React from 'react'
+import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import NotificationSettings from '@/components/Settings/NotificationSettings'
 import ProfileSettings from '@/components/Settings/ProfileSettings'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
-import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
-import React from 'react'
+import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+
 import {
   FaBell,
   FaPlusSquare,
@@ -16,7 +18,7 @@ const Settings = () => {
   const { tab } = query
 
   return (
-    <HStack bgColor="pageBg" align="flex-start" my={8} mt={-8} mb={-8} pb={8}>
+    <HStack bgColor="pageBg" alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
       <Box
         display={{ base: 'none', lg: 'block' }}
         p={{ base: 8, lg: 12 }}
@@ -63,14 +65,18 @@ const Settings = () => {
       <VStack
         p={{ base: 4, lg: 12 }}
         pt={{ base: 14, lg: 24 }}
+        w="100%"
         spacing={8}
         align="left"
       >
-        <Heading textTransform="capitalize">{tab} Settings</Heading>
-        {tab === 'profile' && <ProfileSettings />}
+        <Heading textTransform="capitalize">
+          {tab || 'Profile'} Settings
+        </Heading>
+        {(tab === 'profile' || !tab) && <ProfileSettings />}
         {tab === 'notifications' && <NotificationSettings />}
       </VStack>
     </HStack>
   )
 }
-export default Settings
+
+export default authenticatedRoute(Settings)
