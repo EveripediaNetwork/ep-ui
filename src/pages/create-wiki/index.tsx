@@ -23,9 +23,9 @@ import { getAccount } from '@/utils/getAccount'
 import { Modal } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
-import { WikiAbi } from '../../abi/Wiki.abi'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
+import { WikiAbi } from '../../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
