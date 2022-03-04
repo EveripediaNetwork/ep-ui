@@ -1,12 +1,8 @@
 import React, { memo, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 
-/* eslint-disable-next-line import/no-extraneous-dependencies */
-import '@toast-ui/editor/dist/i18n/es-es'
-import '@toast-ui/editor/dist/i18n/zh-cn'
-import '@toast-ui/editor/dist/i18n/ko-kr'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import '@toast-ui/editor/dist/toastui-editor.css'
-/* eslint-disable-next-line import/no-extraneous-dependencies */
 
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 
