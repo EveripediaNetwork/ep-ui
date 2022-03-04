@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
-import { Box, Select, useColorMode } from '@chakra-ui/react'
+import React, { memo, useRef } from 'react'
+import { Box, useColorMode } from '@chakra-ui/react'
 
 /* eslint-disable-next-line import/no-extraneous-dependencies */
 import '@toast-ui/editor/dist/i18n/es-es'
@@ -17,36 +17,19 @@ type EditorType = {
 
 const Editor = ({ onChange, initialValue }: EditorType) => {
   const { colorMode } = useColorMode()
-  const [language, setLanguage] = useState('en-US')
-  const editorRef = useRef(null)
-
-  useEffect(() => {
-    if (editorRef && editorRef.current !== null) {
-      ;(editorRef.current as any).getInstance().i18n.setCode(language)
-    }
-  }, [language])
+  const editorRef = useRef<ToastUIEditor>(null)
 
   return (
     <Box m={0} w="100%" h="100%">
-      <Select
-        maxW="30%"
-        mb="3"
-        onChange={event => setLanguage(event.target.value)}
-      >
-        <option value="en-US">English</option>
-        <option value="es-ES">Español</option>
-        <option value="ko-KR">Korean</option>
-        <option value="zh-CN">Chinese</option>
-      </Select>
       <ToastUIEditor
         height="100%"
-        language={language}
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         initialValue={initialValue}
         ref={editorRef}
-        onChange={() =>
-          onChange((editorRef.current as any).getInstance().getMarkdown())
-        }
+        onChange={() => {
+          if (editorRef.current)
+            onChange(editorRef.current.getInstance().getMarkdown())
+        }}
       />
     </Box>
   )
