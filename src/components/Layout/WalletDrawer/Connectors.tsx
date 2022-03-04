@@ -45,7 +45,7 @@ const Connectors = () => {
     useState<boolean>(true)
 
   const retrieveWalletBalance = () => {
-    if(address){
+    if (address) {
       const payload = {
         address,
         connector: undefined,
@@ -70,7 +70,7 @@ const Connectors = () => {
     if (address && !walletDetails) {
       retrieveWalletBalance()
     }
-  }, [address])
+  }, [address, retrieveWalletBalance, walletDetails])
 
   useEffect(() => {
     if (walletDetails) {
