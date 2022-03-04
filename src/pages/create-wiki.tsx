@@ -144,7 +144,7 @@ const CreateWiki = () => {
   const disableSaveButton = () =>
     wiki.content.images.length === 0 || submittingWiki || !accountData?.address
 
-  const handleOnEditorChanges = (val: string|undefined) => {
+  const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
   }
 
