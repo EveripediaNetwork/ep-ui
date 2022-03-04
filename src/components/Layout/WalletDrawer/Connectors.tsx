@@ -44,30 +44,33 @@ const Connectors = () => {
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
 
+  const retrieveWalletBalance = () => {
+    if(address){
+      const payload = {
+        address,
+        connector: undefined,
+        ens: accountData?.ens,
+      }
+      dispatch(updateUserDetails(payload))
+      fetchWalletBalance(getBalance, [
+        {
+          addressOrName: address,
+          token: config.iqAddress,
+        },
+        {
+          addressOrName: address,
+        },
+      ]).then(response => {
+        dispatch(updateWalletDetails(response))
+      })
+    }
+  }
+
   useEffect(() => {
     if (address && !walletDetails) {
-      const retrieveWalletBalance = () => {
-        const payload = {
-          address,
-          connector: undefined,
-          ens: accountData?.ens,
-        }
-        dispatch(updateUserDetails(payload))
-        fetchWalletBalance(getBalance, [
-          {
-            addressOrName: address,
-            token: config.iqAddress,
-          },
-          {
-            addressOrName: address,
-          },
-        ]).then(response => {
-          dispatch(updateWalletDetails(response))
-        })
-      }
-      retrieveWalletBalance() 
+      retrieveWalletBalance()
     }
-  }, [address, getBalance, dispatch])
+  }, [address])
 
   useEffect(() => {
     if (walletDetails) {
