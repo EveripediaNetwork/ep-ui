@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useMemo, useState } from 'react'
 import {
   Flex,
   Text,
@@ -47,11 +47,13 @@ const Highlights = () => {
     })
   }
 
-  const dropZoneActions = {
-    setImage: handleSetImage,
-    setHideImageInput,
-    deleteImage: handleDeleteImage,
-  }
+  const dropZoneActions = useMemo(()=> {
+    return {
+      setImage: handleSetImage,
+      setHideImageInput,
+      deleteImage: handleDeleteImage,
+    }
+  }, [])
 
   return (
     <Flex
