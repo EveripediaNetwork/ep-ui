@@ -6,7 +6,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 
 type EditorType = {
-  onChange: (value: string |undefined) => void
+  onChange: (value: string | undefined) => void
   initialValue: string
 }
 
