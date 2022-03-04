@@ -49,8 +49,8 @@ const Highlights = () => {
 
   const dropZoneActions = {
     setImage: handleSetImage,
-    setHideImageInput: setHideImageInput,
-    deleteImage: handleDeleteImage
+    setHideImageInput,
+    deleteImage: handleDeleteImage,
   }
 
   return (
@@ -77,9 +77,7 @@ const Highlights = () => {
       <br />
       {!hideDropzone && (
         <>
-          <Dropzone
-            dropZoneActions={dropZoneActions}
-          />
+          <Dropzone dropZoneActions={dropZoneActions} />
           <br />
         </>
       )}
