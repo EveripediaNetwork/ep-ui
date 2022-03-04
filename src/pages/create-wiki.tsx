@@ -21,8 +21,8 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
-import { WikiAbi } from '../abi/Wiki.abi'
 import shortenAccount from '@/utils/shortenAccount'
+import { WikiAbi } from '../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -112,30 +112,32 @@ const CreateWiki = () => {
   }
 
   const saveOnIpfs = async () => {
-    if(accountData){
+    if (accountData) {
       setSubmittingWiki(true)
-    const imageHash = await saveImage()
+      const imageHash = await saveImage()
 
-    let tmp = { ...wiki }
+      let tmp = { ...wiki }
 
-    tmp.id = slugify(String(wiki.content.title).toLowerCase())
-    tmp = {
-      ...tmp,
-      content: {
-        ...tmp.content,
-        content: String(md),
-        user: {
-          id: accountData.ens? accountData.ens.name :  shortenAccount(accountData.address),
+      tmp.id = slugify(String(wiki.content.title).toLowerCase())
+      tmp = {
+        ...tmp,
+        content: {
+          ...tmp.content,
+          content: String(md),
+          user: {
+            id: accountData.ens
+              ? accountData.ens.name
+              : shortenAccount(accountData.address),
+          },
+          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         },
-        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
-      },
-    }
+      }
 
-    const {
-      data: { ipfs },
-    } = await axios.post('/api/ipfs', tmp)
+      const {
+        data: { ipfs },
+      } = await axios.post('/api/ipfs', tmp)
 
-    if (ipfs) saveHashInTheBlockchain(ipfs)
+      if (ipfs) saveHashInTheBlockchain(ipfs)
     }
   }
 
@@ -194,13 +196,13 @@ const CreateWiki = () => {
             </Alert>
           )}
           <Button
-              isLoading={submittingWiki}
-              loadingText="Loading"
-              disabled={disableSaveButton()}
-              onClick={saveOnIpfs}
-            >
-              Save
-            </Button>
+            isLoading={submittingWiki}
+            loadingText="Loading"
+            disabled={disableSaveButton()}
+            onClick={saveOnIpfs}
+          >
+            Save
+          </Button>
         </Flex>
       </GridItem>
       <Modal

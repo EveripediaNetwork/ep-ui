@@ -46,25 +46,28 @@ const Connectors = () => {
 
   useEffect(() => {
     if (address && !walletDetails) {
-      const payload = {
-        address,
-        connector: undefined,
-        ens: accountData?.ens,
+      const retrieveWalletBalance = () => {
+        const payload = {
+          address,
+          connector: undefined,
+          ens: accountData?.ens,
+        }
+        dispatch(updateUserDetails(payload))
+        fetchWalletBalance(getBalance, [
+          {
+            addressOrName: address,
+            token: config.iqAddress,
+          },
+          {
+            addressOrName: address,
+          },
+        ]).then(response => {
+          dispatch(updateWalletDetails(response))
+        })
       }
-      dispatch(updateUserDetails(payload))
-      fetchWalletBalance(getBalance, [
-        {
-          addressOrName: address,
-          token: config.iqAddress,
-        },
-        {
-          addressOrName: address,
-        },
-      ]).then(response => {
-        dispatch(updateWalletDetails(response))
-      })
+      retrieveWalletBalance() 
     }
-  }, [address, getBalance])
+  }, [address, getBalance, dispatch])
 
   useEffect(() => {
     if (walletDetails) {
