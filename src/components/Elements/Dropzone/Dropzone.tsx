@@ -19,10 +19,12 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState([])
   const [{ data: accountData }] = useAccount()
 
-  // const { setHideImageInput, setImage, deleteImage } = dropZoneActions
+  const { setHideImageInput, setImage, deleteImage } = dropZoneActions
 
   const onDrop = useCallback(
+
     acceptedFiles => {
+
       setPaths(acceptedFiles.map((file: File) => URL.createObjectURL(file)))
 
       acceptedFiles.forEach((f: File) => {
@@ -30,12 +32,12 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
         reader.onload = () => {
           const binaryStr = new buffer.Buffer(reader.result as Buffer)
-          dropZoneActions.setImage(binaryStr)
+          setImage(binaryStr)
         }
 
         reader.readAsArrayBuffer(f)
       })
-      dropZoneActions.setHideImageInput(true)
+      setHideImageInput(true)
     },
     [setPaths, dropZoneActions],
   )
@@ -94,8 +96,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             bg="red.400"
             onClick={() => {
               setPaths([])
-              dropZoneActions.setHideImageInput(false)
-              dropZoneActions.deleteImage()
+              setHideImageInput(false)
+              deleteImage()
             }}
           >
             <RiCloseLine />
