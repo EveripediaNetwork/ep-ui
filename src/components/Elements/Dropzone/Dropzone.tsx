@@ -22,9 +22,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const { setHideImageInput, setImage, deleteImage } = dropZoneActions
 
   const onDrop = useCallback(
-
     acceptedFiles => {
-
       setPaths(acceptedFiles.map((file: File) => URL.createObjectURL(file)))
 
       acceptedFiles.forEach((f: File) => {
@@ -39,7 +37,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
       })
       setHideImageInput(true)
     },
-    [setPaths, dropZoneActions],
+    [setPaths, setHideImageInput, setImage],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
