@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
@@ -8,18 +8,20 @@ import buffer from 'buffer'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
-  setHideImageInput: (hide: boolean) => void
-  setImage: (f: string | ArrayBuffer | null) => void
-  deleteImage: () => void
+  dropZoneActions: {
+    setHideImageInput: (hide: boolean) => void
+    setImage: (f: string | ArrayBuffer | null) => void
+    deleteImage: () => void
+  }
 }
 
 const Dropzone = ({
-  setHideImageInput,
-  setImage,
-  deleteImage,
+  dropZoneActions
 }: DropzoneType) => {
   const [paths, setPaths] = useState([])
   const [{ data: accountData }] = useAccount()
+
+  const {setHideImageInput, setImage, deleteImage} = dropZoneActions
 
   const onDrop = useCallback(
     acceptedFiles => {

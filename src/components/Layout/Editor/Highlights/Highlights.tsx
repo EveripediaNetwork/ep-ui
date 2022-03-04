@@ -47,6 +47,12 @@ const Highlights = () => {
     })
   }
 
+  const dropZoneActions = {
+    setImage: handleSetImage,
+    setHideImageInput: setHideImageInput,
+    deleteImage: handleDeleteImage
+  }
+
   return (
     <Flex
       direction="column"
@@ -72,9 +78,7 @@ const Highlights = () => {
       {!hideDropzone && (
         <>
           <Dropzone
-            setImage={handleSetImage}
-            setHideImageInput={setHideImageInput}
-            deleteImage={handleDeleteImage}
+            dropZoneActions={dropZoneActions}
           />
           <br />
         </>
