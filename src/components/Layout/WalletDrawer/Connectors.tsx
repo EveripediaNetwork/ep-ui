@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useConnect, useAccount, useBalance } from 'wagmi'
 import {
   Box,
@@ -44,27 +44,27 @@ const Connectors = () => {
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
 
-  const retrieveWalletBalance = () => {
-    if (address) {
-      const payload = {
-        address,
-        connector: undefined,
-        ens: accountData?.ens,
+  const retrieveWalletBalance = useCallback(()=>{
+      if (address) {
+        const payload = {
+          address,
+          connector: undefined,
+          ens: accountData?.ens,
+        }
+        dispatch(updateUserDetails(payload))
+        fetchWalletBalance(getBalance, [
+          {
+            addressOrName: address,
+            token: config.iqAddress,
+          },
+          {
+            addressOrName: address,
+          },
+        ]).then(response => {
+          dispatch(updateWalletDetails(response))
+        })
       }
-      dispatch(updateUserDetails(payload))
-      fetchWalletBalance(getBalance, [
-        {
-          addressOrName: address,
-          token: config.iqAddress,
-        },
-        {
-          addressOrName: address,
-        },
-      ]).then(response => {
-        dispatch(updateWalletDetails(response))
-      })
-    }
-  }
+  }, [])
 
   useEffect(() => {
     if (address && !walletDetails) {
