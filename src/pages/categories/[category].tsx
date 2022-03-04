@@ -15,7 +15,7 @@ const Category: NextPage = () => {
   return (
     <Box mt="-12" bgColor="pageBg" pb={12}>
       <Image
-        priority="true"
+        priority
         src={categoryData?.imageHero || '/images/categories-backdrop.png'}
         height="250px"
       />
@@ -49,7 +49,7 @@ const Category: NextPage = () => {
           my={12}
           gap={8}
         >
-          {[...Array(6).keys()].map(i => (
+          {Array.from(new Array(6), (_x, i) => i).map(i => (
             <Box
               key={i}
               h="250px"
