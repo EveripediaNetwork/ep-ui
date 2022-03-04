@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CheckIcon } from '@chakra-ui/icons'
+import { CheckIcon, SettingsIcon } from '@chakra-ui/icons'
 import {
   Flex,
   chakra,
@@ -8,6 +8,9 @@ import {
   Button,
   Text,
   useClipboard,
+  ButtonGroup,
+  Tooltip,
+  TooltipProps,
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { Image } from '@/components/Elements/Image/Image'
@@ -22,6 +25,17 @@ export const UserDetails = (props: UserDetailsProps) => {
   const { headerIsSticky } = useProfileContext()
   const { hasCopied, onCopy } = useClipboard(ethAddress)
   const isSticky = headerIsSticky && hide
+
+  const tooltipProps: Partial<TooltipProps> = {
+    placement: 'top',
+    hasArrow: true,
+    rounded: 'md',
+    fontWeight: 'semibold',
+    fontSize: 'md',
+    px: 3,
+    py: 2,
+  }
+
   return (
     <>
       <Flex align="center" justify="space-between" w="full" px="6">
@@ -54,16 +68,27 @@ export const UserDetails = (props: UserDetailsProps) => {
           </chakra.span>
         </Flex>
         <chakra.span display="flex" flex="1">
-          <IconButton
-            ml="auto"
-            boxSize="12"
-            aria-label="Share"
-            my="6"
-            icon={<FaShareAlt />}
-            variant="outline"
-            rounded="xl"
-            _hover={{ shadow: 'xl' }}
-          />
+          <ButtonGroup isAttached variant="outline" ml="auto" my="6">
+            <Tooltip label="Share" {...tooltipProps}>
+              <IconButton
+                mr="-px"
+                boxSize="12"
+                aria-label="Share"
+                icon={<FaShareAlt />}
+                rounded="xl"
+                _hover={{ shadow: 'xl' }}
+              />
+            </Tooltip>
+            <Tooltip label="Settings" {...tooltipProps}>
+              <IconButton
+                boxSize="12"
+                aria-label="Settings"
+                icon={<SettingsIcon />}
+                rounded="xl"
+                _hover={{ shadow: 'xl' }}
+              />
+            </Tooltip>
+          </ButtonGroup>
         </chakra.span>
       </Flex>
 
