@@ -37,7 +37,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
       })
       dropZoneActions.setHideImageInput(true)
     },
-    [setPaths],
+    [setPaths, dropZoneActions],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -94,8 +94,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             bg="red.400"
             onClick={() => {
               setPaths([])
-              setHideImageInput(false)
-              deleteImage()
+              dropZoneActions.setHideImageInput(false)
+              dropZoneActions.deleteImage()
             }}
           >
             <RiCloseLine />
