@@ -6,13 +6,13 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 
 type EditorType = {
-  onChange: (value: string) => void
+  onChange: (value: string |undefined) => void
   initialValue: string
 }
 
 const Editor = ({ onChange, initialValue }: EditorType) => {
   const { colorMode } = useColorMode()
-  const editorRef = useRef(null)
+  const editorRef = useRef<ToastUIEditor>(null)
 
   return (
     <Box m={0} w="100%" h="100%">
@@ -22,7 +22,7 @@ const Editor = ({ onChange, initialValue }: EditorType) => {
         initialValue={initialValue}
         ref={editorRef}
         onChange={() =>
-          onChange((editorRef.current as any).getInstance().getMarkdown())
+          onChange(editorRef?.current?.getInstance().getMarkdown())
         }
       />
     </Box>
