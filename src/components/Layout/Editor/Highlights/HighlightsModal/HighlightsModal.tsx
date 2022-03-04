@@ -21,23 +21,11 @@ import {
   Languages,
   LanguagesISOEnum,
   MData,
+  PageTypeName,
   Wiki,
 } from '@/types/Wiki'
 import { sampleCategories } from '@/data/CategoriesData'
 import FlexRow from '../FlexRow/FlexRow'
-
-const pageTypeOptions: Array<string> = [
-  'Person',
-  'Place / Location',
-  'Organization / Company / Institution',
-  'Event',
-  'List / Ranking',
-  'Product / Merchandise',
-  'Electronics / Software',
-  'Creative Work / Art',
-  'Other',
-  'None',
-]
 
 const categoryOptions = sampleCategories.map(c => c.title)
 
@@ -148,7 +136,7 @@ const HighlightsModal = ({
           )}
           placeholder="Choose a page type"
         >
-          {pageTypeOptions.map(o => (
+          {Object.values(PageTypeName).map(o => (
             <option key={o}>{o}</option>
           ))}
         </Select>

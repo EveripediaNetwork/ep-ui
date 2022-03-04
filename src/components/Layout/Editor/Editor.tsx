@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -9,11 +9,20 @@ import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 type EditorType = {
   onChange: (value: string) => void
   initialValue: string
+  markdown: string
 }
 
-const Editor = ({ onChange, initialValue }: EditorType) => {
+const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
+
+  const callEditorMethod = () => {
+    editorRef.current?.getInstance().setMarkdown(markdown)
+  }
+
+  useEffect(() => {
+    callEditorMethod()
+  }, [markdown])
 
   return (
     <Box m={0} w="100%" h="100%">
