@@ -54,19 +54,32 @@ const ProfileSettings = () => {
                 <InputLeftElement pointerEvents="none">
                   <FaTwitter color="gray" />
                 </InputLeftElement>
-                <Input variant="flushed" placeholder="Your Twitter Handle" />
+                <Input
+                  variant="flushed"
+                  _focus={{ borderBottomColor: 'inherit' }}
+                  placeholder="Your Twitter Handle"
+                />
               </InputGroup>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaInstagram color="gray" />
                 </InputLeftElement>
-                <Input variant="flushed" placeholder="Your Instagram Handle" />
+                <Input
+                  _focus={{ borderBottomColor: 'inherit' }}
+                  variant="flushed"
+                  placeholder="Your Instagram Handle"
+                />
               </InputGroup>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaSitemap color="gray" />
                 </InputLeftElement>
-                <Input variant="flushed" placeholder="yoursite.io" />
+                <Input
+                  borderBottomWidth="0"
+                  _focus={{ borderBottomColor: 'inherit' }}
+                  variant="flushed"
+                  placeholder="yoursite.io"
+                />
               </InputGroup>
             </Box>
           </FormControl>
@@ -114,7 +127,7 @@ const ProfileSettings = () => {
           </FormControl>
         </VStack>
       </Flex>
-      <Button size="lg" width={2}>
+      <Button size="lg" width={8}>
         Save
       </Button>
     </>

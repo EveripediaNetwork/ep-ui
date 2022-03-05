@@ -27,7 +27,7 @@ export const semanticTokens: SemanticTokens = {
     },
     pageBg: {
       default: 'gray.100',
-      _dark: 'gray.700',
+      _dark: '#212836',
     },
     hoverBg: {
       default: 'gray.100',
@@ -43,7 +43,7 @@ export const semanticTokens: SemanticTokens = {
     },
     cardBg: {
       default: 'white',
-      _dark: 'gray.600',
+      _dark: 'gray.700',
     },
     carouselArrowBg: {
       default: 'white',
