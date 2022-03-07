@@ -1155,13 +1155,6 @@
     "@chakra-ui/react-utils" "1.2.3"
     "@chakra-ui/utils" "1.10.4"
 
-"@chakra-ui/anatomy@1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/anatomy/-/anatomy-1.2.5.tgz#76ab07242b8c502291641a58d7692c07d8a33278"
-  integrity sha512-MIVHl5iD+J0CYx0jsiHnHfRDzhfHTXCijbvZomyzlHI5sKe1LHE+Ry6B2wKUKkh3ICB6Dg0pL8NaFgAHMViuqw==
-  dependencies:
-    "@chakra-ui/theme-tools" "^1.3.6"
-
 "@chakra-ui/anatomy@1.3.0":
   version "1.3.0"
   resolved "https://registry.npmjs.org/@chakra-ui/anatomy/-/anatomy-1.3.0.tgz#38a40dd6f2bb076fe8bebe8fb8e4769ea005e03d"
@@ -1303,16 +1296,6 @@
     "@chakra-ui/icon" "2.0.5"
     "@chakra-ui/react-utils" "1.2.3"
     "@chakra-ui/utils" "1.10.4"
-
-"@chakra-ui/hooks@1.8.4":
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.8.4.tgz#fbfcefb9b767bcaadbd30cea76bfc6f43761e814"
-  integrity sha512-3xIsBVr1noKeG1/twHph/CU+8qJfCByd00IZ8XEAMfFQnyBXAQAhpyK2mSGYhCdsOkwPEqlPiklYMkAgW04qvQ==
-  dependencies:
-    "@chakra-ui/react-utils" "1.2.3"
-    "@chakra-ui/utils" "1.10.4"
-    compute-scroll-into-view "1.0.14"
-    copy-to-clipboard "3.3.1"
 
 "@chakra-ui/hooks@1.8.5":
   version "1.8.5"
@@ -1669,15 +1652,6 @@
     "@chakra-ui/utils" "1.10.4"
     "@ctrl/tinycolor" "^3.4.0"
 
-"@chakra-ui/theme@1.13.4":
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.13.4.tgz#05fbd52670b5b8599493f897f02eabff3e35010f"
-  integrity sha512-bU2QNi4w+zZFrjMg7X9XGwDWp5QPwyY6VFU4CdB3MdOHaAW/lTCL/BMjw9QRFr2H2q6AkEFdoLZ8H0baaPFywQ==
-  dependencies:
-    "@chakra-ui/anatomy" "1.2.5"
-    "@chakra-ui/theme-tools" "1.3.6"
-    "@chakra-ui/utils" "1.10.4"
-
 "@chakra-ui/theme@1.14.0":
   version "1.14.0"
   resolved "https://registry.npmjs.org/@chakra-ui/theme/-/theme-1.14.0.tgz#0aa1d602db8256e09b2e7f172108dea4a79748b1"
@@ -1687,7 +1661,7 @@
     "@chakra-ui/theme-tools" "1.3.6"
     "@chakra-ui/utils" "1.10.4"
 
-"@chakra-ui/toast@1.5.7":
+"@chakra-ui/toast@1.5.7", "@chakra-ui/toast@^1.5.7":
   version "1.5.7"
   resolved "https://registry.npmjs.org/@chakra-ui/toast/-/toast-1.5.7.tgz#d0ffccd13f925967353fb65a590f2ac8f88332db"
   integrity sha512-vM88vX2jTfSwOXWqcj9o9pm+msojJS0cG0Pe/wSuYP+D274SdE8oB2OFqJyijsQ7WQq/P6BIlgquzUcS4smu9A==
@@ -1696,19 +1670,6 @@
     "@chakra-ui/close-button" "1.2.7"
     "@chakra-ui/hooks" "1.8.5"
     "@chakra-ui/theme" "1.14.0"
-    "@chakra-ui/transition" "1.4.7"
-    "@chakra-ui/utils" "1.10.4"
-    "@reach/alert" "0.13.2"
-
-"@chakra-ui/toast@^1.5.6":
-  version "1.5.6"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/toast/-/toast-1.5.6.tgz#faab92e5dd6a2aa2c4083c5c0384744447daee8b"
-  integrity sha512-JzZ4wWa/iYdNss8EOYtNiGJ66YCrh9r4vUIEdh1/FE94PkVMFVDqAtSBbWDRxjiEPxpBZ8SDYL3rB/GdWYyWgg==
-  dependencies:
-    "@chakra-ui/alert" "1.3.7"
-    "@chakra-ui/close-button" "1.2.7"
-    "@chakra-ui/hooks" "1.8.4"
-    "@chakra-ui/theme" "1.13.4"
     "@chakra-ui/transition" "1.4.7"
     "@chakra-ui/utils" "1.10.4"
     "@reach/alert" "0.13.2"
