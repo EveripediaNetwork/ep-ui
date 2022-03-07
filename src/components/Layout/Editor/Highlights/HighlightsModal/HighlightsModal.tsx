@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Badge,
   Button,
-  Checkbox,
   CloseButton,
   Divider,
   Flex,
@@ -12,48 +11,23 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import {
-  RiFolder3Fill,
-  RiGobletLine,
-  RiTranslate2,
-  RiSurveyFill,
-} from 'react-icons/ri'
+import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
-  Category,
+  BaseCategory,
   Languages,
   LanguagesISOEnum,
   MData,
+  PageTypeName,
   Wiki,
 } from '@/types/Wiki'
+import { sampleCategories } from '@/data/CategoriesData'
 import FlexRow from '../FlexRow/FlexRow'
 
-const pageTypeOptions: Array<string> = [
-  'Person',
-  'Place / Location',
-  'Organization / Company / Institution',
-  'Event',
-  'List / Ranking',
-  'Product / Merchandise',
-  'Electronics / Software',
-  'Medical / Biology',
-  'Creative Work / Art',
-  'Science / Academia / Humanities',
-  'Other',
-  'None',
-]
-
-const categoryOptions: Array<string> = [
-  'NFTs',
-  'Person',
-  'Athlete',
-  'Politics',
-  'Miscellaneous',
-]
+const categoryOptions = sampleCategories.map(c => c.title)
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -100,7 +74,9 @@ const HighlightsModal = ({
   const handleAddCategory = (category: string) => {
     if (!category) return
 
-    if (!wiki.content.categories.find((c: Category) => c.title === category))
+    if (
+      !wiki.content.categories.find((c: BaseCategory) => c.title === category)
+    )
       setWiki((prev: Wiki) => ({
         ...prev,
         content: {
@@ -120,7 +96,7 @@ const HighlightsModal = ({
       content: {
         ...wiki.content,
         categories: wiki.content.categories.filter(
-          (c: Category) => c.title !== category,
+          (c: BaseCategory) => c.title !== category,
         ),
       },
     })
@@ -147,19 +123,20 @@ const HighlightsModal = ({
         </FlexRow>
 
         <Select
-          onChange={event =>
-            handleSetWikiMetadata({
-              id: 'page-type',
-              value: event.target.value,
-            })
-          }
+          onChange={event => {
+            if (event.target.value)
+              handleSetWikiMetadata({
+                id: 'page-type',
+                value: event.target.value,
+              })
+          }}
           value={String(
             wiki.content.metadata.find((m: MData) => m.id === 'page-type')
               ?.value,
           )}
           placeholder="Choose a page type"
         >
-          {pageTypeOptions.map(o => (
+          {Object.values(PageTypeName).map(o => (
             <option key={o}>{o}</option>
           ))}
         </Select>
@@ -171,7 +148,9 @@ const HighlightsModal = ({
         </FlexRow>
 
         <Select
-          onChange={event => handleAddCategory(event.target.value)}
+          onChange={event => {
+            if (event.target.value) handleAddCategory(event.target.value)
+          }}
           placeholder="Choose categories"
         >
           {categoryOptions.map(o => (
@@ -186,7 +165,7 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {wiki.content.categories.map((c: Category) => (
+          {wiki.content.categories.map((c: BaseCategory) => (
             <Badge
               variant="outline"
               display="flex"
@@ -205,23 +184,6 @@ const HighlightsModal = ({
             </Badge>
           ))}
         </Flex>
-        <CustomDivider />
-
-        <FlexRow>
-          <RiGobletLine /> <Text>Adult Content</Text>
-        </FlexRow>
-        <Checkbox
-          defaultChecked={
-            getWikiMetadataById(currentWiki, 'adult-content')?.value === true
-          }
-          onChange={event =>
-            handleSetWikiMetadata({
-              id: 'adult-content',
-              value: event.target.checked,
-            })
-          }
-        />
-
         <CustomDivider />
 
         <FlexRow>

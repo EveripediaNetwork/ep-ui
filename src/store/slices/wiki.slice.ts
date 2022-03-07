@@ -8,14 +8,10 @@ const initialState: Wiki = {
   content: {
     title: 'Wiki title',
     content: '',
-    categories: [{ id: 'general', title: 'general category' }],
+    categories: [{ id: 'first-category', title: 'First Category' }],
     tags: [{ id: 'hello' }, { id: 'world' }],
     images: [],
     metadata: [
-      {
-        id: 'adult-content',
-        value: true,
-      },
       {
         id: 'page-type',
         value: 'Place / Location',

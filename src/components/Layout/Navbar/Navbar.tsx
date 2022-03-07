@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import {
   Box,
   Collapse,
@@ -21,11 +21,14 @@ import { NAV_ICON } from '@/data/NavItemData'
 import NavMenu from '@/components/Layout/Navbar/NavMenu'
 import { ColorModeToggle } from '@/components/Layout/Navbar/ColorModeToggle'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useRouter } from 'next/router'
 import MobileNav from './MobileNav'
 import DesktopNav from './DesktopNav'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 
 const Navbar = () => {
+  const router = useRouter()
+
   const { isOpen, onClose, onToggle } = useDisclosure()
 
   const loginButtonRef = useRef<HTMLButtonElement>(null)
@@ -44,6 +47,15 @@ const Navbar = () => {
     }
     onToggle()
   }
+
+  useEffect(() => {
+    const handleRouteChange = () => isOpen && onToggle()
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events, isOpen, onToggle])
 
   return (
     <Box
@@ -97,40 +109,40 @@ const Navbar = () => {
             <HStack
               ml={4}
               spacing={4}
-              onMouseLeave={() => setVisibleMenu(null)}
               display={{
                 base: 'none',
                 xl: 'flex',
               }}
             >
               <DesktopNav />
-              <NavMenu
-                navItem={NAV_ICON}
-                setVisibleMenu={setVisibleMenu}
-                visibleMenu={visibleMenu}
-                labelIsIcon
-                label={
-                  accountData ? (
-                    <DisplayAvatar accountData={accountData} />
-                  ) : (
-                    <Icon
-                      cursor="pointer"
-                      fontSize="3xl"
-                      color="gray.600"
-                      _dark={{ color: 'gray.200' }}
-                      fontWeight={600}
-                      as={RiAccountCircleLine}
-                      mt={2}
-                      _hover={{
-                        textDecoration: 'none',
-                        color: 'linkHoverColor',
-                      }}
-                    />
-                  )
-                }
-              >
-                <ColorModeToggle isInMobileMenu={false} />
-              </NavMenu>
+              <Box onMouseLeave={() => setVisibleMenu(null)}>
+                <NavMenu
+                  navItem={NAV_ICON}
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  label={
+                    accountData ? (
+                      <DisplayAvatar accountData={accountData} />
+                    ) : (
+                      <Icon
+                        cursor="pointer"
+                        fontSize="3xl"
+                        color="gray.600"
+                        _dark={{ color: 'gray.200' }}
+                        fontWeight={600}
+                        as={RiAccountCircleLine}
+                        mt={2}
+                        _hover={{
+                          textDecoration: 'none',
+                          color: 'linkHoverColor',
+                        }}
+                      />
+                    )
+                  }
+                >
+                  <ColorModeToggle isInMobileMenu={false} />
+                </NavMenu>
+              </Box>
               <Icon
                 color="linkColor"
                 cursor="pointer"

@@ -8,18 +8,18 @@ import buffer from 'buffer'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
-  setHideImageInput: (hide: boolean) => void
-  setImage: (f: string | ArrayBuffer | null) => void
-  deleteImage: () => void
+  dropZoneActions: {
+    setHideImageInput: (hide: boolean) => void
+    setImage: (f: string | ArrayBuffer | null) => void
+    deleteImage: () => void
+  }
 }
 
-const Dropzone = ({
-  setHideImageInput,
-  setImage,
-  deleteImage,
-}: DropzoneType) => {
+const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState([])
   const [{ data: accountData }] = useAccount()
+
+  const { setHideImageInput, setImage, deleteImage } = dropZoneActions
 
   const onDrop = useCallback(
     acceptedFiles => {
@@ -37,7 +37,7 @@ const Dropzone = ({
       })
       setHideImageInput(true)
     },
-    [setPaths],
+    [setPaths, setHideImageInput, setImage],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider } from 'wagmi'
 import { Provider as ReduxProvider } from 'react-redux'
+
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
@@ -13,6 +14,7 @@ import { debounce } from 'debounce'
 import { saveState } from '@/utils/browserStorage'
 import { store } from '@/store/store'
 import chakraTheme from '../theme'
+import './static/assets/global.css'
 import './static/assets/dark-mode.css'
 
 const App = (props: AppProps) => {

@@ -1,3 +1,4 @@
+import { styles } from '@/theme/styles'
 import { extendTheme, ThemeConfig, ColorMode } from '@chakra-ui/react'
 
 import { Dict } from '@chakra-ui/utils/src/types'
@@ -23,6 +24,7 @@ const theme: Dict = extendTheme({
   config,
   ...foundations,
   semanticTokens,
+  styles,
 })
 
 export default theme
