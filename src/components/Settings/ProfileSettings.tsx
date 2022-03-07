@@ -94,7 +94,7 @@ const ProfileSettings = () => {
     setInputBio({ ...inputBio, error: validateBio(inputBio.value) })
     setInputEmail({ ...inputEmail, error: validateEmail(inputEmail.value) })
 
-    // if any field is invalid, focus on the first one
+    // if any field is invalid, focus on the first invalid one
     if (inputUsername.error) {
       usernameRef.current?.focus()
       return
@@ -108,7 +108,22 @@ const ProfileSettings = () => {
       return
     }
 
-    // TODO: wire up the form to the backend
+    // aggregate data from all states
+    const data = {
+      username: inputUsername.value,
+      bio: inputUsername.value,
+      email: inputEmail.value,
+      link: {
+        instagram,
+        twitter,
+        website,
+      },
+      profilePicture,
+      coverPicture,
+    }
+
+    // TODO: Send the data to backend
+    console.log(data)
     toast({
       title: 'Profile Settings Saved',
       description: 'Your profile settings have been saved.',
