@@ -4,8 +4,19 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<BoxProps, 'as'> & ImageProps
 
-export const Image = ({ src, alt, ...rest }: NextChakraImageProps) => (
+export const Image = ({
+  src,
+  alt,
+  priority,
+  ...rest
+}: NextChakraImageProps) => (
   <Box {...rest} position="relative">
-    <NextImage objectFit="cover" layout="fill" src={src} alt={alt} />
+    <NextImage
+      objectFit="cover"
+      layout="fill"
+      src={src}
+      alt={alt}
+      priority={priority}
+    />
   </Box>
 )
