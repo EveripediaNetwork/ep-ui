@@ -109,39 +109,40 @@ const Navbar = () => {
             <HStack
               ml={4}
               spacing={4}
-              onMouseLeave={() => setVisibleMenu(null)}
               display={{
                 base: 'none',
                 xl: 'flex',
               }}
             >
               <DesktopNav />
-              <NavMenu
-                navItem={NAV_ICON}
-                setVisibleMenu={setVisibleMenu}
-                visibleMenu={visibleMenu}
-                label={
-                  accountData ? (
-                    <DisplayAvatar accountData={accountData} />
-                  ) : (
-                    <Icon
-                      cursor="pointer"
-                      fontSize="3xl"
-                      color="gray.600"
-                      _dark={{ color: 'gray.200' }}
-                      fontWeight={600}
-                      as={RiAccountCircleLine}
-                      mt={2}
-                      _hover={{
-                        textDecoration: 'none',
-                        color: 'linkHoverColor',
-                      }}
-                    />
-                  )
-                }
-              >
-                <ColorModeToggle isInMobileMenu={false} />
-              </NavMenu>
+              <Box onMouseLeave={() => setVisibleMenu(null)}>
+                <NavMenu
+                  navItem={NAV_ICON}
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  label={
+                    accountData ? (
+                      <DisplayAvatar accountData={accountData} />
+                    ) : (
+                      <Icon
+                        cursor="pointer"
+                        fontSize="3xl"
+                        color="gray.600"
+                        _dark={{ color: 'gray.200' }}
+                        fontWeight={600}
+                        as={RiAccountCircleLine}
+                        mt={2}
+                        _hover={{
+                          textDecoration: 'none',
+                          color: 'linkHoverColor',
+                        }}
+                      />
+                    )
+                  }
+                >
+                  <ColorModeToggle isInMobileMenu={false} />
+                </NavMenu>
+              </Box>
               <Icon
                 color="linkColor"
                 cursor="pointer"
