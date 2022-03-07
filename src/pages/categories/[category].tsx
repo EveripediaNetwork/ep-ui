@@ -49,7 +49,7 @@ const Category: NextPage = () => {
           my={12}
           gap={8}
         >
-          {Array.from(new Array(6), (_x, i) => i).map(i => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <Box
               key={i}
               h="250px"

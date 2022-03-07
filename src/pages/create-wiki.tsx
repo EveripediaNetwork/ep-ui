@@ -19,9 +19,9 @@ import axios from 'axios'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
-import { getAccount } from '@/utils/getAccount'
 import { Modal } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
+import shortenAccount from '@/utils/shortenAccount'
 import { WikiAbi } from '../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -112,35 +112,39 @@ const CreateWiki = () => {
   }
 
   const saveOnIpfs = async () => {
-    setSubmittingWiki(true)
-    const imageHash = await saveImage()
+    if (accountData) {
+      setSubmittingWiki(true)
+      const imageHash = await saveImage()
 
-    let tmp = { ...wiki }
+      let tmp = { ...wiki }
 
-    tmp.id = slugify(String(wiki.content.title).toLowerCase())
-    tmp = {
-      ...tmp,
-      content: {
-        ...tmp.content,
-        content: String(md),
-        user: {
-          id: getAccount(accountData),
+      tmp.id = slugify(String(wiki.content.title).toLowerCase())
+      tmp = {
+        ...tmp,
+        content: {
+          ...tmp.content,
+          content: String(md),
+          user: {
+            id: accountData.ens
+              ? accountData.ens.name
+              : shortenAccount(accountData.address),
+          },
+          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         },
-        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
-      },
+      }
+
+      const {
+        data: { ipfs },
+      } = await axios.post('/api/ipfs', tmp)
+
+      if (ipfs) saveHashInTheBlockchain(ipfs)
     }
-
-    const {
-      data: { ipfs },
-    } = await axios.post('/api/ipfs', tmp)
-
-    if (ipfs) saveHashInTheBlockchain(ipfs)
   }
 
   const disableSaveButton = () =>
     wiki.content.images.length === 0 || submittingWiki || !accountData?.address
 
-  const handleOnEditorChanges = (val: string) => {
+  const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
   }
 

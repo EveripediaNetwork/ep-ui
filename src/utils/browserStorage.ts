@@ -1,3 +1,5 @@
+import type { RootState } from '@/store/store'
+
 const storageKey = 'serializedState'
 
 export const loadState = () => {
@@ -10,11 +12,11 @@ export const loadState = () => {
   }
 }
 
-export function saveState(state: any) {
-    if (typeof window !== "undefined") {
-        const serializedState = JSON.stringify(state)
-        localStorage.setItem(storageKey, serializedState)
-    }
+export function saveState(state: RootState) {
+  if (typeof window !== 'undefined') {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem(storageKey, serializedState)
+  }
 }
 
 export function removeStateFromStorage() {
