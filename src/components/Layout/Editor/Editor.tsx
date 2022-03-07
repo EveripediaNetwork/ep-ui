@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo, useCallback, useEffect, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -16,9 +16,9 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
 
-  const callEditorMethod = () => {
+  const callEditorMethod = useCallback(() => {
     editorRef.current?.getInstance().setMarkdown(markdown)
-  }
+  }, [editorRef])
 
   useEffect(() => {
     callEditorMethod()
