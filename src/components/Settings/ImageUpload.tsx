@@ -3,32 +3,33 @@ import { Image, NextChakraImageProps } from '../Elements/Image/Image'
 
 interface ImageUploadProps extends NextChakraImageProps {
   defaultImage: string
+  setSelectedImage: (file: File) => void
+  selectedImage: File | null
 }
 
 const ImageUpload = ({
   defaultImage,
+  setSelectedImage,
+  selectedImage,
   ...rest
 }: Omit<ImageUploadProps, 'src'>) => {
   const imageRef = useRef<HTMLInputElement | null>(null)
   const [defaultUserImage, setDefaultUserImage] = useState(defaultImage)
 
-  // On each file selection update the default image
-  const [selectedFile, setSelectedFile] = useState()
-
   useEffect(() => {
-    if (selectedFile) {
-      const objectURL = URL.createObjectURL(selectedFile)
+    if (selectedImage) {
+      const objectURL = URL.createObjectURL(selectedImage)
       setDefaultUserImage(objectURL)
       // Clean up the selection to avoid memory leak
       return () => URL.revokeObjectURL(objectURL)
     }
     return () => {}
-  }, [selectedFile])
+  }, [selectedImage])
 
   // On each change let user have access to a selected file
   const handleChange = (event: any) => {
     const file = event.target.files[0]
-    setSelectedFile(file)
+    setSelectedImage(file)
   }
 
   return (

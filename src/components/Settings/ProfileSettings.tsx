@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 import {
   Flex,
   Input,
   Textarea,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   InputLeftElement,
   InputRightElement,
   InputGroup,
@@ -19,6 +20,20 @@ import { useAccount } from 'wagmi'
 import ImageUpload from './ImageUpload'
 
 const ProfileSettings = () => {
+  interface strEntry {
+    value: string
+    error: string
+  }
+  const strInitState: strEntry = { value: '', error: '' }
+  const [username, setUsername] = React.useState<strEntry>(strInitState)
+  const [bio, setBio] = React.useState<strEntry>(strInitState)
+  const [email, setEmail] = React.useState<strEntry>(strInitState)
+  const [website, setWebsite] = React.useState<string>('')
+  const [instagram, setInstagram] = React.useState<string>('')
+  const [twitter, setTwitter] = React.useState<string>('')
+  const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
+  const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
+
   const [{ data: accountData }] = useAccount({
     fetchEns: true,
   })
@@ -30,46 +45,178 @@ const ProfileSettings = () => {
   const clipboard = useClipboard(walletAddress || '')
   const toast = useToast()
 
+  const bioRef = React.useRef<HTMLTextAreaElement>(null)
+  const usernameRef = React.useRef<HTMLInputElement>(null)
+  const emailRef = React.useRef<HTMLInputElement>(null)
+
+  // Validation Functions
+  const validateUsername = (username: string): string => {
+    if (!username) return 'Username is required'
+    if (username.length < 3) {
+      return 'Username must be at least 3 characters long'
+    }
+    if (username.length > 20) {
+      return 'Username must be less than 20 characters long'
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return 'Username can only contain letters, numbers and underscores'
+    }
+    //TODO: Check if username is taken
+    return ''
+  }
+  const validateBio = (bio: string): string => {
+    if (bio.length > 140) {
+      return 'Bio must be 140 characters or less'
+    }
+    return ''
+  }
+  const validateEmail = (email: string): string => {
+    if (!email.length) {
+      return 'Email is required'
+    }
+    const emailRegex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (!emailRegex.test(email)) {
+      return 'Email is not valid'
+    }
+    return ''
+  }
+
+  // form submission handler
+  const handleProfileSettingsSave = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // Validate all fields
+    setUsername({ ...username, error: validateUsername(username.value) })
+    setBio({ ...bio, error: validateBio(bio.value) })
+    setEmail({ ...email, error: validateEmail(email.value) })
+
+    // if any field is invalid, focus on the first one
+    if (username.error) {
+      usernameRef.current?.focus()
+      return
+    }
+    if (bio.error) {
+      bioRef.current?.focus()
+      return
+    }
+    if (email.error) {
+      emailRef.current?.focus()
+      return
+    }
+
+    //TODO: wire up the form to the backend
+    const ProfileSettingsData = {
+      username: username.value,
+      bio: bio.value,
+      links: {
+        email: email.value,
+        website: website,
+        instagram: instagram,
+        twitter: twitter,
+      },
+      profilePicture: profilePicture,
+      coverPicture: coverPicture,
+    }
+    toast({
+      title: 'Profile Settings Saved',
+      description: 'Your profile settings have been saved.',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    })
+  }
+
   return (
-    <>
+    <form onSubmit={handleProfileSettingsSave}>
       <Flex gap={18} flexDir={{ base: 'column', lg: 'row' }}>
         <VStack flex="2" align="left" spacing={4}>
-          <FormControl isRequired>
+          {/* PROFILE: USER NAME */}
+          <FormControl
+            id="username"
+            isRequired
+            isInvalid={username.error !== ''}
+          >
             <FormLabel htmlFor="username">Username</FormLabel>
-            <Input placeholder="Enter username" />
+            <Input
+              ref={usernameRef}
+              value={username.value}
+              onChange={e => {
+                setUsername({
+                  value: e.target.value,
+                  error: validateUsername(e.target.value),
+                })
+              }}
+              placeholder="Enter username"
+            />
+            <FormErrorMessage>{username.error}</FormErrorMessage>
           </FormControl>
-          <FormControl>
+
+          {/* PROFILE: BIO */}
+          <FormControl isInvalid={bio.error !== ''}>
             <FormLabel htmlFor="bio">Bio</FormLabel>
-            <Textarea placeholder="Tell the world your story" />
+            <Textarea
+              ref={bioRef}
+              value={bio.value}
+              onChange={e => {
+                setBio({
+                  value: e.target.value,
+                  error: validateBio(e.target.value),
+                })
+              }}
+              placeholder="Tell the world your story"
+            />
+            <FormErrorMessage>{bio.error}</FormErrorMessage>
           </FormControl>
-          <FormControl isRequired>
+
+          {/* PROFILE: EMAIL */}
+          <FormControl id="email" isRequired isInvalid={email.error !== ''}>
             <FormLabel htmlFor="email">Email Address</FormLabel>
-            <Input placeholder="Enter email" />
+            <Input
+              ref={emailRef}
+              value={email.value}
+              onChange={e => {
+                setEmail({
+                  value: e.target.value,
+                  error: validateEmail(e.target.value),
+                })
+              }}
+              placeholder="Enter email"
+            />
+            <FormErrorMessage>{email.error}</FormErrorMessage>
           </FormControl>
+
+          {/* PROFILE: LINKS */}
           <FormControl>
             <FormLabel htmlFor="links">Links</FormLabel>
             <Box borderWidth="1px" borderRadius="md">
+              {/* LINKS: Twitter */}
               <InputGroup>
-                Settings
                 <InputLeftElement pointerEvents="none">
                   <FaTwitter color="gray" />
                 </InputLeftElement>
                 <Input
                   variant="flushed"
+                  value={twitter}
+                  onChange={e => setTwitter(e.target.value)}
                   _focus={{ borderBottomColor: 'inherit' }}
                   placeholder="Your Twitter Handle"
                 />
               </InputGroup>
+              {/* LINKS: Instagram */}
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaInstagram color="gray" />
                 </InputLeftElement>
                 <Input
                   _focus={{ borderBottomColor: 'inherit' }}
+                  value={instagram}
+                  onChange={e => setInstagram(e.target.value)}
                   variant="flushed"
                   placeholder="Your Instagram Handle"
                 />
               </InputGroup>
+              {/* LINKS: Website */}
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaSitemap color="gray" />
@@ -77,6 +224,8 @@ const ProfileSettings = () => {
                 <Input
                   borderBottomWidth="0"
                   _focus={{ borderBottomColor: 'inherit' }}
+                  value={website}
+                  onChange={e => setWebsite(e.target.value)}
                   variant="flushed"
                   placeholder="yoursite.io"
                 />
@@ -114,6 +263,8 @@ const ProfileSettings = () => {
               w="140px"
               h="140px"
               rounded="full"
+              setSelectedImage={setProfilePicture}
+              selectedImage={profilePicture}
             />
           </FormControl>
           <FormControl>
@@ -123,14 +274,16 @@ const ProfileSettings = () => {
               w="min(300px, 100%)"
               h="120px"
               borderRadius="lg"
+              setSelectedImage={setCoverPicture}
+              selectedImage={coverPicture}
             />
           </FormControl>
         </VStack>
       </Flex>
-      <Button size="lg" width={8}>
+      <Button type="submit" size="lg" width={8} mt={8}>
         Save
       </Button>
-    </>
+    </form>
   )
 }
 
