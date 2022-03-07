@@ -20,14 +20,15 @@ import { useAccount } from 'wagmi'
 import ImageUpload from './ImageUpload'
 
 const ProfileSettings = () => {
-  interface strEntry {
+  interface StrEntry {
     value: string
     error: string
   }
-  const strInitState: strEntry = { value: '', error: '' }
-  const [username, setUsername] = React.useState<strEntry>(strInitState)
-  const [bio, setBio] = React.useState<strEntry>(strInitState)
-  const [email, setEmail] = React.useState<strEntry>(strInitState)
+  const strInitState: StrEntry = { value: '', error: '' }
+  const [inputUsername, setInputUsername] =
+    React.useState<StrEntry>(strInitState)
+  const [inputBio, setInputBio] = React.useState<StrEntry>(strInitState)
+  const [inputEmail, setInputEmail] = React.useState<StrEntry>(strInitState)
   const [website, setWebsite] = React.useState<string>('')
   const [instagram, setInstagram] = React.useState<string>('')
   const [twitter, setTwitter] = React.useState<string>('')
@@ -61,7 +62,7 @@ const ProfileSettings = () => {
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
       return 'Username can only contain letters, numbers and underscores'
     }
-    //TODO: Check if username is taken
+    // TODO: Check if username is taken
     return ''
   }
   const validateBio = (bio: string): string => {
@@ -74,8 +75,7 @@ const ProfileSettings = () => {
     if (!email.length) {
       return 'Email is required'
     }
-    const emailRegex =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return 'Email is not valid'
     }
@@ -87,37 +87,28 @@ const ProfileSettings = () => {
     e.preventDefault()
 
     // Validate all fields
-    setUsername({ ...username, error: validateUsername(username.value) })
-    setBio({ ...bio, error: validateBio(bio.value) })
-    setEmail({ ...email, error: validateEmail(email.value) })
+    setInputUsername({
+      ...inputUsername,
+      error: validateUsername(inputUsername.value),
+    })
+    setInputBio({ ...inputBio, error: validateBio(inputBio.value) })
+    setInputEmail({ ...inputEmail, error: validateEmail(inputEmail.value) })
 
     // if any field is invalid, focus on the first one
-    if (username.error) {
+    if (inputUsername.error) {
       usernameRef.current?.focus()
       return
     }
-    if (bio.error) {
+    if (inputBio.error) {
       bioRef.current?.focus()
       return
     }
-    if (email.error) {
+    if (inputEmail.error) {
       emailRef.current?.focus()
       return
     }
 
-    //TODO: wire up the form to the backend
-    const ProfileSettingsData = {
-      username: username.value,
-      bio: bio.value,
-      links: {
-        email: email.value,
-        website: website,
-        instagram: instagram,
-        twitter: twitter,
-      },
-      profilePicture: profilePicture,
-      coverPicture: coverPicture,
-    }
+    // TODO: wire up the form to the backend
     toast({
       title: 'Profile Settings Saved',
       description: 'Your profile settings have been saved.',
@@ -132,58 +123,54 @@ const ProfileSettings = () => {
       <Flex gap={18} flexDir={{ base: 'column', lg: 'row' }}>
         <VStack flex="2" align="left" spacing={4}>
           {/* PROFILE: USER NAME */}
-          <FormControl
-            id="username"
-            isRequired
-            isInvalid={username.error !== ''}
-          >
+          <FormControl isRequired isInvalid={inputUsername.error !== ''}>
             <FormLabel htmlFor="username">Username</FormLabel>
             <Input
               ref={usernameRef}
-              value={username.value}
+              value={inputUsername.value}
               onChange={e => {
-                setUsername({
+                setInputUsername({
                   value: e.target.value,
                   error: validateUsername(e.target.value),
                 })
               }}
               placeholder="Enter username"
             />
-            <FormErrorMessage>{username.error}</FormErrorMessage>
+            <FormErrorMessage>{inputUsername.error}</FormErrorMessage>
           </FormControl>
 
           {/* PROFILE: BIO */}
-          <FormControl isInvalid={bio.error !== ''}>
+          <FormControl isInvalid={inputBio.error !== ''}>
             <FormLabel htmlFor="bio">Bio</FormLabel>
             <Textarea
               ref={bioRef}
-              value={bio.value}
+              value={inputBio.value}
               onChange={e => {
-                setBio({
+                setInputBio({
                   value: e.target.value,
                   error: validateBio(e.target.value),
                 })
               }}
               placeholder="Tell the world your story"
             />
-            <FormErrorMessage>{bio.error}</FormErrorMessage>
+            <FormErrorMessage>{inputBio.error}</FormErrorMessage>
           </FormControl>
 
           {/* PROFILE: EMAIL */}
-          <FormControl id="email" isRequired isInvalid={email.error !== ''}>
+          <FormControl isRequired isInvalid={inputEmail.error !== ''}>
             <FormLabel htmlFor="email">Email Address</FormLabel>
             <Input
               ref={emailRef}
-              value={email.value}
+              value={inputEmail.value}
               onChange={e => {
-                setEmail({
+                setInputEmail({
                   value: e.target.value,
                   error: validateEmail(e.target.value),
                 })
               }}
               placeholder="Enter email"
             />
-            <FormErrorMessage>{email.error}</FormErrorMessage>
+            <FormErrorMessage>{inputEmail.error}</FormErrorMessage>
           </FormControl>
 
           {/* PROFILE: LINKS */}
