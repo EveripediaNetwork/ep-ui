@@ -22,7 +22,7 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
 
   useEffect(() => {
     callEditorMethod()
-  }, [markdown])
+  }, [markdown, callEditorMethod])
 
   return (
     <Box m={0} w="100%" h="100%">
