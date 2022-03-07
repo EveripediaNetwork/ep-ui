@@ -74,7 +74,7 @@
     "@types/react": "^17.0.37",
     "@types/react-slick": "^0.23.8",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.13.0",
+    "@typescript-eslint/parser": "^5.14.0",
     "babel-loader": "^8.2.3",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.2",
