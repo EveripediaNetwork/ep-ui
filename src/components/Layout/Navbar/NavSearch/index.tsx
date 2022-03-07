@@ -7,6 +7,10 @@ import {
   Spinner,
   chakra,
   Button,
+  HTMLChakraProps,
+  Avatar,
+  Text,
+  Stack,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -17,18 +21,14 @@ import {
   AutoCompleteList,
   AutoCompleteGroupTitle,
 } from '@choc-ui/chakra-autocomplete'
-import { SAMPLE_ARTICLES } from '@/components/Layout/Navbar/NavSearch/utils'
+import {
+  SAMPLE_ARTICLES,
+  SAMPLE_CATEGORIES,
+  SAMPLE_PROFILES,
+} from '@/components/Layout/Navbar/NavSearch/utils'
 
 export const NavSearch = () => {
   const [isLoading, setIsLoading] = useState(false)
-
-  const countries = [
-    'nigeria',
-    'japan',
-    'india',
-    'united states',
-    'south korea',
-  ]
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -51,38 +51,88 @@ export const NavSearch = () => {
     </Center>
   )
 
+  const titleStyles: HTMLChakraProps<'div'> = {
+    fontWeight: 'normal',
+    fontSize: 'md',
+    textTransform: 'capitalize',
+    p: 4,
+    m: 0,
+  }
+
+  const generalItemStyles: HTMLChakraProps<'div'> = {
+    m: 0,
+    rounded: 'none',
+    px: 4,
+    py: 2,
+  }
+
+  const articlesSearchList = (
+    <AutoCompleteGroup>
+      <AutoCompleteGroupTitle {...titleStyles}>Articles</AutoCompleteGroupTitle>
+      {SAMPLE_ARTICLES.map(article => (
+        <AutoCompleteItem
+          key={article.id}
+          value={article}
+          getValue={art => art.title}
+          label={article.title}
+          {...generalItemStyles}
+          gap="2.5"
+        >
+          <Avatar src={article.image} name={article.title} size="xs" />
+          <Stack border="solid 1px red">
+            <chakra.span fontWeight="semibold" fontSize="sm">
+              {article.title}
+            </chakra.span>
+            <Text isTruncated maxW="full">
+              {article.description}
+            </Text>
+          </Stack>
+        </AutoCompleteItem>
+      ))}
+    </AutoCompleteGroup>
+  )
+
+  const cateoriesSearchList = (
+    <AutoCompleteGroup>
+      <AutoCompleteGroupTitle {...titleStyles}>
+        Categories
+      </AutoCompleteGroupTitle>
+      {SAMPLE_CATEGORIES.map(category => (
+        <AutoCompleteItem
+          key={category.id}
+          value={category}
+          getValue={art => art.title}
+          label={category.title}
+          {...generalItemStyles}
+        >
+          {category.title}
+        </AutoCompleteItem>
+      ))}
+    </AutoCompleteGroup>
+  )
+
+  const profilesSearchList = (
+    <AutoCompleteGroup>
+      <AutoCompleteGroupTitle {...titleStyles}>Profiles</AutoCompleteGroupTitle>
+      {SAMPLE_PROFILES.map(profile => (
+        <AutoCompleteItem
+          key={profile.id}
+          value={profile}
+          getValue={art => art.name}
+          label={profile.name}
+          {...generalItemStyles}
+        >
+          {profile.name}
+        </AutoCompleteItem>
+      ))}
+    </AutoCompleteGroup>
+  )
+
   const searchList = (
     <>
-      wow
-      <AutoCompleteGroup showDivider>
-        <AutoCompleteGroupTitle textTransform="capitalize">
-          Countries
-        </AutoCompleteGroupTitle>
-        {countries.map(country => (
-          <AutoCompleteItem
-            key={country}
-            value={{ short: country.charAt(0), name: country }}
-            // getValue={art => art.title}
-            textTransform="capitalize"
-          />
-        ))}
-      </AutoCompleteGroup>
-      <AutoCompleteGroup showDivider>
-        <AutoCompleteGroupTitle textTransform="capitalize">
-          Articles
-        </AutoCompleteGroupTitle>
-        {SAMPLE_ARTICLES.map(article => (
-          <AutoCompleteItem
-            key={article.id}
-            value={article}
-            getValue={art => art.title}
-            label="wow"
-            textTransform="capitalize"
-          >
-            {article.title}
-          </AutoCompleteItem>
-        ))}
-      </AutoCompleteGroup>
+      {articlesSearchList}
+      {cateoriesSearchList}
+      {profilesSearchList}
     </>
   )
 
@@ -99,7 +149,7 @@ export const NavSearch = () => {
         <AutoCompleteInput placeholder="Search items, collections and accounts" />
       </InputGroup>
 
-      <AutoCompleteList pb="0" shadow="lg">
+      <AutoCompleteList p="0" shadow="lg">
         {isLoading ? loadingView : searchList}
 
         <Flex
