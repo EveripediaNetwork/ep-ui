@@ -18,7 +18,7 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
 
   const callEditorMethod = useCallback(() => {
     editorRef.current?.getInstance().setMarkdown(markdown)
-  }, [editorRef])
+  }, [editorRef, markdown])
 
   useEffect(() => {
     callEditorMethod()
