@@ -34,7 +34,11 @@ const NetworkMenu = () => {
         <MenuGroup color="gray.500" title="Select Network">
           {Networks.map((network, index) => (
             <>
-              <MenuItem isDisabled={!network.isActive} py={3} onClick={() => handleNetworkSwitch(network)}>
+              <MenuItem
+                isDisabled={!network.isActive}
+                py={3}
+                onClick={() => handleNetworkSwitch(network)}
+              >
                 <Image
                   boxSize="24px"
                   borderRadius="full"

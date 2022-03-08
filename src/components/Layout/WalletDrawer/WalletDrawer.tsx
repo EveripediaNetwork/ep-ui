@@ -42,8 +42,7 @@ import {
 import { ToastDataType } from '@/types/ToastDataType'
 import chakraTheme from '@/theme'
 import { removeStateFromStorage } from '@/utils/browserStorage'
-import AddNetworkDetails from './AddNetworkDetails'
-import NetworkMenu from './NetworkMenu'
+import NetworkMenu from '@/components/Layout/WalletDrawer/NetworkMenu'
 
 const toastProperties: ToastDataType = {
   description: 'Account successfully refreshed',
@@ -196,9 +195,6 @@ const WalletDrawer = ({
         <Divider />
         <DrawerBody shadow="sm">
           <Connectors />
-          <Box mt="5">
-            <AddNetworkDetails />
-          </Box>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
