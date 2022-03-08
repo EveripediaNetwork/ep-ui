@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Center,
   Flex,
@@ -9,8 +9,8 @@ import {
   Button,
   HTMLChakraProps,
   Avatar,
-  Text,
   Stack,
+  Text,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -28,7 +28,15 @@ import {
 } from '@/components/Layout/Navbar/NavSearch/utils'
 
 export const NavSearch = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const fetchList = () => {
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    fetchList()
+  }, [])
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -64,6 +72,7 @@ export const NavSearch = () => {
     rounded: 'none',
     px: 4,
     py: 2,
+    gap: '2.5',
   }
 
   const articlesSearchList = (
@@ -76,14 +85,13 @@ export const NavSearch = () => {
           getValue={art => art.title}
           label={article.title}
           {...generalItemStyles}
-          gap="2.5"
         >
           <Avatar src={article.image} name={article.title} size="xs" />
-          <Stack border="solid 1px red">
+          <Stack>
             <chakra.span fontWeight="semibold" fontSize="sm">
               {article.title}
             </chakra.span>
-            <Text isTruncated maxW="full">
+            <Text noOfLines={1} maxW="full" fontSize="xs">
               {article.description}
             </Text>
           </Stack>
