@@ -3,15 +3,19 @@ import {
   Box,
   Flex,
   Stack,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Button,
   Center,
   VStack,
   Divider,
   Menu,
   Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -19,12 +23,12 @@ import {
   RiFacebookFill,
   RiTelegramFill,
   RiTwitterFill,
-  RiSearch2Line,
 } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
+import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import { ColorModeToggle } from './ColorModeToggle'
 
 type MobileNavType = {
@@ -58,29 +62,29 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
       h="calc((100vh - 0px) - 72px)"
     >
       <Box>
-        <InputGroup
-          display={{ sm: 'flex', md: 'none' }}
-          py={2}
-          mx={2}
-          width="unset"
-          backgroundColor="subMenuBg"
-          size="lg"
-        >
-          <InputLeftElement pt={4} pl={0} pointerEvents="none">
-            <RiSearch2Line color="gray.300" />
-          </InputLeftElement>
-          <Input
-            pl={10}
-            borderColor="mobileMenuBorderColor"
-            _focus={{ borderColor: 'borderColorHover' }}
-            _hover={{ borderColor: 'borderColorHover' }}
-            placeholder="Search wikis, categories and accounts"
-            _placeholder={{
-              fontSize: 'md',
-              transform: 'translateY(-1px)',
-            }}
-          />
-        </InputGroup>
+        <Popover>
+          <PopoverTrigger>
+            <Button>Trigger</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>Confirmation!</PopoverHeader>
+            <PopoverBody>
+              Are you sure you want to have that milkshake?
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+        <NavSearch
+          inputGroupProps={{ display: 'inherit' }}
+          inputProps={{
+            borderTopWidth: 1,
+            rounded: 'none',
+            borderX: 'none',
+            py: 8,
+          }}
+        />
+
         <Divider />
         {!showSubNav ? (
           <Stack

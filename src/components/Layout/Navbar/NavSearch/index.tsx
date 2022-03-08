@@ -9,7 +9,6 @@ import {
   Button,
   HTMLChakraProps,
   Avatar,
-  Stack,
   Text,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
@@ -27,7 +26,13 @@ import {
   SAMPLE_PROFILES,
 } from '@/components/Layout/Navbar/NavSearch/utils'
 
-export const NavSearch = () => {
+export type NavSearchProps = {
+  inputGroupProps?: HTMLChakraProps<'div'>
+  inputProps?: HTMLChakraProps<'div'>
+}
+
+export const NavSearch = (props: NavSearchProps) => {
+  const { inputGroupProps, inputProps } = props
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchList = () => {
@@ -87,14 +92,31 @@ export const NavSearch = () => {
           {...generalItemStyles}
         >
           <Avatar src={article.image} name={article.title} size="xs" />
-          <Stack>
+          <Flex direction="column">
             <chakra.span fontWeight="semibold" fontSize="sm">
               {article.title}
             </chakra.span>
-            <Text noOfLines={1} maxW="full" fontSize="xs">
+            <Text noOfLines={2} maxW="full" fontSize="xs">
               {article.description}
             </Text>
-          </Stack>
+          </Flex>
+          <chakra.div
+            fontWeight="medium"
+            fontSize="xs"
+            alignSelf="center"
+            px="2"
+            borderWidth={1}
+            rounded="md"
+            _dark={{
+              bg: 'gray.800',
+            }}
+            ml="auto"
+          >
+            {article.tag}
+          </chakra.div>
+          <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
+            {article.views} views
+          </chakra.span>
         </AutoCompleteItem>
       ))}
     </AutoCompleteGroup>
@@ -113,7 +135,27 @@ export const NavSearch = () => {
           label={category.title}
           {...generalItemStyles}
         >
-          {category.title}
+          <Avatar src={category.image} name={category.title} size="xs" />
+          <chakra.span fontWeight="semibold" fontSize="sm">
+            {category.title}
+          </chakra.span>
+          <chakra.div
+            fontWeight="medium"
+            fontSize="xs"
+            alignSelf="center"
+            px="2"
+            borderWidth={1}
+            rounded="md"
+            _dark={{
+              bg: 'gray.800',
+            }}
+            ml="auto"
+          >
+            {category.tag}
+          </chakra.div>
+          <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
+            {category.views} views
+          </chakra.span>
         </AutoCompleteItem>
       ))}
     </AutoCompleteGroup>
@@ -130,7 +172,15 @@ export const NavSearch = () => {
           label={profile.name}
           {...generalItemStyles}
         >
-          {profile.name}
+          <Avatar src={profile.image} name={profile.name} size="xs" />
+          <Flex direction="column">
+            <chakra.span fontWeight="semibold" fontSize="sm">
+              {profile.name}
+            </chakra.span>
+            <Text noOfLines={2} maxW="full" fontSize="xs">
+              {profile.bio}
+            </Text>
+          </Flex>
         </AutoCompleteItem>
       ))}
     </AutoCompleteGroup>
@@ -145,19 +195,27 @@ export const NavSearch = () => {
   )
 
   return (
-    <AutoComplete openOnFocus emptyState={!isLoading && emptyState}>
+    <AutoComplete
+      openOnFocus
+      suggestWhenEmpty
+      emptyState={!isLoading && emptyState}
+    >
       <InputGroup
         size="lg"
         maxW="800px"
         display={{ base: 'none', sm: 'none', md: 'block' }}
+        {...inputGroupProps}
       >
-        <InputLeftElement pointerEvents="none">
+        <InputLeftElement pointerEvents="none" h="full">
           <Search2Icon color="gray.300" />
         </InputLeftElement>
-        <AutoCompleteInput placeholder="Search items, collections and accounts" />
+        <AutoCompleteInput
+          placeholder="Search items, collections and accounts"
+          {...inputProps}
+        />
       </InputGroup>
 
-      <AutoCompleteList p="0" shadow="lg">
+      <AutoCompleteList p="0" shadow="lg" minW="lg">
         {isLoading ? loadingView : searchList}
 
         <Flex

@@ -9,6 +9,7 @@ export type ArticleType = {
 
 export type CategoryType = {
   id: string
+  image: string
   title: string
   tag: string
   views: number
@@ -36,6 +37,7 @@ export const SAMPLE_ARTICLES: ArticleType[] = [
 export const SAMPLE_CATEGORIES: CategoryType[] = [
   {
     id: 'fdeffef',
+    image: 'https://picsum.photos/200',
     title: 'EOS Block Producer',
     tag: 'Organization',
     views: 14000,
