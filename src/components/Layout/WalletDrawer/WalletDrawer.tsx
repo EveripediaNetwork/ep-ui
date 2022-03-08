@@ -18,7 +18,6 @@ import {
   MenuItem,
   Spinner,
   createStandaloneToast,
-
 } from '@chakra-ui/react'
 import { useAccount, useBalance } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -76,7 +75,7 @@ const WalletDrawer = ({
   const toast = createStandaloneToast({ theme: chakraTheme })
   const [, getBalance] = useBalance()
   const address = accountData ? accountData.address : null
-  
+
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
@@ -191,7 +190,7 @@ const WalletDrawer = ({
                 )}
               </Box>
             </HStack>
-            <NetworkMenu/>
+            <NetworkMenu />
           </Flex>
         </DrawerHeader>
         <Divider />
