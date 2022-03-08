@@ -18,8 +18,7 @@ import {
   MenuItem,
   Spinner,
   createStandaloneToast,
-  Button,
-  MenuGroup,
+
 } from '@chakra-ui/react'
 import { useAccount, useBalance } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -44,8 +43,8 @@ import {
 import { ToastDataType } from '@/types/ToastDataType'
 import chakraTheme from '@/theme'
 import { removeStateFromStorage } from '@/utils/browserStorage'
-import { Network, Networks } from '@/data/NetworkData'
 import AddNetworkDetails from './AddNetworkDetails'
+import NetworkMenu from './NetworkMenu'
 
 const toastProperties: ToastDataType = {
   description: 'Account successfully refreshed',
@@ -77,7 +76,7 @@ const WalletDrawer = ({
   const toast = createStandaloneToast({ theme: chakraTheme })
   const [, getBalance] = useBalance()
   const address = accountData ? accountData.address : null
-  const [currentNetwork,] = useState<Network>(Networks[0])
+  
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
@@ -192,38 +191,7 @@ const WalletDrawer = ({
                 )}
               </Box>
             </HStack>
-            <Menu>
-              <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                <Button
-                  variant="outline"
-                  leftIcon={<Image src={currentNetwork.image} />}
-                  rightIcon={<ChevronDownIcon />}
-                >
-                  <Text fontSize="sm"> {currentNetwork.name} </Text>
-                </Button>
-              </MenuButton>
-              <MenuList>
-                <MenuGroup color="gray.500" title="Select Network">
-                  {Networks.map((network, index) => (
-                    <>
-                      <MenuItem py={3}>
-                        <Image
-                          boxSize="24px"
-                          borderRadius="full"
-                          src={network.image}
-                          alt={network.name}
-                          mr={3}
-                        />
-                        <Text fontSize="small" fontWeight="bold">
-                          {network.name}
-                        </Text>
-                      </MenuItem>
-                      {index < Networks.length - 1 && <Divider />}
-                    </>
-                  ))}
-                </MenuGroup>
-              </MenuList>
-            </Menu>
+            <NetworkMenu/>
           </Flex>
         </DrawerHeader>
         <Divider />
