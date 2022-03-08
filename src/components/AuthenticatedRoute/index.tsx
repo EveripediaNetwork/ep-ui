@@ -16,7 +16,7 @@ export const authenticatedRoute = <P extends object>(
           query: { from: router.pathname },
         })
       }
-    }, [user])
+    }, [user, router])
 
     if (user) {
       return <WrappedComponent {...props} />

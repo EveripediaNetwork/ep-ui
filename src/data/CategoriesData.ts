@@ -20,7 +20,7 @@ export const sampleCategories: CategoryDataType = [
     description:
       'This is the first category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. ',
     imageCard: `https://picsum.photos/seed/first-category/400/580`,
-    imageHero: `https:/picsum.photos/seed/first-category/1200/600`,
+    imageHero: `https://picsum.photos/seed/first-category/1200/600`,
     icon: BsPaletteFill,
   },
   {

@@ -1,4 +1,4 @@
-export interface Category {
+export interface BaseCategory {
   id: string
   title: string
 }
@@ -14,17 +14,33 @@ export interface Image {
 
 export interface MData {
   id: string
-  value: string | boolean
+  value: string
 }
 
 export interface User {
   id: string
 }
 
+export enum PageTypeName {
+  PERSON = 'Person',
+  PLACE_LOCATION = 'Place / Location',
+  ORGANIZATION_COMPANY_INSTITUTION = 'Organization / Company / Institution',
+  EVENT = 'Event',
+  LIST_RANKING = 'List / Ranking',
+  PRODUCT_MERCHANDISE = 'Product / Merchandise',
+  CREATIVE_WORK_ART = 'Create Work / Art',
+  OTHER = 'Other',
+}
+
+export type PageType = {
+  type: PageTypeName
+  templateText: string
+}
+
 export interface Content {
   title: string
   content: string
-  categories: Category[]
+  categories: BaseCategory[]
   tags: Tag[]
   images: Image[]
   metadata: MData[]
