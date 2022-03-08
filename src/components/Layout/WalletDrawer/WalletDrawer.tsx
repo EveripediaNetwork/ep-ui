@@ -18,6 +18,8 @@ import {
   MenuItem,
   Spinner,
   createStandaloneToast,
+  Button,
+  MenuGroup,
 } from '@chakra-ui/react'
 import { useAccount, useBalance } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -117,14 +119,13 @@ const WalletDrawer = ({
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader mt={20}>
+        <DrawerHeader mt={18}>
           <Flex
             w="full"
             cursor="pointer"
             direction="row"
             justifyContent="flex-start"
             alignItems="center"
-            mb="2"
           >
             <HStack flex="1">
               <Box
@@ -134,59 +135,114 @@ const WalletDrawer = ({
                 <RiArrowLeftSLine size="30" />
               </Box>
               <DisplayAvatar accountData={accountData} />
-              <Menu>
-                <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                  My Wallet {accountData && <ChevronDownIcon />}
-                </MenuButton>
-                {accountData && (
-                  <MenuList>
-                    <MenuItem py={3}>
-                      <Image
-                        boxSize="24px"
-                        borderRadius="full"
-                        src={`/images/${walletsLogos[0]}`}
-                        alt="MetaMask"
-                        mr={3}
-                      />
-                      <Text fontSize="small" fontWeight="bold">
-                        MetaMask
-                      </Text>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem
-                      onClick={handleAccountRefresh}
-                      closeOnSelect={false}
-                      py={3}
-                      icon={<RiRefreshLine size={25} />}
-                    >
-                      <Flex>
-                        <Text flex="1" fontSize="small" fontWeight="bold">
-                          Refresh
+              <Box>
+                <Menu>
+                  <MenuButton pl={1} fontSize="md" fontWeight={600}>
+                    My Wallet {accountData && <ChevronDownIcon />}
+                  </MenuButton>
+                  {accountData && (
+                    <MenuList>
+                      <MenuItem py={3}>
+                        <Image
+                          boxSize="24px"
+                          borderRadius="full"
+                          src={`/images/${walletsLogos[0]}`}
+                          alt="MetaMask"
+                          mr={3}
+                        />
+                        <Text fontSize="small" fontWeight="bold">
+                          MetaMask
                         </Text>
-                        {accountRefreshLoading && <Spinner size="sm" />}
-                      </Flex>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem
-                      onClick={handleLogOut}
-                      py={3}
-                      icon={<RiLogoutBoxRLine size={25} />}
-                    >
-                      <Text fontSize="small" fontWeight="bold">
-                        Logout
-                      </Text>
-                    </MenuItem>
-                  </MenuList>
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem
+                        onClick={handleAccountRefresh}
+                        closeOnSelect={false}
+                        py={3}
+                        icon={<RiRefreshLine size={25} />}
+                      >
+                        <Flex>
+                          <Text flex="1" fontSize="small" fontWeight="bold">
+                            Refresh
+                          </Text>
+                          {accountRefreshLoading && <Spinner size="sm" />}
+                        </Flex>
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem
+                        onClick={handleLogOut}
+                        py={3}
+                        icon={<RiLogoutBoxRLine size={25} />}
+                      >
+                        <Text fontSize="small" fontWeight="bold">
+                          Logout
+                        </Text>
+                      </MenuItem>
+                    </MenuList>
+                  )}
+                </Menu>
+                {accountData && (
+                  <Text color="gray.500" pl={1} fontSize="sm">
+                    {accountData?.ens?.name
+                      ? `${accountData.ens?.name}`
+                      : shortenAccount(accountData?.address)}
+                  </Text>
                 )}
-              </Menu>
+              </Box>
             </HStack>
-            {accountData && (
-              <Text color="gray.500" textAlign="center" fontSize="medium">
-                {accountData?.ens?.name
-                  ? `${accountData.ens?.name}`
-                  : shortenAccount(accountData?.address)}
-              </Text>
-            )}
+            <Menu>
+              <MenuButton pl={1} fontSize="md" fontWeight={600}>
+                <Button
+                  variant="outline"
+                  leftIcon={<Image src="/images/polygon.svg" />}
+                  rightIcon={<ChevronDownIcon />}
+                >
+                  <Text fontSize="sm"> Polygon </Text>
+                </Button>
+              </MenuButton>
+              <MenuList>
+                <MenuGroup color="gray.500" title="Select Network">
+                  <MenuItem py={3}>
+                    <Image
+                      boxSize="24px"
+                      borderRadius="full"
+                      src="/images/polygon.svg"
+                      alt="MetaMask"
+                      mr={3}
+                    />
+                    <Text fontSize="small" fontWeight="bold">
+                      Polygon
+                    </Text>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem py={3}>
+                    <Image
+                      boxSize="24px"
+                      borderRadius="full"
+                      src="/images/ethereum2.svg"
+                      alt="MetaMask"
+                      mr={3}
+                    />
+                    <Text fontSize="small" fontWeight="bold">
+                      Ethereum
+                    </Text>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem py={3}>
+                    <Image
+                      boxSize="24px"
+                      borderRadius="full"
+                      src="/images/bsc.svg"
+                      alt="MetaMask"
+                      mr={3}
+                    />
+                    <Text fontSize="small" fontWeight="bold">
+                      Bsc
+                    </Text>
+                  </MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
           </Flex>
         </DrawerHeader>
         <Divider />
