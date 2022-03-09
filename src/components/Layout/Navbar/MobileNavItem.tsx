@@ -32,7 +32,7 @@ const MobileNavItem = ({
       onClick={() => {
         onToggle()
         handleClick(navItem)
-        if (!navItem.hasSubItem) {
+        if (!navItem.subItem) {
           router.push(navItem.href)
           setHamburger(false)
         }
