@@ -1661,9 +1661,7 @@
     "@chakra-ui/theme-tools" "1.3.6"
     "@chakra-ui/utils" "1.10.4"
 
-
 "@chakra-ui/toast@1.5.7", "@chakra-ui/toast@^1.5.7":
-
   version "1.5.7"
   resolved "https://registry.yarnpkg.com/@chakra-ui/toast/-/toast-1.5.7.tgz#d0ffccd13f925967353fb65a590f2ac8f88332db"
   integrity sha512-vM88vX2jTfSwOXWqcj9o9pm+msojJS0cG0Pe/wSuYP+D274SdE8oB2OFqJyijsQ7WQq/P6BIlgquzUcS4smu9A==
@@ -4146,7 +4144,6 @@
     "@typescript-eslint/scope-manager" "5.14.0"
     "@typescript-eslint/types" "5.14.0"
     "@typescript-eslint/typescript-estree" "5.14.0"
-    
     eslint-scope "^5.1.1"
     eslint-utils "^3.0.0"
 
@@ -4166,14 +4163,13 @@
     "@typescript-eslint/types" "5.14.0"
     eslint-visitor-keys "^3.0.0"
 
-"@walletconnect/browser-utils@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/@walletconnect/browser-utils/-/browser-utils-1.7.1.tgz#2a28846cd4d73166debbbf7d470e78ba25616f5e"
-  integrity sha512-y6KvxPhi52sWzS0/HtA3EhdgmtG8mXcxdc26YURDOVC/BJh3MxV8E16JFrT4InylOqYJs6dcSLWVfcnJaiPtZw==
-
+"@walletconnect/browser-utils@^1.7.3":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.7.4.tgz#54b24842aa454531212b6c4b02901b5b4a0c1fbe"
+  integrity sha512-YAM+PyRdJb6WZMUDHPAjlYAad6NrgQypmKiC9iKZhcgcYuFIkbY+tRx+Lp7WAXeZS8TsORagi+Sl4T+MnsRzxA==
   dependencies:
     "@walletconnect/safe-json" "1.0.0"
-    "@walletconnect/types" "^1.7.3"
+    "@walletconnect/types" "^1.7.4"
     "@walletconnect/window-getters" "1.0.0"
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
@@ -4332,6 +4328,11 @@
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.7.3.tgz#6378fc058b463beb869f5583b30c000ffd67c082"
   integrity sha512-EtFM7LxjrbCoCJvRZf3wydPitwlB0s4S9sj9yXe13j7mMgf9ruS5Ixa/sCfDKskZdGvkhFis9+Nw+gO++A/klg==
+
+"@walletconnect/types@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.7.4.tgz#429c0ab88771ca39f085757c189ffc704acaf813"
+  integrity sha512-jvdW1/7z16dCC3i2uwPSgXjUXkmvJH0M2PbYD8ZETyEj/oSiLd32nPAUZVU0IVqQk4XAZHUTKhlRgxTch1W4Qg==
 
 "@walletconnect/utils@^1.7.1", "@walletconnect/utils@^1.7.3":
   version "1.7.3"

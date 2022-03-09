@@ -78,6 +78,8 @@ export const NavSearch = (props: NavSearchProps) => {
     px: 4,
     py: 2,
     gap: '2.5',
+    borderY: '1px',
+    borderColor: 'inherit',
   }
 
   const articlesSearchList = (
@@ -96,7 +98,7 @@ export const NavSearch = (props: NavSearchProps) => {
             <chakra.span fontWeight="semibold" fontSize="sm">
               {article.title}
             </chakra.span>
-            <Text noOfLines={2} maxW="full" fontSize="xs">
+            <Text noOfLines={1} maxW="full" fontSize="xs">
               {article.description}
             </Text>
           </Flex>
