@@ -42,14 +42,14 @@ const NavMenu = ({
         whiteSpace="nowrap"
         onMouseEnter={() => setVisibleMenu(navItem.id)}
         onClick={() =>
-          navItem.hasSubItem
+          navItem.subItem
             ? setVisibleMenu(visibleMenu ? null : navItem.id)
             : router.push(navItem.href)
         }
       >
         {label}
       </MenuButton>
-      {navItem.hasSubItem && (
+      {navItem.subItem && (
         <MenuList
           bg="subMenuBg"
           onMouseEnter={() => setVisibleMenu(navItem.id)}

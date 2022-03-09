@@ -26,7 +26,7 @@ import {
 } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
-import { mobileWalletDetails, NAV_ITEMS } from '@/data/NavItemData'
+import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import { ColorModeToggle } from './ColorModeToggle'
@@ -43,8 +43,9 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const iconSize = 20
+
   const handleClick = (currentNav: NavItem | null) => {
-    if (currentNav && currentNav.hasSubItem) {
+    if (currentNav && currentNav.subItem) {
       setCurrentMenu(currentNav)
       setShowSubNav(true)
     }
@@ -93,7 +94,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
             pb={6}
             display={{ lg: 'flex', xl: 'none' }}
           >
-            {NAV_ITEMS.map(navItem => (
+            {MOBILE_NAV_ITEMS.map(navItem => (
               <MobileNavItem
                 handleClick={item => handleClick(item)}
                 key={navItem.label}
@@ -121,8 +122,9 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
           <Box h="calc(100vh - 220px)">
             <MobileSubNav
               setHamburger={setHamburger}
-              handleClick={setShowSubNav}
+              setShowSubNav={setShowSubNav}
               activeMenu={currentMenu}
+              setActiveMenu={setCurrentMenu}
             />
           </Box>
         )}
