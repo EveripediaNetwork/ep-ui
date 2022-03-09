@@ -1,14 +1,22 @@
 import React from 'react'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import CategoryCard from '@/components/Categories/CategoryCard'
 import { sampleCategories } from '@/data/CategoriesData'
-import { useGetCategoriesQuery } from '@/services/categories'
+import {
+  getCategories,
+  getRunningOperationPromises,
+  useGetCategoriesQuery,
+} from '@/services/categories'
+import { store } from '@/store/store'
+import { useRouter } from 'next/router'
 
 const Categories: NextPage = () => {
-  const { data } = useGetCategoriesQuery()
+  const router = useRouter()
+  const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
+
   return (
     <Box mt="-12" bgColor="pageBg" pb={12}>
       <Image src="/images/categories-backdrop.png" height="250px" />
@@ -46,4 +54,13 @@ const Categories: NextPage = () => {
     </Box>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  store.dispatch(getCategories.initiate())
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
+}
+
 export default Categories

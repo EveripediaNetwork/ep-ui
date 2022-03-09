@@ -19,7 +19,9 @@ export const store = configureStore({
     [categoriesApi.reducerPath]: categoriesApi.reducer,
   },
   middleware: gDM =>
-    gDM({ serializableCheck: true }).concat(wikiApi.middleware),
+    gDM({ serializableCheck: true })
+      .concat(wikiApi.middleware)
+      .concat(categoriesApi.middleware),
   preloadedState: loadState(),
 })
 
