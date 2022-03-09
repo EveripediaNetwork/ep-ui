@@ -62,7 +62,7 @@ const MobileNavItem = ({
             {navItem.label}
           </Text>
         </HStack>
-        {navItem.label !== 'wallet' && <RiArrowRightSLine />}
+        {navItem.subItem && <RiArrowRightSLine />}
       </Flex>
     </Stack>
   )
