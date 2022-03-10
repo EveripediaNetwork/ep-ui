@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Flex } from '@chakra-ui/react'
 import detectEthereumProvider from '@metamask/detect-provider'
 import config from '@/config'
+import networkMap from '@/utils/networkMap'
 
 const AddNetworkDetails = () => {
   const [detectedProvider, setDetectedProvider] = useState<any>()
@@ -30,31 +31,33 @@ const AddNetworkDetails = () => {
       },
     )
 
-  const handleSwitchNetwork = async () =>
-    detectedProvider.sendAsync(
-      {
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: config.chainId,
-            chainName: config.chainName,
-            nativeCurrency: {
-              name: 'MATIC',
-              symbol: 'MATIC',
-              decimals: 18,
-            },
-            rpcUrls: [config.rpcUrl],
-            blockExplorerUrls: [config.blockExplorerUrl],
-          },
-        ],
-      },
-      (err: any, added: any) => {
-        console.log('provider returned', err, added)
-        if (err || 'error' in added) {
-          console.log(err)
+  const handleSwitchNetwork = async () => {
+    try {
+      await detectedProvider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: networkMap.MUMBAI_TESTNET.chainId }],
+      })
+    } catch (switchError: any) {
+      if (switchError.code === 4902) {
+        try {
+          const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
+
+          await detectedProvider.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId,
+                chainName,
+                rpcUrls /* ... */,
+              },
+            ],
+          })
+        } catch (addError) {
+          console.log(addError)
         }
-      },
-    )
+      }
+    }
+  }
 
   useEffect(() => {
     const getDetectedProvider = async () => {
