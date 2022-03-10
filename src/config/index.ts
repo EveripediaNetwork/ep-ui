@@ -9,6 +9,7 @@ const config = {
   blockExplorerUrl: process.env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL,
   pinataBaseUrl: process.env.NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL,
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
+  chainId: process.env.NEXT_PUBLIC_CHAIN_ID,
 }
 
 export default config

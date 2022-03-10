@@ -13,7 +13,15 @@ import {
   CloseButton,
   Center,
 } from '@chakra-ui/react'
-import { useAccount, useContractWrite } from 'wagmi'
+import {
+  useAccount,
+  useContractWrite,
+  useProvider,
+  useSigner,
+  useSignMessage,
+} from 'wagmi'
+import { ethers } from 'ethers'
+import { ExternalProvider } from '@ethersproject/providers'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -26,6 +34,8 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiAbi } from '../../abi/Wiki.abi'
+import { createPermitMessageData } from '@/utils/signMessage'
+import { getAccount } from '@/utils/getAccount'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -42,6 +52,10 @@ const CreateWiki = () => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [triggerUpdate, setTriggerUpdate] = useState('')
+  const [{ data, error, loading }, getSigner] = useSigner({
+    skip: true,
+  })
+  // const [{ data: signedData, error, loading }, signMessage] = useSignMessage()
   const [txError, setTxError] = useState({
     title: '',
     description: '',
@@ -75,6 +89,8 @@ const CreateWiki = () => {
 
   const saveHashInTheBlockchain = async (hash: string) => {
     const result = await write({ args: [hash] })
+    console.log(result)
+
     await result.data?.wait(2)
 
     setSubmittingWiki(false)
@@ -91,6 +107,42 @@ const CreateWiki = () => {
       description: result.error.message,
       opened: true,
     })
+  }
+
+  const signData = async (tmp: any) => {
+    const types = createPermitMessageData()
+
+    const value = {
+      content: md,
+      signer: getAccount(accountData) || '',
+    }
+    const metamaskProvider = new ethers.providers.Web3Provider(
+      window.ethereum as ExternalProvider,
+    )
+    const signer = metamaskProvider.getSigner()
+
+    console.log(tmp.content.user)
+    console.log(types)
+
+    console.log(
+      await signer?._signTypedData(
+        {
+          name: 'Everipedia IQ',
+          version: '1',
+          chainId: config.chainId,
+          verifyingContract: config.wikiContractAddress,
+        },
+        types,
+        {
+          ...tmp,
+          content: {
+            title: tmp.content.title,
+            content: tmp.content.content,
+            user: tmp.content.user,
+          },
+        },
+      ),
+    )
   }
 
   const saveOnIpfs = async () => {
@@ -115,11 +167,16 @@ const CreateWiki = () => {
         },
       }
 
-      const {
-        data: { ipfs },
-      } = await axios.post('/api/ipfs', tmp)
+      signData(tmp)
 
-      if (ipfs) saveHashInTheBlockchain(ipfs)
+      // const {
+      //   data: { ipfs },
+      // } = await axios.post('/api/ipfs', tmp)
+
+      // if (ipfs) {
+      //   // await write({args: [""]})
+      //   saveHashInTheBlockchain(ipfs)
+      // }
     }
   }
 
