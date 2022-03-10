@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
   Divider,
   Text,
@@ -23,11 +23,11 @@ const NetworkMenu = () => {
   const [detectedProvider, setDetectedProvider] = useState<any>()
   const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
 
-  const handleChainChanged = (chainDetails: string) => {
-    if (chainDetails !== chainId) {
-      onOpen()
-    }
-  }
+  const handleChainChanged = useCallback((chainDetails: string) => {
+      if (chainDetails !== chainId) {
+        onOpen()
+      }
+  }, [])
 
   useEffect(() => {
     const getConnectedChain = async (provider: any) => {
@@ -53,7 +53,7 @@ const NetworkMenu = () => {
         detectedProvider.removeListener('chainChanged', handleChainChanged)
       }
     }
-  }, [detectedProvider])
+  }, [detectedProvider, handleChainChanged])
 
   const handleNetworkSwitch = (newNetwork: Network) => {
     if (newNetwork.chainId !== chainId) {
@@ -85,10 +85,11 @@ const NetworkMenu = () => {
           })
           onClose()
         } catch (addError) {
-          console.log(addError)
+          return null
         }
       }
     }
+    return null
   }
 
   return (
