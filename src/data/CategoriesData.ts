@@ -15,7 +15,7 @@ import {
 
 export const sampleCategories: CategoryDataType = [
   {
-    slug: '/categories/first-category',
+    id: 'first-category',
     title: 'First Category',
     description:
       'This is the first category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. ',
@@ -24,7 +24,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsPaletteFill,
   },
   {
-    slug: '/categories/second-category',
+    id: 'second-category',
     title: 'Second Category',
     description:
       'This is the second category consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -33,7 +33,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsPatchMinusFill,
   },
   {
-    slug: '/categories/third-category',
+    id: 'third-category',
     title: 'Third Category',
     description:
       'This is the third category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -42,7 +42,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsWalletFill,
   },
   {
-    slug: '/categories/fourth-category',
+    id: 'fourth-category',
     title: 'Fourth Category',
     description:
       'This is the fourth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -51,7 +51,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsTrophyFill,
   },
   {
-    slug: '/categories/fifth-category',
+    id: 'fifth-category',
     title: 'Fifth Category',
     description:
       'This is the fifth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -60,7 +60,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsTerminalFill,
   },
   {
-    slug: '/categories/sixth-category',
+    id: 'sixth-category',
     title: 'Sixth Category',
     description:
       'This is the sixth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -69,7 +69,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsSpeakerFill,
   },
   {
-    slug: '/categories/seventh-category',
+    id: 'seventh-category',
     title: 'Seventh Category',
     description:
       'This is the seventh category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -78,7 +78,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsShieldFill,
   },
   {
-    slug: '/categories/eighth-category',
+    id: 'eighth-category',
     title: 'Eighth Category',
     description:
       'This is the eighth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -87,7 +87,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsPrinterFill,
   },
   {
-    slug: '/categories/ninth-category',
+    id: 'ninth-category',
     title: 'Ninth Category',
     description:
       'This is the ninth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -96,7 +96,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsPiggyBankFill,
   },
   {
-    slug: '/categories/tenth-category',
+    id: 'tenth-category',
     title: 'Tenth Category',
     description:
       'This is the tenth category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',
@@ -105,7 +105,7 @@ export const sampleCategories: CategoryDataType = [
     icon: BsBriefcaseFill,
   },
   {
-    slug: '/categories/eleventh-category',
+    id: 'eleventh-category',
     title: 'Eleventh Category',
     description:
       'This is the eleventh category consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur consectetur consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem. consectetur adipisicing elit. Quisquam, quidem.',

@@ -14,7 +14,7 @@ import { Image } from '../Elements/Image/Image'
 const CategoriesList = () => {
   const categoriesData = [
     {
-      slug: '/categories',
+      id: '#',
       title: 'All Categories',
       imageCard: `https://picsum.photos/seed/categories/400/580`,
     },
@@ -34,7 +34,7 @@ const CategoriesList = () => {
       >
         {categoriesData.map(category => (
           <LinkBox
-            key={category.slug}
+            key={category.id}
             _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
             cursor="pointer"
             borderWidth="1px"
@@ -49,7 +49,7 @@ const CategoriesList = () => {
               h="180px"
               w="100%"
             />
-            <NextLink href={category.slug} passHref>
+            <NextLink href={`/categories/${category.id}`} passHref>
               <LinkOverlay>
                 <Heading w="100%" textAlign="center" py={4} size="md">
                   {category.title}

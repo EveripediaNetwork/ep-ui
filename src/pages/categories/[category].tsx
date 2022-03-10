@@ -9,9 +9,7 @@ import { useRouter } from 'next/router'
 const Category: NextPage = () => {
   const router = useRouter()
   const category = router.query.category as string
-  const categoryData = sampleCategories.find(
-    c => c.slug === `/categories/${category}`,
-  )
+  const categoryData = sampleCategories.find(c => c.id === category)
   return (
     <Box mt="-12" bgColor="pageBg" pb={12}>
       <Image
