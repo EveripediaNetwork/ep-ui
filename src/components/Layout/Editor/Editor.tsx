@@ -1,5 +1,6 @@
-import React, { memo, useRef } from 'react'
+import React, { memo, useCallback, useEffect, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@toast-ui/editor/dist/toastui-editor.css'
 
@@ -8,11 +9,20 @@ import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 type EditorType = {
   onChange: (value: string | undefined) => void
   initialValue: string
+  markdown: string
 }
 
-const Editor = ({ onChange, initialValue }: EditorType) => {
+const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
+
+  const callEditorMethod = useCallback(() => {
+    editorRef.current?.getInstance().setMarkdown(markdown)
+  }, [editorRef, markdown])
+
+  useEffect(() => {
+    callEditorMethod()
+  }, [markdown, callEditorMethod])
 
   return (
     <Box m={0} w="100%" h="100%">
@@ -21,9 +31,10 @@ const Editor = ({ onChange, initialValue }: EditorType) => {
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         initialValue={initialValue}
         ref={editorRef}
-        onChange={() =>
-          onChange(editorRef?.current?.getInstance().getMarkdown())
-        }
+        onChange={() => {
+          if (editorRef.current)
+            onChange(editorRef.current.getInstance().getMarkdown())
+        }}
       />
     </Box>
   )

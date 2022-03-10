@@ -32,7 +32,7 @@ const MobileNavItem = ({
       onClick={() => {
         onToggle()
         handleClick(navItem)
-        if (!navItem.hasSubItem) {
+        if (!navItem.subItem) {
           router.push(navItem.href)
           setHamburger(false)
         }
@@ -62,7 +62,7 @@ const MobileNavItem = ({
             {navItem.label}
           </Text>
         </HStack>
-        {navItem.label !== 'wallet' && <RiArrowRightSLine />}
+        {navItem.subItem && <RiArrowRightSLine />}
       </Flex>
     </Stack>
   )

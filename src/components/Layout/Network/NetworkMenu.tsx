@@ -23,11 +23,14 @@ const NetworkMenu = () => {
   const [detectedProvider, setDetectedProvider] = useState<any>()
   const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
 
-  const handleChainChanged = useCallback((chainDetails: string) => {
-    if (chainDetails !== chainId) {
-      onOpen()
-    }
-  }, [onOpen, chainId])
+  const handleChainChanged = useCallback(
+    (chainDetails: string) => {
+      if (chainDetails !== chainId) {
+        onOpen()
+      }
+    },
+    [onOpen, chainId],
+  )
 
   useEffect(() => {
     const getConnectedChain = async (provider: any) => {

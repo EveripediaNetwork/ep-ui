@@ -17,7 +17,6 @@ interface NavMenuType {
   children?: React.ReactNode
   navItem: NavItem
   setVisibleMenu: React.Dispatch<React.SetStateAction<number | null>>
-  labelIsIcon?: boolean
   label: React.ReactNode
 }
 const NavMenu = ({
@@ -25,7 +24,6 @@ const NavMenu = ({
   navItem,
   setVisibleMenu,
   children,
-  labelIsIcon,
   label,
 }: NavMenuType) => {
   const router = useRouter()
@@ -35,6 +33,7 @@ const NavMenu = ({
         pr={4}
         fontSize="lg"
         fontWeight={600}
+        height="70px"
         color="linkColor"
         _hover={{
           textDecoration: 'none',
@@ -43,18 +42,18 @@ const NavMenu = ({
         whiteSpace="nowrap"
         onMouseEnter={() => setVisibleMenu(navItem.id)}
         onClick={() =>
-          navItem.hasSubItem
+          navItem.subItem
             ? setVisibleMenu(visibleMenu ? null : navItem.id)
             : router.push(navItem.href)
         }
       >
         {label}
       </MenuButton>
-      {navItem.hasSubItem && (
+      {navItem.subItem && (
         <MenuList
           bg="subMenuBg"
           onMouseEnter={() => setVisibleMenu(navItem.id)}
-          mt={!labelIsIcon ? 4 : 1.5}
+          mt={-1}
         >
           {navItem.subItem?.map((item, key) => (
             <Link

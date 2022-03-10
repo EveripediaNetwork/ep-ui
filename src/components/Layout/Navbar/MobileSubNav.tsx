@@ -1,17 +1,50 @@
 import React from 'react'
 import { Flex, Stack, Text, Icon, HStack, Link, Box } from '@chakra-ui/react'
-import { RiArrowLeftSLine } from 'react-icons/ri'
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import NextLink from 'next/link'
 
+const MobileSubNavItem = ({ item }: { item: NavItem }) => (
+  <Flex
+    py={3}
+    justifyContent="space-between"
+    alignItems="center"
+    _hover={{
+      textDecoration: 'none',
+    }}
+    fontSize="lg"
+    px={6}
+  >
+    <HStack>
+      {item.hasImage && (
+        <Icon
+          cursor="pointer"
+          fontSize="3xl"
+          color="linkColor"
+          fontWeight={600}
+          as={item.icon}
+          pr={3}
+        />
+      )}
+
+      <Text fontWeight={600} color="linkColor">
+        {item.label}
+      </Text>
+    </HStack>
+    {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
+  </Flex>
+)
+
 const MobileSubNav = ({
   activeMenu,
-  handleClick,
+  setShowSubNav,
   setHamburger,
+  setActiveMenu,
 }: {
   activeMenu: NavItem | null
-  handleClick: (status: boolean) => void
+  setShowSubNav: (status: boolean) => void
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
+  setActiveMenu: (menu: NavItem | null) => void
 }) => (
   <Stack
     direction="column"
@@ -29,7 +62,7 @@ const MobileSubNav = ({
         textDecoration: 'none',
       }}
       fontSize="lg"
-      onClick={() => handleClick(false)}
+      onClick={() => setShowSubNav(false)}
       bg="pageBg"
       px={2}
       borderBottomColor="gray.200"
@@ -41,40 +74,22 @@ const MobileSubNav = ({
       </Text>
     </Flex>
     <Box h="calc(100vh - 300px)" overflowY="scroll">
-      {activeMenu?.subItem?.map((item, key) => (
-        <NextLink href={item.href} key={key} passHref>
-          <Link
-            href="passRef"
-            py={3}
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            _hover={{
-              textDecoration: 'none',
-            }}
-            fontSize="lg"
-            px={6}
-            onClick={() => setHamburger(false)}
-          >
-            <HStack>
-              {item.hasImage && (
-                <Icon
-                  cursor="pointer"
-                  fontSize="3xl"
-                  color="linkColor"
-                  fontWeight={600}
-                  as={item.icon}
-                  pr={3}
-                />
-              )}
-
-              <Text fontWeight={600} color="linkColor">
-                {item.label}
-              </Text>
-            </HStack>
-          </Link>
-        </NextLink>
-      ))}
+      {activeMenu?.subItem?.map((item, key) => {
+        if (item.subItem) {
+          return (
+            <Box onClick={() => setActiveMenu(item)}>
+              <MobileSubNavItem key={key} item={item} />
+            </Box>
+          )
+        }
+        return (
+          <NextLink href={item.href} key={key} passHref>
+            <Link href="passRef" onClick={() => setHamburger(false)}>
+              <MobileSubNavItem item={item} />
+            </Link>
+          </NextLink>
+        )
+      })}
     </Box>
   </Stack>
 )

@@ -8,17 +8,12 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react'
-import {
-  RiFolder3Fill,
-  RiGobletLine,
-  RiTranslate2,
-  RiSurveyFill,
-} from 'react-icons/ri'
+import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Category, Content, Languages } from '@/types/Wiki'
+import { BaseCategory, Content, Languages } from '@/types/Wiki'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
@@ -99,16 +94,6 @@ const Highlights = () => {
         </FlexRowContainer>
         <FlexRowContainer>
           <FlexRow>
-            <RiGobletLine /> <Text>Adult Content</Text>
-          </FlexRow>
-          <Text>
-            {getWikiMetadataById(currentWiki, 'adult-content')?.value === true
-              ? 'Yes'
-              : 'No'}
-          </Text>
-        </FlexRowContainer>
-        <FlexRowContainer>
-          <FlexRow>
             <RiTranslate2 /> <Text>Language</Text>
           </FlexRow>
           <Text>{Languages[currentWiki.language]}</Text>
@@ -128,7 +113,7 @@ const Highlights = () => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.content.categories.map((c: Category) => (
+            {currentWiki.content.categories.map((c: BaseCategory) => (
               <Badge variant="outline" m="1">
                 {c.title}
               </Badge>
@@ -142,7 +127,9 @@ const Highlights = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <Button onClick={onOpen}>Edit</Button>
+          <Button variant="outline" onClick={onOpen}>
+            Edit
+          </Button>
         </Flex>
       </Flex>
       <HighlightsModal isOpen={isOpen} onClose={onClose} />

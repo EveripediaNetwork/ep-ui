@@ -15,7 +15,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
   ],
-  plugins: ['import', '@typescript-eslint', 'unused-imports'],
+  plugins: ['import', '@typescript-eslint', 'unused-imports', 'prettier'],
   settings: {
     next: {
       rootDir: [
@@ -41,6 +41,7 @@ module.exports = {
   },
   rules: {
     '@next/next/no-html-link-for-pages': ['error', './src'],
+    'arrow-body-style': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -54,6 +55,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-console': 'warn',
+    "prettier/prettier": ["error"],
     'react/require-default-props': 0,
     'react/no-array-index-key': 0,
     'react/jsx-props-no-spreading': 0,
@@ -85,11 +87,5 @@ module.exports = {
       extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
     },
   ],
-  ignorePatterns: [
-    '**/*.js',
-    '**/*.json',
-    'node_modules',
-    '.next',
-    'public',
-  ],
+  ignorePatterns: ['**/*.js', '**/*.json', 'node_modules', '.next', 'public'],
 }
