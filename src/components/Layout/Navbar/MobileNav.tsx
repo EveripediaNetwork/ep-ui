@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Flex,
@@ -25,6 +25,7 @@ import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
+import { useGetTopCategoriesLinksQuery } from '@/services/categories'
 import { ColorModeToggle } from './ColorModeToggle'
 
 type MobileNavType = {
@@ -39,6 +40,34 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const iconSize = 20
+  const [navData, setNavData] = useState<NavItem[]>(MOBILE_NAV_ITEMS)
+  const { data: topCategoriesLinks } = useGetTopCategoriesLinksQuery()
+
+  // Update nav data when top categories links are loaded
+  useEffect(() => {
+    if (topCategoriesLinks) {
+      const topCategories = topCategoriesLinks.map(
+        ({ title, id, icon }, i) => ({
+          id: parseInt(`10${i}${2}`, 10),
+          label: title || id,
+          href: `/categories/${id}`,
+          hasImage: true,
+          icon,
+        }),
+      )
+      setNavData([
+        ...MOBILE_NAV_ITEMS.map(navItem => {
+          if (navItem.label === 'Explore') {
+            return {
+              ...navItem,
+              subItem: [...(navItem.subItem || []), ...topCategories],
+            }
+          }
+          return navItem
+        }),
+      ])
+    }
+  }, [topCategoriesLinks])
 
   const handleClick = (currentNav: NavItem | null) => {
     if (currentNav && currentNav.subItem) {
@@ -90,7 +119,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
             pb={6}
             display={{ lg: 'flex', xl: 'none' }}
           >
-            {MOBILE_NAV_ITEMS.map(navItem => (
+            {navData.map(navItem => (
               <MobileNavItem
                 handleClick={item => handleClick(item)}
                 key={navItem.label}

@@ -17,7 +17,7 @@ interface CategoryCardProps {
   coverIcon?: IconType
   title: string
   brief: string
-  categoryUrl: string
+  categoryId: string
 }
 
 const CategoryCard = ({
@@ -25,7 +25,7 @@ const CategoryCard = ({
   coverIcon,
   title,
   brief,
-  categoryUrl,
+  categoryId,
 }: CategoryCardProps) => (
   <LinkBox
     as="article"
@@ -64,7 +64,7 @@ const CategoryCard = ({
       </Box>
 
       <Box p={8}>
-        <NextLink href={categoryUrl} passHref>
+        <NextLink href={`/categories/${categoryId}`} passHref>
           <LinkOverlay>
             <Heading textAlign="center" size="sm" my="10px">
               {title}

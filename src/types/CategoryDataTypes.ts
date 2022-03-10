@@ -3,7 +3,7 @@ import { IconType } from 'react-icons/lib'
 export type CategoryDataType = Array<CategoryObjDataType>
 
 export type CategoryObjDataType = {
-  slug: string
+  id: string
   title: string
   description: string
   imageCard: string

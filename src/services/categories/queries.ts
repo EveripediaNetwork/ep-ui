@@ -25,3 +25,12 @@ export const GET_CATEGORIES_BY_ID = gql`
     }
   }
 `
+export const GET_TOP_CATEGORIES_LINKS = gql`
+  query GetTopCategoriesLinks {
+    categories {
+      id
+      title
+      icon
+    }
+  }
+`

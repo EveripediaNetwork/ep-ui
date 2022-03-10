@@ -41,11 +41,11 @@ const Categories: NextPage = () => {
         >
           {data?.map((category, i) => (
             <CategoryCard
-              key={category.slug || sampleCategories[i].slug}
+              key={category.id || sampleCategories[i].id}
               imageCard={category.imageCard || sampleCategories[i].imageCard}
               title={category.title || sampleCategories[i].title}
               brief={category.description || sampleCategories[i].description}
-              categoryUrl={category.slug || sampleCategories[i].slug}
+              categoryId={category.id || sampleCategories[i].id}
               coverIcon={category.icon || sampleCategories[i].icon}
             />
           ))}

@@ -9,7 +9,6 @@ import {
   RiWallet2Line,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import { sampleCategories } from './CategoriesData'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -25,16 +24,6 @@ export const NAV_ITEMS: NavItem[] = [
         hasImage: true,
         icon: RiGridFill,
       },
-      // destructure sample categories and add to subItem by mapping and take first 9
-      ...sampleCategories
-        .map(({ title, slug, icon }, i) => ({
-          id: parseInt(`10${i}${2}`, 10),
-          label: title,
-          href: slug,
-          hasImage: true,
-          icon,
-        }))
-        .slice(0, 9),
     ],
   },
   {
