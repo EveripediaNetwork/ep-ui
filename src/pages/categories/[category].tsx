@@ -73,10 +73,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
   await Promise.all(getRunningOperationPromises())
-
   return {
     props: {
-      categoryData: result.data,
+      categoryData: result.data || [],
     },
   }
 }

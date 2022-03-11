@@ -16,6 +16,10 @@ type GetCategoriesLinksResponse = {
   categories: CategoryLink[]
 }
 
+type GetCategoryByIdResponse = {
+  categoryById: Category[]
+}
+
 export const categoriesApi = createApi({
   reducerPath: 'categoriesApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -36,8 +40,8 @@ export const categoriesApi = createApi({
         document: GET_CATEGORIES_BY_ID,
         variables: { id },
       }),
-      transformResponse: (response: GetCategoriesResponse) =>
-        response.categories,
+      transformResponse: (response: GetCategoryByIdResponse) =>
+        response.categoryById,
     }),
     getTopCategoriesLinks: builder.query<CategoryLink[], void>({
       query: () => ({
