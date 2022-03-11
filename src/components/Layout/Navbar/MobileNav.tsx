@@ -9,13 +9,6 @@ import {
   Divider,
   Menu,
   Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -63,19 +56,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
       h="calc((100vh - 0px) - 72px)"
     >
       <Box>
-        <Popover>
-          <PopoverTrigger>
-            <Button>Trigger</Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Confirmation!</PopoverHeader>
-            <PopoverBody>
-              Are you sure you want to have that milkshake?
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
         <NavSearch
           inputGroupProps={{ display: 'inherit' }}
           inputProps={{
@@ -84,6 +64,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
             borderX: 'none',
             py: 8,
           }}
+          listProps={{ w: 'auto', rounded: 'none', mt: 0 }}
         />
 
         <Divider />

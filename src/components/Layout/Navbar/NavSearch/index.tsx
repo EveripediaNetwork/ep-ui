@@ -19,6 +19,7 @@ import {
   AutoCompleteItem,
   AutoCompleteList,
   AutoCompleteGroupTitle,
+  AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
   SAMPLE_ARTICLES,
@@ -29,10 +30,11 @@ import {
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
   inputProps?: HTMLChakraProps<'div'>
+  listProps?: AutoCompleteListProps
 }
 
 export const NavSearch = (props: NavSearchProps) => {
-  const { inputGroupProps, inputProps } = props
+  const { inputGroupProps, inputProps, listProps } = props
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchList = () => {
@@ -217,7 +219,7 @@ export const NavSearch = (props: NavSearchProps) => {
         />
       </InputGroup>
 
-      <AutoCompleteList p="0" shadow="lg" minW="lg">
+      <AutoCompleteList p="0" shadow="lg" maxH="auto" {...listProps}>
         {isLoading ? loadingView : searchList}
 
         <Flex
