@@ -5,6 +5,6 @@ export interface NavItem {
   label: string
   href: string
   hasImage?: boolean
-  icon?: IconType
+  icon?: string | IconType
   subItem?: NavItem[]
 }

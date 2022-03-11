@@ -4,7 +4,7 @@ import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import CategoryCard from '@/components/Categories/CategoryCard'
-import { sampleCategories } from '@/data/CategoriesData'
+
 import {
   getCategories,
   getRunningOperationPromises,
@@ -39,14 +39,14 @@ const Categories: NextPage = () => {
           my={12}
           gap={8}
         >
-          {data?.map((category, i) => (
+          {data?.map(category => (
             <CategoryCard
-              key={category.id || sampleCategories[i].id}
-              imageCard={category.imageCard || sampleCategories[i].imageCard}
-              title={category.title || sampleCategories[i].title}
-              brief={category.description || sampleCategories[i].description}
-              categoryId={category.id || sampleCategories[i].id}
-              coverIcon={category.icon || sampleCategories[i].icon}
+              key={category.id}
+              imageCard={category.cardImage}
+              title={category.title}
+              brief={category.description}
+              categoryId={category.id}
+              coverIcon={category.icon}
             />
           ))}
         </SimpleGrid>

@@ -1,12 +1,13 @@
-import { IconType } from 'react-icons/lib'
-
-export type CategoryDataType = Array<CategoryObjDataType>
-
-export type CategoryObjDataType = {
+export type Category = {
   id: string
   title: string
   description: string
-  imageCard: string
-  imageHero: string
-  icon: IconType
+  cardImage: string
+  heroImage: string
+  icon: string
+}
+export type CategoryLink = {
+  id: string
+  title: string
+  icon: string
 }

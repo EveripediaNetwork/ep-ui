@@ -1,25 +1,33 @@
 import React from 'react'
-import { NextPage } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import { Divider, Box, Heading, SimpleGrid, Icon, Flex } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
-import { sampleCategories } from '@/data/CategoriesData'
-import { useRouter } from 'next/router'
+import {
+  getCategoriesById,
+  getRunningOperationPromises,
+} from '@/services/categories'
+import { store } from '@/store/store'
+import { Category } from '@/types/CategoryDataTypes'
+import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 
-const Category: NextPage = () => {
-  const router = useRouter()
-  const category = router.query.category as string
-  const categoryData = sampleCategories.find(c => c.id === category)
+interface CategoryPageProps {
+  categoryData: Category
+}
+const CategoryPage: NextPage<CategoryPageProps> = ({
+  categoryData,
+}: CategoryPageProps) => {
+  const categoryIcon = getBootStrapIcon(categoryData.icon)
   return (
     <Box mt="-12" bgColor="pageBg" pb={12}>
       <Image
         priority
-        src={categoryData?.imageHero || '/images/categories-backdrop.png'}
+        src={categoryData?.heroImage || '/images/categories-backdrop.png'}
         height="250px"
       />
       <Flex mx="auto" justifyContent="center" mt={12}>
         <Icon
-          as={categoryData?.icon}
+          as={categoryIcon}
           borderRadius="100px"
           overflow="hidden"
           borderWidth="5px"
@@ -61,4 +69,15 @@ const Category: NextPage = () => {
   )
 }
 
-export default Category
+export const getServerSideProps: GetServerSideProps = async context => {
+  const categoryId: string = context.params?.category as string
+  const result = await store.dispatch(getCategoriesById.initiate(categoryId))
+  await Promise.all(getRunningOperationPromises())
+
+  return {
+    props: {
+      categoryData: result.data,
+    },
+  }
+}
+export default CategoryPage

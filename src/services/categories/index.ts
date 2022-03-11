@@ -6,11 +6,14 @@ import {
   GET_CATEGORIES_BY_ID,
   GET_TOP_CATEGORIES_LINKS,
 } from '@/services/categories/queries'
-import { CategoryDataType } from '@/types/CategoryDataTypes'
+import { Category, CategoryLink } from '@/types/CategoryDataTypes'
 import config from '@/config'
 
 type GetCategoriesResponse = {
-  categories: CategoryDataType
+  categories: Category[]
+}
+type GetCategoriesLinksResponse = {
+  categories: CategoryLink[]
 }
 
 export const categoriesApi = createApi({
@@ -23,12 +26,12 @@ export const categoriesApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getCategories: builder.query<CategoryDataType, void>({
+    getCategories: builder.query<Category[], void>({
       query: () => ({ document: GET_CATEGORIES }),
       transformResponse: (response: GetCategoriesResponse) =>
         response.categories,
     }),
-    getCategoriesById: builder.query<CategoryDataType, string>({
+    getCategoriesById: builder.query<Category[], string>({
       query: (id: string) => ({
         document: GET_CATEGORIES_BY_ID,
         variables: { id },
@@ -36,11 +39,11 @@ export const categoriesApi = createApi({
       transformResponse: (response: GetCategoriesResponse) =>
         response.categories,
     }),
-    getTopCategoriesLinks: builder.query<CategoryDataType, void>({
+    getTopCategoriesLinks: builder.query<CategoryLink[], void>({
       query: () => ({
         document: GET_TOP_CATEGORIES_LINKS,
       }),
-      transformResponse: (response: GetCategoriesResponse) =>
+      transformResponse: (response: GetCategoriesLinksResponse) =>
         response.categories,
     }),
   }),

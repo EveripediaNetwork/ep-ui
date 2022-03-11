@@ -9,34 +9,7 @@ import { useGetTopCategoriesLinksQuery } from '@/services/categories'
 const DesktopNav = () => {
   const router = useRouter()
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-  const [navData, setNavData] = useState<NavItem[]>(NAV_ITEMS)
-  const { data: topCategoriesLinks } = useGetTopCategoriesLinksQuery()
-
-  // Update nav data when top categories links are loaded
-  useEffect(() => {
-    if (topCategoriesLinks) {
-      const topCategories = topCategoriesLinks.map(
-        ({ title, id, icon }, i) => ({
-          id: parseInt(`10${i}${2}`, 10),
-          label: title || id,
-          href: `/categories/${id}`,
-          hasImage: true,
-          icon,
-        }),
-      )
-      setNavData([
-        ...NAV_ITEMS.map(navItem => {
-          if (navItem.label === 'Explore') {
-            return {
-              ...navItem,
-              subItem: [...(navItem.subItem || []), ...topCategories],
-            }
-          }
-          return navItem
-        }),
-      ])
-    }
-  }, [topCategoriesLinks])
+  const { data: categoriesLinks } = useGetTopCategoriesLinksQuery()
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -50,7 +23,7 @@ const DesktopNav = () => {
 
   return (
     <HStack spacing={4} onMouseLeave={() => setVisibleMenu(null)}>
-      {navData.map(navItem => (
+      {NAV_ITEMS(categoriesLinks || []).map((navItem: NavItem) => (
         <NavMenu
           key={navItem.id}
           navItem={navItem}
