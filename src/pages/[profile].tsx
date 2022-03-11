@@ -7,12 +7,16 @@ import { Flex } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
 
-const Profile: NextPage = () => {
+export type PageWithoutFooter = NextPage & {
+  noFooter?: boolean
+}
+
+const Profile: PageWithoutFooter = () => {
   const profileContext = useProfile()
 
   return (
     <ProfileProvider value={profileContext}>
-      <Flex direction="column" align="center" pb="60" pos="relative">
+      <Flex direction="column" align="center" pos="relative">
         <Image
           width="full"
           height="56"
@@ -25,5 +29,6 @@ const Profile: NextPage = () => {
     </ProfileProvider>
   )
 }
+Profile.noFooter = true
 
 export default Profile

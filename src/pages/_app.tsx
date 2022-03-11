@@ -17,7 +17,10 @@ import chakraTheme from '../theme'
 import './static/assets/global.css'
 import './static/assets/dark-mode.css'
 
-const App = (props: AppProps) => {
+type EpAppProps = AppProps & {
+  Component: AppProps['Component'] & { noFooter?: boolean }
+}
+const App = (props: EpAppProps) => {
   const { Component, pageProps, router } = props
 
   store.subscribe(
@@ -32,7 +35,7 @@ const App = (props: AppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Provider autoConnect connectors={connectors}>
-            <Layout>
+            <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </Provider>
