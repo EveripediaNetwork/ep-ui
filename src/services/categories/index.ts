@@ -4,7 +4,7 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_CATEGORIES,
   GET_CATEGORIES_BY_ID,
-  GET_TOP_CATEGORIES_LINKS,
+  GET_CATEGORIES_LINKS,
 } from '@/services/categories/queries'
 import { Category, CategoryLink } from '@/types/CategoryDataTypes'
 import config from '@/config'
@@ -43,9 +43,9 @@ export const categoriesApi = createApi({
       transformResponse: (response: GetCategoryByIdResponse) =>
         response.categoryById,
     }),
-    getTopCategoriesLinks: builder.query<CategoryLink[], void>({
+    getCategoriesLinks: builder.query<CategoryLink[], void>({
       query: () => ({
-        document: GET_TOP_CATEGORIES_LINKS,
+        document: GET_CATEGORIES_LINKS,
       }),
       transformResponse: (response: GetCategoriesLinksResponse) =>
         response.categories,
@@ -56,9 +56,9 @@ export const categoriesApi = createApi({
 export const {
   useGetCategoriesByIdQuery,
   useGetCategoriesQuery,
-  useGetTopCategoriesLinksQuery,
+  useGetCategoriesLinksQuery,
   util: { getRunningOperationPromises },
 } = categoriesApi
 
-export const { getCategories, getCategoriesById, getTopCategoriesLinks } =
+export const { getCategories, getCategoriesById, getCategoriesLinks } =
   categoriesApi.endpoints

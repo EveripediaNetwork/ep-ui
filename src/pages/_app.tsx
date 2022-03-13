@@ -16,7 +16,7 @@ import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
 import { saveState } from '@/utils/browserStorage'
 import { store } from '@/store/store'
-import { getTopCategoriesLinks } from '@/services/categories'
+import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import chakraTheme from '../theme'
 
@@ -46,7 +46,7 @@ const App = (props: AppProps) => {
 }
 
 export const getServerSideProps = async () => {
-  store.dispatch(getTopCategoriesLinks.initiate())
+  store.dispatch(getCategoriesLinks.initiate())
   await Promise.all(getRunningOperationPromises())
   return {
     props: {},

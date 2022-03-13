@@ -25,7 +25,7 @@ import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
-import { useGetTopCategoriesLinksQuery } from '@/services/categories'
+import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { ColorModeToggle } from './ColorModeToggle'
 
 type MobileNavType = {
@@ -39,7 +39,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   })
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { data: categoriesLinks } = useGetTopCategoriesLinksQuery()
+  const { data: categoriesLinks } = useGetCategoriesLinksQuery()
   const iconSize = 20
 
   const handleClick = (currentNav: NavItem | null) => {

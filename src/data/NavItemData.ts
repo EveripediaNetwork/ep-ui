@@ -25,7 +25,7 @@ export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
         hasImage: true,
         icon: RiGridFill,
       },
-      // destructure sample categories and add to subItem by mapping
+      // destructure categories and add to subItem by mapping
       ...categories
         .map(({ title, id, icon }, i) => ({
           id: parseInt(`10${i}${2}`, 10),

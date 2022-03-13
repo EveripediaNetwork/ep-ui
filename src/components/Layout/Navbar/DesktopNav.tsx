@@ -4,12 +4,12 @@ import { NAV_ITEMS } from '@/data/NavItemData'
 import { NavMenu } from '@/components/Layout/Navbar'
 import { useRouter } from 'next/router'
 import { NavItem } from '@/types/NavItemType'
-import { useGetTopCategoriesLinksQuery } from '@/services/categories'
+import { useGetCategoriesLinksQuery } from '@/services/categories'
 
 const DesktopNav = () => {
   const router = useRouter()
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-  const { data: categoriesLinks } = useGetTopCategoriesLinksQuery()
+  const { data: categoriesLinks } = useGetCategoriesLinksQuery()
 
   useEffect(() => {
     const handleRouteChange = () => {

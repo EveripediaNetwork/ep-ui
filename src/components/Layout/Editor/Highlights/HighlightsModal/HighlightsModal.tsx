@@ -24,10 +24,8 @@ import {
   PageTypeName,
   Wiki,
 } from '@/types/Wiki'
-import { sampleCategories } from '@/data/CategoriesData'
+import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
-
-const categoryOptions = sampleCategories.map(c => c.title)
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -37,6 +35,7 @@ const HighlightsModal = ({
   const dispatch = useAppDispatch()
   const currentWiki = useAppSelector(state => state.wiki)
   const [wiki, setWiki] = useState<Wiki>({ ...currentWiki })
+  const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
   const SecondaryButton = (
     <Button
@@ -153,8 +152,8 @@ const HighlightsModal = ({
           }}
           placeholder="Choose categories"
         >
-          {categoryOptions.map(o => (
-            <option key={o}>{o}</option>
+          {categoryOptions?.map(o => (
+            <option key={o.title}>{o.title}</option>
           ))}
         </Select>
 
