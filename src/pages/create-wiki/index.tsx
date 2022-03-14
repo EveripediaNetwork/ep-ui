@@ -22,6 +22,7 @@ import {
 } from 'wagmi'
 import { ethers } from 'ethers'
 import { ExternalProvider } from '@ethersproject/providers'
+import { encodeData } from 'eip-712'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -109,7 +110,7 @@ const CreateWiki = () => {
     })
   }
 
-  const signData = async (tmp: any) => {
+  const signData = async (ipfs: string) => {
     const types = createPermitMessageData()
 
     const value = {
@@ -119,30 +120,38 @@ const CreateWiki = () => {
     const metamaskProvider = new ethers.providers.Web3Provider(
       window.ethereum as ExternalProvider,
     )
-    const signer = metamaskProvider.getSigner()
+    // const signer = metamaskProvider.getSigner()
+    const signer = (await getSigner()) as any
 
-    console.log(tmp.content.user)
-    console.log(types)
+    const domain = {
+      name: 'Everipedia IQ',
+      version: '1',
+      chainId: 80001,
+      verifyingContract: config.wikiContractAddress,
+    }
 
-    console.log(
-      await signer?._signTypedData(
-        {
-          name: 'Everipedia IQ',
-          version: '1',
-          chainId: config.chainId,
-          verifyingContract: config.wikiContractAddress,
-        },
-        types,
-        {
-          ...tmp,
-          content: {
-            title: tmp.content.title,
-            content: tmp.content.content,
-            user: tmp.content.user,
-          },
-        },
-      ),
+    const signedData = await signer?._signTypedData(domain, types, {
+      ipfs,
+    })
+
+    console.log(signedData)
+
+    const contract = new ethers.Contract(
+      config.wikiContractAddress,
+      WikiAbi,
+      signer,
     )
+
+    const args = { domain, types, primaryType: 'post', message: { ipfs } }
+    console.log(args)
+    // await signer.sendTransaction(signedData)
+    // const signature = await signer.provider.send('eth_signTypedData_v4', [
+    //   getAccount(accountData),
+    //   JSON.stringify(args),
+    // ])
+    const splittedSignature = ethers.utils.splitSignature(signedData)
+    // console.log(signature)
+    console.log(splittedSignature)
   }
 
   const saveOnIpfs = async () => {
@@ -167,16 +176,15 @@ const CreateWiki = () => {
         },
       }
 
-      signData(tmp)
+      const {
+        data: { ipfs },
+      } = await axios.post('/api/ipfs', tmp)
 
-      // const {
-      //   data: { ipfs },
-      // } = await axios.post('/api/ipfs', tmp)
-
-      // if (ipfs) {
-      //   // await write({args: [""]})
-      //   saveHashInTheBlockchain(ipfs)
-      // }
+      if (ipfs) {
+        signData(ipfs)
+        // await write({args: [""]})
+        // saveHashInTheBlockchain(ipfs)
+      }
     }
   }
 

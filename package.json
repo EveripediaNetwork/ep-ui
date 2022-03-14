@@ -40,6 +40,7 @@
     "buffer": "^6.0.3",
     "contracts": "*",
     "debounce": "^1.2.1",
+    "eip-712": "^1.0.0",
     "ethers": "5.5.4",
     "framer-motion": "^6.2.8",
     "graphql": "^16.3.0",
