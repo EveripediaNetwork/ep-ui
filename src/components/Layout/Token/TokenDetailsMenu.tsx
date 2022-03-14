@@ -22,10 +22,9 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
               symbol: tokenSymbol,
               decimals: 18,
               image:
-                'https://pbs.twimg.com/profile_images/1414736076158033921/nResATsF_400x400.png',
+                'https://ipfs.everipedia.org/ipfs/QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh',
             },
           },
-          id: Math.round(Math.random() * 100000),
         },
         () => {
           return null

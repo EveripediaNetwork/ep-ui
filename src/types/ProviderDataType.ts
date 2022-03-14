@@ -1,5 +1,4 @@
 type JsonRpcRequest = {
-  id: number
   method: string
   params?: {
     type: string
