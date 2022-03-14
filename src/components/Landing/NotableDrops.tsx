@@ -90,7 +90,7 @@ export const NotableDrops = () => {
   )
   return (
     <Flex direction="column" mt="20" gap={10} align="center">
-      <Text align="center" fontWeight="semibold" fontSize="2xl">
+      <Text align="center" fontWeight="bold" fontSize="2xl">
         Notable Wikis
       </Text>
 
@@ -133,10 +133,12 @@ export const NotableDrops = () => {
                   <Box color="white" pt={4} px={8} gap={4} textAlign="center">
                     <NextLink href="#" passHref>
                       <LinkOverlay>
-                        <Text fontSize="2xl">{slide.label}</Text>
+                        <Text fontSize="xl" fontWeight="bold">
+                          {slide.label}
+                        </Text>
                       </LinkOverlay>
                     </NextLink>
-                    <Text fontSize="lg">{slide.description}</Text>
+                    <Text fontSize="md">{slide.description}</Text>
                   </Box>
                 </Box>
                 <Flex justifyContent="center" p={4}>
