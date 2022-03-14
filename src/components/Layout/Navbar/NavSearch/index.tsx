@@ -26,6 +26,7 @@ import {
   SAMPLE_CATEGORIES,
   SAMPLE_PROFILES,
 } from '@/components/Layout/Navbar/NavSearch/utils'
+import { useGetWikisTitleByIdQuery } from '@/services/nav-search'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -36,6 +37,12 @@ export type NavSearchProps = {
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
   const [isLoading, setIsLoading] = useState(true)
+
+  const { data: wikisData } = useGetWikisTitleByIdQuery({ title: '' })
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 42 ~ NavSearch ~ wikisData',
+    wikisData,
+  )
 
   const fetchList = () => {
     setIsLoading(false)
