@@ -40,7 +40,7 @@ const Footer = () => {
         <Divider orientation="horizontal" />
         <SimpleGrid fontSize="xs" columns={{ base: 1, lg: 2 }}>
           <Stack align={{ base: 'center', lg: 'flex-start' }} flex="1">
-            <Text fontSize="sm" fontWeight="bold" py={3}>
+            <Text fontSize="sm" py={3}>
               © 2022 Everipedia. All rights reserved
             </Text>
           </Stack>
