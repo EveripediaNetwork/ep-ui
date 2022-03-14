@@ -7,6 +7,7 @@ import {
   wikiReducer,
 } from '@/store/slices'
 import { loadState } from '@/utils/browserStorage'
+import { categoriesApi } from '@/services/categories'
 
 export const store = configureStore({
   reducer: {
@@ -15,9 +16,12 @@ export const store = configureStore({
     user: userReducer,
     wiki: wikiReducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
+    [categoriesApi.reducerPath]: categoriesApi.reducer,
   },
   middleware: gDM =>
-    gDM({ serializableCheck: true }).concat(wikiApi.middleware),
+    gDM({ serializableCheck: true })
+      .concat(wikiApi.middleware)
+      .concat(categoriesApi.middleware),
   preloadedState: loadState(),
 })
 

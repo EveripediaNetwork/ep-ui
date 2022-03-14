@@ -31,6 +31,7 @@
     "@ethersproject/bignumber": "^5.5.0",
     "@ethersproject/providers": "^5.5.1",
     "@fontsource/poppins": "^4.5.0",
+    "@metamask/detect-provider": "^1.2.0",
     "@reduxjs/toolkit": "^1.8.0",
     "@rtk-query/graphql-request-base-query": "^1.0.3",
     "@toast-ui/editor": "^3.1.3",

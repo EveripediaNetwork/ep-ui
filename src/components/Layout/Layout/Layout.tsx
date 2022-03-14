@@ -7,13 +7,19 @@ const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   ssr: false,
 })
 
-const Layout = ({ children }: { children: React.ReactNode }) => (
+const Layout = ({
+  children,
+  noFooter,
+}: {
+  children: React.ReactNode
+  noFooter?: boolean
+}) => (
   <Stack justify="space-between" minH="100vh" spacing={0}>
     <Navbar />
     <Box as="main" pt={20}>
       {children}
     </Box>
-    <Footer />
+    {!noFooter && <Footer />}
   </Stack>
 )
 

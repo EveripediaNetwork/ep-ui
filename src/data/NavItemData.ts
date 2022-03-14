@@ -9,9 +9,9 @@ import {
   RiWallet2Line,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import { sampleCategories } from './CategoriesData'
+import { CategoryLink } from '@/types/CategoryDataTypes'
 
-export const NAV_ITEMS: NavItem[] = [
+export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
   {
     id: 1,
     label: 'Explore',
@@ -25,14 +25,16 @@ export const NAV_ITEMS: NavItem[] = [
         hasImage: true,
         icon: RiGridFill,
       },
-      // destructure sample categories and add to subItem by mapping and take first 9
-      ...sampleCategories
-        .map(({ title, slug, icon }, i) => ({
+      // destructure categories and add to subItem by mapping
+      ...categories
+        .map(({ title, id, icon }, i) => ({
           id: parseInt(`10${i}${2}`, 10),
           label: title,
-          href: slug,
+          href: `/categories/${id}`,
           hasImage: true,
-          icon,
+          /* eslint-disable */
+          icon: require(`react-icons/bs`)[icon],
+          /* eslint-enable */
         }))
         .slice(0, 9),
     ],
@@ -71,7 +73,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
 ]
 
-export const NAV_ICON: NavItem = {
+export const NAV_ICON = {
   label: 'Account',
   id: 5,
   href: '#',
@@ -107,8 +109,8 @@ export const mobileWalletDetails: NavItem = {
   icon: RiWallet2Line,
 }
 
-export const MOBILE_NAV_ITEMS: NavItem[] = [
-  ...NAV_ITEMS,
+export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
+  ...NAV_ITEMS(categories),
   {
     id: 7,
     label: 'Account',
