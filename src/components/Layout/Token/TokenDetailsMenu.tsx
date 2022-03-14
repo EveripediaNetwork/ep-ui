@@ -6,7 +6,6 @@ import { RootState } from '@/store/store'
 import { RiMore2Fill } from 'react-icons/ri'
 import { supportedTokens } from '@/data/SupportedToken'
 
-
 const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
   const { detectedProvider } = useSelector(
     (state: RootState) => state.providerNetwork,
@@ -23,7 +22,8 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
               address: config.iqAddress,
               symbol: tokenSymbol,
               decimals: 18,
-              image:'https://ipfs.everipedia.org/ipfs/QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh',
+              image:
+                'https://ipfs.everipedia.org/ipfs/QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh',
             },
           },
         },
@@ -39,12 +39,14 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
       <MenuButton>
         <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
       </MenuButton>
-      {
-        token && supportedTokens[token]?.isActive && 
-        <MenuList onClick={() => handleAddTokenToMetamask(token)} boxShadow="xl">
+      {token && supportedTokens[token]?.isActive && (
+        <MenuList
+          onClick={() => handleAddTokenToMetamask(token)}
+          boxShadow="xl"
+        >
           <MenuItem>Add {token} token to Metamask</MenuItem>
         </MenuList>
-      }
+      )}
     </Menu>
   )
 }
