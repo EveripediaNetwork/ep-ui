@@ -12,11 +12,11 @@ import { Logo, Link } from '@/components/Elements'
 const MenuFooter = () => (
   <SimpleGrid columns={{ base: 1, lg: 12 }} py={10} spacing={12}>
     <GridItem colSpan={{ base: 8, lg: 4 }}>
-      <Stack align={{ base: 'center', lg: 'flex-start' }}>
+      <Stack align={{ base: 'center', lg: 'flex-start' }} spacing="1">
         <Logo />
-        <Heading size="lg" py={2}>
+        <Text fontSize="xl" fontWeight="bold">
           Everipedia
-        </Heading>
+        </Text>
         <Text
           align={{ base: 'center', lg: 'start' }}
           fontWeight="medium"

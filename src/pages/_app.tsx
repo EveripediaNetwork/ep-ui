@@ -1,5 +1,4 @@
 import React from 'react'
-import '@fontsource/poppins'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -18,6 +17,7 @@ import { saveState } from '@/utils/browserStorage'
 import { store } from '@/store/store'
 import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
+import Fonts from '@/theme/Fonts'
 import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
@@ -37,6 +37,7 @@ const App = (props: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
+          <Fonts />
           <Provider autoConnect connectors={connectors}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
