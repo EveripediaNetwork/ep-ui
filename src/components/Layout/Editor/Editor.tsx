@@ -5,6 +5,7 @@ import { Box, useColorMode } from '@chakra-ui/react'
 import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
+import wikiLink from '@/editor-plugins/WikiLink'
 
 type EditorType = {
   onChange: (value: string | undefined) => void
@@ -27,6 +28,7 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   return (
     <Box m={0} w="100%" h="100%">
       <ToastUIEditor
+        plugins={[wikiLink]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         initialValue={initialValue}
