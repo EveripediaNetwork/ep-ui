@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Center,
   Flex,
@@ -22,11 +22,10 @@ import {
   AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
-  SAMPLE_ARTICLES,
   SAMPLE_CATEGORIES,
   SAMPLE_PROFILES,
 } from '@/components/Layout/Navbar/NavSearch/utils'
-import { useGetWikisTitleByIdQuery } from '@/services/nav-search'
+import { useNavSearch } from '@/services/nav-search/utils'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -36,21 +35,7 @@ export type NavSearchProps = {
 
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
-  const [isLoading, setIsLoading] = useState(true)
-
-  const { data: wikisData } = useGetWikisTitleByIdQuery({ title: '' })
-  console.log(
-    '🚀 ~ file: index.tsx ~ line 42 ~ NavSearch ~ wikisData',
-    wikisData,
-  )
-
-  const fetchList = () => {
-    setIsLoading(false)
-  }
-
-  useEffect(() => {
-    fetchList()
-  }, [])
+  const { query, setQuery, isLoading, results } = useNavSearch()
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -94,46 +79,57 @@ export const NavSearch = (props: NavSearchProps) => {
   const articlesSearchList = (
     <AutoCompleteGroup>
       <AutoCompleteGroupTitle {...titleStyles}>Articles</AutoCompleteGroupTitle>
-      {SAMPLE_ARTICLES.map(article => (
-        <AutoCompleteItem
-          key={article.id}
-          value={article}
-          getValue={art => art.title}
-          label={article.title}
-          {...generalItemStyles}
-        >
-          <Avatar src={article.image} name={article.title} size="xs" />
-          <Flex direction="column">
-            <chakra.span fontWeight="semibold" fontSize="sm">
-              {article.title}
-            </chakra.span>
-            <Text noOfLines={1} maxW="full" fontSize="xs">
-              {article.description}
-            </Text>
-          </Flex>
-          <chakra.div
-            fontWeight="medium"
-            fontSize="xs"
-            alignSelf="center"
-            px="2"
-            borderWidth={1}
-            rounded="md"
-            _dark={{
-              bg: 'gray.800',
-            }}
-            ml="auto"
+      {results.articles?.map(article => {
+        const articleImage = `https://gateway.pinata.cloud/ipfs/${
+          article.images && article.images[0].id
+        }`
+        console.log(article)
+        return (
+          <AutoCompleteItem
+            key={article.id}
+            value={article}
+            getValue={art => art.title}
+            label={article.title}
+            {...generalItemStyles}
           >
-            {article.tag}
-          </chakra.div>
-          <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
-            {article.views} views
-          </chakra.span>
-        </AutoCompleteItem>
-      ))}
+            <Avatar src={articleImage} name={article.title} size="xs" />
+            <Flex direction="column">
+              <chakra.span fontWeight="semibold" fontSize="sm">
+                {article.title}
+              </chakra.span>
+              <Text noOfLines={1} maxW="full" fontSize="xs">
+                {article.content}
+              </Text>
+            </Flex>
+            <Flex gap="1">
+              {article.tags?.map(tag => (
+                <chakra.div
+                  key={`${article.id}-${tag.id}`}
+                  fontWeight="medium"
+                  fontSize="xs"
+                  alignSelf="center"
+                  px="2"
+                  borderWidth={1}
+                  rounded="md"
+                  _dark={{
+                    bg: 'gray.800',
+                  }}
+                  ml="auto"
+                >
+                  {tag.id}
+                </chakra.div>
+              ))}
+            </Flex>
+            <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
+              {article.views} views
+            </chakra.span>
+          </AutoCompleteItem>
+        )
+      })}
     </AutoCompleteGroup>
   )
 
-  const cateoriesSearchList = (
+  const categoriesSearchList = (
     <AutoCompleteGroup>
       <AutoCompleteGroupTitle {...titleStyles}>
         Categories
@@ -145,6 +141,7 @@ export const NavSearch = (props: NavSearchProps) => {
           getValue={art => art.title}
           label={category.title}
           {...generalItemStyles}
+          alignItems="center"
         >
           <Avatar src={category.image} name={category.title} size="xs" />
           <chakra.span fontWeight="semibold" fontSize="sm">
@@ -200,16 +197,17 @@ export const NavSearch = (props: NavSearchProps) => {
   const searchList = (
     <>
       {articlesSearchList}
-      {cateoriesSearchList}
+      {categoriesSearchList}
       {profilesSearchList}
     </>
   )
 
   return (
     <AutoComplete
-      openOnFocus
       suggestWhenEmpty
       emptyState={!isLoading && emptyState}
+      shouldRenderSuggestions={q => q.length >= 3}
+      openOnFocus={query.length >= 3}
     >
       <InputGroup
         size="lg"
@@ -221,6 +219,8 @@ export const NavSearch = (props: NavSearchProps) => {
           <Search2Icon color="gray.300" />
         </InputLeftElement>
         <AutoCompleteInput
+          value={query}
+          onChange={e => setQuery(e.target.value)}
           placeholder="Search items, collections and accounts"
           {...inputProps}
         />
