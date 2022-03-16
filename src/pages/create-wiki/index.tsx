@@ -56,14 +56,6 @@ const CreateWiki = () => {
     opened: false,
   })
 
-  // const [, write] = useContractWrite(
-  //   {
-  //     addressOrName: config.wikiContractAddress,
-  //     contractInterface: WikiAbi,
-  //   },
-  //   'post',
-  // )
-
   const saveImage = async () => {
     const formData = new FormData()
     const blob = new Blob([wiki.content.images[0].type as ArrayBuffer], {
@@ -80,28 +72,6 @@ const CreateWiki = () => {
 
     return ipfs
   }
-
-  // const saveHashInTheBlockchain = async (hash: string) => {
-  //   const result = await write({ args: [hash] })
-  //   console.log(result)
-
-  //   await result.data?.wait(2)
-
-  //   setSubmittingWiki(false)
-
-  //   if (!result.error) {
-  //     setOpenTxDetailsDialog(true)
-  //     setTxHash(result.data?.hash)
-  //     setWikiHash(hash)
-  //     return
-  //   }
-
-  //   setTxError({
-  //     title: 'Error!',
-  //     description: result.error.message,
-  //     opened: true,
-  //   })
-  // }
 
   const signData = async (ipfs: string) => {
     const account = getAccount(accountData) || ''
@@ -121,8 +91,6 @@ const CreateWiki = () => {
     const nonce = (await forwarderContract.getNonce(account)).toNumber()
     const wikiInterface = new ethers.utils.Interface(WikiAbi)
 
-    console.log(ipfs)
-
     const request = {
       value: 0,
       gas: 1e6,
@@ -141,9 +109,16 @@ const CreateWiki = () => {
       JSON.stringify(builtTypedData),
     ])
 
-    const call = await axios.post(config.autotaskUri, { request, signature })
+    const {
+      data: { result },
+    } = await axios.post(config.autotaskUri, {
+      request,
+      signature,
+    })
 
-    console.log(call)
+    setTxHash(String(result).replaceAll('"', ''))
+    setOpenTxDetailsDialog(true)
+    console.log(String(result).replaceAll('"', ''))
   }
 
   const saveOnIpfs = async () => {
@@ -174,8 +149,7 @@ const CreateWiki = () => {
 
       if (ipfs) {
         signData(ipfs)
-        // await write({args: [""]})
-        // saveHashInTheBlockchain(ipfs)
+        setWikiHash(ipfs)
       }
     }
   }
