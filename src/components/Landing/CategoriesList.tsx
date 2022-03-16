@@ -1,12 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  Heading,
-  LinkBox,
-  LinkOverlay,
-  Box,
-  Text,
-  SimpleGrid,
-} from '@chakra-ui/react'
+import { LinkBox, LinkOverlay, Box, Text, SimpleGrid } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
@@ -48,11 +41,10 @@ const CategoriesList = () => {
             key={category.id}
             _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
             cursor="pointer"
-            borderWidth="1px"
-            borderColor="DimColor"
             bgColor="homeCardBg"
-            borderRadius={3}
+            borderRadius="lg"
             overflow="hidden"
+            shadow="base"
           >
             <Image
               bgColor="DimColor"
@@ -62,9 +54,16 @@ const CategoriesList = () => {
             />
             <NextLink href={`/categories/${category.id}`} passHref>
               <LinkOverlay>
-                <Heading w="100%" textAlign="center" py={4} size="md">
+                <Text
+                  w="100%"
+                  textAlign="center"
+                  py={4}
+                  fontWeight="bold"
+                  fontSize="lg"
+                  size="md"
+                >
                   {category.title}
-                </Heading>
+                </Text>
               </LinkOverlay>
             </NextLink>
           </LinkBox>

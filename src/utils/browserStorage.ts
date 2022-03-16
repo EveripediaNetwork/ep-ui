@@ -14,7 +14,12 @@ export const loadState = () => {
 
 export function saveState(state: RootState) {
   if (typeof window !== 'undefined') {
-    const serializedState = JSON.stringify(state)
+    let updatedState = state
+    if (state.providerNetwork) {
+      const providerNetwork = { detectedProvider: null }
+      updatedState = { ...state, providerNetwork }
+    }
+    const serializedState = JSON.stringify(updatedState)
     localStorage.setItem(storageKey, serializedState)
   }
 }

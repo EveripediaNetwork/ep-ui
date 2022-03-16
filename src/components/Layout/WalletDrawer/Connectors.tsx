@@ -39,6 +39,7 @@ const Connectors = () => {
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
     (state: RootState) => state.user,
   )
+
   const dispatch = useDispatch()
   const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =

@@ -13,14 +13,22 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import detectEthereumProvider from '@metamask/detect-provider'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '@/store/store'
 import { Network, Networks } from '@/data/NetworkData'
 import networkMap from '@/utils/networkMap'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
+import { updateNetworkProvider } from '@/store/slices/provider-slice'
 
 const NetworkMenu = () => {
   const [currentNetwork, setCurrentNetwork] = useState<Network>(Networks[0])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [detectedProvider, setDetectedProvider] = useState<any>()
+  const { detectedProvider } = useSelector(
+    (state: RootState) => state.providerNetwork,
+  )
+
+  const dispatch = useDispatch()
+
   const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
 
   const handleChainChanged = useCallback(
@@ -42,7 +50,7 @@ const NetworkMenu = () => {
 
     const getDetectedProvider = async () => {
       const provider: any = await detectEthereumProvider()
-      setDetectedProvider(provider)
+      dispatch(updateNetworkProvider(provider))
       getConnectedChain(provider)
     }
 
@@ -51,12 +59,13 @@ const NetworkMenu = () => {
     } else {
       detectedProvider.on('chainChanged', handleChainChanged)
     }
+
     return () => {
       if (detectedProvider) {
         detectedProvider.removeListener('chainChanged', handleChainChanged)
       }
     }
-  }, [detectedProvider, handleChainChanged])
+  }, [detectedProvider, handleChainChanged, dispatch])
 
   const handleNetworkSwitch = (newNetwork: Network) => {
     if (newNetwork.chainId !== chainId) {
@@ -68,7 +77,7 @@ const NetworkMenu = () => {
 
   const handleSwitchNetwork = async () => {
     try {
-      await detectedProvider.request({
+      await detectedProvider?.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId }],
       })
@@ -76,7 +85,7 @@ const NetworkMenu = () => {
     } catch (switchError: any) {
       if (switchError.code === 4902) {
         try {
-          await detectedProvider.request({
+          await detectedProvider?.request({
             method: 'wallet_addEthereumChain',
             params: [
               {

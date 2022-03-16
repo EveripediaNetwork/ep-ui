@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import {
   appReducer,
   messagesReducer,
+  providerReducer,
   userReducer,
   wikiReducer,
 } from '@/store/slices'
@@ -16,6 +17,7 @@ export const store = configureStore({
     messages: messagesReducer,
     user: userReducer,
     wiki: wikiReducer,
+    providerNetwork: providerReducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,

@@ -54,7 +54,7 @@ const NetworkErrorNotification = ({
             />
           </Flex>
           <Text mt="6" w="90%" lineHeight="2" fontWeight="light">
-            Your wallet is currently connected to the Ethereum network. To
+            Your wallet is currently connected to an unsupported network. To
             continue with Polygon network, Switch the network in your wallet to
             Polygon.
           </Text>

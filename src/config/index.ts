@@ -9,7 +9,7 @@ const config = {
   blockExplorerUrl: String(process.env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL),
   pinataBaseUrl: process.env.NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL,
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-  graphqlUrl: 'http://api.dev.braindao.org/graphql',
+  graphqlUrl: 'https://api.dev.braindao.org/graphql',
   chainId: String(process.env.NEXT_PUBLIC_CHAIN_ID),
   chainName: String(process.env.NEXT_PUBLIC_CHAIN_NAME),
   rpcUrl: String(process.env.NEXT_PUBLIC_RPC_URL),
