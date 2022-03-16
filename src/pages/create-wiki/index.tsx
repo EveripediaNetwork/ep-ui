@@ -13,16 +13,9 @@ import {
   CloseButton,
   Center,
 } from '@chakra-ui/react'
-import {
-  useAccount,
-  useContractWrite,
-  useProvider,
-  useSigner,
-  useSignMessage,
-} from 'wagmi'
+import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import { ExternalProvider } from '@ethersproject/providers'
-import { encodeData } from 'eip-712'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -35,8 +28,9 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiAbi } from '../../abi/Wiki.abi'
-import { createPermitMessageData } from '@/utils/signMessage'
+import { getTypedData } from '@/utils/getTypedData'
 import { getAccount } from '@/utils/getAccount'
+import { ForwarderAbi } from '@/abi/Forwarder.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -53,23 +47,22 @@ const CreateWiki = () => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [triggerUpdate, setTriggerUpdate] = useState('')
-  const [{ data, error, loading }, getSigner] = useSigner({
+  const [, getSigner] = useSigner({
     skip: true,
   })
-  // const [{ data: signedData, error, loading }, signMessage] = useSignMessage()
   const [txError, setTxError] = useState({
     title: '',
     description: '',
     opened: false,
   })
 
-  const [, write] = useContractWrite(
-    {
-      addressOrName: config.wikiContractAddress,
-      contractInterface: WikiAbi,
-    },
-    'post',
-  )
+  // const [, write] = useContractWrite(
+  //   {
+  //     addressOrName: config.wikiContractAddress,
+  //     contractInterface: WikiAbi,
+  //   },
+  //   'post',
+  // )
 
   const saveImage = async () => {
     const formData = new FormData()
@@ -88,70 +81,69 @@ const CreateWiki = () => {
     return ipfs
   }
 
-  const saveHashInTheBlockchain = async (hash: string) => {
-    const result = await write({ args: [hash] })
-    console.log(result)
+  // const saveHashInTheBlockchain = async (hash: string) => {
+  //   const result = await write({ args: [hash] })
+  //   console.log(result)
 
-    await result.data?.wait(2)
+  //   await result.data?.wait(2)
 
-    setSubmittingWiki(false)
+  //   setSubmittingWiki(false)
 
-    if (!result.error) {
-      setOpenTxDetailsDialog(true)
-      setTxHash(result.data?.hash)
-      setWikiHash(hash)
-      return
-    }
+  //   if (!result.error) {
+  //     setOpenTxDetailsDialog(true)
+  //     setTxHash(result.data?.hash)
+  //     setWikiHash(hash)
+  //     return
+  //   }
 
-    setTxError({
-      title: 'Error!',
-      description: result.error.message,
-      opened: true,
-    })
-  }
+  //   setTxError({
+  //     title: 'Error!',
+  //     description: result.error.message,
+  //     opened: true,
+  //   })
+  // }
 
   const signData = async (ipfs: string) => {
-    const types = createPermitMessageData()
+    const account = getAccount(accountData) || ''
 
-    const value = {
-      content: md,
-      signer: getAccount(accountData) || '',
-    }
     const metamaskProvider = new ethers.providers.Web3Provider(
       window.ethereum as ExternalProvider,
     )
-    // const signer = metamaskProvider.getSigner()
-    const signer = (await getSigner()) as any
 
-    const domain = {
-      name: 'Everipedia IQ',
-      version: '1',
-      chainId: 80001,
-      verifyingContract: config.wikiContractAddress,
-    }
+    const signer = await getSigner()
 
-    const signedData = await signer?._signTypedData(domain, types, {
-      ipfs,
-    })
-
-    console.log(signedData)
-
-    const contract = new ethers.Contract(
-      config.wikiContractAddress,
-      WikiAbi,
+    const forwarderContract = new ethers.Contract(
+      config.forwarderContractAddress,
+      ForwarderAbi,
       signer,
     )
 
-    const args = { domain, types, primaryType: 'post', message: { ipfs } }
-    console.log(args)
-    // await signer.sendTransaction(signedData)
-    // const signature = await signer.provider.send('eth_signTypedData_v4', [
-    //   getAccount(accountData),
-    //   JSON.stringify(args),
-    // ])
-    const splittedSignature = ethers.utils.splitSignature(signedData)
-    // console.log(signature)
-    console.log(splittedSignature)
+    const nonce = (await forwarderContract.getNonce(account)).toNumber()
+    const wikiInterface = new ethers.utils.Interface(WikiAbi)
+
+    console.log(ipfs)
+
+    const request = {
+      value: 0,
+      gas: 1e6,
+      nonce,
+      from: account,
+      to: config.wikiContractAddress,
+      data: wikiInterface.encodeFunctionData('post', [ipfs]),
+    }
+
+    const typedData = getTypedData()
+
+    const builtTypedData = { ...typedData, message: request }
+
+    const signature = await metamaskProvider.send('eth_signTypedData_v4', [
+      account,
+      JSON.stringify(builtTypedData),
+    ])
+
+    const call = await axios.post(config.autotaskUri, { request, signature })
+
+    console.log(call)
   }
 
   const saveOnIpfs = async () => {
