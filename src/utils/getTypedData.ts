@@ -4,7 +4,7 @@ export const getTypedData = () => ({
   domain: {
     name: 'MinimalForwarder',
     version: '0.0.1',
-    chainId: parseInt(config.chainId),
+    chainId: parseInt(config.chainId, 16),
     verifyingContract: config.forwarderContractAddress,
   },
   primaryType: 'ForwardRequest',
