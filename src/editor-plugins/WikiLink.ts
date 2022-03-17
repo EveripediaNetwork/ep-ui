@@ -22,20 +22,23 @@ interface PluginInfo {
 
 export default function wikiLink(context: PluginContext): PluginInfo {
   const { eventEmitter } = context
-  const container = document.createElement('div')
-  const input = document.createElement('input')
-  const button = document.createElement('button')
 
+  // WIKI LINK: Frame Container
+  const container = document.createElement('div')
   container.classList.add('toastui-editor-popup-body')
   container.style.display = 'flex'
   container.style.alignItems = 'center'
   container.style.justifyContent = 'center'
   container.style.gap = '10px'
 
+  // WIKI LINK: Frame Input
+  const input = document.createElement('input')
   input.type = 'text'
   input.placeholder = 'Search Wiki'
   input.style.width = '100%'
 
+  // WIKI LINK: Frame Button
+  const button = document.createElement('button')
   button.classList.add('toastui-editor-ok-button')
   button.innerText = 'Link'
 
@@ -50,6 +53,20 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   container.appendChild(input)
   container.appendChild(button)
 
+  // Adding event listener on wikiLink button to get select text using javascript
+  // since there seems to be no way to get selected text in the editor api
+  // setTimeout is for waiting till the button gets created after this plugin is loaded
+  setTimeout(() => {
+    const popupBtn = document.querySelector('.toastui-editor-wiki-link-button')
+    popupBtn?.addEventListener('click', () => {
+      let selectedText: string = ''
+      if (window.getSelection) {
+        selectedText = window.getSelection()?.toString() || ''
+      }
+      input.value = selectedText
+    })
+  }, 500)
+
   return {
     toolbarItems: [
       {
@@ -58,9 +75,9 @@ export default function wikiLink(context: PluginContext): PluginInfo {
         item: {
           name: 'wiki link',
           tooltip: 'add wiki link',
+          className: 'toastui-editor-wiki-link-button',
           text: 'W',
           popup: {
-            className: 'some class',
             body: container,
             style: { width: 'auto' },
           },
