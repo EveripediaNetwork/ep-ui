@@ -59,7 +59,7 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   setTimeout(() => {
     const popupBtn = document.querySelector('.toastui-editor-wiki-link-button')
     popupBtn?.addEventListener('click', () => {
-      let selectedText: string = ''
+      let selectedText = ''
       if (window.getSelection) {
         selectedText = window.getSelection()?.toString() || ''
       }
