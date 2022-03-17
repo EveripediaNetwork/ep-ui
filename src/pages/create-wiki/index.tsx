@@ -96,13 +96,15 @@ const CreateWiki = () => {
       gas: 1e6,
       nonce,
       from: account,
-      to: config.wikiContractAddress,
+      to: config.wikiContractAddress || '',
       data: wikiInterface.encodeFunctionData('post', [ipfs]),
     }
 
     const typedData = getTypedData()
 
     const builtTypedData = { ...typedData, message: request }
+
+    console.log(builtTypedData)
 
     const signature = await metamaskProvider.send('eth_signTypedData_v4', [
       account,
