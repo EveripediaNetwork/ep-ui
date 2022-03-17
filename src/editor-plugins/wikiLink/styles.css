@@ -1,0 +1,51 @@
+.wikiLink__popupBtn {
+  background-image: url(./assets/wiki-link-icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+  vertical-align: middle;
+  border: none !important;
+}
+.toastui-editor-dark .wikiLink__popupBtn {
+  background-image: url(./assets/wiki-link-icon-dark.png);
+}
+.toastui-editor-dark .wikiLink__popupBtn:hover {
+  background-color: #36383f !important;
+}
+
+.wikiLink__inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.wikiLink__resultsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.wikiLink__resultsContainer--displayNone {
+  display: none;
+}
+.wikiLink__wikiResult {
+  text-align: left;
+  width: 100%;
+  padding-inline: 10px;
+  cursor: pointer;
+  border-top: 1px solid #ddd !important;
+  border-radius: 0 !important;
+}
+.toastui-editor-dark .wikiLink__wikiResult {
+  color: #fff !important;
+  border-top-color: #333 !important;
+}
+.wikiLink__wikiResult:hover {
+  background-color: #f5f5f5;
+}
+.toastui-editor-dark .wikiLink__wikiResult:hover {
+  background-color: rgba(43, 43, 43, 0.5) !important;
+}
+.wikiLink__wikiResult--noTopBorder {
+  border-top: none !important;
+}

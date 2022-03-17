@@ -3,6 +3,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
 import './static/assets/dark-mode.css'
+import '@/editor-plugins/wikiLink/styles.css'
 
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
