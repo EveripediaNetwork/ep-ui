@@ -14,7 +14,6 @@ export type WikiTitle = {
   images?: {
     id: string
   }[]
-  views: number
 }
 
 type GetWikisByTitleResponse = {

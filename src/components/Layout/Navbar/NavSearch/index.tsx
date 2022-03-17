@@ -120,9 +120,6 @@ export const NavSearch = (props: NavSearchProps) => {
                 </chakra.div>
               ))}
             </Flex>
-            <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
-              {article.views} views
-            </chakra.span>
           </AutoCompleteItem>
         )
       })}
@@ -161,9 +158,6 @@ export const NavSearch = (props: NavSearchProps) => {
           >
             {category.tag}
           </chakra.div>
-          <chakra.span alignSelf="center" fontSize="xs" whiteSpace="nowrap">
-            {category.views} views
-          </chakra.span>
         </AutoCompleteItem>
       ))}
     </AutoCompleteGroup>
