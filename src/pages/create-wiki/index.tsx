@@ -25,8 +25,8 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
-import { WikiAbi } from '../../abi/Wiki.abi'
 import { splitSignature } from 'ethers/lib/utils'
+import { WikiAbi } from '../../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -60,14 +60,14 @@ const CreateWiki = () => {
     SignedPost: [
       { name: 'ipfs', type: 'string' },
       { name: 'user', type: 'address' },
-      { name: 'deadline', type: 'uint256' }
+      { name: 'deadline', type: 'uint256' },
     ],
   }
 
   const value = {
-    ipfs: "Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v",
-    user: "0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff",
-    deadline: 0
+    ipfs: 'Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v',
+    user: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+    deadline: 0,
   }
 
   const [{ data, error, loading }, signTypedData] = useSignTypedData({
@@ -102,7 +102,7 @@ const CreateWiki = () => {
   }
 
   const saveHashInTheBlockchain = async () => {
-    await signTypedData();
+    await signTypedData()
   }
 
   const saveOnIpfs = async () => {
@@ -131,7 +131,7 @@ const CreateWiki = () => {
         data: { ipfs },
       } = await axios.post('/api/ipfs', tmp)
 
-      if (ipfs) saveHashInTheBlockchain(ipfs)
+      if (ipfs) saveHashInTheBlockchain()
     }
   }
 
@@ -157,26 +157,32 @@ const CreateWiki = () => {
 
   useEffect(() => {
     async function signData(data, error) {
-      console.log({ data, error });
+      console.log({ data, error })
       if (data) {
+        const signature = data.substring(2)
+        const r = `0x${signature.substring(0, 64)}`
+        const s = `0x${signature.substring(64, 128)}`
+        const v = parseInt(signature.substring(128, 130), 16)
+        console.log('r:', r)
+        console.log('s:', s)
+        console.log('v:', v)
 
-        const signature = data.substring(2);
-        const r = "0x" + signature.substring(0, 64);
-        const s = "0x" + signature.substring(64, 128);
-        const v = parseInt(signature.substring(128, 130), 16);
-        console.log("r:", r);
-        console.log("s:", s);
-        console.log("v:", v);
-
-        const response = splitSignature(data);
-        console.log(response);
-        const result = await write({ args: [
-          "Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v", "0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff", 0, response.v, response.r, response.s]
+        const response = splitSignature(data)
+        console.log(response)
+        const result = await write({
+          args: [
+            'Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v',
+            '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+            0,
+            response.v,
+            response.r,
+            response.s,
+          ],
         })
         await result.data?.wait(2)
       }
     }
-    signData(data, error);
+    signData(data, error)
   }, [data, error])
 
   return (
