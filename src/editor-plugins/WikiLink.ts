@@ -1,3 +1,4 @@
+import { debouncedFetchData } from '@/services/nav-search/utils'
 import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
 import {
   PluginCommandMap,
@@ -22,14 +23,18 @@ interface PluginInfo {
 
 export default function wikiLink(context: PluginContext): PluginInfo {
   const { eventEmitter } = context
+  const wikiSelected = { title: '', url: '' }
 
   // WIKI LINK: Frame Container
   const container = document.createElement('div')
-  container.classList.add('toastui-editor-popup-body')
-  container.style.display = 'flex'
-  container.style.alignItems = 'center'
-  container.style.justifyContent = 'center'
   container.style.gap = '10px'
+
+  // WIKI LINK: Input and Button container
+  const inputContainer = document.createElement('div')
+  inputContainer.style.display = 'flex'
+  inputContainer.style.alignItems = 'center'
+  inputContainer.style.justifyContent = 'center'
+  inputContainer.style.gap = '10px'
 
   // WIKI LINK: Frame Input
   const input = document.createElement('input')
@@ -43,16 +48,54 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   button.innerText = 'Link'
 
   button.addEventListener('click', () => {
-    eventEmitter.emit('command', 'wikiLink', {
-      url: input.value,
-      text: input.value,
-    })
-    eventEmitter.emit('closePopup')
+    if (wikiSelected.title && wikiSelected.url) {
+      eventEmitter.emit('command', 'wikiLink', {
+        url: wikiSelected.url,
+        text: wikiSelected.title,
+      })
+      eventEmitter.emit('closePopup')
+    }
   })
 
-  container.appendChild(input)
-  container.appendChild(button)
+  // WIKI LINK: auto-complete results container
+  const resultsContainer = document.createElement('div')
+  resultsContainer.style.display = 'none'
+  resultsContainer.style.flexDirection = 'column'
+  resultsContainer.style.gap = '5px'
+  resultsContainer.style.marginTop = '10px'
 
+  inputContainer.appendChild(input)
+  inputContainer.appendChild(button)
+  container.appendChild(inputContainer)
+  container.appendChild(resultsContainer)
+
+  // Fetch results of wiki
+  const fetchWikiResults = (query: string) => {
+    debouncedFetchData(query, res => {
+      resultsContainer.innerHTML = ''
+      if (res.length > 0) {
+        resultsContainer.style.display = 'flex'
+        // for each result, create a button and append to results container
+        res.forEach((wiki, i) => {
+          const wikiResult = document.createElement('button')
+          wikiResult.innerText = wiki.title
+          wikiResult.style.textAlign = 'left'
+          wikiResult.style.width = '100%'
+          wikiResult.style.padding = '5px'
+          wikiResult.style.cursor = 'pointer'
+          if (i !== 0) {
+            wikiResult.style.borderTop = '1px solid #eaeaea'
+          }
+          wikiResult.addEventListener('click', () => {
+            wikiSelected.title = wiki.title
+            wikiSelected.url = `${window.location.origin}/wiki/${wiki.id}`
+            input.value = wiki.title
+          })
+          resultsContainer.appendChild(wikiResult)
+        })
+      } else resultsContainer.style.display = 'none'
+    })
+  }
   // Adding event listener on wikiLink button to get select text using javascript
   // since there seems to be no way to get selected text in the editor api
   // setTimeout is for waiting till the button gets created after this plugin is loaded
@@ -64,6 +107,14 @@ export default function wikiLink(context: PluginContext): PluginInfo {
         selectedText = window.getSelection()?.toString() || ''
       }
       input.value = selectedText
+      fetchWikiResults(selectedText)
+    })
+  }, 500)
+
+  // Event listener on input search field to get the wikis when user types
+  setTimeout(() => {
+    input.addEventListener('keyup', () => {
+      fetchWikiResults(input.value)
     })
   }, 500)
 

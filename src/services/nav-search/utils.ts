@@ -9,7 +9,7 @@ const fetchList = async (query: string, cb: (data: WikiTitle[]) => void) => {
   cb(data || [])
 }
 
-const debouncedFetchData = debounce(
+export const debouncedFetchData = debounce(
   (query: string, cb: (data: WikiTitle[]) => void) => {
     fetchList(query, cb)
   },
