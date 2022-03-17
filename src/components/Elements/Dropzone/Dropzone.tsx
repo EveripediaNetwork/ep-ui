@@ -18,7 +18,6 @@ type DropzoneType = {
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState([])
   const [{ data: accountData }] = useAccount()
-
   const { setHideImageInput, setImage, deleteImage } = dropZoneActions
 
   const onDrop = useCallback(
@@ -43,7 +42,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
-    accept: 'image/jpeg, image/png',
+    accept: 'image/jpeg, image/png, image/jpg',
   })
 
   return (

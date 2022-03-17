@@ -48,7 +48,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
-
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange)

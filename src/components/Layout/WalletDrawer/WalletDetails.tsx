@@ -1,11 +1,11 @@
 import React from 'react'
 import { HStack, Image, Text, VStack } from '@chakra-ui/react'
-import { RiMore2Fill } from 'react-icons/ri'
 import { tokenDetails } from '@/data/WalletData'
 import shortenBalance from '@/utils/shortenBallance'
 import { TokenDetailsType } from '@/types/WalletBalanceType'
 import { getTokenValue } from '@/utils/getTokenValue'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
+import TokenDetailsMenu from '../Token/TokenDetailsMenu'
 
 const WalletDetails = ({
   symbol,
@@ -35,7 +35,7 @@ const WalletDetails = ({
             ${shortenBalance(getTokenValue(tokensArray, symbol))} USD
           </Text>
         </VStack>
-        <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
+        <TokenDetailsMenu token={symbol} />
       </HStack>
     </>
   </WalletDetailsWrapper>

@@ -1,3 +1,4 @@
+import config from '@/config'
 import { utils } from 'ethers'
 
 export type Network = {
@@ -14,26 +15,20 @@ export const Networks: Network[] = [
     image: '/images/polygon.svg',
     name: 'Polygon',
     isActive: true,
-    chainId: utils.hexValue(
-      Number(process.env.NEXT_PUBLIC_MUMBAI_TESTNET_CHAIN_ID),
-    ),
+    chainId: utils.hexValue(config.mumbaiTestnetChainId),
   },
   {
     id: 2,
     image: '/images/ethereum2.svg',
     name: 'Ethereum',
     isActive: false,
-    chainId: utils.hexValue(
-      Number(process.env.NEXT_PUBLIC_ETHEREUM_MAINNET_CHAIN_ID),
-    ),
+    chainId: utils.hexValue(config.ethereumMainnetChainId),
   },
   {
     id: 3,
     image: '/images/bsc.svg',
     name: 'Bsc',
     isActive: false,
-    chainId: utils.hexValue(
-      Number(process.env.NEXT_PUBLIC_BINANCE_SMART_CHAIN_ID),
-    ),
+    chainId: utils.hexValue(config.binanceSmartChainId),
   },
 ]
