@@ -1,8 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Button, Flex, Input } from '@chakra-ui/react'
-import { RiCloseLine } from 'react-icons/ri'
+import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
 import axios from 'axios'
-import Image from 'next/image'
 import buffer from 'buffer'
 
 type ImageInputType = {
@@ -17,17 +15,31 @@ const ImageInput = ({
   deleteImage,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
+  const toast = useToast()
 
   const handleOnImageInputChanges = async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     setImageSrc(event.target.value)
     setHideDropzone(true)
-
-    const { data } = await axios.get(String(event.target.value), {
-      responseType: 'arraybuffer',
-    })
-    setImage(new buffer.Buffer(data as Buffer))
+    try {
+      const { data } = await axios.get(String(event.target.value), {
+        responseType: 'arraybuffer',
+      })
+      setImage(new buffer.Buffer(data as Buffer))
+      toast({
+        title: 'Image successfully Fetched',
+        status: 'success',
+        duration: 2000,
+      })
+    } catch (error) {
+      toast({
+        title: 'Image could not be fetched. Ensure you have the right link',
+        status: 'error',
+        duration: 2000,
+      })
+    }
+    return null
   }
 
   return (
@@ -42,9 +54,10 @@ const ImageInput = ({
           direction="column"
           justifyContent="center"
           alignItems="center"
-          gap={4}
+          gap={5}
         >
-          <Image src={imgSrc} alt="input" />
+          <Image objectFit="cover" boxSize="300" src={imgSrc} alt="Input" />
+
           <Button
             w="25%"
             shadow="md"
@@ -55,7 +68,7 @@ const ImageInput = ({
               deleteImage()
             }}
           >
-            <RiCloseLine />
+            Clear
           </Button>
         </Flex>
       ) : (

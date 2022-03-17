@@ -10,7 +10,6 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'wagmi'
 import { Provider as ReduxProvider } from 'react-redux'
 import { debounce } from 'debounce'
-
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
