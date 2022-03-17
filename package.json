@@ -59,7 +59,7 @@
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
     "slugify": "^1.6.5",
-    "wagmi": "^0.2.17",
+    "wagmi": "^0.2.21",
     "walletlink": "^2.5.0"
   },
   "devDependencies": {

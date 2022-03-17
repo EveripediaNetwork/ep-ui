@@ -13,7 +13,7 @@ import {
   CloseButton,
   Center,
 } from '@chakra-ui/react'
-import { useAccount, useContractWrite } from 'wagmi'
+import { useAccount, useContractWrite, useSignTypedData } from 'wagmi'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -26,6 +26,7 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiAbi } from '../../abi/Wiki.abi'
+import { splitSignature } from 'ethers/lib/utils'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -48,12 +49,39 @@ const CreateWiki = () => {
     opened: false,
   })
 
+  const domain = {
+    name: 'EP',
+    version: '1',
+    chainId: 80001,
+    verifyingContract: '0x30D16f801FE596db7b58E4D005c83C2196c7A01E',
+  }
+
+  const types = {
+    SignedPost: [
+      { name: 'ipfs', type: 'string' },
+      { name: 'user', type: 'address' },
+      { name: 'deadline', type: 'uint256' }
+    ],
+  }
+
+  const value = {
+    ipfs: "Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v",
+    user: "0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff",
+    deadline: 0
+  }
+
+  const [{ data, error, loading }, signTypedData] = useSignTypedData({
+    domain,
+    types,
+    value,
+  })
+
   const [, write] = useContractWrite(
     {
-      addressOrName: config.wikiContractAddress,
+      addressOrName: '0x30D16f801FE596db7b58E4D005c83C2196c7A01E',
       contractInterface: WikiAbi,
     },
-    'post',
+    'postBySig',
   )
 
   const saveImage = async () => {
@@ -73,24 +101,8 @@ const CreateWiki = () => {
     return ipfs
   }
 
-  const saveHashInTheBlockchain = async (hash: string) => {
-    const result = await write({ args: [hash] })
-    await result.data?.wait(2)
-
-    setSubmittingWiki(false)
-
-    if (!result.error) {
-      setOpenTxDetailsDialog(true)
-      setTxHash(result.data?.hash)
-      setWikiHash(hash)
-      return
-    }
-
-    setTxError({
-      title: 'Error!',
-      description: result.error.message,
-      opened: true,
-    })
+  const saveHashInTheBlockchain = async () => {
+    await signTypedData();
   }
 
   const saveOnIpfs = async () => {
@@ -143,6 +155,30 @@ const CreateWiki = () => {
     setMd(initialEditorValue)
   }, [])
 
+  useEffect(() => {
+    async function signData(data, error) {
+      console.log({ data, error });
+      if (data) {
+
+        const signature = data.substring(2);
+        const r = "0x" + signature.substring(0, 64);
+        const s = "0x" + signature.substring(64, 128);
+        const v = parseInt(signature.substring(128, 130), 16);
+        console.log("r:", r);
+        console.log("s:", s);
+        console.log("v:", v);
+
+        const response = splitSignature(data);
+        console.log(response);
+        const result = await write({ args: [
+          "Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v", "0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff", 0, response.v, response.r, response.s]
+        })
+        await result.data?.wait(2)
+      }
+    }
+    signData(data, error);
+  }, [data, error])
+
   return (
     <Grid
       templateColumns="repeat(3, 1fr)"
@@ -187,7 +223,7 @@ const CreateWiki = () => {
             isLoading={submittingWiki}
             loadingText="Loading"
             disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
+            onClick={saveHashInTheBlockchain}
           >
             Publish Wiki
           </Button>
