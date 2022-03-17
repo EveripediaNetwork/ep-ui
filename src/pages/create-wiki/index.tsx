@@ -27,10 +27,10 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
-import { WikiAbi } from '../../abi/Wiki.abi'
 import { getTypedData } from '@/utils/getTypedData'
 import { getAccount } from '@/utils/getAccount'
 import { ForwarderAbi } from '@/abi/Forwarder.abi'
+import { WikiAbi } from '@/abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
