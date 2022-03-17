@@ -22,15 +22,27 @@ interface PluginInfo {
 }
 
 const fetchWikiResults = (
+  cleanWikiLinkPopup: () => void,
   query: string,
   resultsContainer: HTMLDivElement,
-  wikiSelected: { title: string; url: string },
+  previewContainer: HTMLDivElement,
+  wikiSelected: {
+    title: string
+    url: string
+  },
   searchInput: HTMLInputElement,
+  linkButton: HTMLButtonElement,
 ) => {
-  debouncedFetchData(query, res => {
-    // Clear results container before adding new results
-    resultsContainer.innerHTML = ''
+  cleanWikiLinkPopup()
+  const loader = document.createElement('div')
+  loader.classList.add('wikiLink__loader')
+  loader.appendChild(document.createElement('div'))
+  loader.appendChild(document.createElement('div'))
+  loader.appendChild(document.createElement('div'))
 
+  resultsContainer.appendChild(loader)
+  debouncedFetchData(query, res => {
+    resultsContainer.innerHTML = ''
     if (res.length > 0) {
       // make results container invisible if there are no results
       resultsContainer.classList.remove(
@@ -41,8 +53,8 @@ const fetchWikiResults = (
         // create wikiResult button (by truncating title)
         const wikiResult = document.createElement('button')
         wikiResult.innerText =
-          wiki.title.length > 100
-            ? wiki.title.slice(0, 100).concat('...')
+          wiki.title.length > 70
+            ? wiki.title.slice(0, 70).concat('...')
             : wiki.title
         wikiResult.classList.add('wikiLink__wikiResult')
         if (i === 0)
@@ -50,15 +62,61 @@ const fetchWikiResults = (
 
         // event listener on wikiResult button to set wikiSelected
         wikiResult.addEventListener('click', () => {
+          // update input and wikiSelected state
           wikiSelected.title = wiki.title
           wikiSelected.url = `${window.location.origin}/wiki/${wiki.id}`
           searchInput.value = wiki.title
+
+          // enable button
+          linkButton.disabled = false
+
+          //= ====================
+          // render preview card
+          //= ====================
+
+          previewContainer.classList.remove(
+            'wikiLink__previewContainer--displayNone',
+          )
+          previewContainer.innerHTML = ''
+
+          // preview title
+          const previewTitle = document.createElement('h3')
+          previewTitle.textContent = wiki.title
+          previewTitle.classList.add('wikiLink__previewTitle')
+
+          // preview tags container
+          const previewTagsContainer = document.createElement('div')
+          previewTagsContainer.classList.add('wikiLink__previewTagsContainer')
+          wiki.tags?.forEach(tag => {
+            const previewTag = document.createElement('span')
+            previewTag.style.background = `hsl(${Math.floor(
+              Math.random() * 360,
+            )}, 10%, 80%)`
+            previewTag.classList.add('wikiLink__previewTag')
+            previewTag.textContent = tag.id
+            previewTagsContainer.appendChild(previewTag)
+          })
+
+          // preview content
+          const previewContent = document.createElement('p')
+          previewContent.textContent =
+            wiki.content.length > 70
+              ? wiki.content.slice(0, 70).concat('...')
+              : wiki.content
+
+          previewContainer.appendChild(previewTitle)
+          previewContainer.appendChild(previewTagsContainer)
+          previewContainer.appendChild(previewContent)
         })
 
         resultsContainer.appendChild(wikiResult)
       })
-    } else
-      resultsContainer.classList.add('wikiLink__resultsContainer--displayNone')
+    } else {
+      const noResultsMsg = document.createElement('div')
+      noResultsMsg.textContent = 'No Wikis Found.'
+      noResultsMsg.classList.add('wikiLink__noResultsMsg')
+      resultsContainer.appendChild(noResultsMsg)
+    }
   })
 }
 
@@ -82,10 +140,28 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   input.type = 'text'
   input.placeholder = 'Search Wiki'
 
+  // preview container
+  const previewContainer = document.createElement('div')
+  previewContainer.classList.add('wikiLink__previewContainer')
+  previewContainer.classList.add('wikiLink__previewContainer--displayNone')
+
+  // Results container
+  const resultsContainer = document.createElement('div')
+  resultsContainer.classList.add('wikiLink__resultsContainer')
+
   // Frame Link Button (runs wikiLink command when clicked)
   const button = document.createElement('button')
   button.innerText = 'Link'
+  button.disabled = true
   button.classList.add('toastui-editor-ok-button')
+
+  const cleanWikiLinkPopup = () => {
+    previewContainer.innerHTML = ''
+    resultsContainer.innerHTML = ''
+    previewContainer.classList.add('wikiLink__previewContainer--displayNone')
+    button.disabled = true
+  }
+
   button.addEventListener('click', () => {
     if (wikiSelected.title && wikiSelected.url) {
       eventEmitter.emit('command', 'wikiLink', {
@@ -93,17 +169,15 @@ export default function wikiLink(context: PluginContext): PluginInfo {
         text: wikiSelected.title,
       })
       eventEmitter.emit('closePopup')
+      cleanWikiLinkPopup()
     }
   })
-
-  // Results container
-  const resultsContainer = document.createElement('div')
-  resultsContainer.classList.add('wikiLink__resultsContainer')
 
   // Append all elements to container
   inputContainer.appendChild(input)
   inputContainer.appendChild(button)
   container.appendChild(inputContainer)
+  container.appendChild(previewContainer)
   container.appendChild(resultsContainer)
 
   // Adding event listener on wikiLink button to get select text using javascript
@@ -117,14 +191,30 @@ export default function wikiLink(context: PluginContext): PluginInfo {
         selectedText = window.getSelection()?.toString() || ''
       }
       input.value = selectedText
-      fetchWikiResults(selectedText, resultsContainer, wikiSelected, input)
+      fetchWikiResults(
+        cleanWikiLinkPopup,
+        selectedText,
+        resultsContainer,
+        previewContainer,
+        wikiSelected,
+        input,
+        button,
+      )
     })
   }, 500)
 
   // Event listener on input search field to get the wikis when user types
   setTimeout(() => {
     input.addEventListener('keyup', () => {
-      fetchWikiResults(input.value, resultsContainer, wikiSelected, input)
+      fetchWikiResults(
+        cleanWikiLinkPopup,
+        input.value,
+        resultsContainer,
+        previewContainer,
+        wikiSelected,
+        input,
+        button,
+      )
     })
   }, 500)
 
@@ -143,7 +233,7 @@ export default function wikiLink(context: PluginContext): PluginInfo {
           className: 'toastui-editor-wiki-link-button wikiLink__popupBtn',
           popup: {
             body: container,
-            style: { width: 'auto' },
+            style: { width: '300px' },
           },
         },
       },
