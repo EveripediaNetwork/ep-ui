@@ -49,3 +49,104 @@
 .wikiLink__wikiResult--noTopBorder {
   border-top: none !important;
 }
+.wikiLink__resultTitle {
+  color: #ccc;
+  font-size: 15px;
+}
+.wikiLink__previewContainer {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+.toastui-editor-dark .wikiLink__previewContainer {
+  border-color: #333 !important;
+}
+.wikiLink__previewContainer--displayNone {
+  display: none;
+}
+.wikiLink__previewTitle {
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.wikiLink__previewTagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.wikiLink__previewTag {
+  padding: 0 5px;
+  border-radius: 100px;
+  font-size: 10px;
+}
+.toastui-editor-dark .wikiLink__previewTag {
+  color: #333 !important;
+}
+.toastui-editor-ok-button[disabled] {
+  cursor: not-allowed;
+  filter: brightness(80%);
+  background-color: #999999 !important;
+}
+.wikiLink__noResultsMsg {
+  text-align: center;
+}
+
+/* LOADER STYLES */
+.wikiLink__loader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+.wikiLink__loader div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgb(122, 122, 122);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.wikiLink__loader div:nth-child(1) {
+  left: 8px;
+  animation: wikiLink__loader1 0.6s infinite;
+}
+.wikiLink__loader div:nth-child(2) {
+  left: 8px;
+  animation: wikiLink__loader2 0.6s infinite;
+}
+.wikiLink__loader div:nth-child(3) {
+  left: 32px;
+  animation: wikiLink__loader2 0.6s infinite;
+}
+.wikiLink__loader div:nth-child(4) {
+  left: 56px;
+  animation: wikiLink__loader3 0.6s infinite;
+}
+@keyframes wikiLink__loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes wikiLink__loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes wikiLink__loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
