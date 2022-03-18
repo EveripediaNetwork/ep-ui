@@ -22,6 +22,7 @@ interface PluginInfo {
 }
 
 const fetchWikiResults = (
+  isTextSelected: boolean,
   cleanWikiLinkPopup: () => void,
   query: string,
   resultsContainer: HTMLDivElement,
@@ -63,7 +64,7 @@ const fetchWikiResults = (
         // event listener on wikiResult button to set wikiSelected
         wikiResult.addEventListener('click', () => {
           // update input and wikiSelected state
-          wikiSelected.title = wiki.title
+          if (!isTextSelected) wikiSelected.title = wiki.title
           wikiSelected.url = `${window.location.origin}/wiki/${wiki.id}`
           searchInput.value = wiki.title
 
@@ -123,6 +124,7 @@ const fetchWikiResults = (
 export default function wikiLink(context: PluginContext): PluginInfo {
   const { eventEmitter } = context
   const wikiSelected = { title: '', url: '' }
+  let userSelectedText = ''
 
   //= =======================
   //  Toolbar Frame Elements
@@ -156,6 +158,8 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   button.classList.add('toastui-editor-ok-button')
 
   const cleanWikiLinkPopup = () => {
+    wikiSelected.title = ''
+    wikiSelected.url = ''
     previewContainer.innerHTML = ''
     resultsContainer.innerHTML = ''
     previewContainer.classList.add('wikiLink__previewContainer--displayNone')
@@ -163,10 +167,10 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   }
 
   button.addEventListener('click', () => {
-    if (wikiSelected.title && wikiSelected.url) {
+    if ((wikiSelected.title || userSelectedText) && wikiSelected.url) {
       eventEmitter.emit('command', 'wikiLink', {
         url: wikiSelected.url,
-        text: wikiSelected.title,
+        text: userSelectedText === '' ? wikiSelected.title : userSelectedText,
       })
       eventEmitter.emit('closePopup')
       cleanWikiLinkPopup()
@@ -186,14 +190,15 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   setTimeout(() => {
     const popupBtn = document.querySelector('.toastui-editor-wiki-link-button')
     popupBtn?.addEventListener('click', () => {
-      let selectedText = ''
+      userSelectedText = ''
       if (window.getSelection) {
-        selectedText = window.getSelection()?.toString() || ''
+        userSelectedText = window.getSelection()?.toString() || ''
       }
-      input.value = selectedText
+      input.value = userSelectedText
       fetchWikiResults(
+        userSelectedText !== '',
         cleanWikiLinkPopup,
-        selectedText,
+        userSelectedText,
         resultsContainer,
         previewContainer,
         wikiSelected,
@@ -207,6 +212,7 @@ export default function wikiLink(context: PluginContext): PluginInfo {
   setTimeout(() => {
     input.addEventListener('keyup', () => {
       fetchWikiResults(
+        userSelectedText !== '',
         cleanWikiLinkPopup,
         input.value,
         resultsContainer,
