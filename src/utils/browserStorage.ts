@@ -8,7 +8,7 @@ export const loadState = () => {
   try {
     const serializedInitialState = localStorage.getItem(storageKey)
 
-    if (!serializedInitialState) return undefined; 
+    if (!serializedInitialState) return undefined
 
     const setExpiry = JSON.parse(localStorage.getItem(storageKey) || '{}')
     if (currentDate.getTime() > setExpiry) {
