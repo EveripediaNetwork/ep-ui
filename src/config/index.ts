@@ -13,6 +13,10 @@ const config = {
   chainId: String(process.env.NEXT_PUBLIC_CHAIN_ID),
   chainName: String(process.env.NEXT_PUBLIC_CHAIN_NAME),
   rpcUrl: String(process.env.NEXT_PUBLIC_RPC_URL),
+  polygonMainnetChainId: 137,
+  mumbaiTestnetChainId: 80001,
+  ethereumMainnetChainId: 1,
+  binanceSmartChainId: 56,
 }
 
 export default config

@@ -3,13 +3,11 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
 import './static/assets/dark-mode.css'
-
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider } from 'wagmi'
 import { Provider as ReduxProvider } from 'react-redux'
 import { debounce } from 'debounce'
-
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
