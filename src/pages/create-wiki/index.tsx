@@ -107,9 +107,7 @@ const CreateWiki = () => {
           ...tmp.content,
           content: String(md),
           user: {
-            id: accountData.ens
-              ? accountData.ens.name
-              : shortenAccount(accountData.address),
+            id: accountData.address
           },
           images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         },
