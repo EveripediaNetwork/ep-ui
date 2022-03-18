@@ -21,10 +21,6 @@ import {
   AutoCompleteGroupTitle,
   AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
-import {
-  SAMPLE_CATEGORIES,
-  SAMPLE_PROFILES,
-} from '@/components/Layout/Navbar/NavSearch/utils'
 import { useNavSearch } from '@/services/nav-search/utils'
 
 export type NavSearchProps = {
@@ -83,7 +79,6 @@ export const NavSearch = (props: NavSearchProps) => {
         const articleImage = `https://gateway.pinata.cloud/ipfs/${
           article.images && article.images[0].id
         }`
-        console.log(article)
         return (
           <AutoCompleteItem
             key={article.id}
@@ -131,7 +126,7 @@ export const NavSearch = (props: NavSearchProps) => {
       <AutoCompleteGroupTitle {...titleStyles}>
         Categories
       </AutoCompleteGroupTitle>
-      {SAMPLE_CATEGORIES.map(category => (
+      {results.categories?.map(category => (
         <AutoCompleteItem
           key={category.id}
           value={category}
@@ -140,49 +135,10 @@ export const NavSearch = (props: NavSearchProps) => {
           {...generalItemStyles}
           alignItems="center"
         >
-          <Avatar src={category.image} name={category.title} size="xs" />
+          <Avatar src={category.cardImage} name={category.title} size="xs" />
           <chakra.span fontWeight="semibold" fontSize="sm">
             {category.title}
           </chakra.span>
-          <chakra.div
-            fontWeight="medium"
-            fontSize="xs"
-            alignSelf="center"
-            px="2"
-            borderWidth={1}
-            rounded="md"
-            _dark={{
-              bg: 'gray.800',
-            }}
-            ml="auto"
-          >
-            {category.tag}
-          </chakra.div>
-        </AutoCompleteItem>
-      ))}
-    </AutoCompleteGroup>
-  )
-
-  const profilesSearchList = (
-    <AutoCompleteGroup>
-      <AutoCompleteGroupTitle {...titleStyles}>Profiles</AutoCompleteGroupTitle>
-      {SAMPLE_PROFILES.map(profile => (
-        <AutoCompleteItem
-          key={profile.id}
-          value={profile}
-          getValue={art => art.name}
-          label={profile.name}
-          {...generalItemStyles}
-        >
-          <Avatar src={profile.image} name={profile.name} size="xs" />
-          <Flex direction="column">
-            <chakra.span fontWeight="semibold" fontSize="sm">
-              {profile.name}
-            </chakra.span>
-            <Text noOfLines={2} maxW="full" fontSize="xs">
-              {profile.bio}
-            </Text>
-          </Flex>
         </AutoCompleteItem>
       ))}
     </AutoCompleteGroup>
@@ -192,7 +148,6 @@ export const NavSearch = (props: NavSearchProps) => {
     <>
       {articlesSearchList}
       {categoriesSearchList}
-      {profilesSearchList}
     </>
   )
 

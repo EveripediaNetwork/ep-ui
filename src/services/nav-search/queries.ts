@@ -15,3 +15,15 @@ export const GET_WIKIS_BY_TITLE = gql`
     }
   }
 `
+
+export const GET_CATEGORIES_BY_TITLE = gql`
+  query categoryByTitle($title: String!) {
+    categoryByTitle(title: $title) {
+      id
+      title
+      cardImage
+      heroImage
+      icon
+    }
+  }
+`

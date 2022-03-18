@@ -8,7 +8,24 @@ import {
   PluginProp,
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
-import { debouncedFetchData } from '@/services/nav-search/utils'
+import { debounce } from 'debounce'
+import { getWikisByTitle, WikiTitle } from '@/services/nav-search'
+import { store } from '@/store/store'
+
+const fetchWikisList = async (
+  query: string,
+  cb: (data: WikiTitle[]) => void,
+) => {
+  const { data } = await store.dispatch(getWikisByTitle.initiate(query))
+  cb(data || [])
+}
+
+export const debouncedFetchWikis = debounce(
+  (query: string, cb: (data: WikiTitle[]) => void) => {
+    fetchWikisList(query, cb)
+  },
+  500,
+)
 
 interface PluginInfo {
   toHTMLRenderers?: HTMLConvertorMap
@@ -42,7 +59,7 @@ const fetchWikiResults = (
   loader.appendChild(document.createElement('div'))
 
   resultsContainer.appendChild(loader)
-  debouncedFetchData(query, res => {
+  debouncedFetchWikis(query, res => {
     resultsContainer.innerHTML = ''
     if (res.length > 0) {
       // make results container invisible if there are no results
