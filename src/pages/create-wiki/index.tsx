@@ -53,7 +53,7 @@ const CreateWiki = () => {
     name: 'EP',
     version: '1',
     chainId: 80001,
-    verifyingContract: '0x30D16f801FE596db7b58E4D005c83C2196c7A01E',
+    verifyingContract: '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
   }
 
   const types = {
@@ -67,7 +67,7 @@ const CreateWiki = () => {
   const value = {
     ipfs: 'Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v',
     user: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
-    deadline: 0,
+    deadline: 0
   }
 
   const [{ data, error, loading }, signTypedData] = useSignTypedData({
@@ -78,7 +78,7 @@ const CreateWiki = () => {
 
   const [, write] = useContractWrite(
     {
-      addressOrName: '0x30D16f801FE596db7b58E4D005c83C2196c7A01E',
+      addressOrName: '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
       contractInterface: WikiAbi,
     },
     'postBySig',
