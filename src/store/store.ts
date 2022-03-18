@@ -9,6 +9,7 @@ import {
 } from '@/store/slices'
 import { loadState } from '@/utils/browserStorage'
 import { categoriesApi } from '@/services/categories'
+import { navSearchApi } from '@/services/nav-search'
 
 export const store = configureStore({
   reducer: {
@@ -19,11 +20,13 @@ export const store = configureStore({
     providerNetwork: providerReducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [navSearchApi.reducerPath]: navSearchApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
       .concat(wikiApi.middleware)
-      .concat(categoriesApi.middleware),
+      .concat(categoriesApi.middleware)
+      .concat(navSearchApi.middleware),
   preloadedState: loadState(),
 })
 
