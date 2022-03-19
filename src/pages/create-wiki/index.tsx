@@ -24,7 +24,6 @@ import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
-import shortenAccount from '@/utils/shortenAccount'
 import { WikiAbi } from '../../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -107,9 +106,7 @@ const CreateWiki = () => {
           ...tmp.content,
           content: String(md),
           user: {
-            id: accountData.ens
-              ? accountData.ens.name
-              : shortenAccount(accountData.address),
+            id: accountData.address,
           },
           images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         },

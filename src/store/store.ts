@@ -10,6 +10,7 @@ import { loadState } from '@/utils/browserStorage'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
 import { activitiesApi } from '@/services/activities'
+import { navSearchApi } from '@/services/nav-search'
 
 export const store = configureStore({
   reducer: {
@@ -21,12 +22,14 @@ export const store = configureStore({
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
+    [navSearchApi.reducerPath]: navSearchApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(activitiesApi.middleware),
+      .concat(navSearchApi.middleware),
   preloadedState: loadState(),
 })
 
