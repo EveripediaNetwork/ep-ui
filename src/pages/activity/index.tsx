@@ -27,7 +27,7 @@ const Activity = () => {
       key={activity.id}
       wikiImg={ActivityData[i].wikiImg}
       title={activity.title || ActivityData[i].title}
-      brief={ActivityData[i].brief}
+      brief={activity.content || ActivityData[i].brief}
       editor={ActivityData[i].editor}
       wordsChanged={ActivityData[i].wordsChanged}
       percentChanged={ActivityData[i].percentChanged}

@@ -5,6 +5,7 @@ export const GET_LATEST_ACTIVITIES = gql`
     wikis {
       id
       title
+      content
     }
   }
 `
