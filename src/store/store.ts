@@ -28,7 +28,7 @@ export const store = configureStore({
     gDM({ serializableCheck: true })
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
-      .concat(activitiesApi.middleware),
+      .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware),
   preloadedState: loadState(),
 })
