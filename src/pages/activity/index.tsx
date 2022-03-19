@@ -21,6 +21,21 @@ import { store } from '@/store/store'
 
 const Activity = () => {
   const { data: LatestActivityData } = useGetLatestActivitiesQuery()
+
+  const renderActivityCard = (activity: any, i: number) => (
+    <ActivityCard
+      key={activity.id}
+      wikiImg={ActivityData[i].wikiImg}
+      title={activity.title || ActivityData[i].title}
+      brief={ActivityData[i].brief}
+      editor={ActivityData[i].editor}
+      wordsChanged={ActivityData[i].wordsChanged}
+      percentChanged={ActivityData[i].percentChanged}
+      isFirstEdit={ActivityData[i].isFirstEdit}
+      lastModTimeStamp={ActivityData[i].lastModTimeStamp}
+    />
+  )
+
   return (
     <Box bgColor="pageBg" mt={-8} mb={-8} pt={8} pb={8}>
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
@@ -36,37 +51,19 @@ const Activity = () => {
             {/* Most Recent Activity Section */}
             <TabPanel px={0}>
               <VStack spacing={4}>
-                {LatestActivityData?.map((activity, i) => (
-                  <ActivityCard
-                    key={activity.id}
-                    wikiImg={ActivityData[i].wikiImg}
-                    title={activity.title || ActivityData[i].title}
-                    brief={ActivityData[i].brief}
-                    editor={ActivityData[i].editor}
-                    wordsChanged={ActivityData[i].wordsChanged}
-                    percentChanged={ActivityData[i].percentChanged}
-                    isFirstEdit={ActivityData[i].isFirstEdit}
-                    lastModTimeStamp={ActivityData[i].lastModTimeStamp}
-                  />
-                ))}
+                {LatestActivityData?.map((activity, i) =>
+                  renderActivityCard(activity, i),
+                )}
               </VStack>
             </TabPanel>
             {/* Expiring Soon Activity Section */}
             <TabPanel px={0}>
               <VStack spacing={4}>
-                {ActivityData.reverse().map((activity, i) => (
-                  <ActivityCard
-                    key={activity.id}
-                    wikiImg={ActivityData[i].wikiImg}
-                    title={activity.title || ActivityData[i].title}
-                    brief={ActivityData[i].brief}
-                    editor={ActivityData[i].editor}
-                    wordsChanged={ActivityData[i].wordsChanged}
-                    percentChanged={ActivityData[i].percentChanged}
-                    isFirstEdit={ActivityData[i].isFirstEdit}
-                    lastModTimeStamp={ActivityData[i].lastModTimeStamp}
-                  />
-                ))}
+                {LatestActivityData?.slice()
+                  .reverse()
+                  .map((activity, i) =>
+                    renderActivityCard(activity, LatestActivityData.length - i),
+                  )}
               </VStack>
             </TabPanel>
           </TabPanels>
