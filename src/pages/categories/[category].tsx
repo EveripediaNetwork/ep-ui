@@ -10,6 +10,7 @@ import {
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
+import SubCategoryCard from '@/components/Categories/SubCategoryCard'
 
 interface CategoryPageProps {
   categoryData: Category
@@ -58,10 +59,10 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
           {Array.from({ length: 6 }).map((_, i) => (
             <Box
               key={i}
-              h="250px"
               w="100%"
-              bgColor={`hsl(${Math.floor(Math.random() * 360)}, 10%, 80%)`}
-            />
+            >
+              <SubCategoryCard/>
+            </Box>
           ))}
         </SimpleGrid>
       </Box>
