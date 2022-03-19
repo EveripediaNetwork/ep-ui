@@ -57,11 +57,8 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
           gap={8}
         >
           {Array.from({ length: 6 }).map((_, i) => (
-            <Box
-              key={i}
-              w="100%"
-            >
-              <SubCategoryCard/>
+            <Box key={i} w="100%">
+              <SubCategoryCard />
             </Box>
           ))}
         </SimpleGrid>
