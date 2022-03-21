@@ -12,5 +12,5 @@ export const WikiAbi = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-  }
+  },
 ]

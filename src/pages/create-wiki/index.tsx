@@ -13,7 +13,7 @@ import {
   CloseButton,
   Center,
 } from '@chakra-ui/react'
-import { useAccount, useContractWrite, useSignTypedData } from 'wagmi'
+import { useAccount, useSignTypedData } from 'wagmi'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -25,8 +25,6 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
-import { splitSignature } from 'ethers/lib/utils'
-import { WikiAbi } from '../../abi/Wiki.abi'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -53,7 +51,7 @@ const CreateWiki = () => {
     name: 'EP',
     version: '1',
     chainId: 80001,
-    verifyingContract: '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
+    verifyingContract: config.wikiContractAddress,
   }
 
   const types = {
@@ -64,24 +62,8 @@ const CreateWiki = () => {
     ],
   }
 
-  const value = {
-    ipfs: 'Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v',
-    user: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
-    deadline: 0
-  }
-
-  const [{ data, error, loading }, signTypedData] = useSignTypedData({
-    domain,
-    types,
-    value,
-  })
-
-  const [, write] = useContractWrite(
-    {
-      addressOrName: '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
-      contractInterface: WikiAbi,
-    },
-    'postBySig',
+  const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
+    {},
   )
 
   const saveImage = async () => {
@@ -101,8 +83,17 @@ const CreateWiki = () => {
     return ipfs
   }
 
-  const saveHashInTheBlockchain = async () => {
-    await signTypedData()
+  const saveHashInTheBlockchain = async (ipfs: string) => {
+    setWikiHash(ipfs)
+    await signTypedData({
+      domain,
+      types,
+      value: {
+        ipfs,
+        user: accountData?.address || '',
+        deadline: 0,
+      },
+    })
   }
 
   const saveOnIpfs = async () => {
@@ -131,12 +122,17 @@ const CreateWiki = () => {
         data: { ipfs },
       } = await axios.post('/api/ipfs', tmp)
 
-      if (ipfs) saveHashInTheBlockchain()
+      if (ipfs) saveHashInTheBlockchain(ipfs)
+
+      setSubmittingWiki(false)
     }
   }
 
   const disableSaveButton = () =>
-    wiki.content.images.length === 0 || submittingWiki || !accountData?.address
+    wiki.content.images.length === 0 ||
+    submittingWiki ||
+    !accountData?.address ||
+    signing
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
@@ -156,30 +152,29 @@ const CreateWiki = () => {
   }, [])
 
   useEffect(() => {
-    async function signData(data, error) {
-      console.log({ data, error })
-      if (data) {
-        const signature = data.substring(2)
+    async function signData(signedData: any, signingError: any) {
+      if (signingError) {
+        console.log(signingError)
+        return
+      }
+
+      if (signedData) {
+        const signature = signedData.substring(2)
         const r = `0x${signature.substring(0, 64)}`
         const s = `0x${signature.substring(64, 128)}`
         const v = parseInt(signature.substring(128, 130), 16)
-        console.log('r:', r)
-        console.log('s:', s)
-        console.log('v:', v)
 
-        const response = splitSignature(data)
-        console.log(response)
-        const result = await write({
-          args: [
-            'Qmb7Kc2r7oH6ff5VdvV97ynuv9uVNXPVppjiMvkGF98F6v',
-            '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
-            0,
-            response.v,
-            response.r,
-            response.s,
-          ],
+        const relayerData = await axios.post('http://localhost:5000/relayer', {
+          ipfs: wikiHash,
+          userAddr: accountData?.address,
+          deadline: 0,
+          v,
+          r,
+          s,
         })
-        await result.data?.wait(2)
+
+        setTxHash(relayerData.data.hash)
+        setOpenTxDetailsDialog(true)
       }
     }
     signData(data, error)
@@ -229,7 +224,7 @@ const CreateWiki = () => {
             isLoading={submittingWiki}
             loadingText="Loading"
             disabled={disableSaveButton()}
-            onClick={saveHashInTheBlockchain}
+            onClick={saveOnIpfs}
           >
             Publish Wiki
           </Button>
