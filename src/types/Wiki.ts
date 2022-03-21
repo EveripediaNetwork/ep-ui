@@ -72,7 +72,23 @@ export const Languages: LanguagesType = {
 
 export interface Wiki {
   id: string
-  version: number
-  content: Content
-  language: LanguagesISOEnum
+  title: string
+  created: string
+  content: string
+  categories: {
+    id: string
+    title: string
+  }
+  tags: Tag[]
+  images: {
+    id: string
+    type: string | ArrayBuffer | null
+  }
+  metadata: {
+    id: string
+    value: string
+  }
+  user: {
+    id: string
+  }
 }

@@ -6,7 +6,7 @@ import {
   GET_WIKI_BY_ID,
   GET_WIKIS,
 } from '@/services/wikis/queries'
-import { Content, Wiki } from '@/types/Wiki'
+import { Wiki } from '@/types/Wiki'
 import config from '@/config'
 
 type GetWikisResponse = {
@@ -18,8 +18,8 @@ type GetWikiResponse = {
 }
 
 type GetUserWikiResponse = {
-  user: {
-    contents: Content[]
+  userById: {
+    wikis: Wiki[]
   }
 }
 
@@ -31,7 +31,7 @@ export const wikiApi = createApi({
     }
     return null
   },
-  baseQuery: graphqlRequestBaseQuery({ url: config.thegraph }),
+  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
     getWikis: builder.query<Wiki[], void>({
       query: () => ({ document: GET_WIKIS }),
@@ -41,13 +41,13 @@ export const wikiApi = createApi({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
       transformResponse: (response: GetWikiResponse) => response.wiki,
     }),
-    getUserWikis: builder.query<Content[], string>({
+    getUserWikis: builder.query<Wiki[], string>({
       query: (id: string) => ({
         document: GET_USER_WIKIS_BY_ID,
         variables: { id },
       }),
       transformResponse: (response: GetUserWikiResponse) =>
-        response.user.contents,
+        response.userById.wikis,
     }),
   }),
 })
