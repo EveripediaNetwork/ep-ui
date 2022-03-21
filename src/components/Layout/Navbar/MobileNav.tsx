@@ -59,14 +59,14 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
     >
       <Box>
         <NavSearch
-          inputGroupProps={{ display: 'inherit' }}
+          inputGroupProps={{ display: { base: 'inherit', md: 'none' } }}
           inputProps={{
             borderTopWidth: 1,
             rounded: 'none',
             borderX: 'none',
             py: 8,
           }}
-          listProps={{ w: 'auto', rounded: 'none', mt: 0 }}
+          listProps={{ w: 'full', rounded: 'none', mt: 0 }}
         />
 
         <Divider />
