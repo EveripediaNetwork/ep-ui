@@ -15,6 +15,7 @@ const CategoriesList = () => {
         {
           id: '#',
           title: 'All Categories',
+          description: '',
           cardImage: `https://picsum.photos/seed/categories/400/580`,
           heroImage: '',
           icon: '',
