@@ -29,6 +29,7 @@ import {
 } from '@/services/nav-search/utils'
 
 import { useRouter } from 'next/router'
+import config from '@/config'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -89,7 +90,7 @@ export const NavSearch = (props: NavSearchProps) => {
     <AutoCompleteGroup>
       <AutoCompleteGroupTitle {...titleStyles}>Articles</AutoCompleteGroupTitle>
       {results.articles?.map(article => {
-        const articleImage = `https://gateway.pinata.cloud/ipfs/${
+        const articleImage = `${config.pinataBaseUrl}${
           article.images && article.images[0].id
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
