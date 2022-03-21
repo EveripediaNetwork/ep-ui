@@ -1,7 +1,6 @@
-import moment from 'moment';
+import moment from 'moment'
 
 export const getReadableDate = (dateToFormat: string) => {
-    let formattedDate = moment(new Date(dateToFormat));
-    return formattedDate.fromNow()
-
+  const formattedDate = moment(new Date(dateToFormat))
+  return formattedDate.fromNow()
 }
