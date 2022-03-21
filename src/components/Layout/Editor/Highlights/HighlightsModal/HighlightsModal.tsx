@@ -54,12 +54,9 @@ const HighlightsModal = ({
   const handleSetWikiMetadata = (ob: MData) => {
     setWiki((prev: Wiki) => ({
       ...prev,
-      content: {
-        ...prev.content,
-        metadata: prev.content.metadata.map((m: MData) =>
-          m.id === ob.id ? { ...m, value: ob.value } : m,
-        ),
-      },
+      metadata: prev.metadata.map((m: MData) =>
+        m.id === ob.id ? { ...m, value: ob.value } : m,
+      ),
     }))
   }
 
@@ -73,31 +70,23 @@ const HighlightsModal = ({
   const handleAddCategory = (category: string) => {
     if (!category) return
 
-    if (
-      !wiki.content.categories.find((c: BaseCategory) => c.title === category)
-    )
+    if (!wiki.categories.find((c: BaseCategory) => c.title === category))
       setWiki((prev: Wiki) => ({
         ...prev,
-        content: {
-          ...prev.content,
-          images: [...currentWiki.content.images],
-          categories: [
-            ...prev.content.categories,
-            { id: slugify(category.toLowerCase()), title: category },
-          ],
-        },
+        images: [...currentWiki.images],
+        categories: [
+          ...prev.categories,
+          { id: slugify(category.toLowerCase()), title: category },
+        ],
       }))
   }
 
   const handleDeleteCategory = (category: string) => {
     setWiki({
       ...wiki,
-      content: {
-        ...wiki.content,
-        categories: wiki.content.categories.filter(
-          (c: BaseCategory) => c.title !== category,
-        ),
-      },
+      categories: wiki.categories.filter(
+        (c: BaseCategory) => c.title !== category,
+      ),
     })
   }
 
@@ -130,8 +119,7 @@ const HighlightsModal = ({
               })
           }}
           value={String(
-            wiki.content.metadata.find((m: MData) => m.id === 'page-type')
-              ?.value,
+            wiki.metadata.find((m: MData) => m.id === 'page-type')?.value,
           )}
           placeholder="Choose a page type"
         >
@@ -164,7 +152,7 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {wiki.content.categories.map((c: BaseCategory) => (
+          {wiki.categories.map((c: BaseCategory) => (
             <Badge
               variant="outline"
               display="flex"

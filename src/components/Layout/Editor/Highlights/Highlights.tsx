@@ -28,7 +28,7 @@ const Highlights = () => {
   const handleDispatch = (object: Partial<Content>) =>
     dispatch({
       type: 'wiki/setCurrentWiki',
-      payload: { content: { ...object } },
+      payload: object,
     })
 
   const handleSetImage = (value: string | ArrayBuffer | null) =>
@@ -65,7 +65,7 @@ const Highlights = () => {
               title: event.target.value,
             })
           }}
-          value={currentWiki.content.title}
+          value={currentWiki.title}
           placeholder="Title goes here"
         />
       </Flex>
@@ -113,7 +113,7 @@ const Highlights = () => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.content.categories.map((c: BaseCategory) => (
+            {currentWiki.categories.map((c: BaseCategory) => (
               <Badge variant="outline" m="1">
                 {c.title}
               </Badge>
