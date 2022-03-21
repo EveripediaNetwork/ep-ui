@@ -22,7 +22,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
             {shortenText(content, 65)}
           </Text>
           <Text color="gray.400" fontSize="sm">
-            Last Edited {getReadableDate(updated)}
+            Last Edited {updated && getReadableDate(updated)}
           </Text>
         </Stack>
       </Box>
