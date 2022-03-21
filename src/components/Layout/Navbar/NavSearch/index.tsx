@@ -21,7 +21,14 @@ import {
   AutoCompleteGroupTitle,
   AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
-import { useNavSearch } from '@/services/nav-search/utils'
+import {
+  fillType,
+  SearchItem,
+  SEARCH_TYPES,
+  useNavSearch,
+} from '@/services/nav-search/utils'
+
+import { useRouter } from 'next/router'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -29,9 +36,15 @@ export type NavSearchProps = {
   listProps?: AutoCompleteListProps
 }
 
+const ItemPaths = {
+  [SEARCH_TYPES.ARTICLE]: '/wiki/',
+  [SEARCH_TYPES.CATEGORY]: '/categories/',
+}
+
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
+  const router = useRouter()
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -79,10 +92,11 @@ export const NavSearch = (props: NavSearchProps) => {
         const articleImage = `https://gateway.pinata.cloud/ipfs/${
           article.images && article.images[0].id
         }`
+        const value = fillType(article, SEARCH_TYPES.ARTICLE)
         return (
           <AutoCompleteItem
             key={article.id}
-            value={article}
+            value={value}
             getValue={art => art.title}
             label={article.title}
             {...generalItemStyles}
@@ -126,21 +140,24 @@ export const NavSearch = (props: NavSearchProps) => {
       <AutoCompleteGroupTitle {...titleStyles}>
         Categories
       </AutoCompleteGroupTitle>
-      {results.categories?.map(category => (
-        <AutoCompleteItem
-          key={category.id}
-          value={category}
-          getValue={art => art.title}
-          label={category.title}
-          {...generalItemStyles}
-          alignItems="center"
-        >
-          <Avatar src={category.cardImage} name={category.title} size="xs" />
-          <chakra.span fontWeight="semibold" fontSize="sm">
-            {category.title}
-          </chakra.span>
-        </AutoCompleteItem>
-      ))}
+      {results.categories?.map(category => {
+        const value = fillType(category, SEARCH_TYPES.CATEGORY)
+        return (
+          <AutoCompleteItem
+            key={category.id}
+            value={value}
+            getValue={art => art.title}
+            label={category.title}
+            {...generalItemStyles}
+            alignItems="center"
+          >
+            <Avatar src={category.cardImage} name={category.title} size="xs" />
+            <chakra.span fontWeight="semibold" fontSize="sm">
+              {category.title}
+            </chakra.span>
+          </AutoCompleteItem>
+        )
+      })}
     </AutoCompleteGroup>
   )
 
@@ -153,10 +170,15 @@ export const NavSearch = (props: NavSearchProps) => {
 
   return (
     <AutoComplete
+      closeOnSelect={false}
       suggestWhenEmpty
       emptyState={!isLoading && emptyState}
       shouldRenderSuggestions={q => q.length >= 3}
       openOnFocus={query.length >= 3}
+      onSelectOption={option => {
+        const { id, type } = option.item.originalValue
+        router.push(ItemPaths[type as SearchItem] + id)
+      }}
     >
       <InputGroup
         size="lg"

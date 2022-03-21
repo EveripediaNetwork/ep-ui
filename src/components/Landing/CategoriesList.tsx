@@ -16,7 +16,6 @@ const CategoriesList = () => {
           id: '#',
           title: 'All Categories',
           cardImage: `https://picsum.photos/seed/categories/400/580`,
-          description: '',
           heroImage: '',
           icon: '',
         },
@@ -48,7 +47,7 @@ const CategoriesList = () => {
           >
             <Image
               bgColor="DimColor"
-              src={category.cardImage}
+              src={category.cardImage || '/'}
               h="180px"
               w="100%"
             />

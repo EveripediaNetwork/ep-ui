@@ -14,6 +14,17 @@ type Results = {
   categories: Category[]
 }
 
+export type SearchItem = keyof typeof SEARCH_TYPES
+
+export const SEARCH_TYPES = {
+  ARTICLE: 'ARTICLE',
+  CATEGORY: 'CATEGORY',
+} as const
+
+export const fillType = (item: WikiTitle | Category, type: SearchItem) => {
+  return { ...item, type }
+}
+
 const fetchWikisList = async (query: string) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
   return data
@@ -43,13 +54,6 @@ export const useNavSearch = () => {
     articles: [],
     categories: [],
   })
-
-  // const [wikis, setWikis] = useState<WikiTitle[] | null>(null)
-  // const [categories, seCategories] = useState<Category[] | null>(null)
-  // const results = {
-  //   articles: wikis,
-  //   categories,
-  // }
 
   useEffect(() => {
     if (query && query.length >= 3) {
