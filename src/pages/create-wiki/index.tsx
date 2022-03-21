@@ -155,10 +155,10 @@ const CreateWiki = () => {
   useEffect(() => {
     async function signData(
       signedData: string | undefined,
-      signingError: Error,
+      signingError: Error | undefined,
     ) {
       if (signingError) {
-        console.log(signingError)
+        console.error(signingError)
         return
       }
 
