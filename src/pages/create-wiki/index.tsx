@@ -25,6 +25,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import shortenAccount from '@/utils/shortenAccount'
+import { getDeadline } from '@/utils/getDeadline'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -50,7 +51,7 @@ const CreateWiki = () => {
   const domain = {
     name: 'EP',
     version: '1',
-    chainId: 80001,
+    chainId: parseInt(config.chainId, 16),
     verifyingContract: config.wikiContractAddress,
   }
 
@@ -91,7 +92,7 @@ const CreateWiki = () => {
       value: {
         ipfs,
         user: accountData?.address || '',
-        deadline: 0,
+        deadline: getDeadline(),
       },
     })
   }
@@ -164,10 +165,10 @@ const CreateWiki = () => {
         const s = `0x${signature.substring(64, 128)}`
         const v = parseInt(signature.substring(128, 130), 16)
 
-        const relayerData = await axios.post('http://localhost:5000/relayer', {
+        const relayerData = await axios.post(`${config.epApiBaseUrl}relayer`, {
           ipfs: wikiHash,
           userAddr: accountData?.address,
-          deadline: 0,
+          deadline: getDeadline(),
           v,
           r,
           s,

@@ -17,6 +17,7 @@ const config = {
   mumbaiTestnetChainId: 80001,
   ethereumMainnetChainId: 1,
   binanceSmartChainId: 56,
+  epApiBaseUrl: process.env.NEXT_PUBLIC_EP_API,
 }
 
 export default config
