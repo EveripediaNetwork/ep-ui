@@ -2,24 +2,26 @@ import type { RootState } from '@/store/store'
 
 const storageKey = 'serializedState'
 const currentDate = new Date()
-const expiryTimeline = 86400;
+const expiryTimeline = 86400
 
-const getLocalStorage = () => { 
-  const setExpiry = JSON.parse(localStorage.getItem(storageKey) || '{}'); 
-  return setExpiry.expiry; 
+const getLocalStorage = () => {
+  const setExpiry = JSON.parse(localStorage.getItem(storageKey) || '{}')
+  return setExpiry.expiry
 }
 
 export const loadState = () => {
   try {
-    const serializedInitialState = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    const serializedInitialState = JSON.parse(
+      localStorage.getItem(storageKey) || '{}',
+    )
 
     if (!serializedInitialState) return undefined
 
     if (currentDate.getTime() > serializedInitialState.expiry) {
       localStorage.removeItem(storageKey)
     }
-    const {updatedState} = serializedInitialState; 
-    return updatedState;
+    const { updatedState } = serializedInitialState
+    return updatedState
   } catch (e) {
     return undefined
   }
@@ -41,7 +43,10 @@ export function saveState(state: RootState) {
     }
     const preSerializedState = {
       updatedState,
-      expiry: currentDate.getTime() < getLocalStorage() ? getLocalStorage() : currentDate.getTime() + expiryTimeline,
+      expiry:
+        currentDate.getTime() < getLocalStorage()
+          ? getLocalStorage()
+          : currentDate.getTime() + expiryTimeline,
     }
     const serializedState = JSON.stringify(preSerializedState)
     localStorage.setItem(storageKey, serializedState)
