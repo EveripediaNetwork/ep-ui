@@ -50,7 +50,7 @@ const CreateWiki = () => {
   const domain = {
     name: 'EP',
     version: '1',
-    chainId: parseInt(config.chainId, 16),
+    chainId: config.chainId,
     verifyingContract: config.wikiContractAddress,
   }
 
