@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Box, Center, Text, Stack } from '@chakra-ui/react'
 import { Content } from '@/types/Wiki'
 import { shortenText } from '@/utils/shortenText'
+import { getReadableDate } from '@/utils/getFormattedDate'
 
 const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
   const { updated, content, title } = wiki
@@ -15,13 +16,13 @@ const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
         </Box>
         <Stack spacing={3}>
           <Text fontSize="2xl" fontWeight="bold">
-              {title}
+            {title}
           </Text>
           <Text color="gray.600" fontSize="md">
             {shortenText(content, 65)}
           </Text>
           <Text color="gray.400" fontSize="sm">
-            {updated}
+            Last Edited {getReadableDate(updated)}
           </Text>
         </Stack>
       </Box>
