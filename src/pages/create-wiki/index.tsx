@@ -32,6 +32,9 @@ const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
 
 const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
 `
+
+const deadline = getDeadline()
+
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const [{ data: accountData }] = useAccount()
@@ -91,7 +94,7 @@ const CreateWiki = () => {
       value: {
         ipfs,
         user: accountData?.address || '',
-        deadline: getDeadline(),
+        deadline,
       },
     })
   }
@@ -165,7 +168,7 @@ const CreateWiki = () => {
         const relayerData = await axios.post(`${config.epApiBaseUrl}relayer`, {
           ipfs: wikiHash,
           userAddr: accountData?.address,
-          deadline: getDeadline(),
+          deadline,
           v,
           r,
           s,
