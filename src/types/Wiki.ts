@@ -45,7 +45,7 @@ export interface Content {
   images: Image[]
   metadata: MData[]
   user?: User
-  updated: string
+  updated?: string
 }
 
 enum LanguagesValuesEnum {
