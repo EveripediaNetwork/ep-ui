@@ -5,19 +5,17 @@ const initialState: Wiki = {
   id: '',
   version: 1,
   language: LanguagesISOEnum.EN,
-  content: {
-    title: 'Wiki title',
-    content: '',
-    categories: [{ id: 'first-category', title: 'First Category' }],
-    tags: [{ id: 'hello' }, { id: 'world' }],
-    images: [],
-    metadata: [
-      {
-        id: 'page-type',
-        value: 'Place / Location',
-      },
-    ],
-  },
+  title: 'Wiki title',
+  content: '',
+  categories: [{ id: 'first-category', title: 'First Category' }],
+  tags: [{ id: 'hello' }, { id: 'world' }],
+  images: [],
+  metadata: [
+    {
+      id: 'page-type',
+      value: 'Place / Location',
+    },
+  ],
 }
 
 const wikiSlice = createSlice({
@@ -28,7 +26,6 @@ const wikiSlice = createSlice({
       const newState = {
         ...state,
         ...action.payload,
-        content: { ...state.content, ...action.payload.content },
       }
       return newState
     },

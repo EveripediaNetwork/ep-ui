@@ -71,7 +71,7 @@ const CreateWiki = () => {
 
   const saveImage = async () => {
     const formData = new FormData()
-    const blob = new Blob([wiki.content.images[0].type as ArrayBuffer], {
+    const blob = new Blob([wiki.images[0].type as ArrayBuffer], {
       type: 'multipart/form-data',
     })
 
@@ -106,17 +106,14 @@ const CreateWiki = () => {
 
       let tmp = { ...wiki }
 
-      tmp.id = slugify(String(wiki.content.title).toLowerCase())
+      tmp.id = slugify(String(wiki.title).toLowerCase())
       tmp = {
         ...tmp,
-        content: {
-          ...tmp.content,
-          content: String(md),
-          user: {
-            id: accountData.address,
-          },
-          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+        content: String(md),
+        user: {
+          id: accountData.address,
         },
+        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
       const {
@@ -130,7 +127,7 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    wiki.content.images.length === 0 ||
+    wiki.images.length === 0 ||
     submittingWiki ||
     !accountData?.address ||
     signing

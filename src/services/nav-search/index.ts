@@ -1,7 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { GET_WIKIS_BY_TITLE } from '@/services/nav-search/queries'
+import {
+  GET_CATEGORIES_BY_TITLE,
+  GET_WIKIS_BY_TITLE,
+} from '@/services/nav-search/queries'
 import config from '@/config'
 
 export type WikiTitle = {
@@ -14,11 +17,23 @@ export type WikiTitle = {
   images?: {
     id: string
   }[]
-  views: number
+}
+
+export type Category = {
+  id: string
+  title: string
+  description: string
+  cardImage: string
+  heroImage: string
+  icon: string
 }
 
 type GetWikisByTitleResponse = {
   wikisByTitle: WikiTitle[]
+}
+
+type GetCategoriessByTitleResponse = {
+  categoriesByTitle: Category[]
 }
 
 export const navSearchApi = createApi({
@@ -39,12 +54,21 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetWikisByTitleResponse) =>
         response.wikisByTitle,
     }),
+    getCategoriesByTitle: builder.query<Category[], string>({
+      query: (title: string) => ({
+        document: GET_CATEGORIES_BY_TITLE,
+        variables: { title },
+      }),
+      transformResponse: (response: GetCategoriessByTitleResponse) =>
+        response.categoriesByTitle,
+    }),
   }),
 })
 
 export const {
   useGetWikisByTitleQuery,
+  useGetCategoriesByTitleQuery,
   util: { getRunningOperationPromises },
 } = navSearchApi
 
-export const { getWikisByTitle } = navSearchApi.endpoints
+export const { getWikisByTitle, getCategoriesByTitle } = navSearchApi.endpoints
