@@ -11,12 +11,16 @@ import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import SubCategoryCard from '@/components/Categories/SubCategoryCard'
+import { getWikisByCategory } from '@/services/wikis'
+import { Content } from '@/types/Wiki'
 
 interface CategoryPageProps {
   categoryData: Category
+  wikis: Content[]
 }
 const CategoryPage: NextPage<CategoryPageProps> = ({
   categoryData,
+  wikis,
 }: CategoryPageProps) => {
   const categoryIcon = getBootStrapIcon(categoryData.icon)
   return (
@@ -56,9 +60,9 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
           my={12}
           gap={8}
         >
-          {Array.from({ length: 6 }).map((_, i) => (
+          {wikis.map((wiki, i) => (
             <Box key={i} w="100%">
-              <SubCategoryCard />
+              <SubCategoryCard wiki={wiki} />
             </Box>
           ))}
         </SimpleGrid>
@@ -70,10 +74,14 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
 export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
+  const wikisByCategory = await store.dispatch(
+    getWikisByCategory.initiate(categoryId),
+  )
   await Promise.all(getRunningOperationPromises())
   return {
     props: {
       categoryData: result.data || [],
+      wikis: wikisByCategory.data || [],
     },
   }
 }

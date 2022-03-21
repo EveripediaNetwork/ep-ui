@@ -36,38 +36,41 @@ const CategoriesList = () => {
         spacingX={6}
         spacingY={12}
       >
-        {categories.map(category => (
-          <LinkBox
-            key={category.id}
-            _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
-            cursor="pointer"
-            bgColor="homeCardBg"
-            borderRadius="lg"
-            overflow="hidden"
-            shadow="base"
-          >
-            <Image
-              bgColor="DimColor"
-              src={category.cardImage}
-              h="180px"
-              w="100%"
-            />
-            <NextLink href={`/categories/${category.id}`} passHref>
-              <LinkOverlay>
-                <Text
+        {categories.map(
+          category =>
+            category.cardImage && (
+              <LinkBox
+                key={category.id}
+                _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+                cursor="pointer"
+                bgColor="homeCardBg"
+                borderRadius="lg"
+                overflow="hidden"
+                shadow="base"
+              >
+                <Image
+                  bgColor="DimColor"
+                  src={category?.cardImage}
+                  h="180px"
                   w="100%"
-                  textAlign="center"
-                  py={4}
-                  fontWeight="bold"
-                  fontSize="lg"
-                  size="md"
-                >
-                  {category.title}
-                </Text>
-              </LinkOverlay>
-            </NextLink>
-          </LinkBox>
-        ))}
+                />
+                <NextLink href={`/categories/${category.id}`} passHref>
+                  <LinkOverlay>
+                    <Text
+                      w="100%"
+                      textAlign="center"
+                      py={4}
+                      fontWeight="bold"
+                      fontSize="lg"
+                      size="md"
+                    >
+                      {category.title}
+                    </Text>
+                  </LinkOverlay>
+                </NextLink>
+              </LinkBox>
+            ),
+        )}
       </SimpleGrid>
     </Box>
   )

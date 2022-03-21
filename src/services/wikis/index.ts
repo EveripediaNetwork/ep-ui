@@ -5,6 +5,7 @@ import {
   GET_USER_WIKIS_BY_ID,
   GET_WIKI_BY_ID,
   GET_WIKIS,
+  GET_WIKIS_BY_CATEGORY,
 } from '@/services/wikis/queries'
 import { Content, Wiki } from '@/types/Wiki'
 import config from '@/config'
@@ -23,6 +24,10 @@ type GetUserWikiResponse = {
   }
 }
 
+type GetWikiCategoryResponse = {
+  wikisByCategory: Content[]
+}
+
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -31,7 +36,7 @@ export const wikiApi = createApi({
     }
     return null
   },
-  baseQuery: graphqlRequestBaseQuery({ url: config.thegraph }),
+  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
     getWikis: builder.query<Wiki[], void>({
       query: () => ({ document: GET_WIKIS }),
@@ -49,6 +54,14 @@ export const wikiApi = createApi({
       transformResponse: (response: GetUserWikiResponse) =>
         response.user.contents,
     }),
+    getWikisByCategory: builder.query<Content[], string>({
+      query: (category: string) => ({
+        document: GET_WIKIS_BY_CATEGORY,
+        variables: { category },
+      }),
+      transformResponse: (response: GetWikiCategoryResponse) =>
+        response.wikisByCategory,
+    }),
   }),
 })
 
@@ -56,7 +69,9 @@ export const {
   useGetWikisQuery,
   useGetWikiQuery,
   useGetUserWikisQuery,
+  useGetWikisByCategoryQuery,
   util: { getRunningOperationPromises },
 } = wikiApi
 
-export const { getWikis, getWiki, getUserWikis } = wikiApi.endpoints
+export const { getWikis, getWiki, getUserWikis, getWikisByCategory } =
+  wikiApi.endpoints
