@@ -202,7 +202,8 @@ export const NavSearch = (props: NavSearchProps) => {
         {isLoading ? loadingView : searchList}
 
         <Flex
-          color="whiteAlpha.600"
+          color="gray.600"
+          _dark={{ color: 'whiteAlpha.600' }}
           fontSize="xs"
           pl="3.5"
           py="5"
