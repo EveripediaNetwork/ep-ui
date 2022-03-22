@@ -6,8 +6,7 @@ import { Wiki } from '@/types/Wiki'
 const pinToPinata = async (payload: Wiki): Promise<string> => {
   const body = {
     pinataMetadata: {
-      name:
-        (<Wiki>payload).content !== undefined ? payload.content.title : 'image',
+      name: (<Wiki>payload).content !== undefined ? payload.title : 'image',
     },
     pinataContent: {
       ...payload,

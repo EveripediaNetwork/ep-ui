@@ -103,14 +103,14 @@ const WikiCard = ({ wiki }: WikiCardProps) => (
       justifyContent="center"
       marginTop={{ base: '3', sm: '0' }}
     >
-      <BlogTags tags={wiki.content.tags} />
+      <BlogTags tags={wiki.tags} />
       <Heading marginTop="1">
         <Link
           href={`/wiki/${wiki.id}`}
           textDecoration="none"
           _hover={{ textDecoration: 'none' }}
         >
-          {wiki.content.title}
+          {wiki.title}
         </Link>
       </Heading>
       <Text
@@ -120,10 +120,10 @@ const WikiCard = ({ wiki }: WikiCardProps) => (
         _dark={{ color: 'gray.200' }}
         fontSize="lg"
       >
-        {wiki.content.content}
+        {wiki.content}
       </Text>
       <BlogAuthor
-        name={shortenAccount(wiki?.content?.user?.id || '')}
+        name={shortenAccount(wiki?.user?.id || '')}
         date={new Date('2021-04-06T19:01:27Z')}
       />
     </Box>

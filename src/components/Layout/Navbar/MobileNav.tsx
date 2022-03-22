@@ -3,9 +3,6 @@ import {
   Box,
   Flex,
   Stack,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Button,
   Center,
   VStack,
@@ -19,12 +16,12 @@ import {
   RiFacebookFill,
   RiTelegramFill,
   RiTwitterFill,
-  RiSearch2Line,
 } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
+import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { ColorModeToggle } from './ColorModeToggle'
 
@@ -61,29 +58,17 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
       h="calc((100vh - 0px) - 72px)"
     >
       <Box>
-        <InputGroup
-          display={{ sm: 'flex', md: 'none' }}
-          py={2}
-          mx={2}
-          width="unset"
-          backgroundColor="subMenuBg"
-          size="lg"
-        >
-          <InputLeftElement pt={4} pl={0} pointerEvents="none">
-            <RiSearch2Line color="gray.300" />
-          </InputLeftElement>
-          <Input
-            pl={10}
-            borderColor="mobileMenuBorderColor"
-            _focus={{ borderColor: 'borderColorHover' }}
-            _hover={{ borderColor: 'borderColorHover' }}
-            placeholder="Search wikis, categories and accounts"
-            _placeholder={{
-              fontSize: 'md',
-              transform: 'translateY(-1px)',
-            }}
-          />
-        </InputGroup>
+        <NavSearch
+          inputGroupProps={{ display: { base: 'inherit', md: 'none' } }}
+          inputProps={{
+            borderTopWidth: 1,
+            rounded: 'none',
+            borderX: 'none',
+            py: 8,
+          }}
+          listProps={{ w: 'full', rounded: 'none', mt: 0 }}
+        />
+
         <Divider />
         {!showSubNav ? (
           <Stack

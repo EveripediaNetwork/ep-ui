@@ -13,7 +13,7 @@ import {
   CloseButton,
   Center,
 } from '@chakra-ui/react'
-import { useAccount, useContractWrite } from 'wagmi'
+import { useAccount, useSignTypedData } from 'wagmi'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -24,7 +24,7 @@ import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
-import { WikiAbi } from '../../abi/Wiki.abi'
+import { getDeadline } from '@/utils/getDeadline'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -32,6 +32,9 @@ const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
 
 const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
 `
+
+const deadline = getDeadline()
+
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const [{ data: accountData }] = useAccount()
@@ -47,17 +50,28 @@ const CreateWiki = () => {
     opened: false,
   })
 
-  const [, write] = useContractWrite(
-    {
-      addressOrName: config.wikiContractAddress,
-      contractInterface: WikiAbi,
-    },
-    'post',
+  const domain = {
+    name: 'EP',
+    version: '1',
+    chainId: config.chainId,
+    verifyingContract: config.wikiContractAddress,
+  }
+
+  const types = {
+    SignedPost: [
+      { name: 'ipfs', type: 'string' },
+      { name: 'user', type: 'address' },
+      { name: 'deadline', type: 'uint256' },
+    ],
+  }
+
+  const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
+    {},
   )
 
   const saveImage = async () => {
     const formData = new FormData()
-    const blob = new Blob([wiki.content.images[0].type as ArrayBuffer], {
+    const blob = new Blob([wiki.images[0].type as ArrayBuffer], {
       type: 'multipart/form-data',
     })
 
@@ -72,23 +86,16 @@ const CreateWiki = () => {
     return ipfs
   }
 
-  const saveHashInTheBlockchain = async (hash: string) => {
-    const result = await write({ args: [hash] })
-    await result.data?.wait(2)
-
-    setSubmittingWiki(false)
-
-    if (!result.error) {
-      setOpenTxDetailsDialog(true)
-      setTxHash(result.data?.hash)
-      setWikiHash(hash)
-      return
-    }
-
-    setTxError({
-      title: 'Error!',
-      description: result.error.message,
-      opened: true,
+  const saveHashInTheBlockchain = async (ipfs: string) => {
+    setWikiHash(ipfs)
+    await signTypedData({
+      domain,
+      types,
+      value: {
+        ipfs,
+        user: accountData?.address || '',
+        deadline,
+      },
     })
   }
 
@@ -99,17 +106,14 @@ const CreateWiki = () => {
 
       let tmp = { ...wiki }
 
-      tmp.id = slugify(String(wiki.content.title).toLowerCase())
+      tmp.id = slugify(String(wiki.title).toLowerCase())
       tmp = {
         ...tmp,
-        content: {
-          ...tmp.content,
-          content: String(md),
-          user: {
-            id: accountData.address,
-          },
-          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+        content: String(md),
+        user: {
+          id: accountData.address,
         },
+        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
       const {
@@ -117,11 +121,16 @@ const CreateWiki = () => {
       } = await axios.post('/api/ipfs', tmp)
 
       if (ipfs) saveHashInTheBlockchain(ipfs)
+
+      setSubmittingWiki(false)
     }
   }
 
   const disableSaveButton = () =>
-    wiki.content.images.length === 0 || submittingWiki || !accountData?.address
+    wiki.images.length === 0 ||
+    submittingWiki ||
+    !accountData?.address ||
+    signing
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
@@ -139,6 +148,38 @@ const CreateWiki = () => {
   useEffect(() => {
     setMd(initialEditorValue)
   }, [])
+
+  useEffect(() => {
+    async function signData(
+      signedData: string | undefined,
+      signingError: Error | undefined,
+    ) {
+      if (signingError) {
+        console.error(signingError)
+        return
+      }
+
+      if (signedData) {
+        const signature = signedData.substring(2)
+        const r = `0x${signature.substring(0, 64)}`
+        const s = `0x${signature.substring(64, 128)}`
+        const v = parseInt(signature.substring(128, 130), 16)
+
+        const relayerData = await axios.post(`${config.epApiBaseUrl}relayer`, {
+          ipfs: wikiHash,
+          userAddr: accountData?.address,
+          deadline,
+          v,
+          r,
+          s,
+        })
+
+        setTxHash(relayerData.data.hash)
+        setOpenTxDetailsDialog(true)
+      }
+    }
+    signData(data, error)
+  }, [data, error])
 
   return (
     <Grid
