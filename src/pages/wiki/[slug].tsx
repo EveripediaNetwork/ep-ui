@@ -19,6 +19,8 @@ const Wiki = () => {
   })
   const { isLoading, error, data } = result
 
+  console.log(data)
+
   return (
     <main>
       {error && <>Oh no, there was an error</>}
