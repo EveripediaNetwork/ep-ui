@@ -7,11 +7,11 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 
 const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
-  const { updated, content, title, id } = wiki
+  const { updated, content, title } = wiki
   const defaultWikiImage = '/images/sub-category-image.png'
   return (
     <Center py={6} cursor="pointer">
-      <NextLink href={`/wiki/${id}`} passHref>
+      <NextLink href={`/wiki/fide`} passHref>
         <LinkOverlay>
           <Box
             w={390}
