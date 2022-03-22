@@ -1,6 +1,15 @@
 import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
-import { Divider, Box, Heading, SimpleGrid, Icon, Flex, Text, Button } from '@chakra-ui/react'
+import {
+  Divider,
+  Box,
+  Heading,
+  SimpleGrid,
+  Icon,
+  Flex,
+  Text,
+  Button,
+} from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import {
@@ -55,9 +64,8 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
         <Heading fontSize={25} textAlign="center">
           Wikis in this category
         </Heading>
-        {
-          wikis.length > 0 ?
-            <SimpleGrid
+        {wikis.length > 0 ? (
+          <SimpleGrid
             columns={{ base: 1, sm: 2, lg: 3 }}
             width="min(90%, 1200px)"
             mx="auto"
@@ -70,7 +78,7 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
               </Box>
             ))}
           </SimpleGrid>
-          :
+        ) : (
           <Box textAlign="center" py={10} px={6}>
             <Text fontSize="lg" mt={3} mb={3}>
               Oops, No Wiki Found in This Category
@@ -79,12 +87,12 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
               colorScheme="primary"
               color="white"
               variant="solid"
-              onClick={()=>router.back()}
+              onClick={() => router.back()}
             >
-                Go Back
+              Go Back
             </Button>
           </Box>
-        }
+        )}
       </Box>
     </Box>
   )
