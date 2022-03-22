@@ -11,7 +11,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
   const defaultWikiImage = '/images/sub-category-image.png'
   return (
     <Center py={6} cursor="pointer">
-      <NextLink href={`/wiki/fide`} passHref>
+      <NextLink href="/wiki/fide" passHref>
         <LinkOverlay>
           <Box
             w={390}
