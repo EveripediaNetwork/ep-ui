@@ -95,6 +95,7 @@ export const GET_USER_WIKIS_BY_ID = gql`
 export const GET_WIKIS_BY_CATEGORY = gql`
   query wikisByCategory($category: String!) {
     wikisByCategory(category: $category) {
+      id
       created
       title
       content

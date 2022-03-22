@@ -9,6 +9,8 @@ const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
   const [categories, setCategories] = React.useState<Category[]>([])
 
+  console.log(categories)
+
   useEffect(
     () =>
       setCategories([
