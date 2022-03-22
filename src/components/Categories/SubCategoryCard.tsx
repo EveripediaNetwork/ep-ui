@@ -10,7 +10,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Content }) => {
 
   return (
     <Center py={6}>
-      <Box minH={390} boxShadow="2xl" rounded="md" p={6} overflow="hidden">
+      <Box w={390} minH={390} boxShadow="2xl" rounded="md" p={6} overflow="hidden">
         <Box h={200} mb={3} pos="relative">
           <Image src="/images/sub-category-image.png" layout="fill" />
         </Box>
