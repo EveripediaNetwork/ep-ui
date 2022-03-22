@@ -1,16 +1,18 @@
 import React from 'react'
-import { Container } from '@chakra-ui/react'
+import { HStack } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
-import WikiCard from '@/components/Wiki/WikiCard/WikiCard'
+import WikiCard from '../WikiCard/WikiCard'
+import WikiActionBar from './WikiActionBar'
 
 interface WikiPageProps {
   wiki: Wiki | undefined
 }
 
 const WikiPage = ({ wiki }: WikiPageProps) => (
-  <Container maxW="7xl" p="12">
+  <HStack mt={-2}>
+    <WikiActionBar />
     {wiki && <WikiCard wiki={wiki} />}
-  </Container>
+  </HStack>
 )
 
 export default WikiPage
