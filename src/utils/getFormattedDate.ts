@@ -1,6 +1,6 @@
-import moment from 'moment'
+import {formatDistance} from 'date-fns'
 
 export const getReadableDate = (dateToFormat: string) => {
-  const formattedDate = moment(new Date(dateToFormat))
-  return formattedDate.fromNow()
+  return formatDistance(new Date(dateToFormat), new Date(), {addSuffix: true})
+
 }
