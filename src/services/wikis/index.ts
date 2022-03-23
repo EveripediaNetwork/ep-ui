@@ -25,7 +25,7 @@ type GetUserWikiResponse = {
 }
 
 type GetWikiCategoryResponse = {
-  wikisByCategory: Content[]
+  wikisByCategory: Wiki[]
 }
 
 export const wikiApi = createApi({
@@ -54,7 +54,7 @@ export const wikiApi = createApi({
       transformResponse: (response: GetUserWikiResponse) =>
         response.userById.wikis,
     }),
-    getWikisByCategory: builder.query<Content[], string>({
+    getWikisByCategory: builder.query<Wiki[], string>({
       query: (category: string) => ({
         document: GET_WIKIS_BY_CATEGORY,
         variables: { category },
