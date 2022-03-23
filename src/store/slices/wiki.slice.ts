@@ -30,9 +30,16 @@ const wikiSlice = createSlice({
       return newState
     },
     updateCategories(state, action) {
+      console.log(action.payload)
       return {
         ...state,
-        categories: [...state.metadata, action.payload],
+        categories: [action.payload],
+      }
+    },
+    deleteCategories(state) {
+      return {
+        ...state,
+        categories: [],
       }
     },
     updateMetadata(state, action) {
