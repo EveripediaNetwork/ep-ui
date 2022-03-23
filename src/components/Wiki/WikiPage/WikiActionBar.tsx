@@ -41,23 +41,19 @@ const actionBarItems: {
   },
 ]
 const WikiActionBar = () => (
-  <VStack
-    spacing={8}
-    borderRightWidth="1px"
-    px={6}
-    py={24}
-    borderColor="borderColor"
-  >
-    {actionBarItems.map((item, index) => (
-      <VStack
-        cursor="pointer"
-        color={item.label === 'Read' ? 'brand.600' : 'unset'}
-        key={index}
-      >
-        <Icon fontSize="20px" as={item.icon} />
-        <Text fontSize="14px">{item.label}</Text>
-      </VStack>
-    ))}
+  <VStack borderRightWidth="1px" px={6} py="100px" borderColor="borderColor">
+    <VStack spacing={8} position="sticky" top="calc(100px + 70px + 2px)">
+      {actionBarItems.map((item, index) => (
+        <VStack
+          cursor="pointer"
+          color={item.label === 'Read' ? 'brand.600' : 'unset'}
+          key={index}
+        >
+          <Icon fontSize="20px" as={item.icon} />
+          <Text fontSize="14px">{item.label}</Text>
+        </VStack>
+      ))}
+    </VStack>
   </VStack>
 )
 
