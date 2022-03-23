@@ -16,7 +16,6 @@ import { useRouter } from 'next/router'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
-
   return (
     <Box mt="-12" bgColor="pageBg" pb={12}>
       <Image src="/images/categories-backdrop.png" height="250px" />
@@ -39,16 +38,19 @@ const Categories: NextPage = () => {
           my={12}
           gap={8}
         >
-          {data?.map(category => (
-            <CategoryCard
-              key={category.id}
-              imageCard={category.cardImage}
-              title={category.title}
-              brief={category.description}
-              categoryId={category.id}
-              coverIcon={category.icon}
-            />
-          ))}
+          {data?.map(
+            category =>
+              category.cardImage && (
+                <CategoryCard
+                  key={category.id}
+                  imageCard={category.cardImage}
+                  title={category.title}
+                  brief={category.description}
+                  categoryId={category.id}
+                  coverIcon={category.icon}
+                />
+              ),
+          )}
         </SimpleGrid>
       </Box>
     </Box>

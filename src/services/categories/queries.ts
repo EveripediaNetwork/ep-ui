@@ -16,7 +16,6 @@ export const GET_CATEGORIES = gql`
 export const GET_CATEGORIES_BY_ID = gql`
   query categoryById($id: String!) {
     categoryById(id: $id) {
-      id
       title
       description
       cardImage

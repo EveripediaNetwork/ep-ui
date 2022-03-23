@@ -16,6 +16,7 @@ module.exports = {
       'everipedia.org',
       'ipfs.everipedia.org',
       'lh3.googleusercontent.com',
+      'gateway.pinata.cloud'
     ], // for demo data
   },
 }

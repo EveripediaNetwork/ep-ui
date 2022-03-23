@@ -38,6 +38,7 @@ export type PageType = {
 }
 
 export interface Content {
+  id?: string
   title: string
   content: string
   categories: BaseCategory[]
@@ -45,6 +46,7 @@ export interface Content {
   images: Image[]
   metadata: MData[]
   user?: User
+  updated?: string
 }
 
 enum LanguagesValuesEnum {
@@ -81,4 +83,5 @@ export interface Wiki {
   user?: User
   version: number
   language: LanguagesISOEnum
+  updated?: string
 }
