@@ -17,7 +17,8 @@ const config = {
   mumbaiTestnetChainId: 80001,
   ethereumMainnetChainId: 1,
   binanceSmartChainId: 56,
-  epApiBaseUrl: process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/',
+  epApiBaseUrl:
+    process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/',
 }
 
 export default config

@@ -36,7 +36,7 @@ const Modal = ({
         {enableBottomCloseButton === true && (
           <Button onClick={onClose}>Close</Button>
         )}
-        {SecondaryButton ? SecondaryButton : null}
+        {SecondaryButton || null}
       </ModalFooter>
     </ModalContent>
   </ChakraModal>
