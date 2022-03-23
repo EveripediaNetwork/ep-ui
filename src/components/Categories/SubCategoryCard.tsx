@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Box, Center, Text, Stack, LinkOverlay } from '@chakra-ui/react'
-import {Wiki } from '@/types/Wiki'
+import { Wiki } from '@/types/Wiki'
 import { shortenText } from '@/utils/shortenText'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
