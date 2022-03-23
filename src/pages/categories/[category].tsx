@@ -21,12 +21,12 @@ import { Category } from '@/types/CategoryDataTypes'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import SubCategoryCard from '@/components/Categories/SubCategoryCard'
 import { getWikisByCategory } from '@/services/wikis'
-import { Content } from '@/types/Wiki'
+import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 
 interface CategoryPageProps {
   categoryData: Category
-  wikis: Content[]
+  wikis: Wiki[]
 }
 const CategoryPage: NextPage<CategoryPageProps> = ({
   categoryData,
