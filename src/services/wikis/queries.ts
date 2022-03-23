@@ -62,8 +62,10 @@ export const GET_USER_WIKIS_BY_ID = gql`
   query GetUserWikis($id: String!) {
     userById(id: $id) {
       wikis {
+        id
         title
         created
+        updated
         content
         categories {
           id
