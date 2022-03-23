@@ -66,7 +66,6 @@ export const GET_USER_WIKIS_BY_ID = gql`
   query GetUserWikis($id: String!) {
     user(id: $id) {
       contents(first: 10, orderBy: createdAt, orderDirection: desc) {
-        id
         createdAt
         title
         content
