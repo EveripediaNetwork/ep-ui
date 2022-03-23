@@ -38,7 +38,7 @@ export type PageType = {
 }
 
 export interface Content {
-  id?:string,
+  id?: string
   title: string
   content: string
   categories: BaseCategory[]
