@@ -14,6 +14,15 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { useAccount, useSignTypedData } from 'wagmi'
+import {
+  getRunningOperationPromises,
+  getWiki,
+  useGetWikiQuery,
+} from '@/services/wikis'
+import { useRouter } from 'next/router'
+import { store } from '@/store/store'
+import { GetServerSideProps } from 'next'
+import { skipToken } from '@reduxjs/toolkit/query'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -25,6 +34,8 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
+import getImgFromArrayBuffer from '@/utils/getImgFromArrayBuffer'
+import getArrayBufferFromIpfs from '@/utils/getArrayBufferFromIpfs'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -35,6 +46,21 @@ const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## Hist
 
 const deadline = getDeadline()
 
+const domain = {
+  name: 'EP',
+  version: '1',
+  chainId: config.chainId,
+  verifyingContract: config.wikiContractAddress,
+}
+
+const types = {
+  SignedPost: [
+    { name: 'ipfs', type: 'string' },
+    { name: 'user', type: 'address' },
+    { name: 'deadline', type: 'uint256' },
+  ],
+}
+
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const [{ data: accountData }] = useAccount()
@@ -44,26 +70,18 @@ const CreateWiki = () => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [triggerUpdate, setTriggerUpdate] = useState('')
+  const [initialImage, setInitialImage] = useState<string>()
+  const router = useRouter()
+  const { slug } = router.query
+  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
+    skip: router.isFallback,
+  })
+  const { isLoading, error: wikiError, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
     description: '',
     opened: false,
   })
-
-  const domain = {
-    name: 'EP',
-    version: '1',
-    chainId: config.chainId,
-    verifyingContract: config.wikiContractAddress,
-  }
-
-  const types = {
-    SignedPost: [
-      { name: 'ipfs', type: 'string' },
-      { name: 'user', type: 'address' },
-      { name: 'deadline', type: 'uint256' },
-    ],
-  }
 
   const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
     {},
@@ -174,12 +192,31 @@ const CreateWiki = () => {
           s,
         })
 
+        console.log(relayerData)
+
         setTxHash(relayerData.data.hash)
         setOpenTxDetailsDialog(true)
       }
     }
     signData(data, error)
   }, [data, error])
+
+  useEffect(() => {
+    console.log(wikiData)
+    if (wikiData && wikiData.content) {
+      setTriggerUpdate(String(wikiData.content))
+
+      const getImg = async () => {
+        const arrayBufferFromIpfs = await getArrayBufferFromIpfs(
+          wikiData.images[0].id,
+        )
+        console.log(arrayBufferFromIpfs)
+        setInitialImage(arrayBufferFromIpfs as any)
+      }
+
+      getImg()
+    }
+  }, [wikiData])
 
   return (
     <Grid
@@ -198,7 +235,7 @@ const CreateWiki = () => {
       </GridItem>
       <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
         <Center>
-          <Highlights />
+          <Highlights initialImage={initialImage} />
         </Center>
       </GridItem>
       <GridItem mt="3" rowSpan={1} colSpan={3}>
@@ -266,6 +303,17 @@ const CreateWiki = () => {
       </Modal>
     </Grid>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const slug = context.params?.slug
+  if (typeof slug === 'string') {
+    store.dispatch(getWiki.initiate(slug))
+  }
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
 }
 
 export default authenticatedRoute(CreateWiki)

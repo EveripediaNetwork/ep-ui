@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
@@ -12,13 +12,15 @@ type DropzoneType = {
     setHideImageInput: (hide: boolean) => void
     setImage: (f: string | ArrayBuffer | null) => void
     deleteImage: () => void
+    initialImage: any
   }
 }
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
-  const [paths, setPaths] = useState([])
+  const [paths, setPaths] = useState<Array<string>>([])
   const [{ data: accountData }] = useAccount()
-  const { setHideImageInput, setImage, deleteImage } = dropZoneActions
+  const { setHideImageInput, setImage, deleteImage, initialImage } =
+    dropZoneActions
 
   const onDrop = useCallback(
     acceptedFiles => {
@@ -29,7 +31,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
         reader.onload = () => {
           const binaryStr = new buffer.Buffer(reader.result as Buffer)
-          setImage(binaryStr)
+          setImage(reader.result)
         }
 
         reader.readAsArrayBuffer(f)
@@ -44,6 +46,20 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     maxFiles: 1,
     accept: 'image/jpeg, image/png, image/jpg',
   })
+
+  useEffect(() => {
+    if (initialImage) {
+      setPaths([initialImage])
+      // const reader = new FileReader()
+      // reader.onload = e => {
+      //   console.log(e)
+      //   setPaths([String(e?.target?.result)])
+      // }
+      // reader.readAsArrayBuffer(initialImage)
+    }
+  }, [initialImage])
+
+  console.log(paths)
 
   return (
     <Box>

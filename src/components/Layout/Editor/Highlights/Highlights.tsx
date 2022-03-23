@@ -18,7 +18,11 @@ import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 
-const Highlights = () => {
+type HightLightsType = {
+  initialImage: any
+}
+
+const Highlights = ({ initialImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
@@ -46,6 +50,7 @@ const Highlights = () => {
     setImage: handleSetImage,
     setHideImageInput,
     deleteImage: handleDeleteImage,
+    initialImage,
   }
 
   return (
