@@ -19,48 +19,47 @@ interface WikiTableOfContentsProps {
 
 const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  return (
-    <div>
-      {!isOpen ? (
+  if (!isOpen) {
+    return (
+      <VStack
+        borderLeftWidth="1px"
+        minW="210px"
+        px={6}
+        py="30px"
+        borderColor="borderColor"
+      >
         <VStack
-          borderLeftWidth="1px"
-          minW="210px"
-          px={6}
-          py="30px"
-          borderColor="borderColor"
+          w="100%"
+          spacing={4}
+          align="start"
+          position="sticky"
+          top="calc(70px + 30px + 2px)"
         >
-          <VStack
-            w="100%"
-            spacing={4}
-            align="start"
-            position="sticky"
-            top="calc(70px + 30px + 2px)"
-          >
-            <Flex w="100%" justify="end">
-              <IconButton
-                aria-label="Toggle Table of Contents"
-                icon={<RiMenu3Fill />}
-                onClick={onToggle}
-              />
-            </Flex>
-            {toc.map(({ level, id, title }) => (
-              <Text key={id} pl={`calc(${(level - 1) * 20}px)`}>
-                <Link href={`#${id}`}>{title}</Link>
-              </Text>
-            ))}
-          </VStack>
+          <Flex w="100%" justify="end">
+            <IconButton
+              aria-label="Toggle Table of Contents"
+              icon={<RiMenu3Fill />}
+              onClick={onToggle}
+            />
+          </Flex>
+          {toc.map(({ level, id, title }) => (
+            <Text key={id} pl={`calc(${(level - 1) * 20}px)`}>
+              <Link href={`#${id}`}>{title}</Link>
+            </Text>
+          ))}
         </VStack>
-      ) : (
-        <IconButton
-          pos="absolute"
-          right="24px"
-          top="calc(70px + 32px)"
-          aria-label="Toggle Table of Contents"
-          icon={<RiMenu3Fill />}
-          onClick={onToggle}
-        />
-      )}
-    </div>
+      </VStack>
+    )
+  }
+  return (
+    <IconButton
+      pos="absolute"
+      right="24px"
+      top="calc(70px + 32px)"
+      aria-label="Toggle Table of Contents"
+      icon={<RiMenu3Fill />}
+      onClick={onToggle}
+    />
   )
 }
 
