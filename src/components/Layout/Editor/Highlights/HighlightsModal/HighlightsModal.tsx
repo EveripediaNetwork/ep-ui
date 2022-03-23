@@ -60,6 +60,14 @@ const HighlightsModal = ({
     }))
   }
 
+  const updateMetadata = (metadata: MData) => {
+    dispatch({
+      type: 'wiki/updateMetadata',
+      payload: [currentWiki, metadata],
+    })
+
+    // handleSetWikiMetadata(metadata)
+  }
   // eslint-disable-next-line react/no-unstable-nested-components
   const CustomDivider = () => (
     <GridItem colSpan={2}>
@@ -75,7 +83,8 @@ const HighlightsModal = ({
         ...prev,
         images: [...currentWiki.images],
         categories: [
-          ...prev.categories,
+          // Uncomment this line when we are ready to accept multiple categories.
+          // ...prev.categories,
           { id: slugify(category.toLowerCase()), title: category },
         ],
       }))
@@ -113,7 +122,7 @@ const HighlightsModal = ({
         <Select
           onChange={event => {
             if (event.target.value)
-              handleSetWikiMetadata({
+              updateMetadata({
                 id: 'page-type',
                 value: event.target.value,
               })
@@ -152,24 +161,28 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {wiki.categories.map((c: BaseCategory) => (
-            <Badge
-              variant="outline"
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              m="1"
-              key={c.title}
-              justifyContent="space-between"
-            >
-              {c.title}
-              <CloseButton
-                size="sm"
-                outline="none"
-                onClick={() => handleDeleteCategory(c.title)}
-              />
-            </Badge>
-          ))}
+          {wiki.categories
+            ?.filter(item => {
+              return item.id !== 'first-category'
+            })
+            ?.map((c: BaseCategory) => (
+              <Badge
+                variant="outline"
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                m="1"
+                key={c.title}
+                justifyContent="space-between"
+              >
+                {c.title}
+                <CloseButton
+                  size="sm"
+                  outline="none"
+                  onClick={() => handleDeleteCategory(c.title)}
+                />
+              </Badge>
+            ))}
         </Flex>
         <CustomDivider />
 

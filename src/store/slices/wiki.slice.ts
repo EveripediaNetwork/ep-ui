@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LanguagesISOEnum, Wiki } from '@/types/Wiki'
+import { LanguagesISOEnum, Wiki, MData } from '@/types/Wiki'
 
 const initialState: Wiki = {
   id: '',
@@ -28,6 +28,21 @@ const wikiSlice = createSlice({
         ...action.payload,
       }
       return newState
+    },
+    updateCategories(state, action) {
+      return {
+        ...state,
+        categories: [...state.metadata, action.payload],
+      }
+    },
+    updateMetadata(state, action) {
+      const ob = action.payload
+      return {
+        ...state,
+        metadata: state.metadata.map((m: MData) =>
+          m.id === ob.id ? { ...m, value: ob.value } : m,
+        ),
+      }
     },
   },
 })

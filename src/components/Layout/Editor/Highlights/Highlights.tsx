@@ -13,7 +13,7 @@ import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Content, Languages } from '@/types/Wiki'
+import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
@@ -25,7 +25,7 @@ const Highlights = () => {
   const [hideImageInput, setHideImageInput] = useState(false)
   const dispatch = useAppDispatch()
 
-  const handleDispatch = (object: Partial<Content>) =>
+  const handleDispatch = (object: Partial<Wiki>) =>
     dispatch({
       type: 'wiki/setCurrentWiki',
       payload: object,
@@ -61,8 +61,12 @@ const Highlights = () => {
       <Flex justifyContent="center" alignItems="center" h="50px">
         <Input
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            handleDispatch({
-              title: event.target.value,
+            // handleDispatch({
+            //   title: event.target.value,
+            // })
+            dispatch({
+              type: 'wiki/setCurrentWiki',
+              payload: { title: event.target.value },
             })
           }}
           value={currentWiki.title}
@@ -113,11 +117,15 @@ const Highlights = () => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.categories.map((c: BaseCategory) => (
-              <Badge variant="outline" m="1">
-                {c.title}
-              </Badge>
-            ))}
+            {currentWiki.categories
+              ?.filter(item => {
+                return item.id !== 'first-category'
+              })
+              ?.map((c: BaseCategory) => (
+                <Badge variant="outline" m="1">
+                  {c.title}
+                </Badge>
+              ))}
           </Flex>
         </Flex>
         <Divider my="5" />
