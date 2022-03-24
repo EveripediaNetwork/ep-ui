@@ -673,7 +673,7 @@
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  background-color: #83838381;
 }
 
 .markdown-body table img {
@@ -957,4 +957,22 @@
 
 .markdown-body summary > * {
   display: inline;
+}
+
+/* DARK MODE STYLES */
+
+.markdown-body-dark {
+  color: #eeeeee;
+}
+.markdown-body-dark h6 {
+  color: #c5c5c5;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #cccccc;
 }
