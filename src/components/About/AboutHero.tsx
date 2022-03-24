@@ -18,10 +18,10 @@ const AboutHero = () => (
         on-chain through the IQ token.
       </Text>
       <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>
-        <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
+        <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
           Sign Up
         </LinkButton>
-        <LinkButton href="/create" w={{ base: 32, lg: 40 }} variant="outline">
+        <LinkButton href="/iq" w={{ base: 32, lg: 40 }} variant="outline">
           Go to IQ Site
         </LinkButton>
       </ButtonGroup>

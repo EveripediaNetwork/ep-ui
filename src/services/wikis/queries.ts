@@ -60,7 +60,7 @@ export const GET_WIKIS = gql`
 
 export const GET_PROMOTED_WIKIS = gql`
   query GetPromotedWikis {
-    wikis {
+    promotedWikis {
       id
       content
       created

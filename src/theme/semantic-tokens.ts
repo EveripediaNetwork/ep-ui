@@ -73,5 +73,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.700',
       _dark: 'gray.100',
     },
+    wikiCardBg: {
+      default: 'gray.200',
+      _dark: 'gray.600',
+    },
   },
 }
