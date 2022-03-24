@@ -19,6 +19,7 @@ type GetLatestActivitiesResponse = {
 
 export const activitiesApi = createApi({
   reducerPath: 'activitiesApi',
+  refetchOnMountOrArgChange: 30,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

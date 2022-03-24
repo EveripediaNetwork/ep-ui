@@ -86,13 +86,6 @@ export const NAV_ICON = {
       icon: RiAccountCircleFill,
     },
     {
-      id: 502,
-      label: 'My Wikis',
-      href: '#',
-      hasImage: true,
-      icon: RiGridFill,
-    },
-    {
       id: 503,
       label: 'Settings',
       href: '/account/settings',
@@ -121,12 +114,6 @@ export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
         id: 701,
         label: 'Profile',
         href: '/user/profile',
-        hasImage: false,
-      },
-      {
-        id: 702,
-        label: 'My Wikis',
-        href: '#',
         hasImage: false,
       },
       {

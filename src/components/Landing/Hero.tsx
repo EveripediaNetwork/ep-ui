@@ -2,44 +2,55 @@ import React from 'react'
 import { Avatar, ButtonGroup, chakra, Flex, Image } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { featuredArticle } from '@/data/FeaturesArticleData'
+import { Wiki } from '@/types/Wiki'
+import shortenAccount from '@/utils/shortenAccount'
+import NextLink from 'next/link'
 
-const HeroCard = () => {
-  const { image, avatarImage, username, title } = featuredArticle
+const HeroCard = ({ wiki }: HeroProps) => {
+  const { image, avatarImage } = featuredArticle
 
   return (
-    <Flex
-      alignSelf="center"
-      direction="column"
-      shadow="lg"
-      rounded="lg"
-      bg="white"
-      color="black"
-      cursor="pointer"
-      _hover={{ shadow: '2xl' }}
-      maxW={{ base: '90vw', md: '96', lg: 'xl' }}
-      w="full"
-    >
-      <Image
-        src={image}
-        alt={title}
-        fit="cover"
-        bg="gray.100"
-        loading="lazy"
-        roundedTop="lg"
-        h={{ base: 80, lg: 'sm' }}
-      />
-      <Flex p="3" align="center" gap={4}>
-        <Avatar boxSize={10} src={avatarImage} />
-        <Flex direction="column" justify="space-between" fontWeight="semibold">
-          <chakra.span>{title}</chakra.span>
-          <chakra.span color="blue">{username}</chakra.span>
+    <NextLink href={`/wiki/${wiki?.id}`} passHref>
+      <Flex
+        alignSelf="center"
+        direction="column"
+        shadow="lg"
+        rounded="lg"
+        bg="white"
+        color="black"
+        cursor="pointer"
+        _hover={{ shadow: '2xl' }}
+        maxW={{ base: '90vw', md: '96', lg: 'xl' }}
+        w="full"
+      >
+        <Image
+          src={image}
+          alt={wiki?.title}
+          fit="cover"
+          bg="gray.100"
+          loading="lazy"
+          roundedTop="lg"
+          h={{ base: 80, lg: 'sm' }}
+        />
+        <Flex p="3" align="center" gap={4}>
+          <Avatar boxSize={10} src={avatarImage} />
+          <Flex
+            direction="column"
+            justify="space-between"
+            fontWeight="semibold"
+          >
+            <chakra.span>{wiki?.title}</chakra.span>
+            <chakra.span color="blue">
+              {shortenAccount(wiki?.user?.id || '')}
+            </chakra.span>
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </NextLink>
   )
 }
 
-export const Hero = () => (
+export const Hero = ({ wiki }: HeroProps) => (
   <Flex pos="relative" direction="column">
     <Flex
       direction={{ base: 'column', lg: 'row' }}
@@ -77,12 +88,16 @@ export const Hero = () => (
           <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
             Explore
           </LinkButton>
-          <LinkButton href="/create" w={{ base: 32, lg: 40 }} variant="outline">
+          <LinkButton
+            href="/create-wiki"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+          >
             Create
           </LinkButton>
         </ButtonGroup>
       </Flex>
-      <HeroCard />
+      <HeroCard wiki={wiki} />
     </Flex>
     <LinkButton
       href="/static/about"
@@ -97,3 +112,7 @@ export const Hero = () => (
     </LinkButton>
   </Flex>
 )
+
+interface HeroProps {
+  wiki: Wiki | undefined
+}

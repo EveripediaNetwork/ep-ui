@@ -38,6 +38,7 @@ type GetCategoriesByTitleResponse = {
 
 export const navSearchApi = createApi({
   reducerPath: 'navSearchApi',
+  refetchOnMountOrArgChange: 30,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

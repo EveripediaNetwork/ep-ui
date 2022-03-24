@@ -29,6 +29,7 @@ export const categoriesApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
+  refetchOnMountOrArgChange: 30,
   endpoints: builder => ({
     getCategories: builder.query<Category[], void>({
       query: () => ({ document: GET_CATEGORIES }),
