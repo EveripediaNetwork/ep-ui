@@ -43,13 +43,12 @@ const HighlightsModal = ({
 
   return (
     <Modal
-      title="Edit metadata"
+      SecondaryButton={undefined} title=""
       enableBottomCloseButton
       onClose={onClose}
       isOpen={isOpen}
       isCentered
-      {...rest}
-    >
+      {...rest}    >
       <SimpleGrid columns={2} spacing={2}>
         <Text>Type</Text>
         <Text>Value</Text>
@@ -114,9 +113,9 @@ const HighlightsModal = ({
           gridColumn="1/3"
         >
           {currentWiki.categories
-            // ?.filter(item => {
-            //   return item.id !== 'first-category'
-            // })
+            ?.filter(item => {
+              return item.id !== 'first-category'
+            })
             ?.map((c: BaseCategory) => (
               <Badge
                 variant="outline"
