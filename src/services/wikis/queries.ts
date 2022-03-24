@@ -147,4 +147,3 @@ export const GET_WIKIS_BY_CATEGORY = gql`
     }
   }
 `
-
