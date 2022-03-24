@@ -79,13 +79,6 @@ export const NAV_ICON = {
   href: '#',
   subItem: [
     {
-      id: 501,
-      label: 'Profile',
-      href: '/account/0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff', // TODO: get address
-      hasImage: true,
-      icon: RiAccountCircleFill,
-    },
-    {
       id: 503,
       label: 'Settings',
       href: '/account/settings',
