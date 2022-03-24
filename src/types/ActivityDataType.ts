@@ -1,5 +1,5 @@
-export type ActivityDataType = Array<ActivityObjType>
-type ActivityObjType = {
+export type Activity = {
+  id: string
   wikiImg: string
   title: string
   brief: string
