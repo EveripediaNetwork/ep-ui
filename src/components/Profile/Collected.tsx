@@ -8,10 +8,10 @@ import { useRouter } from 'next/router'
 import { CollectionItem } from '@/components/Profile/CollectionItem'
 
 export const Collected = () => {
-  const { displaySize, ensAccount } = useProfileContext()
+  const { displaySize } = useProfileContext()
   const router = useRouter()
+  const { profile: address } = router.query
 
-  const address = ensAccount.data?.address
   const result = useGetUserWikisQuery(
     typeof address === 'string' ? address : skipToken,
     {
