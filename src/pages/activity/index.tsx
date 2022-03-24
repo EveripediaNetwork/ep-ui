@@ -15,20 +15,23 @@ import {
   getLatestActivities,
   useGetLatestActivitiesQuery,
   getRunningOperationPromises,
+  TempWikiActivity,
 } from '@/services/activities'
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
+import shortenAccount from '@/utils/shortenAccount'
 
 const Activity = () => {
   const { data: LatestActivityData } = useGetLatestActivitiesQuery()
 
-  const renderActivityCard = (activity: any, i: number) => (
+  const renderActivityCard = (activity: TempWikiActivity, i: number) => (
     <ActivityCard
+      id={activity.id}
       key={activity.id}
       wikiImg={ActivityData[i].wikiImg}
       title={activity.title || ActivityData[i].title}
       brief={activity.content || ActivityData[i].brief}
-      editor={ActivityData[i].editor}
+      editor={shortenAccount(activity.user.id) || ActivityData[i].editor}
       wordsChanged={ActivityData[i].wordsChanged}
       percentChanged={ActivityData[i].percentChanged}
       isFirstEdit={ActivityData[i].isFirstEdit}

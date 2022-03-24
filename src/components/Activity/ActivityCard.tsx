@@ -14,6 +14,7 @@ import NextLink from 'next/link'
 import { Image } from '../Elements/Image/Image'
 
 interface ActivityCardProps {
+  id: string
   wikiImg: string
   title: string
   brief: string
@@ -63,6 +64,7 @@ function timeReminding(timeStamp: string) {
 }
 
 const ActivityCard = ({
+  id,
   wikiImg,
   title,
   brief,
@@ -132,15 +134,20 @@ const ActivityCard = ({
       w="100%"
     >
       <HStack maxW="70%">
-        <Image
-          flexShrink={0}
-          src={wikiImg}
-          alt="wikiImg"
-          h={{ base: 65, lg: 100 }}
-          w={{ base: 65, lg: 100 }}
-          borderRadius="lg"
-          overflow="hidden"
-        />
+        <NextLink href={`/wiki/${id}`} passHref>
+          <Link href="passRef">
+            <Image
+              cursor="pointer"
+              flexShrink={0}
+              src={wikiImg}
+              alt="wikiImg"
+              h={{ base: 65, lg: 100 }}
+              w={{ base: 65, lg: 100 }}
+              borderRadius="lg"
+              overflow="hidden"
+            />
+          </Link>
+        </NextLink>
         <VStack
           alignItems="start"
           px={4}
@@ -149,17 +156,22 @@ const ActivityCard = ({
           p={{ base: 1, lg: 4 }}
           mx="auto"
         >
-          <Heading
-            as="h2"
-            fontSize={{ base: '16px', md: '20px' }}
-            maxW="100%"
-            letterSpacing="wide"
-            overflow="hidden"
-            whiteSpace="nowrap"
-            textOverflow="ellipsis"
-          >
-            {title}
-          </Heading>
+          <NextLink href={`/wiki/${id}`} passHref>
+            <Link href="passRef">
+              <Heading
+                cursor="pointer"
+                as="h2"
+                fontSize={{ base: '16px', md: '20px' }}
+                maxW="100%"
+                letterSpacing="wide"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              >
+                {title}
+              </Heading>
+            </Link>
+          </NextLink>
           <Box maxH="50px" overflow="hidden">
             <Text display={{ base: 'none', lg: 'flex' }}>{brief}</Text>
           </Box>
