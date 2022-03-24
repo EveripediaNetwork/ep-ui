@@ -1,4 +1,4 @@
-import { ActivityDataType } from '@/types/ActivityDataType'
+import { Activity } from '@/types/ActivityDataType'
 
 const randomWikiTitles: string[] = [
   "The Hitchhiker's Guide to the Galaxy",
@@ -18,10 +18,11 @@ const randomWikiTitles: string[] = [
   'King George VI of the United Kingdom',
 ]
 
-export const ActivityData: ActivityDataType = [
+export const ActivityData: Activity[] = [
   ...Array(20)
     .fill(0)
     .map(() => ({
+      id: Math.random().toString(),
       wikiImg: `https://picsum.photos/seed/${Math.random() * 100000}/300/300`,
       title:
         randomWikiTitles[Math.floor(Math.random() * randomWikiTitles.length)],

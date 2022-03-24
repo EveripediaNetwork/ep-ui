@@ -34,7 +34,7 @@ export function saveState(state: RootState) {
       const providerNetwork = { detectedProvider: null }
       updatedState = { ...state, providerNetwork }
     }
-    if (state.wiki.images.length > 0) {
+    if (state.wiki.images?.length > 0) {
       const wiki = {
         ...state.wiki,
         images: [],
