@@ -11,9 +11,11 @@ import {
 } from '@chakra-ui/react'
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import NextLink from 'next/link'
+import shortenAccount from '@/utils/shortenAccount'
 import { Image } from '../Elements/Image/Image'
 
 interface ActivityCardProps {
+  id: string
   wikiImg: string
   title: string
   brief: string
@@ -63,6 +65,7 @@ function timeReminding(timeStamp: string) {
 }
 
 const ActivityCard = ({
+  id,
   wikiImg,
   title,
   brief,
@@ -82,9 +85,9 @@ const ActivityCard = ({
     ),
     md: (
       <Text fontSize="14px" color="linkColor">
-        <NextLink href="#" passHref>
+        <NextLink href={`/account/${editor}`} passHref>
           <Link href="passRef" color="brand.500" fontWeight="bold">
-            {editor}
+            {shortenAccount(editor || '')}
           </Link>
         </NextLink>{' '}
         edited <b>{timeModified} ago</b> |{' '}
@@ -93,9 +96,9 @@ const ActivityCard = ({
     ),
     lg: (
       <Text fontSize="14px" color="linkColor">
-        <NextLink href="#" passHref>
+        <NextLink href={`/account/${editor}`} passHref>
           <Link href="passRef" color="brand.500" fontWeight="bold">
-            {editor}
+            {shortenAccount(editor || '')}
           </Link>
         </NextLink>{' '}
         edited <b>{timeModified} ago</b> |{' '}
@@ -132,15 +135,18 @@ const ActivityCard = ({
       w="100%"
     >
       <HStack maxW="70%">
-        <Image
-          flexShrink={0}
-          src={wikiImg}
-          alt="wikiImg"
-          h={{ base: 65, lg: 100 }}
-          w={{ base: 65, lg: 100 }}
-          borderRadius="lg"
-          overflow="hidden"
-        />
+        <NextLink href={`/wiki/${id}`} passHref>
+          <Image
+            cursor="pointer"
+            flexShrink={0}
+            src={wikiImg}
+            alt="wikiImg"
+            h={{ base: 65, lg: 100 }}
+            w={{ base: 65, lg: 100 }}
+            borderRadius="lg"
+            overflow="hidden"
+          />
+        </NextLink>
         <VStack
           alignItems="start"
           px={4}
@@ -149,17 +155,20 @@ const ActivityCard = ({
           p={{ base: 1, lg: 4 }}
           mx="auto"
         >
-          <Heading
-            as="h2"
-            fontSize={{ base: '16px', md: '20px' }}
-            maxW="100%"
-            letterSpacing="wide"
-            overflow="hidden"
-            whiteSpace="nowrap"
-            textOverflow="ellipsis"
-          >
-            {title}
-          </Heading>
+          <NextLink href={`/wiki/${id}`} passHref>
+            <Heading
+              cursor="pointer"
+              as="h2"
+              fontSize={{ base: '16px', md: '20px' }}
+              maxW="100%"
+              letterSpacing="wide"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+            >
+              {title}
+            </Heading>
+          </NextLink>
           <Box maxH="50px" overflow="hidden">
             <Text display={{ base: 'none', lg: 'flex' }}>{brief}</Text>
           </Box>

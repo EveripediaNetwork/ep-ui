@@ -34,7 +34,6 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
-import getImgFromArrayBuffer from '@/utils/getImgFromArrayBuffer'
 import getArrayBufferFromIpfs from '@/utils/getArrayBufferFromIpfs'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -93,11 +92,12 @@ const CreateWiki = () => {
       type: 'multipart/form-data',
     })
 
-    formData.append('rawImg', blob)
+    formData.append('file', blob)
+    formData.append('name', wiki.images[0].id)
 
     const {
       data: { ipfs },
-    } = await axios.post('/api/ipfs', formData, {
+    } = await axios.post('/api/ipfs-image', formData, {
       headers: { 'content-type': 'multipart/form-data' },
     })
 

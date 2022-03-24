@@ -11,6 +11,12 @@ module.exports = {
   },
   styledComponents: true,
   images: {
-    domains: ['picsum.photos', 'everipedia.org', 'lh3.googleusercontent.com'], // for demo data
+    domains: [
+      'picsum.photos',
+      'everipedia.org',
+      'ipfs.everipedia.org',
+      'lh3.googleusercontent.com',
+      'gateway.pinata.cloud'
+    ], // for demo data
   },
 }

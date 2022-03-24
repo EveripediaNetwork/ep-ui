@@ -5,7 +5,7 @@ import buffer from 'buffer'
 
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
-  setImage: (f: string | ArrayBuffer | null) => void
+  setImage: (name: string, f: string | ArrayBuffer | null) => void
   deleteImage: () => void
 }
 
@@ -26,7 +26,7 @@ const ImageInput = ({
       const { data } = await axios.get(String(event.target.value), {
         responseType: 'arraybuffer',
       })
-      setImage(new buffer.Buffer(data as Buffer))
+      setImage(event.target.value, new buffer.Buffer(data as Buffer))
       toast({
         title: 'Image successfully Fetched',
         status: 'success',
