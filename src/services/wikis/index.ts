@@ -6,12 +6,17 @@ import {
   GET_WIKI_BY_ID,
   GET_WIKIS,
   GET_WIKIS_BY_CATEGORY,
+  GET_PROMOTED_WIKIS,
 } from '@/services/wikis/queries'
 import { Wiki } from '@/types/Wiki'
 import config from '@/config'
 
 type GetWikisResponse = {
   wikis: Wiki[]
+}
+
+type GetPromotedWikisResponse = {
+  promotedWikis: Wiki[]
 }
 
 type GetWikiResponse = {
@@ -42,6 +47,11 @@ export const wikiApi = createApi({
       query: () => ({ document: GET_WIKIS }),
       transformResponse: (response: GetWikisResponse) => response.wikis,
     }),
+    getPromotedWikis: builder.query<Wiki[], void>({
+      query: () => ({ document: GET_PROMOTED_WIKIS }),
+      transformResponse: (response: GetPromotedWikisResponse) =>
+        response.promotedWikis,
+    }),
     getWiki: builder.query<Wiki, string>({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
       transformResponse: (response: GetWikiResponse) => response.wiki,
@@ -67,11 +77,17 @@ export const wikiApi = createApi({
 
 export const {
   useGetWikisQuery,
+  useGetPromotedWikisQuery,
   useGetWikiQuery,
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   util: { getRunningOperationPromises },
 } = wikiApi
 
-export const { getWikis, getWiki, getUserWikis, getWikisByCategory } =
-  wikiApi.endpoints
+export const {
+  getWikis,
+  getPromotedWikis,
+  getWiki,
+  getUserWikis,
+  getWikisByCategory,
+} = wikiApi.endpoints
