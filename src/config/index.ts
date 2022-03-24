@@ -12,8 +12,13 @@ const config = {
     'https://ipfs.everipedia.org',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   graphqlUrl: 'https://api.dev.braindao.org/graphql',
-  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '80001',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Mumbai',
+  chainId: String(process.env.NEXT_PUBLIC_CHAIN_ID),
+  chainName: String(process.env.NEXT_PUBLIC_CHAIN_NAME),
+  rpcUrl: String(process.env.NEXT_PUBLIC_RPC_URL),
+  polygonMainnetChainId: 137,
+  mumbaiTestnetChainId: 80001,
+  ethereumMainnetChainId: 1,
+  binanceSmartChainId: 56,
   epApiBaseUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/',
 }

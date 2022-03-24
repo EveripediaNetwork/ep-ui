@@ -35,7 +35,7 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
   const categoryIcon = getBootStrapIcon(categoryData.icon)
   const router = useRouter()
   return (
-    <Box mt="-12" bgColor="pageBg" pb={12}>
+    <Box mt="-3" bgColor="pageBg" pb={12}>
       <Image
         priority
         src={categoryData?.heroImage || '/images/categories-backdrop.png'}
