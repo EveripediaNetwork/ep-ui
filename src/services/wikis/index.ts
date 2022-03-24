@@ -5,6 +5,7 @@ import {
   GET_USER_WIKIS_BY_ID,
   GET_WIKI_BY_ID,
   GET_WIKIS,
+  GET_WIKIS_BY_CATEGORY,
 } from '@/services/wikis/queries'
 import { Wiki } from '@/types/Wiki'
 import config from '@/config'
@@ -21,6 +22,10 @@ type GetUserWikiResponse = {
   userById: {
     wikis: Wiki[]
   }
+}
+
+type GetWikisByCategoryResponse = {
+  wikisByCategory: Wiki[]
 }
 
 export const wikiApi = createApi({
@@ -49,6 +54,14 @@ export const wikiApi = createApi({
       transformResponse: (response: GetUserWikiResponse) =>
         response.userById.wikis,
     }),
+    getWikisByCategory: builder.query<Wiki[], string>({
+      query: (category: string) => ({
+        document: GET_WIKIS_BY_CATEGORY,
+        variables: { category },
+      }),
+      transformResponse: (response: GetWikisByCategoryResponse) =>
+        response.wikisByCategory,
+    }),
   }),
 })
 
@@ -56,7 +69,9 @@ export const {
   useGetWikisQuery,
   useGetWikiQuery,
   useGetUserWikisQuery,
+  useGetWikisByCategoryQuery,
   util: { getRunningOperationPromises },
 } = wikiApi
 
-export const { getWikis, getWiki, getUserWikis } = wikiApi.endpoints
+export const { getWikis, getWiki, getUserWikis, getWikisByCategory } =
+  wikiApi.endpoints

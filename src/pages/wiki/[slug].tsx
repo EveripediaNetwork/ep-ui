@@ -4,6 +4,7 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import {
   getRunningOperationPromises,
   getWiki,
+  getWikisByCategory,
   useGetWikiQuery,
 } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -58,10 +59,8 @@ const Wiki = () => {
         <>Loading...</>
       ) : (
         <HStack mt={-2} align="stretch" justify="stretch">
-          <HStack w="100%" h="100%" align="stretch">
-            <WikiActionBar />
-            <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-          </HStack>
+          <WikiActionBar />
+          <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
           <WikiInsights wiki={wiki} />
           <WikiTableOfContents toc={toc} />
         </HStack>
@@ -73,7 +72,11 @@ const Wiki = () => {
 export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
-    store.dispatch(getWiki.initiate(slug))
+    store.dispatch(getWiki.initiate(slug)).then(res => {
+      res?.data?.categories.map(category =>
+        getWikisByCategory.initiate(category.id),
+      )
+    })
   }
   await Promise.all(getRunningOperationPromises())
   return {
