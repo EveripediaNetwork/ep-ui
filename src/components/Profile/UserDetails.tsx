@@ -16,11 +16,15 @@ import {
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useEnsAvatar, useEnsLookup } from 'wagmi'
+import { useRouter } from 'next/router'
 
 export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
+  const router = useRouter()
+  const { profile } = router.query
+
   const { headerIsSticky, ensAccount } = useProfileContext()
   const { data, loading } = ensAccount
 
@@ -30,7 +34,8 @@ export const UserDetails = (props: UserDetailsProps) => {
   })
 
   const [{ data: userAvatar }] = useEnsAvatar({
-    addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+    addressOrName: profile as string,
+    // addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
   })
 
   const ethAddress = data?.address
