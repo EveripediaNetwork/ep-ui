@@ -11,12 +11,14 @@ import {
   ButtonGroup,
   Tooltip,
   TooltipProps,
-  Avatar,
+  Skeleton,
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
-import { useEnsAvatar, useEnsLookup } from 'wagmi'
+import { useEnsLookup } from 'wagmi'
 import { useRouter } from 'next/router'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -28,14 +30,8 @@ export const UserDetails = (props: UserDetailsProps) => {
   const { headerIsSticky, ensAccount } = useProfileContext()
   const { data, loading } = ensAccount
 
-  const [{ data: userName }] = useEnsLookup({
-    address: data?.address,
-    // address: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
-  })
-
-  const [{ data: userAvatar }] = useEnsAvatar({
-    addressOrName: profile as string,
-    // addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+  const [{ data: userName, loading: nameLoading }] = useEnsLookup({
+    address: profile as string,
   })
 
   const ethAddress = data?.address
@@ -53,7 +49,8 @@ export const UserDetails = (props: UserDetailsProps) => {
     py: 2,
   }
 
-  if (loading) return null
+  if (loading || !ensAccount.data) return <LoadingProfile hide={hide} />
+  // return <LoadingProfile hide={hide} />
   return (
     <>
       <Flex align="center" justify="space-between" w="full" px="6">
@@ -66,25 +63,29 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          <Avatar
-            mt="-64px"
-            boxSize="32"
-            overflow="hidden"
-            borderWidth={2}
-            borderColor="white"
-            justifySelf="center"
-            src={userAvatar as string}
-            name={userName as string}
-            {...(isSticky && { mt: 0, boxSize: 12 })}
-          />
+          {ensAccount.data && (
+            <DisplayAvatar
+              mt="-64px"
+              boxSize="32"
+              overflow="hidden"
+              borderWidth={2}
+              borderColor="white"
+              rounded="full"
+              justifySelf="center"
+              {...(isSticky && { mt: 0, boxSize: 12 })}
+              accountData={ensAccount.data}
+            />
+          )}
 
-          <chakra.span
-            fontSize={isSticky ? '2xl' : '3xl'}
-            fontWeight="semibold"
-            letterSpacing="tighter"
-          >
-            {userName || 'Unnamed'}
-          </chakra.span>
+          <Skeleton isLoaded={!nameLoading}>
+            <chakra.span
+              fontSize={isSticky ? '2xl' : '3xl'}
+              fontWeight="semibold"
+              letterSpacing="tighter"
+            >
+              {userName || 'Unnamed'}
+            </chakra.span>
+          </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
           <ButtonGroup isAttached variant="outline" ml="auto" my="6">

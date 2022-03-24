@@ -11,6 +11,7 @@ import {
   COLLECTIONS_DISPLAY_SIZES,
   FILTER_SIDEBAR_SIZE,
 } from '@/components/Profile/SidebarFilter/constants'
+import { AccountDataType } from '@/types/AccountDataType'
 
 export type TypeValue<T> = T[keyof T]
 
@@ -25,18 +26,7 @@ type BooleanSwitch = {
 }
 
 type EnsAccount = {
-  readonly data:
-    | {
-        address: string
-        connector: import('wagmi-core').Connector | undefined
-        ens:
-          | {
-              avatar: string | null | undefined
-              name: string
-            }
-          | undefined
-      }
-    | undefined
+  readonly data: AccountDataType
   readonly error: Error | undefined
   readonly loading: boolean
 }
