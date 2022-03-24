@@ -3,7 +3,7 @@ const config = {
   thegraph: 'https://api.thegraph.com/subgraphs/name/kesar/wiki-mumbai-v1', // mumbai
   wikiContractAddress:
     process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
-    '0x9332ad5290cf8de41107712ef408eb0c47dcb057',
+    '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
   blockExplorerUrl:
     process.env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL ||
     'https://mumbai.polygonscan.com/',

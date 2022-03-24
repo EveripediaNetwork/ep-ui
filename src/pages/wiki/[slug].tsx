@@ -4,12 +4,13 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import {
   getRunningOperationPromises,
   getWiki,
+  getWikisByCategory,
   useGetWikiQuery,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
-import { HStack } from '@chakra-ui/react'
+import { HStack, Flex, Spinner } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
@@ -55,13 +56,13 @@ const Wiki = () => {
     <main>
       {error && <>Oh no, there was an error</>}
       {!error && (router.isFallback || isLoading) ? (
-        <>Loading...</>
+        <Flex justify="center" align="center" h="50vh">
+          <Spinner size="xl" />
+        </Flex>
       ) : (
         <HStack mt={-2} align="stretch" justify="stretch">
-          <HStack w="100%" h="100%" align="stretch">
-            <WikiActionBar />
-            <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-          </HStack>
+          <WikiActionBar />
+          <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
           <WikiInsights wiki={wiki} />
           <WikiTableOfContents toc={toc} />
         </HStack>
@@ -73,7 +74,11 @@ const Wiki = () => {
 export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
-    store.dispatch(getWiki.initiate(slug))
+    store.dispatch(getWiki.initiate(slug)).then(res => {
+      res?.data?.categories.map(category =>
+        getWikisByCategory.initiate(category.id),
+      )
+    })
   }
   await Promise.all(getRunningOperationPromises())
   return {

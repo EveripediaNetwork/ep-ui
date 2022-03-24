@@ -6,6 +6,9 @@ export const GET_LATEST_ACTIVITIES = gql`
       id
       title
       content
+      user {
+        id
+      }
     }
   }
 `

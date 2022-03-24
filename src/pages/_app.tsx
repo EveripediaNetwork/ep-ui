@@ -13,7 +13,6 @@ import { debounce } from 'debounce'
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
-import { saveState } from '@/utils/browserStorage'
 import { store } from '@/store/store'
 import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
@@ -28,8 +27,8 @@ const App = (props: EpAppProps) => {
 
   store.subscribe(
     debounce(() => {
-      saveState(store.getState())
-    }, 400),
+      // saveState(store.getState())
+    }, 800),
   )
 
   return (

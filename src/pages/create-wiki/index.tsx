@@ -75,11 +75,12 @@ const CreateWiki = () => {
       type: 'multipart/form-data',
     })
 
-    formData.append('rawImg', blob)
+    formData.append('file', blob)
+    formData.append('name', wiki.images[0].id)
 
     const {
       data: { ipfs },
-    } = await axios.post('/api/ipfs', formData, {
+    } = await axios.post('/api/ipfs-image', formData, {
       headers: { 'content-type': 'multipart/form-data' },
     })
 

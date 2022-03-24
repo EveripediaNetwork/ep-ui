@@ -81,7 +81,7 @@ export const NAV_ICON = {
     {
       id: 501,
       label: 'Profile',
-      href: '/user/profile',
+      href: '/account/0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff', // TODO: get address
       hasImage: true,
       icon: RiAccountCircleFill,
     },
@@ -113,7 +113,7 @@ export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
       {
         id: 701,
         label: 'Profile',
-        href: '/user/profile',
+        href: '/account/0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff', // TODO: get address
         hasImage: false,
       },
       {
