@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
 import NextLink from 'next/link'
-import { useGetPromotedWikisQuery } from '@/services/wikis'
+import { Wiki } from '@/types/Wiki'
 
 const arrowStyles: TextProps = {
   cursor: 'pointer',
@@ -34,10 +34,8 @@ const arrowStyles: TextProps = {
   },
 }
 
-export const NotableDrops = () => {
+export const NotableDrops = ({ drops }: NotableDropsProps) => {
   const [slideColumns, setSlideColumns] = useState(3)
-  const result = useGetPromotedWikisQuery()
-  const { data: slides } = result
 
   useEffect(() => {
     const isOnMobile = isMobile(window?.navigator)
@@ -46,11 +44,11 @@ export const NotableDrops = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  if (!slides) return null
+  if (!drops) return null
 
-  const slidesCount = slides.length
+  const dropsCount = drops.length
 
-  const firstSlideInGroupOfLastSlide = slidesCount - slideColumns
+  const firstSlideInGroupOfLastSlide = dropsCount - slideColumns
 
   const lastSlideInSight = currentSlide === firstSlideInGroupOfLastSlide
 
@@ -60,11 +58,9 @@ export const NotableDrops = () => {
   const nextSlide = () => {
     setCurrentSlide(s => (lastSlideInSight ? 0 : s + 1))
   }
-  const setSlide = (slide: number) => {
+  const setSlide = (wiki: number) => {
     setCurrentSlide(
-      slide > firstSlideInGroupOfLastSlide
-        ? firstSlideInGroupOfLastSlide
-        : slide,
+      wiki > firstSlideInGroupOfLastSlide ? firstSlideInGroupOfLastSlide : wiki,
     )
   }
   const carouselStyle = {
@@ -76,18 +72,18 @@ export const NotableDrops = () => {
 
   const carouselDots = (
     <HStack justify="center" w="full">
-      {Array.from({ length: slidesCount }).map((_, slide) => (
+      {Array.from({ length: dropsCount }).map((_, wiki) => (
         <Box
-          key={`dots-${slides[slide].id}`}
+          key={`dots-${drops[wiki].id}`}
           cursor="pointer"
           boxSize={3}
           m="0 2px"
-          bg={currentSlide === slide ? 'brand.500' : 'brand.200'}
+          bg={currentSlide === wiki ? 'brand.500' : 'brand.200'}
           rounded="50%"
           display="inline-block"
           transition="background-color 0.6s ease"
           _hover={{ bg: 'brand.500' }}
-          onClick={() => setSlide(slide)}
+          onClick={() => setSlide(wiki)}
         />
       ))}
     </HStack>
@@ -105,10 +101,10 @@ export const NotableDrops = () => {
         pos="relative"
       >
         <Flex sx={{ w: `calc(100%/${slideColumns})` }} {...carouselStyle}>
-          {slides.map((slide, sid) => (
+          {drops.map((wiki, sid) => (
             <LinkBox
               pos="relative"
-              key={`slide-${slide.id}`}
+              key={`wiki-${wiki.id}`}
               boxSize="full"
               flex="none"
               overflow="hidden"
@@ -129,22 +125,22 @@ export const NotableDrops = () => {
               >
                 <Box>
                   <Image
-                    // src={slide.img}
+                    // src={wiki.img}
                     src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
                     boxSize="full"
                     objectFit="cover"
                     h="96"
                   />
                   <Box color="white" pt={4} px={8} gap={4} textAlign="center">
-                    <NextLink href={`/wiki/${slide.id}`} passHref>
+                    <NextLink href={`/wiki/${wiki.id}`} passHref>
                       <LinkOverlay>
                         <Text fontSize="xl" fontWeight="bold">
-                          {slide.title}
+                          {wiki.title}
                         </Text>
                       </LinkOverlay>
                     </NextLink>
                     <Text fontSize="md" noOfLines={2}>
-                      {slide.content}
+                      {wiki.content}
                     </Text>
                   </Box>
                 </Box>
@@ -175,4 +171,8 @@ export const NotableDrops = () => {
       {carouselDots}
     </Flex>
   )
+}
+
+interface NotableDropsProps {
+  drops: Wiki[] | undefined
 }

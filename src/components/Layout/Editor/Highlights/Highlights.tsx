@@ -31,9 +31,9 @@ const Highlights = () => {
       payload: object,
     })
 
-  const handleSetImage = (value: string | ArrayBuffer | null) =>
+  const handleSetImage = (name: string, value: string | ArrayBuffer | null) =>
     handleDispatch({
-      images: [{ id: '', type: value }],
+      images: [{ id: name, type: value }],
     })
 
   const handleDeleteImage = () => {

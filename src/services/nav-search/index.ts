@@ -32,12 +32,14 @@ type GetWikisByTitleResponse = {
   wikisByTitle: WikiTitle[]
 }
 
-type GetCategoriessByTitleResponse = {
-  categoriesByTitle: Category[]
+type GetCategoriesByTitleResponse = {
+  categoryByTitle: Category[]
 }
 
 export const navSearchApi = createApi({
   reducerPath: 'navSearchApi',
+  refetchOnMountOrArgChange: 30,
+  refetchOnFocus: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]
@@ -59,8 +61,8 @@ export const navSearchApi = createApi({
         document: GET_CATEGORIES_BY_TITLE,
         variables: { title },
       }),
-      transformResponse: (response: GetCategoriessByTitleResponse) =>
-        response.categoriesByTitle,
+      transformResponse: (response: GetCategoriesByTitleResponse) =>
+        response.categoryByTitle,
     }),
   }),
 })

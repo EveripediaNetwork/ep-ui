@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { LinkBox, LinkOverlay, Box, Text, SimpleGrid } from '@chakra-ui/react'
+import { LinkBox, LinkOverlay, Text, SimpleGrid } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
@@ -25,12 +25,13 @@ const CategoriesList = () => {
     [categoriesData],
   )
   return (
-    <Box>
-      <Text align="center" fontWeight="semibold" fontSize="2xl" mb={8}>
+    <>
+      <Text align="center" fontWeight="semibold" fontSize="2xl" mb={0}>
         Browse by category
       </Text>
       <SimpleGrid
         maxW="1050px"
+        w="100%"
         mx="auto"
         columns={[1, 2, 3]}
         spacingX={6}
@@ -69,7 +70,7 @@ const CategoriesList = () => {
           </LinkBox>
         ))}
       </SimpleGrid>
-    </Box>
+    </>
   )
 }
 

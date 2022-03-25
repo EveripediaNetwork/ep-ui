@@ -29,7 +29,7 @@ type GetUserWikiResponse = {
   }
 }
 
-type GetWikiCategoryResponse = {
+type GetWikisByCategoryResponse = {
   wikisByCategory: Wiki[]
 }
 
@@ -42,6 +42,8 @@ export const wikiApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
+  refetchOnMountOrArgChange: 30,
+  refetchOnFocus: true,
   endpoints: builder => ({
     getWikis: builder.query<Wiki[], void>({
       query: () => ({ document: GET_WIKIS }),
@@ -69,7 +71,7 @@ export const wikiApi = createApi({
         document: GET_WIKIS_BY_CATEGORY,
         variables: { category },
       }),
-      transformResponse: (response: GetWikiCategoryResponse) =>
+      transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
     }),
   }),

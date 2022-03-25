@@ -60,7 +60,7 @@ export const GET_WIKIS = gql`
 
 export const GET_PROMOTED_WIKIS = gql`
   query GetPromotedWikis {
-    wikis {
+    promotedWikis {
       id
       content
       created
@@ -120,9 +120,10 @@ export const GET_USER_WIKIS_BY_ID = gql`
 `
 
 export const GET_WIKIS_BY_CATEGORY = gql`
-  query wikisByCategory($category: String!) {
+  query GetUserWikisByCategory($category: String!) {
     wikisByCategory(category: $category) {
       id
+      content
       created
       title
       content
@@ -139,12 +140,10 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       }
       metadata {
         id
-        value
       }
       user {
         id
       }
-      updated
     }
   }
 `
