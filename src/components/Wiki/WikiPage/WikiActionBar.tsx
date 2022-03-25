@@ -30,7 +30,7 @@ const actionBarItems: {
     handleClick: () => {},
   },
   {
-    label: 'Delete',
+    label: 'Discussion',
     icon: RiChat3Line,
     handleClick: () => {},
   },
