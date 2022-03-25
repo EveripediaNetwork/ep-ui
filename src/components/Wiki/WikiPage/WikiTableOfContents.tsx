@@ -6,6 +6,7 @@ import {
   useDisclosure,
   IconButton,
   Flex,
+  Box,
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
@@ -56,15 +57,18 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
     )
   }
   return (
-    <IconButton
+    <Box
       display={{ base: 'none', md: 'block' }}
       pos="absolute"
       right="24px"
       top="calc(70px + 32px)"
-      aria-label="Toggle Table of Contents"
-      icon={<RiMenu3Fill />}
-      onClick={onToggle}
-    />
+    >
+      <IconButton
+        aria-label="Toggle Table of Contents"
+        icon={<RiMenu3Fill />}
+        onClick={onToggle}
+      />
+    </Box>
   )
 }
 

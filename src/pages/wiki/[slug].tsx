@@ -61,7 +61,11 @@ const Wiki = () => {
         </Flex>
       ) : (
         <HStack mt={-2} align="stretch" justify="stretch">
-          <Flex w="100%" direction={{ base: 'column', md: 'row' }}>
+          <Flex
+            w="100%"
+            justify="space-between"
+            direction={{ base: 'column', md: 'row' }}
+          >
             <WikiActionBar />
             <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
             <WikiInsights wiki={wiki} />

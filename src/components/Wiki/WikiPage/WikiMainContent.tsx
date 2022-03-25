@@ -16,8 +16,8 @@ const WikiMainContent = ({ wiki, addToTOC }: WikiMainContentProps) => {
     <Box
       p={4}
       w="100%"
+      maxW="5xl"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
-      borderRightWidth={{ base: 0, md: '1px' }}
       borderColor="borderColor"
     >
       <Heading mt={22} pt={2}>
