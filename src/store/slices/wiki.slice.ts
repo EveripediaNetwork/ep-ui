@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LanguagesISOEnum, Wiki } from '@/types/Wiki'
+import { LanguagesISOEnum, Wiki, Image } from '@/types/Wiki'
 
 const initialState: Wiki = {
   id: '',
@@ -9,7 +9,6 @@ const initialState: Wiki = {
   content: '',
   categories: [{ id: 'first-category', title: 'First Category' }],
   tags: [{ id: 'hello' }, { id: 'world' }],
-  images: [],
   metadata: [
     {
       id: 'page-type',

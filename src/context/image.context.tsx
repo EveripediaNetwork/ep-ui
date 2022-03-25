@@ -1,3 +1,4 @@
+import { Image } from '@/types/Wiki'
 import React, { ReactNode, useState, createContext } from 'react'
 
 export enum ImageKey {
@@ -7,17 +8,14 @@ export enum ImageKey {
 }
 
 export type ImageStateType = {
-  image: ArrayBuffer
+  image: Image
   ipfsHash: string
   isWikiBeingEdited: boolean
-  updateImageState: (
-    key: ImageKey,
-    value: ArrayBuffer | string | boolean,
-  ) => void
+  updateImageState: (key: ImageKey, value: Image | string | boolean) => void
 }
 
 const initialState = {
-  image: new ArrayBuffer(0),
+  image: { type: new ArrayBuffer(0), id: '' },
   ipfsHash: '',
   isWikiBeingEdited: false,
   updateImageState: () => {},
@@ -28,12 +26,8 @@ export const ImageContext = createContext<ImageStateType>(initialState)
 export const ImageProvider = ({ children }: { children: ReactNode }) => {
   const [imageState, setImageState] = useState<ImageStateType>({
     ...initialState,
-    updateImageState: (
-      key: ImageKey,
-      value: ArrayBuffer | string | boolean,
-    ) => {
-      setImageState(prev => ({ ...prev, [key]: value }))
-    },
+    updateImageState: (key: ImageKey, value: Image | string | boolean) =>
+      setImageState(prev => ({ ...prev, [key]: value })),
   })
 
   return (

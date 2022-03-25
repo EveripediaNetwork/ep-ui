@@ -10,7 +10,7 @@ import { Image } from '../Image/Image'
 type DropzoneType = {
   dropZoneActions: {
     setHideImageInput: (hide: boolean) => void
-    setImage: (name: string, f: string | ArrayBuffer | null) => void
+    setImage: (name: string, f: ArrayBuffer) => void
     deleteImage: () => void
     initialImage: string | undefined
   }
@@ -31,7 +31,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
         reader.onload = () => {
           const binaryStr = new buffer.Buffer(reader.result as Buffer)
-          setImage(f.name, binaryStr)
+          setImage(f.name, binaryStr as ArrayBuffer)
         }
 
         reader.readAsArrayBuffer(f)

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import {
   Flex,
   Text,
@@ -13,10 +13,11 @@ import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Content, Languages } from '@/types/Wiki'
+import { BaseCategory, Content, Languages, Wiki } from '@/types/Wiki'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -24,6 +25,7 @@ type HightLightsType = {
 
 const Highlights = ({ initialImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
@@ -35,10 +37,8 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       payload: object,
     })
 
-  const handleSetImage = (name: string, value: string | ArrayBuffer | null) =>
-    handleDispatch({
-      images: [{ id: name, type: value }],
-    })
+  const handleSetImage = (name: string, value: ArrayBuffer) =>
+    updateImageState(ImageKey.IMAGE, { id: name, type: value })
 
   const handleDeleteImage = () => {
     handleDispatch({
@@ -95,7 +95,9 @@ const Highlights = ({ initialImage }: HightLightsType) => {
           <FlexRow>
             <RiFolder3Fill /> <Text>Page Type</Text>
           </FlexRow>
-          <Text>{getWikiMetadataById(currentWiki, 'page-type')?.value}</Text>
+          <Text>
+            {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
+          </Text>
         </FlexRowContainer>
         <FlexRowContainer>
           <FlexRow>

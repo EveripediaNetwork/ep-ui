@@ -68,7 +68,7 @@ const CreateWiki = () => {
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
   })
-  const { ipfsHash, updateImageState } =
+  const { image, ipfsHash, updateImageState } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
@@ -76,7 +76,6 @@ const CreateWiki = () => {
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  // const [initialImage, setInitialImage] = useState<string>()
   const { isLoading: isLoadingWiki, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
@@ -90,12 +89,12 @@ const CreateWiki = () => {
 
   const saveImage = async () => {
     const formData = new FormData()
-    const blob = new Blob([wiki.images[0].type as ArrayBuffer], {
+    const blob = new Blob([image.type], {
       type: 'multipart/form-data',
     })
 
     formData.append('file', blob)
-    formData.append('name', wiki.images[0].id)
+    formData.append('name', image.id)
 
     const {
       data: { ipfs },
@@ -149,11 +148,8 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    wiki.images.length === 0 ||
-    submittingWiki ||
-    !accountData?.address ||
-    signing ||
-    isLoadingWiki
+    // wiki.images.length === 0 ||
+    submittingWiki || !accountData?.address || signing || isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
@@ -201,7 +197,7 @@ const CreateWiki = () => {
   }, [data, error])
 
   useEffect(() => {
-    if (wikiData && wikiData.content) {
+    if (wikiData && wikiData.content && wikiData.images) {
       setMd(String(wikiData.content))
 
       updateImageState(ImageKey.IPFS_HASH, String(wikiData.images[0].id))
