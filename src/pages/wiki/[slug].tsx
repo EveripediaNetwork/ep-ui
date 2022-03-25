@@ -10,7 +10,7 @@ import {
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
-import { HStack, Flex, Box, Spinner } from '@chakra-ui/react'
+import { HStack, Flex, Spinner } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
@@ -66,9 +66,7 @@ const Wiki = () => {
             <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
             <WikiInsights wiki={wiki} />
           </Flex>
-          <Box display={{ base: 'none', md: 'block' }}>
-            <WikiTableOfContents toc={toc} />
-          </Box>
+          <WikiTableOfContents toc={toc} />
         </HStack>
       )}
     </main>

@@ -25,6 +25,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   if (isOpen === isDefaultOpen) {
     return (
       <VStack
+        display={{ base: 'none', md: 'block' }}
         borderLeftWidth="1px"
         minW="210px"
         px={6}
@@ -56,6 +57,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   }
   return (
     <IconButton
+      display={{ base: 'none', md: 'block' }}
       pos="absolute"
       right="24px"
       top="calc(70px + 32px)"
