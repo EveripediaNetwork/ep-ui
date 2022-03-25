@@ -4,7 +4,7 @@ import { Image } from '@/components/Elements/Image/Image'
 
 export const TitleAndImage = ({ title }: { title: string | undefined }) => {
   return (
-    <VStack minW="400px" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
         bgColor="wikiCardBg"
         as="h3"

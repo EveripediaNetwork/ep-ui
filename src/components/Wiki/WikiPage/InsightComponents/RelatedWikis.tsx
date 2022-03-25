@@ -72,7 +72,7 @@ export const RelatedWikis = ({
     })
   }, [categories])
   return (
-    <VStack minW="400px" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Accordion title="Related Articles">
         <VStack align="start">
           {wikis.slice(0, 4).map(wiki => (

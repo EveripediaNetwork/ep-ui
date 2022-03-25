@@ -1,5 +1,5 @@
 import React from 'react'
-import { VStack, Icon, Text } from '@chakra-ui/react'
+import { VStack, Icon, Text, Flex } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 import {
   RiBookOpenFill,
@@ -41,19 +41,31 @@ const actionBarItems: {
   },
 ]
 const WikiActionBar = () => (
-  <VStack borderRightWidth="1px" px={6} py="100px" borderColor="borderColor">
-    <VStack spacing={8} position="sticky" top="calc(100px + 70px + 2px)">
+  <VStack
+    borderRightWidth={{ base: 0, md: '1px' }}
+    borderBottomWidth={{ base: '1px', md: '0' }}
+    px={6}
+    py={{ base: 4, md: '100px' }}
+    mt={{ base: 0, md: 0 }}
+    borderColor="borderColor"
+  >
+    <Flex
+      direction={{ base: 'row', md: 'column' }}
+      gap={{ base: 6, sm: 8 }}
+      position="sticky"
+      top="calc(100px + 70px + 2px)"
+    >
       {actionBarItems.map((item, index) => (
         <VStack
           cursor="pointer"
           color={item.label === 'Read' ? 'brand.600' : 'unset'}
           key={index}
         >
-          <Icon fontSize="20px" as={item.icon} />
-          <Text fontSize="14px">{item.label}</Text>
+          <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
+          <Text fontSize={{ base: '12px', sm: '14px' }}>{item.label}</Text>
         </VStack>
       ))}
-    </VStack>
+    </Flex>
   </VStack>
 )
 

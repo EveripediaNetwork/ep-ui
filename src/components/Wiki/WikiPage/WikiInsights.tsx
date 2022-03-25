@@ -9,7 +9,7 @@ interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki }: WikiInsightsProps) => (
-  <VStack p={4} spacing={4} pt={24}>
+  <VStack w={{ base: '100%', md: '50%' }} p={4} spacing={4} pt={24}>
     <TitleAndImage title={wiki?.title} />
     <RelatedWikis categories={wiki?.categories} />
   </VStack>

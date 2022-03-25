@@ -20,9 +20,9 @@ interface WikiTableOfContentsProps {
 
 const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue({ base: true, lg: false })
+  const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
 
-  if (isOpen !== isDefaultOpen) {
+  if (isOpen === isDefaultOpen) {
     return (
       <VStack
         borderLeftWidth="1px"
