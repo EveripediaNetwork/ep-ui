@@ -17,6 +17,7 @@ import { store } from '@/store/store'
 import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
+import { ImageProvider } from '@/context/image.context'
 import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
@@ -38,9 +39,11 @@ const App = (props: EpAppProps) => {
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
           <Provider autoConnect connectors={connectors}>
-            <Layout noFooter={Component.noFooter}>
-              <Component {...pageProps} />
-            </Layout>
+            <ImageProvider>
+              <Layout noFooter={Component.noFooter}>
+                <Component {...pageProps} />
+              </Layout>
+            </ImageProvider>
           </Provider>
         </ChakraProvider>
       </ReduxProvider>

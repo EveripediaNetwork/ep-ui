@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import {
   Grid,
@@ -34,6 +34,7 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -62,18 +63,20 @@ const types = {
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
+  const router = useRouter()
+  const { slug } = router.query
+  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
+    skip: router.isFallback,
+  })
+  const { ipfsHash, updateImageState } =
+    useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const [initialImage, setInitialImage] = useState<string>()
-  const router = useRouter()
-  const { slug } = router.query
-  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
-    skip: router.isFallback,
-  })
+  // const [initialImage, setInitialImage] = useState<string>()
   const { isLoading: isLoadingWiki, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
@@ -200,7 +203,8 @@ const CreateWiki = () => {
   useEffect(() => {
     if (wikiData && wikiData.content) {
       setMd(String(wikiData.content))
-      setInitialImage(wikiData.images[0].id)
+
+      updateImageState(ImageKey.IPFS_HASH, String(wikiData.images[0].id))
 
       const { id, title, content, tags, categories } = wikiData
 
@@ -210,6 +214,8 @@ const CreateWiki = () => {
       })
     }
   }, [wikiData])
+
+  console.log(ipfsHash)
 
   return (
     <Grid
@@ -228,7 +234,7 @@ const CreateWiki = () => {
       </GridItem>
       <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
         <Center>
-          <Highlights initialImage={initialImage} />
+          <Highlights initialImage={ipfsHash} />
         </Center>
       </GridItem>
       <GridItem mt="3" rowSpan={1} colSpan={3}>
