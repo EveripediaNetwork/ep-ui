@@ -4,6 +4,7 @@ import { Wiki } from '@/types/Wiki'
 import { TitleAndImage } from './InsightComponents/TitleAndImage'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
+import ProfileSummary from './InsightComponents/ProfileSummary'
 
 interface WikiInsightsProps {
   wiki: Wiki | undefined
@@ -19,6 +20,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     pt={24}
   >
     <TitleAndImage title={wiki?.title} />
+    <ProfileSummary />
     <ProfileStatistics />
     <RelatedWikis categories={wiki?.categories} />
   </VStack>

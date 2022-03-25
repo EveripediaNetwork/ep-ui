@@ -9,8 +9,11 @@ import {
   StatArrow,
   Center,
   Tag,
+  IconButton,
+  useClipboard,
 } from '@chakra-ui/react'
 import React from 'react'
+import { RiCheckboxCircleLine, RiFileCopyLine } from 'react-icons/ri'
 
 const AccordionCard = ({
   title,
@@ -33,6 +36,7 @@ const AccordionCard = ({
   isURL?: boolean
   isTitleTagged?: boolean
 }) => {
+  const { hasCopied, onCopy } = useClipboard(content || '')
   const titleTemplate = () => {
     if (isTitleTagged) {
       return (
@@ -54,11 +58,26 @@ const AccordionCard = ({
   }
   const contentTemplate = () => {
     if (isURL) {
-      return <Link href={content}>{content}</Link>
+      return (
+        <Link color="blue.600" fontSize="14px" href={content}>
+          {content?.replace(/(^\w+:|^)\/\//, '')}
+        </Link>
+      )
     }
     if (isAddress) {
       return (
-        <Link href={`https://etherscan.io/address/${content}`}>{content}</Link>
+        <HStack>
+          <Link href={`https://etherscan.io/address/${content}`}>
+            {content}
+          </Link>
+          <IconButton
+            onClick={onCopy}
+            aria-label="copy address"
+            minW={3}
+            icon={hasCopied ? <RiCheckboxCircleLine /> : <RiFileCopyLine />}
+            variant="link"
+          />
+        </HStack>
       )
     }
     if (isTimedStatistic) {
@@ -85,8 +104,9 @@ const AccordionCard = ({
       justify="space-between"
       align="center"
       p={4}
+      spacing={4}
     >
-      <Box>{titleTemplate()}</Box>
+      <Box whiteSpace="nowrap">{titleTemplate()}</Box>
       <Center>{contentTemplate()}</Center>
     </HStack>
   )
