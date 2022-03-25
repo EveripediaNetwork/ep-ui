@@ -188,8 +188,8 @@ const CreateWiki = () => {
 
         console.log(relayerData.signedTxHash)
 
-        if (signedTxHash) {
-          setTxHash(signedTxHash)
+        if (relayerData.signedTxHash) {
+          setTxHash(relayerData.signedTxHash)
           setOpenTxDetailsDialog(true)
         }
       }

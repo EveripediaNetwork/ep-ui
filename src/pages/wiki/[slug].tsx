@@ -52,8 +52,6 @@ const Wiki = () => {
   }
   /* eslint-enable react/prop-types */
 
-  console.log(data)
-
   return (
     <main>
       {error && <>Oh no, there was an error</>}
