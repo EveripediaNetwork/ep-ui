@@ -2,3 +2,6 @@
 .toastui-editor-contents {
   font-size: 16px !important;
 }
+html {
+  scroll-behavior: smooth;
+}
