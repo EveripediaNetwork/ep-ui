@@ -3,6 +3,7 @@ import { VStack } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { TitleAndImage } from './InsightComponents/TitleAndImage'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
+import ProfileStatistics from './InsightComponents/ProfileStatistics'
 
 interface WikiInsightsProps {
   wiki: Wiki | undefined
@@ -18,6 +19,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     pt={24}
   >
     <TitleAndImage title={wiki?.title} />
+    <ProfileStatistics />
     <RelatedWikis categories={wiki?.categories} />
   </VStack>
 )

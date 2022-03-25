@@ -1,14 +1,20 @@
 import React from 'react'
-import { Box, HStack, Text, IconButton, useDisclosure } from '@chakra-ui/react'
+import {
+  Box,
+  HStack,
+  Text,
+  IconButton,
+  useDisclosure,
+  BoxProps,
+} from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
-const Accordion = ({
-  title,
-  children,
-}: {
+interface AccordionProps {
   title: string
   children: React.ReactNode
-}) => {
+}
+
+const Accordion = ({ title, children, ...rest }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
   return (
     <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
@@ -32,7 +38,7 @@ const Accordion = ({
         </Text>
       </HStack>
       {!isOpen && (
-        <Box p={2} mt={4}>
+        <Box p={2} mt={4} {...rest}>
           {children}
         </Box>
       )}
