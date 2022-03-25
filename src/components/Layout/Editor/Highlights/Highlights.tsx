@@ -19,7 +19,7 @@ import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 
 type HightLightsType = {
-  initialImage: any
+  initialImage: string | undefined
 }
 
 const Highlights = ({ initialImage }: HightLightsType) => {

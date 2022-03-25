@@ -12,7 +12,7 @@ type DropzoneType = {
     setHideImageInput: (hide: boolean) => void
     setImage: (name: string, f: string | ArrayBuffer | null) => void
     deleteImage: () => void
-    initialImage: any
+    initialImage: string | undefined
   }
 }
 
@@ -48,18 +48,9 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   })
 
   useEffect(() => {
-    if (initialImage) {
-      setPaths([initialImage])
-      // const reader = new FileReader()
-      // reader.onload = e => {
-      //   console.log(e)
-      //   setPaths([String(e?.target?.result)])
-      // }
-      // reader.readAsArrayBuffer(initialImage)
-    }
+    if (initialImage)
+      setPaths([`https://ipfs.everipedia.org/ipfs/${initialImage}`])
   }, [initialImage])
-
-  console.log(paths)
 
   return (
     <Box>
@@ -92,6 +83,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           {paths.map(path => (
             <Image
               mx="auto"
+              priority
               w="350px"
               h="300px"
               key={path}

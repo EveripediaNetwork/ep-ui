@@ -29,12 +29,11 @@ import axios from 'axios'
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
-import { useAppSelector } from '@/store/hook'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
-import getArrayBufferFromIpfs from '@/utils/getArrayBufferFromIpfs'
+import { submitVerifiableSignature } from '@/utils/postSignature'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -62,20 +61,20 @@ const types = {
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
+  const dispatch = useAppDispatch()
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const [triggerUpdate, setTriggerUpdate] = useState('')
   const [initialImage, setInitialImage] = useState<string>()
   const router = useRouter()
   const { slug } = router.query
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
   })
-  const { isLoading, error: wikiError, data: wikiData } = result
+  const { isLoading: isLoadingWiki, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
     description: '',
@@ -124,7 +123,9 @@ const CreateWiki = () => {
 
       let tmp = { ...wiki }
 
-      tmp.id = slugify(String(wiki.title).toLowerCase())
+      // otherwise the wiki is being edited
+      if (tmp.id === '') tmp.id = slugify(String(wiki.title).toLowerCase())
+
       tmp = {
         ...tmp,
         content: String(md),
@@ -148,7 +149,8 @@ const CreateWiki = () => {
     wiki.images.length === 0 ||
     submittingWiki ||
     !accountData?.address ||
-    signing
+    signing ||
+    isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
@@ -159,7 +161,7 @@ const CreateWiki = () => {
       const meta = getWikiMetadataById(wiki, 'page-type')
       const pageType = PageTemplate.find(p => p.type === meta?.value)
 
-      setTriggerUpdate(String(pageType?.templateText))
+      setMd(String(pageType?.templateText))
     }
   }, [wiki])
 
@@ -168,53 +170,45 @@ const CreateWiki = () => {
   }, [])
 
   useEffect(() => {
-    async function signData(
-      signedData: string | undefined,
-      signingError: Error | undefined,
-    ) {
-      if (signingError) {
-        console.error(signingError)
-        return
-      }
+    const getSignedTxHash = async () => {
+      if (data && error && wikiHash && accountData) {
+        if (error) {
+          // TODO: show in the UI a msg
+          console.error(error)
+          return
+        }
 
-      if (signedData) {
-        const signature = signedData.substring(2)
-        const r = `0x${signature.substring(0, 64)}`
-        const s = `0x${signature.substring(64, 128)}`
-        const v = parseInt(signature.substring(128, 130), 16)
-
-        const relayerData = await axios.post(`${config.epApiBaseUrl}relayer`, {
-          ipfs: wikiHash,
-          userAddr: accountData?.address,
+        const { data: relayerData }: any = await submitVerifiableSignature(
+          data,
+          error,
+          wikiHash,
+          accountData?.address,
           deadline,
-          v,
-          r,
-          s,
-        })
+        )
 
-        console.log(relayerData)
+        console.log(relayerData.signedTxHash)
 
-        setTxHash(relayerData.data.hash)
-        setOpenTxDetailsDialog(true)
+        if (signedTxHash) {
+          setTxHash(signedTxHash)
+          setOpenTxDetailsDialog(true)
+        }
       }
     }
-    signData(data, error)
+
+    getSignedTxHash()
   }, [data, error])
 
   useEffect(() => {
-    console.log(wikiData)
     if (wikiData && wikiData.content) {
-      setTriggerUpdate(String(wikiData.content))
+      setMd(String(wikiData.content))
+      setInitialImage(wikiData.images[0].id)
 
-      const getImg = async () => {
-        const arrayBufferFromIpfs = await getArrayBufferFromIpfs(
-          wikiData.images[0].id,
-        )
-        console.log(arrayBufferFromIpfs)
-        setInitialImage(arrayBufferFromIpfs as any)
-      }
+      const { id, title, content, tags, categories } = wikiData
 
-      getImg()
+      dispatch({
+        type: 'wiki/setCurrentWiki',
+        payload: { id, title, content, tags, categories },
+      })
     }
   }, [wikiData])
 
@@ -228,7 +222,7 @@ const CreateWiki = () => {
     >
       <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
         <Editor
-          markdown={triggerUpdate}
+          markdown={md || ''}
           initialValue={initialEditorValue}
           onChange={handleOnEditorChanges}
         />
@@ -316,4 +310,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default authenticatedRoute(CreateWiki)
+export default CreateWiki
