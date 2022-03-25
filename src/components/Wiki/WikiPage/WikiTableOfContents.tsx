@@ -6,6 +6,7 @@ import {
   useDisclosure,
   IconButton,
   Flex,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
 
@@ -19,7 +20,9 @@ interface WikiTableOfContentsProps {
 
 const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  if (!isOpen) {
+  const isDefaultOpen = useBreakpointValue({ base: true, lg: false })
+
+  if (isOpen !== isDefaultOpen) {
     return (
       <VStack
         borderLeftWidth="1px"
