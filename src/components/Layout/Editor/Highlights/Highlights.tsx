@@ -14,10 +14,10 @@ import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Content, Languages, Wiki } from '@/types/Wiki'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
-import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 
 type HightLightsType = {
   initialImage: string | undefined

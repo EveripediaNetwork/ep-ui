@@ -73,7 +73,6 @@ const HighlightsModal = ({
     if (!wiki.categories.find((c: BaseCategory) => c.title === category))
       setWiki((prev: Wiki) => ({
         ...prev,
-        images: [...currentWiki.images],
         categories: [
           ...prev.categories,
           { id: slugify(category.toLowerCase()), title: category },
