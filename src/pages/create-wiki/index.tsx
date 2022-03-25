@@ -180,7 +180,6 @@ const CreateWiki = () => {
 
         const { data: relayerData }: any = await submitVerifiableSignature(
           data,
-          error,
           wikiHash,
           accountData?.address,
           deadline,
