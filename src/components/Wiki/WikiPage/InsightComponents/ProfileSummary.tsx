@@ -14,15 +14,7 @@ const ProfileSummary = () => {
         title="Profile Summary"
       >
         {sampleProfileSummary.map((item, index) => (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          <AccordionWidget
-            key={index}
-            type={item.type}
-            title={item.title}
-            titleTag={item.titleTag}
-            content={item.content}
-          />
+          <AccordionWidget key={index} {...item} />
         ))}
       </Accordion>
     </VStack>
