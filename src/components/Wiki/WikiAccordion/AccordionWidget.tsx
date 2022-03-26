@@ -35,12 +35,8 @@ const AccordionCard = ({
     if (type === 'url') {
       const contentURL = content as string
       return (
-        <Link
-          color="blue.600"
-          fontSize="14px"
-          href={JSON.stringify(contentURL)}
-        >
-          {contentURL?.replace(/(^\w+:|^)\/\//, '')}
+        <Link color="blue.600" fontSize="14px" href={contentURL}>
+          {new URL(contentURL).hostname}
         </Link>
       )
     }
