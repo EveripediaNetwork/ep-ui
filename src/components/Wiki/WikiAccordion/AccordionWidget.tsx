@@ -29,13 +29,18 @@ const AccordionCard = ({
   change,
   changeDirection,
 }: WikiInsights) => {
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(content) || '')
+  const { hasCopied, onCopy } = useClipboard(content as string)
 
   const contentTemplate = () => {
     if (type === 'url') {
+      const contentURL = content as string
       return (
-        <Link color="blue.600" fontSize="14px" href={content}>
-          {content?.replace(/(^\w+:|^)\/\//, '')}
+        <Link
+          color="blue.600"
+          fontSize="14px"
+          href={JSON.stringify(contentURL)}
+        >
+          {contentURL?.replace(/(^\w+:|^)\/\//, '')}
         </Link>
       )
     }
