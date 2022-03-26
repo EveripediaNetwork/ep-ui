@@ -1,5 +1,6 @@
+import React from 'react'
+import { WikiInsights } from '@/types/WikiInsightsDataType'
 import {
-  Box,
   HStack,
   Link,
   Text,
@@ -12,59 +13,27 @@ import {
   IconButton,
   useClipboard,
 } from '@chakra-ui/react'
-import React from 'react'
 import { RiCheckboxCircleLine, RiFileCopyLine } from 'react-icons/ri'
 
 const AccordionCard = ({
+  type,
   title,
   titleTag,
   content,
-  statChanged,
-  statChangedDirection,
-  isAddress,
-  isTimedStatistic,
-  isURL,
-  isTitleTagged,
-}: {
-  title: string
-  titleTag?: string
-  content?: string
-  statChanged?: string
-  statChangedDirection?: 'increase' | 'decrease'
-  isAddress?: boolean
-  isTimedStatistic?: boolean
-  isURL?: boolean
-  isTitleTagged?: boolean
-}) => {
+  change,
+  changeDirection,
+}: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content || '')
-  const titleTemplate = () => {
-    if (isTitleTagged) {
-      return (
-        <HStack>
-          <Text fontSize="14px" color="linkColor">
-            {title}
-          </Text>
-          <Tag size="sm" fontSize={10} variant="solid">
-            {titleTag}
-          </Tag>
-        </HStack>
-      )
-    }
-    return (
-      <Text fontSize="14px" color="linkColor">
-        {title}
-      </Text>
-    )
-  }
+
   const contentTemplate = () => {
-    if (isURL) {
+    if (type === 'url') {
       return (
         <Link color="blue.600" fontSize="14px" href={content}>
           {content?.replace(/(^\w+:|^)\/\//, '')}
         </Link>
       )
     }
-    if (isAddress) {
+    if (type === 'address') {
       return (
         <HStack>
           <Link href={`https://etherscan.io/address/${content}`}>
@@ -80,7 +49,7 @@ const AccordionCard = ({
         </HStack>
       )
     }
-    if (isTimedStatistic) {
+    if (type === 'statistic') {
       return (
         <Stat>
           <StatNumber float="right" fontSize={14}>
@@ -88,8 +57,8 @@ const AccordionCard = ({
           </StatNumber>
           <div>
             <StatHelpText float="right" m={0}>
-              <StatArrow type={statChangedDirection} />
-              {statChanged}
+              <StatArrow type={changeDirection} />
+              {change}
             </StatHelpText>
           </div>
         </Stat>
@@ -106,7 +75,16 @@ const AccordionCard = ({
       p={4}
       spacing={4}
     >
-      <Box>{titleTemplate()}</Box>
+      <HStack>
+        <Text fontSize="14px" color="linkColor">
+          {title}
+        </Text>
+        {titleTag && (
+          <Tag size="sm" fontSize={10} variant="solid">
+            {titleTag}
+          </Tag>
+        )}
+      </HStack>
       <Center>{contentTemplate()}</Center>
     </HStack>
   )

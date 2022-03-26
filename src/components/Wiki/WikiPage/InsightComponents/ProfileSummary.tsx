@@ -2,6 +2,7 @@ import React from 'react'
 import Accordion from '@/components/Wiki/WikiAccordion'
 import AccordionCard from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
+import { sampleProfileSummary } from '@/data/WikiInsightsData'
 
 const ProfileSummary = () => {
   return (
@@ -12,20 +13,17 @@ const ProfileSummary = () => {
         gap={2}
         title="Profile Summary"
       >
-        <AccordionCard title="Contract" content="0xbed9...fb4D" isAddress />
-        <AccordionCard
-          title="Holders"
-          isTimedStatistic
-          content="6,382"
-          statChanged="0.17%"
-          statChangedDirection="increase"
-        />
-        <AccordionCard
-          title="Official site"
-          isURL
-          content="https://boredapeyachtclub.com"
-        />
-        <AccordionCard title="Collection" content="10,000 NFTs" />
+        {sampleProfileSummary.map((item, index) => (
+          <AccordionCard
+            key={index}
+            type={item.type}
+            title={item.title}
+            titleTag={item.titleTag}
+            content={item.content}
+            change={item.change}
+            changeDirection={item.changeDirection}
+          />
+        ))}
       </Accordion>
     </VStack>
   )
