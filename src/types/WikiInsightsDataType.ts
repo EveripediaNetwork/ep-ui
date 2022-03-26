@@ -1,6 +1,6 @@
 interface RequiredWikiInsights {
   title: string
-  content: string
+  content: string | string[]
 }
 
 interface DefaultWikiInsights extends RequiredWikiInsights {
