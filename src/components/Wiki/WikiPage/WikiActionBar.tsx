@@ -44,7 +44,7 @@ const WikiActionBar = () => (
   <VStack
     borderRightWidth={{ base: 0, md: '1px' }}
     borderBottomWidth={{ base: '1px', md: '0' }}
-    px={6}
+    px={3}
     py={{ base: 4, md: '100px' }}
     mt={{ base: 0, md: 0 }}
     borderColor="borderColor"
