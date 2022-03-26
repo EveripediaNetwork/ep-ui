@@ -106,7 +106,7 @@ const AccordionCard = ({
       p={4}
       spacing={4}
     >
-      <Box whiteSpace="nowrap">{titleTemplate()}</Box>
+      <Box>{titleTemplate()}</Box>
       <Center>{contentTemplate()}</Center>
     </HStack>
   )
