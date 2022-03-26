@@ -1,6 +1,6 @@
 import React from 'react'
-import Accordion from '@/components/Elements/Accordion/Accordion'
-import AccordionCard from '@/components/Elements/Accordion/AccordionCard'
+import Accordion from '@/components/Wiki/WikiAccordion'
+import AccordionCard from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
 
 const ProfileStatistics = () => {

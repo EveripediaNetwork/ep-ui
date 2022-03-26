@@ -8,7 +8,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
-import Accordion from '@/components/Elements/Accordion/Accordion'
+import Accordion from '@/components/Wiki/WikiAccordion'
 import { getWikisByCategory } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Image } from '@/components/Elements/Image/Image'
