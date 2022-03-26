@@ -54,4 +54,14 @@ export const sampleProfileSummary: WikiInsights[] = [
     title: 'Collection',
     content: '10,000 NFTs',
   },
+  {
+    type: 'explorers',
+    title: 'Explorers',
+    content: [
+      'https://bloks.io/account/everipediaiq',
+      'https://eosflare.io/token/everipediaiq/IQ',
+      'https://www.eosx.io/account/everipediaiq?partner=coinmarketcap',
+      'https://etherscan.io/token/0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
+    ],
+  },
 ]

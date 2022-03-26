@@ -4,7 +4,7 @@ interface RequiredWikiInsights {
 }
 
 interface DefaultWikiInsights extends RequiredWikiInsights {
-  type?: 'statistic' | 'url' | 'address'
+  type?: 'statistic' | 'url' | 'address' | 'explorers'
   titleTag?: string
   change?: string
   changeDirection?: 'increase' | 'decrease'
@@ -18,9 +18,16 @@ interface StatisticWikiInsights extends DefaultWikiInsights {
   change: string
   changeDirection: 'increase' | 'decrease'
 }
+interface ExplorersWikiInsights extends Omit<DefaultWikiInsights, 'content'> {
+  type: 'explorers'
+  content: Array<string>
+}
 
 // ===========================
 // WikiInsights data type union
 // ===========================
 
-export type WikiInsights = StatisticWikiInsights | DefaultWikiInsights
+export type WikiInsights =
+  | StatisticWikiInsights
+  | ExplorersWikiInsights
+  | DefaultWikiInsights

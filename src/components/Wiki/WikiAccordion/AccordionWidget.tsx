@@ -1,6 +1,7 @@
 import React from 'react'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
 import {
+  Box,
   HStack,
   Link,
   Text,
@@ -12,8 +13,13 @@ import {
   Tag,
   IconButton,
   useClipboard,
+  Icon,
 } from '@chakra-ui/react'
-import { RiCheckboxCircleLine, RiFileCopyLine } from 'react-icons/ri'
+import {
+  RiCheckboxCircleLine,
+  RiFileCopyLine,
+  RiShareBoxLine,
+} from 'react-icons/ri'
 
 const AccordionCard = ({
   type,
@@ -23,7 +29,7 @@ const AccordionCard = ({
   change,
   changeDirection,
 }: WikiInsights) => {
-  const { hasCopied, onCopy } = useClipboard(content || '')
+  const { hasCopied, onCopy } = useClipboard(JSON.stringify(content) || '')
 
   const contentTemplate = () => {
     if (type === 'url') {
@@ -47,6 +53,26 @@ const AccordionCard = ({
             variant="link"
           />
         </HStack>
+      )
+    }
+    if (type === 'explorers' && content instanceof Array) {
+      return (
+        <Box>
+          {content.map(explorer => (
+            <HStack>
+              <Link
+                target="_blank"
+                display="block"
+                fontSize="14px"
+                key={explorer}
+                href={explorer}
+              >
+                {new URL(explorer).hostname}
+              </Link>
+              <Icon minW={3} as={RiShareBoxLine} />
+            </HStack>
+          ))}
+        </Box>
       )
     }
     if (type === 'statistic') {
