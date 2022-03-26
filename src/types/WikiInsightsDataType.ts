@@ -1,33 +1,32 @@
-interface RequiredWikiInsights {
-  title: string
-  content: string | string[]
-}
-
-interface DefaultWikiInsights extends RequiredWikiInsights {
-  type?: 'statistic' | 'url' | 'address' | 'explorers'
-  titleTag?: string
-  change?: string
-  changeDirection?: 'increase' | 'decrease'
-}
-// ===========================
-// Specific wikiInsights types
-// ===========================
-
-interface StatisticWikiInsights extends DefaultWikiInsights {
-  type: 'statistic'
-  change: string
-  changeDirection: 'increase' | 'decrease'
-}
-interface ExplorersWikiInsights extends Omit<DefaultWikiInsights, 'content'> {
-  type: 'explorers'
-  content: Array<string>
-}
-
-// ===========================
-// WikiInsights data type union
-// ===========================
-
 export type WikiInsights =
-  | StatisticWikiInsights
-  | ExplorersWikiInsights
-  | DefaultWikiInsights
+  | {
+      type: 'statistic'
+      title: string
+      titleTag?: string
+      content: {
+        value: string
+        change: string
+        changeDirection: 'increase' | 'decrease'
+      }
+    }
+  | {
+      type: 'url' | 'address' | 'text'
+      title: string
+      titleTag?: string
+      content: string
+    }
+  | {
+      type: 'explorers'
+      title: string
+      titleTag?: string
+      content: Array<string>
+    }
+  | {
+      type: 'socials'
+      title: string
+      titleTag?: string
+      content: Array<{
+        icon: string
+        url: string
+      }>
+    }

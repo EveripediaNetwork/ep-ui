@@ -21,14 +21,7 @@ import {
   RiShareBoxLine,
 } from 'react-icons/ri'
 
-const AccordionCard = ({
-  type,
-  title,
-  titleTag,
-  content,
-  change,
-  changeDirection,
-}: WikiInsights) => {
+const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
 
   const contentTemplate = () => {
@@ -59,8 +52,8 @@ const AccordionCard = ({
     if (type === 'explorers' && content instanceof Array) {
       return (
         <Box>
-          {content.map(explorer => (
-            <HStack>
+          {content.map((explorer, i) => (
+            <HStack key={i}>
               <Link
                 target="_blank"
                 display="block"
@@ -76,16 +69,37 @@ const AccordionCard = ({
         </Box>
       )
     }
+    if (type === 'socials' && content instanceof Array) {
+      return (
+        <HStack spacing={2}>
+          {content.map((social, i) => {
+            return (
+              <Link target="_blank" href={social.url}>
+                <IconButton
+                  key={i}
+                  aria-label="open social"
+                  minW={3}
+                  /* eslint-disable */
+                  icon={<Icon as={require(`react-icons/ri`)[social.icon]} />}
+                  /* eslint-enable */
+                  variant="link"
+                />
+              </Link>
+            )
+          })}
+        </HStack>
+      )
+    }
     if (type === 'statistic') {
       return (
         <Stat>
           <StatNumber float="right" fontSize={14}>
-            {content}
+            {content.value}
           </StatNumber>
           <div>
             <StatHelpText float="right" m={0}>
-              <StatArrow type={changeDirection} />
-              {change}
+              <StatArrow type={content.changeDirection} />
+              {content.change}
             </StatHelpText>
           </div>
         </Stat>
@@ -117,4 +131,4 @@ const AccordionCard = ({
   )
 }
 
-export default AccordionCard
+export default AccordionWidget

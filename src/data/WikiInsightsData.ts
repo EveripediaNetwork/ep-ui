@@ -4,31 +4,39 @@ export const sampleProfileStatistics: WikiInsights[] = [
   {
     type: 'statistic',
     title: 'Market Cap',
-    content: '$861,618,023.80',
-    change: '0.17%',
-    changeDirection: 'increase',
+    content: {
+      value: '$861,618,023.80',
+      change: '0.17%',
+      changeDirection: 'increase',
+    },
   },
   {
     type: 'statistic',
     title: 'Holders',
-    content: '6,382',
-    change: '0.17%',
-    changeDirection: 'increase',
+    content: {
+      value: '6,382',
+      change: '0.17%',
+      changeDirection: 'increase',
+    },
   },
   {
     type: 'statistic',
     title: 'Diluted Market Cap',
-    content: '$183,710,797',
-    change: '0.09%',
-    changeDirection: 'increase',
+    content: {
+      value: '$183,710,797',
+      change: '0.09%',
+      changeDirection: 'increase',
+    },
   },
   {
     type: 'statistic',
     title: 'Volume',
     titleTag: '24h',
-    content: '$3,642,982.55',
-    change: '69.03%',
-    changeDirection: 'decrease',
+    content: {
+      value: '$3,642,982.55',
+      change: '69.03%',
+      changeDirection: 'decrease',
+    },
   },
 ]
 
@@ -46,11 +54,23 @@ export const sampleProfileSummary: WikiInsights[] = [
   {
     type: 'statistic',
     title: 'Holders',
-    content: '6,382',
-    change: '0.17%',
-    changeDirection: 'increase',
+    content: {
+      value: '6,382',
+      change: '0.17%',
+      changeDirection: 'increase',
+    },
   },
   {
+    type: 'socials',
+    title: 'Social profiles',
+    content: [
+      { icon: 'RiTwitterFill', url: 'https://twitter.com/boredapeyacht' },
+      { icon: 'RiFacebookFill', url: 'https://facebook.com/boredapeyacht' },
+      { icon: 'RiInstagramFill', url: 'https://instagram.com/boredapeyacht' },
+    ],
+  },
+  {
+    type: 'text',
     title: 'Collection',
     content: '10,000 NFTs',
   },
