@@ -20,6 +20,7 @@ import {
   RiFileCopyLine,
   RiShareBoxLine,
 } from 'react-icons/ri'
+import shortenAccount from '@/utils/shortenAccount'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
@@ -28,7 +29,12 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
     if (type === 'url') {
       const contentURL = content as string
       return (
-        <Link color="blue.600" fontSize="14px" href={contentURL}>
+        <Link
+          target="_blank"
+          color="blue.600"
+          fontSize="14px"
+          href={contentURL}
+        >
           {new URL(contentURL).hostname}
         </Link>
       )
@@ -36,8 +42,11 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
     if (type === 'address') {
       return (
         <HStack>
-          <Link href={`https://etherscan.io/address/${content}`}>
-            {content}
+          <Link
+            target="_blank"
+            href={`https://etherscan.io/address/${content}`}
+          >
+            {shortenAccount(content)}
           </Link>
           <IconButton
             onClick={onCopy}

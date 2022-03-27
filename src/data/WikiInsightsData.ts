@@ -44,7 +44,7 @@ export const sampleProfileSummary: WikiInsights[] = [
   {
     type: 'address',
     title: 'Contract',
-    content: '0xbed9...fb4D',
+    content: '0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9',
   },
   {
     type: 'url',
