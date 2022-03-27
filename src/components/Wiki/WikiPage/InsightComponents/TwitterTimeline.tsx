@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, useColorMode, VStack } from '@chakra-ui/react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
-import Accordion from '../../WikiAccordion'
+import WikiAccordion from '../../WikiAccordion'
 
 const TwitterTimeline = ({ url }: { url: string }) => {
   const { colorMode } = useColorMode()
@@ -16,7 +16,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
 
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
-      <Accordion title="Twitter Timeline">
+      <WikiAccordion title="Twitter Timeline">
         <Box
           className="wikiTwitterTimelineWidget"
           h="400px"
@@ -36,7 +36,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
             />
           )}
         </Box>
-      </Accordion>
+      </WikiAccordion>
     </VStack>
   )
 }

@@ -8,7 +8,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
-import Accordion from '@/components/Wiki/WikiAccordion'
+import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { getWikisByCategory } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Image } from '@/components/Elements/Image/Image'
@@ -28,6 +28,7 @@ export const RelatedWikiCard = ({
       _hover={{ bgColor: 'dimColor' }}
       borderRadius={4}
       p={3}
+      mx={-2}
       align="start"
     >
       <Image
@@ -73,7 +74,7 @@ export const RelatedWikis = ({
   }, [categories])
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
-      <Accordion title="Related Articles">
+      <WikiAccordion title="Related Articles">
         <VStack align="start">
           {wikis.slice(0, 4).map(wiki => (
             <RelatedWikiCard
@@ -84,7 +85,7 @@ export const RelatedWikis = ({
             />
           ))}
         </VStack>
-      </Accordion>
+      </WikiAccordion>
     </VStack>
   )
 }

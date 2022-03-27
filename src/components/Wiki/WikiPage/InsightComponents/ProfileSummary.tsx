@@ -1,5 +1,5 @@
 import React from 'react'
-import Accordion from '@/components/Wiki/WikiAccordion'
+import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
 import { sampleProfileSummary } from '@/data/WikiInsightsData'
@@ -7,7 +7,7 @@ import { sampleProfileSummary } from '@/data/WikiInsightsData'
 const ProfileSummary = () => {
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
-      <Accordion
+      <WikiAccordion
         display="flex"
         flexDir="column"
         gap={2}
@@ -16,7 +16,7 @@ const ProfileSummary = () => {
         {sampleProfileSummary.map((item, index) => (
           <AccordionWidget key={index} {...item} />
         ))}
-      </Accordion>
+      </WikiAccordion>
     </VStack>
   )
 }

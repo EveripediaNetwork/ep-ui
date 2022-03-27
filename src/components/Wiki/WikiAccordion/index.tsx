@@ -14,7 +14,11 @@ interface AccordionProps {
   children: React.ReactNode
 }
 
-const Accordion = ({ title, children, ...rest }: BoxProps & AccordionProps) => {
+const WikiAccordion = ({
+  title,
+  children,
+  ...rest
+}: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
   return (
     <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
@@ -38,7 +42,7 @@ const Accordion = ({ title, children, ...rest }: BoxProps & AccordionProps) => {
         </Text>
       </HStack>
       {!isOpen && (
-        <Box p={2} mt={4} {...rest}>
+        <Box p={2} {...rest}>
           {children}
         </Box>
       )}
@@ -46,4 +50,4 @@ const Accordion = ({ title, children, ...rest }: BoxProps & AccordionProps) => {
   )
 }
 
-export default Accordion
+export default WikiAccordion
