@@ -5,6 +5,7 @@ import { TitleAndImage } from './InsightComponents/TitleAndImage'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
 import ProfileSummary from './InsightComponents/ProfileSummary'
+import TwitterTimeline from './InsightComponents/TwitterTimeline'
 
 interface WikiInsightsProps {
   wiki: Wiki | undefined
@@ -27,6 +28,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     />
     <ProfileSummary />
     <ProfileStatistics />
+    <TwitterTimeline url="https://twitter.com/Everipedia" />
     <RelatedWikis categories={wiki?.categories} />
   </VStack>
 )
