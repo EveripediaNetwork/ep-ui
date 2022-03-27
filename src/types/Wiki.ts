@@ -84,4 +84,5 @@ export interface Wiki {
   version: number
   language: LanguagesISOEnum
   updated?: string
+  created?: string
 }

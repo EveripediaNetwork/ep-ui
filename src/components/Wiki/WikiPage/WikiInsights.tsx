@@ -20,7 +20,11 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     spacing={4}
     pt={24}
   >
-    <TitleAndImage title={wiki?.title} />
+    <TitleAndImage
+      title={wiki?.title}
+      categories={wiki?.categories}
+      lastEdited={wiki?.updated || wiki?.created}
+    />
     <ProfileSummary />
     <ProfileStatistics />
     <RelatedWikis categories={wiki?.categories} />
