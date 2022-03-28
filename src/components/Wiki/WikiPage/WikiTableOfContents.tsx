@@ -24,6 +24,68 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
   const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
   const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
+  const [activeId, setActiveId] = React.useState<string | null>()
+
+  // the below ref is used to store all the heading that are in view
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const headingElementsRef: any = React.useRef({})
+
+  React.useEffect(() => {
+    // get all the heading elements
+    const headingElements = Array.from(document.querySelectorAll('h1, h2, h3'))
+
+    // defining callback function for intersection observer
+    // this function will be called when the heading element is in view
+    // hence when the heading element is in view,
+    // we will set the activeId to the id of the heading element
+    const callback: IntersectionObserverCallback = headings => {
+      headingElementsRef.current = headings.reduce((map, headingElement) => {
+        map[headingElement.target.id] = headingElement
+        return map
+      }, headingElementsRef.current)
+
+      // get the id of the heading element that is in view
+      const visibleHeadings: IntersectionObserverEntry[] = []
+      Object.keys(headingElementsRef.current).forEach(key => {
+        const headingElement: IntersectionObserverEntry =
+          headingElementsRef.current[key]
+        if (headingElement.isIntersecting) visibleHeadings.push(headingElement)
+      })
+
+      const getIndexFromId = (id: string) =>
+        headingElements.findIndex(heading => heading.id === id)
+
+      // setting the activeId to the id of the heading element that is in view
+      if (visibleHeadings.length === 1) {
+        setActiveId(visibleHeadings[0].target.id)
+      } else if (visibleHeadings.length > 1) {
+        // if there are multiple heading elements in view then set heading near to top as active
+        let closestHeading: IntersectionObserverEntry = visibleHeadings[0]
+        visibleHeadings.forEach(headingElement => {
+          if (
+            closestHeading === undefined ||
+            getIndexFromId(closestHeading.target.id) >
+              getIndexFromId(headingElement.target.id)
+          ) {
+            closestHeading = headingElement
+          }
+        })
+        setActiveId(closestHeading.target.id)
+      }
+    }
+
+    // creating intersection observer instance and observing the heading elements
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '-100px 0px 0px 0px',
+    })
+    headingElements.forEach(element => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [setActiveId])
+
+  React.useEffect(() => {
+    if (!activeId) setActiveId(toc[0].id)
+  }, [activeId, toc])
 
   if (isOpen === isDefaultOpen) {
     return (
@@ -63,15 +125,23 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
                 width: '6px',
               },
               '&::-webkit-scrollbar-thumb': {
-                background: colorMode === 'light' ? '#0000002a' : '#cccccc2a',
+                background: colorMode === 'light' ? '#0000002a' : '#3f444e',
                 borderRadius: '24px',
               },
             }}
           >
             {toc.map(({ level, id, title }) => (
-              <Text key={id} pl={`calc(${(level - 1) * 20}px)`}>
-                <Link href={`#${id}`}>{title}</Link>
-              </Text>
+              <Box pl={`calc(${(level - 1) * 20}px)`}>
+                <Text
+                  color={activeId === id ? 'brand.500' : 'unset'}
+                  boxShadow={activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'}
+                  outlineColor="brand.500"
+                  key={id}
+                  pl={2}
+                >
+                  <Link href={`#${id}`}>{title}</Link>
+                </Text>
+              </Box>
             ))}
           </VStack>
         </VStack>
