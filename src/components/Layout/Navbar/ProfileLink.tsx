@@ -8,7 +8,7 @@ export const ProfileLink = () => {
   return (
     <Link
       order={-1}
-      href={`/account/${data?.address}`}
+      href={data?.address ? `/account/${data?.address}` : '/login'}
       _hover={{
         textDecoration: 'none',
         color: 'linkHoverColor',

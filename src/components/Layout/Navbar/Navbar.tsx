@@ -27,6 +27,7 @@ import networkMap from '@/utils/networkMap'
 import { updateNetworkProvider } from '@/store/slices/provider-slice'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
+import { ProviderDataType } from '@/types/ProviderDataType'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
@@ -88,9 +89,9 @@ const Navbar = () => {
     }
 
     const getDetectedProvider = async () => {
-      const provider: any = await detectEthereumProvider()
-      dispatch(updateNetworkProvider(provider))
-      getConnectedChain(provider)
+      const provider = await detectEthereumProvider()
+      dispatch(updateNetworkProvider(provider as ProviderDataType | null))
+      if (provider) getConnectedChain(provider)
     }
 
     if (!detectedProvider) {
