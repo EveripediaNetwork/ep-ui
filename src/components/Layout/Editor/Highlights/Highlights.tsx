@@ -13,7 +13,7 @@ import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Content, Languages, Wiki } from '@/types/Wiki'
+import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
@@ -31,7 +31,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   const [hideImageInput, setHideImageInput] = useState(false)
   const dispatch = useAppDispatch()
 
-  const handleDispatch = (object: Partial<Content>) =>
+  const handleDispatch = (object: Partial<Wiki>) =>
     dispatch({
       type: 'wiki/setCurrentWiki',
       payload: object,
@@ -69,8 +69,9 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       <Flex justifyContent="center" alignItems="center" h="50px">
         <Input
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            handleDispatch({
-              title: event.target.value,
+            dispatch({
+              type: 'wiki/setCurrentWiki',
+              payload: { title: event.target.value },
             })
           }}
           value={currentWiki.title}
@@ -123,7 +124,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.categories.map((c: BaseCategory) => (
+            {currentWiki.categories?.map((c: BaseCategory) => (
               <Badge variant="outline" m="1">
                 {c.title}
               </Badge>

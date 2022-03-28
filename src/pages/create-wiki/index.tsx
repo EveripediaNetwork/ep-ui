@@ -173,7 +173,7 @@ const CreateWiki = () => {
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (data && error && wikiHash && accountData) {
+      if (data && wikiHash && accountData) {
         if (error) {
           // TODO: show in the UI a msg
           console.error(error)
@@ -187,8 +187,10 @@ const CreateWiki = () => {
           deadline,
         )
 
-        if (relayerData.signedTxHash) {
-          setTxHash(relayerData.signedTxHash)
+        console.log(relayerData)
+
+        if (relayerData && relayerData.hash) {
+          setTxHash(relayerData.hash)
           setOpenTxDetailsDialog(true)
         }
       }
