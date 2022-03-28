@@ -47,7 +47,7 @@ export const TitleAndImage = ({
             <Td py={0}>
               <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                 {categories?.map(category => (
-                  <Tag m={2} whiteSpace="nowrap">
+                  <Tag m="3px !important" whiteSpace="nowrap">
                     {category.id}
                   </Tag>
                 ))}
