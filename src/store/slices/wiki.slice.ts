@@ -29,7 +29,6 @@ const wikiSlice = createSlice({
       return newState
     },
     updateCategories(state, action) {
-      console.log(action.payload)
       return {
         ...state,
         categories: [action.payload],
