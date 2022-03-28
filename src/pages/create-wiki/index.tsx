@@ -120,6 +120,8 @@ const CreateWiki = () => {
 
   const getImageHash = async () => (isWikiBeingEdited ? ipfsHash : saveImage())
 
+  const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
+
   const saveOnIpfs = async () => {
     if (accountData) {
       setSubmittingWiki(true)
@@ -129,7 +131,7 @@ const CreateWiki = () => {
       let tmp = { ...wiki }
 
       // otherwise the wiki is being edited
-      if (tmp.id === '') tmp.id = slugify(String(wiki.title).toLowerCase())
+      if (tmp.id === '') tmp.id = getWikiSlug()
 
       tmp = {
         ...tmp,
@@ -186,8 +188,6 @@ const CreateWiki = () => {
           accountData?.address,
           deadline,
         )
-
-        console.log(relayerData)
 
         if (relayerData && relayerData.hash) {
           setTxHash(relayerData.hash)
@@ -296,7 +296,15 @@ const CreateWiki = () => {
             size="sm"
             variant="outline"
           >
-            See in IPFS
+            View in IPFS
+          </Button>
+          <Button
+            size="sm"
+            ml="3"
+            variant="link"
+            onClick={() => router.push({ pathname: `/wiki/${getWikiSlug()}` })}
+          >
+            View
           </Button>
         </Center>
       </Modal>
