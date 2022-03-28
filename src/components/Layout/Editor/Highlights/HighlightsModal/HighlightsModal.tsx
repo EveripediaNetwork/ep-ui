@@ -43,12 +43,14 @@ const HighlightsModal = ({
 
   return (
     <Modal
-      SecondaryButton={undefined} title=""
+      SecondaryButton={undefined}
+      title=""
       enableBottomCloseButton
       onClose={onClose}
       isOpen={isOpen}
       isCentered
-      {...rest}    >
+      {...rest}
+    >
       <SimpleGrid columns={2} spacing={2}>
         <Text>Type</Text>
         <Text>Value</Text>
