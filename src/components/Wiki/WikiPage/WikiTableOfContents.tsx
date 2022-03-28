@@ -7,6 +7,7 @@ import {
   IconButton,
   Flex,
   Box,
+  useColorMode,
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
@@ -20,6 +21,7 @@ interface WikiTableOfContentsProps {
 }
 
 const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
+  const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
   const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
 
@@ -33,7 +35,13 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
         py="30px"
         borderColor="borderColor"
       >
-        <VStack w="100%" spacing={4} align="start">
+        <VStack
+          w="100%"
+          spacing={4}
+          align="start"
+          position="sticky"
+          top="calc(70px + 30px + 2px)"
+        >
           <Flex w="100%" justify="end">
             <IconButton
               aria-label="Toggle Table of Contents"
@@ -41,11 +49,31 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
               onClick={onToggle}
             />
           </Flex>
-          {toc.map(({ level, id, title }) => (
-            <Text key={id} pl={`calc(${(level - 1) * 20}px)`}>
-              <Link href={`#${id}`}>{title}</Link>
-            </Text>
-          ))}
+          <VStack
+            as="nav"
+            spacing={4}
+            h="calc(100vh - (70px + 90px))"
+            overflowY="scroll"
+            pr={4}
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: colorMode === 'light' ? '#0000002a' : '#cccccc2a',
+                borderRadius: '24px',
+              },
+            }}
+          >
+            {toc.map(({ level, id, title }) => (
+              <Text key={id} pl={`calc(${(level - 1) * 20}px)`}>
+                <Link href={`#${id}`}>{title}</Link>
+              </Text>
+            ))}
+          </VStack>
         </VStack>
       </VStack>
     )
