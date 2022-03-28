@@ -114,12 +114,11 @@ const Highlights = () => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.categories
-              ?.map((c: BaseCategory) => (
-                <Badge variant="outline" m="1">
-                  {c.title}
-                </Badge>
-              ))}
+            {currentWiki.categories?.map((c: BaseCategory) => (
+              <Badge variant="outline" m="1">
+                {c.title}
+              </Badge>
+            ))}
           </Flex>
         </Flex>
         <Divider my="5" />

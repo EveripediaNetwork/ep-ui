@@ -114,29 +114,28 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {currentWiki.categories
-            ?.map((c: BaseCategory) => (
-              <Badge
-                variant="outline"
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                m="1"
-                key={c.title}
-                justifyContent="space-between"
-              >
-                {c.title}
-                <CloseButton
-                  size="sm"
-                  outline="none"
-                  onClick={() =>
-                    dispatch({
-                      type: 'wiki/deleteCategories',
-                    })
-                  }
-                />
-              </Badge>
-            ))}
+          {currentWiki.categories?.map((c: BaseCategory) => (
+            <Badge
+              variant="outline"
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              m="1"
+              key={c.title}
+              justifyContent="space-between"
+            >
+              {c.title}
+              <CloseButton
+                size="sm"
+                outline="none"
+                onClick={() =>
+                  dispatch({
+                    type: 'wiki/deleteCategories',
+                  })
+                }
+              />
+            </Badge>
+          ))}
         </Flex>
         <CustomDivider />
 
