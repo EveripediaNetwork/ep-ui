@@ -118,8 +118,7 @@ const CreateWiki = () => {
     })
   }
 
-  const getImageHash = async () =>
-    isWikiBeingEdited ? ipfsHash : await saveImage()
+  const getImageHash = async () => (isWikiBeingEdited ? ipfsHash : saveImage())
 
   const saveOnIpfs = async () => {
     if (accountData) {
