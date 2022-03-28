@@ -68,7 +68,7 @@ const CreateWiki = () => {
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
   })
-  const { image, ipfsHash, updateImageState } =
+  const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
@@ -118,10 +118,14 @@ const CreateWiki = () => {
     })
   }
 
+  const getImageHash = async () =>
+    isWikiBeingEdited ? ipfsHash : await saveImage()
+
   const saveOnIpfs = async () => {
     if (accountData) {
       setSubmittingWiki(true)
-      const imageHash = await saveImage()
+
+      const imageHash = await getImageHash()
 
       let tmp = { ...wiki }
 
@@ -184,8 +188,6 @@ const CreateWiki = () => {
           deadline,
         )
 
-        console.log(relayerData.signedTxHash)
-
         if (relayerData.signedTxHash) {
           setTxHash(relayerData.signedTxHash)
           setOpenTxDetailsDialog(true)
@@ -200,6 +202,9 @@ const CreateWiki = () => {
     if (wikiData && wikiData.content && wikiData.images) {
       setMd(String(wikiData.content))
 
+      // update isWikiBeingEdited
+      updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
+      // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData.images[0].id))
 
       const { id, title, content, tags, categories } = wikiData
@@ -210,8 +215,6 @@ const CreateWiki = () => {
       })
     }
   }, [wikiData])
-
-  console.log(ipfsHash)
 
   return (
     <Grid

@@ -37,8 +37,11 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       payload: object,
     })
 
-  const handleSetImage = (name: string, value: ArrayBuffer) =>
+  const handleSetImage = (name: string, value: ArrayBuffer) => {
+    // update isWikiBeingEdited
+    updateImageState(ImageKey.IS_WIKI_BEING_EDITED, false)
     updateImageState(ImageKey.IMAGE, { id: name, type: value })
+  }
 
   const handleDeleteImage = () => {
     handleDispatch({
