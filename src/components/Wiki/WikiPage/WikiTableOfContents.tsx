@@ -33,13 +33,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
         py="30px"
         borderColor="borderColor"
       >
-        <VStack
-          w="100%"
-          spacing={4}
-          align="start"
-          position="sticky"
-          top="calc(70px + 30px + 2px)"
-        >
+        <VStack w="100%" spacing={4} align="start">
           <Flex w="100%" justify="end">
             <IconButton
               aria-label="Toggle Table of Contents"

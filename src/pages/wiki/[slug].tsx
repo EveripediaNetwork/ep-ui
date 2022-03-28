@@ -38,14 +38,19 @@ const Wiki = () => {
   }: React.PropsWithChildren<HeadingProps>) => {
     const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
     if (level && children && typeof children[0] === 'string') {
-      const id = children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')
-      if (!toc.find(item => item.id === id)) {
-        toc.push({
-          level,
-          id,
-          title: children[0],
-        })
+      const id = `${children[0]
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')}-${Math.random()
+        .toString(36)
+        .substring(2, 5)}`
+      if (toc[toc.length - 1]?.title === children[0]) {
+        toc.pop()
       }
+      toc.push({
+        level,
+        id,
+        title: children[0],
+      })
       return React.createElement(props.node.tagName, { id }, children)
     }
     return React.createElement(props.node.tagName, props, children)
