@@ -23,7 +23,7 @@ const DisplayAvatar = ({ avatar, ...rest }: DisplayAvatarProps) => {
 
   return (
     <chakra.span
-      zIndex="popover"
+      zIndex="banner"
       sx={{
         svg: {
           ...rest,

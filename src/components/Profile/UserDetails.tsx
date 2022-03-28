@@ -36,8 +36,6 @@ export const UserDetails = (props: UserDetailsProps) => {
     addressOrName: address,
   })
 
-  // const ethAddress = data?.address
-
   const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
 
