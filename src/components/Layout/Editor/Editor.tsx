@@ -19,7 +19,9 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const callEditorMethod = useCallback(() => {
-    editorRef.current?.getInstance().setMarkdown(markdown)
+    const currentMarkdown = editorRef.current?.getInstance().getMarkdown()
+    if (currentMarkdown !== markdown)
+      editorRef.current?.getInstance().setMarkdown(markdown)
   }, [editorRef, markdown])
 
   useEffect(() => {
