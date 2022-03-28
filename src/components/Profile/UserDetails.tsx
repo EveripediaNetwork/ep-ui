@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
-import { useEnsLookup } from 'wagmi'
+import { useEnsAvatar, useEnsLookup } from 'wagmi'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
@@ -25,18 +25,20 @@ export type UserDetailsProps = { hide?: boolean }
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
   const router = useRouter()
-  const { profile } = router.query
+  const address = router.query.profile as string
 
-  const { headerIsSticky, ensAccount } = useProfileContext()
-  const { data, loading } = ensAccount
+  const { headerIsSticky } = useProfileContext()
 
   const [{ data: userName, loading: nameLoading }] = useEnsLookup({
-    address: profile as string,
+    address: address as string,
+  })
+  const [{ data: avatar, loading: loadingAvatar }] = useEnsAvatar({
+    addressOrName: address,
   })
 
-  const ethAddress = data?.address
+  // const ethAddress = data?.address
 
-  const { hasCopied, onCopy } = useClipboard(ethAddress || '')
+  const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -49,8 +51,7 @@ export const UserDetails = (props: UserDetailsProps) => {
     py: 2,
   }
 
-  if (loading || !ensAccount.data) return <LoadingProfile hide={hide} />
-  // return <LoadingProfile hide={hide} />
+  if (loadingAvatar) return <LoadingProfile hide={hide} />
   return (
     <>
       <Flex align="center" justify="space-between" w="full" px="6">
@@ -63,19 +64,17 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          {ensAccount.data && (
-            <DisplayAvatar
-              mt="-64px"
-              boxSize="32"
-              overflow="hidden"
-              borderWidth={2}
-              borderColor="white"
-              rounded="full"
-              justifySelf="center"
-              {...(isSticky && { mt: 0, boxSize: 12 })}
-              accountData={ensAccount.data}
-            />
-          )}
+          <DisplayAvatar
+            mt="-64px"
+            boxSize="32"
+            overflow="hidden"
+            borderWidth={2}
+            borderColor="white"
+            rounded="full"
+            justifySelf="center"
+            {...(isSticky && { mt: 0, boxSize: 12 })}
+            avatar={avatar}
+          />
 
           <Skeleton isLoaded={!nameLoading}>
             <chakra.span
@@ -127,7 +126,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
             >
               <Text w="24" isTruncated>
-                {ethAddress}
+                {address}
               </Text>
             </Button>
           </Flex>

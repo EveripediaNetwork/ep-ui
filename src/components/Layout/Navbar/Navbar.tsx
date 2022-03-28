@@ -189,7 +189,7 @@ const Navbar = () => {
                     visibleMenu={visibleMenu}
                     label={
                       accountData ? (
-                        <DisplayAvatar accountData={accountData} />
+                        <DisplayAvatar avatar={accountData.ens?.avatar} />
                       ) : (
                         <Icon
                           cursor="pointer"

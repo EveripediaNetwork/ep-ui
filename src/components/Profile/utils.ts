@@ -11,7 +11,6 @@ import {
   COLLECTIONS_DISPLAY_SIZES,
   FILTER_SIDEBAR_SIZE,
 } from '@/components/Profile/SidebarFilter/constants'
-import { AccountDataType } from '@/types/AccountDataType'
 
 export type TypeValue<T> = T[keyof T]
 
@@ -25,12 +24,6 @@ type BooleanSwitch = {
   readonly toggle: () => void
 }
 
-type EnsAccount = {
-  readonly data: AccountDataType
-  readonly error: Error | undefined
-  readonly loading: boolean
-}
-
 export type ProfileContext = {
   headerIsSticky: boolean
   headerRef: MutableRefObject<HTMLDivElement | null>
@@ -41,7 +34,6 @@ export type ProfileContext = {
   filterSidebarSize: FilterSidebarSize
   displaySize: CollectionDisplaySize
   setDisplaySize: Dispatch<SetStateAction<CollectionDisplaySize>>
-  ensAccount: EnsAccount
 }
 
 export const useStickyElement = () => {
