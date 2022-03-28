@@ -61,9 +61,6 @@ const Highlights = () => {
       <Flex justifyContent="center" alignItems="center" h="50px">
         <Input
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            // handleDispatch({
-            //   title: event.target.value,
-            // })
             dispatch({
               type: 'wiki/setCurrentWiki',
               payload: { title: event.target.value },
@@ -118,9 +115,6 @@ const Highlights = () => {
             w="full"
           >
             {currentWiki.categories
-              ?.filter(item => {
-                return item.id !== 'first-category'
-              })
               ?.map((c: BaseCategory) => (
                 <Badge variant="outline" m="1">
                   {c.title}

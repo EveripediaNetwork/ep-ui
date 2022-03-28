@@ -115,9 +115,6 @@ const HighlightsModal = ({
           gridColumn="1/3"
         >
           {currentWiki.categories
-            ?.filter(item => {
-              return item.id !== 'first-category'
-            })
             ?.map((c: BaseCategory) => (
               <Badge
                 variant="outline"
