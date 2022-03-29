@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Badge,
-  Button,
   CloseButton,
   Divider,
   Flex,
@@ -22,7 +21,6 @@ import {
   LanguagesISOEnum,
   MData,
   PageTypeName,
-  Wiki,
 } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
@@ -34,31 +32,7 @@ const HighlightsModal = ({
 }: Partial<ModalProps>) => {
   const dispatch = useAppDispatch()
   const currentWiki = useAppSelector(state => state.wiki)
-  const [wiki, setWiki] = useState<Wiki>({ ...currentWiki })
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
-
-  const SecondaryButton = (
-    <Button
-      onClick={() => {
-        dispatch({
-          type: 'wiki/setCurrentWiki',
-          payload: wiki,
-        })
-        onClose()
-      }}
-    >
-      Submit
-    </Button>
-  )
-
-  const handleSetWikiMetadata = (ob: MData) => {
-    setWiki((prev: Wiki) => ({
-      ...prev,
-      metadata: prev.metadata.map((m: MData) =>
-        m.id === ob.id ? { ...m, value: ob.value } : m,
-      ),
-    }))
-  }
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const CustomDivider = () => (
@@ -67,34 +41,11 @@ const HighlightsModal = ({
     </GridItem>
   )
 
-  const handleAddCategory = (category: string) => {
-    if (!category) return
-
-    if (!wiki.categories.find((c: BaseCategory) => c.title === category))
-      setWiki((prev: Wiki) => ({
-        ...prev,
-        images: [...currentWiki.images],
-        categories: [
-          ...prev.categories,
-          { id: slugify(category.toLowerCase()), title: category },
-        ],
-      }))
-  }
-
-  const handleDeleteCategory = (category: string) => {
-    setWiki({
-      ...wiki,
-      categories: wiki.categories.filter(
-        (c: BaseCategory) => c.title !== category,
-      ),
-    })
-  }
-
   return (
     <Modal
-      title="Edit metadata"
+      SecondaryButton={undefined}
+      title=""
       enableBottomCloseButton
-      SecondaryButton={SecondaryButton}
       onClose={onClose}
       isOpen={isOpen}
       isCentered
@@ -113,13 +64,17 @@ const HighlightsModal = ({
         <Select
           onChange={event => {
             if (event.target.value)
-              handleSetWikiMetadata({
-                id: 'page-type',
-                value: event.target.value,
+              dispatch({
+                type: 'wiki/updateMetadata',
+                payload: {
+                  id: 'page-type',
+                  value: event.target.value,
+                },
               })
           }}
           value={String(
-            wiki.metadata.find((m: MData) => m.id === 'page-type')?.value,
+            currentWiki.metadata.find((m: MData) => m.id === 'page-type')
+              ?.value,
           )}
           placeholder="Choose a page type"
         >
@@ -136,7 +91,14 @@ const HighlightsModal = ({
 
         <Select
           onChange={event => {
-            if (event.target.value) handleAddCategory(event.target.value)
+            if (event.target.value)
+              dispatch({
+                type: 'wiki/updateCategories',
+                payload: {
+                  id: slugify(event.target.value.toLowerCase()),
+                  title: event.target.value,
+                },
+              })
           }}
           placeholder="Choose categories"
         >
@@ -152,7 +114,7 @@ const HighlightsModal = ({
           alignItems="center"
           gridColumn="1/3"
         >
-          {wiki.categories.map((c: BaseCategory) => (
+          {currentWiki.categories?.map((c: BaseCategory) => (
             <Badge
               variant="outline"
               display="flex"
@@ -166,7 +128,11 @@ const HighlightsModal = ({
               <CloseButton
                 size="sm"
                 outline="none"
-                onClick={() => handleDeleteCategory(c.title)}
+                onClick={() =>
+                  dispatch({
+                    type: 'wiki/deleteCategories',
+                  })
+                }
               />
             </Badge>
           ))}
@@ -177,11 +143,11 @@ const HighlightsModal = ({
           <RiTranslate2 /> <Text>Language</Text>
         </FlexRow>
         <Select
-          value={wiki.language}
+          value={currentWiki.language}
           onChange={event =>
-            setWiki({
-              ...wiki,
-              language: event.target.value as LanguagesISOEnum,
+            dispatch({
+              type: 'wiki/setCurrentWiki',
+              payload: { language: event.target.value as LanguagesISOEnum },
             })
           }
           placeholder="Language"

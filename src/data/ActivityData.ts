@@ -19,7 +19,7 @@ const randomWikiTitles: string[] = [
 ]
 
 export const ActivityData: Activity[] = [
-  ...Array(20)
+  ...Array(50)
     .fill(0)
     .map(() => ({
       id: Math.random().toString(),

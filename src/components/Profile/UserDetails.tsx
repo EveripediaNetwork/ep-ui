@@ -11,31 +11,32 @@ import {
   ButtonGroup,
   Tooltip,
   TooltipProps,
-  Avatar,
+  Skeleton,
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useEnsAvatar, useEnsLookup } from 'wagmi'
+import { useRouter } from 'next/router'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 
 export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
-  const { headerIsSticky, ensAccount } = useProfileContext()
-  const { data, loading } = ensAccount
+  const router = useRouter()
+  const address = router.query.profile as string
 
-  const [{ data: userName }] = useEnsLookup({
-    address: data?.address,
-    // address: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+  const { headerIsSticky } = useProfileContext()
+
+  const [{ data: userName, loading: nameLoading }] = useEnsLookup({
+    address: address as string,
+  })
+  const [{ data: avatar, loading: loadingAvatar }] = useEnsAvatar({
+    addressOrName: address,
   })
 
-  const [{ data: userAvatar }] = useEnsAvatar({
-    addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
-  })
-
-  const ethAddress = data?.address
-
-  const { hasCopied, onCopy } = useClipboard(ethAddress || '')
+  const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -48,7 +49,7 @@ export const UserDetails = (props: UserDetailsProps) => {
     py: 2,
   }
 
-  if (loading) return null
+  if (loadingAvatar) return <LoadingProfile hide={hide} />
   return (
     <>
       <Flex align="center" justify="space-between" w="full" px="6">
@@ -61,25 +62,27 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          <Avatar
+          <DisplayAvatar
             mt="-64px"
             boxSize="32"
             overflow="hidden"
             borderWidth={2}
             borderColor="white"
+            rounded="full"
             justifySelf="center"
-            src={userAvatar as string}
-            name={userName as string}
             {...(isSticky && { mt: 0, boxSize: 12 })}
+            avatar={avatar}
           />
 
-          <chakra.span
-            fontSize={isSticky ? '2xl' : '3xl'}
-            fontWeight="semibold"
-            letterSpacing="tighter"
-          >
-            {userName || 'Unnamed'}
-          </chakra.span>
+          <Skeleton isLoaded={!nameLoading}>
+            <chakra.span
+              fontSize={isSticky ? '2xl' : '3xl'}
+              fontWeight="semibold"
+              letterSpacing="tighter"
+            >
+              {userName || 'Unnamed'}
+            </chakra.span>
+          </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
           <ButtonGroup isAttached variant="outline" ml="auto" my="6">
@@ -121,7 +124,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
             >
               <Text w="24" isTruncated>
-                {ethAddress}
+                {address}
               </Text>
             </Button>
           </Flex>

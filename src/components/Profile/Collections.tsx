@@ -19,14 +19,12 @@ import React from 'react'
 import { BsArrowDownLeft, BsArrowUpRight } from 'react-icons/bs'
 import { FaPaintRoller } from 'react-icons/fa'
 import { TiDocumentAdd } from 'react-icons/ti'
-import { RiHeartLine, RiMenuLine, RiTimer2Line } from 'react-icons/ri'
+import { RiMenuLine } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 
 const SECTIONS = [
-  { label: 'Collected', icon: TiDocumentAdd, count: 22, component: Collected },
-  { label: 'Created', icon: FaPaintRoller, count: 0 },
-  { label: 'Favorited', icon: RiHeartLine, count: 6 },
-  { label: 'Activity', icon: RiTimer2Line },
+  { label: 'Wikis', icon: TiDocumentAdd, count: 22, component: Collected },
+  { label: 'NFTs', icon: FaPaintRoller, count: 0 },
 ]
 
 export const Collections = () => (
