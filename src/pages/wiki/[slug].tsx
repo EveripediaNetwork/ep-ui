@@ -24,13 +24,22 @@ const Wiki = () => {
     skip: router.isFallback,
   })
   const { isLoading, error, data: wiki } = result
+  const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
 
+  // here toc is not state variable since there seems to be some issue
+  // with in react-markdown that is causing infinite loop if toc is state variable
+  // (so using useEffect to update toc length for now)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const toc: {
     level: number
     id: string
     title: string
   }[] = []
+  React.useEffect(() => {
+    setIsTocEmpty(toc.length === 0)
+  }, [toc])
 
+  // listen to changes in toc variable and update the length of the toc
   /* eslint-disable react/prop-types */
   const addToTOC = ({
     children,
@@ -75,7 +84,7 @@ const Wiki = () => {
             <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
             <WikiInsights wiki={wiki} />
           </Flex>
-          <WikiTableOfContents toc={toc} />
+          {!isTocEmpty && <WikiTableOfContents toc={toc} />}
         </HStack>
       )}
     </main>
