@@ -32,9 +32,13 @@ export const RelatedWikiCard = ({
       align="start"
     >
       <Image
-        src={`https://picsum.photos/seed/${title}/400/400`}
+        src={`https://picsum.photos/seed/${Buffer.from(
+          title || 'sample',
+          'base64',
+        )}/400/400`}
         h="80px"
         w="80px"
+        bgColor="dimColor"
         flexShrink={0}
         borderRadius={4}
         overflow="hidden"

@@ -36,7 +36,10 @@ export const TitleAndImage = ({
         {title}
       </Heading>
       <Image
-        src={`https://picsum.photos/seed/${title}/400/400`}
+        src={`https://picsum.photos/seed/${Buffer.from(
+          title || 'sample',
+          'base64',
+        )}/400/400`}
         w="100%"
         h="320px"
       />
