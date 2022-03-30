@@ -18,6 +18,7 @@ import {
   AlertDescription,
   CloseButton,
   Center,
+  useToast,
 } from '@chakra-ui/react'
 import { useAccount, useSignTypedData } from 'wagmi'
 import {
@@ -97,10 +98,10 @@ const CreateWiki = () => {
     description: '',
     opened: false,
   })
-
   const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
     {},
   )
+  const toast = useToast()
 
   const saveImage = async () => {
     const formData = new FormData()
@@ -194,7 +195,11 @@ const CreateWiki = () => {
     const getSignedTxHash = async () => {
       if (data && wikiHash && accountData) {
         if (error) {
-          // TODO: show in the UI a msg
+          toast({
+            title: 'Error signing data',
+            status: 'error',
+            duration: 2000,
+          })
           console.error(error)
           return
         }
