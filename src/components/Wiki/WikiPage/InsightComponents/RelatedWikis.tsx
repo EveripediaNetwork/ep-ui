@@ -46,13 +46,13 @@ export const RelatedWikiCard = ({
       <Box>
         <NextLink href={`/wiki/${id}`} passHref>
           <LinkOverlay>
-            <Text fontSize="18px" fontWeight="500">
+            <Text fontSize="16px" fontWeight="500">
               {title}
             </Text>
           </LinkOverlay>
         </NextLink>
-        <Text fontSize="14px">
-          {brief.length > 50 ? brief.slice(0, 50).concat('...') : brief}
+        <Text fontSize="13px" mt={0.5} wordBreak="break-word">
+          {brief.length > 40 ? brief.slice(0, 40).concat('...') : brief}
         </Text>
       </Box>
     </HStack>
@@ -78,7 +78,7 @@ export const RelatedWikis = ({
   }, [categories])
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
-      <WikiAccordion title="Related Articles">
+      <WikiAccordion mt="-3px" title="Related Articles">
         <VStack align="start">
           {wikis.slice(0, 4).map(wiki => (
             <RelatedWikiCard

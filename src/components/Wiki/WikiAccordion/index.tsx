@@ -42,7 +42,7 @@ const WikiAccordion = ({
         </Text>
       </HStack>
       {!isOpen && (
-        <Box p={2} {...rest}>
+        <Box p={2} mt={1} {...rest}>
           {children}
         </Box>
       )}
