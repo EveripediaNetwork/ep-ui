@@ -42,12 +42,7 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
-import {
-  ImageContext,
-  ImageKey,
-  ImageProvider,
-  ImageStateType,
-} from '@/context/image.context'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { useSelector } from 'react-redux'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {

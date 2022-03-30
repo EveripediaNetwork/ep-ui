@@ -17,8 +17,8 @@ import { store } from '@/store/store'
 import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
-import chakraTheme from '../theme'
 import { ImageProvider } from '@/context/image.context'
+import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
   Component: AppProps['Component'] & { noFooter?: boolean }
