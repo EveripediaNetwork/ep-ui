@@ -51,6 +51,8 @@ const NavMenu = ({
       </MenuButton>
       {navItem.subItem && (
         <MenuList
+          display="flex"
+          flexDirection="column"
           bg="subMenuBg"
           onMouseEnter={() => setVisibleMenu(navItem.id)}
           mt={-1}
