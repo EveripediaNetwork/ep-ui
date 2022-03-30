@@ -5,3 +5,8 @@
 html {
   scroll-behavior: smooth;
 }
+#bp_container > .bp-x {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}

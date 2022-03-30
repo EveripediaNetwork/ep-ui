@@ -85,3 +85,35 @@ export const sampleProfileSummary: WikiInsights[] = [
     ],
   },
 ]
+export const sampleRelatedMedia: any = [
+  {
+    type: 'image',
+    link: 'https://picsum.photos/seed/first-sample-image/1600/1600',
+    caption: 'First sample image',
+  },
+  {
+    type: 'image',
+    link: 'https://picsum.photos/seed/second-sample-image/1400/1580',
+    caption: 'Second sample image',
+  },
+  {
+    type: 'youtube',
+    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    caption: 'Youtube video',
+  },
+  {
+    type: 'image',
+    link: 'https://picsum.photos/seed/third-sample-image/1600/1600',
+    caption: 'Third sample image',
+  },
+  {
+    type: 'image',
+    link: 'https://picsum.photos/seed/fourth-sample-image/1600/1600',
+    caption: 'Fourth sample image',
+  },
+  {
+    type: 'image',
+    link: 'https://picsum.photos/seed/fifth-sample-image/1600/1600',
+    caption: 'Fifth sample image',
+  },
+]
