@@ -3,8 +3,9 @@ import { Box, Button, Flex } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-
 import buffer from 'buffer'
+
+import config from '@/config'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
@@ -48,8 +49,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   })
 
   useEffect(() => {
-    if (initialImage)
-      setPaths([`https://ipfs.everipedia.org/ipfs/${initialImage}`])
+    if (initialImage) setPaths([`${config.pinataBaseUrl}${initialImage}`])
   }, [initialImage])
 
   return (

@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  memo,
+  useCallback,
+} from 'react'
 import dynamic from 'next/dynamic'
 import {
   Grid,
@@ -20,7 +26,7 @@ import {
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
-import { store } from '@/store/store'
+import { RootState, store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import slugify from 'slugify'
@@ -34,14 +40,19 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
-import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
+import {
+  ImageContext,
+  ImageKey,
+  ImageProvider,
+  ImageStateType,
+} from '@/context/image.context'
+import { useSelector } from 'react-redux'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
-`
+const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
 
 const deadline = getDeadline()
 
@@ -76,6 +87,10 @@ const CreateWiki = () => {
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
+  const currentPageType = useSelector(
+    (state: RootState) =>
+      state.wiki.metadata.filter(m => m.id === 'page-type')[0],
+  )
   const { isLoading: isLoadingWiki, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
@@ -160,13 +175,15 @@ const CreateWiki = () => {
     if (val) setMd(val)
   }
 
-  useEffect(() => {
-    if (wiki) {
-      const meta = getWikiMetadataById(wiki, 'page-type')
-      const pageType = PageTemplate.find(p => p.type === meta?.value)
+  const updatePageTypeTemplate = useCallback(() => {
+    const meta = getWikiMetadataById(wiki, 'page-type')
+    const pageType = PageTemplate.find(p => p.type === meta?.value)
 
-      setMd(String(pageType?.templateText))
-    }
+    setMd(String(pageType?.templateText))
+  }, [currentPageType])
+
+  useEffect(() => {
+    if (wiki) updatePageTypeTemplate()
   }, [wiki])
 
   useEffect(() => {
@@ -218,97 +235,101 @@ const CreateWiki = () => {
   }, [wikiData])
 
   return (
-    <Grid
-      templateColumns="repeat(3, 1fr)"
-      templateRows="repeat(3, 1fr)"
-      gap={4}
-      h={['1350px', '1450px', '1450px', '1100px']}
-      my="15px"
-    >
-      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
-        <Editor
-          markdown={md || ''}
-          initialValue={initialEditorValue}
-          onChange={handleOnEditorChanges}
-        />
-      </GridItem>
-      <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
-        <Center>
-          <Highlights initialImage={ipfsHash} />
-        </Center>
-      </GridItem>
-      <GridItem mt="3" rowSpan={1} colSpan={3}>
-        <Flex direction="column" justifyContent="center" alignItems="center">
-          {txError.opened && (
-            <Alert status="error" maxW="md" mb="3">
-              <AlertIcon />
-              <AlertTitle>{txError.title}</AlertTitle>
-              <AlertDescription>{txError.description}</AlertDescription>
-              <CloseButton
-                onClick={() =>
-                  setTxError({
-                    title: '',
-                    description: '',
-                    opened: false,
-                  })
-                }
-                position="absolute"
-                right="5px"
-              />
-            </Alert>
-          )}
-          <Button
-            isLoading={submittingWiki}
-            loadingText="Loading"
-            disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
-          >
-            Publish Wiki
-          </Button>
-        </Flex>
-      </GridItem>
-      <Modal
-        title="Transaction details"
-        enableBottomCloseButton
-        isOpen={openTxDetailsDialog}
-        onClose={() => setOpenTxDetailsDialog(false)}
-        isCentered
-        SecondaryButton={
-          <Button
-            onClick={() =>
-              window.open(`${config.blockExplorerUrl}tx/${txHash}`)
-            }
-            variant="outline"
-          >
-            View in Block Explorer
-          </Button>
-        }
+    <ImageProvider>
+      <Grid
+        templateColumns="repeat(3, 1fr)"
+        templateRows="repeat(3, 1fr)"
+        gap={4}
+        h={['1350px', '1450px', '1450px', '1100px']}
+        my="15px"
       >
-        <Text align="center">
-          The wiki was successfully posted on the Polygon blockchain!
-        </Text>
-        <Center mt="4">
-          <Button
-            as="a"
-            href={`${config.pinataBaseUrl}${wikiHash}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            size="sm"
-            variant="outline"
-          >
-            View in IPFS
-          </Button>
-          <Button
-            size="sm"
-            ml="3"
-            variant="link"
-            onClick={() => router.push({ pathname: `/wiki/${getWikiSlug()}` })}
-          >
-            View
-          </Button>
-        </Center>
-      </Modal>
-    </Grid>
+        <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
+          <Editor
+            markdown={md || ''}
+            initialValue={initialEditorValue}
+            onChange={handleOnEditorChanges}
+          />
+        </GridItem>
+        <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
+          <Center>
+            <Highlights initialImage={ipfsHash} />
+          </Center>
+        </GridItem>
+        <GridItem mt="3" rowSpan={1} colSpan={3}>
+          <Flex direction="column" justifyContent="center" alignItems="center">
+            {txError.opened && (
+              <Alert status="error" maxW="md" mb="3">
+                <AlertIcon />
+                <AlertTitle>{txError.title}</AlertTitle>
+                <AlertDescription>{txError.description}</AlertDescription>
+                <CloseButton
+                  onClick={() =>
+                    setTxError({
+                      title: '',
+                      description: '',
+                      opened: false,
+                    })
+                  }
+                  position="absolute"
+                  right="5px"
+                />
+              </Alert>
+            )}
+            <Button
+              isLoading={submittingWiki}
+              loadingText="Loading"
+              disabled={disableSaveButton()}
+              onClick={saveOnIpfs}
+            >
+              Publish Wiki
+            </Button>
+          </Flex>
+        </GridItem>
+        <Modal
+          title="Transaction details"
+          enableBottomCloseButton
+          isOpen={openTxDetailsDialog}
+          onClose={() => setOpenTxDetailsDialog(false)}
+          isCentered
+          SecondaryButton={
+            <Button
+              onClick={() =>
+                window.open(`${config.blockExplorerUrl}tx/${txHash}`)
+              }
+              variant="outline"
+            >
+              View in Block Explorer
+            </Button>
+          }
+        >
+          <Text align="center">
+            The wiki was successfully posted on the Polygon blockchain!
+          </Text>
+          <Center mt="4">
+            <Button
+              as="a"
+              href={`${config.pinataBaseUrl}${wikiHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+              variant="outline"
+            >
+              View in IPFS
+            </Button>
+            <Button
+              size="sm"
+              ml="3"
+              variant="link"
+              onClick={() =>
+                router.push({ pathname: `/wiki/${getWikiSlug()}` })
+              }
+            >
+              View
+            </Button>
+          </Center>
+        </Modal>
+      </Grid>
+    </ImageProvider>
   )
 }
 
@@ -323,4 +344,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default CreateWiki
+export default memo(CreateWiki)

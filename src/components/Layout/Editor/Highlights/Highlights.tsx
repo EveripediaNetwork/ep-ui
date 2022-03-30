@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useContext, useState, memo } from 'react'
 import {
   Flex,
   Text,
@@ -148,4 +148,4 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   )
 }
 
-export default Highlights
+export default memo(Highlights)
