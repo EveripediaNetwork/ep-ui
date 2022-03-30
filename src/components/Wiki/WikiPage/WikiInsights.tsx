@@ -5,12 +5,12 @@ import { TitleAndImage } from './InsightComponents/TitleAndImage'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 
 interface WikiInsightsProps {
-  wiki: Wiki | undefined
+  wiki: Wiki
 }
 
 const WikiInsights = ({ wiki }: WikiInsightsProps) => (
   <VStack p={4} spacing={4} pt={24}>
-    <TitleAndImage title={wiki?.title} />
+    <TitleAndImage wiki={wiki} />
     <RelatedWikis categories={wiki?.categories} />
   </VStack>
 )

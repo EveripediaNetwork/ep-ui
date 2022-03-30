@@ -12,11 +12,11 @@ import {
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
-import { Image } from '../Elements/Image/Image'
+import { WikiImage } from '@/components/WikiImage'
+import { WikiTitle } from '@/services/nav-search'
 
 interface ActivityCardProps {
   id: string
-  wikiImg: string
   title: string
   brief: string
   editor: string
@@ -24,6 +24,7 @@ interface ActivityCardProps {
   isFirstEdit: boolean
   percentChanged: number
   lastModTimeStamp: string
+  wiki: WikiTitle
 }
 
 function timeSince(timeStamp: string) {
@@ -66,7 +67,6 @@ function timeReminding(timeStamp: string) {
 
 const ActivityCard = ({
   id,
-  wikiImg,
   title,
   brief,
   editor,
@@ -74,6 +74,7 @@ const ActivityCard = ({
   percentChanged,
   isFirstEdit,
   lastModTimeStamp,
+  wiki,
 }: ActivityCardProps) => {
   const [timeModified, setTimeModified] = useState<string | null>()
   const [voteTimeReminding, setVoteTimeReminding] = useState<string | null>()
@@ -136,11 +137,10 @@ const ActivityCard = ({
     >
       <HStack maxW="70%">
         <NextLink href={`/wiki/${id}`} passHref>
-          <Image
+          <WikiImage
             cursor="pointer"
             flexShrink={0}
-            src={wikiImg}
-            alt="wikiImg"
+            wiki={wiki}
             h={{ base: 65, lg: 100 }}
             w={{ base: 65, lg: 100 }}
             borderRadius="lg"

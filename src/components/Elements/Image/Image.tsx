@@ -8,6 +8,8 @@ export const Image = ({
   src,
   alt,
   priority,
+  placeholder,
+  blurDataURL,
   ...rest
 }: NextChakraImageProps) => (
   <Box {...rest} position="relative">
@@ -17,6 +19,8 @@ export const Image = ({
       src={src}
       alt={alt}
       priority={priority}
+      placeholder={placeholder}
+      blurDataURL={blurDataURL}
     />
   </Box>
 )

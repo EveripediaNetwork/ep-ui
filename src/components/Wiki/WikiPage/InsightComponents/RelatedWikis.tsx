@@ -11,48 +11,44 @@ import {
 import Accordion from '@/components/Elements/Accordion/Accordion'
 import { getWikisByCategory } from '@/services/wikis'
 import { store } from '@/store/store'
-import { Image } from '@/components/Elements/Image/Image'
 import NextLink from 'next/link'
+import { WikiTitle } from '@/services/nav-search'
+import { WikiImage } from '@/components/WikiImage'
 
-export const RelatedWikiCard = ({
-  id,
-  title,
-  brief,
-}: {
-  id: string
-  title: string
-  brief: string
-}) => (
-  <LinkBox w="100%">
-    <HStack
-      _hover={{ bgColor: 'dimColor' }}
-      borderRadius={4}
-      p={3}
-      align="start"
-    >
-      <Image
-        src={`https://picsum.photos/seed/${title}/400/400`}
-        h="80px"
-        w="80px"
-        flexShrink={0}
+export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
+  const { id, title, content: brief } = wiki
+  return (
+    <LinkBox w="100%">
+      <HStack
+        _hover={{ bgColor: 'dimColor' }}
         borderRadius={4}
-        overflow="hidden"
-      />
-      <Box>
-        <NextLink href={`/wiki/${id}`} passHref>
-          <LinkOverlay>
-            <Text fontSize="18px" fontWeight="500">
-              {title}
-            </Text>
-          </LinkOverlay>
-        </NextLink>
-        <Text fontSize="14px">
-          {brief.length > 50 ? brief.slice(0, 50).concat('...') : brief}
-        </Text>
-      </Box>
-    </HStack>
-  </LinkBox>
-)
+        p={3}
+        align="start"
+      >
+        <WikiImage
+          wiki={wiki}
+          h="80px"
+          w="80px"
+          flexShrink={0}
+          borderRadius={4}
+          overflow="hidden"
+        />
+        <Box>
+          <NextLink href={`/wiki/${id}`} passHref>
+            <LinkOverlay>
+              <Text fontSize="18px" fontWeight="500">
+                {title}
+              </Text>
+            </LinkOverlay>
+          </NextLink>
+          <Text fontSize="14px">
+            {brief.length > 50 ? brief.slice(0, 50).concat('...') : brief}
+          </Text>
+        </Box>
+      </HStack>
+    </LinkBox>
+  )
+}
 export const RelatedWikis = ({
   categories,
 }: {
@@ -76,12 +72,7 @@ export const RelatedWikis = ({
       <Accordion title="Related Articles">
         <VStack align="start">
           {wikis.slice(0, 4).map(wiki => (
-            <RelatedWikiCard
-              key={wiki.id}
-              id={wiki.id}
-              title={wiki.title}
-              brief={wiki.content}
-            />
+            <RelatedWikiCard key={wiki.id} wiki={wiki} />
           ))}
         </VStack>
       </Accordion>

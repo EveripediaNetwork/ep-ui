@@ -1,8 +1,10 @@
 import React from 'react'
 import { Heading, VStack } from '@chakra-ui/react'
-import { Image } from '@/components/Elements/Image/Image'
+import { WikiTitle } from '@/services/nav-search'
+import { WikiImage } from '@/components/WikiImage'
 
-export const TitleAndImage = ({ title }: { title: string | undefined }) => {
+export const TitleAndImage = ({ wiki }: { wiki: WikiTitle }) => {
+  const { title } = wiki
   return (
     <VStack minW="400px" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
@@ -17,11 +19,7 @@ export const TitleAndImage = ({ title }: { title: string | undefined }) => {
       >
         {title}
       </Heading>
-      <Image
-        src={`https://picsum.photos/seed/${title}/400/400`}
-        w="100%"
-        h="320px"
-      />
+      <WikiImage wiki={wiki} w="100%" h="320px" />
     </VStack>
   )
 }

@@ -63,7 +63,7 @@ const Wiki = () => {
         <HStack mt={-2} align="stretch" justify="stretch">
           <WikiActionBar />
           <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-          <WikiInsights wiki={wiki} />
+          {wiki && <WikiInsights wiki={wiki} />}
           <WikiTableOfContents toc={toc} />
         </HStack>
       )}
