@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -17,12 +17,16 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [instance] = useState(editorRef.current?.getInstance())
 
   const callEditorMethod = useCallback(() => {
-    const currentMarkdown = instance?.getMarkdown()
-    if (currentMarkdown !== markdown) instance?.setMarkdown(markdown)
-  }, [instance?.getMarkdown(), markdown])
+    const currentMarkdown = editorRef.current
+      ?.getInstance()
+      .getMarkdown()
+      .toString() as string
+
+    if (currentMarkdown !== markdown)
+      editorRef.current?.getInstance()?.setMarkdown(markdown)
+  }, [editorRef.current?.getInstance()?.getMarkdown(), markdown])
 
   useEffect(() => {
     callEditorMethod()
@@ -55,7 +59,7 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
       .getMarkdown()
       .toString() as string
     if (markdown !== currentMd) onChange(currentMd)
-  }, [instance?.getMarkdown(), markdown, onChange])
+  }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
 
   useEffect(() => {
     updateEditorHeaderBackground(colorMode)

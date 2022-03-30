@@ -49,7 +49,12 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   })
 
   useEffect(() => {
-    if (initialImage) setPaths([`${config.pinataBaseUrl}${initialImage}`])
+    console.log(config.pinataBaseUrl)
+    if (initialImage) {
+      const path = `${config.pinataBaseUrl}${initialImage}`
+
+      setPaths([path])
+    }
   }, [initialImage])
 
   return (

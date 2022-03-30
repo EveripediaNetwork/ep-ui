@@ -19,6 +19,7 @@ import {
   CloseButton,
   Center,
   useToast,
+  Skeleton,
 } from '@chakra-ui/react'
 import { useAccount, useSignTypedData } from 'wagmi'
 import {
@@ -240,27 +241,31 @@ const CreateWiki = () => {
   }, [wikiData])
 
   return (
-    <ImageProvider>
-      <Grid
-        templateColumns="repeat(3, 1fr)"
-        templateRows="repeat(3, 1fr)"
-        gap={4}
-        h={['1350px', '1450px', '1450px', '1100px']}
-        my="15px"
-      >
-        <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
+    <Grid
+      templateColumns="repeat(3, 1fr)"
+      templateRows="repeat(3, 1fr)"
+      gap={4}
+      h={['1350px', '1450px', '1450px', '1100px']}
+      my="15px"
+    >
+      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
           <Editor
             markdown={md || ''}
             initialValue={initialEditorValue}
             onChange={handleOnEditorChanges}
           />
-        </GridItem>
-        <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
+        </Skeleton>
+      </GridItem>
+      <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
           <Center>
             <Highlights initialImage={ipfsHash} />
           </Center>
-        </GridItem>
-        <GridItem mt="3" rowSpan={1} colSpan={3}>
+        </Skeleton>
+      </GridItem>
+      <GridItem mt="3" rowSpan={1} colSpan={3}>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
           <Flex direction="column" justifyContent="center" alignItems="center">
             {txError.opened && (
               <Alert status="error" maxW="md" mb="3">
@@ -289,52 +294,50 @@ const CreateWiki = () => {
               Publish Wiki
             </Button>
           </Flex>
-        </GridItem>
-        <Modal
-          title="Transaction details"
-          enableBottomCloseButton
-          isOpen={openTxDetailsDialog}
-          onClose={() => setOpenTxDetailsDialog(false)}
-          isCentered
-          SecondaryButton={
-            <Button
-              onClick={() =>
-                window.open(`${config.blockExplorerUrl}tx/${txHash}`)
-              }
-              variant="outline"
-            >
-              View in Block Explorer
-            </Button>
-          }
-        >
-          <Text align="center">
-            The wiki was successfully posted on the Polygon blockchain!
-          </Text>
-          <Center mt="4">
-            <Button
-              as="a"
-              href={`${config.pinataBaseUrl}${wikiHash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              size="sm"
-              variant="outline"
-            >
-              View in IPFS
-            </Button>
-            <Button
-              size="sm"
-              ml="3"
-              variant="link"
-              onClick={() =>
-                router.push({ pathname: `/wiki/${getWikiSlug()}` })
-              }
-            >
-              View
-            </Button>
-          </Center>
-        </Modal>
-      </Grid>
-    </ImageProvider>
+        </Skeleton>
+      </GridItem>
+      <Modal
+        title="Transaction details"
+        enableBottomCloseButton
+        isOpen={openTxDetailsDialog}
+        onClose={() => setOpenTxDetailsDialog(false)}
+        isCentered
+        SecondaryButton={
+          <Button
+            onClick={() =>
+              window.open(`${config.blockExplorerUrl}tx/${txHash}`)
+            }
+            variant="outline"
+          >
+            View in Block Explorer
+          </Button>
+        }
+      >
+        <Text align="center">
+          The wiki was successfully posted on the Polygon blockchain!
+        </Text>
+        <Center mt="4">
+          <Button
+            as="a"
+            href={`${config.pinataBaseUrl}${wikiHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="sm"
+            variant="outline"
+          >
+            View in IPFS
+          </Button>
+          <Button
+            size="sm"
+            ml="3"
+            variant="link"
+            onClick={() => router.push({ pathname: `/wiki/${getWikiSlug()}` })}
+          >
+            View
+          </Button>
+        </Center>
+      </Modal>
+    </Grid>
   )
 }
 

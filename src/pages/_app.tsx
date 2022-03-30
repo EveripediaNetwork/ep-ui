@@ -18,6 +18,7 @@ import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import chakraTheme from '../theme'
+import { ImageProvider } from '@/context/image.context'
 
 type EpAppProps = AppProps & {
   Component: AppProps['Component'] & { noFooter?: boolean }
@@ -39,7 +40,9 @@ const App = (props: EpAppProps) => {
           <Fonts />
           <Provider autoConnect connectors={connectors}>
             <Layout noFooter={Component.noFooter}>
-              <Component {...pageProps} />
+              <ImageProvider>
+                <Component {...pageProps} />
+              </ImageProvider>
             </Layout>
           </Provider>
         </ChakraProvider>
