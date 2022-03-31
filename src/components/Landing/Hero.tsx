@@ -1,13 +1,17 @@
 import React from 'react'
-import { Avatar, ButtonGroup, chakra, Flex, Image } from '@chakra-ui/react'
+import { Avatar, ButtonGroup, chakra, Flex } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { featuredArticle } from '@/data/FeaturesArticleData'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
+import { useEnsAvatar } from 'wagmi'
+import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
-  const { image, avatarImage } = featuredArticle
+  const [{ data: avatar}] = useEnsAvatar({
+    addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+  })
 
   return (
     <NextLink href={`/wiki/${wiki?.id}`} passHref>
@@ -23,17 +27,21 @@ const HeroCard = ({ wiki }: HeroProps) => {
         maxW={{ base: '90vw', md: '96', lg: 'xl' }}
         w="full"
       >
-        <Image
-          src={image}
-          alt={wiki?.title}
-          fit="cover"
-          bg="gray.100"
-          loading="lazy"
-          roundedTop="lg"
-          h={{ base: 80, lg: 'sm' }}
-        />
+        {wiki && (
+          <WikiImage
+            cursor="pointer"
+            flexShrink={0}
+            wiki={wiki}
+            h={{ base: '100%', lg: 400 }}
+            w={{ base: '100%', lg: '100%' }}
+            borderRadius="none"
+            overflow="hidden"
+          />
+        )}
         <Flex p="3" align="center" gap={4}>
-          <Avatar boxSize={10} src={avatarImage} />
+          <NextLink href={`/account/${wiki?.user?.id}`} passHref>
+            <Avatar boxSize={10} src={avatar || undefined} />
+          </NextLink>
           <Flex
             direction="column"
             justify="space-between"
