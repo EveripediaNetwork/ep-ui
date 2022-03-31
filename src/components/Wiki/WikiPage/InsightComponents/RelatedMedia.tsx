@@ -6,13 +6,23 @@ import WikiAccordion from '../../WikiAccordion'
 
 const RelatedMedia = () => {
   const getImageSrc = (type: string, link: string) => {
-    if (type === 'image') {
-      return link
+    let videoID = ''
+    let src = ''
+    switch (type) {
+      case 'youtube':
+        videoID = new URL(link).searchParams.get('v') || ''
+        src = `https://i3.ytimg.com/vi/${videoID}/maxresdefault.jpg`
+        break
+
+      case 'vimeo':
+        videoID = link.replace(/(https?:\/\/)?(www\.)?vimeo\.com\//, '')
+        src = `https://vumbnail.com/${videoID}.jpg`
+        break
+
+      default:
+        src = link
     }
-    if (type === 'youtube') {
-      return `https://i3.ytimg.com/vi/${link.split('=')[1]}/maxresdefault.jpg`
-    }
-    return link
+    return src
   }
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>

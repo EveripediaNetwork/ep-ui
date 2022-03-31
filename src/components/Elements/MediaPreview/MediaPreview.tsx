@@ -81,7 +81,7 @@ const MediaPreview = ({
         options.audio = src
         break
       case 'vimeo':
-        options.vimeoSrc = src.replace(/https\\:\/\/vimeo\.com\//, '')
+        options.vimeoSrc = src.replace(/(https?:\/\/)?(www\.)?vimeo\.com\//, '')
         break
       default:
         options.imgSrc = src

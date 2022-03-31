@@ -102,14 +102,14 @@ export const sampleRelatedMedia: RelatedMedia[] = [
     caption: 'Youtube video',
   },
   {
-    type: 'image',
-    link: 'https://picsum.photos/seed/third-sample-image/1600/1600',
-    caption: 'Third sample image',
+    type: 'vimeo',
+    link: 'https://vimeo.com/153481489',
+    caption: 'Vimeo video',
   },
   {
-    type: 'image',
-    link: 'https://picsum.photos/seed/fourth-sample-image/1600/1600',
-    caption: 'Fourth sample image',
+    type: 'vimeo',
+    link: 'https://vimeo.com/347119375',
+    caption: 'Vimeo video',
   },
   {
     type: 'image',
