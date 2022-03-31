@@ -31,8 +31,15 @@ export type WikiInsights =
       }>
     }
 
-export type RelatedMedia = {
-  type: 'image' | 'video' | 'youtube' | 'vimeo' | 'iframe' | 'audio'
-  link: string
-  caption?: string
-}
+export type RelatedMedia =
+  | {
+      type: 'image' | 'youtube' | 'vimeo' | 'iframe' | 'audio'
+      link: string
+      caption?: string
+    }
+  | {
+      type: 'video'
+      thumbnail: string
+      link: string
+      caption?: string
+    }

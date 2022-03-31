@@ -3,7 +3,7 @@ import React from 'react'
 // @ts-ignore
 import BigPicture from 'bigpicture'
 import { Box, BoxProps, Icon } from '@chakra-ui/react'
-import { RiPlayLine } from 'react-icons/ri'
+import { RiPlayLine, RiVolumeUpLine } from 'react-icons/ri'
 
 interface MediaPreviewTypes {
   type: 'image' | 'video' | 'youtube' | 'vimeo' | 'iframe' | 'audio'
@@ -57,7 +57,11 @@ const MediaPreview = ({
   ...rest
 }: MediaPreviewTypes & BoxProps) => {
   const elRef = React.useRef(null)
-  const isVideo = type === 'video' || type === 'youtube' || type === 'vimeo'
+  const isPlayable =
+    type === 'video' ||
+    type === 'youtube' ||
+    type === 'vimeo' ||
+    type === 'audio'
   const zoomHandle = () => {
     if (!elRef.current) return
     const options: BigPictureTypes = {
@@ -124,9 +128,9 @@ const MediaPreview = ({
       style={{ display: 'inline-block', ...style }}
       {...rest}
     >
-      {isVideo && (
+      {isPlayable && (
         <Icon
-          as={RiPlayLine}
+          as={type === 'audio' ? RiVolumeUpLine : RiPlayLine}
           fontSize="30px"
           position="absolute"
           top="50%"
@@ -135,6 +139,7 @@ const MediaPreview = ({
           color="white"
           bgColor="whiteAlpha.400"
           borderRadius="50%"
+          p={1}
           w={8}
           h={8}
         />

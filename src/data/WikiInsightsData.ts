@@ -107,13 +107,15 @@ export const sampleRelatedMedia: RelatedMedia[] = [
     caption: 'Vimeo video',
   },
   {
-    type: 'vimeo',
-    link: 'https://vimeo.com/347119375',
-    caption: 'Vimeo video',
+    type: 'video',
+    thumbnail:
+      'https://m.media-amazon.com/images/M/MV5BOTAzZGQyNWQtZTg4Yi00OTRhLTg3ZjktOTUzNDJjMmIwNjVhXkEyXkFqcGdeQXVyNTc0NjY1ODk@._V1_.jpg',
+    link: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    caption: 'Sample video',
   },
   {
-    type: 'image',
-    link: 'https://picsum.photos/seed/fifth-sample-image/1600/1600',
+    type: 'audio',
+    link: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     caption: 'Fifth sample image',
   },
 ]
