@@ -80,7 +80,7 @@ const Wiki = () => {
             justify="space-between"
             direction={{ base: 'column', md: 'row' }}
           >
-            <WikiActionBar />
+            <WikiActionBar wiki={wiki} />
             <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
             {wiki && <WikiInsights wiki={wiki} />}
           </Flex>

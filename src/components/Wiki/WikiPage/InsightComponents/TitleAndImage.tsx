@@ -47,7 +47,7 @@ export const TitleAndImage = ({
       >
         {title}
       </Heading>
-      <WikiImage bgColor="dimColor" wiki={wikiTitle} w="100%" h="320px" />
+      <WikiImage bgColor="dimColor" image={wiki.images?.[0]?.id} w="100%" h="320px" />
       <Table size="sm" variant="simple">
         <Tbody>
           {categories.length !== 0 && (

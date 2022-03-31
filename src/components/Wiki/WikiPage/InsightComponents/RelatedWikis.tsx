@@ -27,7 +27,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
         align="start"
       >
         <WikiImage
-          wiki={wiki}
+          image={wiki.images?.[0]?.id}
           h="80px"
           w="80px"
           flexShrink={0}

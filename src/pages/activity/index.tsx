@@ -46,8 +46,8 @@ const Activity = () => {
         </Heading>
         <Tabs>
           <TabList>
-            <Tab>Most Recent</Tab>
-            <Tab>Expiring Soon</Tab>
+            <Tab>New Wikis</Tab>
+            <Tab>Updated Wikis</Tab>
           </TabList>
           <TabPanels>
             {/* Most Recent Activity Section */}
