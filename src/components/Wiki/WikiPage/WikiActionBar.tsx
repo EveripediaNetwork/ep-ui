@@ -4,6 +4,7 @@ import { IconType } from 'react-icons'
 import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
 
 interface WikiActionBarProps {
   wiki: Wiki | undefined
@@ -11,19 +12,26 @@ interface WikiActionBarProps {
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   const router = useRouter()
+  const [{ data: accountData }] = useAccount()
   const actionBarItems: {
     label: string
     icon: IconType
+    isDisabled?: boolean
+    isActive?: boolean
     handleClick: () => void
   }[] = [
     {
       label: 'Read',
       icon: RiBookOpenFill,
+      isDisabled: !wiki,
+      isActive: router.asPath === `/wiki/${wiki?.id}`,
       handleClick: () => {},
     },
     {
       label: 'Edit',
       icon: RiEdit2Line,
+      isDisabled: accountData?.address === undefined,
+      isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
         router.push(`/create-wiki?slug=${wiki?.id}`)
       },
@@ -31,6 +39,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'History',
       icon: RiHistoryLine,
+      isDisabled: true,
       handleClick: () => {},
     },
   ]
@@ -51,10 +60,17 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       >
         {actionBarItems.map((item, index) => (
           <VStack
-            cursor="pointer"
-            color={item.label === 'Read' ? 'brand.600' : 'unset'}
+            cursor={item.isDisabled ? 'not-allowed' : 'pointer'}
+            color={
+              // eslint-disable-next-line no-nested-ternary
+              item.isActive
+                ? 'brand.600'
+                : item.isDisabled
+                ? 'gray.500'
+                : 'gray.700'
+            }
             key={index}
-            onClick={item.handleClick}
+            onClick={!item.isDisabled ? item.handleClick : undefined}
           >
             <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
             <Text fontSize={{ base: '12px', sm: '14px' }}>{item.label}</Text>
