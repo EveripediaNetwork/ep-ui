@@ -1,13 +1,7 @@
 import React from 'react'
 import { VStack, Icon, Text, Flex } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
-import {
-  RiBookOpenFill,
-  RiChat3Line,
-  RiEdit2Line,
-  RiHistoryLine,
-  RiLineChartLine,
-} from 'react-icons/ri'
+import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 
@@ -39,23 +33,13 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       icon: RiHistoryLine,
       handleClick: () => {},
     },
-    {
-      label: 'Discussion',
-      icon: RiChat3Line,
-      handleClick: () => {},
-    },
-    {
-      label: 'Activity',
-      icon: RiLineChartLine,
-      handleClick: () => {},
-    },
   ]
   return (
     <VStack
       borderRightWidth={{ base: 0, md: '1px' }}
       borderBottomWidth={{ base: '1px', md: '0' }}
-      px={3}
-      py={{ base: 4, md: '100px' }}
+      px={6}
+      py={{ base: 4, md: 'calc(50vh - 150px )' }}
       mt={{ base: 0, md: 0 }}
       borderColor="borderColor"
     >
@@ -63,7 +47,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         direction={{ base: 'row', md: 'column' }}
         gap={{ base: 6, sm: 8 }}
         position="sticky"
-        top="calc(100px + 70px + 2px)"
+        top="calc(50vh - 150px + 70px + 2px)"
       >
         {actionBarItems.map((item, index) => (
           <VStack
