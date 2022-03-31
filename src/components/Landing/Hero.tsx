@@ -1,7 +1,6 @@
 import React from 'react'
 import { Avatar, ButtonGroup, chakra, Flex } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
-import { featuredArticle } from '@/data/FeaturesArticleData'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
@@ -9,7 +8,7 @@ import { useEnsAvatar } from 'wagmi'
 import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
-  const [{ data: avatar}] = useEnsAvatar({
+  const [{ data: avatar }] = useEnsAvatar({
     addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
   })
 
