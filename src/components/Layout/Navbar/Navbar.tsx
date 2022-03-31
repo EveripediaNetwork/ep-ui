@@ -26,6 +26,8 @@ import { RootState } from '@/store/store'
 import networkMap from '@/utils/networkMap'
 import { updateNetworkProvider } from '@/store/slices/provider-slice'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
+import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
+import { ProviderDataType } from '@/types/ProviderDataType'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
@@ -87,9 +89,9 @@ const Navbar = () => {
     }
 
     const getDetectedProvider = async () => {
-      const provider: any = await detectEthereumProvider()
-      dispatch(updateNetworkProvider(provider))
-      getConnectedChain(provider)
+      const provider = await detectEthereumProvider()
+      dispatch(updateNetworkProvider(provider as ProviderDataType | null))
+      if (provider) getConnectedChain(provider)
     }
 
     if (!detectedProvider) {
@@ -141,7 +143,7 @@ const Navbar = () => {
         position="fixed"
         zIndex={1500}
         w="full"
-        h={isHamburgerOpen ? '100%' : 'unset'}
+        h={isHamburgerOpen ? '100%' : '20'}
         bg="subMenuBg"
         px={{ base: 4, md: 8 }}
         borderBottomWidth={1}
@@ -187,7 +189,7 @@ const Navbar = () => {
                     visibleMenu={visibleMenu}
                     label={
                       accountData ? (
-                        <DisplayAvatar accountData={accountData} />
+                        <DisplayAvatar avatar={accountData.ens?.avatar} />
                       ) : (
                         <Icon
                           cursor="pointer"
@@ -205,6 +207,7 @@ const Navbar = () => {
                       )
                     }
                   >
+                    <ProfileLink />
                     <ColorModeToggle isInMobileMenu={false} />
                   </NavMenu>
                 </Box>

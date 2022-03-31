@@ -9,7 +9,7 @@ import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 
 interface WikiInsightsProps {
-  wiki: Wiki | undefined
+  wiki: Wiki
 }
 
 const WikiInsights = ({ wiki }: WikiInsightsProps) => (
@@ -23,14 +23,16 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     pt={24}
   >
     <TitleAndImage
-      title={wiki?.title}
+      wikiTitle={wiki}
       categories={wiki?.categories}
       lastEdited={wiki?.updated || wiki?.created}
     />
     <ProfileSummary />
     <ProfileStatistics />
     <TwitterTimeline url="https://twitter.com/Everipedia" />
-    <RelatedWikis categories={wiki?.categories} />
+    {wiki.categories.length !== 0 && (
+      <RelatedWikis categories={wiki.categories} />
+    )}
     <RelatedMediaGrid />
   </VStack>
 )

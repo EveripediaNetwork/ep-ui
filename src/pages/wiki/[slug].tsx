@@ -82,7 +82,7 @@ const Wiki = () => {
           >
             <WikiActionBar />
             <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-            <WikiInsights wiki={wiki} />
+            {wiki && <WikiInsights wiki={wiki} />}
           </Flex>
           {!isTocEmpty && <WikiTableOfContents toc={toc} />}
         </HStack>

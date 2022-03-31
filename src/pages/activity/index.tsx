@@ -27,7 +27,6 @@ const Activity = () => {
     <ActivityCard
       id={activity.id}
       key={activity.id}
-      wikiImg={ActivityData[i].wikiImg}
       title={activity.title}
       brief={activity.content}
       editor={activity?.user?.id}
@@ -35,6 +34,7 @@ const Activity = () => {
       percentChanged={ActivityData[i].percentChanged}
       isFirstEdit={ActivityData[i].isFirstEdit}
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
+      wiki={activity}
     />
   )
 

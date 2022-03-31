@@ -9,7 +9,7 @@ export interface Tag {
 
 export interface Image {
   id: string
-  type: string | ArrayBuffer | null
+  type: ArrayBuffer | string
 }
 
 export interface MData {
@@ -78,7 +78,7 @@ export interface Wiki {
   content: string
   categories: BaseCategory[]
   tags: Tag[]
-  images: Image[]
+  images?: Image[]
   metadata: MData[]
   user?: User
   version: number

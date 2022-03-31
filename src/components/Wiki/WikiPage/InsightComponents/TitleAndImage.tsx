@@ -11,21 +11,23 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react'
-import { Image } from '@/components/Elements/Image/Image'
-import { BaseCategory } from '@/types/Wiki'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
+import { WikiImage } from '@/components/WikiImage'
+import { WikiTitle } from '@/services/nav-search'
+import { BaseCategory } from '@/types/Wiki'
 
 export const TitleAndImage = ({
-  title,
+  wikiTitle,
   categories,
   lastEdited,
 }: {
-  title: string | undefined
-  categories: BaseCategory[] | undefined
+  wikiTitle: WikiTitle
+  categories: BaseCategory[]
   lastEdited: string | undefined
 }) => {
+  const { title } = wikiTitle
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
@@ -40,32 +42,27 @@ export const TitleAndImage = ({
       >
         {title}
       </Heading>
-      <Image
-        src={`https://picsum.photos/seed/${Buffer.from(
-          title || 'sample',
-          'base64',
-        )}/400/400`}
-        w="100%"
-        h="320px"
-      />
+      <WikiImage bgColor="dimColor" wiki={wikiTitle} w="100%" h="320px" />
       <Table size="sm" variant="simple">
         <Tbody>
-          <Tr>
-            <Td py={0}>Categories</Td>
-            <Td py={0}>
-              <HStack marginLeft={-2} flexWrap="wrap" justify="start">
-                {categories?.map((category, i) => (
-                  <NextLink href={`/categories/${category.id}`} passHref>
-                    <Link m="3px !important" href="passRef">
-                      <Tag key={i} whiteSpace="nowrap">
-                        {category.id}
-                      </Tag>
-                    </Link>
-                  </NextLink>
-                ))}
-              </HStack>
-            </Td>
-          </Tr>
+          {categories.length !== 0 && (
+            <Tr>
+              <Td py={0}>Categories</Td>
+              <Td py={0}>
+                <HStack marginLeft={-2} flexWrap="wrap" justify="start">
+                  {categories?.map((category, i) => (
+                    <NextLink href={`/categories/${category.id}`} passHref>
+                      <Link m="3px !important" href="passRef">
+                        <Tag key={i} whiteSpace="nowrap">
+                          {category.id}
+                        </Tag>
+                      </Link>
+                    </NextLink>
+                  ))}
+                </HStack>
+              </Td>
+            </Tr>
+          )}
           <Tr>
             <Td>Last Edit</Td>
             <Td>

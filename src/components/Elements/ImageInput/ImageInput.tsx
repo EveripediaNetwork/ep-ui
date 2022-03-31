@@ -5,7 +5,7 @@ import buffer from 'buffer'
 
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
-  setImage: (name: string, f: string | ArrayBuffer | null) => void
+  setImage: (name: string, f: ArrayBuffer) => void
   deleteImage: () => void
 }
 

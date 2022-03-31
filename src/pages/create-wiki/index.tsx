@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  memo,
+  useCallback,
+} from 'react'
 import dynamic from 'next/dynamic'
 import {
   Grid,
@@ -12,71 +18,95 @@ import {
   AlertDescription,
   CloseButton,
   Center,
+  useToast,
+  Skeleton,
 } from '@chakra-ui/react'
 import { useAccount, useSignTypedData } from 'wagmi'
+import {
+  getRunningOperationPromises,
+  getWiki,
+  useGetWikiQuery,
+} from '@/services/wikis'
+import { useRouter } from 'next/router'
+import { RootState, store } from '@/store/store'
+import { GetServerSideProps } from 'next'
+import { skipToken } from '@reduxjs/toolkit/query'
 import slugify from 'slugify'
 import axios from 'axios'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
-import { useAppSelector } from '@/store/hook'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/constant/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
+import { submitVerifiableSignature } from '@/utils/postSignature'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
+import { useSelector } from 'react-redux'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
-`
+const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
 
 const deadline = getDeadline()
 
+const domain = {
+  name: 'EP',
+  version: '1',
+  chainId: config.chainId,
+  verifyingContract: config.wikiContractAddress,
+}
+
+const types = {
+  SignedPost: [
+    { name: 'ipfs', type: 'string' },
+    { name: 'user', type: 'address' },
+    { name: 'deadline', type: 'uint256' },
+  ],
+}
+
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+  const { slug } = router.query
+  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
+    skip: router.isFallback,
+  })
+  const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
+    useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const [triggerUpdate, setTriggerUpdate] = useState('')
+  const currentPageType = useSelector(
+    (state: RootState) =>
+      state.wiki.metadata.filter(m => m.id === 'page-type')[0],
+  )
+  const { isLoading: isLoadingWiki, data: wikiData } = result
   const [txError, setTxError] = useState({
     title: '',
     description: '',
     opened: false,
   })
-
-  const domain = {
-    name: 'EP',
-    version: '1',
-    chainId: config.chainId,
-    verifyingContract: config.wikiContractAddress,
-  }
-
-  const types = {
-    SignedPost: [
-      { name: 'ipfs', type: 'string' },
-      { name: 'user', type: 'address' },
-      { name: 'deadline', type: 'uint256' },
-    ],
-  }
-
   const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
     {},
   )
+  const toast = useToast()
 
   const saveImage = async () => {
     const formData = new FormData()
-    const blob = new Blob([wiki.images[0].type as ArrayBuffer], {
+    const blob = new Blob([image.type], {
       type: 'multipart/form-data',
     })
 
     formData.append('file', blob)
-    formData.append('name', wiki.images[0].id)
+    formData.append('name', image.id)
 
     const {
       data: { ipfs },
@@ -100,14 +130,21 @@ const CreateWiki = () => {
     })
   }
 
+  const getImageHash = async () => (isWikiBeingEdited ? ipfsHash : saveImage())
+
+  const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
+
   const saveOnIpfs = async () => {
     if (accountData) {
       setSubmittingWiki(true)
-      const imageHash = await saveImage()
+
+      const imageHash = await getImageHash()
 
       let tmp = { ...wiki }
 
-      tmp.id = slugify(String(wiki.title).toLowerCase())
+      // otherwise the wiki is being edited
+      if (tmp.id === '') tmp.id = getWikiSlug()
+
       tmp = {
         ...tmp,
         content: String(md),
@@ -128,22 +165,22 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    wiki.images.length === 0 ||
-    submittingWiki ||
-    !accountData?.address ||
-    signing
+    // wiki.images.length === 0 ||
+    submittingWiki || !accountData?.address || signing || isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
   }
 
-  useEffect(() => {
-    if (wiki) {
-      const meta = getWikiMetadataById(wiki, 'page-type')
-      const pageType = PageTemplate.find(p => p.type === meta?.value)
+  const updatePageTypeTemplate = useCallback(() => {
+    const meta = getWikiMetadataById(wiki, 'page-type')
+    const pageType = PageTemplate.find(p => p.type === meta?.value)
 
-      setTriggerUpdate(String(pageType?.templateText))
-    }
+    setMd(String(pageType?.templateText))
+  }, [currentPageType])
+
+  useEffect(() => {
+    if (wiki) updatePageTypeTemplate()
   }, [wiki])
 
   useEffect(() => {
@@ -151,36 +188,52 @@ const CreateWiki = () => {
   }, [])
 
   useEffect(() => {
-    async function signData(
-      signedData: string | undefined,
-      signingError: Error | undefined,
-    ) {
-      if (signingError) {
-        console.error(signingError)
-        return
-      }
+    const getSignedTxHash = async () => {
+      if (data && wikiHash && accountData) {
+        if (error) {
+          toast({
+            title: 'Error signing data',
+            status: 'error',
+            duration: 2000,
+          })
+          console.error(error)
+          return
+        }
 
-      if (signedData) {
-        const signature = signedData.substring(2)
-        const r = `0x${signature.substring(0, 64)}`
-        const s = `0x${signature.substring(64, 128)}`
-        const v = parseInt(signature.substring(128, 130), 16)
-
-        const relayerData = await axios.post(`${config.epApiBaseUrl}relayer`, {
-          ipfs: wikiHash,
-          userAddr: accountData?.address,
+        const { data: relayerData }: any = await submitVerifiableSignature(
+          data,
+          wikiHash,
+          accountData?.address,
           deadline,
-          v,
-          r,
-          s,
-        })
+        )
 
-        setTxHash(relayerData.data.hash)
-        setOpenTxDetailsDialog(true)
+        if (relayerData && relayerData.hash) {
+          setTxHash(relayerData.hash)
+          setOpenTxDetailsDialog(true)
+        }
       }
     }
-    signData(data, error)
+
+    getSignedTxHash()
   }, [data, error])
+
+  useEffect(() => {
+    if (wikiData && wikiData.content && wikiData.images) {
+      setMd(String(wikiData.content))
+
+      // update isWikiBeingEdited
+      updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
+      // update image hash
+      updateImageState(ImageKey.IPFS_HASH, String(wikiData.images[0].id))
+
+      const { id, title, content, tags, categories } = wikiData
+
+      dispatch({
+        type: 'wiki/setCurrentWiki',
+        payload: { id, title, content, tags, categories },
+      })
+    }
+  }, [wikiData])
 
   return (
     <Grid
@@ -191,46 +244,52 @@ const CreateWiki = () => {
       my="15px"
     >
       <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
-        <Editor
-          markdown={triggerUpdate}
-          initialValue={initialEditorValue}
-          onChange={handleOnEditorChanges}
-        />
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+          <Editor
+            markdown={md || ''}
+            initialValue={initialEditorValue}
+            onChange={handleOnEditorChanges}
+          />
+        </Skeleton>
       </GridItem>
       <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
-        <Center>
-          <Highlights />
-        </Center>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+          <Center>
+            <Highlights initialImage={ipfsHash} />
+          </Center>
+        </Skeleton>
       </GridItem>
       <GridItem mt="3" rowSpan={1} colSpan={3}>
-        <Flex direction="column" justifyContent="center" alignItems="center">
-          {txError.opened && (
-            <Alert status="error" maxW="md" mb="3">
-              <AlertIcon />
-              <AlertTitle>{txError.title}</AlertTitle>
-              <AlertDescription>{txError.description}</AlertDescription>
-              <CloseButton
-                onClick={() =>
-                  setTxError({
-                    title: '',
-                    description: '',
-                    opened: false,
-                  })
-                }
-                position="absolute"
-                right="5px"
-              />
-            </Alert>
-          )}
-          <Button
-            isLoading={submittingWiki}
-            loadingText="Loading"
-            disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
-          >
-            Publish Wiki
-          </Button>
-        </Flex>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+          <Flex direction="column" justifyContent="center" alignItems="center">
+            {txError.opened && (
+              <Alert status="error" maxW="md" mb="3">
+                <AlertIcon />
+                <AlertTitle>{txError.title}</AlertTitle>
+                <AlertDescription>{txError.description}</AlertDescription>
+                <CloseButton
+                  onClick={() =>
+                    setTxError({
+                      title: '',
+                      description: '',
+                      opened: false,
+                    })
+                  }
+                  position="absolute"
+                  right="5px"
+                />
+              </Alert>
+            )}
+            <Button
+              isLoading={submittingWiki}
+              loadingText="Loading"
+              disabled={disableSaveButton()}
+              onClick={saveOnIpfs}
+            >
+              Publish Wiki
+            </Button>
+          </Flex>
+        </Skeleton>
       </GridItem>
       <Modal
         title="Transaction details"
@@ -261,7 +320,15 @@ const CreateWiki = () => {
             size="sm"
             variant="outline"
           >
-            See in IPFS
+            View in IPFS
+          </Button>
+          <Button
+            size="sm"
+            ml="3"
+            variant="link"
+            onClick={() => router.push({ pathname: `/wiki/${getWikiSlug()}` })}
+          >
+            View
           </Button>
         </Center>
       </Modal>
@@ -269,4 +336,15 @@ const CreateWiki = () => {
   )
 }
 
-export default authenticatedRoute(CreateWiki)
+export const getServerSideProps: GetServerSideProps = async context => {
+  const slug = context.params?.slug
+  if (typeof slug === 'string') {
+    store.dispatch(getWiki.initiate(slug))
+  }
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
+}
+
+export default memo(CreateWiki)

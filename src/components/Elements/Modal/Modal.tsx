@@ -14,7 +14,7 @@ import {
 type ModalType = ModalProps & {
   title: string
   enableBottomCloseButton: boolean
-  SecondaryButton: ReactNode
+  SecondaryButton?: ReactNode
 }
 
 const Modal = ({
@@ -36,7 +36,7 @@ const Modal = ({
         {enableBottomCloseButton === true && (
           <Button onClick={onClose}>Close</Button>
         )}
-        {SecondaryButton}
+        {SecondaryButton || null}
       </ModalFooter>
     </ModalContent>
   </ChakraModal>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState, memo } from 'react'
 import {
   Flex,
   Text,
@@ -13,28 +13,35 @@ import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Content, Languages } from '@/types/Wiki'
+import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
+import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
 import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 
-const Highlights = () => {
+type HightLightsType = {
+  initialImage: string | undefined
+}
+
+const Highlights = ({ initialImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
   const dispatch = useAppDispatch()
 
-  const handleDispatch = (object: Partial<Content>) =>
+  const handleDispatch = (object: Partial<Wiki>) =>
     dispatch({
       type: 'wiki/setCurrentWiki',
       payload: object,
     })
 
-  const handleSetImage = (name: string, value: string | ArrayBuffer | null) =>
-    handleDispatch({
-      images: [{ id: name, type: value }],
-    })
+  const handleSetImage = (name: string, value: ArrayBuffer) => {
+    // update isWikiBeingEdited
+    updateImageState(ImageKey.IS_WIKI_BEING_EDITED, false)
+    updateImageState(ImageKey.IMAGE, { id: name, type: value })
+  }
 
   const handleDeleteImage = () => {
     handleDispatch({
@@ -46,6 +53,7 @@ const Highlights = () => {
     setImage: handleSetImage,
     setHideImageInput,
     deleteImage: handleDeleteImage,
+    initialImage,
   }
 
   return (
@@ -61,8 +69,9 @@ const Highlights = () => {
       <Flex justifyContent="center" alignItems="center" h="50px">
         <Input
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            handleDispatch({
-              title: event.target.value,
+            dispatch({
+              type: 'wiki/setCurrentWiki',
+              payload: { title: event.target.value },
             })
           }}
           value={currentWiki.title}
@@ -90,7 +99,9 @@ const Highlights = () => {
           <FlexRow>
             <RiFolder3Fill /> <Text>Page Type</Text>
           </FlexRow>
-          <Text>{getWikiMetadataById(currentWiki, 'page-type')?.value}</Text>
+          <Text>
+            {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
+          </Text>
         </FlexRowContainer>
         <FlexRowContainer>
           <FlexRow>
@@ -113,7 +124,7 @@ const Highlights = () => {
             justify="space-evenly"
             w="full"
           >
-            {currentWiki.categories.map((c: BaseCategory) => (
+            {currentWiki.categories?.map((c: BaseCategory) => (
               <Badge variant="outline" m="1">
                 {c.title}
               </Badge>
@@ -137,4 +148,4 @@ const Highlights = () => {
   )
 }
 
-export default Highlights
+export default memo(Highlights)

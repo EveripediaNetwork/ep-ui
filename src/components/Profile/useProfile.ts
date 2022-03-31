@@ -9,7 +9,6 @@ import {
 } from '@/components/Profile/utils'
 import { useBoolean } from '@chakra-ui/react'
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
 
 export const useProfile = (): ProfileContext => {
   const [headerRef, headerIsSticky] = useStickyElement()
@@ -24,10 +23,6 @@ export const useProfile = (): ProfileContext => {
     COLLECTIONS_DISPLAY_SIZES.LARGE,
   )
 
-  const [ensAccount] = useAccount({
-    fetchEns: true,
-  })
-
   return {
     headerRef,
     headerIsSticky: keepHeaderSticky,
@@ -38,6 +33,5 @@ export const useProfile = (): ProfileContext => {
     filterSidebarSize,
     displaySize,
     setDisplaySize,
-    ensAccount,
   }
 }

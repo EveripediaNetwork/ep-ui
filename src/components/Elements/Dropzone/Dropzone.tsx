@@ -1,24 +1,27 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-
 import buffer from 'buffer'
+
+import config from '@/config'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
   dropZoneActions: {
     setHideImageInput: (hide: boolean) => void
-    setImage: (name: string, f: string | ArrayBuffer | null) => void
+    setImage: (name: string, f: ArrayBuffer) => void
     deleteImage: () => void
+    initialImage: string | undefined
   }
 }
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
-  const [paths, setPaths] = useState([])
+  const [paths, setPaths] = useState<Array<string>>([])
   const [{ data: accountData }] = useAccount()
-  const { setHideImageInput, setImage, deleteImage } = dropZoneActions
+  const { setHideImageInput, setImage, deleteImage, initialImage } =
+    dropZoneActions
 
   const onDrop = useCallback(
     acceptedFiles => {
@@ -29,7 +32,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
         reader.onload = () => {
           const binaryStr = new buffer.Buffer(reader.result as Buffer)
-          setImage(f.name, binaryStr)
+          setImage(f.name, binaryStr as ArrayBuffer)
         }
 
         reader.readAsArrayBuffer(f)
@@ -44,6 +47,14 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     maxFiles: 1,
     accept: 'image/jpeg, image/png, image/jpg',
   })
+
+  useEffect(() => {
+    if (initialImage) {
+      const path = `${config.pinataBaseUrl}${initialImage}`
+
+      setPaths([path])
+    }
+  }, [initialImage])
 
   return (
     <Box>
@@ -76,6 +87,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           {paths.map(path => (
             <Image
               mx="auto"
+              priority
               w="350px"
               h="300px"
               key={path}

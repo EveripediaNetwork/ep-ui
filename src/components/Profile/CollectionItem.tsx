@@ -1,4 +1,3 @@
-import { Image } from '@/components/Elements/Image/Image'
 import {
   AspectRatio,
   chakra,
@@ -17,14 +16,10 @@ import NextLink from 'next/link'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { shortenText } from '@/utils/shortenText'
 import { Wiki } from '@/types/Wiki'
+import { WikiImage } from '@/components/WikiImage'
 
 export type CollectionItemProps = {
   item: Wiki
-}
-
-const COLLECTION = {
-  image:
-    'https://lh3.googleusercontent.com/rRFcgtEdcqEs9dPVJBdofZYu7jlyiO9tbN2S1wqTRnpEo9FUzEq0it_n6DLjxLTd_SWjD1chgImLw4tEvyVrpbRuVa_dfMgUU263=w316',
 }
 
 export const CollectionItem = (props: CollectionItemProps) => {
@@ -42,7 +37,7 @@ export const CollectionItem = (props: CollectionItemProps) => {
         _dark={{ bg: '#303339' }}
       >
         <AspectRatio maxW="full" ratio={1}>
-          <Image src={COLLECTION.image} w="full" />
+          <WikiImage wiki={item} w="full" />
         </AspectRatio>
         <Flex direction="column" px="3" fontSize="xs" py="2" mb="3">
           <Flex align="center">

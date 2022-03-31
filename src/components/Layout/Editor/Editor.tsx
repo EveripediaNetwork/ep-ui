@@ -19,8 +19,14 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const callEditorMethod = useCallback(() => {
-    editorRef.current?.getInstance().setMarkdown(markdown)
-  }, [editorRef, markdown])
+    const currentMarkdown = editorRef.current
+      ?.getInstance()
+      .getMarkdown()
+      .toString() as string
+
+    if (currentMarkdown !== markdown)
+      editorRef.current?.getInstance()?.setMarkdown(markdown)
+  }, [editorRef.current?.getInstance()?.getMarkdown(), markdown])
 
   useEffect(() => {
     callEditorMethod()
@@ -47,6 +53,14 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
     }
   }
 
+  const handleOnEditorChange = useCallback(() => {
+    const currentMd = editorRef.current
+      ?.getInstance()
+      .getMarkdown()
+      .toString() as string
+    if (markdown !== currentMd) onChange(currentMd)
+  }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
+
   useEffect(() => {
     updateEditorHeaderBackground(colorMode)
   }, [colorMode])
@@ -59,10 +73,7 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         initialValue={initialValue}
         ref={editorRef}
-        onChange={() => {
-          if (editorRef.current)
-            onChange(editorRef.current.getInstance().getMarkdown())
-        }}
+        onChange={handleOnEditorChange}
       />
     </Box>
   )
