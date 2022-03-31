@@ -49,7 +49,6 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   })
 
   useEffect(() => {
-    console.log(config.pinataBaseUrl)
     if (initialImage) {
       const path = `${config.pinataBaseUrl}${initialImage}`
 
