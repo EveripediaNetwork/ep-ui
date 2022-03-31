@@ -180,11 +180,14 @@ const CreateWiki = () => {
   }, [currentPageType])
 
   useEffect(() => {
-    if (wiki) updatePageTypeTemplate()
-  }, [wiki])
+    if (wiki && wikiData) {
+      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
+      if (currentPageType.value !== pageType) updatePageTypeTemplate()
+    }
+  }, [currentPageType])
 
   useEffect(() => {
-    setMd(initialEditorValue)
+    if (!wikiData) setMd(initialEditorValue)
   }, [])
 
   useEffect(() => {
@@ -218,20 +221,25 @@ const CreateWiki = () => {
   }, [data, error])
 
   useEffect(() => {
-    if (wikiData && wikiData.content && wikiData.images) {
-      setMd(String(wikiData.content))
-
+    if (
+      wikiData &&
+      wikiData.content.length > 0 &&
+      wikiData.images &&
+      wikiData.images.length > 0
+    ) {
       // update isWikiBeingEdited
       updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
       // update image hash
-      updateImageState(ImageKey.IPFS_HASH, String(wikiData.images[0].id))
+      updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, content, tags, categories } = wikiData
+      const { id, title, content, tags, categories, metadata } = wikiData
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { id, title, content, tags, categories },
+        payload: { id, title, content, tags, categories, metadata },
       })
+
+      setMd(String(wikiData.content))
     }
   }, [wikiData])
 
