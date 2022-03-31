@@ -17,15 +17,20 @@ import { SiIpfs } from 'react-icons/si'
 import { WikiImage } from '@/components/WikiImage'
 import { WikiTitle } from '@/services/nav-search'
 import { BaseCategory } from '@/types/Wiki'
+import CustomAvatar from 'boring-avatars'
 
 export const TitleAndImage = ({
   wikiTitle,
   categories,
   lastEdited,
+  ipfsHash,
+  lastEditor,
 }: {
   wikiTitle: WikiTitle
   categories: BaseCategory[]
   lastEdited: string | undefined
+  ipfsHash: string | undefined
+  lastEditor: string | undefined
 }) => {
   const { title } = wikiTitle
   return (
@@ -47,8 +52,8 @@ export const TitleAndImage = ({
         <Tbody>
           {categories.length !== 0 && (
             <Tr>
-              <Td py={0}>Categories</Td>
-              <Td py={0}>
+              <Td py={1}>Categories</Td>
+              <Td py={1}>
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {categories?.map((category, i) => (
                     <NextLink href={`/categories/${category.id}`} passHref>
@@ -85,13 +90,26 @@ export const TitleAndImage = ({
               <SiIpfs />
               <Link
                 target="_blank"
-                href="https://ipfs.everipedia.org/ipfs/QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh"
+                href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
                 color="blue.400"
               >
-                {shortenAccount(
-                  'QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh',
-                )}
+                {shortenAccount(ipfsHash || '')}
               </Link>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td whiteSpace="nowrap">latest Editor</Td>
+            <Td>
+              <HStack>
+                <CustomAvatar name={lastEditor} size={25} variant="beam" />
+                <Link
+                  target="_blank"
+                  href={`/user/${lastEditor}`}
+                  color="blue.400"
+                >
+                  {shortenAccount(lastEditor || '')}
+                </Link>
+              </HStack>
             </Td>
           </Tr>
         </Tbody>

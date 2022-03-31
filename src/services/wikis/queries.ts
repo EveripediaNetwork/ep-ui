@@ -4,6 +4,7 @@ export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {
       id
+      ipfs
       created
       title
       content
@@ -33,6 +34,7 @@ export const GET_WIKIS = gql`
   query GetWikis {
     wikis {
       id
+      ipfs
       content
       created
       title
@@ -62,6 +64,7 @@ export const GET_PROMOTED_WIKIS = gql`
   query GetPromotedWikis {
     promotedWikis {
       id
+      ipfs
       content
       created
       title
@@ -92,6 +95,7 @@ export const GET_USER_WIKIS_BY_ID = gql`
     userById(id: $id) {
       wikis {
         id
+        ipfs
         title
         created
         updated
@@ -123,6 +127,7 @@ export const GET_WIKIS_BY_CATEGORY = gql`
   query GetUserWikisByCategory($category: String!) {
     wikisByCategory(category: $category) {
       id
+      ipfs
       content
       created
       title

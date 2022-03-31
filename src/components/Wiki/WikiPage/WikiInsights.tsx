@@ -24,8 +24,10 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
   >
     <TitleAndImage
       wikiTitle={wiki}
-      categories={wiki?.categories}
-      lastEdited={wiki?.updated || wiki?.created}
+      categories={wiki.categories}
+      lastEdited={wiki.updated || wiki?.created}
+      ipfsHash={wiki.ipfs}
+      lastEditor={wiki.user?.id}
     />
     <ProfileSummary />
     <ProfileStatistics />
