@@ -25,12 +25,14 @@ export const TitleAndImage = ({
   lastEdited,
   ipfsHash,
   lastEditor,
+  imgSrc,
 }: {
   wikiTitle: WikiTitle
   categories: BaseCategory[]
   lastEdited: string | undefined
   ipfsHash: string | undefined
   lastEditor: string | undefined
+  imgSrc?: string
 }) => {
   const { title } = wikiTitle
   return (
@@ -47,7 +49,7 @@ export const TitleAndImage = ({
       >
         {title}
       </Heading>
-      <WikiImage bgColor="dimColor" image={wiki.images?.[0]?.id} w="100%" h="320px" />
+      <WikiImage bgColor="dimColor" image={imgSrc} w="100%" h="320px" />
       <Table size="sm" variant="simple">
         <Tbody>
           {categories.length !== 0 && (

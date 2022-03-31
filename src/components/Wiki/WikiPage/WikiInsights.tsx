@@ -28,6 +28,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
       lastEdited={wiki.updated || wiki?.created}
       ipfsHash={wiki.ipfs}
       lastEditor={wiki.user?.id}
+      imgSrc={wiki.images?.[0]?.id}
     />
     <ProfileSummary />
     <ProfileStatistics />
