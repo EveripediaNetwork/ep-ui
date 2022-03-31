@@ -30,3 +30,9 @@ export type WikiInsights =
         url: string
       }>
     }
+
+export type RelatedMedia = {
+  type: 'image' | 'video' | 'youtube' | 'vimeo' | 'iframe' | 'audio'
+  link: string
+  caption?: string
+}

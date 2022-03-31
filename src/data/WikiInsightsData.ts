@@ -1,4 +1,4 @@
-import { WikiInsights } from '@/types/WikiInsightsDataType'
+import { RelatedMedia, WikiInsights } from '@/types/WikiInsightsDataType'
 
 export const sampleProfileStatistics: WikiInsights[] = [
   {
@@ -85,7 +85,7 @@ export const sampleProfileSummary: WikiInsights[] = [
     ],
   },
 ]
-export const sampleRelatedMedia: any = [
+export const sampleRelatedMedia: RelatedMedia[] = [
   {
     type: 'image',
     link: 'https://picsum.photos/seed/first-sample-image/1600/1600',

@@ -5,22 +5,20 @@ import { sampleRelatedMedia } from '@/data/WikiInsightsData'
 import WikiAccordion from '../../WikiAccordion'
 
 const RelatedMedia = () => {
-  const getImageSrc = (media: any) => {
-    if (media.type === 'image') {
-      return media.link
+  const getImageSrc = (type: string, link: string) => {
+    if (type === 'image') {
+      return link
     }
-    if (media.type === 'youtube') {
-      return `https://i3.ytimg.com/vi/${
-        media.link.split('=')[1]
-      }/maxresdefault.jpg`
+    if (type === 'youtube') {
+      return `https://i3.ytimg.com/vi/${link.split('=')[1]}/maxresdefault.jpg`
     }
-    return media.link
+    return link
   }
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <WikiAccordion title="Media">
         <SimpleGrid columns={3} spacing={5}>
-          {sampleRelatedMedia.map((media: any) => (
+          {sampleRelatedMedia.map(media => (
             <AspectRatio ratio={1}>
               <MediaPreview
                 type={media.type}
@@ -32,7 +30,7 @@ const RelatedMedia = () => {
                 overflow="hidden"
               >
                 <Image
-                  src={getImageSrc(media)}
+                  src={getImageSrc(media.type, media.link)}
                   h="100%"
                   w="100%"
                   objectFit="cover"
