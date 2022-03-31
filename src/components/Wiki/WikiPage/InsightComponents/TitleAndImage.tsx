@@ -2,15 +2,20 @@ import React from 'react'
 import {
   Heading,
   HStack,
+  Link,
   Table,
   Tag,
   Tbody,
   Td,
+  Text,
   Tr,
   VStack,
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { BaseCategory } from '@/types/Wiki'
+import NextLink from 'next/link'
+import shortenAccount from '@/utils/shortenAccount'
+import { SiIpfs } from 'react-icons/si'
 
 export const TitleAndImage = ({
   title,
@@ -50,9 +55,13 @@ export const TitleAndImage = ({
             <Td py={0}>
               <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                 {categories?.map((category, i) => (
-                  <Tag m="3px !important" key={i} whiteSpace="nowrap">
-                    {category.id}
-                  </Tag>
+                  <NextLink href={`/categories/${category.id}`} passHref>
+                    <Link m="3px !important" href="passRef">
+                      <Tag key={i} whiteSpace="nowrap">
+                        {category.id}
+                      </Tag>
+                    </Link>
+                  </NextLink>
                 ))}
               </HStack>
             </Td>
@@ -67,6 +76,25 @@ export const TitleAndImage = ({
                     day: 'numeric',
                   })
                 : '-'}
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>
+              <HStack spacing={3}>
+                <Text>IPFS</Text>
+              </HStack>
+            </Td>
+            <Td display="flex" align="center" gap={3}>
+              <SiIpfs />
+              <Link
+                target="_blank"
+                href="https://ipfs.everipedia.org/ipfs/QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh"
+                color="blue.400"
+              >
+                {shortenAccount(
+                  'QmXacPjgKBnpPgBsCdnavjqfndvfjnGG8UrQGt85r2XEXh',
+                )}
+              </Link>
             </Td>
           </Tr>
         </Tbody>

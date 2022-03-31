@@ -57,7 +57,7 @@ const RelatedMediaGrid = () => {
         </SimpleGrid>
       </WikiAccordion>
     </VStack>
-  ) /*  */
+  )
 }
 
 export default RelatedMediaGrid
