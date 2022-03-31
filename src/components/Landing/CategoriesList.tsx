@@ -3,7 +3,7 @@ import { LinkBox, LinkOverlay, Text, SimpleGrid } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
-import { Image } from '../Elements/Image/Image'
+import { WikiImage } from '@/components/WikiImage'
 
 const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
@@ -47,12 +47,8 @@ const CategoriesList = () => {
             overflow="hidden"
             shadow="base"
           >
-            <Image
-              bgColor="DimColor"
-              src={category.cardImage || '/'}
-              h="180px"
-              w="100%"
-            />
+            <WikiImage image={category.cardImage} noPinata h="180px" w="100%" />
+
             <NextLink href={`/categories/${category.id}`} passHref>
               <LinkOverlay>
                 <Text
