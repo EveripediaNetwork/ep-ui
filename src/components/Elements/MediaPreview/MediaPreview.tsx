@@ -112,7 +112,13 @@ const MediaPreview = ({
       options.noLoader = true
     }
 
-    BigPicture(options)
+    const bp = BigPicture(options)
+
+    // 16:9 ratio with height of window.innerHeight - 200px
+    const height = window.innerHeight - 200
+    const width = (height * 16) / 9
+    bp.opts.dimensions = [width, height]
+    bp.updateDimensions()
   }
 
   return (

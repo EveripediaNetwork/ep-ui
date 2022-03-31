@@ -42,6 +42,7 @@ const RelatedMediaGrid = () => {
                 w="100%"
                 h="100%"
                 overflow="hidden"
+                data-caption={media.caption}
               >
                 <Image
                   src={getImageSrc(media)}
