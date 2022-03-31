@@ -81,5 +81,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'gray.700',
     },
+    wikiActionBtnDisabled: {
+      default: 'gray.400',
+      _dark: 'gray.600',
+    },
   },
 }

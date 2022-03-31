@@ -66,8 +66,8 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
               item.isActive
                 ? 'brand.600'
                 : item.isDisabled
-                ? 'gray.500'
-                : 'gray.700'
+                ? 'wikiActionBtnDisabled'
+                : 'unset'
             }
             key={index}
             onClick={!item.isDisabled ? item.handleClick : undefined}
