@@ -140,7 +140,7 @@ const ActivityCard = ({
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            wiki={wiki}
+            image={wiki.images?.[0]?.id}
             h={{ base: 65, lg: 100 }}
             w={{ base: 65, lg: 100 }}
             borderRadius="lg"

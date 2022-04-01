@@ -37,18 +37,6 @@ export type PageType = {
   templateText: string
 }
 
-export interface Content {
-  id?: string
-  title: string
-  content: string
-  categories: BaseCategory[]
-  tags: Tag[]
-  images: Image[]
-  metadata: MData[]
-  user?: User
-  updated?: string
-}
-
 enum LanguagesValuesEnum {
   SPANISH = 'Español',
   ENGLISH = 'English',

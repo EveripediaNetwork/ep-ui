@@ -11,6 +11,9 @@ export type TempWikiActivity = {
   user: {
     id: string
   }
+  images?: {
+    id: string
+  }[]
 }
 
 type GetLatestActivitiesResponse = {

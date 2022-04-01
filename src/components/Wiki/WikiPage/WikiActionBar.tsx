@@ -1,13 +1,9 @@
 import React from 'react'
-import { VStack, Icon, Text } from '@chakra-ui/react'
+import { Icon, Text, VStack } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
-import {
-  RiBookOpenFill,
-  RiChat3Line,
-  RiEdit2Line,
-  RiHistoryLine,
-  RiLineChartLine,
-} from 'react-icons/ri'
+import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
+import { Wiki } from '@/types/Wiki'
+import { useRouter } from 'next/router'
 
 const actionBarItems: {
   label: string
@@ -29,32 +25,33 @@ const actionBarItems: {
     icon: RiHistoryLine,
     handleClick: () => {},
   },
-  {
-    label: 'Delete',
-    icon: RiChat3Line,
-    handleClick: () => {},
-  },
-  {
-    label: 'Activity',
-    icon: RiLineChartLine,
-    handleClick: () => {},
-  },
 ]
-const WikiActionBar = () => (
-  <VStack borderRightWidth="1px" px={6} py="100px" borderColor="borderColor">
-    <VStack spacing={8} position="sticky" top="calc(100px + 70px + 2px)">
-      {actionBarItems.map((item, index) => (
-        <VStack
-          cursor="pointer"
-          color={item.label === 'Read' ? 'brand.600' : 'unset'}
-          key={index}
-        >
-          <Icon fontSize="20px" as={item.icon} />
-          <Text fontSize="14px">{item.label}</Text>
-        </VStack>
-      ))}
+
+interface WikiActionBarProps {
+  wiki: Wiki | undefined
+}
+
+const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
+  const router = useRouter()
+  return (
+    <VStack borderRightWidth="1px" px={6} py="100px" borderColor="borderColor">
+      <VStack spacing={8} position="sticky" top="calc(100px + 70px + 2px)">
+        {actionBarItems.map((item, index) => (
+          <VStack
+            cursor="pointer"
+            color={item.label === 'Read' ? 'brand.600' : 'unset'}
+            key={index}
+            onClick={() => {
+              router.push(`/create-wiki?slug=${wiki?.id}`) // TODO: fix this for only edit button
+            }}
+          >
+            <Icon fontSize="20px" as={item.icon} />
+            <Text fontSize="14px">{item.label}</Text>
+          </VStack>
+        ))}
+      </VStack>
     </VStack>
-  </VStack>
-)
+  )
+}
 
 export default WikiActionBar

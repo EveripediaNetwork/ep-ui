@@ -125,7 +125,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
               >
                 <Box>
                   <WikiImage
-                    wiki={wiki}
+                    image={wiki.images?.[0]?.id}
                     boxSize="full"
                     objectFit="cover"
                     h="96"

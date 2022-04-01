@@ -1,14 +1,13 @@
 import React from 'react'
-import Image from 'next/image'
-import { Box, Center, Text, Stack } from '@chakra-ui/react'
+import { Box, Center, Stack, Text } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { shortenText } from '@/utils/shortenText'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
+import { WikiImage } from '@/components/WikiImage'
 
 const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
   const { updated, content, title, id } = wiki
-  const defaultWikiImage = '/images/sub-category-image.png'
   return (
     <Center py={6} cursor="pointer">
       <NextLink href={`/wiki/${id}`} passHref>
@@ -20,9 +19,12 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
           p={6}
           overflow="hidden"
         >
-          <Box h={200} mb={3} pos="relative">
-            <Image src={defaultWikiImage} layout="fill" />
-          </Box>
+          <WikiImage
+            h={200}
+            mb={3}
+            image={wiki.images?.[0]?.id}
+            layout="fill"
+          />
           <Stack spacing={3}>
             <Text fontSize="2xl" fontWeight="bold">
               {title}

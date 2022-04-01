@@ -37,7 +37,7 @@ export const CollectionItem = (props: CollectionItemProps) => {
         _dark={{ bg: '#303339' }}
       >
         <AspectRatio maxW="full" ratio={1}>
-          <WikiImage wiki={item} w="full" />
+          <WikiImage image={item.images?.[0]?.id} w="full" />
         </AspectRatio>
         <Flex direction="column" px="3" fontSize="xs" py="2" mb="3">
           <Flex align="center">
