@@ -19,7 +19,7 @@ export const TitleAndImage = ({ wiki }: { wiki: WikiTitle }) => {
       >
         {title}
       </Heading>
-      <WikiImage wiki={wiki} w="100%" h="320px" />
+      <WikiImage image={wiki.images?.[0]?.id} w="100%" h="320px" />
     </VStack>
   )
 }

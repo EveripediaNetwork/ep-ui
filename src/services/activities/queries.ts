@@ -9,6 +9,9 @@ export const GET_LATEST_ACTIVITIES = gql`
       user {
         id
       }
+      images {
+        id
+      }
     }
   }
 `

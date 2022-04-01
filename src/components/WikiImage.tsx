@@ -1,5 +1,4 @@
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
-import { WikiTitle } from '@/services/nav-search'
 import React from 'react'
 import config from '@/config'
 
@@ -11,12 +10,12 @@ const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <linearGradient id="g">
-      <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="70%" />
+      <stop stop-color="#F9D1F4" offset="20%" />
+      <stop stop-color="#F399E8" offset="50%" />
+      <stop stop-color="#F9D1F4" offset="70%" />
     </linearGradient>
   </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
+  <rect width="${w}" height="${h}" fill="#F9D1F4" />
   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
 </svg>`
@@ -26,14 +25,11 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString('base64')
     : window.btoa(str)
 
-export type WikiImageProps = Partial<NextChakraImageProps> & { wiki: WikiTitle }
+export type WikiImageProps = Partial<NextChakraImageProps> & { image?: string }
 
 export const WikiImage = (props: WikiImageProps) => {
-  const { wiki, ...rest } = props
-
-  const image = wiki.images?.[0]?.id
+  const { image, ...rest } = props
   const imageURL = `${config.pinataBaseUrl}${image}`
-
   const imgSrc = image ? imageURL : PLACEHOLDER_IMAGE
 
   return (

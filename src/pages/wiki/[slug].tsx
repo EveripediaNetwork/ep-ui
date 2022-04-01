@@ -61,7 +61,7 @@ const Wiki = () => {
         </Flex>
       ) : (
         <HStack mt={-2} align="stretch" justify="stretch">
-          <WikiActionBar />
+          <WikiActionBar wiki={wiki} />
           <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
           {wiki && <WikiInsights wiki={wiki} />}
           <WikiTableOfContents toc={toc} />
