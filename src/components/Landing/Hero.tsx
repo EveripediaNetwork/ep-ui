@@ -9,7 +9,7 @@ import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [{ data: avatar }] = useEnsAvatar({
-    addressOrName: '0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff',
+    addressOrName: wiki?.user?.id
   })
 
   return (
