@@ -50,7 +50,7 @@
     "ipfs-http-client": "55.0.0",
     "ismobilejs": "^1.1.1",
     "match-sorter": "^6.3.1",
-    "next": "^12.0.7",
+    "next": "^12.1.4",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^5.1.0",
     "react": "^17.0.2",
