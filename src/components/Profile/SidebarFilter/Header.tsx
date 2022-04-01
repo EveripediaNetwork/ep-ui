@@ -27,7 +27,7 @@ export const Header = () => {
         display="flex"
         justifyContent="center"
         w={filterSidebarIsOpen ? 'auto' : 'full'}
-        flexShrink="0"
+        flexShrink="unset"
       >
         <Icon
           as={FiArrowRight}
