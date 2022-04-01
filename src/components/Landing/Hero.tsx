@@ -9,7 +9,7 @@ import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [{ data: avatar }] = useEnsAvatar({
-    addressOrName: wiki?.user?.id
+    addressOrName: wiki?.user?.id,
   })
 
   return (
@@ -30,7 +30,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            wiki={wiki}
+            image={wiki.images?.[0]?.id}
             h={{ base: '100%', lg: 400 }}
             w={{ base: '100%', lg: '100%' }}
             borderRadius="none"
