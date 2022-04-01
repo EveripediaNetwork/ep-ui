@@ -1234,12 +1234,21 @@
     "@chakra-ui/icon" "2.0.5"
     "@chakra-ui/utils" "1.10.4"
 
-"@chakra-ui/color-mode@1.4.6", "@chakra-ui/color-mode@^1.4.6":
+"@chakra-ui/color-mode@1.4.6":
   version "1.4.6"
   resolved "https://registry.yarnpkg.com/@chakra-ui/color-mode/-/color-mode-1.4.6.tgz#6532086b0030934a5b18ba2b7117b8077b989064"
   integrity sha512-gCO8Z/jv68jXop94MUQNzigl7JXICAgZQUUqLaKhdy1h2zatVDIPFfjwwjnsgM97G0BxQaNBOC87+PD2UYjzHw==
   dependencies:
     "@chakra-ui/hooks" "1.8.5"
+    "@chakra-ui/react-env" "1.1.6"
+    "@chakra-ui/utils" "1.10.4"
+
+"@chakra-ui/color-mode@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/color-mode/-/color-mode-1.4.7.tgz#01ad9b83a97f18e1b314ad3541c52360aee53771"
+  integrity sha512-pl5lMhNnFVBpYzXrs3mjxJOE/qnb5NJC71sQaxk9uqUQUpM/oJ+kyE4eYKKSWNvs+qhFx9eZJvuP5DvSrtij3w==
+  dependencies:
+    "@chakra-ui/hooks" "1.9.0"
     "@chakra-ui/react-env" "1.1.6"
     "@chakra-ui/utils" "1.10.4"
 
@@ -1301,6 +1310,16 @@
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.8.5.tgz#db6dc4a7992c7d48cfec5cd796f6a1eb19143eb7"
   integrity sha512-/UrBfUG7NLxuU/09gy2qQfEH+H5SPBUaUiFtokRlq887D/32JQ3XksZdF78RKMCM/0bbZuIjqUkuN/wO9kAbSw==
+  dependencies:
+    "@chakra-ui/react-utils" "1.2.3"
+    "@chakra-ui/utils" "1.10.4"
+    compute-scroll-into-view "1.0.14"
+    copy-to-clipboard "3.3.1"
+
+"@chakra-ui/hooks@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.9.0.tgz#1fe049e69267d34083fa045b911b30ca1ca7d7dc"
+  integrity sha512-fvhsObVxfQzAGaT5Vc4siwzoUVxueSK81MCHlU4FifANJQ+u/6c8PZkn9WRM0+WzWJHMAcYvp0y+A46y7TftFQ==
   dependencies:
     "@chakra-ui/react-utils" "1.2.3"
     "@chakra-ui/utils" "1.10.4"
@@ -1710,10 +1729,10 @@
   dependencies:
     "@chakra-ui/utils" "1.10.4"
 
-"@choc-ui/chakra-autocomplete@^4.18.1":
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/@choc-ui/chakra-autocomplete/-/chakra-autocomplete-4.20.0.tgz#462dcc1991dd074e6a6ae2a561eed7a744d2c790"
-  integrity sha512-JEx4HDRkayKEhQ4m3eIGLvjINFigfSsMTL2JfUIYeuUj3g8qUbmcJ4Z9nzpslvuoGdePdUZq0greb2QDiHteKw==
+"@choc-ui/chakra-autocomplete@^4.20.1":
+  version "4.20.1"
+  resolved "https://registry.yarnpkg.com/@choc-ui/chakra-autocomplete/-/chakra-autocomplete-4.20.1.tgz#0fc59e894704da7a3da6bb0e26eea0b03faefcd4"
+  integrity sha512-8DdcPZP9SLQ8uBEZ2JdUDp3rTG4yOwk69O9XMzsI42tffnFsgrQ97oRqdg/yxA349g/hDrRUTVXGHq5Jfrnl/Q==
   dependencies:
     react-nanny "^2.9.0"
 
@@ -4982,13 +5001,13 @@ axobject-query@^2.2.0:
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-2.2.0.tgz#943d47e10c0b704aa42275e20edf3722648989be"
   integrity sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==
 
-babel-loader@^8.0.0, babel-loader@^8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.3.tgz#8986b40f1a64cacfcb4b8429320085ef68b1342d"
-  integrity sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==
+babel-loader@^8.0.0, babel-loader@^8.2.4:
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.4.tgz#95f5023c791b2e9e2ca6f67b0984f39c82ff384b"
+  integrity sha512-8dytA3gcvPPPv4Grjhnt8b5IIiTcq/zeXOPk4iTYI0SVXcsmuGg7JtBRDp8S9X+gJfhQ8ektjXZlDu1Bb33U8A==
   dependencies:
     find-cache-dir "^3.3.1"
-    loader-utils "^1.4.0"
+    loader-utils "^2.0.0"
     make-dir "^3.1.0"
     schema-utils "^2.6.5"
 
@@ -9751,7 +9770,7 @@ loader-utils@2.0.0:
     emojis-list "^3.0.0"
     json5 "^2.1.2"
 
-loader-utils@^1.2.3, loader-utils@^1.4.0:
+loader-utils@^1.2.3:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
   integrity sha512-qH0WSMBtn/oHuwjy/NucEgbx5dbxxnxup9s4PVXJUDHZBQY+s0NWA9rJf53RBnQZxfch7euUui7hpoAPvALZdA==
