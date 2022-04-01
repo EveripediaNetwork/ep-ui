@@ -29,7 +29,6 @@ import {
 } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
-import { Category } from '@/types/CategoryDataTypes'
 
 const HighlightsModal = ({
   onClose = () => {},
