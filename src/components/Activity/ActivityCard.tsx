@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   HStack,
   VStack,
@@ -14,6 +14,8 @@ import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { WikiTitle } from '@/services/nav-search'
+import TimeModified from './TimeModified'
+import VoteTimeRemaining from './VoteTimeRemaining'
 
 interface ActivityCardProps {
   id: string
@@ -27,44 +29,6 @@ interface ActivityCardProps {
   wiki: WikiTitle
 }
 
-function timeSince(timeStamp: string) {
-  const seconds = Math.floor(
-    (new Date().valueOf() - new Date(timeStamp).valueOf()) / 1000,
-  )
-  let interval = seconds / 31536000
-  if (interval > 1) {
-    return `${Math.floor(interval)} years`
-  }
-  interval = seconds / 2592000
-  if (interval > 1) {
-    return `${Math.floor(interval)} months`
-  }
-  interval = seconds / 86400
-  if (interval > 1) {
-    return `${Math.floor(interval)} days`
-  }
-  interval = seconds / 3600
-  if (interval > 1) {
-    return `${Math.floor(interval)} hours`
-  }
-  interval = seconds / 60
-  if (interval > 1) {
-    return `${Math.floor(interval)} minutes`
-  }
-  return `${Math.floor(seconds)} seconds`
-}
-
-function timeReminding(timeStamp: string) {
-  const seconds = Math.floor(
-    (new Date().valueOf() - new Date(timeStamp).valueOf()) / 1000,
-  )
-  const timeRemaining = 12 * 3600 - seconds
-  const hours = Math.floor(timeRemaining / 3600)
-  const minutes = Math.floor((timeRemaining - hours * 3600) / 60)
-  if (hours > 0) return `${hours}h ${minutes}m`
-  return `${minutes}m`
-}
-
 const ActivityCard = ({
   id,
   title,
@@ -76,12 +40,10 @@ const ActivityCard = ({
   lastModTimeStamp,
   wiki,
 }: ActivityCardProps) => {
-  const [timeModified, setTimeModified] = useState<string | null>()
-  const [voteTimeReminding, setVoteTimeReminding] = useState<string | null>()
   const editDetails = useBreakpointValue({
     base: (
       <Text fontSize="14px" opacity={0.6}>
-        {timeModified} ago
+        <TimeModified lastModTimeStamp={lastModTimeStamp} />
       </Text>
     ),
     md: (
@@ -91,7 +53,7 @@ const ActivityCard = ({
             {shortenAccount(editor || '')}
           </Link>
         </NextLink>{' '}
-        edited <b>{timeModified} ago</b> |{' '}
+        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '}
         {isFirstEdit ? 'First Edit ' : `${percentChanged * 100}% Changed `}
       </Text>
     ),
@@ -102,26 +64,12 @@ const ActivityCard = ({
             {shortenAccount(editor || '')}
           </Link>
         </NextLink>{' '}
-        edited <b>{timeModified} ago</b> |{' '}
+        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '}
         {isFirstEdit ? 'First Edit ' : `${percentChanged * 100}% Changed `}(
         {wordsChanged} words)
       </Text>
     ),
   })
-
-  useEffect(() => {
-    // set last modified time on first render
-    setTimeModified(timeSince(lastModTimeStamp))
-
-    // update last modified time every 5 seconds
-    const intervalId = setInterval(() => {
-      setTimeModified(timeSince(lastModTimeStamp))
-      setVoteTimeReminding(timeReminding(lastModTimeStamp))
-    }, 5000)
-
-    // clean up setInterval
-    return () => clearInterval(intervalId)
-  }, [lastModTimeStamp])
 
   return (
     <HStack
@@ -178,9 +126,7 @@ const ActivityCard = ({
       <HStack gap={10} ml="0 !important">
         <VStack spacing={2} display={{ base: 'none', lg: 'flex' }}>
           <Button>Vote</Button>
-          <Text fontSize="14px" opacity={0.6} whiteSpace="nowrap">
-            {voteTimeReminding} remaining
-          </Text>
+          <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
         </VStack>
         <HStack
           marginInlineStart="0 !important"
