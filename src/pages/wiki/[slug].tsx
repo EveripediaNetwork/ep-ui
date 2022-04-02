@@ -17,6 +17,7 @@ import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
+import { shortenText } from '@/utils/shortenText'
 
 const Wiki = () => {
   const router = useRouter()
@@ -74,7 +75,7 @@ const Wiki = () => {
         title={wiki?.title}
         openGraph={{
           title: wiki?.title,
-          description: wiki?.content,
+          description: shortenText(wiki?.content || '', 180),
           images: [
             {
               url: `${config.pinataBaseUrl}${
