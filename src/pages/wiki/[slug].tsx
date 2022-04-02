@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
+import { NextSeo } from 'next-seo'
 import {
   getRunningOperationPromises,
   getWiki,
@@ -11,6 +12,7 @@ import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner } from '@chakra-ui/react'
+import config from '@/config'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
@@ -67,27 +69,44 @@ const Wiki = () => {
   /* eslint-enable react/prop-types */
 
   return (
-    <main>
-      {error && <>Oh no, there was an error</>}
-      {!error && (router.isFallback || isLoading) ? (
-        <Flex justify="center" align="center" h="50vh">
-          <Spinner size="xl" />
-        </Flex>
-      ) : (
-        <HStack mt={-2} align="stretch" justify="stretch">
-          <Flex
-            w="100%"
-            justify="space-between"
-            direction={{ base: 'column', md: 'row' }}
-          >
-            <WikiActionBar wiki={wiki} />
-            <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-            {wiki && <WikiInsights wiki={wiki} />}
+    <>
+      <NextSeo
+        title={wiki?.title}
+        openGraph={{
+          title: wiki?.title,
+          description: wiki?.content,
+          images: [
+            {
+              url: `${config.pinataBaseUrl}${
+                wiki?.images ? wiki?.images[0]?.id : ''
+              }`,
+            },
+          ],
+        }}
+      />
+
+      <main>
+        {error && <>Oh no, there was an error</>}
+        {!error && (router.isFallback || isLoading) ? (
+          <Flex justify="center" align="center" h="50vh">
+            <Spinner size="xl" />
           </Flex>
-          {!isTocEmpty && <WikiTableOfContents toc={toc} />}
-        </HStack>
-      )}
-    </main>
+        ) : (
+          <HStack mt={-2} align="stretch" justify="stretch">
+            <Flex
+              w="100%"
+              justify="space-between"
+              direction={{ base: 'column', md: 'row' }}
+            >
+              <WikiActionBar wiki={wiki} />
+              <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
+              {wiki && <WikiInsights wiki={wiki} />}
+            </Flex>
+            {!isTocEmpty && <WikiTableOfContents toc={toc} />}
+          </HStack>
+        )}
+      </main>
+    </>
   )
 }
 
