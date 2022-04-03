@@ -12,12 +12,12 @@ import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner } from '@chakra-ui/react'
-import config from '@/config'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { shortenText } from '@/utils/shortenText'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const Wiki = () => {
   const router = useRouter()
@@ -71,20 +71,20 @@ const Wiki = () => {
 
   return (
     <>
-      <NextSeo
-        title={wiki?.title}
-        openGraph={{
-          title: wiki?.title,
-          description: shortenText(wiki?.content || '', 180),
-          images: [
-            {
-              url: `${config.pinataBaseUrl}${
-                wiki?.images ? wiki?.images[0]?.id : ''
-              }`,
-            },
-          ],
-        }}
-      />
+      {wiki && (
+        <NextSeo
+          title={wiki.title}
+          openGraph={{
+            title: wiki.title,
+            description: shortenText(wiki.content, 180),
+            images: [
+              {
+                url: getWikiImageUrl(wiki),
+              },
+            ],
+          }}
+        />
+      )}
 
       <main>
         {error && <>Oh no, there was an error</>}
