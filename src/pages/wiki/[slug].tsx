@@ -16,8 +16,8 @@ import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
-import { shortenText } from '@/utils/shortenText'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 
 const Wiki = () => {
   const router = useRouter()
@@ -76,7 +76,7 @@ const Wiki = () => {
           title={wiki.title}
           openGraph={{
             title: wiki.title,
-            description: shortenText(wiki.content, 180),
+            description: getWikiSummary(wiki),
             images: [
               {
                 url: getWikiImageUrl(wiki),
