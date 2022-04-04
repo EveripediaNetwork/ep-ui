@@ -10,7 +10,7 @@ export enum WikiSummarySize {
 
 export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiTitle,
-  size?: WikiSummarySize,
+  size: WikiSummarySize = WikiSummarySize.Big,
 ) => {
-  return shortenText(wiki?.content || '', size || WikiSummarySize.Big)
+  return shortenText(wiki.content || '', size)
 }
