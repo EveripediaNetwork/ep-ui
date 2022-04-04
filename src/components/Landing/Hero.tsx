@@ -30,14 +30,14 @@ const HeroCard = ({ wiki }: HeroProps) => {
           cursor="pointer"
           flexShrink={0}
           image={wiki?.images?.[0]?.id}
-          h={{ base: '100%', lg: 400 }}
+          h={{ base: 200, md: 300, lg: 400 }}
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
           overflow="hidden"
         />
         <Flex p="3" align="center" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-            <Avatar size="md" boxSize={10} src={avatar || undefined} />
+            <Avatar boxSize={10} src={avatar || undefined} />
           </NextLink>
           <Flex
             direction="column"
