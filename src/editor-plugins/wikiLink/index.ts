@@ -118,7 +118,7 @@ const fetchWikiResults = (
 
           // preview content
           const previewContent = document.createElement('p')
-          previewContent.textContent = getWikiSummary(wiki, 70)
+          previewContent.textContent = getWikiSummary(wiki, 'medium')
 
           previewContainer.appendChild(previewTitle)
           previewContainer.appendChild(previewTagsContainer)

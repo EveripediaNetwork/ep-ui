@@ -141,7 +141,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                       </LinkOverlay>
                     </NextLink>
                     <Text fontSize="md" noOfLines={2}>
-                      {getWikiSummary(wiki, 70)}
+                      {getWikiSummary(wiki, 'medium')}
                     </Text>
                   </Box>
                 </Box>

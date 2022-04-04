@@ -31,7 +31,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
               {title}
             </Text>
             <Text color="gray.600" fontSize="md">
-              {getWikiSummary(wiki, 65)}
+              {getWikiSummary(wiki, 'small')}
             </Text>
             <Text color="gray.400" fontSize="sm">
               Last Edited {updated && getReadableDate(updated)}

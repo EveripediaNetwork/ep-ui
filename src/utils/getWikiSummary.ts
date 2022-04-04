@@ -4,7 +4,12 @@ import { shortenText } from './shortenText'
 
 export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiTitle,
-  size?: number,
+  size?: 'small' | 'medium' | 'large',
 ) => {
-  return shortenText(wiki?.content || '', size || 150)
+  const sizeMap = {
+    small: 50,
+    medium: 70,
+    large: 160,
+  }
+  return shortenText(wiki?.content || '', sizeMap[size || 'small'])
 }
