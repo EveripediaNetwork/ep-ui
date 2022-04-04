@@ -31,9 +31,7 @@ import { RootState } from '@/store/store'
 
 const Connectors = () => {
   const [{ data }, connect] = useConnect()
-  const [{ data: accountData }] = useAccount({
-    fetchEns: true,
-  })
+  const [{ data: accountData }] = useAccount()
   const address = accountData ? accountData.address : null
   const [, getBalance] = useBalance()
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
@@ -46,7 +44,7 @@ const Connectors = () => {
     useState<boolean>(true)
 
   useEffect(() => {
-    if (address && !walletDetails && accountData?.address) {
+    if (address !== null && !walletDetails) {
       const payload = {
         address,
         connector: undefined,
@@ -56,7 +54,8 @@ const Connectors = () => {
       fetchWalletBalance(getBalance, [
         {
           addressOrName: address,
-          token: config.iqAddress,
+          // change the token to iqAddress on launch
+          token: config.iqTestNetAddress,
         },
         {
           addressOrName: address,

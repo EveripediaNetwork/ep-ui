@@ -1,5 +1,5 @@
 import { Wiki } from '@/types/Wiki'
-import { Box, Heading, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
@@ -16,14 +16,14 @@ const WikiMainContent = ({ wiki, addToTOC }: WikiMainContentProps) => {
     <Box
       p={4}
       w="100%"
-      minH="calc(100vh - 70px)"
-      borderRightWidth="1px"
+      maxW="5xl"
+      minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
     >
       <Heading mt={22} pt={2}>
         {wiki?.title}
       </Heading>
-      <Text mt={8}>
+      <Box mt={8}>
         <ReactMarkdown
           components={{
             h1: addToTOC,
@@ -39,7 +39,7 @@ const WikiMainContent = ({ wiki, addToTOC }: WikiMainContentProps) => {
         >
           {wiki?.content || ''}
         </ReactMarkdown>
-      </Text>
+      </Box>
     </Box>
   )
 }

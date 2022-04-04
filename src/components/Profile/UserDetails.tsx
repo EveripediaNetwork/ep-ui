@@ -15,10 +15,10 @@ import {
 } from '@chakra-ui/react'
 import { FaEthereum, FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
-import { useEnsAvatar, useEnsLookup } from 'wagmi'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
+import { useENSData } from '@/hooks/useENSData'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -28,13 +28,7 @@ export const UserDetails = (props: UserDetailsProps) => {
   const address = router.query.profile as string
 
   const { headerIsSticky } = useProfileContext()
-
-  const [{ data: userName, loading: nameLoading }] = useEnsLookup({
-    address: address as string,
-  })
-  const [{ data: avatar, loading: loadingAvatar }] = useEnsAvatar({
-    addressOrName: address,
-  })
+  const [, username, loading] = useENSData(address)
 
   const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
@@ -48,8 +42,8 @@ export const UserDetails = (props: UserDetailsProps) => {
     px: 3,
     py: 2,
   }
-
-  if (loadingAvatar) return <LoadingProfile hide={hide} />
+  // TODO: change
+  if (loading) return <LoadingProfile hide={hide} />
   return (
     <>
       <Flex align="center" justify="space-between" w="full" px="6">
@@ -71,16 +65,16 @@ export const UserDetails = (props: UserDetailsProps) => {
             rounded="full"
             justifySelf="center"
             {...(isSticky && { mt: 0, boxSize: 12 })}
-            avatar={avatar}
+            address={address}
           />
 
-          <Skeleton isLoaded={!nameLoading}>
+          <Skeleton isLoaded={!loading}>
             <chakra.span
               fontSize={isSticky ? '2xl' : '3xl'}
               fontWeight="semibold"
               letterSpacing="tighter"
             >
-              {userName || 'Unnamed'}
+              {username || 'Unnamed'}
             </chakra.span>
           </Skeleton>
         </Flex>
@@ -112,7 +106,7 @@ export const UserDetails = (props: UserDetailsProps) => {
       {!isSticky && (
         <Flex gap="3" direction="column" px="6" w="full" align="center">
           <Flex align="center" gap="2" color="gray.500">
-            <chakra.span fontWeight="medium">{userName}</chakra.span>
+            <chakra.span fontWeight="medium">{username}</chakra.span>
             <Button
               variant="outline"
               rounded="full"

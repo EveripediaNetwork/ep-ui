@@ -43,6 +43,7 @@ import { ToastDataType } from '@/types/ToastDataType'
 import chakraTheme from '@/theme'
 import { removeStateFromStorage } from '@/utils/browserStorage'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
+import { useENSData } from '@/hooks/useENSData'
 
 const toastProperties: ToastDataType = {
   description: 'Account successfully refreshed',
@@ -66,9 +67,8 @@ const WalletDrawer = ({
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
-  const [{ data: accountData }, disconnect] = useAccount({
-    fetchEns: true,
-  })
+  const [{ data: accountData }, disconnect] = useAccount()
+  const [, username] = useENSData(accountData?.address)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
   const toast = createStandaloneToast({ theme: chakraTheme })
@@ -133,7 +133,7 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar avatar={accountData?.ens?.avatar} />
+              <DisplayAvatar address={accountData?.address} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
@@ -182,9 +182,7 @@ const WalletDrawer = ({
                 </Menu>
                 {accountData && (
                   <Text color="gray.500" pl={1} fontSize="sm">
-                    {accountData?.ens?.name
-                      ? `${accountData.ens?.name}`
-                      : shortenAccount(accountData?.address)}
+                    {username || shortenAccount(accountData?.address)}
                   </Text>
                 )}
               </Box>

@@ -31,9 +31,7 @@ type MobileNavType = {
 }
 
 const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
-  const [{ data: accountData }] = useAccount({
-    fetchEns: true,
-  })
+  const [{ data: accountData }] = useAccount()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const { data: categoriesLinks } = useGetCategoriesLinksQuery()

@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
+import { useENSData } from '@/hooks/useENSData'
 import ImageUpload from './ImageUpload'
 
 const ProfileSettings = () => {
@@ -35,15 +36,10 @@ const ProfileSettings = () => {
   const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
   const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
 
-  const [{ data: accountData }] = useAccount({
-    fetchEns: true,
-  })
+  const [{ data: accountData }] = useAccount()
+  const [, username] = useENSData(accountData?.address)
 
-  const walletAddress = accountData?.ens?.name
-    ? accountData.ens?.name
-    : accountData?.address
-
-  const clipboard = useClipboard(walletAddress || '')
+  const clipboard = useClipboard(username || '')
   const toast = useToast()
 
   const bioRef = React.useRef<HTMLTextAreaElement>(null)
@@ -51,18 +47,18 @@ const ProfileSettings = () => {
   const emailRef = React.useRef<HTMLInputElement>(null)
 
   // Validation Functions
-  const validateUsername = (username: string): string => {
-    if (!username) return 'Username is required'
-    if (username.length < 3) {
+  const validateUsername = (name: string): string => {
+    if (!name) return 'Username is required'
+    if (name.length < 3) {
       return 'Username must be at least 3 characters long'
     }
-    if (username.length > 20) {
+    if (name.length > 20) {
       return 'Username must be less than 20 characters long'
     }
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+    if (!/^[a-zA-Z0-9_]+$/.test(name)) {
       return 'Username can only contain letters, numbers and underscores'
     }
-    // TODO: Check if username is taken
+    // TODO: Check if name is taken
     return ''
   }
   const validateBio = (bio: string): string => {
@@ -241,7 +237,7 @@ const ProfileSettings = () => {
                 cursor="pointer"
                 readOnly
                 _focus={{ outline: 'none' }}
-                value={walletAddress}
+                value={accountData?.address}
                 onClick={() => {
                   clipboard.onCopy()
                   toast({

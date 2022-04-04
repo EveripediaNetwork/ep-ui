@@ -24,13 +24,22 @@ const Wiki = () => {
     skip: router.isFallback,
   })
   const { isLoading, error, data: wiki } = result
+  const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
 
+  // here toc is not state variable since there seems to be some issue
+  // with in react-markdown that is causing infinite loop if toc is state variable
+  // (so using useEffect to update toc length for now)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const toc: {
     level: number
     id: string
     title: string
   }[] = []
+  React.useEffect(() => {
+    setIsTocEmpty(toc.length === 0)
+  }, [toc])
 
+  // listen to changes in toc variable and update the length of the toc
   /* eslint-disable react/prop-types */
   const addToTOC = ({
     children,
@@ -38,14 +47,19 @@ const Wiki = () => {
   }: React.PropsWithChildren<HeadingProps>) => {
     const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
     if (level && children && typeof children[0] === 'string') {
-      const id = children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')
-      if (!toc.find(item => item.id === id)) {
-        toc.push({
-          level,
-          id,
-          title: children[0],
-        })
+      const id = `${children[0]
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')}-${Math.random()
+        .toString(36)
+        .substring(2, 5)}`
+      if (toc[toc.length - 1]?.title === children[0]) {
+        toc.pop()
       }
+      toc.push({
+        level,
+        id,
+        title: children[0],
+      })
       return React.createElement(props.node.tagName, { id }, children)
     }
     return React.createElement(props.node.tagName, props, children)
@@ -61,10 +75,16 @@ const Wiki = () => {
         </Flex>
       ) : (
         <HStack mt={-2} align="stretch" justify="stretch">
-          <WikiActionBar wiki={wiki} />
-          <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-          {wiki && <WikiInsights wiki={wiki} />}
-          <WikiTableOfContents toc={toc} />
+          <Flex
+            w="100%"
+            justify="space-between"
+            direction={{ base: 'column', md: 'row' }}
+          >
+            <WikiActionBar wiki={wiki} />
+            <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
+            {wiki && <WikiInsights wiki={wiki} />}
+          </Flex>
+          {!isTocEmpty && <WikiTableOfContents toc={toc} />}
         </HStack>
       )}
     </main>

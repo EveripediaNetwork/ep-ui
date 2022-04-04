@@ -1,4 +1,39 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* EDITOR STYLES */
 .ProseMirror,
 .toastui-editor-contents {
   font-size: 16px !important;
+}
+
+/* WIKI MEDIA SHOWCASE STYLES */
+#bp_container > .bp-x {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#bp_container .bp-xc {
+  left: 0% !important;
+  bottom: 0% !important;
+  height: 100% !important;
+  padding: 9px 20px 7px !important;
+  background: #ffffff33 !important;
+  border-radius: 0 !important;
+}
+
+#bp_caption {
+  overflow: hidden;
+  width: fit-content;
+  padding: 0.8em !important;
+  background: #2b313bd8 !important;
+  padding-left: 40px;
+  margin: 0 auto !important;
+  margin-bottom: 20px !important;
+  border-radius: 12px !important;
+}
+#bp_caption span {
+  margin-left: 60px;
 }

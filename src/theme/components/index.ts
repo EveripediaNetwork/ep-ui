@@ -1,3 +1,4 @@
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 import { ChakraTheme } from '@chakra-ui/react'
 import { Avatar } from './Avatar'
 import { Button } from './Button'
@@ -9,4 +10,5 @@ export const components: ChakraTheme['components'] = {
   Button,
   Input,
   Link,
+  Steps,
 }

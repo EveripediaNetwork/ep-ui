@@ -77,5 +77,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.200',
       _dark: 'gray.600',
     },
+    wikiCardItemBg: {
+      default: 'gray.100',
+      _dark: 'gray.700',
+    },
+    wikiActionBtnDisabled: {
+      default: 'gray.400',
+      _dark: 'gray.600',
+    },
   },
 }

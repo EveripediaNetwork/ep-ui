@@ -13,8 +13,10 @@ type Connector =
 
 const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
   const { infuraId } = config
+
   const rpcUrl =
     chains.find(x => x.id === chainId)?.rpcUrls?.[0] ?? chain.mainnet.rpcUrls[0]
+
   return [
     new InjectedConnector({ chains }),
     new WalletConnectConnector({
@@ -26,7 +28,7 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
     new WalletLinkConnector({
       options: {
         appName: 'Everipedia',
-        jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+        jsonRpcUrl: `${rpcUrl}`,
       },
     }),
   ]
