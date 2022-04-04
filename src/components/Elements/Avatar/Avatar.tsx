@@ -32,10 +32,6 @@ const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
         fontWeight={600}
         as={RiAccountCircleLine}
         mt={2}
-        _hover={{
-          textDecoration: 'none',
-          color: 'linkHoverColor',
-        }}
       />
     )
   }
