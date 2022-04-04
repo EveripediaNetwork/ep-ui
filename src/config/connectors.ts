@@ -18,7 +18,9 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
     chains.find(x => x.id === chainId)?.rpcUrls?.[0] ?? chain.mainnet.rpcUrls[0]
 
   return [
-    new InjectedConnector({ chains }),
+    new InjectedConnector({ chains, options: {
+      shimDisconnect: true,
+    }, }),
     new WalletConnectConnector({
       options: {
         infuraId,
