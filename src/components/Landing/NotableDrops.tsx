@@ -15,6 +15,7 @@ import NextLink from 'next/link'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const arrowStyles: TextProps = {
   cursor: 'pointer',
@@ -126,7 +127,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
               >
                 <Box>
                   <WikiImage
-                    image={wiki.images?.[0]?.id}
+                    imageURL={getWikiImageUrl(wiki)}
                     boxSize="full"
                     objectFit="cover"
                     h="96"

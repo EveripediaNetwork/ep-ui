@@ -49,7 +49,7 @@ export const TitleAndImage = ({
       >
         {title}
       </Heading>
-      <WikiImage bgColor="dimColor" image={imgSrc} w="100%" h="320px" />
+      <WikiImage bgColor="dimColor" imageURL={imgSrc} w="100%" h="320px" />
       <Table size="sm" variant="simple">
         <Tbody>
           {categories.length !== 0 && (

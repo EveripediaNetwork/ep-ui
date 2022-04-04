@@ -1,6 +1,5 @@
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
 import React from 'react'
-import config from '@/config'
 
 const PLACEHOLDER_IMAGE = `https://picsum.photos/seed/${
   Math.random() * 100000
@@ -25,12 +24,13 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString('base64')
     : window.btoa(str)
 
-export type WikiImageProps = Partial<NextChakraImageProps> & { image?: string }
+export type WikiImageProps = Partial<NextChakraImageProps> & {
+  imageURL?: string
+}
 
 export const WikiImage = (props: WikiImageProps) => {
-  const { image, ...rest } = props
-  const imageURL = `${config.pinataBaseUrl}${image}`
-  const imgSrc = image ? imageURL : PLACEHOLDER_IMAGE
+  const { imageURL, ...rest } = props
+  const imgSrc = imageURL || PLACEHOLDER_IMAGE
 
   return (
     <Image

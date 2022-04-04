@@ -5,6 +5,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
   const { updated, title, id } = wiki
@@ -22,7 +23,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
           <WikiImage
             h={200}
             mb={3}
-            image={wiki.images?.[0]?.id}
+            imageURL={getWikiImageUrl(wiki)}
             layout="fill"
           />
           <Stack spacing={3}>
