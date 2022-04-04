@@ -34,6 +34,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
           overflow="hidden"
+          roundedTop="lg"
         />
         <Flex p="3" align="center" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
