@@ -3,9 +3,8 @@ on: [push]
 jobs:
   Checkout:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     steps:
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.4
         with:
