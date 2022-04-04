@@ -13,8 +13,7 @@ const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
   let content = null
   if (avatar) {
     content = <Avatar size="xs" src={avatar} {...rest} />
-  }
-  else if(address && !avatar) {
+  } else if (address && !avatar) {
     content = (
       <CustomAvatar
         size={25}
@@ -23,22 +22,22 @@ const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
         colors={AvatarColorArray}
       />
     )
-  }
-  else{
-    content = ( 
-    <Icon
-      cursor="pointer"
-      fontSize="3xl"
-      color="gray.600"
-      _dark={{ color: 'gray.200' }}
-      fontWeight={600}
-      as={RiAccountCircleLine}
-      mt={2}
-      _hover={{
-        textDecoration: 'none',
-        color: 'linkHoverColor',
-      }}
-    />)
+  } else {
+    content = (
+      <Icon
+        cursor="pointer"
+        fontSize="3xl"
+        color="gray.600"
+        _dark={{ color: 'gray.200' }}
+        fontWeight={600}
+        as={RiAccountCircleLine}
+        mt={2}
+        _hover={{
+          textDecoration: 'none',
+          color: 'linkHoverColor',
+        }}
+      />
+    )
   }
 
   return (
