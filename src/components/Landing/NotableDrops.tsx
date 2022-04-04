@@ -14,7 +14,7 @@ import isMobile from 'ismobilejs'
 import NextLink from 'next/link'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const arrowStyles: TextProps = {
@@ -141,7 +141,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                       </LinkOverlay>
                     </NextLink>
                     <Text fontSize="md" noOfLines={2}>
-                      {getWikiSummary(wiki, 'medium')}
+                      {getWikiSummary(wiki, WikiSummarySize.Medium)}
                     </Text>
                   </Box>
                 </Box>

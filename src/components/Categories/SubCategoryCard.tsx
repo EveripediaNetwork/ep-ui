@@ -4,7 +4,7 @@ import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
@@ -31,7 +31,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
               {title}
             </Text>
             <Text color="gray.600" fontSize="md">
-              {getWikiSummary(wiki, 'small')}
+              {getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
             <Text color="gray.400" fontSize="sm">
               Last Edited {updated && getReadableDate(updated)}

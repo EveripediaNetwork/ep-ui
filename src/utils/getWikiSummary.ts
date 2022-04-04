@@ -2,14 +2,15 @@ import { WikiTitle } from '@/services/nav-search'
 import { Wiki } from '@/types/Wiki'
 import { shortenText } from './shortenText'
 
+export enum WikiSummarySize {
+  Small = 65,
+  Medium = 70,
+  Big = 160,
+}
+
 export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiTitle,
-  size?: 'small' | 'medium' | 'large',
+  size?: WikiSummarySize,
 ) => {
-  const sizeMap = {
-    small: 50,
-    medium: 70,
-    large: 160,
-  }
-  return shortenText(wiki?.content || '', sizeMap[size || 'small'])
+  return shortenText(wiki?.content || '', size || WikiSummarySize.Big)
 }

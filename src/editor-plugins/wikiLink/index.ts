@@ -11,7 +11,7 @@ import {
 import { debounce } from 'debounce'
 import { getWikisByTitle, WikiTitle } from '@/services/nav-search'
 import { store } from '@/store/store'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 
 const fetchWikisList = async (
   query: string,
@@ -118,7 +118,10 @@ const fetchWikiResults = (
 
           // preview content
           const previewContent = document.createElement('p')
-          previewContent.textContent = getWikiSummary(wiki, 'medium')
+          previewContent.textContent = getWikiSummary(
+            wiki,
+            WikiSummarySize.Medium,
+          )
 
           previewContainer.appendChild(previewTitle)
           previewContainer.appendChild(previewTagsContainer)
