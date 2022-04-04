@@ -1,58 +1,39 @@
+import { AccountDataType } from '@/types/AccountDataType'
+
 const storageKey = 'serializedState'
 const currentDate = new Date()
-/*
 const expiryTimeline = 86400
 
 const getLocalStorage = () => {
-  const setExpiry = JSON.parse(localStorage.getItem(storageKey) || '{}')
-  return setExpiry.expiry
-} */
+  return JSON.parse(localStorage.getItem(storageKey) || '{}')
+}
 
-export const loadState = () => {
+export const saveUserToLocalStorage = (user: AccountDataType) => {
+  const expiryTime = getLocalStorage()?.expiry || 0
+  const preSerializedState = {
+    user,
+    expiry:
+      currentDate.getTime() < expiryTime
+        ? expiryTime
+        : currentDate.getTime() + expiryTimeline,
+  }
+  const serializedState = JSON.stringify(preSerializedState)
+  localStorage.setItem(storageKey, serializedState)
+}
+
+export const getState = () => {
   try {
-    const serializedInitialState = JSON.parse(
-      localStorage.getItem(storageKey) || '{}',
-    )
-
+    const serializedInitialState = getLocalStorage()
     if (!serializedInitialState) return undefined
-
     if (currentDate.getTime() > serializedInitialState.expiry) {
       localStorage.removeItem(storageKey)
     }
-    const { updatedState } = serializedInitialState
-    return updatedState
+    const { user } = serializedInitialState
+    return user
   } catch (e) {
     return undefined
   }
 }
-/*
-export function saveState(state: RootState) {
-
-if (typeof window !== 'undefined') {
-  let updatedState = state
-  if (state.providerNetwork) {
-    const providerNetwork = { detectedProvider: null }
-    updatedState = { ...state, providerNetwork }
-  }
-  if (state.wiki.images?.length > 0) {
-    const wiki = {
-      ...state.wiki,
-      images: [],
-    }
-    updatedState = { ...state, wiki }
-  }
-
-  const preSerializedState = {
-    updatedState,
-    expiry:
-      currentDate.getTime() < getLocalStorage()
-        ? getLocalStorage()
-        : currentDate.getTime() + expiryTimeline,
-  }
-  localStorage.setItem(storageKey, preSerializedState)
-}
-
-} */
 
 export function removeStateFromStorage() {
   localStorage.removeItem(storageKey)

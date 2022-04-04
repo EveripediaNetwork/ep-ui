@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
 import config from '@/config'
-import { RootState } from '@/store/store'
 import { RiMore2Fill } from 'react-icons/ri'
 import { supportedTokens } from '@/data/SupportedToken'
+import { ProviderDataType } from '@/types/ProviderDataType'
+import detectEthereumProvider from '@metamask/detect-provider'
 
 const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
-  const { detectedProvider } = useSelector(
-    (state: RootState) => state.providerNetwork,
-  )
+  const [detectedProvider, setDetectedProvider] =
+    useState<ProviderDataType | null>(null)
+
+  useEffect(() => {
+    const getDetectedProvider = async () => {
+      const provider = await detectEthereumProvider()
+      setDetectedProvider(provider as ProviderDataType)
+    }
+
+    if (!detectedProvider) {
+      getDetectedProvider()
+    }
+  }, [detectedProvider])
 
   const handleAddTokenToMetamask = async (tokenSymbol: string | undefined) => {
     if (tokenSymbol === 'IQ') {
@@ -33,7 +43,6 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
       )
     }
   }
-
   return (
     <Menu placement="left-start">
       <MenuButton>
