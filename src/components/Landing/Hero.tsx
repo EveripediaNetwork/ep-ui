@@ -30,7 +30,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
           cursor="pointer"
           flexShrink={0}
           image={wiki?.images?.[0]?.id}
-          h={{ base: 200, md: 300, lg: 400 }}
+          h={{ base: 80, lg: 400 }}
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
           overflow="hidden"
