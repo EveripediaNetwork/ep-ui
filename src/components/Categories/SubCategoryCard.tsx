@@ -1,13 +1,13 @@
 import React from 'react'
 import { Box, Center, Stack, Text } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
-import { shortenText } from '@/utils/shortenText'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 
 const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
-  const { updated, content, title, id } = wiki
+  const { updated, title, id } = wiki
   return (
     <Center py={6} cursor="pointer">
       <NextLink href={`/wiki/${id}`} passHref>
@@ -30,7 +30,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
               {title}
             </Text>
             <Text color="gray.600" fontSize="md">
-              {shortenText(content, 65)}
+              {getWikiSummary(wiki, 65)}
             </Text>
             <Text color="gray.400" fontSize="sm">
               Last Edited {updated && getReadableDate(updated)}
