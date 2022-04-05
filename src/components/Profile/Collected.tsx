@@ -5,7 +5,7 @@ import { Center, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/router'
-import { CollectionItem } from '@/components/Profile/CollectionItem'
+import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 export const Collected = () => {
   const { displaySize } = useProfileContext()
@@ -26,7 +26,7 @@ export const Collected = () => {
       {!data?.length && <Center>No Wikis found!</Center>}
       <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
         {data?.map((item, i) => (
-          <CollectionItem key={i} item={item} />
+          <WikiPreviewCard wiki={item} key={i} />
         ))}
       </SimpleGrid>
     </FilterLayout>

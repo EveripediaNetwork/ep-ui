@@ -6,7 +6,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
 
-const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
+const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
   const { updated, content, title, id } = wiki
   return (
     <Center py={6} cursor="pointer">
@@ -42,4 +42,4 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export default SubCategoryCard
+export default WikiPreviewCard
