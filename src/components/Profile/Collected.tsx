@@ -22,8 +22,11 @@ export const Collected = () => {
 
   return (
     <FilterLayout>
-      {isLoading && <Center>Loading Wikis</Center>}
-      {!data?.length && <Center>No Wikis found!</Center>}
+      {isLoading ? (
+        <Center>Loading Wikis</Center>
+      ) : (
+        !data?.length && <Center>No Wikis found!</Center>
+      )}
       <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
         {data?.map((item, i) => (
           <CollectionItem key={i} item={item} />
