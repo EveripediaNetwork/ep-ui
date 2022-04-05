@@ -25,13 +25,15 @@ export const Collected = () => {
       {isLoading ? (
         <Center>Loading Wikis</Center>
       ) : (
-        !data?.length && <Center>No Wikis found!</Center>
+        <>
+          {!data?.length && <Center>No Wikis found!</Center>}
+          <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
+            {data?.map((item, i) => (
+              <WikiPreviewCard wiki={item} key={i} />
+            ))}
+          </SimpleGrid>
+        </>
       )}
-      <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
-        {data?.map((item, i) => (
-          <WikiPreviewCard wiki={item} key={i} />
-        ))}
-      </SimpleGrid>
     </FilterLayout>
   )
 }
