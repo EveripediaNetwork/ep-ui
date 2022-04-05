@@ -7,7 +7,7 @@ import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
-const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
+const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
   const { updated, title, id } = wiki
   return (
     <Center py={6} cursor="pointer">
@@ -43,4 +43,4 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export default SubCategoryCard
+export default WikiPreviewCard

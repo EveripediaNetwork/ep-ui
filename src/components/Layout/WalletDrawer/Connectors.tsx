@@ -28,6 +28,7 @@ import {
 } from '@/store/slices/user-slice'
 import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
 import { RootState } from '@/store/store'
+import { saveUserToLocalStorage } from '@/utils/browserStorage'
 
 const Connectors = () => {
   const [{ data }, connect] = useConnect()
@@ -51,10 +52,10 @@ const Connectors = () => {
         ens: accountData?.ens,
       }
       dispatch(updateUserDetails(payload))
+      saveUserToLocalStorage(payload)
       fetchWalletBalance(getBalance, [
         {
           addressOrName: address,
-          // change the token to iqAddress on launch
           token: config.iqTestNetAddress,
         },
         {
@@ -78,6 +79,7 @@ const Connectors = () => {
       fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
+
         setTotalBalanceIsLoading(false)
       })
     }
