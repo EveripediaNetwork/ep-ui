@@ -336,14 +336,13 @@ const CreateWiki = () => {
   }, [txHash])
 
   return (
-    <Box my={4} maxW="8xl" mx="auto">
+    <Box maxW="1900px" mx="auto">
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
         justify="center"
         align="stretch"
-        gap={10}
-        my={4}
-        p={4}
+        gap={8}
+        p={{ base: 4, xl: 8 }}
       >
         <Box h="690px" w="full">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
@@ -399,7 +398,7 @@ const CreateWiki = () => {
             loadingText="Loading"
             disabled={disableSaveButton()}
             onClick={saveOnIpfs}
-            my={22}
+            mb={24}
           >
             Publish Wiki
           </Button>
