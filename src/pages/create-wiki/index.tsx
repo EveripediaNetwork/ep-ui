@@ -7,8 +7,6 @@ import React, {
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
-  Grid,
-  GridItem,
   Flex,
   Button,
   Alert,
@@ -19,6 +17,7 @@ import {
   Center,
   Skeleton,
   useToast,
+  Box,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -337,73 +336,76 @@ const CreateWiki = () => {
   }, [txHash])
 
   return (
-    <Grid
-      templateColumns="repeat(3, 1fr)"
-      templateRows="repeat(3, 1fr)"
-      gap={4}
-      h={['1350px', '1450px', '1450px', '1100px']}
-      my="15px"
-    >
-      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Editor
-            markdown={md || ''}
-            initialValue={initialEditorValue}
-            onChange={handleOnEditorChanges}
-          />
-        </Skeleton>
-      </GridItem>
-      <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Center>
-            <Highlights initialImage={ipfsHash} />
-          </Center>
-        </Skeleton>
-      </GridItem>
-      <GridItem mt="3" rowSpan={1} colSpan={3}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Flex direction="column" justifyContent="center" alignItems="center">
-            {txError.opened && (
-              <Alert status="error" maxW="md" mb="3">
-                <AlertIcon />
-                <AlertTitle>{txError.title}</AlertTitle>
-                <AlertDescription>{txError.description}</AlertDescription>
-                <CloseButton
-                  onClick={() =>
-                    setTxError({
-                      title: '',
-                      description: '',
-                      opened: false,
-                    })
-                  }
-                  position="absolute"
-                  right="5px"
-                />
-              </Alert>
-            )}
-            <Button
-              isLoading={submittingWiki}
-              loadingText="Loading"
-              disabled={disableSaveButton()}
-              onClick={saveOnIpfs}
-            >
-              Publish Wiki
-            </Button>
-          </Flex>
-        </Skeleton>
-      </GridItem>
+    <Box my={4} maxW="8xl" mx="auto">
+      <Flex
+        flexDirection={{ base: 'column', xl: 'row' }}
+        justify="center"
+        align="stretch"
+        gap={10}
+        my={4}
+        p={4}
+      >
+        <Box h="690px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
+            <Editor
+              markdown={md || ''}
+              initialValue={initialEditorValue}
+              onChange={handleOnEditorChanges}
+            />
+          </Skeleton>
+        </Box>
+        <Box minH="690px">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+            <Center>
+              <Highlights initialImage={ipfsHash} />
+            </Center>
+          </Skeleton>
+        </Box>
 
-      <WikiProcessModal
-        wikiId={wikiId}
-        msg={msg}
-        txHash={txHash}
-        wikiHash={wikiHash}
-        activeStep={activeStep}
-        state={loadingState}
-        isOpen={openTxDetailsDialog}
-        onClose={() => setOpenTxDetailsDialog(false)}
-      />
-    </Grid>
+        <WikiProcessModal
+          wikiId={wikiId}
+          msg={msg}
+          txHash={txHash}
+          wikiHash={wikiHash}
+          activeStep={activeStep}
+          state={loadingState}
+          isOpen={openTxDetailsDialog}
+          onClose={() => setOpenTxDetailsDialog(false)}
+        />
+      </Flex>
+
+      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+        <Flex direction="column" justifyContent="center" alignItems="center">
+          {txError.opened && (
+            <Alert status="error" maxW="md" mb="3">
+              <AlertIcon />
+              <AlertTitle>{txError.title}</AlertTitle>
+              <AlertDescription>{txError.description}</AlertDescription>
+              <CloseButton
+                onClick={() =>
+                  setTxError({
+                    title: '',
+                    description: '',
+                    opened: false,
+                  })
+                }
+                position="absolute"
+                right="5px"
+              />
+            </Alert>
+          )}
+          <Button
+            isLoading={submittingWiki}
+            loadingText="Loading"
+            disabled={disableSaveButton()}
+            onClick={saveOnIpfs}
+            my={22}
+          >
+            Publish Wiki
+          </Button>
+        </Flex>
+      </Skeleton>
+    </Box>
   )
 }
 

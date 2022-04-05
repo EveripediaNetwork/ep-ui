@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
@@ -63,6 +63,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           display="flex"
           padding="10px"
           border="1px"
+          borderColor="borderColor"
           borderStyle="dashed"
           borderRadius="5px"
           justifyContent="center"
@@ -71,15 +72,17 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           minH="300px"
           _hover={{
             boxShadow: 'md',
-            borderColor: 'orange',
+            borderColor: 'brand.400',
           }}
           {...getRootProps()}
         >
           <input disabled={!accountData?.address} {...getInputProps()} />
           {isDragActive ? (
-            <p>Drop the files here ...</p>
+            <Text textAlign="center">Drop the files here ...</Text>
           ) : (
-            <p>Drag and drop an image, or click to select</p>
+            <Text textAlign="center" opacity="0.5" maxW="xs">
+              Drag and drop an image, or click to select
+            </Text>
           )}
         </Box>
       ) : (

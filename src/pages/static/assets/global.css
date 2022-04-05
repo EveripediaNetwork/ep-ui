@@ -7,6 +7,9 @@ html {
 .toastui-editor-contents {
   font-size: 16px !important;
 }
+.toastui-editor-defaultUI .toastui-editor-md-tab-container{
+  border-color: transparent !important;
+}
 
 /* WIKI MEDIA SHOWCASE STYLES */
 #bp_container > .bp-x {
