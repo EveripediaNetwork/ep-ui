@@ -5,6 +5,7 @@ import { Center, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/router'
+import { EmptyState } from '@/components/Profile/EmptyState'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 export const Collected = () => {
@@ -26,7 +27,11 @@ export const Collected = () => {
         <Center>Loading Wikis</Center>
       ) : (
         <>
-          {!data?.length && <Center>No Wikis found!</Center>}
+          {!data?.length && (
+            <Center>
+              <EmptyState />
+            </Center>
+          )}
           <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
             {data?.map((item, i) => (
               <WikiPreviewCard wiki={item} key={i} />
