@@ -8,7 +8,7 @@ const initialState: Wiki = {
   title: 'Wiki title',
   content: '',
   categories: [],
-  tags: [{ id: 'hello' }, { id: 'world' }],
+  tags: [],
   metadata: [
     {
       id: 'page-type',
@@ -38,6 +38,18 @@ const wikiSlice = createSlice({
       return {
         ...state,
         categories: [],
+      }
+    },
+    addTag(state, action) {
+      return {
+        ...state,
+        tags: [...state.tags, action.payload],
+      }
+    },
+    setTags(state, action) {
+      return {
+        ...state,
+        tags: action.payload,
       }
     },
     updateMetadata(state, action) {

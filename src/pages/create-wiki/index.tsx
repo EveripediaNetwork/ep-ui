@@ -18,6 +18,7 @@ import {
   CloseButton,
   Center,
   Skeleton,
+  useToast,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -35,7 +36,7 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { PageTemplate } from '@/constant/pageTemplate'
+import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
@@ -75,6 +76,7 @@ const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const toast = useToast()
   const { slug } = router.query
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
@@ -151,7 +153,49 @@ const CreateWiki = () => {
 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
+  const isValidWiki = () => {
+    if (wiki.images?.length === 0) {
+      toast({
+        title: 'Add a main image to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (wiki.categories.length === 0) {
+      toast({
+        title: 'Add one category to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (md && md.split(' ').length < 1550) {
+      toast({
+        title: 'Add a minimum of 1550 wors to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
+      toast({
+        title: 'Add a page type to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    return true
+  }
+
   const saveOnIpfs = async () => {
+    if (!isValidWiki()) return
+
     if (accountData) {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
@@ -197,17 +241,6 @@ const CreateWiki = () => {
     setMd(String(pageType?.templateText))
   }, [currentPageType])
 
-  useEffect(() => {
-    if (wiki && wikiData) {
-      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
-      if (currentPageType.value !== pageType) updatePageTypeTemplate()
-    }
-  }, [currentPageType])
-
-  useEffect(() => {
-    if (!wikiData) setMd(initialEditorValue)
-  }, [])
-
   const verifyTrxHash = async (trxHash: string) => {
     const timer = setInterval(() => {
       try {
@@ -234,6 +267,17 @@ const CreateWiki = () => {
       }
     }, 3000)
   }
+
+  useEffect(() => {
+    if (!wikiData) setMd(initialEditorValue)
+  }, [])
+
+  useEffect(() => {
+    if (wiki && wikiData) {
+      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
+      if (currentPageType.value !== pageType) updatePageTypeTemplate()
+    }
+  }, [currentPageType])
 
   useEffect(() => {
     const getSignedTxHash = async () => {
@@ -289,9 +333,7 @@ const CreateWiki = () => {
   }, [wikiData])
 
   useEffect(() => {
-    if (txHash) {
-      verifyTrxHash(txHash)
-    }
+    if (txHash) verifyTrxHash(txHash)
   }, [txHash])
 
   return (

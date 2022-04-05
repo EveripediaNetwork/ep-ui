@@ -12,7 +12,7 @@ import {
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line, RiAccountCircleLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
 import { Logo } from '@/components/Elements/'
@@ -22,9 +22,7 @@ import { ColorModeToggle } from '@/components/Layout/Navbar/ColorModeToggle'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
 import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
-import { RootState } from '@/store/store'
 import networkMap from '@/utils/networkMap'
-import { updateNetworkProvider } from '@/store/slices/provider-slice'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
 import { ProviderDataType } from '@/types/ProviderDataType'
@@ -45,14 +43,14 @@ const Navbar = () => {
 
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
 
+  const [detectedProvider, setDetectedProvider] =
+    useState<ProviderDataType | null>(null)
+
   const [{ data: accountData }] = useAccount()
+
   const dispatch = useDispatch()
 
   const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
-
-  const { detectedProvider } = useSelector(
-    (state: RootState) => state.providerNetwork,
-  )
 
   const handleWalletIconAction = () => {
     if (isHamburgerOpen) {
@@ -88,7 +86,7 @@ const Navbar = () => {
 
     const getDetectedProvider = async () => {
       const provider = await detectEthereumProvider()
-      dispatch(updateNetworkProvider(provider as ProviderDataType | null))
+      setDetectedProvider(provider as ProviderDataType)
       if (provider) getConnectedChain(provider)
     }
 
