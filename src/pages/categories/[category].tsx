@@ -19,7 +19,7 @@ import {
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
-import SubCategoryCard from '@/components/Categories/SubCategoryCard'
+import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
@@ -74,7 +74,7 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
           >
             {wikis.map((wiki, i) => (
               <Box key={i} w="100%">
-                <SubCategoryCard wiki={wiki} />
+                <WikiPreviewCard wiki={wiki} />
               </Box>
             ))}
           </SimpleGrid>
