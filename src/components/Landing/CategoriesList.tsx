@@ -3,7 +3,7 @@ import { LinkBox, LinkOverlay, Text, SimpleGrid } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
-import { Image } from '../Elements/Image/Image'
+import { Image } from '@/components/Elements/Image/Image'
 
 const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
@@ -53,6 +53,7 @@ const CategoriesList = () => {
               h="180px"
               w="100%"
             />
+
             <NextLink href={`/categories/${category.id}`} passHref>
               <LinkOverlay>
                 <Text

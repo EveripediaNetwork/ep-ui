@@ -1,9 +1,7 @@
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
-import React from 'react'
+import React, { useState } from 'react'
 
-const PLACEHOLDER_IMAGE = `https://picsum.photos/seed/${
-  Math.random() * 100000
-}/300/300`
+const PLACEHOLDER_IMAGE = `/broken-image.png`
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -32,10 +30,13 @@ export const WikiImage = (props: WikiImageProps) => {
   const { imageURL, ...rest } = props
   const imgSrc = imageURL || PLACEHOLDER_IMAGE
 
+  const [src, setSrc] = useState(imgSrc)
+
   return (
     <Image
-      src={imgSrc}
+      src={src}
       placeholder="blur"
+      onError={() => setSrc(PLACEHOLDER_IMAGE)}
       blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
       {...rest}
     />
