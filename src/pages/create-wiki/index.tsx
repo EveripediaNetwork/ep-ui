@@ -344,8 +344,8 @@ const CreateWiki = () => {
         gap={8}
         p={{ base: 4, xl: 8 }}
       >
-        <Box h="690px" w="full">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
+        <Box h="725px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="725px">
             <Editor
               markdown={md || ''}
               initialValue={initialEditorValue}
@@ -353,7 +353,7 @@ const CreateWiki = () => {
             />
           </Skeleton>
         </Box>
-        <Box minH="690px">
+        <Box minH="725px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights initialImage={ipfsHash} />

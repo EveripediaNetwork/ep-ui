@@ -44,7 +44,9 @@ const ImageInput = ({
 
   return (
     <Flex
-      w="full"
+      mt={imgSrc ? 0 : -20}
+      mb={5}
+      mx={5}
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -56,8 +58,13 @@ const ImageInput = ({
           alignItems="center"
           gap={5}
         >
-          <Image objectFit="cover" boxSize="300" src={imgSrc} alt="Input" />
-
+          <Image
+            objectFit="cover"
+            h="220px"
+            w="300px"
+            src={imgSrc}
+            alt="Input"
+          />
           <Button
             w="25%"
             shadow="md"
@@ -73,8 +80,9 @@ const ImageInput = ({
         </Flex>
       ) : (
         <Input
+          textAlign="center"
           onChange={handleOnImageInputChanges}
-          placeholder="Paste a link here"
+          placeholder="(or) paste image link here"
         />
       )}
     </Flex>

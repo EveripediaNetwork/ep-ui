@@ -91,8 +91,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             <Image
               mx="auto"
               priority
-              w="350px"
-              h="300px"
+              h="255px"
+              w="full"
               key={path}
               src={path}
               alt="highlight"
