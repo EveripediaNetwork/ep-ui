@@ -59,10 +59,9 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   return (
     <Flex
       direction="column"
-      minW="360px"
-      w={['full', 'full', 'full', 400]}
+      w={{ base: 'full', xl: '400px' }}
       border="1px"
-      borderColor="gray.200"
+      borderColor="borderColor"
       borderRadius="7px"
       padding="15px"
     >
@@ -92,7 +91,6 @@ const Highlights = ({ initialImage }: HightLightsType) => {
           deleteImage={handleDeleteImage}
         />
       )}
-
       <Divider my="10px" />
       <Flex direction="column" justifyContent="center" alignItems="center">
         <FlexRowContainer>

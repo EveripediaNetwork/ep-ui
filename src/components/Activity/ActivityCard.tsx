@@ -14,6 +14,7 @@ import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { WikiTitle } from '@/services/nav-search'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import TimeModified from './TimeModified'
 import VoteTimeRemaining from './VoteTimeRemaining'
 
@@ -88,7 +89,7 @@ const ActivityCard = ({
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            image={wiki.images?.[0]?.id}
+            imageURL={getWikiImageUrl(wiki)}
             h={{ base: 65, lg: 100 }}
             w={{ base: 65, lg: 100 }}
             borderRadius="lg"

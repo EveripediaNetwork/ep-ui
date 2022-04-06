@@ -14,6 +14,7 @@ import { store } from '@/store/store'
 import NextLink from 'next/link'
 import { WikiTitle } from '@/services/nav-search'
 import { WikiImage } from '@/components/WikiImage'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
   const { id, title, content: brief } = wiki
@@ -27,7 +28,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
         align="start"
       >
         <WikiImage
-          image={wiki.images?.[0]?.id}
+          imageURL={getWikiImageUrl(wiki)}
           h="80px"
           w="80px"
           flexShrink={0}

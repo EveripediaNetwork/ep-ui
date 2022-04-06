@@ -5,6 +5,7 @@ import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
 import { useEnsAvatar } from 'wagmi'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
@@ -29,7 +30,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
         <WikiImage
           cursor="pointer"
           flexShrink={0}
-          image={wiki?.images?.[0]?.id}
+          imageURL={getWikiImageUrl(wiki)}
           h={{ base: 80, lg: 400 }}
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
