@@ -1,10 +1,8 @@
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
-import React from 'react'
+import React, { useState } from 'react'
 import config from '@/config'
 
-const PLACEHOLDER_IMAGE = `https://picsum.photos/seed/${
-  Math.random() * 100000
-}/300/300`
+const PLACEHOLDER_IMAGE = `/broken-image.png`
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -25,17 +23,25 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString('base64')
     : window.btoa(str)
 
-export type WikiImageProps = Partial<NextChakraImageProps> & { image?: string }
+export type WikiImageProps = Partial<NextChakraImageProps> & {
+  image?: string
+  noPinata?: boolean
+}
 
 export const WikiImage = (props: WikiImageProps) => {
-  const { image, ...rest } = props
-  const imageURL = `${config.pinataBaseUrl}${image}`
+  const { image, noPinata, ...rest } = props
+  const imageURL = noPinata
+    ? image || PLACEHOLDER_IMAGE
+    : `${config.pinataBaseUrl}${image}`
   const imgSrc = image ? imageURL : PLACEHOLDER_IMAGE
+
+  const [src, setSrc] = useState(imgSrc)
 
   return (
     <Image
-      src={imgSrc}
+      src={src}
       placeholder="blur"
+      onError={() => setSrc(PLACEHOLDER_IMAGE)}
       blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
       {...rest}
     />
