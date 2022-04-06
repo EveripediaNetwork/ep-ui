@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useContext, useState, memo } from 'react'
+import React, { useContext, useState, memo } from 'react'
 import {
   Flex,
   Text,
   useDisclosure,
   Badge,
-  Input,
   Button,
   Table,
   Tbody,
@@ -71,21 +70,6 @@ const Highlights = ({ initialImage }: HightLightsType) => {
     >
       <Box>
         <Text mb={2} opacity={0.5}>
-          Wiki Title
-        </Text>
-        <Input
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            dispatch({
-              type: 'wiki/setCurrentWiki',
-              payload: { title: event.target.value },
-            })
-          }}
-          value={currentWiki.title}
-          placeholder="Title goes here"
-        />
-      </Box>
-      <Box>
-        <Text mb={2} opacity={0.5}>
           Wiki Summary
         </Text>
         <Textarea placeholder="Summary of wiki" />
@@ -100,7 +84,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       )}
       <Flex direction="column" justifyContent="center" alignItems="center">
         <Table size="sm" variant="simple" mb={2}>
-          <Tbody borderWidth="1px" borderColor="borderColorHover">
+          <Tbody borderWidth="1px" borderColor="borderColor">
             <Tr>
               <Td display="flex" gap={2}>
                 <RiFolder3Fill /> <Text>Page Type</Text>
@@ -115,7 +99,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
               </Td>
               <Td>{Languages[currentWiki.language]}</Td>
             </Tr>
-            <Tr>
+            <Tr borderBottomWidth={0}>
               <Td display="flex" gap={2}>
                 <RiSurveyFill /> <Text>Categories</Text>
               </Td>
