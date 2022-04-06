@@ -23,6 +23,7 @@ import {
 import {
   getRunningOperationPromises,
   getWiki,
+  postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
@@ -30,8 +31,10 @@ import { RootState, store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import axios from 'axios'
+
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -40,7 +43,6 @@ import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import { useSelector } from 'react-redux'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 
@@ -172,14 +174,16 @@ const CreateWiki = () => {
       return false
     }
 
-    if (md && md.split(' ').length < 1550) {
-      toast({
-        title: 'Add a minimum of 1550 wors to continue',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
+    // console.log(md && md?.split(' ').length)
+
+    // if (md && md.split(' ').length < 1550) {
+    //   toast({
+    //     title: 'Add a minimum of 1550 wors to continue',
+    //     status: 'error',
+    //     duration: 3000,
+    //   })
+    //   return false
+    // }
 
     if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
       toast({
@@ -214,12 +218,19 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      const {
-        data: { ipfs },
-      } = await axios.post('/api/ipfs', tmp)
+      console.log(tmp)
 
-      if (ipfs) {
-        saveHashInTheBlockchain(ipfs)
+      const wikiResult: any = await store.dispatch(
+        postWiki.initiate({ data: tmp }),
+      )
+
+      // const {
+      //   data: { ipfs },
+      // } = await axios.post('/api/ipfs', tmp)
+
+      if (wikiResult) {
+        console.log(wikiResult.data)
+        saveHashInTheBlockchain(String(wikiResult.data))
       }
 
       setSubmittingWiki(false)
