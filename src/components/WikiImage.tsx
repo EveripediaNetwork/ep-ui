@@ -1,6 +1,5 @@
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
 import React, { useState } from 'react'
-import config from '@/config'
 
 const PLACEHOLDER_IMAGE = `/broken-image.png`
 
@@ -24,16 +23,12 @@ const toBase64 = (str: string) =>
     : window.btoa(str)
 
 export type WikiImageProps = Partial<NextChakraImageProps> & {
-  image?: string
-  noPinata?: boolean
+  imageURL?: string
 }
 
 export const WikiImage = (props: WikiImageProps) => {
-  const { image, noPinata, ...rest } = props
-  const imageURL = noPinata
-    ? image || PLACEHOLDER_IMAGE
-    : `${config.pinataBaseUrl}${image}`
-  const imgSrc = image ? imageURL : PLACEHOLDER_IMAGE
+  const { imageURL, ...rest } = props
+  const imgSrc = imageURL || PLACEHOLDER_IMAGE
 
   const [src, setSrc] = useState(imgSrc)
 
