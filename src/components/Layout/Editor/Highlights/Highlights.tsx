@@ -31,23 +31,14 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   const [hideImageInput, setHideImageInput] = useState(false)
   const dispatch = useAppDispatch()
 
-  const handleDispatch = (object: Partial<Wiki>) =>
-    dispatch({
-      type: 'wiki/setCurrentWiki',
-      payload: object,
-    })
-
   const handleSetImage = (name: string, value: ArrayBuffer) => {
     // update isWikiBeingEdited
     updateImageState(ImageKey.IS_WIKI_BEING_EDITED, false)
     updateImageState(ImageKey.IMAGE, { id: name, type: value })
   }
 
-  const handleDeleteImage = () => {
-    handleDispatch({
-      images: [],
-    })
-  }
+  const handleDeleteImage = () =>
+    updateImageState(ImageKey.IMAGE, { type: new ArrayBuffer(0), id: '' })
 
   const dropZoneActions = {
     setImage: handleSetImage,

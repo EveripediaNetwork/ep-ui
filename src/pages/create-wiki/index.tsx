@@ -156,7 +156,14 @@ const CreateWiki = () => {
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
   const isValidWiki = () => {
-    if (wiki.images?.length === 0) {
+    console.log(wiki)
+
+    if (
+      !image ||
+      image.type === null ||
+      image.type === undefined ||
+      (image.type as ArrayBuffer).byteLength === 0
+    ) {
       toast({
         title: 'Add a main image to continue',
         status: 'error',
