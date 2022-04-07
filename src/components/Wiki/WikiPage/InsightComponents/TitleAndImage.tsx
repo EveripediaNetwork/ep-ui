@@ -36,6 +36,15 @@ export const TitleAndImage = ({
 }) => {
   const { title } = wikiTitle
   const [, username] = useENSData(lastEditor || '')
+  console.table({
+    image: imgSrc,
+    title,
+    categories,
+    lastEdited,
+    ipfsHash,
+    lastEditor,
+    username,
+  })
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
