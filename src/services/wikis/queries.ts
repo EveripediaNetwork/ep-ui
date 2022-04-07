@@ -160,3 +160,11 @@ export const POST_WIKI = gql`
     }
   }
 `
+
+export const POST_IMG = gql`
+  mutation postImage($file: Upload!) {
+    pinImage(fileUpload: $file) {
+      IpfsHash
+    }
+  }
+`

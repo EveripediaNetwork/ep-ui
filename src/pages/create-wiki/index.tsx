@@ -23,6 +23,7 @@ import {
 import {
   getRunningOperationPromises,
   getWiki,
+  // postImage,
   postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
@@ -187,8 +188,6 @@ const CreateWiki = () => {
       })
       return false
     }
-
-    // TODO: add tag validation
 
     if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
       toast({

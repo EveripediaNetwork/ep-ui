@@ -8,6 +8,7 @@ import {
   GET_WIKIS_BY_CATEGORY,
   GET_PROMOTED_WIKIS,
   POST_WIKI,
+  POST_IMG,
 } from '@/services/wikis/queries'
 import { Wiki } from '@/types/Wiki'
 import config from '@/config'
@@ -91,6 +92,12 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiResponse) =>
         response.pinJSON.IpfsHash,
     }),
+    postImage: builder.mutation<string, { file: any }>({
+      query: ({ file }) => ({
+        document: POST_IMG,
+        variables: { file },
+      }),
+    }),
   }),
 })
 
@@ -110,4 +117,5 @@ export const {
   getUserWikis,
   getWikisByCategory,
   postWiki,
+  postImage,
 } = wikiApi.endpoints
