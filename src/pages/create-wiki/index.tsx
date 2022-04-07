@@ -227,10 +227,6 @@ const CreateWiki = () => {
         postWiki.initiate({ data: tmp }),
       )
 
-      // const {
-      //   data: { ipfs },
-      // } = await axios.post('/api/ipfs', tmp)
-
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       setSubmittingWiki(false)
@@ -238,7 +234,6 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    // wiki.images.length === 0 ||
     submittingWiki || !accountData?.address || signing || isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
