@@ -156,8 +156,6 @@ const CreateWiki = () => {
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
   const isValidWiki = () => {
-    console.log(wiki)
-
     if (
       !image ||
       image.type === null ||
@@ -225,8 +223,6 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      console.log(tmp)
-
       const wikiResult: any = await store.dispatch(
         postWiki.initiate({ data: tmp }),
       )
@@ -235,10 +231,7 @@ const CreateWiki = () => {
       //   data: { ipfs },
       // } = await axios.post('/api/ipfs', tmp)
 
-      if (wikiResult) {
-        console.log(wikiResult.data)
-        saveHashInTheBlockchain(String(wikiResult.data))
-      }
+      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       setSubmittingWiki(false)
     }
