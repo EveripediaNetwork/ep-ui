@@ -12,7 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
-import {BsTwitter} from 'react-icons/bs'
+import { BsTwitter } from 'react-icons/bs'
 import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -165,7 +165,7 @@ const HighlightsModal = ({
         <FlexRow>
           <BsTwitter /> <Text>Twitter profile</Text>
         </FlexRow>
-        <Input 
+        <Input
           onChange={event => {
             if (event.target.value)
               dispatch({
@@ -176,7 +176,7 @@ const HighlightsModal = ({
                 },
               })
           }}
-          placeholder='Your twitter Profile Name'
+          placeholder="Your twitter Profile Name"
         />
         <CustomDivider />
         <Tags />

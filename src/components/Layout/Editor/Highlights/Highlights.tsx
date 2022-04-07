@@ -145,7 +145,12 @@ const Highlights = ({ initialImage }: HightLightsType) => {
             justify="space-evenly"
             w="full"
           >
-            <Text>{getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')?.value}</Text>
+            <Text>
+              {
+                getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')
+                  ?.value
+              }
+            </Text>
           </Flex>
         </Flex>
         <Divider my="5" />

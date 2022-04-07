@@ -16,7 +16,7 @@ export interface MData {
   id: string
   value: string
 }
-export interface UpdatedMetaDataInterface extends Array<MData>{} 
+export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
