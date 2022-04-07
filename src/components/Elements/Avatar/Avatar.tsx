@@ -36,18 +36,7 @@ const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
     )
   }
 
-  return (
-    <chakra.span
-      zIndex="banner"
-      sx={{
-        svg: {
-          ...rest,
-        },
-      }}
-    >
-      {content}
-    </chakra.span>
-  )
+  return <chakra.span zIndex="banner">{content}</chakra.span>
 }
 
 export default DisplayAvatar

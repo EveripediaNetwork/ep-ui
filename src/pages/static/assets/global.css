@@ -7,7 +7,43 @@ html {
 .toastui-editor-contents {
   font-size: 16px !important;
 }
-
+.toastui-editor-defaultUI .toastui-editor-md-tab-container {
+  border-color: #00000010 !important;
+}
+.toastui-editor-dark .toastui-editor-md-container,
+.toastui-editor-dark  .toastui-editor-ww-container,
+.toastui-editor-dark .toastui-editor-defaultUI-toolbar,
+.toastui-editor-dark .toastui-editor-md-tab-container,
+.toastui-editor-dark .toastui-editor-ww-tab-container {
+  background: transparent !important;
+}
+.toastui-editor-dark .toastui-editor-toolbar,
+.toastui-editor-dark .toastui-editor-mode-switch {
+  background-color: #212836 !important;
+}
+.toastui-editor-dark .tab-item {
+  background-color: #202634 !important;
+}
+.toastui-editor-dark  .tab-item.active {
+  background-color: #2b3447 !important;
+  border-color: inherit !important;
+}
+.toastui-editor-toolbar{
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+.toastui-editor-dark .toastui-editor-popup-body, 
+.toastui-editor-dark .toastui-editor-popup, 
+.toastui-editor-dark .toastui-editor-context-menu{
+  background-color: #1c212c !important;
+}
+.toastui-editor-dark .toastui-editor-toolbar-icons{
+  border-color: transparent  !important;
+}
+.toastui-editor-dark .toastui-editor-toolbar-icons:not(:disabled):hover{
+  background-color: #2b3447 !important;
+  border-color: inherit !important;
+}
 /* WIKI MEDIA SHOWCASE STYLES */
 #bp_container > .bp-x {
   justify-content: center;

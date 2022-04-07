@@ -4,11 +4,10 @@ import React, {
   useState,
   memo,
   useCallback,
+  ChangeEvent,
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
-  Grid,
-  GridItem,
   Flex,
   Button,
   Alert,
@@ -19,6 +18,12 @@ import {
   Center,
   Skeleton,
   useToast,
+  Box,
+  HStack,
+  Input,
+  InputLeftElement,
+  InputGroup,
+  Icon,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -33,6 +38,7 @@ import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { useSelector } from 'react-redux'
+import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
 
@@ -182,7 +188,7 @@ const CreateWiki = () => {
 
     if (getWordCount(md || '') < 300) {
       toast({
-        title: 'Add a minimum of 300 words to continue',
+        title: `Add a minimum of 300 words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })
@@ -342,73 +348,109 @@ const CreateWiki = () => {
   }, [txHash])
 
   return (
-    <Grid
-      templateColumns="repeat(3, 1fr)"
-      templateRows="repeat(3, 1fr)"
-      gap={4}
-      h={['1350px', '1450px', '1450px', '1100px']}
-      my="15px"
-    >
-      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Editor
-            markdown={md || ''}
-            initialValue={initialEditorValue}
-            onChange={handleOnEditorChanges}
+    <Box maxW="1900px" mx="auto" mb={8}>
+      <HStack
+        boxShadow="sm"
+        borderRadius={4}
+        borderWidth="1px"
+        p={3}
+        justifyContent="space-between"
+        mx="auto"
+        mb={4}
+        mt={2}
+        w="96%"
+      >
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+          </InputLeftElement>
+          <Input
+            fontWeight="500"
+            color="linkColor"
+            borderColor="transparent"
+            fontSize="18px"
+            variant="flushed"
+            maxW="max(50%, 300px)"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              dispatch({
+                type: 'wiki/setCurrentWiki',
+                payload: { title: event.target.value },
+              })
+            }}
+            value={wiki.title}
+            placeholder="Title goes here"
           />
-        </Skeleton>
-      </GridItem>
-      <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Center>
-            <Highlights initialImage={ipfsHash} />
-          </Center>
-        </Skeleton>
-      </GridItem>
-      <GridItem mt="3" rowSpan={1} colSpan={3}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Flex direction="column" justifyContent="center" alignItems="center">
-            {txError.opened && (
-              <Alert status="error" maxW="md" mb="3">
-                <AlertIcon />
-                <AlertTitle>{txError.title}</AlertTitle>
-                <AlertDescription>{txError.description}</AlertDescription>
-                <CloseButton
-                  onClick={() =>
-                    setTxError({
-                      title: '',
-                      description: '',
-                      opened: false,
-                    })
-                  }
-                  position="absolute"
-                  right="5px"
-                />
-              </Alert>
-            )}
-            <Button
-              isLoading={submittingWiki}
-              loadingText="Loading"
-              disabled={disableSaveButton()}
-              onClick={saveOnIpfs}
-            >
-              Publish Wiki
-            </Button>
-          </Flex>
-        </Skeleton>
-      </GridItem>
+        </InputGroup>
 
-      <WikiProcessModal
-        wikiId={wikiId}
-        msg={msg}
-        txHash={txHash}
-        wikiHash={wikiHash}
-        activeStep={activeStep}
-        state={loadingState}
-        isOpen={openTxDetailsDialog}
-        onClose={() => setOpenTxDetailsDialog(false)}
-      />
-    </Grid>
+        <Button
+          isLoading={submittingWiki}
+          loadingText="Loading"
+          disabled={disableSaveButton()}
+          onClick={saveOnIpfs}
+          mb={24}
+        >
+          Publish
+        </Button>
+      </HStack>
+      <Flex
+        flexDirection={{ base: 'column', xl: 'row' }}
+        justify="center"
+        align="stretch"
+        gap={8}
+        px={{ base: 4, xl: 8 }}
+      >
+        <Box h="635px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
+            <Editor
+              markdown={md || ''}
+              initialValue={initialEditorValue}
+              onChange={handleOnEditorChanges}
+            />
+          </Skeleton>
+        </Box>
+        <Box minH="635px">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+            <Center>
+              <Highlights initialImage={ipfsHash} />
+            </Center>
+          </Skeleton>
+        </Box>
+
+        <WikiProcessModal
+          wikiId={wikiId}
+          msg={msg}
+          txHash={txHash}
+          wikiHash={wikiHash}
+          activeStep={activeStep}
+          state={loadingState}
+          isOpen={openTxDetailsDialog}
+          onClose={() => setOpenTxDetailsDialog(false)}
+        />
+      </Flex>
+
+      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+        <Flex direction="column" justifyContent="center" alignItems="center">
+          {txError.opened && (
+            <Alert status="error" maxW="md" mb="3">
+              <AlertIcon />
+              <AlertTitle>{txError.title}</AlertTitle>
+              <AlertDescription>{txError.description}</AlertDescription>
+              <CloseButton
+                onClick={() =>
+                  setTxError({
+                    title: '',
+                    description: '',
+                    opened: false,
+                  })
+                }
+                position="absolute"
+                right="5px"
+              />
+            </Alert>
+          )}
+        </Flex>
+      </Skeleton>
+    </Box>
   )
 }
 

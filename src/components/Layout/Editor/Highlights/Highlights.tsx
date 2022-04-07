@@ -1,12 +1,14 @@
-import React, { ChangeEvent, useContext, useState, memo } from 'react'
+import React, { useContext, useState, memo } from 'react'
 import {
   Flex,
   Text,
-  Divider,
   useDisclosure,
   Badge,
-  Input,
   Button,
+  Table,
+  Tbody,
+  Td,
+  Tr,
 } from '@chakra-ui/react'
 import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 
@@ -15,9 +17,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import FlexRowContainer from './FlexRowContainer/FlexRowContainer'
-import FlexRow from './FlexRow/FlexRow'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
+import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -50,32 +51,15 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   return (
     <Flex
       direction="column"
-      minW="360px"
-      w={['full', 'full', 'full', 400]}
+      gap={5}
+      w={{ base: 'full', xl: '400px' }}
       border="1px"
-      borderColor="gray.200"
+      borderColor="borderColor"
       borderRadius="7px"
       padding="15px"
     >
-      <Flex justifyContent="center" alignItems="center" h="50px">
-        <Input
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            dispatch({
-              type: 'wiki/setCurrentWiki',
-              payload: { title: event.target.value },
-            })
-          }}
-          value={currentWiki.title}
-          placeholder="Title goes here"
-        />
-      </Flex>
-      <br />
-      {!hideDropzone && (
-        <>
-          <Dropzone dropZoneActions={dropZoneActions} />
-          <br />
-        </>
-      )}
+      <SummaryInput />
+      {!hideDropzone && <Dropzone dropZoneActions={dropZoneActions} />}
       {!hideImageInput && (
         <ImageInput
           setImage={handleSetImage}
@@ -83,53 +67,49 @@ const Highlights = ({ initialImage }: HightLightsType) => {
           deleteImage={handleDeleteImage}
         />
       )}
-
-      <Divider my="10px" />
       <Flex direction="column" justifyContent="center" alignItems="center">
-        <FlexRowContainer>
-          <FlexRow>
-            <RiFolder3Fill /> <Text>Page Type</Text>
-          </FlexRow>
-          <Text>
-            {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
-          </Text>
-        </FlexRowContainer>
-        <FlexRowContainer>
-          <FlexRow>
-            <RiTranslate2 /> <Text>Language</Text>
-          </FlexRow>
-          <Text>{Languages[currentWiki.language]}</Text>
-        </FlexRowContainer>
-        <Flex
-          justifyContent="center"
-          wrap="wrap"
-          alignItems="center"
-          direction="row"
-        >
-          <RiSurveyFill /> <Text ml="2">Categories</Text>
-          <br />
-          <Flex
-            mt="2"
-            direction="row"
-            wrap="wrap"
-            justify="space-evenly"
-            w="full"
-          >
-            {currentWiki.categories?.map((c: BaseCategory) => (
-              <Badge variant="outline" m="1">
-                {c.title}
-              </Badge>
-            ))}
-          </Flex>
-        </Flex>
-        <Divider my="5" />
+        <Table size="sm" variant="simple" mb={2}>
+          <Tbody borderWidth="1px" overflow="hidden">
+            <Tr>
+              <Td color="linkColor" display="flex" gap={2}>
+                <RiFolder3Fill /> <Text>Page Type</Text>
+              </Td>
+              <Td>
+                {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
+              </Td>
+            </Tr>
+            <Tr>
+              <Td color="linkColor" display="flex" gap={2}>
+                <RiTranslate2 /> <Text>Language</Text>
+              </Td>
+              <Td>{Languages[currentWiki.language]}</Td>
+            </Tr>
+            <Tr>
+              <Td
+                color="linkColor"
+                borderColor="transparent"
+                display="flex"
+                gap={2}
+              >
+                <RiSurveyFill /> <Text>Categories</Text>
+              </Td>
+              <Td borderColor="inherit">
+                {currentWiki.categories?.map((c: BaseCategory) => (
+                  <Badge variant="outline" m={0}>
+                    {c.title}
+                  </Badge>
+                ))}
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
         <Flex
           w="full"
           direction="row"
           justifyContent="center"
           alignItems="center"
         >
-          <Button variant="outline" onClick={onOpen}>
+          <Button variant="outline" color="linkColor" onClick={onOpen}>
             Edit
           </Button>
         </Flex>

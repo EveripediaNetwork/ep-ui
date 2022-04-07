@@ -11,7 +11,8 @@
   background-image: url(./assets/wiki-link-icon-dark.png);
 }
 .toastui-editor-dark .wikiLink__popupBtn:hover {
-  background-color: #36383f !important;
+  background-color: #2b3447 !important;
+  border: 1px solid #cccccc2a !important;
 }
 
 .wikiLink__inputContainer {

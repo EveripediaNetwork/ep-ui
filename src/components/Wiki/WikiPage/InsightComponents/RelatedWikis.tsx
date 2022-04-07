@@ -14,9 +14,11 @@ import { store } from '@/store/store'
 import NextLink from 'next/link'
 import { WikiTitle } from '@/services/nav-search'
 import { WikiImage } from '@/components/WikiImage'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
-  const { id, title, content: brief } = wiki
+  const { id, title } = wiki
   return (
     <LinkBox w="100%">
       <HStack
@@ -27,7 +29,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
         align="start"
       >
         <WikiImage
-          image={wiki.images?.[0]?.id}
+          imageURL={getWikiImageUrl(wiki)}
           h="80px"
           w="80px"
           flexShrink={0}
@@ -43,7 +45,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
             </LinkOverlay>
           </NextLink>
           <Text fontSize="13px" mt={0.5} wordBreak="break-word">
-            {brief.length > 40 ? brief.slice(0, 40).concat('...') : brief}
+            {getWikiSummary(wiki, WikiSummarySize.Small)}
           </Text>
         </Box>
       </HStack>

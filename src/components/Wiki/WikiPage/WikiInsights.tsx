@@ -1,6 +1,7 @@
 import React from 'react'
 import { VStack } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TitleAndImage } from './InsightComponents/TitleAndImage'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -14,7 +15,7 @@ interface WikiInsightsProps {
 
 const WikiInsights = ({ wiki }: WikiInsightsProps) => (
   <VStack
-    maxW="xl"
+    maxW="500px"
     borderLeftWidth={{ base: 0, md: '1px' }}
     w={{ base: '100%', md: '50%' }}
     mx={{ base: 'auto', md: 0 }}
@@ -28,7 +29,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
       lastEdited={wiki.updated || wiki?.created}
       ipfsHash={wiki.ipfs}
       lastEditor={wiki.user?.id}
-      imgSrc={wiki.images?.[0]?.id}
+      imgSrc={getWikiImageUrl(wiki)}
     />
     <ProfileSummary />
     <ProfileStatistics />
