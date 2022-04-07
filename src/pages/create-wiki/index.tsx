@@ -45,13 +45,13 @@ import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
+import { getWordCount } from '@/utils/getWordCount'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
-`
+const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
 const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
 const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
@@ -179,16 +179,16 @@ const CreateWiki = () => {
       return false
     }
 
-    // console.log(md && md?.split(' ').length)
+    if (getWordCount(md || '') < 300) {
+      toast({
+        title: 'Add a minimum of 300 words to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
 
-    // if (md && md.split(' ').length < 1550) {
-    //   toast({
-    //     title: 'Add a minimum of 1550 wors to continue',
-    //     status: 'error',
-    //     duration: 3000,
-    //   })
-    //   return false
-    // }
+    // TODO: add tag validation
 
     if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
       toast({
