@@ -14,6 +14,10 @@ const initialState: Wiki = {
       id: 'page-type',
       value: 'Place / Location',
     },
+    {
+      id: 'twitter-profile',
+      value: '',
+    },
   ],
 }
 

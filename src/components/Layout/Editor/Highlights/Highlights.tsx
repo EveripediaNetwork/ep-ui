@@ -131,6 +131,25 @@ const Highlights = ({ initialImage }: HightLightsType) => {
         </Flex>
         <Divider my="5" />
         <Flex
+          justifyContent="center"
+          wrap="wrap"
+          alignItems="center"
+          direction="row"
+        >
+          <RiSurveyFill /> <Text ml="2">Twitter Profile</Text>
+          <br />
+          <Flex
+            mt="2"
+            direction="row"
+            wrap="wrap"
+            justify="space-evenly"
+            w="full"
+          >
+            <Text>{getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')?.value}</Text>
+          </Flex>
+        </Flex>
+        <Divider my="5" />
+        <Flex
           w="full"
           direction="row"
           justifyContent="center"

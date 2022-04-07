@@ -16,6 +16,7 @@ export interface MData {
   id: string
   value: string
 }
+export interface UpdatedMetaDataInterface extends Array<MData>{} 
 
 export interface User {
   id: string
@@ -68,7 +69,7 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
-  metadata: MData[]
+  metadata: UpdatedMetaDataInterface
   user?: User
   version: number
   language: LanguagesISOEnum
