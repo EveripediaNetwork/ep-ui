@@ -9,49 +9,24 @@ import wikiLink from '@/editor-plugins/wikiLink'
 
 type EditorType = {
   onChange: (value: string | undefined) => void
-  initialValue: string
   markdown: string
 }
 
-const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
+const Editor = ({ onChange, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const callEditorMethod = useCallback(() => {
-    const currentMarkdown = editorRef.current
-      ?.getInstance()
-      .getMarkdown()
-      .toString() as string
-
-    if (currentMarkdown !== markdown)
-      editorRef.current?.getInstance()?.setMarkdown(markdown)
-  }, [editorRef.current?.getInstance()?.getMarkdown(), markdown])
-
   useEffect(() => {
-    callEditorMethod()
-  }, [markdown, callEditorMethod])
-
-  const updateEditorHeaderBackground = (mode: 'dark' | 'light') => {
-    const backgroundColor = mode === 'dark' ? '#232428' : '#f7f9fc'
     const editorContainer = containerRef.current?.getElementsByClassName(
       'toastui-editor-defaultUI',
     )[0]
-    const editorTab = Array.from(
-      containerRef.current?.getElementsByClassName(
-        'toastui-editor-md-tab-container',
-      ) as HTMLCollectionOf<HTMLElement>,
-    )[0]
     if (editorContainer) {
-      if (mode === 'dark') {
+      if (colorMode === 'dark')
         editorContainer.classList.add('toastui-editor-dark')
-        editorTab.style.backgroundColor = backgroundColor
-      } else {
-        editorTab.style.backgroundColor = backgroundColor
-        editorContainer.classList.remove('toastui-editor-dark')
-      }
+      else editorContainer.classList.remove('toastui-editor-dark')
     }
-  }
+  }, [colorMode])
 
   const handleOnEditorChange = useCallback(() => {
     const currentMd = editorRef.current
@@ -61,20 +36,20 @@ const Editor = ({ onChange, initialValue, markdown }: EditorType) => {
     if (markdown !== currentMd) onChange(currentMd)
   }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
 
-  useEffect(() => {
-    updateEditorHeaderBackground(colorMode)
-  }, [colorMode])
-
+  console.log(markdown)
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
-      <ToastUIEditor
-        plugins={[wikiLink]}
-        height="100%"
-        theme={colorMode === 'dark' ? 'dark' : 'light'}
-        initialValue={initialValue}
-        ref={editorRef}
-        onChange={handleOnEditorChange}
-      />
+      {markdown && (
+        <ToastUIEditor
+          plugins={[wikiLink]}
+          height="100%"
+          autofocus={false}
+          theme={colorMode === 'dark' ? 'dark' : 'light'}
+          initialValue={markdown}
+          ref={editorRef}
+          onChange={handleOnEditorChange}
+        />
+      )}
     </Box>
   )
 }

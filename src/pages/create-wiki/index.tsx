@@ -397,11 +397,7 @@ const CreateWiki = () => {
       >
         <Box h="635px" w="full">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-            <Editor
-              markdown={md || ''}
-              initialValue={initialEditorValue}
-              onChange={handleOnEditorChanges}
-            />
+            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
           </Skeleton>
         </Box>
         <Box minH="635px">
