@@ -7,6 +7,7 @@ import config from '@/config'
 export type TempWikiActivity = {
   id: string
   title: string
+  summary: string
   content: string
   user: {
     id: string

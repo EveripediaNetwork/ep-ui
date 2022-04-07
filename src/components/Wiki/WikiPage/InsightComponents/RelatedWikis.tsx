@@ -15,7 +15,7 @@ import NextLink from 'next/link'
 import { WikiTitle } from '@/services/nav-search'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
   const { id, title } = wiki
@@ -45,7 +45,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
             </LinkOverlay>
           </NextLink>
           <Text fontSize="13px" mt={0.5} wordBreak="break-word">
-            {getWikiSummary(wiki)}
+            {getWikiSummary(wiki, WikiSummarySize.Small)}
           </Text>
         </Box>
       </HStack>
