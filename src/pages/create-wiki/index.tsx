@@ -328,11 +328,12 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, content, tags, categories, metadata } = wikiData
+      const { id, title, summary, content, tags, categories, metadata } =
+        wikiData
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { id, title, content, tags, categories, metadata },
+        payload: { id, title, summary, content, tags, categories, metadata },
       })
 
       setMd(String(wikiData.content))
