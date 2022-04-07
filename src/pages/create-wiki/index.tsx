@@ -186,7 +186,9 @@ const CreateWiki = () => {
       return false
     }
 
-    if (getWordCount(md || '') < 300) {
+    const words = getWordCount(md || '')
+
+    if (words < 300) {
       toast({
         title: `Add a minimum of 300 words to continue, you have written ${words}`,
         status: 'error',
