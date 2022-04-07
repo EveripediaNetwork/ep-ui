@@ -61,7 +61,7 @@ const ImageInput = ({
           <Image
             objectFit="cover"
             h="220px"
-            w="300px"
+            w="100%"
             src={imgSrc}
             alt="Input"
           />

@@ -84,9 +84,9 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       )}
       <Flex direction="column" justifyContent="center" alignItems="center">
         <Table size="sm" variant="simple" mb={2}>
-          <Tbody borderWidth="1px" borderColor="borderColor">
+          <Tbody borderWidth="1px" overflow="hidden">
             <Tr>
-              <Td display="flex" gap={2}>
+              <Td color="linkColor" display="flex" gap={2}>
                 <RiFolder3Fill /> <Text>Page Type</Text>
               </Td>
               <Td>
@@ -94,16 +94,21 @@ const Highlights = ({ initialImage }: HightLightsType) => {
               </Td>
             </Tr>
             <Tr>
-              <Td display="flex" gap={2}>
+              <Td color="linkColor" display="flex" gap={2}>
                 <RiTranslate2 /> <Text>Language</Text>
               </Td>
               <Td>{Languages[currentWiki.language]}</Td>
             </Tr>
-            <Tr borderBottomWidth={0}>
-              <Td display="flex" gap={2}>
+            <Tr>
+              <Td
+                color="linkColor"
+                borderColor="transparent"
+                display="flex"
+                gap={2}
+              >
                 <RiSurveyFill /> <Text>Categories</Text>
               </Td>
-              <Td>
+              <Td borderColor="inherit">
                 {currentWiki.categories?.map((c: BaseCategory) => (
                   <Badge variant="outline" m={0}>
                     {c.title}
@@ -119,7 +124,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
           justifyContent="center"
           alignItems="center"
         >
-          <Button variant="outline" onClick={onOpen}>
+          <Button variant="outline" color="linkColor" onClick={onOpen}>
             Edit
           </Button>
         </Flex>

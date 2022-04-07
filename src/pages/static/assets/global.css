@@ -28,6 +28,10 @@ html {
   background-color: #2b3447 !important;
   border-color: inherit !important;
 }
+.toastui-editor-toolbar{
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
 .toastui-editor-dark .toastui-editor-popup-body, 
 .toastui-editor-dark .toastui-editor-popup, 
 .toastui-editor-dark .toastui-editor-context-menu{
