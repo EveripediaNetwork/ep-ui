@@ -30,6 +30,7 @@ import {
 
 import { useRouter } from 'next/router'
 import config from '@/config'
+import Link from 'next/link'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -42,10 +43,23 @@ const ItemPaths = {
   [SEARCH_TYPES.CATEGORY]: '/categories/',
 }
 
+const ARTICLES_LIMIT = 5
+const CATEGORIES_LIMIT = 2
+
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
+
+  const unrenderedArticles = results.articles.length - ARTICLES_LIMIT
+  const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
+
+  const resolvedUnrenderedArticles =
+    unrenderedArticles > 0 ? unrenderedArticles : 0
+  const resolvedUnrenderedCategories =
+    unrenderedCategories > 0 ? unrenderedCategories : 0
+  const totalUnrendered =
+    resolvedUnrenderedArticles + resolvedUnrenderedCategories
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -89,7 +103,7 @@ export const NavSearch = (props: NavSearchProps) => {
   const articlesSearchList = (
     <AutoCompleteGroup>
       <AutoCompleteGroupTitle {...titleStyles}>Articles</AutoCompleteGroupTitle>
-      {results.articles?.map(article => {
+      {results.articles?.slice(0, ARTICLES_LIMIT).map(article => {
         const articleImage = `${config.pinataBaseUrl}${
           article.images && article.images[0].id
         }`
@@ -141,7 +155,7 @@ export const NavSearch = (props: NavSearchProps) => {
       <AutoCompleteGroupTitle {...titleStyles}>
         Categories
       </AutoCompleteGroupTitle>
-      {results.categories?.map(category => {
+      {results.categories?.slice(0, CATEGORIES_LIMIT).map(category => {
         const value = fillType(category, SEARCH_TYPES.CATEGORY)
         return (
           <AutoCompleteItem
@@ -200,7 +214,15 @@ export const NavSearch = (props: NavSearchProps) => {
 
       <AutoCompleteList p="0" shadow="lg" maxH="auto" {...listProps}>
         {isLoading ? loadingView : searchList}
-
+        {totalUnrendered > 0 && (
+          <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
+            <Link href={`/search/${query}`} passHref>
+              <Button variant="outline" as="a">
+                +View {totalUnrendered} more Results
+              </Button>
+            </Link>
+          </Flex>
+        )}
         <Flex
           color="gray.600"
           _dark={{ color: 'whiteAlpha.600' }}

@@ -178,9 +178,10 @@ const CreateWiki = () => {
       return false
     }
 
-    if (md && md.split(' ').length < 1550) {
+    const words = md ? md.split(' ').length : 0
+    if (words < 150) {
       toast({
-        title: 'Add a minimum of 1550 wors to continue',
+        title: `Add a minimum of 150 words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })
