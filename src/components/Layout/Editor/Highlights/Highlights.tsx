@@ -9,8 +9,6 @@ import {
   Tbody,
   Td,
   Tr,
-  Textarea,
-  Box,
 } from '@chakra-ui/react'
 import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 
@@ -20,6 +18,7 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
+import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -68,12 +67,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
       borderRadius="7px"
       padding="15px"
     >
-      <Box>
-        <Text mb={2} opacity={0.5}>
-          Wiki Summary
-        </Text>
-        <Textarea placeholder="Summary of wiki" />
-      </Box>
+      <SummaryInput />
       {!hideDropzone && <Dropzone dropZoneActions={dropZoneActions} />}
       {!hideImageInput && (
         <ImageInput
