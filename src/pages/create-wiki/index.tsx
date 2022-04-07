@@ -81,6 +81,8 @@ const types = {
   ],
 }
 
+const MINIMUM_WORDS = 300
+
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
@@ -188,9 +190,9 @@ const CreateWiki = () => {
 
     const words = getWordCount(md || '')
 
-    if (words < 300) {
+    if (words < MINIMUM_WORDS) {
       toast({
-        title: `Add a minimum of 300 words to continue, you have written ${words}`,
+        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })

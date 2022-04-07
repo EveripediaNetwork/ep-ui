@@ -14,6 +14,8 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Tag } from '@/types/Wiki'
 
+const MAX_LENGTH = 15
+
 const Tags = () => {
   const currentWiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
@@ -59,8 +61,8 @@ const Tags = () => {
     else if (value.indexOf(' ') >= 0) {
       setTagState({ msg: "Name can't contain blank spaces", invalid: true })
       setAddBtnDisabled(true)
-    } else if (value.length >= 15) {
-      setTagState({ msg: 'Max length is 15', invalid: true })
+    } else if (value.length >= MAX_LENGTH) {
+      setTagState({ msg: `Max length is ${MAX_LENGTH}`, invalid: true })
       setAddBtnDisabled(true)
     } else {
       setTagState({ msg: '', invalid: false })
