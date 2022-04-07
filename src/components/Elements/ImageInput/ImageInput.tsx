@@ -46,7 +46,6 @@ const ImageInput = ({
     <Flex
       mt={imgSrc ? 0 : -20}
       mb={5}
-      mx={5}
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -60,8 +59,10 @@ const ImageInput = ({
         >
           <Image
             objectFit="cover"
-            h="220px"
-            w="100%"
+            h="255px"
+            w="full"
+            borderRadius={4}
+            overflow="hidden"
             src={imgSrc}
             alt="Input"
           />
@@ -80,6 +81,7 @@ const ImageInput = ({
         </Flex>
       ) : (
         <Input
+          w="90%"
           textAlign="center"
           onChange={handleOnImageInputChanges}
           placeholder="(or) paste image link here"

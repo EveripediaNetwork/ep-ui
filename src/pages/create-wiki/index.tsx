@@ -365,7 +365,7 @@ const CreateWiki = () => {
             borderColor="transparent"
             fontSize="18px"
             variant="flushed"
-            maxW="300px"
+            maxW="max(50%, 300px)"
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               dispatch({
                 type: 'wiki/setCurrentWiki',
@@ -384,7 +384,7 @@ const CreateWiki = () => {
           onClick={saveOnIpfs}
           mb={24}
         >
-          Publish Wiki
+          Publish
         </Button>
       </HStack>
       <Flex
