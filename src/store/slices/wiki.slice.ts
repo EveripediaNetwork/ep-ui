@@ -7,6 +7,7 @@ const initialState: Wiki = {
   language: LanguagesISOEnum.EN,
   title: 'Wiki title',
   content: '',
+  summary: '',
   categories: [],
   tags: [],
   metadata: [

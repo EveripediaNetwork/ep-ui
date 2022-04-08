@@ -39,7 +39,6 @@ const MobileNavItem = ({
       }}
     >
       <Flex
-        py={5}
         as={Link}
         href={navItem.href}
         justify="space-between"

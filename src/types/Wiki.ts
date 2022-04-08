@@ -64,6 +64,7 @@ export const Languages: LanguagesType = {
 export interface Wiki {
   id: string
   ipfs?: string
+  summary?: string
   title: string
   content: string
   categories: BaseCategory[]

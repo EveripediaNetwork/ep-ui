@@ -66,6 +66,15 @@ export const UserDetails = (props: UserDetailsProps) => {
             justifySelf="center"
             {...(isSticky && { mt: 0, boxSize: 12 })}
             address={address}
+            svgProps={{
+              mt: '-64px',
+              boxSize: '32',
+              overflow: 'hidden',
+              borderWidth: 2,
+              borderColor: 'white',
+              rounded: 'full',
+              justifySelf: 'center',
+            }}
           />
 
           <Skeleton isLoaded={!loading}>

@@ -10,6 +10,7 @@ import config from '@/config'
 export type WikiTitle = {
   id: string
   title: string
+  summary?: string
   content: string
   tags?: {
     id: string

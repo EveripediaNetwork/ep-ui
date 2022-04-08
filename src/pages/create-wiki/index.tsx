@@ -4,6 +4,7 @@ import React, {
   useState,
   memo,
   useCallback,
+  ChangeEvent,
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
@@ -18,6 +19,11 @@ import {
   Skeleton,
   useToast,
   Box,
+  HStack,
+  Input,
+  InputLeftElement,
+  InputGroup,
+  Icon,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -42,6 +48,7 @@ import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { useSelector } from 'react-redux'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
+import { MdTitle } from 'react-icons/md'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -171,9 +178,10 @@ const CreateWiki = () => {
       return false
     }
 
-    if (md && md.split(' ').length < 1550) {
+    const words = md ? md.split(' ').length : 0
+    if (words < 150) {
       toast({
-        title: 'Add a minimum of 1550 wors to continue',
+        title: `Add a minimum of 150 words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })
@@ -320,11 +328,12 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, content, tags, categories, metadata } = wikiData
+      const { id, title, summary, content, tags, categories, metadata } =
+        wikiData
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { id, title, content, tags, categories, metadata },
+        payload: { id, title, summary, content, tags, categories, metadata },
       })
 
       setMd(String(wikiData.content))
@@ -336,16 +345,59 @@ const CreateWiki = () => {
   }, [txHash])
 
   return (
-    <Box maxW="1900px" mx="auto">
+    <Box maxW="1900px" mx="auto" mb={8}>
+      <HStack
+        boxShadow="sm"
+        borderRadius={4}
+        borderWidth="1px"
+        p={3}
+        justifyContent="space-between"
+        mx="auto"
+        mb={4}
+        mt={2}
+        w="96%"
+      >
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+          </InputLeftElement>
+          <Input
+            fontWeight="500"
+            color="linkColor"
+            borderColor="transparent"
+            fontSize="18px"
+            variant="flushed"
+            maxW="max(50%, 300px)"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              dispatch({
+                type: 'wiki/setCurrentWiki',
+                payload: { title: event.target.value },
+              })
+            }}
+            value={wiki.title}
+            placeholder="Title goes here"
+          />
+        </InputGroup>
+
+        <Button
+          isLoading={submittingWiki}
+          loadingText="Loading"
+          disabled={disableSaveButton()}
+          onClick={saveOnIpfs}
+          mb={24}
+        >
+          Publish
+        </Button>
+      </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
         justify="center"
         align="stretch"
         gap={8}
-        p={{ base: 4, xl: 8 }}
+        px={{ base: 4, xl: 8 }}
       >
-        <Box h="690px" w="full">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
+        <Box h="635px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
             <Editor
               markdown={md || ''}
               initialValue={initialEditorValue}
@@ -353,7 +405,7 @@ const CreateWiki = () => {
             />
           </Skeleton>
         </Box>
-        <Box minH="690px">
+        <Box minH="635px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights initialImage={ipfsHash} />
@@ -393,15 +445,6 @@ const CreateWiki = () => {
               />
             </Alert>
           )}
-          <Button
-            isLoading={submittingWiki}
-            loadingText="Loading"
-            disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
-            mb={24}
-          >
-            Publish Wiki
-          </Button>
         </Flex>
       </Skeleton>
     </Box>

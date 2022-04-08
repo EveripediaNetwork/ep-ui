@@ -51,7 +51,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   useEffect(() => {
     if (initialImage) {
       const path = `${config.pinataBaseUrl}${initialImage}`
-
+      setHideImageInput(true)
       setPaths([path])
     }
   }, [initialImage])
@@ -91,8 +91,10 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             <Image
               mx="auto"
               priority
-              w="350px"
-              h="300px"
+              h="255px"
+              w="full"
+              borderRadius={4}
+              overflow="hidden"
               key={path}
               src={path}
               alt="highlight"
