@@ -207,6 +207,10 @@ export const NavSearch = (props: NavSearchProps) => {
         </InputLeftElement>
         <AutoCompleteInput
           value={query}
+          _placeholderShown={{
+            textOverflow: 'ellipsis',
+            width: '90%',
+          }}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search items, collections and accounts"
           {...inputProps}

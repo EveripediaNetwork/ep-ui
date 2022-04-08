@@ -65,14 +65,19 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
         {!showSubNav ? (
           <Box
             px={{ base: 4, md: 8 }}
-            h={{ base: 'calc(100vh - 240px)', md: 'calc(100vh - 180px)' }}
+            h={{
+              base: !accountData
+                ? 'calc(100vh - 300px)'
+                : 'calc(100vh - 240px)',
+              md: 'calc(100vh - 180px)',
+            }}
           >
             <Box
               display={{ base: 'flex', xl: 'none' }}
               flexDirection="column"
               justifyContent="space-between"
               mt={5}
-              h="min(100%, 500px)"
+              h={!accountData ? 'min(100%, 400px)' : 'min(100%, 500px)'}
               bg="subMenuBg"
               px={6}
               pb={6}
