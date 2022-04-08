@@ -33,7 +33,9 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     />
     <ProfileSummary />
     <ProfileStatistics />
-    <TwitterTimeline url="https://twitter.com/Everipedia" />
+    {wiki.metadata[1]?.value && (
+      <TwitterTimeline url={wiki.metadata[1].value} />
+    )}
     {wiki.categories.length !== 0 && (
       <RelatedWikis categories={wiki.categories} />
     )}

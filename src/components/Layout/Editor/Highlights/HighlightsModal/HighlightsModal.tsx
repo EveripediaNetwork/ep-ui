@@ -176,7 +176,7 @@ const HighlightsModal = ({
                 },
               })
           }}
-          placeholder="Your twitter Profile Name"
+          placeholder="Your twitter URL"
         />
         <CustomDivider />
         <Tags />
