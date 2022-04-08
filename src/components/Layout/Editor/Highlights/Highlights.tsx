@@ -135,7 +135,6 @@ const Highlights = ({ initialImage }: HightLightsType) => {
             </Text>
           </Flex>
         </Flex>
-        <Divider my="5" />
         <Flex
           w="full"
           direction="row"
