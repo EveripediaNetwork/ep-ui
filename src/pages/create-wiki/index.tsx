@@ -28,7 +28,6 @@ import {
 import {
   getRunningOperationPromises,
   getWiki,
-  postImage,
   postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
