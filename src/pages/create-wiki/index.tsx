@@ -81,7 +81,7 @@ const types = {
   ],
 }
 
-const MINIMUM_WORDS = 300
+const MINIMUM_WORDS = 150
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
