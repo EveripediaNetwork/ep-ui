@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Box,
   Flex,
-  Stack,
   Button,
   Center,
   VStack,
@@ -49,12 +48,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   }
 
   return (
-    <VStack
-      justify="space-between"
-      align="stretch"
-      backgroundColor="subMenuBg"
-      h="calc((100vh - 0px) - 72px)"
-    >
+    <VStack justify="space-between" align="stretch" backgroundColor="subMenuBg">
       <Box>
         <NavSearch
           inputGroupProps={{ display: { base: 'inherit', md: 'none' } }}
@@ -69,36 +63,48 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
 
         <Divider />
         {!showSubNav ? (
-          <Stack
-            bg="subMenuBg"
-            px={6}
-            pb={6}
-            display={{ lg: 'flex', xl: 'none' }}
+          <Box
+            px={{ base: 4, md: 8 }}
+            h={{ base: 'calc(100vh - 240px)', md: 'calc(100vh - 180px)' }}
           >
-            {MOBILE_NAV_ITEMS(categoriesLinks || []).map(navItem => (
-              <MobileNavItem
-                handleClick={item => handleClick(item)}
-                key={navItem.label}
-                navItem={navItem}
-                setHamburger={setHamburger}
-              />
-            ))}
-            <Menu>
-              <Box mx="-8" pt={2}>
-                <ColorModeToggle isInMobileMenu />
-              </Box>
-            </Menu>
-            {accountData && (
-              <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
-                <MobileNavItem
-                  handleClick={handleWalletButtonClick}
-                  key={mobileWalletDetails.label}
-                  navItem={mobileWalletDetails}
-                  setHamburger={setHamburger}
-                />
-              </Box>
-            )}
-          </Stack>
+            <Box
+              display={{ base: 'flex', xl: 'none' }}
+              flexDirection="column"
+              justifyContent="space-between"
+              mt={5}
+              h="min(100%, 500px)"
+              bg="subMenuBg"
+              px={6}
+              pb={6}
+            >
+              {MOBILE_NAV_ITEMS(categoriesLinks || [])
+                .filter(i => i.label !== 'Account' || accountData)
+                .map(navItem => (
+                  <MobileNavItem
+                    handleClick={item => handleClick(item)}
+                    key={navItem.label}
+                    navItem={navItem}
+                    setHamburger={setHamburger}
+                  />
+                ))}
+
+              {accountData && (
+                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
+                  <MobileNavItem
+                    handleClick={handleWalletButtonClick}
+                    key={mobileWalletDetails.label}
+                    navItem={mobileWalletDetails}
+                    setHamburger={setHamburger}
+                  />
+                </Box>
+              )}
+              <Menu>
+                <Box>
+                  <ColorModeToggle isInMobileMenu />
+                </Box>
+              </Menu>
+            </Box>
+          </Box>
         ) : (
           <Box h="calc(100vh - 220px)">
             <MobileSubNav

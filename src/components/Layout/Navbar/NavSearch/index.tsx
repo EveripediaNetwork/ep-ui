@@ -196,6 +196,7 @@ export const NavSearch = (props: NavSearchProps) => {
       }}
     >
       <InputGroup
+        mx={{ base: 4, md: 0 }}
         size="lg"
         maxW="800px"
         display={{ base: 'none', sm: 'none', md: 'block' }}
