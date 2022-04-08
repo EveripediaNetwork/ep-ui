@@ -53,6 +53,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
         <NavSearch
           inputGroupProps={{ display: { base: 'inherit', md: 'none' } }}
           inputProps={{
+            border: 'none',
             rounded: 'none',
             borderColor: 'transparent',
             py: 8,
@@ -66,8 +67,8 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
             px={{ base: 4, md: 8 }}
             h={{
               base: !accountData
-                ? 'calc(100vh - 300px)'
-                : 'calc(100vh - 240px)',
+                ? 'max(calc(100vh - 300px), 350px)'
+                : 'max(calc(100vh - 240px), 350px)',
               md: 'calc(100vh - 180px)',
             }}
           >
