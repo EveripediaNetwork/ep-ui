@@ -36,7 +36,6 @@ const Editor = ({ onChange, markdown }: EditorType) => {
     if (markdown !== currentMd) onChange(currentMd)
   }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
 
-  console.log(markdown)
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
       {markdown && (
