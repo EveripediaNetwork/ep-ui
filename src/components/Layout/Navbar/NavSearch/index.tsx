@@ -201,18 +201,29 @@ export const NavSearch = (props: NavSearchProps) => {
         display={{ base: 'none', sm: 'none', md: 'block' }}
         {...inputGroupProps}
       >
-        <InputLeftElement pointerEvents="none" h="full">
+        <InputLeftElement ml={4} pointerEvents="none" h="full">
           <Search2Icon color="gray.300" />
         </InputLeftElement>
         <AutoCompleteInput
+          ml={4}
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search items, collections and accounts"
+          _placeholderShown={{
+            textOverflow: 'ellipsis',
+            width: '96%',
+          }}
           {...inputProps}
         />
       </InputGroup>
 
-      <AutoCompleteList p="0" shadow="lg" maxH="auto" {...listProps}>
+      <AutoCompleteList
+        p="0"
+        mx={{ base: 4, md: 0 }}
+        shadow="lg"
+        maxH="auto"
+        {...listProps}
+      >
         {isLoading ? loadingView : searchList}
         {totalUnrendered > 0 && (
           <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">

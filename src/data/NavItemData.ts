@@ -124,7 +124,19 @@ export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
           {
             id: 7004,
             label: 'Notification Settings',
-            href: '/account/settings?tab=notification',
+            href: '/account/settings?tab=notifications',
+            hasImage: false,
+          },
+          {
+            id: 7005,
+            label: 'Support Settings',
+            href: '/account/settings?tab=support',
+            hasImage: false,
+          },
+          {
+            id: 7006,
+            label: 'Advanced Settings',
+            href: '/account/settings?tab=advanced',
             hasImage: false,
           },
         ],
