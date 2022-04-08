@@ -28,7 +28,7 @@ import {
 import {
   getRunningOperationPromises,
   getWiki,
-  // postImage,
+  postImage,
   postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
@@ -53,6 +53,7 @@ import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
+import { POST_IMG } from '@/services/wikis/queries'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -127,16 +128,20 @@ const CreateWiki = () => {
       type: 'multipart/form-data',
     })
 
-    formData.append('file', blob)
-    formData.append('name', image.id)
+    formData.append('operations', POST_IMG)
+    const map = `{"0": ["variables.file"]}`
+    formData.append('map', map)
+    formData.append('0', blob)
 
     const {
-      data: { ipfs },
-    } = await axios.post('/api/ipfs-image', formData, {
-      headers: { 'content-type': 'multipart/form-data' },
-    })
+      data: {
+        data: {
+          pinImage: { IpfsHash },
+        },
+      },
+    } = await axios.post(config.graphqlUrl, formData, {})
 
-    return ipfs
+    return IpfsHash
   }
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
@@ -164,12 +169,15 @@ const CreateWiki = () => {
 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
+  const getImageArrayBufferLength = () =>
+    (image.type as ArrayBuffer).byteLength === 0
+
   const isValidWiki = () => {
     if (
       !image ||
       image.type === null ||
       image.type === undefined ||
-      (image.type as ArrayBuffer).byteLength === 0
+      getImageArrayBufferLength()
     ) {
       toast({
         title: 'Add a main image to continue',
