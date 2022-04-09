@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   AlertDialog,
@@ -51,6 +51,7 @@ const WikiProcessModal = ({
       window.open(`${config.blockExplorerUrl}tx/${txHash}`)
     }
   }
+
   return (
     <AlertDialog
       motionPreset="slideInBottom"

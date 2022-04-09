@@ -352,6 +352,13 @@ const CreateWiki = () => {
     if (txHash) verifyTrxHash(txHash)
   }, [txHash])
 
+  const handlePopupClose = () => {
+    setMsg(initialMsg)
+    setIsLoading("loading")
+    setActiveStep(0)
+    setOpenTxDetailsDialog(false)
+  }
+
   return (
     <Box maxW="1900px" mx="auto" mb={8}>
       <HStack
@@ -429,7 +436,7 @@ const CreateWiki = () => {
           activeStep={activeStep}
           state={loadingState}
           isOpen={openTxDetailsDialog}
-          onClose={() => setOpenTxDetailsDialog(false)}
+          onClose={() => handlePopupClose()}
         />
       </Flex>
 
