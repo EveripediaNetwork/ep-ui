@@ -33,7 +33,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     />
     <ProfileSummary />
     <ProfileStatistics />
-    <CurrencyConverter />
+    <CurrencyConverter token="everipedia" />
     <TwitterTimeline url="https://twitter.com/Everipedia" />
     {wiki.categories.length !== 0 && (
       <RelatedWikis categories={wiki.categories} />
