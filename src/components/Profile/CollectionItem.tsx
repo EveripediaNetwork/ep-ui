@@ -17,6 +17,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import { shortenText } from '@/utils/shortenText'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 export type CollectionItemProps = {
   item: Wiki
@@ -37,7 +38,7 @@ export const CollectionItem = (props: CollectionItemProps) => {
         _dark={{ bg: '#303339' }}
       >
         <AspectRatio maxW="full" ratio={1}>
-          <WikiImage image={item.images?.[0]?.id} w="full" />
+          <WikiImage imageURL={getWikiImageUrl(item)} w="full" />
         </AspectRatio>
         <Flex direction="column" px="3" fontSize="xs" py="2" mb="3">
           <Flex align="center">

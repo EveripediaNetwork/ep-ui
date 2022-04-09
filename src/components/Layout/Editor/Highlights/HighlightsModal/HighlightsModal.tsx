@@ -24,6 +24,7 @@ import {
 } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
+import Tags from './Tags'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -158,7 +159,8 @@ const HighlightsModal = ({
             </option>
           ))}
         </Select>
-
+        <CustomDivider />
+        <Tags />
         <CustomDivider />
       </SimpleGrid>
     </Modal>

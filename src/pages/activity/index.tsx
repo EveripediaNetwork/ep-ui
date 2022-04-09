@@ -8,6 +8,7 @@ import {
   Tab,
   Tabs,
   TabList,
+  Center,
 } from '@chakra-ui/react'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { ActivityData } from '@/data/ActivityData'
@@ -19,9 +20,10 @@ import {
 } from '@/services/activities'
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
+import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 
 const Activity = () => {
-  const { data: LatestActivityData } = useGetLatestActivitiesQuery()
+  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery()
 
   const renderActivityCard = (activity: TempWikiActivity, i: number) => (
     <ActivityCard
@@ -49,26 +51,40 @@ const Activity = () => {
             <Tab>New Wikis</Tab>
             <Tab>Updated Wikis</Tab>
           </TabList>
-          <TabPanels>
-            {/* Most Recent Activity Section */}
-            <TabPanel px={0}>
-              <VStack spacing={4}>
-                {LatestActivityData?.map((activity, i) =>
-                  renderActivityCard(activity, i),
-                )}
-              </VStack>
-            </TabPanel>
-            {/* Expiring Soon Activity Section */}
-            <TabPanel px={0}>
-              <VStack spacing={4}>
-                {LatestActivityData?.slice()
-                  .reverse()
-                  .map((activity, i) =>
-                    renderActivityCard(activity, LatestActivityData.length - i),
+          {isLoading ? (
+            <Center w="full" h="16">
+              Loading Wikis
+            </Center>
+          ) : (
+            <TabPanels>
+              {!LatestActivityData?.length && (
+                <Center>
+                  <ActivityEmptyState />
+                </Center>
+              )}
+              {/* Most Recent Activity Section */}
+              <TabPanel px={0}>
+                <VStack spacing={4}>
+                  {LatestActivityData?.map((activity, i) =>
+                    renderActivityCard(activity, i),
                   )}
-              </VStack>
-            </TabPanel>
-          </TabPanels>
+                </VStack>
+              </TabPanel>
+              {/* Expiring Soon Activity Section */}
+              <TabPanel px={0}>
+                <VStack spacing={4}>
+                  {LatestActivityData?.slice()
+                    .reverse()
+                    .map((activity, i) =>
+                      renderActivityCard(
+                        activity,
+                        LatestActivityData.length - i,
+                      ),
+                    )}
+                </VStack>
+              </TabPanel>
+            </TabPanels>
+          )}
         </Tabs>
       </Box>
     </Box>

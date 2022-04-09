@@ -8,7 +8,6 @@ export type FilterLayoutProps = { children: React.ReactNode }
 
 export const FilterLayout = (props: FilterLayoutProps) => {
   const { children } = props
-
   const { filterSidebarSize, filterSidebarIsSticky } = useProfileContext()
 
   return (

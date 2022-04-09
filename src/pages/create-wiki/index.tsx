@@ -7,8 +7,6 @@ import React, {
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
-  Grid,
-  GridItem,
   Flex,
   Button,
   Alert,
@@ -18,6 +16,8 @@ import {
   CloseButton,
   Center,
   Skeleton,
+  useToast,
+  Box,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -35,7 +35,7 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { PageTemplate } from '@/constant/pageTemplate'
+import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
@@ -75,6 +75,7 @@ const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const toast = useToast()
   const { slug } = router.query
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
@@ -151,7 +152,49 @@ const CreateWiki = () => {
 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
+  const isValidWiki = () => {
+    if (wiki.images?.length === 0) {
+      toast({
+        title: 'Add a main image to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (wiki.categories.length === 0) {
+      toast({
+        title: 'Add one category to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (md && md.split(' ').length < 1550) {
+      toast({
+        title: 'Add a minimum of 1550 wors to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
+      toast({
+        title: 'Add a page type to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    return true
+  }
+
   const saveOnIpfs = async () => {
+    if (!isValidWiki()) return
+
     if (accountData) {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
@@ -197,17 +240,6 @@ const CreateWiki = () => {
     setMd(String(pageType?.templateText))
   }, [currentPageType])
 
-  useEffect(() => {
-    if (wiki && wikiData) {
-      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
-      if (currentPageType.value !== pageType) updatePageTypeTemplate()
-    }
-  }, [currentPageType])
-
-  useEffect(() => {
-    if (!wikiData) setMd(initialEditorValue)
-  }, [])
-
   const verifyTrxHash = async (trxHash: string) => {
     const timer = setInterval(() => {
       try {
@@ -234,6 +266,17 @@ const CreateWiki = () => {
       }
     }, 3000)
   }
+
+  useEffect(() => {
+    if (!wikiData) setMd(initialEditorValue)
+  }, [])
+
+  useEffect(() => {
+    if (wiki && wikiData) {
+      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
+      if (currentPageType.value !== pageType) updatePageTypeTemplate()
+    }
+  }, [currentPageType])
 
   useEffect(() => {
     const getSignedTxHash = async () => {
@@ -289,79 +332,79 @@ const CreateWiki = () => {
   }, [wikiData])
 
   useEffect(() => {
-    if (txHash) {
-      verifyTrxHash(txHash)
-    }
+    if (txHash) verifyTrxHash(txHash)
   }, [txHash])
 
   return (
-    <Grid
-      templateColumns="repeat(3, 1fr)"
-      templateRows="repeat(3, 1fr)"
-      gap={4}
-      h={['1350px', '1450px', '1450px', '1100px']}
-      my="15px"
-    >
-      <GridItem rowSpan={[2, 1, 1, 2]} colSpan={[3, 3, 3, 2, 2]} maxH="690px">
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Editor
-            markdown={md || ''}
-            initialValue={initialEditorValue}
-            onChange={handleOnEditorChanges}
-          />
-        </Skeleton>
-      </GridItem>
-      <GridItem rowSpan={[1, 2, 2, 2]} colSpan={[3, 3, 3, 1, 1]}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Center>
-            <Highlights initialImage={ipfsHash} />
-          </Center>
-        </Skeleton>
-      </GridItem>
-      <GridItem mt="3" rowSpan={1} colSpan={3}>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Flex direction="column" justifyContent="center" alignItems="center">
-            {txError.opened && (
-              <Alert status="error" maxW="md" mb="3">
-                <AlertIcon />
-                <AlertTitle>{txError.title}</AlertTitle>
-                <AlertDescription>{txError.description}</AlertDescription>
-                <CloseButton
-                  onClick={() =>
-                    setTxError({
-                      title: '',
-                      description: '',
-                      opened: false,
-                    })
-                  }
-                  position="absolute"
-                  right="5px"
-                />
-              </Alert>
-            )}
-            <Button
-              isLoading={submittingWiki}
-              loadingText="Loading"
-              disabled={disableSaveButton()}
-              onClick={saveOnIpfs}
-            >
-              Publish Wiki
-            </Button>
-          </Flex>
-        </Skeleton>
-      </GridItem>
+    <Box maxW="1900px" mx="auto">
+      <Flex
+        flexDirection={{ base: 'column', xl: 'row' }}
+        justify="center"
+        align="stretch"
+        gap={8}
+        p={{ base: 4, xl: 8 }}
+      >
+        <Box h="690px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
+            <Editor
+              markdown={md || ''}
+              initialValue={initialEditorValue}
+              onChange={handleOnEditorChanges}
+            />
+          </Skeleton>
+        </Box>
+        <Box minH="690px">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+            <Center>
+              <Highlights initialImage={ipfsHash} />
+            </Center>
+          </Skeleton>
+        </Box>
 
-      <WikiProcessModal
-        wikiId={wikiId}
-        msg={msg}
-        txHash={txHash}
-        wikiHash={wikiHash}
-        activeStep={activeStep}
-        state={loadingState}
-        isOpen={openTxDetailsDialog}
-        onClose={() => setOpenTxDetailsDialog(false)}
-      />
-    </Grid>
+        <WikiProcessModal
+          wikiId={wikiId}
+          msg={msg}
+          txHash={txHash}
+          wikiHash={wikiHash}
+          activeStep={activeStep}
+          state={loadingState}
+          isOpen={openTxDetailsDialog}
+          onClose={() => setOpenTxDetailsDialog(false)}
+        />
+      </Flex>
+
+      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+        <Flex direction="column" justifyContent="center" alignItems="center">
+          {txError.opened && (
+            <Alert status="error" maxW="md" mb="3">
+              <AlertIcon />
+              <AlertTitle>{txError.title}</AlertTitle>
+              <AlertDescription>{txError.description}</AlertDescription>
+              <CloseButton
+                onClick={() =>
+                  setTxError({
+                    title: '',
+                    description: '',
+                    opened: false,
+                  })
+                }
+                position="absolute"
+                right="5px"
+              />
+            </Alert>
+          )}
+          <Button
+            isLoading={submittingWiki}
+            loadingText="Loading"
+            disabled={disableSaveButton()}
+            onClick={saveOnIpfs}
+            mb={24}
+          >
+            Publish Wiki
+          </Button>
+        </Flex>
+      </Skeleton>
+    </Box>
   )
 }
 

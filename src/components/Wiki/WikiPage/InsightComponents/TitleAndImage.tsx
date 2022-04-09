@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Heading,
   HStack,
-  Link,
   Table,
   Tag,
   Tbody,
@@ -11,13 +10,14 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
 import { WikiImage } from '@/components/WikiImage'
 import { WikiTitle } from '@/services/nav-search'
 import { BaseCategory } from '@/types/Wiki'
-import CustomAvatar from 'boring-avatars'
+import Link from '@/components/Elements/Link/Link'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useENSData } from '@/hooks/useENSData'
 
 export const TitleAndImage = ({
   wikiTitle,
@@ -35,6 +35,7 @@ export const TitleAndImage = ({
   imgSrc?: string
 }) => {
   const { title } = wikiTitle
+  const [, username] = useENSData(lastEditor || '')
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
@@ -49,7 +50,7 @@ export const TitleAndImage = ({
       >
         {title}
       </Heading>
-      <WikiImage bgColor="dimColor" image={imgSrc} w="100%" h="320px" />
+      <WikiImage bgColor="dimColor" imageURL={imgSrc} w="100%" h="320px" />
       <Table size="sm" variant="simple">
         <Tbody>
           {categories.length !== 0 && (
@@ -58,13 +59,14 @@ export const TitleAndImage = ({
               <Td py={1}>
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {categories?.map((category, i) => (
-                    <NextLink href={`/categories/${category.id}`} passHref>
-                      <Link m="3px !important" href="passRef">
-                        <Tag key={i} whiteSpace="nowrap">
-                          {category.id}
-                        </Tag>
-                      </Link>
-                    </NextLink>
+                    <Link
+                      m="3px !important"
+                      href={`/categories/${category.id}`}
+                    >
+                      <Tag key={i} whiteSpace="nowrap">
+                        {category.id}
+                      </Tag>
+                    </Link>
                   ))}
                 </HStack>
               </Td>
@@ -103,13 +105,9 @@ export const TitleAndImage = ({
             <Td whiteSpace="nowrap">latest Editor</Td>
             <Td>
               <HStack>
-                <CustomAvatar name={lastEditor} size={25} variant="beam" />
-                <Link
-                  target="_blank"
-                  href={`/user/${lastEditor}`}
-                  color="blue.400"
-                >
-                  {shortenAccount(lastEditor || '')}
+                <DisplayAvatar address={lastEditor} />
+                <Link href={`/account/${lastEditor}`} color="blue.400">
+                  {username || shortenAccount(lastEditor || '')}
                 </Link>
               </HStack>
             </Td>

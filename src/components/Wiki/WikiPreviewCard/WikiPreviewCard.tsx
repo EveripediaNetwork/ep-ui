@@ -1,13 +1,14 @@
 import React from 'react'
 import { Box, Center, Stack, Text } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
-import { shortenText } from '@/utils/shortenText'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
-const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
-  const { updated, content, title, id } = wiki
+const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
+  const { updated, title, id } = wiki
   return (
     <Center py={6} cursor="pointer">
       <NextLink href={`/wiki/${id}`} passHref>
@@ -22,7 +23,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
           <WikiImage
             h={200}
             mb={3}
-            image={wiki.images?.[0]?.id}
+            imageURL={getWikiImageUrl(wiki)}
             layout="fill"
           />
           <Stack spacing={3}>
@@ -30,7 +31,7 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
               {title}
             </Text>
             <Text color="gray.600" fontSize="md">
-              {shortenText(content, 65)}
+              {getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
             <Text color="gray.400" fontSize="sm">
               Last Edited {updated && getReadableDate(updated)}
@@ -42,4 +43,4 @@ const SubCategoryCard = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export default SubCategoryCard
+export default WikiPreviewCard
