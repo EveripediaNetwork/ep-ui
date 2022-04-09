@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   Avatar,
   Box,
@@ -49,27 +49,30 @@ const CurrencyConverter = ({ token }: CurrencyConverterProps) => {
   const [toCurrency, setToCurrency] = useState<number>(0)
 
   // function for updating the from currency
-  const updateValues = (value: string, isEditedFrom: boolean) => {
-    // sanitize the input value
-    let v = parseFloat(value)
-    if (Number.isNaN(v)) v = 0
+  const updateValues = useCallback(
+    (value: string, isEditedFrom: boolean) => {
+      // sanitize the input value
+      let v = parseFloat(value)
+      if (Number.isNaN(v)) v = 0
 
-    // update the state
-    if (isEditedFrom) setFromCurrency(v)
-    else setToCurrency(v)
+      // update the state
+      if (isEditedFrom) setFromCurrency(v)
+      else setToCurrency(v)
 
-    // calculate the comparing currency
-    let c = 0
-    if (isEditedFrom) c = v * conversionRate
-    else c = v / conversionRate
+      // calculate the comparing currency
+      let c = 0
+      if (isEditedFrom) c = v * conversionRate
+      else c = v / conversionRate
 
-    // trim the value to 2 decimal places
-    c = Math.round(c * 100) / 100
+      // trim the value to 2 decimal places
+      c = Math.round(c * 100) / 100
 
-    // update the state
-    if (isEditedFrom) setToCurrency(c)
-    else setFromCurrency(c)
-  }
+      // update the state
+      if (isEditedFrom) setToCurrency(c)
+      else setFromCurrency(c)
+    },
+    [conversionRate],
+  )
 
   useEffect(() => {
     const fetchConversion = async () => {
@@ -79,7 +82,7 @@ const CurrencyConverter = ({ token }: CurrencyConverterProps) => {
     fetchConversion()
     // update from currency
     updateValues('1', true)
-  }, [])
+  }, [token, setConversionRate, updateValues])
 
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
