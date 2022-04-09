@@ -8,6 +8,9 @@ import { useRouter } from 'next/router'
 const Login = () => {
   const { user } = useSelector((state: RootState) => state.user)
   const router = useRouter()
+  console.log(router.query.from)
+  console.log(router.query.from)
+  console.log(router.query.from)
   useEffect(() => {
     if (user) {
       if (router.query.from) {
