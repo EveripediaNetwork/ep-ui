@@ -354,7 +354,7 @@ const CreateWiki = () => {
 
   const handlePopupClose = () => {
     setMsg(initialMsg)
-    setIsLoading("loading")
+    setIsLoading('loading')
     setActiveStep(0)
     setOpenTxDetailsDialog(false)
   }
