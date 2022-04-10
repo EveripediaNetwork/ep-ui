@@ -12,7 +12,7 @@ export const authenticatedRoute = <P extends object>(
     const router = useRouter()
     const user =
       useSelector((state: RootState) => state.user.user) || getState()
-    
+
     useEffect(() => {
       if (!user) {
         const previousPageQuery = router.query as GetUrlQueriesType
