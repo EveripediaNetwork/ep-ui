@@ -7,8 +7,9 @@ import { useENSData } from '@/hooks/useENSData'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
+  svgProps?: any
 }
-const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
+const DisplayAvatar = ({ address, svgProps, ...rest }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
   let content = null
   if (avatar) {
@@ -41,7 +42,7 @@ const DisplayAvatar = ({ address, ...rest }: DisplayAvatarProps) => {
       zIndex="banner"
       sx={{
         svg: {
-          ...rest,
+          ...svgProps,
         },
       }}
     >

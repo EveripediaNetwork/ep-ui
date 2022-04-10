@@ -14,27 +14,18 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Tag } from '@/types/Wiki'
 
+const MAX_LENGTH = 15
+
 const Tags = () => {
   const currentWiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const [tagState, setTagState] = useState({ invalid: false, msg: '' })
+  const [addBtnDisabled, setAddBtnDisabled] = useState(true)
   const inputTagRef = useRef<HTMLInputElement>(null)
 
   const handleAddTag = (value: string) => {
     // update previous invalid state
     if (tagState.invalid) setTagState(prev => ({ ...prev, invalid: false }))
-
-    if (value.length === 0) return
-
-    if (value.indexOf(' ') >= 0) {
-      setTagState({ msg: "Name can't contain blank spaces", invalid: true })
-      return
-    }
-
-    if (value.length >= 15) {
-      setTagState({ msg: 'Max length is 15', invalid: true })
-      return
-    }
 
     if (currentWiki.tags.length === 5) {
       setTagState({ msg: "You can't add more than 5 tags", invalid: true })
@@ -65,8 +56,19 @@ const Tags = () => {
     })
   }
 
-  const disableAddTagButton = () =>
-    inputTagRef === null || inputTagRef.current?.value === ''
+  const handleOnTagInputChanges = (value: string) => {
+    if (value === '') setAddBtnDisabled(true)
+    else if (value.indexOf(' ') >= 0) {
+      setTagState({ msg: "Name can't contain blank spaces", invalid: true })
+      setAddBtnDisabled(true)
+    } else if (value.length >= MAX_LENGTH) {
+      setTagState({ msg: `Max length is ${MAX_LENGTH}`, invalid: true })
+      setAddBtnDisabled(true)
+    } else {
+      setTagState({ msg: '', invalid: false })
+      setAddBtnDisabled(false)
+    }
+  }
 
   return (
     <>
@@ -87,11 +89,12 @@ const Tags = () => {
               <Input
                 ref={inputTagRef}
                 isInvalid={tagState.invalid}
+                onChange={event => handleOnTagInputChanges(event.target.value)}
                 placeholder="Tag name"
               />
               <InputRightElement width="4.5rem">
                 <Button
-                  disabled={disableAddTagButton()}
+                  disabled={addBtnDisabled}
                   onClick={() => {
                     if (inputTagRef?.current?.value)
                       handleAddTag(inputTagRef.current.value)

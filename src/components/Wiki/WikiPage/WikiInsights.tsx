@@ -16,7 +16,7 @@ interface WikiInsightsProps {
 
 const WikiInsights = ({ wiki }: WikiInsightsProps) => (
   <VStack
-    maxW="xl"
+    maxW="500px"
     borderLeftWidth={{ base: 0, md: '1px' }}
     w={{ base: '100%', md: '50%' }}
     mx={{ base: 'auto', md: 0 }}

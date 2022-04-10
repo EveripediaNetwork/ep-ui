@@ -12,5 +12,5 @@ export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiTitle,
   size: WikiSummarySize = WikiSummarySize.Big,
 ) => {
-  return shortenText(wiki.content || '', size)
+  return shortenText(wiki.summary || wiki.content || '', size)
 }

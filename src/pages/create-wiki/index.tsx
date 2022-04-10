@@ -4,6 +4,7 @@ import React, {
   useState,
   memo,
   useCallback,
+  ChangeEvent,
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
@@ -18,10 +19,17 @@ import {
   Skeleton,
   useToast,
   Box,
+  HStack,
+  Input,
+  InputLeftElement,
+  InputGroup,
+  Icon,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
   getWiki,
+  // postImage,
+  postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
@@ -29,8 +37,11 @@ import { RootState, store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import { useSelector } from 'react-redux'
+import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
+
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -39,16 +50,15 @@ import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import { useSelector } from 'react-redux'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
+import { getWordCount } from '@/utils/getWordCount'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
-`
+const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
 const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
 const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
@@ -70,6 +80,8 @@ const types = {
     { name: 'deadline', type: 'uint256' },
   ],
 }
+
+const MINIMUM_WORDS = 150
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -153,7 +165,12 @@ const CreateWiki = () => {
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
   const isValidWiki = () => {
-    if (wiki.images?.length === 0) {
+    if (
+      !image ||
+      image.type === null ||
+      image.type === undefined ||
+      (image.type as ArrayBuffer).byteLength === 0
+    ) {
       toast({
         title: 'Add a main image to continue',
         status: 'error',
@@ -171,9 +188,11 @@ const CreateWiki = () => {
       return false
     }
 
-    if (md && md.split(' ').length < 1550) {
+    const words = getWordCount(md || '')
+
+    if (words < MINIMUM_WORDS) {
       toast({
-        title: 'Add a minimum of 1550 wors to continue',
+        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })
@@ -213,20 +232,17 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      const {
-        data: { ipfs },
-      } = await axios.post('/api/ipfs', tmp)
+      const wikiResult: any = await store.dispatch(
+        postWiki.initiate({ data: tmp }),
+      )
 
-      if (ipfs) {
-        saveHashInTheBlockchain(ipfs)
-      }
+      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       setSubmittingWiki(false)
     }
   }
 
   const disableSaveButton = () =>
-    // wiki.images.length === 0 ||
     submittingWiki || !accountData?.address || signing || isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
@@ -320,11 +336,12 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, content, tags, categories, metadata } = wikiData
+      const { id, title, summary, content, tags, categories, metadata } =
+        wikiData
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { id, title, content, tags, categories, metadata },
+        payload: { id, title, summary, content, tags, categories, metadata },
       })
 
       setMd(String(wikiData.content))
@@ -336,16 +353,59 @@ const CreateWiki = () => {
   }, [txHash])
 
   return (
-    <Box maxW="1900px" mx="auto">
+    <Box maxW="1900px" mx="auto" mb={8}>
+      <HStack
+        boxShadow="sm"
+        borderRadius={4}
+        borderWidth="1px"
+        p={3}
+        justifyContent="space-between"
+        mx="auto"
+        mb={4}
+        mt={2}
+        w="96%"
+      >
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+          </InputLeftElement>
+          <Input
+            fontWeight="500"
+            color="linkColor"
+            borderColor="transparent"
+            fontSize="18px"
+            variant="flushed"
+            maxW="max(50%, 300px)"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              dispatch({
+                type: 'wiki/setCurrentWiki',
+                payload: { title: event.target.value },
+              })
+            }}
+            value={wiki.title}
+            placeholder="Title goes here"
+          />
+        </InputGroup>
+
+        <Button
+          isLoading={submittingWiki}
+          loadingText="Loading"
+          disabled={disableSaveButton()}
+          onClick={saveOnIpfs}
+          mb={24}
+        >
+          Publish
+        </Button>
+      </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
         justify="center"
         align="stretch"
         gap={8}
-        p={{ base: 4, xl: 8 }}
+        px={{ base: 4, xl: 8 }}
       >
-        <Box h="690px" w="full">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="690px">
+        <Box h="635px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
             <Editor
               markdown={md || ''}
               initialValue={initialEditorValue}
@@ -353,7 +413,7 @@ const CreateWiki = () => {
             />
           </Skeleton>
         </Box>
-        <Box minH="690px">
+        <Box minH="635px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights initialImage={ipfsHash} />
@@ -393,15 +453,6 @@ const CreateWiki = () => {
               />
             </Alert>
           )}
-          <Button
-            isLoading={submittingWiki}
-            loadingText="Loading"
-            disabled={disableSaveButton()}
-            onClick={saveOnIpfs}
-            mb={24}
-          >
-            Publish Wiki
-          </Button>
         </Flex>
       </Skeleton>
     </Box>

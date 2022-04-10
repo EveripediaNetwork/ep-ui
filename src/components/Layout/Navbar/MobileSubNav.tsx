@@ -55,16 +55,16 @@ const MobileSubNav = ({
     height="xl"
   >
     <Flex
-      py={4}
       justify="flex-start"
       align="center"
       _hover={{
         textDecoration: 'none',
       }}
       fontSize="lg"
+      cursor="pointer"
       onClick={() => setShowSubNav(false)}
       bg="pageBg"
-      px={2}
+      p={4}
       borderBottomColor="gray.200"
       borderBottomWidth="thin"
     >
@@ -73,7 +73,7 @@ const MobileSubNav = ({
         {activeMenu?.label}
       </Text>
     </Flex>
-    <Box h="calc(100vh - 300px)" overflowY="scroll">
+    <Box h="calc(100vh - 300px)" px={4} overflowY="scroll">
       {activeMenu?.subItem?.map((item, key) => {
         if (item.subItem) {
           return (

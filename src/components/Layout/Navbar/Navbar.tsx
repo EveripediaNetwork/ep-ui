@@ -141,7 +141,6 @@ const Navbar = () => {
         w="full"
         h={isHamburgerOpen ? '100%' : 'unset'}
         bg="subMenuBg"
-        px={{ base: 4, md: 8 }}
         borderBottomWidth={1}
       >
         <Flex mx="auto" align="center">
@@ -151,6 +150,7 @@ const Navbar = () => {
               h="70px"
               alignItems="center"
               justifyContent="space-between"
+              px={{ base: 4, md: 8 }}
             >
               <Link
                 href="/"
@@ -221,12 +221,26 @@ const Navbar = () => {
                   }}
                 />
               </HStack>
-              <Box
+              <HStack
                 display={{
-                  base: 'block',
+                  base: 'flex',
                   xl: 'none',
                 }}
               >
+                <Icon
+                  display={{ base: 'none', md: 'flex' }}
+                  color="linkColor"
+                  cursor="pointer"
+                  fontSize="3xl"
+                  onClick={handleWalletIconAction}
+                  fontWeight={600}
+                  as={RiWallet2Line}
+                  onMouseEnter={() => setVisibleMenu(null)}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: 'linkHoverColor',
+                  }}
+                />
                 <IconButton
                   onClick={() => setHamburger(!isHamburgerOpen)}
                   icon={
@@ -239,7 +253,7 @@ const Navbar = () => {
                   variant="ghost"
                   aria-label="Toggle Navigation"
                 />
-              </Box>
+              </HStack>
             </Flex>
           </Box>
         </Flex>

@@ -7,6 +7,7 @@ export const GET_WIKI_BY_ID = gql`
       ipfs
       created
       title
+      summary
       content
       categories {
         id
@@ -38,6 +39,7 @@ export const GET_WIKIS = gql`
       content
       created
       title
+      summary
       content
       categories {
         id
@@ -68,6 +70,7 @@ export const GET_PROMOTED_WIKIS = gql`
       content
       created
       title
+      summary
       content
       categories {
         id
@@ -97,6 +100,7 @@ export const GET_USER_WIKIS_BY_ID = gql`
         id
         ipfs
         title
+        summary
         created
         updated
         content
@@ -131,6 +135,7 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       content
       created
       title
+      summary
       content
       categories {
         id
@@ -149,6 +154,22 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       user {
         id
       }
+    }
+  }
+`
+
+export const POST_WIKI = gql`
+  mutation postWiki($data: String!) {
+    pinJSON(data: $data) {
+      IpfsHash
+    }
+  }
+`
+
+export const POST_IMG = gql`
+  mutation postImage($file: Upload!) {
+    pinImage(fileUpload: $file) {
+      IpfsHash
     }
   }
 `

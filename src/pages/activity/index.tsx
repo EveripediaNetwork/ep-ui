@@ -21,6 +21,7 @@ import {
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
 import { ActivityEmptyState } from '@/components/Activity/EmptyState'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 
 const Activity = () => {
   const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery()
@@ -30,7 +31,7 @@ const Activity = () => {
       id={activity.id}
       key={activity.id}
       title={activity.title}
-      brief={activity.content}
+      brief={getWikiSummary(activity)}
       editor={activity?.user?.id}
       wordsChanged={ActivityData[i].wordsChanged}
       percentChanged={ActivityData[i].percentChanged}
