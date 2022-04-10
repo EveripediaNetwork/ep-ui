@@ -12,10 +12,11 @@ export const authenticatedRoute = <P extends object>(
     const router = useRouter()
     const user =
       useSelector((state: RootState) => state.user.user) || getState()
-    const previousPageQuery = router.query as GetUrlQueriesType
-    const queryAfterLogin = getUrlQueries(previousPageQuery) || ''
+    
     useEffect(() => {
       if (!user) {
+        const previousPageQuery = router.query as GetUrlQueriesType
+        const queryAfterLogin = getUrlQueries(previousPageQuery) || ''
         router.push({
           pathname: '/login',
           query: { from: `${router.pathname}${queryAfterLogin}` },
