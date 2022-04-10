@@ -1,6 +1,5 @@
 import { RootState } from '@/store/store'
 import { getState } from '@/utils/browserStorage'
-import { getUrlQueries, GetUrlQueriesType } from '@/utils/reworkUrlQueries'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -15,11 +14,9 @@ export const authenticatedRoute = <P extends object>(
 
     useEffect(() => {
       if (!user) {
-        const previousPageQuery = router.query as GetUrlQueriesType
-        const queryAfterLogin = getUrlQueries(previousPageQuery) || ''
         router.push({
           pathname: '/login',
-          query: { from: `${router.pathname}${queryAfterLogin}` },
+          query: { from: router.asPath },
         })
       }
     }, [user, router])
