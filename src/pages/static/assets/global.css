@@ -2,7 +2,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* EDITOR STYLES */
+/* EDITOR SHELL STYLES */
 .ProseMirror,
 .toastui-editor-contents {
   font-size: 16px !important;
@@ -44,6 +44,18 @@ html {
   background-color: #2b3447 !important;
   border-color: inherit !important;
 }
+
+/* EDITOR CONTENT STYLES */
+.toastui-editor-main *{
+  font-family: poppins, sans-serif !important;
+}
+.toastui-editor-main h1, .toastui-editor-main h2, .toastui-editor-main h3 {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0.5em !important;
+  margin-top: 1em !important;
+}
+
 /* WIKI MEDIA SHOWCASE STYLES */
 #bp_container > .bp-x {
   justify-content: center;
