@@ -37,10 +37,6 @@ const Editor = ({ onChange, markdown }: EditorType) => {
     if (markdown !== currentMd) onChange(currentMd)
   }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
 
-  useEffect(() => {
-    if (markdown) editorRef.current?.getInstance().setMarkdown(markdown)
-  }, [])
-
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
       {markdown && (
