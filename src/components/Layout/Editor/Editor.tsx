@@ -33,8 +33,13 @@ const Editor = ({ onChange, markdown }: EditorType) => {
       ?.getInstance()
       .getMarkdown()
       .toString() as string
+
     if (markdown !== currentMd) onChange(currentMd)
   }, [editorRef.current?.getInstance().getMarkdown(), markdown, onChange])
+
+  useEffect(() => {
+    if (markdown) editorRef.current?.getInstance().setMarkdown(markdown)
+  }, [])
 
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">

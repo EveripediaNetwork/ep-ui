@@ -172,11 +172,13 @@ const CreateWiki = () => {
     (image.type as ArrayBuffer).byteLength === 0
 
   const isValidWiki = () => {
+    console.log(image)
     if (
-      !image ||
-      image.type === null ||
-      image.type === undefined ||
-      getImageArrayBufferLength()
+      isWikiBeingEdited === false &&
+      (!image ||
+        image.type === null ||
+        image.type === undefined ||
+        getImageArrayBufferLength())
     ) {
       toast({
         title: 'Add a main image to continue',
@@ -197,6 +199,7 @@ const CreateWiki = () => {
 
     const words = getWordCount(md || '')
 
+    console.log(words)
     if (words < MINIMUM_WORDS) {
       toast({
         title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
@@ -291,8 +294,8 @@ const CreateWiki = () => {
   }
 
   useEffect(() => {
-    if (!wikiData) setMd(initialEditorValue)
-  }, [])
+    if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
+  }, [isLoadingWiki])
 
   useEffect(() => {
     if (wiki && wikiData) {
@@ -365,6 +368,8 @@ const CreateWiki = () => {
     setActiveStep(0)
     setOpenTxDetailsDialog(false)
   }
+
+  // console.log(md)
 
   return (
     <Box maxW="1900px" mx="auto" mb={8}>
