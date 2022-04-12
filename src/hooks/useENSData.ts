@@ -12,31 +12,27 @@ export const useENSData = (address: string | undefined | null) => {
   const ens = useAppSelector(state => state.ens)
   const dispatch = useAppDispatch()
 
-  const setENSAddressToCache = (
-    addr: string,
-    name: string | null,
-    avt: string | null,
-  ) => {
-    dispatch(addENSAddress({ address: addr, username: name, avatar: avt }))
-  }
-
   useEffect(() => {
     const getAvatar = async (addrs: string) => {
       const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
       const name = await provider.lookupAddress(addrs)
+      let avatarURI
       if (name) {
         setUsername(name)
         const avt = new AvatarResolver(provider, { cache: 300 })
-        const avatarURI = await avt.getAvatar(name, {
+        avatarURI = await avt.getAvatar(name, {
           /* jsdomWindow: jsdom (on nodejs) */
         })
-        if (avatarURI) {
-          setAvatar(avatarURI)
-          setENSAddressToCache(addrs, name, avatarURI)
-        } else setENSAddressToCache(addrs, name, null)
-      } else setENSAddressToCache(addrs, null, null)
-
+        if (avatarURI) setAvatar(avatarURI)
+      }
       setLoading(false)
+      dispatch(
+        addENSAddress({
+          address: addrs,
+          username: name || null,
+          avatar: avatarURI || null,
+        }),
+      )
     }
 
     if (!avatar && address) {
