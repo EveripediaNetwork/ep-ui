@@ -347,8 +347,9 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      let { id, title, summary, content, tags, categories, metadata } = wikiData
-      metadata = metadata[1].value
+      const { id, title, summary, content, tags, categories } = wikiData
+      let { metadata } = wikiData
+      metadata = metadata[1]?.value
         ? metadata
         : [...metadata, { id: 'twitter-profile', value: '' }]
 
