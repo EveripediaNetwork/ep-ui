@@ -4,6 +4,7 @@ import {
   messagesReducer,
   userReducer,
   wikiReducer,
+  ensReducer,
 } from '@/store/slices'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
@@ -16,6 +17,7 @@ export const store = configureStore({
     messages: messagesReducer,
     user: userReducer,
     wiki: wikiReducer,
+    ens: ensReducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
