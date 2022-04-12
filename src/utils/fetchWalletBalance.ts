@@ -6,6 +6,7 @@ import {
   TokenDetailsType,
   ConvertedBalanceType,
 } from '@/types/WalletBalanceType'
+import { fetchTokenRate } from './fetchTokenRate'
 
 export const fetchWalletBalance = async (
   getBalance: (config?: ParamsType) => Promise<BalanceType | ErrorType>,
@@ -26,13 +27,6 @@ export const fetchWalletBalance = async (
   return convertedResult
 }
 
-const fetchRate = async (tokenName: string) => {
-  const res = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${tokenName}&vs_currencies=usd`,
-  )
-  return (await res.json())[tokenName].usd
-}
-
 export const fetchRateAndCalculateTotalBalance = async (
   walletDetails: ConvertedBalanceType[],
 ) => {
@@ -41,7 +35,7 @@ export const fetchRateAndCalculateTotalBalance = async (
       const tokenName: string | undefined =
         wallet.data?.symbol && tokenDetails[wallet.data?.symbol].name
       if (tokenName) {
-        const rate = await fetchRate(tokenName)
+        const rate = await fetchTokenRate(tokenName)
         return {
           price: rate * Number(wallet.data?.formatted),
           token: wallet.data?.symbol,

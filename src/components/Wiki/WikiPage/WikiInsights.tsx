@@ -8,6 +8,7 @@ import ProfileStatistics from './InsightComponents/ProfileStatistics'
 import ProfileSummary from './InsightComponents/ProfileSummary'
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
+import CurrencyConverter from './InsightComponents/CurrencyConverter'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -33,6 +34,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     />
     <ProfileSummary />
     <ProfileStatistics />
+    <CurrencyConverter token="everipedia" />
     {wiki.metadata[1]?.value && (
       <TwitterTimeline url={wiki.metadata[1].value} />
     )}

@@ -11,11 +11,12 @@ export const authenticatedRoute = <P extends object>(
     const router = useRouter()
     const user =
       useSelector((state: RootState) => state.user.user) || getState()
+
     useEffect(() => {
       if (!user) {
         router.push({
           pathname: '/login',
-          query: { from: router.pathname },
+          query: { from: router.asPath },
         })
       }
     }, [user, router])

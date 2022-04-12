@@ -28,6 +28,7 @@ import {
 import {
   getRunningOperationPromises,
   getWiki,
+  postWiki,
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
@@ -35,8 +36,11 @@ import { RootState, store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import { useSelector } from 'react-redux'
+import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
+
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -45,17 +49,16 @@ import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
 import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import { useSelector } from 'react-redux'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
-import { MdTitle } from 'react-icons/md'
+import { getWordCount } from '@/utils/getWordCount'
+import { POST_IMG } from '@/services/wikis/queries'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...
-`
+const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
 const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
 const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
@@ -77,6 +80,8 @@ const types = {
     { name: 'deadline', type: 'uint256' },
   ],
 }
+
+const MINIMUM_WORDS = 150
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -122,16 +127,20 @@ const CreateWiki = () => {
       type: 'multipart/form-data',
     })
 
-    formData.append('file', blob)
-    formData.append('name', image.id)
+    formData.append('operations', POST_IMG)
+    const map = `{"0": ["variables.file"]}`
+    formData.append('map', map)
+    formData.append('0', blob)
 
     const {
-      data: { ipfs },
-    } = await axios.post('/api/ipfs-image', formData, {
-      headers: { 'content-type': 'multipart/form-data' },
-    })
+      data: {
+        data: {
+          pinImage: { IpfsHash },
+        },
+      },
+    } = await axios.post(config.graphqlUrl, formData, {})
 
-    return ipfs
+    return IpfsHash
   }
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
@@ -159,8 +168,17 @@ const CreateWiki = () => {
 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
+  const getImageArrayBufferLength = () =>
+    (image.type as ArrayBuffer).byteLength === 0
+
   const isValidWiki = () => {
-    if (wiki.images?.length === 0) {
+    if (
+      isWikiBeingEdited === false &&
+      (!image ||
+        image.type === null ||
+        image.type === undefined ||
+        getImageArrayBufferLength())
+    ) {
       toast({
         title: 'Add a main image to continue',
         status: 'error',
@@ -178,10 +196,11 @@ const CreateWiki = () => {
       return false
     }
 
-    const words = md ? md.split(' ').length : 0
-    if (words < 150) {
+    const words = getWordCount(md || '')
+
+    if (words < MINIMUM_WORDS) {
       toast({
-        title: `Add a minimum of 150 words to continue, you have written ${words}`,
+        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
         status: 'error',
         duration: 3000,
       })
@@ -221,20 +240,17 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      const {
-        data: { ipfs },
-      } = await axios.post('/api/ipfs', tmp)
+      const wikiResult: any = await store.dispatch(
+        postWiki.initiate({ data: tmp }),
+      )
 
-      if (ipfs) {
-        saveHashInTheBlockchain(ipfs)
-      }
+      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       setSubmittingWiki(false)
     }
   }
 
   const disableSaveButton = () =>
-    // wiki.images.length === 0 ||
     submittingWiki || !accountData?.address || signing || isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
@@ -276,8 +292,8 @@ const CreateWiki = () => {
   }
 
   useEffect(() => {
-    if (!wikiData) setMd(initialEditorValue)
-  }, [])
+    if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
+  }, [isLoadingWiki])
 
   useEffect(() => {
     if (wiki && wikiData) {
@@ -344,6 +360,13 @@ const CreateWiki = () => {
     if (txHash) verifyTrxHash(txHash)
   }, [txHash])
 
+  const handlePopupClose = () => {
+    setMsg(initialMsg)
+    setIsLoading('loading')
+    setActiveStep(0)
+    setOpenTxDetailsDialog(false)
+  }
+
   return (
     <Box maxW="1900px" mx="auto" mb={8}>
       <HStack
@@ -398,11 +421,7 @@ const CreateWiki = () => {
       >
         <Box h="635px" w="full">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-            <Editor
-              markdown={md || ''}
-              initialValue={initialEditorValue}
-              onChange={handleOnEditorChanges}
-            />
+            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
           </Skeleton>
         </Box>
         <Box minH="635px">
@@ -421,7 +440,7 @@ const CreateWiki = () => {
           activeStep={activeStep}
           state={loadingState}
           isOpen={openTxDetailsDialog}
-          onClose={() => setOpenTxDetailsDialog(false)}
+          onClose={() => handlePopupClose()}
         />
       </Flex>
 

@@ -51,6 +51,7 @@ const WikiProcessModal = ({
       window.open(`${config.blockExplorerUrl}tx/${txHash}`)
     }
   }
+
   return (
     <AlertDialog
       motionPreset="slideInBottom"

@@ -13,7 +13,7 @@ import {
 import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
-import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
@@ -30,13 +30,6 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
-  const dispatch = useAppDispatch()
-
-  const handleDispatch = (object: Partial<Wiki>) =>
-    dispatch({
-      type: 'wiki/setCurrentWiki',
-      payload: object,
-    })
 
   const handleSetImage = (name: string, value: ArrayBuffer) => {
     // update isWikiBeingEdited
@@ -44,11 +37,8 @@ const Highlights = ({ initialImage }: HightLightsType) => {
     updateImageState(ImageKey.IMAGE, { id: name, type: value })
   }
 
-  const handleDeleteImage = () => {
-    handleDispatch({
-      images: [],
-    })
-  }
+  const handleDeleteImage = () =>
+    updateImageState(ImageKey.IMAGE, { type: new ArrayBuffer(0), id: '' })
 
   const dropZoneActions = {
     setImage: handleSetImage,

@@ -9,7 +9,7 @@ export interface Tag {
 
 export interface Image {
   id: string
-  type: ArrayBuffer | string
+  type: ArrayBuffer | string | File | Blob
 }
 
 export interface MData {
