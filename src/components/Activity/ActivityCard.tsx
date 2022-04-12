@@ -41,18 +41,64 @@ const ActivityCard = ({
 }: ActivityCardProps) => {
   const editDetails = useBreakpointValue({
     base: (
-      <Text fontSize="14px" opacity={0.6}>
-        <TimeModified lastModTimeStamp={lastModTimeStamp} />
-      </Text>
+      <Box>
+        <HStack>
+            <DisplayAvatar size="xl" mt={1} />
+            <Text fontSize="14px" color="linkColor">
+              <NextLink href={`/account/${editor}`} passHref>
+                <Link href="passRef" color="brand.500" fontWeight="bold">
+                  {shortenAccount(editor || '')}
+                </Link>
+              </NextLink>
+            </Text>
+        </HStack>
+        <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
+      </Box>
+      // <Text fontSize="14px" opacity={0.6}>
+      //   {/* <TimeModified lastModTimeStamp={lastModTimeStamp} /> */}
+       
+      // </Text>
+    //   <Flex justifyContent="space-between" w="full">
+    //   <Box>
+    //     <HStack flex="1">
+    //       <DisplayAvatar size="xl" mt={1} />
+    //       <Text fontSize="14px" color="linkColor">
+    //         <NextLink href={`/account/${editor}`} passHref>
+    //           <Link href="passRef" color="brand.500" fontWeight="bold">
+    //             {shortenAccount(editor || '')}
+    //           </Link>
+    //         </NextLink>
+    //       </Text>
+    //       <HStack spacing={2}>
+    //         {['red', 'green', 'yellow', 'purple', 'teal'].map(color => (
+    //           <Tag
+    //             key={color}
+    //             borderRadius={6}
+    //             variant="solid"
+    //             colorScheme={color}
+    //           >
+    //             <Text px={4} color="textColor">
+    //               {' '}
+    //               NFT
+    //             </Text>
+    //           </Tag>
+    //         ))}
+    //       </HStack>
+    //     </HStack>
+    //   </Box>
+    //   <Box>
+    //     <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
+    //   </Box>
+    // </Flex>
     ),
     md: (
       <Text fontSize="14px" color="linkColor">
-        <NextLink href={`/account/${editor}`} passHref>
+        {/* <NextLink href={`/account/${editor}`} passHref>
           <Link href="passRef" color="brand.500" fontWeight="bold">
             {shortenAccount(editor || '')}
           </Link>
         </NextLink>{' '}
-        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '}
+        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '} */}
         {isFirstEdit ? 'First Edit ' : `${percentChanged * 100}% Changed `}
       </Text>
     ),
@@ -116,7 +162,7 @@ const ActivityCard = ({
         />
       </NextLink>
       <Box w="100%" px={4} minW={0} p={{ base: 1, lg: 4 }} mx="auto">
-        <Flex mb="2" justifyContent="space-between">
+        <Flex mb={{base: 0, md: 2}} justifyContent="space-between">
           <Heading
             cursor="pointer"
             as="h2"
@@ -125,11 +171,12 @@ const ActivityCard = ({
             overflow="hidden"
             whiteSpace="nowrap"
             textOverflow="ellipsis"
+            w={{base: "50%", md: "100%"}}
           >
             {title}
           </Heading>
 
-          <Text color="brand.500" fontWeight="extrabold">
+          <Text color="brand.500" fontWeight="bold">
             NFTs
           </Text>
         </Flex>

@@ -33,7 +33,7 @@ const VoteTimeRemaining = ({
   return (
     <Text
       mt="1"
-      fontSize="12px"
+      fontSize="sm"
       fontWeight="light"
       opacity={0.6}
       whiteSpace="nowrap"
