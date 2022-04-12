@@ -351,7 +351,8 @@ const CreateWiki = () => {
       }
     }
     getSignedTxHash()
-  }, [accountData, data, error, wikiHash])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, error])
 
   useEffect(() => {
     if (
