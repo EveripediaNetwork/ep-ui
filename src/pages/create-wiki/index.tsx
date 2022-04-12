@@ -258,8 +258,11 @@ const CreateWiki = () => {
   }
 
   const updatePageTypeTemplate = useCallback(() => {
-    const meta = getWikiMetadataById(wiki, 'page-type')
-    const pageType = PageTemplate.find(p => p.type === meta?.value)
+    const meta = [
+      getWikiMetadataById(wiki, 'page-type'),
+      getWikiMetadataById(wiki, 'twitter-profile'),
+    ]
+    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
     setMd(String(pageType?.templateText))
   }, [currentPageType])
@@ -344,8 +347,10 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, summary, content, tags, categories, metadata } =
-        wikiData
+      let { id, title, summary, content, tags, categories, metadata } = wikiData
+      metadata = metadata[1].value
+        ? metadata
+        : [...metadata, { id: 'twitter-profile', value: '' }]
 
       dispatch({
         type: 'wiki/setCurrentWiki',

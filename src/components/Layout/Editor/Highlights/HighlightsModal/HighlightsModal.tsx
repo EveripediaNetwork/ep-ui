@@ -176,7 +176,19 @@ const HighlightsModal = ({
                 },
               })
           }}
-          placeholder="Your twitter URL"
+          placeholder={
+            String(
+              currentWiki.metadata.find(
+                (m: MData) => m.id === 'twitter-profile',
+              )?.value,
+            )
+              ? String(
+                  currentWiki.metadata.find(
+                    (m: MData) => m.id === 'twitter-profile',
+                  )?.value,
+                )
+              : 'Your Twitter Handle'
+          }
         />
         <CustomDivider />
         <Tags />
