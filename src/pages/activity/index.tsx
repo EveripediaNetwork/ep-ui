@@ -33,7 +33,6 @@ const Activity = () => {
       title={activity.title}
       brief={getWikiSummary(activity)}
       editor={activity?.user?.id}
-      wordsChanged={ActivityData[i].wordsChanged}
       percentChanged={ActivityData[i].percentChanged}
       isFirstEdit={ActivityData[i].isFirstEdit}
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
