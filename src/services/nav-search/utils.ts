@@ -25,11 +25,11 @@ export const fillType = (item: WikiTitle | Category, type: SearchItem) => {
   return { ...item, type }
 }
 
-const fetchWikisList = async (query: string) => {
+export const fetchWikisList = async (query: string) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
   return data
 }
-const fetchCategoriesList = async (query: string) => {
+export const fetchCategoriesList = async (query: string) => {
   const { data } = await store.dispatch(getCategoriesByTitle.initiate(query))
   return data
 }
