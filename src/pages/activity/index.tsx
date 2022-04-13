@@ -47,46 +47,27 @@ const Activity = () => {
         <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
           Recent Activity
         </Heading>
-        <Tabs>
-          <TabList>
-            <Tab>New Wikis</Tab>
-            <Tab>Updated Wikis</Tab>
-          </TabList>
+        <Box>
           {isLoading ? (
-            <Center w="full" h="16">
-              Loading Wikis
-            </Center>
-          ) : (
-            <TabPanels>
-              {!LatestActivityData?.length && (
+              <Center w="full" h="16">
+                Loading Wikis
+              </Center>
+            )
+            :
+            <Box mt="10">
+              {!LatestActivityData?.length && 
                 <Center>
                   <ActivityEmptyState />
                 </Center>
-              )}
-              {/* Most Recent Activity Section */}
-              <TabPanel px={0}>
-                <VStack spacing={4}>
+              }
+              <VStack spacing={4}>
                   {LatestActivityData?.map((activity, i) =>
                     renderActivityCard(activity, i),
                   )}
-                </VStack>
-              </TabPanel>
-              {/* Expiring Soon Activity Section */}
-              <TabPanel px={0}>
-                <VStack spacing={4}>
-                  {LatestActivityData?.slice()
-                    .reverse()
-                    .map((activity, i) =>
-                      renderActivityCard(
-                        activity,
-                        LatestActivityData.length - i,
-                      ),
-                    )}
-                </VStack>
-              </TabPanel>
-            </TabPanels>
-          )}
-        </Tabs>
+              </VStack>
+            </Box>
+          }
+        </Box>
       </Box>
     </Box>
   )
