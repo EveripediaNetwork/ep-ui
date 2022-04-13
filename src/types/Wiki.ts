@@ -63,6 +63,7 @@ export const Languages: LanguagesType = {
 
 export interface Wiki {
   id: string
+  commitMessage?: string
   ipfs?: string
   summary?: string
   title: string

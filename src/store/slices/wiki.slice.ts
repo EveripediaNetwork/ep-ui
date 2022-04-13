@@ -4,6 +4,7 @@ import { LanguagesISOEnum, Wiki, MData } from '@/types/Wiki'
 const initialState: Wiki = {
   id: '',
   version: 1,
+  commitMessage: '',
   language: LanguagesISOEnum.EN,
   title: 'Wiki title',
   content: '',

@@ -24,6 +24,15 @@ import {
   InputLeftElement,
   InputGroup,
   Icon,
+  Textarea,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -97,6 +106,7 @@ const CreateWiki = () => {
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
+  const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
@@ -251,7 +261,11 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    submittingWiki || !accountData?.address || signing || isLoadingWiki
+    isWritingCommitMsg ||
+    submittingWiki ||
+    !accountData?.address ||
+    signing ||
+    isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
     if (val) setMd(val)
@@ -407,16 +421,70 @@ const CreateWiki = () => {
             placeholder="Title goes here"
           />
         </InputGroup>
-
-        <Button
-          isLoading={submittingWiki}
-          loadingText="Loading"
-          disabled={disableSaveButton()}
-          onClick={saveOnIpfs}
-          mb={24}
-        >
-          Publish
-        </Button>
+        <Popover onClose={() => setIsWritingCommitMsg(false)}>
+          <PopoverTrigger>
+            <Button
+              isLoading={submittingWiki}
+              _disabled={{
+                opacity: disableSaveButton() ? 0.5 : undefined,
+                _hover: {
+                  bgColor: 'grey !important',
+                  cursor: 'not-allowed',
+                },
+              }}
+              loadingText="Loading"
+              disabled={disableSaveButton()}
+              onClick={() => setIsWritingCommitMsg(true)}
+              mb={24}
+            >
+              Publish
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent m={4}>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>
+              Commit Message <small>(Optional)</small>{' '}
+            </PopoverHeader>
+            <PopoverBody>
+              <Textarea
+                placeholder="Enter what changed..."
+                onChange={e =>
+                  dispatch({
+                    type: 'wiki/setCurrentWiki',
+                    payload: { commitMessage: e.target.value },
+                  })
+                }
+              />
+            </PopoverBody>
+            <PopoverFooter>
+              <HStack spacing={2} justify="right">
+                <Button
+                  onClick={() => {
+                    dispatch({
+                      type: 'wiki/setCurrentWiki',
+                      payload: { commitMessage: '' },
+                    })
+                    setIsWritingCommitMsg(false)
+                    saveOnIpfs()
+                  }}
+                  float="right"
+                  variant="outline"
+                >
+                  Skip
+                </Button>
+                <Button
+                  onClick={() => {
+                    setIsWritingCommitMsg(false)
+                    saveOnIpfs()
+                  }}
+                >
+                  Submit
+                </Button>
+              </HStack>
+            </PopoverFooter>
+          </PopoverContent>
+        </Popover>
       </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
@@ -449,7 +517,6 @@ const CreateWiki = () => {
           onClose={() => handlePopupClose()}
         />
       </Flex>
-
       <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
         <Flex direction="column" justifyContent="center" alignItems="center">
           {txError.opened && (
