@@ -105,6 +105,29 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           </Tbody>
         </Table>
         <Flex
+          justifyContent="center"
+          wrap="wrap"
+          alignItems="center"
+          direction="row"
+        >
+          <RiSurveyFill /> <Text ml="2">Twitter Profile</Text>
+          <br />
+          <Flex
+            mt="2"
+            direction="row"
+            wrap="wrap"
+            justify="space-evenly"
+            w="full"
+          >
+            <Text>
+              {
+                getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')
+                  ?.value
+              }
+            </Text>
+          </Flex>
+        </Flex>
+        <Flex
           w="full"
           direction="row"
           justifyContent="center"

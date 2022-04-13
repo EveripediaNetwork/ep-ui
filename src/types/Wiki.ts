@@ -16,6 +16,7 @@ export interface MData {
   id: string
   value: string
 }
+export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
@@ -62,6 +63,7 @@ export const Languages: LanguagesType = {
 
 export interface Wiki {
   id: string
+  commitMessage?: string
   ipfs?: string
   summary?: string
   title: string
@@ -69,7 +71,7 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
-  metadata: MData[]
+  metadata: UpdatedMetaDataInterface
   user?: User
   version: number
   language: LanguagesISOEnum
