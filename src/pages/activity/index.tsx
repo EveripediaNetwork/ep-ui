@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Heading, VStack, Center } from '@chakra-ui/react'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import { ActivityData } from '@/data/ActivityData'
 import {
   getLatestActivities,
   useGetLatestActivitiesQuery,
@@ -17,15 +16,14 @@ const Activity = () => {
   const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({
     offset: 0,
   })
-
-  const renderActivityCard = (activity: ActivityType, i: number) => (
+  const renderActivityCard = (activity: ActivityType) => (
     <ActivityCard
       id={activity.id}
       key={activity.id}
       title={activity.content[0].title}
       brief={getWikiSummary(activity?.content[0])}
       editor={activity.content[0].user.id}
-      lastModTimeStamp={ActivityData[i].lastModTimeStamp}
+      lastModTimeStamp={activity.datetime}
       wiki={activity.content[0]}
       wikiId={activity.wikiId}
     />
@@ -50,8 +48,8 @@ const Activity = () => {
                 </Center>
               )}
               <VStack spacing={4}>
-                {LatestActivityData?.map((activity, i) =>
-                  renderActivityCard(activity, i),
+                {LatestActivityData?.map((activity) =>
+                  renderActivityCard(activity),
                 )}
               </VStack>
             </Box>

@@ -10,6 +10,7 @@ export type ActivityType = {
   wikiId: string
   type: string
   content: Wiki[]
+  datetime: string
 }
 
 type GetActivitiesResponse = {
