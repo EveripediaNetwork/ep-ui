@@ -16,6 +16,9 @@ const initialState: Wiki = {
       value: 'Place / Location',
     },
   ],
+  user:{
+    id: ""
+  }
 }
 
 const wikiSlice = createSlice({
