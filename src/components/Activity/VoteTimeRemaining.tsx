@@ -38,7 +38,7 @@ const VoteTimeRemaining = ({
       opacity={0.6}
       whiteSpace="nowrap"
     >
-      {voteTimeReminding} remaining
+      {voteTimeReminding} ago
     </Text>
   )
 }
