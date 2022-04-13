@@ -48,7 +48,7 @@ const Activity = () => {
                 </Center>
               )}
               <VStack spacing={4}>
-                {LatestActivityData?.map((activity) =>
+                {LatestActivityData?.map(activity =>
                   renderActivityCard(activity),
                 )}
               </VStack>
