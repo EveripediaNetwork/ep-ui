@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Heading,
-  VStack,
-  TabPanel,
-  TabPanels,
-  Tab,
-  Tabs,
-  TabList,
-  Center,
-} from '@chakra-ui/react'
+import { Box, Heading, VStack, Center } from '@chakra-ui/react'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { ActivityData } from '@/data/ActivityData'
 import {
@@ -49,24 +39,23 @@ const Activity = () => {
         </Heading>
         <Box>
           {isLoading ? (
-              <Center w="full" h="16">
-                Loading Wikis
-              </Center>
-            )
-            :
+            <Center w="full" h="16">
+              Loading Wikis
+            </Center>
+          ) : (
             <Box mt="10">
-              {!LatestActivityData?.length && 
+              {!LatestActivityData?.length && (
                 <Center>
                   <ActivityEmptyState />
                 </Center>
-              }
+              )}
               <VStack spacing={4}>
-                  {LatestActivityData?.map((activity, i) =>
-                    renderActivityCard(activity, i),
-                  )}
+                {LatestActivityData?.map((activity, i) =>
+                  renderActivityCard(activity, i),
+                )}
               </VStack>
             </Box>
-          }
+          )}
         </Box>
       </Box>
     </Box>
