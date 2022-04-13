@@ -27,6 +27,8 @@ const Activity = () => {
   const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({
     offset: 0,
   })
+  console.log(LatestActivityData)
+  console.log(LatestActivityData)
   const renderActivityCard = (activity: ActivityType, i: number) => (
     <ActivityCard
       id={activity.id}
