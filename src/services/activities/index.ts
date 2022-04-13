@@ -34,13 +34,12 @@ export const activitiesApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
     getLatestActivities: builder.query<ActivityType[], ActivitiesArg>({
-      query: ({offset, limit}: ActivitiesArg) => (
-        { 
-          document: GET_ACTIVITIES, 
-          variables: {offset, limit }
-        }),
+      query: ({ offset, limit }: ActivitiesArg) => ({
+        document: GET_ACTIVITIES,
+        variables: { offset, limit },
+      }),
       transformResponse: (response: GetActivitiesResponse) =>
-        response.activities
+        response.activities,
     }),
   }),
 })

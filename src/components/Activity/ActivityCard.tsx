@@ -12,17 +12,16 @@ import {
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
-import { WikiTitle } from '@/services/nav-search'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { Wiki } from '@/types/Wiki'
 import VoteTimeRemaining from './VoteTimeRemaining'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
-import { Wiki } from '@/types/Wiki'
 
 interface ActivityCardProps {
   id: string
   title: string
   brief: string
-  editor: string|undefined
+  editor: string | undefined
   lastModTimeStamp: string
   wiki: Wiki
 }

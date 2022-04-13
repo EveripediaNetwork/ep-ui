@@ -24,7 +24,9 @@ import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 
 const Activity = () => {
-  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({offset: 0})
+  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({
+    offset: 0,
+  })
   const renderActivityCard = (activity: ActivityType, i: number) => (
     <ActivityCard
       id={activity.id}
@@ -35,7 +37,7 @@ const Activity = () => {
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
       wiki={activity.content[0]}
     />
-   )
+  )
 
   return (
     <Box bgColor="pageBg" my={-8} py={8}>
@@ -90,7 +92,7 @@ const Activity = () => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // TODO: Modify this for infinite scroll logic
-  store.dispatch(getLatestActivities.initiate({offset: 0}))
+  store.dispatch(getLatestActivities.initiate({ offset: 0 }))
   await Promise.all(getRunningOperationPromises())
   return {
     props: {},
