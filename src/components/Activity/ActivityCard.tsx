@@ -16,14 +16,15 @@ import { WikiTitle } from '@/services/nav-search'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import VoteTimeRemaining from './VoteTimeRemaining'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { Wiki } from '@/types/Wiki'
 
 interface ActivityCardProps {
   id: string
   title: string
   brief: string
-  editor: string
+  editor: string|undefined
   lastModTimeStamp: string
-  wiki: WikiTitle
+  wiki: Wiki
 }
 
 const ActivityCard = ({
@@ -82,16 +83,15 @@ const ActivityCard = ({
               </NextLink>
             </Text>
             <HStack spacing={2}>
-              {['red', 'green', 'yellow', 'purple', 'teal'].map(color => (
+              {wiki.tags.map((tag, index) => (
                 <Tag
-                  key={color}
+                  key={index}
                   borderRadius={6}
                   variant="solid"
-                  colorScheme={color}
+                  bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
                 >
                   <Text px={4} color="textColor">
-                    {' '}
-                    NFT
+                    {tag.id}
                   </Text>
                 </Tag>
               ))}
@@ -145,7 +145,7 @@ const ActivityCard = ({
             </Heading>
           </NextLink>
           <Text color="brand.500" fontWeight="bold">
-            NFTs
+            {wiki.categories[0].title}
           </Text>
         </Flex>
         <Box mb="2" maxW="80%" overflow="hidden">

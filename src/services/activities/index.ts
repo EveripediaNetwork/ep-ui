@@ -1,24 +1,24 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { GET_LATEST_ACTIVITIES } from '@/services/activities/queries'
+import { GET_ACTIVITIES } from '@/services/activities/queries'
 import config from '@/config'
+import { Wiki } from '@/types/Wiki'
 
-export type TempWikiActivity = {
+export type ActivityType = {
   id: string
-  title: string
-  summary: string
-  content: string
-  user: {
-    id: string
-  }
-  images?: {
-    id: string
-  }[]
+  wikiId: string
+  type: string
+  content: Wiki[]
 }
 
-type GetLatestActivitiesResponse = {
-  wikis: TempWikiActivity[]
+type GetActivitiesResponse = {
+  activities: ActivityType[]
+}
+
+type ActivitiesArg = {
+  limit?: number
+  offset?: number
 }
 
 export const activitiesApi = createApi({
@@ -33,10 +33,14 @@ export const activitiesApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getLatestActivities: builder.query<TempWikiActivity[], void>({
-      query: () => ({ document: GET_LATEST_ACTIVITIES }),
-      transformResponse: (response: GetLatestActivitiesResponse) =>
-        response.wikis,
+    getLatestActivities: builder.query<ActivityType[], ActivitiesArg>({
+      query: ({offset, limit}: ActivitiesArg) => (
+        { 
+          document: GET_ACTIVITIES, 
+          variables: {offset, limit }
+        }),
+      transformResponse: (response: GetActivitiesResponse) =>
+        response.activities
     }),
   }),
 })

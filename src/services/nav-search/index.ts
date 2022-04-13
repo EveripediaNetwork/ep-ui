@@ -18,6 +18,7 @@ export type WikiTitle = {
   images?: {
     id: string
   }[]
+  
 }
 
 export type Category = {

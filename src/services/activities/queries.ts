@@ -1,18 +1,29 @@
 import { gql } from 'graphql-request'
 
-export const GET_LATEST_ACTIVITIES = gql`
-  query GetLatestActivities {
-    wikis {
+export const GET_ACTIVITIES = gql`
+query GetActivities($offset: Int, $limit: Int) {
+  activities(offset: $offset, limit: $limit) {
+    id
+    wikiId
+    type
+    content{
       id
       title
-      summary
-      content
-      user {
+      block
+      tags{
         id
       }
-      images {
+			summary
+      user{
         id
+      }
+      categories{
+        id
+        title
       }
     }
+    datetime
+    ipfs
   }
+}
 `

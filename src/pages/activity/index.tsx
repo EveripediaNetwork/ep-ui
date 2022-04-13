@@ -16,7 +16,7 @@ import {
   getLatestActivities,
   useGetLatestActivitiesQuery,
   getRunningOperationPromises,
-  TempWikiActivity,
+  ActivityType,
 } from '@/services/activities'
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
@@ -24,22 +24,21 @@ import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 
 const Activity = () => {
-  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery()
-
-  const renderActivityCard = (activity: TempWikiActivity, i: number) => (
+  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({offset: 0})
+  const renderActivityCard = (activity: ActivityType, i: number) => (
     <ActivityCard
       id={activity.id}
       key={activity.id}
-      title={activity.title}
-      brief={getWikiSummary(activity)}
-      editor={activity?.user?.id}
+      title={activity.content[0].title}
+      brief={getWikiSummary(activity?.content[0])}
+      editor={activity.content[0].user?.id}
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
-      wiki={activity}
+      wiki={activity.content[0]}
     />
-  )
+   )
 
   return (
-    <Box bgColor="pageBg" mt={-8} mb={-8} pt={8} pb={8}>
+    <Box bgColor="pageBg" my={-8} py={8}>
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
         <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
           Recent Activity
@@ -91,7 +90,7 @@ const Activity = () => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // TODO: Modify this for infinite scroll logic
-  store.dispatch(getLatestActivities.initiate())
+  store.dispatch(getLatestActivities.initiate({offset: 0}))
   await Promise.all(getRunningOperationPromises())
   return {
     props: {},
