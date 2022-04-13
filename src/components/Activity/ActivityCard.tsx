@@ -24,6 +24,7 @@ interface ActivityCardProps {
   editor: string | undefined
   lastModTimeStamp: string
   wiki: Wiki
+  wikiId: string
 }
 
 const ActivityCard = ({
@@ -33,6 +34,7 @@ const ActivityCard = ({
   editor,
   lastModTimeStamp,
   wiki,
+  wikiId
 }: ActivityCardProps) => {
   const editDetails = useBreakpointValue({
     base: (
@@ -129,7 +131,7 @@ const ActivityCard = ({
       </NextLink>
       <Box w="100%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <NextLink href={`/wiki/${id}`} passHref>
+          <NextLink href={`/wiki/${wikiId}`} passHref>
             <Heading
               cursor="pointer"
               as="h2"

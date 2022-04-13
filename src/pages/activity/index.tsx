@@ -37,6 +37,7 @@ const Activity = () => {
       editor={activity.content[0].user?.id}
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
       wiki={activity.content[0]}
+      wikiId={activity.wikiId}
     />
   )
 
