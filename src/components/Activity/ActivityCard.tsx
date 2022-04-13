@@ -40,7 +40,7 @@ const ActivityCard = ({
     base: (
       <Box>
         <HStack>
-          <DisplayAvatar size="xl" mt={1} />
+          <DisplayAvatar address={wiki.user?.id} size="20" />
           <Text fontSize="14px" color="linkColor">
             <NextLink href={`/account/${editor}`} passHref>
               <Link href="passRef" color="brand.500" fontWeight="bold">
@@ -56,7 +56,7 @@ const ActivityCard = ({
       <Flex justifyContent="space-between" w="full">
         <Box>
           <HStack flex="1">
-            <DisplayAvatar size="xl" mt={1} />
+            <DisplayAvatar address={wiki.user?.id} size="20" />
             <Text fontSize="14px" color="linkColor">
               <NextLink href={`/account/${editor}`} passHref>
                 <Link href="passRef" color="brand.500" fontWeight="bold">
