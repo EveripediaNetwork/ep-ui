@@ -12,12 +12,8 @@ import { useRouter } from 'next/router'
 import {
   fetchCategoriesList,
   fetchWikisList,
-  useNavSearch,
 } from '@/services/nav-search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
-import config from '@/config'
-import Image from 'next/image'
-import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Category, WikiTitle } from '@/services/nav-search'
 
@@ -38,8 +34,10 @@ const SearchQuery = () => {
     Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
       res => {
         const [articles = [], categories = []] = res
-        setResults({ articles, categories })
-        setIsLoading(false)
+        if (articles.length || categories.length) {
+          setResults({ articles, categories })
+          setIsLoading(false)
+        }
       },
     )
   }, [query])
