@@ -8,13 +8,13 @@ import { useENSData } from '@/hooks/useENSData'
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
   svgProps?: any
-  size?: string
+  size?: number|string
   mt?: number | string
 }
 const DisplayAvatar = ({
   address,
   svgProps,
-  size = '3xl',
+  size = 25,
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
