@@ -21,7 +21,7 @@ export const GET_ACTIVITIES = gql`
           id
           title
         }
-        images{
+        images {
           id
         }
       }
