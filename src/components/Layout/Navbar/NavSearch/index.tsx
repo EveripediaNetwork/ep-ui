@@ -225,6 +225,15 @@ export const NavSearch = (props: NavSearchProps) => {
         {...listProps}
       >
         {isLoading ? loadingView : searchList}
+        <AutoCompleteItem value={{ id: 'UNRENDERED' }} fixed>
+          <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
+            <Link href={`/search/${query}`} passHref>
+              <Button variant="outline" as="a">
+                +View {totalUnrendered} more Results
+              </Button>
+            </Link>
+          </Flex>
+        </AutoCompleteItem>
         {totalUnrendered > 0 && (
           <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
             <Link href={`/search/${query}`} passHref>
