@@ -143,11 +143,15 @@ const ActivityCard = ({
               {title}
             </Heading>
           </NextLink>
-          <Text color="brand.500" fontWeight="bold">
+          <Text
+            display={{ base: 'none', md: 'block' }}
+            color="brand.500"
+            fontWeight="bold"
+          >
             {wiki.categories[0].title}
           </Text>
         </Flex>
-        <Box mb="2" maxW="80%" overflow="hidden">
+        <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
         </Box>
         {editDetails}
