@@ -145,13 +145,16 @@ const ActivityCard = ({
               {title}
             </Heading>
           </NextLink>
-          <Text
-            display={{ base: 'none', md: 'block' }}
-            color="brand.500"
-            fontWeight="bold"
-          >
-            {wiki.categories[0].title}
-          </Text>
+          <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
+            <Text
+              display={{ base: 'none', md: 'block' }}
+              color="brand.500"
+              fontWeight="bold"
+              cursor="pointer"
+            >
+              {wiki.categories[0].title}
+            </Text>
+          </NextLink>
         </Flex>
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
