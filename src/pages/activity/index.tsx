@@ -24,7 +24,7 @@ const Activity = () => {
       key={activity.id}
       title={activity.content[0].title}
       brief={getWikiSummary(activity?.content[0])}
-      editor={activity.content[0].user?.id}
+      editor={activity.content[0].user.id}
       lastModTimeStamp={ActivityData[i].lastModTimeStamp}
       wiki={activity.content[0]}
       wikiId={activity.wikiId}

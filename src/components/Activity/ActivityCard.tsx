@@ -21,7 +21,7 @@ interface ActivityCardProps {
   id: string
   title: string
   brief: string
-  editor: string | undefined
+  editor: string
   lastModTimeStamp: string
   wiki: Wiki
   wikiId: string

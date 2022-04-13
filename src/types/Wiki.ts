@@ -70,7 +70,7 @@ export interface Wiki {
   tags: Tag[]
   images?: Image[]
   metadata: MData[]
-  user?: User
+  user: User
   version: number
   language: LanguagesISOEnum
   updated?: string
