@@ -34,7 +34,7 @@ const ActivityCard = ({
   editor,
   lastModTimeStamp,
   wiki,
-  wikiId
+  wikiId,
 }: ActivityCardProps) => {
   const editDetails = useBreakpointValue({
     base: (
