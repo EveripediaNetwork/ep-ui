@@ -14,8 +14,8 @@ import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Wiki } from '@/types/Wiki'
-import VoteTimeRemaining from './VoteTimeRemaining'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { getReadableDate } from '@/utils/getFormattedDate'
 
 interface ActivityCardProps {
   id: string
@@ -25,6 +25,18 @@ interface ActivityCardProps {
   lastModTimeStamp: string
   wiki: Wiki
   wikiId: string
+}
+
+const CreatedTime = ({date}: {date: string}) => {
+  return <Text
+          mt="1"
+          fontSize="sm"
+          fontWeight="light"
+          opacity={0.6}
+          whiteSpace="nowrap"
+        >
+          {getReadableDate(date)}
+        </Text>
 }
 
 const ActivityCard = ({
@@ -49,7 +61,7 @@ const ActivityCard = ({
             </NextLink>
           </Text>
         </HStack>
-        <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
+        <CreatedTime date={lastModTimeStamp}/>
       </Box>
     ),
     md: (
@@ -67,7 +79,7 @@ const ActivityCard = ({
           </HStack>
         </Box>
         <Box>
-          <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
+          <CreatedTime date={lastModTimeStamp}/>
         </Box>
       </Flex>
     ),
@@ -100,7 +112,7 @@ const ActivityCard = ({
           </HStack>
         </Box>
         <Box>
-          <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
+          <CreatedTime date={lastModTimeStamp}/>
         </Box>
       </Flex>
     ),
