@@ -56,10 +56,15 @@ const SearchQuery = () => {
       <NextLink href={`/categories/${category.id}`} passHref>
         <Flex
           key={category.id}
-          bg="white"
-          rounded="lg"
-          shadow="lg"
-          p="4"
+          bgColor="cardBg"
+          justifyContent="flex-start"
+          borderWidth="1px"
+          borderColor="cardBorder"
+          borderRadius="lg"
+          boxShadow="0px 4px 8px rgba(0, 0, 0, 0.10)"
+          px={{ base: 3, lg: 5 }}
+          py={{ base: 3, lg: 3 }}
+          w="full"
           cursor="pointer"
         >
           <Avatar
