@@ -1,9 +1,9 @@
-import React from 'react'
-import { Box, Heading, VStack, Center } from '@chakra-ui/react'
+import React, {useState} from 'react'
+import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 import ActivityCard from '@/components/Activity/ActivityCard'
 import {
   getLatestActivities,
-  useGetLatestActivitiesQuery,
   getRunningOperationPromises,
   ActivityType,
 } from '@/services/activities'
@@ -11,11 +11,43 @@ import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
 import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants';
 
-const Activity = () => {
-  const { data: LatestActivityData, isLoading } = useGetLatestActivitiesQuery({
-    offset: 0,
-  })
+const Activity = ({activities}: {activities: ActivityType[]}) => {
+  const [LatestActivityData, setLatestActivityData] = useState<ActivityType[] | []>(activities)
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [loading , setLoading] = useState<boolean>(false)
+  const [offset, setOffset] = useState<number>(0)
+  const fetchMoreActivities = () => {
+    const updatedOffset = offset + ITEM_PER_PAGE
+    setTimeout(() => {
+      const fetchNewActivites = async () => {
+        const result = await store.dispatch(
+          getLatestActivities.initiate({
+            limit: ITEM_PER_PAGE,
+            offset: updatedOffset,
+          }),
+        )
+        if (result.data && result.data?.length > 0) {
+          const data = result.data || []
+          const updatedActivities = [...LatestActivityData, ...data]
+          setLatestActivityData(updatedActivities)
+          setOffset(updatedOffset)
+        } else {
+          setHasMore(false)
+          setLoading(false)
+        }
+      }
+      fetchNewActivites()
+    }, FETCH_DELAY_TIME)
+  }
+
+  const [sentryRef] = useInfiniteScroll({
+    loading: loading,
+    hasNextPage: hasMore,
+    onLoadMore: fetchMoreActivities,
+  });
+
   const renderActivityCard = (activity: ActivityType) => (
     <ActivityCard
       id={activity.id}
@@ -36,11 +68,7 @@ const Activity = () => {
           Recent Activity
         </Heading>
         <Box>
-          {isLoading ? (
-            <Center w="full" h="16">
-              Loading Wikis
-            </Center>
-          ) : (
+          
             <Box mt="10">
               {!LatestActivityData?.length && (
                 <Center>
@@ -53,7 +81,20 @@ const Activity = () => {
                 )}
               </VStack>
             </Box>
-          )}
+            {(loading || hasMore) ? 
+              
+              <Center ref={sentryRef} mt="10" w="full" h="16">
+                <Spinner  size="xl" />
+              </Center>
+              
+              :
+         
+              <Center mt="10">
+                  <Text fontWeight="semibold">
+                    Yay! You have seen it all 🥳{' '}
+                  </Text>
+              </Center>
+          }
         </Box>
       </Box>
     </Box>
@@ -61,11 +102,10 @@ const Activity = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // TODO: Modify this for infinite scroll logic
-  store.dispatch(getLatestActivities.initiate({ offset: 0 }))
+  const activities = await store.dispatch(getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }))
   await Promise.all(getRunningOperationPromises())
   return {
-    props: {},
+    props: {activities: activities.data},
   }
 }
 
