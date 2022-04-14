@@ -71,8 +71,8 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
+  user: User
   metadata: UpdatedMetaDataInterface
-  user?: User
   version: number
   language: LanguagesISOEnum
   updated?: string

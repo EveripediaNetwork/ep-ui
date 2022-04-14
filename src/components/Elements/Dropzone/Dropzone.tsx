@@ -13,6 +13,7 @@ type DropzoneType = {
     setHideImageInput: (hide: boolean) => void
     setImage: (name: string, f: ArrayBuffer) => void
     deleteImage: () => void
+    isToResetImage: boolean
     initialImage: string | undefined
   }
 }
@@ -20,8 +21,13 @@ type DropzoneType = {
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
   const [{ data: accountData }] = useAccount()
-  const { setHideImageInput, setImage, deleteImage, initialImage } =
-    dropZoneActions
+  const {
+    setHideImageInput,
+    isToResetImage,
+    setImage,
+    deleteImage,
+    initialImage,
+  } = dropZoneActions
 
   const onDrop = useCallback(
     acceptedFiles => {
@@ -54,7 +60,16 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
       setHideImageInput(true)
       setPaths([path])
     }
-  }, [initialImage])
+  }, [initialImage, setHideImageInput])
+
+  useEffect(() => {
+    if (isToResetImage) {
+      deleteImage()
+      setHideImageInput(false)
+      setPaths([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isToResetImage, setHideImageInput])
 
   return (
     <Box>

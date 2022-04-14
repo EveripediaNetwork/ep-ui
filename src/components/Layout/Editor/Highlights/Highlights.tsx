@@ -22,9 +22,10 @@ import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
   initialImage: string | undefined
+  isToResetImage: boolean
 }
 
-const Highlights = ({ initialImage }: HightLightsType) => {
+const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
@@ -43,6 +44,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   const dropZoneActions = {
     setImage: handleSetImage,
     setHideImageInput,
+    isToResetImage,
     deleteImage: handleDeleteImage,
     initialImage,
   }

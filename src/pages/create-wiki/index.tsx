@@ -5,6 +5,7 @@ import React, {
   memo,
   useCallback,
   ChangeEvent,
+  useMemo,
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
@@ -41,11 +42,10 @@ import {
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
-import { RootState, store } from '@/store/store'
+import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
-import { useSelector } from 'react-redux'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
@@ -98,9 +98,12 @@ const CreateWiki = () => {
   const router = useRouter()
   const toast = useToast()
   const { slug } = router.query
-  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
-    skip: router.isFallback,
-  })
+  const { isLoading: isLoadingWiki, data: wikiData } = useGetWikiQuery(
+    typeof slug === 'string' ? slug : skipToken,
+    {
+      skip: router.isFallback,
+    },
+  )
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
@@ -110,11 +113,7 @@ const CreateWiki = () => {
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const currentPageType = useSelector(
-    (state: RootState) =>
-      state.wiki.metadata.filter(m => m.id === 'page-type')[0],
-  )
-  const { isLoading: isLoadingWiki, data: wikiData } = result
+  const [isToResetImage, setIsToResetImage] = useState<boolean>(false)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loadingState, setIsLoading] = useState<
     'error' | 'loading' | undefined
@@ -268,7 +267,7 @@ const CreateWiki = () => {
     isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
-    if (val) setMd(val)
+    setMd(val || ' ')
   }
 
   const updatePageTypeTemplate = useCallback(() => {
@@ -279,45 +278,68 @@ const CreateWiki = () => {
     const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
     setMd(String(pageType?.templateText))
-  }, [currentPageType])
+  }, [wiki])
 
-  const verifyTrxHash = async (trxHash: string) => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await wait({
-            hash: trxHash,
-          })
-          if (trx.error) {
-            setIsLoading('error')
-            setMsg(errorMessage)
-            clearInterval(timer)
-          } else if (trx.data.confirmations > 1) {
-            setIsLoading(undefined)
-            setActiveStep(3)
-            setMsg(successMessage)
-            clearInterval(timer)
+  const verifyTrxHash = useCallback(
+    async (trxHash: string) => {
+      const timer = setInterval(() => {
+        try {
+          const checkTrx = async () => {
+            const trx = await wait({
+              hash: trxHash,
+            })
+            if (trx.error) {
+              setIsLoading('error')
+              setMsg(errorMessage)
+              clearInterval(timer)
+            } else if (trx.data.confirmations > 1) {
+              setIsLoading(undefined)
+              setActiveStep(3)
+              setMsg(successMessage)
+              clearInterval(timer)
+            }
           }
+          checkTrx()
+        } catch (err) {
+          setIsLoading('error')
+          setMsg(errorMessage)
+          clearInterval(timer)
         }
-        checkTrx()
-      } catch (err) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        clearInterval(timer)
-      }
-    }, 3000)
-  }
+      }, 3000)
+    },
+    [wait],
+  )
+
+  // Reset the State to new wiki if there is no slug
+  useEffect(() => {
+    if (!slug) {
+      setIsToResetImage(true)
+      dispatch({ type: 'wiki/reset' })
+      setMd(initialEditorValue)
+    } else {
+      setIsToResetImage(false)
+    }
+  }, [dispatch, slug])
 
   useEffect(() => {
     if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
-  }, [isLoadingWiki])
+  }, [isLoadingWiki, wikiData])
 
+  // update the page type template when the page type changes
+  const presentPageType = useMemo(
+    () => wiki?.metadata?.find(m => m.id === 'page-type')?.value,
+    [wiki?.metadata],
+  )
   useEffect(() => {
-    if (wiki && wikiData) {
-      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
-      if (currentPageType.value !== pageType) updatePageTypeTemplate()
+    if (presentPageType) {
+      let isMdPageTemplate = false
+      PageTemplate.forEach(p => {
+        if (p.templateText === md) isMdPageTemplate = true
+      })
+      if (isMdPageTemplate || md === ' ') updatePageTypeTemplate()
     }
-  }, [currentPageType])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [presentPageType])
 
   useEffect(() => {
     const getSignedTxHash = async () => {
@@ -327,7 +349,6 @@ const CreateWiki = () => {
           setIsLoading('error')
           return
         }
-
         try {
           const { data: relayerData }: any = await submitVerifiableSignature(
             data,
@@ -347,6 +368,7 @@ const CreateWiki = () => {
       }
     }
     getSignedTxHash()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error])
 
   useEffect(() => {
@@ -374,11 +396,11 @@ const CreateWiki = () => {
 
       setMd(String(wikiData.content))
     }
-  }, [wikiData])
+  }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
     if (txHash) verifyTrxHash(txHash)
-  }, [txHash])
+  }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
     setMsg(initialMsg)
@@ -501,7 +523,10 @@ const CreateWiki = () => {
         <Box minH="635px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
-              <Highlights initialImage={ipfsHash} />
+              <Highlights
+                initialImage={ipfsHash}
+                isToResetImage={isToResetImage}
+              />
             </Center>
           </Skeleton>
         </Box>

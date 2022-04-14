@@ -21,6 +21,9 @@ const initialState: Wiki = {
       value: '',
     },
   ],
+  user: {
+    id: '',
+  },
 }
 
 const wikiSlice = createSlice({
@@ -66,6 +69,9 @@ const wikiSlice = createSlice({
           m.id === ob.id ? { ...m, value: ob.value } : m,
         ),
       }
+    },
+    reset() {
+      return initialState
     },
   },
 })
