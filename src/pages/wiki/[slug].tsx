@@ -18,6 +18,7 @@ import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 
 const Wiki = () => {
   const router = useRouter()
@@ -87,7 +88,6 @@ const Wiki = () => {
       )}
 
       <main>
-        {error && <>Oh no, there was an error</>}
         {!error && (router.isFallback || isLoading) ? (
           <Flex justify="center" align="center" h="50vh">
             <Spinner size="xl" />
@@ -100,8 +100,14 @@ const Wiki = () => {
               direction={{ base: 'column', md: 'row' }}
             >
               <WikiActionBar wiki={wiki} />
-              <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
-              {wiki && <WikiInsights wiki={wiki} />}
+              {wiki ? (
+                <>
+                  <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
+                  <WikiInsights wiki={wiki} />
+                </>
+              ) : (
+                <WikiNotFound />
+              )}
             </Flex>
             {!isTocEmpty && <WikiTableOfContents toc={toc} />}
           </HStack>
