@@ -12,6 +12,7 @@ import { store } from '@/store/store'
 import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { LoadingSkeleton } from '@/components/Activity/LoadingSkeleton'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -71,11 +72,6 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         </Heading>
         <Box>
           <Box mt="10">
-            {!LatestActivityData?.length && (
-              <Center>
-                <ActivityEmptyState />
-              </Center>
-            )}
             <VStack spacing={4}>
               {LatestActivityData?.map(activity =>
                 renderActivityCard(activity),
@@ -92,6 +88,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             </Center>
           )}
         </Box>
+
       </Box>
     </Box>
   )

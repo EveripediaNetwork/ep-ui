@@ -22,9 +22,10 @@ import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
   initialImage: string | undefined
+  isToResetImage: boolean
 }
 
-const Highlights = ({ initialImage }: HightLightsType) => {
+const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
@@ -43,6 +44,7 @@ const Highlights = ({ initialImage }: HightLightsType) => {
   const dropZoneActions = {
     setImage: handleSetImage,
     setHideImageInput,
+    isToResetImage,
     deleteImage: handleDeleteImage,
     initialImage,
   }
@@ -102,6 +104,29 @@ const Highlights = ({ initialImage }: HightLightsType) => {
             </Tr>
           </Tbody>
         </Table>
+        <Flex
+          justifyContent="center"
+          wrap="wrap"
+          alignItems="center"
+          direction="row"
+        >
+          <RiSurveyFill /> <Text ml="2">Twitter Profile</Text>
+          <br />
+          <Flex
+            mt="2"
+            direction="row"
+            wrap="wrap"
+            justify="space-evenly"
+            w="full"
+          >
+            <Text>
+              {
+                getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')
+                  ?.value
+              }
+            </Text>
+          </Flex>
+        </Flex>
         <Flex
           w="full"
           direction="row"

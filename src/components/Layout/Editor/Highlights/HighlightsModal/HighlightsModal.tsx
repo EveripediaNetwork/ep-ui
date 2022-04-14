@@ -5,12 +5,14 @@ import {
   Divider,
   Flex,
   GridItem,
+  Input,
   ModalProps,
   Select,
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
 import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
+import { BsTwitter } from 'react-icons/bs'
 import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -159,6 +161,35 @@ const HighlightsModal = ({
             </option>
           ))}
         </Select>
+        <CustomDivider />
+        <FlexRow>
+          <BsTwitter /> <Text>Twitter profile</Text>
+        </FlexRow>
+        <Input
+          onChange={event => {
+            if (event.target.value)
+              dispatch({
+                type: 'wiki/updateMetadata',
+                payload: {
+                  id: 'twitter-profile',
+                  value: event.target.value,
+                },
+              })
+          }}
+          placeholder={
+            String(
+              currentWiki.metadata.find(
+                (m: MData) => m.id === 'twitter-profile',
+              )?.value,
+            )
+              ? String(
+                  currentWiki.metadata.find(
+                    (m: MData) => m.id === 'twitter-profile',
+                  )?.value,
+                )
+              : 'Your Twitter Handle'
+          }
+        />
         <CustomDivider />
         <Tags />
         <CustomDivider />

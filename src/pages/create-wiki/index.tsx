@@ -5,6 +5,7 @@ import React, {
   memo,
   useCallback,
   ChangeEvent,
+  useMemo,
 } from 'react'
 import dynamic from 'next/dynamic'
 import {
@@ -24,6 +25,15 @@ import {
   InputLeftElement,
   InputGroup,
   Icon,
+  Textarea,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -32,11 +42,10 @@ import {
   useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
-import { RootState, store } from '@/store/store'
+import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
-import { useSelector } from 'react-redux'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
@@ -89,22 +98,22 @@ const CreateWiki = () => {
   const router = useRouter()
   const toast = useToast()
   const { slug } = router.query
-  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
-    skip: router.isFallback,
-  })
+  const { isLoading: isLoadingWiki, data: wikiData } = useGetWikiQuery(
+    typeof slug === 'string' ? slug : skipToken,
+    {
+      skip: router.isFallback,
+    },
+  )
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
   const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
+  const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const currentPageType = useSelector(
-    (state: RootState) =>
-      state.wiki.metadata.filter(m => m.id === 'page-type')[0],
-  )
-  const { isLoading: isLoadingWiki, data: wikiData } = result
+  const [isToResetImage, setIsToResetImage] = useState<boolean>(false)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loadingState, setIsLoading] = useState<
     'error' | 'loading' | undefined
@@ -251,56 +260,86 @@ const CreateWiki = () => {
   }
 
   const disableSaveButton = () =>
-    submittingWiki || !accountData?.address || signing || isLoadingWiki
+    isWritingCommitMsg ||
+    submittingWiki ||
+    !accountData?.address ||
+    signing ||
+    isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
-    if (val) setMd(val)
+    setMd(val || ' ')
   }
 
   const updatePageTypeTemplate = useCallback(() => {
-    const meta = getWikiMetadataById(wiki, 'page-type')
-    const pageType = PageTemplate.find(p => p.type === meta?.value)
+    const meta = [
+      getWikiMetadataById(wiki, 'page-type'),
+      getWikiMetadataById(wiki, 'twitter-profile'),
+    ]
+    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
     setMd(String(pageType?.templateText))
-  }, [currentPageType])
+  }, [wiki])
 
-  const verifyTrxHash = async (trxHash: string) => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await wait({
-            hash: trxHash,
-          })
-          if (trx.error) {
-            setIsLoading('error')
-            setMsg(errorMessage)
-            clearInterval(timer)
-          } else if (trx.data.confirmations > 1) {
-            setIsLoading(undefined)
-            setActiveStep(3)
-            setMsg(successMessage)
-            clearInterval(timer)
+  const verifyTrxHash = useCallback(
+    async (trxHash: string) => {
+      const timer = setInterval(() => {
+        try {
+          const checkTrx = async () => {
+            const trx = await wait({
+              hash: trxHash,
+            })
+            if (trx.error) {
+              setIsLoading('error')
+              setMsg(errorMessage)
+              clearInterval(timer)
+            } else if (trx.data.confirmations > 1) {
+              setIsLoading(undefined)
+              setActiveStep(3)
+              setMsg(successMessage)
+              clearInterval(timer)
+            }
           }
+          checkTrx()
+        } catch (err) {
+          setIsLoading('error')
+          setMsg(errorMessage)
+          clearInterval(timer)
         }
-        checkTrx()
-      } catch (err) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        clearInterval(timer)
-      }
-    }, 3000)
-  }
+      }, 3000)
+    },
+    [wait],
+  )
+
+  // Reset the State to new wiki if there is no slug
+  useEffect(() => {
+    if (!slug) {
+      setIsToResetImage(true)
+      dispatch({ type: 'wiki/reset' })
+      setMd(initialEditorValue)
+    } else {
+      setIsToResetImage(false)
+    }
+  }, [dispatch, slug])
 
   useEffect(() => {
     if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
-  }, [isLoadingWiki])
+  }, [isLoadingWiki, wikiData])
 
+  // update the page type template when the page type changes
+  const presentPageType = useMemo(
+    () => wiki?.metadata?.find(m => m.id === 'page-type')?.value,
+    [wiki?.metadata],
+  )
   useEffect(() => {
-    if (wiki && wikiData) {
-      const pageType = getWikiMetadataById(wikiData, 'page-type')?.value
-      if (currentPageType.value !== pageType) updatePageTypeTemplate()
+    if (presentPageType) {
+      let isMdPageTemplate = false
+      PageTemplate.forEach(p => {
+        if (p.templateText === md) isMdPageTemplate = true
+      })
+      if (isMdPageTemplate || md === ' ') updatePageTypeTemplate()
     }
-  }, [currentPageType])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [presentPageType])
 
   useEffect(() => {
     const getSignedTxHash = async () => {
@@ -310,7 +349,6 @@ const CreateWiki = () => {
           setIsLoading('error')
           return
         }
-
         try {
           const { data: relayerData }: any = await submitVerifiableSignature(
             data,
@@ -330,6 +368,7 @@ const CreateWiki = () => {
       }
     }
     getSignedTxHash()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error])
 
   useEffect(() => {
@@ -344,8 +383,11 @@ const CreateWiki = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, summary, content, tags, categories, metadata } =
-        wikiData
+      const { id, title, summary, content, tags, categories } = wikiData
+      let { metadata } = wikiData
+      metadata = metadata[1]?.value
+        ? metadata
+        : [...metadata, { id: 'twitter-profile', value: '' }]
 
       dispatch({
         type: 'wiki/setCurrentWiki',
@@ -354,11 +396,11 @@ const CreateWiki = () => {
 
       setMd(String(wikiData.content))
     }
-  }, [wikiData])
+  }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
     if (txHash) verifyTrxHash(txHash)
-  }, [txHash])
+  }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
     setMsg(initialMsg)
@@ -401,16 +443,70 @@ const CreateWiki = () => {
             placeholder="Title goes here"
           />
         </InputGroup>
-
-        <Button
-          isLoading={submittingWiki}
-          loadingText="Loading"
-          disabled={disableSaveButton()}
-          onClick={saveOnIpfs}
-          mb={24}
-        >
-          Publish
-        </Button>
+        <Popover onClose={() => setIsWritingCommitMsg(false)}>
+          <PopoverTrigger>
+            <Button
+              isLoading={submittingWiki}
+              _disabled={{
+                opacity: disableSaveButton() ? 0.5 : undefined,
+                _hover: {
+                  bgColor: 'grey !important',
+                  cursor: 'not-allowed',
+                },
+              }}
+              loadingText="Loading"
+              disabled={disableSaveButton()}
+              onClick={() => setIsWritingCommitMsg(true)}
+              mb={24}
+            >
+              Publish
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent m={4}>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>
+              Commit Message <small>(Optional)</small>{' '}
+            </PopoverHeader>
+            <PopoverBody>
+              <Textarea
+                placeholder="Enter what changed..."
+                onChange={e =>
+                  dispatch({
+                    type: 'wiki/setCurrentWiki',
+                    payload: { commitMessage: e.target.value },
+                  })
+                }
+              />
+            </PopoverBody>
+            <PopoverFooter>
+              <HStack spacing={2} justify="right">
+                <Button
+                  onClick={() => {
+                    dispatch({
+                      type: 'wiki/setCurrentWiki',
+                      payload: { commitMessage: '' },
+                    })
+                    setIsWritingCommitMsg(false)
+                    saveOnIpfs()
+                  }}
+                  float="right"
+                  variant="outline"
+                >
+                  Skip
+                </Button>
+                <Button
+                  onClick={() => {
+                    setIsWritingCommitMsg(false)
+                    saveOnIpfs()
+                  }}
+                >
+                  Submit
+                </Button>
+              </HStack>
+            </PopoverFooter>
+          </PopoverContent>
+        </Popover>
       </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
@@ -427,7 +523,10 @@ const CreateWiki = () => {
         <Box minH="635px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
-              <Highlights initialImage={ipfsHash} />
+              <Highlights
+                initialImage={ipfsHash}
+                isToResetImage={isToResetImage}
+              />
             </Center>
           </Skeleton>
         </Box>
@@ -443,7 +542,6 @@ const CreateWiki = () => {
           onClose={() => handlePopupClose()}
         />
       </Flex>
-
       <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
         <Flex direction="column" justifyContent="center" alignItems="center">
           {txError.opened && (
