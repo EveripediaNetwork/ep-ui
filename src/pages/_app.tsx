@@ -19,6 +19,7 @@ import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import { ImageProvider } from '@/context/image.context'
 import config from '@/config'
+import NextNProgress from 'nextjs-progressbar'
 import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
@@ -36,6 +37,7 @@ const App = (props: EpAppProps) => {
 
   return (
     <>
+      <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
