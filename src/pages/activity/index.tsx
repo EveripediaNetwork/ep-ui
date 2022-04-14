@@ -9,10 +9,8 @@ import {
 } from '@/services/activities'
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
-import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
-import { LoadingSkeleton } from '@/components/Activity/LoadingSkeleton'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -88,7 +86,6 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             </Center>
           )}
         </Box>
-
       </Box>
     </Box>
   )
