@@ -14,8 +14,8 @@ import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Wiki } from '@/types/Wiki'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { getReadableDate } from '@/utils/getFormattedDate'
+import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
   id: string
@@ -27,16 +27,18 @@ interface ActivityCardProps {
   wikiId: string
 }
 
-const CreatedTime = ({date}: {date: string}) => {
-  return <Text
-          mt="1"
-          fontSize="sm"
-          fontWeight="light"
-          opacity={0.6}
-          whiteSpace="nowrap"
-        >
-          {getReadableDate(date)}
-        </Text>
+const CreatedTime = ({ date }: { date: string }) => {
+  return (
+    <Text
+      mt="1"
+      fontSize="sm"
+      fontWeight="light"
+      opacity={0.6}
+      whiteSpace="nowrap"
+    >
+      {getReadableDate(date)}
+    </Text>
+  )
 }
 
 const ActivityCard = ({
@@ -61,7 +63,7 @@ const ActivityCard = ({
             </NextLink>
           </Text>
         </HStack>
-        <CreatedTime date={lastModTimeStamp}/>
+        <CreatedTime date={lastModTimeStamp} />
       </Box>
     ),
     md: (
@@ -79,7 +81,7 @@ const ActivityCard = ({
           </HStack>
         </Box>
         <Box>
-          <CreatedTime date={lastModTimeStamp}/>
+          <CreatedTime date={lastModTimeStamp} />
         </Box>
       </Flex>
     ),
@@ -112,7 +114,7 @@ const ActivityCard = ({
           </HStack>
         </Box>
         <Box>
-          <CreatedTime date={lastModTimeStamp}/>
+          <CreatedTime date={lastModTimeStamp} />
         </Box>
       </Flex>
     ),
