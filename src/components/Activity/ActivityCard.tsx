@@ -22,8 +22,8 @@ interface ActivityCardProps {
   title: string
   brief: string
   editor: string
-  lastModTimeStamp: string
-  wiki: Wiki
+  lastModTimeStamp?: string
+  wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
   wikiId: string
 }
 
@@ -63,7 +63,7 @@ const ActivityCard = ({
             </NextLink>
           </Text>
         </HStack>
-        <CreatedTime date={lastModTimeStamp} />
+        {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
       </Box>
     ),
     md: (
@@ -80,9 +80,7 @@ const ActivityCard = ({
             </Text>
           </HStack>
         </Box>
-        <Box>
-          <CreatedTime date={lastModTimeStamp} />
-        </Box>
+        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
       </Flex>
     ),
     lg: (
@@ -113,9 +111,7 @@ const ActivityCard = ({
             </HStack>
           </HStack>
         </Box>
-        <Box>
-          <CreatedTime date={lastModTimeStamp} />
-        </Box>
+        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
       </Flex>
     ),
   })
@@ -159,16 +155,18 @@ const ActivityCard = ({
               {title}
             </Heading>
           </NextLink>
-          <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
-            <Text
-              display={{ base: 'none', md: 'block' }}
-              color="brand.500"
-              fontWeight="bold"
-              cursor="pointer"
-            >
-              {wiki.categories[0].title}
-            </Text>
-          </NextLink>
+          {wiki.categories.length && (
+            <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
+              <Text
+                display={{ base: 'none', md: 'block' }}
+                color="brand.500"
+                fontWeight="bold"
+                cursor="pointer"
+              >
+                {wiki.categories[0].title}
+              </Text>
+            </NextLink>
+          )}
         </Flex>
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>

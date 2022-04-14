@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Avatar,
-  chakra,
-  Flex,
-  Heading,
-  HStack,
-  Stack,
-  Text,
-} from '@chakra-ui/react'
+import { Avatar, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import {
   fetchCategoriesList,
   fetchWikisList,
 } from '@/services/nav-search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Category, WikiTitle } from '@/services/nav-search'
+import ActivityCard from '@/components/Activity/ActivityCard'
+import { getWikiSummary } from '@/utils/getWikiSummary'
+import NextLink from 'next/link'
 
 const SearchQuery = () => {
   const { query: queryParam } = useRouter()
@@ -43,67 +37,42 @@ const SearchQuery = () => {
   }, [query])
   const { articles, categories } = results
   const totalResults = articles.length + categories.length
-  console.log('articles :>> ', articles)
 
   const articleList = articles.map(article => {
-    const cat = article?.categories?.[0]?.title
     return (
-      <Flex key={article.id} bg="white" rounded="lg" shadow="lg" p="4">
-        <Avatar
-          src={getWikiImageUrl(article)}
-          boxSize="16"
-          sx={{ img: { rounded: 'none' } }}
-        />
-        <Flex direction="column" ml="4" gap="4" maxW="2xl">
-          <chakra.span fontWeight="semibold" fontSize="sm">
-            {article.title}
-          </chakra.span>
-          <Text noOfLines={1} maxW="full" fontSize="xs">
-            {article.content}
-          </Text>
-          <HStack>
-            {article.tags?.map(tag => (
-              <chakra.div
-                key={`${article.id}-${tag.id}`}
-                fontWeight="medium"
-                fontSize="xs"
-                px="2"
-                borderWidth={1}
-                rounded="md"
-                _dark={{
-                  bg: 'gray.800',
-                }}
-              >
-                {tag.id}
-              </chakra.div>
-            ))}
-          </HStack>
-        </Flex>
-        <chakra.span
-          ml="auto"
-          display={{ base: 'none', md: 'block' }}
-          color="brand.500"
-          fontWeight="bold"
-          cursor="pointer"
-        >
-          {cat}
-        </chakra.span>
-      </Flex>
+      <ActivityCard
+        id={article.id}
+        key={article.id}
+        title={article.title}
+        brief={getWikiSummary({ content: article.content })}
+        editor={article.user.id}
+        wiki={article}
+        wikiId={article.id}
+      />
     )
   })
   const categoryList = categories.map(category => {
     return (
-      <Flex key={category.id} bg="white" rounded="lg" shadow="lg" p="4">
-        <Avatar
-          src={category.cardImage}
-          name={category.title}
-          boxSize="16"
-          sx={{ img: { rounded: 'none' } }}
-        />
-        <chakra.span fontWeight="semibold" fontSize="sm" ml="4">
-          {category.title}
-        </chakra.span>
-      </Flex>
+      <NextLink href={`/categories/${category.id}`} passHref>
+        <Flex
+          key={category.id}
+          bg="white"
+          rounded="lg"
+          shadow="lg"
+          p="4"
+          cursor="pointer"
+        >
+          <Avatar
+            src={category.cardImage}
+            name={category.title}
+            boxSize="16"
+            sx={{ img: { rounded: 'none' } }}
+          />
+          <chakra.span fontWeight="semibold" fontSize="sm" ml="4">
+            {category.title}
+          </chakra.span>
+        </Flex>
+      </NextLink>
     )
   })
 

@@ -6,23 +6,19 @@ import {
   GET_WIKIS_BY_TITLE,
 } from '@/services/nav-search/queries'
 import config from '@/config'
+import { Wiki } from '@/types/Wiki'
 
-export type WikiTitle = {
-  id: string
-  title: string
-  summary?: string
-  content: string
-  tags?: {
-    id: string
-  }[]
-  images?: {
-    id: string
-  }[]
-  categories?: {
-    id: string
-    title: string
-  }[]
-}
+export type WikiTitle = Pick<
+  Wiki,
+  | 'id'
+  | 'title'
+  | 'summary'
+  | 'content'
+  | 'tags'
+  | 'images'
+  | 'categories'
+  | 'user'
+>
 
 export type Category = {
   id: string
