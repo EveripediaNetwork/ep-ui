@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
-import useInfiniteScroll from 'react-infinite-scroll-hook';
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import {
   getLatestActivities,
@@ -11,12 +11,14 @@ import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
 import { ActivityEmptyState } from '@/components/Activity/EmptyState'
 import { getWikiSummary } from '@/utils/getWikiSummary'
-import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants';
+import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 
-const Activity = ({activities}: {activities: ActivityType[]}) => {
-  const [LatestActivityData, setLatestActivityData] = useState<ActivityType[] | []>(activities)
+const Activity = ({ activities }: { activities: ActivityType[] }) => {
+  const [LatestActivityData, setLatestActivityData] = useState<
+    ActivityType[] | []
+  >(activities)
   const [hasMore, setHasMore] = useState<boolean>(true)
-  const [loading , setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
@@ -43,10 +45,10 @@ const Activity = ({activities}: {activities: ActivityType[]}) => {
   }
 
   const [sentryRef] = useInfiniteScroll({
-    loading: loading,
+    loading,
     hasNextPage: hasMore,
     onLoadMore: fetchMoreActivities,
-  });
+  })
 
   const renderActivityCard = (activity: ActivityType) => (
     <ActivityCard
@@ -68,33 +70,27 @@ const Activity = ({activities}: {activities: ActivityType[]}) => {
           Recent Activity
         </Heading>
         <Box>
-          
-            <Box mt="10">
-              {!LatestActivityData?.length && (
-                <Center>
-                  <ActivityEmptyState />
-                </Center>
+          <Box mt="10">
+            {!LatestActivityData?.length && (
+              <Center>
+                <ActivityEmptyState />
+              </Center>
+            )}
+            <VStack spacing={4}>
+              {LatestActivityData?.map(activity =>
+                renderActivityCard(activity),
               )}
-              <VStack spacing={4}>
-                {LatestActivityData?.map(activity =>
-                  renderActivityCard(activity),
-                )}
-              </VStack>
-            </Box>
-            {(loading || hasMore) ? 
-              
-              <Center ref={sentryRef} mt="10" w="full" h="16">
-                <Spinner  size="xl" />
-              </Center>
-              
-              :
-         
-              <Center mt="10">
-                  <Text fontWeight="semibold">
-                    Yay! You have seen it all 🥳{' '}
-                  </Text>
-              </Center>
-          }
+            </VStack>
+          </Box>
+          {loading || hasMore ? (
+            <Center ref={sentryRef} mt="10" w="full" h="16">
+              <Spinner size="xl" />
+            </Center>
+          ) : (
+            <Center mt="10">
+              <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+            </Center>
+          )}
         </Box>
       </Box>
     </Box>
@@ -102,10 +98,12 @@ const Activity = ({activities}: {activities: ActivityType[]}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const activities = await store.dispatch(getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }))
+  const activities = await store.dispatch(
+    getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
+  )
   await Promise.all(getRunningOperationPromises())
   return {
-    props: {activities: activities.data},
+    props: { activities: activities.data },
   }
 }
 
