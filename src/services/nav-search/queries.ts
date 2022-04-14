@@ -12,6 +12,10 @@ export const GET_WIKIS_BY_TITLE = gql`
       images {
         id
       }
+      categories {
+        id
+        title
+      }
     }
   }
 `

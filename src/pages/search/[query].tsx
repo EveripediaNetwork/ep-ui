@@ -43,8 +43,10 @@ const SearchQuery = () => {
   }, [query])
   const { articles, categories } = results
   const totalResults = articles.length + categories.length
+  console.log('articles :>> ', articles)
 
   const articleList = articles.map(article => {
+    const cat = article?.categories?.[0]?.title
     return (
       <Flex key={article.id} bg="white" rounded="lg" shadow="lg" p="4">
         <Avatar
@@ -52,7 +54,7 @@ const SearchQuery = () => {
           boxSize="16"
           sx={{ img: { rounded: 'none' } }}
         />
-        <Flex direction="column" ml="4" gap="4">
+        <Flex direction="column" ml="4" gap="4" maxW="2xl">
           <chakra.span fontWeight="semibold" fontSize="sm">
             {article.title}
           </chakra.span>
@@ -77,6 +79,15 @@ const SearchQuery = () => {
             ))}
           </HStack>
         </Flex>
+        <chakra.span
+          ml="auto"
+          display={{ base: 'none', md: 'block' }}
+          color="brand.500"
+          fontWeight="bold"
+          cursor="pointer"
+        >
+          {cat}
+        </chakra.span>
       </Flex>
     )
   })
