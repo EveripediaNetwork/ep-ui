@@ -58,7 +58,7 @@ const ActivityCard = ({
           <Text fontSize="14px" color="linkColor">
             <NextLink href={`/account/${editor}`} passHref>
               <Link href="passRef" color="brand.500" fontWeight="bold">
-                {shortenAccount(editor || '')}
+                {shortenAccount(editor)}
               </Link>
             </NextLink>
           </Text>
@@ -74,7 +74,7 @@ const ActivityCard = ({
             <Text fontSize="14px" color="linkColor">
               <NextLink href={`/account/${editor}`} passHref>
                 <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {shortenAccount(editor || '')}
+                  {shortenAccount(editor)}
                 </Link>
               </NextLink>
             </Text>
