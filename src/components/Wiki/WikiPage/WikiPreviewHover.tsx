@@ -4,6 +4,7 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import {
   HStack,
+  Icon,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -17,7 +18,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
-import { RiPriceTagLine } from 'react-icons/ri'
+import { RiLightbulbLine, RiPriceTagLine } from 'react-icons/ri'
 
 interface WikiPreviewHoverProps {
   href: string
@@ -55,7 +56,12 @@ const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
         mx={4}
       >
         <PopoverArrow />
-        <PopoverHeader>{wiki?.title}</PopoverHeader>
+        <PopoverHeader>
+          <HStack justify="center" opacity={0.8}>
+            <Icon as={RiLightbulbLine} />{' '}
+            <Text fontSize="15px">{wiki?.title}</Text>
+          </HStack>
+        </PopoverHeader>
         <PopoverBody>
           <HStack align="start" spacing={3}>
             <WikiImage
