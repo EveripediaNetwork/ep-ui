@@ -2,12 +2,20 @@ import { Wiki } from '@/types/Wiki'
 import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { HeadingProps } from 'react-markdown/lib/ast-to-react'
+import {
+  ComponentPropsWithoutRef,
+  HeadingProps,
+  ReactMarkdownProps,
+} from 'react-markdown/lib/ast-to-react'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
   addToTOC: (props: React.PropsWithChildren<HeadingProps>) => JSX.Element
-  addWikiPreview: any
+  addWikiPreview: (
+    props: React.PropsWithChildren<
+      ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
+    >,
+  ) => JSX.Element
 }
 
 const WikiMainContent = ({

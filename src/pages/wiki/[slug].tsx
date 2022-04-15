@@ -10,7 +10,11 @@ import {
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { HeadingProps } from 'react-markdown/lib/ast-to-react'
+import {
+  ComponentPropsWithoutRef,
+  HeadingProps,
+  ReactMarkdownProps,
+} from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
@@ -52,11 +56,16 @@ const Wiki = () => {
   }: React.PropsWithChildren<HeadingProps>) => {
     const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
     if (level && children && typeof children[0] === 'string') {
+      // TODO: Make this id fixed instead of volatile id
       const id = `${children[0]
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')}-${Math.random()
         .toString(36)
         .substring(2, 5)}`
+
+      // TODO: Find out why this is happening
+      // if the last item in toc is same as current item, remove the last item
+      // to avoid duplicate items
       if (toc[toc.length - 1]?.title === children[0]) {
         toc.pop()
       }
@@ -70,18 +79,26 @@ const Wiki = () => {
     return React.createElement(props.node.tagName, props, children)
   }
 
-  const addWikiPreview = ({ children, ...props }: any) => {
+  const addWikiPreview = ({
+    children,
+    ...props
+  }: React.PropsWithChildren<
+    ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
+  >) => {
     // TODO: Make more specific regex
     const wikiLinkRecognizer = /.*\/wiki\/(.*)/
-    if (
-      children &&
-      typeof children[0] === 'string' &&
-      wikiLinkRecognizer.test(props.href)
-    ) {
-      const wikiSlug = props.href.match(wikiLinkRecognizer)?.[1]
+    const wikiSlug = props?.href?.match(wikiLinkRecognizer)?.[1]
+
+    // Checks if the link is a wiki link
+    const isChildrenPresent =
+      children && typeof children[0] === 'string' && children[0].length > 0
+    const isWikiSlugPresent = wikiSlug && wikiSlug.length > 0
+
+    // render special hover component if the link is a wiki link
+    if (isChildrenPresent && isWikiSlugPresent && props.href) {
       return (
         <WikiPreviewHover
-          text={children[0]}
+          text={children[0] as string}
           href={props.href}
           slug={wikiSlug}
         />
@@ -89,7 +106,6 @@ const Wiki = () => {
     }
     return React.createElement(props.node.tagName, props, children)
   }
-
   /* eslint-enable react/prop-types */
 
   return (
