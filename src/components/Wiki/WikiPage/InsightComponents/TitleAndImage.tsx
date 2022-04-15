@@ -13,8 +13,7 @@ import {
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
 import { WikiImage } from '@/components/WikiImage'
-import { WikiTitle } from '@/services/nav-search'
-import { BaseCategory } from '@/types/Wiki'
+import { BaseCategory, WikiPreview } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
@@ -27,7 +26,7 @@ export const TitleAndImage = ({
   lastEditor,
   imgSrc,
 }: {
-  wikiTitle: WikiTitle
+  wikiTitle: WikiPreview
   categories: BaseCategory[]
   lastEdited: string | undefined
   ipfsHash: string | undefined

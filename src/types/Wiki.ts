@@ -78,3 +78,16 @@ export interface Wiki {
   updated?: string
   created?: string
 }
+
+export type WikiPreview = {
+  id: string
+  title: string
+  summary?: string
+  content: string
+  tags?: {
+    id: string
+  }[]
+  images?: {
+    id: string
+  }[]
+}

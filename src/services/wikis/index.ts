@@ -9,8 +9,9 @@ import {
   GET_PROMOTED_WIKIS,
   POST_WIKI,
   POST_IMG,
+  GET_PREVIEW_WIKI_BY_ID,
 } from '@/services/wikis/queries'
-import { Wiki } from '@/types/Wiki'
+import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
 
 type GetWikisResponse = {
@@ -21,6 +22,9 @@ type GetPromotedWikisResponse = {
   promotedWikis: Wiki[]
 }
 
+type GetWikiPreviewResponse = {
+  wiki: WikiPreview
+}
 type GetWikiResponse = {
   wiki: Wiki
 }
@@ -61,6 +65,13 @@ export const wikiApi = createApi({
       query: () => ({ document: GET_PROMOTED_WIKIS }),
       transformResponse: (response: GetPromotedWikisResponse) =>
         response.promotedWikis,
+    }),
+    getWikiPreview: builder.query<WikiPreview, string>({
+      query: (id: string) => ({
+        document: GET_PREVIEW_WIKI_BY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
     }),
     getWiki: builder.query<Wiki, string>({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
@@ -105,6 +116,7 @@ export const {
   useGetWikisQuery,
   useGetPromotedWikisQuery,
   useGetWikiQuery,
+  useGetWikiPreviewQuery,
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   util: { getRunningOperationPromises },
@@ -114,6 +126,7 @@ export const {
   getWikis,
   getPromotedWikis,
   getWiki,
+  getWikiPreview,
   getUserWikis,
   getWikisByCategory,
   postWiki,

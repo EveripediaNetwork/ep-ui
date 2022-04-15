@@ -71,13 +71,20 @@ const Wiki = () => {
 
   const addWikiPreview = ({ children, ...props }: any) => {
     // TODO: Make more specific regex
-    const wikiLinkRecognizer = /.*\/wiki\/.*/
+    const wikiLinkRecognizer = /.*\/wiki\/(.*)/
     if (
       children &&
       typeof children[0] === 'string' &&
       wikiLinkRecognizer.test(props.href)
     ) {
-      return <WikiPreviewHover text={children[0]} href={props.href} />
+      const wikiSlug = props.href.match(wikiLinkRecognizer)?.[1]
+      return (
+        <WikiPreviewHover
+          text={children[0]}
+          href={props.href}
+          slug={wikiSlug}
+        />
+      )
     }
     return React.createElement(props.node.tagName, props, children)
   }

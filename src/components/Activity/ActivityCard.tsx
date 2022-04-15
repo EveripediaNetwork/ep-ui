@@ -13,8 +13,8 @@ import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
-import { WikiTitle } from '@/services/nav-search'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { WikiPreview } from '@/types/Wiki'
 import TimeModified from './TimeModified'
 import VoteTimeRemaining from './VoteTimeRemaining'
 
@@ -27,7 +27,7 @@ interface ActivityCardProps {
   isFirstEdit: boolean
   percentChanged: number
   lastModTimeStamp: string
-  wiki: WikiTitle
+  wiki: WikiPreview
 }
 
 const ActivityCard = ({

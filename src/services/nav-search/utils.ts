@@ -1,16 +1,13 @@
-import {
-  getCategoriesByTitle,
-  getWikisByTitle,
-  WikiTitle,
-} from '@/services/nav-search'
+import { getCategoriesByTitle, getWikisByTitle } from '@/services/nav-search'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
+import { WikiPreview } from '@/types/Wiki'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
 
 type Results = {
-  articles: WikiTitle[]
+  articles: WikiPreview[]
   categories: Category[]
 }
 
@@ -21,7 +18,7 @@ export const SEARCH_TYPES = {
   CATEGORY: 'CATEGORY',
 } as const
 
-export const fillType = (item: WikiTitle | Category, type: SearchItem) => {
+export const fillType = (item: WikiPreview | Category, type: SearchItem) => {
   return { ...item, type }
 }
 
