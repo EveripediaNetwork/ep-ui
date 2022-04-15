@@ -24,17 +24,22 @@ interface WikiPreviewHoverProps {
 
 const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
+  const linkRef = React.useRef<HTMLAnchorElement>(null)
   const { data: wiki } = useGetWikiPreviewQuery(slug)
 
   return (
     <Popover
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
+      returnFocusOnClose={false}
       aria-label="Wiki preview"
     >
       <PopoverTrigger>
         <a
-          onMouseOver={() => setIsOpen(true)}
+          ref={linkRef}
+          onMouseOver={() => {
+            setIsOpen(true)
+          }}
           onMouseOut={() => setIsOpen(false)}
           onFocus={() => {}}
           onBlur={() => {}}
