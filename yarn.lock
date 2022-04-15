@@ -1710,10 +1710,10 @@
   dependencies:
     "@chakra-ui/utils" "1.10.4"
 
-"@choc-ui/chakra-autocomplete@^4.20.1":
-  version "4.20.1"
-  resolved "https://registry.yarnpkg.com/@choc-ui/chakra-autocomplete/-/chakra-autocomplete-4.20.1.tgz#0fc59e894704da7a3da6bb0e26eea0b03faefcd4"
-  integrity sha512-8DdcPZP9SLQ8uBEZ2JdUDp3rTG4yOwk69O9XMzsI42tffnFsgrQ97oRqdg/yxA349g/hDrRUTVXGHq5Jfrnl/Q==
+"@choc-ui/chakra-autocomplete@^4.22.0":
+  version "4.22.0"
+  resolved "https://registry.yarnpkg.com/@choc-ui/chakra-autocomplete/-/chakra-autocomplete-4.22.0.tgz#540b9f561309cc7a64e9fbd4f44ff30336189aa7"
+  integrity sha512-jP1IBM8Xtm7iNs4mB1ky/HRFpJQeNUDbVwA2CQ/UZyPHsoMGbo6dH2iHofaE1H4KuGPJV1gWvjmQ6o/uMYeT0g==
   dependencies:
     react-nanny "^2.9.0"
 
@@ -10371,6 +10371,14 @@ next@^12.1.4:
     "@next/swc-win32-ia32-msvc" "12.1.4"
     "@next/swc-win32-x64-msvc" "12.1.4"
 
+nextjs-progressbar@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/nextjs-progressbar/-/nextjs-progressbar-0.0.14.tgz#cc2630ee4e9dec598314394bd0fffb0cbfc40444"
+  integrity sha512-AXYXHDN6M52AwFnGqH/vlwyo0gbC9zM7QS/4ryOTI0RUqfze5FJl8uSrxKJMzK6hGFdDeQXcZoWsLGXeCVtTwg==
+  dependencies:
+    nprogress "^0.2.0"
+    prop-types "^15.7.2"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -10495,6 +10503,11 @@ npmlog@^5.0.1:
     console-control-strings "^1.1.0"
     gauge "^3.0.0"
     set-blocking "^2.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 nth-check@^2.0.1:
   version "2.0.1"
@@ -11634,6 +11647,13 @@ react-icons@^4.3.1:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.3.1.tgz#2fa92aebbbc71f43d2db2ed1aed07361124e91ca"
   integrity sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==
 
+react-infinite-scroll-hook@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-hook/-/react-infinite-scroll-hook-4.0.3.tgz#48eba01ef3e7f70528e92d15f031ff0ec7845493"
+  integrity sha512-5B3YuWODFq9j2m1J+Shk24QR2WDV0U9oQAaxR8ddFge8oC8Ls54EmkQxwelOjyv1jub4bP0jjSK7v+fM5QwWmg==
+  dependencies:
+    react-intersection-observer-hook "^2.0.4"
+
 react-inspector@^5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-inspector/-/react-inspector-5.1.1.tgz#58476c78fde05d5055646ed8ec02030af42953c8"
@@ -11642,6 +11662,11 @@ react-inspector@^5.1.0:
     "@babel/runtime" "^7.0.0"
     is-dom "^1.0.0"
     prop-types "^15.0.0"
+
+react-intersection-observer-hook@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer-hook/-/react-intersection-observer-hook-2.0.4.tgz#1ea00ab07f7bb859a5cc924f612862a63faf3b24"
+  integrity sha512-bBZSuv5+CNAH3eA5U52McmkR/Obn23igBL3/MuYzlRvALrweSxqvT35cwWnaFkqUh6SjvYRfJncDpaqejAr9oA==
 
 react-is@17.0.2, react-is@^17.0.2:
   version "17.0.2"

@@ -17,6 +17,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'grey.200',
     },
+    textColor: {
+      default: 'gray.900',
+      _dark: 'grey.200',
+    },
     linkHoverColor: {
       default: 'gray.800',
       _dark: 'gray.400',

@@ -1,33 +1,44 @@
 import React from 'react'
 import {
   HStack,
-  VStack,
   Heading,
   Text,
   Box,
   Link,
-  Button,
+  Tag,
   useBreakpointValue,
+  Flex,
 } from '@chakra-ui/react'
-import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { WikiPreview } from '@/types/Wiki'
-import TimeModified from './TimeModified'
-import VoteTimeRemaining from './VoteTimeRemaining'
+import { Wiki } from '@/types/Wiki'
+import { getReadableDate } from '@/utils/getFormattedDate'
+import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
   id: string
   title: string
   brief: string
   editor: string
-  wordsChanged: number
-  isFirstEdit: boolean
-  percentChanged: number
-  lastModTimeStamp: string
-  wiki: WikiPreview
+  lastModTimeStamp?: string
+  wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
+  wikiId: string
+}
+
+const CreatedTime = ({ date }: { date: string }) => {
+  return (
+    <Text
+      mt="1"
+      fontSize="sm"
+      fontWeight="light"
+      opacity={0.6}
+      whiteSpace="nowrap"
+    >
+      {getReadableDate(date)}
+    </Text>
+  )
 }
 
 const ActivityCard = ({
@@ -35,130 +46,133 @@ const ActivityCard = ({
   title,
   brief,
   editor,
-  wordsChanged,
-  percentChanged,
-  isFirstEdit,
   lastModTimeStamp,
   wiki,
+  wikiId,
 }: ActivityCardProps) => {
   const editDetails = useBreakpointValue({
     base: (
-      <Text fontSize="14px" opacity={0.6}>
-        <TimeModified lastModTimeStamp={lastModTimeStamp} />
-      </Text>
+      <Box>
+        <HStack>
+          <DisplayAvatar address={wiki.user?.id} size="20" />
+          <Text fontSize="14px" color="linkColor">
+            <NextLink href={`/account/${editor}`} passHref>
+              <Link href="passRef" color="brand.500" fontWeight="bold">
+                {shortenAccount(editor)}
+              </Link>
+            </NextLink>
+          </Text>
+        </HStack>
+        {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
+      </Box>
     ),
     md: (
-      <Text fontSize="14px" color="linkColor">
-        <NextLink href={`/account/${editor}`} passHref>
-          <Link href="passRef" color="brand.500" fontWeight="bold">
-            {shortenAccount(editor || '')}
-          </Link>
-        </NextLink>{' '}
-        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '}
-        {isFirstEdit ? 'First Edit ' : `${percentChanged * 100}% Changed `}
-      </Text>
+      <Flex justifyContent="space-between" w="full">
+        <Box>
+          <HStack flex="1">
+            <DisplayAvatar address={wiki.user?.id} size="20" />
+            <Text fontSize="14px" color="linkColor">
+              <NextLink href={`/account/${editor}`} passHref>
+                <Link href="passRef" color="brand.500" fontWeight="bold">
+                  {shortenAccount(editor)}
+                </Link>
+              </NextLink>
+            </Text>
+          </HStack>
+        </Box>
+        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
+      </Flex>
     ),
     lg: (
-      <Text fontSize="14px" color="linkColor">
-        <NextLink href={`/account/${editor}`} passHref>
-          <Link href="passRef" color="brand.500" fontWeight="bold">
-            {shortenAccount(editor || '')}
-          </Link>
-        </NextLink>{' '}
-        edited <TimeModified lastModTimeStamp={lastModTimeStamp} /> |{' '}
-        {isFirstEdit ? 'First Edit ' : `${percentChanged * 100}% Changed `}(
-        {wordsChanged} words)
-      </Text>
+      <Flex justifyContent="space-between" w="full">
+        <Box>
+          <HStack flex="1">
+            <DisplayAvatar address={wiki.user?.id} size="20" />
+            <Text fontSize="14px" color="linkColor">
+              <NextLink href={`/account/${editor}`} passHref>
+                <Link href="passRef" color="brand.500" fontWeight="bold">
+                  {shortenAccount(editor || '')}
+                </Link>
+              </NextLink>
+            </Text>
+            <HStack spacing={2}>
+              {wiki.tags.map((tag, index) => (
+                <Tag
+                  key={index}
+                  borderRadius={6}
+                  variant="solid"
+                  bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
+                >
+                  <Text px={4} color="black">
+                    {tag.id}
+                  </Text>
+                </Tag>
+              ))}
+            </HStack>
+          </HStack>
+        </Box>
+        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
+      </Flex>
     ),
   })
 
   return (
     <HStack
       bgColor="cardBg"
-      justifyContent="space-between"
+      justifyContent="flex-start"
       borderWidth="1px"
       borderColor="cardBorder"
       borderRadius="lg"
       boxShadow="0px 4px 8px rgba(0, 0, 0, 0.10)"
       px={{ base: 3, lg: 5 }}
-      py={{ base: 3, lg: 1 }}
-      w="100%"
+      py={{ base: 3, lg: 3 }}
+      w="full"
     >
-      <HStack maxW="70%">
-        <NextLink href={`/wiki/${id}`} passHref>
-          <WikiImage
-            cursor="pointer"
-            flexShrink={0}
-            imageURL={getWikiImageUrl(wiki)}
-            h={{ base: 65, lg: 100 }}
-            w={{ base: 65, lg: 100 }}
-            borderRadius="lg"
-            overflow="hidden"
-          />
-        </NextLink>
-        <VStack
-          alignItems="start"
-          px={4}
-          spacing={{ base: 1, lg: 2 }}
-          minW={0}
-          p={{ base: 1, lg: 4 }}
-          mx="auto"
-        >
-          <NextLink href={`/wiki/${id}`} passHref>
+      <NextLink href={`/wiki/${id}`} passHref>
+        <WikiImage
+          cursor="pointer"
+          flexShrink={0}
+          imageURL={getWikiImageUrl(wiki)}
+          h={{ base: 70, lg: 100 }}
+          w={{ base: 70, lg: 100 }}
+          borderRadius="lg"
+          overflow="hidden"
+        />
+      </NextLink>
+      <Box w="100%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
+        <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
+          <NextLink href={`/wiki/${wikiId}`} passHref>
             <Heading
               cursor="pointer"
               as="h2"
               fontSize={{ base: '16px', md: '20px' }}
-              maxW="100%"
               letterSpacing="wide"
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
+              w={{ base: '50%', md: '100%' }}
             >
               {title}
             </Heading>
           </NextLink>
-          <Box maxH="50px" overflow="hidden">
-            <Text display={{ base: 'none', lg: 'flex' }}>{brief}</Text>
-          </Box>
-          <HStack>{editDetails}</HStack>
-        </VStack>
-      </HStack>
-      <HStack gap={10} ml="0 !important">
-        <VStack spacing={2} display={{ base: 'none', lg: 'flex' }}>
-          <Button>Vote</Button>
-          <VoteTimeRemaining lastModTimeStamp={lastModTimeStamp} />
-        </VStack>
-        <HStack
-          marginInlineStart="0 !important"
-          flexDirection={{ base: 'column', lg: 'row' }}
-          gap={3}
-          minW={0}
-        >
-          <Button
-            aria-label="up-vote"
-            leftIcon={<FaThumbsDown color="#e04c60" />}
-            variant="outline"
-            p={3}
-            fontSize={{ base: '14px', lg: '16px' }}
-            height={{ base: '30px', lg: '40px' }}
-            color="linkColor"
-          >
-            0 IQ
-          </Button>
-          <Button
-            aria-label="up-vote"
-            leftIcon={<FaThumbsUp color="#318c48" />}
-            variant="outline"
-            p={3}
-            fontSize={{ base: '14px', lg: '16px' }}
-            height={{ base: '30px', lg: '40px' }}
-            color="linkColor"
-          >
-            50 IQ
-          </Button>
-        </HStack>
-      </HStack>
+          {wiki.categories.length && (
+            <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
+              <Text
+                display={{ base: 'none', md: 'block' }}
+                color="brand.500"
+                fontWeight="bold"
+                cursor="pointer"
+              >
+                {wiki.categories[0].title}
+              </Text>
+            </NextLink>
+          )}
+        </Flex>
+        <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
+          <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
+        </Box>
+        {editDetails}
+      </Box>
     </HStack>
   )
 }

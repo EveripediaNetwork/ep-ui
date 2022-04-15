@@ -31,8 +31,14 @@ const VoteTimeRemaining = ({
     return () => clearInterval(intervalId)
   }, [lastModTimeStamp])
   return (
-    <Text fontSize="14px" opacity={0.6} whiteSpace="nowrap">
-      {voteTimeReminding} remaining
+    <Text
+      mt="1"
+      fontSize="sm"
+      fontWeight="light"
+      opacity={0.6}
+      whiteSpace="nowrap"
+    >
+      {voteTimeReminding} ago
     </Text>
   )
 }

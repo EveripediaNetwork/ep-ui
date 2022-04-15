@@ -225,6 +225,7 @@ export const NavSearch = (props: NavSearchProps) => {
         {...listProps}
       >
         {isLoading ? loadingView : searchList}
+
         {totalUnrendered > 0 && (
           <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
             <Link href={`/search/${query}`} passHref>

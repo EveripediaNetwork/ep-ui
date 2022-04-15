@@ -71,23 +71,22 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
+  user: User
   metadata: UpdatedMetaDataInterface
-  user?: User
   version: number
   language: LanguagesISOEnum
   updated?: string
   created?: string
 }
 
-export type WikiPreview = {
-  id: string
-  title: string
-  summary?: string
-  content: string
-  tags?: {
-    id: string
-  }[]
-  images?: {
-    id: string
-  }[]
-}
+export type WikiPreview = Pick<
+  Wiki,
+  | 'id'
+  | 'title'
+  | 'summary'
+  | 'content'
+  | 'tags'
+  | 'images'
+  | 'categories'
+  | 'user'
+>
