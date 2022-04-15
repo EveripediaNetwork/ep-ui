@@ -59,6 +59,7 @@ export const TitleAndImage = ({
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {categories?.map((category, i) => (
                     <Link
+                      key={i}
                       m="3px !important"
                       href={`/categories/${category.id}`}
                     >

@@ -12,9 +12,12 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Tag,
+  TagLabel,
+  TagLeftIcon,
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import { RiPriceTagLine } from 'react-icons/ri'
 
 interface WikiPreviewHoverProps {
   href: string
@@ -37,9 +40,7 @@ const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
       <PopoverTrigger>
         <a
           ref={linkRef}
-          onMouseOver={() => {
-            setIsOpen(true)
-          }}
+          onMouseOver={() => setIsOpen(true)}
           onMouseOut={() => setIsOpen(false)}
           onFocus={() => {}}
           onBlur={() => {}}
@@ -72,12 +73,16 @@ const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
         {wiki?.tags?.length !== 0 && (
           <PopoverFooter>
             <HStack spacing={2} align="center" flexWrap="wrap">
-              <Tag variant="outline" fontWeight="bold">
-                Tags:{' '}
+              <Tag variant="outline">
+                <TagLeftIcon mr={1} boxSize="12px" as={RiPriceTagLine} />
+                <TagLabel ml={0} fontSize="12px">
+                  TAGS
+                </TagLabel>
               </Tag>
-              {wiki?.tags?.map(tag => (
+              {wiki?.tags?.map((tag, i) => (
                 <Tag
-                  bgColor={`hsl(${Math.floor(Math.random() * 360)}, 40%, 80%)`}
+                  key={i}
+                  bgColor={`hsl(${Math.floor(i * 0.5 * 360)}, 40%, 80%)`}
                   color="black"
                 >
                   {tag.id}
