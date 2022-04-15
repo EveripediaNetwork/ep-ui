@@ -18,6 +18,7 @@ import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import WikiPreviewHover from '@/components/Wiki/WikiPage/WikiPreviewHover'
 
 const Wiki = () => {
   const router = useRouter()
@@ -67,6 +68,20 @@ const Wiki = () => {
     }
     return React.createElement(props.node.tagName, props, children)
   }
+
+  const addWikiPreview = ({ children, ...props }: any) => {
+    // TODO: Make more specific regex
+    const wikiLinkRecognizer = /.*\/wiki\/.*/
+    if (
+      children &&
+      typeof children[0] === 'string' &&
+      wikiLinkRecognizer.test(props.href)
+    ) {
+      return <WikiPreviewHover text={children[0]} href={props.href} />
+    }
+    return React.createElement(props.node.tagName, props, children)
+  }
+
   /* eslint-enable react/prop-types */
 
   return (
@@ -100,7 +115,11 @@ const Wiki = () => {
               direction={{ base: 'column', md: 'row' }}
             >
               <WikiActionBar wiki={wiki} />
-              <WikiMainContent wiki={wiki} addToTOC={addToTOC} />
+              <WikiMainContent
+                wiki={wiki}
+                addToTOC={addToTOC}
+                addWikiPreview={addWikiPreview}
+              />
               {wiki && <WikiInsights wiki={wiki} />}
             </Flex>
             {!isTocEmpty && <WikiTableOfContents toc={toc} />}
