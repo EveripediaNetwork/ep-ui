@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { NextSeo } from 'next-seo'
@@ -29,6 +29,17 @@ const Wiki = () => {
   })
   const { isLoading, error, data: wiki } = result
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
+
+  // get the link id if available to scroll to the correct position
+  useEffect(() => {
+    if (!isTocEmpty) {
+      const linkId = window.location.hash.replace('#', '')
+      if (linkId) {
+        router.push(`/wiki/${slug}#${linkId}`)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTocEmpty])
 
   // here toc is not state variable since there seems to be some issue
   // with in react-markdown that is causing infinite loop if toc is state variable
