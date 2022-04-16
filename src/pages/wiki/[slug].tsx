@@ -51,11 +51,14 @@ const Wiki = () => {
   }: React.PropsWithChildren<HeadingProps>) => {
     const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
     if (level && children && typeof children[0] === 'string') {
-      const id = `${children[0]
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')}-${Math.random()
-        .toString(36)
-        .substring(2, 5)}`
+      // id for each heading to be used in table of contents
+      const id = `${children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${
+        toc.length
+      }`
+
+      // TODO: Find out why this is happening
+      // if the last item in toc is same as current item, remove the last item
+      // to avoid duplicate items
       if (toc[toc.length - 1]?.title === children[0]) {
         toc.pop()
       }
