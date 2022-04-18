@@ -174,6 +174,39 @@ export const GET_WIKIS_BY_CATEGORY = gql`
   }
 `
 
+export const GET_TAG_WIKIS_BY_ID = gql`
+  query GetTagWikis($id: String!) {
+    tagById(id: $id) {
+      wikis {
+        id
+        ipfs
+        content
+        created
+        title
+        summary
+        content
+        categories {
+          id
+          title
+        }
+        tags {
+          id
+        }
+        images {
+          id
+          type
+        }
+        metadata {
+          id
+        }
+        user {
+          id
+        }
+      }
+    }
+  }
+`
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {
