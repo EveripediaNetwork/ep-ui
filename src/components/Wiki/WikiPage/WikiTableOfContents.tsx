@@ -81,7 +81,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
     headingElements.forEach(element => observer.observe(element))
 
     return () => observer.disconnect()
-  }, [setActiveId])
+  }, [setActiveId, toc])
 
   React.useEffect(() => {
     if (!activeId) setActiveId(toc[0].id)
