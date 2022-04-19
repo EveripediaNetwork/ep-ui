@@ -53,6 +53,8 @@ export const NavSearch = (props: NavSearchProps) => {
 
   const unrenderedArticles = results.articles.length - ARTICLES_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
+  const noResults =
+    results.articles.length === 0 && results.categories.length === 0
 
   const resolvedUnrenderedArticles =
     unrenderedArticles > 0 ? unrenderedArticles : 0
@@ -186,8 +188,9 @@ export const NavSearch = (props: NavSearchProps) => {
   return (
     <AutoComplete
       closeOnSelect={false}
+      disableFilter
       suggestWhenEmpty
-      emptyState={!isLoading && emptyState}
+      emptyState={!isLoading && noResults && emptyState}
       shouldRenderSuggestions={q => q.length >= 3}
       openOnFocus={query.length >= 3}
       onSelectOption={option => {
@@ -226,7 +229,7 @@ export const NavSearch = (props: NavSearchProps) => {
       >
         {isLoading ? loadingView : searchList}
 
-        {totalUnrendered > 0 && (
+        {totalUnrendered > 0 && !isLoading && (
           <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
             <Link href={`/search/${query}`} passHref>
               <Button variant="outline" as="a">

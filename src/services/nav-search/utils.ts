@@ -1,4 +1,5 @@
 import { getCategoriesByTitle, getWikisByTitle } from '@/services/nav-search'
+import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { WikiPreview } from '@/types/Wiki'
@@ -24,7 +25,8 @@ export const fillType = (item: WikiPreview | Category, type: SearchItem) => {
 
 export const fetchWikisList = async (query: string) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-  return data
+  const { data: tagsData } = await store.dispatch(getTagWikis.initiate(query))
+  return [...(data || []), ...(tagsData || [])]
 }
 export const fetchCategoriesList = async (query: string) => {
   const { data } = await store.dispatch(getCategoriesByTitle.initiate(query))
@@ -56,6 +58,7 @@ export const useNavSearch = () => {
     if (query && query.length >= 3) {
       setIsLoading(true)
       debouncedFetchResults(query, res => {
+        console.log('res.articles :>> ', res.articles)
         setResults(res)
         setIsLoading(false)
       })
