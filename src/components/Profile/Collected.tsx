@@ -1,16 +1,15 @@
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { FilterLayout } from '@/components/Profile/FilterLayout'
 import { useProfileContext } from '@/components/Profile/utils'
-import { getUserWikis} from '@/services/wikis'
+import { getUserWikis } from '@/services/wikis'
 import { Center, SimpleGrid, Text, Spinner } from '@chakra-ui/react'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { EmptyState } from '@/components/Profile/EmptyState'
-import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 import { Wiki } from '@/types/Wiki'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { store } from '@/store/store'
-
+import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 export const Collected = () => {
   const { displaySize } = useProfileContext()
@@ -26,7 +25,11 @@ export const Collected = () => {
     setTimeout(() => {
       const fetchNewWikis = async () => {
         const result = await store.dispatch(
-          getUserWikis.initiate({ id: address, limit: ITEM_PER_PAGE, offset: updatedOffset }),
+          getUserWikis.initiate({
+            id: address,
+            limit: ITEM_PER_PAGE,
+            offset: updatedOffset,
+          }),
         )
         if (result.data && result.data?.length > 0) {
           const data = result.data || []
@@ -40,11 +43,11 @@ export const Collected = () => {
         }
       }
       fetchNewWikis()
-   }, FETCH_DELAY_TIME)
+    }, FETCH_DELAY_TIME)
   }
 
-  useEffect(()=> {
-    if(address){
+  useEffect(() => {
+    if (address) {
       fetchMoreWikis()
     }
   }, [address])
@@ -57,24 +60,29 @@ export const Collected = () => {
 
   return (
     <FilterLayout>
-      {(wikis.length < 1 && !hasMore) && (
+      {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState />
         </Center>
       )}
-      <SimpleGrid ref={sentryRef}  minChildWidth={displaySize} w="full" spacing="4">
+      <SimpleGrid
+        ref={sentryRef}
+        minChildWidth={displaySize}
+        w="full"
+        spacing="4"
+      >
         {wikis.map((item, i) => (
           <WikiPreviewCard wiki={item} key={i} />
         ))}
       </SimpleGrid>
-      { (loading||hasMore) ? (
-          <Center ref={sentryRef}  w="full" h="16">
-            <Spinner size="xl" />
-          </Center>) 
-          : (
-          <Center mt="10">
-            <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
-          </Center>
+      {loading || hasMore ? (
+        <Center ref={sentryRef} w="full" h="16">
+          <Spinner size="xl" />
+        </Center>
+      ) : (
+        <Center mt="10">
+          <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+        </Center>
       )}
     </FilterLayout>
   )
