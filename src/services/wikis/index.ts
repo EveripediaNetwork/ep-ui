@@ -50,6 +50,18 @@ type PostWikiResponse = {
   }
 }
 
+type UserWikiArg = {
+  id: string
+  limit?: number
+  offset?: number
+}
+
+type WikisByCategoryArg = {
+  category: string
+  limit?: number
+  offset?: number
+}
+
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -82,11 +94,21 @@ export const wikiApi = createApi({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
       transformResponse: (response: GetWikiResponse) => response.wiki,
     }),
-    getUserWikis: builder.query<Wiki[], string>({
-      query: (id: string) => ({
-        document: GET_USER_WIKIS_BY_ID,
-        variables: { id },
-      }),
+    getUserWikis: builder.query<Wiki[], UserWikiArg>({
+      query: ({
+        id,
+        limit,
+        offset,
+      }: {
+        id: string
+        limit: number
+        offset: number
+      }) => {
+        return {
+          document: GET_USER_WIKIS_BY_ID,
+          variables: { id, limit, offset },
+        }
+      },
       transformResponse: (response: GetUserWikiResponse) =>
         response.userById.wikis,
     }),
@@ -98,10 +120,18 @@ export const wikiApi = createApi({
       transformResponse: (response: GetWikisByTagResponse) =>
         response.tagById.wikis,
     }),
-    getWikisByCategory: builder.query<Wiki[], string>({
-      query: (category: string) => ({
+    getWikisByCategory: builder.query<Wiki[], WikisByCategoryArg>({
+      query: ({
+        category,
+        limit,
+        offset,
+      }: {
+        category: string
+        limit?: number
+        offset?: number
+      }) => ({
         document: GET_WIKIS_BY_CATEGORY,
-        variables: { category },
+        variables: { category, limit, offset },
       }),
       transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
