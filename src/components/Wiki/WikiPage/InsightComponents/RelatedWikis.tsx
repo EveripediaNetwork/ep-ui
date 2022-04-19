@@ -59,14 +59,16 @@ export const RelatedWikis = ({
   const [wikis, setWikis] = React.useState<Wiki[] | []>([])
   useEffect(() => {
     categories?.forEach(category => {
-      store.dispatch(getWikisByCategory.initiate({category:category.id})).then(res => {
-        setWikis(prev => [
-          ...prev,
-          ...(res?.data?.filter(wiki => {
-            return !prev.some(w => w.id === wiki.id)
-          }) || []),
-        ])
-      })
+      store
+        .dispatch(getWikisByCategory.initiate({ category: category.id }))
+        .then(res => {
+          setWikis(prev => [
+            ...prev,
+            ...(res?.data?.filter(wiki => {
+              return !prev.some(w => w.id === wiki.id)
+            }) || []),
+          ])
+        })
     })
   }, [categories])
   return (
