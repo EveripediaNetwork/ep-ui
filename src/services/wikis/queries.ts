@@ -110,9 +110,9 @@ export const GET_PROMOTED_WIKIS = gql`
 `
 
 export const GET_USER_WIKIS_BY_ID = gql`
-  query GetUserWikis($id: String!) {
+  query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
     userById(id: $id) {
-      wikis {
+      wikis(offset: $offset, limit: $limit) {
         id
         ipfs
         title
