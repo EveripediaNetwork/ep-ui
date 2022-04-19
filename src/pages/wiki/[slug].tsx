@@ -173,7 +173,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (typeof slug === 'string') {
     store.dispatch(getWiki.initiate(slug)).then(res => {
       res?.data?.categories.map(category =>
-        getWikisByCategory.initiate(category.id),
+        getWikisByCategory.initiate({category: category.id}),
       )
     })
   }
