@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import {
   Divider,
@@ -8,8 +8,9 @@ import {
   Icon,
   Flex,
   Text,
-  Button,
+  Button, Center, Spinner
 } from '@chakra-ui/react'
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { Image } from '@/components/Elements/Image/Image'
 import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import {
@@ -23,17 +24,59 @@ import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
+import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 
-interface CategoryPageProps {
+type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
-}
-const CategoryPage: NextPage<CategoryPageProps> = ({
-  categoryData,
-  wikis,
-}: CategoryPageProps) => {
+}  
+
+const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const categoryIcon = getBootStrapIcon(categoryData.icon)
+  const [wikisInCategory, setWikisInCategory] = useState<Wiki[]|[]>([])
   const router = useRouter()
+  const category = router.query.category as string
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [offset, setOffset] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(()=> {
+    setHasMore(true)
+    setOffset(0)
+    setWikisInCategory(wikis)
+  }, [category])
+
+  const fetchMoreWikis = () => {
+    const updatedOffset = offset + ITEM_PER_PAGE
+    setTimeout(() => {
+      const fetchNewWikis = async () => {
+        const result = await store.dispatch(
+          getWikisByCategory.initiate({
+            category,
+            limit: ITEM_PER_PAGE,
+            offset: updatedOffset,
+          }),
+        )
+        if (result.data && result.data?.length > 0) {
+          const data = result.data
+          const updatedWiki = [...wikisInCategory, ...data]
+          setWikisInCategory(updatedWiki)
+          setOffset(updatedOffset)
+        } else {
+          setHasMore(false)
+          setLoading(false)
+        }
+      }
+      fetchNewWikis()
+    }, FETCH_DELAY_TIME)
+  }
+
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage: hasMore,
+    onLoadMore: fetchMoreWikis,
+  })
+
   return (
     <Box mt="-3" bgColor="pageBg" pb={12}>
       <Image
@@ -64,20 +107,31 @@ const CategoryPage: NextPage<CategoryPageProps> = ({
         <Heading fontSize={25} textAlign="center">
           Wikis in this category
         </Heading>
-        {wikis.length > 0 ? (
-          <SimpleGrid
-            columns={{ base: 1, sm: 2, lg: 3 }}
-            width="min(90%, 1200px)"
-            mx="auto"
-            my={12}
-            gap={8}
-          >
-            {wikis.map((wiki, i) => (
-              <Box key={i} w="100%">
-                <WikiPreviewCard wiki={wiki} />
-              </Box>
-            ))}
-          </SimpleGrid>
+        {wikisInCategory.length > 0 ? (
+          <>
+            <SimpleGrid
+              columns={{ base: 1, sm: 2, lg: 3 }}
+              width="min(90%, 1200px)"
+              mx="auto"
+              my={12}
+              gap={8}
+            >
+              {wikisInCategory.map((wiki, i) => (
+                <Box key={i} w="100%">
+                  <WikiPreviewCard wiki={wiki} />
+                </Box>
+              ))}
+            </SimpleGrid>
+            {loading || hasMore ? (
+              <Center ref={sentryRef} mt="10" w="full" h="16">
+                <Spinner size="xl" />
+              </Center>
+            ) : (
+              <Center mt="10">
+                <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+              </Center>
+            )}
+          </>
         ) : (
           <Box textAlign="center" py={10} px={6}>
             <Text fontSize="lg" mt={3} mb={3}>
@@ -102,7 +156,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
   const wikisByCategory = await store.dispatch(
-    getWikisByCategory.initiate(categoryId),
+    getWikisByCategory.initiate({
+      category: categoryId,
+      limit: ITEM_PER_PAGE,
+      offset: 0,
+    }),
   )
   await Promise.all(getRunningOperationPromises())
   return {
@@ -112,4 +170,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     },
   }
 }
+
+CategoryPage.noFooter = true
+
 export default CategoryPage
