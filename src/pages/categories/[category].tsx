@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import {
   Divider,
@@ -8,7 +8,9 @@ import {
   Icon,
   Flex,
   Text,
-  Button, Center, Spinner
+  Button,
+  Center,
+  Spinner,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { Image } from '@/components/Elements/Image/Image'
@@ -29,18 +31,18 @@ import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
-}  
+}
 
 const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const categoryIcon = getBootStrapIcon(categoryData.icon)
-  const [wikisInCategory, setWikisInCategory] = useState<Wiki[]|[]>([])
+  const [wikisInCategory, setWikisInCategory] = useState<Wiki[] | []>([])
   const router = useRouter()
   const category = router.query.category as string
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
 
-  useEffect(()=> {
+  useEffect(() => {
     setHasMore(true)
     setOffset(0)
     setWikisInCategory(wikis)
@@ -58,7 +60,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
-          const data = result.data
+          const { data } = result
           const updatedWiki = [...wikisInCategory, ...data]
           setWikisInCategory(updatedWiki)
           setOffset(updatedOffset)
