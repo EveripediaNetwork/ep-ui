@@ -97,16 +97,20 @@ const ActivityCard = ({
             </Text>
             <HStack spacing={2}>
               {wiki.tags.map((tag, index) => (
-                <Tag
-                  key={index}
-                  borderRadius={6}
-                  variant="solid"
-                  bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
-                >
-                  <Text px={4} color="black">
-                    {tag.id}
-                  </Text>
-                </Tag>
+                <NextLink href={`/tags/${tag.id}`} passHref>
+                  <Tag
+                    as="a"
+                    key={index}
+                    borderRadius={6}
+                    variant="solid"
+                    bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
+                    cursor="pointer"
+                  >
+                    <Text px={4} color="black">
+                      {tag.id}
+                    </Text>
+                  </Tag>
+                </NextLink>
               ))}
             </HStack>
           </HStack>
