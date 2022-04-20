@@ -386,8 +386,12 @@ const CreateWiki = () => {
       const { id, title, summary, content, tags, categories } = wikiData
       let { metadata } = wikiData
       metadata = metadata[1]?.value
-        ? metadata
-        : [...metadata, { id: 'twitter-profile', value: '' }]
+        ? [...metadata, { id: 'commit-message', value: '' }]
+        : [
+            ...metadata,
+            { id: 'twitter-profile', value: '' },
+            { id: 'commit-message', value: '' },
+          ]
 
       dispatch({
         type: 'wiki/setCurrentWiki',
@@ -475,8 +479,11 @@ const CreateWiki = () => {
                   placeholder="Enter what changed..."
                   onChange={e =>
                     dispatch({
-                      type: 'wiki/setCurrentWiki',
-                      payload: { commitMessage: e.target.value },
+                      type: 'wiki/updateMetadata',
+                      payload: {
+                        id: 'commit-message',
+                        value: e.target.value,
+                      },
                     })
                   }
                 />
@@ -486,8 +493,11 @@ const CreateWiki = () => {
                   <Button
                     onClick={() => {
                       dispatch({
-                        type: 'wiki/setCurrentWiki',
-                        payload: { commitMessage: '' },
+                        type: 'wiki/updateMetadata',
+                        payload: {
+                          id: 'commit-message',
+                          value: '',
+                        },
                       })
                       setIsWritingCommitMsg(false)
                       saveOnIpfs()
@@ -514,8 +524,8 @@ const CreateWiki = () => {
           <Button
             onClick={() => {
               dispatch({
-                type: 'wiki/setCurrentWiki',
-                payload: { commitMessage: 'Wiki created' },
+                type: 'wiki/updateMetadata',
+                payload: { id: 'commit-message', value: 'New Wiki Created 🎉' },
               })
               saveOnIpfs()
             }}
