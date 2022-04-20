@@ -58,7 +58,6 @@ export const useNavSearch = () => {
     if (query && query.length >= 3) {
       setIsLoading(true)
       debouncedFetchResults(query, res => {
-        console.log('res.articles :>> ', res.articles)
         setResults(res)
         setIsLoading(false)
       })
