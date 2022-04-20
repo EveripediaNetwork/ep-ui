@@ -182,6 +182,7 @@ export const GET_TAG_WIKIS_BY_ID = gql`
         ipfs
         content
         created
+        updated
         title
         summary
         content
