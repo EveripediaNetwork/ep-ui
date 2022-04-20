@@ -151,7 +151,7 @@ export const HistoryCard = ({
       <HStack mt={3} justify="space-between">
         <HStack>
           <Text fontSize="sm" color="text.500">
-            Tx Address:
+            TX Address:
           </Text>
           <Link
             href={`https://etherscan.io/tx/${transactionAddress}`}
