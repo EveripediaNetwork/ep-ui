@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import {
   Divider,
@@ -6,7 +6,9 @@ import {
   Heading,
   SimpleGrid,
   Text,
-  Button,Center, Spinner
+  Button,
+  Center,
+  Spinner,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { getRunningOperationPromises } from '@/services/categories'
@@ -28,7 +30,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
-  
+
   useEffect(() => {
     setHasMore(true)
     setOffset(0)
