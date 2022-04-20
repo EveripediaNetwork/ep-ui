@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Button, HStack, Icon, Link, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Icon,
+  Link,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { useENSData } from '@/hooks/useENSData'
 import shortenAccount from '@/utils/shortenAccount'
@@ -10,16 +19,20 @@ import { shortenText } from '@/utils/shortenText'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
+  isFullWidth?: boolean
 }
 
-const HistoryCardArrow = ({ isRightAligned }: HistoryCardArrowProps) => {
+const HistoryCardArrow = ({
+  isRightAligned,
+  isFullWidth,
+}: HistoryCardArrowProps) => {
   return (
     <HStack
       flexDir={isRightAligned ? 'row-reverse' : 'row'}
       justify="space-between"
       pos="absolute"
       top="50%"
-      w="30px"
+      w={isFullWidth ? '15px' : '30px'}
       transform={
         isRightAligned ? 'translate(-100%, -50%)' : 'translate(100%, -50%)'
       }
@@ -67,14 +80,21 @@ export const HistoryCard = ({
   return (
     <Box
       pos="relative"
-      w={isFullWidth ? 'calc(100% - 15px)' : 'calc(50% - 30px)'}
+      w={
+        isFullWidth
+          ? `calc(100% - ${isFullWidth ? '17px' : '15px'})`
+          : `calc(50% - 30px)`
+      }
       bgColor="cardBg"
       borderRadius={4}
       p={4}
       ml={isRightAligned ? 'auto' : 'unset'}
       mr={isRightAligned ? '0' : 'unset'}
     >
-      <HistoryCardArrow isRightAligned={isRightAligned} />
+      <HistoryCardArrow
+        isRightAligned={isRightAligned}
+        isFullWidth={isFullWidth}
+      />
 
       {/* Username and Avatar of the last editor */}
       <HStack>
@@ -109,9 +129,10 @@ export const HistoryCard = ({
       </Text>
 
       {/* What Changed tags */}
-      <HStack my={2}>
+      <Flex flexWrap="wrap" justify="start" gap={2}>
         {['Content', 'Media', 'Info Box', 'Categories'].map((changed, i) => (
           <Tag
+            mx="0 !important"
             variant="outline"
             boxShadow="0 0 0 1px rgba(226, 232, 240, 1)"
             _dark={{ boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.16)' }}
@@ -122,7 +143,7 @@ export const HistoryCard = ({
             {changed}
           </Tag>
         ))}
-      </HStack>
+      </Flex>
 
       {/* Transaction address and restore button */}
       <HStack mt={3} justify="space-between">
