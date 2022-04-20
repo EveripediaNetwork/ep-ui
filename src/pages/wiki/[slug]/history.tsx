@@ -44,7 +44,7 @@ const History = () => {
           pos="relative"
           w="100%"
           p={isHistoryFullWidth ? 0 : 4}
-          pl={2}
+          pl={isHistoryFullWidth ? 2 : 4}
           pt={18}
         >
           {/* Border line */}
