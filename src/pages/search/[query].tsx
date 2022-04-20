@@ -94,10 +94,14 @@ const SearchQuery = () => {
           <Flex direction="column" gap="6">
             {articleList}
           </Flex>
-          <Heading fontSize="2xl">Categories</Heading>
-          <Flex direction="column" gap="6">
-            {categoryList}
-          </Flex>
+          {categories.length !== 0 && (
+            <>
+              <Heading fontSize="2xl">Categories</Heading>
+              <Flex direction="column" gap="6">
+                {categoryList}
+              </Flex>
+            </>
+          )}
         </Stack>
       )}
       {isLoading && <SearchSkeleton />}

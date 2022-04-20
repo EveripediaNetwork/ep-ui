@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import {
   Divider,
@@ -7,20 +7,67 @@ import {
   SimpleGrid,
   Text,
   Button,
+  Center,
+  Spinner,
 } from '@chakra-ui/react'
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { getRunningOperationPromises } from '@/services/categories'
 import { store } from '@/store/store'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getTagWikis } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
+import { ITEM_PER_PAGE, FETCH_DELAY_TIME } from '@/data/Constants'
 
 interface TagPageProps {
   tagId: string
   wikis: Wiki[]
 }
 const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
+  const [wikisByTag, setWikisByTag] = useState<Wiki[] | []>([])
   const router = useRouter()
+  const tag = router.query.tag as string
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [offset, setOffset] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    setHasMore(true)
+    setOffset(0)
+    setWikisByTag(wikis)
+  }, [tag])
+
+  const fetchMoreWikis = () => {
+    const updatedOffset = offset + ITEM_PER_PAGE
+    setTimeout(() => {
+      const fetchNewWikis = async () => {
+        const result = await store.dispatch(
+          getTagWikis.initiate({
+            id: tag,
+            limit: ITEM_PER_PAGE,
+            offset: updatedOffset,
+          }),
+        )
+        if (result.data && result.data?.length > 0) {
+          const { data } = result
+          const updatedWiki = [...wikisByTag, ...data]
+          setWikisByTag(updatedWiki)
+          setOffset(updatedOffset)
+        } else {
+          setHasMore(false)
+          setLoading(false)
+        }
+      }
+      fetchNewWikis()
+    }, FETCH_DELAY_TIME)
+  }
+
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage: hasMore,
+    onLoadMore: fetchMoreWikis,
+  })
+
   return (
     <Box bgColor="pageBg" border="solid 1px transparent" pb={12}>
       <Heading fontSize={40} textAlign="center" mt={4}>
@@ -33,19 +80,30 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           Wikis with this tag
         </Heading>
         {wikis.length > 0 ? (
-          <SimpleGrid
-            columns={{ base: 1, sm: 2, lg: 3 }}
-            width="min(90%, 1200px)"
-            mx="auto"
-            my={12}
-            gap={8}
-          >
-            {wikis.map((wiki, i) => (
-              <Box key={i} w="100%">
-                <WikiPreviewCard wiki={wiki} />
-              </Box>
-            ))}
-          </SimpleGrid>
+          <>
+            <SimpleGrid
+              columns={{ base: 1, sm: 2, lg: 3 }}
+              width="min(90%, 1200px)"
+              mx="auto"
+              my={12}
+              gap={8}
+            >
+              {wikisByTag.map((wiki, i) => (
+                <Box key={i} w="100%">
+                  <WikiPreviewCard wiki={wiki} />
+                </Box>
+              ))}
+            </SimpleGrid>
+            {loading || hasMore ? (
+              <Center ref={sentryRef} mt="10" w="full" h="16">
+                <Spinner size="xl" />
+              </Center>
+            ) : (
+              <Center mt="10">
+                <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+              </Center>
+            )}
+          </>
         ) : (
           <Box textAlign="center" py={10} px={6}>
             <Text fontSize="lg" mt={3} mb={3}>
@@ -68,7 +126,9 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const tagId: string = context.params?.tag as string
-  const tagWikis = await store.dispatch(getTagWikis.initiate(tagId))
+  const tagWikis = await store.dispatch(
+    getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
+  )
 
   await Promise.all(getRunningOperationPromises())
   return {

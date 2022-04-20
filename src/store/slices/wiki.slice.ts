@@ -4,7 +4,6 @@ import { LanguagesISOEnum, Wiki, MData } from '@/types/Wiki'
 const initialState: Wiki = {
   id: '',
   version: 1,
-  commitMessage: '',
   language: LanguagesISOEnum.EN,
   title: 'Wiki title',
   content: '',
@@ -13,8 +12,12 @@ const initialState: Wiki = {
   tags: [],
   metadata: [
     {
+      id: 'commit-message',
+      value: '',
+    },
+    {
       id: 'page-type',
-      value: 'Place / Location',
+      value: 'generic',
     },
     {
       id: 'twitter-profile',

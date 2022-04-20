@@ -113,7 +113,7 @@ const CreateWiki = () => {
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const [isToResetImage, setIsToResetImage] = useState<boolean>(false)
+  const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loadingState, setIsLoading] = useState<
     'error' | 'loading' | undefined
@@ -313,11 +313,11 @@ const CreateWiki = () => {
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
     if (!slug) {
-      setIsToResetImage(true)
+      setIsNewCreateWiki(true)
       dispatch({ type: 'wiki/reset' })
       setMd(initialEditorValue)
     } else {
-      setIsToResetImage(false)
+      setIsNewCreateWiki(false)
     }
   }, [dispatch, slug])
 
@@ -386,8 +386,12 @@ const CreateWiki = () => {
       const { id, title, summary, content, tags, categories } = wikiData
       let { metadata } = wikiData
       metadata = metadata[1]?.value
-        ? metadata
-        : [...metadata, { id: 'twitter-profile', value: '' }]
+        ? [...metadata, { id: 'commit-message', value: '' }]
+        : [
+            ...metadata,
+            { id: 'twitter-profile', value: '' },
+            { id: 'commit-message', value: '' },
+          ]
 
       dispatch({
         type: 'wiki/setCurrentWiki',
@@ -443,70 +447,92 @@ const CreateWiki = () => {
             placeholder="Title goes here"
           />
         </InputGroup>
-        <Popover onClose={() => setIsWritingCommitMsg(false)}>
-          <PopoverTrigger>
-            <Button
-              isLoading={submittingWiki}
-              _disabled={{
-                opacity: disableSaveButton() ? 0.5 : undefined,
-                _hover: {
-                  bgColor: 'grey !important',
-                  cursor: 'not-allowed',
-                },
-              }}
-              loadingText="Loading"
-              disabled={disableSaveButton()}
-              onClick={() => setIsWritingCommitMsg(true)}
-              mb={24}
-            >
-              Publish
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent m={4}>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>
-              Commit Message <small>(Optional)</small>{' '}
-            </PopoverHeader>
-            <PopoverBody>
-              <Textarea
-                placeholder="Enter what changed..."
-                onChange={e =>
-                  dispatch({
-                    type: 'wiki/setCurrentWiki',
-                    payload: { commitMessage: e.target.value },
-                  })
-                }
-              />
-            </PopoverBody>
-            <PopoverFooter>
-              <HStack spacing={2} justify="right">
-                <Button
-                  onClick={() => {
+        {!isNewCreateWiki ? (
+          // Publish button with commit message for wiki edit
+          <Popover onClose={() => setIsWritingCommitMsg(false)}>
+            <PopoverTrigger>
+              <Button
+                isLoading={submittingWiki}
+                _disabled={{
+                  opacity: disableSaveButton() ? 0.5 : undefined,
+                  _hover: {
+                    bgColor: 'grey !important',
+                    cursor: 'not-allowed',
+                  },
+                }}
+                loadingText="Loading"
+                disabled={disableSaveButton()}
+                onClick={() => setIsWritingCommitMsg(true)}
+                mb={24}
+              >
+                Publish
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent m={4}>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>
+                Commit Message <small>(Optional)</small>{' '}
+              </PopoverHeader>
+              <PopoverBody>
+                <Textarea
+                  placeholder="Enter what changed..."
+                  onChange={e =>
                     dispatch({
-                      type: 'wiki/setCurrentWiki',
-                      payload: { commitMessage: '' },
+                      type: 'wiki/updateMetadata',
+                      payload: {
+                        id: 'commit-message',
+                        value: e.target.value,
+                      },
                     })
-                    setIsWritingCommitMsg(false)
-                    saveOnIpfs()
-                  }}
-                  float="right"
-                  variant="outline"
-                >
-                  Skip
-                </Button>
-                <Button
-                  onClick={() => {
-                    setIsWritingCommitMsg(false)
-                    saveOnIpfs()
-                  }}
-                >
-                  Submit
-                </Button>
-              </HStack>
-            </PopoverFooter>
-          </PopoverContent>
-        </Popover>
+                  }
+                />
+              </PopoverBody>
+              <PopoverFooter>
+                <HStack spacing={2} justify="right">
+                  <Button
+                    onClick={() => {
+                      dispatch({
+                        type: 'wiki/updateMetadata',
+                        payload: {
+                          id: 'commit-message',
+                          value: '',
+                        },
+                      })
+                      setIsWritingCommitMsg(false)
+                      saveOnIpfs()
+                    }}
+                    float="right"
+                    variant="outline"
+                  >
+                    Skip
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setIsWritingCommitMsg(false)
+                      saveOnIpfs()
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </HStack>
+              </PopoverFooter>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          // Publish button without commit message at new create wiki
+          <Button
+            onClick={() => {
+              dispatch({
+                type: 'wiki/updateMetadata',
+                payload: { id: 'commit-message', value: 'New Wiki Created 🎉' },
+              })
+              saveOnIpfs()
+            }}
+          >
+            Publish
+          </Button>
+        )}
       </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
@@ -525,7 +551,7 @@ const CreateWiki = () => {
             <Center>
               <Highlights
                 initialImage={ipfsHash}
-                isToResetImage={isToResetImage}
+                isToResetImage={isNewCreateWiki}
               />
             </Center>
           </Skeleton>

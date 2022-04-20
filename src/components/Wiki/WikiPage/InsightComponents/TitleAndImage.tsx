@@ -17,6 +17,7 @@ import { BaseCategory, WikiPreview } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
+import NextLink from 'next/link'
 
 export const TitleAndImage = ({
   wikiTitle,
@@ -33,7 +34,7 @@ export const TitleAndImage = ({
   lastEditor: string | undefined
   imgSrc?: string
 }) => {
-  const { title } = wikiTitle
+  const { title, tags } = wikiTitle
   const [, username] = useENSData(lastEditor || '')
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
@@ -67,6 +68,22 @@ export const TitleAndImage = ({
                         {category.id}
                       </Tag>
                     </Link>
+                  ))}
+                </HStack>
+              </Td>
+            </Tr>
+          )}
+          {tags.length !== 0 && (
+            <Tr>
+              <Td py={1}>Tags</Td>
+              <Td py={1}>
+                <HStack marginLeft={-2} flexWrap="wrap" justify="start">
+                  {tags?.map((tag, i) => (
+                    <NextLink key={i} href={`/tags/${tag.id}`} passHref>
+                      <Tag key={i} whiteSpace="nowrap" as="a">
+                        {tag.id}
+                      </Tag>
+                    </NextLink>
                   ))}
                 </HStack>
               </Td>

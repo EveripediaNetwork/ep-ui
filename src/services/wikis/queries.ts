@@ -178,13 +178,14 @@ export const GET_WIKIS_BY_CATEGORY = gql`
 `
 
 export const GET_TAG_WIKIS_BY_ID = gql`
-  query GetTagWikis($id: String!) {
+  query GetTagWikis($id: String!, $limit: Int, $offset: Int) {
     tagById(id: $id) {
-      wikis {
+      wikis(offset: $offset, limit: $limit) {
         id
         ipfs
         content
         created
+        updated
         title
         summary
         content

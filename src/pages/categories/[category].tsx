@@ -173,6 +173,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-CategoryPage.noFooter = true
-
 export default CategoryPage
