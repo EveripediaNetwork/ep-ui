@@ -68,6 +68,7 @@ interface HistoryCardProps {
   isFullWidth?: boolean
   lastEditor?: string
   lastEditedTime?: string
+  transactionAddress?: string
 }
 
 export const HistoryCard = ({
@@ -75,6 +76,7 @@ export const HistoryCard = ({
   isFullWidth,
   lastEditor,
   lastEditedTime,
+  transactionAddress,
 }: HistoryCardProps) => {
   const [, username] = useENSData(lastEditor || '')
   return (
@@ -157,7 +159,7 @@ export const HistoryCard = ({
             ml={2}
             isExternal
           >
-            {shortenAccount('0x1234567890')}
+            {shortenAccount(transactionAddress || '')}
           </Link>
         </HStack>
         <Button size="xs" p={2} fontSize="sm">

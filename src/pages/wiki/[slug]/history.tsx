@@ -1,9 +1,15 @@
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { HistoryCard } from '@/components/Wiki/History/HistoryCard'
-import { useGetWikiQuery } from '@/services/wikis'
+import {
+  getActivityByWiki,
+  useGetActivityByWikiQuery,
+} from '@/services/activities'
+import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
+import { store } from '@/store/store'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -16,6 +22,13 @@ const History = () => {
       skip: router.isFallback,
     },
   )
+  const { data: wikiHistory } = useGetActivityByWikiQuery(
+    typeof slug === 'string' ? slug : skipToken,
+    {
+      skip: router.isFallback,
+    },
+  )
+
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
 
   return (
@@ -57,22 +70,31 @@ const History = () => {
             borderRightWidth={2}
             borderColor="brand.500"
           />
-          {
-            // map 10 times
-            Array.from({ length: 10 }, (_, index) => (
-              <HistoryCard
-                key={index}
-                isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
-                isFullWidth={isHistoryFullWidth}
-                lastEditor={wiki?.user.id}
-                lastEditedTime={wiki?.updated}
-              />
-            ))
-          }
+          {wikiHistory?.map((activity, index) => (
+            <HistoryCard
+              key={activity.id}
+              isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
+              isFullWidth={isHistoryFullWidth}
+              lastEditor={activity.content[0].user.id}
+              lastEditedTime={activity.datetime}
+              transactionAddress={activity.content[0].transactionHash}
+            />
+          ))}
         </Flex>
       </Box>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const slug = context.params?.slug
+  if (typeof slug === 'string') {
+    store.dispatch(getActivityByWiki.initiate(slug))
+  }
+  await Promise.all(getRunningOperationPromises())
+  return {
+    props: {},
+  }
 }
 
 export default History
