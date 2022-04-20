@@ -242,7 +242,7 @@ const CreateWiki = () => {
 
       tmp = {
         ...tmp,
-        content: String(md),
+        content: String(md).replace(/\n/gm, '  \n'),
         user: {
           id: accountData.address,
         },
