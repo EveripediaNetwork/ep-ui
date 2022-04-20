@@ -14,6 +14,7 @@ import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getTagWikis } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 
 interface TagPageProps {
   tagId: string
@@ -68,7 +69,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const tagId: string = context.params?.tag as string
-  const tagWikis = await store.dispatch(getTagWikis.initiate(tagId))
+  const tagWikis = await store.dispatch(getTagWikis.initiate({id:tagId, offset: 0, limit: ITEM_PER_PAGE}))
 
   await Promise.all(getRunningOperationPromises())
   return {
