@@ -55,6 +55,10 @@ export const GET_ACTIVITIES_BY_WIKI = gql`
         images {
           id
         }
+        metadata {
+          id
+          value
+        }
       }
       datetime
       ipfs

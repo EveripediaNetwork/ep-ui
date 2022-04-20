@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Alert,
   Box,
   Button,
   Flex,
@@ -69,6 +70,7 @@ interface HistoryCardProps {
   lastEditor?: string
   lastEditedTime?: string
   transactionAddress?: string
+  commitMessage?: string
 }
 
 export const HistoryCard = ({
@@ -77,6 +79,7 @@ export const HistoryCard = ({
   lastEditor,
   lastEditedTime,
   transactionAddress,
+  commitMessage,
 }: HistoryCardProps) => {
   const [, username] = useENSData(lastEditor || '')
   return (
@@ -123,15 +126,21 @@ export const HistoryCard = ({
       </HStack>
 
       {/* Commit message */}
-      <Text fontSize="sm" color="text.500" my={2}>
-        {shortenText(
-          'ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisleget consectetur tempor',
-          90,
-        )}
-      </Text>
+      {commitMessage && (
+        <Text fontSize="sm" color="text.500" my={2}>
+          <Alert
+            colorScheme="pink"
+            borderRadius={4}
+            variant="left-accent"
+            mb={3}
+          >
+            {shortenText(commitMessage, 90)}
+          </Alert>
+        </Text>
+      )}
 
       {/* What Changed tags */}
-      <Flex flexWrap="wrap" justify="start" gap={2}>
+      <Flex flexWrap="wrap" mt={2} justify="start" gap={2}>
         {['Content', 'Media', 'Info Box', 'Categories'].map((changed, i) => (
           <Tag
             mx="0 !important"

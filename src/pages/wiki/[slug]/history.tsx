@@ -6,6 +6,7 @@ import {
 } from '@/services/activities'
 import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
+import { MData } from '@/types/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
@@ -70,16 +71,24 @@ const History = () => {
             borderRightWidth={2}
             borderColor="brand.500"
           />
-          {wikiHistory?.map((activity, index) => (
-            <HistoryCard
-              key={activity.id}
-              isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
-              isFullWidth={isHistoryFullWidth}
-              lastEditor={activity.content[0].user.id}
-              lastEditedTime={activity.datetime}
-              transactionAddress={activity.content[0].transactionHash}
-            />
-          ))}
+          {wikiHistory?.map((activity, index) => {
+            return (
+              <HistoryCard
+                key={activity.id}
+                isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
+                isFullWidth={isHistoryFullWidth}
+                lastEditor={activity.content[0].user.id}
+                lastEditedTime={activity.datetime}
+                transactionAddress={activity.content[0].transactionHash}
+                commitMessage={
+                  activity?.content[0]?.metadata?.find(
+                    (m: MData) => m.id === 'commit-message',
+                  )?.value ||
+                  'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
+                }
+              />
+            )
+          })}
         </Flex>
       </Box>
     </Box>
