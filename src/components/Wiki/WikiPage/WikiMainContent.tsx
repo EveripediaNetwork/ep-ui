@@ -51,7 +51,7 @@ const WikiMainContent = ({
             colorMode === 'dark' ? 'markdown-body-dark' : ''
           }`}
         >
-          {wiki?.content || ''}
+          {wiki?.content.replace(/\n/gm, '  \n') || ''}
         </ReactMarkdown>
       </Box>
     </Box>
