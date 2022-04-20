@@ -83,11 +83,7 @@ const History = () => {
                 commitMessage={
                   activity?.content[0]?.metadata?.find(
                     (m: MData) => m.id === 'commit-message',
-                  )?.value ||
-                  // TODO: REMOVE after TESTING
-                  (index % 3 === 0
-                    ? 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
-                    : '')
+                  )?.value
                 }
               />
             )

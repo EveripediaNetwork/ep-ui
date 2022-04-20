@@ -76,12 +76,12 @@ interface HistoryCardProps {
 export const HistoryCard = ({
   isRightAligned,
   isFullWidth,
-  lastEditor,
+  lastEditor = '',
   lastEditedTime,
-  transactionAddress,
+  transactionAddress = '',
   commitMessage,
 }: HistoryCardProps) => {
-  const [, username] = useENSData(lastEditor || '')
+  const [, username] = useENSData(lastEditor)
   return (
     <Box
       pos="relative"
@@ -105,7 +105,7 @@ export const HistoryCard = ({
       <HStack>
         <DisplayAvatar address={lastEditor} />
         <Link href={`/account/${lastEditor}`} color="brand.500">
-          {username || shortenAccount(lastEditor || '')}
+          {username || shortenAccount(lastEditor)}
         </Link>
       </HStack>
 
@@ -168,7 +168,7 @@ export const HistoryCard = ({
             ml={2}
             isExternal
           >
-            {shortenAccount(transactionAddress || '')}
+            {shortenAccount(transactionAddress)}
           </Link>
         </HStack>
         <Button size="xs" p={2} fontSize="sm">
