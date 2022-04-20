@@ -127,7 +127,7 @@ export const NavSearch = (props: NavSearchProps) => {
                 {article.content}
               </Text>
             </Flex>
-            <Flex gap="1">
+            <Flex gap="1" ml="auto">
               {article.tags?.map(tag => (
                 <chakra.div
                   key={`${article.id}-${tag.id}`}
