@@ -25,7 +25,9 @@ export const fillType = (item: WikiPreview | Category, type: SearchItem) => {
 
 export const fetchWikisList = async (query: string) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-  const { data: tagsData } = await store.dispatch(getTagWikis.initiate({id: query}))
+  const { data: tagsData } = await store.dispatch(
+    getTagWikis.initiate({ id: query }),
+  )
   return [...(data || []), ...(tagsData || [])]
 }
 export const fetchCategoriesList = async (query: string) => {
