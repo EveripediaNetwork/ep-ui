@@ -119,7 +119,15 @@ export const wikiApi = createApi({
         response.userById.wikis,
     }),
     getTagWikis: builder.query<Wiki[], WikisByTagArg>({
-      query: ({id, limit, offset}: {id: string, limit?:number, offset?:number}) => ({
+      query: ({
+        id,
+        limit,
+        offset,
+      }: {
+        id: string
+        limit?: number
+        offset?: number
+      }) => ({
         document: GET_TAG_WIKIS_BY_ID,
         variables: { id, limit, offset },
       }),
