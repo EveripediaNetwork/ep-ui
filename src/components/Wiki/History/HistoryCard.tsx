@@ -154,7 +154,7 @@ export const HistoryCard = ({
             Tx Address:
           </Text>
           <Link
-            href="https://etherscan.io/tx/0x1234567890"
+            href={`https://etherscan.io/tx/${transactionAddress}`}
             color="brand.500"
             ml={2}
             isExternal
