@@ -393,12 +393,21 @@ const CreateWiki = () => {
             { id: 'commit-message', value: '' },
           ]
 
+      const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { id, title, summary, content, tags, categories, metadata },
+        payload: {
+          id,
+          title,
+          summary,
+          content: transformedContent,
+          tags,
+          categories,
+          metadata,
+        },
       })
 
-      setMd(String(wikiData.content))
+      setMd(String(transformedContent))
     }
   }, [dispatch, updateImageState, wikiData])
 
