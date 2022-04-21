@@ -42,7 +42,6 @@ const SearchQuery = () => {
   const articleList = articles.map(article => {
     return (
       <ActivityCard
-        id={article.id}
         key={article.id}
         title={article.title}
         brief={getWikiSummary({ content: article.content })}
