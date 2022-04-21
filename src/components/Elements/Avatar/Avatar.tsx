@@ -10,21 +10,19 @@ type DisplayAvatarProps = ChakraProps & {
   svgProps?: any
   size?: number | string
   mt?: number | string
-  showPlaceHolderAvatar?: boolean | null
 }
 const DisplayAvatar = ({
   address,
   svgProps,
   size = 25,
   mt = 2,
-  showPlaceHolderAvatar,
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
   let content = null
   if (avatar) {
     content = <Avatar size="xs" src={avatar} {...rest} />
-  } else if (address && !avatar && showPlaceHolderAvatar) {
+  } else if (address && !avatar) {
     content = (
       <CustomAvatar
         size={size}
@@ -33,7 +31,7 @@ const DisplayAvatar = ({
         colors={AvatarColorArray}
       />
     )
-  } else if (showPlaceHolderAvatar) {
+  } else {
     content = (
       <Icon
         cursor="pointer"
