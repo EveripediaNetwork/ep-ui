@@ -51,7 +51,6 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   const renderActivityCard = (activity: ActivityType) => (
     <ActivityCard
-      id={activity.id}
       key={activity.id}
       title={activity.content[0].title}
       brief={getWikiSummary(activity?.content[0])}
