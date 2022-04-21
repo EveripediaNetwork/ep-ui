@@ -20,6 +20,7 @@ import Fonts from '@/theme/Fonts'
 import { ImageProvider } from '@/context/image.context'
 import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
+import Script from 'next/script'
 import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
@@ -37,6 +38,21 @@ const App = (props: EpAppProps) => {
 
   return (
     <>
+      <Script
+        id="google-analytics"
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
+      <Script id="google-analytics-config" strategy="lazyOnload">
+        {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+              });
+          `}
+      </Script>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
