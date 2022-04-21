@@ -62,6 +62,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
+import { commonMetaIds, editSpecificMetaIds } from '@/data/WikiMetaIdsData'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -385,13 +386,16 @@ const CreateWiki = () => {
 
       const { id, title, summary, content, tags, categories } = wikiData
       let { metadata } = wikiData
-      metadata = metadata[1]?.value
-        ? [...metadata, { id: 'commit-message', value: '' }]
-        : [
-            ...metadata,
-            { id: 'twitter-profile', value: '' },
-            { id: 'commit-message', value: '' },
-          ]
+
+      // fetch the currently stored meta data of page that are not edit specific
+      // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
+      metadata = [
+        ...commonMetaIds.map(mId => {
+          const meta = getWikiMetadataById(wikiData, mId)
+          return { id: mId, value: meta?.value || '' }
+        }),
+        ...editSpecificMetaIds.map(mId => ({ id: mId, value: '' })),
+      ]
 
       const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
