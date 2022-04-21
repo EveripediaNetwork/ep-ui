@@ -63,6 +63,8 @@ import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
 import { commonMetaIds, editSpecificMetaIds } from '@/data/WikiMetaIdsData'
+import diff from 'fast-diff'
+import { MData, Wiki } from '@/types/Wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -228,6 +230,54 @@ const CreateWiki = () => {
 
     return true
   }
+  const calculateEditInfo = (prevWiki: Wiki, currWiki: Wiki) => {
+    // check if content has changed
+    const prevContent = prevWiki?.content
+    const currContent = currWiki?.content
+
+    // calculate percent changed and number of words changed in prevContent and currContent
+    let contentAdded = 0
+    let contentRemoved = 0
+    let contentUnchanged = 0
+
+    let wordsAdded = 0
+    let wordsRemoved = 0
+
+    diff(prevContent, currContent).forEach(part => {
+      if (part[0] === 1) {
+        contentAdded += part[1].length
+        wordsAdded += getWordCount(part[1])
+      }
+      if (part[0] === -1) {
+        contentRemoved += part[1].length
+        wordsRemoved += getWordCount(part[1])
+      }
+      if (part[0] === 0) {
+        contentUnchanged += part[1].length
+      }
+    })
+
+    const percentChanged =
+      ((contentAdded + contentRemoved) / contentUnchanged) * 100
+    const wordsChanged = wordsAdded + wordsRemoved
+
+    // update metadata in redux state
+    dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'words-changed',
+        value: wordsChanged.toString(),
+      },
+    })
+
+    dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'percent-changed',
+        value: percentChanged.toFixed(2),
+      },
+    })
+  }
 
   const saveOnIpfs = async () => {
     if (!isValidWiki()) return
@@ -253,7 +303,6 @@ const CreateWiki = () => {
       const wikiResult: any = await store.dispatch(
         postWiki.initiate({ data: tmp }),
       )
-
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       setSubmittingWiki(false)
@@ -328,7 +377,7 @@ const CreateWiki = () => {
 
   // update the page type template when the page type changes
   const presentPageType = useMemo(
-    () => wiki?.metadata?.find(m => m.id === 'page-type')?.value,
+    () => wiki?.metadata?.find((m: MData) => m.id === 'page-type')?.value,
     [wiki?.metadata],
   )
   useEffect(() => {
@@ -475,7 +524,17 @@ const CreateWiki = () => {
                 }}
                 loadingText="Loading"
                 disabled={disableSaveButton()}
-                onClick={() => setIsWritingCommitMsg(true)}
+                onClick={() => {
+                  // calculate edit info when publish button is pressed
+                  // edit info is only calculated if its not a new create wiki
+                  if (!isNewCreateWiki && wikiData && wiki)
+                    calculateEditInfo(wikiData, {
+                      ...wiki,
+                      content: String(md),
+                    })
+
+                  setIsWritingCommitMsg(true)
+                }}
                 mb={24}
               >
                 Publish

@@ -2,7 +2,8 @@ export const commonMetaIds = ['page-type', 'twitter-profile']
 
 export const editSpecificMetaIds = [
   'commit-message',
-  'content-changed',
+  'words-changed',
+  'percent-changed',
   'blocks-changed',
 ]
 
