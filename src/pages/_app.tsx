@@ -63,6 +63,7 @@ const App = (props: EpAppProps) => {
                 gtag('js', new Date());
                 gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
                 page_path: window.location.pathname,
+                send_page_view: false
                 });
             `}
       </Script>
