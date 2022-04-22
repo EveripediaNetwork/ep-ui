@@ -47,10 +47,10 @@ export const UserDetails = (props: UserDetailsProps) => {
   if (loading) return <LoadingProfile hide={hide} />
   return (
     <>
-       <NextSeo
-        title="Profile Page - Everipedia"
+      <NextSeo
+        title={`${username || 'Unnamed'} Profile Page - Everipedia`}
         openGraph={{
-          title: "Profile Page - Everipedia",
+          title: `${username || 'Unnamed'} Profile Page - Everipedia`,
           description: `${username || 'Unnamed'} profile page`,
         }}
       />

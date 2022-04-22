@@ -88,33 +88,33 @@ const SearchQuery = () => {
       <NextSeo
         title={`Results for ${query}`}
         openGraph={{
-          title:`Results for ${query}`,
+          title: `Results for ${query}`,
           description: `Showing ${totalResults} Wikis with ${query} query`,
         }}
       />
-    <Stack my="16" mx="30">
-      <Heading>Results for {query}</Heading>
+      <Stack my="16" mx="30">
+        <Heading>Results for {query}</Heading>
 
-      {!isLoading && (
-        <Stack spacing="12">
-          <Text>Showing {totalResults} results </Text>
+        {!isLoading && (
+          <Stack spacing="12">
+            <Text>Showing {totalResults} results </Text>
 
-          <Heading fontSize="2xl">Articles</Heading>
-          <Flex direction="column" gap="6">
-            {articleList}
-          </Flex>
-          {categories.length !== 0 && (
-            <>
-              <Heading fontSize="2xl">Categories</Heading>
-              <Flex direction="column" gap="6">
-                {categoryList}
-              </Flex>
-            </>
-          )}
-        </Stack>
-      )}
-      {isLoading && <SearchSkeleton />}
-    </Stack>
+            <Heading fontSize="2xl">Articles</Heading>
+            <Flex direction="column" gap="6">
+              {articleList}
+            </Flex>
+            {categories.length !== 0 && (
+              <>
+                <Heading fontSize="2xl">Categories</Heading>
+                <Flex direction="column" gap="6">
+                  {categoryList}
+                </Flex>
+              </>
+            )}
+          </Stack>
+        )}
+        {isLoading && <SearchSkeleton />}
+      </Stack>
     </>
   )
 }
