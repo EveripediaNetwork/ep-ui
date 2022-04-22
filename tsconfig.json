@@ -5,6 +5,6 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "src/**/*"],
+  "include": ["next-env.d.ts", "src/**/*", "index.d.ts"],
   "exclude": ["src/stories/**/*", "node_modules", ".next"]
 }
