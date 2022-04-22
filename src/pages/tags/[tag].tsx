@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
+import { NextSeo } from 'next-seo'
 import {
   Divider,
   Box,
@@ -69,6 +70,14 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   })
 
   return (
+    <>
+      <NextSeo
+        title={tagId}
+        openGraph={{
+          title: tagId,
+          description: `Wikis with ${tagId} tag`,
+        }}
+      />
     <Box bgColor="pageBg" border="solid 1px transparent" pb={12}>
       <Heading fontSize={40} textAlign="center" mt={4}>
         {tagId}
@@ -121,6 +130,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         )}
       </Box>
     </Box>
+    </>
   )
 }
 

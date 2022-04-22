@@ -82,93 +82,94 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
 
   return (
     <>
-      {
-        categoryData && (
-          <NextSeo
-            title={categoryData.title}
-            openGraph={{
-              title: categoryData.title,
-              description: categoryData.description,
-              images: [
-                {
-                  url: categoryData?.heroImage || '/images/categories-backdrop.png',
-                },
-              ],
-            }}
-          />
-        )
-      }
-    <Box mt="-3" bgColor="pageBg" pb={12}>
-      <Image
-        priority
-        src={categoryData?.heroImage || '/images/categories-backdrop.png'}
-        height="250px"
-      />
-      <Flex mx="auto" justifyContent="center" mt={12}>
-        <Icon
-          as={categoryIcon}
-          borderRadius="100px"
-          overflow="hidden"
-          borderWidth="5px"
-          bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
-          color="#0000002f"
-          width="60px"
-          height="60px"
-          padding={2}
+      {categoryData && (
+        <NextSeo
+          title={categoryData.title}
+          openGraph={{
+            title: categoryData.title,
+            description: categoryData.description,
+            images: [
+              {
+                url:
+                  categoryData?.heroImage || '/images/categories-backdrop.png',
+              },
+            ],
+          }}
         />
-      </Flex>
-      <Heading fontSize={40} textAlign="center" mt={4}>
-        {categoryData?.title}
-      </Heading>
-
-      <ToggleText my={8} text={categoryData?.description || ''} />
-      <Divider />
-      <Box mt={16}>
-        <Heading fontSize={25} textAlign="center">
-          Wikis in this category
+      )}
+      <Box mt="-3" bgColor="pageBg" pb={12}>
+        <Image
+          priority
+          src={categoryData?.heroImage || '/images/categories-backdrop.png'}
+          height="250px"
+        />
+        <Flex mx="auto" justifyContent="center" mt={12}>
+          <Icon
+            as={categoryIcon}
+            borderRadius="100px"
+            overflow="hidden"
+            borderWidth="5px"
+            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
+            color="#0000002f"
+            width="60px"
+            height="60px"
+            padding={2}
+          />
+        </Flex>
+        <Heading fontSize={40} textAlign="center" mt={4}>
+          {categoryData?.title}
         </Heading>
-        {wikisInCategory.length > 0 ? (
-          <>
-            <SimpleGrid
-              columns={{ base: 1, sm: 2, lg: 3 }}
-              width="min(90%, 1200px)"
-              mx="auto"
-              my={12}
-              gap={8}
-            >
-              {wikisInCategory.map((wiki, i) => (
-                <Box key={i} w="100%">
-                  <WikiPreviewCard wiki={wiki} />
-                </Box>
-              ))}
-            </SimpleGrid>
-            {loading || hasMore ? (
-              <Center ref={sentryRef} mt="10" w="full" h="16">
-                <Spinner size="xl" />
-              </Center>
-            ) : (
-              <Center mt="10">
-                <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
-              </Center>
-            )}
-          </>
-        ) : (
-          <Box textAlign="center" py={10} px={6}>
-            <Text fontSize="lg" mt={3} mb={3}>
-              Oops, No Wiki Found in This Category
-            </Text>
-            <Button
-              colorScheme="primary"
-              color="white"
-              variant="solid"
-              onClick={() => router.back()}
-            >
-              Go Back
-            </Button>
-          </Box>
-        )}
+
+        <ToggleText my={8} text={categoryData?.description || ''} />
+        <Divider />
+        <Box mt={16}>
+          <Heading fontSize={25} textAlign="center">
+            Wikis in this category
+          </Heading>
+          {wikisInCategory.length > 0 ? (
+            <>
+              <SimpleGrid
+                columns={{ base: 1, sm: 2, lg: 3 }}
+                width="min(90%, 1200px)"
+                mx="auto"
+                my={12}
+                gap={8}
+              >
+                {wikisInCategory.map((wiki, i) => (
+                  <Box key={i} w="100%">
+                    <WikiPreviewCard wiki={wiki} />
+                  </Box>
+                ))}
+              </SimpleGrid>
+              {loading || hasMore ? (
+                <Center ref={sentryRef} mt="10" w="full" h="16">
+                  <Spinner size="xl" />
+                </Center>
+              ) : (
+                <Center mt="10">
+                  <Text fontWeight="semibold">
+                    Yay! You have seen it all 🥳{' '}
+                  </Text>
+                </Center>
+              )}
+            </>
+          ) : (
+            <Box textAlign="center" py={10} px={6}>
+              <Text fontSize="lg" mt={3} mb={3}>
+                Oops, No Wiki Found in This Category
+              </Text>
+              <Button
+                colorScheme="primary"
+                color="white"
+                variant="solid"
+                onClick={() => router.back()}
+              >
+                Go Back
+              </Button>
+            </Box>
+          )}
+        </Box>
       </Box>
-    </Box>
     </>
   )
 }
