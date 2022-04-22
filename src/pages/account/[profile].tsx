@@ -15,6 +15,8 @@ const Profile: PageWithoutFooter = () => {
   const profileContext = useProfile()
 
   return (
+    <>
+   
     <ProfileProvider value={profileContext}>
       <Flex direction="column" align="center" pos="relative">
         <Image
@@ -27,6 +29,7 @@ const Profile: PageWithoutFooter = () => {
         <Collections />
       </Flex>
     </ProfileProvider>
+    </>
   )
 }
 Profile.noFooter = true

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
+
 import {
   fetchCategoriesList,
   fetchWikisList,
@@ -82,6 +84,14 @@ const SearchQuery = () => {
   })
 
   return (
+    <>
+      <NextSeo
+        title={`Results for ${query}`}
+        openGraph={{
+          title:`Results for ${query}`,
+          description: `Showing ${totalResults} Wikis with ${query} query`,
+        }}
+      />
     <Stack my="16" mx="30">
       <Heading>Results for {query}</Heading>
 
@@ -105,6 +115,7 @@ const SearchQuery = () => {
       )}
       {isLoading && <SearchSkeleton />}
     </Stack>
+    </>
   )
 }
 
