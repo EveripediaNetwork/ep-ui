@@ -234,10 +234,10 @@ const CreateWiki = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: accountData?.address, title: wiki.title },
+      params: { address: accountData?.address, slug: getWikiSlug()},
     })
 
-    if (accountData) {
+    if (accountData) { 
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
       const imageHash = await getImageHash()
