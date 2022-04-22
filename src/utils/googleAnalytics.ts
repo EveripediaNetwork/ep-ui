@@ -5,7 +5,7 @@ export const pageView = (url: URL) => {
     window.gtag('event', 'page_view', {
       page_title: document.title,
       page_path: url,
-      send_to: GA_TRACKING_ID
+      send_to: GA_TRACKING_ID,
     })
   }
 }

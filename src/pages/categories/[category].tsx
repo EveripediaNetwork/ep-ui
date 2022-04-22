@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
+import { NextSeo } from 'next-seo'
 import {
   Divider,
   Box,
@@ -80,6 +81,23 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   })
 
   return (
+    <>
+      {
+        categoryData && (
+          <NextSeo
+            title={categoryData.title}
+            openGraph={{
+              title: categoryData.title,
+              description: categoryData.description,
+              images: [
+                {
+                  url: categoryData?.heroImage || '/images/categories-backdrop.png',
+                },
+              ],
+            }}
+          />
+        )
+      }
     <Box mt="-3" bgColor="pageBg" pb={12}>
       <Image
         priority
@@ -151,6 +169,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         )}
       </Box>
     </Box>
+    </>
   )
 }
 
