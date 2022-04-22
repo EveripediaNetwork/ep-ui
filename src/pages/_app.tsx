@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -20,6 +20,7 @@ import Fonts from '@/theme/Fonts'
 import { ImageProvider } from '@/context/image.context'
 import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
+import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
 import chakraTheme from '../theme'
 
@@ -29,6 +30,18 @@ type EpAppProps = AppProps & {
 
 const App = (props: EpAppProps) => {
   const { Component, pageProps, router } = props
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      pageView(url)
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
 
   const provider = () =>
     new ethers.providers.AlchemyProvider(
@@ -45,13 +58,13 @@ const App = (props: EpAppProps) => {
       />
       <Script id="google-analytics-config" strategy="lazyOnload">
         {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-              page_path: window.location.pathname,
-              });
-          `}
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+                page_path: window.location.pathname,
+                });
+            `}
       </Script>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />

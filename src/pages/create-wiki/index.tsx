@@ -62,6 +62,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -230,6 +231,11 @@ const CreateWiki = () => {
 
   const saveOnIpfs = async () => {
     if (!isValidWiki()) return
+
+    logEvent({
+      action: 'SUBMIT_WIKI',
+      params: { address: accountData?.address, title: wiki.title },
+    })
 
     if (accountData) {
       setOpenTxDetailsDialog(true)
