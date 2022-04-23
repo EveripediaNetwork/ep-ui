@@ -49,6 +49,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.700',
     },
+    historyCommentBg: {
+      default: 'white',
+      _dark: 'gray.600',
+    },
     carouselArrowBg: {
       default: 'white',
       _dark: 'gray.600',
