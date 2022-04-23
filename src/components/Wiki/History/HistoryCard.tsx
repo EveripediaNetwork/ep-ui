@@ -71,6 +71,9 @@ interface HistoryCardProps {
   lastEditedTime?: string
   transactionAddress?: string
   commitMessage?: string
+  wordsChanged?: string
+  percentChanged?: string
+  blocksChanged?: string
 }
 
 export const HistoryCard = ({
@@ -80,6 +83,9 @@ export const HistoryCard = ({
   lastEditedTime,
   transactionAddress = '',
   commitMessage,
+  wordsChanged = '0',
+  percentChanged = '0',
+  blocksChanged = '',
 }: HistoryCardProps) => {
   const [, username] = useENSData(lastEditor)
   return (
@@ -121,7 +127,7 @@ export const HistoryCard = ({
       <HStack mt={2}>
         <Icon as={RiHistoryLine} />
         <Text fontSize="md" color="text.500" mt={2}>
-          20% content change (250 words)
+          {percentChanged}% content change ({wordsChanged} words)
         </Text>
       </HStack>
 
@@ -140,21 +146,23 @@ export const HistoryCard = ({
       )}
 
       {/* What Changed tags */}
-      <Flex flexWrap="wrap" mt={2} justify="start" gap={2}>
-        {['Content', 'Media', 'Info Box', 'Categories'].map((changed, i) => (
-          <Tag
-            mx="0 !important"
-            variant="outline"
-            boxShadow="0 0 0 1px rgba(226, 232, 240, 1)"
-            _dark={{ boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.16)' }}
-            color={{ light: 'black', _dark: 'white' }}
-            size="sm"
-            key={i}
-          >
-            {changed}
-          </Tag>
-        ))}
-      </Flex>
+      {blocksChanged !== '' && (
+        <Flex flexWrap="wrap" mt={2} justify="start" gap={2}>
+          {blocksChanged.split(',').map((changed, i) => (
+            <Tag
+              mx="0 !important"
+              variant="outline"
+              boxShadow="0 0 0 1px rgba(226, 232, 240, 1)"
+              _dark={{ boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.16)' }}
+              color={{ light: 'black', _dark: 'white' }}
+              size="sm"
+              key={i}
+            >
+              {changed}
+            </Tag>
+          ))}
+        </Flex>
+      )}
 
       {/* Transaction address and restore button */}
       <HStack mt={3} justify="space-between">

@@ -6,7 +6,7 @@ import {
 } from '@/services/activities'
 import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
-import { MData } from '@/types/Wiki'
+import { getActivityMetadataById } from '@/utils/getWikiFields'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
@@ -81,9 +81,16 @@ const History = () => {
                 lastEditedTime={activity.datetime}
                 transactionAddress={activity.content[0].transactionHash}
                 commitMessage={
-                  activity?.content[0]?.metadata?.find(
-                    (m: MData) => m.id === 'commit-message',
-                  )?.value
+                  getActivityMetadataById(activity, 'commit-message')?.value
+                }
+                wordsChanged={
+                  getActivityMetadataById(activity, 'words-changed')?.value
+                }
+                percentChanged={
+                  getActivityMetadataById(activity, 'percent-changed')?.value
+                }
+                blocksChanged={
+                  getActivityMetadataById(activity, 'blocks-changed')?.value
                 }
               />
             )
