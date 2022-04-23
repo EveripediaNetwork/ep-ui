@@ -231,11 +231,11 @@ const CreateWiki = () => {
     return true
   }
   const calculateEditInfo = (prevWiki: Wiki, currWiki: Wiki) => {
-    // check if content has changed
-    const prevContent = prevWiki?.content
-    const currContent = currWiki?.content
-
     const calculateContentChanged = () => {
+      // check if content has changed
+      const prevContent = prevWiki?.content
+      const currContent = currWiki?.content
+
       // calculate percent changed and number of words changed in prevContent and currContent
       let contentAdded = 0
       let contentRemoved = 0
@@ -284,7 +284,7 @@ const CreateWiki = () => {
     const blocksChanged = []
 
     // root level block changes
-    if (prevContent !== currContent) {
+    if (prevWiki.content !== currWiki.content) {
       blocksChanged.push('content')
       calculateContentChanged()
     }
@@ -293,6 +293,9 @@ const CreateWiki = () => {
       blocksChanged.push('categories')
     if (prevWiki.tags !== currWiki.tags) blocksChanged.push('tags')
     if (prevWiki.summary !== currWiki.summary) blocksChanged.push('summary')
+    const prevImgId = prevWiki.images && prevWiki.images[0].id
+    const currImgId = currWiki.images && currWiki.images[0].id
+    if (prevImgId !== currImgId) blocksChanged.push('images')
 
     // common metadata changes
     commonMetaIds.forEach(id => {
@@ -319,23 +322,36 @@ const CreateWiki = () => {
     if (accountData) {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
+
+      // Build the wiki object
       const imageHash = await getImageHash()
 
-      let tmp = { ...wiki }
-      if (tmp.id === '') tmp.id = getWikiSlug()
-      setWikiId(tmp.id)
+      let interWiki = { ...wiki }
+      if (interWiki.id === '') interWiki.id = getWikiSlug()
+      setWikiId(interWiki.id)
 
-      tmp = {
-        ...tmp,
-        content: String(md).replace(/\n/gm, '  \n'),
+      interWiki = {
+        ...interWiki,
+        content: String(md),
         user: {
           id: accountData.address,
         },
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
+      if (isWikiBeingEdited && wikiData && wiki) {
+        calculateEditInfo(wikiData, interWiki)
+      }
+
+      // Build the wiki object after edit info has been calculated
+      const finalWiki = {
+        ...interWiki,
+        content: String(md).replace(/\n/gm, '  \n'),
+        metadata: store.getState().wiki.metadata,
+      }
+
       const wikiResult: any = await store.dispatch(
-        postWiki.initiate({ data: tmp }),
+        postWiki.initiate({ data: finalWiki }),
       )
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
@@ -558,17 +574,7 @@ const CreateWiki = () => {
                 }}
                 loadingText="Loading"
                 disabled={disableSaveButton()}
-                onClick={() => {
-                  // calculate edit info when publish button is pressed
-                  // edit info is only calculated if its not a new create wiki
-                  if (!isNewCreateWiki && wikiData && wiki)
-                    calculateEditInfo(wikiData, {
-                      ...wiki,
-                      content: String(md),
-                    })
-
-                  setIsWritingCommitMsg(true)
-                }}
+                onClick={() => setIsWritingCommitMsg(true)}
                 mb={24}
               >
                 Publish
