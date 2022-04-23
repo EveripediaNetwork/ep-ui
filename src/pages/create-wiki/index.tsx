@@ -235,46 +235,80 @@ const CreateWiki = () => {
     const prevContent = prevWiki?.content
     const currContent = currWiki?.content
 
-    // calculate percent changed and number of words changed in prevContent and currContent
-    let contentAdded = 0
-    let contentRemoved = 0
-    let contentUnchanged = 0
+    const calculateContentChanged = () => {
+      // calculate percent changed and number of words changed in prevContent and currContent
+      let contentAdded = 0
+      let contentRemoved = 0
+      let contentUnchanged = 0
 
-    let wordsAdded = 0
-    let wordsRemoved = 0
+      let wordsAdded = 0
+      let wordsRemoved = 0
 
-    diff(prevContent, currContent).forEach(part => {
-      if (part[0] === 1) {
-        contentAdded += part[1].length
-        wordsAdded += getWordCount(part[1])
-      }
-      if (part[0] === -1) {
-        contentRemoved += part[1].length
-        wordsRemoved += getWordCount(part[1])
-      }
-      if (part[0] === 0) {
-        contentUnchanged += part[1].length
-      }
+      diff(prevContent, currContent).forEach(part => {
+        if (part[0] === 1) {
+          contentAdded += part[1].length
+          wordsAdded += getWordCount(part[1])
+        }
+        if (part[0] === -1) {
+          contentRemoved += part[1].length
+          wordsRemoved += getWordCount(part[1])
+        }
+        if (part[0] === 0) {
+          contentUnchanged += part[1].length
+        }
+      })
+
+      const percentChanged =
+        ((contentAdded + contentRemoved) / contentUnchanged) * 100
+      const wordsChanged = wordsAdded + wordsRemoved
+
+      // update metadata in redux state
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: 'words-changed',
+          value: wordsChanged.toString(),
+        },
+      })
+
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: 'percent-changed',
+          value: percentChanged.toFixed(2),
+        },
+      })
+    }
+
+    // calculate which blocks have changed
+    const blocksChanged = []
+
+    // root level block changes
+    if (prevContent !== currContent) {
+      blocksChanged.push('content')
+      calculateContentChanged()
+    }
+    if (prevWiki.title !== currWiki.title) blocksChanged.push('title')
+    if (prevWiki.categories !== currWiki.categories)
+      blocksChanged.push('categories')
+    if (prevWiki.tags !== currWiki.tags) blocksChanged.push('tags')
+    if (prevWiki.summary !== currWiki.summary) blocksChanged.push('summary')
+
+    // common metadata changes
+    commonMetaIds.forEach(id => {
+      if (
+        getWikiMetadataById(prevWiki, id)?.value !==
+        getWikiMetadataById(currWiki, id)?.value
+      )
+        blocksChanged.push(id)
     })
 
-    const percentChanged =
-      ((contentAdded + contentRemoved) / contentUnchanged) * 100
-    const wordsChanged = wordsAdded + wordsRemoved
-
-    // update metadata in redux state
+    // update blocks changed metadata in redux state
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {
-        id: 'words-changed',
-        value: wordsChanged.toString(),
-      },
-    })
-
-    dispatch({
-      type: 'wiki/updateMetadata',
-      payload: {
-        id: 'percent-changed',
-        value: percentChanged.toFixed(2),
+        id: 'blocks-changed',
+        value: blocksChanged.join(','),
       },
     })
   }
