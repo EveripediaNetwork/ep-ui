@@ -47,6 +47,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     loading,
     hasNextPage: hasMore,
     onLoadMore: fetchMoreActivities,
+    rootMargin: '0px 0px 400px 0px',
   })
 
   const renderActivityCard = (activity: ActivityType) => (
