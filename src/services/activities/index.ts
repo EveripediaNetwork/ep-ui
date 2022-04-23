@@ -6,22 +6,14 @@ import {
   GET_ACTIVITIES_BY_WIKI,
 } from '@/services/activities/queries'
 import config from '@/config'
-import { Wiki } from '@/types/Wiki'
-
-export type ActivityType = {
-  id: string
-  wikiId: string
-  type: string
-  content: Wiki[]
-  datetime: string
-}
+import { Activity } from '@/types/ActivityDataType'
 
 type GetActivitiesResponse = {
-  activities: ActivityType[]
+  activities: Activity[]
 }
 
 type GetActivityByWikiResponse = {
-  activitiesByWikId: ActivityType[]
+  activitiesByWikId: Activity[]
 }
 
 type ActivitiesArg = {
@@ -41,7 +33,7 @@ export const activitiesApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getLatestActivities: builder.query<ActivityType[], ActivitiesArg>({
+    getLatestActivities: builder.query<Activity[], ActivitiesArg>({
       query: ({ offset, limit }: ActivitiesArg) => ({
         document: GET_ACTIVITIES,
         variables: { offset, limit },
@@ -49,7 +41,7 @@ export const activitiesApi = createApi({
       transformResponse: (response: GetActivitiesResponse) =>
         response.activities,
     }),
-    getActivityByWiki: builder.query<ActivityType[], string>({
+    getActivityByWiki: builder.query<Activity[], string>({
       query: (id: string) => ({
         document: GET_ACTIVITIES_BY_WIKI,
         variables: { id },
