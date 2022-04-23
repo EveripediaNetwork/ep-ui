@@ -295,7 +295,7 @@ const CreateWiki = () => {
     if (prevWiki.summary !== currWiki.summary) blocksChanged.push('summary')
     const prevImgId = prevWiki.images && prevWiki.images[0].id
     const currImgId = currWiki.images && currWiki.images[0].id
-    if (prevImgId !== currImgId) blocksChanged.push('images')
+    if (prevImgId !== currImgId) blocksChanged.push('wiki-image')
 
     // common metadata changes
     commonMetaIds.forEach(id => {
@@ -339,7 +339,7 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      if (isWikiBeingEdited && wikiData && wiki) {
+      if (!isNewCreateWiki && wikiData && wiki) {
         calculateEditInfo(wikiData, interWiki)
       }
 
