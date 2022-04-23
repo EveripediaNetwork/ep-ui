@@ -59,6 +59,7 @@ const Editor = ({ onChange, markdown }: EditorType) => {
           theme={colorMode === 'dark' ? 'dark' : 'light'}
           ref={editorRef}
           initialValue={markdown}
+          initialEditType="wysiwyg"
           onChange={handleOnEditorChange}
         />
       )}
