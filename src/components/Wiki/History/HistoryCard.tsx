@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Flex, HStack, Icon, Link, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  HStack,
+  Icon,
+  Link,
+  Tag,
+  Text,
+  Tooltip,
+} from '@chakra-ui/react'
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { useENSData } from '@/hooks/useENSData'
 import shortenAccount from '@/utils/shortenAccount'
@@ -60,7 +69,7 @@ interface HistoryCardProps {
   lastEditedTime?: string
   transactionAddress?: string
   commitMessage?: string
-  // wordsChanged?: string
+  wordsChanged?: string
   percentChanged?: string
   blocksChanged?: string
 }
@@ -72,7 +81,7 @@ export const HistoryCard = ({
   lastEditedTime,
   transactionAddress = '',
   commitMessage,
-  // wordsChanged = '0',
+  wordsChanged = '0',
   percentChanged = '0',
   blocksChanged = '',
 }: HistoryCardProps) => {
@@ -170,8 +179,15 @@ export const HistoryCard = ({
               color={{ light: 'black', _dark: 'white' }}
               size="sm"
               key={i}
+              gap={1}
             >
-              {changed} {changed === 'content' && `${percentChanged}%`}
+              <Text>{changed}</Text>
+
+              {changed === 'content' && (
+                <Tooltip label={`${wordsChanged} words changed`}>
+                  <Text cursor="pointer">{` ${percentChanged}`}%</Text>
+                </Tooltip>
+              )}
             </Tag>
           ))}
         </Flex>
