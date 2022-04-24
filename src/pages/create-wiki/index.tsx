@@ -2,6 +2,7 @@ import React, {
   useContext,
   useEffect,
   useState,
+  useRef,
   memo,
   useCallback,
   ChangeEvent,
@@ -132,6 +133,10 @@ const CreateWiki = () => {
     {},
   )
   const [, wait] = useWaitForTransaction()
+  const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
+    wiki: wikiData,
+    isPublished: false,
+  })
 
   const saveImage = async () => {
     const formData = new FormData()
@@ -339,8 +344,17 @@ const CreateWiki = () => {
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      if (!isNewCreateWiki && wikiData) {
-        calculateEditInfo(wikiData, interWiki)
+      if (!isNewCreateWiki) {
+        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
+          console.log(
+            'prevEditedWiki is used to calculate edit info',
+            prevEditedWiki.current.wiki,
+          )
+          calculateEditInfo(prevEditedWiki.current.wiki, interWiki)
+        } else if (wikiData) {
+          console.log('wikiData is used to calculate edit info', wikiData)
+          calculateEditInfo(wikiData, interWiki)
+        }
       }
 
       // Build the wiki object after edit info has been calculated
@@ -349,10 +363,27 @@ const CreateWiki = () => {
         metadata: store.getState().wiki.metadata,
       }
 
+      console.log('finalWiki', finalWiki)
+      prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
+      console.log('set prevEdited wiki with final wiki with isPublished false')
+
       const wikiResult: any = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
+
+      // clear all edit based metadata from redux state
+      editSpecificMetaIds.forEach(id => {
+        dispatch({
+          type: 'wiki/updateMetadata',
+          payload: {
+            id,
+            value: '',
+          },
+        })
+      })
+
+      console.log('Wiki after clear edit details ', wiki)
 
       setSubmittingWiki(false)
     }
@@ -408,6 +439,13 @@ const CreateWiki = () => {
     },
     [wait],
   )
+
+  useEffect(() => {
+    if (activeStep === 3) {
+      console.log('setting prevEditedWiki.current.isPublished to true')
+      prevEditedWiki.current.isPublished = true
+    }
+  }, [activeStep])
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
