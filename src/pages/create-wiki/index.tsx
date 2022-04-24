@@ -345,14 +345,13 @@ const CreateWiki = () => {
       }
 
       if (!isNewCreateWiki) {
+        // calculate edit info for current wiki and previous wiki
+        // previous wiki varies if editor is trying to publish
+        // more than two edits to chain in same session
+
         if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          console.log(
-            'prevEditedWiki is used to calculate edit info',
-            prevEditedWiki.current.wiki,
-          )
           calculateEditInfo(prevEditedWiki.current.wiki, interWiki)
         } else if (wikiData) {
-          console.log('wikiData is used to calculate edit info', wikiData)
           calculateEditInfo(wikiData, interWiki)
         }
       }
@@ -363,9 +362,7 @@ const CreateWiki = () => {
         metadata: store.getState().wiki.metadata,
       }
 
-      console.log('finalWiki', finalWiki)
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
-      console.log('set prevEdited wiki with final wiki with isPublished false')
 
       const wikiResult: any = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
@@ -382,8 +379,6 @@ const CreateWiki = () => {
           },
         })
       })
-
-      console.log('Wiki after clear edit details ', wiki)
 
       setSubmittingWiki(false)
     }
@@ -442,7 +437,6 @@ const CreateWiki = () => {
 
   useEffect(() => {
     if (activeStep === 3) {
-      console.log('setting prevEditedWiki.current.isPublished to true')
       prevEditedWiki.current.isPublished = true
     }
   }, [activeStep])
