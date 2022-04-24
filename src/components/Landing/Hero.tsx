@@ -6,11 +6,9 @@ import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useENSData } from '@/hooks/useENSData'
-import { WikiImage } from '../WikiImage'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-
-
+import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
@@ -41,18 +39,16 @@ const HeroCard = ({ wiki }: HeroProps) => {
         <Flex p="3" align="center" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
             <Box>
-              { 
-              avatar ? 
-              <Avatar size="xs" src={avatar} />
-              : 
-              <CustomAvatar
-                size={'25'}
-                variant="pixel"
-                name="Unnamed"
-                colors={AvatarColorArray}
-              />
-              }
-              
+              {avatar ? (
+                <Avatar size="xs" src={avatar} />
+              ) : (
+                <CustomAvatar
+                  size="25"
+                  variant="pixel"
+                  name="Unnamed"
+                  colors={AvatarColorArray}
+                />
+              )}
             </Box>
           </NextLink>
           <Flex
