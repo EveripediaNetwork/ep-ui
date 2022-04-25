@@ -24,6 +24,14 @@ export enum EditSpecificMetaIds {
   BLOCKS_CHANGED = 'blocks-changed',
 }
 
+export enum WikiRootBlocks {
+  TITLE = 'title',
+  CONTENT = 'content',
+  WIKI_IMAGE = 'wiki-image',
+  SUMMARY = 'summary',
+  TAGS = 'tags',
+}
+
 export interface MData {
   id: string
   value: string

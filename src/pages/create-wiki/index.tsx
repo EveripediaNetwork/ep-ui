@@ -64,7 +64,13 @@ import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
 import diff from 'fast-diff'
-import { MData, Wiki, CommonMetaIds, EditSpecificMetaIds } from '@/types/Wiki'
+import {
+  MData,
+  Wiki,
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  WikiRootBlocks,
+} from '@/types/Wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -289,17 +295,19 @@ const CreateWiki = () => {
 
     // root level block changes
     if (prevWiki.content !== currWiki.content) {
-      blocksChanged.push('content')
+      blocksChanged.push(WikiRootBlocks.CONTENT)
       calculateContentChanged()
     }
-    if (prevWiki.title !== currWiki.title) blocksChanged.push('title')
+    if (prevWiki.title !== currWiki.title)
+      blocksChanged.push(WikiRootBlocks.TITLE)
     if (prevWiki.categories !== currWiki.categories)
       blocksChanged.push('categories')
-    if (prevWiki.tags !== currWiki.tags) blocksChanged.push('tags')
-    if (prevWiki.summary !== currWiki.summary) blocksChanged.push('summary')
+    if (prevWiki.tags !== currWiki.tags) blocksChanged.push(WikiRootBlocks.TAGS)
+    if (prevWiki.summary !== currWiki.summary)
+      blocksChanged.push(WikiRootBlocks.SUMMARY)
     const prevImgId = prevWiki.images && prevWiki.images[0].id
     const currImgId = currWiki.images && currWiki.images[0].id
-    if (prevImgId !== currImgId) blocksChanged.push('wiki-image')
+    if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
 
     // common metadata changes
     Object.values(CommonMetaIds).forEach(id => {
