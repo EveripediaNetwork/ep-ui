@@ -15,6 +15,7 @@ import shortenAccount from '@/utils/shortenAccount'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { format } from 'date-fns'
 import { shortenText } from '@/utils/shortenText'
+import { MdFormatQuote } from 'react-icons/md'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -127,41 +128,25 @@ export const HistoryCard = ({
       {commitMessage && (
         <Box
           pos="relative"
-          py={2}
+          py={1}
           px={4}
           my={4}
-          bgColor="historyCommentBg"
-          boxShadow="0px 0px 4px rgba(0, 0, 0, 0.25);"
-          borderRadius={4}
+          ml={2.5}
+          borderLeftWidth="2px"
+          borderLeftColor="brand.400"
         >
-          <Box
-            w="70px"
+          <Icon
             pos="absolute"
-            top={0}
-            left={6}
-            transform="translateY(-100%)"
-          >
-            <Box
-              width="30%"
-              position="relative"
-              overflow="hidden"
-              paddingBottom="21.27%"
-              _before={{
-                content: "''",
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
-                backgroundColor: 'historyCommentBg',
-                transformOrigin: '0 100%',
-                transform: 'rotate(45deg)',
-              }}
-            />
-          </Box>
+            left={0}
+            top="50%"
+            transform="translate(-50%, -50%)"
+            as={MdFormatQuote}
+            fontSize="20px"
+            bgColor="gray.700"
+            color="brand.500"
+          />
           <Text fontSize="sm" color="text.500" my={2}>
-            {shortenText(commitMessage, 90)}
+            <i>{shortenText(commitMessage, 90)}</i>
           </Text>
         </Box>
       )}
