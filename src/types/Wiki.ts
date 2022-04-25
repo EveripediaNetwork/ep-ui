@@ -12,6 +12,18 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export enum CommonMetaIds {
+  PAGE_TYPE = 'page-type',
+  TWITTER_PROFILE = 'twitter-profile',
+}
+
+export enum EditSpecificMetaIds {
+  COMMIT_MESSAGE = 'commit-message',
+  WORDS_CHANGED = 'words-changed',
+  PERCENT_CHANGED = 'percent-changed',
+  BLOCKS_CHANGED = 'blocks-changed',
+}
+
 export interface MData {
   id: string
   value: string

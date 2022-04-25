@@ -63,9 +63,8 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
-import { CommonMetaIds, EditSpecificMetaIds } from '@/data/WikiMetaIdsData'
 import diff from 'fast-diff'
-import { MData, Wiki } from '@/types/Wiki'
+import { MData, Wiki, CommonMetaIds, EditSpecificMetaIds } from '@/types/Wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -224,7 +223,7 @@ const CreateWiki = () => {
       return false
     }
 
-    if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
+    if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
       toast({
         title: 'Add a page type to continue',
         status: 'error',
@@ -271,7 +270,7 @@ const CreateWiki = () => {
       dispatch({
         type: 'wiki/updateMetadata',
         payload: {
-          id: 'words-changed',
+          id: EditSpecificMetaIds.WORDS_CHANGED,
           value: wordsChanged.toString(),
         },
       })
@@ -279,7 +278,7 @@ const CreateWiki = () => {
       dispatch({
         type: 'wiki/updateMetadata',
         payload: {
-          id: 'percent-changed',
+          id: EditSpecificMetaIds.PERCENT_CHANGED,
           value: percentChanged.toFixed(2),
         },
       })
@@ -315,7 +314,7 @@ const CreateWiki = () => {
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {
-        id: 'blocks-changed',
+        id: EditSpecificMetaIds.BLOCKS_CHANGED,
         value: blocksChanged.join(','),
       },
     })
@@ -397,8 +396,8 @@ const CreateWiki = () => {
 
   const updatePageTypeTemplate = useCallback(() => {
     const meta = [
-      getWikiMetadataById(wiki, 'page-type'),
-      getWikiMetadataById(wiki, 'twitter-profile'),
+      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
+      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
     ]
     const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
@@ -458,7 +457,9 @@ const CreateWiki = () => {
 
   // update the page type template when the page type changes
   const presentPageType = useMemo(
-    () => wiki?.metadata?.find((m: MData) => m.id === 'page-type')?.value,
+    () =>
+      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
+        ?.value,
     [wiki?.metadata],
   )
   useEffect(() => {
@@ -627,7 +628,7 @@ const CreateWiki = () => {
                     dispatch({
                       type: 'wiki/updateMetadata',
                       payload: {
-                        id: 'commit-message',
+                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
                         value: e.target.value,
                       },
                     })
@@ -641,7 +642,7 @@ const CreateWiki = () => {
                       dispatch({
                         type: 'wiki/updateMetadata',
                         payload: {
-                          id: 'commit-message',
+                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
                           value: '',
                         },
                       })
@@ -671,7 +672,10 @@ const CreateWiki = () => {
             onClick={() => {
               dispatch({
                 type: 'wiki/updateMetadata',
-                payload: { id: 'commit-message', value: 'New Wiki Created 🎉' },
+                payload: {
+                  id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                  value: 'New Wiki Created 🎉',
+                },
               })
               saveOnIpfs()
             }}

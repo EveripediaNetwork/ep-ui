@@ -16,7 +16,7 @@ import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
-import { BaseCategory, MData, PageTypeName } from '@/types/Wiki'
+import { BaseCategory, MData, PageTypeName, CommonMetaIds } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
 import Tags from './Tags'
@@ -62,14 +62,15 @@ const HighlightsModal = ({
               dispatch({
                 type: 'wiki/updateMetadata',
                 payload: {
-                  id: 'page-type',
+                  id: CommonMetaIds.PAGE_TYPE,
                   value: event.target.value,
                 },
               })
           }}
           value={String(
-            currentWiki.metadata.find((m: MData) => m.id === 'page-type')
-              ?.value,
+            currentWiki.metadata.find(
+              (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
+            )?.value,
           )}
         >
           {Object.values(PageTypeName).map(o => (
@@ -143,7 +144,7 @@ const HighlightsModal = ({
               dispatch({
                 type: 'wiki/updateMetadata',
                 payload: {
-                  id: 'twitter-profile',
+                  id: CommonMetaIds.TWITTER_PROFILE,
                   value: event.target.value,
                 },
               })
@@ -151,12 +152,12 @@ const HighlightsModal = ({
           placeholder={
             String(
               currentWiki.metadata.find(
-                (m: MData) => m.id === 'twitter-profile',
+                (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
               )?.value,
             )
               ? String(
                   currentWiki.metadata.find(
-                    (m: MData) => m.id === 'twitter-profile',
+                    (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
                   )?.value,
                 )
               : 'Your Twitter Handle'
