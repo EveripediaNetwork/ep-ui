@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
+
 import {
   fetchCategoriesList,
   fetchWikisList,
@@ -42,7 +44,6 @@ const SearchQuery = () => {
   const articleList = articles.map(article => {
     return (
       <ActivityCard
-        id={article.id}
         key={article.id}
         title={article.title}
         brief={getWikiSummary({ content: article.content })}
@@ -83,29 +84,38 @@ const SearchQuery = () => {
   })
 
   return (
-    <Stack my="16" mx="30">
-      <Heading>Results for {query}</Heading>
+    <>
+      <NextSeo
+        title={`Results for ${query}`}
+        openGraph={{
+          title: `Results for ${query}`,
+          description: `Showing ${totalResults} Wikis with ${query} query`,
+        }}
+      />
+      <Stack my="16" mx="30">
+        <Heading>Results for {query}</Heading>
 
-      {!isLoading && (
-        <Stack spacing="12">
-          <Text>Showing {totalResults} results </Text>
+        {!isLoading && (
+          <Stack spacing="12">
+            <Text>Showing {totalResults} results </Text>
 
-          <Heading fontSize="2xl">Articles</Heading>
-          <Flex direction="column" gap="6">
-            {articleList}
-          </Flex>
-          {categories.length !== 0 && (
-            <>
-              <Heading fontSize="2xl">Categories</Heading>
-              <Flex direction="column" gap="6">
-                {categoryList}
-              </Flex>
-            </>
-          )}
-        </Stack>
-      )}
-      {isLoading && <SearchSkeleton />}
-    </Stack>
+            <Heading fontSize="2xl">Articles</Heading>
+            <Flex direction="column" gap="6">
+              {articleList}
+            </Flex>
+            {categories.length !== 0 && (
+              <>
+                <Heading fontSize="2xl">Categories</Heading>
+                <Flex direction="column" gap="6">
+                  {categoryList}
+                </Flex>
+              </>
+            )}
+          </Stack>
+        )}
+        {isLoading && <SearchSkeleton />}
+      </Stack>
+    </>
   )
 }
 
