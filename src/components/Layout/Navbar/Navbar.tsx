@@ -139,7 +139,7 @@ const Navbar = () => {
         position="fixed"
         zIndex={1500}
         w="full"
-        h={{ base: isHamburgerOpen ? '100%' : '20', md: 20 }}
+        h={{ base: isHamburgerOpen ? '100%' : 'unset', md: 'unset' }}
         bg="subMenuBg"
         borderBottomWidth={1}
       >
