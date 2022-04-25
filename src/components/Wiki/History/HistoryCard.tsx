@@ -82,11 +82,26 @@ export const HistoryCard = ({
   lastEditedTime,
   transactionAddress = '',
   commitMessage,
-  wordsChanged = '0',
-  percentChanged = '0',
+  wordsChanged,
+  percentChanged,
   blocksChanged = '',
 }: HistoryCardProps) => {
   const [, username] = useENSData(lastEditor)
+
+  // validate wordsChanged, percentChanged
+  let checkedWordsChanged = '0'
+  if (wordsChanged) {
+    checkedWordsChanged = Number.isNaN(Number(wordsChanged))
+      ? '0'
+      : wordsChanged
+  }
+  let checkedPercentChanged = '0'
+  if (percentChanged) {
+    checkedPercentChanged = Number.isNaN(Number(percentChanged))
+      ? '0'
+      : percentChanged
+  }
+
   return (
     <Box
       pos="relative"
@@ -142,7 +157,7 @@ export const HistoryCard = ({
             transform="translate(-50%, -50%)"
             as={MdFormatQuote}
             fontSize="20px"
-            bgColor="gray.700"
+            bgColor="cardBg"
             color="brand.500"
           />
           <Text fontSize="sm" color="text.500" my={2}>
@@ -169,8 +184,8 @@ export const HistoryCard = ({
               <Text>{changed}</Text>
 
               {changed === 'content' && (
-                <Tooltip label={`${wordsChanged} words changed`}>
-                  <Text cursor="pointer">{` ${percentChanged}`}%</Text>
+                <Tooltip label={`${checkedWordsChanged} words changed`}>
+                  <Text cursor="pointer">{` ${checkedPercentChanged}`}%</Text>
                 </Tooltip>
               )}
             </Tag>
