@@ -63,7 +63,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
-import { commonMetaIds, editSpecificMetaIds } from '@/data/WikiMetaIdsData'
+import { CommonMetaIds, EditSpecificMetaIds } from '@/data/WikiMetaIdsData'
 import diff from 'fast-diff'
 import { MData, Wiki } from '@/types/Wiki'
 
@@ -303,7 +303,7 @@ const CreateWiki = () => {
     if (prevImgId !== currImgId) blocksChanged.push('wiki-image')
 
     // common metadata changes
-    commonMetaIds.forEach(id => {
+    Object.values(CommonMetaIds).forEach(id => {
       if (
         getWikiMetadataById(prevWiki, id)?.value !==
         getWikiMetadataById(currWiki, id)?.value
@@ -370,7 +370,7 @@ const CreateWiki = () => {
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       // clear all edit based metadata from redux state
-      editSpecificMetaIds.forEach(id => {
+      Object.values(EditSpecificMetaIds).forEach(id => {
         dispatch({
           type: 'wiki/updateMetadata',
           payload: {
@@ -520,11 +520,14 @@ const CreateWiki = () => {
       // fetch the currently stored meta data of page that are not edit specific
       // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
       metadata = [
-        ...commonMetaIds.map(mId => {
+        ...Object.values(CommonMetaIds).map(mId => {
           const meta = getWikiMetadataById(wikiData, mId)
           return { id: mId, value: meta?.value || '' }
         }),
-        ...editSpecificMetaIds.map(mId => ({ id: mId, value: '' })),
+        ...Object.values(EditSpecificMetaIds).map(mId => ({
+          id: mId,
+          value: '',
+        })),
       ]
 
       const transformedContent = content.replace(/ {2}\n/gm, '\n')

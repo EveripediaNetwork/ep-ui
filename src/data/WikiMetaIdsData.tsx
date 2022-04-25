@@ -1,10 +1,16 @@
-export const commonMetaIds = ['page-type', 'twitter-profile']
+export enum CommonMetaIds {
+  PageType = 'page-type',
+  TwitterProfile = 'twitter-profile',
+}
 
-export const editSpecificMetaIds = [
-  'commit-message',
-  'words-changed',
-  'percent-changed',
-  'blocks-changed',
+export enum EditSpecificMetaIds {
+  commitMessage = 'commit-message',
+  wordsChanged = 'words-changed',
+  percentChanged = 'percent-changed',
+  blocksChanged = 'blocks-changed',
+}
+
+export const AllMetaDataIds = [
+  ...Object.values(EditSpecificMetaIds),
+  ...Object.values(EditSpecificMetaIds),
 ]
-
-export const AllMetaDataIds = [...commonMetaIds, ...editSpecificMetaIds]
