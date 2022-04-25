@@ -6,6 +6,7 @@ import {
 } from '@/services/activities'
 import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
+import { EditSpecificMetaIds } from '@/types/Wiki'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
@@ -41,7 +42,6 @@ const History = () => {
         </Text>
         {wiki && (
           <ActivityCard
-            id={wiki.id}
             title={wiki.title}
             brief={getWikiSummary(wiki)}
             editor={wiki.user.id}
@@ -81,16 +81,28 @@ const History = () => {
                 lastEditedTime={activity.datetime}
                 transactionAddress={activity.content[0].transactionHash}
                 commitMessage={
-                  getActivityMetadataById(activity, 'commit-message')?.value
+                  getActivityMetadataById(
+                    activity,
+                    EditSpecificMetaIds.COMMIT_MESSAGE,
+                  )?.value
                 }
                 wordsChanged={
-                  getActivityMetadataById(activity, 'words-changed')?.value
+                  getActivityMetadataById(
+                    activity,
+                    EditSpecificMetaIds.WORDS_CHANGED,
+                  )?.value
                 }
                 percentChanged={
-                  getActivityMetadataById(activity, 'percent-changed')?.value
+                  getActivityMetadataById(
+                    activity,
+                    EditSpecificMetaIds.PERCENT_CHANGED,
+                  )?.value
                 }
                 blocksChanged={
-                  getActivityMetadataById(activity, 'blocks-changed')?.value
+                  getActivityMetadataById(
+                    activity,
+                    EditSpecificMetaIds.BLOCKS_CHANGED,
+                  )?.value
                 }
               />
             )
