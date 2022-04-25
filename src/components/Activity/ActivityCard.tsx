@@ -18,7 +18,6 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
-  id: string
   title: string
   brief: string
   editor: string
@@ -42,7 +41,6 @@ const CreatedTime = ({ date }: { date: string }) => {
 }
 
 const ActivityCard = ({
-  id,
   title,
   brief,
   editor,
@@ -132,7 +130,7 @@ const ActivityCard = ({
       py={{ base: 3, lg: 3 }}
       w="full"
     >
-      <NextLink href={`/wiki/${id}`} passHref>
+      <NextLink href={`/wiki/${wikiId}`} passHref>
         <WikiImage
           cursor="pointer"
           flexShrink={0}

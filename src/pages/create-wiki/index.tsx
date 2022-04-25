@@ -50,6 +50,7 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
+import diff from 'fast-diff'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
@@ -63,8 +64,8 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
-import diff from 'fast-diff'
 import { MData, Wiki, CommonMetaIds, EditSpecificMetaIds } from '@/types/Wiki'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -322,6 +323,11 @@ const CreateWiki = () => {
 
   const saveOnIpfs = async () => {
     if (!isValidWiki()) return
+
+    logEvent({
+      action: 'SUBMIT_WIKI',
+      params: { address: accountData?.address, slug: getWikiSlug() },
+    })
 
     if (accountData) {
       setOpenTxDetailsDialog(true)
