@@ -11,7 +11,7 @@ import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { store } from '@/store/store'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
-export const Collected = () => {
+const Collected = () => {
   const { displaySize } = useProfileContext()
   const router = useRouter()
   const address = router.query.profile as string
@@ -19,23 +19,21 @@ export const Collected = () => {
   const [wikis, setWikis] = useState<Wiki[] | []>([])
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
-
-  const fetchMoreWikis = () => {
-    const updatedOffset = offset + ITEM_PER_PAGE
+  const fetchMoreWikis = (fetchOffset: number) => {
     setTimeout(() => {
       const fetchNewWikis = async () => {
         const result = await store.dispatch(
           getUserWikis.initiate({
             id: address,
             limit: ITEM_PER_PAGE,
-            offset: updatedOffset,
+            offset: fetchOffset,
           }),
         )
         if (result.data && result.data?.length > 0) {
           const data = result.data || []
           const updatedWiki = [...wikis, ...data]
           setWikis(updatedWiki)
-          setOffset(updatedOffset)
+          setOffset(fetchOffset)
           setLoading(false)
         } else {
           setHasMore(false)
@@ -48,14 +46,14 @@ export const Collected = () => {
 
   useEffect(() => {
     if (address) {
-      fetchMoreWikis()
+      fetchMoreWikis(offset)
     }
   }, [address])
 
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage: hasMore,
-    onLoadMore: fetchMoreWikis,
+    onLoadMore: () => fetchMoreWikis(offset + ITEM_PER_PAGE),
   })
 
   return (
@@ -87,3 +85,5 @@ export const Collected = () => {
     </FilterLayout>
   )
 }
+
+export default Collected
