@@ -29,18 +29,24 @@ const MagicLogo = `
 `
 
 const modalStyles = `
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 .MagicLink__formOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
   z-index: 9999;
 }
 .MagicLink__formContainer {
   display: flex;
   flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  color: black;
+  text-align: center;
+  gap: 30px;
   align-items: center;
   justify-content: start;
   position: fixed;
@@ -51,8 +57,9 @@ const modalStyles = `
   width: min(450px, 90%);
   z-index: 9999;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 56px rgb(119 118 122 / 15%);
+  border-radius: 30px;
+  padding: min(80px, 15%);
 }
 
 .MagicLink__closeButton {
@@ -71,16 +78,14 @@ const modalStyles = `
 
 .MagicLink__formHeader{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
-  border-bottom: 1px solid #2222222a;
-  margin-top: 20px;
-  padding: 20px 0;
 }
 .MagicLink__logoText{
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
   color: #333;
 }
@@ -91,36 +96,42 @@ const modalStyles = `
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: #eee;
   width: 100%;
   height: 100%;
-  padding: 20px;
+}
+
+.MagicLink__emailLabel{
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .MagicLink__emailInput {
   padding: 10px;
-  z-index: 999999;
   width: 100%;
+  text-align: center;
   margin-bottom: 10px;
-  border: 1px solid #ccc; 
+  border: 1px solid #D6D6D6; 
   color: #333;
+  font-size: 17px;
+  font-weight: 400;
   border-radius: 5px;
 }
 
 .MagicLink__emailInput::placeholder { 
-  color: #ccc;
+  color: #D6D6D6;
   opacity: 1; 
 }
 
 .MagicLink__submitButton {
   display: block;
-  padding: 10px 30px;
+  padding: 8px 30px;
   border: none;
   cursor: pointer;
   color: white;
   margin-bottom: 10px;
-  font-weight: 400;
-  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 12px;
   background-color: #6452f7;
 }
 
@@ -231,7 +242,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
       logo.innerHTML = MagicLogo
       logo.classList.add('MagicLink__logo')
       const logoText = document.createElement('h1')
-      logoText.innerHTML = 'Magic Link'
+      logoText.innerHTML = 'Login by Magic Link '
       logoText.classList.add('MagicLink__logoText')
       formHeader.appendChild(logo)
       formHeader.appendChild(logoText)
@@ -241,16 +252,22 @@ export class MagicLinkConnector extends Connector<Options, any> {
       const formBody = document.createElement('form')
       formBody.classList.add('MagicLink__formBody')
 
+      // FORM EMAIL LABEL
+      const emailLabel = document.createElement('label')
+      emailLabel.classList.add('MagicLink__emailLabel')
+      emailLabel.innerHTML = 'Sign-in with Email'
+      formBody.appendChild(emailLabel)
+
       // FORM EMAIL INPUT
       const emailInput = document.createElement('input')
       emailInput.classList.add('MagicLink__emailInput')
       emailInput.setAttribute('type', 'email')
-      emailInput.setAttribute('placeholder', 'Email')
+      emailInput.setAttribute('placeholder', 'address@example.com')
       formBody.appendChild(emailInput)
 
       // FORM SUBMIT BUTTON
       const submitButton = document.createElement('button')
-      submitButton.textContent = 'Send Login Link'
+      submitButton.textContent = 'Send login link'
       submitButton.classList.add('MagicLink__submitButton')
       submitButton.type = 'submit'
       formBody.appendChild(submitButton)
