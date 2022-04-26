@@ -127,9 +127,7 @@ const WikiProcessModal = ({
                   }
                   variant="link"
                   fontWeight="semibold"
-                  size="xs"
-                  _hover={{ textDecoration: 'none' }}
-                  color="link"
+                  fontSize='xs'
                 >
                   View on Block Explorer
                 </Button>
