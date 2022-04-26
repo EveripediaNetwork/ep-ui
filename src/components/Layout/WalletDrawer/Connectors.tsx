@@ -29,7 +29,6 @@ import {
 import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
 import { RootState } from '@/store/store'
 import { saveUserToLocalStorage } from '@/utils/browserStorage'
-import { MagicLinkConnector } from './MagicLinkConnector'
 
 const Connectors = () => {
   const [{ data }, connect] = useConnect()
@@ -187,7 +186,6 @@ const Connectors = () => {
                 <Divider />
               </Box>
             ))}
-            <MagicLinkConnector />
           </Box>
         )}
       </Box>

@@ -1,3 +1,5 @@
+import { MagicLinkConnector } from '@/utils/magicLinkConnector'
+import { MagicSDKAdditionalConfiguration } from 'magic-sdk'
 import { chain, defaultChains, InjectedConnector } from 'wagmi'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
@@ -36,6 +38,15 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
         jsonRpcUrl: `${rpcUrl}`,
       },
     }),
+    new MagicLinkConnector({
+      chains,
+      options: {
+        apiKey: config.magicLinkApiKey,
+        opt: {
+          networkId: chainId ?? 0,
+        } as MagicSDKAdditionalConfiguration,
+      },
+    }) as any, // TODO: fix this
   ]
 }
 

@@ -20,6 +20,7 @@ const config = {
   epApiBaseUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
+  magicLinkApiKey: String(process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY),
 }
 
 export default config
