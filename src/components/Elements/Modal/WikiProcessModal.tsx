@@ -114,13 +114,23 @@ const WikiProcessModal = ({
                   fontWeight="semibold"
                   variant="outline"
                   disabled={!wikiHash}
-                  onClick={()=> window.open(`${config.pinataBaseUrl}${wikiHash}`)}
+                  onClick={() =>
+                    window.open(`${config.pinataBaseUrl}${wikiHash}`)
+                  }
                 >
                   See on IPFS
                 </Button>
-                <Button disabled={(activeStep === 3 && txHash)? false: true} onClick={()=> window.open(`${config.blockExplorerUrl}tx/${txHash}`)
-  } variant='link' fontWeight="semibold" size='xs' _hover={{textDecoration: "none"}}>
-                    View on Block Explorer
+                <Button
+                  disabled={!(activeStep === 3 && txHash)}
+                  onClick={() =>
+                    window.open(`${config.blockExplorerUrl}tx/${txHash}`)
+                  }
+                  variant="link"
+                  fontWeight="semibold"
+                  size="xs"
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  View on Block Explorer
                 </Button>
               </Stack>
             </Center>
