@@ -130,7 +130,6 @@ const WikiProcessModal = ({
                   size="xs"
                   _hover={{ textDecoration: 'none' }}
                   color="link"
-
                 >
                   View on Block Explorer
                 </Button>
