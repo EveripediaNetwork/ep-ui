@@ -27,6 +27,15 @@ const MagicLogo = `
 `
 
 const modalStyles = `
+.MagicLink__formOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
 .MagicLink__formContainer {
   display: flex;
   flex-direction: column;
@@ -42,7 +51,6 @@ const modalStyles = `
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  outline: 5000px solid rgba(0, 0, 0, 0.5);
 }
 
 .MagicLink__closeButton {
@@ -173,10 +181,14 @@ export class MagicLinkConnector extends Connector<Options, any> {
       style.innerHTML = modalStyles
       document.head.appendChild(style)
 
+      // FORM OVERLAY
+      const overlay = document.createElement('div')
+      overlay.classList.add('MagicLink__formOverlay')
+
       // FORM CONTAINER
       const formContainer = document.createElement('div')
       formContainer.classList.add('MagicLink__formContainer')
-      document.body.appendChild(formContainer)
+      overlay.appendChild(formContainer)
 
       // FORM CLOSE BUTTON
       const closeButton = document.createElement('button')
@@ -217,15 +229,18 @@ export class MagicLinkConnector extends Connector<Options, any> {
       formBody.appendChild(submitButton)
       formContainer.appendChild(formBody)
 
+      // APPEND FORM TO BODY
+      document.body.appendChild(overlay)
+
       // FORM SUBMIT HANDLER
       return new Promise(resolve => {
         closeButton.addEventListener('click', () => {
-          formContainer.remove()
+          overlay.remove()
           resolve('')
         })
         submitButton.addEventListener('click', () => {
           const email = emailInput.value
-          formContainer.remove()
+          overlay.remove()
           resolve(email)
         })
       })
