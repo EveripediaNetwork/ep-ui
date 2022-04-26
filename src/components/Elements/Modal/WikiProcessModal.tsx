@@ -17,7 +17,6 @@ import { Step, Steps } from 'chakra-ui-steps'
 import config from '@/config'
 import { useRouter } from 'next/router'
 
-
 const steps = [
   { label: 'Signed Wiki' },
   { label: 'Sent to Relayer' },
@@ -123,7 +122,7 @@ const WikiProcessModal = ({
                   fontSize="xs"
                   fontWeight="semibold"
                   variant="outline"
-                  disabled={wikiHash ? false: true}
+                  disabled={!wikiHash}
                 >
                   See on IPFS
                 </Button>
