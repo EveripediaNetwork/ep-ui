@@ -39,8 +39,10 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'History',
       icon: RiHistoryLine,
-      isDisabled: true,
-      handleClick: () => {},
+      isDisabled: false,
+      handleClick: () => {
+        router.push(`/wiki/${wiki?.id}/history`)
+      },
     },
   ]
   return (

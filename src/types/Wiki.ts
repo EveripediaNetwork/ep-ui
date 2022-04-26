@@ -12,6 +12,26 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export enum CommonMetaIds {
+  PAGE_TYPE = 'page-type',
+  TWITTER_PROFILE = 'twitter-profile',
+}
+
+export enum EditSpecificMetaIds {
+  COMMIT_MESSAGE = 'commit-message',
+  WORDS_CHANGED = 'words-changed',
+  PERCENT_CHANGED = 'percent-changed',
+  BLOCKS_CHANGED = 'blocks-changed',
+}
+
+export enum WikiRootBlocks {
+  TITLE = 'title',
+  CONTENT = 'content',
+  WIKI_IMAGE = 'wiki-image',
+  SUMMARY = 'summary',
+  TAGS = 'tags',
+}
+
 export interface MData {
   id: string
   value: string
@@ -61,6 +81,7 @@ export const Languages: LanguagesType = {
 
 export interface Wiki {
   id: string
+  transactionHash?: string
   ipfs?: string
   summary?: string
   title: string

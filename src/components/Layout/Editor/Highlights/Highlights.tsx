@@ -15,7 +15,7 @@ import { RiFolder3Line, RiSurveyLine, RiTwitterLine } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Wiki } from '@/types/Wiki'
+import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { shortenText } from '@/utils/shortenText'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
@@ -77,7 +77,12 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                 <RiFolder3Line /> <Text>Page Type</Text>
               </Td>
               <Td>
-                {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
+                {
+                  getWikiMetadataById(
+                    currentWiki as Wiki,
+                    CommonMetaIds.PAGE_TYPE,
+                  )?.value
+                }
               </Td>
             </Tr>
             <Tr>
@@ -104,8 +109,10 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
               </Td>
               <Td wordBreak="break-word">
                 {shortenText(
-                  getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')
-                    ?.value || '',
+                  getWikiMetadataById(
+                    currentWiki as Wiki,
+                    CommonMetaIds.TWITTER_PROFILE,
+                  )?.value || '',
                   50,
                 )}
               </Td>

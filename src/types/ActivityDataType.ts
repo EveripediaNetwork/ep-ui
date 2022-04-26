@@ -1,11 +1,9 @@
+import { Wiki } from './Wiki'
+
 export type Activity = {
   id: string
-  wikiImg: string
-  title: string
-  brief: string
-  editor: string
-  wordsChanged: number
-  percentChanged: number
-  isFirstEdit: boolean
-  lastModTimeStamp: string
+  wikiId: string
+  type: string
+  content: Wiki[]
+  datetime: string
 }

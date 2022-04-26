@@ -22,6 +22,7 @@ export const GET_WIKI_BY_ID = gql`
       id
       ipfs
       created
+      updated
       title
       summary
       content
@@ -54,6 +55,7 @@ export const GET_WIKIS = gql`
       ipfs
       content
       created
+      updated
       title
       summary
       content
@@ -85,6 +87,7 @@ export const GET_PROMOTED_WIKIS = gql`
       ipfs
       content
       created
+      updated
       title
       summary
       content
@@ -148,11 +151,11 @@ export const GET_WIKIS_BY_CATEGORY = gql`
     wikisByCategory(category: $category, offset: $offset, limit: $limit) {
       id
       ipfs
-      content
       created
       title
       summary
       content
+      updated
       categories {
         id
         title

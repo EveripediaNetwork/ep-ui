@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LanguagesISOEnum, Wiki, MData } from '@/types/Wiki'
+import {
+  LanguagesISOEnum,
+  Wiki,
+  MData,
+  CommonMetaIds,
+  EditSpecificMetaIds,
+} from '@/types/Wiki'
 
 const initialState: Wiki = {
   id: '',
@@ -11,18 +17,12 @@ const initialState: Wiki = {
   categories: [],
   tags: [],
   metadata: [
-    {
-      id: 'commit-message',
-      value: '',
-    },
-    {
-      id: 'page-type',
-      value: 'generic',
-    },
-    {
-      id: 'twitter-profile',
-      value: '',
-    },
+    ...Object.values(CommonMetaIds).map(mID => {
+      let value = ''
+      if (mID === CommonMetaIds.PAGE_TYPE) value = 'generic'
+      return { id: mID, value }
+    }),
+    ...Object.values(EditSpecificMetaIds).map(mID => ({ id: mID, value: '' })),
   ],
   user: {
     id: '',

@@ -2,6 +2,7 @@ import React, {
   useContext,
   useEffect,
   useState,
+  useRef,
   memo,
   useCallback,
   ChangeEvent,
@@ -49,6 +50,7 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
 import axios from 'axios'
+import diff from 'fast-diff'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import config from '@/config'
@@ -62,6 +64,13 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import { POST_IMG } from '@/services/wikis/queries'
+import {
+  MData,
+  Wiki,
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  WikiRootBlocks,
+} from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -130,6 +139,10 @@ const CreateWiki = () => {
     {},
   )
   const [, wait] = useWaitForTransaction()
+  const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
+    wiki: wikiData,
+    isPublished: false,
+  })
 
   const saveImage = async () => {
     const formData = new FormData()
@@ -217,7 +230,7 @@ const CreateWiki = () => {
       return false
     }
 
-    if (getWikiMetadataById(wiki, 'page-type')?.value === null) {
+    if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
       toast({
         title: 'Add a page type to continue',
         status: 'error',
@@ -227,6 +240,93 @@ const CreateWiki = () => {
     }
 
     return true
+  }
+  const calculateEditInfo = (prevWiki: Wiki, currWiki: Wiki) => {
+    const calculateContentChanged = () => {
+      // check if content has changed
+      const prevContent = prevWiki?.content
+      const currContent = currWiki?.content
+
+      // calculate percent changed and number of words changed in prevContent and currContent
+      let contentAdded = 0
+      let contentRemoved = 0
+      let contentUnchanged = 0
+
+      let wordsAdded = 0
+      let wordsRemoved = 0
+
+      diff(prevContent, currContent).forEach(part => {
+        if (part[0] === 1) {
+          contentAdded += part[1].length
+          wordsAdded += getWordCount(part[1])
+        }
+        if (part[0] === -1) {
+          contentRemoved += part[1].length
+          wordsRemoved += getWordCount(part[1])
+        }
+        if (part[0] === 0) {
+          contentUnchanged += part[1].length
+        }
+      })
+
+      const percentChanged =
+        ((contentAdded + contentRemoved) / contentUnchanged) * 100
+      const wordsChanged = wordsAdded + wordsRemoved
+
+      // update metadata in redux state
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: EditSpecificMetaIds.WORDS_CHANGED,
+          value: wordsChanged.toString(),
+        },
+      })
+
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: EditSpecificMetaIds.PERCENT_CHANGED,
+          value: percentChanged.toFixed(2),
+        },
+      })
+    }
+
+    // calculate which blocks have changed
+    const blocksChanged = []
+
+    // root level block changes
+    if (prevWiki.content !== currWiki.content) {
+      blocksChanged.push(WikiRootBlocks.CONTENT)
+      calculateContentChanged()
+    }
+    if (prevWiki.title !== currWiki.title)
+      blocksChanged.push(WikiRootBlocks.TITLE)
+    if (prevWiki.categories !== currWiki.categories)
+      blocksChanged.push('categories')
+    if (prevWiki.tags !== currWiki.tags) blocksChanged.push(WikiRootBlocks.TAGS)
+    if (prevWiki.summary !== currWiki.summary)
+      blocksChanged.push(WikiRootBlocks.SUMMARY)
+    const prevImgId = prevWiki.images && prevWiki.images[0].id
+    const currImgId = currWiki.images && currWiki.images[0].id
+    if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
+
+    // common metadata changes
+    Object.values(CommonMetaIds).forEach(id => {
+      if (
+        getWikiMetadataById(prevWiki, id)?.value !==
+        getWikiMetadataById(currWiki, id)?.value
+      )
+        blocksChanged.push(id)
+    })
+
+    // update blocks changed metadata in redux state
+    dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: EditSpecificMetaIds.BLOCKS_CHANGED,
+        value: blocksChanged.join(','),
+      },
+    })
   }
 
   const saveOnIpfs = async () => {
@@ -240,26 +340,58 @@ const CreateWiki = () => {
     if (accountData) {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
+
+      // Build the wiki object
       const imageHash = await getImageHash()
 
-      let tmp = { ...wiki }
-      if (tmp.id === '') tmp.id = getWikiSlug()
-      setWikiId(tmp.id)
+      let interWiki = { ...wiki }
+      if (interWiki.id === '') interWiki.id = getWikiSlug()
+      setWikiId(interWiki.id)
 
-      tmp = {
-        ...tmp,
-        content: String(md).replace(/\n/gm, '  \n'),
+      interWiki = {
+        ...interWiki,
         user: {
           id: accountData.address,
         },
+        content: String(md).replace(/\n/gm, '  \n'),
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
-      const wikiResult: any = await store.dispatch(
-        postWiki.initiate({ data: tmp }),
-      )
+      if (!isNewCreateWiki) {
+        // calculate edit info for current wiki and previous wiki
+        // previous wiki varies if editor is trying to publish
+        // more than two edits to chain in same session
 
+        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
+          calculateEditInfo(prevEditedWiki.current.wiki, interWiki)
+        } else if (wikiData) {
+          calculateEditInfo(wikiData, interWiki)
+        }
+      }
+
+      // Build the wiki object after edit info has been calculated
+      const finalWiki = {
+        ...interWiki,
+        metadata: store.getState().wiki.metadata,
+      }
+
+      prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
+
+      const wikiResult: any = await store.dispatch(
+        postWiki.initiate({ data: finalWiki }),
+      )
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
+
+      // clear all edit based metadata from redux state
+      Object.values(EditSpecificMetaIds).forEach(id => {
+        dispatch({
+          type: 'wiki/updateMetadata',
+          payload: {
+            id,
+            value: '',
+          },
+        })
+      })
 
       setSubmittingWiki(false)
     }
@@ -278,8 +410,8 @@ const CreateWiki = () => {
 
   const updatePageTypeTemplate = useCallback(() => {
     const meta = [
-      getWikiMetadataById(wiki, 'page-type'),
-      getWikiMetadataById(wiki, 'twitter-profile'),
+      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
+      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
     ]
     const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
@@ -316,6 +448,12 @@ const CreateWiki = () => {
     [wait],
   )
 
+  useEffect(() => {
+    if (activeStep === 3) {
+      prevEditedWiki.current.isPublished = true
+    }
+  }, [activeStep])
+
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
     if (!slug) {
@@ -333,7 +471,9 @@ const CreateWiki = () => {
 
   // update the page type template when the page type changes
   const presentPageType = useMemo(
-    () => wiki?.metadata?.find(m => m.id === 'page-type')?.value,
+    () =>
+      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
+        ?.value,
     [wiki?.metadata],
   )
   useEffect(() => {
@@ -391,13 +531,19 @@ const CreateWiki = () => {
 
       const { id, title, summary, content, tags, categories } = wikiData
       let { metadata } = wikiData
-      metadata = metadata[1]?.value
-        ? [...metadata, { id: 'commit-message', value: '' }]
-        : [
-            ...metadata,
-            { id: 'twitter-profile', value: '' },
-            { id: 'commit-message', value: '' },
-          ]
+
+      // fetch the currently stored meta data of page that are not edit specific
+      // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
+      metadata = [
+        ...Object.values(CommonMetaIds).map(mId => {
+          const meta = getWikiMetadataById(wikiData, mId)
+          return { id: mId, value: meta?.value || '' }
+        }),
+        ...Object.values(EditSpecificMetaIds).map(mId => ({
+          id: mId,
+          value: '',
+        })),
+      ]
 
       const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
@@ -496,7 +642,7 @@ const CreateWiki = () => {
                     dispatch({
                       type: 'wiki/updateMetadata',
                       payload: {
-                        id: 'commit-message',
+                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
                         value: e.target.value,
                       },
                     })
@@ -510,7 +656,7 @@ const CreateWiki = () => {
                       dispatch({
                         type: 'wiki/updateMetadata',
                         payload: {
-                          id: 'commit-message',
+                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
                           value: '',
                         },
                       })
@@ -540,7 +686,10 @@ const CreateWiki = () => {
             onClick={() => {
               dispatch({
                 type: 'wiki/updateMetadata',
-                payload: { id: 'commit-message', value: 'New Wiki Created 🎉' },
+                payload: {
+                  id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                  value: 'New Wiki Created 🎉',
+                },
               })
               saveOnIpfs()
             }}

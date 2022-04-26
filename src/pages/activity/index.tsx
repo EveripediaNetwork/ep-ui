@@ -5,12 +5,12 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import {
   getLatestActivities,
   getRunningOperationPromises,
-  ActivityType,
 } from '@/services/activities'
 import { GetServerSideProps } from 'next'
 import { store } from '@/store/store'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { Activity as ActivityType } from '@/types/ActivityDataType'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
