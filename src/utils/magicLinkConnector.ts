@@ -198,11 +198,12 @@ export class MagicLinkConnector extends Connector<Options, any> {
       formContainer.appendChild(formHeader)
 
       // FORM BODY
-      const formBody = document.createElement('div')
+      const formBody = document.createElement('form')
       formBody.classList.add('MagicLink__formBody')
 
       // FORM EMAIL INPUT
       const emailInput = document.createElement('input')
+      emailInput.setAttribute('onblur', 'this.focus()')
       emailInput.classList.add('MagicLink__emailInput')
       emailInput.setAttribute('type', 'email')
       emailInput.setAttribute('placeholder', 'Email')
