@@ -380,6 +380,7 @@ const CreateWiki = () => {
       const wikiResult: any = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
+
       if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
 
       // clear all edit based metadata from redux state
@@ -720,7 +721,6 @@ const CreateWiki = () => {
             </Center>
           </Skeleton>
         </Box>
-
         <WikiProcessModal
           wikiId={wikiId}
           msg={msg}

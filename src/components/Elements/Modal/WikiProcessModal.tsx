@@ -17,6 +17,7 @@ import { Step, Steps } from 'chakra-ui-steps'
 import config from '@/config'
 import { useRouter } from 'next/router'
 
+
 const steps = [
   { label: 'Signed Wiki' },
   { label: 'Sent to Relayer' },
@@ -47,7 +48,7 @@ const WikiProcessModal = ({
   const cancelRef = React.useRef<FocusableElement>(null)
   const router = useRouter()
   const handleBlockExplorer = () => {
-    if (activeStep === 3) {
+    if (activeStep === 3 && txHash) {
       window.open(`${config.blockExplorerUrl}tx/${txHash}`)
     }
   }
@@ -122,7 +123,7 @@ const WikiProcessModal = ({
                   fontSize="xs"
                   fontWeight="semibold"
                   variant="outline"
-                  disabled={!(activeStep === 3)}
+                  disabled={wikiHash ? false: true}
                 >
                   See on IPFS
                 </Button>
