@@ -46,11 +46,6 @@ const WikiProcessModal = ({
 }: WikiProcessType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const router = useRouter()
-  const handleBlockExplorer = () => {
-    if (activeStep === 3 && txHash) {
-      window.open(`${config.blockExplorerUrl}tx/${txHash}`)
-    }
-  }
 
   return (
     <AlertDialog
@@ -115,26 +110,18 @@ const WikiProcessModal = ({
                   View Wiki
                 </Button>
                 <Button
-                  as="a"
-                  href={`${config.pinataBaseUrl}${wikiHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   fontSize="xs"
                   fontWeight="semibold"
                   variant="outline"
                   disabled={!wikiHash}
+                  onClick={()=> window.open(`${config.pinataBaseUrl}${wikiHash}`)}
                 >
                   See on IPFS
                 </Button>
-                <Text
-                  cursor="pointer"
-                  fontSize="xs"
-                  fontWeight="semibold"
-                  pt={2}
-                  onClick={handleBlockExplorer}
-                >
-                  View on Block Explorer
-                </Text>
+                <Button disabled={(activeStep === 3 && txHash)? false: true} onClick={()=> window.open(`${config.blockExplorerUrl}tx/${txHash}`)
+  } variant='link' fontWeight="semibold" size='xs' _hover={{textDecoration: "none"}}>
+                    View on Block Explorer
+                </Button>
               </Stack>
             </Center>
           </Flex>
