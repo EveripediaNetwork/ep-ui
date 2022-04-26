@@ -21,7 +21,7 @@ const Login = () => {
   return (
     <Container centerContent mt="8" mb="24">
       <Box w="xl">
-        <Heading fontWeight="extrabold" fontSize={23}>
+        <Heading mb={2} fontWeight="extrabold" fontSize={23}>
           Connect your wallet
         </Heading>
         <Connectors />

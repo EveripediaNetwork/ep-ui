@@ -92,7 +92,7 @@ const Connectors = () => {
   return (
     <>
       {!accountData && (
-        <Text mb="6" mt="3" color="gray.500" fontWeight="bold" fontSize="sm">
+        <Text mb="6" color="gray.500" fontWeight="bold" fontSize="sm">
           Connect with one of our available&nbsp;
           <Tooltip
             hasArrow
@@ -117,7 +117,7 @@ const Connectors = () => {
           <>
             <Flex
               border="1px"
-              borderColor="gray.200"
+              borderColor="borderColor"
               borderRadius="lg"
               direction="column"
               mb={5}
@@ -155,7 +155,7 @@ const Connectors = () => {
               </Center>
             </Flex>
             {balanceBreakdown && walletDetails && walletDetails.length > 0 && (
-              <Box border="1px" borderColor="gray.200" borderRadius="lg">
+              <Box border="1px" borderColor="borderColor" borderRadius="lg">
                 {walletDetails.map((details, key) => (
                   <React.Fragment key={key}>
                     <WalletDetails

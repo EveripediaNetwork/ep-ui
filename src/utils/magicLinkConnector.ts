@@ -5,10 +5,12 @@ import {
   Chain,
   Connector,
   ConnectorData,
+  normalizeChainId,
   UserRejectedRequestError,
 } from 'wagmi'
 import { ethers, Signer } from 'ethers'
 import { Magic, MagicSDKAdditionalConfiguration } from 'magic-sdk'
+import { getAddress } from 'ethers/lib/utils'
 
 const IS_SERVER = typeof window === 'undefined'
 
@@ -97,11 +99,17 @@ const modalStyles = `
 
 .MagicLink__emailInput {
   padding: 10px;
+  z-index: 999999;
   width: 100%;
   margin-bottom: 10px;
   border: 1px solid #ccc; 
   color: #333;
   border-radius: 5px;
+}
+
+.MagicLink__emailInput::placeholder { 
+  color: #ccc;
+  opacity: 1; 
 }
 
 .MagicLink__submitButton {
@@ -128,6 +136,8 @@ export class MagicLinkConnector extends Connector<Options, any> {
 
   magicSDK: Magic | undefined
 
+  isModalOpen = false
+
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(config: { chains?: Chain[] | undefined; options: Options }) {
     super(config)
@@ -143,22 +153,39 @@ export class MagicLinkConnector extends Connector<Options, any> {
         provider.on('disconnect', this.onDisconnect)
       }
 
-      const email = await this.getUserDetailsByForm()
+      // Check if there is a user logged in
+      const isAuthenticated = await this.isAuthorized()
 
-      if (email) {
-        const magic = await this.getMagicSDK()
-        await magic.auth.loginWithMagicLink({
-          email,
-        })
-        const signer = await this.getSigner()
-        const account = await signer.getAddress()
+      // if there is a user logged in, return the user
+      if (isAuthenticated) {
         return {
-          account,
+          provider,
           chain: {
             id: 0,
             unsupported: false,
           },
-          provider,
+          account: await this.getAccount(),
+        }
+      }
+
+      // open the modal and process the magic login steps
+      if (!this.isModalOpen) {
+        const email = await this.getUserDetailsByForm()
+        if (email) {
+          const magic = await this.getMagicSDK()
+          await magic.auth.loginWithMagicLink({
+            email,
+          })
+          const signer = await this.getSigner()
+          const account = await signer.getAddress()
+          return {
+            account,
+            chain: {
+              id: 0,
+              unsupported: false,
+            },
+            provider,
+          }
         }
       }
       throw new UserRejectedRequestError('User rejected request')
@@ -175,6 +202,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
   }
 
   async getUserDetailsByForm(): Promise<string> {
+    this.isModalOpen = true
     const createForm = async () => {
       // FORM STYLES
       const style = document.createElement('style')
@@ -215,7 +243,6 @@ export class MagicLinkConnector extends Connector<Options, any> {
 
       // FORM EMAIL INPUT
       const emailInput = document.createElement('input')
-      emailInput.setAttribute('onblur', 'this.focus()')
       emailInput.classList.add('MagicLink__emailInput')
       emailInput.setAttribute('type', 'email')
       emailInput.setAttribute('placeholder', 'Email')
@@ -236,11 +263,13 @@ export class MagicLinkConnector extends Connector<Options, any> {
       return new Promise(resolve => {
         closeButton.addEventListener('click', () => {
           overlay.remove()
+          this.isModalOpen = false
           resolve('')
         })
         submitButton.addEventListener('click', () => {
           const email = emailInput.value
           overlay.remove()
+          this.isModalOpen = false
           resolve(email)
         })
       })
@@ -286,16 +315,19 @@ export class MagicLinkConnector extends Connector<Options, any> {
     throw new Error('Method not implemented.')
   }
 
-  protected onAccountsChanged(_accounts: string[]): void {
-    throw new Error('Method not implemented.')
+  protected onAccountsChanged(accounts: string[]): void {
+    if (accounts.length === 0) this.emit('disconnect')
+    else this.emit('change', { account: getAddress(accounts[0]) })
   }
 
-  protected onChainChanged(_chain: string | number): void {
-    throw new Error('Method not implemented.')
+  protected onChainChanged(chainId: string | number): void {
+    const id = normalizeChainId(chainId)
+    const unsupported = this.isChainUnsupported(id)
+    this.emit('change', { chain: { id, unsupported } })
   }
 
   protected onDisconnect(): void {
-    throw new Error('Method not implemented.')
+    this.emit('disconnect')
   }
 
   async disconnect(): Promise<void> {
