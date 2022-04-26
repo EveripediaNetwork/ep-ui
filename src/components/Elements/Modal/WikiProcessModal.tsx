@@ -127,7 +127,7 @@ const WikiProcessModal = ({
                   }
                   variant="link"
                   fontWeight="semibold"
-                  fontSize='xs'
+                  fontSize="xs"
                 >
                   View on Block Explorer
                 </Button>
