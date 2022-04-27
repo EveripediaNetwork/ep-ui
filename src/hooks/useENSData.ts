@@ -18,8 +18,8 @@ export const useENSData = (address: string | undefined | null) => {
       let lookupAddress = addrs
       const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
       if (!validateAddress(addrs)) {
-        const resolved = (await provider.resolveName(addrs)) as string
-        lookupAddress = resolved
+        const resolvedAddress = (await provider.resolveName(addrs)) as string
+        lookupAddress = resolvedAddress
       }
       const name = await provider.lookupAddress(lookupAddress)
       let avatarURI
