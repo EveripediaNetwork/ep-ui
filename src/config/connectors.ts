@@ -12,7 +12,7 @@ type Connector =
   | WalletConnectConnector
   | WalletLinkConnector
 
-const connectors = ({ chainId = 0 }: { chainId?: number }): Connector[] => {
+const connectors = ({ chainId = 1 }: { chainId?: number }): Connector[] => {
   const { infuraId } = config
 
   const rpcUrl =
