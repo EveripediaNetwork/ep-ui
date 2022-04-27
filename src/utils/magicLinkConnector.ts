@@ -68,8 +68,8 @@ const modalStyles = `
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
   z-index: 9999;
 }
 .MagicLink__formContainer {
@@ -91,19 +91,18 @@ const modalStyles = `
   background-color: white;
   box-shadow: 0 12px 56px rgb(119 118 122 / 15%);
   border-radius: 30px;
-  padding: min(80px, 15%);
+  padding: 80px 20px;
 }
 .MagicLink__closeButton {
   position: absolute;
   top: 0;
-  right: 10px;
+  right: 15px;
   padding: 10px;
   border: none;
   background-color: transparent;
   cursor: pointer;
   font-size: 30px;
   color: #ccc;
-  font-weight: bold;
   z-index: 9999;
 }
 .MagicLink__formHeader{
@@ -135,6 +134,7 @@ const modalStyles = `
 .MagicLink__emailInput {
   padding: 10px;
   width: 100%;
+  max-width: 300px;
   text-align: center;
   margin-bottom: 10px;
   border: 1px solid #D6D6D6; 
@@ -315,6 +315,11 @@ export class MagicLinkConnector extends Connector<Options, any> {
       // FORM CONTAINER
       const formContainer = document.createElement('div')
       formContainer.classList.add('MagicLink__formContainer')
+      formContainer.style.transform = 'translate(-50%, -50%) scale(0)'
+      formContainer.style.transition = 'all 0.2s ease-in-out'
+      setTimeout(() => {
+        formContainer.style.transform = 'translate(-50%, -50%) scale(1)'
+      }, 100)
       overlay.appendChild(formContainer)
 
       // FORM CLOSE BUTTON
@@ -339,6 +344,9 @@ export class MagicLinkConnector extends Connector<Options, any> {
       // FORM BODY
       const formBody = document.createElement('form')
       formBody.classList.add('MagicLink__formBody')
+      formBody.onsubmit = async event => {
+        event.preventDefault()
+      }
 
       // FORM EMAIL LABEL
       const emailLabel = document.createElement('label')
@@ -387,10 +395,18 @@ export class MagicLinkConnector extends Connector<Options, any> {
       document.body.appendChild(overlay)
 
       // FORM SUBMIT HANDLER
+      const removeForm = () => {
+        setTimeout(() => {
+          formContainer.style.transform = 'translate(-50%, -50%) scale(0)'
+        }, 100)
+        setTimeout(() => {
+          overlay.remove()
+        }, 200)
+      }
       return new Promise(resolve => {
         // for close button
         closeButton.addEventListener('click', () => {
-          overlay.remove()
+          removeForm()
           this.isModalOpen = false
           resolve({ email: '', isGoogle: false, isDiscord: false })
         })
@@ -404,7 +420,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
               isGoogle: false,
               isDiscord: false,
             }
-            overlay.remove()
+            removeForm()
             this.isModalOpen = false
             resolve(output)
           }
@@ -423,7 +439,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
               isTwitter: provider.name === 'Twitter',
               isFacebook: provider.name === 'Facebook',
             }
-            overlay.remove()
+            removeForm()
             this.isModalOpen = false
             resolve(output)
           })

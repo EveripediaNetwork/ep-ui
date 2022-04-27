@@ -93,7 +93,7 @@ const Connectors = () => {
   return (
     <>
       {!accountData && (
-        <Text mb="6" color="gray.500" fontWeight="bold" fontSize="sm">
+        <Text mb="4" mt={2} color="gray.500" fontWeight="bold" fontSize="sm">
           Connect with one of our available&nbsp;
           <Tooltip
             hasArrow
