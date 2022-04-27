@@ -185,7 +185,7 @@ const Connectors = () => {
                   imageLink={`/images/${walletsLogos[index]}`}
                   loading={loading}
                 />
-                <Divider />
+                {index < walletsLogos.length - 1 && <Divider />}
               </Box>
             ))}
           </Box>
