@@ -1,3 +1,5 @@
+import { GTagParams } from '@/types/global'
+
 export const pageView = (url: URL) => {
   const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string
   if (typeof window.gtag !== 'undefined') {
@@ -14,7 +16,7 @@ export const logEvent = ({
   params,
 }: {
   action: string
-  params: any
+  params: GTagParams
 }) => {
   if (typeof window.gtag !== 'undefined') {
     window.gtag('event', action, params)
