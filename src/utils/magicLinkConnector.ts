@@ -349,6 +349,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
       // FORM EMAIL INPUT
       const emailInput = document.createElement('input')
       emailInput.classList.add('MagicLink__emailInput')
+      emailInput.setAttribute('required', 'true')
       emailInput.setAttribute('type', 'email')
       emailInput.setAttribute('placeholder', 'address@example.com')
       formBody.appendChild(emailInput)
@@ -396,14 +397,17 @@ export class MagicLinkConnector extends Connector<Options, any> {
 
         // for email submit
         submitButton.addEventListener('click', () => {
-          const output = {
-            email: emailInput.value,
-            isGoogle: false,
-            isDiscord: false,
+          const isEmailValid = emailInput.checkValidity()
+          if (isEmailValid) {
+            const output = {
+              email: emailInput.value,
+              isGoogle: false,
+              isDiscord: false,
+            }
+            overlay.remove()
+            this.isModalOpen = false
+            resolve(output)
           }
-          overlay.remove()
-          this.isModalOpen = false
-          resolve(output)
         })
 
         // for oauth buttons
@@ -428,6 +432,7 @@ export class MagicLinkConnector extends Connector<Options, any> {
     }
 
     const output: UserDetails = (await createForm()) as UserDetails
+    alert(JSON.stringify(output))
     return output
   }
 
