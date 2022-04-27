@@ -31,7 +31,8 @@ import { RootState } from '@/store/store'
 import { saveUserToLocalStorage } from '@/utils/browserStorage'
 
 const Connectors = () => {
-  const [{ data }, connect] = useConnect()
+  const [{ data, loading }, connect] = useConnect()
+
   const [{ data: accountData }] = useAccount()
   const address = accountData ? accountData.address : null
   const [, getBalance] = useBalance()
@@ -182,6 +183,7 @@ const Connectors = () => {
                   connect={connect}
                   w={w}
                   imageLink={`/images/${walletsLogos[index]}`}
+                  loading={loading}
                 />
                 <Divider />
               </Box>
