@@ -12,21 +12,14 @@ const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Center py={6} cursor="pointer">
       <NextLink href={`/wiki/${id}`} passHref>
-        <Box
-          w={390}
-          minH={390}
-          boxShadow="xl"
-          rounded="md"
-          p={6}
-          overflow="hidden"
-        >
+        <Box w={390} minH={390} boxShadow="xl" rounded="md" overflow="hidden">
           <WikiImage
             h={200}
             mb={3}
             imageURL={getWikiImageUrl(wiki)}
             layout="fill"
           />
-          <Stack spacing={3}>
+          <Stack spacing={3} p={4}>
             <Text fontSize="2xl" fontWeight="bold">
               {title}
             </Text>
