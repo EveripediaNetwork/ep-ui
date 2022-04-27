@@ -19,6 +19,7 @@ const Collected = () => {
   const [wikis, setWikis] = useState<Wiki[] | []>([])
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
+
   const fetchMoreWikis = (fetchOffset: number) => {
     setTimeout(() => {
       const fetchNewWikis = async () => {
