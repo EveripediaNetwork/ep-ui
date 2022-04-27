@@ -432,7 +432,6 @@ export class MagicLinkConnector extends Connector<Options, any> {
     }
 
     const output: UserDetails = (await createForm()) as UserDetails
-    alert(JSON.stringify(output))
     return output
   }
 
