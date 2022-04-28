@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { LinkBox, LinkOverlay, Text, SimpleGrid, Spinner, Center } from '@chakra-ui/react'
+import {
+  LinkBox,
+  LinkOverlay,
+  Text,
+  SimpleGrid,
+  Spinner,
+  Center,
+} from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
@@ -9,7 +16,7 @@ const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
   const [categories, setCategories] = React.useState<Category[]>([])
 
-  useEffect(()=> {
+  useEffect(() => {
     setCategories(categoriesData || [])
   }, [categoriesData])
 
@@ -60,12 +67,11 @@ const CategoriesList = () => {
           </LinkBox>
         ))}
       </SimpleGrid>
-      {
-        categories.length < 1 &&
+      {categories.length < 1 && (
         <Center w="full" h="16">
           <Spinner size="xl" />
         </Center>
-      }
+      )}
     </>
   )
 }
