@@ -26,7 +26,7 @@ const CategoriesList = () => {
   )
   return (
     <>
-      <Text align="center" fontWeight="semibold" fontSize="2xl" mb={0}>
+      <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
         Browse by category
       </Text>
       <SimpleGrid
