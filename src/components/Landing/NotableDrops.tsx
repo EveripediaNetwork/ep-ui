@@ -93,7 +93,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
   return (
     <Flex direction="column" mt="20" gap={10} align="center">
       <Text align="center" fontWeight="bold" fontSize="2xl">
-        Notable Wikis
+        Trending Wikis
       </Text>
 
       <Flex
