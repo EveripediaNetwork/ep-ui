@@ -140,24 +140,12 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                         </Text>
                       </LinkOverlay>
                     </NextLink>
-                    <Text fontSize="md" noOfLines={2}>
+                    <Text mb="6" fontSize="md" noOfLines={2}>
                       {getWikiSummary(wiki, WikiSummarySize.Medium)}
                     </Text>
                   </Box>
                 </Box>
-                <Flex justifyContent="center" p={4}>
-                  <DarkMode>
-                    <Button
-                      color="white"
-                      variant="outline"
-                      size="sm"
-                      w="fit-content"
-                      fontWeight="medium"
-                    >
-                      Live
-                    </Button>
-                  </DarkMode>
-                </Flex>
+                
               </Flex>
             </LinkBox>
           ))}
