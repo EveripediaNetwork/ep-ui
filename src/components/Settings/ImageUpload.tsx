@@ -27,9 +27,9 @@ const ImageUpload = ({
   }, [selectedImage])
 
   // On each change let user have access to a selected file
-  const handleChange = (event: any) => {
-    const file = event.target.files[0]
-    setSelectedImage(file)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0]
+    if (file) setSelectedImage(file)
   }
 
   return (

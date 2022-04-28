@@ -377,11 +377,12 @@ const CreateWiki = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
-      const wikiResult: any = await store.dispatch(
+      const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
 
-      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
+      if (wikiResult && 'data' in wikiResult)
+        saveHashInTheBlockchain(String(wikiResult.data))
 
       // clear all edit based metadata from redux state
       Object.values(EditSpecificMetaIds).forEach(id => {
@@ -497,7 +498,7 @@ const CreateWiki = () => {
           return
         }
         try {
-          const { data: relayerData }: any = await submitVerifiableSignature(
+          const { data: relayerData } = await submitVerifiableSignature(
             data,
             wikiHash,
             accountData?.address,

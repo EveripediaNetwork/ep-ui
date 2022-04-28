@@ -138,7 +138,7 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiResponse) =>
         response.pinJSON.IpfsHash,
     }),
-    postImage: builder.mutation<string, { file: any }>({
+    postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
         variables: { file },

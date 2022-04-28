@@ -120,6 +120,7 @@ const ProfileSettings = () => {
 
     // TODO: Send the data to backend
     console.log(data)
+
     toast({
       title: 'Profile Settings Saved',
       description: 'Your profile settings have been saved.',

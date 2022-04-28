@@ -19,36 +19,39 @@ const Collected = () => {
   const [wikis, setWikis] = useState<Wiki[] | []>([])
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
-  const fetchMoreWikis = (fetchOffset: number) => {
-    setTimeout(() => {
-      const fetchNewWikis = async () => {
-        const result = await store.dispatch(
-          getUserWikis.initiate({
-            id: address,
-            limit: ITEM_PER_PAGE,
-            offset: fetchOffset,
-          }),
-        )
-        if (result.data && result.data?.length > 0) {
-          const data = result.data || []
-          const updatedWiki = [...wikis, ...data]
-          setWikis(updatedWiki)
-          setOffset(fetchOffset)
-          setLoading(false)
-        } else {
-          setHasMore(false)
-          setLoading(false)
+  const fetchMoreWikis = React.useCallback(
+    (fetchOffset: number) => {
+      setTimeout(() => {
+        const fetchNewWikis = async () => {
+          const result = await store.dispatch(
+            getUserWikis.initiate({
+              id: address,
+              limit: ITEM_PER_PAGE,
+              offset: fetchOffset,
+            }),
+          )
+          if (result.data && result.data?.length > 0) {
+            const data = result.data || []
+            const updatedWiki = [...wikis, ...data]
+            setWikis(updatedWiki)
+            setOffset(fetchOffset)
+            setLoading(false)
+          } else {
+            setHasMore(false)
+            setLoading(false)
+          }
         }
-      }
-      fetchNewWikis()
-    }, FETCH_DELAY_TIME)
-  }
+        fetchNewWikis()
+      }, FETCH_DELAY_TIME)
+    },
+    [address, wikis],
+  )
 
   useEffect(() => {
     if (address) {
       fetchMoreWikis(offset)
     }
-  }, [address])
+  }, [address, offset, fetchMoreWikis])
 
   const [sentryRef] = useInfiniteScroll({
     loading,
