@@ -4,10 +4,8 @@ import {
   Box,
   Flex,
   HStack,
-  Button,
   LinkBox,
   LinkOverlay,
-  DarkMode,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
@@ -145,7 +143,6 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                     </Text>
                   </Box>
                 </Box>
-                
               </Flex>
             </LinkBox>
           ))}
