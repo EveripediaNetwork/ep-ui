@@ -3,7 +3,7 @@ import { Box, Heading, Text, Button } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Error = () => {
-    const router = useRouter()
+  const router = useRouter()
   return (
     <Box textAlign="center" py={10} px={6}>
       <Heading display="inline-block" as="h2" size="2xl">
