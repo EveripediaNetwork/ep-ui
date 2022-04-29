@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useRef,
   memo,
-  useCallback,
   ChangeEvent,
   useMemo,
 } from 'react'
@@ -39,45 +38,33 @@ import {
   getRunningOperationPromises,
   getWiki,
   postWiki,
-  useGetWikiQuery,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { skipToken } from '@reduxjs/toolkit/query'
-import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
-import diff from 'fast-diff'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
-import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { PageTemplate } from '@/data/pageTemplate'
 import { getDeadline } from '@/utils/getDeadline'
-import { submitVerifiableSignature } from '@/utils/postSignature'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
-import {
-  MData,
-  Wiki,
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  WikiRootBlocks,
-} from '@/types/Wiki'
+import { Wiki, CommonMetaIds, EditSpecificMetaIds } from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
-  initialEditorValue,
   initialMsg,
-  errorMessage,
-  successMessage,
-  domain,
-  types,
   MINIMUM_WORDS,
   useCreateWikiState,
   saveImage,
+  calculateEditInfo,
+  CreateWikiProvider,
+  useGetSignedHash,
+  useCreateWikiEffects,
 } from '@/utils/create-wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -88,21 +75,18 @@ const deadline = getDeadline()
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const dispatch = useAppDispatch()
   const router = useRouter()
   const toast = useToast()
-  const { slug } = router.query
-  const { isLoading: isLoadingWiki, data: wikiData } = useGetWikiQuery(
-    typeof slug === 'string' ? slug : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
+
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
 
+  const wikiState = useCreateWikiState(router)
   const {
+    isLoadingWiki,
+    wikiData,
+    dispatch,
     md,
     setMd,
     openTxDetailsDialog,
@@ -110,13 +94,10 @@ const CreateWiki = () => {
     isWritingCommitMsg,
     setIsWritingCommitMsg,
     txHash,
-    setTxHash,
     submittingWiki,
     setSubmittingWiki,
     wikiHash,
-    setWikiHash,
     isNewCreateWiki,
-    setIsNewCreateWiki,
     activeStep,
     setActiveStep,
     loadingState,
@@ -127,37 +108,17 @@ const CreateWiki = () => {
     setMsg,
     txError,
     setTxError,
-  } = useCreateWikiState()
+  } = wikiState
 
-  const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
-    {},
-  )
-  const [, wait] = useWaitForTransaction()
+  const providerValue = useMemo(() => wikiState, [wikiState])
+
   const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
     wiki: wikiData,
     isPublished: false,
   })
 
-  const saveHashInTheBlockchain = async (ipfs: string) => {
-    setWikiHash(ipfs)
-    signTypedData({
-      domain,
-      types,
-      value: {
-        ipfs,
-        user: accountData?.address || '',
-        deadline,
-      },
-    }).then(response => {
-      if (response.data) {
-        setActiveStep(1)
-      }
-      if (response.error) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-      }
-    })
-  }
+  const { saveHashInTheBlockchain, signing, verifyTrxHash } =
+    useGetSignedHash(deadline)
 
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
@@ -214,93 +175,6 @@ const CreateWiki = () => {
 
     return true
   }
-  const calculateEditInfo = (prevWiki: Wiki, currWiki: Wiki) => {
-    const calculateContentChanged = () => {
-      // check if content has changed
-      const prevContent = prevWiki?.content
-      const currContent = currWiki?.content
-
-      // calculate percent changed and number of words changed in prevContent and currContent
-      let contentAdded = 0
-      let contentRemoved = 0
-      let contentUnchanged = 0
-
-      let wordsAdded = 0
-      let wordsRemoved = 0
-
-      diff(prevContent, currContent).forEach(part => {
-        if (part[0] === 1) {
-          contentAdded += part[1].length
-          wordsAdded += getWordCount(part[1])
-        }
-        if (part[0] === -1) {
-          contentRemoved += part[1].length
-          wordsRemoved += getWordCount(part[1])
-        }
-        if (part[0] === 0) {
-          contentUnchanged += part[1].length
-        }
-      })
-
-      const percentChanged =
-        ((contentAdded + contentRemoved) / contentUnchanged) * 100
-      const wordsChanged = wordsAdded + wordsRemoved
-
-      // update metadata in redux state
-      dispatch({
-        type: 'wiki/updateMetadata',
-        payload: {
-          id: EditSpecificMetaIds.WORDS_CHANGED,
-          value: wordsChanged.toString(),
-        },
-      })
-
-      dispatch({
-        type: 'wiki/updateMetadata',
-        payload: {
-          id: EditSpecificMetaIds.PERCENT_CHANGED,
-          value: percentChanged.toFixed(2),
-        },
-      })
-    }
-
-    // calculate which blocks have changed
-    const blocksChanged = []
-
-    // root level block changes
-    if (prevWiki.content !== currWiki.content) {
-      blocksChanged.push(WikiRootBlocks.CONTENT)
-      calculateContentChanged()
-    }
-    if (prevWiki.title !== currWiki.title)
-      blocksChanged.push(WikiRootBlocks.TITLE)
-    if (prevWiki.categories !== currWiki.categories)
-      blocksChanged.push('categories')
-    if (prevWiki.tags !== currWiki.tags) blocksChanged.push(WikiRootBlocks.TAGS)
-    if (prevWiki.summary !== currWiki.summary)
-      blocksChanged.push(WikiRootBlocks.SUMMARY)
-    const prevImgId = prevWiki.images && prevWiki.images[0].id
-    const currImgId = currWiki.images && currWiki.images[0].id
-    if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
-
-    // common metadata changes
-    Object.values(CommonMetaIds).forEach(id => {
-      if (
-        getWikiMetadataById(prevWiki, id)?.value !==
-        getWikiMetadataById(currWiki, id)?.value
-      )
-        blocksChanged.push(id)
-    })
-
-    // update blocks changed metadata in redux state
-    dispatch({
-      type: 'wiki/updateMetadata',
-      payload: {
-        id: EditSpecificMetaIds.BLOCKS_CHANGED,
-        value: blocksChanged.join(','),
-      },
-    })
-  }
 
   const saveOnIpfs = async () => {
     if (!isValidWiki()) return
@@ -336,9 +210,9 @@ const CreateWiki = () => {
         // more than two edits to chain in same session
 
         if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          calculateEditInfo(prevEditedWiki.current.wiki, interWiki)
+          calculateEditInfo(prevEditedWiki.current.wiki, interWiki, dispatch)
         } else if (wikiData) {
-          calculateEditInfo(wikiData, interWiki)
+          calculateEditInfo(wikiData, interWiki, dispatch)
         }
       }
 
@@ -382,114 +256,7 @@ const CreateWiki = () => {
     setMd(val || ' ')
   }
 
-  const updatePageTypeTemplate = useCallback(() => {
-    const meta = [
-      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
-      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
-    ]
-    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
-
-    setMd(String(pageType?.templateText))
-  }, [wiki])
-
-  const verifyTrxHash = useCallback(
-    async (trxHash: string) => {
-      const timer = setInterval(() => {
-        try {
-          const checkTrx = async () => {
-            const trx = await wait({
-              hash: trxHash,
-            })
-            if (trx.error) {
-              setIsLoading('error')
-              setMsg(errorMessage)
-              clearInterval(timer)
-            } else if (trx.data.confirmations > 1) {
-              setIsLoading(undefined)
-              setActiveStep(3)
-              setMsg(successMessage)
-              clearInterval(timer)
-            }
-          }
-          checkTrx()
-        } catch (err) {
-          setIsLoading('error')
-          setMsg(errorMessage)
-          clearInterval(timer)
-        }
-      }, 3000)
-    },
-    [wait],
-  )
-
-  useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-    }
-  }, [activeStep])
-
-  // Reset the State to new wiki if there is no slug
-  useEffect(() => {
-    if (!slug) {
-      setIsNewCreateWiki(true)
-      dispatch({ type: 'wiki/reset' })
-      setMd(initialEditorValue)
-    } else {
-      setIsNewCreateWiki(false)
-    }
-  }, [dispatch, slug])
-
-  useEffect(() => {
-    if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
-  }, [isLoadingWiki, wikiData])
-
-  // update the page type template when the page type changes
-  const presentPageType = useMemo(
-    () =>
-      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
-        ?.value,
-    [wiki?.metadata],
-  )
-  useEffect(() => {
-    if (presentPageType) {
-      let isMdPageTemplate = false
-      PageTemplate.forEach(p => {
-        if (p.templateText === md) isMdPageTemplate = true
-      })
-      if (isMdPageTemplate || md === ' ') updatePageTypeTemplate()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [presentPageType])
-
-  useEffect(() => {
-    const getSignedTxHash = async () => {
-      if (data && wikiHash && accountData) {
-        if (error) {
-          setMsg(errorMessage)
-          setIsLoading('error')
-          return
-        }
-        try {
-          const { data: relayerData }: any = await submitVerifiableSignature(
-            data,
-            wikiHash,
-            accountData?.address,
-            deadline,
-          )
-
-          if (relayerData && relayerData.hash) {
-            setTxHash(relayerData.hash)
-            setActiveStep(2)
-          }
-        } catch (err) {
-          setIsLoading('error')
-          setMsg(errorMessage)
-        }
-      }
-    }
-    getSignedTxHash()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  useCreateWikiEffects(wiki, prevEditedWiki)
 
   useEffect(() => {
     if (
@@ -549,185 +316,187 @@ const CreateWiki = () => {
   }
 
   return (
-    <Box maxW="1900px" mx="auto" mb={8}>
-      <HStack
-        boxShadow="sm"
-        borderRadius={4}
-        borderWidth="1px"
-        p={3}
-        justifyContent="space-between"
-        mx="auto"
-        mb={4}
-        mt={2}
-        w="96%"
-      >
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
-          </InputLeftElement>
-          <Input
-            fontWeight="500"
-            color="linkColor"
-            borderColor="transparent"
-            fontSize="18px"
-            variant="flushed"
-            maxW="max(50%, 300px)"
-            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              dispatch({
-                type: 'wiki/setCurrentWiki',
-                payload: { title: event.target.value },
-              })
-            }}
-            value={wiki.title}
-            placeholder="Title goes here"
-          />
-        </InputGroup>
-        {!isNewCreateWiki ? (
-          // Publish button with commit message for wiki edit
-          <Popover onClose={() => setIsWritingCommitMsg(false)}>
-            <PopoverTrigger>
-              <Button
-                isLoading={submittingWiki}
-                _disabled={{
-                  opacity: disableSaveButton() ? 0.5 : undefined,
-                  _hover: {
-                    bgColor: 'grey !important',
-                    cursor: 'not-allowed',
-                  },
-                }}
-                loadingText="Loading"
-                disabled={disableSaveButton()}
-                onClick={() => setIsWritingCommitMsg(true)}
-                mb={24}
-              >
-                Publish
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent m={4}>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>
-                Commit Message <small>(Optional)</small>{' '}
-              </PopoverHeader>
-              <PopoverBody>
-                <Textarea
-                  placeholder="Enter what changed..."
-                  onChange={e =>
-                    dispatch({
-                      type: 'wiki/updateMetadata',
-                      payload: {
-                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                        value: e.target.value,
-                      },
-                    })
-                  }
-                />
-              </PopoverBody>
-              <PopoverFooter>
-                <HStack spacing={2} justify="right">
-                  <Button
-                    onClick={() => {
+    <CreateWikiProvider value={providerValue}>
+      <Box maxW="1900px" mx="auto" mb={8}>
+        <HStack
+          boxShadow="sm"
+          borderRadius={4}
+          borderWidth="1px"
+          p={3}
+          justifyContent="space-between"
+          mx="auto"
+          mb={4}
+          mt={2}
+          w="96%"
+        >
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+            </InputLeftElement>
+            <Input
+              fontWeight="500"
+              color="linkColor"
+              borderColor="transparent"
+              fontSize="18px"
+              variant="flushed"
+              maxW="max(50%, 300px)"
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                dispatch({
+                  type: 'wiki/setCurrentWiki',
+                  payload: { title: event.target.value },
+                })
+              }}
+              value={wiki.title}
+              placeholder="Title goes here"
+            />
+          </InputGroup>
+          {!isNewCreateWiki ? (
+            // Publish button with commit message for wiki edit
+            <Popover onClose={() => setIsWritingCommitMsg(false)}>
+              <PopoverTrigger>
+                <Button
+                  isLoading={submittingWiki}
+                  _disabled={{
+                    opacity: disableSaveButton() ? 0.5 : undefined,
+                    _hover: {
+                      bgColor: 'grey !important',
+                      cursor: 'not-allowed',
+                    },
+                  }}
+                  loadingText="Loading"
+                  disabled={disableSaveButton()}
+                  onClick={() => setIsWritingCommitMsg(true)}
+                  mb={24}
+                >
+                  Publish
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent m={4}>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>
+                  Commit Message <small>(Optional)</small>{' '}
+                </PopoverHeader>
+                <PopoverBody>
+                  <Textarea
+                    placeholder="Enter what changed..."
+                    onChange={e =>
                       dispatch({
                         type: 'wiki/updateMetadata',
                         payload: {
                           id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: '',
+                          value: e.target.value,
                         },
                       })
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
-                    }}
-                    float="right"
-                    variant="outline"
-                  >
-                    Skip
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </HStack>
-              </PopoverFooter>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          // Publish button without commit message at new create wiki
-          <Button
-            onClick={() => {
-              dispatch({
-                type: 'wiki/updateMetadata',
-                payload: {
-                  id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                  value: 'New Wiki Created 🎉',
-                },
-              })
-              saveOnIpfs()
-            }}
-          >
-            Publish
-          </Button>
-        )}
-      </HStack>
-      <Flex
-        flexDirection={{ base: 'column', xl: 'row' }}
-        justify="center"
-        align="stretch"
-        gap={8}
-        px={{ base: 4, xl: 8 }}
-      >
-        <Box h="635px" w="full">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
-          </Skeleton>
-        </Box>
-        <Box minH="635px">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-            <Center>
-              <Highlights
-                initialImage={ipfsHash}
-                isToResetImage={isNewCreateWiki}
-              />
-            </Center>
-          </Skeleton>
-        </Box>
-        <WikiProcessModal
-          wikiId={wikiId}
-          msg={msg}
-          txHash={txHash}
-          wikiHash={wikiHash}
-          activeStep={activeStep}
-          state={loadingState}
-          isOpen={openTxDetailsDialog}
-          onClose={() => handlePopupClose()}
-        />
-      </Flex>
-      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-        <Flex direction="column" justifyContent="center" alignItems="center">
-          {txError.opened && (
-            <Alert status="error" maxW="md" mb="3">
-              <AlertIcon />
-              <AlertTitle>{txError.title}</AlertTitle>
-              <AlertDescription>{txError.description}</AlertDescription>
-              <CloseButton
-                onClick={() =>
-                  setTxError({
-                    title: '',
-                    description: '',
-                    opened: false,
-                  })
-                }
-                position="absolute"
-                right="5px"
-              />
-            </Alert>
+                    }
+                  />
+                </PopoverBody>
+                <PopoverFooter>
+                  <HStack spacing={2} justify="right">
+                    <Button
+                      onClick={() => {
+                        dispatch({
+                          type: 'wiki/updateMetadata',
+                          payload: {
+                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                            value: '',
+                          },
+                        })
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                      float="right"
+                      variant="outline"
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </HStack>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            // Publish button without commit message at new create wiki
+            <Button
+              onClick={() => {
+                dispatch({
+                  type: 'wiki/updateMetadata',
+                  payload: {
+                    id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                    value: 'New Wiki Created 🎉',
+                  },
+                })
+                saveOnIpfs()
+              }}
+            >
+              Publish
+            </Button>
           )}
+        </HStack>
+        <Flex
+          flexDirection={{ base: 'column', xl: 'row' }}
+          justify="center"
+          align="stretch"
+          gap={8}
+          px={{ base: 4, xl: 8 }}
+        >
+          <Box h="635px" w="full">
+            <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
+              <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
+            </Skeleton>
+          </Box>
+          <Box minH="635px">
+            <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+              <Center>
+                <Highlights
+                  initialImage={ipfsHash}
+                  isToResetImage={isNewCreateWiki}
+                />
+              </Center>
+            </Skeleton>
+          </Box>
+          <WikiProcessModal
+            wikiId={wikiId}
+            msg={msg}
+            txHash={txHash}
+            wikiHash={wikiHash}
+            activeStep={activeStep}
+            state={loadingState}
+            isOpen={openTxDetailsDialog}
+            onClose={() => handlePopupClose()}
+          />
         </Flex>
-      </Skeleton>
-    </Box>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+          <Flex direction="column" justifyContent="center" alignItems="center">
+            {txError.opened && (
+              <Alert status="error" maxW="md" mb="3">
+                <AlertIcon />
+                <AlertTitle>{txError.title}</AlertTitle>
+                <AlertDescription>{txError.description}</AlertDescription>
+                <CloseButton
+                  onClick={() =>
+                    setTxError({
+                      title: '',
+                      description: '',
+                      opened: false,
+                    })
+                  }
+                  position="absolute"
+                  right="5px"
+                />
+              </Alert>
+            )}
+          </Flex>
+        </Skeleton>
+      </Box>
+    </CreateWikiProvider>
   )
 }
 
