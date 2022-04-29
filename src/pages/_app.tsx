@@ -22,6 +22,7 @@ import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
+import { BaseProvider } from '@ethersproject/providers'
 import chakraTheme from '../theme'
 
 type EpAppProps = AppProps & {
@@ -75,7 +76,7 @@ const App = (props: EpAppProps) => {
           <Provider
             autoConnect
             connectors={connectors as any}
-            provider={provider as any}
+            provider={provider as unknown as BaseProvider}
           >
             <Layout noFooter={Component.noFooter}>
               <ImageProvider>

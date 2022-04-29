@@ -96,7 +96,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             <Text textAlign="center">Drop the files here ...</Text>
           ) : (
             <Text textAlign="center" opacity="0.5" maxW="xs">
-              Drag and drop an image, or click to select
+              Drag and drop a <b>main image</b>, or click to select
             </Text>
           )}
         </Box>

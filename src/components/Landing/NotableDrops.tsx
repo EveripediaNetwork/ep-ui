@@ -4,10 +4,8 @@ import {
   Box,
   Flex,
   HStack,
-  Button,
   LinkBox,
   LinkOverlay,
-  DarkMode,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
@@ -93,7 +91,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
   return (
     <Flex direction="column" mt="20" gap={10} align="center">
       <Text align="center" fontWeight="bold" fontSize="2xl">
-        Notable Wikis
+        Trending Wikis
       </Text>
 
       <Flex
@@ -140,24 +138,11 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                         </Text>
                       </LinkOverlay>
                     </NextLink>
-                    <Text fontSize="md" noOfLines={2}>
+                    <Text mb="6" fontSize="md" noOfLines={2}>
                       {getWikiSummary(wiki, WikiSummarySize.Medium)}
                     </Text>
                   </Box>
                 </Box>
-                <Flex justifyContent="center" p={4}>
-                  <DarkMode>
-                    <Button
-                      color="white"
-                      variant="outline"
-                      size="sm"
-                      w="fit-content"
-                      fontWeight="medium"
-                    >
-                      Live
-                    </Button>
-                  </DarkMode>
-                </Flex>
               </Flex>
             </LinkBox>
           ))}

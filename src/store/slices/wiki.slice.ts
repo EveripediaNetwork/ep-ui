@@ -11,7 +11,7 @@ const initialState: Wiki = {
   id: '',
   version: 1,
   language: LanguagesISOEnum.EN,
-  title: 'Wiki title',
+  title: '',
   content: '',
   summary: '',
   categories: [],

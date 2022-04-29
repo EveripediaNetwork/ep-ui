@@ -36,5 +36,9 @@ export const Button = {
       },
       px: 10,
     }),
+    link: ({ colorMode }: ThemeProps) => ({
+      color: colorMode === 'dark' ? 'grey.200' : 'gray.600',
+      _hover: { textDecoration: 'none' },
+    }),
   },
 }

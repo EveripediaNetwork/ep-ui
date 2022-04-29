@@ -77,7 +77,7 @@ const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = `# Place name\n**Place_name** is a place ...\n## History\n**Place_name** is known for ...\n## Features\n**Place_name** offers ...`
+const initialEditorValue = ` `
 const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
 const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
@@ -203,7 +203,7 @@ const CreateWiki = () => {
         getImageArrayBufferLength())
     ) {
       toast({
-        title: 'Add a main image to continue',
+        title: 'Add a main image on the right column to continue',
         status: 'error',
         duration: 3000,
       })
@@ -377,10 +377,12 @@ const CreateWiki = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
-      const wikiResult: any = await store.dispatch(
+      const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
-      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
+
+      if (wikiResult && 'data' in wikiResult)
+        saveHashInTheBlockchain(String(wikiResult.data))
 
       // clear all edit based metadata from redux state
       Object.values(EditSpecificMetaIds).forEach(id => {
@@ -496,7 +498,7 @@ const CreateWiki = () => {
           return
         }
         try {
-          const { data: relayerData }: any = await submitVerifiableSignature(
+          const { data: relayerData } = await submitVerifiableSignature(
             data,
             wikiHash,
             accountData?.address,
@@ -720,7 +722,6 @@ const CreateWiki = () => {
             </Center>
           </Skeleton>
         </Box>
-
         <WikiProcessModal
           wikiId={wikiId}
           msg={msg}
