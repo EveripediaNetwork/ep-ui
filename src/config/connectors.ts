@@ -43,6 +43,8 @@ const connectors = ({ chainId = 1 }: { chainId?: number }): Connector[] => {
         oauthOptions: {
           providers: ['google', 'discord', 'facebook', 'twitter'],
         },
+        customLogo: '/images/braindao-logo.svg',
+        accentColor: '#ea3b87',
         additionalMagicOptions: {
           network: { rpcUrl, chainId },
         },
