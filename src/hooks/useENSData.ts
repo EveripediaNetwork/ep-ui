@@ -4,7 +4,6 @@ import { AvatarResolver } from '@ensdomains/ens-avatar'
 import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
-import { validateAddress } from '@/utils/validateAddress'
 
 export const useENSData = (address: string | undefined | null) => {
   const [avatar, setAvatar] = useState<string>()
@@ -15,13 +14,13 @@ export const useENSData = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getAvatar = async (addrs: string) => {
-      let lookupAddress = addrs
+      // let lookupAddress = addrs
       const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
-      if (!validateAddress(addrs)) {
-        const resolvedAddress = (await provider.resolveName(addrs)) as string
-        lookupAddress = resolvedAddress
-      }
-      const name = await provider.lookupAddress(lookupAddress)
+      // if (!validateAddress(addrs)) {
+      //   const resolvedAddress = (await provider.resolveName(addrs)) as string
+      //   lookupAddress = resolvedAddress
+      // }
+      const name = await provider.lookupAddress(addrs)
       let avatarURI
       if (name) {
         setUsername(name)
@@ -34,7 +33,7 @@ export const useENSData = (address: string | undefined | null) => {
       setLoading(false)
       dispatch(
         addENSAddress({
-          address: lookupAddress,
+          address: addrs,
           username: name || null,
           avatar: avatarURI || null,
         }),
