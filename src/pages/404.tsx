@@ -1,7 +1,9 @@
 import React from 'react'
 import { Box, Heading, Text, Button } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 const Error = () => {
+    const router = useRouter()
   return (
     <Box textAlign="center" py={10} px={6}>
       <Heading display="inline-block" as="h2" size="2xl">
@@ -14,7 +16,7 @@ const Error = () => {
         The page you are looking for does not seem to exist
       </Text>
 
-      <Button size="lg" variant="solid">
+      <Button onClick={() => router.push('/')} size="lg" variant="solid">
         Go to Home
       </Button>
     </Box>
