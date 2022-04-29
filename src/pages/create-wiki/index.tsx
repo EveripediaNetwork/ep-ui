@@ -1,7 +1,6 @@
 import React, {
   useContext,
   useEffect,
-  useState,
   useRef,
   memo,
   useCallback,
@@ -49,11 +48,9 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import slugify from 'slugify'
-import axios from 'axios'
 import diff from 'fast-diff'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
-import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { PageTemplate } from '@/data/pageTemplate'
@@ -63,7 +60,6 @@ import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
-import { POST_IMG } from '@/services/wikis/queries'
 import {
   MData,
   Wiki,
@@ -72,35 +68,23 @@ import {
   WikiRootBlocks,
 } from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
+import {
+  initialEditorValue,
+  initialMsg,
+  errorMessage,
+  successMessage,
+  domain,
+  types,
+  MINIMUM_WORDS,
+  useCreateWikiState,
+  saveImage,
+} from '@/utils/create-wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
 
-const initialEditorValue = ` `
-const initialMsg =
-  'Your Wiki is being processed. It will be available on the blockchain soon.'
-const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
-const successMessage = 'Wiki has been created successfully.'
-
 const deadline = getDeadline()
-
-const domain = {
-  name: 'EP',
-  version: '1',
-  chainId: config.chainId,
-  verifyingContract: config.wikiContractAddress,
-}
-
-const types = {
-  SignedPost: [
-    { name: 'ipfs', type: 'string' },
-    { name: 'user', type: 'address' },
-    { name: 'deadline', type: 'uint256' },
-  ],
-}
-
-const MINIMUM_WORDS = 150
 
 const CreateWiki = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -117,24 +101,34 @@ const CreateWiki = () => {
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
-  const [md, setMd] = useState<string>()
-  const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
-  const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
-  const [txHash, setTxHash] = useState<string>()
-  const [submittingWiki, setSubmittingWiki] = useState(false)
-  const [wikiHash, setWikiHash] = useState<string>()
-  const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
-  const [activeStep, setActiveStep] = useState<number>(0)
-  const [loadingState, setIsLoading] = useState<
-    'error' | 'loading' | undefined
-  >('loading')
-  const [wikiId, setWikiId] = useState<string>('')
-  const [msg, setMsg] = useState<string>(initialMsg)
-  const [txError, setTxError] = useState({
-    title: '',
-    description: '',
-    opened: false,
-  })
+
+  const {
+    md,
+    setMd,
+    openTxDetailsDialog,
+    setOpenTxDetailsDialog,
+    isWritingCommitMsg,
+    setIsWritingCommitMsg,
+    txHash,
+    setTxHash,
+    submittingWiki,
+    setSubmittingWiki,
+    wikiHash,
+    setWikiHash,
+    isNewCreateWiki,
+    setIsNewCreateWiki,
+    activeStep,
+    setActiveStep,
+    loadingState,
+    setIsLoading,
+    wikiId,
+    setWikiId,
+    msg,
+    setMsg,
+    txError,
+    setTxError,
+  } = useCreateWikiState()
+
   const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
     {},
   )
@@ -143,28 +137,6 @@ const CreateWiki = () => {
     wiki: wikiData,
     isPublished: false,
   })
-
-  const saveImage = async () => {
-    const formData = new FormData()
-    const blob = new Blob([image.type], {
-      type: 'multipart/form-data',
-    })
-
-    formData.append('operations', POST_IMG)
-    const map = `{"0": ["variables.file"]}`
-    formData.append('map', map)
-    formData.append('0', blob)
-
-    const {
-      data: {
-        data: {
-          pinImage: { IpfsHash },
-        },
-      },
-    } = await axios.post(config.graphqlUrl, formData, {})
-
-    return IpfsHash
-  }
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
     setWikiHash(ipfs)
@@ -187,7 +159,8 @@ const CreateWiki = () => {
     })
   }
 
-  const getImageHash = async () => (isWikiBeingEdited ? ipfsHash : saveImage())
+  const getImageHash = async () =>
+    isWikiBeingEdited ? ipfsHash : saveImage(image)
 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
