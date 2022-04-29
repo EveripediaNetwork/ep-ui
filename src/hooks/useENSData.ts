@@ -14,12 +14,7 @@ export const useENSData = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getAvatar = async (addrs: string) => {
-      // let lookupAddress = addrs
       const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
-      // if (!validateAddress(addrs)) {
-      //   const resolvedAddress = (await provider.resolveName(addrs)) as string
-      //   lookupAddress = resolvedAddress
-      // }
       const name = await provider.lookupAddress(addrs)
       let avatarURI
       if (name) {
