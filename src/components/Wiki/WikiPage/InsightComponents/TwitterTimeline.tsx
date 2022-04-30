@@ -15,7 +15,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
   }, [colorMode])
 
   return (
-    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Twitter Timeline">
         <Box
           className="wikiTwitterTimelineWidget"

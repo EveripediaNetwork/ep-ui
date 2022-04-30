@@ -21,7 +21,7 @@ const WikiAccordion = ({
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
   return (
-    <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
+    <Box w="100%" borderWidth={1} bgColor="wikiCardBg" p={3} borderRadius={4}>
       <HStack cursor="pointer" onClick={onToggle} justify="start">
         <IconButton
           color="linkColor"

@@ -99,7 +99,7 @@ const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
   }, [token, setConversionRate, updateValues])
 
   return (
-    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" spacing={4} borderWidth={1} borderRadius={2}>
       <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
         <Text
           style={{
