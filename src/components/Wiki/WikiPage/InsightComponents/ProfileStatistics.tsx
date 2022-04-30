@@ -7,7 +7,13 @@ import { sampleProfileStatistics } from '@/data/WikiInsightsData'
 const ProfileStatistics = () => {
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
-      <WikiAccordion display="flex" flexDir="column" gap={2} title="Statistics">
+      <WikiAccordion
+        withNoDarkBg
+        display="flex"
+        flexDir="column"
+        gap={2}
+        title="Statistics"
+      >
         {sampleProfileStatistics.map((item, index) => (
           <AccordionWidget key={index} {...item} />
         ))}

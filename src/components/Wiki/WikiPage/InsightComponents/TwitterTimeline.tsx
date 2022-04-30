@@ -20,7 +20,10 @@ const TwitterTimeline = ({ url }: { url: string }) => {
         <Box
           className="wikiTwitterTimelineWidget"
           h="400px"
-          bgColor="wikiCardItemBg"
+          bgColor="white"
+          _dark={{
+            bgColor: 'dimColor',
+          }}
           borderRadius={4}
           position="relative"
         >

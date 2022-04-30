@@ -9,6 +9,7 @@ const ProfileSummary = () => {
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion
         display="flex"
+        withNoDarkBg
         flexDir="column"
         gap={2}
         title="Profile Summary"
