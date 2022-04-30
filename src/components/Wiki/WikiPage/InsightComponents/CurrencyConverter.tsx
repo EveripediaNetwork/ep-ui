@@ -23,7 +23,13 @@ const CurrencyBox = ({
   setValue: (value: string) => void
 }) => {
   return (
-    <HStack m="0px !important" justify="space-between" align="center" flex="1">
+    <HStack
+      zIndex={2}
+      m="0px !important"
+      justify="space-between"
+      align="center"
+      flex="1"
+    >
       <HStack align="center">
         {token ? (
           <Image
@@ -114,11 +120,25 @@ const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
         <Box p={2} mt={1}>
           <HStack
             flexDirection={isTokenLeft ? 'row' : 'row-reverse'}
-            p={2}
-            borderRadius={4}
+            px={3}
+            borderRadius={6}
             justify="space-between"
             bgColor="wikiCardItemBg"
+            position="relative"
+            overflow="hidden"
           >
+            <Box
+              pos="absolute"
+              top={0}
+              right={0}
+              w="50%"
+              bgColor="gray.50"
+              _dark={{
+                bgColor: 'gray.600',
+              }}
+              h="100%"
+              zIndex={1}
+            />
             <CurrencyBox
               token={token}
               tokenSymbol={tokenSymbol}
@@ -126,20 +146,22 @@ const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
               setValue={e => updateValues(e, true)}
             />
             <IconButton
-              bgColor="dimColor"
+              bgColor="gray.100"
               borderWidth="1px"
-              borderColor="borderColor"
+              color="gray.500"
               aria-label="convert"
               cursor="pointer"
-              _hover={{ bgColor: '#0000003a' }}
-              _focus={{ bgColor: '#0000003a' }}
-              _active={{ bgColor: '#0000003a' }}
+              _dark={{ bgColor: 'gray.800' }}
+              _hover={{ filter: 'brightness(95%)' }}
+              _focus={{ filter: 'brightness(95%)' }}
+              _active={{ filter: 'brightness(95%)' }}
               as={RiArrowLeftRightLine}
               borderRadius="50%"
               p={2}
-              m="8px !important"
+              zIndex={2}
+              m="2px 7px !important"
               onClick={() => setisTokenLeft(!isTokenLeft)}
-              size="sm"
+              transform="scale(0.8)"
             />
             <CurrencyBox
               tokenSymbol="USD"
