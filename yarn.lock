@@ -1976,10 +1976,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@ensdomains/ens-avatar@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@ensdomains/ens-avatar/-/ens-avatar-0.1.2.tgz#0eda35511573e443fd8768d0fa390c395b955a86"
-  integrity sha512-qabg5L2tqDQMprsrDP7GD43QoGEszx/loGP45mNPfwlz6d5Q+iY5ANC5R7TM6VG/9k0NxOHxYobQfzprgCgzzQ==
+"@ensdomains/ens-avatar@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@ensdomains/ens-avatar/-/ens-avatar-0.1.4.tgz#3338c961d84ce9cc2384dba33e809a58f2dcf74e"
+  integrity sha512-oJSdqtbqtEKUTMyKy2GV1y+MTo2tRc9hygNoQMR0/Fg4fsHbGXY3y1KIqaeqncR/jRhBCcbkqd44/sD3UZ+TCg==
   dependencies:
     "@ethersproject/contracts" "^5.5.0"
     "@ethersproject/providers" "^5.5.2"
@@ -2227,7 +2227,7 @@
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
-"@ethersproject/providers@5.6.2", "@ethersproject/providers@^5.5.1", "@ethersproject/providers@^5.5.2":
+"@ethersproject/providers@5.6.2":
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.6.2.tgz#b9807b1c8c6f59fa2ee4b3cf6519724d07a9f422"
   integrity sha512-6/EaFW/hNWz+224FXwl8+HdMRzVHt8DpPmu5MZaIQqx/K/ELnC9eY236SMV7mleCM3NnEArFwcAAxH5kUUgaRg==
@@ -2252,7 +2252,7 @@
     bech32 "1.1.4"
     ws "7.4.6"
 
-"@ethersproject/providers@5.6.4":
+"@ethersproject/providers@5.6.4", "@ethersproject/providers@^5.5.1", "@ethersproject/providers@^5.5.2":
   version "5.6.4"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.6.4.tgz#1a49c211b57b0b2703c320819abbbfa35c83dff7"
   integrity sha512-WAdknnaZ52hpHV3qPiJmKx401BLpup47h36Axxgre9zT+doa/4GC/Ne48ICPxTm0BqndpToHjpLP1ZnaxyE+vw==
