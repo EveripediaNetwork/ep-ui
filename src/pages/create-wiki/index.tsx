@@ -221,11 +221,12 @@ const CreateWikiContent = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
-      const wikiResult: any = await store.dispatch(
+      const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
 
-      if (wikiResult) saveHashInTheBlockchain(String(wikiResult.data))
+      if (wikiResult && 'data' in wikiResult)
+        saveHashInTheBlockchain(String(wikiResult.data))
 
       // clear all edit based metadata from redux state
       Object.values(EditSpecificMetaIds).forEach(id => {
@@ -254,6 +255,12 @@ const CreateWikiContent = () => {
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
+
+  useEffect(() => {
+    if (activeStep === 3) {
+      prevEditedWiki.current.isPublished = true
+    }
+  }, [activeStep])
 
   useEffect(() => {
     if (

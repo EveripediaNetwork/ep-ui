@@ -1,3 +1,4 @@
+import { MagicConnector } from '@everipedia/wagmi-magic-connector'
 import { chain, defaultChains, InjectedConnector } from 'wagmi'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
@@ -10,8 +11,9 @@ type Connector =
   | InjectedConnector
   | WalletConnectConnector
   | WalletLinkConnector
+  | MagicConnector
 
-const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
+const connectors = ({ chainId = 1 }: { chainId?: number }): Connector[] => {
   const { infuraId } = config
 
   const rpcUrl =
@@ -34,6 +36,19 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
       options: {
         appName: 'Everipedia',
         jsonRpcUrl: `${rpcUrl}`,
+      },
+    }),
+    new MagicConnector({
+      options: {
+        apiKey: config.magicLinkApiKey,
+        oauthOptions: {
+          providers: ['google', 'discord', 'facebook', 'twitter'],
+        },
+        customLogo: '/images/braindao-logo.svg',
+        accentColor: '#ea3b87',
+        additionalMagicOptions: {
+          network: { rpcUrl, chainId },
+        },
       },
     }),
   ]

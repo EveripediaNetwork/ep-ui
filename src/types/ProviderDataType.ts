@@ -37,7 +37,7 @@ export type ProviderDataType = {
   request: (request: {
     method: string
     params?: RequestParameters[]
-  }) => Promise<unknown>
+  }) => Promise<string>
   on: (eventType: string, handler: (chainId: string) => unknown) => void
   removeListener: (
     eventType: string,

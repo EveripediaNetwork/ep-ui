@@ -1,4 +1,5 @@
 import config from '@/config'
+import { Dict } from '@chakra-ui/utils'
 import axios from 'axios'
 
 export const submitVerifiableSignature = async (
@@ -6,7 +7,7 @@ export const submitVerifiableSignature = async (
   wikiHash: string,
   address: string,
   deadline: number,
-) => {
+): Promise<Dict> => {
   const signature = signedData.substring(2)
   const r = `0x${signature.substring(0, 64)}`
   const s = `0x${signature.substring(64, 128)}`
@@ -22,7 +23,6 @@ export const submitVerifiableSignature = async (
       s,
     })
   } catch (error) {
-    console.log(error)
-    return error
+    return error as Dict
   }
 }

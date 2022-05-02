@@ -31,7 +31,8 @@ import { RootState } from '@/store/store'
 import { saveUserToLocalStorage } from '@/utils/browserStorage'
 
 const Connectors = () => {
-  const [{ data }, connect] = useConnect()
+  const [{ data, loading }, connect] = useConnect()
+
   const [{ data: accountData }] = useAccount()
   const address = accountData ? accountData.address : null
   const [, getBalance] = useBalance()
@@ -92,7 +93,7 @@ const Connectors = () => {
   return (
     <>
       {!accountData && (
-        <Text mb="6" mt="3" color="gray.500" fontWeight="bold" fontSize="sm">
+        <Text mb="4" mt={2} color="gray.500" fontWeight="bold" fontSize="sm">
           Connect with one of our available&nbsp;
           <Tooltip
             hasArrow
@@ -117,7 +118,7 @@ const Connectors = () => {
           <>
             <Flex
               border="1px"
-              borderColor="gray.200"
+              borderColor="borderColor"
               borderRadius="lg"
               direction="column"
               mb={5}
@@ -155,7 +156,7 @@ const Connectors = () => {
               </Center>
             </Flex>
             {balanceBreakdown && walletDetails && walletDetails.length > 0 && (
-              <Box border="1px" borderColor="gray.200" borderRadius="lg">
+              <Box border="1px" borderColor="borderColor" borderRadius="lg">
                 {walletDetails.map((details, key) => (
                   <React.Fragment key={key}>
                     <WalletDetails
@@ -182,6 +183,7 @@ const Connectors = () => {
                   connect={connect}
                   w={w}
                   imageLink={`/images/${walletsLogos[index]}`}
+                  loading={loading}
                 />
                 {index < walletsLogos.length - 1 && <Divider />}
               </Box>
