@@ -4,7 +4,7 @@ import Carousel from '../Elements/Carousel/Carousel'
 import AboutTestimonial from './AboutTestimonial'
 
 const AboutCommunity = () => (
-  <VStack spacing={8} maxW="5xl" mx="auto" mt="20">
+  <VStack spacing={8} maxW="5xl" mx="auto" mt="24">
     <Heading size="lg">
       An open community bringing blockchain knowledge to the world
     </Heading>
