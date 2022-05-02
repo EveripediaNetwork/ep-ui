@@ -59,9 +59,9 @@ const HeroCard = ({ wiki }: HeroProps) => {
             <chakra.span>{wiki?.title}</chakra.span>
 
             <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-              <chakra.span color="blue">
+              <chakra.a color="blue">
                 {username || shortenAccount(wiki?.user?.id || '')}
-              </chakra.span>
+              </chakra.a>
             </NextLink>
           </Flex>
         </Flex>
