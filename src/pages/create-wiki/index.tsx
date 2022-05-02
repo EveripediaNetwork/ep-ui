@@ -65,6 +65,7 @@ import {
   CreateWikiProvider,
   useGetSignedHash,
   useCreateWikiEffects,
+  useCreateWikiContext,
 } from '@/utils/create-wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -73,16 +74,14 @@ const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
 
 const deadline = getDeadline()
 
-const CreateWiki = () => {
+const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const router = useRouter()
   const toast = useToast()
 
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
 
-  const wikiState = useCreateWikiState(router)
   const {
     isLoadingWiki,
     wikiData,
@@ -108,9 +107,7 @@ const CreateWiki = () => {
     setMsg,
     txError,
     setTxError,
-  } = wikiState
-
-  const providerValue = useMemo(() => wikiState, [wikiState])
+  } = useCreateWikiContext()
 
   const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
     wiki: wikiData,
@@ -316,186 +313,195 @@ const CreateWiki = () => {
   }
 
   return (
-    <CreateWikiProvider value={providerValue}>
-      <Box maxW="1900px" mx="auto" mb={8}>
-        <HStack
-          boxShadow="sm"
-          borderRadius={4}
-          borderWidth="1px"
-          p={3}
-          justifyContent="space-between"
-          mx="auto"
-          mb={4}
-          mt={2}
-          w="96%"
-        >
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <Icon as={MdTitle} color="gray.400" fontSize="25px" />
-            </InputLeftElement>
-            <Input
-              fontWeight="500"
-              color="linkColor"
-              borderColor="transparent"
-              fontSize="18px"
-              variant="flushed"
-              maxW="max(50%, 300px)"
-              onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                dispatch({
-                  type: 'wiki/setCurrentWiki',
-                  payload: { title: event.target.value },
-                })
-              }}
-              value={wiki.title}
-              placeholder="Title goes here"
-            />
-          </InputGroup>
-          {!isNewCreateWiki ? (
-            // Publish button with commit message for wiki edit
-            <Popover onClose={() => setIsWritingCommitMsg(false)}>
-              <PopoverTrigger>
-                <Button
-                  isLoading={submittingWiki}
-                  _disabled={{
-                    opacity: disableSaveButton() ? 0.5 : undefined,
-                    _hover: {
-                      bgColor: 'grey !important',
-                      cursor: 'not-allowed',
-                    },
-                  }}
-                  loadingText="Loading"
-                  disabled={disableSaveButton()}
-                  onClick={() => setIsWritingCommitMsg(true)}
-                  mb={24}
-                >
-                  Publish
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent m={4}>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>
-                  Commit Message <small>(Optional)</small>{' '}
-                </PopoverHeader>
-                <PopoverBody>
-                  <Textarea
-                    placeholder="Enter what changed..."
-                    onChange={e =>
+    <Box maxW="1900px" mx="auto" mb={8}>
+      <HStack
+        boxShadow="sm"
+        borderRadius={4}
+        borderWidth="1px"
+        p={3}
+        justifyContent="space-between"
+        mx="auto"
+        mb={4}
+        mt={2}
+        w="96%"
+      >
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+          </InputLeftElement>
+          <Input
+            fontWeight="500"
+            color="linkColor"
+            borderColor="transparent"
+            fontSize="18px"
+            variant="flushed"
+            maxW="max(50%, 300px)"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              dispatch({
+                type: 'wiki/setCurrentWiki',
+                payload: { title: event.target.value },
+              })
+            }}
+            value={wiki.title}
+            placeholder="Title goes here"
+          />
+        </InputGroup>
+        {!isNewCreateWiki ? (
+          // Publish button with commit message for wiki edit
+          <Popover onClose={() => setIsWritingCommitMsg(false)}>
+            <PopoverTrigger>
+              <Button
+                isLoading={submittingWiki}
+                _disabled={{
+                  opacity: disableSaveButton() ? 0.5 : undefined,
+                  _hover: {
+                    bgColor: 'grey !important',
+                    cursor: 'not-allowed',
+                  },
+                }}
+                loadingText="Loading"
+                disabled={disableSaveButton()}
+                onClick={() => setIsWritingCommitMsg(true)}
+                mb={24}
+              >
+                Publish
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent m={4}>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>
+                Commit Message <small>(Optional)</small>{' '}
+              </PopoverHeader>
+              <PopoverBody>
+                <Textarea
+                  placeholder="Enter what changed..."
+                  onChange={e =>
+                    dispatch({
+                      type: 'wiki/updateMetadata',
+                      payload: {
+                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                        value: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </PopoverBody>
+              <PopoverFooter>
+                <HStack spacing={2} justify="right">
+                  <Button
+                    onClick={() => {
                       dispatch({
                         type: 'wiki/updateMetadata',
                         payload: {
                           id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: e.target.value,
+                          value: '',
                         },
                       })
-                    }
-                  />
-                </PopoverBody>
-                <PopoverFooter>
-                  <HStack spacing={2} justify="right">
-                    <Button
-                      onClick={() => {
-                        dispatch({
-                          type: 'wiki/updateMetadata',
-                          payload: {
-                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                            value: '',
-                          },
-                        })
-                        setIsWritingCommitMsg(false)
-                        saveOnIpfs()
-                      }}
-                      float="right"
-                      variant="outline"
-                    >
-                      Skip
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setIsWritingCommitMsg(false)
-                        saveOnIpfs()
-                      }}
-                    >
-                      Submit
-                    </Button>
-                  </HStack>
-                </PopoverFooter>
-              </PopoverContent>
-            </Popover>
-          ) : (
-            // Publish button without commit message at new create wiki
-            <Button
-              onClick={() => {
-                dispatch({
-                  type: 'wiki/updateMetadata',
-                  payload: {
-                    id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                    value: 'New Wiki Created 🎉',
-                  },
-                })
-                saveOnIpfs()
-              }}
-            >
-              Publish
-            </Button>
+                      setIsWritingCommitMsg(false)
+                      saveOnIpfs()
+                    }}
+                    float="right"
+                    variant="outline"
+                  >
+                    Skip
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setIsWritingCommitMsg(false)
+                      saveOnIpfs()
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </HStack>
+              </PopoverFooter>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          // Publish button without commit message at new create wiki
+          <Button
+            onClick={() => {
+              dispatch({
+                type: 'wiki/updateMetadata',
+                payload: {
+                  id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                  value: 'New Wiki Created 🎉',
+                },
+              })
+              saveOnIpfs()
+            }}
+          >
+            Publish
+          </Button>
+        )}
+      </HStack>
+      <Flex
+        flexDirection={{ base: 'column', xl: 'row' }}
+        justify="center"
+        align="stretch"
+        gap={8}
+        px={{ base: 4, xl: 8 }}
+      >
+        <Box h="635px" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
+            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
+          </Skeleton>
+        </Box>
+        <Box minH="635px">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+            <Center>
+              <Highlights
+                initialImage={ipfsHash}
+                isToResetImage={isNewCreateWiki}
+              />
+            </Center>
+          </Skeleton>
+        </Box>
+        <WikiProcessModal
+          wikiId={wikiId}
+          msg={msg}
+          txHash={txHash}
+          wikiHash={wikiHash}
+          activeStep={activeStep}
+          state={loadingState}
+          isOpen={openTxDetailsDialog}
+          onClose={() => handlePopupClose()}
+        />
+      </Flex>
+      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+        <Flex direction="column" justifyContent="center" alignItems="center">
+          {txError.opened && (
+            <Alert status="error" maxW="md" mb="3">
+              <AlertIcon />
+              <AlertTitle>{txError.title}</AlertTitle>
+              <AlertDescription>{txError.description}</AlertDescription>
+              <CloseButton
+                onClick={() =>
+                  setTxError({
+                    title: '',
+                    description: '',
+                    opened: false,
+                  })
+                }
+                position="absolute"
+                right="5px"
+              />
+            </Alert>
           )}
-        </HStack>
-        <Flex
-          flexDirection={{ base: 'column', xl: 'row' }}
-          justify="center"
-          align="stretch"
-          gap={8}
-          px={{ base: 4, xl: 8 }}
-        >
-          <Box h="635px" w="full">
-            <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-              <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
-            </Skeleton>
-          </Box>
-          <Box minH="635px">
-            <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-              <Center>
-                <Highlights
-                  initialImage={ipfsHash}
-                  isToResetImage={isNewCreateWiki}
-                />
-              </Center>
-            </Skeleton>
-          </Box>
-          <WikiProcessModal
-            wikiId={wikiId}
-            msg={msg}
-            txHash={txHash}
-            wikiHash={wikiHash}
-            activeStep={activeStep}
-            state={loadingState}
-            isOpen={openTxDetailsDialog}
-            onClose={() => handlePopupClose()}
-          />
         </Flex>
-        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Flex direction="column" justifyContent="center" alignItems="center">
-            {txError.opened && (
-              <Alert status="error" maxW="md" mb="3">
-                <AlertIcon />
-                <AlertTitle>{txError.title}</AlertTitle>
-                <AlertDescription>{txError.description}</AlertDescription>
-                <CloseButton
-                  onClick={() =>
-                    setTxError({
-                      title: '',
-                      description: '',
-                      opened: false,
-                    })
-                  }
-                  position="absolute"
-                  right="5px"
-                />
-              </Alert>
-            )}
-          </Flex>
-        </Skeleton>
-      </Box>
+      </Skeleton>
+    </Box>
+  )
+}
+
+const CreateWiki = () => {
+  const router = useRouter()
+  const wikiState = useCreateWikiState(router)
+  const providerValue = useMemo(() => wikiState, [wikiState])
+  return (
+    <CreateWikiProvider value={providerValue}>
+      <CreateWikiContent />
     </CreateWikiProvider>
   )
 }
