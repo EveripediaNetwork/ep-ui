@@ -51,7 +51,7 @@ const ActivityCard = ({
   wikiId,
 }: ActivityCardProps) => {
   const activityCardLinkRoute = activityId
-    ? `/wiki/history/${activityId}`
+    ? `/revision/${activityId}`
     : `/wiki/${wikiId}`
   const editDetails = useBreakpointValue({
     base: (

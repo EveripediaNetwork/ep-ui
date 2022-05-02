@@ -135,7 +135,7 @@ export const HistoryCard = ({
         </HStack>
 
         {/* Date of the last edit */}
-        <LinkOverlay href={`/wiki/history/${activityId}`}>
+        <LinkOverlay href={`/revision/${activityId}`}>
           {lastEditedTime && (
             <Text fontSize="sm" color="gray.500" mt={2}>
               {format(new Date(lastEditedTime), 'MMMM d, yyyy')} at{' '}
