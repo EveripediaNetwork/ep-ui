@@ -30,7 +30,6 @@ export const UserDetails = (props: UserDetailsProps) => {
 
   const { headerIsSticky } = useProfileContext()
   const [, username, loading] = useENSData(address)
-  console.log(username)
 
   const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
