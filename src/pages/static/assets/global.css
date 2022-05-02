@@ -85,3 +85,8 @@ html {
 #bp_caption span {
   margin-left: 60px;
 }
+
+/* CHAKRA UI STYLE FIXES */
+.chakra-popover__popper {
+  z-index: 999 !important;
+}

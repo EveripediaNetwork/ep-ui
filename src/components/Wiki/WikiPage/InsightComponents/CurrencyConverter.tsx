@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import {
-  Avatar,
   Box,
   HStack,
   IconButton,
+  Image,
   Input,
   Text,
   VStack,
@@ -12,19 +12,30 @@ import { RiArrowLeftRightLine } from 'react-icons/ri'
 import { fetchTokenRate } from '@/utils/fetchTokenRate'
 
 const CurrencyBox = ({
-  currency,
+  token,
+  tokenSymbol,
   value,
   setValue,
 }: {
-  currency: string
+  token?: string
+  tokenSymbol: string
   value: number
   setValue: (value: string) => void
 }) => {
   return (
-    <HStack justify="space-between" align="center" flex="1">
+    <HStack m="0px !important" justify="space-between" align="center" flex="1">
       <HStack align="center">
-        <Avatar h="18px" w="18px" />
-        <Text fontSize="14px">{currency}</Text>
+        {token ? (
+          <Image
+            src={`https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/${token}.png`}
+            h="18px"
+            w="18px"
+          />
+        ) : (
+          <Image src="/images/usd-logo.svg" alt={tokenSymbol} />
+        )}
+
+        <Text fontSize="14px">{tokenSymbol}</Text>
       </HStack>
       <Input
         placeholder="0"
@@ -32,6 +43,7 @@ const CurrencyBox = ({
         opacity={value ? '1' : '0.4'}
         onChange={e => setValue(e.target.value)}
         textAlign="right"
+        fontSize="14px"
         variant="unstyled"
         w="50%"
       />
@@ -41,12 +53,14 @@ const CurrencyBox = ({
 
 interface CurrencyConverterProps {
   token: string
+  tokenSymbol: string
 }
 
-const CurrencyConverter = ({ token }: CurrencyConverterProps) => {
+const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
   const [conversionRate, setConversionRate] = useState<number>(0.0)
   const [fromCurrency, setFromCurrency] = useState<number>(0)
   const [toCurrency, setToCurrency] = useState<number>(0)
+  const [isTokenLeft, setisTokenLeft] = useState(true)
 
   // function for updating the from currency
   const updateValues = useCallback(
@@ -99,14 +113,15 @@ const CurrencyConverter = ({ token }: CurrencyConverterProps) => {
         </Text>
         <Box p={2} mt={1}>
           <HStack
+            flexDirection={isTokenLeft ? 'row' : 'row-reverse'}
             p={2}
             borderRadius={4}
-            spacing={2}
             justify="space-between"
             bgColor="wikiCardItemBg"
           >
             <CurrencyBox
-              currency="IQ"
+              token={token}
+              tokenSymbol={tokenSymbol}
               value={fromCurrency}
               setValue={e => updateValues(e, true)}
             />
@@ -122,10 +137,12 @@ const CurrencyConverter = ({ token }: CurrencyConverterProps) => {
               as={RiArrowLeftRightLine}
               borderRadius="50%"
               p={2}
+              m="8px !important"
+              onClick={() => setisTokenLeft(!isTokenLeft)}
               size="sm"
             />
             <CurrencyBox
-              currency="USD"
+              tokenSymbol="USD"
               value={toCurrency}
               setValue={e => updateValues(e, false)}
             />

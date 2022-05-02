@@ -19,6 +19,7 @@ import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
+import { NextSeo } from 'next-seo'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -47,6 +48,13 @@ export const UserDetails = (props: UserDetailsProps) => {
   if (loading) return <LoadingProfile hide={hide} />
   return (
     <>
+      <NextSeo
+        title={`${username || 'Unnamed'} Profile Page - Everipedia`}
+        openGraph={{
+          title: `${username || 'Unnamed'} Profile Page - Everipedia`,
+          description: `${username || 'Unnamed'} profile page`,
+        }}
+      />
       <Flex align="center" justify="space-between" w="full" px="6">
         <chakra.span flex="1" />
 

@@ -1,44 +1,92 @@
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { FilterLayout } from '@/components/Profile/FilterLayout'
 import { useProfileContext } from '@/components/Profile/utils'
-import { useGetUserWikisQuery } from '@/services/wikis'
-import { Center, SimpleGrid } from '@chakra-ui/react'
-import React from 'react'
-import { skipToken } from '@reduxjs/toolkit/query'
+import { getUserWikis } from '@/services/wikis'
+import { Center, SimpleGrid, Text, Spinner } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { EmptyState } from '@/components/Profile/EmptyState'
+import { Wiki } from '@/types/Wiki'
+import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { store } from '@/store/store'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
-export const Collected = () => {
+const Collected = () => {
   const { displaySize } = useProfileContext()
   const router = useRouter()
-  const { profile: address } = router.query
-
-  const result = useGetUserWikisQuery(
-    typeof address === 'string' ? address : skipToken,
-    {
-      skip: router.isFallback,
+  const address = router.query.profile as string
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [wikis, setWikis] = useState<Wiki[] | []>([])
+  const [offset, setOffset] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(true)
+  const fetchMoreWikis = React.useCallback(
+    (fetchOffset: number) => {
+      setTimeout(() => {
+        const fetchNewWikis = async () => {
+          const result = await store.dispatch(
+            getUserWikis.initiate({
+              id: address,
+              limit: ITEM_PER_PAGE,
+              offset: fetchOffset,
+            }),
+          )
+          if (result.data && result.data?.length > 0) {
+            const data = result.data || []
+            const updatedWiki = [...wikis, ...data]
+            setWikis(updatedWiki)
+            setOffset(fetchOffset)
+            setLoading(false)
+          } else {
+            setHasMore(false)
+            setLoading(false)
+          }
+        }
+        fetchNewWikis()
+      }, FETCH_DELAY_TIME)
     },
+    [address, wikis],
   )
-  const { isLoading, data } = result
+
+  useEffect(() => {
+    if (address) {
+      fetchMoreWikis(offset)
+    }
+  }, [address, offset, fetchMoreWikis])
+
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage: hasMore,
+    onLoadMore: () => fetchMoreWikis(offset + ITEM_PER_PAGE),
+  })
 
   return (
     <FilterLayout>
-      {isLoading ? (
-        <Center>Loading Wikis</Center>
+      {wikis.length < 1 && !hasMore && (
+        <Center>
+          <EmptyState />
+        </Center>
+      )}
+      <SimpleGrid
+        ref={sentryRef}
+        minChildWidth={displaySize}
+        w="full"
+        spacing="4"
+      >
+        {wikis.map((item, i) => (
+          <WikiPreviewCard wiki={item} key={i} />
+        ))}
+      </SimpleGrid>
+      {loading || hasMore ? (
+        <Center ref={sentryRef} w="full" h="16">
+          <Spinner size="xl" />
+        </Center>
       ) : (
-        <>
-          {!data?.length && (
-            <Center>
-              <EmptyState />
-            </Center>
-          )}
-          <SimpleGrid minChildWidth={displaySize} w="full" spacing="4">
-            {data?.map((item, i) => (
-              <WikiPreviewCard wiki={item} key={i} />
-            ))}
-          </SimpleGrid>
-        </>
+        <Center mt="10">
+          <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+        </Center>
       )}
     </FilterLayout>
   )
 }
+
+export default Collected

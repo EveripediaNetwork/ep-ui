@@ -13,6 +13,7 @@ import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line, RiAccountCircleLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
+
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
 import { Logo } from '@/components/Elements/'
@@ -77,15 +78,16 @@ const Navbar = () => {
   }, [router.events, isOpen, onToggle])
 
   useEffect(() => {
-    const getConnectedChain = async (provider: any) => {
+    const getConnectedChain = async (provider: ProviderDataType) => {
       const connectedChainId = await provider.request({
         method: 'eth_chainId',
       })
-      handleChainChanged(connectedChainId)
+
+      if (connectedChainId) handleChainChanged(connectedChainId)
     }
 
     const getDetectedProvider = async () => {
-      const provider = await detectEthereumProvider()
+      const provider = (await detectEthereumProvider()) as ProviderDataType
       setDetectedProvider(provider as ProviderDataType)
       if (provider) getConnectedChain(provider)
     }
@@ -139,7 +141,7 @@ const Navbar = () => {
         position="fixed"
         zIndex={1500}
         w="full"
-        h={isHamburgerOpen ? '100%' : 'unset'}
+        h={{ base: isHamburgerOpen ? '100%' : 'unset', md: 'unset' }}
         bg="subMenuBg"
         borderBottomWidth={1}
       >
@@ -156,6 +158,7 @@ const Navbar = () => {
                 href="/"
                 mr={{ base: 0, xl: '9vw' }}
                 _hover={{ textDecoration: 'none' }}
+                _focus={{ boxShadow: 'none' }}
               >
                 <HStack width="150px">
                   <Logo />

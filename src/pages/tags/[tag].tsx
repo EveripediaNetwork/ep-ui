@@ -6,39 +6,28 @@ import {
   Box,
   Heading,
   SimpleGrid,
-  Icon,
-  Flex,
   Text,
   Button,
   Center,
   Spinner,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
-import { Image } from '@/components/Elements/Image/Image'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
-import {
-  getCategoriesById,
-  getRunningOperationPromises,
-} from '@/services/categories'
+import { getRunningOperationPromises } from '@/services/categories'
 import { store } from '@/store/store'
-import { Category } from '@/types/CategoryDataTypes'
-import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { getWikisByCategory } from '@/services/wikis'
+import { getTagWikis } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
-import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { ITEM_PER_PAGE, FETCH_DELAY_TIME } from '@/data/Constants'
 
-type CategoryPageProps = NextPage & {
-  categoryData: Category
+interface TagPageProps {
+  tagId: string
   wikis: Wiki[]
 }
-
-const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
-  const categoryIcon = getBootStrapIcon(categoryData.icon)
-  const [wikisInCategory, setWikisInCategory] = useState<Wiki[] | []>([])
+const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
+  const [wikisByTag, setWikisByTag] = useState<Wiki[] | []>([])
   const router = useRouter()
-  const category = router.query.category as string
+  const tag = router.query.tag as string
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
@@ -46,24 +35,24 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   useEffect(() => {
     setHasMore(true)
     setOffset(0)
-    setWikisInCategory(wikis)
-  }, [category])
+    setWikisByTag(wikis)
+  }, [tag])
 
   const fetchMoreWikis = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
     setTimeout(() => {
       const fetchNewWikis = async () => {
         const result = await store.dispatch(
-          getWikisByCategory.initiate({
-            category,
+          getTagWikis.initiate({
+            id: tag,
             limit: ITEM_PER_PAGE,
             offset: updatedOffset,
           }),
         )
         if (result.data && result.data?.length > 0) {
           const { data } = result
-          const updatedWiki = [...wikisInCategory, ...data]
-          setWikisInCategory(updatedWiki)
+          const updatedWiki = [...wikisByTag, ...data]
+          setWikisByTag(updatedWiki)
           setOffset(updatedOffset)
         } else {
           setHasMore(false)
@@ -82,51 +71,24 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
 
   return (
     <>
-      {categoryData && (
-        <NextSeo
-          title={categoryData.title}
-          openGraph={{
-            title: categoryData.title,
-            description: categoryData.description,
-            images: [
-              {
-                url:
-                  categoryData?.heroImage || '/images/categories-backdrop.png',
-              },
-            ],
-          }}
-        />
-      )}
-      <Box mt="-3" bgColor="pageBg" pb={12}>
-        <Image
-          priority
-          src={categoryData?.heroImage || '/images/categories-backdrop.png'}
-          height="250px"
-        />
-        <Flex mx="auto" justifyContent="center" mt={12}>
-          <Icon
-            as={categoryIcon}
-            borderRadius="100px"
-            overflow="hidden"
-            borderWidth="5px"
-            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
-            color="#0000002f"
-            width="60px"
-            height="60px"
-            padding={2}
-          />
-        </Flex>
+      <NextSeo
+        title={`result for ${tagId}`}
+        openGraph={{
+          title: `result for ${tagId}`,
+          description: `Wikis with ${tagId} tag`,
+        }}
+      />
+      <Box bgColor="pageBg" border="solid 1px transparent" pb={12}>
         <Heading fontSize={40} textAlign="center" mt={4}>
-          {categoryData?.title}
+          {tagId}
         </Heading>
 
-        <ToggleText my={8} text={categoryData?.description || ''} />
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">
-            Wikis in this category
+            Wikis with this tag
           </Heading>
-          {wikisInCategory.length > 0 ? (
+          {wikis.length > 0 ? (
             <>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
@@ -135,7 +97,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
                 my={12}
                 gap={8}
               >
-                {wikisInCategory.map((wiki, i) => (
+                {wikisByTag.map((wiki, i) => (
                   <Box key={i} w="100%">
                     <WikiPreviewCard wiki={wiki} />
                   </Box>
@@ -156,7 +118,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           ) : (
             <Box textAlign="center" py={10} px={6}>
               <Text fontSize="lg" mt={3} mb={3}>
-                Oops, No Wiki Found in This Category
+                Oops, No Wiki Found with this Tag
               </Text>
               <Button
                 colorScheme="primary"
@@ -175,22 +137,17 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const categoryId: string = context.params?.category as string
-  const result = await store.dispatch(getCategoriesById.initiate(categoryId))
-  const wikisByCategory = await store.dispatch(
-    getWikisByCategory.initiate({
-      category: categoryId,
-      limit: ITEM_PER_PAGE,
-      offset: 0,
-    }),
+  const tagId: string = context.params?.tag as string
+  const tagWikis = await store.dispatch(
+    getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
   )
+
   await Promise.all(getRunningOperationPromises())
   return {
     props: {
-      categoryData: result.data || [],
-      wikis: wikisByCategory.data || [],
+      tagId,
+      wikis: tagWikis.data || [],
     },
   }
 }
-
-export default CategoryPage
+export default TagPage

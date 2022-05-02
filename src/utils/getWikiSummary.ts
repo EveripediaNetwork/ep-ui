@@ -1,5 +1,4 @@
-import { WikiTitle } from '@/services/nav-search'
-import { Wiki } from '@/types/Wiki'
+import { Wiki, WikiPreview } from '@/types/Wiki'
 import { shortenText } from './shortenText'
 
 export enum WikiSummarySize {
@@ -9,7 +8,7 @@ export enum WikiSummarySize {
 }
 
 export const getWikiSummary = (
-  wiki: Partial<Wiki> | WikiTitle,
+  wiki: Partial<Wiki> | WikiPreview,
   size: WikiSummarySize = WikiSummarySize.Big,
 ) => {
   return shortenText(wiki.summary || wiki.content || '', size)

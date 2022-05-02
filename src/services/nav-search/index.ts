@@ -6,19 +6,7 @@ import {
   GET_WIKIS_BY_TITLE,
 } from '@/services/nav-search/queries'
 import config from '@/config'
-import { Wiki } from '@/types/Wiki'
-
-export type WikiTitle = Pick<
-  Wiki,
-  | 'id'
-  | 'title'
-  | 'summary'
-  | 'content'
-  | 'tags'
-  | 'images'
-  | 'categories'
-  | 'user'
->
+import { WikiPreview } from '@/types/Wiki'
 
 export type Category = {
   id: string
@@ -30,7 +18,7 @@ export type Category = {
 }
 
 type GetWikisByTitleResponse = {
-  wikisByTitle: WikiTitle[]
+  wikisByTitle: WikiPreview[]
 }
 
 type GetCategoriesByTitleResponse = {
@@ -49,7 +37,7 @@ export const navSearchApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getWikisByTitle: builder.query<WikiTitle[], string>({
+    getWikisByTitle: builder.query<WikiPreview[], string>({
       query: (title: string) => ({
         document: GET_WIKIS_BY_TITLE,
         variables: { title },

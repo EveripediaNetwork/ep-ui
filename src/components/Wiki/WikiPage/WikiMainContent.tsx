@@ -2,14 +2,27 @@ import { Wiki } from '@/types/Wiki'
 import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { HeadingProps } from 'react-markdown/lib/ast-to-react'
+import {
+  ComponentPropsWithoutRef,
+  HeadingProps,
+  ReactMarkdownProps,
+} from 'react-markdown/lib/ast-to-react'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
   addToTOC: (props: React.PropsWithChildren<HeadingProps>) => JSX.Element
+  addWikiPreview: (
+    props: React.PropsWithChildren<
+      ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
+    >,
+  ) => JSX.Element
 }
 
-const WikiMainContent = ({ wiki, addToTOC }: WikiMainContentProps) => {
+const WikiMainContent = ({
+  wiki,
+  addToTOC,
+  addWikiPreview,
+}: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -32,6 +45,7 @@ const WikiMainContent = ({ wiki, addToTOC }: WikiMainContentProps) => {
             h4: addToTOC,
             h5: addToTOC,
             h6: addToTOC,
+            a: addWikiPreview,
           }}
           className={`markdown-body ${
             colorMode === 'dark' ? 'markdown-body-dark' : ''

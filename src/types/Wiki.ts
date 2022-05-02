@@ -12,6 +12,26 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export enum CommonMetaIds {
+  PAGE_TYPE = 'page-type',
+  TWITTER_PROFILE = 'twitter-profile',
+}
+
+export enum EditSpecificMetaIds {
+  COMMIT_MESSAGE = 'commit-message',
+  WORDS_CHANGED = 'words-changed',
+  PERCENT_CHANGED = 'percent-changed',
+  BLOCKS_CHANGED = 'blocks-changed',
+}
+
+export enum WikiRootBlocks {
+  TITLE = 'title',
+  CONTENT = 'content',
+  WIKI_IMAGE = 'wiki-image',
+  SUMMARY = 'summary',
+  TAGS = 'tags',
+}
+
 export interface MData {
   id: string
   value: string
@@ -23,14 +43,12 @@ export interface User {
 }
 
 export enum PageTypeName {
+  GENERIC = 'generic',
   PERSON = 'Person',
-  PLACE_LOCATION = 'Place / Location',
-  ORGANIZATION_COMPANY_INSTITUTION = 'Organization / Company / Institution',
   EVENT = 'Event',
-  LIST_RANKING = 'List / Ranking',
-  PRODUCT_MERCHANDISE = 'Product / Merchandise',
-  CREATIVE_WORK_ART = 'Create Work / Art',
-  OTHER = 'Other',
+  DAPP = 'Dapp',
+  NFT = 'NFT',
+  TOKEN = 'Token',
 }
 
 export type PageType = {
@@ -63,7 +81,7 @@ export const Languages: LanguagesType = {
 
 export interface Wiki {
   id: string
-  commitMessage?: string
+  transactionHash?: string
   ipfs?: string
   summary?: string
   title: string
@@ -78,3 +96,15 @@ export interface Wiki {
   updated?: string
   created?: string
 }
+
+export type WikiPreview = Pick<
+  Wiki,
+  | 'id'
+  | 'title'
+  | 'summary'
+  | 'content'
+  | 'tags'
+  | 'images'
+  | 'categories'
+  | 'user'
+>

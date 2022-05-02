@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { LinkBox, LinkOverlay, Text, SimpleGrid } from '@chakra-ui/react'
+import {
+  LinkBox,
+  LinkOverlay,
+  Text,
+  SimpleGrid,
+  Spinner,
+  Center,
+} from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
@@ -9,24 +16,13 @@ const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
   const [categories, setCategories] = React.useState<Category[]>([])
 
-  useEffect(
-    () =>
-      setCategories([
-        {
-          id: '#',
-          title: 'All Categories',
-          description: '',
-          cardImage: `https://picsum.photos/seed/categories/400/580`,
-          heroImage: '',
-          icon: '',
-        },
-        ...(categoriesData || []),
-      ]),
-    [categoriesData],
-  )
+  useEffect(() => {
+    setCategories(categoriesData || [])
+  }, [categoriesData])
+
   return (
     <>
-      <Text align="center" fontWeight="semibold" fontSize="2xl" mb={0}>
+      <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
         Browse by category
       </Text>
       <SimpleGrid
@@ -71,6 +67,11 @@ const CategoriesList = () => {
           </LinkBox>
         ))}
       </SimpleGrid>
+      {categories.length < 1 && (
+        <Center w="full" h="16">
+          <Spinner size="xl" />
+        </Center>
+      )}
     </>
   )
 }

@@ -9,20 +9,21 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import { debounce } from 'debounce'
-import { getWikisByTitle, WikiTitle } from '@/services/nav-search'
+import { getWikisByTitle } from '@/services/nav-search'
 import { store } from '@/store/store'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { WikiPreview } from '@/types/Wiki'
 
 const fetchWikisList = async (
   query: string,
-  cb: (data: WikiTitle[]) => void,
+  cb: (data: WikiPreview[]) => void,
 ) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
   cb(data || [])
 }
 
 export const debouncedFetchWikis = debounce(
-  (query: string, cb: (data: WikiTitle[]) => void) => {
+  (query: string, cb: (data: WikiPreview[]) => void) => {
     fetchWikisList(query, cb)
   },
   500,

@@ -10,13 +10,14 @@ import {
   Td,
   Tr,
 } from '@chakra-ui/react'
-import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
+import { RiFolder3Line, RiSurveyLine, RiTwitterLine } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Languages, Wiki } from '@/types/Wiki'
+import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
+import { shortenText } from '@/utils/shortenText'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import SummaryInput from './SummaryInput'
 
@@ -73,26 +74,20 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           <Tbody borderWidth="1px" overflow="hidden">
             <Tr>
               <Td color="linkColor" display="flex" gap={2}>
-                <RiFolder3Fill /> <Text>Page Type</Text>
+                <RiFolder3Line /> <Text>Page Type</Text>
               </Td>
               <Td>
-                {getWikiMetadataById(currentWiki as Wiki, 'page-type')?.value}
+                {
+                  getWikiMetadataById(
+                    currentWiki as Wiki,
+                    CommonMetaIds.PAGE_TYPE,
+                  )?.value
+                }
               </Td>
             </Tr>
             <Tr>
               <Td color="linkColor" display="flex" gap={2}>
-                <RiTranslate2 /> <Text>Language</Text>
-              </Td>
-              <Td>{Languages[currentWiki.language]}</Td>
-            </Tr>
-            <Tr>
-              <Td
-                color="linkColor"
-                borderColor="transparent"
-                display="flex"
-                gap={2}
-              >
-                <RiSurveyFill /> <Text>Categories</Text>
+                <RiSurveyLine /> <Text>Categories</Text>
               </Td>
               <Td borderColor="inherit">
                 {currentWiki.categories?.map((c: BaseCategory) => (
@@ -102,31 +97,28 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                 ))}
               </Td>
             </Tr>
+            <Tr>
+              <Td
+                color="linkColor"
+                borderColor="transparent"
+                display="flex"
+                gap={2}
+              >
+                <RiTwitterLine />
+                <Text whiteSpace="nowrap">Twitter Profile</Text>
+              </Td>
+              <Td wordBreak="break-word">
+                {shortenText(
+                  getWikiMetadataById(
+                    currentWiki as Wiki,
+                    CommonMetaIds.TWITTER_PROFILE,
+                  )?.value || '',
+                  50,
+                )}
+              </Td>
+            </Tr>
           </Tbody>
         </Table>
-        <Flex
-          justifyContent="center"
-          wrap="wrap"
-          alignItems="center"
-          direction="row"
-        >
-          <RiSurveyFill /> <Text ml="2">Twitter Profile</Text>
-          <br />
-          <Flex
-            mt="2"
-            direction="row"
-            wrap="wrap"
-            justify="space-evenly"
-            w="full"
-          >
-            <Text>
-              {
-                getWikiMetadataById(currentWiki as Wiki, 'twitter-profile')
-                  ?.value
-              }
-            </Text>
-          </Flex>
-        </Flex>
         <Flex
           w="full"
           direction="row"

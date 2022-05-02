@@ -1,4 +1,4 @@
-import { Collected } from '@/components/Profile/Collected'
+import Collected from '@/components/Profile/Collected'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Tabs,

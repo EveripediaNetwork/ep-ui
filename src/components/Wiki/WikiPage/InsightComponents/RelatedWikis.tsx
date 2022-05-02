@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BaseCategory, Wiki } from '@/types/Wiki'
+import { BaseCategory, Wiki, WikiPreview } from '@/types/Wiki'
 import {
   VStack,
   Text,
@@ -12,12 +12,11 @@ import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { getWikisByCategory } from '@/services/wikis'
 import { store } from '@/store/store'
 import NextLink from 'next/link'
-import { WikiTitle } from '@/services/nav-search'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 
-export const RelatedWikiCard = ({ wiki }: { wiki: WikiTitle }) => {
+export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
   return (
     <LinkBox w="100%">
@@ -60,14 +59,16 @@ export const RelatedWikis = ({
   const [wikis, setWikis] = React.useState<Wiki[] | []>([])
   useEffect(() => {
     categories?.forEach(category => {
-      store.dispatch(getWikisByCategory.initiate(category.id)).then(res => {
-        setWikis(prev => [
-          ...prev,
-          ...(res?.data?.filter(wiki => {
-            return !prev.some(w => w.id === wiki.id)
-          }) || []),
-        ])
-      })
+      store
+        .dispatch(getWikisByCategory.initiate({ category: category.id }))
+        .then(res => {
+          setWikis(prev => [
+            ...prev,
+            ...(res?.data?.filter(wiki => {
+              return !prev.some(w => w.id === wiki.id)
+            }) || []),
+          ])
+        })
     })
   }, [categories])
   return (

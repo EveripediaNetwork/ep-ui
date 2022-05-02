@@ -11,19 +11,12 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import { RiFolder3Fill, RiTranslate2, RiSurveyFill } from 'react-icons/ri'
-import { BsTwitter } from 'react-icons/bs'
+import { RiFolder3Line, RiSurveyLine, RiTwitterLine } from 'react-icons/ri'
 import slugify from 'slugify'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
-import {
-  BaseCategory,
-  Languages,
-  LanguagesISOEnum,
-  MData,
-  PageTypeName,
-} from '@/types/Wiki'
+import { BaseCategory, MData, PageTypeName, CommonMetaIds } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
 import Tags from './Tags'
@@ -57,39 +50,39 @@ const HighlightsModal = ({
       <SimpleGrid columns={2} spacing={2}>
         <Text>Type</Text>
         <Text>Value</Text>
-
         <CustomDivider />
 
+        {/* ========== Page Type ========== */}
         <FlexRow>
-          <RiFolder3Fill /> <Text>Page Type</Text>
+          <RiFolder3Line /> <Text>Page Type</Text>
         </FlexRow>
-
         <Select
           onChange={event => {
             if (event.target.value)
               dispatch({
                 type: 'wiki/updateMetadata',
                 payload: {
-                  id: 'page-type',
+                  id: CommonMetaIds.PAGE_TYPE,
                   value: event.target.value,
                 },
               })
           }}
           value={String(
-            currentWiki.metadata.find((m: MData) => m.id === 'page-type')
-              ?.value,
+            currentWiki.metadata.find(
+              (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
+            )?.value,
           )}
-          placeholder="Choose a page type"
         >
           {Object.values(PageTypeName).map(o => (
             <option key={o}>{o}</option>
           ))}
         </Select>
-
         <CustomDivider />
 
+        {/* ========== Categories ========== */}
         <FlexRow>
-          <RiSurveyFill /> <Text>Category</Text>
+          <RiSurveyLine />
+          <Text>Category</Text>
         </FlexRow>
 
         <Select
@@ -103,13 +96,12 @@ const HighlightsModal = ({
                 },
               })
           }}
-          placeholder="Choose categories"
+          placeholder="choose categories"
         >
           {categoryOptions?.map(o => (
             <option key={o.title}>{o.title}</option>
           ))}
         </Select>
-
         <Flex
           flexDirection="row"
           wrap="wrap"
@@ -142,28 +134,9 @@ const HighlightsModal = ({
         </Flex>
         <CustomDivider />
 
+        {/* ========== Twitter profile ========== */}
         <FlexRow>
-          <RiTranslate2 /> <Text>Language</Text>
-        </FlexRow>
-        <Select
-          value={currentWiki.language}
-          onChange={event =>
-            dispatch({
-              type: 'wiki/setCurrentWiki',
-              payload: { language: event.target.value as LanguagesISOEnum },
-            })
-          }
-          placeholder="Language"
-        >
-          {Object.keys(Languages).map((o, idx) => (
-            <option key={o} value={o}>
-              {Object.values(Languages)[idx]}
-            </option>
-          ))}
-        </Select>
-        <CustomDivider />
-        <FlexRow>
-          <BsTwitter /> <Text>Twitter profile</Text>
+          <RiTwitterLine /> <Text>Twitter profile</Text>
         </FlexRow>
         <Input
           onChange={event => {
@@ -171,7 +144,7 @@ const HighlightsModal = ({
               dispatch({
                 type: 'wiki/updateMetadata',
                 payload: {
-                  id: 'twitter-profile',
+                  id: CommonMetaIds.TWITTER_PROFILE,
                   value: event.target.value,
                 },
               })
@@ -179,12 +152,12 @@ const HighlightsModal = ({
           placeholder={
             String(
               currentWiki.metadata.find(
-                (m: MData) => m.id === 'twitter-profile',
+                (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
               )?.value,
             )
               ? String(
                   currentWiki.metadata.find(
-                    (m: MData) => m.id === 'twitter-profile',
+                    (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
                   )?.value,
                 )
               : 'Your Twitter Handle'

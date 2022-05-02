@@ -1,25 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LanguagesISOEnum, Wiki, MData } from '@/types/Wiki'
+import {
+  LanguagesISOEnum,
+  Wiki,
+  MData,
+  CommonMetaIds,
+  EditSpecificMetaIds,
+} from '@/types/Wiki'
 
 const initialState: Wiki = {
   id: '',
   version: 1,
-  commitMessage: '',
   language: LanguagesISOEnum.EN,
-  title: 'Wiki title',
+  title: '',
   content: '',
   summary: '',
   categories: [],
   tags: [],
   metadata: [
-    {
-      id: 'page-type',
-      value: 'Place / Location',
-    },
-    {
-      id: 'twitter-profile',
-      value: '',
-    },
+    ...Object.values(CommonMetaIds).map(mID => {
+      let value = ''
+      if (mID === CommonMetaIds.PAGE_TYPE) value = 'generic'
+      return { id: mID, value }
+    }),
+    ...Object.values(EditSpecificMetaIds).map(mID => ({ id: mID, value: '' })),
   ],
   user: {
     id: '',

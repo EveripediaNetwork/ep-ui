@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
+
 import {
   fetchCategoriesList,
   fetchWikisList,
 } from '@/services/nav-search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
-import { Category, WikiTitle } from '@/services/nav-search'
+import { Category } from '@/services/nav-search'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import NextLink from 'next/link'
+import { WikiPreview } from '@/types/Wiki'
 
 const SearchQuery = () => {
   const { query: queryParam } = useRouter()
@@ -17,7 +20,7 @@ const SearchQuery = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<{
-    articles: WikiTitle[]
+    articles: WikiPreview[]
     categories: Category[]
   }>({
     articles: [],
@@ -41,7 +44,6 @@ const SearchQuery = () => {
   const articleList = articles.map(article => {
     return (
       <ActivityCard
-        id={article.id}
         key={article.id}
         title={article.title}
         brief={getWikiSummary({ content: article.content })}
@@ -82,25 +84,38 @@ const SearchQuery = () => {
   })
 
   return (
-    <Stack my="16" mx="30">
-      <Heading>Results for {query}</Heading>
+    <>
+      <NextSeo
+        title={`Results for ${query}`}
+        openGraph={{
+          title: `Results for ${query}`,
+          description: `Showing ${totalResults} Wikis with ${query} query`,
+        }}
+      />
+      <Stack my="16" mx="30">
+        <Heading>Results for {query}</Heading>
 
-      {!isLoading && (
-        <Stack spacing="12">
-          <Text>Showing {totalResults} results </Text>
+        {!isLoading && (
+          <Stack spacing="12">
+            <Text>Showing {totalResults} results </Text>
 
-          <Heading fontSize="2xl">Articles</Heading>
-          <Flex direction="column" gap="6">
-            {articleList}
-          </Flex>
-          <Heading fontSize="2xl">Categories</Heading>
-          <Flex direction="column" gap="6">
-            {categoryList}
-          </Flex>
-        </Stack>
-      )}
-      {isLoading && <SearchSkeleton />}
-    </Stack>
+            <Heading fontSize="2xl">Articles</Heading>
+            <Flex direction="column" gap="6">
+              {articleList}
+            </Flex>
+            {categories.length !== 0 && (
+              <>
+                <Heading fontSize="2xl">Categories</Heading>
+                <Flex direction="column" gap="6">
+                  {categoryList}
+                </Flex>
+              </>
+            )}
+          </Stack>
+        )}
+        {isLoading && <SearchSkeleton />}
+      </Stack>
+    </>
   )
 }
 

@@ -113,6 +113,7 @@ const WalletDrawer = ({
       onClose={onClose}
       placement="right"
       finalFocusRef={finalFocusRef}
+      trapFocus={false}
       size="sm"
     >
       <DrawerOverlay />

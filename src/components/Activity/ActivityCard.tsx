@@ -18,7 +18,6 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
-  id: string
   title: string
   brief: string
   editor: string
@@ -42,7 +41,6 @@ const CreatedTime = ({ date }: { date: string }) => {
 }
 
 const ActivityCard = ({
-  id,
   title,
   brief,
   editor,
@@ -97,16 +95,20 @@ const ActivityCard = ({
             </Text>
             <HStack spacing={2}>
               {wiki.tags.map((tag, index) => (
-                <Tag
-                  key={index}
-                  borderRadius={6}
-                  variant="solid"
-                  bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
-                >
-                  <Text px={4} color="textColor">
-                    {tag.id}
-                  </Text>
-                </Tag>
+                <NextLink href={`/tags/${tag.id}`} passHref>
+                  <Tag
+                    as="a"
+                    key={index}
+                    borderRadius={6}
+                    variant="solid"
+                    bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
+                    cursor="pointer"
+                  >
+                    <Text px={4} color="black">
+                      {tag.id}
+                    </Text>
+                  </Tag>
+                </NextLink>
               ))}
             </HStack>
           </HStack>
@@ -128,7 +130,7 @@ const ActivityCard = ({
       py={{ base: 3, lg: 3 }}
       w="full"
     >
-      <NextLink href={`/wiki/${id}`} passHref>
+      <NextLink href={`/wiki/${wikiId}`} passHref>
         <WikiImage
           cursor="pointer"
           flexShrink={0}

@@ -81,7 +81,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
     headingElements.forEach(element => observer.observe(element))
 
     return () => observer.disconnect()
-  }, [setActiveId])
+  }, [setActiveId, toc])
 
   React.useEffect(() => {
     if (!activeId) setActiveId(toc[0].id)
@@ -92,7 +92,8 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
       <VStack
         display={{ base: 'none', md: 'block' }}
         borderLeftWidth="1px"
-        minW="210px"
+        minW="240px"
+        maxW="20vw"
         px={6}
         py="30px"
         borderColor="borderColor"
@@ -115,8 +116,10 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
             as="nav"
             spacing={4}
             h="calc(100vh - (70px + 90px))"
+            w="100%"
             overflowY="scroll"
             pr={4}
+            align="start"
             css={{
               '&::-webkit-scrollbar': {
                 width: '4px',

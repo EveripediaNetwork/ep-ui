@@ -34,7 +34,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
     />
     <ProfileSummary />
     <ProfileStatistics />
-    <CurrencyConverter token="everipedia" />
+    <CurrencyConverter token="everipedia" tokenSymbol="IQ" />
     {wiki.metadata[1]?.value && (
       <TwitterTimeline url={wiki.metadata[1].value} />
     )}
