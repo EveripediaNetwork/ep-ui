@@ -18,7 +18,7 @@ interface WikiTableOfContentsProps {
     id: string
     title: string
   }[]
-  isAlertAtTop: boolean
+  isAlertAtTop?: boolean
 }
 
 const WikiTableOfContents = ({
