@@ -25,7 +25,7 @@
     "@chakra-ui/toast": "^1.5.8",
     "@chakra-ui/utils": "^1.9.1",
     "@choc-ui/chakra-autocomplete": "^4.22.0",
-    "@editorjs/editorjs": "^2.22.2",
+    "@editorjs/editorjs": "^2.24.2",
     "@editorjs/paragraph": "^2.8.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
