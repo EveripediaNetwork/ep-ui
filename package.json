@@ -31,7 +31,7 @@
     "@emotion/styled": "^11.8.1",
     "@ensdomains/ens-avatar": "^0.1.2",
     "@ethersproject/bignumber": "^5.5.0",
-    "@ethersproject/providers": "^5.5.2",
+    "@ethersproject/providers": "^5.6.4",
     "@everipedia/wagmi-magic-connector": "0.3.3",
     "@magic-ext/oauth": "^2.1.1",
     "@magic-sdk/provider": "^8.1.1",
