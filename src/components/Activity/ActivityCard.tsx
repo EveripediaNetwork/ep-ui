@@ -23,7 +23,7 @@ interface ActivityCardProps {
   editor: string
   lastModTimeStamp?: string
   wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
-  wikiId: string
+  activityId: string
 }
 
 const CreatedTime = ({ date }: { date: string }) => {
@@ -46,7 +46,7 @@ const ActivityCard = ({
   editor,
   lastModTimeStamp,
   wiki,
-  wikiId,
+  activityId,
 }: ActivityCardProps) => {
   const editDetails = useBreakpointValue({
     base: (
@@ -130,7 +130,7 @@ const ActivityCard = ({
       py={{ base: 3, lg: 3 }}
       w="full"
     >
-      <NextLink href={`/wiki/${wikiId}`} passHref>
+      <NextLink href={`/wiki/history/${activityId}`} passHref>
         <WikiImage
           cursor="pointer"
           flexShrink={0}
@@ -143,7 +143,7 @@ const ActivityCard = ({
       </NextLink>
       <Box w="100%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <NextLink href={`/wiki/${wikiId}`} passHref>
+          <NextLink href={`/wiki/history/${activityId}`} passHref>
             <Heading
               cursor="pointer"
               as="h2"

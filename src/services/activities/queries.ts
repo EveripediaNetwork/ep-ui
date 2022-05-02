@@ -65,3 +65,39 @@ export const GET_ACTIVITIES_BY_WIKI = gql`
     }
   }
 `
+export const GET_ACTIVITIES_BY_ID = gql`
+  query GetActivitiesById($id: String!) {
+    activityById(id: $id) {
+      id
+      wikiId
+      type
+      content {
+        id
+        title
+        content
+        transactionHash
+        block
+        tags {
+          id
+        }
+        summary
+        user {
+          id
+        }
+        categories {
+          id
+          title
+        }
+        images {
+          id
+        }
+        metadata {
+          id
+          value
+        }
+      }
+      datetime
+      ipfs
+    }
+  }
+`
