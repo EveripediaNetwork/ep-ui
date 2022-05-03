@@ -35,7 +35,7 @@ const ProfileSettings = () => {
   const [twitter, setTwitter] = React.useState<string>('')
   const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
   const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
-  const [buttonDisabled,] = React.useState<boolean>(true)
+  const [buttonDisabled] = React.useState<boolean>(true)
 
   const [{ data: accountData }] = useAccount()
   const [, username] = useENSData(accountData?.address)
