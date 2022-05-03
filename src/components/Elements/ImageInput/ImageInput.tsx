@@ -23,9 +23,12 @@ const ImageInput = ({
     setImageSrc(event.target.value)
     setHideDropzone(true)
     try {
-      const { data } = await axios.get(String(event.target.value), {
-        responseType: 'arraybuffer',
+      const response = await fetch(event.target.value, {
+        method: 'get',
+        mode: 'no-cors',
       })
+      const data = await response.arrayBuffer()
+
       setImage(event.target.value, new buffer.Buffer(data as Buffer))
       toast({
         title: 'Image successfully Fetched',
