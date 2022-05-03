@@ -35,6 +35,7 @@ const ProfileSettings = () => {
   const [twitter, setTwitter] = React.useState<string>('')
   const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
   const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
+  const [buttonDisabled,] = React.useState<boolean>(true)
 
   const [{ data: accountData }] = useAccount()
   const [, username] = useENSData(accountData?.address)
@@ -279,7 +280,13 @@ const ProfileSettings = () => {
           </FormControl>
         </VStack>
       </Flex>
-      <Button type="submit" size="lg" width={8} mt={8}>
+      <Button
+        disabled={buttonDisabled}
+        type="submit"
+        size="lg"
+        width={8}
+        mt={8}
+      >
         Save
       </Button>
     </form>
