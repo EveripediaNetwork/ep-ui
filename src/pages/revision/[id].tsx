@@ -160,9 +160,12 @@ const Wiki = () => {
                   maxW="120px"
                   variant="solid"
                   bgColor="dimColor"
-                  _hover={{ bgColor: 'dimColor', textDecoration: 'underline' }}
-                  _focus={{ bgColor: 'dimColor', textDecoration: 'underline' }}
-                  _active={{ bgColor: 'dimColor', textDecoration: 'underline' }}
+                  sx={{
+                    '&:hover, &:focus, &:active': {
+                      bgColor: 'dimColor',
+                      textDecoration: 'underline',
+                    },
+                  }}
                   px={4}
                   colorScheme="blue"
                   _dark={{ colorScheme: 'blue' }}
