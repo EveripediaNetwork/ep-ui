@@ -66,15 +66,18 @@ export const NavSearch = (props: NavSearchProps) => {
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
       <chakra.span fontWeight="semibold">No search Results</chakra.span>
-      <Button
-        variant="outline"
-        px="10"
-        w="fit-content"
-        fontWeight="semibold"
-        fontSize="xs"
-      >
-        Create New Wiki
-      </Button>
+      <Link passHref href="/create-wiki">
+        <Button
+          as="a"
+          variant="outline"
+          px="10"
+          w="fit-content"
+          fontWeight="semibold"
+          fontSize="xs"
+        >
+          Create New Wiki
+        </Button>
+      </Link>
     </Flex>
   )
 
@@ -238,16 +241,6 @@ export const NavSearch = (props: NavSearchProps) => {
             </Link>
           </Flex>
         )}
-        <Flex
-          color="gray.600"
-          _dark={{ color: 'whiteAlpha.600' }}
-          fontSize="xs"
-          pl="3.5"
-          py="5"
-          borderTopWidth={1}
-        >
-          Press ‘Enter’ to reveal search results
-        </Flex>
       </AutoCompleteList>
     </AutoComplete>
   )
