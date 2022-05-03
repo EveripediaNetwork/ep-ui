@@ -73,8 +73,8 @@ const CategoryCard = ({
               </Heading>
             </LinkOverlay>
           </NextLink>
-          <Text maxWidth="250px" fontSize="md" textAlign="center" opacity="0.6">
-            {brief.length > 100 ? brief.slice(0, 100).concat('...') : brief}
+          <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
+            {brief.length > 200 ? brief.slice(0, 200).concat('...') : brief}
           </Text>
         </Box>
       </VStack>
