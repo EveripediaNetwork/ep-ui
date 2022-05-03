@@ -1,5 +1,4 @@
 import Collected from '@/components/Profile/Collected'
-import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Tabs,
   TabList,
@@ -7,19 +6,10 @@ import {
   TabPanel,
   Icon,
   chakra,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Portal,
-  Divider,
 } from '@chakra-ui/react'
-import { isDefined } from '@chakra-ui/utils'
 import React from 'react'
-import { BsArrowDownLeft, BsArrowUpRight } from 'react-icons/bs'
 import { FaPaintRoller } from 'react-icons/fa'
 import { TiDocumentAdd } from 'react-icons/ti'
-import { RiMenuLine } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 
 const SECTIONS = [

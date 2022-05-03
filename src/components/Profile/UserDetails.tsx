@@ -117,8 +117,8 @@ export const UserDetails = (props: UserDetailsProps) => {
                 icon={<SettingsIcon />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
-                onClick={()=>router.push("/account/settings")}
-                disabled={(address ===  data?.address) ? false : true}
+                onClick={() => router.push('/account/settings')}
+                disabled={address !== data?.address}
               />
             </Tooltip>
           </ButtonGroup>
