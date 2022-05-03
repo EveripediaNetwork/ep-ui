@@ -152,9 +152,11 @@ const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
               aria-label="convert"
               cursor="pointer"
               _dark={{ bgColor: 'gray.800' }}
-              _hover={{ filter: 'brightness(95%)' }}
-              _focus={{ filter: 'brightness(95%)' }}
-              _active={{ filter: 'brightness(95%)' }}
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  filter: 'brightness(95%)',
+                },
+              }}
               as={RiArrowLeftRightLine}
               borderRadius="50%"
               p={2}
