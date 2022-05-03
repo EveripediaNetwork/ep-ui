@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
-import axios from 'axios'
 import buffer from 'buffer'
 
 type ImageInputType = {
