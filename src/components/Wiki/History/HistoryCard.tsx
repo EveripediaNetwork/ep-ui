@@ -5,6 +5,8 @@ import {
   HStack,
   Icon,
   Link,
+  LinkBox,
+  LinkOverlay,
   Tag,
   Text,
   Tooltip,
@@ -64,6 +66,7 @@ const HistoryCardArrow = ({
 }
 
 interface HistoryCardProps {
+  activityId: string
   isRightAligned?: boolean
   isFullWidth?: boolean
   lastEditor?: string
@@ -76,6 +79,7 @@ interface HistoryCardProps {
 }
 
 export const HistoryCard = ({
+  activityId,
   isRightAligned,
   isFullWidth,
   lastEditor = '',
@@ -103,7 +107,7 @@ export const HistoryCard = ({
   }
 
   return (
-    <Box
+    <LinkBox
       pos="relative"
       w={
         isFullWidth
@@ -131,12 +135,14 @@ export const HistoryCard = ({
         </HStack>
 
         {/* Date of the last edit */}
-        {lastEditedTime && (
-          <Text fontSize="sm" color="gray.500" mt={2}>
-            {format(new Date(lastEditedTime), 'MMMM d, yyyy')} at{' '}
-            {format(new Date(lastEditedTime), 'h:mm a')}
-          </Text>
-        )}
+        <LinkOverlay href={`/revision/${activityId}`}>
+          {lastEditedTime && (
+            <Text fontSize="sm" color="gray.500" mt={2}>
+              {format(new Date(lastEditedTime), 'MMMM d, yyyy')} at{' '}
+              {format(new Date(lastEditedTime), 'h:mm a')}
+            </Text>
+          )}
+        </LinkOverlay>
       </HStack>
 
       {/* Commit message */}
@@ -214,6 +220,6 @@ export const HistoryCard = ({
           {shortenAccount(transactionAddress)}
         </Link>
       </HStack>
-    </Box>
+    </LinkBox>
   )
 }

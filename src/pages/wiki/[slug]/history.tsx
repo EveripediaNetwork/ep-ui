@@ -75,6 +75,7 @@ const History = () => {
             return (
               <HistoryCard
                 key={activity.id}
+                activityId={activity.id}
                 isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
                 isFullWidth={isHistoryFullWidth}
                 lastEditor={activity.content[0].user.id}

@@ -58,7 +58,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       editor={activity.content[0].user.id}
       lastModTimeStamp={activity.datetime}
       wiki={activity.content[0]}
-      wikiId={activity.wikiId}
+      activityId={activity.id}
     />
   )
 

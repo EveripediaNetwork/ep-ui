@@ -1,5 +1,6 @@
 import { Wiki } from '@/types/Wiki'
-import { Box, Heading, useColorMode } from '@chakra-ui/react'
+import { getReadableDate } from '@/utils/getFormattedDate'
+import { Box, Flex, Heading, Tag, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import {
@@ -16,15 +17,16 @@ interface WikiMainContentProps {
       ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
     >,
   ) => JSX.Element
+  editedTimestamp?: string
 }
 
 const WikiMainContent = ({
   wiki,
   addToTOC,
   addWikiPreview,
+  editedTimestamp,
 }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
-
   return (
     <Box
       p={4}
@@ -33,9 +35,19 @@ const WikiMainContent = ({
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
     >
-      <Heading mt={22} pt={2}>
-        {wiki?.title}
-      </Heading>
+      <Flex
+        mt={22}
+        flexDir={{ base: 'column', md: 'row' }}
+        gap={2}
+        align="center"
+      >
+        <Heading>{wiki?.title}</Heading>
+        {editedTimestamp && (
+          <Tag whiteSpace="nowrap">
+            Edited {getReadableDate(editedTimestamp)}
+          </Tag>
+        )}
+      </Flex>
       <Box mt={8}>
         <ReactMarkdown
           components={{
