@@ -168,7 +168,6 @@ const Wiki = () => {
                   }}
                   px={4}
                   colorScheme="blue"
-                  _dark={{ colorScheme: 'blue' }}
                   size="sm"
                 >
                   View Latest
