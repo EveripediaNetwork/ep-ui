@@ -23,8 +23,8 @@ import { RiMenuLine } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 
 const SECTIONS = [
-  { label: 'Wikis', icon: TiDocumentAdd, count: 22, component: Collected },
-  { label: 'NFTs', icon: FaPaintRoller, count: 0 },
+  { label: 'Wikis', icon: TiDocumentAdd, component: Collected },
+  { label: 'NFTs', icon: FaPaintRoller },
 ]
 
 export const Collections = () => (
@@ -33,54 +33,8 @@ export const Collections = () => (
       {SECTIONS.map((section, sid) => (
         <CustomTab key={sid} fontWeight="semibold">
           <Icon fontSize="2xl" as={section.icon} mr="3" /> {section.label}{' '}
-          {isDefined(section.count) && (
-            <chakra.span ml="3" fontWeight="medium" fontSize="sm">
-              {section.count}
-            </chakra.span>
-          )}
         </CustomTab>
       ))}
-      <Menu>
-        <MenuButton>
-          <CustomTab fontWeight="semibold" noTab>
-            <Icon fontSize="2xl" as={RiMenuLine} mr="3" /> <span>Offers</span>
-            <ChevronDownIcon ml="3" />
-          </CustomTab>
-        </MenuButton>
-        <Portal>
-          <MenuList p="0" overflow="hidden">
-            <MenuItem
-              p="4"
-              icon={
-                <Icon
-                  boxSize={6}
-                  strokeWidth="0.5"
-                  as={BsArrowDownLeft}
-                  fontSize="2xl"
-                />
-              }
-              fontWeight="semibold"
-            >
-              Offers received
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              p="4"
-              icon={
-                <Icon
-                  boxSize={6}
-                  strokeWidth="0.5"
-                  as={BsArrowUpRight}
-                  fontSize="2xl"
-                />
-              }
-              fontWeight="semibold"
-            >
-              Offers made
-            </MenuItem>
-          </MenuList>
-        </Portal>
-      </Menu>
     </TabList>
 
     <TabPanels>

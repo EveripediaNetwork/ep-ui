@@ -20,12 +20,14 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
 import { NextSeo } from 'next-seo'
+import { useAccount } from 'wagmi'
 
 export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
   const router = useRouter()
+  const [{ data }] = useAccount()
   const address = router.query.profile as string
 
   const { headerIsSticky } = useProfileContext()
@@ -109,11 +111,14 @@ export const UserDetails = (props: UserDetailsProps) => {
             </Tooltip>
             <Tooltip label="Settings" {...tooltipProps}>
               <IconButton
+                cursor="pointer"
                 boxSize="12"
                 aria-label="Settings"
                 icon={<SettingsIcon />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
+                onClick={()=>router.push("/account/settings")}
+                disabled={(address ===  data?.address) ? false : true}
               />
             </Tooltip>
           </ButtonGroup>
