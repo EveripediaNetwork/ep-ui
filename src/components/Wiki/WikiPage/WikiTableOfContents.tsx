@@ -160,7 +160,7 @@ const WikiTableOfContents = ({
       display={{ base: 'none', md: 'block' }}
       pos="absolute"
       right="24px"
-      top={isAlertAtTop ? 'calc(70px + 80px)' : 'calc(70px + 32px)'}
+      top={`calc(70px + ${isAlertAtTop ? '80px' : '32px'})`}
     >
       <IconButton
         aria-label="Toggle Table of Contents"
