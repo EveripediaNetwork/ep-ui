@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
+import { CATEGORY_DESCRIPTION_WORD_LIMIT } from '@/data/Constants'
 import { Image } from '../Elements/Image/Image'
 
 interface CategoryCardProps {
@@ -74,7 +75,9 @@ const CategoryCard = ({
             </LinkOverlay>
           </NextLink>
           <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
-            {brief.length > 200 ? brief.slice(0, 200).concat('...') : brief}
+            {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
+              ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
+              : brief}
           </Text>
         </Box>
       </VStack>
