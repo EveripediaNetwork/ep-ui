@@ -14,11 +14,7 @@ export const NotificationChannelsData: NotificationChannelDataType = [
     description: 'Get a wiki page recommendation every month for you to read',
   },
   {
-    title: 'Wiki of the Year',
-    description: 'Get a wiki page recommendation every year for you to read',
-  },
-  {
-    title: 'Comment Notifications',
-    description: 'Get notified when someone comments on your wiki page edit',
+    title: 'Edit Notifications',
+    description: 'Get notified when someone edit your wiki',
   },
 ]

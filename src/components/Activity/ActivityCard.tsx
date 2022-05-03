@@ -8,7 +8,7 @@ import {
   Tag,
   useBreakpointValue,
   Flex,
-  Badge
+  Badge,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
@@ -51,7 +51,7 @@ const ActivityCard = ({
   wiki,
   activityId,
   wikiId,
-  type
+  type,
 }: ActivityCardProps) => {
   const activityCardLinkRoute = activityId
     ? `/revision/${activityId}`
@@ -163,8 +163,8 @@ const ActivityCard = ({
               w={{ base: '50%', md: '100%' }}
             >
               {title}
-              <Badge ml='1' fontSize="0.5em" colorScheme="pink">
-                {type === 'CREATED'? "New" : "Edited"}
+              <Badge ml="1" fontSize="0.5em" colorScheme="pink">
+                {type === 'CREATED' ? 'New' : 'Edited'}
               </Badge>
             </Heading>
           </NextLink>
