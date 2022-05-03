@@ -167,7 +167,6 @@ const Wiki = () => {
                     },
                   }}
                   px={4}
-                  colorScheme="blue"
                   size="sm"
                 >
                   View Latest
