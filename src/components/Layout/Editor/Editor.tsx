@@ -6,6 +6,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 import wikiLink from '@/editor-plugins/wikiLink'
+import cite from '@/editor-plugins/cite'
 
 type EditorType = {
   onChange: (value: string | undefined) => void
@@ -53,7 +54,7 @@ const Editor = ({ onChange, markdown }: EditorType) => {
     <Box ref={containerRef} m={0} w="100%" h="100%">
       {markdown && (
         <ToastUIEditor
-          plugins={[wikiLink]}
+          plugins={[wikiLink, cite]}
           height="100%"
           autofocus={false}
           theme={colorMode === 'dark' ? 'dark' : 'light'}
