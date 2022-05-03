@@ -163,12 +163,11 @@ const ActivityCard = ({
               w={{ base: '50%', md: '100%' }}
             >
               {title}
-              {
-                type && 
+              {type && (
                 <Badge ml="1" fontSize="0.5em" colorScheme="pink">
                   {type === 'CREATED' ? 'New' : 'Edited'}
                 </Badge>
-              }
+              )}
             </Heading>
           </NextLink>
           {wiki.categories.length && (
