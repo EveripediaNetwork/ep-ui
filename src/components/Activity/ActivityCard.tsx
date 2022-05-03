@@ -26,7 +26,7 @@ interface ActivityCardProps {
   wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
   activityId?: string
   wikiId?: string
-  type: string
+  type?: string
 }
 
 const CreatedTime = ({ date }: { date: string }) => {
@@ -163,9 +163,12 @@ const ActivityCard = ({
               w={{ base: '50%', md: '100%' }}
             >
               {title}
-              <Badge ml="1" fontSize="0.5em" colorScheme="pink">
-                {type === 'CREATED' ? 'New' : 'Edited'}
-              </Badge>
+              {
+                type && 
+                <Badge ml="1" fontSize="0.5em" colorScheme="pink">
+                  {type === 'CREATED' ? 'New' : 'Edited'}
+                </Badge>
+              }
             </Heading>
           </NextLink>
           {wiki.categories.length && (
