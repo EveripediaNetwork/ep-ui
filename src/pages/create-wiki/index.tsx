@@ -126,7 +126,6 @@ const CreateWikiContent = () => {
     (image.type as ArrayBuffer).byteLength === 0
 
   const isValidWiki = () => {
-    console.log(image)
     if (
       isWikiBeingEdited === false &&
       (!image ||
