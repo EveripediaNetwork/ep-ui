@@ -15,3 +15,15 @@
   background-color: #2b3447 !important;
   outline: 1px solid #cccccc2a !important;
 }
+.cite__frame {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cite__frame input {
+  width: 100% !important;
+}
+
+.cite__frame label {
+  margin: 0 !important;
+}
