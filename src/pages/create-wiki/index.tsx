@@ -388,8 +388,8 @@ const CreateWikiContent = () => {
                 <Tag
                   mb={{ base: 2, lg: 2 }}
                   variant="solid"
-                  // eslint-disable-next-line no-nested-ternary
                   colorScheme={
+                    // eslint-disable-next-line no-nested-ternary
                     commitMessageLimitAlert
                       ? 'red'
                       : (commitMessage?.length || '') > 50
