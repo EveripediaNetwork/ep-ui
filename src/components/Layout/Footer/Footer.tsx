@@ -3,20 +3,31 @@ import {
   Box,
   Container,
   Divider,
-  Flex,
   GridItem,
   SimpleGrid,
   Stack,
   Text,
   useBreakpointValue,
+  Icon,
+  MenuOptionGroup,
+  MenuItemOption,
+  MenuButton,
+  Menu,
+  HStack,
+  MenuList,
 } from '@chakra-ui/react'
+
 import {
   MenuFooter,
   Newsletter,
   SocialFooter,
 } from '@/components/Layout/Footer'
 
-import Link from '@/components/Elements/Link/Link'
+import {
+  RiGlobalLine
+} from 'react-icons/ri'
+
+import { ChevronDownIcon } from '@chakra-ui/icons'
 
 const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
@@ -45,15 +56,29 @@ const Footer = () => {
             </Text>
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
-            <Flex>
-              <Link href="/static/privacy" py={3} px={5}>
-                Privacy Policy
-              </Link>
-              <Link href="/static/terms" py={3}>
-                Terms of Service
-              </Link>
-            </Flex>
-          </Stack>
+            <HStack py={3}>
+              <Icon
+                cursor="pointer"
+                fontSize={25}
+                fontWeight={600}
+                as={RiGlobalLine}
+              />
+              <Box>
+                <Menu>
+                  <MenuButton fontSize="sm">
+                    English, USA {<ChevronDownIcon />}
+                  </MenuButton>
+                    <MenuList color="linkColor">
+                      <MenuOptionGroup  type='radio'>
+                        <MenuItemOption  fontSize="md"  value='en'>English</MenuItemOption>
+                        <MenuItemOption fontSize="md"  value='ko'>Korean</MenuItemOption>
+                        <MenuItemOption fontSize="md" value='zh'>Chinese</MenuItemOption>
+                      </MenuOptionGroup>
+                    </MenuList>
+                </Menu>
+              </Box>
+            </HStack>
+          </Stack>       
         </SimpleGrid>
       </Container>
     </Box>

@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Stack,
-  Tag,
-  Text,
-} from '@chakra-ui/react'
+import { GridItem, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 
 const MenuFooter = () => (
