@@ -69,13 +69,15 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio">
-                      {
-                        languageData.map(lang => (
-                          <MenuItemOption key={lang.id} fontSize="md" value={lang.value}>
-                            {lang.language}
-                          </MenuItemOption>
-                        ))
-                      }
+                      {languageData.map(lang => (
+                        <MenuItemOption
+                          key={lang.id}
+                          fontSize="md"
+                          value={lang.value}
+                        >
+                          {lang.language}
+                        </MenuItemOption>
+                      ))}
                     </MenuOptionGroup>
                   </MenuList>
                 </Menu>
