@@ -23,11 +23,10 @@ import {
   SocialFooter,
 } from '@/components/Layout/Footer'
 
-import {
-  RiGlobalLine
-} from 'react-icons/ri'
+import { RiGlobalLine } from 'react-icons/ri'
 
 import { ChevronDownIcon } from '@chakra-ui/icons'
+import { languageData } from '@/data/LanguageData'
 
 const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
@@ -66,19 +65,23 @@ const Footer = () => {
               <Box>
                 <Menu>
                   <MenuButton fontSize="sm">
-                    English, USA {<ChevronDownIcon />}
+                    English, USA <ChevronDownIcon />
                   </MenuButton>
-                    <MenuList color="linkColor">
-                      <MenuOptionGroup  type='radio'>
-                        <MenuItemOption  fontSize="md"  value='en'>English</MenuItemOption>
-                        <MenuItemOption fontSize="md"  value='ko'>Korean</MenuItemOption>
-                        <MenuItemOption fontSize="md" value='zh'>Chinese</MenuItemOption>
-                      </MenuOptionGroup>
-                    </MenuList>
+                  <MenuList color="linkColor">
+                    <MenuOptionGroup type="radio">
+                      {
+                        languageData.map(lang => (
+                          <MenuItemOption key={lang.id} fontSize="md" value={lang.value}>
+                            {lang.language}
+                          </MenuItemOption>
+                        ))
+                      }
+                    </MenuOptionGroup>
+                  </MenuList>
                 </Menu>
               </Box>
             </HStack>
-          </Stack>       
+          </Stack>
         </SimpleGrid>
       </Container>
     </Box>
