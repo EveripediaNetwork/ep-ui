@@ -1,7 +1,5 @@
-import config from '@/config'
 import { GraphQLClient, gql } from 'graphql-request'
 import { Dict } from '@chakra-ui/utils'
-import axios from 'axios'
 
 export const submitVerifiableSignature = async (
   signedData: string,
@@ -14,9 +12,9 @@ export const submitVerifiableSignature = async (
   const s = `0x${signature.substring(64, 128)}`
   const v = parseInt(signature.substring(128, 130), 16)
 
-  //mutation
+  // mutation
   const endpoint = 'https://api.dev.braindao.org/graphql'
-  const graphQLClient = new GraphQLClient(endpoint);
+  const graphQLClient = new GraphQLClient(endpoint)
   const mutation = gql`
     mutation Relayer(
       $ipfs: String!
@@ -49,9 +47,5 @@ export const submitVerifiableSignature = async (
     r: r.toString(),
     s: s.toString(),
   })
-
-  const relayerData = {fake: 'yes'}
-
-  console.log(data.relayer)
-  return relayerData
+  return data.relayer
 }

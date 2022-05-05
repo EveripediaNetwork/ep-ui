@@ -47,7 +47,7 @@ export const MINIMUM_WORDS = 150
 
 export const saveImage = async (image: Image) => {
   const formData = new FormData()
-  console.log(image.type);
+  console.log(image.type)
   const blob = new Blob([image.type], {
     type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
   })
