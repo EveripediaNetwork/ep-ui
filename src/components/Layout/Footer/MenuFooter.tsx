@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Stack,
-  Tag,
-  Text,
-} from '@chakra-ui/react'
+import { GridItem, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 
 const MenuFooter = () => (
@@ -32,42 +25,57 @@ const MenuFooter = () => (
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">IQ</Heading>
-            <Link href="/">What&apos;s IQ?</Link>
+            <Link target="_blank" href="https://learn.everipedia.org/iq/">
+              What&apos;s IQ?
+            </Link>
             <Stack direction="row" align="center" spacing={2}>
-              <Link href="/">Bridges</Link>
-              <Tag size="sm" bg="highlight" ml={2} color="black">
-                New
-              </Tag>
+              <Link
+                target="_blank"
+                href="https://learn.everipedia.org/iq/iq/bridges"
+              >
+                Bridges
+              </Link>
             </Stack>
-            <Link href="/">Staking</Link>
-            <Link href="/">Bonds</Link>
+            <Link
+              target="_blank"
+              href="https://learn.everipedia.org/iq/iq/hiiq-staking-via-tokenpocket"
+            >
+              Staking
+            </Link>
+            <Link
+              target="_blank"
+              href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-polygon"
+            >
+              Bonds
+            </Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">Everipedia</Heading>
             <Link href="/static/about">About Us</Link>
-            <Link href="/">Press</Link>
-            <Link href="/">Careers</Link>
-            <Link href="/">Contact Us</Link>
+            <Link href="/static/careers">Careers</Link>
+            <Link href="/">Brainies</Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
-            <Heading size="sm">Legal</Heading>
-            <Link href="/">Cookies Policy</Link>
-            <Link href="/">Privacy Policy</Link>
-            <Link href="/">Terms of Service</Link>
-            <Link href="/">Status</Link>
+            <Heading size="sm">Resources</Heading>
+            <Link target="_blank" href="https://learn.everipedia.org/iq/">
+              Help
+            </Link>
+            <Link target="_blank" href="https://everipedia.org/blog">
+              Blog
+            </Link>
+            <Link href="/static/faq">FAQ</Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
-            <Heading size="sm">Legal</Heading>
-            <Link href="/">Facebook</Link>
-            <Link href="/">Twitter</Link>
-            <Link href="/">Instagram</Link>
-            <Link href="/">LinkedIn</Link>
+            <Heading size="sm">Policies</Heading>
+            <Link href="/static/guidelines">Guidelines</Link>
+            <Link href="/static/privacy">Privacy Policy</Link>
+            <Link href="/static/terms">Terms of Service</Link>
           </Stack>
         </GridItem>
       </SimpleGrid>

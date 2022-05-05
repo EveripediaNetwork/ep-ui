@@ -22,7 +22,7 @@ const NotificationSettingBox = ({
   isLast,
 }: NotificationSettingBoxProps) => (
   <Box p={4} borderBottomWidth={isLast ? 0 : '1px'}>
-    <Checkbox name={title} colorScheme="pink" defaultChecked size="lg">
+    <Checkbox isChecked={false} name={title} colorScheme="pink" size="lg">
       <VStack align="left" spacing={2} ml={4}>
         <Heading fontSize="md">{title}</Heading>
         <Text opacity={0.8} fontSize="md">
@@ -73,7 +73,7 @@ const NotificationSettings = () => {
           />
         ))}
       </VStack>
-      <Button type="submit" mt={8} size="lg">
+      <Button disabled type="submit" mt={8} size="lg">
         Save
       </Button>
     </form>
