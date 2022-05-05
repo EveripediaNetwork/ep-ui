@@ -25,12 +25,29 @@ const MenuFooter = () => (
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">IQ</Heading>
-            <Link target="_blank" href="https://learn.everipedia.org/iq/">What&apos;s IQ?</Link>
+            <Link target="_blank" href="https://learn.everipedia.org/iq/">
+              What&apos;s IQ?
+            </Link>
             <Stack direction="row" align="center" spacing={2}>
-              <Link target="_blank" href="https://learn.everipedia.org/iq/iq/bridges">Bridges</Link>
+              <Link
+                target="_blank"
+                href="https://learn.everipedia.org/iq/iq/bridges"
+              >
+                Bridges
+              </Link>
             </Stack>
-            <Link target="_blank" href="https://learn.everipedia.org/iq/iq/hiiq-staking-via-tokenpocket">Staking</Link>
-            <Link target="_blank" href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-polygon">Bonds</Link>
+            <Link
+              target="_blank"
+              href="https://learn.everipedia.org/iq/iq/hiiq-staking-via-tokenpocket"
+            >
+              Staking
+            </Link>
+            <Link
+              target="_blank"
+              href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-polygon"
+            >
+              Bonds
+            </Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>
@@ -44,8 +61,12 @@ const MenuFooter = () => (
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">Resources</Heading>
-            <Link target="_blank"  href="https://learn.everipedia.org/iq/">Help</Link>
-            <Link target="_blank" href="https://everipedia.org/blog">Blog</Link>
+            <Link target="_blank" href="https://learn.everipedia.org/iq/">
+              Help
+            </Link>
+            <Link target="_blank" href="https://everipedia.org/blog">
+              Blog
+            </Link>
             <Link href="/static/faq">FAQ</Link>
           </Stack>
         </GridItem>
