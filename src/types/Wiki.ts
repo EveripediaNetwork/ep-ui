@@ -15,6 +15,7 @@ export interface Image {
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   TWITTER_PROFILE = 'twitter-profile',
+  REFERENCES = 'references',
 }
 
 export enum EditSpecificMetaIds {

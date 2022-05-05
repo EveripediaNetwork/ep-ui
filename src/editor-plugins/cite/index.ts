@@ -1,3 +1,5 @@
+import { store } from '@/store/store'
+import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
 import {
   PluginCommandMap,
@@ -64,9 +66,29 @@ export default function cite(context: PluginContext): PluginInfo {
   submitButton.textContent = 'Cite'
 
   submitButton.addEventListener('click', () => {
+    // access wiki data from wiki slice
+    const references =
+      getWikiMetadataById(store.getState().wiki, 'references')?.value || '[]'
+    const referencesParsed = JSON.parse(references)
+    const refCount = referencesParsed.length
+
+    // dispatch new metadata to wiki slice
+    store.dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'references',
+        value: JSON.stringify([
+          ...referencesParsed,
+          {
+            url: urlInput.value,
+            description: descriptionInput.value,
+          },
+        ]),
+      },
+    })
     eventEmitter.emit('command', 'cite', {
-      url: urlInput.value,
-      desc: descriptionInput.value,
+      urlId: `#cite-id-${refCount + 1}`,
+      refNo: refCount + 1,
     })
   })
   container.appendChild(urlInputContainer)
@@ -90,14 +112,27 @@ export default function cite(context: PluginContext): PluginInfo {
       },
     ],
     markdownCommands: {
-      cite: () => {
-        // TODO: figure out a markdown syntax for this
+      cite: (payload, state, dispatch) => {
+        const link = `[${payload.refNo}](${payload.urlId})`
+        const { from, to } = state.selection
+        const tr = state.tr.insertText(link, from, to)
+        dispatch(tr)
         return true
       },
     },
     wysiwygCommands: {
-      cite: () => {
-        // TODO: implement this
+      cite: (payload, state, dispatch) => {
+        const { from, to } = state.selection
+        const attrs = {
+          linkUrl: payload.urlId,
+        }
+        const text = `[${payload.refNo}]`
+        const mark = state.schema.marks.link.create(attrs)
+        const tr = state.tr
+          .insertText(text, from, to)
+          .addMark(from, from + text.length, mark)
+        dispatch(tr)
+
         return true
       },
     },
