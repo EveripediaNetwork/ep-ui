@@ -11,17 +11,28 @@ import { RiArrowDownSLine } from 'react-icons/ri'
 
 interface AccordionProps {
   title: string
+  withNoDarkBg?: boolean
   children: React.ReactNode
 }
 
 const WikiAccordion = ({
   title,
+  withNoDarkBg,
   children,
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
   return (
-    <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
+    <Box
+      w="100%"
+      borderWidth={1}
+      bgColor="wikiCardBg"
+      _dark={{
+        bgColor: withNoDarkBg ? 'gray.800' : 'gray.700',
+      }}
+      p={3}
+      borderRadius={4}
+    >
       <HStack cursor="pointer" onClick={onToggle} justify="start">
         <IconButton
           color="linkColor"
