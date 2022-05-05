@@ -14,25 +14,9 @@ export const submitVerifiableSignature = async (
   const s = `0x${signature.substring(64, 128)}`
   const v = parseInt(signature.substring(128, 130), 16)
 
-  try {
-    return await axios.post(`${config.epApiBaseUrl}relayer`, {
-      ipfs: wikiHash,
-      userAddr: address,
-      deadline,
-      v,
-      r,
-      s,
-    })
-  } catch (error) {
-    return error as Dict
-  }
-}
-
-async function main() {
+  //mutation
   const endpoint = 'https://api.dev.braindao.org/graphql'
-
-  const graphQLClient = new GraphQLClient(endpoint)
-
+  const graphQLClient = new GraphQLClient(endpoint);
   const mutation = gql`
     mutation Relayer(
       $ipfs: String!
@@ -57,24 +41,17 @@ async function main() {
     }
   `
 
-  const variables = {
-    ipfs: '2',
-    userAddr: '2',
-    deadline: 2.0,
-    v: '2',
-    r: '2',
-    s: '2',
-  }
-  try {
-    return await axios.post(`${config.epApiBaseUrl}relayer`, {
-      ipfs: variables.ipfs,
-      userAddr: variables.userAddr,
-      deadline: variables.deadline,
-      v: variables.v,
-      r: variables.r,
-      s: variables.s,
-    })
-  } catch (error) {
-    return error as Dict
-  }
+  const data = await graphQLClient.request(mutation, {
+    ipfs: wikiHash,
+    userAddr: address,
+    deadline,
+    v: v.toString(),
+    r: r.toString(),
+    s: s.toString(),
+  })
+
+  const relayerData = {fake: 'yes'}
+
+  console.log(data.relayer)
+  return relayerData
 }

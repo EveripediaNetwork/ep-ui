@@ -220,7 +220,7 @@ export const useGetSignedHash = (deadline: number) => {
             accountData?.address,
             deadline,
           )
-
+          console.log(data)
           if (relayerData && relayerData.hash) {
             setTxHash(relayerData.hash)
             setActiveStep(2)
