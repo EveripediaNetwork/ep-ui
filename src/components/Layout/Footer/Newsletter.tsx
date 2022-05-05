@@ -7,8 +7,8 @@ const Newsletter = () => (
       Get updated with Everipedia
     </Text>
     <Text align={{ base: 'center', lg: 'start' }} maxW="600px">
-      Join our mailing list to stay in the loop with our newest feature releases, 
-      NFT drops, and tips and tricks for navigating Everipedia.
+      Join our mailing list to stay in the loop with our newest feature
+      releases, NFT drops, and tips and tricks for navigating Everipedia.
     </Text>
     <Button
       onClick={() =>

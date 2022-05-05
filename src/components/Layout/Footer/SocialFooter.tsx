@@ -6,7 +6,7 @@ import { Socials } from '@/data/SocialsData'
 const SocialFooter = () => (
   <Stack align={{ base: 'center', lg: 'flex-start' }}>
     <Text fontSize="xl" fontWeight="bold" py={2}>
-      Join the community
+      Community Hub
     </Text>
     <SimpleGrid columns={{ base: 3, lg: 7 }}>
       {Socials.map(social => (
