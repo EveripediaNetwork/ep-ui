@@ -1,8 +1,8 @@
 export const walletsLogos: string[] = [
   'metamask.png',
   'walletconnect-logo.svg',
-  'torus.svg',
-  'fortmatic.png',
+  'coinbase.svg',
+  'magiclink.svg',
 ]
 
 export const tokenDetails: { [key: string]: { name: string; logo: string } } = {

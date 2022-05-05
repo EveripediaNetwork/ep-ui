@@ -4,7 +4,7 @@ import { MdArticle, MdDesignServices, MdOutlinePeopleAlt } from 'react-icons/md'
 import AboutFeaturesCard from './AboutFeaturesCard'
 
 const AboutFeatures = () => (
-  <VStack spacing={8} maxW="5xl" mx="auto" my={16}>
+  <VStack spacing={8} maxW="5xl" mx="auto" mt="24">
     <Heading size="lg">
       Taking the Online Encyclopedia into the Modern Age
     </Heading>

@@ -3,6 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_ACTIVITIES,
+  GET_ACTIVITIES_BY_ID,
   GET_ACTIVITIES_BY_WIKI,
 } from '@/services/activities/queries'
 import config from '@/config'
@@ -11,7 +12,9 @@ import { Activity } from '@/types/ActivityDataType'
 type GetActivitiesResponse = {
   activities: Activity[]
 }
-
+type GetActivityByIdResponse = {
+  activityById: Activity
+}
 type GetActivityByWikiResponse = {
   activitiesByWikId: Activity[]
 }
@@ -41,6 +44,14 @@ export const activitiesApi = createApi({
       transformResponse: (response: GetActivitiesResponse) =>
         response.activities,
     }),
+    getActivityById: builder.query<Activity, string>({
+      query: (id: string) => ({
+        document: GET_ACTIVITIES_BY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: GetActivityByIdResponse) =>
+        response.activityById,
+    }),
     getActivityByWiki: builder.query<Activity[], string>({
       query: (id: string) => ({
         document: GET_ACTIVITIES_BY_WIKI,
@@ -55,8 +66,9 @@ export const activitiesApi = createApi({
 export const {
   useGetLatestActivitiesQuery,
   useGetActivityByWikiQuery,
+  useGetActivityByIdQuery,
   util: { getRunningOperationPromises },
 } = activitiesApi
 
-export const { getLatestActivities, getActivityByWiki } =
+export const { getLatestActivities, getActivityByWiki, getActivityById } =
   activitiesApi.endpoints

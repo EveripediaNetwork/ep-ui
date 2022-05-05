@@ -18,9 +18,13 @@ interface WikiTableOfContentsProps {
     id: string
     title: string
   }[]
+  isAlertAtTop?: boolean
 }
 
-const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
+const WikiTableOfContents = ({
+  toc,
+  isAlertAtTop,
+}: WikiTableOfContentsProps) => {
   const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
   const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
@@ -155,7 +159,7 @@ const WikiTableOfContents = ({ toc }: WikiTableOfContentsProps) => {
       display={{ base: 'none', md: 'block' }}
       pos="absolute"
       right="24px"
-      top="calc(70px + 32px)"
+      top={`calc(70px + ${isAlertAtTop ? '80px' : '32px'})`}
     >
       <IconButton
         aria-label="Toggle Table of Contents"

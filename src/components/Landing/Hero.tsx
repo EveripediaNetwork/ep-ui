@@ -1,14 +1,17 @@
 import React from 'react'
-import { ButtonGroup, chakra, Flex } from '@chakra-ui/react'
+import { Avatar, Box, ButtonGroup, chakra, Flex } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useENSData } from '@/hooks/useENSData'
+import CustomAvatar from 'boring-avatars'
+import { AvatarColorArray } from '@/data/AvatarData'
 import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
+  const [avatar, username] = useENSData(wiki?.user?.id)
   return (
     <NextLink href={`/wiki/${wiki?.id}`} passHref>
       <Flex
@@ -35,7 +38,18 @@ const HeroCard = ({ wiki }: HeroProps) => {
         />
         <Flex p="3" align="center" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-            <DisplayAvatar address={wiki?.user?.id} />
+            <Box>
+              {avatar ? (
+                <Avatar size="xs" src={avatar} />
+              ) : (
+                <CustomAvatar
+                  size="25"
+                  variant="pixel"
+                  name="Unnamed"
+                  colors={AvatarColorArray}
+                />
+              )}
+            </Box>
           </NextLink>
           <Flex
             direction="column"
@@ -43,9 +57,12 @@ const HeroCard = ({ wiki }: HeroProps) => {
             fontWeight="semibold"
           >
             <chakra.span>{wiki?.title}</chakra.span>
-            <chakra.span color="blue">
-              {shortenAccount(wiki?.user?.id || '')}
-            </chakra.span>
+
+            <NextLink href={`/account/${wiki?.user?.id}`} passHref>
+              <chakra.a color="blue">
+                {username || shortenAccount(wiki?.user?.id || '')}
+              </chakra.a>
+            </NextLink>
           </Flex>
         </Flex>
       </Flex>

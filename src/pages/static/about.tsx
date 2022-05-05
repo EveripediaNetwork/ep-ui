@@ -8,15 +8,13 @@ import AboutOurTeam from '@/components/About/AboutOurTeam'
 import AboutLatestFromBlog from '@/components/About/AboutLatestFromBlog'
 
 const About = () => (
-  <Box maxW="7xl" mx="auto" mt={4}>
+  <Box px={{ base: 6, lg: 16 }} py={{ lg: 20 }}>
     <AboutHero />
-    <Box px={8}>
-      <AboutFeatures />
-      <AboutCommunity />
-      <AboutAsSeenIn />
-      <AboutOurTeam />
-      <AboutLatestFromBlog />
-    </Box>
+    <AboutFeatures />
+    <AboutCommunity />
+    <AboutAsSeenIn />
+    <AboutOurTeam />
+    <AboutLatestFromBlog />
   </Box>
 )
 

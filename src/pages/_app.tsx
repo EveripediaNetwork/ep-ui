@@ -75,7 +75,7 @@ const App = (props: EpAppProps) => {
           <Fonts />
           <Provider
             autoConnect
-            connectors={connectors}
+            connectors={connectors as any}
             provider={provider as unknown as BaseProvider}
           >
             <Layout noFooter={Component.noFooter}>
