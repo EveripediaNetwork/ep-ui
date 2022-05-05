@@ -1,5 +1,4 @@
 import {
-  RiGridFill,
   RiSettings5Fill,
   RiAccountCircleFill,
   RiCompass3Fill,

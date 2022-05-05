@@ -97,5 +97,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.400',
       _dark: 'gray.600',
     },
+    fadedText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
   },
 }
