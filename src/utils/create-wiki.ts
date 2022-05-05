@@ -214,15 +214,14 @@ export const useGetSignedHash = (deadline: number) => {
           return
         }
         try {
-          const { data: relayerData }: any = await submitVerifiableSignature(
+          const hash = await submitVerifiableSignature(
             data,
             wikiHash,
             accountData?.address,
             deadline,
           )
-          console.log(data)
-          if (relayerData && relayerData.hash) {
-            setTxHash(relayerData.hash)
+          if (hash) {
+            setTxHash(hash)
             setActiveStep(2)
           }
         } catch (err) {
