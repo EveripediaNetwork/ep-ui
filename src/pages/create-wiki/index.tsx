@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useRef,
   memo,
+  useState,
   ChangeEvent,
   useMemo,
 } from 'react'
@@ -33,6 +34,7 @@ import {
   PopoverHeader,
   PopoverBody,
   PopoverFooter,
+  Tag,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -81,6 +83,8 @@ const CreateWikiContent = () => {
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
+  const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
+  const [commitMessage, setcommitMessage] = useState('')
 
   const {
     isLoadingWiki,
@@ -381,17 +385,48 @@ const CreateWikiContent = () => {
                 Commit Message <small>(Optional)</small>{' '}
               </PopoverHeader>
               <PopoverBody>
-                <Textarea
-                  placeholder="Enter what changed..."
-                  onChange={e =>
-                    dispatch({
-                      type: 'wiki/updateMetadata',
-                      payload: {
-                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                        value: e.target.value,
-                      },
-                    })
+                <Tag
+                  mb={{ base: 2, lg: 2 }}
+                  variant="solid"
+                  colorScheme={
+                    commitMessageLimitAlert
+                      ? 'red'
+                      : (commitMessage?.length || '') > 50
+                      ? 'green'
+                      : 'yellow'
                   }
+                >
+                  {commitMessage?.length || 0}/128
+                </Tag>
+                <Textarea
+                  value={commitMessage}
+                  placeholder="Enter what changed..."
+                  bgColor={
+                    commitMessageLimitAlert ? '#d406082a' : 'transparent'
+                  }
+                  _focus={{
+                    borderColor: commitMessageLimitAlert
+                      ? '#ff787c'
+                      : '#63b3ed',
+                    boxShadow: commitMessageLimitAlert
+                      ? '0 0 0 1px #ff787c'
+                      : '0 0 0 1px #63b3ed',
+                  }}
+                  onChange={e => {
+                    if (e.target.value.length <= 128) {
+                      setcommitMessage(e.target.value)
+                      dispatch({
+                        type: 'wiki/updateMetadata',
+                        payload: {
+                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                          value: e.target.value,
+                        },
+                      })
+                    } else {
+                      setcommitMessageLimitAlert(true)
+                      setTimeout(() => setcommitMessageLimitAlert(false), 2000)
+                    }
+                  }}
                 />
               </PopoverBody>
               <PopoverFooter>
