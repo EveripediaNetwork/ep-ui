@@ -35,9 +35,6 @@ const MenuFooter = () => (
             <Link href="/">What&apos;s IQ?</Link>
             <Stack direction="row" align="center" spacing={2}>
               <Link href="/">Bridges</Link>
-              <Tag size="sm" bg="highlight" ml={2} color="black">
-                New
-              </Tag>
             </Stack>
             <Link href="/">Staking</Link>
             <Link href="/">Bonds</Link>
@@ -46,28 +43,27 @@ const MenuFooter = () => (
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
             <Heading size="sm">Everipedia</Heading>
-            <Link href="/static/about">About Us</Link>
-            <Link href="/">Press</Link>
+            <Link href="/static/about">Press</Link>
+            <Link href="/">About Us</Link>
             <Link href="/">Careers</Link>
-            <Link href="/">Contact Us</Link>
+            <Link href="/">Brainies</Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>
           <Stack align={{ base: 'center', md: 'flex-start' }}>
-            <Heading size="sm">Legal</Heading>
+            <Heading size="sm">Resources</Heading>
+            <Link href="/">Help</Link>
+            <Link href="/">Blog</Link>
+            <Link href="/">FAQ</Link>
+            <Link href="/">Feedback</Link>
+          </Stack>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <Stack align={{ base: 'center', md: 'flex-start' }}>
+            <Heading size="sm">Policies</Heading>
             <Link href="/">Cookies Policy</Link>
             <Link href="/">Privacy Policy</Link>
             <Link href="/">Terms of Service</Link>
-            <Link href="/">Status</Link>
-          </Stack>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <Stack align={{ base: 'center', md: 'flex-start' }}>
-            <Heading size="sm">Legal</Heading>
-            <Link href="/">Facebook</Link>
-            <Link href="/">Twitter</Link>
-            <Link href="/">Instagram</Link>
-            <Link href="/">LinkedIn</Link>
           </Stack>
         </GridItem>
       </SimpleGrid>
