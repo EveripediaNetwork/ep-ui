@@ -5,11 +5,7 @@ import { NextSeo } from 'next-seo'
 import { getRunningOperationPromises } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import {
-  ComponentPropsWithoutRef,
-  HeadingProps,
-  ReactMarkdownProps,
-} from 'react-markdown/lib/ast-to-react'
+import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner, VStack, Text, Button } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
@@ -17,10 +13,10 @@ import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
-import WikiPreviewHover from '@/components/Wiki/WikiPage/WikiPreviewHover'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import { getActivityById, useGetActivityByIdQuery } from '@/services/activities'
 import Link from 'next/link'
+import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
 
 const Wiki = () => {
   const router = useRouter()
@@ -84,34 +80,6 @@ const Wiki = () => {
         title: children[0],
       })
       return React.createElement(props.node.tagName, { id }, children)
-    }
-    return React.createElement(props.node.tagName, props, children)
-  }
-
-  const addWikiPreview = ({
-    children,
-    ...props
-  }: React.PropsWithChildren<
-    ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
-  >) => {
-    // TODO: Make more specific regex
-    const wikiLinkRecognizer = /.*\/wiki\/(.*)/
-    const wikiSlug = props?.href?.match(wikiLinkRecognizer)?.[1]
-
-    // Checks if the link is a wiki link
-    const isChildrenPresent =
-      children && typeof children[0] === 'string' && children[0].length > 0
-    const isWikiSlugPresent = wikiSlug && wikiSlug.length > 0
-
-    // render special hover component if the link is a wiki link
-    if (isChildrenPresent && isWikiSlugPresent && props.href) {
-      return (
-        <WikiPreviewHover
-          text={children[0] as string}
-          href={props.href}
-          slug={wikiSlug}
-        />
-      )
     }
     return React.createElement(props.node.tagName, props, children)
   }
@@ -185,7 +153,7 @@ const Wiki = () => {
                     <WikiMainContent
                       wiki={wiki.content[0]}
                       addToTOC={addToTOC}
-                      addWikiPreview={addWikiPreview}
+                      addWikiPreview={wikiLinkRenderer}
                       editedTimestamp={wiki.datetime}
                     />
                     <WikiInsights wiki={wiki.content[0]} />
