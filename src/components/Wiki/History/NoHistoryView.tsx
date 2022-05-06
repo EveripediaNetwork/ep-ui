@@ -14,7 +14,7 @@ export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
       mb={{ base: '96' }}
     >
       <Flex
-        w={{ lg: '45%', base: '40%' }}
+        w={{ lg: '45%', base: '100%' }}
         alignItems={{ base: 'center' }}
         justifyContent={{ base: 'center' }}
       >
