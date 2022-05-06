@@ -1,5 +1,6 @@
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { HistoryCard } from '@/components/Wiki/History/HistoryCard'
+import { NoHistoryView } from '@/components/Wiki/History/NoHistoryView'
 import {
   getActivityByWiki,
   useGetActivityByWikiQuery,
@@ -32,7 +33,6 @@ const History = () => {
   )
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
-
   return (
     <Box bgColor="pageBg" my={-8} py={8}>
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
@@ -40,7 +40,10 @@ const History = () => {
         <Text textAlign="center" mt={4} mb={8} color="linkColor">
           A timeline of changes for this wiki
         </Text>
-        {wiki && (
+        {wikiHistory && wikiHistory?.length <= 1 && (
+          <NoHistoryView wiki={wiki} />
+        )}
+        {wiki && wikiHistory && wikiHistory?.length > 1 && (
           <ActivityCard
             title={wiki.title}
             brief={getWikiSummary(wiki)}
@@ -62,52 +65,57 @@ const History = () => {
           pt={18}
         >
           {/* Border line */}
-          <Box
-            pos="absolute"
-            top="0"
-            left="0"
-            w={isHistoryFullWidth ? '1px' : 'calc(50% + 1px)'}
-            h="100%"
-            borderRightWidth={2}
-            borderColor="brand.500"
-          />
-          {wikiHistory?.map((activity, index) => {
-            return (
-              <HistoryCard
-                key={activity.id}
-                activityId={activity.id}
-                isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
-                isFullWidth={isHistoryFullWidth}
-                lastEditor={activity.content[0].user.id}
-                lastEditedTime={activity.datetime}
-                transactionAddress={activity.content[0].transactionHash}
-                commitMessage={
-                  getActivityMetadataById(
-                    activity,
-                    EditSpecificMetaIds.COMMIT_MESSAGE,
-                  )?.value
-                }
-                wordsChanged={
-                  getActivityMetadataById(
-                    activity,
-                    EditSpecificMetaIds.WORDS_CHANGED,
-                  )?.value
-                }
-                percentChanged={
-                  getActivityMetadataById(
-                    activity,
-                    EditSpecificMetaIds.PERCENT_CHANGED,
-                  )?.value
-                }
-                blocksChanged={
-                  getActivityMetadataById(
-                    activity,
-                    EditSpecificMetaIds.BLOCKS_CHANGED,
-                  )?.value
-                }
-              />
-            )
-          })}
+          {wikiHistory && wikiHistory?.length > 1 && (
+            <Box
+              pos="absolute"
+              top="0"
+              left="0"
+              w={isHistoryFullWidth ? '1px' : 'calc(50% + 1px)'}
+              h="100%"
+              borderRightWidth={2}
+              borderColor="brand.500"
+            />
+          )}
+
+          {wikiHistory &&
+            wikiHistory?.length > 1 &&
+            wikiHistory?.map((activity, index) => {
+              return (
+                <HistoryCard
+                  key={activity.id}
+                  activityId={activity.id}
+                  isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
+                  isFullWidth={isHistoryFullWidth}
+                  lastEditor={activity.content[0].user.id}
+                  lastEditedTime={activity.datetime}
+                  transactionAddress={activity.content[0].transactionHash}
+                  commitMessage={
+                    getActivityMetadataById(
+                      activity,
+                      EditSpecificMetaIds.COMMIT_MESSAGE,
+                    )?.value
+                  }
+                  wordsChanged={
+                    getActivityMetadataById(
+                      activity,
+                      EditSpecificMetaIds.WORDS_CHANGED,
+                    )?.value
+                  }
+                  percentChanged={
+                    getActivityMetadataById(
+                      activity,
+                      EditSpecificMetaIds.PERCENT_CHANGED,
+                    )?.value
+                  }
+                  blocksChanged={
+                    getActivityMetadataById(
+                      activity,
+                      EditSpecificMetaIds.BLOCKS_CHANGED,
+                    )?.value
+                  }
+                />
+              )
+            })}
         </Flex>
       </Box>
     </Box>
