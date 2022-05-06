@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
-import axios from 'axios'
 import buffer from 'buffer'
 
 type ImageInputType = {
@@ -23,9 +22,15 @@ const ImageInput = ({
     setImageSrc(event.target.value)
     setHideDropzone(true)
     try {
-      const { data } = await axios.get(String(event.target.value), {
-        responseType: 'arraybuffer',
-      })
+      const response = await fetch(
+        `https://images.weserv.nl/?url=${event.target.value}`,
+        {
+          method: 'GET',
+          headers: {},
+        },
+      )
+      const data = await response.arrayBuffer()
+
       setImage(event.target.value, new buffer.Buffer(data as Buffer))
       toast({
         title: 'Image successfully Fetched',
@@ -33,6 +38,7 @@ const ImageInput = ({
         duration: 2000,
       })
     } catch (error) {
+      console.log(error)
       toast({
         title: 'Image could not be fetched. Ensure you have the right link',
         status: 'error',

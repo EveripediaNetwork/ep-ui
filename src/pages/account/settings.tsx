@@ -5,12 +5,7 @@ import NotificationSettings from '@/components/Settings/NotificationSettings'
 import ProfileSettings from '@/components/Settings/ProfileSettings'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
-import {
-  FaBell,
-  FaPlusSquare,
-  FaUserCircle,
-  FaUserShield,
-} from 'react-icons/fa'
+import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import AdvancedSettings from '@/components/Settings/AdvancedSettings'
 
 const Settings = () => {
@@ -47,12 +42,6 @@ const Settings = () => {
             Icon={FaBell}
             tabName="notifications"
             isActive={tab === 'notifications'}
-          />
-          <SettingNavButton
-            text="Account Support"
-            Icon={FaUserShield}
-            tabName="support"
-            isActive={tab === 'support'}
           />
           <SettingNavButton
             text="Advanced Settings"

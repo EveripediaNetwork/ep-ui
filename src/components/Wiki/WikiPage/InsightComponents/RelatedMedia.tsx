@@ -29,7 +29,7 @@ const RelatedMediaGrid = () => {
     return media.link
   }
   return (
-    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">
         <SimpleGrid columns={3} spacing={5}>
           {sampleRelatedMedia.map((media, i) => (
@@ -49,7 +49,7 @@ const RelatedMediaGrid = () => {
                   h="100%"
                   w="100%"
                   objectFit="cover"
-                  bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
+                  bgColor="gray.500"
                 />
               </MediaPreview>
             </AspectRatio>

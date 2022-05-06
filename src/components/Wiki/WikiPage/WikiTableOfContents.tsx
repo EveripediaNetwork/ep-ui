@@ -100,7 +100,6 @@ const WikiTableOfContents = ({
         maxW="20vw"
         px={6}
         py="30px"
-        borderColor="borderColor"
       >
         <VStack
           w="100%"

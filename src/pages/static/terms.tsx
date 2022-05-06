@@ -186,12 +186,7 @@ const Terms = () => (
         <RelatedTopics
           topics={[
             { name: 'Privacy Policy', url: '/static/privacy' },
-            { name: 'Everipedia Guidelines', url: '#' },
-            {
-              name: 'Your California Privacy Rights',
-              url: '/static/privacy#california',
-              isSectionLink: true,
-            },
+            { name: 'Guidelines', url: '/static/guidelines' },
           ]}
         />
       </Box>

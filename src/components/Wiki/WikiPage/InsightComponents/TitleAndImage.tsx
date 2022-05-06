@@ -39,7 +39,7 @@ export const TitleAndImage = ({
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
-        bgColor="wikiCardBg"
+        bgColor="wikiTitleBg"
         as="h3"
         fontSize="18px"
         p={3}

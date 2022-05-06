@@ -8,6 +8,7 @@ import {
   Tag,
   useBreakpointValue,
   Flex,
+  Badge,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
@@ -25,6 +26,7 @@ interface ActivityCardProps {
   wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
   activityId?: string
   wikiId?: string
+  type?: string
 }
 
 const CreatedTime = ({ date }: { date: string }) => {
@@ -49,6 +51,7 @@ const ActivityCard = ({
   wiki,
   activityId,
   wikiId,
+  type,
 }: ActivityCardProps) => {
   const activityCardLinkRoute = activityId
     ? `/revision/${activityId}`
@@ -146,7 +149,7 @@ const ActivityCard = ({
           overflow="hidden"
         />
       </NextLink>
-      <Box w="100%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
+      <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
           <NextLink href={activityCardLinkRoute} passHref>
             <Heading
@@ -157,9 +160,14 @@ const ActivityCard = ({
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
-              w={{ base: '50%', md: '100%' }}
+              w={{ base: '50%', md: '70%' }}
             >
               {title}
+              {type && (
+                <Badge ml="1" fontSize="0.5em" colorScheme="pink">
+                  {type === 'CREATED' ? 'New' : 'Edited'}
+                </Badge>
+              )}
             </Heading>
           </NextLink>
           {wiki.categories.length && (

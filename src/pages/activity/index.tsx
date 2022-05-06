@@ -59,6 +59,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       lastModTimeStamp={activity.datetime}
       wiki={activity.content[0]}
       activityId={activity.id}
+      type={activity.type}
     />
   )
 
