@@ -6,7 +6,7 @@ export type WikiInsights =
       content: {
         value: string
         change: string
-        changeDirection: 'increase' | 'decrease'
+        changeDirection?: 'increase' | 'decrease'
       }
     }
   | {

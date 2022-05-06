@@ -1,10 +1,79 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
-import { sampleProfileStatistics } from '@/data/WikiInsightsData'
+import { fetchTokenStats } from '@/services/token-stats/utils'
+import { TokenStats } from '@/services/token-stats'
+import { WikiInsights } from '@/types/WikiInsightsDataType'
 
 const ProfileStatistics = () => {
+  const [tokenStats, setTokenStats] = useState<TokenStats>()
+  useEffect(() => {
+    const fetchTokenData = async () => {
+      await fetchTokenStats().then(res => {
+        setTokenStats(res)
+        console.table(res)
+      })
+    }
+    fetchTokenData()
+  }, [])
+
+  if (!tokenStats) return null
+
+  const getStatDirection = (stat: number) => {
+    if (stat === 0) return undefined
+    if (stat > 0) return 'increase'
+    return 'decrease'
+  }
+
+  const statChange = (stat: number) => {
+    return `${(stat * 100).toFixed(2)}%`
+  }
+
+  const statWithCommas = (stat: number) => {
+    return `$${stat
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+  }
+
+  const profileStatistics: WikiInsights[] = [
+    {
+      type: 'statistic',
+      title: 'Market Cap',
+      content: {
+        value: statWithCommas(tokenStats.market_cap),
+        change: statChange(tokenStats.market_cap_percentage_change),
+        changeDirection: getStatDirection(
+          tokenStats.market_cap_percentage_change,
+        ),
+      },
+    },
+
+    {
+      type: 'statistic',
+      title: 'Diluted Market Cap',
+      content: {
+        value: statWithCommas(tokenStats.diluted_market_cap),
+        change: statChange(tokenStats.diluted_market_cap_percentage_change),
+        changeDirection: getStatDirection(
+          tokenStats.diluted_market_cap_percentage_change,
+        ),
+      },
+    },
+
+    {
+      type: 'statistic',
+      title: 'Volume',
+      titleTag: '24h',
+      content: {
+        value: statWithCommas(tokenStats.volume),
+        change: statChange(tokenStats.volume_percentage_change),
+        changeDirection: getStatDirection(tokenStats.volume_percentage_change),
+      },
+    },
+  ]
+
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion
@@ -14,7 +83,7 @@ const ProfileStatistics = () => {
         gap={2}
         title="Statistics"
       >
-        {sampleProfileStatistics.map((item, index) => (
+        {profileStatistics.map((item, index) => (
           <AccordionWidget key={index} {...item} />
         ))}
       </WikiAccordion>
