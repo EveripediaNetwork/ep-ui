@@ -157,7 +157,7 @@ const CiteFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </Box>
         </TabPanel>
         <TabPanel>
-          <VStack spacing={8}>
+          <VStack maxH="300px" overflowY="scroll" spacing={8}>
             {refCount > 0 ? (
               references.map((ref, index) => (
                 <Button
@@ -171,6 +171,10 @@ const CiteFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                     w="100% !important"
                     p={8}
                     bgColor="#aaaaaa2a !important"
+                    _dark={{
+                      bgColor: '#2e3445 !important',
+                      color: 'white !important',
+                    }}
                     borderLeftWidth="3px !important"
                     borderColor={`hsl(${hashToNum(
                       ref.url + ref.description,
