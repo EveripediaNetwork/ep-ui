@@ -51,7 +51,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
-    accept: 'image/jpeg, image/png, image/jpg',
+    accept: 'image/jpeg, image/png, image/jpg, image/webp',
   })
 
   useEffect(() => {

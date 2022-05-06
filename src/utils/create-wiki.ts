@@ -48,7 +48,7 @@ export const MINIMUM_WORDS = 150
 export const saveImage = async (image: Image) => {
   const formData = new FormData()
   const blob = new Blob([image.type], {
-    type: 'multipart/form-data',
+    type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
   })
 
   formData.append('operations', POST_IMG)
@@ -213,15 +213,14 @@ export const useGetSignedHash = (deadline: number) => {
           return
         }
         try {
-          const { data: relayerData }: any = await submitVerifiableSignature(
+          const hash = await submitVerifiableSignature(
             data,
             wikiHash,
             accountData?.address,
             deadline,
           )
-
-          if (relayerData && relayerData.hash) {
-            setTxHash(relayerData.hash)
+          if (hash) {
+            setTxHash(hash)
             setActiveStep(2)
           }
         } catch (err) {

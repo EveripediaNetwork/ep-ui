@@ -1,5 +1,4 @@
 import {
-  RiGridFill,
   RiSettings5Fill,
   RiAccountCircleFill,
   RiCompass3Fill,
@@ -18,13 +17,6 @@ export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
     href: '#',
     icon: RiCompass3Fill,
     subItem: [
-      {
-        id: 101,
-        label: 'All Categories',
-        href: '/categories',
-        hasImage: true,
-        icon: RiGridFill,
-      },
       // destructure categories and add to subItem by mapping
       ...categories
         .map(({ title, id, icon }, i) => ({
