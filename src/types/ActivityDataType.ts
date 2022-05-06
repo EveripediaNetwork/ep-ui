@@ -6,4 +6,5 @@ export type Activity = {
   type: string
   content: Wiki[]
   datetime: string
+  ipfs?: string
 }
