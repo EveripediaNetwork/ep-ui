@@ -12,7 +12,6 @@ const ProfileStatistics = () => {
     const fetchTokenData = async () => {
       await fetchTokenStats().then(res => {
         setTokenStats(res)
-        console.table(res)
       })
     }
     fetchTokenData()
