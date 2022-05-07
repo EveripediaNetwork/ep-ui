@@ -11,7 +11,7 @@ const FrameTab = ({ children }: { children: React.ReactNode }) => (
   <Tab
     border="unset"
     _selected={{
-      borderBottom: '1px solid #dbdde5 !important',
+      borderBottom: '2px solid #4ba6f8 !important',
       color: '#4ba6f8 !important',
       _dark: {
         bgColor: '#2e3445 !important',
@@ -37,6 +37,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
   const { eventEmitter } = editorContext
   const [references, setReferences] = React.useState<CiteReference[]>([])
   const [refCount, setRefCount] = React.useState(0)
+  const [tabIndex, setTabIndex] = React.useState(0)
 
   const fetchReferences = () => {
     const fetchedReferences =
@@ -84,7 +85,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
   }
 
   return (
-    <Tabs>
+    <Tabs index={tabIndex} onChange={index => setTabIndex(index)}>
       <TabList mt={-8} mb={8}>
         <FrameTab>New URL</FrameTab>
         <FrameTab>Add from Existing</FrameTab>
@@ -98,6 +99,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
             refCount={refCount}
             handleExistingCiteSubmit={handleExistingCiteSubmit}
             references={references}
+            setTabIndex={setTabIndex}
           />
         </TabPanel>
       </TabPanels>

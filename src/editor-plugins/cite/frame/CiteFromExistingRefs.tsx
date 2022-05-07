@@ -7,12 +7,14 @@ interface AddFromExistingProps {
   refCount: number
   references: CiteReference[]
   handleExistingCiteSubmit: (ref: CiteReference) => void
+  setTabIndex: (index: number) => void
 }
 
 export const CiteFromExistingRefs = ({
   refCount,
   references,
   handleExistingCiteSubmit,
+  setTabIndex,
 }: AddFromExistingProps) => {
   return (
     <VStack maxH="300px" overflowY="scroll" spacing={8}>
@@ -71,6 +73,15 @@ export const CiteFromExistingRefs = ({
           >
             Add a Citation to this Page by clicking the New URL tab at the top
           </Text>
+          <Button
+            className="toastui-editor-ok-button"
+            outline="0 !important"
+            w="60% !important"
+            mt="10px !important"
+            onClick={() => setTabIndex(0)}
+          >
+            Cite New
+          </Button>
         </Box>
       )}
     </VStack>
