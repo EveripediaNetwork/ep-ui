@@ -65,8 +65,8 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
         />
       </FormControl>
       <FormControl>
-        <HStack mt={14} align="center" justify="space-between">
-          <FormLabel m="0">Short Description</FormLabel>
+        <HStack mt="10px" align="center" justify="space-between">
+          <FormLabel m="0 !important">Short Description</FormLabel>
           <Tag
             display="block"
             variant="outline"
@@ -87,7 +87,7 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
           </Tag>
         </HStack>
         <Textarea
-          mt={4}
+          mt="4px"
           w="100% !important"
           value={desc}
           required

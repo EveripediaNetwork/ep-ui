@@ -9,6 +9,7 @@ import { CiteFromExistingRefs } from './CiteFromExistingRefs'
 
 const FrameTab = ({ children }: { children: React.ReactNode }) => (
   <Tab
+    border="unset"
     _selected={{
       borderBottom: '1px solid #dbdde5 !important',
       color: '#4ba6f8 !important',
@@ -18,7 +19,6 @@ const FrameTab = ({ children }: { children: React.ReactNode }) => (
         borderBottom: '2px solid #4ba6f8 !important',
       },
     }}
-    border="unset"
     h="unset !important"
     borderBottom="1px solid #dbdde5 !important"
     borderRadius="0 !important"
