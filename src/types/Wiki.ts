@@ -57,6 +57,12 @@ export type PageType = {
   templateText: string
 }
 
+export interface CiteReference {
+  id: number
+  url: string
+  description: string
+}
+
 enum LanguagesValuesEnum {
   SPANISH = 'Español',
   ENGLISH = 'English',

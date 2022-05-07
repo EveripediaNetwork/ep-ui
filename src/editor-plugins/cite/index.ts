@@ -11,7 +11,7 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import React from 'react'
-import CiteFrame from './frame/CiteFrame'
+import Frame from './frame'
 
 interface PluginInfo {
   toHTMLRenderers?: HTMLConvertorMap
@@ -25,16 +25,12 @@ interface PluginInfo {
 }
 
 export default function cite(context: PluginContext): PluginInfo {
-  // ========================
-  //  Toolbar Frame Elements
-  // ========================
-
   // Frame Container
   const container = document.createElement('div')
 
   // render react component in the container
   ReactDOM.render(
-    React.createElement(CiteFrame, { editorContext: context }),
+    React.createElement(Frame, { editorContext: context }),
     container,
   )
 
