@@ -33,6 +33,7 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
   const [showRed, setShowRed] = React.useState(false)
   const [url, setUrl] = React.useState('')
   const [desc, setDesc] = React.useState<string>('')
+  const [citedIndicator, setCitedIndicator] = React.useState(false)
   return (
     <form
       onSubmit={e => {
@@ -42,6 +43,10 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
           setUrl('')
           setDesc('')
         }
+        setCitedIndicator(true)
+        setTimeout(() => {
+          setCitedIndicator(false)
+        }, 3000)
       }}
     >
       <FormControl>
@@ -107,9 +112,9 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
         className="toastui-editor-ok-button"
         outline="0 !important"
         w="100% !important"
-        mt="20px !important"
+        mt="10px !important"
       >
-        Cite
+        {citedIndicator ? 'Cited !' : 'Cite'}
       </Button>
     </form>
   )
