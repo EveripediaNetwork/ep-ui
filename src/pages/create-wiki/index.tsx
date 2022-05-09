@@ -66,6 +66,7 @@ import {
   useGetSignedHash,
   useCreateWikiEffects,
   useCreateWikiContext,
+  errorMessage,
 } from '@/utils/create-wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -119,7 +120,7 @@ const CreateWikiContent = () => {
 
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
-
+ 
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
   const getImageArrayBufferLength = () =>
@@ -187,6 +188,12 @@ const CreateWikiContent = () => {
 
       // Build the wiki object
       const imageHash = await getImageHash()
+
+      if(!imageHash){
+        setIsLoading('error')
+        setMsg(errorMessage)
+        return
+      }
 
       let interWiki = { ...wiki }
       if (interWiki.id === '') interWiki.id = getWikiSlug()
