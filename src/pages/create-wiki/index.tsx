@@ -86,6 +86,22 @@ const CreateWikiContent = () => {
   const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
   const [commitMessage, setcommitMessage] = useState('')
 
+  const commitMessageLimitAlertStyle = {
+    bgColor: '#d406082a',
+    '&:focus': {
+      borderColor: '#ff787c',
+      boxShadow: '0 0 0 1px #ff787c',
+    },
+  }
+
+  const baseStyle = {
+    bgColor: 'transparent',
+    '&:focus': {
+      borderColor: '#63b3ed',
+      boxShadow: '0 0 0 1px #63b3ed',
+    },
+  }
+
   const {
     isLoadingWiki,
     wikiData,
@@ -402,17 +418,9 @@ const CreateWikiContent = () => {
                 <Textarea
                   value={commitMessage}
                   placeholder="Enter what changed..."
-                  bgColor={
-                    commitMessageLimitAlert ? '#d406082a' : 'transparent'
-                  }
-                  _focus={{
-                    borderColor: commitMessageLimitAlert
-                      ? '#ff787c'
-                      : '#63b3ed',
-                    boxShadow: commitMessageLimitAlert
-                      ? '0 0 0 1px #ff787c'
-                      : '0 0 0 1px #63b3ed',
-                  }}
+                  {...(commitMessageLimitAlert
+                    ? commitMessageLimitAlertStyle
+                    : baseStyle)}
                   onChange={e => {
                     if (e.target.value.length <= 128) {
                       setcommitMessage(e.target.value)
