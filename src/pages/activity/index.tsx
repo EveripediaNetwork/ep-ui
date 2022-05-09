@@ -98,7 +98,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   )
   await Promise.all(getRunningOperationPromises())
   return {
-    props: { activities: activities.status !== 'fulfilled' ? [] : activities.data },
+    props: {
+      activities: activities.status !== 'fulfilled' ? [] : activities.data,
+    },
   }
 }
 
