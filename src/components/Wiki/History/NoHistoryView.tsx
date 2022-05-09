@@ -10,8 +10,8 @@ export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
       alignItems={{ base: 'center' }}
       justifyContent={{ base: 'center' }}
       direction={{ base: 'column' }}
-      mt={{ base: '22' }}
-      mb={{ base: '96' }}
+      mt={{ base: '12', lg: '24' }}
+      mb={{ base: '12' }}
     >
       <Flex
         w={{ lg: '45%', base: '100%' }}
@@ -26,7 +26,7 @@ export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
         />
       </Flex>
 
-      <Box mt={{ lg: '32', base: '12' }} textAlign="center">
+      <Box mt={{ lg: '12', base: '24' }} textAlign="center">
         <Text fontWeight="bold" fontSize="2xl" color="linkColor">
           {' '}
           Looks like this wiki doesn’t have any history yet.{' '}
