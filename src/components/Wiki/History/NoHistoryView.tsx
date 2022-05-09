@@ -11,7 +11,6 @@ export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
       justifyContent={{ base: 'center' }}
       direction={{ base: 'column' }}
       mt={{ base: '12', lg: '24' }}
-      mb={{ base: '12' }}
     >
       <Flex
         w={{ lg: '45%', base: '100%' }}
