@@ -11,7 +11,7 @@ import {
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
-import { HStack, Flex, Spinner } from '@chakra-ui/react'
+import { HStack, Flex, Spinner, Box } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
@@ -20,6 +20,9 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
+import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
+import { getWikiMetadataById } from '@/utils/getWikiFields'
+import { CommonMetaIds } from '@/types/Wiki'
 
 const Wiki = () => {
   const router = useRouter()
@@ -34,10 +37,8 @@ const Wiki = () => {
   // get the link id if available to scroll to the correct position
   useEffect(() => {
     if (!isTocEmpty) {
-      const linkId = window.location.hash.replace('#', '')
-      if (linkId) {
-        router.push(`/wiki/${slug}#${linkId}`)
-      }
+      const linkId = window.location.hash
+      if (linkId) router.push(`/wiki/${slug}${linkId}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTocEmpty])
@@ -117,14 +118,26 @@ const Wiki = () => {
             >
               <WikiActionBar wiki={wiki} />
               {wiki ? (
-                <>
-                  <WikiMainContent
-                    wiki={wiki}
-                    addToTOC={addToTOC}
-                    addWikiPreview={wikiLinkRenderer}
+                <Box>
+                  <Flex
+                    w="100%"
+                    justify="space-between"
+                    direction={{ base: 'column', md: 'row' }}
+                  >
+                    <WikiMainContent
+                      wiki={wiki}
+                      addToTOC={addToTOC}
+                      addWikiPreview={wikiLinkRenderer}
+                    />
+                    <WikiInsights wiki={wiki} />
+                  </Flex>
+                  <WikiReferences
+                    references={JSON.parse(
+                      getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)
+                        ?.value || '[]',
+                    )}
                   />
-                  <WikiInsights wiki={wiki} />
-                </>
+                </Box>
               ) : (
                 <WikiNotFound />
               )}

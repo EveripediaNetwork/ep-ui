@@ -1,5 +1,5 @@
 import { store } from '@/store/store'
-import { CiteReference } from '@/types/Wiki'
+import { CiteReference, CommonMetaIds } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
@@ -41,7 +41,8 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
 
   const fetchReferences = () => {
     const fetchedReferences =
-      getWikiMetadataById(store.getState().wiki, 'references')?.value || '[]'
+      getWikiMetadataById(store.getState().wiki, CommonMetaIds.REFERENCES)
+        ?.value || '[]'
     const referencesParsed = JSON.parse(fetchedReferences)
     setReferences(referencesParsed)
     setRefCount(referencesParsed.length)
@@ -52,6 +53,9 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
   }, [])
 
   const handleCiteSubmit = (url: string, description: string) => {
+    // Generate a new unique id
+    const newRefId = `${Math.random().toString(36).substring(2, 15)}`
+
     // Dispatch new metadata to wiki slice
     store.dispatch({
       type: 'wiki/updateMetadata',
@@ -60,7 +64,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
         value: JSON.stringify([
           ...references,
           {
-            id: refCount + 1,
+            id: newRefId,
             url,
             description,
           },
@@ -70,7 +74,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
 
     // Add CiteMarker to editor
     eventEmitter.emit('command', 'cite', {
-      urlId: `#cite-id-${refCount + 1}`,
+      urlId: `#cite-id-${newRefId}`,
       refNo: refCount + 1,
     })
     fetchReferences()

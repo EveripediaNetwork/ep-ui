@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithoutRef } from 'react'
 import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
 import WikiPreviewHover from '@/components/Wiki/WikiPage/WikiPreviewHover'
+import CitationPreviewHover from '@/components/Wiki/WikiPage/CitationPreviewHover'
 
 export const wikiLinkRenderer = ({
   children,
@@ -26,5 +27,15 @@ export const wikiLinkRenderer = ({
       slug: wikiSlug,
     })
   }
+
+  // Check if the link is a cite-id
+  const isCiteIdPresent = props.href && props.href.match(/#cite-id-(.*)/)
+  if (isCiteIdPresent) {
+    return React.createElement(CitationPreviewHover, {
+      text: children[0] as string,
+      href: props.href,
+    })
+  }
+
   return React.createElement(props.node.tagName, props, children)
 }
