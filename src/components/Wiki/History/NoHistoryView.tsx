@@ -6,16 +6,16 @@ import { Wiki } from '@/types/Wiki'
 export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
   return (
     <Flex
-      w={{ base: '100%' }}
-      alignItems={{ base: 'center' }}
-      justifyContent={{ base: 'center' }}
-      direction={{ base: 'column' }}
+      w="100%"
+      align="center"
+      justify="center"
+      direction="column"
       mt={{ base: '12', lg: '24' }}
     >
       <Flex
         w={{ lg: '45%', base: '100%' }}
-        alignItems={{ base: 'center' }}
-        justifyContent={{ base: 'center' }}
+        alignItems="center"
+        justifyContent="center"
       >
         <Image
           flex={1}
