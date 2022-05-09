@@ -107,7 +107,9 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
           </StatNumber>
           <div>
             <StatHelpText float="right" m={0}>
-              <StatArrow type={content.changeDirection} />
+              {content.changeDirection && (
+                <StatArrow type={content.changeDirection} />
+              )}
               {content.change}
             </StatHelpText>
           </div>

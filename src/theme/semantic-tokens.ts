@@ -37,10 +37,6 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'gray.600',
     },
-    homeCardBg: {
-      default: 'white',
-      _dark: 'gray.700',
-    },
     toolTipBg: {
       default: 'black',
       _dark: 'gray.500',
@@ -100,6 +96,14 @@ export const semanticTokens: SemanticTokens = {
     wikiActionBtnDisabled: {
       default: 'gray.400',
       _dark: 'gray.600',
+    },
+    fadedText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
+    divider: {
+      default: 'gray.200',
+      _dark: 'whiteAlpha.400',
     },
   },
 }

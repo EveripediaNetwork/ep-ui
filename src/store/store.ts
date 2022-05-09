@@ -10,6 +10,7 @@ import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
 import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/nav-search'
+import { tokenStatsApi } from '@/services/token-stats'
 
 export const store = configureStore({
   reducer: {
@@ -22,13 +23,15 @@ export const store = configureStore({
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [navSearchApi.reducerPath]: navSearchApi.reducer,
+    [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(activitiesApi.middleware)
-      .concat(navSearchApi.middleware),
+      .concat(navSearchApi.middleware)
+      .concat(tokenStatsApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

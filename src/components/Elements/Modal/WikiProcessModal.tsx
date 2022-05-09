@@ -55,6 +55,7 @@ const WikiProcessModal = ({
       isOpen={isOpen}
       isCentered
       size="2xl"
+      closeOnOverlayClick={false}
     >
       <AlertDialogOverlay />
       <AlertDialogContent>
