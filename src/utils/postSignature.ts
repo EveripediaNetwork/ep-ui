@@ -1,7 +1,6 @@
 import { GraphQLClient, gql } from 'graphql-request'
 import config from '@/config'
 
-
 export const submitVerifiableSignature = async (
   signedData: string,
   wikiHash: string,

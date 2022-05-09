@@ -48,7 +48,7 @@ export const MINIMUM_WORDS = 150
 export const saveImage = async (image: Image) => {
   const formData = new FormData()
   const blob = new Blob([image.type], {
-    type: 'imagess/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
+    type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
   })
 
   formData.append('operations', POST_IMG)
@@ -56,7 +56,7 @@ export const saveImage = async (image: Image) => {
   formData.append('map', map)
   formData.append('0', blob)
 
-  try{
+  try {
     const {
       data: {
         data: {
@@ -66,10 +66,9 @@ export const saveImage = async (image: Image) => {
     } = await axios.post(config.graphqlUrl, formData, {})
 
     return IpfsHash
-  }
-  catch(err){
+  } catch (err) {
     return null
-  }  
+  }
 }
 
 export const [CreateWikiProvider, useCreateWikiContext] =

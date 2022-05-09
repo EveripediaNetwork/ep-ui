@@ -120,7 +120,7 @@ const CreateWikiContent = () => {
 
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
- 
+
   const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
 
   const getImageArrayBufferLength = () =>
@@ -189,7 +189,7 @@ const CreateWikiContent = () => {
       // Build the wiki object
       const imageHash = await getImageHash()
 
-      if(!imageHash){
+      if (!imageHash) {
         setIsLoading('error')
         setMsg(errorMessage)
         return
