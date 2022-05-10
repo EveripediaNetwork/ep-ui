@@ -33,10 +33,8 @@ export const GET_ACTIVITIES = gql`
 
 export const GET_LATEST_ACTIVITY_BY_WIKI = gql`
   query GetLatestActivityByWiki($wikiId: String!) {
-    {
-      activitiesByWikId(wikiId: $wikiId, limit:1) {
-        ipfs
-      }
+    activitiesByWikId(wikiId: $wikiId, limit: 1) {
+      ipfs
     }
   }
 `

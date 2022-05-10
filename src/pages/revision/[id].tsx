@@ -43,8 +43,9 @@ const Wiki = () => {
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
 
+  const wikiId = wiki?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
-    typeof ActivityId === 'string' ? ActivityId : skipToken,
+    typeof wikiId === 'string' ? wikiId : skipToken,
     {
       skip: router.isFallback,
     },
@@ -62,10 +63,12 @@ const Wiki = () => {
   }, [isTocEmpty])
 
   useEffect(() => {
-    if (latestIPFS === wiki?.ipfs) {
+    if (latestIPFS && wiki && latestIPFS !== wiki?.ipfs) {
+      setIsLatest(false)
+    } else {
       setIsLatest(true)
     }
-  }, [latestIPFS, wiki?.ipfs])
+  }, [latestIPFS, wiki, wiki?.ipfs])
 
   // here toc is not state variable since there seems to be some issue
   // with in react-markdown that is causing infinite loop if toc is state variable
@@ -203,7 +206,9 @@ const Wiki = () => {
                   <WikiNotFound />
                 )}
               </Flex>
-              {!isTocEmpty && <WikiTableOfContents toc={toc} isAlertAtTop />}
+              {!isTocEmpty && (
+                <WikiTableOfContents toc={toc} isAlertAtTop={!isLatest} />
+              )}
             </HStack>
           </Box>
         )}
