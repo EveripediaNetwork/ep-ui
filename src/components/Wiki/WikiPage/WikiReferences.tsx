@@ -51,7 +51,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
             <Text color="blue.500">[{index + 1}] </Text>
             <Box>
               <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
-                <Link p="0 0 0 0 !important" href={ref.url}>
+                <Link rel="nofollow" p="0 0 0 0 !important" href={ref.url}>
                   {new URL(ref.url).hostname}
                 </Link>
               </Tag>
