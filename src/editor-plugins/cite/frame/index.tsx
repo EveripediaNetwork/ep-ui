@@ -67,6 +67,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
             id: newRefId,
             url,
             description,
+            timestamp: new Date().toISOString(),
           },
         ]),
       },

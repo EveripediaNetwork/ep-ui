@@ -8,7 +8,11 @@ const CitationPreviewHover = ({
   text: string
   href?: string
 }) => {
-  return <Link href={href}>{text}</Link>
+  return (
+    <Link href={href}>
+      <sup>{text}</sup>
+    </Link>
+  )
 }
 
 export default CitationPreviewHover

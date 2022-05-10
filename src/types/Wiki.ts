@@ -61,6 +61,7 @@ export interface CiteReference {
   id: number
   url: string
   description: string
+  timestamp: string
 }
 
 enum LanguagesValuesEnum {

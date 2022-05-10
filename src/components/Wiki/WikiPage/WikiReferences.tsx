@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { CiteReference } from '@/types/Wiki'
-import { Box, Flex, Heading, SimpleGrid, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Tag,
+  Text,
+  Link,
+} from '@chakra-ui/react'
 
 interface WikiReferencesProps {
   references: CiteReference[]
@@ -20,16 +28,16 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
   if (references.length === 0) return null
   return (
     <Box borderTopWidth="1px" p={4}>
-      <Heading my={4} fontWeight="500">
+      <Heading my={4} p={2} fontWeight="500">
         REFERENCES
       </Heading>
-      <SimpleGrid mt={4} columns={2} spacing={4}>
-        {references.map((reference, index) => (
+      <SimpleGrid mb={8} columns={[1, 2, 3]} spacing={4}>
+        {references.map((ref, index) => (
           <Flex
-            id={`cite-id-${reference.id}`}
+            id={`cite-id-${ref.id}`}
             bgColor={
-              currentLocationHash === `#cite-id-${reference.id}`
-                ? '#cca7002a'
+              currentLocationHash === `#cite-id-${ref.id}`
+                ? '#c5e2f644'
                 : 'transparent'
             }
             borderRadius={4}
@@ -42,12 +50,21 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
           >
             <Text color="blue.500">[{index + 1}] </Text>
             <Box>
-              <Tag colorScheme="blue" as="h3" fontSize="sm" fontWeight="500">
-                {reference.url}
+              <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
+                <Link p="0 0 0 0 !important" href={ref.url}>
+                  {new URL(ref.url).hostname}
+                </Link>
               </Tag>
-              <Text display="inline" ml={2} mt={2} lineHeight="7">
-                {reference.description}
-              </Text>
+              <Text>{ref.description}</Text>
+              {ref.timestamp && (
+                <Text opacity={0.6} fontSize="sm">
+                  {new Date(ref.timestamp).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </Text>
+              )}
             </Box>
           </Flex>
         ))}
