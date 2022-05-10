@@ -5,6 +5,7 @@ import {
   GET_ACTIVITIES,
   GET_ACTIVITIES_BY_ID,
   GET_ACTIVITIES_BY_WIKI,
+  GET_LATEST_ACTIVITY_BY_WIKI,
 } from '@/services/activities/queries'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
@@ -17,6 +18,13 @@ type GetActivityByIdResponse = {
 }
 type GetActivityByWikiResponse = {
   activitiesByWikId: Activity[]
+}
+type GetLatestActivityByWikiResponse = {
+  activitiesByWikId: [
+    {
+      ipfs: string
+    },
+  ]
 }
 
 type ActivitiesArg = {
@@ -52,6 +60,14 @@ export const activitiesApi = createApi({
       transformResponse: (response: GetActivityByIdResponse) =>
         response.activityById,
     }),
+    getLatestIPFSByWiki: builder.query<string, string>({
+      query: (wikiId: string) => ({
+        document: GET_LATEST_ACTIVITY_BY_WIKI,
+        variables: { wikiId },
+      }),
+      transformResponse: (response: GetLatestActivityByWikiResponse) =>
+        response.activitiesByWikId[0].ipfs,
+    }),
     getActivityByWiki: builder.query<Activity[], string>({
       query: (id: string) => ({
         document: GET_ACTIVITIES_BY_WIKI,
@@ -67,8 +83,13 @@ export const {
   useGetLatestActivitiesQuery,
   useGetActivityByWikiQuery,
   useGetActivityByIdQuery,
+  useGetLatestIPFSByWikiQuery,
   util: { getRunningOperationPromises },
 } = activitiesApi
 
-export const { getLatestActivities, getActivityByWiki, getActivityById } =
-  activitiesApi.endpoints
+export const {
+  getLatestActivities,
+  getActivityByWiki,
+  getLatestIPFSByWiki,
+  getActivityById,
+} = activitiesApi.endpoints

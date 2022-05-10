@@ -12,9 +12,10 @@ import CurrencyConverter from './InsightComponents/CurrencyConverter'
 
 interface WikiInsightsProps {
   wiki: Wiki
+  ipfs?: string
 }
 
-const WikiInsights = ({ wiki }: WikiInsightsProps) => (
+const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => (
   <VStack
     maxW="500px"
     borderLeftWidth={{ base: 0, md: '1px' }}
@@ -28,7 +29,7 @@ const WikiInsights = ({ wiki }: WikiInsightsProps) => (
       wikiTitle={wiki}
       categories={wiki.categories}
       lastEdited={wiki.updated || wiki?.created}
-      ipfsHash={wiki.ipfs}
+      ipfsHash={ipfs || wiki.ipfs}
       lastEditor={wiki.user?.id}
       imgSrc={getWikiImageUrl(wiki)}
     />
