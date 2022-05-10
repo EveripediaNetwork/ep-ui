@@ -282,7 +282,7 @@ const CreateWikiContent = () => {
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
-  
+
   useEffect(() => {
     if (activeStep === 3) {
       prevEditedWiki.current.isPublished = true
