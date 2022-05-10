@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useGetActivityByIdQuery } from '@/services/activities'
 import { useGetWikiQuery } from '@/services/wikis'
-import { CiteReference, CommonMetaIds } from '@/types/Wiki'
+import { CiteReference, CommonMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
   HStack,
@@ -25,16 +27,32 @@ const CitationPreviewHover = ({
   href?: string
   id?: string
 }) => {
-  const [isOpen, setIsOpen] = React.useState(true)
+  const [isOpen, setIsOpen] = React.useState(false)
   const router = useRouter()
   const { slug } = router.query
-  const { data: wiki } = useGetWikiQuery(
-    typeof slug === 'string' ? slug : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
+  let wiki: Wiki | undefined
+
+  if (slug) {
+    const { data: wikiData } = useGetWikiQuery(
+      typeof slug === 'string' ? slug : skipToken,
+      {
+        skip: router.isFallback,
+      },
+    )
+    wiki = wikiData
+  } else if (router.asPath.includes('/revision/')) {
+    const revisionId = router.asPath.replace('/revision/', '')
+    const { data: revisionData } = useGetActivityByIdQuery(
+      typeof revisionId === 'string' ? revisionId : skipToken,
+      {
+        skip: router.isFallback,
+      },
+    )
+    wiki = revisionData?.content[0]
+  }
+
   if (!wiki) return null
+
   const referencesString = getWikiMetadataById(
     wiki,
     CommonMetaIds.REFERENCES,
@@ -43,8 +61,6 @@ const CitationPreviewHover = ({
   const ref = references.find(
     (r: CiteReference) => r.id === id?.split('#cite-id-')[1],
   )
-
-  console.log(references)
 
   return (
     <Popover
