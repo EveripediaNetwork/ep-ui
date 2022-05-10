@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 export const authenticatedRoute = <P extends object>(
-  WrappedComponent: React.ComponentType<P>,
+  WrappedComponent: () => JSX.Element,
 ) => {
   const AuthenticatedRoute = (props: P) => {
     const router = useRouter()

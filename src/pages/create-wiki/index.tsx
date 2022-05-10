@@ -579,4 +579,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default authenticatedRoute(memo(CreateWiki))
+export default authenticatedRoute(
+  memo(CreateWiki) as unknown as () => JSX.Element,
+)
