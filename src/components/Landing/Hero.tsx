@@ -87,21 +87,21 @@ export const Hero = ({ wiki }: HeroProps) => (
       >
         <chakra.h1
           mb={6}
-          fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '5xl' }}
+          fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
           marginTop={{ md: '60px' }}
           fontWeight="bold"
           lineHeight="shorter"
           letterSpacing="wider"
         >
-          An Ecosystem of Knowledge.
+          An Ecosystem of Knowledge on the Blockchain.
         </chakra.h1>
         <chakra.p
           pr={{ base: 0, lg: 16 }}
           mb={4}
-          fontSize={{ base: 'sm', md: 'xl', lg: '2xl' }}
+          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           letterSpacing="wider"
         >
-          On the blockchain
+          Everipedia is the world’s largest crypto knowledge base
         </chakra.p>
 
         <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>

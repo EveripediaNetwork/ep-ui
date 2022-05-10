@@ -66,9 +66,7 @@ const Editor = ({ onChange, markdown }: EditorType) => {
             ['heading', 'bold', 'italic', 'strike'],
             ['hr', 'quote'],
             ['ul', 'ol', 'indent', 'outdent'],
-            ['table', 'image'],
-            ['code', 'codeblock'],
-            ['scrollSync'],
+            ['table', 'image', 'code'],
           ]}
         />
       )}
