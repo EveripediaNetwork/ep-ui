@@ -34,6 +34,7 @@ export const wikiLinkRenderer = ({
     return React.createElement(CitationPreviewHover, {
       text: children[0] as string,
       href: props.href,
+      id: props.href,
     })
   }
 

@@ -58,7 +58,7 @@ export type PageType = {
 }
 
 export interface CiteReference {
-  id: number
+  id: string
   url: string
   description: string
   timestamp: string
