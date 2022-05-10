@@ -139,7 +139,7 @@ const Navbar = () => {
       <Box
         boxShadow="sm"
         position="fixed"
-        zIndex={1500}
+        zIndex="banner"
         w="full"
         h={{ base: isHamburgerOpen ? '100%' : 'unset', md: 'unset' }}
         bg="subMenuBg"
