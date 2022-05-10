@@ -254,8 +254,7 @@ const CreateWikiContent = () => {
 
       if (wikiResult && 'data' in wikiResult)
         saveHashInTheBlockchain(String(wikiResult.data))
-        
-      else{
+      else {
         setIsLoading('error')
         setMsg(errorMessage)
       }
