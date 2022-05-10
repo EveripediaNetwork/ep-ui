@@ -214,7 +214,6 @@ const CreateWikiContent = () => {
         setMsg(errorMessage)
         return
       }
-
       let interWiki = { ...wiki }
       if (interWiki.id === '') interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
@@ -248,25 +247,27 @@ const CreateWikiContent = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
-      const wikiResult = await store.dispatch(
-        postWiki.initiate({ data: finalWiki }),
-      )
+        const wikiResult = await store.dispatch(
+          postWiki.initiate({ data: finalWiki }),
+        )
 
-      if (wikiResult && 'data' in wikiResult)
+        if (wikiResult && 'data' in wikiResult)
         saveHashInTheBlockchain(String(wikiResult.data))
-
-      // clear all edit based metadata from redux state
-      Object.values(EditSpecificMetaIds).forEach(id => {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id,
-            value: '',
-          },
+        else{
+          setIsLoading('error')
+          setMsg(errorMessage)
+        }
+        // clear all edit based metadata from redux state
+        Object.values(EditSpecificMetaIds).forEach(id => {
+          dispatch({
+            type: 'wiki/updateMetadata',
+            payload: {
+              id,
+              value: '',
+            },
+          })
         })
-      })
-
-      setSubmittingWiki(false)
+        setSubmittingWiki(false)
     }
   }
 
