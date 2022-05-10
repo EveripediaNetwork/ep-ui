@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useRef,
   memo,
+  useState,
   ChangeEvent,
   useMemo,
 } from 'react'
@@ -33,6 +34,7 @@ import {
   PopoverHeader,
   PopoverBody,
   PopoverFooter,
+  Tag,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -66,6 +68,7 @@ import {
   useGetSignedHash,
   useCreateWikiEffects,
   useCreateWikiContext,
+  errorMessage,
 } from '@/utils/create-wiki'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
@@ -81,6 +84,24 @@ const CreateWikiContent = () => {
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
+  const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
+  const [commitMessage, setcommitMessage] = useState('')
+
+  const commitMessageLimitAlertStyle = {
+    bgColor: '#d406082a',
+    '&:focus': {
+      borderColor: '#ff787c',
+      boxShadow: '0 0 0 1px #ff787c',
+    },
+  }
+
+  const baseStyle = {
+    bgColor: 'transparent',
+    '&:focus': {
+      borderColor: '#63b3ed',
+      boxShadow: '0 0 0 1px #63b3ed',
+    },
+  }
 
   const {
     isLoadingWiki,
@@ -187,6 +208,12 @@ const CreateWikiContent = () => {
 
       // Build the wiki object
       const imageHash = await getImageHash()
+
+      if (!imageHash) {
+        setIsLoading('error')
+        setMsg(errorMessage)
+        return
+      }
 
       let interWiki = { ...wiki }
       if (interWiki.id === '') interWiki.id = getWikiSlug()
@@ -381,17 +408,41 @@ const CreateWikiContent = () => {
                 Commit Message <small>(Optional)</small>{' '}
               </PopoverHeader>
               <PopoverBody>
-                <Textarea
-                  placeholder="Enter what changed..."
-                  onChange={e =>
-                    dispatch({
-                      type: 'wiki/updateMetadata',
-                      payload: {
-                        id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                        value: e.target.value,
-                      },
-                    })
+                <Tag
+                  mb={{ base: 2, lg: 2 }}
+                  variant="solid"
+                  colorScheme={
+                    // eslint-disable-next-line no-nested-ternary
+                    commitMessageLimitAlert
+                      ? 'red'
+                      : (commitMessage?.length || '') > 50
+                      ? 'green'
+                      : 'yellow'
                   }
+                >
+                  {commitMessage?.length || 0}/128
+                </Tag>
+                <Textarea
+                  value={commitMessage}
+                  placeholder="Enter what changed..."
+                  {...(commitMessageLimitAlert
+                    ? commitMessageLimitAlertStyle
+                    : baseStyle)}
+                  onChange={e => {
+                    if (e.target.value.length <= 128) {
+                      setcommitMessage(e.target.value)
+                      dispatch({
+                        type: 'wiki/updateMetadata',
+                        payload: {
+                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                          value: e.target.value,
+                        },
+                      })
+                    } else {
+                      setcommitMessageLimitAlert(true)
+                      setTimeout(() => setcommitMessageLimitAlert(false), 2000)
+                    }
+                  }}
                 />
               </PopoverBody>
               <PopoverFooter>

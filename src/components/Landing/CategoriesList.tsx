@@ -38,7 +38,7 @@ const CategoriesList = () => {
             key={category.id}
             _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
             cursor="pointer"
-            bgColor="homeCardBg"
+            bgColor="cardBg"
             borderRadius="lg"
             overflow="hidden"
             shadow="base"
