@@ -254,6 +254,11 @@ const CreateWikiContent = () => {
 
       if (wikiResult && 'data' in wikiResult)
         saveHashInTheBlockchain(String(wikiResult.data))
+        
+      else{
+        setIsLoading('error')
+        setMsg(errorMessage)
+      }
 
       // clear all edit based metadata from redux state
       Object.values(EditSpecificMetaIds).forEach(id => {
