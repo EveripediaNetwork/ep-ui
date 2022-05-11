@@ -8,7 +8,7 @@ export const resources = {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
       iq_description:
-        "The 🧠 IQ token is a multichain token that powers the Everipedia ecosystem of dapps and features! Read the",
+        "Everipedia is the world’s largest crypto knowledge base",
       hero_title: "An Ecosystem of Knowledge on the Blockchain.",
       docs: "docs",
       for_technical_specs: "for the technical specs.",
@@ -171,7 +171,7 @@ export const resources = {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
       iq_description:
-        "🧠IQ토큰은 dapp 및 기능과 에브리피디아의 생태계를 지원하는 멀티체인 토큰입니다!",
+        "Everipedia는 세계 최대의 암호화 지식 기반입니다.",
       docs: "문서",
       hero_title: "멀티체인 토큰입니다",
       for_technical_specs: "기술 사양.",
@@ -334,7 +334,7 @@ export const resources = {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
       iq_description:
-        "🧠IQ代币是一种多链代币，驱动Everipedia的dapps生态和特色！阅读",
+        "Everipedia 是世界上最大的加密知识库",
       docs: "文档",
       for_technical_specs: "以了解技术规格.",
       bridge: "桥接",
