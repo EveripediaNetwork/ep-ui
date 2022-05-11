@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -24,12 +24,18 @@ import {
 } from '@/components/Layout/Footer'
 
 import { RiGlobalLine } from 'react-icons/ri'
-
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+  const {i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
+  const [lang, setLang] = useState<string | any>(languageData[0].value)
+  const hanleLangChange = (userLang: any) => {
+    setLang(userLang)
+    i18n.changeLanguage(userLang)
+  }
   return (
     <Box bg="brandBackground" color="default">
       <Container
@@ -65,17 +71,17 @@ const Footer = () => {
               <Box>
                 <Menu>
                   <MenuButton fontSize="sm">
-                    English, USA <ChevronDownIcon />
+                    {lang.toUpperCase()} <ChevronDownIcon />
                   </MenuButton>
                   <MenuList color="linkColor">
-                    <MenuOptionGroup type="radio">
-                      {languageData.map(lang => (
+                    <MenuOptionGroup type="radio" onChange={hanleLangChange}>
+                      {languageData.map(langObj => (
                         <MenuItemOption
-                          key={lang.id}
+                          key={langObj.id}
                           fontSize="md"
-                          value={lang.value}
+                          value={langObj.value}
                         >
-                          {lang.language}
+                          {langObj.language}
                         </MenuItemOption>
                       ))}
                     </MenuOptionGroup>

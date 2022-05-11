@@ -24,6 +24,7 @@ import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
 import { BaseProvider } from '@ethersproject/providers'
 import chakraTheme from '../theme'
+import '../utils/i18n'
 
 type EpAppProps = AppProps & {
   Component: AppProps['Component'] & { noFooter?: boolean }
