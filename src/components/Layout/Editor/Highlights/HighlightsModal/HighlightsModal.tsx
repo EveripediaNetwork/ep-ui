@@ -76,9 +76,7 @@ const HighlightsModal = ({
 
   const [currentSocialMedia, setCurrentSocialMedia] = useState<string>()
   const [currentUserName, setCurrentUserName] = useState<string>()
-  const [socialMedia, setSocialMedia] = useState<Record<string, string>>({
-    facebook: 'anubra266',
-  })
+  const [socialMedia, setSocialMedia] = useState<Record<string, string>>({})
 
   type SocialMediaOption = ArrayElement<typeof SOCIAL_MEDIA_OPTIONS>
   const findSocialMedia = (network: string): SocialMediaOption =>
