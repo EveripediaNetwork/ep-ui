@@ -29,7 +29,7 @@ import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
-  const {i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string | any>(languageData[0].value)
   const hanleLangChange = (userLang: any) => {
