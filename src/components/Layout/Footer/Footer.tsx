@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Container,
@@ -29,13 +29,17 @@ import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string | any>(languageData[0].value)
   const hanleLangChange = (userLang: any) => {
     setLang(userLang)
     i18n.changeLanguage(userLang)
   }
+
+  useEffect(() => { 
+    setLang(localStorage.storeLang)
+  }, [JSON.stringify(localStorage.storeLang)])
   return (
     <Box bg="brandBackground" color="default">
       <Container
@@ -57,7 +61,7 @@ const Footer = () => {
         <SimpleGrid fontSize="xs" columns={{ base: 1, lg: 2 }}>
           <Stack align={{ base: 'center', lg: 'flex-start' }} flex="1">
             <Text fontSize="sm" py={3}>
-              © 2022 Everipedia. All rights reserved
+              {`${t('copyRight')}`}
             </Text>
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>

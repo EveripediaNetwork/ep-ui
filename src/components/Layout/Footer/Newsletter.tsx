@@ -1,14 +1,16 @@
 import React from 'react'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 
-const Newsletter = () => (
-  <Stack align={{ base: 'center', lg: 'flex-start' }} spacing={4}>
+
+const Newsletter = () => {
+  const {t} = useTranslation();
+  return (<Stack align={{ base: 'center', lg: 'flex-start' }} spacing={4}>
     <Text fontSize="xl" fontWeight="bold" py={2}>
-      Get updated with Everipedia
+      {`${t('updatesFooterHeading')}`}
     </Text>
     <Text align={{ base: 'center', lg: 'start' }} maxW="600px">
-      Join our mailing list to stay in the loop with our newest feature
-      releases, NFT drops, and tips and tricks for navigating Everipedia.
+      {`${t('updatesFooterText')}`}
     </Text>
     <Button
       onClick={() =>
@@ -20,9 +22,9 @@ const Newsletter = () => (
       size="lg"
       variant="solid"
     >
-      Subscribe now
+      {`${t('subScribeFooterBttn')}`}
     </Button>
-  </Stack>
-)
+  </Stack>)
+}
 
 export default Newsletter

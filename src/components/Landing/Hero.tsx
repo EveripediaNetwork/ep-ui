@@ -111,14 +111,14 @@ export const Hero = ({ wiki }: HeroProps) => {
 
           <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
             <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
-              Explore
+            {`${t('exploreHeroBttn')}`}
             </LinkButton>
             <LinkButton
               href="/create-wiki"
               w={{ base: 32, lg: 40 }}
               variant="outline"
             >
-              Create
+              {`${t('createHeroBttn')}`}
             </LinkButton>
           </ButtonGroup>
         </Flex>
@@ -133,7 +133,7 @@ export const Hero = ({ wiki }: HeroProps) => {
         pos={{ lg: 'absolute' }}
         bottom={{ lg: 0 }}
       >
-        Learn more about Everipedia
+        {`${t('learnMoreHeroBttn')}`}
       </LinkButton>
     </Flex>
   )
