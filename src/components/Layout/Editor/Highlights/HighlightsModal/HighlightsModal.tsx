@@ -39,27 +39,27 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 
 const SOCIAL_MEDIA_OPTIONS = [
   {
-    id: 'facebook',
+    id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
     icon: <AiOutlineFacebook />,
   },
   {
-    id: 'instagram',
+    id: CommonMetaIds.INSTAGRAM_PROFILE,
     label: 'Instagram',
     icon: <AiOutlineInstagram />,
   },
   {
-    id: 'twitter',
+    id: CommonMetaIds.TWITTER_PROFILE,
     label: 'Twitter',
     icon: <AiOutlineTwitter />,
   },
   {
-    id: 'linkedin',
+    id: CommonMetaIds.LINKEDIN_PROFILE,
     label: 'Linkedin',
     icon: <AiOutlineLinkedin />,
   },
   {
-    id: 'youtube',
+    id: CommonMetaIds.YOUTUBE_PROFILE,
     label: 'Youtube',
     icon: <AiOutlineYoutube />,
   },
@@ -75,8 +75,11 @@ const HighlightsModal = ({
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
   const [currentSocialMedia, setCurrentSocialMedia] = useState<string>()
-  const [currentUserName, setCurrentUserName] = useState<string>()
-  const [socialMedia, setSocialMedia] = useState<Record<string, string>>({})
+  const [currentSocialLink, setCurrentSocialLink] = useState<string>()
+
+  const socialMedia = SOCIAL_MEDIA_OPTIONS.filter(
+    med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
+  )
 
   type SocialMediaOption = ArrayElement<typeof SOCIAL_MEDIA_OPTIONS>
   const findSocialMedia = (network: string): SocialMediaOption =>
@@ -84,29 +87,31 @@ const HighlightsModal = ({
     ({} as SocialMediaOption)
 
   const removeSocialMedia = (network: string) => {
-    setSocialMedia(prev =>
-      Object.entries(prev)
-        .filter(med => med[0] !== network)
-        .reduce(
-          (acc, [med, username]) => ({ ...acc, [med]: username }),
-          {} as Record<string, string>,
-        ),
-    )
+    dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: network,
+        value: '',
+      },
+    })
   }
 
-  const updateSocialMedia = (network?: string, username?: string) => {
-    if (network && username) {
-      setSocialMedia(prev => ({
-        ...prev,
-        [network]: username,
-      }))
+  const updateSocialMedia = (network?: string, link?: string) => {
+    if (network && link) {
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: network,
+          value: link,
+        },
+      })
       setCurrentSocialMedia('')
-      setCurrentUserName('')
+      setCurrentSocialLink('')
     }
   }
 
   const addSocialMedia = () => {
-    updateSocialMedia(currentSocialMedia, currentUserName)
+    updateSocialMedia(currentSocialMedia, currentSocialLink)
   }
 
   const getWikiAttribute = (attr: string) => {
@@ -219,7 +224,7 @@ const HighlightsModal = ({
                   placeholder="Select Network"
                 >
                   {SOCIAL_MEDIA_OPTIONS.filter(
-                    med => !Object.keys(socialMedia).includes(med.id),
+                    med => !socialMedia.includes(med),
                   ).map(med => (
                     <chakra.option key={med.id} value={med.id}>
                       {med.label}
@@ -227,20 +232,22 @@ const HighlightsModal = ({
                   ))}
                 </Select>
                 <Input
-                  placeholder="Enter username"
-                  value={currentUserName}
+                  placeholder="Enter link"
+                  value={currentSocialLink}
                   onChange={event => {
-                    setCurrentUserName(event.target.value)
+                    setCurrentSocialLink(event.target.value)
                   }}
+                  type="url"
                 />
                 <Button colorScheme="blue" mx="auto" onClick={addSocialMedia}>
                   Add
                 </Button>
               </Flex>
               <ButtonGroup spacing="7" pt="3">
-                {Object.keys(socialMedia).map(network => (
+                {socialMedia.map(network => (
                   <IconButton
-                    aria-label={network}
+                    key={network.id}
+                    aria-label={network.label}
                     bg="gray.100"
                     color="black"
                     _hover={{
@@ -253,7 +260,7 @@ const HighlightsModal = ({
                     rounded="full"
                     icon={
                       <>
-                        {findSocialMedia(network).icon}{' '}
+                        {network.icon}{' '}
                         <chakra.span
                           pos="absolute"
                           top="-1px"
@@ -268,7 +275,7 @@ const HighlightsModal = ({
                           bg="red.400"
                           _hover={{ bg: 'red.500' }}
                           rounded="full"
-                          onClick={() => removeSocialMedia(network)}
+                          onClick={() => removeSocialMedia(network.id)}
                         >
                           x
                         </chakra.span>
@@ -277,35 +284,6 @@ const HighlightsModal = ({
                   />
                 ))}
               </ButtonGroup>
-              {/* ========== Twitter profile ========== */}
-              {/* <FlexRow>
-          <RiTwitterLine /> <Text>Twitter profile</Text>
-        </FlexRow>
-        <Input
-          onChange={event => {
-            if (event.target.value)
-              dispatch({
-                type: 'wiki/updateMetadata',
-                payload: {
-                  id: CommonMetaIds.TWITTER_PROFILE,
-                  value: event.target.value,
-                },
-              })
-          }}
-          placeholder={
-            String(
-              currentWiki.metadata.find(
-                (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
-              )?.value,
-            )
-              ? String(
-                  currentWiki.metadata.find(
-                    (m: MData) => m.id === CommonMetaIds.TWITTER_PROFILE,
-                  )?.value,
-                )
-              : 'Your Twitter Handle'
-          }
-        /> */}
             </Stack>
             <Tags />
           </Stack>
