@@ -28,7 +28,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
   if (references.length === 0) return null
   return (
     <Box borderTopWidth="1px" p={4}>
-      <Heading my={4} p={2} fontWeight="500">
+      <Heading my={4} p={2} fontWeight="medium">
         REFERENCES
       </Heading>
       <SimpleGrid mb={8} columns={[1, 2, 3]} spacing={4}>
