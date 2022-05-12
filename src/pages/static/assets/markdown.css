@@ -46,7 +46,7 @@
 
 .markdown-body a {
   background-color: transparent;
-  color: #FE5CAA;
+  color: #fe5caa;
   text-decoration: none;
 }
 
@@ -668,12 +668,12 @@
 }
 
 .markdown-body table tr {
-  background-color: #ffffff;
+  background-color: transparent;
   border-top: 1px solid hsla(210, 18%, 87%, 1);
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background-color: #83838381;
+  background-color: #8181812a;
 }
 
 .markdown-body table img {
