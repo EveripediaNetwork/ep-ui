@@ -111,7 +111,7 @@ export const Hero = ({ wiki }: HeroProps) => {
 
           <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
             <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
-            {`${t('exploreHeroBttn')}`}
+              {`${t('exploreHeroBttn')}`}
             </LinkButton>
             <LinkButton
               href="/create-wiki"

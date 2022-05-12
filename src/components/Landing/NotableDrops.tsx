@@ -37,7 +37,7 @@ const arrowStyles: TextProps = {
 
 export const NotableDrops = ({ drops }: NotableDropsProps) => {
   const [slideColumns, setSlideColumns] = useState(3)
-  const {t} = useTranslation();
+  const { t } = useTranslation()
   useEffect(() => {
     const isOnMobile = isMobile(window?.navigator)
     if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
@@ -89,7 +89,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
       ))}
     </HStack>
   )
-  
+
   return (
     <Flex direction="column" mt="20" gap={10} align="center">
       <Text align="center" fontWeight="bold" fontSize="2xl">

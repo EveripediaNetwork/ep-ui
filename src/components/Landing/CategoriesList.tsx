@@ -20,7 +20,7 @@ const CategoriesList = () => {
   useEffect(() => {
     setCategories(categoriesData || [])
   }, [categoriesData])
-  const {t} = useTranslation();
+  const { t } = useTranslation()
   return (
     <>
       <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>

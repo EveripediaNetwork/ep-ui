@@ -37,7 +37,7 @@ const Footer = () => {
     i18n.changeLanguage(userLang)
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     setLang(localStorage.storeLang)
   }, [JSON.stringify(localStorage.storeLang)])
   return (
