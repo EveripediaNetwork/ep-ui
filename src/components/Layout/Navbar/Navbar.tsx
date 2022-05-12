@@ -112,8 +112,9 @@ const Navbar = () => {
         params: [{ chainId }],
       })
       setOpenSwitch(false)
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
+    } catch (switchError) {
+      const err = switchError as Record<string, number>
+      if (err.code === 4902) {
         try {
           await detectedProvider?.request({
             method: 'wallet_addEthereumChain',

@@ -38,7 +38,6 @@ const ImageInput = ({
         duration: 2000,
       })
     } catch (error) {
-      console.log(error)
       toast({
         title: 'Image could not be fetched. Ensure you have the right link',
         status: 'error',
