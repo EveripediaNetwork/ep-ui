@@ -57,7 +57,9 @@ export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
           type="url"
           required
           value={url}
-          onChange={e => setUrl(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setUrl(e.target.value)
+          }
           placeholder="Insert URL"
           id="citeUrlInput"
           h="30px"

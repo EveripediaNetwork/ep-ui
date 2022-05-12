@@ -81,19 +81,22 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
     fetchReferences()
   }
 
-  const handleExistingCiteSubmit = (ref: CiteReference) => {
+  const handleExistingCiteSubmit = (ref: CiteReference, index: number) => {
     // Add CiteMarker to editor
     eventEmitter.emit('command', 'cite', {
       urlId: `#cite-id-${ref.id}`,
-      refNo: ref.id,
+      refNo: index + 1,
     })
   }
 
   return (
-    <Tabs index={tabIndex} onChange={index => setTabIndex(index)}>
+    <Tabs
+      index={tabIndex}
+      onChange={(index: React.SetStateAction<number>) => setTabIndex(index)}
+    >
       <TabList mt={-8} mb={8}>
         <FrameTab>New URL</FrameTab>
-        <FrameTab>Add from Existing</FrameTab>
+        <FrameTab>Existing Refs</FrameTab>
       </TabList>
       <TabPanels>
         <TabPanel>
