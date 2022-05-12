@@ -35,7 +35,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
         {references.map((ref, index) => (
           <Flex
             id={`cite-id-${ref.id}`}
-            bgColor={
+            bg={
               currentLocationHash === `#cite-id-${ref.id}`
                 ? '#c5e2f644'
                 : 'transparent'
