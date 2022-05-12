@@ -34,9 +34,6 @@ import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
 import slugify from 'slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 
-type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never
-
 const SOCIAL_MEDIA_OPTIONS = [
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
@@ -80,11 +77,6 @@ const HighlightsModal = ({
   const socialMedia = SOCIAL_MEDIA_OPTIONS.filter(
     med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
-
-  type SocialMediaOption = ArrayElement<typeof SOCIAL_MEDIA_OPTIONS>
-  const findSocialMedia = (network: string): SocialMediaOption =>
-    SOCIAL_MEDIA_OPTIONS.find(med => med.id === network) ||
-    ({} as SocialMediaOption)
 
   const removeSocialMedia = (network: string) => {
     dispatch({
