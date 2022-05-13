@@ -1,8 +1,10 @@
+import { store } from '@/store/store'
 import { CiteReference } from '@/types/Wiki'
 import { hashToNum } from '@/utils/hashToNum'
 import {
   Box,
   Button,
+  ButtonGroup,
   Flex,
   FormControl,
   FormLabel,
@@ -14,29 +16,71 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
-import React, { ChangeEvent } from 'react'
-import { RiEdit2Line } from 'react-icons/ri'
+import React, { ChangeEvent, useEffect } from 'react'
+import { RiArrowUpLine, RiEdit2Line } from 'react-icons/ri'
 import { tuiEditorInputStyles } from './CiteFromNewURL'
 
 interface ReferenceCardProps {
   index: number
   handleExistingCiteSubmit: (reference: CiteReference, index: number) => void
   reference: CiteReference
+  setEditingId: (id: string | null) => void
+  editingId: string | null
+  allReferences: CiteReference[]
+  fetchReferences: () => void
 }
 export const ReferenceCard = ({
   index,
   handleExistingCiteSubmit,
   reference,
+  setEditingId,
+  editingId,
+  allReferences,
+  fetchReferences,
 }: ReferenceCardProps) => {
   const [url, setUrl] = React.useState('')
   const [desc, setDesc] = React.useState<string>('')
   const [showRed, setShowRed] = React.useState(false)
+  const isOpen = editingId === reference.id
+
+  useEffect(() => {
+    setUrl(reference.url)
+    setDesc(reference.description)
+  }, [reference])
+
+  const handleDeleteRefClick = () => {
+    // delete the current cite-id from all references
+    const newReferences = allReferences.filter(ref => ref.id !== reference.id)
+
+    // stringify the new references
+    const newReferencesString = JSON.stringify(newReferences)
+
+    // update the references in the state
+    store.dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'references',
+        value: newReferencesString,
+      },
+    })
+
+    // update the references in the state
+    fetchReferences()
+
+    // close the card
+    setEditingId(null)
+  }
+
+  const handleSaveRefClick = () => {}
+
   return (
     <Box key={index} w="100% !important" h="unset !important">
       <Flex
         w="100% !important"
         justify="space-between"
         align="center"
+        borderLeftWidth="3px !important"
+        borderColor={`hsl(${hashToNum(reference.id)}, 80%, 80%) !important`}
         bgColor="#f7f9fc !important"
         _dark={{
           bgColor: '#2e3445 !important',
@@ -47,12 +91,8 @@ export const ReferenceCard = ({
           flex="9"
           textAlign="start"
           p={8}
-          borderLeftWidth="3px !important"
           onClick={() => handleExistingCiteSubmit(reference, index)}
           cursor="pointer"
-          borderColor={`hsl(${hashToNum(
-            reference.url + reference.description,
-          )}, 80%, 80%) !important`}
         >
           <Text
             textOverflow="ellipsis"
@@ -60,7 +100,7 @@ export const ReferenceCard = ({
             maxW="250px"
             overflow="hidden"
           >
-            {reference.url}
+            {url}
           </Text>
           <Text
             textOverflow="ellipsis"
@@ -70,13 +110,13 @@ export const ReferenceCard = ({
             opacity={0.5}
             fontWeight="100 !important"
           >
-            {reference.description}
+            {desc}
           </Text>
         </Box>
         <VStack flex="1" mr="10px !important">
           <IconButton
             aria-label="edit-citation"
-            icon={<RiEdit2Line />}
+            icon={isOpen ? <RiArrowUpLine /> : <RiEdit2Line />}
             _dark={{ color: 'white', bgColor: '#464c61 !important' }}
             bgColor="#dde4f0 !important"
             h="30px !important"
@@ -85,90 +125,117 @@ export const ReferenceCard = ({
             _hover={{
               filter: 'brightness(0.9)',
             }}
+            onClick={() => {
+              if (isOpen) {
+                setEditingId(null)
+              } else {
+                setEditingId(reference.id)
+              }
+            }}
           />
         </VStack>
       </Flex>
-      <Box borderWidth="1px" p="10px !important" borderTop="0px">
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            if (url) {
-              setUrl('')
-              setDesc('')
-            }
-          }}
-        >
-          <FormControl>
-            <FormLabel mt="0 !important">Enter URL</FormLabel>
-            <Input
-              mt={4}
-              w="100% !important"
-              type="url"
-              required
-              value={url}
-              onChange={(e: {
-                target: { value: React.SetStateAction<string> }
-              }) => setUrl(e.target.value)}
-              placeholder="Insert URL"
-              id="citeUrlInput"
-              h="30px"
-              {...tuiEditorInputStyles}
-            />
-          </FormControl>
-          <FormControl>
-            <HStack mt="10px" align="center" justify="space-between">
-              <FormLabel m="0 !important">Short Description</FormLabel>
-              <Tag
-                display="block"
-                variant="outline"
-                px={4}
-                py={2}
-                borderRadius={3}
-                color="white"
-                bgColor={
-                  // eslint-disable-next-line no-nested-ternary
-                  showRed
-                    ? '#d34c46 !important'
-                    : (desc.length || '') > 25
-                    ? '#579f6e !important'
-                    : '#cea046 !important'
-                }
-              >
-                {desc.length || 0}/60
-              </Tag>
-            </HStack>
-            <Textarea
-              mt="4px"
-              w="100% !important"
-              value={desc}
-              required
-              placeholder="Enter a short description about the reference linked"
-              id="citeDescriptionInput"
-              h="50px"
-              resize="none"
-              {...tuiEditorInputStyles}
-              bgColor={showRed ? '#d406082a' : 'transparent'}
-              outline={!showRed ? 'none' : '1px solid red !important'}
-              onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-                if (event.target.value.length <= 60) setDesc(event.target.value)
-                else {
-                  setShowRed(true)
-                  setTimeout(() => setShowRed(false), 2000)
-                }
-              }}
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            className="toastui-editor-ok-button"
-            outline="0 !important"
-            w="100% !important"
-            mt="10px !important"
+      {isOpen && (
+        <Box borderWidth="1px" p="10px !important" mt="10px">
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              if (url) {
+                setUrl('')
+                setDesc('')
+              }
+            }}
           >
-            Save
-          </Button>
-        </form>
-      </Box>
+            <FormControl>
+              <FormLabel mt="0 !important">Enter URL</FormLabel>
+              <Input
+                mt={4}
+                w="100% !important"
+                type="url"
+                required
+                value={url}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUrl(e.target.value)}
+                placeholder="Insert URL"
+                id="citeUrlInput"
+                h="30px"
+                {...tuiEditorInputStyles}
+              />
+            </FormControl>
+            <FormControl>
+              <HStack mt="10px" align="center" justify="space-between">
+                <FormLabel m="0 !important">Short Description</FormLabel>
+                <Tag
+                  display="block"
+                  variant="outline"
+                  px={4}
+                  py={2}
+                  borderRadius={3}
+                  color="white"
+                  bgColor={
+                    // eslint-disable-next-line no-nested-ternary
+                    showRed
+                      ? '#d34c46 !important'
+                      : (desc.length || '') > 25
+                      ? '#579f6e !important'
+                      : '#cea046 !important'
+                  }
+                >
+                  {desc.length || 0}/60
+                </Tag>
+              </HStack>
+              <Textarea
+                mt="4px"
+                w="100% !important"
+                value={desc}
+                required
+                placeholder="Enter a short description about the reference linked"
+                id="citeDescriptionInput"
+                h="50px"
+                resize="none"
+                {...tuiEditorInputStyles}
+                bgColor={showRed ? '#d406082a' : 'transparent'}
+                outline={!showRed ? 'none' : '1px solid red !important'}
+                onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+                  if (event.target.value.length <= 60)
+                    setDesc(event.target.value)
+                  else {
+                    setShowRed(true)
+                    setTimeout(() => setShowRed(false), 2000)
+                  }
+                }}
+              />
+            </FormControl>
+            <ButtonGroup>
+              <Button
+                type="submit"
+                className="toastui-editor-ok-button"
+                outline="0 !important"
+                bgColor="#e36e6a !important"
+                color="white !important"
+                w="150px !important"
+                mt="10px !important"
+                onClick={handleDeleteRefClick}
+              >
+                Delete Citation
+              </Button>
+              <Button
+                type="submit"
+                className="toastui-editor-ok-button"
+                color="white !important"
+                bgColor="#4ba6f8 !important"
+                outline="0 !important"
+                w="100px !important"
+                mt="10px !important"
+                onClick={handleSaveRefClick}
+              >
+                Save
+              </Button>
+            </ButtonGroup>
+          </form>
+        </Box>
+      )}
     </Box>
   )
 }

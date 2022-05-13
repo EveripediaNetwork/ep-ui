@@ -108,6 +108,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
             handleExistingCiteSubmit={handleExistingCiteSubmit}
             references={references}
             setTabIndex={setTabIndex}
+            fetchReferences={fetchReferences}
           />
         </TabPanel>
       </TabPanels>

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { CiteReference } from '@/types/Wiki'
 import { Box, Button, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
@@ -8,6 +9,7 @@ interface AddFromExistingProps {
   references: CiteReference[]
   handleExistingCiteSubmit: (ref: CiteReference, index: number) => void
   setTabIndex: (index: number) => void
+  fetchReferences: () => void
 }
 
 export const CiteFromExistingRefs = ({
@@ -15,15 +17,27 @@ export const CiteFromExistingRefs = ({
   references,
   handleExistingCiteSubmit,
   setTabIndex,
+  fetchReferences,
 }: AddFromExistingProps) => {
+  const [editingId, setEditingId] = React.useState<string | null>(null)
+  const shownReferences = editingId
+    ? references.filter(ref => {
+        return ref.id === editingId
+      })
+    : references
+
   return (
     <VStack maxH="300px" overflowY="scroll" spacing={8}>
       {refCount ? (
-        references.map((reference, index) => (
+        shownReferences.map((reference, index) => (
           <ReferenceCard
             index={index}
             handleExistingCiteSubmit={handleExistingCiteSubmit}
             reference={reference}
+            setEditingId={setEditingId}
+            editingId={editingId}
+            allReferences={references}
+            fetchReferences={fetchReferences}
           />
         ))
       ) : (
