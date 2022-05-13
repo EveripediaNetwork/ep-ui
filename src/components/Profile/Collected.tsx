@@ -20,7 +20,7 @@ const Collected = () => {
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
   const fetchMoreWikis = React.useCallback(
-    (fetchOffset: number) => {
+    (fetchOffset:number = 0 ) => {
       setTimeout(() => {
         const fetchNewWikis = async () => {
           const result = await store.dispatch(
@@ -49,7 +49,7 @@ const Collected = () => {
 
   useEffect(() => {
     if (address) {
-      fetchMoreWikis(offset)
+      fetchMoreWikis()
     }
   }, [address])
 
