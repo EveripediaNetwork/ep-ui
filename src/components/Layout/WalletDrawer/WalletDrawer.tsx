@@ -27,6 +27,7 @@ import {
   RiRefreshLine,
 } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
+import { UseToastOptions } from '@chakra-ui/toast'
 import shortenAccount from '@/utils/shortenAccount'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
@@ -39,13 +40,12 @@ import {
   setStateToDefault,
   updateWalletDetails,
 } from '@/store/slices/user-slice'
-import { ToastDataType } from '@/types/ToastDataType'
 import chakraTheme from '@/theme'
 import { removeStateFromStorage } from '@/utils/browserStorage'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 
-const toastProperties: ToastDataType = {
+const toastProperties: UseToastOptions = {
   description: 'Account successfully refreshed',
   status: 'success',
   duration: 4000,
@@ -71,7 +71,7 @@ const WalletDrawer = ({
   const [, username] = useENSData(accountData?.address)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
-  const toast = createStandaloneToast({ theme: chakraTheme })
+  const { toast } = createStandaloneToast({ theme: chakraTheme })
   const [, getBalance] = useBalance()
   const address = accountData ? accountData.address : null
 

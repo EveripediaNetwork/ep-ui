@@ -5,10 +5,10 @@ import './static/assets/global.css'
 import './static/assets/dark-mode.css'
 import './static/assets/markdown.css'
 import '@/editor-plugins/wikiLink/styles.css'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider } from 'wagmi'
-import { Provider as ReduxProvider } from 'react-redux'
+import { Provider as ReduxProviderClass } from 'react-redux'
 import { ethers } from 'ethers'
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -23,9 +23,15 @@ import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
 import { BaseProvider } from '@ethersproject/providers'
+import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
 
-type EpAppProps = AppProps & {
+const { ToastContainer } = createStandaloneToast()
+const ReduxProvider = ReduxProviderClass as unknown as (
+  props: Dict,
+) => JSX.Element
+
+type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
@@ -86,6 +92,7 @@ const App = (props: EpAppProps) => {
           </Provider>
         </ChakraProvider>
       </ReduxProvider>
+      <ToastContainer />
     </>
   )
 }
