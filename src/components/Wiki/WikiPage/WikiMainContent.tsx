@@ -3,6 +3,8 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import { Box, Flex, Heading, Tag, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
 import {
   ComponentPropsWithoutRef,
   HeadingProps,
@@ -50,6 +52,7 @@ const WikiMainContent = ({
       </Flex>
       <Box mt={8}>
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           components={{
             h1: addToTOC,
             h2: addToTOC,

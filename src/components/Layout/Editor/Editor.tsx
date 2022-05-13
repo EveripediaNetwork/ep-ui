@@ -61,6 +61,12 @@ const Editor = ({ onChange, markdown }: EditorType) => {
           initialValue={markdown}
           initialEditType="wysiwyg"
           onChange={handleOnEditorChange}
+          toolbarItems={[
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'indent', 'outdent'],
+            ['table', 'image', 'code'],
+          ]}
         />
       )}
     </Box>
