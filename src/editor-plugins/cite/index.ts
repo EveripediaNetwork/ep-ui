@@ -45,7 +45,7 @@ export default function cite(context: PluginContext): PluginInfo {
           className: 'toastui-editor-cite-button cite__popupBtn',
           popup: {
             body: container,
-            style: { width: '300px' },
+            style: { width: '350px' },
           },
         },
       },

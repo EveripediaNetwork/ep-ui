@@ -53,7 +53,9 @@ const CitationPreviewHover = ({
 
   if (!wiki)
     return (
-      <Link as="sup" href={href}>{text}</Link>
+      <Link as="sup" href={href}>
+        {text}
+      </Link>
     )
 
   const referencesString = getWikiMetadataById(
