@@ -97,7 +97,7 @@ const CitationPreviewHover = ({
               borderBottomWidth="1px"
               justify="space-between"
             >
-              <Tag colorScheme="blue" size="sm" fontWeight="500">
+              <Tag colorScheme="blue" size="sm" fontWeight="medium">
                 <Link
                   color="#304262 !important"
                   _dark={{
