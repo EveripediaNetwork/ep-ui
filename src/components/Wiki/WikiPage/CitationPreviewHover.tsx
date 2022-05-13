@@ -104,7 +104,7 @@ const CitationPreviewHover = ({
                     color: '#9dcbf0 !important',
                   }}
                   fontSize="sm"
-                  p="0 0 0 0 !important"
+                  p="0 !important"
                   href={ref.url}
                 >
                   {new URL(ref.url).hostname}
