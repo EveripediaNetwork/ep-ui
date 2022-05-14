@@ -137,10 +137,13 @@ export const ReferenceCard = ({
       >
         <Box
           flex="9"
+          minH="50px"
           textAlign="start"
           p={8}
-          onClick={() => handleExistingCiteSubmit(reference, index)}
-          cursor="pointer"
+          onClick={() =>
+            !editingId && handleExistingCiteSubmit(reference, index)
+          }
+          cursor={!editingId ? 'pointer' : 'unset'}
         >
           <Text
             textOverflow="ellipsis"
@@ -192,6 +195,7 @@ export const ReferenceCard = ({
                 setUrl('')
                 setDesc('')
               }
+              handleSaveRefClick()
             }}
           >
             <FormControl>
@@ -257,7 +261,7 @@ export const ReferenceCard = ({
             </FormControl>
             <ButtonGroup>
               <Button
-                type="submit"
+                type="button"
                 className="toastui-editor-ok-button"
                 outline="0 !important"
                 bgColor="#e36e6a !important"
@@ -276,7 +280,6 @@ export const ReferenceCard = ({
                 outline="0 !important"
                 w="100px !important"
                 mt="10px !important"
-                onClick={handleSaveRefClick}
               >
                 Save
               </Button>
