@@ -7,6 +7,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 import wikiLink from '@/editor-plugins/wikiLink'
 import cite from '@/editor-plugins/cite'
+import { EditorContentOverride } from '@/types/Wiki'
 
 type EditorType = {
   onChange: (value: string | undefined) => void
@@ -19,13 +20,21 @@ const Editor = ({ onChange, markdown }: EditorType) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   // when markdown changes, update the editor
-  useEffect(() => {
+  function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
-    if (editorInstance?.getMarkdown() !== markdown) {
-      editorInstance?.setMarkdown(markdown)
+    if (editorInstance?.getMarkdown() !== text) {
+      editorInstance?.setMarkdown(text)
       editorInstance?.moveCursorToStart()
       editorInstance?.setScrollTop(0)
     }
+  }
+  useEffect(() => {
+    if (
+      markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
+      EditorContentOverride.KEYWORD
+    )
+      updateEditorText(markdown.substring(26))
+    else updateEditorText(markdown)
   }, [markdown])
 
   // when color mode changes, update top level class tag
@@ -47,7 +56,14 @@ const Editor = ({ onChange, markdown }: EditorType) => {
       .getMarkdown()
       .toString() as string
 
-    if (markdown !== currentMd) onChange(currentMd)
+    if (markdown !== currentMd) {
+      if (
+        markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
+        EditorContentOverride.KEYWORD
+      ) {
+        onChange(markdown.substring(26))
+      } else onChange(currentMd)
+    }
   }, [editorRef, markdown, onChange])
 
   return (

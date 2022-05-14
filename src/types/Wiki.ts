@@ -12,6 +12,10 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export enum EditorContentOverride {
+  KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
+}
+
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   TWITTER_PROFILE = 'twitter-profile',

@@ -79,8 +79,8 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const toast = useToast()
 
+  const toast = useToast()
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const [{ data: accountData }] = useAccount()
@@ -107,8 +107,6 @@ const CreateWikiContent = () => {
     isLoadingWiki,
     wikiData,
     dispatch,
-    md,
-    setMd,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -171,7 +169,7 @@ const CreateWikiContent = () => {
       return false
     }
 
-    const words = getWordCount(md || '')
+    const words = getWordCount(wiki.content || '')
 
     if (words < MINIMUM_WORDS) {
       toast({
@@ -224,7 +222,7 @@ const CreateWikiContent = () => {
         user: {
           id: accountData.address,
         },
-        content: String(md).replace(/\n/gm, '  \n'),
+        content: String(wiki.content).replace(/\n/gm, '  \n'),
         images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
       }
 
@@ -282,7 +280,10 @@ const CreateWikiContent = () => {
     isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
-    setMd(val || ' ')
+    dispatch({
+      type: 'wiki/setContent',
+      payload: val || ' ',
+    })
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
@@ -334,8 +335,6 @@ const CreateWikiContent = () => {
           metadata,
         },
       })
-
-      setMd(String(transformedContent))
     }
   }, [dispatch, updateImageState, wikiData])
 
@@ -507,7 +506,10 @@ const CreateWikiContent = () => {
       >
         <Box h="635px" w="full">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
+            <Editor
+              markdown={wiki.content || ''}
+              onChange={handleOnEditorChanges}
+            />
           </Skeleton>
         </Box>
         <Box minH="635px">

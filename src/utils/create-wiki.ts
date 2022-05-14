@@ -83,11 +83,10 @@ export const useCreateWikiEffects = (
 ) => {
   const {
     slug,
-    md,
     wikiData,
     activeStep,
     setIsNewCreateWiki,
-    setMd,
+
     dispatch,
     isLoadingWiki,
   } = useCreateWikiContext()
@@ -103,14 +102,15 @@ export const useCreateWikiEffects = (
     if (!slug) {
       setIsNewCreateWiki(true)
       dispatch({ type: 'wiki/reset' })
-      setMd(initialEditorValue)
+      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
     } else {
       setIsNewCreateWiki(false)
     }
   }, [dispatch, slug])
 
   useEffect(() => {
-    if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
+    if (isLoadingWiki === false && !wikiData)
+      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
   }, [isLoadingWiki, wikiData])
 
   const updatePageTypeTemplate = useCallback(() => {
@@ -120,8 +120,11 @@ export const useCreateWikiEffects = (
     ]
     const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
-    setMd(String(pageType?.templateText))
-  }, [wiki])
+    dispatch({
+      type: 'wiki/setContent',
+      payload: String(pageType?.templateText),
+    })
+  }, [wiki.metadata])
 
   // update the page type template when the page type changes
   const presentPageType = useMemo(
@@ -134,9 +137,9 @@ export const useCreateWikiEffects = (
     if (presentPageType) {
       let isMdPageTemplate = false
       PageTemplate.forEach(p => {
-        if (p.templateText === md) isMdPageTemplate = true
+        if (p.templateText === wiki.content) isMdPageTemplate = true
       })
-      if (isMdPageTemplate || md === ' ') updatePageTypeTemplate()
+      if (isMdPageTemplate || wiki.content === ' ') updatePageTypeTemplate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [presentPageType])
@@ -248,7 +251,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     },
   )
   const { slug } = router.query
-  const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
@@ -273,8 +275,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
-    md,
-    setMd,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,

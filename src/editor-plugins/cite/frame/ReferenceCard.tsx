@@ -1,6 +1,6 @@
 import { store } from '@/store/store'
-import { CiteReference } from '@/types/Wiki'
-import { hashToNum } from '@/utils/hashToNum'
+import { CiteReference, EditorContentOverride } from '@/types/Wiki'
+import { lettersToNum } from '@/utils/lettersToNum'
 import {
   Box,
   Button,
@@ -49,6 +49,10 @@ export const ReferenceCard = ({
   }, [reference])
 
   const handleDeleteRefClick = () => {
+    // =======================
+    // Delete from metadata
+    // =======================
+
     // delete the current cite-id from all references
     const newReferences = allReferences.filter(ref => ref.id !== reference.id)
 
@@ -69,6 +73,37 @@ export const ReferenceCard = ({
 
     // close the card
     setEditingId(null)
+
+    // =======================
+    // Edit cite marks
+    // =======================
+    let newContent = store.getState().wiki.content
+
+    // STEP 1: remove the reference to be deleted
+    const citeMarkRegex = new RegExp(
+      // eslint-disable-next-line no-useless-escape
+      ` *\[\\\\[[0-9]{0,5}\\]\]\\(#cite-id-${reference.id}\\) *`,
+      'g',
+    )
+    newContent = newContent.replace(citeMarkRegex, ' ')
+
+    // STEP 2: update all the cite marks that are after the deleted reference with currIndex - 1
+    const currIndex =
+      allReferences.findIndex(ref => ref.id === reference.id) + 1
+
+    // iterate over the current content and update the cite mark numbers
+    for (let i = currIndex + 1; i <= allReferences.length; i += 1) {
+      newContent = newContent.replace(
+        `[\\[${i}\\]](#cite-id-`,
+        `[\\[${i - 1}\\]](#cite-id-`,
+      )
+    }
+
+    // update the content in the state
+    store.dispatch({
+      type: 'wiki/setContent',
+      payload: EditorContentOverride.KEYWORD + newContent,
+    })
   }
 
   const handleSaveRefClick = () => {}
@@ -80,7 +115,7 @@ export const ReferenceCard = ({
         justify="space-between"
         align="center"
         borderLeftWidth="3px !important"
-        borderColor={`hsl(${hashToNum(reference.id)}, 80%, 80%) !important`}
+        borderColor={`hsl(${lettersToNum(reference.id)}, 80%, 80%) !important`}
         bgColor="#f7f9fc !important"
         _dark={{
           bgColor: '#2e3445 !important',
