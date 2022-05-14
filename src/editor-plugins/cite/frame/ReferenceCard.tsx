@@ -57,12 +57,14 @@ export const ReferenceCard = ({
     let newContent = store.getState().wiki.content
 
     // STEP 1: remove the reference to be deleted
-    const citeMarkRegex = new RegExp(
-      // eslint-disable-next-line no-useless-escape
-      ` *\[\\\\[[0-9]{0,5}\\]\]\\(#cite-id-${reference.id}\\) *`,
-      'g',
+    newContent = newContent.replace(
+      new RegExp(
+        // eslint-disable-next-line no-useless-escape
+        ` *\[\\\\[[0-9]{0,5}\\]\]\\(#cite-id-${reference.id}\\) *`,
+        'g',
+      ),
+      '',
     )
-    newContent = newContent.replace(citeMarkRegex, ' ')
 
     // STEP 2: update all the cite marks that are after the deleted reference with currIndex - 1
     const currIndex =
