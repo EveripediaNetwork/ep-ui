@@ -96,7 +96,14 @@ export const ReferenceCard = ({
 
   const handleSaveRefClick = () => {
     const newReferences = allReferences.map(ref =>
-      ref.id === reference.id ? { id: ref.id, url, description: desc } : ref,
+      ref.id === reference.id
+        ? {
+            id: ref.id,
+            url,
+            description: desc,
+            timestamp: reference.url !== url ? Date.now() : reference.timestamp,
+          }
+        : ref,
     )
     store.dispatch({
       type: 'wiki/updateMetadata',
