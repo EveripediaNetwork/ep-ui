@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { CiteReference } from '@/types/Wiki'
 import {
   Box,
-  Flex,
   Heading,
   SimpleGrid,
   Tag,
   Text,
-  Link,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 
 interface WikiReferencesProps {
@@ -33,27 +33,39 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
       </Heading>
       <SimpleGrid mb={8} columns={[1, 2, 3]} spacing={4}>
         {references.map((ref, index) => (
-          <Flex
+          <LinkBox
+            display="flex"
+            key={ref.id}
             id={`cite-id-${ref.id}`}
             bg={
               currentLocationHash === `#cite-id-${ref.id}`
-                ? '#c5e2f644'
+                ? 'blue.50'
                 : 'transparent'
             }
+            _dark={{
+              bg:
+                currentLocationHash === `#cite-id-${ref.id}`
+                  ? 'gray.700'
+                  : 'transparent',
+            }}
             borderRadius={4}
             p={2}
             scrollMarginTop="20vh"
             gap={2}
-            align="start"
-            key={index}
             maxW="400px"
+            _hover={{
+              bg: 'gray.50',
+              _dark: {
+                bg: 'gray.900',
+              },
+            }}
           >
             <Text color="blue.500">[{index + 1}] </Text>
             <Box>
               <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
-                <Link rel="nofollow" p="0 !important" href={ref.url}>
+                <LinkOverlay rel="nofollow" p="0 !important" href={ref.url}>
                   {new URL(ref.url).hostname}
-                </Link>
+                </LinkOverlay>
               </Tag>
               <Text>{ref.description}</Text>
               {ref.timestamp && (
@@ -66,7 +78,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                 </Text>
               )}
             </Box>
-          </Flex>
+          </LinkBox>
         ))}
       </SimpleGrid>
     </Box>
