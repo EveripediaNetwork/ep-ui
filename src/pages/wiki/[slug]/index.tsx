@@ -19,10 +19,10 @@ import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
-import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
+import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
 
 const Wiki = () => {
   const router = useRouter()

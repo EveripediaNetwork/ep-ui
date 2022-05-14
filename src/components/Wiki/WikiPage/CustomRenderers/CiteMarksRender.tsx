@@ -18,7 +18,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const CitationPreviewHover = ({
+const CiteMarksRender = ({
   text,
   href,
   id,
@@ -130,4 +130,4 @@ const CitationPreviewHover = ({
   )
 }
 
-export default CitationPreviewHover
+export default CiteMarksRender

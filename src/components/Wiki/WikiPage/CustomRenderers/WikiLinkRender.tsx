@@ -26,7 +26,7 @@ interface WikiPreviewHoverProps {
   slug: string
 }
 
-const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
+const WikiLinkRender = ({ href, text, slug }: WikiPreviewHoverProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const linkRef = React.useRef<HTMLAnchorElement>(null)
   const { data: wiki } = useGetWikiPreviewQuery(slug)
@@ -102,4 +102,4 @@ const WikiPreviewHover = ({ href, text, slug }: WikiPreviewHoverProps) => {
   )
 }
 
-export default WikiPreviewHover
+export default WikiLinkRender
