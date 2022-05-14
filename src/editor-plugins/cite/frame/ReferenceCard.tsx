@@ -50,31 +50,6 @@ export const ReferenceCard = ({
 
   const handleDeleteRefClick = () => {
     // =======================
-    // Delete from metadata
-    // =======================
-
-    // delete the current cite-id from all references
-    const newReferences = allReferences.filter(ref => ref.id !== reference.id)
-
-    // stringify the new references
-    const newReferencesString = JSON.stringify(newReferences)
-
-    // update the references in the state
-    store.dispatch({
-      type: 'wiki/updateMetadata',
-      payload: {
-        id: 'references',
-        value: newReferencesString,
-      },
-    })
-
-    // update the references in the state
-    fetchReferences()
-
-    // close the card
-    setEditingId(null)
-
-    // =======================
     // Edit cite marks
     // =======================
     let newContent = store.getState().wiki.content
@@ -104,9 +79,47 @@ export const ReferenceCard = ({
       type: 'wiki/setContent',
       payload: EditorContentOverride.KEYWORD + newContent,
     })
+
+    // =======================
+    // Delete from metadata
+    // =======================
+
+    // delete the current cite-id from all references
+    const newReferences = allReferences.filter(ref => ref.id !== reference.id)
+
+    // stringify the new references
+    const newReferencesString = JSON.stringify(newReferences)
+
+    // update the references in the state
+    store.dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'references',
+        value: newReferencesString,
+      },
+    })
+
+    // update the references in the state
+    fetchReferences()
+
+    // close the card
+    setEditingId(null)
   }
 
-  const handleSaveRefClick = () => {}
+  const handleSaveRefClick = () => {
+    const newReferences = allReferences.map(ref =>
+      ref.id === reference.id ? { id: ref.id, url, description: desc } : ref,
+    )
+    store.dispatch({
+      type: 'wiki/updateMetadata',
+      payload: {
+        id: 'references',
+        value: JSON.stringify(newReferences),
+      },
+    })
+    fetchReferences()
+    setEditingId(null)
+  }
 
   return (
     <Box key={index} w="100% !important" h="unset !important">
