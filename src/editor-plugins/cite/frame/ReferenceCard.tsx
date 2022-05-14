@@ -21,7 +21,6 @@ import { RiArrowUpLine, RiEdit2Line } from 'react-icons/ri'
 import { tuiEditorInputStyles } from './CiteFromNewURL'
 
 interface ReferenceCardProps {
-  index: number
   handleExistingCiteSubmit: (reference: CiteReference, index: number) => void
   reference: CiteReference
   setEditingId: (id: string | null) => void
@@ -30,7 +29,6 @@ interface ReferenceCardProps {
   fetchReferences: () => void
 }
 export const ReferenceCard = ({
-  index,
   handleExistingCiteSubmit,
   reference,
   setEditingId,
@@ -42,6 +40,7 @@ export const ReferenceCard = ({
   const [desc, setDesc] = React.useState<string>('')
   const [showRed, setShowRed] = React.useState(false)
   const isOpen = editingId === reference.id
+  const index = allReferences.indexOf(reference) + 1
 
   useEffect(() => {
     setUrl(reference.url)
@@ -65,18 +64,12 @@ export const ReferenceCard = ({
     )
 
     // STEP 2: update all the cite marks that are after the deleted reference with currIndex - 1
-    const currIndex =
-      allReferences.findIndex(ref => ref.id === reference.id) + 1
-
-    // iterate over the current content and update the cite mark numbers
-    for (let i = currIndex + 1; i <= allReferences.length; i += 1) {
+    for (let i = index + 1; i <= allReferences.length; i += 1) {
       newContent = newContent.replace(
         `[\\[${i}\\]](#cite-id-`,
         `[\\[${i - 1}\\]](#cite-id-`,
       )
     }
-
-    // update the content in the state
     store.dispatch({
       type: 'wiki/setContent',
       payload: EditorContentOverride.KEYWORD + newContent,
@@ -86,22 +79,15 @@ export const ReferenceCard = ({
     // Delete from metadata
     // =======================
 
-    // delete the current cite-id from all references
     const newReferences = allReferences.filter(ref => ref.id !== reference.id)
-
-    // stringify the new references
-    const newReferencesString = JSON.stringify(newReferences)
-
-    // update the references in the state
     store.dispatch({
       type: 'wiki/updateMetadata',
       payload: {
         id: 'references',
-        value: newReferencesString,
+        value: JSON.stringify(newReferences),
       },
     })
 
-    // update the references in the state
     fetchReferences()
 
     // close the card
@@ -124,7 +110,7 @@ export const ReferenceCard = ({
   }
 
   return (
-    <Box key={index} w="100% !important" h="unset !important">
+    <Box w="100% !important" h="unset !important">
       <Flex
         w="100% !important"
         justify="space-between"
@@ -137,6 +123,7 @@ export const ReferenceCard = ({
           color: 'white !important',
         }}
       >
+        <Box>{}</Box>
         <Box
           flex="9"
           minH="50px"

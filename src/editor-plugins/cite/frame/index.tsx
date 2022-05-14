@@ -85,7 +85,7 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
     // Add CiteMarker to editor
     eventEmitter.emit('command', 'cite', {
       urlId: `#cite-id-${ref.id}`,
-      refNo: index + 1,
+      refNo: index,
     })
   }
 
