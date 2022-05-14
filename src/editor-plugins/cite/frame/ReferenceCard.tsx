@@ -44,10 +44,8 @@ export const ReferenceCard = ({
   const isOpen = editingId === reference.id
 
   useEffect(() => {
-    if (editingId !== reference.id) {
-      setUrl(reference.url)
-      setDesc(reference.description)
-    }
+    setUrl(reference.url)
+    setDesc(reference.description)
   }, [reference, editingId])
 
   const handleDeleteRefClick = () => {
