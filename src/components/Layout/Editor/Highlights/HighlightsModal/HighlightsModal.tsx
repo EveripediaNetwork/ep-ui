@@ -20,6 +20,7 @@ import { BaseCategory, MData, PageTypeName, CommonMetaIds } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import FlexRow from '../FlexRow/FlexRow'
 import Tags from './Tags'
+import { useTranslation } from 'react-i18next'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -36,7 +37,7 @@ const HighlightsModal = ({
       <Divider />
     </GridItem>
   )
-
+  const { t } = useTranslation();
   return (
     <Modal
       SecondaryButton={undefined}
@@ -54,7 +55,7 @@ const HighlightsModal = ({
 
         {/* ========== Page Type ========== */}
         <FlexRow>
-          <RiFolder3Line /> <Text>Page Type</Text>
+          <RiFolder3Line /> <Text>{`${t('pageTypeLabel')}`}</Text>
         </FlexRow>
         <Select
           onChange={event => {
@@ -82,7 +83,7 @@ const HighlightsModal = ({
         {/* ========== Categories ========== */}
         <FlexRow>
           <RiSurveyLine />
-          <Text>Category</Text>
+          <Text>{`${t('categoryTypeLabel')}`}</Text>
         </FlexRow>
 
         <Select
@@ -136,7 +137,7 @@ const HighlightsModal = ({
 
         {/* ========== Twitter profile ========== */}
         <FlexRow>
-          <RiTwitterLine /> <Text>Twitter profile</Text>
+          <RiTwitterLine /> <Text>{`${t('twitterProfileLabel')}`}</Text>
         </FlexRow>
         <Input
           onChange={event => {

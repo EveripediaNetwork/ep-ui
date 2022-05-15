@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
 import buffer from 'buffer'
+import { useTranslation } from 'react-i18next'
 
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
@@ -47,7 +48,7 @@ const ImageInput = ({
     }
     return null
   }
-
+  const { t } = useTranslation();
   return (
     <Flex
       mt={imgSrc ? 0 : -20}
@@ -90,7 +91,7 @@ const ImageInput = ({
           w="90%"
           textAlign="center"
           onChange={handleOnImageInputChanges}
-          placeholder="(or) paste image link here"
+          placeholder={`${t('pasteMainImgLabel')}`}
         />
       )}
     </Flex>

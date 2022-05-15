@@ -11,6 +11,7 @@ import {
 import Link from '@/components/Elements/Link/Link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -27,6 +28,7 @@ const NavMenu = ({
   label,
 }: NavMenuType) => {
   const router = useRouter()
+  const { t } = useTranslation();
   return (
     <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
       <MenuButton
@@ -78,7 +80,7 @@ const NavMenu = ({
                   />
                 )}
                 <Box fontSize="md" fontWeight={600} color="linkColor">
-                  {item.label}
+                  {`${t(item.label.split(' ').join(''))}`}
                 </Box>
               </MenuItem>
               {navItem.subItem?.length !== key + 1 && <Divider />}

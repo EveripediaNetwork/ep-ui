@@ -42,7 +42,26 @@ export const resources = {
       termsOfService: "Terms of service",
       copyRight: "© 2022 Everipedia. All rights reserved",
 
+      //Desktop Nav 
+      Explore: "Explore",
+      Activity: "Activity",
+      Resources: "Resources",
+      Aboutus: "About us", 
+      CreateWiki: "Create Wiki",
+      HelpCenter: "Help Center",
+      //Category page
+      wikiCategory: "Wiki Categories", 
+      trendingCategory: "Trending Wiki Categories",
 
+      //Create wiki page
+      wikiTitlePlaceholder: "Title goes here",
+      wikiSummaryLabel: "Wiki Summary",
+      wikiSummaryPlaceholder: "Summary of wiki",
+      dragMainImgLabel: "Drag and drop a main image, or click to select",
+      pasteMainImgLabel: "(or) paste image link here",
+      pageTypeLabel: "Page Type", 
+      categoryTypeLabel: "Category", 
+      twitterProfileLabel: "Twitter profile",
       //---End of Copies for Everipedia--
       
       // ---------------------------------------------------------------

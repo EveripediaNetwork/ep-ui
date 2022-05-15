@@ -7,6 +7,7 @@ import buffer from 'buffer'
 
 import config from '@/config'
 import { Image } from '../Image/Image'
+import { useTranslation } from 'react-i18next'
 
 type DropzoneType = {
   dropZoneActions: {
@@ -70,7 +71,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
-
+  const { t } = useTranslation();
   return (
     <Box>
       {paths.length === 0 ? (
@@ -96,7 +97,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             <Text textAlign="center">Drop the files here ...</Text>
           ) : (
             <Text textAlign="center" opacity="0.5" maxW="xs">
-              Drag and drop a <b>main image</b>, or click to select
+              {`${t('dragMainImgLabel')}`}
             </Text>
           )}
         </Box>
