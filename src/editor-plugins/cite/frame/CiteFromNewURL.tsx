@@ -11,6 +11,8 @@ import React, { ChangeEvent } from 'react'
 
 interface CiteFromNewURLProps {
   handleCiteSubmit: (url: string, description: string) => void
+  citedIndicator: boolean
+  setCitedIndicator: (citedIndicator: boolean) => void
 }
 
 export const tuiEditorInputStyles = {
@@ -29,11 +31,15 @@ export const tuiEditorInputStyles = {
   },
 }
 
-export const CiteFromNewURL = ({ handleCiteSubmit }: CiteFromNewURLProps) => {
+export const CiteFromNewURL = ({
+  handleCiteSubmit,
+  citedIndicator,
+  setCitedIndicator,
+}: CiteFromNewURLProps) => {
   const [showRed, setShowRed] = React.useState(false)
   const [url, setUrl] = React.useState('')
   const [desc, setDesc] = React.useState<string>('')
-  const [citedIndicator, setCitedIndicator] = React.useState(false)
+
   return (
     <form
       onSubmit={e => {

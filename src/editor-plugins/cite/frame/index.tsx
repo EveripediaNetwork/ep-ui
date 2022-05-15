@@ -1,11 +1,24 @@
 import { store } from '@/store/store'
 import { CiteReference, CommonMetaIds } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import {
+  chakra,
+  HTMLChakraProps,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
+import { HTMLMotionProps, motion } from 'framer-motion'
 import { CiteFromNewURL } from './CiteFromNewURL'
 import { CiteFromExistingRefs } from './CiteFromExistingRefs'
+
+type Merge<P, T> = Omit<P, keyof T> & T
+type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>
+export const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
 
 const FrameTab = ({ children }: { children: React.ReactNode }) => (
   <Tab
@@ -36,6 +49,7 @@ const FrameTab = ({ children }: { children: React.ReactNode }) => (
 const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
   const { eventEmitter } = editorContext
   const [references, setReferences] = React.useState<CiteReference[]>([])
+  const [citedIndicator, setCitedIndicator] = React.useState(false)
   const [refCount, setRefCount] = React.useState(0)
   const [tabIndex, setTabIndex] = React.useState(0)
 
@@ -81,26 +95,55 @@ const Frame = ({ editorContext }: { editorContext: PluginContext }) => {
     fetchReferences()
   }
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCitedIndicator(false)
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [citedIndicator])
+
   const handleExistingCiteSubmit = (ref: CiteReference, index: number) => {
     // Add CiteMarker to editor
     eventEmitter.emit('command', 'cite', {
       urlId: `#cite-id-${ref.id}`,
       refNo: index,
     })
+    setCitedIndicator(true)
   }
 
   return (
     <Tabs
       index={tabIndex}
       onChange={(index: React.SetStateAction<number>) => setTabIndex(index)}
+      pos="relative"
     >
+      {citedIndicator && (
+        <MotionBox
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.1 }}
+          bgColor="#579f6e2a"
+          color="#579f6e !important"
+          borderRadius="4px"
+          p="2px 10px"
+          pos="absolute"
+          right="5px"
+          top="10px"
+        >
+          Cited !
+        </MotionBox>
+      )}
       <TabList mt={-8} mb={8}>
         <FrameTab>New URL</FrameTab>
         <FrameTab>Existing Refs</FrameTab>
       </TabList>
       <TabPanels>
         <TabPanel>
-          <CiteFromNewURL handleCiteSubmit={handleCiteSubmit} />
+          <CiteFromNewURL
+            handleCiteSubmit={handleCiteSubmit}
+            citedIndicator={citedIndicator}
+            setCitedIndicator={setCitedIndicator}
+          />
         </TabPanel>
         <TabPanel>
           <CiteFromExistingRefs

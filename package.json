@@ -51,6 +51,7 @@
     "ethers": "^5.6.2",
     "fast-diff": "^1.2.0",
     "framer-motion": "^5.6.0",
+    "fuse.js": "^6.6.2",
     "graphql": "^15.8.0",
     "graphql-request": "^3.7.0",
     "ismobilejs": "^1.1.1",

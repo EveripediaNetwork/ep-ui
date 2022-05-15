@@ -40,7 +40,7 @@ export const ReferenceCard = ({
   const [desc, setDesc] = React.useState<string>('')
   const [showRed, setShowRed] = React.useState(false)
   const isOpen = editingId === reference.id
-  const index = allReferences.indexOf(reference) + 1
+  const index = allReferences.findIndex(ref => ref.id === reference.id) + 1
 
   useEffect(() => {
     setUrl(reference.url)
@@ -130,7 +130,6 @@ export const ReferenceCard = ({
           color: 'white !important',
         }}
       >
-        <Box>{}</Box>
         <Box
           flex="9"
           minH="50px"
@@ -141,14 +140,29 @@ export const ReferenceCard = ({
           }
           cursor={!editingId ? 'pointer' : 'unset'}
         >
-          <Text
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            maxW="250px"
-            overflow="hidden"
-          >
-            {url}
-          </Text>
+          <HStack>
+            <Text
+              color={`hsl(${lettersToNum(reference.id)}, 50%, 40%) !important`}
+              _dark={{
+                color: `hsl(${lettersToNum(
+                  reference.id,
+                )}, 50%, 80%) !important`,
+              }}
+              textAlign="center"
+              borderRadius="3px"
+              fontSize="0.9em"
+            >
+              [{index}]
+            </Text>
+            <Text
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              maxW="220px"
+              overflow="hidden"
+            >
+              {url}
+            </Text>
+          </HStack>
           <Text
             textOverflow="ellipsis"
             overflow="hidden"
