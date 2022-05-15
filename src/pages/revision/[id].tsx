@@ -21,7 +21,7 @@ import {
   useGetLatestIPFSByWikiQuery,
 } from '@/services/activities'
 import Link from 'next/link'
-import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
+import { wikiLinkRenderer } from '@/utils/customLinkRender'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'

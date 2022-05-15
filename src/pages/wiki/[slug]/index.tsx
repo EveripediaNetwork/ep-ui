@@ -22,7 +22,7 @@ import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
-import { wikiLinkRenderer } from '@/utils/wikiLinkRenderer'
+import { wikiLinkRenderer } from '@/utils/customLinkRender'
 
 const Wiki = () => {
   const router = useRouter()
