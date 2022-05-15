@@ -25,18 +25,21 @@ const DesktopNav = () => {
   return (
     <HStack spacing={4} onMouseLeave={() => setVisibleMenu(null)}>
       {NAV_ITEMS(categoriesLinks || []).map((navItem: NavItem) => {
-        
         console.log(navItem)
-        return (<NavMenu
-          key={navItem.id}
-          navItem={navItem}
-          setVisibleMenu={setVisibleMenu}
-          visibleMenu={visibleMenu}
-          label={navItem.label === 'Create Wiki' ? t(navItem.label.split(' ').join('')) : t(navItem.label)}
-        />)
-}
-      
-      )}
+        return (
+          <NavMenu
+            key={navItem.id}
+            navItem={navItem}
+            setVisibleMenu={setVisibleMenu}
+            visibleMenu={visibleMenu}
+            label={
+              navItem.label === 'Create Wiki'
+                ? t(navItem.label.split(' ').join(''))
+                : t(navItem.label)
+            }
+          />
+        )
+      })}
     </HStack>
   )
 }

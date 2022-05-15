@@ -350,7 +350,7 @@ const CreateWikiContent = () => {
     setActiveStep(0)
     setOpenTxDetailsDialog(false)
   }
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Box maxW="1900px" mx="auto" mb={8}>
       <HStack

@@ -28,7 +28,7 @@ const NavMenu = ({
   label,
 }: NavMenuType) => {
   const router = useRouter()
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
       <MenuButton

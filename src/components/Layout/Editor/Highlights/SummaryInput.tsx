@@ -7,7 +7,7 @@ const SummaryInput = () => {
   const wiki = useAppSelector(state => state.wiki)
   const [showRed, setShowRed] = React.useState(false)
   const dispatch = useAppDispatch()
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">

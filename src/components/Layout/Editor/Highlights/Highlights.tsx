@@ -18,9 +18,9 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { shortenText } from '@/utils/shortenText'
+import { useTranslation } from 'react-i18next'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import SummaryInput from './SummaryInput'
-import { useTranslation } from 'react-i18next'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -50,7 +50,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     deleteImage: handleDeleteImage,
     initialImage,
   }
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Flex
       direction="column"

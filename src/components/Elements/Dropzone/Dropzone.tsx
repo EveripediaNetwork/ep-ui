@@ -6,8 +6,8 @@ import { useAccount } from 'wagmi'
 import buffer from 'buffer'
 
 import config from '@/config'
-import { Image } from '../Image/Image'
 import { useTranslation } from 'react-i18next'
+import { Image } from '../Image/Image'
 
 type DropzoneType = {
   dropZoneActions: {
@@ -71,7 +71,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Box>
       {paths.length === 0 ? (

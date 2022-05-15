@@ -48,7 +48,7 @@ const ImageInput = ({
     }
     return null
   }
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Flex
       mt={imgSrc ? 0 : -20}

@@ -18,9 +18,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import Modal from '@/components/Elements/Modal/Modal'
 import { BaseCategory, MData, PageTypeName, CommonMetaIds } from '@/types/Wiki'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
+import { useTranslation } from 'react-i18next'
 import FlexRow from '../FlexRow/FlexRow'
 import Tags from './Tags'
-import { useTranslation } from 'react-i18next'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -37,7 +37,7 @@ const HighlightsModal = ({
       <Divider />
     </GridItem>
   )
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Modal
       SecondaryButton={undefined}
