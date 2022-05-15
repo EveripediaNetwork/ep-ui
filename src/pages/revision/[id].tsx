@@ -51,6 +51,13 @@ const Wiki = () => {
     },
   )
 
+  // clear cite marks
+  useEffect(() => {
+    store.dispatch({
+      type: 'citeMarks/reset',
+    })
+  }, [ActivityId])
+
   // get the link id if available to scroll to the correct position
   useEffect(() => {
     if (!isTocEmpty) {

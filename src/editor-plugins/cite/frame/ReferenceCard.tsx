@@ -162,6 +162,7 @@ export const ReferenceCard = ({
             >
               {url}
             </Text>
+            <HStack flexWrap="wrap" />
           </HStack>
           <Text
             textOverflow="ellipsis"

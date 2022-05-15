@@ -18,13 +18,13 @@ const Editor = ({ onChange, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const body = document.getElementsByTagName('body')[0]
+  const html = document.getElementsByTagName('html')[0]
 
   // when markdown changes, update the editor
   function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
     if (editorInstance?.getMarkdown() !== text) {
-      body.classList.add('scroller-blocker')
+      html.classList.add('scroller-blocker')
       editorInstance?.setMarkdown(text)
       editorInstance?.setSelection(0, 0)
       editorInstance?.setScrollTop(0)
@@ -80,7 +80,7 @@ const Editor = ({ onChange, markdown }: EditorType) => {
           initialEditType="wysiwyg"
           initialValue={markdown}
           onFocus={() => {
-            body.classList.remove('scroller-blocker')
+            html.classList.remove('scroller-blocker')
             window.scrollTo(0, 0)
           }}
           onChange={handleOnEditorChange}

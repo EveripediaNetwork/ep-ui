@@ -8,7 +8,10 @@ import {
   Text,
   LinkBox,
   LinkOverlay,
+  Link,
+  Flex,
 } from '@chakra-ui/react'
+import { useAppSelector } from '@/store/hook'
 
 interface WikiReferencesProps {
   references: CiteReference[]
@@ -24,6 +27,8 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
       window.removeEventListener('hashchange', onHashChanged)
     }
   }, [])
+
+  const citeMarks = useAppSelector(state => state.citeMarks)
 
   if (references.length === 0) return null
   return (
@@ -62,11 +67,28 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
           >
             <Text color="blue.500">[{index + 1}] </Text>
             <Box>
-              <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
-                <LinkOverlay rel="nofollow" p="0 !important" href={ref.url}>
-                  {new URL(ref.url).hostname}
-                </LinkOverlay>
-              </Tag>
+              <Flex flexWrap="wrap" gap={2}>
+                <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
+                  <LinkOverlay rel="nofollow" p="0 !important" href={ref.url}>
+                    {new URL(ref.url).hostname}
+                  </LinkOverlay>
+                </Tag>
+                <Flex flexWrap="wrap" ml="0 !important" columnGap={2}>
+                  {citeMarks[ref.id] &&
+                    Array.from(Array(citeMarks[ref.id])).map((_, i) => (
+                      <Link
+                        href={`#cite-mark-${ref.id}-${i + 1}`}
+                        color="blue.500"
+                        ml="0 !important"
+                        fontWeight="medium"
+                        fontSize="sm"
+                        whiteSpace="nowrap"
+                      >
+                        ↑ {index + 1}.{i + 1}
+                      </Link>
+                    ))}
+                </Flex>
+              </Flex>
               <Text>{ref.description}</Text>
               {ref.timestamp && (
                 <Text opacity={0.6} fontSize="sm">

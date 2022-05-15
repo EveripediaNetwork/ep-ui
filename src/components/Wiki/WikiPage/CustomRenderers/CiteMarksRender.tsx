@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useGetActivityByIdQuery } from '@/services/activities'
 import { useGetWikiQuery } from '@/services/wikis'
+import { store } from '@/store/store'
 import { CiteReference, CommonMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
@@ -16,21 +17,35 @@ import {
 } from '@chakra-ui/react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const CiteMarksRender = ({
-  text,
-  href,
-  id,
-}: {
-  text: string
-  href?: string
-  id?: string
-}) => {
+const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const router = useRouter()
   const { slug } = router.query
   let wiki: Wiki | undefined
+  const id = href?.split('#cite-id-')[1]
+  const [count, setCount] = React.useState(0)
+
+  const [isActive, setIsActive] = useState(false)
+  useEffect(() => {
+    const onHashChanged = () => {
+      setIsActive(window.location.hash === `#cite-mark-${id}-${count}`)
+    }
+    window.addEventListener('hashchange', onHashChanged)
+    return () => {
+      window.removeEventListener('hashchange', onHashChanged)
+    }
+  }, [count, id])
+
+  useEffect(() => {
+    store.dispatch({
+      type: 'citeMarks/incCiteCount',
+      payload: id,
+    })
+    const storedCount = store.getState().citeMarks[id || ''] as number
+    setCount(storedCount)
+  }, [id])
 
   if (slug) {
     const { data: wikiData } = useGetWikiQuery(
@@ -53,8 +68,18 @@ const CiteMarksRender = ({
 
   if (!wiki)
     return (
-      <Link as="sup" href={href}>
-        {text}
+      <Link as="sup" id={`cite-mark-${id}-${count}`} href={href}>
+        <Text
+          as="sup"
+          id={`cite-mark-${id}-${count}`}
+          scrollMarginTop="50vh"
+          bgColor={isActive ? '#e160a12a' : 'transparent'}
+          boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
+          borderRadius={2}
+          zIndex={-1}
+        >
+          {text}
+        </Text>
       </Link>
     )
 
@@ -63,9 +88,7 @@ const CiteMarksRender = ({
     CommonMetaIds.REFERENCES,
   )?.value
   const references = referencesString ? JSON.parse(referencesString) : []
-  const ref = references.find(
-    (r: CiteReference) => r.id === id?.split('#cite-id-')[1],
-  )
+  const ref = references.find((r: CiteReference) => r.id === id)
 
   return (
     <Popover
@@ -81,8 +104,19 @@ const CiteMarksRender = ({
           onFocus={() => {}}
           onBlur={() => {}}
           href={href}
+          borderRadius="100px"
         >
-          <sup>{text}</sup>
+          <Text
+            as="sup"
+            id={`cite-mark-${id}-${count}`}
+            scrollMarginTop="50vh"
+            bgColor={isActive ? '#e160a12a' : 'transparent'}
+            boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
+            borderRadius={2}
+            zIndex={-1}
+          >
+            {text}
+          </Text>
         </Link>
       </PopoverTrigger>
       {ref && (
