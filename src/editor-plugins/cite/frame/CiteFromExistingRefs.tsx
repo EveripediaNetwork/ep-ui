@@ -99,7 +99,7 @@ export const CiteFromExistingRefs = ({
 
   return (
     <VStack maxH="350px">
-      {!editingId && (
+      {!editingId && references.length > 5 && (
         <Input
           w="100% !important"
           m="5px"

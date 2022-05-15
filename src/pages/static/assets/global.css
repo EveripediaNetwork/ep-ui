@@ -1,7 +1,12 @@
-html {
+body {
   scroll-behavior: smooth;
 }
-
+.scroller-blocker {
+  position: fixed;
+  height: 101%;
+  width: 100%;
+  overflow: scroll;
+}
 /* EDITOR SHELL STYLES */
 .ProseMirror,
 .toastui-editor-contents {
@@ -11,7 +16,7 @@ html {
   border-color: #00000010 !important;
 }
 .toastui-editor-dark .toastui-editor-md-container,
-.toastui-editor-dark  .toastui-editor-ww-container,
+.toastui-editor-dark .toastui-editor-ww-container,
 .toastui-editor-dark .toastui-editor-defaultUI-toolbar,
 .toastui-editor-dark .toastui-editor-md-tab-container,
 .toastui-editor-dark .toastui-editor-ww-tab-container {
@@ -24,32 +29,34 @@ html {
 .toastui-editor-dark .tab-item {
   background-color: #202634 !important;
 }
-.toastui-editor-dark  .tab-item.active {
+.toastui-editor-dark .tab-item.active {
   background-color: #2b3447 !important;
   border-color: inherit !important;
 }
-.toastui-editor-toolbar{
+.toastui-editor-toolbar {
   border-top-left-radius: 4px !important;
   border-top-right-radius: 4px !important;
 }
-.toastui-editor-dark .toastui-editor-popup-body, 
-.toastui-editor-dark .toastui-editor-popup, 
-.toastui-editor-dark .toastui-editor-context-menu{
+.toastui-editor-dark .toastui-editor-popup-body,
+.toastui-editor-dark .toastui-editor-popup,
+.toastui-editor-dark .toastui-editor-context-menu {
   background-color: #1c212c !important;
 }
-.toastui-editor-dark .toastui-editor-toolbar-icons{
-  border-color: transparent  !important;
+.toastui-editor-dark .toastui-editor-toolbar-icons {
+  border-color: transparent !important;
 }
-.toastui-editor-dark .toastui-editor-toolbar-icons:not(:disabled):hover{
+.toastui-editor-dark .toastui-editor-toolbar-icons:not(:disabled):hover {
   background-color: #2b3447 !important;
   border-color: inherit !important;
 }
 
 /* EDITOR CONTENT STYLES */
-.toastui-editor-main *{
+.toastui-editor-main * {
   font-family: poppins, sans-serif !important;
 }
-.toastui-editor-main h1, .toastui-editor-main h2, .toastui-editor-main h3 {
+.toastui-editor-main h1,
+.toastui-editor-main h2,
+.toastui-editor-main h3 {
   border-bottom: none !important;
   padding-bottom: 0 !important;
   margin-bottom: 0.5em !important;

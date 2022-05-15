@@ -18,13 +18,15 @@ const Editor = ({ onChange, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const body = document.getElementsByTagName('body')[0]
 
   // when markdown changes, update the editor
   function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
     if (editorInstance?.getMarkdown() !== text) {
+      body.classList.add('scroller-blocker')
       editorInstance?.setMarkdown(text)
-      editorInstance?.moveCursorToStart()
+      editorInstance?.setSelection(0, 0)
       editorInstance?.setScrollTop(0)
     }
   }
@@ -72,11 +74,15 @@ const Editor = ({ onChange, markdown }: EditorType) => {
         <ToastUIEditor
           plugins={[wikiLink, cite]}
           height="100%"
-          autofocus={false}
           theme={colorMode === 'dark' ? 'dark' : 'light'}
           ref={editorRef}
-          initialValue={markdown}
+          autofocus={false}
           initialEditType="wysiwyg"
+          initialValue={markdown}
+          onFocus={() => {
+            body.classList.remove('scroller-blocker')
+            window.scrollTo(0, 0)
+          }}
           onChange={handleOnEditorChange}
           toolbarItems={[
             ['heading', 'bold', 'italic', 'strike'],
