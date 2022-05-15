@@ -26,7 +26,7 @@ const ProfileStatistics = () => {
   }
 
   const statChange = (stat: number) => {
-    return `${(stat * 100).toFixed(2)}%`
+    return `${stat.toFixed(2)}%`
   }
 
   const statWithCommas = (stat: number) => {
