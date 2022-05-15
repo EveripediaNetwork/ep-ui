@@ -5,7 +5,6 @@ import { NextSeo } from 'next-seo'
 import { getRunningOperationPromises } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner, Text, Button, Box } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
@@ -21,10 +20,10 @@ import {
   useGetLatestIPFSByWikiQuery,
 } from '@/services/activities'
 import Link from 'next/link'
-import { wikiLinkRenderer } from '@/utils/customLinkRender'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
+import { useAppSelector } from '@/store/hook'
 
 const Wiki = () => {
   const router = useRouter()
@@ -58,17 +57,6 @@ const Wiki = () => {
     })
   }, [ActivityId])
 
-  // get the link id if available to scroll to the correct position
-  useEffect(() => {
-    if (!isTocEmpty) {
-      const linkId = window.location.hash.replace('#', '')
-      if (linkId) {
-        router.push(`/revision/${ActivityId}#${linkId}`)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTocEmpty])
-
   useEffect(() => {
     if (latestIPFS && wiki && latestIPFS !== wiki?.ipfs) {
       setIsLatest(false)
@@ -77,49 +65,25 @@ const Wiki = () => {
     }
   }, [latestIPFS, wiki, wiki?.ipfs])
 
+  // get the link id if available to scroll to the correct position
+  useEffect(() => {
+    if (!isTocEmpty) {
+      const linkId = window.location.hash
+      if (linkId) router.push(`/revision/${ActivityId}#${linkId}`)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTocEmpty])
+
   // here toc is not state variable since there seems to be some issue
   // with in react-markdown that is causing infinite loop if toc is state variable
   // (so using useEffect to update toc length for now)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const toc: {
-    level: number
-    id: string
-    title: string
-  }[] = []
+
+  const toc = useAppSelector(state => state.toc)
 
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
-
-  // listen to changes in toc variable and update the length of the toc
-  /* eslint-disable react/prop-types */
-  const addToTOC = ({
-    children,
-    ...props
-  }: React.PropsWithChildren<HeadingProps>) => {
-    const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
-    if (level && children && typeof children[0] === 'string') {
-      // id for each heading to be used in table of contents
-      const id = `${children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${
-        toc.length
-      }`
-
-      // TODO: Find out why this is happening
-      // if the last item in toc is same as current item, remove the last item
-      // to avoid duplicate items
-      if (toc[toc.length - 1]?.title === children[0]) {
-        toc.pop()
-      }
-      toc.push({
-        level,
-        id,
-        title: children[0],
-      })
-      return React.createElement(props.node.tagName, { id }, children)
-    }
-    return React.createElement(props.node.tagName, props, children)
-  }
-  /* eslint-enable react/prop-types */
 
   return (
     <>
@@ -147,7 +111,7 @@ const Wiki = () => {
           <Box mt={-2}>
             {!isLatest && (
               <Flex
-                flexDir={{ base: 'column', lg: 'row' }}
+                flexDir={{ base: 'column', md: 'row' }}
                 justify="center"
                 align="center"
                 gap={2}
@@ -193,11 +157,7 @@ const Wiki = () => {
                       justify="space-between"
                       direction={{ base: 'column', md: 'row' }}
                     >
-                      <WikiMainContent
-                        wiki={wiki.content[0]}
-                        addToTOC={addToTOC}
-                        addWikiPreview={wikiLinkRenderer}
-                      />
+                      <WikiMainContent wiki={wiki.content[0]} />
                       <WikiInsights wiki={wiki.content[0]} ipfs={wiki.ipfs} />
                     </Flex>
                     <WikiReferences
@@ -213,9 +173,7 @@ const Wiki = () => {
                   <WikiNotFound />
                 )}
               </Flex>
-              {!isTocEmpty && (
-                <WikiTableOfContents toc={toc} isAlertAtTop={!isLatest} />
-              )}
+              {!isTocEmpty && <WikiTableOfContents isAlertAtTop={!isLatest} />}
             </HStack>
           </Box>
         )}

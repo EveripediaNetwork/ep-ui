@@ -10,7 +10,6 @@ import {
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 import { HStack, Flex, Spinner, Box } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
@@ -22,7 +21,7 @@ import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
-import { wikiLinkRenderer } from '@/utils/customLinkRender'
+import { useAppSelector } from '@/store/hook'
 
 const Wiki = () => {
   const router = useRouter()
@@ -47,45 +46,12 @@ const Wiki = () => {
   // with in react-markdown that is causing infinite loop if toc is state variable
   // (so using useEffect to update toc length for now)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const toc: {
-    level: number
-    id: string
-    title: string
-  }[] = []
+
+  const toc = useAppSelector(state => state.toc)
+
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
-
-  // listen to changes in toc variable and update the length of the toc
-  /* eslint-disable react/prop-types */
-  const addToTOC = ({
-    children,
-    ...props
-  }: React.PropsWithChildren<HeadingProps>) => {
-    const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
-    if (level && children && typeof children[0] === 'string') {
-      // id for each heading to be used in table of contents
-      const id = `${children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${
-        toc.length
-      }`
-
-      // TODO: Find out why this is happening
-      // if the last item in toc is same as current item, remove the last item
-      // to avoid duplicate items
-      if (toc[toc.length - 1]?.title === children[0]) {
-        toc.pop()
-      }
-      toc.push({
-        level,
-        id,
-        title: children[0],
-      })
-      return React.createElement(props.node.tagName, { id }, children)
-    }
-    return React.createElement(props.node.tagName, props, children)
-  }
-
-  /* eslint-enable react/prop-types */
 
   return (
     <>
@@ -124,11 +90,7 @@ const Wiki = () => {
                     justify="space-between"
                     direction={{ base: 'column', md: 'row' }}
                   >
-                    <WikiMainContent
-                      wiki={wiki}
-                      addToTOC={addToTOC}
-                      addWikiPreview={wikiLinkRenderer}
-                    />
+                    <WikiMainContent wiki={wiki} />
                     <WikiInsights wiki={wiki} />
                   </Flex>
                   <WikiReferences
@@ -142,7 +104,7 @@ const Wiki = () => {
                 <WikiNotFound />
               )}
             </Flex>
-            {!isTocEmpty && <WikiTableOfContents toc={toc} />}
+            {!isTocEmpty && <WikiTableOfContents />}
           </HStack>
         )}
       </main>
