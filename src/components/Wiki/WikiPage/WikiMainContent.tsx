@@ -10,6 +10,7 @@ import {
   HeadingProps,
   ReactMarkdownProps,
 } from 'react-markdown/lib/ast-to-react'
+import { store } from '@/store/store'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
@@ -29,6 +30,14 @@ const WikiMainContent = ({
   editedTimestamp,
 }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
+
+  // Remove the existing cite marks to fill the state with
+  // upcoming wiki data when the wiki is still loading
+  if (!wiki) {
+    store.dispatch({
+      type: 'citeMarks/reset',
+    })
+  }
   return (
     <Box
       p={4}

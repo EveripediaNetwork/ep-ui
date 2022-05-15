@@ -23,7 +23,6 @@ import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
 import { wikiLinkRenderer } from '@/utils/customLinkRender'
-import { Router } from 'next/dist/client/router'
 
 const Wiki = () => {
   const router = useRouter()
@@ -34,13 +33,6 @@ const Wiki = () => {
   })
   const { isLoading, error, data: wiki } = result
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
-
-  // clear cite marks
-  Router.events.on('routeChangeStart', () => {
-    store.dispatch({
-      type: 'citeMarks/reset',
-    })
-  })
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
