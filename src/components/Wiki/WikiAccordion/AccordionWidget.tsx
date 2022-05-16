@@ -116,7 +116,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
         </Stat>
       )
     }
-    return <Text>{content}</Text>
+    return <Text>{content.toString()}</Text>
   }
   return (
     <HStack

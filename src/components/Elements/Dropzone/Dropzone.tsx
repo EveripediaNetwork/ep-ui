@@ -20,7 +20,7 @@ type DropzoneType = {
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const {
     setHideImageInput,
     isToResetImage,
@@ -30,8 +30,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   } = dropZoneActions
 
   const onDrop = useCallback(
-    acceptedFiles => {
-      setPaths(acceptedFiles.map((file: File) => URL.createObjectURL(file)))
+    (acceptedFiles: File[]) => {
+      setPaths(acceptedFiles.map(file => URL.createObjectURL(file)))
 
       acceptedFiles.forEach((f: File) => {
         const reader = new FileReader()

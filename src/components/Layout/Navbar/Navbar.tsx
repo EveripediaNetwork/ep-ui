@@ -47,7 +47,7 @@ const Navbar = () => {
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
 
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
 
   const dispatch = useDispatch()
 
@@ -112,8 +112,9 @@ const Navbar = () => {
         params: [{ chainId }],
       })
       setOpenSwitch(false)
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
+    } catch (switchError) {
+      const err = switchError as Record<string, number>
+      if (err.code === 4902) {
         try {
           await detectedProvider?.request({
             method: 'wallet_addEthereumChain',
@@ -139,7 +140,7 @@ const Navbar = () => {
       <Box
         boxShadow="sm"
         position="fixed"
-        zIndex={1500}
+        zIndex="banner"
         w="full"
         h={{ base: isHamburgerOpen ? '100%' : 'unset', md: 'unset' }}
         bg="subMenuBg"

@@ -49,7 +49,7 @@ export const Socials: Social[] = [
   },
   {
     id: 6,
-    href: 'https://discord.gg/nFus9wezwU',
+    href: 'https://discord.com/invite/brainies',
     name: 'discord',
     icon: RiDiscordFill,
   },

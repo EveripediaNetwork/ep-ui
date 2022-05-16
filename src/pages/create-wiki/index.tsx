@@ -88,23 +88,27 @@ const CreateWikiContent = () => {
   const toast = useToast()
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
-  const [{ data: accountData }] = useAccount()
-  const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setCommitMessage] = useState('')
+  const { data: accountData } = useAccount()
+  const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
+  const [commitMessage, setcommitMessage] = useState('')
 
   const commitMessageLimitAlertStyle = {
-    bgColor: '#d406082a',
-    '&:focus': {
-      borderColor: '#ff787c',
-      boxShadow: '0 0 0 1px #ff787c',
+    sx: {
+      bgColor: '#d406082a',
+      '&:focus': {
+        borderColor: '#ff787c',
+        boxShadow: '0 0 0 1px #ff787c',
+      },
     },
   }
 
   const baseStyle = {
-    bgColor: 'transparent',
-    '&:focus': {
-      borderColor: '#63b3ed',
-      boxShadow: '0 0 0 1px #63b3ed',
+    sx: {
+      bgColor: 'transparent',
+      '&:focus': {
+        borderColor: '#63b3ed',
+        boxShadow: '0 0 0 1px #63b3ed',
+      },
     },
   }
 
@@ -222,13 +226,15 @@ const CreateWikiContent = () => {
       if (interWiki.id === '') interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
-      interWiki = {
-        ...interWiki,
-        user: {
-          id: accountData.address,
-        },
-        content: String(wiki.content).replace(/\n/gm, '  \n'),
-        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+      if (accountData.address) {
+        interWiki = {
+          ...interWiki,
+          user: {
+            id: accountData.address,
+          },
+          content: String(wiki.content).replace(/\n/gm, '  \n'),
+          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+        }
       }
 
       if (!isNewCreateWiki) {
@@ -344,7 +350,7 @@ const CreateWikiContent = () => {
   }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(txHash)
+    if (txHash) verifyTrxHash()
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
@@ -586,4 +592,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default authenticatedRoute(memo(CreateWiki))
+export default authenticatedRoute(
+  memo(CreateWiki) as unknown as () => JSX.Element,
+)

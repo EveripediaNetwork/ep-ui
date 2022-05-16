@@ -1,150 +1,83 @@
-import React, { memo, useRef, useState } from 'react'
-import {
-  Flex,
-  Text,
-  Badge,
-  CloseButton,
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  GridItem,
-} from '@chakra-ui/react'
+import React, { memo, useState } from 'react'
+import { Stack, Text, chakra } from '@chakra-ui/react'
+import * as tagsInput from '@zag-js/tags-input'
+import { useMachine, useSetup } from '@zag-js/react'
 
-import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { Tag } from '@/types/Wiki'
+import { useAppDispatch } from '@/store/hook'
+import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
 
 const MAX_LENGTH = 15
 
 const Tags = () => {
-  const currentWiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const [tagState, setTagState] = useState({ invalid: false, msg: '' })
-  const [addBtnDisabled, setAddBtnDisabled] = useState(true)
-  const inputTagRef = useRef<HTMLInputElement>(null)
 
-  const handleAddTag = (value: string) => {
-    // update previous invalid state
-    if (tagState.invalid) setTagState(prev => ({ ...prev, invalid: false }))
-
-    if (currentWiki.tags.length === 5) {
-      setTagState({ msg: "You can't add more than 5 tags", invalid: true })
-      return
-    }
-
-    const tag = currentWiki.tags.find(t => t.id === value)
-
-    if (tag) {
-      setTagState({ msg: 'Tag already added', invalid: true })
-      return
-    }
-
-    dispatch({
-      type: 'wiki/addTag',
-      payload: {
-        id: value,
+  const [state, send] = useMachine(
+    tagsInput.machine({
+      max: 5,
+      validate(opts) {
+        if (opts.inputValue.indexOf(' ') >= 0) {
+          setTagState({ msg: "Name can't contain blank spaces", invalid: true })
+          return false
+        }
+        if (opts.inputValue.length >= MAX_LENGTH) {
+          setTagState({ msg: `Max length is ${MAX_LENGTH}`, invalid: true })
+          return false
+        }
+        if (opts.values.includes(opts.inputValue)) {
+          setTagState({ msg: 'Tag already added', invalid: true })
+          return false
+        }
+        return true
       },
-    })
-  }
-
-  const handleDeleteTag = (value: string) => {
-    const tags = currentWiki.tags.filter(t => t.id !== value)
-
-    dispatch({
-      type: 'wiki/setTags',
-      payload: tags,
-    })
-  }
-
-  const handleOnTagInputChanges = (value: string) => {
-    if (value === '') setAddBtnDisabled(true)
-    else if (value.indexOf(' ') >= 0) {
-      setTagState({ msg: "Name can't contain blank spaces", invalid: true })
-      setAddBtnDisabled(true)
-    } else if (value.length >= MAX_LENGTH) {
-      setTagState({ msg: `Max length is ${MAX_LENGTH}`, invalid: true })
-      setAddBtnDisabled(true)
-    } else {
-      setTagState({ msg: '', invalid: false })
-      setAddBtnDisabled(false)
-    }
-  }
+      onChange(tags) {
+        setTagState({ msg: '', invalid: false })
+        dispatch({
+          type: 'wiki/setTags',
+          payload: tags.values.map(ta => ({ id: ta })),
+        })
+      },
+    }),
+  )
+  const ref = useSetup({ send, id: '1' })
+  const api = tagsInput.connect(state, send)
 
   return (
-    <>
-      <GridItem colSpan={2}>
-        <Flex direction="column" w="full">
-          <Text align="center" mb="2">
-            Add up to 5 tags
-          </Text>
-          <Flex
-            mb="3"
-            wrap="wrap"
-            w="full"
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <InputGroup w="2xs" size="md">
-              <Input
-                ref={inputTagRef}
-                isInvalid={tagState.invalid}
-                onChange={event => handleOnTagInputChanges(event.target.value)}
-                placeholder="Tag name"
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  disabled={addBtnDisabled}
-                  onClick={() => {
-                    if (inputTagRef?.current?.value)
-                      handleAddTag(inputTagRef.current.value)
-                  }}
-                  px="3"
-                  h="1.75rem"
-                  size="sm"
-                  variant="outline"
+    <Stack spacing="4">
+      <Text fontWeight="semibold">
+        Tags <chakra.span opacity={0.4}>(Add up to 5)</chakra.span>
+      </Text>
+      <chakra.div
+        rounded="md"
+        border="solid 1px"
+        borderColor="gray.300"
+        _dark={{ borderColor: 'whiteAlpha.300', bg: 'gray.700' }}
+        p="5"
+      >
+        <chakra.div ref={ref} {...api.rootProps} sx={{ ...tagsInputStyle }}>
+          {api.value.map((value, index) => (
+            <span key={index}>
+              <div {...api.getTagProps({ index, value })}>
+                <span>{value} </span>
+                <button
+                  type="button"
+                  {...api.getTagDeleteButtonProps({ index, value })}
                 >
-                  Add
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            {tagState.invalid ? (
-              <Text fontSize="xs" color="red">
-                {tagState.msg}
-              </Text>
-            ) : null}
-          </Flex>
-        </Flex>
-      </GridItem>
-      <GridItem colSpan={2}>
-        <Flex
-          flexDirection="row"
-          wrap="wrap"
-          justify="space-evenly"
-          alignItems="center"
-          gridColumn="1/3"
-        >
-          {currentWiki.tags?.map((c: Tag) => (
-            <Badge
-              variant="outline"
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              m="1"
-              key={c.id}
-              justifyContent="space-between"
-            >
-              {c.id}
-              <CloseButton
-                size="sm"
-                outline="none"
-                onClick={() => handleDeleteTag(c.id)}
-              />
-            </Badge>
+                  &#x2715;
+                </button>
+              </div>
+              <input {...api.getTagInputProps({ index, value })} />
+            </span>
           ))}
-        </Flex>
-      </GridItem>
-    </>
+          <input placeholder="Add tag..." {...api.inputProps} />
+        </chakra.div>
+        {tagState.invalid ? (
+          <Text fontSize="xs" color="red">
+            {tagState.msg}
+          </Text>
+        ) : null}
+      </chakra.div>
+    </Stack>
   )
 }
 

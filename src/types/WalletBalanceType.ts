@@ -9,6 +9,13 @@ export type BalanceType = {
   error: Error | undefined
 }
 
+export type WalletBalanceType = {
+  data?: {
+    formatted: string | undefined
+    symbol: string | undefined
+  }
+}
+
 export type ConvertedBalanceType = {
   data?: {
     formatted: string | undefined
@@ -26,6 +33,12 @@ export type ParamsType = {
   addressOrName: string
   token?: string | undefined
 }
+
+export type WalletParamsType = {
+  addressOrName: string | undefined
+  token?: string | undefined
+}
+
 export type TokenDetailsType = {
   price: number
   token: string | undefined

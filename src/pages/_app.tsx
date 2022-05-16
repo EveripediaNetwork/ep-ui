@@ -6,10 +6,10 @@ import './static/assets/dark-mode.css'
 import './static/assets/markdown.css'
 import '@/editor-plugins/wikiLink/styles.css'
 import '@/editor-plugins/cite/styles.css'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
-import { Provider } from 'wagmi'
-import { Provider as ReduxProvider } from 'react-redux'
+import { Provider as ReduxProviderClass } from 'react-redux'
+import { Provider, createClient } from 'wagmi'
 import { ethers } from 'ethers'
 import connectors from '@/config/connectors'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -23,12 +23,33 @@ import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
-import { BaseProvider } from '@ethersproject/providers'
+import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
 
-type EpAppProps = AppProps & {
+const { ToastContainer } = createStandaloneToast()
+const ReduxProvider = ReduxProviderClass as unknown as (
+  props: Dict,
+) => JSX.Element
+
+type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
+
+const provider = () =>
+  new ethers.providers.AlchemyProvider(
+    config.alchemyChain,
+    config.alchemyApiKey,
+  )
+
+type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
+type CreateClientConnectors = CreateClientArgs['connectors']
+const createClientConnectors = connectors as CreateClientConnectors
+
+const client = createClient({
+  autoConnect: true,
+  connectors: createClientConnectors,
+  provider,
+})
 
 const App = (props: EpAppProps) => {
   const { Component, pageProps, router } = props
@@ -44,12 +65,6 @@ const App = (props: EpAppProps) => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
-
-  const provider = () =>
-    new ethers.providers.AlchemyProvider(
-      config.alchemyChain,
-      config.alchemyApiKey,
-    )
 
   return (
     <>
@@ -74,11 +89,7 @@ const App = (props: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
-          <Provider
-            autoConnect
-            connectors={connectors as any}
-            provider={provider as unknown as BaseProvider}
-          >
+          <Provider client={client}>
             <Layout noFooter={Component.noFooter}>
               <ImageProvider>
                 <Component {...pageProps} />
@@ -87,6 +98,7 @@ const App = (props: EpAppProps) => {
           </Provider>
         </ChakraProvider>
       </ReduxProvider>
+      <ToastContainer />
     </>
   )
 }

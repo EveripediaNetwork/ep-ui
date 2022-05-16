@@ -27,7 +27,7 @@ export type UserDetailsProps = { hide?: boolean }
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
   const router = useRouter()
-  const [{ data }] = useAccount()
+  const { data } = useAccount()
   const address = router.query.profile as string
 
   const { headerIsSticky } = useProfileContext()
@@ -139,7 +139,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               onClick={onCopy}
               rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
             >
-              <Text w="24" isTruncated>
+              <Text w="24" noOfLines={1}>
                 {address}
               </Text>
             </Button>
