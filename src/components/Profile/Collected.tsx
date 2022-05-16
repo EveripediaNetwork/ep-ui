@@ -10,6 +10,7 @@ import { Wiki } from '@/types/Wiki'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { store } from '@/store/store'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
+import { useTranslation } from 'react-i18next'
 
 const Collected = () => {
   const { displaySize } = useProfileContext()
@@ -58,7 +59,7 @@ const Collected = () => {
     hasNextPage: hasMore,
     onLoadMore: () => fetchMoreWikis(offset + ITEM_PER_PAGE),
   })
-
+  const { t } = useTranslation()
   return (
     <FilterLayout>
       {wikis.length < 1 && !hasMore && (
@@ -82,7 +83,7 @@ const Collected = () => {
         </Center>
       ) : (
         <Center mt="10">
-          <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+          <Text fontWeight="semibold">{t('seenItAll')}</Text>
         </Center>
       )}
     </FilterLayout>

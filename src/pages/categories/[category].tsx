@@ -28,6 +28,7 @@ import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { useTranslation } from 'react-i18next'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -79,7 +80,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-
+  const { t } = useTranslation()
   return (
     <>
       {categoryData && (
@@ -124,7 +125,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">
-            Wikis in this category
+            {t('wikiInCategory')}
           </Heading>
           {wikisInCategory.length > 0 ? (
             <>
@@ -147,9 +148,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
                 </Center>
               ) : (
                 <Center mt="10">
-                  <Text fontWeight="semibold">
-                    Yay! You have seen it all 🥳{' '}
-                  </Text>
+                  <Text fontWeight="semibold">{t('seenItAll')}</Text>
                 </Center>
               )}
             </>

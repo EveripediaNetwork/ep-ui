@@ -21,6 +21,7 @@ import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
 import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
+import { useTranslation } from 'react-i18next'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -45,6 +46,7 @@ export const UserDetails = (props: UserDetailsProps) => {
     px: 3,
     py: 2,
   }
+  const { t } = useTranslation()
   // TODO: change
   if (loading) return <LoadingProfile hide={hide} />
   return (
@@ -99,7 +101,7 @@ export const UserDetails = (props: UserDetailsProps) => {
         </Flex>
         <chakra.span display="flex" flex="1">
           <ButtonGroup isAttached variant="outline" ml="auto" my="6">
-            <Tooltip label="Share" {...tooltipProps}>
+            <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"
                 boxSize="12"
@@ -109,7 +111,7 @@ export const UserDetails = (props: UserDetailsProps) => {
                 _hover={{ shadow: 'xl' }}
               />
             </Tooltip>
-            <Tooltip label="Settings" {...tooltipProps}>
+            <Tooltip label={t('settingBttnText')} {...tooltipProps}>
               <IconButton
                 cursor="pointer"
                 boxSize="12"

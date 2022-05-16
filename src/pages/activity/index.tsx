@@ -11,6 +11,7 @@ import { store } from '@/store/store'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { Activity as ActivityType } from '@/types/ActivityDataType'
+import { useTranslation } from 'react-i18next'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -62,7 +63,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       type={activity.type}
     />
   )
-
+  const { t } = useTranslation()
   return (
     <Box bgColor="pageBg" my={-8} py={8}>
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
@@ -83,7 +84,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             </Center>
           ) : (
             <Center mt="10">
-              <Text fontWeight="semibold">Yay! You have seen it all 🥳 </Text>
+              <Text fontWeight="semibold">{t('seenItAll')}</Text>
             </Center>
           )}
         </Box>

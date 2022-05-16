@@ -17,6 +17,7 @@ import {
   MenuList,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { BsFillGrid3X3GapFill, BsFillGridFill } from 'react-icons/bs'
 import { FaSearch } from 'react-icons/fa'
 
@@ -29,6 +30,7 @@ export const TopBarFilter = () => {
       bg: 'whiteAlpha.200',
     },
   }
+  const { t } = useTranslation()
   return (
     <Flex mt="4" gap="2" wrap={{ base: 'wrap', md: 'nowrap' }}>
       <InputGroup>
@@ -57,20 +59,20 @@ export const TopBarFilter = () => {
           px="3"
           fontSize="md"
         >
-          All items
+          {t('selectAllItems')}
         </MenuButton>
         <MenuList>
-          <MenuItem>Recentyl Listed</MenuItem>
-          <MenuItem>Recentyl Created</MenuItem>
-          <MenuItem>Recentyl Sold</MenuItem>
-          <MenuItem>Recentyl Received</MenuItem>
-          <MenuItem>Ending Soon</MenuItem>
-          <MenuItem>Price: Low to High</MenuItem>
-          <MenuItem>Price: High to Low</MenuItem>
-          <MenuItem>Highest Lost Sale</MenuItem>
-          <MenuItem>Most Viewed</MenuItem>
-          <MenuItem>Most Favorited</MenuItem>
-          <MenuItem>Oldest</MenuItem>
+          <MenuItem>{t('selectRecentListed')}</MenuItem>
+          <MenuItem>{t('selectRecentCreated')}</MenuItem>
+          <MenuItem>{t('selectRecentSold')}</MenuItem>
+          <MenuItem>{t('selectRecentReceived')}</MenuItem>
+          <MenuItem>{t('selectEndingSoon')}</MenuItem>
+          <MenuItem>{t('selectPriceLowtoHigh')}</MenuItem>
+          <MenuItem>{t('selectPriceHighttoLow')}</MenuItem>
+          <MenuItem>{t('selectHightLost')}</MenuItem>
+          <MenuItem>{t('selectMostView')}</MenuItem>
+          <MenuItem>{t('selectMostFav')}</MenuItem>
+          <MenuItem>{t('selectOldest')}</MenuItem>
         </MenuList>
       </Menu>
       <Menu>
@@ -87,11 +89,11 @@ export const TopBarFilter = () => {
           px="3"
           fontSize="md"
         >
-          Recently Listed
+          {t('selectRecentListed')}
         </MenuButton>
         <MenuList>
-          <MenuItem>Single items</MenuItem>
-          <MenuItem>Bundles</MenuItem>
+          <MenuItem>{t('selectSingleItem')}</MenuItem>
+          <MenuItem>{t('Bundles')}</MenuItem>
         </MenuList>
       </Menu>
       <ButtonGroup size="lg" isAttached variant="outline">
