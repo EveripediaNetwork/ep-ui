@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react'
 import { Box, Container, Heading } from '@chakra-ui/react'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
 import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
 
 const Login = () => {
-  const { user } = useSelector((state: RootState) => state.user)
+  const { data } = useAccount()
   const router = useRouter()
   useEffect(() => {
-    if (user) {
+    if (data?.address) {
       if (router.query.from) {
         router.push(`${router.query.from}`)
       } else {
         router.push('/')
       }
     }
-  }, [user, router])
+  }, [data?.address, router])
 
   return (
     <Container centerContent mt="8" mb="24">

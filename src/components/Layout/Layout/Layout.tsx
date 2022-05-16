@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   ssr: false,
-})
+}) as () => JSX.Element
 
 const Layout = ({
   children,

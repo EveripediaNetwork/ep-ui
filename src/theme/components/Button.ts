@@ -1,4 +1,4 @@
-import { ColorMode } from '@chakra-ui/color-mode/src/color-mode.utils'
+import { ColorMode } from '@chakra-ui/color-mode'
 
 type ThemeProps = {
   colorMode: ColorMode
