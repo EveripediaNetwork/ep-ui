@@ -12,7 +12,7 @@ interface WikiActionBarProps {
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   const router = useRouter()
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const actionBarItems: {
     label: string
     icon: IconType

@@ -5,6 +5,7 @@ import {
   ErrorType,
   TokenDetailsType,
   ConvertedBalanceType,
+  WalletBalanceType,
 } from '@/types/WalletBalanceType'
 import { fetchTokenRate } from './fetchTokenRate'
 
@@ -28,7 +29,7 @@ export const fetchWalletBalance = async (
 }
 
 export const fetchRateAndCalculateTotalBalance = async (
-  walletDetails: ConvertedBalanceType[],
+  walletDetails: WalletBalanceType[],
 ) => {
   const prices = walletDetails.map(async wallet => {
     try {

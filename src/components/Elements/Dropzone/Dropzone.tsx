@@ -20,7 +20,7 @@ type DropzoneType = {
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const {
     setHideImageInput,
     isToResetImage,

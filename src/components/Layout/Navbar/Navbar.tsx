@@ -47,7 +47,7 @@ const Navbar = () => {
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
 
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
 
   const dispatch = useDispatch()
 

@@ -83,7 +83,7 @@ const CreateWikiContent = () => {
 
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
   const [commitMessage, setcommitMessage] = useState('')
 
@@ -223,13 +223,15 @@ const CreateWikiContent = () => {
       if (interWiki.id === '') interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
-      interWiki = {
-        ...interWiki,
-        user: {
-          id: accountData.address,
-        },
-        content: String(md).replace(/\n/gm, '  \n'),
-        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+      if (accountData.address) {
+        interWiki = {
+          ...interWiki,
+          user: {
+            id: accountData.address,
+          },
+          content: String(md).replace(/\n/gm, '  \n'),
+          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+        }
       }
 
       if (!isNewCreateWiki) {
@@ -344,7 +346,7 @@ const CreateWikiContent = () => {
   }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(txHash)
+    if (txHash) verifyTrxHash()
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
