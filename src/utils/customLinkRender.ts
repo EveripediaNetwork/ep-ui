@@ -3,7 +3,7 @@ import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
 import WikiLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WikiLinkRender'
 import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/CiteMarksRender'
 
-export const wikiLinkRenderer = ({
+export const customLinkRenderer = ({
   children,
   ...props
 }: React.PropsWithChildren<
@@ -34,7 +34,6 @@ export const wikiLinkRenderer = ({
     return React.createElement(CiteMarksRender, {
       text: children[0] as string,
       href: props.href,
-      id: props.href,
     })
   }
 

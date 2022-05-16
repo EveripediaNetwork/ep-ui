@@ -89,8 +89,8 @@ const CreateWikiContent = () => {
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const { data: accountData } = useAccount()
-  const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setcommitMessage] = useState('')
+  const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
+  const [commitMessage, setCommitMessage] = useState('')
 
   const commitMessageLimitAlertStyle = {
     sx: {

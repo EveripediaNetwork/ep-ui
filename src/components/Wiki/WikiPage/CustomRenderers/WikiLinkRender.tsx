@@ -20,13 +20,15 @@ import {
 import React from 'react'
 import { RiLightbulbLine, RiPriceTagLine } from 'react-icons/ri'
 
-interface WikiPreviewHoverProps {
+const WikiLinkRender = ({
+  href,
+  text,
+  slug,
+}: {
   href: string
   text: string
   slug: string
-}
-
-const WikiLinkRender = ({ href, text, slug }: WikiPreviewHoverProps) => {
+}) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const linkRef = React.useRef<HTMLAnchorElement>(null)
   const { data: wiki } = useGetWikiPreviewQuery(slug)
