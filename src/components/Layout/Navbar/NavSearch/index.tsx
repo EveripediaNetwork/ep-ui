@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-//* Fragments are needed for the standalone mappings, or they won't render
-
 import React from 'react'
 import {
   Center,

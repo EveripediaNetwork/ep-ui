@@ -53,6 +53,7 @@ module.exports = {
       },
     ],
     'import/prefer-default-export': 'off',
+    'react/jsx-no-useless-fragment': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-console': 'warn',
     "prettier/prettier": ["error"],
