@@ -232,13 +232,7 @@ export const NavSearch = (props: NavSearchProps) => {
         />
       </InputGroup>
 
-      <AutoCompleteList
-        p="0"
-        mx={{ base: 4, md: 4 }}
-        shadow="lg"
-        maxH="auto"
-        {...listProps}
-      >
+      <AutoCompleteList p="0" mx={4} shadow="lg" maxH="auto" {...listProps}>
         {isLoading ? loadingView : searchList}
 
         {totalUnrendered > 0 && !isLoading && (
