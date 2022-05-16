@@ -1,8 +1,8 @@
 import React from 'react'
 import { Heading, Text, VStack, Box } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 import Carousel from '../Elements/Carousel/Carousel'
 import AboutTestimonial from './AboutTestimonial'
-import { useTranslation } from 'react-i18next'
 
 const AboutCommunity = () => {
   const { t } = useTranslation()

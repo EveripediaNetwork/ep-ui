@@ -1,8 +1,8 @@
 import React from 'react'
 import { Heading, VStack, Text, SimpleGrid } from '@chakra-ui/react'
 import { MdArticle, MdDesignServices, MdOutlinePeopleAlt } from 'react-icons/md'
-import AboutFeaturesCard from './AboutFeaturesCard'
 import { useTranslation } from 'react-i18next'
+import AboutFeaturesCard from './AboutFeaturesCard'
 
 const AboutFeatures = () => {
   const { t } = useTranslation()

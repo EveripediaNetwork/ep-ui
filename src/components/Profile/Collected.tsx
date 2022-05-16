@@ -9,8 +9,8 @@ import { EmptyState } from '@/components/Profile/EmptyState'
 import { Wiki } from '@/types/Wiki'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { store } from '@/store/store'
-import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 import { useTranslation } from 'react-i18next'
+import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 const Collected = () => {
   const { displaySize } = useProfileContext()
