@@ -139,7 +139,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               onClick={onCopy}
               rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
             >
-              <Text w="24" isTruncated>
+              <Text w="24" noOfLines={1}>
                 {address}
               </Text>
             </Button>

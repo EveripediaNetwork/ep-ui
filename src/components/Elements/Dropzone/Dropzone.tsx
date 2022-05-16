@@ -30,8 +30,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   } = dropZoneActions
 
   const onDrop = useCallback(
-    acceptedFiles => {
-      setPaths(acceptedFiles.map((file: File) => URL.createObjectURL(file)))
+    (acceptedFiles: File[]) => {
+      setPaths(acceptedFiles.map(file => URL.createObjectURL(file)))
 
       acceptedFiles.forEach((f: File) => {
         const reader = new FileReader()

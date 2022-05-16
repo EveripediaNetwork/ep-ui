@@ -1,9 +1,14 @@
 import React from 'react'
-import Slider, { Settings } from 'react-slick'
+import SliderClass, { Settings } from 'react-slick'
 import { Icon, Box } from '@chakra-ui/react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { IconType } from 'react-icons/lib'
 
+const Slider = SliderClass as unknown as (props: {
+  children: React.ReactNode
+  nextArrow: JSX.Element
+  prevArrow: JSX.Element
+}) => JSX.Element
 interface ArrowProps {
   ArrowIcon?: IconType
   isNext?: boolean

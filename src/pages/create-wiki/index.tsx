@@ -88,18 +88,22 @@ const CreateWikiContent = () => {
   const [commitMessage, setcommitMessage] = useState('')
 
   const commitMessageLimitAlertStyle = {
-    bgColor: '#d406082a',
-    '&:focus': {
-      borderColor: '#ff787c',
-      boxShadow: '0 0 0 1px #ff787c',
+    sx: {
+      bgColor: '#d406082a',
+      '&:focus': {
+        borderColor: '#ff787c',
+        boxShadow: '0 0 0 1px #ff787c',
+      },
     },
   }
 
   const baseStyle = {
-    bgColor: 'transparent',
-    '&:focus': {
-      borderColor: '#63b3ed',
-      boxShadow: '0 0 0 1px #63b3ed',
+    sx: {
+      bgColor: 'transparent',
+      '&:focus': {
+        borderColor: '#63b3ed',
+        boxShadow: '0 0 0 1px #63b3ed',
+      },
     },
   }
 
@@ -579,4 +583,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default authenticatedRoute(memo(CreateWiki))
+export default authenticatedRoute(
+  memo(CreateWiki) as unknown as () => JSX.Element,
+)

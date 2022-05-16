@@ -14,7 +14,11 @@ export interface Image {
 
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
-  TWITTER_PROFILE = 'twitter-profile',
+  FACEBOOK_PROFILE = 'facebook_profile',
+  INSTAGRAM_PROFILE = 'instagram_profile',
+  TWITTER_PROFILE = 'twitter_profile',
+  LINKEDIN_PROFILE = 'linkedin_profile',
+  YOUTUBE_PROFILE = 'youtube_profile',
 }
 
 export enum EditSpecificMetaIds {

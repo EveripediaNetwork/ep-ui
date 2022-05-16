@@ -106,7 +106,7 @@ const Connectors = () => {
             bg="toolTipBg"
             label={tooltipText}
           >
-            <Text d="inline" fontWeight="bold" color="primary">
+            <Text display="inline" fontWeight="bold" color="primary">
               Wallet&nbsp;
             </Text>
           </Tooltip>
