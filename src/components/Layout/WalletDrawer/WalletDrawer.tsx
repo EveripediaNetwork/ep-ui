@@ -17,7 +17,7 @@ import {
   MenuList,
   MenuItem,
   Spinner,
-  useToast
+  useToast,
 } from '@chakra-ui/react'
 import { useAccount, useDisconnect } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -69,7 +69,7 @@ const WalletDrawer = ({
   const [, username] = useENSData(accountData?.address)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
-    const toast = useToast()
+  const toast = useToast()
   const { refreshBalance } = useFetchWalletBalance(accountData?.address)
   const dispatch = useDispatch()
 
