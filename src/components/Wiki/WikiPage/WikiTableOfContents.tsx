@@ -11,20 +11,15 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
+import { useAppSelector } from '@/store/hook'
 
 interface WikiTableOfContentsProps {
-  toc: {
-    level: number
-    id: string
-    title: string
-  }[]
   isAlertAtTop?: boolean
 }
 
-const WikiTableOfContents = ({
-  toc,
-  isAlertAtTop,
-}: WikiTableOfContentsProps) => {
+const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
+  const toc = useAppSelector(state => state.toc)
+
   const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
   const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
@@ -88,7 +83,7 @@ const WikiTableOfContents = ({
   }, [setActiveId, toc])
 
   React.useEffect(() => {
-    if (!activeId) setActiveId(toc[0].id)
+    if (!activeId) setActiveId(toc[0]?.id)
   }, [activeId, toc])
 
   if (isOpen === isDefaultOpen) {

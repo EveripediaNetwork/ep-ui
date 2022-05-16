@@ -4,31 +4,45 @@ import { Box, Flex, Heading, Tag, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-
-import {
-  ComponentPropsWithoutRef,
-  HeadingProps,
-  ReactMarkdownProps,
-} from 'react-markdown/lib/ast-to-react'
+import { store } from '@/store/store'
+import { addToTOC } from '@/utils/customHeadingRender'
+import { customLinkRenderer } from '@/utils/customLinkRender'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
-  addToTOC: (props: React.PropsWithChildren<HeadingProps>) => JSX.Element
-  addWikiPreview: (
-    props: React.PropsWithChildren<
-      ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
-    >,
-  ) => JSX.Element
   editedTimestamp?: string
 }
+const MarkdownRender = React.memo(
+  ({ wikiContent }: { wikiContent?: string }) => {
+    store.dispatch({
+      type: 'citeMarks/reset',
+    })
+    store.dispatch({
+      type: 'toc/reset',
+    })
+    if (!wikiContent) return null
+    return (
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: addToTOC,
+          h2: addToTOC,
+          h3: addToTOC,
+          h4: addToTOC,
+          h5: addToTOC,
+          h6: addToTOC,
+          a: customLinkRenderer,
+        }}
+      >
+        {wikiContent}
+      </ReactMarkdown>
+    )
+  },
+)
 
-const WikiMainContent = ({
-  wiki,
-  addToTOC,
-  addWikiPreview,
-  editedTimestamp,
-}: WikiMainContentProps) => {
+const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
+
   return (
     <Box
       p={4}
@@ -50,27 +64,16 @@ const WikiMainContent = ({
           </Tag>
         )}
       </Flex>
-      <Box mt={8}>
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            h1: addToTOC,
-            h2: addToTOC,
-            h3: addToTOC,
-            h4: addToTOC,
-            h5: addToTOC,
-            h6: addToTOC,
-            a: addWikiPreview,
-          }}
-          className={`markdown-body ${
-            colorMode === 'dark' ? 'markdown-body-dark' : ''
-          }`}
-        >
-          {wiki?.content || ''}
-        </ReactMarkdown>
+      <Box
+        mt={8}
+        className={`markdown-body ${
+          colorMode === 'dark' ? 'markdown-body-dark' : ''
+        }`}
+      >
+        <MarkdownRender wikiContent={wiki?.content} />
       </Box>
     </Box>
   )
 }
 
-export default WikiMainContent
+export default React.memo(WikiMainContent)

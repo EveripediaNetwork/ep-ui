@@ -2,7 +2,7 @@
   background-image: url(./assets/wiki-link-icon.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: 70%;
   display: inline-block;
   vertical-align: middle;
   border: none !important;
@@ -12,7 +12,7 @@
 }
 .toastui-editor-dark .wikiLink__popupBtn:hover {
   background-color: #2b3447 !important;
-  border: 1px solid #cccccc2a !important;
+  outline: 1px solid #cccccc2a !important;
 }
 
 .wikiLink__inputContainer {

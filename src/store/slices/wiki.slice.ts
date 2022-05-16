@@ -40,6 +40,13 @@ const wikiSlice = createSlice({
       }
       return newState
     },
+    setContent(state, action) {
+      const newState = {
+        ...state,
+        content: action.payload,
+      }
+      return newState
+    },
     updateCategories(state, action) {
       return {
         ...state,
