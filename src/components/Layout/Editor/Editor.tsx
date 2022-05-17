@@ -16,10 +16,10 @@ const ToastUIEditorJSX = ToastUIEditor as unknown as (
 
 type EditorType = {
   onChange: (value: string | undefined) => void
-  markdown: string
+  markdown?: string
 }
 
-const Editor = ({ onChange, markdown }: EditorType) => {
+const Editor = ({ onChange, markdown = '' }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -75,28 +75,26 @@ const Editor = ({ onChange, markdown }: EditorType) => {
 
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
-      {markdown && (
-        <ToastUIEditorJSX
-          plugins={[wikiLink, cite]}
-          height="100%"
-          theme={colorMode === 'dark' ? 'dark' : 'light'}
-          ref={editorRef}
-          autofocus={false}
-          initialEditType="wysiwyg"
-          initialValue={markdown}
-          onFocus={() => {
-            html.classList.remove('scroller-blocker')
-            window.scrollTo(0, 0)
-          }}
-          onChange={handleOnEditorChange}
-          toolbarItems={[
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'indent', 'outdent'],
-            ['table', 'image', 'code'],
-          ]}
-        />
-      )}
+      <ToastUIEditorJSX
+        plugins={[wikiLink, cite]}
+        height="100%"
+        theme={colorMode === 'dark' ? 'dark' : 'light'}
+        ref={editorRef}
+        autofocus={false}
+        initialEditType="wysiwyg"
+        initialValue={markdown}
+        onFocus={() => {
+          html.classList.remove('scroller-blocker')
+          window.scrollTo(0, 0)
+        }}
+        onChange={handleOnEditorChange}
+        toolbarItems={[
+          ['heading', 'bold', 'italic', 'strike'],
+          ['hr', 'quote'],
+          ['ul', 'ol', 'indent', 'outdent'],
+          ['table', 'image', 'code'],
+        ]}
+      />
     </Box>
   )
 }
