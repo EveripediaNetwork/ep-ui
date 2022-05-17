@@ -1,11 +1,11 @@
 import React from 'react'
 import CustomAvatar from 'boring-avatars'
 import {
-  As,
   Avatar,
   chakra,
   ChakraProps,
   CSSObject,
+  HTMLChakraProps,
   Icon,
 } from '@chakra-ui/react'
 import { AvatarColorArray } from '@/data/AvatarData'
@@ -15,7 +15,7 @@ import { useENSData } from '@/hooks/useENSData'
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
   svgProps?: CSSObject
-  wrapperProps?: As<'div'>
+  wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
   mt?: number | string
 }
