@@ -204,7 +204,12 @@ export const useGetSignedHash = (deadline: number) => {
             clearInterval(timer)
           }
 
-          if (trx && trx.data && trx.data.status === 1 && trx.data.confirmations > 1) {
+          if (
+            trx &&
+            trx.data &&
+            trx.data.status === 1 &&
+            trx.data.confirmations > 1
+          ) {
             setIsLoading(undefined)
             setActiveStep(3)
             setMsg(successMessage)
