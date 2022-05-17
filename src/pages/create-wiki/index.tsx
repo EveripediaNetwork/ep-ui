@@ -56,7 +56,12 @@ import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
-import { Wiki, CommonMetaIds, EditSpecificMetaIds } from '@/types/Wiki'
+import {
+  Wiki,
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  EditorContentOverride,
+} from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
   initialMsg,
@@ -79,13 +84,13 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const toast = useToast()
 
+  const toast = useToast()
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
-  const [{ data: accountData }] = useAccount()
-  const [commitMessageLimitAlert, setcommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setcommitMessage] = useState('')
+  const { data: accountData } = useAccount()
+  const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
+  const [commitMessage, setCommitMessage] = useState('')
 
   const commitMessageLimitAlertStyle = {
     sx: {
@@ -111,8 +116,6 @@ const CreateWikiContent = () => {
     isLoadingWiki,
     wikiData,
     dispatch,
-    md,
-    setMd,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -175,7 +178,7 @@ const CreateWikiContent = () => {
       return false
     }
 
-    const words = getWordCount(md || '')
+    const words = getWordCount(wiki.content || '')
 
     if (words < MINIMUM_WORDS) {
       toast({
@@ -223,13 +226,15 @@ const CreateWikiContent = () => {
       if (interWiki.id === '') interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
-      interWiki = {
-        ...interWiki,
-        user: {
-          id: accountData.address,
-        },
-        content: String(md).replace(/\n/gm, '  \n'),
-        images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+      if (accountData.address) {
+        interWiki = {
+          ...interWiki,
+          user: {
+            id: accountData.address,
+          },
+          content: String(wiki.content).replace(/\n/gm, '  \n'),
+          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
+        }
       }
 
       if (!isNewCreateWiki) {
@@ -286,7 +291,10 @@ const CreateWikiContent = () => {
     isLoadingWiki
 
   const handleOnEditorChanges = (val: string | undefined) => {
-    setMd(val || ' ')
+    dispatch({
+      type: 'wiki/setContent',
+      payload: val || ' ',
+    })
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
@@ -332,19 +340,17 @@ const CreateWikiContent = () => {
           id,
           title,
           summary,
-          content: transformedContent,
+          content: EditorContentOverride.KEYWORD + transformedContent,
           tags,
           categories,
           metadata,
         },
       })
-
-      setMd(String(transformedContent))
     }
   }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(txHash)
+    if (txHash) verifyTrxHash()
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
@@ -355,7 +361,7 @@ const CreateWikiContent = () => {
   }
 
   return (
-    <Box maxW="1900px" mx="auto" mb={8}>
+    <Box scrollBehavior="auto" maxW="1900px" mx="auto" mb={8}>
       <HStack
         boxShadow="sm"
         borderRadius={4}
@@ -436,9 +442,9 @@ const CreateWikiContent = () => {
                   {...(commitMessageLimitAlert
                     ? commitMessageLimitAlertStyle
                     : baseStyle)}
-                  onChange={e => {
+                  onChange={(e: { target: { value: string } }) => {
                     if (e.target.value.length <= 128) {
-                      setcommitMessage(e.target.value)
+                      setCommitMessage(e.target.value)
                       dispatch({
                         type: 'wiki/updateMetadata',
                         payload: {
@@ -447,8 +453,8 @@ const CreateWikiContent = () => {
                         },
                       })
                     } else {
-                      setcommitMessageLimitAlert(true)
-                      setTimeout(() => setcommitMessageLimitAlert(false), 2000)
+                      setCommitMessageLimitAlert(true)
+                      setTimeout(() => setCommitMessageLimitAlert(false), 2000)
                     }
                   }}
                 />
@@ -511,7 +517,10 @@ const CreateWikiContent = () => {
       >
         <Box h="635px" w="full">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
-            <Editor markdown={md || ''} onChange={handleOnEditorChanges} />
+            <Editor
+              markdown={wiki.content || ''}
+              onChange={handleOnEditorChanges}
+            />
           </Skeleton>
         </Box>
         <Box minH="635px">

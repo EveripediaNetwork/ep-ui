@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useConnect, useAccount, useBalance } from 'wagmi'
+import { useConnect, useAccount } from 'wagmi'
 import {
   Box,
   Divider,
@@ -14,28 +14,23 @@ import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
 import shortenBalance from '@/utils/shortenBallance'
 import {
-  fetchWalletBalance,
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
 } from '@/utils/fetchWalletBalance'
-import config from '@/config'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateBalanceBreakdown,
   updateTotalBalance,
-  updateUserDetails,
   updateWalletDetails,
 } from '@/store/slices/user-slice'
 import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
 import { RootState } from '@/store/store'
-import { saveUserToLocalStorage } from '@/utils/browserStorage'
+import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 
 const Connectors = () => {
-  const [{ data, loading }, connect] = useConnect()
-
-  const [{ data: accountData }] = useAccount()
-  const address = accountData ? accountData.address : null
-  const [, getBalance] = useBalance()
+  const { isConnecting, connectors, connect } = useConnect()
+  const { data: accountData } = useAccount()
+  const { userBalance } = useFetchWalletBalance(accountData?.address)
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
     (state: RootState) => state.user,
   )
@@ -46,34 +41,10 @@ const Connectors = () => {
     useState<boolean>(true)
 
   useEffect(() => {
-    if (address !== null && !walletDetails) {
-      const payload = {
-        address,
-        connector: undefined,
-        ens: accountData?.ens,
-      }
-      dispatch(updateUserDetails(payload))
-      saveUserToLocalStorage(payload)
-      fetchWalletBalance(getBalance, [
-        {
-          addressOrName: address,
-          token: config.iqTestNetAddress,
-        },
-        {
-          addressOrName: address,
-        },
-      ]).then(response => {
-        dispatch(updateWalletDetails(response))
-      })
+    if (userBalance && !walletDetails) {
+      dispatch(updateWalletDetails(userBalance))
     }
-  }, [
-    address,
-    getBalance,
-    dispatch,
-    walletDetails,
-    accountData?.address,
-    accountData?.ens,
-  ])
+  }, [dispatch, walletDetails, userBalance])
 
   useEffect(() => {
     if (walletDetails) {
@@ -177,13 +148,13 @@ const Connectors = () => {
             borderRadius="lg"
             overflow="hidden"
           >
-            {data.connectors.map((w, index) => (
+            {connectors.map((w, index) => (
               <Box key={w.name} w="full">
                 <ConnectorDetails
                   connect={connect}
                   w={w}
                   imageLink={`/images/${walletsLogos[index]}`}
-                  loading={loading}
+                  loading={isConnecting}
                 />
                 {index < walletsLogos.length - 1 && <Divider />}
               </Box>

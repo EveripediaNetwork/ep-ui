@@ -12,8 +12,13 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export enum EditorContentOverride {
+  KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
+}
+
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
+  REFERENCES = 'references',
   FACEBOOK_PROFILE = 'facebook_profile',
   INSTAGRAM_PROFILE = 'instagram_profile',
   TWITTER_PROFILE = 'twitter_profile',
@@ -58,6 +63,13 @@ export enum PageTypeName {
 export type PageType = {
   type: PageTypeName
   templateText: string
+}
+
+export interface CiteReference {
+  id: string
+  url: string
+  description: string
+  timestamp: string
 }
 
 enum LanguagesValuesEnum {

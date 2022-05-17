@@ -83,11 +83,10 @@ export const useCreateWikiEffects = (
 ) => {
   const {
     slug,
-    md,
     wikiData,
     activeStep,
     setIsNewCreateWiki,
-    setMd,
+
     dispatch,
     isLoadingWiki,
   } = useCreateWikiContext()
@@ -103,14 +102,15 @@ export const useCreateWikiEffects = (
     if (!slug) {
       setIsNewCreateWiki(true)
       dispatch({ type: 'wiki/reset' })
-      setMd(initialEditorValue)
+      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
     } else {
       setIsNewCreateWiki(false)
     }
   }, [dispatch, slug])
 
   useEffect(() => {
-    if (isLoadingWiki === false && !wikiData) setMd(initialEditorValue)
+    if (isLoadingWiki === false && !wikiData)
+      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
   }, [isLoadingWiki, wikiData])
 
   const updatePageTypeTemplate = useCallback(() => {
@@ -120,8 +120,11 @@ export const useCreateWikiEffects = (
     ]
     const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
 
-    setMd(String(pageType?.templateText))
-  }, [wiki])
+    dispatch({
+      type: 'wiki/setContent',
+      payload: String(pageType?.templateText),
+    })
+  }, [wiki.metadata])
 
   // update the page type template when the page type changes
   const presentPageType = useMemo(
@@ -134,9 +137,9 @@ export const useCreateWikiEffects = (
     if (presentPageType) {
       let isMdPageTemplate = false
       PageTemplate.forEach(p => {
-        if (p.templateText === md) isMdPageTemplate = true
+        if (p.templateText === wiki.content) isMdPageTemplate = true
       })
-      if (isMdPageTemplate || md === ' ') updatePageTypeTemplate()
+      if (isMdPageTemplate || wiki.content === ' ') updatePageTypeTemplate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [presentPageType])
@@ -150,67 +153,74 @@ export const useGetSignedHash = (deadline: number) => {
     setIsLoading,
     setTxHash,
     setActiveStep,
+    txHash,
   } = useCreateWikiContext()
-  const [{ data: accountData }] = useAccount()
-  const [{ data, error, loading: signing }, signTypedData] = useSignTypedData(
-    {},
-  )
-  const [, wait] = useWaitForTransaction()
+
+  const { data: accountData } = useAccount()
+
+  const {
+    data,
+    error,
+    isLoading: signing,
+    signTypedDataAsync,
+  } = useSignTypedData()
+
+  const { refetch } = useWaitForTransaction({ hash: txHash })
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
     setWikiHash(ipfs)
-    signTypedData({
+
+    signTypedDataAsync({
       domain,
       types,
       value: {
         ipfs,
-        user: accountData?.address || '',
+        user: accountData!.address,
         deadline,
       },
-    }).then(response => {
-      if (response.data) {
-        setActiveStep(1)
-      }
-      if (response.error) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-      }
     })
-  }
-
-  const verifyTrxHash = useCallback(
-    async (trxHash: string) => {
-      const timer = setInterval(() => {
-        try {
-          const checkTrx = async () => {
-            const trx = await wait({
-              hash: trxHash,
-            })
-            if (trx.error) {
-              setIsLoading('error')
-              setMsg(errorMessage)
-              clearInterval(timer)
-            } else if (trx.data.confirmations > 1) {
-              setIsLoading(undefined)
-              setActiveStep(3)
-              setMsg(successMessage)
-              clearInterval(timer)
-            }
-          }
-          checkTrx()
-        } catch (err) {
+      .then(response => {
+        if (response) {
+          setActiveStep(1)
+        } else {
           setIsLoading('error')
           setMsg(errorMessage)
-          clearInterval(timer)
         }
-      }, 3000)
-    },
-    [wait],
-  )
+      })
+      .catch(() => {
+        setIsLoading('error')
+        setMsg(errorMessage)
+      })
+  }
+
+  const verifyTrxHash = useCallback(async () => {
+    const timer = setInterval(() => {
+      try {
+        const checkTrx = async () => {
+          const trx = await refetch()
+          if (trx.error) {
+            setIsLoading('error')
+            setMsg(errorMessage)
+            clearInterval(timer)
+          } else if (trx && trx.data && trx.data.confirmations > 1) {
+            setIsLoading(undefined)
+            setActiveStep(3)
+            setMsg(successMessage)
+            clearInterval(timer)
+          }
+        }
+        checkTrx()
+      } catch (err) {
+        setIsLoading('error')
+        setMsg(errorMessage)
+        clearInterval(timer)
+      }
+    }, 3000)
+  }, [refetch])
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (data && wikiHash && accountData) {
+      if (data && wikiHash && accountData && accountData.address) {
         if (error) {
           setMsg(errorMessage)
           setIsLoading('error')
@@ -248,7 +258,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     },
   )
   const { slug } = router.query
-  const [md, setMd] = useState<string>()
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
@@ -273,8 +282,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
-    md,
-    setMd,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,

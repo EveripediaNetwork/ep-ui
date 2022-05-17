@@ -6,6 +6,8 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 import wikiLink from '@/editor-plugins/wikiLink'
+import cite from '@/editor-plugins/cite'
+import { EditorContentOverride } from '@/types/Wiki'
 import { Dict } from '@chakra-ui/utils'
 
 const ToastUIEditorJSX = ToastUIEditor as unknown as (
@@ -21,15 +23,25 @@ const Editor = ({ onChange, markdown }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const html = document.getElementsByTagName('html')[0]
 
   // when markdown changes, update the editor
-  useEffect(() => {
+  function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
-    if (editorInstance?.getMarkdown() !== markdown) {
-      editorInstance?.setMarkdown(markdown)
-      editorInstance?.moveCursorToStart()
+    if (editorInstance?.getMarkdown() !== text) {
+      html.classList.add('scroller-blocker')
+      editorInstance?.setMarkdown(text)
+      editorInstance?.setSelection(0, 0)
       editorInstance?.setScrollTop(0)
     }
+  }
+  useEffect(() => {
+    if (
+      markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
+      EditorContentOverride.KEYWORD
+    )
+      updateEditorText(markdown.substring(26))
+    else updateEditorText(markdown)
   }, [markdown])
 
   // when color mode changes, update top level class tag
@@ -51,20 +63,31 @@ const Editor = ({ onChange, markdown }: EditorType) => {
       .getMarkdown()
       .toString() as string
 
-    if (markdown !== currentMd) onChange(currentMd)
+    if (markdown !== currentMd) {
+      if (
+        markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
+        EditorContentOverride.KEYWORD
+      ) {
+        onChange(markdown.substring(26))
+      } else onChange(currentMd)
+    }
   }, [editorRef, markdown, onChange])
 
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
       {markdown && (
         <ToastUIEditorJSX
-          plugins={[wikiLink]}
+          plugins={[wikiLink, cite]}
           height="100%"
-          autofocus={false}
           theme={colorMode === 'dark' ? 'dark' : 'light'}
           ref={editorRef}
-          initialValue={markdown}
+          autofocus={false}
           initialEditType="wysiwyg"
+          initialValue={markdown}
+          onFocus={() => {
+            html.classList.remove('scroller-blocker')
+            window.scrollTo(0, 0)
+          }}
           onChange={handleOnEditorChange}
           toolbarItems={[
             ['heading', 'bold', 'italic', 'strike'],

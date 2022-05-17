@@ -10,20 +10,18 @@ import {
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import {
-  ComponentPropsWithoutRef,
-  HeadingProps,
-  ReactMarkdownProps,
-} from 'react-markdown/lib/ast-to-react'
-import { HStack, Flex, Spinner } from '@chakra-ui/react'
+import { HStack, Flex, Spinner, Box } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary } from '@/utils/getWikiSummary'
-import WikiPreviewHover from '@/components/Wiki/WikiPage/WikiPreviewHover'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
+import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
+import { getWikiMetadataById } from '@/utils/getWikiFields'
+import { CommonMetaIds } from '@/types/Wiki'
+import { useAppSelector } from '@/store/hook'
 
 const Wiki = () => {
   const router = useRouter()
@@ -38,10 +36,8 @@ const Wiki = () => {
   // get the link id if available to scroll to the correct position
   useEffect(() => {
     if (!isTocEmpty) {
-      const linkId = window.location.hash.replace('#', '')
-      if (linkId) {
-        router.push(`/wiki/${slug}#${linkId}`)
-      }
+      const linkId = window.location.hash
+      if (linkId) router.push(`/wiki/${slug}${linkId}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTocEmpty])
@@ -50,72 +46,12 @@ const Wiki = () => {
   // with in react-markdown that is causing infinite loop if toc is state variable
   // (so using useEffect to update toc length for now)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const toc: {
-    level: number
-    id: string
-    title: string
-  }[] = []
+
+  const toc = useAppSelector(state => state.toc)
+
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
-
-  // listen to changes in toc variable and update the length of the toc
-  /* eslint-disable react/prop-types */
-  const addToTOC = ({
-    children,
-    ...props
-  }: React.PropsWithChildren<HeadingProps>) => {
-    const level = Number(props.node.tagName.match(/h(\d)/)?.slice(1))
-    if (level && children && typeof children[0] === 'string') {
-      // id for each heading to be used in table of contents
-      const id = `${children[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${
-        toc.length
-      }`
-
-      // TODO: Find out why this is happening
-      // if the last item in toc is same as current item, remove the last item
-      // to avoid duplicate items
-      if (toc[toc.length - 1]?.title === children[0]) {
-        toc.pop()
-      }
-      toc.push({
-        level,
-        id,
-        title: children[0],
-      })
-      return React.createElement(props.node.tagName, { id }, children)
-    }
-    return React.createElement(props.node.tagName, props, children)
-  }
-
-  const addWikiPreview = ({
-    children,
-    ...props
-  }: React.PropsWithChildren<
-    ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
-  >) => {
-    // TODO: Make more specific regex
-    const wikiLinkRecognizer = /.*\/wiki\/(.*)/
-    const wikiSlug = props?.href?.match(wikiLinkRecognizer)?.[1]
-
-    // Checks if the link is a wiki link
-    const isChildrenPresent =
-      children && typeof children[0] === 'string' && children[0].length > 0
-    const isWikiSlugPresent = wikiSlug && wikiSlug.length > 0
-
-    // render special hover component if the link is a wiki link
-    if (isChildrenPresent && isWikiSlugPresent && props.href) {
-      return (
-        <WikiPreviewHover
-          text={children[0] as string}
-          href={props.href}
-          slug={wikiSlug}
-        />
-      )
-    }
-    return React.createElement(props.node.tagName, props, children)
-  }
-  /* eslint-enable react/prop-types */
 
   return (
     <>
@@ -148,19 +84,27 @@ const Wiki = () => {
             >
               <WikiActionBar wiki={wiki} />
               {wiki ? (
-                <>
-                  <WikiMainContent
-                    wiki={wiki}
-                    addToTOC={addToTOC}
-                    addWikiPreview={addWikiPreview}
+                <Box>
+                  <Flex
+                    w="100%"
+                    justify="space-between"
+                    direction={{ base: 'column', md: 'row' }}
+                  >
+                    <WikiMainContent wiki={wiki} />
+                    <WikiInsights wiki={wiki} />
+                  </Flex>
+                  <WikiReferences
+                    references={JSON.parse(
+                      getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)
+                        ?.value || '[]',
+                    )}
                   />
-                  <WikiInsights wiki={wiki} />
-                </>
+                </Box>
               ) : (
                 <WikiNotFound />
               )}
             </Flex>
-            {!isTocEmpty && <WikiTableOfContents toc={toc} />}
+            {!isTocEmpty && <WikiTableOfContents />}
           </HStack>
         )}
       </main>

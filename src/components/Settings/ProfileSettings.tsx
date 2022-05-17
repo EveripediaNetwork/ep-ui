@@ -37,7 +37,7 @@ const ProfileSettings = () => {
   const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
   const [buttonDisabled] = React.useState<boolean>(true)
 
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const [, username] = useENSData(accountData?.address)
 
   const clipboard = useClipboard(username || '')

@@ -27,7 +27,7 @@ export type UserDetailsProps = { hide?: boolean }
 export const UserDetails = (props: UserDetailsProps) => {
   const { hide } = props
   const router = useRouter()
-  const [{ data }] = useAccount()
+  const { data } = useAccount()
   const address = router.query.profile as string
 
   const { headerIsSticky } = useProfileContext()

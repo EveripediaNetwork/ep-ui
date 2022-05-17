@@ -1,19 +1,13 @@
-import { AccountDataType } from '@/types/AccountDataType'
-import {
-  TokenDetailsType,
-  ConvertedBalanceType,
-} from '@/types/WalletBalanceType'
+import { TokenDetailsType, WalletBalanceType } from '@/types/WalletBalanceType'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
-  user: AccountDataType | null
-  walletDetails: ConvertedBalanceType[] | null
+  walletDetails: WalletBalanceType[] | null
   totalBalance: number | null | undefined
   balanceBreakdown: TokenDetailsType[] | null
 }
 
 const initialState: UserState = {
-  user: null,
   walletDetails: null,
   totalBalance: null,
   balanceBreakdown: null,
@@ -23,12 +17,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUserDetails: (state, action: PayloadAction<AccountDataType>) => {
-      state.user = action.payload
-    },
     updateWalletDetails: (
       state,
-      action: PayloadAction<ConvertedBalanceType[] | null>,
+      action: PayloadAction<WalletBalanceType[] | null>,
     ) => {
       state.walletDetails = action.payload
     },
@@ -49,7 +40,6 @@ const userSlice = createSlice({
 })
 
 export const {
-  updateUserDetails,
   updateWalletDetails,
   updateTotalBalance,
   updateBalanceBreakdown,
