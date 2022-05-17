@@ -1,14 +1,7 @@
 import React from 'react'
-import {
-  Flex,
-  Icon,
-  Stack,
-  Text,
-  useDisclosure,
-  HStack,
-} from '@chakra-ui/react'
+import { Icon, useDisclosure, LinkBox, LinkOverlay } from '@chakra-ui/react'
 import { RiArrowRightSLine } from 'react-icons/ri'
-import Link from '@/components/Elements/Link/Link'
+import Link from 'next/link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 
@@ -26,9 +19,7 @@ const MobileNavItem = ({
   const { onToggle } = useDisclosure()
   const router = useRouter()
   return (
-    <Stack
-      direction="column"
-      spacing={4}
+    <LinkBox
       onClick={() => {
         onToggle()
         handleClick(navItem)
@@ -37,33 +28,29 @@ const MobileNavItem = ({
           setHamburger(false)
         }
       }}
+      display="flex"
+      alignItems="center"
+      _hover={{
+        textDecoration: 'none',
+      }}
+      fontSize="lg"
+      gap="4"
     >
-      <Flex
-        as={Link}
-        href={navItem.href}
-        justify="space-between"
-        align="center"
-        _hover={{
-          textDecoration: 'none',
-        }}
-        fontSize="lg"
-      >
-        <HStack>
-          <Icon
-            cursor="pointer"
-            fontSize="4xl"
-            color="linkColor"
-            fontWeight={600}
-            as={navItem.icon}
-            pr={3}
-          />
-          <Text fontWeight={600} color="linkColor">
-            {navItem.label}
-          </Text>
-        </HStack>
-        {navItem.subItem && <RiArrowRightSLine />}
-      </Flex>
-    </Stack>
+      <Icon
+        cursor="pointer"
+        fontSize="4xl"
+        color="linkColor"
+        fontWeight={600}
+        as={navItem.icon}
+        pr={3}
+      />
+      <Link href={navItem.href} passHref>
+        <LinkOverlay fontWeight={600} color="linkColor" mr="auto">
+          {navItem.label}
+        </LinkOverlay>
+      </Link>
+      {navItem.subItem && <RiArrowRightSLine />}
+    </LinkBox>
   )
 }
 
