@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -25,6 +25,7 @@ import { pageView } from '@/utils/googleAnalytics'
 import Script from 'next/script'
 import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
+import '../utils/i18n'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -67,7 +68,7 @@ const App = (props: EpAppProps) => {
   }, [router.events])
 
   return (
-    <>
+    <StrictMode>
       <Script
         id="google-analytics"
         strategy="lazyOnload"
@@ -99,7 +100,7 @@ const App = (props: EpAppProps) => {
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />
-    </>
+    </StrictMode>
   )
 }
 

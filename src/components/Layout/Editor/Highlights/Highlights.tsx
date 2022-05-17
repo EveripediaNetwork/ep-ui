@@ -18,6 +18,7 @@ import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { shortenText } from '@/utils/shortenText'
+import { useTranslation } from 'react-i18next'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import SummaryInput from './SummaryInput'
 
@@ -49,7 +50,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     deleteImage: handleDeleteImage,
     initialImage,
   }
-
+  const { t } = useTranslation()
   return (
     <Flex
       direction="column"
@@ -74,7 +75,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           <Tbody borderWidth="1px" overflow="hidden">
             <Tr>
               <Td color="linkColor" display="flex" gap={2}>
-                <RiFolder3Line /> <Text>Page Type</Text>
+                <RiFolder3Line /> <Text>{`${t('pageTypeLabel')}`}</Text>
               </Td>
               <Td>
                 {
@@ -87,7 +88,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
             </Tr>
             <Tr>
               <Td color="linkColor" display="flex" gap={2}>
-                <RiSurveyLine /> <Text>Categories</Text>
+                <RiSurveyLine /> <Text>{`${t('categoryTypeLabel')}`}</Text>
               </Td>
               <Td borderColor="inherit">
                 {currentWiki.categories?.map((c: BaseCategory) => (
@@ -105,7 +106,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                 gap={2}
               >
                 <RiTwitterLine />
-                <Text whiteSpace="nowrap">Twitter Profile</Text>
+                <Text whiteSpace="nowrap">{`${t('twitterProfileLabel')}`}</Text>
               </Td>
               <Td wordBreak="break-word">
                 {shortenText(

@@ -1,7 +1,7 @@
 export const languageData = [
   {
     id: 1,
-    language: 'English',
+    language: 'English, US',
     value: 'en',
   },
   {

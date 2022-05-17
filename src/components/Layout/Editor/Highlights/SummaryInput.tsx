@@ -1,15 +1,17 @@
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Box, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
 import React, { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const SummaryInput = () => {
   const wiki = useAppSelector(state => state.wiki)
   const [showRed, setShowRed] = React.useState(false)
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">
-        <Text opacity={0.5}>Wiki Summary</Text>
+        <Text opacity={0.5}>{`${t('wikiSummaryLabel')}`}</Text>
         <Tag
           variant="solid"
           colorScheme={
@@ -42,7 +44,7 @@ const SummaryInput = () => {
             setTimeout(() => setShowRed(false), 2000)
           }
         }}
-        placeholder="Summary of wiki"
+        placeholder={`${t('wikiSummaryPlaceholder')}`}
       />
     </Box>
   )

@@ -5,6 +5,7 @@ import { NavMenu } from '@/components/Layout/Navbar'
 import { useRouter } from 'next/router'
 import { NavItem } from '@/types/NavItemType'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
+import { useTranslation } from 'react-i18next'
 
 const DesktopNav = () => {
   const router = useRouter()
@@ -20,18 +21,24 @@ const DesktopNav = () => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
-
+  const { t } = useTranslation()
   return (
     <HStack spacing={4} onMouseLeave={() => setVisibleMenu(null)}>
-      {NAV_ITEMS(categoriesLinks || []).map((navItem: NavItem) => (
-        <NavMenu
-          key={navItem.id}
-          navItem={navItem}
-          setVisibleMenu={setVisibleMenu}
-          visibleMenu={visibleMenu}
-          label={navItem.label}
-        />
-      ))}
+      {NAV_ITEMS(categoriesLinks || []).map((navItem: NavItem) => {
+        return (
+          <NavMenu
+            key={navItem.id}
+            navItem={navItem}
+            setVisibleMenu={setVisibleMenu}
+            visibleMenu={visibleMenu}
+            label={
+              navItem.label === 'Create Wiki'
+                ? t(navItem.label.split(' ').join(''))
+                : t(navItem.label)
+            }
+          />
+        )
+      })}
     </HStack>
   )
 }

@@ -11,6 +11,7 @@ import NextLink from 'next/link'
 import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
 import { Image } from '@/components/Elements/Image/Image'
+import { useTranslation } from 'react-i18next'
 
 const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
@@ -19,11 +20,11 @@ const CategoriesList = () => {
   useEffect(() => {
     setCategories(categoriesData || [])
   }, [categoriesData])
-
+  const { t } = useTranslation()
   return (
     <>
       <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
-        Browse by category
+        {`${t('browseCategory')}`}
       </Text>
       <SimpleGrid
         maxW="1050px"

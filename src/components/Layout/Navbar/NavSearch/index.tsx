@@ -15,10 +15,10 @@ import { Search2Icon } from '@chakra-ui/icons'
 import {
   AutoComplete,
   AutoCompleteGroup,
+  AutoCompleteGroupTitle,
   AutoCompleteInput,
   AutoCompleteItem,
   AutoCompleteList,
-  AutoCompleteGroupTitle,
   AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
@@ -106,8 +106,7 @@ export const NavSearch = (props: NavSearchProps) => {
   }
 
   const articlesSearchList = (
-    <AutoCompleteGroup>
-      <AutoCompleteGroupTitle {...titleStyles}>Articles</AutoCompleteGroupTitle>
+    <>
       {results.articles?.slice(0, ARTICLES_LIMIT).map(article => {
         const articleImage = `${config.pinataBaseUrl}${
           article.images && article.images[0].id
@@ -152,14 +151,11 @@ export const NavSearch = (props: NavSearchProps) => {
           </AutoCompleteItem>
         )
       })}
-    </AutoCompleteGroup>
+    </>
   )
 
   const categoriesSearchList = (
-    <AutoCompleteGroup>
-      <AutoCompleteGroupTitle {...titleStyles}>
-        Categories
-      </AutoCompleteGroupTitle>
+    <>
       {results.categories?.slice(0, CATEGORIES_LIMIT).map(category => {
         const value = fillType(category, SEARCH_TYPES.CATEGORY)
         return (
@@ -178,13 +174,23 @@ export const NavSearch = (props: NavSearchProps) => {
           </AutoCompleteItem>
         )
       })}
-    </AutoCompleteGroup>
+    </>
   )
 
   const searchList = (
     <>
-      {articlesSearchList}
-      {categoriesSearchList}
+      <AutoCompleteGroup>
+        <AutoCompleteGroupTitle {...titleStyles}>
+          Articles
+        </AutoCompleteGroupTitle>
+        {articlesSearchList}
+      </AutoCompleteGroup>
+      <AutoCompleteGroup>
+        <AutoCompleteGroupTitle {...titleStyles}>
+          Articles
+        </AutoCompleteGroupTitle>
+        {categoriesSearchList}
+      </AutoCompleteGroup>
     </>
   )
 
@@ -223,13 +229,7 @@ export const NavSearch = (props: NavSearchProps) => {
         />
       </InputGroup>
 
-      <AutoCompleteList
-        p="0"
-        mx={{ base: 4, md: 0 }}
-        shadow="lg"
-        maxH="auto"
-        {...listProps}
-      >
+      <AutoCompleteList p="0" mx={4} shadow="lg" maxH="auto" {...listProps}>
         {isLoading ? loadingView : searchList}
 
         {totalUnrendered > 0 && !isLoading && (

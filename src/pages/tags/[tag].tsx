@@ -19,6 +19,7 @@ import { getTagWikis } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE, FETCH_DELAY_TIME } from '@/data/Constants'
+import { useTranslation } from 'react-i18next'
 
 interface TagPageProps {
   tagId: string
@@ -68,7 +69,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-
+  const { t } = useTranslation()
   return (
     <>
       <NextSeo
@@ -109,9 +110,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
                 </Center>
               ) : (
                 <Center mt="10">
-                  <Text fontWeight="semibold">
-                    Yay! You have seen it all 🥳{' '}
-                  </Text>
+                  <Text fontWeight="semibold">{t('seenItAll')}</Text>
                 </Center>
               )}
             </>

@@ -14,6 +14,7 @@ import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { useTranslation } from 'react-i18next'
 
 const arrowStyles: TextProps = {
   cursor: 'pointer',
@@ -36,7 +37,7 @@ const arrowStyles: TextProps = {
 
 export const NotableDrops = ({ drops }: NotableDropsProps) => {
   const [slideColumns, setSlideColumns] = useState(3)
-
+  const { t } = useTranslation()
   useEffect(() => {
     const isOnMobile = isMobile(window?.navigator)
     if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
@@ -88,10 +89,11 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
       ))}
     </HStack>
   )
+
   return (
     <Flex direction="column" mt="20" gap={10} align="center">
       <Text align="center" fontWeight="bold" fontSize="2xl">
-        Trending Wikis
+        {`${t('trendingWIkis')}`}
       </Text>
 
       <Flex

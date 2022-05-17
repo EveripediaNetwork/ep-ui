@@ -2,6 +2,7 @@ import React, { ComponentPropsWithoutRef } from 'react'
 import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
 import WikiLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WikiLinkRender'
 import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/CiteMarksRender'
+import config from '@/config'
 
 export const customLinkRenderer = ({
   children,
@@ -10,8 +11,7 @@ export const customLinkRenderer = ({
   ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
 >) => {
   // link is domain + /wiki/ + some slug
-  const domain = process.env.NEXT_PUBLIC_DOMAIN || window.location.origin
-  const wikiLinkRecognizer = new RegExp(`${domain}/wiki/(.*)`)
+  const wikiLinkRecognizer = new RegExp(`${config.publicDomain}/wiki/(.*)`)
   const wikiSlug = props?.href?.match(wikiLinkRecognizer)?.[1]
 
   // Checks if the link is a wiki link

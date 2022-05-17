@@ -75,6 +75,7 @@ import {
   useCreateWikiContext,
   errorMessage,
 } from '@/utils/create-wiki'
+import { useTranslation } from 'react-i18next'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -359,7 +360,7 @@ const CreateWikiContent = () => {
     setActiveStep(0)
     setOpenTxDetailsDialog(false)
   }
-
+  const { t } = useTranslation()
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto" mb={8}>
       <HStack
@@ -391,7 +392,7 @@ const CreateWikiContent = () => {
               })
             }}
             value={wiki.title}
-            placeholder="Title goes here"
+            placeholder={`${t('wikiTitlePlaceholder')}`}
           />
         </InputGroup>
         {!isNewCreateWiki ? (
