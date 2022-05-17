@@ -18,6 +18,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { format } from 'date-fns'
 import { shortenText } from '@/utils/shortenText'
 import { MdFormatQuote } from 'react-icons/md'
+import config from '@/config'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -72,6 +73,7 @@ interface HistoryCardProps {
   lastEditor?: string
   lastEditedTime?: string
   transactionAddress?: string
+  IPFS?: string
   commitMessage?: string
   wordsChanged?: string
   percentChanged?: string
@@ -85,6 +87,7 @@ export const HistoryCard = ({
   lastEditor = '',
   lastEditedTime,
   transactionAddress = '',
+  IPFS = '',
   commitMessage,
   wordsChanged,
   percentChanged,
@@ -208,17 +211,34 @@ export const HistoryCard = ({
         mt={3}
         justify="space-between"
       >
-        <Text fontSize="sm" color="text.500">
-          Transaction Address:
-        </Text>
-        <Link
-          href={`https://etherscan.io/tx/${transactionAddress}`}
-          color="brand.500"
-          ml={2}
-          isExternal
-        >
-          {shortenAccount(transactionAddress)}
-        </Link>
+        <HStack>
+          <Text fontSize="sm" color="text.500">
+            IPFS:
+          </Text>
+          <Link
+            href={`${config.pinataBaseUrl}${IPFS}`}
+            color="brand.500"
+            ml={2}
+            isExternal
+            fontSize="sm"
+          >
+            {shortenAccount(IPFS)}
+          </Link>
+        </HStack>
+        <HStack>
+          <Text fontSize="sm" color="text.500">
+            TX:
+          </Text>
+          <Link
+            href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
+            color="brand.500"
+            ml={2}
+            isExternal
+            fontSize="sm"
+          >
+            {shortenAccount(transactionAddress)}
+          </Link>
+        </HStack>
       </HStack>
     </LinkBox>
   )
