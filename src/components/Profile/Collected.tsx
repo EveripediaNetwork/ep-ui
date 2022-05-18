@@ -36,7 +36,7 @@ const Collected = () => {
             const updatedWiki = [...wikis, ...data]
             setWikis(updatedWiki)
             setOffset(fetchOffset)
-            if(data.length < ITEM_PER_PAGE){
+            if (data.length < ITEM_PER_PAGE) {
               setLoading(false)
               setHasMore(false)
             }

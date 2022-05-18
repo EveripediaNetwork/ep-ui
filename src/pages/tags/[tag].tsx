@@ -37,7 +37,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     setHasMore(true)
     setOffset(0)
     setWikisByTag(wikis)
-    if(wikis.length < ITEM_PER_PAGE){
+    if (wikis.length < ITEM_PER_PAGE) {
       setHasMore(false)
       setLoading(false)
     }
@@ -59,7 +59,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           const updatedWiki = [...wikisByTag, ...data]
           setWikisByTag(updatedWiki)
           setOffset(updatedOffset)
-          if(data.length < ITEM_PER_PAGE){
+          if (data.length < ITEM_PER_PAGE) {
             setHasMore(false)
             setLoading(false)
           }
