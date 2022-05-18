@@ -87,7 +87,13 @@ export const mobileWalletDetails: NavItem = {
   icon: RiWallet2Line,
 }
 
-export const MOBILE_NAV_ITEMS = ({categories, address}: {categories: CategoryLink[], address: string|undefined}): NavItem[] => [
+export const MOBILE_NAV_ITEMS = ({
+  categories,
+  address,
+}: {
+  categories: CategoryLink[]
+  address: string | undefined
+}): NavItem[] => [
   ...NAV_ITEMS(categories),
   {
     id: 7,
