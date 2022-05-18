@@ -87,7 +87,7 @@ export const mobileWalletDetails: NavItem = {
   icon: RiWallet2Line,
 }
 
-export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
+export const MOBILE_NAV_ITEMS = ({categories, address}: {categories: CategoryLink[], address: string|undefined}): NavItem[] => [
   ...NAV_ITEMS(categories),
   {
     id: 7,
@@ -98,7 +98,7 @@ export const MOBILE_NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
       {
         id: 701,
         label: 'Profile',
-        href: '/account/0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff', // TODO: get address
+        href: `/account/${address}`, // TODO: get address
         hasImage: false,
       },
       {
