@@ -31,9 +31,7 @@ const DesktopNav = () => {
             navItem={navItem}
             setVisibleMenu={setVisibleMenu}
             visibleMenu={visibleMenu}
-            label={
-               t(navItem.label)
-            }
+            label={t(navItem.label)}
           />
         )
       })}
