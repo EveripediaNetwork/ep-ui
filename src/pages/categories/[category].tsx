@@ -66,6 +66,10 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           const updatedWiki = [...wikisInCategory, ...data]
           setWikisInCategory(updatedWiki)
           setOffset(updatedOffset)
+          if (data.length < ITEM_PER_PAGE) {
+            setHasMore(false)
+            setLoading(false)
+          }
         } else {
           setHasMore(false)
           setLoading(false)
