@@ -78,6 +78,9 @@ export const UserDetails = (props: UserDetailsProps) => {
             justifySelf="center"
             {...(isSticky && { mt: 0, boxSize: 12 })}
             address={address}
+            wrapperProps={{
+              zIndex: 'banner',
+            }}
             svgProps={{
               mt: '-64px',
               boxSize: '32',

@@ -198,11 +198,18 @@ export const useGetSignedHash = (deadline: number) => {
       try {
         const checkTrx = async () => {
           const trx = await refetch()
-          if (trx.error) {
+          if (trx.error || trx.data?.status === 0) {
             setIsLoading('error')
             setMsg(errorMessage)
             clearInterval(timer)
-          } else if (trx && trx.data && trx.data.confirmations > 1) {
+          }
+
+          if (
+            trx &&
+            trx.data &&
+            trx.data.status === 1 &&
+            trx.data.confirmations > 1
+          ) {
             setIsLoading(undefined)
             setActiveStep(3)
             setMsg(successMessage)

@@ -89,6 +89,7 @@ const History = () => {
                   lastEditor={activity.content[0].user.id}
                   lastEditedTime={activity.datetime}
                   transactionAddress={activity.content[0].transactionHash}
+                  IPFS={activity.ipfs}
                   commitMessage={
                     getActivityMetadataById(
                       activity,

@@ -117,7 +117,11 @@ const HighlightsModal = ({
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
-      <ModalContent bg="gray.800">
+      <ModalContent
+        _dark={{
+          bg: 'gray.800',
+        }}
+      >
         <ModalHeader fontSize="lg" display="flex" alignItems="center">
           Edit Details
           <ModalCloseButton size="sm" my="auto" position="unset" ml="auto" />
