@@ -21,6 +21,7 @@ const BlogCard = ({
     >
       <Box
         maxW="445px"
+        h="445px"
         w="full"
         boxShadow="2xl"
         rounded="md"
