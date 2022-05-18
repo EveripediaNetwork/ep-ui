@@ -27,6 +27,7 @@ import networkMap from '@/utils/networkMap'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
 import { ProviderDataType } from '@/types/ProviderDataType'
+import { StaticContent } from '@/components/StaticElement'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
@@ -183,33 +184,35 @@ const Navbar = () => {
               >
                 <DesktopNav />
                 <Box onMouseLeave={() => setVisibleMenu(null)}>
-                  <NavMenu
-                    navItem={NAV_ICON}
-                    setVisibleMenu={setVisibleMenu}
-                    visibleMenu={visibleMenu}
-                    label={
-                      accountData ? (
-                        <DisplayAvatar address={accountData.address} />
-                      ) : (
-                        <Icon
-                          cursor="pointer"
-                          fontSize="3xl"
-                          color="gray.600"
-                          _dark={{ color: 'gray.200' }}
-                          fontWeight={600}
-                          as={RiAccountCircleLine}
-                          mt={2}
-                          _hover={{
-                            textDecoration: 'none',
-                            color: 'linkHoverColor',
-                          }}
-                        />
-                      )
-                    }
-                  >
-                    <ProfileLink />
-                    <ColorModeToggle isInMobileMenu={false} />
-                  </NavMenu>
+                  <StaticContent>
+                    <NavMenu
+                      navItem={NAV_ICON}
+                      setVisibleMenu={setVisibleMenu}
+                      visibleMenu={visibleMenu}
+                      label={
+                        accountData ? (
+                          <DisplayAvatar address={accountData.address} />
+                        ) : (
+                          <Icon
+                            cursor="pointer"
+                            fontSize="3xl"
+                            color="gray.600"
+                            _dark={{ color: 'gray.200' }}
+                            fontWeight={600}
+                            as={RiAccountCircleLine}
+                            mt={2}
+                            _hover={{
+                              textDecoration: 'none',
+                              color: 'linkHoverColor',
+                            }}
+                          />
+                        )
+                      }
+                    >
+                      <ProfileLink />
+                      <ColorModeToggle isInMobileMenu={false} />
+                    </NavMenu>
+                  </StaticContent>
                 </Box>
                 <Icon
                   color="linkColor"
@@ -269,16 +272,18 @@ const Navbar = () => {
           setHamburger={setHamburger}
         />
 
-        <Collapse
-          in={isHamburgerOpen}
-          animateOpacity
-          style={{ margin: '0 -15px' }}
-        >
-          <MobileNav
-            setHamburger={setHamburger}
-            toggleWalletDrawer={onToggle}
-          />
-        </Collapse>
+        <StaticContent>
+          <Collapse
+            in={isHamburgerOpen}
+            animateOpacity
+            style={{ margin: '0 -15px' }}
+          >
+            <MobileNav
+              setHamburger={setHamburger}
+              toggleWalletDrawer={onToggle}
+            />
+          </Collapse>
+        </StaticContent>
       </Box>
       <NetworkErrorNotification
         switchNetwork={handleSwitchNetwork}

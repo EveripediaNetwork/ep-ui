@@ -6,6 +6,7 @@ import {
   HStack,
   LinkBox,
   LinkOverlay,
+  chakra,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
@@ -116,36 +117,36 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
                   : 4
               }
             >
-              <Flex
-                direction="column"
-                justifyContent="space-between"
+              <chakra.div
                 rounded="lg"
                 shadow="xl"
                 h="100%"
                 bg="grey"
                 overflow="hidden"
               >
-                <Box>
-                  <WikiImage
-                    imageURL={getWikiImageUrl(wiki)}
-                    boxSize="full"
-                    objectFit="cover"
-                    h="96"
-                  />
-                  <Box color="white" pt={4} px={8} gap={4} textAlign="center">
+                <WikiImage
+                  imageURL={getWikiImageUrl(wiki)}
+                  boxSize="full"
+                  objectFit="cover"
+                  h="96"
+                />
+                <chakra.div
+                  color="white"
+                  pt={4}
+                  px={8}
+                  gap={4}
+                  textAlign="center"
+                >
+                  <Text fontSize="xl" fontWeight="bold">
                     <NextLink href={`/wiki/${wiki.id}`} passHref>
-                      <LinkOverlay>
-                        <Text fontSize="xl" fontWeight="bold">
-                          {wiki.title}
-                        </Text>
-                      </LinkOverlay>
+                      <LinkOverlay>{wiki.title}</LinkOverlay>
                     </NextLink>
-                    <Text mb="6" fontSize="md" noOfLines={2}>
-                      {getWikiSummary(wiki, WikiSummarySize.Medium)}
-                    </Text>
-                  </Box>
-                </Box>
-              </Flex>
+                  </Text>
+                  <Text mb="6" fontSize="md" noOfLines={2}>
+                    {getWikiSummary(wiki, WikiSummarySize.Medium)}
+                  </Text>
+                </chakra.div>
+              </chakra.div>
             </LinkBox>
           ))}
         </Flex>

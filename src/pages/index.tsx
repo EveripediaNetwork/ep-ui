@@ -11,7 +11,7 @@ import { NotableDrops } from '@/components/Landing/NotableDrops'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import { store } from '@/store/store'
 
-export const Home: NextPage = () => {
+export const Index: NextPage = () => {
   const result = useGetPromotedWikisQuery()
   const { data } = result
   const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
@@ -40,4 +40,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Home
+export default Index
