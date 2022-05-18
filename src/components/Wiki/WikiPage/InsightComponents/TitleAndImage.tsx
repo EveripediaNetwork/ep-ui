@@ -9,6 +9,7 @@ import {
   Text,
   Tr,
   VStack,
+  Box,
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
@@ -80,9 +81,11 @@ export const TitleAndImage = ({
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {tags?.map((tag, i) => (
                     <NextLink key={i} href={`/tags/${tag.id}`} passHref>
-                      <Tag key={i} whiteSpace="nowrap" as="a">
-                        {tag.id}
-                      </Tag>
+                      <Box py={1}>
+                        <Tag key={i} whiteSpace="nowrap" as="a">
+                          {tag.id}
+                        </Tag>
+                      </Box>
                     </NextLink>
                   ))}
                 </HStack>
