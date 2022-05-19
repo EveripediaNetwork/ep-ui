@@ -17,20 +17,18 @@ export const Home: NextPage = () => {
   const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
 
   return (
-    <main>
-      <Flex
-        direction="column"
-        mx="auto"
-        w="fit-content"
-        px={{ base: 6, lg: 20 }}
-        py={{ lg: 20 }}
-        gap={10}
-      >
-        <Hero wiki={wiki} />
-        <NotableDrops drops={data} />
-        <CategoriesList />
-      </Flex>
-    </main>
+    <Flex
+      direction="column"
+      mx="auto"
+      w="fit-content"
+      px={{ base: 6, lg: 20 }}
+      py={{ lg: 20 }}
+      gap={10}
+    >
+      <Hero wiki={wiki} />
+      <NotableDrops drops={data} />
+      <CategoriesList />
+    </Flex>
   )
 }
 
