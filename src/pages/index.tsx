@@ -15,20 +15,23 @@ export const Home: NextPage = () => {
   const result = useGetPromotedWikisQuery()
   const { data } = result
   const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
-
   return (
-    <Flex
-      direction="column"
-      mx="auto"
-      w="fit-content"
-      px={{ base: 6, lg: 20 }}
-      py={{ lg: 20 }}
-      gap={10}
-    >
-      <Hero wiki={wiki} />
-      <NotableDrops drops={data} />
-      <CategoriesList />
-    </Flex>
+      <Flex
+        direction="column"
+        mx="auto"
+        w="full"
+        px={{ base: 6, lg: 20 }}
+        py={{ lg: 20 }}
+        gap={10}
+        _dark={{
+          bgImage:"/images/homepage-bg-dark.png"
+        }}
+        bgImage="/images/homepage-bg-white.png"
+      > 
+        <Hero wiki={wiki} />
+        <NotableDrops drops={data} />
+        <CategoriesList />
+      </Flex>    
   )
 }
 

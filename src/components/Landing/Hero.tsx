@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Box, ButtonGroup, chakra, Flex } from '@chakra-ui/react'
+import { Avatar, Box, ButtonGroup, chakra, Flex, Text } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
@@ -10,6 +10,7 @@ import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
 import { WikiImage } from '../WikiImage'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
@@ -25,7 +26,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: '90vw', md: '96', lg: 'xl' }}
+        maxW={{ base: '90vw', md: '96', lg: '418' }}
         w="full"
       >
         <WikiImage
@@ -59,6 +60,9 @@ const HeroCard = ({ wiki }: HeroProps) => {
             fontWeight="semibold"
           >
             <chakra.span>{wiki?.title}</chakra.span>
+            <Text fontSize="xs" fontWeight="light" my={2}>
+              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
+            </Text>
 
             <NextLink href={`/account/${wiki?.user?.id}`} passHref>
               <chakra.a color="blue">
@@ -76,10 +80,10 @@ export const Hero = ({ wiki }: HeroProps) => {
   const { t } = useTranslation()
 
   return (
-    <Flex pos="relative" direction="column">
+    <Flex pos="relative" direction="column" px={{ base: 6, lg: 16 }}>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        columnGap={{ base: 8, xl: 20 }}
+        columnGap={{ base: 8, xl: 48}}
         rowGap={{ base: 14, lg: 0 }}
       >
         <Flex
@@ -87,8 +91,9 @@ export const Hero = ({ wiki }: HeroProps) => {
           alignItems={{ base: 'center', lg: 'start' }}
           textAlign={{ base: 'center', lg: 'start' }}
           pt="10"
-          mx="auto"
+          mx={{base: 'auto', lg:0}}
           maxW={{ base: 'lg', lg: '4xl' }}
+          
         >
           <chakra.h1
             mb={6}
@@ -117,24 +122,26 @@ export const Hero = ({ wiki }: HeroProps) => {
               href="/create-wiki"
               w={{ base: 32, lg: 40 }}
               variant="outline"
+              bgColor="btnBgColor"
             >
               {`${t('createHeroBttn')}`}
             </LinkButton>
           </ButtonGroup>
+          <LinkButton
+            href="/static/about"
+            mx="auto"
+            variant="link"
+            mt={{ base: 12, lg: 0 }}
+            color="blue.300"
+            pos={{ lg: 'absolute' }}
+            bottom={{ lg: 0 }}
+          >
+            {`${t('learnMoreHeroBttn')}`}
+          </LinkButton>
         </Flex>
         <HeroCard wiki={wiki} />
       </Flex>
-      <LinkButton
-        href="/static/about"
-        mx="auto"
-        variant="link"
-        mt={{ base: 12, lg: 0 }}
-        color="blue.300"
-        pos={{ lg: 'absolute' }}
-        bottom={{ lg: 0 }}
-      >
-        {`${t('learnMoreHeroBttn')}`}
-      </LinkButton>
+      
     </Flex>
   )
 }
