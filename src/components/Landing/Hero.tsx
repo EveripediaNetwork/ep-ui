@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -18,12 +18,10 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { StaticContent } from '@/components/StaticElement'
 import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
-
   return (
     <LinkBox
       display="flex"
@@ -79,9 +77,29 @@ const HeroCard = ({ wiki }: HeroProps) => {
 
 export const Hero = ({ wiki }: HeroProps) => {
   const { t } = useTranslation()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  const renderHereCard = () => {
+    return wiki ? (
+      <HeroCard wiki={wiki} />
+    ) : (
+      <Skeleton
+        h={{ base: 80, lg: 400 }}
+        width="full"
+        maxW={{ base: '90vw', md: '96', lg: '2xl' }}
+        borderRadius="none"
+        roundedTop="lg"
+      />
+    )
+  }
 
   return (
-    <StaticContent>
+    <>
       <Flex pos="relative" direction="column">
         <Flex
           direction={{ base: 'column', lg: 'row' }}
@@ -128,18 +146,9 @@ export const Hero = ({ wiki }: HeroProps) => {
               </LinkButton>
             </ButtonGroup>
           </Flex>
-          {wiki ? (
-            <HeroCard wiki={wiki} />
-          ) : (
-            <Skeleton
-              h={{ base: 80, lg: 400 }}
-              width="full"
-              maxW={{ base: '90vw', md: '96', lg: '2xl' }}
-              borderRadius="none"
-              roundedTop="lg"
-            />
-          )}
+          {renderHereCard()}
         </Flex>
+
         <LinkButton
           href="/static/about"
           mx="auto"
@@ -152,7 +161,7 @@ export const Hero = ({ wiki }: HeroProps) => {
           {`${t('learnMoreHeroBttn')}`}
         </LinkButton>
       </Flex>
-    </StaticContent>
+    </>
   )
 }
 

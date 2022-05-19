@@ -12,7 +12,6 @@ import { useGetCategoriesQuery } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
-import { StaticContent } from '@/components/StaticElement'
 
 const CategoriesList = () => {
   const { data: categoriesData } = useGetCategoriesQuery()
@@ -21,10 +20,11 @@ const CategoriesList = () => {
   useEffect(() => {
     setCategories(categoriesData || [])
   }, [categoriesData])
+
   const { t } = useTranslation()
 
   return (
-    <StaticContent>
+    <>
       <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
         {`${t('browseCategory')}`}
       </Text>
@@ -73,7 +73,7 @@ const CategoriesList = () => {
           <Spinner size="xl" />
         </Center>
       )}
-    </StaticContent>
+    </>
   )
 }
 

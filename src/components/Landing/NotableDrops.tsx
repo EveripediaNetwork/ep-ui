@@ -36,17 +36,9 @@ const arrowStyles: TextProps = {
   },
 }
 
-export const NotableDrops = ({ drops }: NotableDropsProps) => {
+const useCarousel = (drops: Wiki[]) => {
   const [slideColumns, setSlideColumns] = useState(3)
-  const { t } = useTranslation()
-  useEffect(() => {
-    const isOnMobile = isMobile(window?.navigator)
-    if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
-  }, [])
-
   const [currentSlide, setCurrentSlide] = useState(0)
-
-  if (!drops) return null
 
   const dropsCount = drops.length
 
@@ -65,6 +57,41 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
       wiki > firstSlideInGroupOfLastSlide ? firstSlideInGroupOfLastSlide : wiki,
     )
   }
+
+  return {
+    slideColumns,
+    setSlideColumns,
+    currentSlide,
+    prevSlide,
+    nextSlide,
+    setSlide,
+  }
+}
+
+export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
+  const { t } = useTranslation()
+
+  const {
+    slideColumns,
+    setSlideColumns,
+    currentSlide,
+    setSlide,
+    prevSlide,
+    nextSlide,
+  } = useCarousel(drops)
+
+  useEffect(() => {
+    const isOnMobile = isMobile(window?.navigator)
+    if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
+  }, [])
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   const carouselStyle = {
     transition: 'all .5s',
     ml: `-${(currentSlide * 100) / slideColumns}%`,
@@ -74,7 +101,7 @@ export const NotableDrops = ({ drops }: NotableDropsProps) => {
 
   const carouselDots = (
     <HStack justify="center" w="full">
-      {Array.from({ length: dropsCount }).map((_, wiki) => (
+      {Array.from({ length: drops.length }).map((_, wiki) => (
         <Box
           key={`dots-${drops[wiki].id}`}
           cursor="pointer"
