@@ -50,6 +50,15 @@ html {
   border-color: inherit !important;
 }
 
+.toastui-editor-custom-toolbar-icon:not(:disabled):hover {
+  outline: 1px solid #e4e7ee !important;
+  background-color: #fff !important;
+}
+.toastui-editor-dark .toastui-editor-custom-toolbar-icon:not(:disabled):hover {
+  background-color: #2b3447 !important;
+  outline: 1px solid #cccccc2a !important;
+}
+
 /* EDITOR CONTENT STYLES */
 .toastui-editor-main * {
   font-family: poppins, sans-serif !important;

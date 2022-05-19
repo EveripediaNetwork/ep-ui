@@ -1,5 +1,5 @@
-.cite__popupBtn {
-  background-image: url(./assets/cite-icon.png) !important;
+.undo__toolbarBtn {
+  background-image: url(./assets/undo-icon.png) !important;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 60%;
@@ -8,6 +8,6 @@
   background-clip: content-box;
   border: none !important;
 }
-.toastui-editor-dark .cite__popupBtn {
-  background-image: url(./assets/cite-icon-dark.png) !important;
+.toastui-editor-dark .undo__toolbarBtn {
+  background-image: url(./assets/undo-icon-dark.png) !important;
 }

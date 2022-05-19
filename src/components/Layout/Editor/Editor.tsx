@@ -9,6 +9,8 @@ import wikiLink from '@/editor-plugins/wikiLink'
 import cite from '@/editor-plugins/cite'
 import { EditorContentOverride } from '@/types/Wiki'
 import { Dict } from '@chakra-ui/utils'
+import undo from '@/editor-plugins/undo'
+import redo from '@/editor-plugins/redo'
 
 const ToastUIEditorJSX = ToastUIEditor as unknown as (
   props: Dict,
@@ -76,7 +78,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
       <ToastUIEditorJSX
-        plugins={[wikiLink, cite]}
+        plugins={[wikiLink, cite, undo, redo]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}

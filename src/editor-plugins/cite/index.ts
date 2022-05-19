@@ -41,7 +41,7 @@ export default function cite(context: PluginContext): PluginInfo {
         item: {
           name: 'cite',
           tooltip: 'Cite',
-          className: 'toastui-editor-cite-button cite__popupBtn',
+          className: 'toastui-editor-custom-toolbar-icon cite__popupBtn',
           popup: {
             body: container,
             style: { width: '350px' },
