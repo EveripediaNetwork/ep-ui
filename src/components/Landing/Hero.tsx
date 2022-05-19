@@ -36,7 +36,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: "min(90vw, 400px)", md: '96', lg: '418' }}
+        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
         w="full"
       >
         <WikiImage
@@ -93,7 +93,7 @@ export const Hero = ({ wiki }: HeroProps) => {
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       justify="center"
-      w={{base: "full", lg: "90vw", xl: "min(90%, 1150px)"}}
+      w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
       px={{ base: 6, lg: 0 }}
     >
@@ -105,7 +105,7 @@ export const Hero = ({ wiki }: HeroProps) => {
       >
         <Heading
           w="70%"
-          fontSize={{ base: '2xl', sm: "30", md: '44' }}
+          fontSize={{ base: '2xl', sm: '30', md: '44' }}
           fontWeight="black"
           lineHeight="normal"
           letterSpacing="wider"
