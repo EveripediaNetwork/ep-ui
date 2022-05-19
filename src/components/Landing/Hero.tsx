@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { WikiImage } from '../WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
@@ -83,7 +83,7 @@ export const Hero = ({ wiki }: HeroProps) => {
     <Flex pos="relative" direction="column" px={{ base: 6, lg: 16 }}>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        columnGap={{ base: 8, xl: 48}}
+        columnGap={{ base: 8, xl: 48 }}
         rowGap={{ base: 14, lg: 0 }}
       >
         <Flex
@@ -91,9 +91,8 @@ export const Hero = ({ wiki }: HeroProps) => {
           alignItems={{ base: 'center', lg: 'start' }}
           textAlign={{ base: 'center', lg: 'start' }}
           pt="10"
-          mx={{base: 'auto', lg:0}}
+          mx={{ base: 'auto', lg: 0 }}
           maxW={{ base: 'lg', lg: '4xl' }}
-          
         >
           <chakra.h1
             mb={6}
@@ -141,7 +140,6 @@ export const Hero = ({ wiki }: HeroProps) => {
         </Flex>
         <HeroCard wiki={wiki} />
       </Flex>
-      
     </Flex>
   )
 }
