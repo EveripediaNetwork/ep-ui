@@ -36,14 +36,14 @@ const HeroCard = ({ wiki }: HeroProps) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: '90vw', md: '96', lg: '418' }}
+        maxW={{ base: "min(90vw, 400px)", md: '96', lg: '418' }}
         w="full"
       >
         <WikiImage
           cursor="pointer"
           flexShrink={0}
           imageURL={getWikiImageUrl(wiki)}
-          h={{ base: 80, lg: 400 }}
+          h={{ base: 80, lg: 320 }}
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
           overflow="hidden"
@@ -93,8 +93,9 @@ export const Hero = ({ wiki }: HeroProps) => {
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       justify="center"
-      w="full"
-      px={{ base: 6, lg: 16 }}
+      w={{base: "full", lg: "90vw", xl: "min(90%, 1150px)"}}
+      mx="auto"
+      px={{ base: 6, lg: 0 }}
     >
       <VStack
         alignItems={{ base: 'center', lg: 'start' }}
@@ -104,9 +105,9 @@ export const Hero = ({ wiki }: HeroProps) => {
       >
         <Heading
           w="70%"
-          fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
-          fontWeight="bold"
-          lineHeight="shorter"
+          fontSize={{ base: '2xl', sm: "30", md: '44' }}
+          fontWeight="black"
+          lineHeight="normal"
           letterSpacing="wider"
         >
           {`${t('hero_title')}`}

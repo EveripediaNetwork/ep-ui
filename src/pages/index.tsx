@@ -19,7 +19,7 @@ export const Home: NextPage = () => {
     <Flex
       direction="column"
       mx="auto"
-      w="full"
+      w="fit-content"
       px={{ base: 6, lg: 20 }}
       py={{ lg: 20 }}
       gap={10}
