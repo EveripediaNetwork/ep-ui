@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
@@ -64,6 +64,13 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     />
   )
   const { t } = useTranslation()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <Box bgColor="pageBg" my={-8} py={8}>
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
