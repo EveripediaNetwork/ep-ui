@@ -1,5 +1,15 @@
 import React from 'react'
-import { Avatar, Box, ButtonGroup, Heading, chakra, Flex, Text, VStack,Stack } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  ButtonGroup,
+  Heading,
+  chakra,
+  Flex,
+  Text,
+  VStack,
+  Stack,
+} from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
@@ -80,43 +90,53 @@ export const Hero = ({ wiki }: HeroProps) => {
   const { t } = useTranslation()
 
   return (
-    <Stack direction={{base: 'column', lg: "row"}} justify="center" w="full" px={{ base: 6, lg: 16}}>
-        <VStack  
-          alignItems={{ base: 'center', lg: 'start' }}
-          textAlign={{ base: 'center', lg: 'start' }}
-          spacing={10}
-          my={10}
+    <Stack
+      direction={{ base: 'column', lg: 'row' }}
+      justify="center"
+      w="full"
+      px={{ base: 6, lg: 16 }}
+    >
+      <VStack
+        alignItems={{ base: 'center', lg: 'start' }}
+        textAlign={{ base: 'center', lg: 'start' }}
+        spacing={10}
+        my={10}
+      >
+        <Heading
+          w="70%"
+          fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
+          fontWeight="bold"
+          lineHeight="shorter"
+          letterSpacing="wider"
         >
-            <Heading w="70%" fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }} fontWeight="bold" lineHeight="shorter" letterSpacing="wider">
-              {`${t('hero_title')}`}
-            </Heading>
-            <Text  w="60%"  fontSize={{ base: 'sm', md: 'md', lg: 'xl' }} letterSpacing="wider">
-              {`${t('iq_description')}`}
-            </Text>
-            <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
-              <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
-                {`${t('exploreHeroBttn')}`}
-              </LinkButton>
-              <LinkButton
-                href="/create-wiki"
-                w={{ base: 32, lg: 40 }}
-                variant="outline"
-                bgColor="btnBgColor"
-              >
-                {`${t('createHeroBttn')}`}
-              </LinkButton>
-            </ButtonGroup>
-            <LinkButton
-              href="/static/about"
-              variant="link"
-              color="blue.300"
-            >
-              {`${t('learnMoreHeroBttn')}`}
-            </LinkButton>
-        </VStack>
-        <HeroCard wiki={wiki} />
+          {`${t('hero_title')}`}
+        </Heading>
+        <Text
+          w="60%"
+          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          letterSpacing="wider"
+        >
+          {`${t('iq_description')}`}
+        </Text>
+        <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
+          <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
+            {`${t('exploreHeroBttn')}`}
+          </LinkButton>
+          <LinkButton
+            href="/create-wiki"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
+          >
+            {`${t('createHeroBttn')}`}
+          </LinkButton>
+        </ButtonGroup>
+        <LinkButton href="/static/about" variant="link" color="blue.300">
+          {`${t('learnMoreHeroBttn')}`}
+        </LinkButton>
+      </VStack>
+      <HeroCard wiki={wiki} />
     </Stack>
-    
   )
 }
 
