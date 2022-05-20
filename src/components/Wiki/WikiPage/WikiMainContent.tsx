@@ -57,7 +57,7 @@ const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
         gap={2}
         align="center"
       >
-        <Heading>{wiki?.title}</Heading>
+        <Heading mb={8}>{wiki?.title}</Heading>
         {editedTimestamp && (
           <Tag whiteSpace="nowrap">
             Edited {getReadableDate(editedTimestamp)}
@@ -65,7 +65,6 @@ const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
         )}
       </Flex>
       <Box
-        mt={8}
         className={`markdown-body ${
           colorMode === 'dark' ? 'markdown-body-dark' : ''
         }`}

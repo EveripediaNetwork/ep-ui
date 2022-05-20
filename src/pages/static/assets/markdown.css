@@ -9,27 +9,6 @@
   word-wrap: break-word;
 }
 
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.markdown-body h1:hover .anchor .octicon-link:before,
-.markdown-body h2:hover .anchor .octicon-link:before,
-.markdown-body h3:hover .anchor .octicon-link:before,
-.markdown-body h4:hover .anchor .octicon-link:before,
-.markdown-body h5:hover .anchor .octicon-link:before,
-.markdown-body h6:hover .anchor .octicon-link:before {
-  width: 16px;
-  height: 16px;
-  content: ' ';
-  display: inline-block;
-  background-color: currentColor;
-  -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
-  mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
-}
-
 .markdown-body details,
 .markdown-body figcaption,
 .markdown-body figure {
@@ -123,11 +102,11 @@
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
-  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
-  height: 0.25em;
+  border-bottom: none;
+  height: 1px;
   padding: 0;
   margin: 24px 0;
-  background-color: #d0d7de;
+  background-color: #e3e8ef;
   border: 0;
 }
 
@@ -333,13 +312,6 @@
   word-wrap: normal;
 }
 
-.markdown-body .octicon {
-  display: inline-block;
-  overflow: visible !important;
-  vertical-align: text-bottom;
-  fill: currentColor;
-}
-
 .markdown-body ::placeholder {
   color: #6e7781;
   opacity: 1;
@@ -352,142 +324,8 @@
   appearance: none;
 }
 
-.markdown-body .pl-c {
-  color: #6e7781;
-}
-
-.markdown-body .pl-c1,
-.markdown-body .pl-s .pl-v {
-  color: #0550ae;
-}
-
-.markdown-body .pl-e,
-.markdown-body .pl-en {
-  color: #8250df;
-}
-
-.markdown-body .pl-smi,
-.markdown-body .pl-s .pl-s1 {
-  color: #24292f;
-}
-
-.markdown-body .pl-ent {
-  color: #116329;
-}
-
-.markdown-body .pl-k {
-  color: #cf222e;
-}
-
-.markdown-body .pl-s,
-.markdown-body .pl-pds,
-.markdown-body .pl-s .pl-pse .pl-s1,
-.markdown-body .pl-sr,
-.markdown-body .pl-sr .pl-cce,
-.markdown-body .pl-sr .pl-sre,
-.markdown-body .pl-sr .pl-sra {
-  color: #0a3069;
-}
-
-.markdown-body .pl-v,
-.markdown-body .pl-smw {
-  color: #953800;
-}
-
-.markdown-body .pl-bu {
-  color: #82071e;
-}
-
-.markdown-body .pl-ii {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-
-.markdown-body .pl-c2 {
-  color: #f6f8fa;
-  background-color: #cf222e;
-}
-
-.markdown-body .pl-sr .pl-cce {
-  font-weight: bold;
-  color: #116329;
-}
-
-.markdown-body .pl-ml {
-  color: #3b2300;
-}
-
-.markdown-body .pl-mh,
-.markdown-body .pl-mh .pl-en,
-.markdown-body .pl-ms {
-  font-weight: bold;
-  color: #0550ae;
-}
-
-.markdown-body .pl-mi {
-  font-style: italic;
-  color: #24292f;
-}
-
-.markdown-body .pl-mb {
-  font-weight: bold;
-  color: #24292f;
-}
-
-.markdown-body .pl-md {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-
-.markdown-body .pl-mi1 {
-  color: #116329;
-  background-color: #dafbe1;
-}
-
-.markdown-body .pl-mc {
-  color: #953800;
-  background-color: #ffd8b5;
-}
-
-.markdown-body .pl-mi2 {
-  color: #eaeef2;
-  background-color: #0550ae;
-}
-
-.markdown-body .pl-mdr {
-  font-weight: bold;
-  color: #8250df;
-}
-
-.markdown-body .pl-ba {
-  color: #57606a;
-}
-
-.markdown-body .pl-sg {
-  color: #8c959f;
-}
-
-.markdown-body .pl-corl {
-  text-decoration: underline;
-  color: #0a3069;
-}
-
 .markdown-body [data-catalyst] {
   display: block;
-}
-
-.markdown-body g-emoji {
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  font-size: 1em;
-  font-style: normal !important;
-  font-weight: 400;
-  line-height: 1;
-  vertical-align: -0.075em;
-}
-
-.markdown-body g-emoji img {
-  width: 1em;
-  height: 1em;
 }
 
 .markdown-body::before {
@@ -512,21 +350,6 @@
 .markdown-body a:not([href]) {
   color: inherit;
   text-decoration: none;
-}
-
-.markdown-body .absent {
-  color: #cf222e;
-}
-
-.markdown-body .anchor {
-  float: left;
-  padding-right: 4px;
-  margin-left: -20px;
-  line-height: 1;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
 }
 
 .markdown-body p,
@@ -557,17 +380,6 @@
   content: ']';
 }
 
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #24292f;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
 .markdown-body h1:hover .anchor,
 .markdown-body h2:hover .anchor,
 .markdown-body h3:hover .anchor,
@@ -575,15 +387,6 @@
 .markdown-body h5:hover .anchor,
 .markdown-body h6:hover .anchor {
   text-decoration: none;
-}
-
-.markdown-body h1:hover .anchor .octicon-link,
-.markdown-body h2:hover .anchor .octicon-link,
-.markdown-body h3:hover .anchor .octicon-link,
-.markdown-body h4:hover .anchor .octicon-link,
-.markdown-body h5:hover .anchor .octicon-link,
-.markdown-body h6:hover .anchor .octicon-link {
-  visibility: visible;
 }
 
 .markdown-body h1 tt,
@@ -680,7 +483,6 @@
   background-color: transparent;
 }
 
-/* remove this if needed */
 .markdown-body img {
   margin: 0 auto;
 }
@@ -691,100 +493,6 @@
 
 .markdown-body img[align='left'] {
   padding-right: 20px;
-}
-
-.markdown-body .emoji {
-  max-width: none;
-  vertical-align: text-top;
-  background-color: transparent;
-}
-
-.markdown-body span.frame {
-  display: block;
-  overflow: hidden;
-}
-
-.markdown-body span.frame > span {
-  display: block;
-  float: left;
-  width: auto;
-  padding: 7px;
-  margin: 13px 0 0;
-  overflow: hidden;
-  border: 1px solid #d0d7de;
-}
-
-.markdown-body span.frame span img {
-  display: block;
-  float: left;
-}
-
-.markdown-body span.frame span span {
-  display: block;
-  padding: 5px 0 0;
-  clear: both;
-  color: #24292f;
-}
-
-.markdown-body span.align-center {
-  display: block;
-  overflow: hidden;
-  clear: both;
-}
-
-.markdown-body span.align-center > span {
-  display: block;
-  margin: 13px auto 0;
-  overflow: hidden;
-  text-align: center;
-}
-
-.markdown-body span.align-center span img {
-  margin: 0 auto;
-  text-align: center;
-}
-
-.markdown-body span.align-right {
-  display: block;
-  overflow: hidden;
-  clear: both;
-}
-
-.markdown-body span.align-right > span {
-  display: block;
-  margin: 13px 0 0;
-  overflow: hidden;
-  text-align: right;
-}
-
-.markdown-body span.align-right span img {
-  margin: 0;
-  text-align: right;
-}
-
-.markdown-body span.float-left {
-  display: block;
-  float: left;
-  margin-right: 13px;
-  overflow: hidden;
-}
-
-.markdown-body span.float-left span {
-  margin: 13px 0 0;
-}
-
-.markdown-body span.float-right {
-  display: block;
-  float: right;
-  margin-left: 13px;
-  overflow: hidden;
-}
-
-.markdown-body span.float-right > span {
-  display: block;
-  margin: 13px auto 0;
-  overflow: hidden;
-  text-align: right;
 }
 
 .markdown-body code,
@@ -818,25 +526,6 @@
   border: 0;
 }
 
-.markdown-body .highlight {
-  margin-bottom: 16px;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f6f8fa;
-  border-radius: 6px;
-}
-
 .markdown-body pre code,
 .markdown-body pre tt {
   display: inline;
@@ -848,96 +537,6 @@
   word-wrap: normal;
   background-color: transparent;
   border: 0;
-}
-
-.markdown-body .csv-data td,
-.markdown-body .csv-data th {
-  padding: 5px;
-  overflow: hidden;
-  font-size: 12px;
-  line-height: 1;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.markdown-body .csv-data .blob-num {
-  padding: 10px 8px 9px;
-  text-align: right;
-  background: #ffffff;
-  border: 0;
-}
-
-.markdown-body .csv-data tr {
-  border-top: 0;
-}
-
-.markdown-body .csv-data th {
-  font-weight: 600;
-  background: #f6f8fa;
-  border-top: 0;
-}
-
-.markdown-body .footnotes {
-  font-size: 12px;
-  color: #57606a;
-  border-top: 1px solid #d0d7de;
-}
-
-.markdown-body .footnotes ol {
-  padding-left: 16px;
-}
-
-.markdown-body .footnotes li {
-  position: relative;
-}
-
-.markdown-body .footnotes li:target::before {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  bottom: -8px;
-  left: -24px;
-  pointer-events: none;
-  content: '';
-  border: 2px solid #0969da;
-  border-radius: 6px;
-}
-
-.markdown-body .footnotes li:target {
-  color: #24292f;
-}
-
-.markdown-body .footnotes .data-footnote-backref g-emoji {
-  font-family: monospace;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item label {
-  font-weight: 400;
-}
-
-.markdown-body .task-list-item.enabled label {
-  cursor: pointer;
-}
-
-.markdown-body .task-list-item + .task-list-item {
-  margin-top: 3px;
-}
-
-.markdown-body .task-list-item .handle {
-  display: none;
-}
-
-.markdown-body .task-list-item-checkbox {
-  margin: 0 0.2em 0.25em -1.6em;
-  vertical-align: middle;
-}
-
-.markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
-  margin: 0 -1.6em 0.25em 0.2em;
 }
 
 .markdown-body ::-webkit-calendar-picker-indicator {
@@ -968,11 +567,11 @@
   color: #c5c5c5;
 }
 
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #cccccc;
+.markdown-body-dark hr {
+  background-color: #40444e;
+}
+
+.markdown-body-dark blockquote {
+  color: #a9b6c5;
+  border-left: 0.25em solid #4c5566;
 }
