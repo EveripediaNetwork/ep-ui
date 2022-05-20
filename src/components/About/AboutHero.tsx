@@ -22,7 +22,6 @@ const AboutHero = () => {
       <Box pr="32" m="0">
         <Heading mb={4}>{`${t('aboutHeroHeading')}`}</Heading>
         <Text opacity={0.6}>{`${t('aboutHeroPhrase')}`}</Text>
-
         <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>
           <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
             {`${t('aboutSignUpBttn')}`}
