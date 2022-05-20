@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Box,
   ButtonGroup,
+  Flex,
   Heading,
   HStack,
   Image,
@@ -13,10 +14,16 @@ import { useTranslation } from 'react-i18next'
 const AboutHero = () => {
   const { t } = useTranslation()
   return (
-    <HStack spacing={8} flexDirection={{ base: 'column-reverse', lg: 'row' }}>
-      <Box flex={1} p={{ base: 8, lg: 12 }}>
+    <HStack
+      mx="auto"
+      maxW={{ base: '100%', lg: '70%' }}
+      spacing={8}
+      flexDirection={{ base: 'column-reverse', lg: 'row' }}
+    >
+      <Box pr="32" m="0">
         <Heading mb={4}>{`${t('aboutHeroHeading')}`}</Heading>
         <Text opacity={0.6}>{`${t('aboutHeroPhrase')}`}</Text>
+
         <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>
           <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
             {`${t('aboutSignUpBttn')}`}
@@ -28,7 +35,6 @@ const AboutHero = () => {
       </Box>
       <Image
         flex={1}
-        marginInlineStart="0 !important"
         src="/images/about-everipedia.svg"
         w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }}
       />

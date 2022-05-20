@@ -7,7 +7,7 @@ import BlogCard from './BlogCard'
 const AboutLatestFromBlog = () => {
   const { t } = useTranslation()
   return (
-    <VStack spacing={8} maxW="7xl" mx="auto" mt="24">
+    <VStack spacing={8} maxW={{ base: '100%', lg: '70%' }} mx="auto" mt="24">
       <Heading size="lg">{`${t('latestFromBlogHeading')}`}</Heading>
       <SimpleGrid
         columns={[1, 1, 2, 3]}
