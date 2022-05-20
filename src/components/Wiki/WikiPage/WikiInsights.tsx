@@ -2,7 +2,7 @@ import React from 'react'
 import { VStack } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { TitleAndImage } from './InsightComponents/TitleAndImage'
+import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
 import ProfileSummary from './InsightComponents/ProfileSummary'
@@ -25,11 +25,12 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => (
     spacing={4}
     pt={24}
   >
-    <TitleAndImage
+    <WikiDetails
       wikiTitle={wiki}
       categories={wiki.categories}
       lastEdited={wiki.updated || wiki?.created}
       ipfsHash={ipfs || wiki.ipfs}
+      txHash={wiki.transactionHash}
       lastEditor={wiki.user?.id}
       imgSrc={getWikiImageUrl(wiki)}
     />
