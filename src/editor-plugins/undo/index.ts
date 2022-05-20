@@ -1,5 +1,8 @@
 import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
-import { PluginCommandMap } from '@toast-ui/editor/dist/toastui-editor-viewer'
+import {
+  PluginCommandMap,
+  PluginContext,
+} from '@toast-ui/editor/dist/toastui-editor-viewer'
 import {
   NodeViewPropMap,
   PluginProp,
@@ -17,7 +20,16 @@ interface PluginInfo {
   toolbarItems?: PluginToolbarItem[]
 }
 
-export default function undo(): PluginInfo {
+export default function undo(context: PluginContext): PluginInfo {
+  const createUndoButton = () => {
+    const undoBtn = document.createElement('button')
+    undoBtn.className = 'toastui-editor-custom-toolbar-icon undo__toolbarBtn'
+
+    undoBtn.addEventListener('click', () => {
+      context.eventEmitter.emit('command', 'undo')
+    })
+    return undoBtn
+  }
   return {
     toolbarItems: [
       {
@@ -27,7 +39,7 @@ export default function undo(): PluginInfo {
           name: 'Undo',
           tooltip: 'Undo',
           command: 'undo',
-          className: 'toastui-editor-custom-toolbar-icon undo__toolbarBtn',
+          el: createUndoButton(),
         },
       },
     ],

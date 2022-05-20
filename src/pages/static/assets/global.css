@@ -58,7 +58,9 @@ html {
   background-color: #2b3447 !important;
   outline: 1px solid #cccccc2a !important;
 }
-
+.toastui-editor-toolbar-item-wrapper {
+  margin: 0 !important;
+}
 /* EDITOR CONTENT STYLES */
 .toastui-editor-main * {
   font-family: poppins, sans-serif !important;
