@@ -80,7 +80,7 @@ const NavMenu = ({
                   />
                 )}
                 <Box fontSize="md" fontWeight={600} color="linkColor">
-                  {`${t(item.label.split(' ').join(''))}`}
+                  {`${t(item.label)}`}
                 </Box>
               </MenuItem>
               {navItem.subItem?.length !== key + 1 && <Divider />}

@@ -1,5 +1,5 @@
 import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
 import {
   PluginCommandMap,
@@ -28,11 +28,10 @@ export default function cite(context: PluginContext): PluginInfo {
   // Frame Container
   const container = document.createElement('div')
 
+  const root = ReactDOM.createRoot(container)
+
   // render react component in the container
-  ReactDOM.render(
-    React.createElement(Frame, { editorContext: context }),
-    container,
-  )
+  root.render(React.createElement(Frame, { editorContext: context }))
 
   return {
     toolbarItems: [

@@ -82,7 +82,10 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
               px={6}
               pb={6}
             >
-              {MOBILE_NAV_ITEMS(categoriesLinks || [])
+              {MOBILE_NAV_ITEMS({
+                categories: categoriesLinks || [],
+                address: accountData?.address,
+              })
                 .filter(i => i.label !== 'Account' || accountData)
                 .map(navItem => (
                   <MobileNavItem

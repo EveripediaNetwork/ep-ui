@@ -31,11 +31,7 @@ const DesktopNav = () => {
             navItem={navItem}
             setVisibleMenu={setVisibleMenu}
             visibleMenu={visibleMenu}
-            label={
-              navItem.label === 'Create Wiki'
-                ? t(navItem.label.split(' ').join(''))
-                : t(navItem.label)
-            }
+            label={t(navItem.label)}
           />
         )
       })}

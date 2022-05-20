@@ -21,6 +21,7 @@ export const GET_WIKI_BY_ID = gql`
     wiki(id: $id) {
       id
       ipfs
+      transactionHash
       created
       updated
       title

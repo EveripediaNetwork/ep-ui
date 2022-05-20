@@ -1,11 +1,22 @@
 import React from 'react'
-import { Flex, Stack, Text, Icon, HStack, Link, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Stack,
+  Text,
+  Icon,
+  HStack,
+  Box,
+  LinkBox,
+  LinkOverlay,
+  FlexProps,
+} from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import NextLink from 'next/link'
 
-const MobileSubNavItem = ({ item }: { item: NavItem }) => (
-  <Flex
+const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
+  <LinkBox
+    display="flex"
     py={3}
     justifyContent="space-between"
     alignItems="center"
@@ -14,6 +25,7 @@ const MobileSubNavItem = ({ item }: { item: NavItem }) => (
     }}
     fontSize="lg"
     px={6}
+    {...rest}
   >
     <HStack>
       {item.hasImage && (
@@ -27,12 +39,14 @@ const MobileSubNavItem = ({ item }: { item: NavItem }) => (
         />
       )}
 
-      <Text fontWeight={600} color="linkColor">
-        {item.label}
-      </Text>
+      <NextLink href={item.href} passHref>
+        <LinkOverlay fontWeight={600} color="linkColor">
+          {item.label}
+        </LinkOverlay>
+      </NextLink>
     </HStack>
     {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
-  </Flex>
+  </LinkBox>
 )
 
 const MobileSubNav = ({
@@ -83,11 +97,11 @@ const MobileSubNav = ({
           )
         }
         return (
-          <NextLink href={item.href} key={key} passHref>
-            <Link href="passRef" onClick={() => setHamburger(false)}>
-              <MobileSubNavItem item={item} />
-            </Link>
-          </NextLink>
+          <MobileSubNavItem
+            key={key}
+            item={item}
+            onClick={() => setHamburger(false)}
+          />
         )
       })}
     </Box>
