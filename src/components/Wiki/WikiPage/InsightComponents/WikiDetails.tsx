@@ -13,18 +13,21 @@ import {
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
+import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
 import { BaseCategory, WikiPreview } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import NextLink from 'next/link'
+import config from '@/config'
 
-export const TitleAndImage = ({
+export const WikiDetails = ({
   wikiTitle,
   categories,
   lastEdited,
   ipfsHash,
+  txHash,
   lastEditor,
   imgSrc,
 }: {
@@ -32,6 +35,7 @@ export const TitleAndImage = ({
   categories: BaseCategory[]
   lastEdited: string | undefined
   ipfsHash: string | undefined
+  txHash: string | undefined
   lastEditor: string | undefined
   imgSrc?: string
 }) => {
@@ -118,6 +122,23 @@ export const TitleAndImage = ({
                 color="blue.400"
               >
                 {shortenAccount(ipfsHash || '')}
+              </Link>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>
+              <HStack spacing={3}>
+                <Text>TX Hash</Text>
+              </HStack>
+            </Td>
+            <Td display="flex" align="center" gap={3}>
+              <GoLink />
+              <Link
+                target="_blank"
+                href={`${config.blockExplorerUrl}/tx/${txHash}`}
+                color="blue.400"
+              >
+                {shortenAccount(txHash || '')}
               </Link>
             </Td>
           </Tr>
