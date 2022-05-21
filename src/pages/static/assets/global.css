@@ -84,14 +84,14 @@ html {
   border: none !important;
 }
 .toastui-editor-dark .redo__toolbarBtn {
-  background-image: url(/images/editor-toolbar/assets/redo-icon-dark.png) !important;
+  background-image: url(/images/editor-toolbar/redo-icon-dark.png) !important;
 }
 
 .undo__toolbarBtn {
   background-image: url(/images/editor-toolbar/undo-icon.png) !important;
 }
 .toastui-editor-dark .undo__toolbarBtn {
-  background-image: url(/images/editor-toolbar/-icon-dark.png) !important;
+  background-image: url(/images/editor-toolbar/undo-icon-dark.png) !important;
 }
 
 /* EDITOR CONTENT STYLES */
