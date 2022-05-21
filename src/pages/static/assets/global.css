@@ -54,12 +54,7 @@ html {
 .toastui-editor-contents * {
   font-family: poppins, sans-serif !important;
 }
-.toastui-editor-contents h1,
-.toastui-editor-contents h2,
-.toastui-editor-contents h3,
-.toastui-editor-contents h4,
-.toastui-editor-contents h5,
-.toastui-editor-contents h6 {
+.toastui-editor-contents :where(h1, h2, h3, h4, h5, h6) {
   border-bottom: none !important;
   padding-bottom: 0 !important;
   margin: 24px 0 16px !important;
