@@ -1,12 +1,6 @@
 html {
   scroll-behavior: smooth;
 }
-.scroll-blocker {
-  position: fixed;
-  height: 101%;
-  width: 100%;
-  overflow: scroll;
-}
 /* EDITOR SHELL STYLES */
 .ProseMirror,
 .toastui-editor-contents {

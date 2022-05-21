@@ -23,25 +23,12 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const html = document.getElementsByTagName('html')[0]
 
   // when markdown changes, update the editor
   function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
-    if (editorInstance?.getMarkdown() !== text) {
-      // disable scroll and update the markdown
-      // to prevent the editor from scrolling
-      html.classList.add('scroll-blocker')
-      editorInstance?.setMarkdown(text)
-      editorInstance?.setSelection(0, 0)
-      editorInstance?.setScrollTop(0)
-
-      // wait for the editor to update to enable scroll back
-      setTimeout(() => {
-        html.classList.remove('scroll-blocker')
-        window.scrollTo(0, 0)
-      }, 100)
-    }
+    if (editorInstance?.getMarkdown() !== text)
+      editorInstance?.setMarkdown(text, false)
   }
   useEffect(() => {
     if (
