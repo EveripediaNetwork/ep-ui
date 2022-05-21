@@ -70,8 +70,8 @@ html {
   margin: 0.6em 0 !important;
   font-size: 1.7em !important;
 }
-.toastui-editor-contents h4 {
-  font-size: 16px !important;
+:where(.toastui-editor-contents h4) {
+  font-size: 16px;
 }
 .toastui-editor-contents li {
   list-style-type: unset !important;
