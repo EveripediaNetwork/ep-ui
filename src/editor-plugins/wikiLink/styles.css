@@ -1,11 +1,5 @@
 .wikiLink__popupBtn {
   background-image: url(./assets/wiki-link-icon.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 70%;
-  display: inline-block;
-  vertical-align: middle;
-  border: none !important;
 }
 .toastui-editor-dark .wikiLink__popupBtn {
   background-image: url(./assets/wiki-link-icon-dark.png);

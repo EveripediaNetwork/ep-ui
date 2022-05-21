@@ -61,6 +61,39 @@ html {
 .toastui-editor-toolbar-item-wrapper {
   margin: 0 !important;
 }
+
+/* EDITOR TOOLBAR STYLES */
+
+.toastui-editor-custom-toolbar-icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  display: inline-block;
+  vertical-align: middle;
+  background-clip: content-box;
+  border: none !important;
+}
+.redo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/redo-icon.png) !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  display: inline-block;
+  vertical-align: middle;
+  background-clip: content-box;
+  border: none !important;
+}
+.toastui-editor-dark .redo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/assets/redo-icon-dark.png) !important;
+}
+
+.undo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/undo-icon.png) !important;
+}
+.toastui-editor-dark .undo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/-icon-dark.png) !important;
+}
+
 /* EDITOR CONTENT STYLES */
 .toastui-editor-main * {
   font-family: poppins, sans-serif !important;

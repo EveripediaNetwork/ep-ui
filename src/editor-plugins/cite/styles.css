@@ -1,12 +1,5 @@
 .cite__popupBtn {
   background-image: url(./assets/cite-icon.png) !important;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 60%;
-  display: inline-block;
-  vertical-align: middle;
-  background-clip: content-box;
-  border: none !important;
 }
 .toastui-editor-dark .cite__popupBtn {
   background-image: url(./assets/cite-icon-dark.png) !important;
