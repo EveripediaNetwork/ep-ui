@@ -69,7 +69,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         EditorContentOverride.KEYWORD
       ) {
         onChange(markdown.substring(26))
-      } else onChange(currentMd)
+      } else if (currentMd) onChange(currentMd)
     }
   }, [editorRef, markdown, onChange])
 
