@@ -29,10 +29,18 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
     if (editorInstance?.getMarkdown() !== text) {
-      html.classList.add('scroller-blocker')
+      // disable scroll and update the markdown
+      // to prevent the editor from scrolling
+      html.classList.add('scroll-blocker')
       editorInstance?.setMarkdown(text)
       editorInstance?.setSelection(0, 0)
       editorInstance?.setScrollTop(0)
+
+      // wait for the editor to update to enable scroll back
+      setTimeout(() => {
+        html.classList.remove('scroll-blocker')
+        window.scrollTo(0, 0)
+      }, 100)
     }
   }
   useEffect(() => {
@@ -62,14 +70,17 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
       ?.getInstance()
       .getMarkdown()
       .toString() as string
-
     if (markdown !== currentMd) {
       if (
         markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
         EditorContentOverride.KEYWORD
       ) {
         onChange(markdown.substring(26))
-      } else if (currentMd) onChange(currentMd)
+      } else if (
+        currentMd &&
+        currentMd !== 'Write\nPreview\n\nMarkdown\nWYSIWYG'
+      )
+        onChange(currentMd)
     }
   }, [editorRef, markdown, onChange])
 
@@ -83,10 +94,6 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         autofocus={false}
         initialEditType="wysiwyg"
         initialValue={markdown}
-        onFocus={() => {
-          html.classList.remove('scroller-blocker')
-          window.scrollTo(0, 0)
-        }}
         onChange={handleOnEditorChange}
         toolbarItems={[
           ['heading', 'bold', 'italic', 'strike'],

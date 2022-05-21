@@ -1,7 +1,7 @@
 html {
   scroll-behavior: smooth;
 }
-.scroller-blocker {
+.scroll-blocker {
   position: fixed;
   height: 101%;
   width: 100%;
