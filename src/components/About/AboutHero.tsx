@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Box,
   ButtonGroup,
+  Flex,
   Heading,
   HStack,
   Image,
@@ -16,10 +17,10 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '70%' }}
-      spacing={8}
+      spacing={{lg:'5%', base: 0, md: '10%'}}
       flexDirection={{ base: 'column-reverse', lg: 'row' }}
     >
-      <Box pr="32" m="0">
+      <Box pr="32">
         <Heading mb={4}>{`${t('aboutHeroHeading')}`}</Heading>
         <Text opacity={0.6}>{`${t('aboutHeroPhrase')}`}</Text>
         <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>
@@ -32,11 +33,12 @@ const AboutHero = () => {
         </ButtonGroup>
       </Box>
       <Image
-        flex={1}
         src="/images/about-everipedia.svg"
         w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }}
+        m='40'
       />
     </HStack>
+
   )
 }
 
