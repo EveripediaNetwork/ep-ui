@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Box,
   ButtonGroup,
-  Flex,
   Heading,
   HStack,
   Image,
@@ -17,7 +16,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '70%' }}
-      spacing={{lg:'5%', base: 0, md: '10%'}}
+      spacing={{ lg: '5%', base: 0, md: '10%' }}
       flexDirection={{ base: 'column-reverse', lg: 'row' }}
     >
       <Box pr="32">
@@ -35,10 +34,9 @@ const AboutHero = () => {
       <Image
         src="/images/about-everipedia.svg"
         w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }}
-        m='40'
+        m="40"
       />
     </HStack>
-
   )
 }
 
