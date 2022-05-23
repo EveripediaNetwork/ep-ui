@@ -16,7 +16,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      spacing={{ lg: '27%', base: 0, md: '10%', '2xl': '29%' }}
+      spacing={{ lg: '27%', base: 0, md: '10%', '2xl': '27%' }}
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mb={{ base: 10, lg: 0 }}>
@@ -29,7 +29,7 @@ const AboutHero = () => {
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
           opacity={0.6}
         >{`${t('aboutHeroPhrase')}`}</Text>
-        <Box textAlign="center">
+        <Box textAlign={{ base: 'center', lg: 'left' }}>
           <ButtonGroup
             mx="auto"
             mt={{ base: 10, lg: 4, md: 10 }}
