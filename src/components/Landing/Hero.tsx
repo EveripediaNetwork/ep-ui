@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
   Stack,
-  Link
+  Link,
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
 const CARD_DETAILS_LENGTH = 50
@@ -53,7 +53,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
         />
         <Flex p="3" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-            <Box >
+            <Box>
               {avatar ? (
                 <Avatar size="xs" src={avatar} />
               ) : (
