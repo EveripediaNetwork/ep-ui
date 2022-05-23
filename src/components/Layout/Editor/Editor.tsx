@@ -23,17 +23,12 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const html = document.getElementsByTagName('html')[0]
 
   // when markdown changes, update the editor
   function updateEditorText(text: string) {
     const editorInstance = editorRef.current?.getInstance()
-    if (editorInstance?.getMarkdown() !== text) {
-      html.classList.add('scroller-blocker')
-      editorInstance?.setMarkdown(text)
-      editorInstance?.setSelection(0, 0)
-      editorInstance?.setScrollTop(0)
-    }
+    if (editorInstance?.getMarkdown() !== text)
+      editorInstance?.setMarkdown(text, false)
   }
   useEffect(() => {
     if (
@@ -62,14 +57,17 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
       ?.getInstance()
       .getMarkdown()
       .toString() as string
-
     if (markdown !== currentMd) {
       if (
         markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
         EditorContentOverride.KEYWORD
       ) {
         onChange(markdown.substring(26))
-      } else onChange(currentMd)
+      } else if (
+        currentMd &&
+        currentMd !== 'Write\nPreview\n\nMarkdown\nWYSIWYG'
+      )
+        onChange(currentMd)
     }
   }, [editorRef, markdown, onChange])
 
@@ -83,10 +81,6 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         autofocus={false}
         initialEditType="wysiwyg"
         initialValue={markdown}
-        onFocus={() => {
-          html.classList.remove('scroller-blocker')
-          window.scrollTo(0, 0)
-        }}
         onChange={handleOnEditorChange}
         toolbarItems={[
           ['heading', 'bold', 'italic', 'strike'],

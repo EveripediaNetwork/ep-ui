@@ -361,6 +361,14 @@ const CreateWikiContent = () => {
     setOpenTxDetailsDialog(false)
   }
   const { t } = useTranslation()
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto" mb={8}>
       <HStack
