@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
 const CARD_DETAILS_LENGTH = 50
