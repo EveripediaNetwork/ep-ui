@@ -38,7 +38,12 @@ const IconButtonSocial = ({
   />
 )
 const AboutOurTeam = () => (
-  <VStack spacing={8} maxW={{ base: '100%', lg: '70%' }} mx="auto" mt="24">
+  <VStack
+    spacing={8}
+    maxW={{ base: '100%', lg: '80%', '2xl': '65%' }}
+    mx="auto"
+    mt="24"
+  >
     <Heading size="lg">Meet our team</Heading>
     <Text align={{ base: 'left', lg: 'center' }} maxW="3xl" opacity={0.6}>
       Our mission to build the world’s greatest encyclopedia requires a skilled

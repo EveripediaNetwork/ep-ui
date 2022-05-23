@@ -15,11 +15,11 @@ const AboutHero = () => {
   return (
     <HStack
       mx="auto"
-      maxW={{ base: '100%', lg: '70%' }}
-      spacing={{ lg: '5%', base: 0, md: '10%' }}
-      flexDirection={{ base: 'column-reverse', lg: 'row' }}
+      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      spacing={{ lg: '25%', base: 0, md: '10%', '2xl': '29%' }}
+      flexDirection={{ base: 'column', lg: 'row' }}
     >
-      <Box pr="32">
+      <Box>
         <Heading mb={4}>{`${t('aboutHeroHeading')}`}</Heading>
         <Text opacity={0.6}>{`${t('aboutHeroPhrase')}`}</Text>
         <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>

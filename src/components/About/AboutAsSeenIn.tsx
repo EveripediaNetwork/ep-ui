@@ -8,7 +8,7 @@ import CoinDeskLogo from './logos/coindesk.svg'
 import FortuneLogo from './logos/fortune.svg'
 
 const AboutAsSeenIn = () => (
-  <VStack mt="24" maxW={{ base: '100%', lg: '70%' }} mx="auto">
+  <VStack mt="24" maxW={{ base: '100%', lg: '90%', '2xl': '65%' }} mx="auto">
     <Flex gap={8} flexWrap="wrap" justifyContent="center" alignItems="center">
       <Heading size="md">AS SEEN IN:</Heading>
       <CNNLogo height="min(30px, 6vw)" fill="#8a939b" />
