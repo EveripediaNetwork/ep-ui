@@ -13,7 +13,9 @@ const AboutFeatures = () => {
       mx="auto"
       mt="24"
     >
-      <Heading size="lg">{`${t('aboutFeatHeading')}`}</Heading>
+      <Heading textAlign={{ base: 'center', lg: 'left' }} size="lg">{`${t(
+        'aboutFeatHeading',
+      )}`}</Heading>
       <Text align={{ base: 'left', lg: 'center' }} maxW="3xl" opacity={0.6}>
         {`${t('aboutFeatContent')}`}
       </Text>

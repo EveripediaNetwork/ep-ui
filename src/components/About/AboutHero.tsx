@@ -16,7 +16,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      spacing={{ lg: '25%', base: 0, md: '10%', '2xl': '29%' }}
+      spacing={{ lg: '27%', base: 0, md: '10%', '2xl': '29%' }}
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mb={{ base: 10, lg: 0 }}>
@@ -29,18 +29,21 @@ const AboutHero = () => {
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
           opacity={0.6}
         >{`${t('aboutHeroPhrase')}`}</Text>
-        <ButtonGroup
-          mt={{ base: 10, lg: 4, md: 10 }}
-          size="lg"
-          spacing={{ base: 4, lg: 8 }}
-        >
-          <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
-            {`${t('aboutSignUpBttn')}`}
-          </LinkButton>
-          <LinkButton href="/iq" w={{ base: 32, lg: 40 }} variant="outline">
-            {`${t('aboutgoTo')}`}
-          </LinkButton>
-        </ButtonGroup>
+        <Box textAlign="center">
+          <ButtonGroup
+            mx="auto"
+            mt={{ base: 10, lg: 4, md: 10 }}
+            size="lg"
+            spacing={{ base: 4, lg: 8 }}
+          >
+            <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
+              {`${t('aboutSignUpBttn')}`}
+            </LinkButton>
+            <LinkButton href="/iq" w={{ base: 32, lg: 40 }} variant="outline">
+              {`${t('aboutgoTo')}`}
+            </LinkButton>
+          </ButtonGroup>
+        </Box>
       </Box>
       <Image
         src="/images/about-everipedia.svg"
