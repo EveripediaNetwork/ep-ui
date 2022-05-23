@@ -9,6 +9,7 @@ import {
   Text,
   VStack,
   Stack,
+  Link
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
@@ -22,6 +23,7 @@ import { AvatarColorArray } from '@/data/AvatarData'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
+const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
 
@@ -49,9 +51,9 @@ const HeroCard = ({ wiki }: HeroProps) => {
           overflow="hidden"
           roundedTop="lg"
         />
-        <Flex p="3" align="center" gap={4}>
+        <Flex p="3" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-            <Box>
+            <Box >
               {avatar ? (
                 <Avatar size="xs" src={avatar} />
               ) : (
@@ -70,15 +72,16 @@ const HeroCard = ({ wiki }: HeroProps) => {
             fontWeight="semibold"
           >
             <chakra.span>{wiki?.title}</chakra.span>
-            <Text fontSize="xs" fontWeight="light" my={2}>
-              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
+            <Text fontSize="xs" fontWeight="light" my={1}>
+              {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
             </Text>
-
-            <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-              <chakra.a color="blue">
-                {username || shortenAccount(wiki?.user?.id || '')}
-              </chakra.a>
-            </NextLink>
+            <Text fontSize="14px" color="linkColor">
+              <NextLink href={`/account/${wiki?.user?.id}`} passHref>
+                <Link href="passRef" color="brand.500" fontWeight="bold">
+                  {username || shortenAccount(wiki?.user?.id || '')}
+                </Link>
+              </NextLink>
+            </Text>
           </Flex>
         </Flex>
       </Flex>
