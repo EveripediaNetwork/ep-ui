@@ -10,6 +10,7 @@ import { EditorContentOverride } from '@/types/Wiki'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
+import media from '@/editor-plugins/media'
 
 const ToastUIEditorJSX = ToastUIEditor as unknown as (
   props: Dict,
@@ -118,7 +119,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   return (
     <Box ref={containerRef} m={0} w="100%" h="100%">
       <ToastUIEditorJSX
-        plugins={[wikiLink, cite]}
+        plugins={[wikiLink, cite, media]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}
@@ -130,7 +131,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
           ['ul', 'ol', 'indent', 'outdent'],
-          ['table', 'image', 'code'],
+          ['table', 'code'],
         ]}
       />
     </Box>
