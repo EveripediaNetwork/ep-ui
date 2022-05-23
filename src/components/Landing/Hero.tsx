@@ -28,7 +28,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
+  useEffect(function mountApp() {
     setMounted(false)
   }, [])
 
