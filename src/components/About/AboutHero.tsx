@@ -19,10 +19,21 @@ const AboutHero = () => {
       spacing={{ lg: '25%', base: 0, md: '10%', '2xl': '29%' }}
       flexDirection={{ base: 'column', lg: 'row' }}
     >
-      <Box>
-        <Heading mb={4}>{`${t('aboutHeroHeading')}`}</Heading>
-        <Text opacity={0.6}>{`${t('aboutHeroPhrase')}`}</Text>
-        <ButtonGroup size="lg" mt={4} spacing={{ base: 4, lg: 8 }}>
+      <Box mb={{ base: 10, lg: 0 }}>
+        <Heading
+          textAlign={{ base: 'center', md: 'left', lg: 'left' }}
+          mt={10}
+          mb={{ base: 5, lg: 10 }}
+        >{`${t('aboutHeroHeading')}`}</Heading>
+        <Text
+          textAlign={{ base: 'center', md: 'left', lg: 'left' }}
+          opacity={0.6}
+        >{`${t('aboutHeroPhrase')}`}</Text>
+        <ButtonGroup
+          mt={{ base: 10, lg: 4, md: 10 }}
+          size="lg"
+          spacing={{ base: 4, lg: 8 }}
+        >
           <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
             {`${t('aboutSignUpBttn')}`}
           </LinkButton>
