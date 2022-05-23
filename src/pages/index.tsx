@@ -7,15 +7,15 @@ import {
   useGetPromotedWikisQuery,
 } from '@/services/wikis'
 import { Hero } from '@/components/Landing/Hero'
-import { NotableDrops } from '@/components/Landing/NotableDrops'
+// import { NotableDrops } from '@/components/Landing/NotableDrops'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import { store } from '@/store/store'
+import { NotableDrops } from '@/components/Landing/NotableDrops'
 
-export const Home: NextPage = () => {
+export const Index: NextPage = () => {
   const result = useGetPromotedWikisQuery()
   const { data } = result
   const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
-
   return (
     <Flex
       direction="column"
@@ -24,6 +24,10 @@ export const Home: NextPage = () => {
       px={{ base: 6, lg: 20 }}
       py={{ lg: 20 }}
       gap={10}
+      _dark={{
+        bgImage: '/images/homepage-bg-dark.png',
+      }}
+      bgImage="/images/homepage-bg-white.png"
     >
       <Hero wiki={wiki} />
       <NotableDrops drops={data} />
@@ -40,4 +44,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Home
+export default Index

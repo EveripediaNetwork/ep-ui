@@ -105,5 +105,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.200',
       _dark: 'whiteAlpha.400',
     },
+    btnBgColor: {
+      default: 'white',
+      _dark: 'gray.800',
+    },
   },
 }

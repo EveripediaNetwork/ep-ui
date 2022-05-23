@@ -1,12 +1,6 @@
 html {
   scroll-behavior: smooth;
 }
-.scroller-blocker {
-  position: fixed;
-  height: 101%;
-  width: 100%;
-  overflow: scroll;
-}
 /* EDITOR SHELL STYLES */
 .ProseMirror,
 .toastui-editor-contents {
@@ -95,18 +89,47 @@ html {
 }
 
 /* EDITOR CONTENT STYLES */
-.toastui-editor-main * {
+.toastui-editor-contents * {
   font-family: poppins, sans-serif !important;
 }
-.toastui-editor-main h1,
-.toastui-editor-main h2,
-.toastui-editor-main h3 {
+.toastui-editor-contents :where(h1, h2, h3, h4, h5, h6) {
   border-bottom: none !important;
   padding-bottom: 0 !important;
-  margin-bottom: 0.5em !important;
-  margin-top: 1em !important;
+  margin: 24px 0 16px !important;
+  font-weight: 600;
+  line-height: 1.25;
+  scroll-margin-top: 80px;
+}
+.toastui-editor-contents h1,
+.toastui-editor-contents h2 {
+  font-weight: 500 !important;
+}
+.toastui-editor-contents h1 {
+  margin: 0.6em 0 !important;
+  font-size: 1.7em !important;
+}
+:where(.toastui-editor-contents h4) {
+  font-size: 16px;
+}
+.toastui-editor-contents li {
+  list-style-type: unset !important;
+}
+.toastui-editor-contents ul > li::before {
+  height: 0 !important;
+  width: 0 !important;
 }
 
+.toastui-editor-contents blockquote {
+  color: #57606a !important;
+  border-left: 0.25em solid #d0d7de !important;
+}
+.toastui-editor-dark .toastui-editor-contents blockquote {
+  color: #a9b6c5 !important;
+  border-left: 0.25em solid #4c5566 !important;
+}
+.toastui-editor-contents blockquote > p {
+  color: inherit !important;
+}
 /* WIKI MEDIA SHOWCASE STYLES */
 #bp_container > .bp-x {
   justify-content: center;

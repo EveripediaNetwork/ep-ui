@@ -54,7 +54,7 @@ const MenuFooter = () => {
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
-              <Heading size="sm">{`${t('bonds')}`}</Heading>
+              <Heading size="sm">{`${t('Everipedia')}`}</Heading>
               <Link href="/static/about">{`${t('aboutUs')}`}</Link>
               <Link href="/static/careers">{`${t('careers')}`}</Link>
               <Link href="/">{`${t('brainies')}`}</Link>

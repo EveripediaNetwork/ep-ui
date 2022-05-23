@@ -31,7 +31,9 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
   React.useEffect(() => {
     // get all the heading elements
-    const headingElements = Array.from(document.querySelectorAll('h1, h2, h3'))
+    const headingElements = Array.from(
+      document.querySelectorAll('h1, h2, h3, h4, h5, h6'),
+    )
 
     // defining callback function for intersection observer
     // this function will be called when the heading element is in view

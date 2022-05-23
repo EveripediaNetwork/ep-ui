@@ -1,5 +1,15 @@
 import React from 'react'
-import { Avatar, Box, ButtonGroup, chakra, Flex } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  ButtonGroup,
+  Heading,
+  chakra,
+  Flex,
+  Text,
+  VStack,
+  Stack,
+} from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
 import shortenAccount from '@/utils/shortenAccount'
@@ -9,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
 const HeroCard = ({ wiki }: HeroProps) => {
@@ -25,14 +36,14 @@ const HeroCard = ({ wiki }: HeroProps) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: '90vw', md: '96', lg: 'xl' }}
+        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
         w="full"
       >
         <WikiImage
           cursor="pointer"
           flexShrink={0}
           imageURL={getWikiImageUrl(wiki)}
-          h={{ base: 80, lg: 400 }}
+          h={{ base: 80, lg: 320 }}
           w={{ base: '100%', lg: '100%' }}
           borderRadius="none"
           overflow="hidden"
@@ -59,6 +70,9 @@ const HeroCard = ({ wiki }: HeroProps) => {
             fontWeight="semibold"
           >
             <chakra.span>{wiki?.title}</chakra.span>
+            <Text fontSize="xs" fontWeight="light" my={2}>
+              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
+            </Text>
 
             <NextLink href={`/account/${wiki?.user?.id}`} passHref>
               <chakra.a color="blue">
@@ -76,66 +90,54 @@ export const Hero = ({ wiki }: HeroProps) => {
   const { t } = useTranslation()
 
   return (
-    <Flex pos="relative" direction="column">
-      <Flex
-        direction={{ base: 'column', lg: 'row' }}
-        columnGap={{ base: 8, xl: 20 }}
-        rowGap={{ base: 14, lg: 0 }}
+    <Stack
+      direction={{ base: 'column', lg: 'row' }}
+      justify="center"
+      w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
+      mx="auto"
+      px={{ base: 6, lg: 0 }}
+    >
+      <VStack
+        alignItems={{ base: 'center', lg: 'start' }}
+        textAlign={{ base: 'center', lg: 'start' }}
+        spacing={10}
+        my={10}
       >
-        <Flex
-          direction="column"
-          alignItems={{ base: 'center', lg: 'start' }}
-          textAlign={{ base: 'center', lg: 'start' }}
-          pt="10"
-          mx="auto"
-          maxW={{ base: 'lg', lg: '4xl' }}
+        <Heading
+          w="70%"
+          fontSize={{ base: '2xl', sm: '30', md: '44' }}
+          fontWeight="black"
+          lineHeight="normal"
+          letterSpacing="wider"
         >
-          <chakra.h1
-            mb={6}
-            fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
-            marginTop={{ md: '60px' }}
-            fontWeight="bold"
-            lineHeight="shorter"
-            letterSpacing="wider"
+          {`${t('hero_title')}`}
+        </Heading>
+        <Text
+          w="60%"
+          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          letterSpacing="wider"
+        >
+          {`${t('iq_description')}`}
+        </Text>
+        <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
+          <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
+            {`${t('exploreHeroBttn')}`}
+          </LinkButton>
+          <LinkButton
+            href="/create-wiki"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
           >
-            {`${t('hero_title')}`}
-          </chakra.h1>
-          <chakra.p
-            pr={{ base: 0, lg: 16 }}
-            mb={4}
-            fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-            letterSpacing="wider"
-          >
-            {`${t('iq_description')}`}
-          </chakra.p>
-
-          <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
-            <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
-              {`${t('exploreHeroBttn')}`}
-            </LinkButton>
-            <LinkButton
-              href="/create-wiki"
-              w={{ base: 32, lg: 40 }}
-              variant="outline"
-            >
-              {`${t('createHeroBttn')}`}
-            </LinkButton>
-          </ButtonGroup>
-        </Flex>
-        <HeroCard wiki={wiki} />
-      </Flex>
-      <LinkButton
-        href="/static/about"
-        mx="auto"
-        variant="link"
-        mt={{ base: 12, lg: 0 }}
-        color="blue.300"
-        pos={{ lg: 'absolute' }}
-        bottom={{ lg: 0 }}
-      >
-        {`${t('learnMoreHeroBttn')}`}
-      </LinkButton>
-    </Flex>
+            {`${t('createHeroBttn')}`}
+          </LinkButton>
+        </ButtonGroup>
+        <LinkButton href="/static/about" variant="link" color="blue.300">
+          {`${t('learnMoreHeroBttn')}`}
+        </LinkButton>
+      </VStack>
+      <HeroCard wiki={wiki} />
+    </Stack>
   )
 }
 

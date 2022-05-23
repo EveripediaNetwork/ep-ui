@@ -14,8 +14,9 @@ const CustomSteps = {
       connector: {
         ...StepsStyleConfig.baseStyle(props).connector,
         // your custom styles here
-        marginLeft: '75px',
+        left: '50%',
         width: '100px',
+        right: '50%',
       },
     }
   },
