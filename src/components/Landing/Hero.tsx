@@ -29,7 +29,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
   const [mounted, setMounted] = useState(false)
 
   useEffect(function mountApp() {
-    setMounted(false)
+    setMounted(true)
   }, [])
 
   if (!mounted) return null
