@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
 const CARD_DETAILS_LENGTH = 50
@@ -51,7 +51,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
           overflow="hidden"
           roundedTop="lg"
         />
-        <Flex p="3" gap={4}>
+        <Flex p="3" align="end" gap={4}>
           <NextLink href={`/account/${wiki?.user?.id}`} passHref>
             <Box>
               {avatar ? (
