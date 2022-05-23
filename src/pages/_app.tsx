@@ -22,7 +22,6 @@ import { ImageProvider } from '@/context/image.context'
 import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
-import Script from 'next/script'
 import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
 import '../utils/i18n'
@@ -69,22 +68,6 @@ const App = (props: EpAppProps) => {
 
   return (
     <StrictMode>
-      <Script
-        id="google-analytics"
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-      />
-      <Script id="google-analytics-config" strategy="lazyOnload">
-        {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-                page_path: window.location.pathname,
-                send_page_view: false
-                });
-            `}
-      </Script>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>

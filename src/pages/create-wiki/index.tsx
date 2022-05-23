@@ -220,6 +220,14 @@ const CreateWikiContent = () => {
       if (!imageHash) {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'NO_IMAGE',
+            address: accountData?.address,
+            slug: getWikiSlug(),
+          },
+        })
         return
       }
 
@@ -267,6 +275,14 @@ const CreateWikiContent = () => {
       else {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'NO_IPFS',
+            address: accountData?.address,
+            slug: getWikiSlug(),
+          },
+        })
       }
 
       // clear all edit based metadata from redux state
