@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 const Careers = () => {
   const { t } = useTranslation()
-  const [openings, setOpening] = React.useState<Array<Object> | null>()
+  const [openings] = React.useState<Array<any> | null>()
   console.log(openings)
 
   return (
