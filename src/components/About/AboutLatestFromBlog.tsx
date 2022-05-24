@@ -18,7 +18,7 @@ const AboutLatestFromBlog = () => {
         columns={[1, 1, 2, 3]}
         spacing={4}
         mt={4}
-        w="min(1200px, 90%)"
+        w="min(1200px, 95%)"
       >
         {blogData.map(data => (
           <BlogCard
