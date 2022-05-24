@@ -184,7 +184,12 @@ const HighlightsModal = ({
                       })
                     }
                   }}
-                  placeholder="Select Category"
+                  value={currentWiki.categories[0].title}
+                  placeholder={
+                    currentWiki.categories.length > 0
+                      ? undefined
+                      : 'Select Category'
+                  }
                 >
                   {categoryOptions?.map(o => (
                     <option key={o.title}>{o.title}</option>
