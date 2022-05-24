@@ -7,10 +7,10 @@ import {
   IconButton,
   useDisclosure,
   HStack,
-  Heading,
+  Heading
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { RiWallet2Line, RiAccountCircleLine } from 'react-icons/ri'
+import { RiWallet2Line} from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
 
@@ -45,6 +45,9 @@ const Navbar = () => {
 
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
 
+  const [mounted, setMounted] = useState(false)
+
+  
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
 
@@ -136,6 +139,12 @@ const Navbar = () => {
     return null
   }
 
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <>
       <Box
@@ -184,35 +193,17 @@ const Navbar = () => {
               >
                 <DesktopNav />
                 <Box onMouseLeave={() => setVisibleMenu(null)}>
-                  <StaticContent>
                     <NavMenu
                       navItem={NAV_ICON}
                       setVisibleMenu={setVisibleMenu}
                       visibleMenu={visibleMenu}
                       label={
-                        accountData ? (
-                          <DisplayAvatar address={accountData.address} />
-                        ) : (
-                          <Icon
-                            cursor="pointer"
-                            fontSize="3xl"
-                            color="gray.600"
-                            _dark={{ color: 'gray.200' }}
-                            fontWeight={600}
-                            as={RiAccountCircleLine}
-                            mt={2}
-                            _hover={{
-                              textDecoration: 'none',
-                              color: 'linkHoverColor',
-                            }}
-                          />
-                        )
+                        <DisplayAvatar address={accountData?.address}/> 
                       }
                     >
                       <ProfileLink />
                       <ColorModeToggle isInMobileMenu={false} />
                     </NavMenu>
-                  </StaticContent>
                 </Box>
                 <Icon
                   color="linkColor"

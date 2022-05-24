@@ -27,6 +27,10 @@ const DisplayAvatar = ({
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
+  console.log("getting herer")
+  console.log(address)
+  console.log(address)
+  console.log(address)
   const [avatar, ,] = useENSData(address)
   let content = null
   if (avatar) {
