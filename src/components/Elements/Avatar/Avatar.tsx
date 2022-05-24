@@ -27,7 +27,7 @@ const DisplayAvatar = ({
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
-  console.log("getting herer")
+  console.log('getting herer')
   console.log(address)
   console.log(address)
   console.log(address)

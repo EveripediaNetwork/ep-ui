@@ -7,10 +7,10 @@ import {
   IconButton,
   useDisclosure,
   HStack,
-  Heading
+  Heading,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { RiWallet2Line} from 'react-icons/ri'
+import { RiWallet2Line } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
 
@@ -47,7 +47,6 @@ const Navbar = () => {
 
   const [mounted, setMounted] = useState(false)
 
-  
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
 
@@ -193,17 +192,15 @@ const Navbar = () => {
               >
                 <DesktopNav />
                 <Box onMouseLeave={() => setVisibleMenu(null)}>
-                    <NavMenu
-                      navItem={NAV_ICON}
-                      setVisibleMenu={setVisibleMenu}
-                      visibleMenu={visibleMenu}
-                      label={
-                        <DisplayAvatar address={accountData?.address}/> 
-                      }
-                    >
-                      <ProfileLink />
-                      <ColorModeToggle isInMobileMenu={false} />
-                    </NavMenu>
+                  <NavMenu
+                    navItem={NAV_ICON}
+                    setVisibleMenu={setVisibleMenu}
+                    visibleMenu={visibleMenu}
+                    label={<DisplayAvatar address={accountData?.address} />}
+                  >
+                    <ProfileLink />
+                    <ColorModeToggle isInMobileMenu={false} />
+                  </NavMenu>
                 </Box>
                 <Icon
                   color="linkColor"
