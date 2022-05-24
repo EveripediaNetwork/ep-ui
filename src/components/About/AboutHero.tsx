@@ -6,12 +6,17 @@ import {
   HStack,
   Image,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
 
 const AboutHero = () => {
   const { t } = useTranslation()
+  const aboutHeroSrc = useColorModeValue(
+    'AboutSecHeroLight.png',
+    'AboutSecHeroDark.png',
+  )
   return (
     <HStack
       mx="auto"
@@ -46,7 +51,7 @@ const AboutHero = () => {
         </Box>
       </Box>
       <Image
-        src="/images/AboutSecHero.png"
+        src={`/images/${aboutHeroSrc}`}
         w={{ base: '100%', sm: '80%', md: '60%', lg: '43%' }}
         m="40"
       />
