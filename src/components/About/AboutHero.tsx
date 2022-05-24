@@ -16,7 +16,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      spacing={{ lg: '27%', base: 0, md: '10%', '2xl': '27%' }}
+      spacing={{ lg: '25%', base: 0, md: '10%', '2xl': '29%' }}
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mb={{ base: 10, lg: 0 }}>
@@ -46,8 +46,8 @@ const AboutHero = () => {
         </Box>
       </Box>
       <Image
-        src="/images/about-everipedia.svg"
-        w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }}
+        src="/images/AboutSecHero.png"
+        w={{ base: '100%', sm: '80%', md: '60%', lg: '43%' }}
         m="40"
       />
     </HStack>
