@@ -124,7 +124,7 @@ const WikiProcessModal = ({
                 <Button
                   disabled={!(activeStep === 3 && txHash)}
                   onClick={() =>
-                    window.open(`${config.blockExplorerUrl}tx/${txHash}`)
+                    window.open(`${config.blockExplorerUrl}/tx/${txHash}`)
                   }
                   variant="link"
                   fontWeight="semibold"
