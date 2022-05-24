@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -9,6 +9,7 @@ import {
   Text,
   VStack,
   Stack,
+  Link,
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
@@ -19,11 +20,19 @@ import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import { getWikiSummary } from '@/utils/getWikiSummary'
 import { WikiImage } from '../WikiImage'
 
+const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   return (
     <NextLink href={`/wiki/${wiki?.id}`} passHref>
@@ -49,36 +58,39 @@ const HeroCard = ({ wiki }: HeroProps) => {
           overflow="hidden"
           roundedTop="lg"
         />
-        <Flex p="3" align="center" gap={4}>
-          <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-            <Box>
-              {avatar ? (
-                <Avatar size="xs" src={avatar} />
-              ) : (
-                <CustomAvatar
-                  size="25"
-                  variant="pixel"
-                  name="Unnamed"
-                  colors={AvatarColorArray}
-                />
-              )}
-            </Box>
-          </NextLink>
-          <Flex
-            direction="column"
-            justify="space-between"
-            fontWeight="semibold"
-          >
-            <chakra.span>{wiki?.title}</chakra.span>
-            <Text fontSize="xs" fontWeight="light" my={2}>
-              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
-            </Text>
+        <Flex
+          direction="column"
+          justify="space-between"
+          fontWeight="semibold"
+          p={4}
+        >
+          <chakra.span>{wiki?.title}</chakra.span>
+          <Text fontSize="xs" fontWeight="light" my={2}>
+            {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
+          </Text>
 
+          <Flex gap={3}>
             <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-              <chakra.a color="blue">
-                {username || shortenAccount(wiki?.user?.id || '')}
-              </chakra.a>
+              <Box>
+                {avatar ? (
+                  <Avatar size="xs" src={avatar} />
+                ) : (
+                  <CustomAvatar
+                    size="20"
+                    variant="pixel"
+                    name="Unnamed"
+                    colors={AvatarColorArray}
+                  />
+                )}
+              </Box>
             </NextLink>
+            <Text fontSize="14px" color="linkColor">
+              <NextLink href={`/account/${wiki?.user?.id}`} passHref>
+                <Link href="passRef" color="brand.500" fontWeight="bold">
+                  {username || shortenAccount(wiki?.user?.id || '')}
+                </Link>
+              </NextLink>
+            </Text>
           </Flex>
         </Flex>
       </Flex>
