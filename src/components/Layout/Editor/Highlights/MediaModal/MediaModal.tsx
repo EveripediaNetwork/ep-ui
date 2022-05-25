@@ -47,8 +47,8 @@ const MediaModal = ({
         <ModalBody>
           <Box mt="3">
             <Text fontWeight="bold">Local Files</Text>
-            <Box my={4}>
-              <SimpleGrid columns={2} spacing={6}>
+            <Box my={4} display="flex" justifyContent={{base: 'center', md: "left"}}>
+              <SimpleGrid columns={{base: 1, md: 2}} spacing={6} spacingX={12}>
                 <Flex gap={4} color="linkColor">
                   <Box mt={2}>
                     <RiImageLine size="50" />
