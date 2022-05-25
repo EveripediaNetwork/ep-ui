@@ -114,7 +114,7 @@ const HighlightsModal = ({
     }
   }
 
-  return (
+  return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
@@ -292,7 +292,7 @@ const HighlightsModal = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  ) : null
 }
 
 export default HighlightsModal

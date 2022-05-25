@@ -114,6 +114,12 @@ export const resources = {
       //Category page: 
       wikiInCategory: "Wikis in this category",
 
+      //Career
+      careerHeading: "Careers",
+      noOpeningsHeading: "There are currently no open positions at this time",
+      careerSubscribeText: "Suscribe to our mailing list to get the latest from everipedia",
+
+
       //Global text 
       seenItAll: "Yay! You have seen it all 🥳 ", 
       //---End of Copies for Everipedia--

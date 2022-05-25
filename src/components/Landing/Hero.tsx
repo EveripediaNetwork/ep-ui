@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -26,6 +26,13 @@ import { WikiImage } from '../WikiImage'
 const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
   const [avatar, username] = useENSData(wiki?.user?.id)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   return (
     <NextLink href={`/wiki/${wiki?.id}`} passHref>

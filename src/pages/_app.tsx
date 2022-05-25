@@ -9,9 +9,7 @@ import '@/editor-plugins/cite/styles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProviderClass } from 'react-redux'
-import { Provider, createClient } from 'wagmi'
-import { ethers } from 'ethers'
-import connectors from '@/config/connectors'
+import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
 import { store } from '@/store/store'
@@ -19,10 +17,10 @@ import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import { ImageProvider } from '@/context/image.context'
-import config from '@/config'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
+import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
@@ -34,12 +32,6 @@ const ReduxProvider = ReduxProviderClass as unknown as (
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
-
-const provider = () =>
-  new ethers.providers.AlchemyProvider(
-    config.alchemyChain,
-    config.alchemyApiKey,
-  )
 
 type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
 type CreateClientConnectors = CreateClientArgs['connectors']
@@ -73,13 +65,13 @@ const App = (props: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
-          <Provider client={client}>
+          <WagmiConfig client={client}>
             <Layout noFooter={Component.noFooter}>
               <ImageProvider>
                 <Component {...pageProps} />
               </ImageProvider>
             </Layout>
-          </Provider>
+          </WagmiConfig>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />

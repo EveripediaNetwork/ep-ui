@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { NextSeo } from 'next-seo'
@@ -49,9 +49,17 @@ const Wiki = () => {
 
   const toc = useAppSelector(state => state.toc)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
+
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   return (
     <>
