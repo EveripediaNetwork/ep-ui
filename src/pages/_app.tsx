@@ -9,7 +9,7 @@ import '@/editor-plugins/cite/styles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProviderClass } from 'react-redux'
-import { WagmiConfig } from 'wagmi'
+import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Headers'
 import { store } from '@/store/store'
@@ -20,7 +20,7 @@ import { ImageProvider } from '@/context/image.context'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
-import client from '@/config/wagmi'
+import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
@@ -32,6 +32,16 @@ const ReduxProvider = ReduxProviderClass as unknown as (
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
+
+type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
+type CreateClientConnectors = CreateClientArgs['connectors']
+const createClientConnectors = connectors as CreateClientConnectors
+
+const client = createClient({
+  autoConnect: true,
+  connectors: createClientConnectors,
+  provider,
+})
 
 const App = (props: EpAppProps) => {
   const { Component, pageProps, router } = props

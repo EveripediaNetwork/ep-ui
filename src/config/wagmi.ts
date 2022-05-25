@@ -9,27 +9,30 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import config from './index'
+import { AlchemyProvider, Network } from '@ethersproject/providers'
 
 type Connector =
   | InjectedConnector
+  | MetaMaskConnector
   | WalletConnectConnector
   | CoinbaseWalletConnector
   | MagicConnector
 
-const alchemy = alchemyProvider({
-  alchemyId: config.alchemyApiKey,
-  weight: 1,
-})
-const { chains, provider } = configureChains(
+export const { chains, provider } = configureChains(
   [chain.polygon, chain.polygonMumbai],
   [
-    alchemy,
+    alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
     infuraProvider({ infuraId: config.infuraId, weight: 2 }),
     publicProvider({ weight: 3 }),
   ],
 )
 
-const connectors: Connector[] = [
+const network: Network = {
+  name: config.alchemyChain,
+  chainId: Number(config.chainId),
+}
+
+export const connectors: Connector[] = [
   new MetaMaskConnector({ chains }),
   new CoinbaseWalletConnector({
     chains,
@@ -59,16 +62,11 @@ const connectors: Connector[] = [
       customLogo: '/images/braindao-logo.svg',
       accentColor: '#ea3b87',
       additionalMagicOptions: {
-        network: { rpcUrl: alchemy.rpcUrl, chainId: config.chainId },
+        network: {
+          rpcUrl: AlchemyProvider.getUrl(network, config.alchemyApiKey).url,
+          chainId: Number(config.chainId),
+        },
       },
     },
   }),
 ]
-
-const client = createClient({
-  autoConnect: true,
-  connectors,
-  provider,
-})
-
-export default client
