@@ -9,8 +9,15 @@ import {
   Tbody,
   Td,
   Tr,
+  Box,
+  VStack,
 } from '@chakra-ui/react'
-import { RiFolder3Line, RiSurveyLine, RiTwitterLine } from 'react-icons/ri'
+import {
+  RiFolder3Line,
+  RiSurveyLine,
+  RiTwitterLine,
+  RiFilmLine,
+} from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
@@ -20,6 +27,7 @@ import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { shortenText } from '@/utils/shortenText'
 import { useTranslation } from 'react-i18next'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
+import MediaModal from './MediaModal/MediaModal'
 import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
@@ -29,6 +37,11 @@ type HightLightsType = {
 
 const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isMediaOpen,
+    onOpen: mediaOpen,
+    onClose: mediaClose,
+  } = useDisclosure()
   const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
@@ -70,6 +83,17 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           deleteImage={handleDeleteImage}
         />
       )}
+      <VStack align="start" spacing={2}>
+        <Flex gap={2} color="linkColor">
+          <Box mt={1}>
+            <RiFilmLine size="16" />
+          </Box>
+          <Text>Media</Text>
+        </Flex>
+        <Button onClick={mediaOpen} mt="2" size="sm">
+          <Text fontSize="sm">Add new image or video</Text>
+        </Button>
+      </VStack>
       <Flex direction="column" justifyContent="center" alignItems="center">
         <Table size="sm" variant="simple" mb={2}>
           <Tbody borderWidth="1px" overflow="hidden">
@@ -132,6 +156,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
         </Flex>
       </Flex>
       <HighlightsModal isOpen={isOpen} onClose={onClose} />
+      <MediaModal isOpen={isMediaOpen} onClose={mediaClose} />
     </Flex>
   )
 }
