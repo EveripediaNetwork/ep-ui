@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 const Careers = () => {
   const { t } = useTranslation()
   const [openings] = React.useState<Array<any> | null>()
-  console.log(openings)
 
   return (
     <main>
@@ -20,40 +19,13 @@ const Careers = () => {
           mt={8}
           mb={4}
           as="h1"
-          fontSize={{ lg: '6xl', md: '4xl', base: '2xl' }}
+          fontSize={{ lg: '4xl', md: '4xl', base: '2xl' }}
           letterSpacing="wide"
         >
           {t('careerHeading')}
         </Heading>
         <Flex direction="column" align="center" justify="center">
           {openings ? 'List of openings here' : <NoOpenings />}
-        </Flex>
-
-        <Flex
-          align="center"
-          justify="center"
-          direction="column"
-          gap={{ base: 3 }}
-        >
-          <Text
-            fontSize={{ lg: 'xl', base: 'md' }}
-            opacity="0.4"
-            textAlign="center"
-          >
-            {`${t('careerSubscribeText')}`}
-          </Text>
-          <Button
-            size="lg"
-            variant="solid"
-            onClick={() =>
-              window.open(
-                'https://www.getdrip.com/forms/505929689/submissions/new',
-                '_blank',
-              )
-            }
-          >
-            {`${t('subScribeFooterBttn')}`}
-          </Button>
         </Flex>
       </Flex>
     </main>
