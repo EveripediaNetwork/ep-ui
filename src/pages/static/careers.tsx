@@ -1,5 +1,5 @@
 import NoOpenings from '@/components/Careers/NoOpeningsCard'
-import { Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading } from '@chakra-ui/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
