@@ -58,7 +58,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
                     li => li.id === social.id,
                   )?.icon
                   return (
-                    <Link target="_blank" href={social.value} key={i}>
+                    <Link target="_blank" href={`//${social.value}`} key={i}>
                       <IconButton
                         key={i}
                         aria-label="open social"
