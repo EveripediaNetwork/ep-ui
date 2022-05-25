@@ -15,13 +15,9 @@ import {
   SimpleGrid,
   Flex,
   Progress,
-  Stack
+  Stack,
 } from '@chakra-ui/react'
-import {
-  RiCloseLine,
-  RiFilmLine,
-  RiImageLine,
-} from 'react-icons/ri'
+import { RiCloseLine, RiFilmLine, RiImageLine } from 'react-icons/ri'
 
 const MediaModal = ({
   onClose = () => {},
@@ -58,19 +54,24 @@ const MediaModal = ({
                     <RiImageLine size="50" />
                   </Box>
                   <VStack>
-                      <Flex w="full" gap={16}>
-                          <Text fontSize="sm">brainies.png</Text>
-                          <Box mt={1}>
-                            <RiCloseLine color="red" size="14"/>
-                          </Box>
-                      </Flex>
-                      <Box w="full">
-                         <Progress  value={80}  h="5px" colorScheme="green" size='sm' />
+                    <Flex w="full" gap={16}>
+                      <Text fontSize="sm">brainies.png</Text>
+                      <Box mt={1}>
+                        <RiCloseLine color="red" size="14" />
                       </Box>
-                      <Flex w="full" fontSize="xs" gap={16}>
-                          <Text  flex="1">3mb</Text>
-                          <Text flex="1">Uploading</Text>
-                      </Flex>
+                    </Flex>
+                    <Box w="full">
+                      <Progress
+                        value={80}
+                        h="5px"
+                        colorScheme="green"
+                        size="sm"
+                      />
+                    </Box>
+                    <Flex w="full" fontSize="xs" gap={16}>
+                      <Text flex="1">3mb</Text>
+                      <Text flex="1">Uploading</Text>
+                    </Flex>
                   </VStack>
                 </Flex>
                 <Flex gap={4} color="linkColor">
@@ -78,19 +79,24 @@ const MediaModal = ({
                     <RiFilmLine size="50" />
                   </Box>
                   <VStack>
-                      <Flex w="full" gap={16}>
-                          <Text fontSize="sm">brainies.png</Text>
-                          <Box mt={1}>
-                            <RiCloseLine color="red" size="14"/>
-                          </Box>
-                      </Flex>
-                      <Box w="full">
-                         <Progress  value={80} h="5px"  colorScheme="green" size='sm' />
+                    <Flex w="full" gap={16}>
+                      <Text fontSize="sm">brainies.png</Text>
+                      <Box mt={1}>
+                        <RiCloseLine color="red" size="14" />
                       </Box>
-                      <Flex w="full" fontSize="xs" gap={16}>
-                          <Text  flex="1">3mb</Text>
-                          <Text flex="1">Uploading</Text>
-                      </Flex>
+                    </Flex>
+                    <Box w="full">
+                      <Progress
+                        value={80}
+                        h="5px"
+                        colorScheme="green"
+                        size="sm"
+                      />
+                    </Box>
+                    <Flex w="full" fontSize="xs" gap={16}>
+                      <Text flex="1">3mb</Text>
+                      <Text flex="1">Uploading</Text>
+                    </Flex>
                   </VStack>
                 </Flex>
                 <Flex gap={4} color="linkColor">
@@ -98,19 +104,24 @@ const MediaModal = ({
                     <RiImageLine size="50" />
                   </Box>
                   <VStack>
-                      <Flex w="full" gap={16}>
-                          <Text fontSize="sm">brainies.png</Text>
-                          <Box mt={1}>
-                            <RiCloseLine color="red" size="14"/>
-                          </Box>
-                      </Flex>
-                      <Box w="full">
-                         <Progress  value={80} h="5px" colorScheme="green" size='sm' />
+                    <Flex w="full" gap={16}>
+                      <Text fontSize="sm">brainies.png</Text>
+                      <Box mt={1}>
+                        <RiCloseLine color="red" size="14" />
                       </Box>
-                      <Flex w="full" fontSize="xs" gap={16}>
-                          <Text  flex="1">3mb</Text>
-                          <Text flex="1">Uploading</Text>
-                      </Flex>
+                    </Flex>
+                    <Box w="full">
+                      <Progress
+                        value={80}
+                        h="5px"
+                        colorScheme="green"
+                        size="sm"
+                      />
+                    </Box>
+                    <Flex w="full" fontSize="xs" gap={16}>
+                      <Text flex="1">3mb</Text>
+                      <Text flex="1">Uploading</Text>
+                    </Flex>
                   </VStack>
                 </Flex>
                 <Flex gap={4} color="linkColor">
@@ -118,23 +129,26 @@ const MediaModal = ({
                     <RiFilmLine size="50" />
                   </Box>
                   <VStack>
-                      <Flex w="full" gap={16}>
-                          <Text fontSize="sm">brainies.png</Text>
-                          <Box mt={1}>
-                            <RiCloseLine color="red" size="14"/>
-                          </Box>
-                      </Flex>
-                      <Box w="full">
-                         <Progress  value={80} h="5px" colorScheme="green" size='sm' />
+                    <Flex w="full" gap={16}>
+                      <Text fontSize="sm">brainies.png</Text>
+                      <Box mt={1}>
+                        <RiCloseLine color="red" size="14" />
                       </Box>
-                      <Flex w="full" fontSize="xs" gap={16}>
-                          <Text  flex="1">3mb</Text>
-                          <Text flex="1">Uploading</Text>
-                      </Flex>
+                    </Flex>
+                    <Box w="full">
+                      <Progress
+                        value={80}
+                        h="5px"
+                        colorScheme="green"
+                        size="sm"
+                      />
+                    </Box>
+                    <Flex w="full" fontSize="xs" gap={16}>
+                      <Text flex="1">3mb</Text>
+                      <Text flex="1">Uploading</Text>
+                    </Flex>
                   </VStack>
                 </Flex>
-
-                
               </SimpleGrid>
             </Box>
             <VStack align="center" mb={8} py={5} gap={10}>
@@ -142,11 +156,9 @@ const MediaModal = ({
               <Button mx="auto">
                 <Text fontSize="xs">Upload from computer (8mb max)</Text>
               </Button>
-              <Stack spacing={4} direction='row' align='center'>
-                <Button size='md'>
-                  Save
-                </Button>
-                <Button onClick={onClose} variant="outline" size='md'>
+              <Stack spacing={4} direction="row" align="center">
+                <Button size="md">Save</Button>
+                <Button onClick={onClose} variant="outline" size="md">
                   Cancel
                 </Button>
               </Stack>
