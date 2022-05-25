@@ -78,27 +78,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
         </Box>
       )
     }
-    if (type === 'socials' && content instanceof Array) {
-      return (
-        <HStack spacing={2}>
-          {content.map((social, i) => {
-            return (
-              <Link target="_blank" href={social.url} key={i}>
-                <IconButton
-                  key={i}
-                  aria-label="open social"
-                  minW={3}
-                  /* eslint-disable */
-                  icon={<Icon as={require(`react-icons/ri`)[social.icon]} />}
-                  /* eslint-enable */
-                  variant="link"
-                />
-              </Link>
-            )
-          })}
-        </HStack>
-      )
-    }
+
     if (type === 'statistic') {
       return (
         <Stat>

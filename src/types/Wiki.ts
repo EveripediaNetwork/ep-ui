@@ -24,6 +24,7 @@ export enum CommonMetaIds {
   TWITTER_PROFILE = 'twitter_profile',
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
+  COINGECKO_PROFILE = 'coingecko_profile',
 }
 
 export enum EditSpecificMetaIds {
