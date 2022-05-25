@@ -184,7 +184,7 @@ const HighlightsModal = ({
                       })
                     }
                   }}
-                  value={currentWiki.categories[0].title}
+                  value={currentWiki.categories[0]?.title}
                   placeholder={
                     currentWiki.categories.length > 0
                       ? undefined
