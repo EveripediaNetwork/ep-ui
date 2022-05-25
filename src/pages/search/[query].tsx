@@ -58,6 +58,7 @@ const SearchQuery = () => {
         editor={article.user.id}
         wiki={article}
         wikiId={article.id}
+        lastModTimeStamp={article.updated}
       />
     )
   })
