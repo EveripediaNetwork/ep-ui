@@ -157,9 +157,9 @@ const MediaModal = ({
                 <Text fontSize="xs">Upload from computer (8mb max)</Text>
               </Button>
               <Stack spacing={4} direction="row" align="center">
-                <Button size="md">Save</Button>
+                <Button size="md"><Text fontSize="xs">Save</Text></Button>
                 <Button onClick={onClose} variant="outline" size="md">
-                  Cancel
+                  <Text fontSize="xs">Cancel</Text>
                 </Button>
               </Stack>
             </VStack>
