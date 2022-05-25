@@ -16,10 +16,14 @@ type Connector =
   | CoinbaseWalletConnector
   | MagicConnector
 
+const alchemy = alchemyProvider({
+  alchemyId: config.alchemyApiKey,
+  weight: 1,
+})
 const { chains, provider } = configureChains(
   [chain.polygon, chain.polygonMumbai],
   [
-    alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
+    alchemy,
     infuraProvider({ infuraId: config.infuraId, weight: 2 }),
     publicProvider({ weight: 3 }),
   ],
@@ -55,7 +59,7 @@ const connectors: Connector[] = [
       customLogo: '/images/braindao-logo.svg',
       accentColor: '#ea3b87',
       additionalMagicOptions: {
-        network: { rpcUrl: config.rpcUrl, chainId: config.chainId },
+        network: { rpcUrl: alchemy.rpcUrl, chainId: config.chainId },
       },
     },
   }),
