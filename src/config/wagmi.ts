@@ -1,21 +1,17 @@
 import { MagicConnector } from '@everipedia/wagmi-magic-connector'
-import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { chain, configureChains, createClient } from 'wagmi'
+import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
-import config from './index'
 import { AlchemyProvider, Network } from '@ethersproject/providers'
+import config from './index'
 
 type Connector =
-  | InjectedConnector
   | MetaMaskConnector
   | WalletConnectConnector
-  | CoinbaseWalletConnector
   | MagicConnector
 
 export const { chains, provider } = configureChains(
@@ -33,24 +29,11 @@ const network: Network = {
 }
 
 export const connectors: Connector[] = [
-  new MetaMaskConnector({ chains }),
-  new CoinbaseWalletConnector({
-    chains,
-    options: {
-      appName: 'Everipedia',
-    },
-  }),
+  new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
   new WalletConnectConnector({
     chains,
     options: {
       qrcode: true,
-    },
-  }),
-  new InjectedConnector({
-    chains,
-    options: {
-      name: 'Injected',
-      shimDisconnect: true,
     },
   }),
   new MagicConnector({
