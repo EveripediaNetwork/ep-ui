@@ -24,6 +24,8 @@ import shortenBalance from '@/utils/shortenBallance'
 import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
 import { Image } from '@/types/Wiki'
+import { WikiImage } from '@/components/WikiImage'
+import config from '@/config'
 
 const MediaModal = ({
   onClose = () => {},
@@ -112,10 +114,18 @@ const MediaModal = ({
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
                       <Box mt={2}>
-                        {media.type === 'IMAGE' ? (
-                          <RiImageLine size="50" />
+                        {media.ipfs ? (
+                          <WikiImage
+                          cursor="pointer"
+                          flexShrink={0}
+                          imageURL={`${config.pinataBaseUrl}${media.ipfs}`}
+                          h={{ base: "50px", lg: "60px" }}
+                          w={{ base: "50px", lg: "60px" }}
+                          borderRadius="lg"
+                          overflow="hidden"
+                        />
                         ) : (
-                          <RiFilmLine size="50" />
+                          <RiImageLine size="50" />
                         )}
                       </Box>
                       <VStack>
@@ -157,7 +167,7 @@ const MediaModal = ({
               <input
                 type="file"
                 id="file"
-                accept="image/*, video/*"
+                accept="image/*"
                 ref={mediaRef}
                 style={{ display: 'none' }}
                 onChange={handleChange}
@@ -165,14 +175,17 @@ const MediaModal = ({
               <Button onClick={() => mediaRef.current?.click()} mx="auto">
                 <Text fontSize="xs">Upload from computer (8mb max)</Text>
               </Button>
-              <Stack spacing={4} direction="row" align="center">
-                <Button size="md">
-                  <Text fontSize="xs">Save</Text>
-                </Button>
-                <Button onClick={onClose} variant="outline" size="md">
-                  <Text fontSize="xs">Cancel</Text>
-                </Button>
-              </Stack>
+              {
+                wiki.media !== undefined && wiki.media?.length > 0 &&
+                <Stack spacing={4} direction="row" align="center">
+                  <Button size="md">
+                    <Text fontSize="xs">Save</Text>
+                  </Button>
+                  <Button onClick={onClose} variant="outline" size="md">
+                    <Text fontSize="xs">Cancel</Text>
+                  </Button>
+                </Stack>
+              }
             </VStack>
           </Box>
         </ModalBody>
