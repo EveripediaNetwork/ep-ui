@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   Divider,
   ModalProps,
@@ -18,12 +18,43 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { RiCloseLine, RiFilmLine, RiImageLine } from 'react-icons/ri'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { shortenMediaText } from '@/utils/shortenText'
+import shortenBalance from '@/utils/shortenBallance'
+import { v4 as uuidv4 } from 'uuid'
 
 const MediaModal = ({
   onClose = () => {},
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
+  const wiki = useAppSelector(state => state.wiki)
+  const dispatch = useAppDispatch()
+  const mediaRef = useRef<HTMLInputElement | null>(null)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0]
+    if (file) {
+      dispatch({
+        type: 'wiki/addMedia',
+        payload: {
+          name: file.name,
+          size: shortenBalance(file.size / 1024 ** 2),
+          type: file.type.includes('image') ? 'IMAGE' : 'VIDEO',
+          id: uuidv4(),
+          progress: 'UPLOADING',
+        },
+      })
+    }
+  }
+  const deleteMedia = (mediaId: string) => {
+    dispatch({
+      type: 'wiki/removeMedia',
+      payload: {
+        id: mediaId,
+      },
+    })
+  }
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
@@ -47,121 +78,71 @@ const MediaModal = ({
         <ModalBody>
           <Box mt="3">
             <Text fontWeight="bold">Local Files</Text>
-            <Box
-              my={4}
-              display="flex"
-              justifyContent={{ base: 'center', md: 'left' }}
-            >
-              <SimpleGrid
-                columns={{ base: 1, md: 2 }}
-                spacing={6}
-                spacingX={12}
+            {wiki.media !== undefined && wiki.media?.length > 0 && (
+              <Box
+                my={4}
+                display="flex"
+                justifyContent={{ base: 'center', md: 'left' }}
               >
-                <Flex gap={4} color="linkColor">
-                  <Box mt={2}>
-                    <RiImageLine size="50" />
-                  </Box>
-                  <VStack>
-                    <Flex w="full" gap={16}>
-                      <Text fontSize="sm">brainies.png</Text>
-                      <Box mt={1}>
-                        <RiCloseLine color="red" size="14" />
+                <SimpleGrid
+                  columns={{ base: 1, md: 2 }}
+                  spacing={6}
+                  spacingX={12}
+                >
+                  {wiki.media.map(media => (
+                    <Flex gap={4} color="linkColor">
+                      <Box mt={2}>
+                        {media.type === 'IMAGE' ? (
+                          <RiImageLine size="50" />
+                        ) : (
+                          <RiFilmLine size="50" />
+                        )}
                       </Box>
+                      <VStack>
+                        <Flex w="full" gap={16}>
+                          <Text fontSize="sm">
+                            {shortenMediaText(media.name)}
+                          </Text>
+                          <Box mt={1}>
+                            <RiCloseLine
+                              cursor="pointer"
+                              onClick={() => deleteMedia(media.id)}
+                              color="red"
+                              size="14"
+                            />
+                          </Box>
+                        </Flex>
+                        <Box w="full">
+                          <Progress
+                            value={80}
+                            h="5px"
+                            colorScheme="green"
+                            size="sm"
+                          />
+                        </Box>
+                        <Flex w="full" fontSize="xs" gap={16}>
+                          <Text flex="1">{media.size}mb</Text>
+                          <Text flex="1">{media.progress.toLowerCase()}</Text>
+                        </Flex>
+                      </VStack>
                     </Flex>
-                    <Box w="full">
-                      <Progress
-                        value={80}
-                        h="5px"
-                        colorScheme="green"
-                        size="sm"
-                      />
-                    </Box>
-                    <Flex w="full" fontSize="xs" gap={16}>
-                      <Text flex="1">3mb</Text>
-                      <Text flex="1">Uploading</Text>
-                    </Flex>
-                  </VStack>
-                </Flex>
-                <Flex gap={4} color="linkColor">
-                  <Box mt={2}>
-                    <RiFilmLine size="50" />
-                  </Box>
-                  <VStack>
-                    <Flex w="full" gap={16}>
-                      <Text fontSize="sm">brainies.png</Text>
-                      <Box mt={1}>
-                        <RiCloseLine color="red" size="14" />
-                      </Box>
-                    </Flex>
-                    <Box w="full">
-                      <Progress
-                        value={80}
-                        h="5px"
-                        colorScheme="green"
-                        size="sm"
-                      />
-                    </Box>
-                    <Flex w="full" fontSize="xs" gap={16}>
-                      <Text flex="1">3mb</Text>
-                      <Text flex="1">Uploading</Text>
-                    </Flex>
-                  </VStack>
-                </Flex>
-                <Flex gap={4} color="linkColor">
-                  <Box mt={2}>
-                    <RiImageLine size="50" />
-                  </Box>
-                  <VStack>
-                    <Flex w="full" gap={16}>
-                      <Text fontSize="sm">brainies.png</Text>
-                      <Box mt={1}>
-                        <RiCloseLine color="red" size="14" />
-                      </Box>
-                    </Flex>
-                    <Box w="full">
-                      <Progress
-                        value={80}
-                        h="5px"
-                        colorScheme="green"
-                        size="sm"
-                      />
-                    </Box>
-                    <Flex w="full" fontSize="xs" gap={16}>
-                      <Text flex="1">3mb</Text>
-                      <Text flex="1">Uploading</Text>
-                    </Flex>
-                  </VStack>
-                </Flex>
-                <Flex gap={4} color="linkColor">
-                  <Box mt={2}>
-                    <RiFilmLine size="50" />
-                  </Box>
-                  <VStack>
-                    <Flex w="full" gap={16}>
-                      <Text fontSize="sm">brainies.png</Text>
-                      <Box mt={1}>
-                        <RiCloseLine color="red" size="14" />
-                      </Box>
-                    </Flex>
-                    <Box w="full">
-                      <Progress
-                        value={80}
-                        h="5px"
-                        colorScheme="green"
-                        size="sm"
-                      />
-                    </Box>
-                    <Flex w="full" fontSize="xs" gap={16}>
-                      <Text flex="1">3mb</Text>
-                      <Text flex="1">Uploading</Text>
-                    </Flex>
-                  </VStack>
-                </Flex>
-              </SimpleGrid>
-            </Box>
+                  ))}
+                </SimpleGrid>
+              </Box>
+            )}
             <VStack align="center" mb={8} py={5} gap={10}>
-              <Img src="/images/file-image.png" h={150} w={250} />
-              <Button mx="auto">
+              {wiki.media !== undefined && wiki.media?.length < 1 && (
+                <Img src="/images/file-image.png" h={150} w={250} />
+              )}
+              <input
+                type="file"
+                id="file"
+                accept="image/*, video/*"
+                ref={mediaRef}
+                style={{ display: 'none' }}
+                onChange={handleChange}
+              />
+              <Button onClick={() => mediaRef.current?.click()} mx="auto">
                 <Text fontSize="xs">Upload from computer (8mb max)</Text>
               </Button>
               <Stack spacing={4} direction="row" align="center">

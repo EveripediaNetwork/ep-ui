@@ -12,6 +12,15 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export interface Media {
+  id: string
+  size: string
+  name: string
+  ipfs: string | null
+  type: 'IMAGE' | 'VIDEO'
+  progress: 'UPLOADED' | 'UPLOADING'
+}
+
 export enum EditorContentOverride {
   KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
 }
@@ -105,6 +114,7 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
+  media?: Media[]
   user: User
   metadata: UpdatedMetaDataInterface
   version: number
