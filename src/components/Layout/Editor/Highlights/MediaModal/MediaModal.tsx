@@ -15,7 +15,8 @@ import {
   SimpleGrid,
   Flex,
   Progress,
-  Stack, useToast
+  Stack,
+  useToast,
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -55,8 +56,8 @@ const MediaModal = ({
     const file = event.target?.files?.[0]
     const id = uuidv4()
     if (file) {
-      const fileSize = file.size / (1024 ** 2)
-      if(fileSize > 8){
+      const fileSize = file.size / 1024 ** 2
+      if (fileSize > 8) {
         toast({
           title: 'File size is larger than 8mb',
           status: 'error',
