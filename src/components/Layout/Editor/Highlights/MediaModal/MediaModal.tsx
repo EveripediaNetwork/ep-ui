@@ -15,7 +15,7 @@ import {
   SimpleGrid,
   Flex,
   Progress,
-  Stack,
+  Stack, useToast
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -35,6 +35,7 @@ const MediaModal = ({
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const mediaRef = useRef<HTMLInputElement | null>(null)
+  const toast = useToast()
 
   const uploadImageToIPFS = async (image: Image) => {
     const ipfsHash = await saveImage(image)
@@ -54,11 +55,20 @@ const MediaModal = ({
     const file = event.target?.files?.[0]
     const id = uuidv4()
     if (file) {
+      const fileSize = file.size / (1024 ** 2)
+      if(fileSize > 8){
+        toast({
+          title: 'File size is larger than 8mb',
+          status: 'error',
+          duration: 3000,
+        })
+        return
+      }
       dispatch({
         type: 'wiki/addMedia',
         payload: {
           name: file.name,
-          size: shortenBalance(file.size / 1024 ** 2),
+          size: shortenBalance(fileSize),
           type: file.type.includes('image') ? 'IMAGE' : 'VIDEO',
           id,
           progress: 'UPLOADING',
@@ -113,7 +123,7 @@ const MediaModal = ({
                 >
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
-                      <Box mt={2}>
+                      <Box mt={1}>
                         {media.ipfs ? (
                           <WikiImage
                             cursor="pointer"
