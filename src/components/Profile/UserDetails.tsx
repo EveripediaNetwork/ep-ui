@@ -79,11 +79,11 @@ export const UserDetails = (props: UserDetailsProps) => {
             {...(isSticky && { mt: 0, boxSize: 12 })}
             address={address}
             wrapperProps={{
-              zIndex: 'banner',
+              zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
             }}
             svgProps={{
-              mt: '-64px',
-              boxSize: '32',
+              mt: isSticky ? 0 : '-64px',
+              boxSize: isSticky ? '16' : '32',
               overflow: 'hidden',
               borderWidth: 2,
               borderColor: 'white',
