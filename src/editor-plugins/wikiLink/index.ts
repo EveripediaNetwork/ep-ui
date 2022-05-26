@@ -255,7 +255,7 @@ export default function wikiLink(context: PluginContext): PluginInfo {
         item: {
           name: 'wiki link',
           tooltip: 'Insert wiki link',
-          className: 'toastui-editor-wiki-link-button wikiLink__popupBtn',
+          className: 'toastui-editor-custom-toolbar-icon wikiLink__popupBtn',
           popup: {
             body: container,
             style: { width: '300px' },

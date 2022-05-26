@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import {
   Divider,
   Text,
@@ -27,19 +27,20 @@ const NetworkMenu = () => {
 
   return (
     <Menu>
-      <MenuButton pl={1} fontSize="md" fontWeight={600}>
-        <Button
-          variant="outline"
-          leftIcon={<Image src={currentNetwork.image} />}
-          rightIcon={<ChevronDownIcon />}
-        >
-          <Text fontSize="sm"> {currentNetwork.name} </Text>
-        </Button>
+      <MenuButton
+        as={Button}
+        fontSize="md"
+        fontWeight={600}
+        variant="outline"
+        leftIcon={<Image src={currentNetwork.image} />}
+        rightIcon={<ChevronDownIcon />}
+      >
+        <Text fontSize="sm"> {currentNetwork.name} </Text>
       </MenuButton>
       <MenuList>
         <MenuGroup color="gray.500" title="Select Network">
           {Networks.map((network, index) => (
-            <>
+            <Fragment key={index}>
               <MenuItem
                 isDisabled={!network.isActive}
                 py={3}
@@ -57,7 +58,7 @@ const NetworkMenu = () => {
                 </Text>
               </MenuItem>
               {index < Networks.length - 1 && <Divider />}
-            </>
+            </Fragment>
           ))}
         </MenuGroup>
       </MenuList>

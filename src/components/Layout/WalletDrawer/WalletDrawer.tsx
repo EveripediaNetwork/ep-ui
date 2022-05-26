@@ -94,7 +94,7 @@ const WalletDrawer = ({
     dispatch(setStateToDefault())
   }
 
-  return (
+  return isOpen ? (
     <Drawer
       isOpen={isOpen}
       onClose={onClose}
@@ -186,7 +186,7 @@ const WalletDrawer = ({
         </DrawerBody>
       </DrawerContent>
     </Drawer>
-  )
+  ) : null
 }
 
 export default memo(WalletDrawer)

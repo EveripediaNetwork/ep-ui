@@ -103,7 +103,7 @@ const ActivityCard = ({
             </Text>
             <HStack spacing={2}>
               {wiki.tags.map((tag, index) => (
-                <NextLink href={`/tags/${tag.id}`} passHref>
+                <NextLink href={`/tags/${tag.id}`} key={index} passHref>
                   <Tag
                     as="a"
                     key={index}

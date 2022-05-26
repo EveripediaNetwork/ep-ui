@@ -7,7 +7,7 @@ const config = {
     '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
   blockExplorerUrl:
     process.env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL ||
-    'https://mumbai.polygonscan.com/',
+    'https://mumbai.polygonscan.com',
   pinataBaseUrl:
     process.env.NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL ||
     'https://ipfs.everipedia.org/ipfs/',

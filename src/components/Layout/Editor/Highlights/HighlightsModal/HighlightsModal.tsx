@@ -114,7 +114,7 @@ const HighlightsModal = ({
     }
   }
 
-  return (
+  return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
@@ -184,7 +184,12 @@ const HighlightsModal = ({
                       })
                     }
                   }}
-                  placeholder="Select Category"
+                  value={currentWiki.categories[0]?.title}
+                  placeholder={
+                    currentWiki.categories.length > 0
+                      ? undefined
+                      : 'Select Category'
+                  }
                 >
                   {categoryOptions?.map(o => (
                     <option key={o.title}>{o.title}</option>
@@ -292,7 +297,7 @@ const HighlightsModal = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  ) : null
 }
 
 export default HighlightsModal

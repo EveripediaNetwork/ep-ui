@@ -220,6 +220,14 @@ const CreateWikiContent = () => {
       if (!imageHash) {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'NO_IMAGE',
+            address: accountData?.address,
+            slug: getWikiSlug(),
+          },
+        })
         return
       }
 
@@ -267,6 +275,14 @@ const CreateWikiContent = () => {
       else {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'NO_IPFS',
+            address: accountData?.address,
+            slug: getWikiSlug(),
+          },
+        })
       }
 
       // clear all edit based metadata from redux state
@@ -361,6 +377,14 @@ const CreateWikiContent = () => {
     setOpenTxDetailsDialog(false)
   }
   const { t } = useTranslation()
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto" mb={8}>
       <HStack

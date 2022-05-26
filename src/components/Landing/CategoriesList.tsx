@@ -20,7 +20,9 @@ const CategoriesList = () => {
   useEffect(() => {
     setCategories(categoriesData || [])
   }, [categoriesData])
+
   const { t } = useTranslation()
+
   return (
     <>
       <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
@@ -51,20 +53,18 @@ const CategoriesList = () => {
               w="100%"
             />
 
-            <NextLink href={`/categories/${category.id}`} passHref>
-              <LinkOverlay>
-                <Text
-                  w="100%"
-                  textAlign="center"
-                  py={4}
-                  fontWeight="bold"
-                  fontSize="lg"
-                  size="md"
-                >
-                  {category.title}
-                </Text>
-              </LinkOverlay>
-            </NextLink>
+            <Text
+              py="4"
+              w="100%"
+              textAlign="center"
+              fontWeight="bold"
+              fontSize="lg"
+              size="md"
+            >
+              <NextLink href={`/categories/${category.id}`} passHref>
+                <LinkOverlay>{category.title}</LinkOverlay>
+              </NextLink>
+            </Text>
           </LinkBox>
         ))}
       </SimpleGrid>

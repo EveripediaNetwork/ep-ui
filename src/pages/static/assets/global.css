@@ -1,12 +1,6 @@
 html {
   scroll-behavior: smooth;
 }
-.scroller-blocker {
-  position: fixed;
-  height: 101%;
-  width: 100%;
-  overflow: scroll;
-}
 /* EDITOR SHELL STYLES */
 .ProseMirror,
 .toastui-editor-contents {
@@ -50,19 +44,92 @@ html {
   border-color: inherit !important;
 }
 
-/* EDITOR CONTENT STYLES */
-.toastui-editor-main * {
-  font-family: poppins, sans-serif !important;
+.toastui-editor-custom-toolbar-icon:not(:disabled):hover {
+  outline: 1px solid #e4e7ee !important;
+  background-color: #fff !important;
 }
-.toastui-editor-main h1,
-.toastui-editor-main h2,
-.toastui-editor-main h3 {
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 0.5em !important;
-  margin-top: 1em !important;
+.toastui-editor-dark .toastui-editor-custom-toolbar-icon:not(:disabled):hover {
+  background-color: #2b3447 !important;
+  outline: 1px solid #cccccc2a !important;
+}
+.toastui-editor-toolbar-item-wrapper {
+  margin: 0 !important;
 }
 
+/* EDITOR TOOLBAR STYLES */
+
+.toastui-editor-custom-toolbar-icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  display: inline-block;
+  vertical-align: middle;
+  background-clip: content-box;
+  border: none !important;
+}
+.redo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/redo-icon.png) !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  display: inline-block;
+  vertical-align: middle;
+  background-clip: content-box;
+  border: none !important;
+}
+.toastui-editor-dark .redo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/redo-icon-dark.png) !important;
+}
+
+.undo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/undo-icon.png) !important;
+}
+.toastui-editor-dark .undo__toolbarBtn {
+  background-image: url(/images/editor-toolbar/undo-icon-dark.png) !important;
+}
+
+/* EDITOR CONTENT STYLES */
+.toastui-editor-contents * {
+  font-family: poppins, sans-serif !important;
+}
+.toastui-editor-contents :where(h1, h2, h3, h4, h5, h6) {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin: 24px 0 16px !important;
+  font-weight: 600;
+  line-height: 1.25;
+  scroll-margin-top: 80px;
+}
+.toastui-editor-contents h1,
+.toastui-editor-contents h2 {
+  font-weight: 500 !important;
+}
+.toastui-editor-contents h1 {
+  margin: 0.6em 0 !important;
+  font-size: 1.7em !important;
+}
+:where(.toastui-editor-contents h4) {
+  font-size: 16px;
+}
+.toastui-editor-contents li {
+  list-style-type: unset !important;
+}
+.toastui-editor-contents ul > li::before {
+  height: 0 !important;
+  width: 0 !important;
+}
+
+.toastui-editor-contents blockquote {
+  color: #57606a !important;
+  border-left: 0.25em solid #d0d7de !important;
+}
+.toastui-editor-dark .toastui-editor-contents blockquote {
+  color: #a9b6c5 !important;
+  border-left: 0.25em solid #4c5566 !important;
+}
+.toastui-editor-contents blockquote > p {
+  color: inherit !important;
+}
 /* WIKI MEDIA SHOWCASE STYLES */
 #bp_container > .bp-x {
   justify-content: center;
