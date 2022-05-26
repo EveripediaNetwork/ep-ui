@@ -22,6 +22,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { shortenMediaText } from '@/utils/shortenText'
 import shortenBalance from '@/utils/shortenBallance'
 import { v4 as uuidv4 } from 'uuid'
+import { saveImage } from '@/utils/create-wiki'
+import { Image } from '@/types/Wiki'
 
 const MediaModal = ({
   onClose = () => {},
@@ -32,8 +34,23 @@ const MediaModal = ({
   const dispatch = useAppDispatch()
   const mediaRef = useRef<HTMLInputElement | null>(null)
 
+  const uploadImageToIPFS = async (image: Image) => {
+    const ipfsHash = await saveImage(image)
+    if (ipfsHash) {
+      dispatch({
+        type: 'wiki/updateMediaDetails',
+        payload: {
+          ipfs: ipfsHash,
+          id: image.id,
+          progress: 'UPLOADED',
+        },
+      })
+    }
+  }
+  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
+    const id = uuidv4()
     if (file) {
       dispatch({
         type: 'wiki/addMedia',
@@ -41,12 +58,14 @@ const MediaModal = ({
           name: file.name,
           size: shortenBalance(file.size / 1024 ** 2),
           type: file.type.includes('image') ? 'IMAGE' : 'VIDEO',
-          id: uuidv4(),
+          id,
           progress: 'UPLOADING',
         },
       })
+      uploadImageToIPFS({ id, type: file })
     }
   }
+
   const deleteMedia = (mediaId: string) => {
     dispatch({
       type: 'wiki/removeMedia',
@@ -55,6 +74,8 @@ const MediaModal = ({
       },
     })
   }
+
+  
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
@@ -90,7 +111,7 @@ const MediaModal = ({
                   spacingX={12}
                 >
                   {wiki.media.map(media => (
-                    <Flex gap={4} color="linkColor">
+                    <Flex key={media.id} gap={4} color="linkColor">
                       <Box mt={2}>
                         {media.type === 'IMAGE' ? (
                           <RiImageLine size="50" />
@@ -114,7 +135,7 @@ const MediaModal = ({
                         </Flex>
                         <Box w="full">
                           <Progress
-                            value={80}
+                            value={media.progress === 'UPLOADING' ? 50 : 100}
                             h="5px"
                             colorScheme="green"
                             size="sm"

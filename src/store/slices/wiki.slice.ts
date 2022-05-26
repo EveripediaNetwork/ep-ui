@@ -93,6 +93,23 @@ const wikiSlice = createSlice({
       }
       return state
     },
+    updateMediaDetails(state, action) {
+      if (state.media) {
+        const findMediaIndex = state.media.findIndex(
+          media => media.id === action.payload.id,
+        )
+        const updatedMedia = [...state.media]
+        updatedMedia[findMediaIndex] = {
+          ...updatedMedia[findMediaIndex],
+          ...action.payload,
+        }
+        return {
+          ...state,
+          media: updatedMedia,
+        }
+      }
+      return state
+    },
     updateMetadata(state, action) {
       const ob = action.payload
       return {
