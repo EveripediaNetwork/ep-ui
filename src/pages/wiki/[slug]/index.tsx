@@ -20,9 +20,23 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { CommonMetaIds } from '@/types/Wiki'
+import { CommonMetaIds, Wiki as WikiType } from '@/types/Wiki'
 import { useAppSelector } from '@/store/hook'
 
+const WikiSEOMetaData = ({ wiki }: { wiki: WikiType }) => (
+  <NextSeo
+    title={wiki.title}
+    openGraph={{
+      title: wiki.title,
+      description: getWikiSummary(wiki),
+      images: [
+        {
+          url: getWikiImageUrl(wiki),
+        },
+      ],
+    }}
+  />
+)
 const Wiki = () => {
   const router = useRouter()
 
@@ -59,25 +73,11 @@ const Wiki = () => {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted) return wiki && <WikiSEOMetaData wiki={wiki} />
 
   return (
     <>
-      {wiki && (
-        <NextSeo
-          title={wiki.title}
-          openGraph={{
-            title: wiki.title,
-            description: getWikiSummary(wiki),
-            images: [
-              {
-                url: getWikiImageUrl(wiki),
-              },
-            ],
-          }}
-        />
-      )}
-
+      {wiki && <WikiSEOMetaData wiki={wiki} />}
       <main>
         {!error && (router.isFallback || isLoading) ? (
           <Flex justify="center" align="center" h="50vh">

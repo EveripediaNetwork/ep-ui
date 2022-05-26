@@ -16,6 +16,7 @@ export interface Media {
   id: string
   size: string
   name: string
+  caption?: string
   ipfs: string | null
   type: 'IMAGE' | 'VIDEO'
   progress: 'UPLOADED' | 'UPLOADING'

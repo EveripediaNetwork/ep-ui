@@ -44,30 +44,21 @@ export default function media(context: PluginContext): PluginInfo {
       },
     ],
     markdownCommands: {
-      insertImage: () => {
-        // TODO: Complete this function
-        return true
-      },
-      insertVideo: () => {
-        // TODO: Complete this function
-        return true
-      },
-      insertIFrame: () => {
-        // TODO: Complete this function
+      insertImage: (payload, state, dispatch) => {
+        const link = `![${payload.name}](${payload.src})`
+        const { from, to } = state.selection
+        const tr = state.tr.insertText(link, from, to)
+        dispatch(tr.scrollIntoView())
         return true
       },
     },
     wysiwygCommands: {
-      insertImage: () => {
-        // TODO: Complete this function
-        return true
-      },
-      insertVideo: () => {
-        // TODO: Complete this function
-        return true
-      },
-      insertIFrame: () => {
-        // TODO: Complete this function
+      insertImage: (payload, state, dispatch) => {
+        const img = state.schema.nodes.image.createAndFill({
+          imageUrl: payload.src,
+          altText: payload.alt,
+        })
+        dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
       },
     },

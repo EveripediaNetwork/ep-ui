@@ -1,0 +1,60 @@
+import { Media } from '@/types/Wiki'
+
+export const media: Media[] = [
+  {
+    id: '1',
+    size: '200x144',
+    name: 'image1.jpg',
+    ipfs: 'QmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '2',
+    size: '200x144',
+    name: 'image2.jpg',
+    ipfs: 'QmaA6h9xJDywYUVrqHj3sN42MNzCytJyCMGLBKDRTgJzgA',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '3',
+    size: '200x144',
+    name: 'image3.jpg',
+    ipfs: 'QmUhxZYhsPukL5MpRcGd68P2FyiQyXN7r639FTd3RyNFZ5',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '4',
+    size: '200x144',
+    name: 'image4.jpg',
+    ipfs: 'QmcHm28y68qdm1sVkx4gUWUr6vwVPPXa8S9BgkmNmtRwyr',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '5',
+    size: '200x144',
+    name: 'image5.jpg',
+    ipfs: 'QmSo9QjkZhCmrz8nBotN3rmc3gQQoWL2MU6T82M9Yr5pFa',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '6',
+    size: '200x144',
+    name: 'image6.jpg',
+    ipfs: 'QmPrYMhXmfiijv34pbBcfkG6McYmHEfSGNuYhqGLm6uUTY',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+  {
+    id: '7',
+    size: '200x144',
+    name: 'image7.jpg',
+    ipfs: 'QmNfvvAJiPFiuXn5E2epFKcxACRSeax4YQS2v3u75tuWw1',
+    type: 'IMAGE',
+    progress: 'UPLOADED',
+  },
+]

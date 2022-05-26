@@ -113,8 +113,9 @@ export const CiteFromExistingRefs = ({
       )}
       <VStack w="100%" overflowY="scroll" spacing={8}>
         {refCount ? (
-          shownReferences.map(reference => (
+          shownReferences.map((reference, i) => (
             <ReferenceCard
+              key={i}
               handleExistingCiteSubmit={handleExistingCiteSubmit}
               reference={reference}
               setEditingId={setEditingId}

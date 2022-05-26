@@ -115,8 +115,8 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                 <RiSurveyLine /> <Text>{`${t('categoryTypeLabel')}`}</Text>
               </Td>
               <Td borderColor="inherit">
-                {currentWiki.categories?.map((c: BaseCategory) => (
-                  <Badge variant="outline" m={0}>
+                {currentWiki.categories?.map((c: BaseCategory, i) => (
+                  <Badge variant="outline" m={0} key={i}>
                     {c.title}
                   </Badge>
                 ))}
