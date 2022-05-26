@@ -13,10 +13,18 @@ const AboutCommunity = () => {
       mx="auto"
       mt="24"
     >
-      <Heading textAlign={{ base: 'center', lg: 'left' }} size="lg">{`${t(
-        'aboutTestimonialHeading',
-      )}`}</Heading>
-      <Text align={{ base: 'left', lg: 'center' }} maxW="3xl" opacity={0.6}>
+      <Heading
+        letterSpacing="wider"
+        fontWeight="bold"
+        lineHeight="shorter"
+        textAlign={{ base: 'center', lg: 'left' }}
+        size="lg"
+      >{`${t('aboutTestimonialHeading')}`}</Heading>
+      <Text
+        align={{ base: 'left', lg: 'center' }}
+        maxW="3xl"
+        letterSpacing="wider"
+      >
         {`${t('aboutTestimonialContent')}`}
       </Text>
       <Box mt={8} w="100%" maxW="4xl">

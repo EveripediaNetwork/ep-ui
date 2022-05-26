@@ -29,15 +29,21 @@ const AboutHero = () => {
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
           mt={10}
           mb={{ base: 5, lg: 10 }}
+          letterSpacing="wider"
+          fontWeight="bold"
+          lineHeight="shorter"
+          fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
         >{`${t('aboutHeroHeading')}`}</Heading>
         <Text
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
-          opacity={0.6}
+          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          letterSpacing="wider"
+          mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
         <Box textAlign={{ base: 'center', lg: 'left' }}>
           <ButtonGroup
             mx="auto"
-            mt={{ base: 10, lg: 4, md: 10 }}
+            mt={{ base: 10, lg: 10, md: 10 }}
             size="lg"
             spacing={{ base: 4, lg: 8 }}
           >
