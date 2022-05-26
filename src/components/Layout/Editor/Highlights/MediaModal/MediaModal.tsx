@@ -47,7 +47,7 @@ const MediaModal = ({
       })
     }
   }
-  
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
     const id = uuidv4()
@@ -75,7 +75,6 @@ const MediaModal = ({
     })
   }
 
-  
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
