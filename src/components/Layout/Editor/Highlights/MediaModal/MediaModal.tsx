@@ -17,7 +17,7 @@ import {
   Progress,
   Stack,
 } from '@chakra-ui/react'
-import { RiCloseLine, RiFilmLine, RiImageLine } from 'react-icons/ri'
+import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { shortenMediaText } from '@/utils/shortenText'
 import shortenBalance from '@/utils/shortenBallance'
@@ -116,14 +116,14 @@ const MediaModal = ({
                       <Box mt={2}>
                         {media.ipfs ? (
                           <WikiImage
-                          cursor="pointer"
-                          flexShrink={0}
-                          imageURL={`${config.pinataBaseUrl}${media.ipfs}`}
-                          h={{ base: "50px", lg: "60px" }}
-                          w={{ base: "50px", lg: "60px" }}
-                          borderRadius="lg"
-                          overflow="hidden"
-                        />
+                            cursor="pointer"
+                            flexShrink={0}
+                            imageURL={`${config.pinataBaseUrl}${media.ipfs}`}
+                            h={{ base: '50px', lg: '60px' }}
+                            w={{ base: '50px', lg: '60px' }}
+                            borderRadius="lg"
+                            overflow="hidden"
+                          />
                         ) : (
                           <RiImageLine size="50" />
                         )}
@@ -175,8 +175,7 @@ const MediaModal = ({
               <Button onClick={() => mediaRef.current?.click()} mx="auto">
                 <Text fontSize="xs">Upload from computer (8mb max)</Text>
               </Button>
-              {
-                wiki.media !== undefined && wiki.media?.length > 0 &&
+              {wiki.media !== undefined && wiki.media?.length > 0 && (
                 <Stack spacing={4} direction="row" align="center">
                   <Button size="md">
                     <Text fontSize="xs">Save</Text>
@@ -185,7 +184,7 @@ const MediaModal = ({
                     <Text fontSize="xs">Cancel</Text>
                   </Button>
                 </Stack>
-              }
+              )}
             </VStack>
           </Box>
         </ModalBody>
