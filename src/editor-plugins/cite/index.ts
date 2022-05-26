@@ -25,12 +25,8 @@ interface PluginInfo {
 }
 
 export default function cite(context: PluginContext): PluginInfo {
-  // Frame Container
   const container = document.createElement('div')
-
   const root = ReactDOM.createRoot(container)
-
-  // render react component in the container
   root.render(React.createElement(Frame, { editorContext: context }))
 
   return {
@@ -49,6 +45,7 @@ export default function cite(context: PluginContext): PluginInfo {
         },
       },
     ],
+
     markdownCommands: {
       cite: (payload, state, dispatch) => {
         const link = `[${payload.refNo}](${payload.urlId})`

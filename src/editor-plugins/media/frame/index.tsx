@@ -17,12 +17,12 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
 
   const fetchReferences = () => {
     const fetchedMedia = store.getState().wiki.media
-
     setMedia(fetchedMedia)
   }
 
   useEffect(() => {
     fetchReferences()
+    store.subscribe(fetchReferences)
   }, [])
 
   return (
