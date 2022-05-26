@@ -30,9 +30,9 @@ const AboutHero = () => {
           mt={10}
           mb={{ base: 5, lg: 10 }}
           letterSpacing="wider"
-          fontWeight="bold"
+          fontWeight="black"
           lineHeight="shorter"
-          fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
+          fontSize={{ base: '2xl', sm: '30', md: '44' }}
         >{`${t('aboutHeroHeading')}`}</Heading>
         <Text
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}

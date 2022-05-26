@@ -48,11 +48,7 @@ const AboutOurTeam = () => {
       mt="24"
     >
       <Heading size="lg">{t('meetTeamHead')}</Heading>
-      <Text
-        letterSpacing="wider"
-        align={{ base: 'left', lg: 'center' }}
-        maxW="3xl"
-      >
+      <Text letterSpacing="wider" align="center" maxW="3xl">
         {t('meetTeamContent')}
       </Text>
       <Box w="100%">

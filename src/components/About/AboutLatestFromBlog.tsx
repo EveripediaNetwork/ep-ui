@@ -14,12 +14,7 @@ const AboutLatestFromBlog = () => {
       mt="24"
     >
       <Heading size="lg">{`${t('latestFromBlogHeading')}`}</Heading>
-      <SimpleGrid
-        columns={[1, 1, 2, 3]}
-        spacing={4}
-        mt={4}
-        w="min(1200px, 95%)"
-      >
+      <SimpleGrid columns={[1, 1, 2, 3]} spacing={4} mt={4}>
         {blogData.map(data => (
           <BlogCard
             title={data.title}

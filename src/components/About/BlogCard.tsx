@@ -18,6 +18,7 @@ const BlogCard = ({
       onClick={() => window.open('https://everipedia.org/blog')}
       cursor="pointer"
       py={6}
+      w="auto"
     >
       <Box
         maxW="445px"

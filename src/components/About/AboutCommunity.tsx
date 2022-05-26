@@ -17,14 +17,10 @@ const AboutCommunity = () => {
         letterSpacing="wider"
         fontWeight="bold"
         lineHeight="shorter"
-        textAlign={{ base: 'center', lg: 'left' }}
+        textAlign={{ base: 'center', lg: 'center', md: 'center' }}
         size="lg"
       >{`${t('aboutTestimonialHeading')}`}</Heading>
-      <Text
-        align={{ base: 'left', lg: 'center' }}
-        maxW="3xl"
-        letterSpacing="wider"
-      >
+      <Text align="center" maxW="3xl" letterSpacing="wider">
         {`${t('aboutTestimonialContent')}`}
       </Text>
       <Box mt={8} w="100%" maxW="4xl">
