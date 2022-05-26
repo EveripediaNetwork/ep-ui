@@ -3,7 +3,7 @@ import { Stack, Text, chakra } from '@chakra-ui/react'
 import * as tagsInput from '@zag-js/tags-input'
 import { useMachine, useSetup } from '@zag-js/react'
 
-import { useAppDispatch } from '@/store/hook'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
 
 const MAX_LENGTH = 15
@@ -12,8 +12,11 @@ const Tags = () => {
   const dispatch = useAppDispatch()
   const [tagState, setTagState] = useState({ invalid: false, msg: '' })
 
+  const currentWiki = useAppSelector(state => state.wiki)
+
   const [state, send] = useMachine(
     tagsInput.machine({
+      value: currentWiki.tags.map(ta => ta.id),
       max: 5,
       validate(opts) {
         if (opts.inputValue.indexOf(' ') >= 0) {
