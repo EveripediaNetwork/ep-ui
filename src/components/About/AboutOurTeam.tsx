@@ -6,14 +6,14 @@ import {
   Box,
   IconButton,
 } from '@chakra-ui/react'
-import React, { useTransition } from 'react'
+import React from 'react'
 import { TeamData } from '@/data/MeetOurTeamData'
 import { BsLinkedin, BsTwitter } from 'react-icons/bs'
 import { IconType } from 'react-icons/lib'
+import { useTranslation } from 'react-i18next'
 import EveripediaLogo from './logos/everipedia.svg'
 import { Image } from '../Elements/Image/Image'
 import AboutOurTeamSlider from './AboutOurTeamSlider'
-import { useTranslation } from 'react-i18next'
 
 const IconButtonSocial = ({
   name,
