@@ -20,6 +20,10 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
     meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
 
+  const twitterLink = wiki.metadata.find(
+    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+  )?.value
+
   return (
     <VStack
       maxW="500px"
@@ -47,9 +51,7 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
           <CurrencyConverter token="everipedia" tokenSymbol="IQ" />
         </>
       )}
-      {wiki.metadata[1]?.value && (
-        <TwitterTimeline url={wiki.metadata[1].value} />
-      )}
+      {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {wiki.categories.length !== 0 && (
         <RelatedWikis categories={wiki.categories} />
       )}
