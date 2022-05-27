@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
-import { fetchTokenStats } from '@/services/token-stats/utils'
 import { TokenStats } from '@/services/token-stats'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
 
-const ProfileStatistics = () => {
-  const [tokenStats, setTokenStats] = useState<TokenStats>()
-  useEffect(() => {
-    const fetchTokenData = async () => {
-      await fetchTokenStats().then(res => {
-        setTokenStats(res)
-      })
-    }
-    fetchTokenData()
-  }, [])
+type ProfileStatisticsProps = {
+  tokenStats?: TokenStats
+}
+
+const ProfileStatistics = (props: ProfileStatisticsProps) => {
+  const { tokenStats } = props
 
   if (!tokenStats) return null
 

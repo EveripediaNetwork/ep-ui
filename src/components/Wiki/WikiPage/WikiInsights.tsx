@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { VStack } from '@chakra-ui/react'
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { TokenStats } from '@/services/token-stats'
+import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -23,6 +25,16 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
   const twitterLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
+
+  const [tokenStats, setTokenStats] = useState<TokenStats>()
+  useEffect(() => {
+    const fetchTokenData = async () => {
+      await fetchTokenStats(coingeckoLink).then(res => {
+        setTokenStats(res)
+      })
+    }
+    fetchTokenData()
+  }, [])
 
   return (
     <VStack
@@ -47,8 +59,13 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
       {!!coingeckoLink && (
         <>
           <ProfileSummary wiki={wiki} />
-          <ProfileStatistics />
-          <CurrencyConverter token="everipedia" tokenSymbol="IQ" />
+          <ProfileStatistics tokenStats={tokenStats} />
+          {tokenStats && (
+            <CurrencyConverter
+              token={getTokenFromURI(coingeckoLink)}
+              tokenStats={tokenStats}
+            />
+          )}
         </>
       )}
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
