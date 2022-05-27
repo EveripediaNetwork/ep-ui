@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Box,
-  Center,
   HStack,
   LinkBox,
   LinkOverlay,
@@ -18,44 +17,52 @@ import Link from 'next/link'
 import { useENSData } from '@/hooks/useENSData'
 import shortenAccount from '@/utils/shortenAccount'
 
-const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
+const WikiPreviewCard = ({
+  wiki,
+  showLatestEditor = false,
+}: {
+  wiki: Wiki
+  showLatestEditor?: boolean
+}) => {
   const { updated, title, id } = wiki
   const [, username] = useENSData(wiki.user?.id || '')
   return (
-    <Center cursor="pointer">
-      <LinkBox>
-        <Box
-          bgColor="cardBg"
-          w={390}
-          boxShadow="xl"
-          rounded="xl"
-          overflow="hidden"
-        >
-          <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
-          <Stack spacing={3} p={4}>
-            <LinkOverlay href={`/wiki/${id}`}>
-              <Text fontSize="2xl" fontWeight="bold">
-                {title}
-              </Text>
-            </LinkOverlay>
-            <Text fontSize="md" opacity={0.7} h={14}>
-              {getWikiSummary(wiki, WikiSummarySize.Small)}
-            </Text>
-            <HStack justify="space-between">
-              <HStack fontSize="sm" color="brand.500">
+    <LinkBox
+      w="100%"
+      h="100%"
+      bgColor="cardBg"
+      boxShadow="xl"
+      rounded="xl"
+      overflow="hidden"
+      cursor="pointer"
+    >
+      <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
+      <Stack spacing={3} p={4}>
+        <LinkOverlay href={`/wiki/${id}`}>
+          <Text fontSize="2xl" fontWeight="bold">
+            {title}
+          </Text>
+        </LinkOverlay>
+        <Box>
+          <Text fontSize="md" opacity={0.7}>
+            {getWikiSummary(wiki, WikiSummarySize.Small)}
+          </Text>
+          <HStack flexWrap="wrap" mt={2} justify="space-between">
+            {showLatestEditor && (
+              <HStack fontSize="sm" py={2} color="brand.500">
                 <DisplayAvatar address={wiki.user?.id} />
                 <Link href={`/account/${wiki.user?.id}`}>
                   {username || shortenAccount(wiki.user?.id || '')}
                 </Link>
               </HStack>
-              <Text color="gray.400" fontSize="sm">
-                Last Edited {updated && getReadableDate(updated)}
-              </Text>
-            </HStack>
-          </Stack>
+            )}
+            <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
+              Last Edited {updated && getReadableDate(updated)}
+            </Text>
+          </HStack>
         </Box>
-      </LinkBox>
-    </Center>
+      </Stack>
+    </LinkBox>
   )
 }
 
