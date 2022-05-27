@@ -87,7 +87,9 @@ html {
 .toastui-editor-dark .undo__toolbarBtn {
   background-image: url(/images/editor-toolbar/undo-icon-dark.png) !important;
 }
-
+.toastui-editor-ok-button {
+  background-color: #ec67a8 !important;
+}
 /* EDITOR CONTENT STYLES */
 .toastui-editor-contents * {
   font-family: poppins, sans-serif !important;
@@ -100,8 +102,7 @@ html {
   line-height: 1.25;
   scroll-margin-top: 80px;
 }
-.toastui-editor-contents h1,
-.toastui-editor-contents h2 {
+.toastui-editor-contents :where(h1, h2) {
   font-weight: 500 !important;
 }
 .toastui-editor-contents h1 {
@@ -117,6 +118,10 @@ html {
 .toastui-editor-contents ul > li::before {
   height: 0 !important;
   width: 0 !important;
+}
+
+.toastui-editor-contents a {
+  color: #ec67a8 !important;
 }
 
 .toastui-editor-contents blockquote {
