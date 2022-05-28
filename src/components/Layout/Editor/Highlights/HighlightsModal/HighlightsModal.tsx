@@ -31,7 +31,6 @@ import {
   AiOutlineYoutube,
 } from 'react-icons/ai'
 import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
-import slugify from 'slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 import { slugifyText } from '@/utils/slugify'
 

@@ -46,7 +46,6 @@ import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
-import slugify from 'slugify'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
