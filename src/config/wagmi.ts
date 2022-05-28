@@ -9,10 +9,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { AlchemyProvider, Network } from '@ethersproject/providers'
 import config from './index'
 
-type Connector =
-  | MetaMaskConnector
-  | WalletConnectConnector
-  | MagicConnector
+type Connector = MetaMaskConnector | WalletConnectConnector | MagicConnector
 
 export const { chains, provider } = configureChains(
   [chain.polygon, chain.polygonMumbai],

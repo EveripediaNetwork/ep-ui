@@ -76,6 +76,7 @@ import {
   errorMessage,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
+import { slugifyText } from '@/utils/slugify'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -149,7 +150,7 @@ const CreateWikiContent = () => {
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
 
-  const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
+  const getWikiSlug = () => slugifyText(String(wiki.title).toLowerCase())
 
   const getImageArrayBufferLength = () =>
     (image.type as ArrayBuffer).byteLength === 0

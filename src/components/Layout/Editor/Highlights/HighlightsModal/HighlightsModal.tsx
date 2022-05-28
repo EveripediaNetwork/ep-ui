@@ -33,6 +33,7 @@ import {
 import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
 import slugify from 'slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import { slugifyText } from '@/utils/slugify'
 
 const SOCIAL_MEDIA_OPTIONS = [
   {
@@ -174,7 +175,7 @@ const HighlightsModal = ({
                       dispatch({
                         type: 'wiki/updateCategories',
                         payload: {
-                          id: slugify(event.target.value.toLowerCase()),
+                          id: slugifyText(event.target.value.toLowerCase()),
                           title: event.target.value,
                         },
                       })
