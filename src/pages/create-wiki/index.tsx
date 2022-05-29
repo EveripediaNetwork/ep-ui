@@ -149,7 +149,7 @@ const CreateWikiContent = () => {
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
 
-  const getWikiSlug = () => slugifyText(String(wiki.title).toLowerCase())
+  const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const getImageArrayBufferLength = () =>
     (image.type as ArrayBuffer).byteLength === 0

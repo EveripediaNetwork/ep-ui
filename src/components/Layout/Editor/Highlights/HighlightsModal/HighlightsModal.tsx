@@ -174,7 +174,7 @@ const HighlightsModal = ({
                       dispatch({
                         type: 'wiki/updateCategories',
                         payload: {
-                          id: slugifyText(event.target.value.toLowerCase()),
+                          id: slugifyText(event.target.value),
                           title: event.target.value,
                         },
                       })
