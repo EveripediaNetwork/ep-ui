@@ -31,7 +31,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
       return (
         <Link
           target="_blank"
-          color="blue.600"
+          color="brand.500"
           fontSize="14px"
           href={contentURL}
         >

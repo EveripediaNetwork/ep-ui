@@ -19,7 +19,7 @@ import React from 'react'
 const CHAINS = [
   {
     name: 'Ethereum',
-    image: 'https://opensea.io/static/images/logos/ethereum.png',
+    image: 'https://opensea.io/static/images/logos/ethereum.svg', // TODO: store this images
   },
   {
     name: 'Polygon',
@@ -27,7 +27,7 @@ const CHAINS = [
   },
   {
     name: 'Klatyn',
-    image: 'https://opensea.io/static/images/logos/klaytn.png',
+    image: 'https://opensea.io/static/images/logos/klaytn.svg',
   },
 ]
 

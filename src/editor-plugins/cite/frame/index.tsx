@@ -24,12 +24,12 @@ const FrameTab = ({ children }: { children: React.ReactNode }) => (
   <Tab
     border="unset"
     _selected={{
-      borderBottom: '2px solid #4ba6f8 !important',
-      color: '#4ba6f8 !important',
+      borderBottom: '2px solid  !important',
+      color: '#ea3b87 !important',
       _dark: {
         bgColor: '#2e3445 !important',
-        color: '#4ba6f8 !important',
-        borderBottom: '2px solid #4ba6f8 !important',
+        color: '#dc6fa6 !important',
+        borderBottom: '2px solid #dc6fa6 !important',
       },
     }}
     h="unset !important"
