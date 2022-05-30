@@ -44,7 +44,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
             id={`cite-id-${ref.id}`}
             bg={
               currentLocationHash === `#cite-id-${ref.id}`
-                ? 'blue.50'
+                ? 'pink.50'
                 : 'transparent'
             }
             _dark={{
@@ -65,11 +65,16 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
               },
             }}
           >
-            <Text color="blue.500">[{index + 1}] </Text>
+            <Text color="brand.500">[{index + 1}] </Text>
             <Box>
               <Flex flexWrap="wrap" gap={2}>
-                <Tag colorScheme="blue" as="h3" size="sm" fontWeight="500">
-                  <LinkOverlay rel="nofollow" p="0 !important" href={ref.url}>
+                <Tag colorScheme="brand" as="h3" size="sm">
+                  <LinkOverlay
+                    fontWeight="500"
+                    rel="nofollow"
+                    p="0 !important"
+                    href={ref.url}
+                  >
                     {new URL(ref.url).hostname}
                   </LinkOverlay>
                 </Tag>
@@ -78,7 +83,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                     Array.from(Array(citeMarks[ref.id])).map((_, i) => (
                       <Link
                         href={`#cite-mark-${ref.id}-${i + 1}`}
-                        color="blue.500"
+                        color="brand.500"
                         ml="0 !important"
                         fontWeight="medium"
                         fontSize="sm"

@@ -187,7 +187,7 @@ export const NavSearch = (props: NavSearchProps) => {
       </AutoCompleteGroup>
       <AutoCompleteGroup>
         <AutoCompleteGroupTitle {...titleStyles}>
-          Articles
+          Categories
         </AutoCompleteGroupTitle>
         {categoriesSearchList}
       </AutoCompleteGroup>

@@ -135,14 +135,14 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             <>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
-                width="min(90%, 1200px)"
+                width="min(90%, 1300px)"
                 mx="auto"
                 my={12}
                 gap={8}
               >
                 {wikisInCategory.map((wiki, i) => (
-                  <Box key={i} w="100%">
-                    <WikiPreviewCard wiki={wiki} />
+                  <Box key={i} w="390px">
+                    <WikiPreviewCard wiki={wiki} showLatestEditor />
                   </Box>
                 ))}
               </SimpleGrid>
