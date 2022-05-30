@@ -526,7 +526,7 @@ const Privacy = () => (
           page.
         </Text>
       </Flex>
-      <Box flex="1">
+      <Box >
         <RelatedTopics
           topics={[
             { name: 'Terms of Service', url: '/static/terms' },

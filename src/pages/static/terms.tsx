@@ -186,7 +186,7 @@ const Terms = () => (
           </Link>
         </Text>
       </Flex>
-      <Box flex="1">
+      <Box>
         <RelatedTopics
           topics={[
             { name: 'Privacy Policy', url: '/static/privacy' },
