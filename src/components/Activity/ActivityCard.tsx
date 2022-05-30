@@ -16,6 +16,8 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { shortenText } from '@/utils/shortenText'
+import { useRouter } from 'next/router'
 
 interface ActivityCardProps {
   title: string
@@ -55,6 +57,7 @@ const ActivityCard = ({
   const activityCardLinkRoute = activityId
     ? `/revision/${activityId}`
     : `/wiki/${wikiId}`
+  const router = useRouter()
   const editDetails = useBreakpointValue({
     base: (
       <Box>
@@ -150,8 +153,7 @@ const ActivityCard = ({
       </NextLink>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <HStack>
-            <NextLink href={activityCardLinkRoute} passHref>
+          <HStack w={{base: "50%", md: "70%"}}>
               <Heading
                 cursor="pointer"
                 as="h2"
@@ -160,11 +162,11 @@ const ActivityCard = ({
                 overflow="hidden"
                 whiteSpace="nowrap"
                 textOverflow="ellipsis"
-                w={{ base: '50%', md: '70%' }}
+                onClick={()=> router.push(activityCardLinkRoute)}
               >
                 {title}
               </Heading>
-            </NextLink>
+
             {type && (
               <Text
                 fontSize="sm"
