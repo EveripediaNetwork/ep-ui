@@ -13,6 +13,8 @@ const BlogCard = ({
   title: string
   body: string
 }) => {
+  console.log(image)
+
   return (
     <Center
       onClick={() => window.open('https://everipedia.org/blog')}
@@ -29,9 +31,17 @@ const BlogCard = ({
         p={6}
         overflow="hidden"
       >
-        <Box h="210px" mt={-6} mx={-6} mb={6} pos="relative">
-          <Image src={image} layout="fill" />
-        </Box>
+        <Box
+          h="210px"
+          mt={-6}
+          mx={-6}
+          mb={6}
+          pos="relative"
+          bg={`url(${image})`}
+          bgPosition="center"
+          bgSize="cover"
+          bgRepeat="no-repeat"
+        ></Box>
         <Stack>
           <Text color="gray.400" fontSize="sm">
             {date}

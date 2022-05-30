@@ -17,7 +17,7 @@ const AboutFeatures = () => {
         letterSpacing="wider"
         fontWeight="bold"
         lineHeight="shorter"
-        textAlign={{ base: 'center', lg: 'left' }}
+        textAlign="center"
         size="lg"
       >{`${t('aboutFeatHeading')}`}</Heading>
       <Text

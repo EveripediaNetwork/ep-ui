@@ -21,7 +21,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      spacing={{ lg: '25%', base: 0, md: '10%', '2xl': '29%' }}
+      spacing={{ lg: '5%', base: 0, md: '10%', '2xl': '20%' }}
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mb={{ base: 10, lg: 0 }}>
