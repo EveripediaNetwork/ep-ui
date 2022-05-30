@@ -8,7 +8,7 @@ import {
   Tag,
   useBreakpointValue,
   Flex,
-  Badge,
+  chakra,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
@@ -151,25 +151,28 @@ const ActivityCard = ({
       </NextLink>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <NextLink href={activityCardLinkRoute} passHref>
-            <Heading
-              cursor="pointer"
-              as="h2"
-              fontSize={{ base: '16px', md: '20px' }}
-              letterSpacing="wide"
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-              w={{ base: '50%', md: '70%' }}
-            >
-              {title}
-              {type && (
-                <Badge ml="1" fontSize="0.5em" colorScheme="pink">
+          <HStack>
+            <NextLink href={activityCardLinkRoute} passHref>
+              <Heading
+                cursor="pointer"
+                as="h2"
+                fontSize={{ base: '16px', md: '20px' }}
+                letterSpacing="wide"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+                w={{ base: '50%', md: '70%' }}
+              >
+                {title}
+                
+              </Heading>
+            </NextLink>
+            {type && (
+                <Text fontSize="sm" color="brand.500" fontWeight="medium"  mb="8px !important">
                   {type === 'CREATED' ? 'New' : 'Edited'}
-                </Badge>
+                </Text>
               )}
-            </Heading>
-          </NextLink>
+          </HStack>
           {wiki.categories.length && (
             <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
               <Text
