@@ -8,7 +8,6 @@ import {
   Tag,
   useBreakpointValue,
   Flex,
-  chakra,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
@@ -164,14 +163,18 @@ const ActivityCard = ({
                 w={{ base: '50%', md: '70%' }}
               >
                 {title}
-                
               </Heading>
             </NextLink>
             {type && (
-                <Text fontSize="sm" color="brand.500" fontWeight="medium"  mb="8px !important">
-                  {type === 'CREATED' ? 'New' : 'Edited'}
-                </Text>
-              )}
+              <Text
+                fontSize="sm"
+                color="brand.500"
+                fontWeight="medium"
+                mb="8px !important"
+              >
+                {type === 'CREATED' ? 'New' : 'Edited'}
+              </Text>
+            )}
           </HStack>
           {wiki.categories.length && (
             <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
