@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { Box, Center, Text, Stack } from '@chakra-ui/react'
 
 const BlogCard = ({
@@ -41,7 +40,7 @@ const BlogCard = ({
           bgPosition="center"
           bgSize="cover"
           bgRepeat="no-repeat"
-        ></Box>
+        />
         <Stack>
           <Text color="gray.400" fontSize="sm">
             {date}
