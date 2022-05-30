@@ -334,7 +334,7 @@ const CreateWikiContent = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, summary, content, tags, categories } = wikiData
+      const { id, title, summary, content, tags, categories, media } = wikiData
       let { metadata } = wikiData
 
       // fetch the currently stored meta data of page that are not edit specific
@@ -361,6 +361,7 @@ const CreateWikiContent = () => {
           tags,
           categories,
           metadata,
+          media
         },
       })
     }
