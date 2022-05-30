@@ -361,7 +361,7 @@ const CreateWikiContent = () => {
           tags,
           categories,
           metadata,
-          media
+          media,
         },
       })
     }
