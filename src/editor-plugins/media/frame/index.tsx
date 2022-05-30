@@ -2,6 +2,7 @@ import { WikiImage } from '@/components/WikiImage'
 import config from '@/config'
 import { store } from '@/store/store'
 import { Media } from '@/types/Wiki'
+import { constructMediaUrl } from '@/utils/mediaUtils'
 import {
   Box,
   Center,
@@ -58,7 +59,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                       key={m.id}
                       onClick={() => handleImageClick(m)}
                       cursor="pointer"
-                      imageURL={`${config.pinataBaseUrl}${m.id}`}
+                      imageURL={constructMediaUrl(m)}
                     />
                     <Icon
                       as={RiImage2Fill}
