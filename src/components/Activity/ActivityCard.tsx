@@ -15,9 +15,8 @@ import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
-import { shortenText } from '@/utils/shortenText'
 import { useRouter } from 'next/router'
+import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
   title: string
@@ -153,19 +152,19 @@ const ActivityCard = ({
       </NextLink>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <HStack w={{base: "50%", md: "70%"}}>
-              <Heading
-                cursor="pointer"
-                as="h2"
-                fontSize={{ base: '16px', md: '20px' }}
-                letterSpacing="wide"
-                overflow="hidden"
-                whiteSpace="nowrap"
-                textOverflow="ellipsis"
-                onClick={()=> router.push(activityCardLinkRoute)}
-              >
-                {title}
-              </Heading>
+          <HStack w={{ base: '50%', md: '70%' }}>
+            <Heading
+              cursor="pointer"
+              as="h2"
+              fontSize={{ base: '16px', md: '20px' }}
+              letterSpacing="wide"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              onClick={() => router.push(activityCardLinkRoute)}
+            >
+              {title}
+            </Heading>
 
             {type && (
               <Text
