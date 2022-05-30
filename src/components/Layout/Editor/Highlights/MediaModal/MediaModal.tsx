@@ -125,7 +125,7 @@ const MediaModal = ({
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
                       <Box mt={1}>
-                        {checkMediaDefaultId(media.id) ? (
+                        {!checkMediaDefaultId(media.id) ? (
                           <WikiImage
                             cursor="pointer"
                             flexShrink={0}

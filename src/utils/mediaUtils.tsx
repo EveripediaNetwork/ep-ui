@@ -5,6 +5,8 @@ const YOUTUBE_DEFAULT_URL = 'https://www.youtube.com/watch?app=desktop&v='
 const VIMEO_DEFAULT_URL = 'https://vimeo.com/'
 
 export const checkMediaDefaultId = (id: string) => {
+  console.log(id.includes(id))
+  console.log(id)
   return id.includes(id)
 }
 
