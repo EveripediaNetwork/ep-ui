@@ -71,8 +71,8 @@ const MediaModal = ({
           name: file.name,
           size: shortenBalance(fileSize),
           id,
-          format: "IMAGE",
-          source: "IPFS_IMG"
+          format: 'IMAGE',
+          source: 'IPFS_IMG',
         },
       })
       uploadImageToIPFS({ id, type: file })

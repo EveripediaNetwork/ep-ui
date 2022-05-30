@@ -1,5 +1,6 @@
 import config from '@/config'
 import { Media } from '@/types/Wiki'
+
 const YOUTUBE_DEFAULT_URL = 'https://www.youtube.com/watch?app=desktop&v='
 const VIMEO_DEFAULT_URL = 'https://vimeo.com/'
 
