@@ -162,6 +162,8 @@ const ActivityCard = ({
               whiteSpace="nowrap"
               textOverflow="ellipsis"
               onClick={() => router.push(activityCardLinkRoute)}
+              tabIndex={0}
+              role="link"
             >
               {title}
             </Heading>
