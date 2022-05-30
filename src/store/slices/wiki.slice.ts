@@ -99,10 +99,7 @@ const wikiSlice = createSlice({
           media => media.id === action.payload.id,
         )
         const updatedMedia = [...state.media]
-        updatedMedia[findMediaIndex] = {
-          ...updatedMedia[findMediaIndex],
-          ...action.payload,
-        }
+        updatedMedia[findMediaIndex].id = action.payload.hash
         return {
           ...state,
           media: updatedMedia,

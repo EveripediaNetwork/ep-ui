@@ -26,7 +26,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
 import { Image } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
-import config from '@/config'
+import { WIKI_POST_DEFAULT_ID } from '@/data/Constants'
+import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
 
 const MediaModal = ({
   onClose = () => {},
@@ -44,9 +45,8 @@ const MediaModal = ({
       dispatch({
         type: 'wiki/updateMediaDetails',
         payload: {
-          ipfs: ipfsHash,
+          hash: ipfsHash,
           id: image.id,
-          progress: 'UPLOADED',
         },
       })
     }
@@ -54,7 +54,7 @@ const MediaModal = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
-    const id = uuidv4()
+    const id = `${uuidv4()}_${WIKI_POST_DEFAULT_ID}`
     if (file) {
       const fileSize = file.size / 1024 ** 2
       if (fileSize > 8) {
@@ -70,9 +70,9 @@ const MediaModal = ({
         payload: {
           name: file.name,
           size: shortenBalance(fileSize),
-          type: file.type.includes('image') ? 'IMAGE' : 'VIDEO',
           id,
-          progress: 'UPLOADING',
+          format: "IMAGE",
+          source: "IPFS_IMG"
         },
       })
       uploadImageToIPFS({ id, type: file })
@@ -125,11 +125,11 @@ const MediaModal = ({
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
                       <Box mt={1}>
-                        {media.ipfs ? (
+                        {checkMediaDefaultId(media.id) ? (
                           <WikiImage
                             cursor="pointer"
                             flexShrink={0}
-                            imageURL={`${config.pinataBaseUrl}${media.ipfs}`}
+                            imageURL={constructMediaUrl(media)}
                             h={{ base: '50px', lg: '60px' }}
                             w={{ base: '50px', lg: '60px' }}
                             borderRadius="lg"
@@ -141,9 +141,11 @@ const MediaModal = ({
                       </Box>
                       <VStack>
                         <Flex w="full" gap={16}>
-                          <Text fontSize="sm">
-                            {shortenMediaText(media.name)}
-                          </Text>
+                          {media.name && (
+                            <Text fontSize="sm">
+                              {shortenMediaText(media.name)}
+                            </Text>
+                          )}
                           <Box mt={1}>
                             <RiCloseLine
                               cursor="pointer"
@@ -155,7 +157,7 @@ const MediaModal = ({
                         </Flex>
                         <Box w="full">
                           <Progress
-                            value={media.progress === 'UPLOADING' ? 50 : 100}
+                            value={checkMediaDefaultId(media.id) ? 50 : 100}
                             h="5px"
                             colorScheme="green"
                             size="sm"
@@ -163,7 +165,11 @@ const MediaModal = ({
                         </Box>
                         <Flex w="full" fontSize="xs" gap={16}>
                           <Text flex="1">{media.size}mb</Text>
-                          <Text flex="1">{media.progress.toLowerCase()}</Text>
+                          <Text flex="1">
+                            {checkMediaDefaultId(media.id)
+                              ? 'uploading'
+                              : 'uploaded'}
+                          </Text>
                         </Flex>
                       </VStack>
                     </Flex>
