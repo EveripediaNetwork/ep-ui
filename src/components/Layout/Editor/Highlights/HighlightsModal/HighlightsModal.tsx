@@ -23,6 +23,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { RiFolder3Line, RiSurveyLine } from 'react-icons/ri'
+import { GiTwoCoins } from 'react-icons/gi'
 import {
   AiOutlineFacebook,
   AiOutlineInstagram,
@@ -31,10 +32,10 @@ import {
   AiOutlineYoutube,
 } from 'react-icons/ai'
 import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
-import slugify from 'slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import { slugifyText } from '@/utils/slugify'
 
-const SOCIAL_MEDIA_OPTIONS = [
+export const SOCIAL_MEDIA_OPTIONS = [
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
@@ -59,6 +60,11 @@ const SOCIAL_MEDIA_OPTIONS = [
     id: CommonMetaIds.YOUTUBE_PROFILE,
     label: 'Youtube',
     icon: <AiOutlineYoutube />,
+  },
+  {
+    id: CommonMetaIds.COINGECKO_PROFILE,
+    label: 'Coingecko',
+    icon: <GiTwoCoins />,
   },
 ]
 
@@ -174,7 +180,7 @@ const HighlightsModal = ({
                       dispatch({
                         type: 'wiki/updateCategories',
                         payload: {
-                          id: slugify(event.target.value.toLowerCase()),
+                          id: slugifyText(event.target.value),
                           title: event.target.value,
                         },
                       })

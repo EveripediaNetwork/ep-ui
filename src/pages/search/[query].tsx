@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  chakra,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 
@@ -50,6 +58,7 @@ const SearchQuery = () => {
         editor={article.user.id}
         wiki={article}
         wikiId={article.id}
+        lastModTimeStamp={article.updated}
       />
     )
   })
@@ -84,7 +93,7 @@ const SearchQuery = () => {
   })
 
   return (
-    <>
+    <Box bgColor="pageBg" my={-8} py={8}>
       <NextSeo
         title={`Results for ${query}`}
         openGraph={{
@@ -92,21 +101,23 @@ const SearchQuery = () => {
           description: `Showing ${totalResults} Wikis with ${query} query`,
         }}
       />
-      <Stack my="16" mx="30">
-        <Heading>Results for {query}</Heading>
+      <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
+        <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
+          Results for {query}
+        </Heading>
 
         {!isLoading && (
-          <Stack spacing="12">
+          <Stack spacing="4">
             <Text>Showing {totalResults} results </Text>
 
             <Heading fontSize="2xl">Articles</Heading>
-            <Flex direction="column" gap="6">
+            <Flex direction="column" gap="4">
               {articleList}
             </Flex>
             {categories.length !== 0 && (
               <>
                 <Heading fontSize="2xl">Categories</Heading>
-                <Flex direction="column" gap="6">
+                <Flex direction="column" gap="4">
                   {categoryList}
                 </Flex>
               </>
@@ -114,8 +125,8 @@ const SearchQuery = () => {
           </Stack>
         )}
         {isLoading && <SearchSkeleton />}
-      </Stack>
-    </>
+      </Box>
+    </Box>
   )
 }
 
