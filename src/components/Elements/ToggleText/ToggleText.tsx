@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   chakra,
   HTMLChakraProps,
@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react'
 import { HTMLMotionProps, motion } from 'framer-motion'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { CATEGORY_DESCRIPTION_WORD_LIMIT } from '@/data/Constants'
 
 // interface for ToggleTextProps is text and VStack Interface
 interface TextProp {
@@ -24,6 +23,17 @@ export const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
 
 const ToggleText = ({ text, ...rest }: ToggleTextProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
+  const descRef = React.useRef<HTMLDivElement>(null)
+  const [height, setHeight] = React.useState(0)
+
+  // calculate the height of the description text and setHeight
+  useEffect(() => {
+    if (descRef.current) {
+      setHeight(descRef.current.clientHeight)
+    }
+  }, [descRef.current?.clientHeight])
+
+  const MAX_CATEGORY_DESC_HEIGHT = 80
   return (
     <VStack width="100%" {...rest}>
       <MotionBox
@@ -33,18 +43,18 @@ const ToggleText = ({ text, ...rest }: ToggleTextProps) => {
         animate={{ height: isOpen ? 'auto' : '90px' }}
         transition={{ duration: 0.1 }}
         style={
-          !isOpen && text.length > CATEGORY_DESCRIPTION_WORD_LIMIT
+          !isOpen && height > MAX_CATEGORY_DESC_HEIGHT
             ? {
                 WebkitMaskImage: 'linear-gradient(180deg, black, transparent)',
               }
             : { marginBottom: '20px' }
         }
       >
-        <Text fontSize="large" opacity="0.5" textAlign="center">
+        <Text fontSize="large" opacity="0.5" ref={descRef} textAlign="center">
           {text}
         </Text>
       </MotionBox>
-      {text.length > CATEGORY_DESCRIPTION_WORD_LIMIT && (
+      {height > MAX_CATEGORY_DESC_HEIGHT && (
         <IconButton
           width="min(300px, 90%)"
           icon={

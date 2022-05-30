@@ -140,8 +140,8 @@ export const HistoryCard = ({
         {/* Date of the last edit */}
         <LinkOverlay href={`/revision/${activityId}`}>
           {lastEditedTime && (
-            <Text fontSize="sm" color="gray.500" mt={2}>
-              {format(new Date(lastEditedTime), 'MMMM d, yyyy')} at{' '}
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color="gray.500">
+              {format(new Date(lastEditedTime), 'MMMM d, yyyy')}{' '}
               {format(new Date(lastEditedTime), 'h:mm a')}
             </Text>
           )}
