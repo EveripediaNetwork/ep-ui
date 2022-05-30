@@ -19,7 +19,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const [media, setMedia] = React.useState<Media[]>()
   function handleImageClick(m: Media): void {
     editorContext.eventEmitter.emit('command', 'insertImage', {
-      src: `${config.pinataBaseUrl}${m.ipfs}`,
+      src: `${config.pinataBaseUrl}${m.id}`,
       alt: m.name,
     })
   }
@@ -47,7 +47,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </Text>
           <SimpleGrid columns={3} gap={4}>
             {media.map(m => {
-              if (m.type === 'IMAGE')
+              if (m.format === 'IMAGE')
                 return (
                   <Box pos="relative">
                     <WikiImage
@@ -58,7 +58,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                       key={m.id}
                       onClick={() => handleImageClick(m)}
                       cursor="pointer"
-                      imageURL={`${config.pinataBaseUrl}${m.ipfs}`}
+                      imageURL={`${config.pinataBaseUrl}${m.id}`}
                     />
                     <Icon
                       as={RiImage2Fill}
