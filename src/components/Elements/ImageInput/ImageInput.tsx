@@ -31,7 +31,7 @@ const ImageInput = ({
         },
       )
       const data = await response.arrayBuffer()
-
+      
       setImage(event.target.value, new buffer.Buffer(data as Buffer))
       toast({
         title: 'Image successfully Fetched',
