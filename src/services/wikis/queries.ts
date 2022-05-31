@@ -38,7 +38,7 @@ export const GET_WIKI_BY_ID = gql`
         id
         type
       }
-      media{
+      media {
         name
         id
         size

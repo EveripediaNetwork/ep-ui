@@ -1,11 +1,11 @@
 import { AspectRatio, Image, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
-import WikiAccordion from '../../WikiAccordion'
 import { Media } from '@/types/Wiki'
 import { constructMediaUrl } from '@/utils/mediaUtils'
+import WikiAccordion from '../../WikiAccordion'
 
-const RelatedMediaGrid = ({media}: {media:Media[]}) => {
+const RelatedMediaGrid = ({ media }: { media: Media[] }) => {
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">

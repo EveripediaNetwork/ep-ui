@@ -6,7 +6,7 @@ import { Box, BoxProps, Icon } from '@chakra-ui/react'
 import { RiPlayLine } from 'react-icons/ri'
 
 interface MediaPreviewTypes {
-  type: 'IPFS_IMG' | 'IPFS_VID' | 'YOUTUBE' | 'VIMEO' 
+  type: 'IPFS_IMG' | 'IPFS_VID' | 'YOUTUBE' | 'VIMEO'
   src: string
   children?: React.ReactNode
   className?: string
@@ -58,9 +58,7 @@ const MediaPreview = ({
 }: MediaPreviewTypes & BoxProps) => {
   const elRef = React.useRef(null)
   const isPlayable =
-    type === 'IPFS_VID' ||
-    type === 'YOUTUBE' ||
-    type === 'VIMEO'
+    type === 'IPFS_VID' || type === 'YOUTUBE' || type === 'VIMEO'
 
   const zoomHandle = () => {
     if (!elRef.current) return

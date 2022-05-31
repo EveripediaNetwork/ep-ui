@@ -43,10 +43,9 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => (
     {wiki.categories.length !== 0 && (
       <RelatedWikis categories={wiki.categories} />
     )}
-    {
-      wiki.media && wiki.media.length > 0 && 
+    {wiki.media && wiki.media.length > 0 && (
       <RelatedMediaGrid media={wiki.media} />
-    }
+    )}
   </VStack>
 )
 
