@@ -12,11 +12,7 @@ import {
   Box,
   VStack,
 } from '@chakra-ui/react'
-import {
-  RiFolder3Line,
-  RiSurveyLine,
-  RiFilmLine,
-} from 'react-icons/ri'
+import { RiFolder3Line, RiSurveyLine, RiFilmLine } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
