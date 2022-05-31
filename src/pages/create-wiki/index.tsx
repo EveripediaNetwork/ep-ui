@@ -261,7 +261,9 @@ const CreateWikiContent = () => {
       // Build the wiki object after edit info has been calculated
       const finalWiki = {
         ...interWiki,
-        metadata: store.getState().wiki.metadata,
+        metadata: store.getState().wiki.metadata.filter(meta => {
+          return meta.value !== '' || meta.id === 'references'
+        }),
       }
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
