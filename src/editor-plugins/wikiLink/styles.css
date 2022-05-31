@@ -82,7 +82,7 @@
 .toastui-editor-ok-button[disabled] {
   cursor: not-allowed;
   filter: brightness(80%);
-  background-color: #999999 !important;
+  background-color: #ec67a8 !important;
 }
 .wikiLink__noResultsMsg {
   text-align: center;

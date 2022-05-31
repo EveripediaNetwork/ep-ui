@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import {
   Box,
   HStack,
@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { RiArrowLeftRightLine } from 'react-icons/ri'
-import { fetchTokenRate } from '@/utils/fetchTokenRate'
+import { TokenStats } from '@/services/token-stats'
 
 const CurrencyBox = ({
   token,
@@ -59,11 +59,12 @@ const CurrencyBox = ({
 
 interface CurrencyConverterProps {
   token: string
-  tokenSymbol: string
+  tokenStats: TokenStats
 }
 
-const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
-  const [conversionRate, setConversionRate] = useState<number>(0.0)
+const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
+  const conversionRate = tokenStats?.token_price_in_usd
+  const tokenSymbol = tokenStats.symbol
   const [fromCurrency, setFromCurrency] = useState<number>(0)
   const [toCurrency, setToCurrency] = useState<number>(0)
   const [isTokenLeft, setisTokenLeft] = useState(true)
@@ -93,16 +94,6 @@ const CurrencyConverter = ({ token, tokenSymbol }: CurrencyConverterProps) => {
     },
     [conversionRate],
   )
-
-  useEffect(() => {
-    const fetchConversion = async () => {
-      const rate = await fetchTokenRate(token)
-      setConversionRate(parseFloat(rate))
-    }
-    fetchConversion()
-    // update from currency
-    updateValues('1', true)
-  }, [token, setConversionRate, updateValues])
 
   return (
     <VStack w="100%" spacing={4} borderWidth={1} borderRadius={2}>

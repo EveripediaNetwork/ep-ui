@@ -160,7 +160,7 @@ const ActivityCard = ({
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
-              w={{ base: '50%', md: '70%' }}
+              w={{ base: '80%', md: '60%' }}
             >
               {title}
               {type && (

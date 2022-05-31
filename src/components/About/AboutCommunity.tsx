@@ -7,9 +7,20 @@ import AboutTestimonial from './AboutTestimonial'
 const AboutCommunity = () => {
   const { t } = useTranslation()
   return (
-    <VStack spacing={8} maxW="5xl" mx="auto" mt="24">
-      <Heading size="lg">{`${t('aboutTestimonialHeading')}`}</Heading>
-      <Text align={{ base: 'left', lg: 'center' }} maxW="3xl" opacity={0.6}>
+    <VStack
+      spacing={8}
+      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      mx="auto"
+      mt="24"
+    >
+      <Heading
+        letterSpacing="wider"
+        fontWeight="bold"
+        lineHeight="shorter"
+        textAlign={{ base: 'center', lg: 'center', md: 'center' }}
+        size="lg"
+      >{`${t('aboutTestimonialHeading')}`}</Heading>
+      <Text align="center" maxW="3xl" letterSpacing="wider">
         {`${t('aboutTestimonialContent')}`}
       </Text>
       <Box mt={8} w="100%" maxW="4xl">

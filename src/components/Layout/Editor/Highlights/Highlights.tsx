@@ -15,7 +15,6 @@ import {
 import {
   RiFolder3Line,
   RiSurveyLine,
-  RiTwitterLine,
   RiFilmLine,
 } from 'react-icons/ri'
 
@@ -24,7 +23,6 @@ import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import { shortenText } from '@/utils/shortenText'
 import { useTranslation } from 'react-i18next'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import MediaModal from './MediaModal/MediaModal'
@@ -120,26 +118,6 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                     {c.title}
                   </Badge>
                 ))}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                color="linkColor"
-                borderColor="transparent"
-                display="flex"
-                gap={2}
-              >
-                <RiTwitterLine />
-                <Text whiteSpace="nowrap">{`${t('twitterProfileLabel')}`}</Text>
-              </Td>
-              <Td wordBreak="break-word">
-                {shortenText(
-                  getWikiMetadataById(
-                    currentWiki as Wiki,
-                    CommonMetaIds.TWITTER_PROFILE,
-                  )?.value || '',
-                  50,
-                )}
               </Td>
             </Tr>
           </Tbody>

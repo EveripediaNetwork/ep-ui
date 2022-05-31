@@ -79,7 +79,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         </Heading>
         <Box>
           <Box mt="10">
-            <VStack spacing={4}>
+            <VStack overflow="hidden" spacing={4}>
               {LatestActivityData?.map(activity =>
                 renderActivityCard(activity),
               )}

@@ -22,7 +22,7 @@ export const Index: NextPage = () => {
       mx="auto"
       w="fit-content"
       px={{ base: 6, lg: 20 }}
-      py={{ lg: 20 }}
+      py={{ base: 6, lg: 20 }}
       gap={10}
       _dark={{
         bgImage: '/images/homepage-bg-dark.png',

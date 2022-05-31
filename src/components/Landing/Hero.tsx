@@ -107,17 +107,17 @@ export const Hero = ({ wiki }: HeroProps) => {
       justify="center"
       w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
-      px={{ base: 6, lg: 0 }}
     >
       <VStack
         alignItems={{ base: 'center', lg: 'start' }}
         textAlign={{ base: 'center', lg: 'start' }}
-        spacing={10}
-        my={10}
+        spacing={{ base: 6, lg: 10 }}
+        mb={10}
+        mt={5}
       >
         <Heading
-          w="70%"
-          fontSize={{ base: '2xl', sm: '30', md: '44' }}
+          w={{ base: '80%', md: '70%' }}
+          fontSize={{ base: '32', md: '44' }}
           fontWeight="black"
           lineHeight="normal"
           letterSpacing="wider"
@@ -125,7 +125,7 @@ export const Hero = ({ wiki }: HeroProps) => {
           {`${t('hero_title')}`}
         </Heading>
         <Text
-          w="60%"
+          w={{ base: '70%', md: '60%' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           letterSpacing="wider"
         >
