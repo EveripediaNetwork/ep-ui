@@ -7,14 +7,14 @@ import BlogCard from './BlogCard'
 const AboutLatestFromBlog = () => {
   const { t } = useTranslation()
   return (
-    <VStack
-      spacing={8}
-      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      mx="auto"
-      mt="24"
-    >
+    <VStack spacing={8} maxW="7xl" mx="auto" mt="24">
       <Heading size="lg">{`${t('latestFromBlogHeading')}`}</Heading>
-      <SimpleGrid columns={[1, 1, 2, 3]} spacing={4} mt={4}>
+      <SimpleGrid
+        columns={[1, 1, 2, 3]}
+        spacing={4}
+        mt={4}
+        w="min(1200px, 90%)"
+      >
         {blogData.map(data => (
           <BlogCard
             title={data.title}

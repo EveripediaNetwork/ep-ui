@@ -63,8 +63,7 @@ const AboutOurTeam = () => {
             >
               <Box>
                 <Image
-                  w="150px"
-                  h="150px"
+                  boxSize="150px"
                   mx="auto"
                   mt="80px"
                   className="teamMember__image"
