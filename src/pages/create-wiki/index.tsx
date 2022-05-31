@@ -265,7 +265,7 @@ const CreateWikiContent = () => {
       }
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
-
+       
       const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )

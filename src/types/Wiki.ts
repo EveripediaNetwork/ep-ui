@@ -17,7 +17,6 @@ export interface Media {
   size?: string
   name?: string
   caption?: string
-  format: 'IMAGE' | 'VIDEO'
   thumbnail?: string
   source: 'IPFS_IMG' | 'VIMEO' | 'YOUTUBE' | 'IPFS_VID'
 }

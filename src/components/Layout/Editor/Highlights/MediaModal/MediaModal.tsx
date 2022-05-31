@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
 import { Image } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
-import { WIKI_POST_DEFAULT_ID } from '@/data/Constants'
+import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
 
 const MediaModal = ({
@@ -54,7 +54,7 @@ const MediaModal = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
-    const id = `${uuidv4()}_${WIKI_POST_DEFAULT_ID}`
+    const id = `${uuidv4()}_${MEDIA_POST_DEFAULT_ID}`
     if (file) {
       const fileSize = file.size / 1024 ** 2
       if (fileSize > 8) {
@@ -71,7 +71,6 @@ const MediaModal = ({
           name: file.name,
           size: shortenBalance(fileSize),
           id,
-          format: 'IMAGE',
           source: 'IPFS_IMG',
         },
       })
@@ -194,8 +193,8 @@ const MediaModal = ({
               </Button>
               {wiki.media !== undefined && wiki.media?.length > 0 && (
                 <Stack spacing={4} direction="row" align="center">
-                  <Button size="md">
-                    <Text fontSize="xs">Save</Text>
+                  <Button size="md" onClick={onClose}>
+                    <Text fontSize="xs" >Save</Text>
                   </Button>
                   <Button onClick={onClose} variant="outline" size="md">
                     <Text fontSize="xs">Cancel</Text>
