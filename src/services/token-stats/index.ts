@@ -13,6 +13,7 @@ export type TokenStats = {
   diluted_market_cap: number
   diluted_market_cap_percentage_change: number
   volume: number
+  token_price_in_usd: number
   volume_percentage_change: number
 }
 

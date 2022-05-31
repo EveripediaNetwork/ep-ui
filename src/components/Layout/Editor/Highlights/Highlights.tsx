@@ -10,14 +10,13 @@ import {
   Td,
   Tr,
 } from '@chakra-ui/react'
-import { RiFolder3Line, RiSurveyLine, RiTwitterLine } from 'react-icons/ri'
+import { RiFolder3Line, RiSurveyLine } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
 import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
-import { shortenText } from '@/utils/shortenText'
 import { useTranslation } from 'react-i18next'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import SummaryInput from './SummaryInput'
@@ -96,26 +95,6 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
                     {c.title}
                   </Badge>
                 ))}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                color="linkColor"
-                borderColor="transparent"
-                display="flex"
-                gap={2}
-              >
-                <RiTwitterLine />
-                <Text whiteSpace="nowrap">{`${t('twitterProfileLabel')}`}</Text>
-              </Td>
-              <Td wordBreak="break-word">
-                {shortenText(
-                  getWikiMetadataById(
-                    currentWiki as Wiki,
-                    CommonMetaIds.TWITTER_PROFILE,
-                  )?.value || '',
-                  50,
-                )}
               </Td>
             </Tr>
           </Tbody>

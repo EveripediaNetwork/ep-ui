@@ -4,8 +4,8 @@ export const FILTER_SIDEBAR_SIZE = {
 } as const
 
 export const COLLECTIONS_DISPLAY_SIZES = {
-  LARGE: '320px',
-  SMALL: '207px',
+  LARGE: '390px',
+  SMALL: '257px',
 } as const
 
 export const STATUS_FILTERS = {

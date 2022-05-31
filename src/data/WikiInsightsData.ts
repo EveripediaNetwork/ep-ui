@@ -61,15 +61,6 @@ export const sampleProfileSummary: WikiInsights[] = [
     },
   },
   {
-    type: 'socials',
-    title: 'Social profiles',
-    content: [
-      { icon: 'RiTwitterFill', url: 'https://twitter.com/boredapeyacht' },
-      { icon: 'RiFacebookFill', url: 'https://facebook.com/boredapeyacht' },
-      { icon: 'RiInstagramFill', url: 'https://instagram.com/boredapeyacht' },
-    ],
-  },
-  {
     type: 'text',
     title: 'Collection',
     content: '10,000 NFTs',

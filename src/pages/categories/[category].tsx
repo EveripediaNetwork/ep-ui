@@ -121,7 +121,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             padding={2}
           />
         </Flex>
-        <Heading fontSize={40} textAlign="center" mt={4}>
+        <Heading fontSize={40} maxW="80%" mx="auto" textAlign="center" mt={4}>
           {categoryData?.title}
         </Heading>
 
@@ -135,14 +135,14 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             <>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
-                width="min(90%, 1200px)"
+                width="min(90%, 1300px)"
                 mx="auto"
                 my={12}
                 gap={8}
               >
                 {wikisInCategory.map((wiki, i) => (
-                  <Box key={i} w="100%">
-                    <WikiPreviewCard wiki={wiki} />
+                  <Box key={i}>
+                    <WikiPreviewCard wiki={wiki} showLatestEditor />
                   </Box>
                 ))}
               </SimpleGrid>

@@ -119,7 +119,7 @@ export const WikiDetails = ({
               <Link
                 target="_blank"
                 href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                color="blue.400"
+                color="brand.500"
               >
                 {shortenAccount(ipfsHash || '')}
               </Link>
@@ -136,7 +136,7 @@ export const WikiDetails = ({
               <Link
                 target="_blank"
                 href={`${config.blockExplorerUrl}/tx/${txHash}`}
-                color="blue.400"
+                color="brand.500"
               >
                 {shortenAccount(txHash || '')}
               </Link>
@@ -147,7 +147,7 @@ export const WikiDetails = ({
             <Td>
               <HStack>
                 <DisplayAvatar address={lastEditor} />
-                <Link href={`/account/${lastEditor}`} color="blue.400">
+                <Link href={`/account/${lastEditor}`} color="brand.500">
                   {username || shortenAccount(lastEditor || '')}
                 </Link>
               </HStack>

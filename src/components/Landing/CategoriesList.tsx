@@ -25,7 +25,13 @@ const CategoriesList = () => {
 
   return (
     <>
-      <Text align="center" mt="20" fontWeight="semibold" fontSize="2xl" mb={0}>
+      <Text
+        align="center"
+        mt={{ base: '10', lg: '20' }}
+        fontWeight="semibold"
+        fontSize="2xl"
+        mb={0}
+      >
         {`${t('browseCategory')}`}
       </Text>
       <SimpleGrid

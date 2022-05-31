@@ -1,38 +1,68 @@
 import React from 'react'
-import { Box, Center, Stack, Text } from '@chakra-ui/react'
+import {
+  Box,
+  HStack,
+  LinkBox,
+  LinkOverlay,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
-import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import Link from 'next/link'
+import { useENSData } from '@/hooks/useENSData'
+import shortenAccount from '@/utils/shortenAccount'
 
-const WikiPreviewCard = ({ wiki }: { wiki: Wiki }) => {
+const WikiPreviewCard = ({
+  wiki,
+  showLatestEditor = false,
+}: {
+  wiki: Wiki
+  showLatestEditor?: boolean
+}) => {
   const { updated, title, id } = wiki
+  const [, username] = useENSData(wiki.user?.id || '')
   return (
-    <Center py={6} cursor="pointer">
-      <NextLink href={`/wiki/${id}`} passHref>
-        <Box w={390} minH={390} boxShadow="xl" rounded="md" overflow="hidden">
-          <WikiImage
-            h={200}
-            mb={3}
-            imageURL={getWikiImageUrl(wiki)}
-            layout="fill"
-          />
-          <Stack spacing={3} p={4}>
-            <Text fontSize="2xl" fontWeight="bold">
-              {title}
-            </Text>
-            <Text color="gray.600" fontSize="md">
-              {getWikiSummary(wiki, WikiSummarySize.Small)}
-            </Text>
-            <Text color="gray.400" fontSize="sm">
+    <LinkBox
+      w="100%"
+      h="100%"
+      bgColor="cardBg"
+      boxShadow="xl"
+      rounded="xl"
+      overflow="hidden"
+      cursor="pointer"
+    >
+      <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
+      <Stack spacing={3} p={4}>
+        <LinkOverlay href={`/wiki/${id}`}>
+          <Text fontSize="2xl" fontWeight="bold">
+            {title}
+          </Text>
+        </LinkOverlay>
+        <Box>
+          <Text fontSize="md" opacity={0.7}>
+            {getWikiSummary(wiki, WikiSummarySize.Small)}
+          </Text>
+          <HStack flexWrap="wrap" mt={2} justify="space-between">
+            {showLatestEditor && (
+              <HStack fontSize="sm" py={2} color="brand.500">
+                <DisplayAvatar address={wiki.user?.id} />
+                <Link href={`/account/${wiki.user?.id}`}>
+                  {username || shortenAccount(wiki.user?.id || '')}
+                </Link>
+              </HStack>
+            )}
+            <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
               Last Edited {updated && getReadableDate(updated)}
             </Text>
-          </Stack>
+          </HStack>
         </Box>
-      </NextLink>
-    </Center>
+      </Stack>
+    </LinkBox>
   )
 }
 
