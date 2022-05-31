@@ -194,7 +194,7 @@ const MediaModal = ({
               {wiki.media !== undefined && wiki.media?.length > 0 && (
                 <Stack spacing={4} direction="row" align="center">
                   <Button size="md" onClick={onClose}>
-                    <Text fontSize="xs" >Save</Text>
+                    <Text fontSize="xs">Save</Text>
                   </Button>
                   <Button onClick={onClose} variant="outline" size="md">
                     <Text fontSize="xs">Cancel</Text>

@@ -48,7 +48,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </Text>
           <SimpleGrid columns={3} gap={4}>
             {media.map(m => {
-              if (m.source === "IPFS_IMG")
+              if (m.source === 'IPFS_IMG')
                 return (
                   <Box key={m.id} pos="relative">
                     <WikiImage
