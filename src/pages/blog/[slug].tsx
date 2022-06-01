@@ -108,18 +108,32 @@ export const BlogPostPage = (props: BlogPostProps) => {
 
           <Stack
             alignItems="center"
-            spacing="10"
-            px="24"
+            spacing={{ base: 2, md: 4, lg: 8 }}
+            px={{ base: 4, md: 14, lg: '24' }}
             py="8"
             bg="gray.300"
             _dark={{ bg: 'whiteAlpha.200' }}
             rounded="lg"
           >
-            <Text fontWeight="bold" fontSize="3xl" textAlign="center">
+            <Text
+              fontWeight="bold"
+              fontSize={{ base: 'sm', md: 'md', lg: '3xl' }}
+              textAlign="center"
+            >
               Join thousands of others in receiving the most interesting wikis
               on Everipedia every week
             </Text>
-            <Button w="fit-content">Sign me up</Button>
+            <Button
+              as="a"
+              fontSize={{ base: 'xs', md: 'md', lg: 'inherit' }}
+              px={{ base: '2', lg: 10 }}
+              href="https://www.getdrip.com/forms/505929689/submissions/new"
+              target="_blank"
+              w="fit-content"
+              maxW="fit-content"
+            >
+              Sign me up
+            </Button>
           </Stack>
 
           <Stack spacing="8">
