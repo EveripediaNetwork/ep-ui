@@ -16,6 +16,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import Link from 'next/link'
 import { useENSData } from '@/hooks/useENSData'
 import shortenAccount from '@/utils/shortenAccount'
+import { shortenText } from '@/utils/shortenText'
 
 const WikiPreviewCard = ({
   wiki,
@@ -37,10 +38,10 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
-      <Stack spacing={3} p={4}>
+      <Stack spacing={3} p={4} >
         <LinkOverlay href={`/wiki/${id}`}>
           <Text fontSize="2xl" fontWeight="bold">
-            {title}
+            {shortenText(title, 65)}
           </Text>
         </LinkOverlay>
         <Box>
