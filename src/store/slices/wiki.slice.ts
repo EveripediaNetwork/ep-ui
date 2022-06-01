@@ -27,6 +27,7 @@ const initialState: Wiki = {
   user: {
     id: '',
   },
+  media: [],
 }
 
 const wikiSlice = createSlice({
@@ -70,6 +71,44 @@ const wikiSlice = createSlice({
         ...state,
         tags: action.payload,
       }
+    },
+    addMedia(state, action) {
+      if (state.media) {
+        return {
+          ...state,
+          media: [...state.media, action.payload],
+        }
+      }
+      return state
+    },
+    removeMedia(state, action) {
+      if (state.media) {
+        const updatedMedia = state.media.filter(
+          media => media.id !== action.payload.id,
+        )
+        return {
+          ...state,
+          media: updatedMedia,
+        }
+      }
+      return state
+    },
+    updateMediaDetails(state, action) {
+      if (state.media) {
+        const findMediaIndex = state.media.findIndex(
+          media => media.id === action.payload.id,
+        )
+        const updatedMedia = [...state.media]
+        updatedMedia[findMediaIndex] = {
+          ...updatedMedia[findMediaIndex],
+          ...{ id: action.payload.hash },
+        }
+        return {
+          ...state,
+          media: updatedMedia,
+        }
+      }
+      return state
     },
     updateMetadata(state, action) {
       const ob = action.payload

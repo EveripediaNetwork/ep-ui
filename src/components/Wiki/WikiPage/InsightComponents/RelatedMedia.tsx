@@ -1,51 +1,29 @@
 import { AspectRatio, Image, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
-import { sampleRelatedMedia } from '@/data/WikiInsightsData'
-import { RelatedMedia } from '@/types/WikiInsightsDataType'
+import { Media } from '@/types/Wiki'
+import { constructMediaUrl } from '@/utils/mediaUtils'
 import WikiAccordion from '../../WikiAccordion'
 
-const RelatedMediaGrid = () => {
-  const getImageSrc = (media: RelatedMedia) => {
-    if (media.type === 'youtube') {
-      const videoID = new URL(media.link).searchParams.get('v') || ''
-      return `https://i3.ytimg.com/vi/${videoID}/maxresdefault.jpg`
-    }
-
-    if (media.type === 'vimeo') {
-      const videoID = media.link.replace(
-        /(https?:\/\/)?(www\.)?vimeo\.com\//,
-        '',
-      )
-      return `https://vumbnail.com/${videoID}.jpg`
-    }
-
-    if (media.type === 'video') return media.thumbnail
-
-    if (media.type === 'audio')
-      // transparent placeholder
-      return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
-
-    return media.link
-  }
+const RelatedMediaGrid = ({ media }: { media: Media[] }) => {
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">
         <SimpleGrid columns={3} spacing={5}>
-          {sampleRelatedMedia.map((media, i) => (
+          {media.map((m, i) => (
             <AspectRatio ratio={1} key={i}>
               <MediaPreview
-                type={media.type}
-                src={media.link}
+                type={m.source}
+                src={constructMediaUrl(m)}
                 bgColor="dimColor"
                 borderRadius={4}
                 w="100%"
                 h="100%"
                 overflow="hidden"
-                data-caption={media.caption}
+                data-caption={m?.caption}
               >
                 <Image
-                  src={getImageSrc(media)}
+                  src={constructMediaUrl(m)}
                   h="100%"
                   w="100%"
                   objectFit="cover"

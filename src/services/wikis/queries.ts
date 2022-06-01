@@ -38,6 +38,12 @@ export const GET_WIKI_BY_ID = gql`
         id
         type
       }
+      media {
+        name
+        id
+        size
+        source
+      }
       metadata {
         id
         value

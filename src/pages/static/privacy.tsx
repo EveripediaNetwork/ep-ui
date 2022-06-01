@@ -13,12 +13,17 @@ import {
   Td,
   UnorderedList,
   ListItem,
+  Container,
 } from '@chakra-ui/react'
 import React from 'react'
 import RelatedTopics from '@/components/Elements/RelatedTopics/RelatedTopics'
 
 const Privacy = () => (
-  <Box w="min(90%, 1200px)" mx="auto" my={{ base: '10', lg: '16' }}>
+  <Container
+    w="min(90%, 1200px)"
+    maxW={{ base: '7xl', xl: '6xl', '2xl': '80%' }}
+    my={{ base: '10', lg: '16' }}
+  >
     <Heading my={8} as="h1" size="3xl" letterSpacing="wide">
       Privacy Policy
     </Heading>
@@ -521,7 +526,7 @@ const Privacy = () => (
           page.
         </Text>
       </Flex>
-      <Box flex="1">
+      <Box>
         <RelatedTopics
           topics={[
             { name: 'Terms of Service', url: '/static/terms' },
@@ -530,7 +535,7 @@ const Privacy = () => (
         />
       </Box>
     </Flex>
-  </Box>
+  </Container>
 )
 
 export default Privacy

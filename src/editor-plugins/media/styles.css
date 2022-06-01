@@ -1,0 +1,6 @@
+.media__popupBtn {
+  background-image: url(./assets/media-icon.png) !important;
+}
+.toastui-editor-dark .media__popupBtn {
+  background-image: url(./assets/media-icon-dark.png) !important;
+}
