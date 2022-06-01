@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
-import { NextSeo } from 'next-seo'
 import {
   getRunningOperationPromises,
   getWiki,
@@ -15,28 +14,15 @@ import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { CommonMetaIds, Wiki as WikiType } from '@/types/Wiki'
+import { CommonMetaIds } from '@/types/Wiki'
 import { useAppSelector } from '@/store/hook'
+import { WikiHeader } from '@/components/SEO/Wiki'
+import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
-const WikiSEOMetaData = ({ wiki }: { wiki: WikiType }) => (
-  <NextSeo
-    title={wiki.title}
-    openGraph={{
-      title: wiki.title,
-      description: getWikiSummary(wiki),
-      images: [
-        {
-          url: getWikiImageUrl(wiki),
-        },
-      ],
-    }}
-  />
-)
 const Wiki = () => {
   const router = useRouter()
 
@@ -73,11 +59,26 @@ const Wiki = () => {
     setMounted(true)
   }, [])
 
-  if (!mounted) return wiki && <WikiSEOMetaData wiki={wiki} />
+  if (!mounted)
+    return (
+      wiki && (
+        <WikiHeader
+          title={wiki.title}
+          description={getWikiSummary(wiki)}
+          mainImage={getWikiImageUrl(wiki)}
+        />
+      )
+    )
 
   return (
     <>
-      {wiki && <WikiSEOMetaData wiki={wiki} />}
+      {wiki && (
+        <WikiHeader
+          title={wiki.title}
+          description={getWikiSummary(wiki)}
+          mainImage={getWikiImageUrl(wiki)}
+        />
+      )}
       <main>
         {!error && (router.isFallback || isLoading) ? (
           <Flex justify="center" align="center" h="50vh">

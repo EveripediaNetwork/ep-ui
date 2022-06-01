@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
-import { NextSeo } from 'next-seo'
 import { getRunningOperationPromises } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
@@ -10,8 +9,6 @@ import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
 import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import {
   getActivityById,
@@ -24,6 +21,9 @@ import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { CommonMetaIds } from '@/types/Wiki'
 import { useAppSelector } from '@/store/hook'
+import { WikiHeader } from '@/components/SEO/Wiki'
+import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
 const Wiki = () => {
   const router = useRouter()
@@ -88,17 +88,10 @@ const Wiki = () => {
   return (
     <>
       {wiki && (
-        <NextSeo
+        <WikiHeader
           title={wiki.content[0].title}
-          openGraph={{
-            title: wiki.content[0].title,
-            description: getWikiSummary(wiki.content[0]),
-            images: [
-              {
-                url: getWikiImageUrl(wiki.content[0]),
-              },
-            ],
-          }}
+          description={getWikiSummary(wiki.content[0])}
+          mainImage={getWikiImageUrl(wiki.content[0])}
         />
       )}
 
