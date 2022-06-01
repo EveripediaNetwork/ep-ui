@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   Flex,
-  Box
+  Box,
 } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
@@ -40,19 +40,19 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
-      
+
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>
-            <Text
-              fontSize="2xl"
-              fontWeight="bold"
-              noOfLines={1}
-              textOverflow="ellipsis"
-              overflow="hidden"
-              orientation="vertical"
-            >
-              {shortenText(title, 65)}
-            </Text>
+          <Text
+            fontSize="2xl"
+            fontWeight="bold"
+            noOfLines={1}
+            textOverflow="ellipsis"
+            overflow="hidden"
+            orientation="vertical"
+          >
+            {shortenText(title, 65)}
+          </Text>
         </LinkOverlay>
         <Flex h="95" direction="column">
           <Box flex="1">
