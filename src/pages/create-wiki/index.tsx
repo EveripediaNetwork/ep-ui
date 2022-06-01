@@ -262,7 +262,7 @@ const CreateWikiContent = () => {
       const finalWiki = {
         ...interWiki,
         metadata: store.getState().wiki.metadata.filter(meta => {
-          return meta.value !== '' || meta.id === 'references'
+          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
         }),
       }
 
