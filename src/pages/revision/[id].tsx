@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { getRunningOperationPromises } from '@/services/wikis'
@@ -84,6 +84,22 @@ const Wiki = () => {
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!mounted)
+    return (
+      wiki && (
+        <WikiHeader
+          title={wiki.content[0].title}
+          description={getWikiSummary(wiki.content[0])}
+          mainImage={getWikiImageUrl(wiki.content[0])}
+        />
+      )
+    )
 
   return (
     <>

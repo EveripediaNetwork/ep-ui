@@ -10,16 +10,16 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
   <DefaultSeo
     title="Everipedia"
     titleTemplate="%s · Everipedia"
-    description="Everipedia description"
+    description="World's largest crypto knowledge base"
     canonical={`https://everipedia.org${router.asPath || ''}`}
     openGraph={{
       title: 'Everipedia',
-      description: 'Everipedia description',
+      description: "World's largest crypto knowledge base",
       type: 'website',
       site_name: 'Everipedia',
       images: [
         {
-          url: `https://everipedia.org/social.png`,
+          url: `https://i.imgur.com/u42cq1C.png`,
           width: 1024,
           height: 512,
           alt: 'Everipedia',
