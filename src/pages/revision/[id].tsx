@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
-import { getRunningOperationPromises } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { HStack, Flex, Spinner, Text, Button, Box } from '@chakra-ui/react'
@@ -15,6 +14,7 @@ import {
   getLatestIPFSByWiki,
   useGetActivityByIdQuery,
   useGetLatestIPFSByWikiQuery,
+  getRunningOperationPromises,
 } from '@/services/activities'
 import Link from 'next/link'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
@@ -25,7 +25,7 @@ import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 
-const Wiki = () => {
+const Revision = () => {
   const router = useRouter()
 
   const { id: ActivityId } = router.query
@@ -41,7 +41,7 @@ const Wiki = () => {
   )
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
-
+  const toc = useAppSelector(state => state.toc)
   const wikiId = wiki?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
     typeof wikiId === 'string' ? wikiId : skipToken,
@@ -50,13 +50,14 @@ const Wiki = () => {
     },
   )
 
-  // clear cite marks
+  // clear cite marks if any present initially
   useEffect(() => {
     store.dispatch({
       type: 'citeMarks/reset',
     })
   }, [ActivityId])
 
+  // check if the current revision is the latest revision
   useEffect(() => {
     if (latestIPFS && wiki && latestIPFS !== wiki?.ipfs) {
       setIsLatest(false)
@@ -73,13 +74,6 @@ const Wiki = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTocEmpty])
-
-  // here toc is not state variable since there seems to be some issue
-  // with in react-markdown that is causing infinite loop if toc is state variable
-  // (so using useEffect to update toc length for now)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  const toc = useAppSelector(state => state.toc)
 
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
@@ -203,4 +197,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default Wiki
+export default Revision
