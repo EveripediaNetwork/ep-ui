@@ -8,7 +8,6 @@ import {
   Tag,
   useBreakpointValue,
   Flex,
-  Badge,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import shortenAccount from '@/utils/shortenAccount'
@@ -16,6 +15,7 @@ import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
+import { useRouter } from 'next/router'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
@@ -56,6 +56,7 @@ const ActivityCard = ({
   const activityCardLinkRoute = activityId
     ? `/revision/${activityId}`
     : `/wiki/${wikiId}`
+  const router = useRouter()
   const editDetails = useBreakpointValue({
     base: (
       <Box>
@@ -151,7 +152,7 @@ const ActivityCard = ({
       </NextLink>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <NextLink href={activityCardLinkRoute} passHref>
+          <HStack w={{ base: '50%', md: '70%' }}>
             <Heading
               cursor="pointer"
               as="h2"
@@ -160,16 +161,24 @@ const ActivityCard = ({
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
-              w={{ base: '50%', md: '70%' }}
+              onClick={() => router.push(activityCardLinkRoute)}
+              tabIndex={0}
+              role="link"
             >
               {title}
-              {type && (
-                <Badge ml="1" fontSize="0.5em" colorScheme="pink">
-                  {type === 'CREATED' ? 'New' : 'Edited'}
-                </Badge>
-              )}
             </Heading>
-          </NextLink>
+
+            {type && (
+              <Text
+                fontSize="sm"
+                color="brand.500"
+                fontWeight="medium"
+                mb="8px !important"
+              >
+                {type === 'CREATED' ? 'New' : 'Edited'}
+              </Text>
+            )}
+          </HStack>
           {wiki.categories.length && (
             <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
               <Text

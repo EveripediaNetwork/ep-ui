@@ -1,6 +1,5 @@
 import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
 import ReactDOM from 'react-dom/client'
-
 import {
   PluginCommandMap,
   PluginContext,
@@ -11,7 +10,7 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import React from 'react'
-import Frame from './frame'
+import MediaFrame from './frame'
 
 interface PluginInfo {
   toHTMLRenderers?: HTMLConvertorMap
@@ -24,20 +23,19 @@ interface PluginInfo {
   toolbarItems?: PluginToolbarItem[]
 }
 
-export default function cite(context: PluginContext): PluginInfo {
+export default function media(context: PluginContext): PluginInfo {
   const container = document.createElement('div')
   const root = ReactDOM.createRoot(container)
-  root.render(React.createElement(Frame, { editorContext: context }))
-
+  root.render(React.createElement(MediaFrame, { editorContext: context }))
   return {
     toolbarItems: [
       {
-        groupIndex: 1,
-        itemIndex: 3,
+        groupIndex: 3,
+        itemIndex: 0,
         item: {
-          name: 'cite',
-          tooltip: 'Cite',
-          className: 'toastui-editor-custom-toolbar-icon cite__popupBtn',
+          name: 'media',
+          tooltip: 'Media',
+          className: 'toastui-editor-custom-toolbar-icon media__popupBtn',
           popup: {
             body: container,
             style: { width: '350px' },
@@ -45,29 +43,22 @@ export default function cite(context: PluginContext): PluginInfo {
         },
       },
     ],
-
     markdownCommands: {
-      cite: (payload, state, dispatch) => {
-        const link = `[${payload.refNo}](${payload.urlId})`
+      insertImage: (payload, state, dispatch) => {
+        const link = `![${payload.name}](${payload.src})`
         const { from, to } = state.selection
         const tr = state.tr.insertText(link, from, to)
-        dispatch(tr)
+        dispatch(tr.scrollIntoView())
         return true
       },
     },
     wysiwygCommands: {
-      cite: (payload, state, dispatch) => {
-        const { from, to } = state.selection
-        const attrs = {
-          linkUrl: payload.urlId,
-        }
-        const text = `[${payload.refNo}]`
-        const mark = state.schema.marks.link.create(attrs)
-        const tr = state.tr
-          .insertText(text, from, to)
-          .addMark(from, from + text.length, mark)
-        dispatch(tr)
-
+      insertImage: (payload, state, dispatch) => {
+        const img = state.schema.nodes.image.createAndFill({
+          imageUrl: payload.src,
+          altText: payload.alt,
+        })
+        dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
       },
     },

@@ -46,7 +46,6 @@ import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
 import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
-import slugify from 'slugify'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
@@ -76,6 +75,7 @@ import {
   errorMessage,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
+import { slugifyText } from '@/utils/slugify'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -149,7 +149,7 @@ const CreateWikiContent = () => {
   const getImageHash = async () =>
     isWikiBeingEdited ? ipfsHash : saveImage(image)
 
-  const getWikiSlug = () => slugify(String(wiki.title).toLowerCase())
+  const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const getImageArrayBufferLength = () =>
     (image.type as ArrayBuffer).byteLength === 0
@@ -261,7 +261,9 @@ const CreateWikiContent = () => {
       // Build the wiki object after edit info has been calculated
       const finalWiki = {
         ...interWiki,
-        metadata: store.getState().wiki.metadata,
+        metadata: store.getState().wiki.metadata.filter(meta => {
+          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
+        }),
       }
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
@@ -334,7 +336,7 @@ const CreateWikiContent = () => {
       // update image hash
       updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
 
-      const { id, title, summary, content, tags, categories } = wikiData
+      const { id, title, summary, content, tags, categories, media } = wikiData
       let { metadata } = wikiData
 
       // fetch the currently stored meta data of page that are not edit specific
@@ -361,6 +363,7 @@ const CreateWikiContent = () => {
           tags,
           categories,
           metadata,
+          media,
         },
       })
     }

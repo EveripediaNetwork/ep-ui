@@ -10,6 +10,7 @@ export const GET_TOKEN_STATS = gql`
       market_cap_percentage_change
       diluted_market_cap
       diluted_market_cap_percentage_change
+      token_price_in_usd
       volume
       volume_percentage_change
     }

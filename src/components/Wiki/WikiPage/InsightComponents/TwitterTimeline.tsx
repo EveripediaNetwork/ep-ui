@@ -35,7 +35,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
               sourceType="url"
               noScrollbar
               borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-              url={url}
+              url={`//${url}`}
             />
           )}
         </Box>

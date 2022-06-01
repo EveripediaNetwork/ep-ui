@@ -3,10 +3,10 @@ import React from 'react'
 // @ts-ignore
 import BigPicture from 'bigpicture'
 import { Box, BoxProps, Icon } from '@chakra-ui/react'
-import { RiPlayLine, RiVolumeUpLine } from 'react-icons/ri'
+import { RiPlayLine } from 'react-icons/ri'
 
 interface MediaPreviewTypes {
-  type: 'image' | 'video' | 'youtube' | 'vimeo' | 'iframe' | 'audio'
+  type: 'IPFS_IMG' | 'IPFS_VID' | 'YOUTUBE' | 'VIMEO'
   src: string
   children?: React.ReactNode
   className?: string
@@ -42,7 +42,7 @@ interface BigPictureTypes {
   onOpen?: () => void
 }
 const MediaPreview = ({
-  type = 'image',
+  type = 'IPFS_IMG',
   src,
   children,
   className,
@@ -58,33 +58,25 @@ const MediaPreview = ({
 }: MediaPreviewTypes & BoxProps) => {
   const elRef = React.useRef(null)
   const isPlayable =
-    type === 'video' ||
-    type === 'youtube' ||
-    type === 'vimeo' ||
-    type === 'audio'
+    type === 'IPFS_VID' || type === 'YOUTUBE' || type === 'VIMEO'
+
   const zoomHandle = () => {
     if (!elRef.current) return
     const options: BigPictureTypes = {
       el: elRef.current,
     }
     switch (type) {
-      case 'image':
+      case 'IPFS_IMG':
         options.imgSrc = src
         break
-      case 'video':
+      case 'IPFS_VID':
         options.vidSrc = src
         break
-      case 'youtube':
+      case 'YOUTUBE':
         // eslint-disable-next-line prefer-destructuring
         options.ytSrc = src.split('=')[1]
         break
-      case 'iframe':
-        options.iframeSrc = src
-        break
-      case 'audio':
-        options.audio = src
-        break
-      case 'vimeo':
+      case 'VIMEO':
         options.vimeoSrc = src.replace(/(https?:\/\/)?(www\.)?vimeo\.com\//, '')
         break
       default:
@@ -136,7 +128,7 @@ const MediaPreview = ({
     >
       {isPlayable && (
         <Icon
-          as={type === 'audio' ? RiVolumeUpLine : RiPlayLine}
+          as={RiPlayLine}
           fontSize="30px"
           position="absolute"
           top="50%"

@@ -12,6 +12,15 @@ export interface Image {
   type: ArrayBuffer | string | File | Blob
 }
 
+export interface Media {
+  id: string
+  size?: string
+  name?: string
+  caption?: string
+  thumbnail?: string
+  source: 'IPFS_IMG' | 'VIMEO' | 'YOUTUBE' | 'IPFS_VID'
+}
+
 export enum EditorContentOverride {
   KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
 }
@@ -24,6 +33,7 @@ export enum CommonMetaIds {
   TWITTER_PROFILE = 'twitter_profile',
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
+  COINGECKO_PROFILE = 'coingecko_profile',
 }
 
 export enum EditSpecificMetaIds {
@@ -105,6 +115,7 @@ export interface Wiki {
   categories: BaseCategory[]
   tags: Tag[]
   images?: Image[]
+  media?: Media[]
   user: User
   metadata: UpdatedMetaDataInterface
   version: number
@@ -123,4 +134,5 @@ export type WikiPreview = Pick<
   | 'images'
   | 'categories'
   | 'user'
+  | 'updated'
 >

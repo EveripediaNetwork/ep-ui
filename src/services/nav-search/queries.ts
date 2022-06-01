@@ -6,6 +6,7 @@ export const GET_WIKIS_BY_TITLE = gql`
       id
       title
       content
+      updated
       tags {
         id
       }

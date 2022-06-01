@@ -7,9 +7,27 @@ import AboutFeaturesCard from './AboutFeaturesCard'
 const AboutFeatures = () => {
   const { t } = useTranslation()
   return (
-    <VStack spacing={8} maxW="5xl" mx="auto" mt="24">
-      <Heading size="lg">{`${t('aboutFeatHeading')}`}</Heading>
-      <Text align={{ base: 'left', lg: 'center' }} maxW="3xl" opacity={0.6}>
+    <VStack
+      spacing={8}
+      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      mx="auto"
+      mt="24"
+    >
+      <Heading
+        letterSpacing="wider"
+        fontWeight="bold"
+        lineHeight="shorter"
+        textAlign="center"
+        size="lg"
+      >{`${t('aboutFeatHeading')}`}</Heading>
+      <Text
+        align={{ base: 'left', lg: 'center' }}
+        maxW="3xl"
+        textAlign="center"
+        fontSize={{ base: 'sm', md: 'md', lg: 'md' }}
+        letterSpacing="wider"
+        mb={4}
+      >
         {`${t('aboutFeatContent')}`}
       </Text>
       <SimpleGrid columns={[1, 1, 2, 3]} spacing={4} mt={4}>
