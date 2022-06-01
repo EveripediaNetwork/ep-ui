@@ -39,12 +39,12 @@ const WikiPreviewCard = ({
     >
       <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
       <Stack spacing={3} p={4} >
-        <LinkOverlay href={`/wiki/${id}`}>
-          <Text fontSize="2xl" fontWeight="bold">
-            {shortenText(title, 65)}
-          </Text>
-        </LinkOverlay>
-        <Box>
+        <Box h="181" display="flex" flexDirection="column" justifyContent="space-between" flexGrow="1">
+          <LinkOverlay href={`/wiki/${id}`}>
+            <Text fontSize="2xl" fontWeight="bold" noOfLines={2} textOverflow="ellipsis" overflow="hidden" orientation="vertical">
+              {shortenText(title, 65)}
+            </Text>
+          </LinkOverlay>
           <Text fontSize="md" opacity={0.7}>
             {getWikiSummary(wiki, WikiSummarySize.Small)}
           </Text>
