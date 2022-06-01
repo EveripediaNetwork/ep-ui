@@ -56,7 +56,10 @@ const WikiPreviewCard = ({
         </LinkOverlay>
         <Flex h="95" direction="column">
           <Box flex="1">
-            <Text fontSize="md" opacity={0.7}>
+            <Text fontSize="md" opacity={0.7} noOfLines={2}
+            textOverflow="ellipsis"
+            overflow="hidden"
+            orientation="vertical">
               {getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
           </Box>
