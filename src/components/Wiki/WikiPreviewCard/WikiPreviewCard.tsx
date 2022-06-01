@@ -44,7 +44,7 @@ const WikiPreviewCard = ({
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>
           <Text
-            fontSize="2xl"
+            fontSize="xl"
             fontWeight="bold"
             noOfLines={1}
             textOverflow="ellipsis"
