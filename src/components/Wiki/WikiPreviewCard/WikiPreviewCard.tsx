@@ -1,11 +1,13 @@
 import React from 'react'
 import {
-  Box,
+  Spacer,
   HStack,
   LinkBox,
   LinkOverlay,
   Stack,
   Text,
+  Flex,
+  Box
 } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
@@ -38,29 +40,51 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
+      
       <Stack spacing={3} p={4}>
-        <Box
-          h="181"
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          flexGrow="1"
-        >
-          <LinkOverlay href={`/wiki/${id}`}>
+        <LinkOverlay href={`/wiki/${id}`}>
             <Text
               fontSize="2xl"
               fontWeight="bold"
-              noOfLines={2}
+              noOfLines={1}
               textOverflow="ellipsis"
               overflow="hidden"
               orientation="vertical"
             >
               {shortenText(title, 65)}
             </Text>
-          </LinkOverlay>
+        </LinkOverlay>
+        <Flex h="95" direction="column">
+          <Box flex="1">
+            <Text fontSize="md" opacity={0.7}>
+              {getWikiSummary(wiki, WikiSummarySize.Small)}
+            </Text>
+          </Box>
+          <Spacer />
+          <Box>
+            <HStack flexWrap="wrap" mt={2} justify="space-between">
+              {showLatestEditor && (
+                <HStack fontSize="sm" py={2} color="brand.500">
+                  <DisplayAvatar address={wiki.user?.id} />
+                  <Link href={`/account/${wiki.user?.id}`}>
+                    {username || shortenAccount(wiki.user?.id || '')}
+                  </Link>
+                </HStack>
+              )}
+              <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
+                Last Edited {updated && getReadableDate(updated)}
+              </Text>
+            </HStack>
+          </Box>
+        </Flex>
+        {/* <Flex
+          flexDirection="column"
+          
+        >
           <Text fontSize="md" opacity={0.7}>
             {getWikiSummary(wiki, WikiSummarySize.Small)}
           </Text>
+          <Spacer/>
           <HStack flexWrap="wrap" mt={2} justify="space-between">
             {showLatestEditor && (
               <HStack fontSize="sm" py={2} color="brand.500">
@@ -74,7 +98,7 @@ const WikiPreviewCard = ({
               Last Edited {updated && getReadableDate(updated)}
             </Text>
           </HStack>
-        </Box>
+        </Flex> */}
       </Stack>
     </LinkBox>
   )
