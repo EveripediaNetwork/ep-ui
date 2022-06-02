@@ -26,14 +26,24 @@ export const BlogPostPage = (props: BlogPostProps) => {
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
       <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
-        <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
+        <Heading
+          mt={8}
+          mb={4}
+          as="h1"
+          fontSize={{ base: '3xl', lg: '5xl' }}
+          letterSpacing="wide"
+        >
           {post.title}
         </Heading>
         <Text color="gray.600" _dark={{ color: 'gray.400' }}>
           {post.date}
         </Text>
 
-        <Image h="729px" src={`/images${post.image_url}`} mt="14" />
+        <Image
+          h={{ base: '224px', md: '342px', lg: '729px' }}
+          src={`/images${post.image_url}`}
+          mt="14"
+        />
 
         <Stack spacing="15" mt="12">
           {/* Post Content Start */}
