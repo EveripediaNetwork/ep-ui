@@ -48,7 +48,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
     setHasMore(true)
     setOffset(0)
     setWikisInCategory(wikis)
-  }, [category])
+  }, [category, wikis])
 
   const fetchMoreWikis = () => {
     const updatedOffset = offset + ITEM_PER_PAGE

@@ -95,7 +95,7 @@ export const useCreateWikiEffects = (
     if (activeStep === 3) {
       prevEditedWiki.current.isPublished = true
     }
-  }, [activeStep])
+  }, [activeStep, prevEditedWiki])
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
@@ -106,11 +106,13 @@ export const useCreateWikiEffects = (
     } else {
       setIsNewCreateWiki(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, slug])
 
   useEffect(() => {
     if (isLoadingWiki === false && !wikiData)
       dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingWiki, wikiData])
 
   const updatePageTypeTemplate = useCallback(() => {
@@ -124,6 +126,7 @@ export const useCreateWikiEffects = (
       type: 'wiki/setContent',
       payload: String(pageType?.templateText),
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wiki.metadata])
 
   // update the page type template when the page type changes
@@ -175,7 +178,7 @@ export const useGetSignedHash = (deadline: number) => {
       types,
       value: {
         ipfs,
-        user: accountData!.address,
+        user: accountData?.address,
         deadline,
       },
     })
@@ -223,6 +226,7 @@ export const useGetSignedHash = (deadline: number) => {
         clearInterval(timer)
       }
     }, 3000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch])
 
   useEffect(() => {

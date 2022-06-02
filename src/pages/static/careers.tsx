@@ -1,11 +1,12 @@
 import NoOpenings from '@/components/Careers/NoOpeningsCard'
 import { Flex, Heading } from '@chakra-ui/react'
+import { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 const Careers = () => {
   const { t } = useTranslation()
-  const [openings] = React.useState<Array<any> | null>()
+  const [openings] = React.useState<Array<Dict> | null>()
 
   return (
     <main>

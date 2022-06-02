@@ -16,6 +16,7 @@ import {
   HStack,
   MenuList,
 } from '@chakra-ui/react'
+import { isString } from '@chakra-ui/utils'
 
 import {
   MenuFooter,
@@ -31,15 +32,19 @@ import { useTranslation } from 'react-i18next'
 const Footer = () => {
   const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
-  const [lang, setLang] = useState<string | any>(languageData[0].value)
-  const hanleLangChange = (userLang: any) => {
-    setLang(userLang)
-    i18n.changeLanguage(userLang)
+  const [lang, setLang] = useState<string>(languageData[0].value)
+  const hanleLangChange = (userLang: string | string[]) => {
+    if (isString(userLang)) {
+      setLang(userLang)
+      i18n.changeLanguage(userLang)
+    }
   }
 
+  const storedLang = JSON.stringify(localStorage.storeLang)
   useEffect(() => {
     setLang(localStorage.storeLang)
-  }, [JSON.stringify(localStorage.storeLang)])
+  }, [storedLang])
+
   return (
     <Box bg="brandBackground" color="default">
       <Container

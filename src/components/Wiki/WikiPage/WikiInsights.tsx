@@ -34,7 +34,7 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
       })
     }
     fetchTokenData()
-  }, [])
+  }, [coingeckoLink])
 
   return (
     <VStack
