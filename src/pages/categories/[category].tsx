@@ -43,6 +43,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
+  console.log(categoryData)
 
   useEffect(() => {
     setHasMore(true)
@@ -95,8 +96,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             description: categoryData.description,
             images: [
               {
-                url:
-                  categoryData?.heroImage || '/images/categories-backdrop.png',
+                url: `/images/categories/${categoryData.id}.jpg`,
               },
             ],
           }}
@@ -105,7 +105,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
       <Box mt="-3" bgColor="pageBg" pb={12}>
         <Image
           priority
-          src={categoryData?.heroImage || '/images/categories-backdrop.png'}
+          src={`/images/categories/${categoryData.id}.jpg`}
           height="250px"
         />
         <Flex mx="auto" justifyContent="center" mt={12}>
