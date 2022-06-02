@@ -19,7 +19,6 @@ import { BaseCategory, WikiPreview } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
-import NextLink from 'next/link'
 import config from '@/config'
 
 export const WikiDetails = ({
@@ -84,13 +83,13 @@ export const WikiDetails = ({
               <Td py={1}>
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {tags?.map((tag, i) => (
-                    <NextLink key={i} href={`/tags/${tag.id}`} passHref>
+                    <Link key={i} href={`/tags/${tag.id}`} passHref>
                       <Box py={1}>
                         <Tag key={i} whiteSpace="nowrap" as="a">
                           {tag.id}
                         </Tag>
                       </Box>
-                    </NextLink>
+                    </Link>
                   ))}
                 </HStack>
               </Td>
