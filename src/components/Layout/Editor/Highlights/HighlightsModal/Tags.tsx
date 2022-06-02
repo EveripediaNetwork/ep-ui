@@ -55,7 +55,7 @@ const Tags = () => {
         border="solid 1px"
         borderColor="gray.300"
         _dark={{ borderColor: 'whiteAlpha.300', bg: 'gray.700' }}
-        p="5"
+        p={4}
       >
         <chakra.div ref={ref} {...api.rootProps} sx={{ ...tagsInputStyle }}>
           {api.value.map((value, index) => (

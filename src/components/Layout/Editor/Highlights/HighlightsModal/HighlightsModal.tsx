@@ -136,80 +136,83 @@ const HighlightsModal = ({
           <Divider />
         </chakra.div>
         <ModalBody>
-          <Stack spacing="12">
-            <Stack spacing="6">
-              <Flex gap="2.5" align="center">
-                <RiFolder3Line /> <Text whiteSpace="nowrap">Page Type</Text>
-                <Select
-                  maxW="52"
-                  ml="auto"
-                  onChange={event => {
-                    if (event.target.value)
-                      dispatch({
-                        type: 'wiki/updateMetadata',
-                        payload: {
-                          id: CommonMetaIds.PAGE_TYPE,
-                          value: event.target.value,
-                        },
-                      })
-                  }}
-                  value={String(
-                    currentWiki.metadata.find(
-                      (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
-                    )?.value,
-                  )}
-                  placeholder={
-                    getWikiAttribute('page-type').isDefined
-                      ? ''
-                      : 'Select Page Type'
+          <Stack spacing="4">
+            {/* PAGE TYPE SELECTION  */}
+            <Flex gap="2.5" align="center" mt={1}>
+              <RiFolder3Line /> <Text whiteSpace="nowrap">Page Type</Text>
+              <Select
+                maxW="52"
+                ml="auto"
+                onChange={event => {
+                  if (event.target.value)
+                    dispatch({
+                      type: 'wiki/updateMetadata',
+                      payload: {
+                        id: CommonMetaIds.PAGE_TYPE,
+                        value: event.target.value,
+                      },
+                    })
+                }}
+                value={String(
+                  currentWiki.metadata.find(
+                    (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
+                  )?.value,
+                )}
+                placeholder={
+                  getWikiAttribute('page-type').isDefined
+                    ? ''
+                    : 'Select Page Type'
+                }
+              >
+                {Object.values(PageTypeName).map(o => (
+                  <option key={o}>{o}</option>
+                ))}
+              </Select>
+            </Flex>
+            {/* CATEGORY SELECTION */}
+            <Flex gap="2.5" align="center">
+              <RiSurveyLine />
+              <Text whiteSpace="nowrap">Category</Text>
+              <Select
+                maxW="52"
+                ml="auto"
+                onChange={event => {
+                  if (event.target.value) {
+                    dispatch({
+                      type: 'wiki/updateCategories',
+                      payload: {
+                        id: slugifyText(event.target.value),
+                        title: event.target.value,
+                      },
+                    })
+                  } else {
+                    dispatch({
+                      type: 'wiki/deleteCategories',
+                    })
                   }
-                >
-                  {Object.values(PageTypeName).map(o => (
-                    <option key={o}>{o}</option>
-                  ))}
-                </Select>
-              </Flex>
-              <Flex gap="2.5" align="center">
-                <RiSurveyLine />
-                <Text whiteSpace="nowrap">Category</Text>
-                <Select
-                  maxW="52"
-                  ml="auto"
-                  onChange={event => {
-                    if (event.target.value) {
-                      dispatch({
-                        type: 'wiki/updateCategories',
-                        payload: {
-                          id: slugifyText(event.target.value),
-                          title: event.target.value,
-                        },
-                      })
-                    } else {
-                      dispatch({
-                        type: 'wiki/deleteCategories',
-                      })
-                    }
-                  }}
-                  value={currentWiki.categories[0]?.title}
-                  placeholder={
-                    currentWiki.categories.length > 0
-                      ? undefined
-                      : 'Select Category'
-                  }
-                >
-                  {categoryOptions?.map(o => (
-                    <option key={o.title}>{o.title}</option>
-                  ))}
-                </Select>
-              </Flex>
-            </Stack>
-            <Divider />
+                }}
+                value={currentWiki.categories[0]?.title}
+                placeholder={
+                  currentWiki.categories.length > 0
+                    ? undefined
+                    : 'Select Category'
+                }
+              >
+                {categoryOptions?.map(o => (
+                  <option key={o.title}>{o.title}</option>
+                ))}
+              </Select>
+            </Flex>
+
+            {/* TAGS ADDITIONS */}
+            <Tags />
+
+            {/* SOCIAL PROFILES */}
             <Stack
               rounded="md"
-              border="solid 1px"
-              borderColor="gray.300"
+              borderWidth={1}
               _dark={{ borderColor: 'whiteAlpha.300' }}
-              p="5"
+              p={4}
               spacing="3"
             >
               <Text fontWeight="semibold">Social Profiles</Text>
@@ -250,49 +253,50 @@ const HighlightsModal = ({
                   Add
                 </Button>
               </Flex>
-              <ButtonGroup spacing="7" pt="3">
-                {socialMedia.map(network => (
-                  <IconButton
-                    key={network.id}
-                    aria-label={network.label}
-                    bg="gray.100"
-                    color="black"
-                    _hover={{
-                      bg: 'gray.100',
-                    }}
-                    _dark={{
-                      color: 'white',
-                      bg: 'whiteAlpha.100',
-                    }}
-                    rounded="full"
-                    icon={
-                      <>
-                        {network.icon}{' '}
-                        <chakra.span
-                          pos="absolute"
-                          top="-1px"
-                          right="-1px"
-                          px={2}
-                          py={1}
-                          fontSize="xs"
-                          fontWeight="bold"
-                          lineHeight="none"
-                          color="red.100"
-                          transform="translate(50%,-50%)"
-                          bg="red.400"
-                          _hover={{ bg: 'red.500' }}
-                          rounded="full"
-                          onClick={() => removeSocialMedia(network.id)}
-                        >
-                          x
-                        </chakra.span>
-                      </>
-                    }
-                  />
-                ))}
-              </ButtonGroup>
+              {socialMedia.length > 0 && (
+                <ButtonGroup spacing="7" pt="3">
+                  {socialMedia.map(network => (
+                    <IconButton
+                      key={network.id}
+                      aria-label={network.label}
+                      bg="gray.100"
+                      color="black"
+                      _hover={{
+                        bg: 'gray.100',
+                      }}
+                      _dark={{
+                        color: 'white',
+                        bg: 'whiteAlpha.100',
+                      }}
+                      rounded="full"
+                      icon={
+                        <>
+                          {network.icon}{' '}
+                          <chakra.span
+                            pos="absolute"
+                            top="-1px"
+                            right="-1px"
+                            px={2}
+                            py={1}
+                            fontSize="xs"
+                            fontWeight="bold"
+                            lineHeight="none"
+                            color="red.100"
+                            transform="translate(50%,-50%)"
+                            bg="red.400"
+                            _hover={{ bg: 'red.500' }}
+                            rounded="full"
+                            onClick={() => removeSocialMedia(network.id)}
+                          >
+                            x
+                          </chakra.span>
+                        </>
+                      }
+                    />
+                  ))}
+                </ButtonGroup>
+              )}
             </Stack>
-            <Tags />
           </Stack>
         </ModalBody>
 
