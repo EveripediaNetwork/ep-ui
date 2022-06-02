@@ -136,7 +136,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
             <Button
               as="a"
               fontSize={{ base: 'xs', md: 'md', lg: 'inherit' }}
-              px={{ base: '2', lg: 10 }}
+              px={{ base: '8', lg: 10 }}
               href="https://www.getdrip.com/forms/505929689/submissions/new"
               target="_blank"
               w="fit-content"
