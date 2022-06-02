@@ -405,3 +405,28 @@ export const calculateEditInfo = (
     },
   })
 }
+
+export const isVerifiedContentLinks = (content: string) => {
+  const whitelistedDomains = [
+    'youtube.com/watch',
+    'youtu.be',
+    'vimeo.com',
+    'alpha.everipedia.org/wiki',
+    'ipfs.everipedia.org/ipfs',
+  ]
+  const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
+  let isValid = true
+  markdownLinks?.every(link => {
+    const url = link.match(/\((.*?)\)/g)?.[0].replace(/\(|\)/g, '')
+    if (url && url.charAt(0) !== '#') {
+      // check if url is of whitelisted domains
+      const validURLRecognizer = new RegExp(
+        `^https?://(www\\.)?(${whitelistedDomains.join('|')})`,
+      )
+      isValid = validURLRecognizer.test(url)
+      return isValid
+    }
+    return true
+  })
+  return isValid
+}

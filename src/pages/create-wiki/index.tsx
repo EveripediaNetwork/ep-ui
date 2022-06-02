@@ -73,6 +73,7 @@ import {
   useCreateWikiEffects,
   useCreateWikiContext,
   errorMessage,
+  isVerifiedContentLinks,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
@@ -193,6 +194,15 @@ const CreateWikiContent = () => {
     if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
       toast({
         title: 'Add a page type to continue',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (!isVerifiedContentLinks(wiki.content)) {
+      toast({
+        title: 'Please remove all external links from the content',
         status: 'error',
         duration: 3000,
       })
