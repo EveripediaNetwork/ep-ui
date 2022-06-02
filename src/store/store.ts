@@ -11,7 +11,7 @@ import {
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
 import { activitiesApi } from '@/services/activities'
-import { navSearchApi } from '@/services/nav-search'
+import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 
 export const store = configureStore({

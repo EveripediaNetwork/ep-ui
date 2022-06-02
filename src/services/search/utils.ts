@@ -1,8 +1,12 @@
-import { getCategoriesByTitle, getWikisByTitle } from '@/services/nav-search'
+import {
+  getCategoriesByTitle,
+  getTagsById,
+  getWikisByTitle,
+} from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
-import { WikiPreview } from '@/types/Wiki'
+import { Tag, WikiPreview } from '@/types/Wiki'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
@@ -35,6 +39,11 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
+export const fetchTagsList = async (query: string) => {
+  const { data } = await store.dispatch(getTagsById.initiate(query))
+  return data
+}
+
 const debouncedFetchResults = debounce(
   (query: string, cb: (data: Results) => void) => {
     Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
@@ -43,6 +52,16 @@ const debouncedFetchResults = debounce(
         cb({ articles, categories })
       },
     )
+  },
+  500,
+)
+
+const debouncedFetchTags = debounce(
+  (query: string, cb: (data: Tag[]) => void) => {
+    Promise.all([fetchTagsList(query)]).then(res => {
+      const [tags = []] = res
+      cb(tags)
+    })
   },
   500,
 )
@@ -60,6 +79,25 @@ export const useNavSearch = () => {
     if (query && query.length >= 3) {
       setIsLoading(true)
       debouncedFetchResults(query, res => {
+        setResults(res)
+        setIsLoading(false)
+      })
+    }
+  }, [query])
+
+  return { query, setQuery, isLoading, results }
+}
+
+export const useTagSearch = () => {
+  const [query, setQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [results, setResults] = useState<Tag[]>([])
+
+  useEffect(() => {
+    if (query && query.length >= 3) {
+      setIsLoading(true)
+      debouncedFetchTags(query, res => {
         setResults(res)
         setIsLoading(false)
       })
