@@ -75,7 +75,7 @@ const Tags = () => {
           sx={{ ...tagsInputStyle }}
         >
           {api.value.map((value, index) => (
-            <span key={index}>
+            <chakra.span key={index} whiteSpace="nowrap">
               <div {...api.getTagProps({ index, value })}>
                 <span>{value} </span>
                 <button
@@ -86,9 +86,11 @@ const Tags = () => {
                 </button>
               </div>
               <input {...api.getTagInputProps({ index, value })} />
-            </span>
+            </chakra.span>
           ))}
-          <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
+          {api.value.length < 5 && (
+            <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
+          )}
         </chakra.div>
         {tagState.invalid ? (
           <Text fontSize="xs" color="red">
