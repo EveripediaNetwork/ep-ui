@@ -43,7 +43,6 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
-  console.log(categoryData)
 
   useEffect(() => {
     setHasMore(true)
