@@ -182,7 +182,7 @@ const ActivityCard = ({
           {wiki.categories.length && (
             <HStack spacing={2}>
               {wiki.categories.map((category, index) => (
-                <NextLink href={`/categories/${category.id}`} key={index} passHref >
+                <Link  key={index} href={`/categories/${category.id}`} >
                   <Text
                     as="a"
                     color="brand.500"
@@ -191,7 +191,7 @@ const ActivityCard = ({
                   >
                     {category.id}
                   </Text>
-                </NextLink>
+                </Link>
               ))}
             </HStack>
           )}
