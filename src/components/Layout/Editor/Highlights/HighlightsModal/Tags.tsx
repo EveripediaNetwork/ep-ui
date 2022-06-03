@@ -131,8 +131,8 @@ const Tags = () => {
                 }}
               >
                 <HStack>
-                  <Icon as={RiLightbulbLine} fontSize={20} />
-                  <Text>{tag.id}</Text>
+                  <Icon as={RiLightbulbLine} color="linkColor" fontSize={20} />
+                  <Text color="linkColor">{tag.id}</Text>
                 </HStack>
               </Box>
             ))}
