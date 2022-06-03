@@ -11,6 +11,7 @@ import ProfileSummary from './InsightComponents/ProfileSummary'
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
+import WikiCommitMessage from './InsightComponents/WikiCommiMessage'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -24,6 +25,10 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
 
   const twitterLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+  )?.value
+
+  const commitMessage = wiki.metadata.find(
+    meta => meta.id === CommonMetaIds.COMMIT_MESSAGE,
   )?.value
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
@@ -67,6 +72,13 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
             />
           )}
         </>
+      )}
+      {!!commitMessage && (
+        <WikiCommitMessage
+          commitMessage={commitMessage}
+          user={wiki.user}
+          lastUpdated={wiki.updated}
+        />
       )}
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {wiki.categories.length !== 0 && (
