@@ -179,23 +179,24 @@ const ActivityCard = ({
               </Text>
             )}
           </HStack>
-          {wiki.categories.map((category, index) => (
-            <NextLink 
-            href={`/categories/${category.id}`} 
-            key={index} 
-            passHref
-            >
-              <Text
+          {wiki.categories.map((category, i) => (
+            <NextLink href={`/categories/${category.id}`} key={i} passHref>
+              
+              <Tag
                 as="a"
-                display={{ base: 'none', md: 'block' }}
-                color="brand.500"
-                fontWeight="bold"
+                key={i}
+                borderRadius={6}
+                variant="solid"
+                bg={`hsl(${Math.floor(Math.random() * 360)}, 20%, 80%)`}
                 cursor="pointer"
               >
-                {category.id}
-              </Text>
+                <Text px={4} color="black">
+                  {category.id}
+                </Text>
+              </Tag>
             </NextLink>
           ))}
+          
         </Flex>
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
