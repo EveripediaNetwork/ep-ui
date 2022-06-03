@@ -38,7 +38,7 @@ export const GET_CATEGORIES_BY_TITLE = gql`
 
 export const GET_TAGS_BY_ID = gql`
   query tagsById($id: String!) {
-    tagsById(id: $id) {
+    tagsById(limit: 5, id: $id) {
       id
     }
   }
