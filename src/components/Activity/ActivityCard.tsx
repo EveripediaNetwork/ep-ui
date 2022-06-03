@@ -180,7 +180,11 @@ const ActivityCard = ({
             )}
           </HStack>
           {wiki.categories.map((category, index) => (
-            <NextLink href={`/categories/${category.id}`} key={index}  passHref>
+            <NextLink 
+            href={`/categories/${category.id}`} 
+            key={index} 
+            passHref
+            >
               <Text
                 as="a"
                 display={{ base: 'none', md: 'block' }}
