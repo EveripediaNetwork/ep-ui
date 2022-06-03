@@ -1,7 +1,13 @@
+/* =========================== */
+/* GLOBAL STYLES */
+/* =========================== */
 html {
   scroll-behavior: smooth;
 }
+
+/* =========================== */
 /* EDITOR SHELL STYLES */
+/* =========================== */
 .ProseMirror,
 .toastui-editor-contents {
   font-size: 16px !important;
@@ -56,8 +62,9 @@ html {
   margin: 0 !important;
 }
 
+/* =========================== */
 /* EDITOR TOOLBAR STYLES */
-
+/* =========================== */
 .toastui-editor-custom-toolbar-icon {
   background-repeat: no-repeat;
   background-position: center;
@@ -90,7 +97,12 @@ html {
 .toastui-editor-ok-button {
   background-color: #ec67a8 !important;
 }
+
+/* =========================== */
 /* EDITOR CONTENT STYLES */
+/* =========================== */
+
+/* WYSIWYG MODE STYLES */
 .toastui-editor-contents * {
   font-family: poppins, sans-serif !important;
 }
@@ -135,7 +147,21 @@ html {
 .toastui-editor-contents blockquote > p {
   color: inherit !important;
 }
+
+/* MARKDOWN MODE STYLES */
+.md-mode :where(div) {
+  font-weight: 400 !important;
+  font-family: poppins, sans-serif !important;
+}
+.toastui-editor-md-heading {
+  font-weight: 600 !important;
+  font-family: poppins, sans-serif !important;
+}
+
+/* =========================== */
 /* WIKI MEDIA SHOWCASE STYLES */
+/* =========================== */
+
 #bp_container > .bp-x {
   justify-content: center;
   align-items: center;
@@ -165,7 +191,9 @@ html {
   margin-left: 60px;
 }
 
+/* =========================== */
 /* CHAKRA UI STYLE FIXES */
+/* =========================== */
 .chakra-popover__popper {
   z-index: 999 !important;
 }
