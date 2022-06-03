@@ -64,10 +64,16 @@ const Tags = () => {
         border="solid 1px"
         borderColor="gray.300"
         _dark={{ borderColor: 'whiteAlpha.300', bg: 'gray.700' }}
-        p={4}
+        p={3}
         pos="relative"
       >
-        <chakra.div ref={ref} {...api.rootProps} sx={{ ...tagsInputStyle }}>
+        <chakra.div
+          ref={ref}
+          display="flex"
+          alignItems="center"
+          {...api.rootProps}
+          sx={{ ...tagsInputStyle }}
+        >
           {api.value.map((value, index) => (
             <span key={index}>
               <div {...api.getTagProps({ index, value })}>
