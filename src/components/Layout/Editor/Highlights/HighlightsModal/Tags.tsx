@@ -1,11 +1,12 @@
 import React, { memo, useRef, useState } from 'react'
-import { Stack, Text, chakra, Box } from '@chakra-ui/react'
+import { Stack, Text, chakra, Box, HStack, Icon } from '@chakra-ui/react'
 import * as tagsInput from '@zag-js/tags-input'
 import { mergeProps, useMachine, useSetup } from '@zag-js/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
 import { useTagSearch } from '@/services/search/utils'
+import { RiLightbulbLine } from 'react-icons/ri'
 
 const MAX_LENGTH = 15
 
@@ -62,8 +63,7 @@ const Tags = () => {
       <chakra.div
         rounded="md"
         border="solid 1px"
-        borderColor="gray.300"
-        _dark={{ borderColor: 'whiteAlpha.300', bg: 'gray.700' }}
+        borderColor="borderColor"
         p={3}
         pos="relative"
       >
@@ -93,7 +93,7 @@ const Tags = () => {
           )}
         </chakra.div>
         {tagState.invalid ? (
-          <Text fontSize="xs" color="red">
+          <Text fontSize="xs" color="red.300">
             {tagState.msg}
           </Text>
         ) : null}
@@ -130,7 +130,10 @@ const Tags = () => {
                   },
                 }}
               >
-                <Text>{tag.id}</Text>
+                <HStack>
+                  <Icon as={RiLightbulbLine} fontSize={20} />
+                  <Text>{tag.id}</Text>
+                </HStack>
               </Box>
             ))}
           </Box>
