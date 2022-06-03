@@ -203,13 +203,18 @@ const ActivityCard = ({
 
                 //   </Tag>
                 // </Link>
-                <Text fontSize="16px" color="linkColor">
+               
                   <NextLink key={i} href={`/categories/${category.id}`} passHref>
-                    <Link  href="passRef" color="brand.500" fontWeight="bold">
+                   <Text
+                    display={{ base: 'none', md: 'block' }}
+                    color="brand.500"
+                    fontWeight="bold"
+                    cursor="pointer"
+                  >
                       {category.id}
-                    </Link>
+                    </Text>
                   </NextLink>
-                </Text>
+               
               ))}
             </HStack>
           )}
