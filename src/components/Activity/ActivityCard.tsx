@@ -180,16 +180,38 @@ const ActivityCard = ({
             )}
           </HStack>
           {wiki.categories.length && (
-            <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
-              <Text
-                display={{ base: 'none', md: 'block' }}
-                color="brand.500"
-                fontWeight="bold"
-                cursor="pointer"
-              >
-                {wiki.categories[0].title}
-              </Text>
-            </NextLink>
+            // <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
+            // <Text
+            //   display={{ base: 'none', md: 'block' }}
+            //   color="brand.500"
+            //   fontWeight="bold"
+            //   cursor="pointer"
+            // >
+            //     {wiki.categories[0].title}
+            //   </Text>
+            // </NextLink>
+            <HStack>
+              {wiki.categories?.map((category, i) => (
+                // <Link
+                //   key={i}
+                //   m="3px !important"
+                //   href={`/categories/${category.id}`}
+                // >
+                //   <Tag key={i} whiteSpace="nowrap" bg='transparent'>
+
+                //   {category.id}
+
+                //   </Tag>
+                // </Link>
+                <Text fontSize="16px" color="linkColor">
+                  <NextLink key={i} href={`/categories/${category.id}`} passHref>
+                    <Link  href="passRef" color="brand.500" fontWeight="bold">
+                      {category.id}
+                    </Link>
+                  </NextLink>
+                </Text>
+              ))}
+            </HStack>
           )}
         </Flex>
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
