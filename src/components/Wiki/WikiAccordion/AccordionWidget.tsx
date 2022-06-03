@@ -26,7 +26,9 @@ import { useENSData } from '@/hooks/useENSData'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
-  const [, username] = useENSData((type === 'address' && typeof content === 'string') ?  content : '')
+  const [, username] = useENSData(
+    type === 'address' && typeof content === 'string' ? content : '',
+  )
   const contentTemplate = () => {
     if (type === 'url') {
       const contentURL = content as string
@@ -63,11 +65,11 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
     if (type === 'account' && typeof content === 'string') {
       return (
         <HStack>
-        <DisplayAvatar size="16" address={content} />
-        <Link fontSize="xs" href={`/account/${content}`} color="brand.500">
-          {username || shortenAccount(content || '')}
-        </Link>
-      </HStack>
+          <DisplayAvatar size="16" address={content} />
+          <Link fontSize="xs" href={`/account/${content}`} color="brand.500">
+            {username || shortenAccount(content || '')}
+          </Link>
+        </HStack>
       )
     }
     if (type === 'explorers' && content instanceof Array) {
