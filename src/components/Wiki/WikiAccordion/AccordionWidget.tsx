@@ -21,10 +21,12 @@ import {
   RiShareBoxLine,
 } from 'react-icons/ri'
 import shortenAccount from '@/utils/shortenAccount'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useENSData } from '@/hooks/useENSData'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
-
+  const [, username] = useENSData((type === 'address' && typeof content === 'string') ?  content : '')
   const contentTemplate = () => {
     if (type === 'url') {
       const contentURL = content as string
@@ -56,6 +58,16 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
             variant="link"
           />
         </HStack>
+      )
+    }
+    if (type === 'account' && typeof content === 'string') {
+      return (
+        <HStack>
+        <DisplayAvatar size="16" address={content} />
+        <Link fontSize="xs" href={`/account/${content}`} color="brand.500">
+          {username || shortenAccount(content || '')}
+        </Link>
+      </HStack>
       )
     }
     if (type === 'explorers' && content instanceof Array) {
@@ -96,7 +108,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
         </Stat>
       )
     }
-    return <Text>{content.toString()}</Text>
+    return <Text fontSize="xs">{content.toString()}</Text>
   }
   return (
     <HStack

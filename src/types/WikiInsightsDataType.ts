@@ -10,7 +10,7 @@ export type WikiInsights =
       }
     }
   | {
-      type: 'url' | 'address' | 'text'
+      type: 'url' | 'address' | 'text'| 'account'
       title: string
       titleTag?: string
       content: string
