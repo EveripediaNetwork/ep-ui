@@ -65,6 +65,9 @@ const Tags = () => {
           if (suggestionSelectionId > 0) setSuggestionSelectionId(p => p - 1)
         },
         Enter() {
+          setQuery('')
+          setSuggestionSelectionId(-1)
+          inputRef.current?.focus()
           if (suggestionSelectionId === -1) return
           if (editTagIndex === -1)
             api.setValue([...api.value, results[suggestionSelectionId]?.id])
@@ -77,9 +80,6 @@ const Tags = () => {
               ),
             )
           }
-          setQuery('')
-          setSuggestionSelectionId(-1)
-          inputRef.current?.focus()
         },
       }
       const exec = keyMap[e.key]
