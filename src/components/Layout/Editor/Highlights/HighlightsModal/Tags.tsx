@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { Stack, Text, chakra, Box } from '@chakra-ui/react'
+import { Stack, Text, chakra, Box, useDisclosure } from '@chakra-ui/react'
 import * as tagsInput from '@zag-js/tags-input'
 import { mergeProps, useMachine, useSetup } from '@zag-js/react'
 
@@ -16,6 +16,11 @@ const Tags = () => {
   const [editTagIndex, setEditTagIndex] = useState<number>(-1)
   const currentWiki = useAppSelector(state => state.wiki)
   const [suggestionSelectionId, setSuggestionSelectionId] = useState<number>(-1)
+  const {
+    isOpen: isOpenSuggestions,
+    onOpen: onOpenSuggestions,
+    onClose: onCloseSuggestions,
+  } = useDisclosure()
 
   const [state, send] = useMachine(
     tagsInput.machine({
@@ -50,46 +55,43 @@ const Tags = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleKeyPress = useCallback(
-    (e: { key: string; preventDefault: () => void }) => {
-      if (results.length === 0) return
-      if (e.key === 'ArrowDown') {
-        e.preventDefault()
-        if (suggestionSelectionId < results.length - 1) {
-          setSuggestionSelectionId(p => p + 1)
-        }
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const keyMap: Record<string, () => void> = {
+        ArrowDown() {
+          if (suggestionSelectionId < results.length - 1) {
+            setSuggestionSelectionId(p => p + 1)
+          }
+        },
+        ArrowUp() {
+          if (suggestionSelectionId > 0) {
+            setSuggestionSelectionId(p => p - 1)
+          }
+        },
+        Enter() {
+          if (editTagIndex === -1)
+            api.setValue([...api.value, results[suggestionSelectionId]?.id])
+          else
+            api.setValue(
+              api.value.map((_, index) =>
+                index === editTagIndex
+                  ? results[suggestionSelectionId]?.id
+                  : api.value[index],
+              ),
+            )
+          setQuery('')
+          setSuggestionSelectionId(-1)
+          inputRef.current?.focus()
+        },
       }
-      if (e.key === 'ArrowUp') {
+      const exec = keyMap[e.key]
+      if (exec) {
         e.preventDefault()
-        if (suggestionSelectionId > 0) {
-          setSuggestionSelectionId(p => p - 1)
-        }
-      }
-      if (e.key === 'Enter') {
-        if (editTagIndex === -1)
-          api.setValue([...api.value, results[suggestionSelectionId]?.id])
-        else
-          api.setValue(
-            api.value.map((_, index) =>
-              index === editTagIndex
-                ? results[suggestionSelectionId]?.id
-                : api.value[index],
-            ),
-          )
-        setQuery('')
-        setSuggestionSelectionId(-1)
-        inputRef.current?.focus()
+        exec()
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [results, suggestionSelectionId, editTagIndex, setQuery],
   )
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress)
-    }
-  }, [results, handleKeyPress])
 
   const InputProps = mergeProps(api.inputProps, {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +99,20 @@ const Tags = () => {
       setQuery(e.target.value)
       setSuggestionSelectionId(-1)
     },
+    onKeyDown: handleKeyPress,
+    onBlur: () => {
+      setSuggestionSelectionId(-1)
+      onCloseSuggestions()
+    },
   })
+
+  useEffect(() => {
+    if (results.length > 0) {
+      onOpenSuggestions()
+    } else {
+      onCloseSuggestions()
+    }
+  }, [onCloseSuggestions, onOpenSuggestions, results])
 
   return (
     <Stack spacing="4">
@@ -127,6 +142,11 @@ const Tags = () => {
                   setQuery(e.target.value)
                   setSuggestionSelectionId(-1)
                 },
+                onKeyDown: handleKeyPress,
+                onBlur: () => {
+                  setSuggestionSelectionId(-1)
+                  onCloseSuggestions()
+                },
               },
             )
             return (
@@ -153,7 +173,7 @@ const Tags = () => {
             {tagState.msg}
           </Text>
         ) : null}
-        {results.length > 0 && (
+        {isOpenSuggestions && (
           <Box
             pos="absolute"
             zIndex={2}
