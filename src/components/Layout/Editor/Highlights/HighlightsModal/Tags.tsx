@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Stack, Text, chakra, Box } from '@chakra-ui/react'
 import * as tagsInput from '@zag-js/tags-input'
 import { mergeProps, useMachine, useSetup } from '@zag-js/react'
@@ -15,6 +15,8 @@ const Tags = () => {
   const { setQuery, results } = useTagSearch()
   const [editTagIndex, setEditTagIndex] = useState<number>(-1)
   const currentWiki = useAppSelector(state => state.wiki)
+  const [suggestionSelectionId, setSuggestionSelectionId] = useState<number>(-1)
+
   const [state, send] = useMachine(
     tagsInput.machine({
       value: currentWiki.tags.map(ta => ta.id),
@@ -45,15 +47,57 @@ const Tags = () => {
   )
   const ref = useSetup({ send, id: '1' })
   const api = tagsInput.connect(state, send)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleKeyPress = useCallback(
+    (e: { key: string; preventDefault: () => void }) => {
+      if (results.length === 0) return
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        if (suggestionSelectionId < results.length - 1) {
+          setSuggestionSelectionId(p => p + 1)
+        }
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        if (suggestionSelectionId > 0) {
+          setSuggestionSelectionId(p => p - 1)
+        }
+      }
+      if (e.key === 'Enter') {
+        if (editTagIndex === -1)
+          api.setValue([...api.value, results[suggestionSelectionId]?.id])
+        else
+          api.setValue(
+            api.value.map((_, index) =>
+              index === editTagIndex
+                ? results[suggestionSelectionId]?.id
+                : api.value[index],
+            ),
+          )
+        setQuery('')
+        setSuggestionSelectionId(-1)
+        inputRef.current?.focus()
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [results, suggestionSelectionId, editTagIndex, setQuery],
+  )
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress)
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [results, handleKeyPress])
 
   const InputProps = mergeProps(api.inputProps, {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setEditTagIndex(-1)
       setQuery(e.target.value)
+      setSuggestionSelectionId(-1)
     },
   })
-
-  const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <Stack spacing="4">
@@ -81,6 +125,7 @@ const Tags = () => {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   setEditTagIndex(index)
                   setQuery(e.target.value)
+                  setSuggestionSelectionId(-1)
                 },
               },
             )
@@ -123,7 +168,6 @@ const Tags = () => {
           >
             {results.map((tag, i) => (
               <Box
-                as="button"
                 key={tag.id}
                 onClick={() => {
                   if (editTagIndex === -1) api.addValue(tag.id)
@@ -134,12 +178,17 @@ const Tags = () => {
                       ),
                     )
                   setQuery('')
+                  setSuggestionSelectionId(-1)
                   inputRef.current?.focus()
                 }}
+                bgColor={
+                  suggestionSelectionId === i ? 'hoverBg' : 'transparent'
+                }
                 w="full"
                 textAlign="left"
                 p={2}
                 borderTopWidth={i > 0 ? 1 : 0}
+                cursor="pointer"
                 sx={{
                   '&:hover, &:focus, &:active': {
                     bg: 'hoverBg',
