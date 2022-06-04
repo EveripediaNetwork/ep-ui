@@ -55,22 +55,20 @@ const Tags = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleKeyPress = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
+    (e: { key: string | number; preventDefault: () => void }) => {
       const keyMap: Record<string, () => void> = {
         ArrowDown() {
-          if (suggestionSelectionId < results.length - 1) {
+          if (suggestionSelectionId < results.length - 1)
             setSuggestionSelectionId(p => p + 1)
-          }
         },
         ArrowUp() {
-          if (suggestionSelectionId > 0) {
-            setSuggestionSelectionId(p => p - 1)
-          }
+          if (suggestionSelectionId > 0) setSuggestionSelectionId(p => p - 1)
         },
         Enter() {
+          if (suggestionSelectionId === -1) return
           if (editTagIndex === -1)
             api.setValue([...api.value, results[suggestionSelectionId]?.id])
-          else
+          else {
             api.setValue(
               api.value.map((_, index) =>
                 index === editTagIndex
@@ -78,6 +76,7 @@ const Tags = () => {
                   : api.value[index],
               ),
             )
+          }
           setQuery('')
           setSuggestionSelectionId(-1)
           inputRef.current?.focus()
@@ -93,26 +92,30 @@ const Tags = () => {
     [results, suggestionSelectionId, editTagIndex, setQuery],
   )
 
+  useEffect(() => {
+    if (results.length > 0) {
+      window.addEventListener('keydown', handleKeyPress)
+      onOpenSuggestions()
+    } else {
+      window.removeEventListener('keydown', handleKeyPress)
+      onCloseSuggestions()
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [results, handleKeyPress, onOpenSuggestions, onCloseSuggestions])
+
   const InputProps = mergeProps(api.inputProps, {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSuggestionSelectionId(-1)
       setEditTagIndex(-1)
       setQuery(e.target.value)
-      setSuggestionSelectionId(-1)
     },
-    onKeyDown: handleKeyPress,
     onBlur: () => {
       setSuggestionSelectionId(-1)
       onCloseSuggestions()
     },
   })
-
-  useEffect(() => {
-    if (results.length > 0) {
-      onOpenSuggestions()
-    } else {
-      onCloseSuggestions()
-    }
-  }, [onCloseSuggestions, onOpenSuggestions, results])
 
   return (
     <Stack spacing="4">
@@ -138,11 +141,10 @@ const Tags = () => {
               api.getTagInputProps({ index, value }),
               {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSuggestionSelectionId(-1)
                   setEditTagIndex(index)
                   setQuery(e.target.value)
-                  setSuggestionSelectionId(-1)
                 },
-                onKeyDown: handleKeyPress,
                 onBlur: () => {
                   setSuggestionSelectionId(-1)
                   onCloseSuggestions()
