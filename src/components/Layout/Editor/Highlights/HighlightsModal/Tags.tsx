@@ -52,7 +52,7 @@ const Tags = () => {
   )
   const ref = useSetup({ send, id: '1' })
   const api = tagsInput.connect(state, send)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleKeyPress = useCallback(
     (e: { key: string | number; preventDefault: () => void }) => {
