@@ -13,8 +13,8 @@ const Tags = () => {
   const dispatch = useAppDispatch()
   const [tagState, setTagState] = useState({ invalid: false, msg: '' })
   const { setQuery, results } = useTagSearch()
+  const [editTagIndex, setEditTagIndex] = useState<number>(-1)
   const currentWiki = useAppSelector(state => state.wiki)
-
   const [state, send] = useMachine(
     tagsInput.machine({
       value: currentWiki.tags.map(ta => ta.id),
@@ -48,6 +48,7 @@ const Tags = () => {
 
   const InputProps = mergeProps(api.inputProps, {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEditTagIndex(-1)
       setQuery(e.target.value)
     },
   })
@@ -73,20 +74,31 @@ const Tags = () => {
           {...api.rootProps}
           sx={{ ...tagsInputStyle }}
         >
-          {api.value.map((value, index) => (
-            <chakra.span key={index} whiteSpace="nowrap">
-              <div {...api.getTagProps({ index, value })}>
-                <span>{value} </span>
-                <button
-                  type="button"
-                  {...api.getTagDeleteButtonProps({ index, value })}
-                >
-                  &#x2715;
-                </button>
-              </div>
-              <input {...api.getTagInputProps({ index, value })} />
-            </chakra.span>
-          ))}
+          {api.value.map((value, index) => {
+            const TagInputProps = mergeProps(
+              api.getTagInputProps({ index, value }),
+              {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setEditTagIndex(index)
+                  setQuery(e.target.value)
+                },
+              },
+            )
+            return (
+              <chakra.span key={index} whiteSpace="nowrap">
+                <div {...api.getTagProps({ index, value })}>
+                  <span>{value} </span>
+                  <button
+                    type="button"
+                    {...api.getTagDeleteButtonProps({ index, value })}
+                  >
+                    &#x2715;
+                  </button>
+                </div>
+                <input {...TagInputProps} />
+              </chakra.span>
+            )
+          })}
           {api.value.length < 5 && (
             <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
           )}
@@ -114,7 +126,13 @@ const Tags = () => {
                 as="button"
                 key={tag.id}
                 onClick={() => {
-                  api.addValue(tag.id)
+                  if (editTagIndex === -1) api.addValue(tag.id)
+                  else
+                    api.setValue(
+                      api.value.map((_, index) =>
+                        index === editTagIndex ? tag.id : api.value[index],
+                      ),
+                    )
                   setQuery('')
                   inputRef.current?.focus()
                 }}

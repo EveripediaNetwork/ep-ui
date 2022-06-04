@@ -63,7 +63,7 @@ const debouncedFetchTags = debounce(
       cb(tags)
     })
   },
-  500,
+  50,
 )
 
 export const useNavSearch = () => {
@@ -95,8 +95,7 @@ export const useTagSearch = () => {
   const [results, setResults] = useState<Tag[]>([])
 
   useEffect(() => {
-    console.log('FETCHING')
-    if (query && query.length >= 3) {
+    if (query && query.length >= 1) {
       setIsLoading(true)
       debouncedFetchTags(query, res => {
         setResults(res)
