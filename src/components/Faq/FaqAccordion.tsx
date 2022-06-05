@@ -8,9 +8,9 @@ import {
   Box,
   AccordionPanel,
   Flex,
-  useColorModeValue,
   Icon,
 } from '@chakra-ui/react'
+import { IconType } from 'react-icons'
 
 const SingleAccordion = ({
   header,
@@ -19,17 +19,15 @@ const SingleAccordion = ({
   header: string
   body: string
 }) => {
-  const accordionBg = useColorModeValue('#ffffff', '#2D3748')
-  const accordionShadow = useColorModeValue('0px 0px 20px 11px #80808012', '')
   return (
     <Flex direction="column">
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 5 }}>
+      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
           py={{ base: 5 }}
-          bg={accordionBg}
           border="none"
-          boxShadow={accordionShadow}
+          _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
+          _dark={{ bg: '#2D3748' }}
         >
           {({ isExpanded }) => {
             return (
@@ -79,14 +77,14 @@ const FaqAccordion = ({
   heading,
   icon,
 }: {
-  faqData: Array<any>
+  faqData: Record<string, string>[]
   heading: string
-  icon: any
+  icon: IconType
 }) => {
   return (
     <Flex direction="column" mt={10}>
-      <Flex gap={{ base: 5 }} align="center" justify="center" w="fit-content">
-        <Icon as={icon} boxSize="30px" />
+      <Flex gap={{ base: 2 }} align="center" justify="center" w="fit-content">
+        <Icon as={icon} boxSize={{base: "25px", lg: "30px"}} />
         <Text
           fontWeight="bold"
           mt={{ base: 5 }}
@@ -97,7 +95,7 @@ const FaqAccordion = ({
           {heading}
         </Text>
       </Flex>
-      {faqData.map((item: any, index: any) => {
+      {faqData.map((item, index: any) => {
         return (
           <SingleAccordion key={index} header={item.header} body={item.body} />
         )

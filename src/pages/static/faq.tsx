@@ -5,11 +5,14 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { RiFlagFill, RiSettings2Fill } from 'react-icons/ri'
 import { FaMousePointer } from 'react-icons/fa'
+import { IconType } from 'react-icons'
+import { FaqDataItem } from '@/types/FaqDataItem'
 
-console.log(RiSettings2Fill)
+
+
 const FAQ = () => {
   const { t } = useTranslation()
-  const faqData = [
+  const faqData: FaqDataItem[] = [
     {
       keyWord: t('faqSectionOne'),
       icon: RiFlagFill,
@@ -66,8 +69,8 @@ const FAQ = () => {
     },
   ]
   return (
-    <main>
-      <Flex direction="column" px={{ base: 6, lg: 16 }} py={{ lg: 20 }}>
+    <Flex bgColor="pageBg">
+      <Flex  w="min(90%, 1100px)" mx="auto" direction="column" py={{ lg: 20 }}>
         <FaqHeader />
         <Flex direction="column">
           {faqData.map((item: any, index: any) => {
@@ -82,7 +85,7 @@ const FAQ = () => {
           })}
         </Flex>
       </Flex>
-    </main>
+    </Flex>
   )
 }
 
