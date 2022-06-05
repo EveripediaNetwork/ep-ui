@@ -48,7 +48,6 @@ const SingleAccordion = ({
                         {header}
                       </Text>
                     </Box>
-                    {/* <AccordionIcon /> */}
                     {isExpanded ? (
                       <MinusIcon fontSize="12px" />
                     ) : (
@@ -59,7 +58,7 @@ const SingleAccordion = ({
                 <AccordionPanel pb={4}>
                   <Text
                     fontSize={{ base: 'sm', md: 'sm', lg: 'sm' }}
-                    lineHeight={{ base: '2' }}
+                    lineHeight={2}
                   >
                     {body}
                   </Text>
@@ -87,7 +86,7 @@ const FaqAccordion = ({
         <Icon as={icon} boxSize={{ base: '25px', lg: '30px' }} />
         <Text
           fontWeight="bold"
-          mt={{ base: 5 }}
+          mt={5}
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
           fontSize={{ base: 'md', md: 'md', lg: 'xl' }}
           mb={4}
@@ -95,7 +94,7 @@ const FaqAccordion = ({
           {heading}
         </Text>
       </Flex>
-      {faqData.map((item, index: any) => {
+      {faqData.map((item, index) => {
         return (
           <SingleAccordion key={index} header={item.header} body={item.body} />
         )
