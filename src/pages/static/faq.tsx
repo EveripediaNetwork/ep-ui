@@ -5,10 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { RiFlagFill, RiSettings2Fill } from 'react-icons/ri'
 import { FaMousePointer } from 'react-icons/fa'
-import { IconType } from 'react-icons'
 import { FaqDataItem } from '@/types/FaqDataItem'
-
-
 
 const FAQ = () => {
   const { t } = useTranslation()
@@ -70,7 +67,7 @@ const FAQ = () => {
   ]
   return (
     <Flex bgColor="pageBg">
-      <Flex  w="min(90%, 1100px)" mx="auto" direction="column" py={{ lg: 20 }}>
+      <Flex w="min(90%, 1100px)" mx="auto" direction="column" py={{ lg: 20 }}>
         <FaqHeader />
         <Flex direction="column">
           {faqData.map((item: any, index: any) => {

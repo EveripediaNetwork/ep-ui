@@ -8,10 +8,10 @@ const FaqHeader = () => {
     <Flex direction="column">
       <Heading
         lineHeight="shorter"
-        as="h1" 
-        size="2xl" 
+        as="h1"
+        size="2xl"
         letterSpacing="wide"
-        fontSize={{base: '3xl', md: '4xl', lg: '5xl'}}
+        fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
       >{`${t('faqHeader')}`}</Heading>
       <Text
         mt={{ base: 2, lg: 4, md: 2 }}
