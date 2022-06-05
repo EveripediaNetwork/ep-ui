@@ -82,7 +82,7 @@ const FaqAccordion = ({
 }) => {
   return (
     <Flex direction="column" mt={10}>
-      <Flex gap={{ base: 2 }} align="center" justify="center" w="fit-content">
+      <Flex gap={2} align="center" justify="center" w="fit-content">
         <Icon as={icon} boxSize={{ base: '25px', lg: '30px' }} />
         <Text
           fontWeight="bold"
