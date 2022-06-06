@@ -11,19 +11,25 @@ import ProfileSummary from './InsightComponents/ProfileSummary'
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
+import WikiCommitMessage from './InsightComponents/WikiCommiMessage'
 
 interface WikiInsightsProps {
   wiki: Wiki
   ipfs?: string
+  dateTime?: string | undefined
 }
 
-const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
+const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   const coingeckoLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
 
   const twitterLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+  )?.value
+
+  const commitMessage = wiki.metadata.find(
+    meta => meta.id === CommonMetaIds.COMMIT_MESSAGE,
   )?.value
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
@@ -34,7 +40,7 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
       })
     }
     fetchTokenData()
-  }, [])
+  }, [coingeckoLink])
 
   return (
     <VStack
@@ -49,7 +55,7 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
       <WikiDetails
         wikiTitle={wiki}
         categories={wiki.categories}
-        lastEdited={wiki.updated || wiki?.created}
+        lastEdited={wiki.updated || wiki?.created || dateTime}
         ipfsHash={ipfs || wiki.ipfs}
         txHash={wiki.transactionHash}
         lastEditor={wiki.user?.id}
@@ -68,6 +74,13 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
           )}
         </>
       )}
+
+      <WikiCommitMessage
+        commitMessage={commitMessage}
+        user={wiki.user}
+        lastUpdated={wiki.updated || dateTime}
+      />
+
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {wiki.categories.length !== 0 && (
         <RelatedWikis categories={wiki.categories} />

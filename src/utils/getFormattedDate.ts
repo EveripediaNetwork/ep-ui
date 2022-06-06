@@ -1,5 +1,7 @@
-import { formatDistance } from 'date-fns'
+import { formatDistanceToNowStrict } from 'date-fns'
 
 export const getReadableDate = (dateToFormat: string) => {
-  return formatDistance(new Date(dateToFormat), new Date(), { addSuffix: true })
+  return formatDistanceToNowStrict(new Date(dateToFormat), {
+    addSuffix: false,
+  })
 }

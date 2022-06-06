@@ -95,7 +95,7 @@ export const useCreateWikiEffects = (
     if (activeStep === 3) {
       prevEditedWiki.current.isPublished = true
     }
-  }, [activeStep])
+  }, [activeStep, prevEditedWiki])
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
@@ -106,11 +106,13 @@ export const useCreateWikiEffects = (
     } else {
       setIsNewCreateWiki(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, slug])
 
   useEffect(() => {
     if (isLoadingWiki === false && !wikiData)
       dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingWiki, wikiData])
 
   const updatePageTypeTemplate = useCallback(() => {
@@ -124,6 +126,7 @@ export const useCreateWikiEffects = (
       type: 'wiki/setContent',
       payload: String(pageType?.templateText),
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wiki.metadata])
 
   // update the page type template when the page type changes
@@ -175,7 +178,7 @@ export const useGetSignedHash = (deadline: number) => {
       types,
       value: {
         ipfs,
-        user: accountData!.address,
+        user: accountData?.address,
         deadline,
       },
     })
@@ -223,6 +226,7 @@ export const useGetSignedHash = (deadline: number) => {
         clearInterval(timer)
       }
     }, 3000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch])
 
   useEffect(() => {
@@ -404,4 +408,29 @@ export const calculateEditInfo = (
       value: blocksChanged.join(','),
     },
   })
+}
+
+export const isVerifiedContentLinks = (content: string) => {
+  const whitelistedDomains = [
+    'youtube.com/watch',
+    'youtu.be',
+    'vimeo.com',
+    'alpha.everipedia.org/wiki',
+    'ipfs.everipedia.org/ipfs',
+  ]
+  const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
+  let isValid = true
+  markdownLinks?.every(link => {
+    const url = link.match(/\((.*?)\)/g)?.[0].replace(/\(|\)/g, '')
+    if (url && url.charAt(0) !== '#') {
+      // check if url is of whitelisted domains
+      const validURLRecognizer = new RegExp(
+        `^https?://(www\\.)?(${whitelistedDomains.join('|')})`,
+      )
+      isValid = validURLRecognizer.test(url)
+      return isValid
+    }
+    return true
+  })
+  return isValid
 }

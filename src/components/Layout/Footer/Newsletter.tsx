@@ -13,12 +13,9 @@ const Newsletter = () => {
         {`${t('updatesFooterText')}`}
       </Text>
       <Button
-        onClick={() =>
-          window.open(
-            'https://www.getdrip.com/forms/505929689/submissions/new',
-            '_blank',
-          )
-        }
+        as="a"
+        href="https://www.getdrip.com/forms/505929689/submissions/new"
+        target="_blank"
         size="lg"
         variant="solid"
       >

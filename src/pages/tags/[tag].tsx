@@ -41,7 +41,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
       setHasMore(false)
       setLoading(false)
     }
-  }, [tag])
+  }, [tag, wikis])
 
   const fetchMoreWikis = () => {
     const updatedOffset = offset + ITEM_PER_PAGE

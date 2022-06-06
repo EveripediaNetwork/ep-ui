@@ -8,7 +8,7 @@ import {
   LinkOverlay,
   chakra,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import isMobile from 'ismobilejs'
 import NextLink from 'next/link'
 import { Wiki } from '@/types/Wiki'
@@ -80,10 +80,15 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
     nextSlide,
   } = useCarousel(drops)
 
-  useEffect(() => {
+  const mountSlideColumns = useCallback(() => {
     const isOnMobile = isMobile(window?.navigator)
     if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    mountSlideColumns()
+  }, [mountSlideColumns])
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {

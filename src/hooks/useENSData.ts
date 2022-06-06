@@ -47,7 +47,8 @@ export const useENSData = (address: string | undefined | null) => {
         getAvatar(address)
       }
     }
-  }, [address])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, avatar, ens])
 
   return [avatar, username, loading] as const
 }
