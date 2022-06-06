@@ -27,13 +27,12 @@ const WikiCommitMessage = ({
         withNoDarkBg
         flexDir="column"
         gap={2}
-        title="Commit Message"
+        title="Commit Info"
       >
         <AccordionWidget title="Edited by:" type="account" content={user.id} />
         <AccordionWidget title="Edited in:" type="text" content={lastEdited} />
-        {
-          commitMessage && 
-            <VStack
+        {commitMessage && (
+          <VStack
             bgColor="wikiCardItemBg"
             borderRadius={4}
             align="left"
@@ -47,7 +46,7 @@ const WikiCommitMessage = ({
               {commitMessage}
             </Text>
           </VStack>
-        }
+        )}
       </WikiAccordion>
     </VStack>
   )

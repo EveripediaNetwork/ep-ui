@@ -73,13 +73,13 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
           )}
         </>
       )}
-      
+
       <WikiCommitMessage
         commitMessage={commitMessage}
         user={wiki.user}
         lastUpdated={wiki.updated}
       />
-     
+
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {wiki.categories.length !== 0 && (
         <RelatedWikis categories={wiki.categories} />
