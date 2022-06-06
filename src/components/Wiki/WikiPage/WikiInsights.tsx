@@ -16,9 +16,10 @@ import WikiCommitMessage from './InsightComponents/WikiCommiMessage'
 interface WikiInsightsProps {
   wiki: Wiki
   ipfs?: string
+  dateTime?: string | undefined
 }
 
-const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
+const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   const coingeckoLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
@@ -77,7 +78,7 @@ const WikiInsights = ({ wiki, ipfs }: WikiInsightsProps) => {
       <WikiCommitMessage
         commitMessage={commitMessage}
         user={wiki.user}
-        lastUpdated={wiki.updated}
+        lastUpdated={wiki.updated || dateTime}
       />
 
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
