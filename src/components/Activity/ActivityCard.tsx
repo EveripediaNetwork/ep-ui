@@ -189,7 +189,7 @@ const ActivityCard = ({
                     fontWeight="bold"
                     cursor="pointer"
                   >
-                  {category.title ? category.title : category.id}
+                    {category.title ? category.title : category.id}
                   </Text>
                 </NextLink>
               ))}
