@@ -11,7 +11,7 @@ const WikiCommitMessage = ({
 }: {
   user: User
   lastUpdated: string | undefined
-  commitMessage: string
+  commitMessage: string | undefined
 }) => {
   const lastEdited = lastUpdated
     ? new Date(lastUpdated).toLocaleDateString('en-US', {
@@ -31,20 +31,23 @@ const WikiCommitMessage = ({
       >
         <AccordionWidget title="Edited by:" type="account" content={user.id} />
         <AccordionWidget title="Edited in:" type="text" content={lastEdited} />
-        <VStack
-          bgColor="wikiCardItemBg"
-          borderRadius={4}
-          align="left"
-          p={4}
-          spacing={2}
-        >
-          <Text fontSize="sm" color="linkColor">
-            Reason for edit:
-          </Text>
-          <Text fontSize="xs" color="linkColor">
-            {commitMessage}
-          </Text>
-        </VStack>
+        {
+          commitMessage && 
+            <VStack
+            bgColor="wikiCardItemBg"
+            borderRadius={4}
+            align="left"
+            p={4}
+            spacing={2}
+          >
+            <Text fontSize="sm" color="linkColor">
+              Reason for edit:
+            </Text>
+            <Text fontSize="xs" color="linkColor">
+              {commitMessage}
+            </Text>
+          </VStack>
+        }
       </WikiAccordion>
     </VStack>
   )
