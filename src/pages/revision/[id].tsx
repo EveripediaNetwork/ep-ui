@@ -160,7 +160,11 @@ const Revision = () => {
                       direction={{ base: 'column', md: 'row' }}
                     >
                       <WikiMainContent wiki={wiki.content[0]} />
-                      <WikiInsights dateTime={wiki.datetime} wiki={wiki.content[0]} ipfs={wiki.ipfs} />
+                      <WikiInsights
+                        dateTime={wiki.datetime}
+                        wiki={wiki.content[0]}
+                        ipfs={wiki.ipfs}
+                      />
                     </Flex>
                     <WikiReferences
                       references={JSON.parse(
