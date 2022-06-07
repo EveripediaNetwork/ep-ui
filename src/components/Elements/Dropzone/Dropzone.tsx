@@ -16,6 +16,7 @@ type DropzoneType = {
     isToResetImage?: boolean
     initialImage?: string | undefined
     showFetchedImage: boolean
+    textType: string
   }
 }
 
@@ -29,6 +30,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     deleteImage,
     initialImage,
     showFetchedImage,
+    textType,
   } = dropZoneActions
 
   const onDrop = useCallback(
@@ -104,7 +106,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           ) : (
             <Box px="8">
               <Text textAlign="center" opacity="0.5">
-                Drag and drop a <b>main image</b>, or click to select.
+                Drag and drop a <b>{textType}</b>, or click to select.
               </Text>
               <Text textAlign="center" opacity="0.5" fontWeight="bold">
                 (10mb max)

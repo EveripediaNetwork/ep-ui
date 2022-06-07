@@ -86,6 +86,7 @@ const MediaModal = ({
   const dropZoneActions = {
     setImage: handleSetImage,
     showFetchedImage: false,
+    textType: 'image or video',
   }
 
   return isOpen ? (

@@ -57,6 +57,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     deleteImage: handleDeleteImage,
     initialImage,
     showFetchedImage: true,
+    textType: 'main image',
   }
   const { t } = useTranslation()
   return (
