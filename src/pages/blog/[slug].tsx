@@ -25,7 +25,12 @@ export const BlogPostPage = (props: BlogPostProps) => {
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
-      <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
+      <chakra.div
+        w="min(90%, 1100px)"
+        px={{ lg: '44' }}
+        mx="auto"
+        my={{ base: '10', lg: '16' }}
+      >
         <Heading
           mt={8}
           mb={4}
@@ -40,7 +45,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
         </Text>
 
         <Image
-          h={{ base: '224px', md: '342px', lg: '729px' }}
+          h={{ base: '300px', md: '393px' }}
           src={`/images${post.image_url}`}
           mt="14"
         />
