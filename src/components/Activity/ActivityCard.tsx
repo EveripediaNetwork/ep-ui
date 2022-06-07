@@ -180,16 +180,21 @@ const ActivityCard = ({
             )}
           </HStack>
           {wiki.categories.length && (
-            <NextLink href={`/categories/${wiki.categories[0].id}`} passHref>
-              <Text
-                display={{ base: 'none', md: 'block' }}
-                color="brand.500"
-                fontWeight="bold"
-                cursor="pointer"
-              >
-                {wiki.categories[0].title}
-              </Text>
-            </NextLink>
+            <HStack>
+              {wiki.categories?.map((category, i) => (
+                <NextLink key={i} href={`/categories/${category.id}`} passHref>
+                  <Text
+                    as="a"
+                    display={{ base: 'none', md: 'block' }}
+                    color="brand.500"
+                    fontWeight="bold"
+                    cursor="pointer"
+                  >
+                    {category.title ? category.title : category.id}
+                  </Text>
+                </NextLink>
+              ))}
+            </HStack>
           )}
         </Flex>
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">

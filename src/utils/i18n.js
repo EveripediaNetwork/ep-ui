@@ -119,6 +119,16 @@ export const resources = {
       noOpeningsHeading: "There are currently no open positions at this time",
       careerSubscribeText: "Suscribe to our mailing list to get the latest from everipedia",
 
+      //FAQ
+      faqHeader: "Frequently Asked Questions",
+      faqPhrase: "Have questions? We are here to help you.",
+      faqSectionOne:"Getting Started", 
+      faqSectionTwo:"Using Everipedia", 
+      faqSectionThree:"Advanced", 
+      faqOneHead: "What is IQ", 
+      faqOneBody: "The IQ token is a DeFi, NFT, and Oracle token centered around bringing the world’s knowledge on-chain from finance to art to data. The IQ token is multichain available on Ethereum, Binance Smart Chain, Polygon, and EOS. The IQ token will also be the native token of the upcoming Brainchain, the first blockchain dedicated to bringing real-world knowledge on-chain. The IQ token was first launched in 2018 and powers Everipedia encyclopedia, the decentralized prediction market PredIQt, the first-party oracle service Everipedia OraQles, and HiIQ.", 
+
+
 
       //Global text 
       seenItAll: "Yay! You have seen it all 🥳 ", 
@@ -239,6 +249,15 @@ export const resources = {
       selectBundles: "Bundles", 
       shareBttnText: "Share", 
       settingBttnText: "Settings",  
+
+      //FAQ
+      faqHeader: "Frequently Asked Questions",
+      faqPhrase: "Have questions? We are here to help you.",
+      faqSectionOne:"Getting Started", 
+      faqSectionTwo:"Using Everipedia", 
+      faqSectionThree:"Advanced", 
+      faqOneHead: "What is IQ", 
+      faqOneBody: "The IQ token is a DeFi, NFT, and Oracle token centered around bringing the world’s knowledge on-chain from finance to art to data. The IQ token is multichain available on Ethereum, Binance Smart Chain, Polygon, and EOS. The IQ token will also be the native token of the upcoming Brainchain, the first blockchain dedicated to bringing real-world knowledge on-chain. The IQ token was first launched in 2018 and powers Everipedia encyclopedia, the decentralized prediction market PredIQt, the first-party oracle service Everipedia OraQles, and HiIQ.", 
 
       //Global text 
       seenItAll: "Yay! You have seen it all 🥳 ", 
@@ -361,6 +380,15 @@ export const resources = {
       //Category page: 
       wikiInCategory: "Wikis in thiss category",
 
+      //FAQ
+      faqHeader: "Frequently Asked Questions",
+      faqPhrase: "Have questions? We are here to help you.",
+      faqSectionOne:"Getting Started", 
+      faqSectionTwo:"Using Everipedia", 
+      faqSectionThree:"Advanced", 
+      faqOneHead: "What is IQ", 
+      faqOneBody: "The IQ token is a DeFi, NFT, and Oracle token centered around bringing the world’s knowledge on-chain from finance to art to data. The IQ token is multichain available on Ethereum, Binance Smart Chain, Polygon, and EOS. The IQ token will also be the native token of the upcoming Brainchain, the first blockchain dedicated to bringing real-world knowledge on-chain. The IQ token was first launched in 2018 and powers Everipedia encyclopedia, the decentralized prediction market PredIQt, the first-party oracle service Everipedia OraQles, and HiIQ.", 
+      
       //Global text 
       seenItAll: "Yay! You have seen it all 🥳 ", 
       //---End of Copies for Everipedia--
