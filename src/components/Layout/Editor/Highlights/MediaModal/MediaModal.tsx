@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import {
   Divider,
   ModalProps,
@@ -11,7 +11,6 @@ import {
   Text,
   VStack,
   Box,
-  Img,
   SimpleGrid,
   Flex,
   Progress,
@@ -20,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { shortenMediaText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/shortenText'
 import shortenBalance from '@/utils/shortenBallance'
 import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
@@ -28,6 +27,7 @@ import { Image } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
+import { ImageInput, Dropzone } from '@/components/Elements'
 
 const MediaModal = ({
   onClose = () => {},
@@ -36,7 +36,6 @@ const MediaModal = ({
 }: Partial<ModalProps>) => {
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
-  const mediaRef = useRef<HTMLInputElement | null>(null)
   const toast = useToast()
 
   const uploadImageToIPFS = async (image: Image) => {
@@ -52,32 +51,6 @@ const MediaModal = ({
     }
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target?.files?.[0]
-    const id = `${uuidv4()}_${MEDIA_POST_DEFAULT_ID}`
-    if (file) {
-      const fileSize = file.size / 1024 ** 2
-      if (fileSize > 8) {
-        toast({
-          title: 'File size is larger than 8mb',
-          status: 'error',
-          duration: 3000,
-        })
-        return
-      }
-      dispatch({
-        type: 'wiki/addMedia',
-        payload: {
-          name: file.name,
-          size: shortenBalance(fileSize),
-          id,
-          source: 'IPFS_IMG',
-        },
-      })
-      uploadImageToIPFS({ id, type: file })
-    }
-  }
-
   const deleteMedia = (mediaId: string) => {
     dispatch({
       type: 'wiki/removeMedia',
@@ -85,6 +58,34 @@ const MediaModal = ({
         id: mediaId,
       },
     })
+  }
+
+  const handleSetImage = (name: string, value: ArrayBuffer) => {
+    const id = `${uuidv4()}_${MEDIA_POST_DEFAULT_ID}`
+    const fileSize = value.byteLength / 1024 ** 2
+    if (fileSize > 10) {
+      toast({
+        title: 'File size is larger than 8mb',
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
+    dispatch({
+      type: 'wiki/addMedia',
+      payload: {
+        name,
+        size: shortenBalance(fileSize),
+        id,
+        source: 'IPFS_IMG',
+      },
+    })
+    uploadImageToIPFS({ id, type: value })
+  }
+
+  const dropZoneActions = {
+    setImage: handleSetImage,
+    showFetchedImage: false,
   }
 
   return isOpen ? (
@@ -142,7 +143,7 @@ const MediaModal = ({
                         <Flex w="full" gap={16}>
                           {media.name && (
                             <Text fontSize="sm">
-                              {shortenMediaText(media.name)}
+                              {shortenText(media.name, 8)}
                             </Text>
                           )}
                           <Box mt={1}>
@@ -176,22 +177,20 @@ const MediaModal = ({
                 </SimpleGrid>
               </Box>
             )}
-            <VStack align="center" mb={8} py={5} gap={10}>
-              {wiki.media !== undefined && wiki.media?.length < 1 && (
-                <Img src="/images/file-image.png" h={150} w={250} />
-              )}
-              <input
-                type="file"
-                id="file"
-                accept="image/*"
-                ref={mediaRef}
-                style={{ display: 'none' }}
-                onChange={handleChange}
-              />
-              <Button onClick={() => mediaRef.current?.click()} mx="auto">
-                <Text fontSize="xs">Upload from computer (8mb max)</Text>
-              </Button>
-              {wiki.media !== undefined && wiki.media?.length > 0 && (
+
+            <Flex
+              direction="column"
+              gap={5}
+              w="full"
+              borderRadius="7px"
+              py={5}
+              mb={3}
+            >
+              <Dropzone dropZoneActions={dropZoneActions} />
+              <ImageInput setImage={handleSetImage} showFetchedImage={false} />
+            </Flex>
+            {wiki.media !== undefined && wiki.media?.length > 0 && (
+              <Box mb={8} justifyContent="center" display="flex">
                 <Stack spacing={4} direction="row" align="center">
                   <Button size="md" onClick={onClose}>
                     <Text fontSize="xs">Save</Text>
@@ -200,8 +199,8 @@ const MediaModal = ({
                     <Text fontSize="xs">Cancel</Text>
                   </Button>
                 </Stack>
-              )}
-            </VStack>
+              </Box>
+            )}
           </Box>
         </ModalBody>
       </ModalContent>

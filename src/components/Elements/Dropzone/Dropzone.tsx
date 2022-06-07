@@ -6,16 +6,16 @@ import { useAccount } from 'wagmi'
 import buffer from 'buffer'
 
 import config from '@/config'
-import { useTranslation } from 'react-i18next'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
   dropZoneActions: {
-    setHideImageInput: (hide: boolean) => void
+    setHideImageInput?: (hide: boolean) => void
     setImage: (name: string, f: ArrayBuffer) => void
-    deleteImage: () => void
-    isToResetImage: boolean
-    initialImage: string | undefined
+    deleteImage?: () => void
+    isToResetImage?: boolean
+    initialImage?: string | undefined
+    showFetchedImage: boolean
   }
 }
 
@@ -28,6 +28,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     setImage,
     deleteImage,
     initialImage,
+    showFetchedImage,
   } = dropZoneActions
 
   const onDrop = useCallback(
@@ -44,7 +45,9 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
         reader.readAsArrayBuffer(f)
       })
-      setHideImageInput(true)
+      if (setHideImageInput) {
+        setHideImageInput(true)
+      }
     },
     [setPaths, setHideImageInput, setImage],
   )
@@ -58,23 +61,26 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   useEffect(() => {
     if (initialImage) {
       const path = `${config.pinataBaseUrl}${initialImage}`
-      setHideImageInput(true)
+      if (setHideImageInput) {
+        setHideImageInput(true)
+      }
       setPaths([path])
     }
   }, [initialImage, setHideImageInput])
 
   useEffect(() => {
     if (isToResetImage) {
-      deleteImage()
-      setHideImageInput(false)
+      if (deleteImage && setHideImageInput) {
+        deleteImage()
+        setHideImageInput(false)
+      }
       setPaths([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
-  const { t } = useTranslation()
   return (
     <Box>
-      {paths.length === 0 ? (
+      {paths.length === 0 || !showFetchedImage ? (
         <Box
           display="flex"
           padding="10px"
@@ -96,43 +102,54 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           {isDragActive ? (
             <Text textAlign="center">Drop the files here ...</Text>
           ) : (
-            <Text textAlign="center" opacity="0.5" maxW="xs">
-              {`${t('dragMainImgLabel')}`}
-            </Text>
+            <Box px="8">
+              <Text textAlign="center" opacity="0.5">
+                Drag and drop a <b>main image</b>, or click to select.
+              </Text>
+              <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                (10mb max)
+              </Text>
+            </Box>
           )}
         </Box>
       ) : (
-        <Flex direction="column" w="full" h="full" justify="center">
-          {paths.map(path => (
-            <Image
-              mx="auto"
-              priority
-              h="255px"
-              w="full"
-              borderRadius={4}
-              overflow="hidden"
-              key={path}
-              src={path}
-              alt="highlight"
-            />
-          ))}
-          <Button
-            w="25%"
-            fontWeight="bold"
-            fontSize="20px"
-            m="auto"
-            mt="5px"
-            shadow="md"
-            bg="red.400"
-            onClick={() => {
-              setPaths([])
-              setHideImageInput(false)
-              deleteImage()
-            }}
-          >
-            <RiCloseLine />
-          </Button>
-        </Flex>
+        <>
+          {showFetchedImage && (
+            <Flex direction="column" w="full" h="full" justify="center">
+              {paths.map(path => (
+                <Image
+                  mx="auto"
+                  priority
+                  h="255px"
+                  w="full"
+                  borderRadius={4}
+                  overflow="hidden"
+                  key={path}
+                  src={path}
+                  alt="highlight"
+                />
+              ))}
+              <Button
+                w="25%"
+                fontWeight="bold"
+                fontSize="20px"
+                m="auto"
+                mt="5px"
+                shadow="md"
+                bg="red.400"
+                onClick={() => {
+                  setPaths([])
+                  if (setHideImageInput && deleteImage) {
+                    setHideImageInput(false)
+                    deleteImage()
+                  }
+                }}
+              >
+                <RiCloseLine />
+              </Button>
+            </Flex>
+          )}
+        </>
       )}
     </Box>
   )
