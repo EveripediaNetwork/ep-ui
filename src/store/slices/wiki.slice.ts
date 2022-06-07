@@ -5,15 +5,16 @@ import {
   MData,
   CommonMetaIds,
   EditSpecificMetaIds,
+  CreateNewWikiSlug,
 } from '@/types/Wiki'
 
 export const saveDraftInLocalStorage = (wiki: Wiki) => {
-  if (wiki.id) {
-    const wikiData = JSON.stringify(wiki)
-    const timestamp = new Date().getTime()
-    const wikiDataWithTimestamp = `${wikiData}|${timestamp}`
-    localStorage.setItem(`draftData-${wiki.id}`, wikiDataWithTimestamp)
-  }
+  if (!wiki.id) return
+  console.log('saving draft to local storage')
+  const wikiData = JSON.stringify(wiki)
+  const timestamp = new Date().getTime()
+  const wikiDataWithTimestamp = `${wikiData}|${timestamp}`
+  localStorage.setItem(`draftData-${wiki.id}`, wikiDataWithTimestamp)
 }
 
 export const getDraftFromLocalStorage = (slug: string) => {
@@ -40,7 +41,7 @@ export const removeDraftFromLocalStorage = (slug?: string) => {
 }
 
 const initialState: Wiki = {
-  id: '',
+  id: CreateNewWikiSlug,
   version: 1,
   language: LanguagesISOEnum.EN,
   title: '',
@@ -85,7 +86,8 @@ const wikiSlice = createSlice({
         ...state,
         content: action.payload,
       }
-      if (newState.content) {
+      if (newState.content.trim()) {
+        console.log(newState.content)
         saveDraftInLocalStorage(newState)
       }
       return newState

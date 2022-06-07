@@ -9,6 +9,8 @@ import {
   EditSpecificMetaIds,
   WikiRootBlocks,
   MData,
+  CreateNewWikiSlug,
+  EditorContentOverride,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -22,6 +24,8 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { PageTemplate } from '@/data/pageTemplate'
 import { store } from '@/store/store'
+import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import { useToast } from '@chakra-ui/toast'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -87,7 +91,6 @@ export const useCreateWikiEffects = (
     wikiData,
     activeStep,
     setIsNewCreateWiki,
-
     dispatch,
     isLoadingWiki,
   } = useCreateWikiContext()
@@ -102,8 +105,22 @@ export const useCreateWikiEffects = (
   useEffect(() => {
     if (!slug) {
       setIsNewCreateWiki(true)
-      dispatch({ type: 'wiki/reset' })
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+      // fetch draft data from local storage
+      const draft = getDraftFromLocalStorage(CreateNewWikiSlug)
+      if (draft) {
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            ...draft,
+            content:
+              EditorContentOverride.KEYWORD +
+              draft.content.replace(/ {2}\n/gm, '\n'),
+          },
+        })
+      } else {
+        dispatch({ type: 'wiki/reset' })
+        dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+      }
     } else {
       setIsNewCreateWiki(false)
     }
@@ -111,22 +128,21 @@ export const useCreateWikiEffects = (
   }, [dispatch, slug])
 
   useEffect(() => {
-    if (isLoadingWiki === false && !wikiData)
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+    // if (isLoadingWiki === false && !wikiData)
+    //   dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingWiki, wikiData])
 
   const updatePageTypeTemplate = useCallback(() => {
-    const meta = [
-      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
-      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
-    ]
-    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
-
-    dispatch({
-      type: 'wiki/setContent',
-      payload: String(pageType?.templateText),
-    })
+    // const meta = [
+    //   getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
+    //   getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
+    // ]
+    // const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
+    // dispatch({
+    //   type: 'wiki/setContent',
+    //   payload: String(pageType?.templateText),
+    // })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wiki.metadata])
 
@@ -276,6 +292,7 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
+  const toast = useToast()
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -297,6 +314,7 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
+    toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,

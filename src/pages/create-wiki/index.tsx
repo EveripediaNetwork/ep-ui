@@ -18,7 +18,6 @@ import {
   CloseButton,
   Center,
   Skeleton,
-  useToast,
   Box,
   HStack,
   Input,
@@ -61,6 +60,7 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   EditorContentOverride,
+  CreateNewWikiSlug,
 } from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
@@ -93,8 +93,6 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-
-  const toast = useToast()
   const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
     useContext<ImageStateType>(ImageContext)
   const { data: accountData } = useAccount()
@@ -125,6 +123,7 @@ const CreateWikiContent = () => {
     isLoadingWiki,
     wikiData,
     dispatch,
+    toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -366,6 +365,42 @@ const CreateWikiContent = () => {
   }, [activeStep])
 
   useEffect(() => {
+    // get draft wiki if it exists
+    let draft: Wiki | undefined
+    if (isNewCreateWiki) draft = getDraftFromLocalStorage(CreateNewWikiSlug)
+    else if (wikiData) draft = getDraftFromLocalStorage(wikiData.id)
+
+    if (!toast.isActive('draft-loaded') && draft) {
+      toast({
+        id: 'draft-loaded',
+        title: (
+          <HStack w="full" justify="space-between" align="center">
+            <Text>Loaded from saved draft</Text>
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => {
+                removeDraftFromLocalStorage(draft?.id)
+                // reload the page to remove the draft
+                window.location.reload()
+              }}
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: '#0000002a',
+                },
+              }}
+            >
+              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Fetch Latest'}
+            </Button>
+          </HStack>
+        ),
+        status: 'info',
+        duration: 5000,
+      })
+    }
+  }, [isNewCreateWiki, toast, wikiData])
+
+  useEffect(() => {
     let initWikiData: Wiki | undefined
     if (wikiData) initWikiData = getDraftFromLocalStorage(wikiData.id)
 
@@ -377,34 +412,6 @@ const CreateWikiContent = () => {
 
     // if there is no draft stored, use fetched wiki data
     if (!initWikiData) initWikiData = wikiData
-    else if (!toast.isActive('draft-loaded')) {
-      toast({
-        id: 'draft-loaded',
-        title: (
-          <HStack w="full" justify="space-between" align="center">
-            <Text>Loaded from saved draft</Text>
-            <Button
-              size="xs"
-              variant="outline"
-              onClick={() => {
-                removeDraftFromLocalStorage(initWikiData?.id)
-                // reload the page to remove the draft
-                window.location.reload()
-              }}
-              sx={{
-                '&:hover, &:focus, &:active': {
-                  bgColor: '#0000002a',
-                },
-              }}
-            >
-              Fetch Latest
-            </Button>
-          </HStack>
-        ),
-        status: 'info',
-        duration: 5000,
-      })
-    }
 
     if (
       initWikiData &&
@@ -435,14 +442,14 @@ const CreateWikiContent = () => {
         })),
       ]
 
-      const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
           id,
           title,
           summary,
-          content: EditorContentOverride.KEYWORD + transformedContent,
+          content:
+            EditorContentOverride.KEYWORD + content.replace(/ {2}\n/gm, '\n'),
           tags,
           categories,
           metadata,

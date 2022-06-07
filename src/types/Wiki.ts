@@ -25,6 +25,8 @@ export enum EditorContentOverride {
   KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
 }
 
+export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
+
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
