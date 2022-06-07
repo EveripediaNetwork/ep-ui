@@ -45,10 +45,18 @@ export const BlogPostPage = (props: BlogPostProps) => {
           mt="14"
         />
 
-        <Stack spacing="15" mt="12">
+        <Stack
+          spacing="15"
+          mt="12"
+          sx={{
+            p: {
+              lineHeight: '26px',
+            },
+          }}
+        >
           {/* Post Content Start */}
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               Stats
             </Text>
             <p>
@@ -68,7 +76,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
             </p>
           </Stack>
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               BrainDAO Blue Chip NFT Proposal
             </Text>
             <p>
@@ -103,7 +111,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
             </p>
           </Stack>
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               Brainies
             </Text>
             <p>
@@ -147,17 +155,19 @@ export const BlogPostPage = (props: BlogPostProps) => {
           </Stack>
 
           <Stack spacing="8">
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               You might like
             </Text>
             <SimpleGrid
+              alignSelf="center"
+              w="fit-content"
               mt={{ base: '15', md: '16' }}
-              columns={{ base: 1, md: 2, lg: 3 }}
+              columns={{ base: 1, md: 2 }}
               spacingX="5"
               spacingY="14"
             >
-              {postSuggestions.map((blogPost, i) => (
-                <BlogPost post={blogPost} key={i} />
+              {postSuggestions.slice(-2).map((blogPost, i) => (
+                <BlogPost maxW="420px" post={blogPost} key={i} />
               ))}
             </SimpleGrid>
           </Stack>
