@@ -67,7 +67,7 @@ const FAQ = () => {
   ]
   return (
     <Flex bgColor="pageBg">
-      <Flex w="min(90%, 1100px)" mx="auto" direction="column" py={{ lg: 20 }}>
+      <Flex w="min(90%, 1100px)" mx="auto" direction="column" py={{ lg: 20 }} mb={{base: 17, lg: 0}}>
         <FaqHeader />
         <Flex direction="column">
           {faqData.map((item: any, index: any) => {
