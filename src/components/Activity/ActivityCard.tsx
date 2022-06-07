@@ -184,6 +184,7 @@ const ActivityCard = ({
               {wiki.categories?.map((category, i) => (
                 <NextLink key={i} href={`/categories/${category.id}`} passHref>
                   <Text
+                    as="a"
                     display={{ base: 'none', md: 'block' }}
                     color="brand.500"
                     fontWeight="bold"
