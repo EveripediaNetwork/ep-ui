@@ -261,7 +261,7 @@ const CreateWikiContent = () => {
       }
 
       let interWiki = { ...wiki }
-      if (interWiki.id === '') interWiki.id = getWikiSlug()
+      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
       if (accountData.address) {
