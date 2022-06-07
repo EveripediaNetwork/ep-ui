@@ -35,6 +35,7 @@ import {
   PopoverBody,
   PopoverFooter,
   Tag,
+  Text,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -79,6 +80,10 @@ import {
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
 import OverrideExistingWikiDialog from '@/components/Elements/Modal/OverrideExistingWikiDialog'
+import {
+  getDraftFromLocalStorage,
+  removeDraftFromLocalStorage,
+} from '@/store/slices/wiki.slice'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -334,11 +339,22 @@ const CreateWikiContent = () => {
     signing ||
     isLoadingWiki
 
-  const handleOnEditorChanges = (val: string | undefined) => {
-    dispatch({
-      type: 'wiki/setContent',
-      payload: val || ' ',
-    })
+  const handleOnEditorChanges = (
+    val: string | undefined,
+    isInitSet?: boolean,
+  ) => {
+    if (isInitSet)
+      dispatch({
+        type: 'wiki/setInitialWikiState',
+        payload: {
+          content: val || ' ',
+        },
+      })
+    else
+      dispatch({
+        type: 'wiki/setContent',
+        payload: val || ' ',
+      })
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
@@ -350,25 +366,67 @@ const CreateWikiContent = () => {
   }, [activeStep])
 
   useEffect(() => {
+    let initWikiData: Wiki | undefined
+    if (wikiData) initWikiData = getDraftFromLocalStorage(wikiData.id)
+
+    // combine draft wiki data with existing wikidata images
+    // if the draft doesn't modify the images
+    if (initWikiData && wikiData && !initWikiData.images)
+      if (wikiData.images && wikiData.images.length > 0)
+        initWikiData.images = wikiData.images
+
+    // if there is no draft stored, use fetched wiki data
+    if (!initWikiData) initWikiData = wikiData
+    else if (!toast.isActive('draft-loaded')) {
+      toast({
+        id: 'draft-loaded',
+        title: (
+          <HStack w="full" justify="space-between" align="center">
+            <Text>Loaded from saved draft</Text>
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => {
+                removeDraftFromLocalStorage(initWikiData?.id)
+                // reload the page to remove the draft
+                window.location.reload()
+              }}
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: '#0000002a',
+                },
+              }}
+            >
+              Fetch Latest
+            </Button>
+          </HStack>
+        ),
+        status: 'info',
+        duration: 5000,
+      })
+    }
+
     if (
-      wikiData &&
-      wikiData.content.length > 0 &&
-      wikiData.images &&
-      wikiData.images.length > 0
+      initWikiData &&
+      initWikiData.content.length > 0 &&
+      initWikiData.images &&
+      initWikiData.images.length > 0
     ) {
       // update isWikiBeingEdited
       updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
       // update image hash
-      updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
+      updateImageState(ImageKey.IPFS_HASH, String(initWikiData?.images[0].id))
 
-      const { id, title, summary, content, tags, categories, media } = wikiData
-      let { metadata } = wikiData
+      const { id, title, summary, content, tags, categories, media } =
+        initWikiData
+      let { metadata } = initWikiData
 
       // fetch the currently stored meta data of page that are not edit specific
       // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
+      const wikiDt = initWikiData
       metadata = [
         ...Object.values(CommonMetaIds).map(mId => {
-          const meta = getWikiMetadataById(wikiData, mId)
+          const meta = getWikiMetadataById(wikiDt, mId)
           return { id: mId, value: meta?.value || '' }
         }),
         ...Object.values(EditSpecificMetaIds).map(mId => ({
@@ -379,7 +437,7 @@ const CreateWikiContent = () => {
 
       const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
-        type: 'wiki/setCurrentWiki',
+        type: 'wiki/setInitialWikiState',
         payload: {
           id,
           title,
@@ -392,7 +450,7 @@ const CreateWikiContent = () => {
         },
       })
     }
-  }, [dispatch, updateImageState, wikiData])
+  }, [dispatch, toast, updateImageState, wikiData])
 
   useEffect(() => {
     if (txHash) verifyTrxHash()

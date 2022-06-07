@@ -17,7 +17,7 @@ const ToastUIEditorJSX = ToastUIEditor as unknown as (
 ) => JSX.Element
 
 type EditorType = {
-  onChange: (value: string | undefined) => void
+  onChange: (value: string | undefined, isInitSet?: boolean) => void
   markdown?: string
 }
 
@@ -107,7 +107,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
         EditorContentOverride.KEYWORD
       ) {
-        onChange(markdown.substring(26))
+        onChange(markdown.substring(26), true)
       } else if (
         currentMd &&
         currentMd !== 'Write\nPreview\n\nMarkdown\nWYSIWYG'
