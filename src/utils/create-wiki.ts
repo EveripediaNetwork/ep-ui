@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -8,7 +8,6 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   WikiRootBlocks,
-  MData,
   CreateNewWikiSlug,
   EditorContentOverride,
 } from '@/types/Wiki'
@@ -22,10 +21,9 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
-import { PageTemplate } from '@/data/pageTemplate'
-import { store } from '@/store/store'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useToast } from '@chakra-ui/toast'
+import { store } from '@/store/store'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -86,14 +84,8 @@ export const useCreateWikiEffects = (
     isPublished: boolean
   }>,
 ) => {
-  const {
-    slug,
-    wikiData,
-    activeStep,
-    setIsNewCreateWiki,
-    dispatch,
-    isLoadingWiki,
-  } = useCreateWikiContext()
+  const { slug, activeStep, setIsNewCreateWiki, dispatch } =
+    useCreateWikiContext()
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -126,43 +118,6 @@ export const useCreateWikiEffects = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, slug])
-
-  useEffect(() => {
-    // if (isLoadingWiki === false && !wikiData)
-    //   dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingWiki, wikiData])
-
-  const updatePageTypeTemplate = useCallback(() => {
-    // const meta = [
-    //   getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
-    //   getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
-    // ]
-    // const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
-    // dispatch({
-    //   type: 'wiki/setContent',
-    //   payload: String(pageType?.templateText),
-    // })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wiki.metadata])
-
-  // update the page type template when the page type changes
-  const presentPageType = useMemo(
-    () =>
-      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
-        ?.value,
-    [wiki?.metadata],
-  )
-  useEffect(() => {
-    if (presentPageType) {
-      let isMdPageTemplate = false
-      PageTemplate.forEach(p => {
-        if (p.templateText === wiki.content) isMdPageTemplate = true
-      })
-      if (isMdPageTemplate || wiki.content === ' ') updatePageTypeTemplate()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [presentPageType])
 }
 
 export const useGetSignedHash = (deadline: number) => {
@@ -460,7 +415,6 @@ export const isVerifiedContentLinks = (content: string) => {
   })
   return isValid
 }
-
 export const isWikiExists = async (
   slug: string,
   setExistingWikiData: (data: Wiki) => void,
