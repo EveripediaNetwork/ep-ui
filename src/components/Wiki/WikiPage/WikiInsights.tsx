@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { VStack } from '@chakra-ui/react'
-import { CommonMetaIds, Wiki } from '@/types/Wiki'
+import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
@@ -29,7 +29,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   )?.value
 
   const commitMessage = wiki.metadata.find(
-    meta => meta.id === CommonMetaIds.COMMIT_MESSAGE,
+    meta => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
