@@ -1,13 +1,19 @@
 import React from 'react'
-import { Flex, LinkBox, LinkOverlay, Text } from '@chakra-ui/react'
+import {
+  Flex,
+  LinkBox,
+  LinkBoxProps,
+  LinkOverlay,
+  Text,
+} from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import type { BlogPost as BlogPostType } from '@/components/Blog/data'
 import NextLink from 'next/link'
 
-export type BlogPostProps = { post: BlogPostType }
+export type BlogPostProps = { post: BlogPostType } & LinkBoxProps
 
 export const BlogPost = (props: BlogPostProps) => {
-  const { post } = props
+  const { post, ...rest } = props
 
   return (
     <LinkBox
@@ -18,6 +24,7 @@ export const BlogPost = (props: BlogPostProps) => {
       bg="white"
       _dark={{ bg: 'gray.700' }}
       overflowX="hidden"
+      {...rest}
     >
       <Image h="52" src={`/images${post.image_url}`} />
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
