@@ -128,7 +128,7 @@ const MediaModal = ({
                 justifyContent={{ base: 'center', md: 'left' }}
                 maxH="162px"
                 border="1px solid #CBD5E0"
-                p={6}
+                p={5}
                 borderRadius={8}
                 overflow="auto"
               >
