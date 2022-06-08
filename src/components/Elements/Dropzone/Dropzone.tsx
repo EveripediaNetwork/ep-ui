@@ -7,7 +7,7 @@ import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useTranslation } from 'react-i18next'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
-import { CreateNewWikiSlug } from '@/types/Wiki'
+import { useDispatch } from 'react-redux'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
@@ -24,6 +24,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const { t } = useTranslation()
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
+  const dispatch = useDispatch()
   const { data: accountData } = useAccount()
   const {
     setHideImageInput,
@@ -82,9 +83,14 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   useEffect(() => {
     if (isToResetImage) {
-      const draftWiki = getDraftFromLocalStorage(CreateNewWikiSlug)
-      if (draftWiki?.image?.length === 0) {
-        deleteImage()
+      const draftWiki = getDraftFromLocalStorage()
+      if (!draftWiki || draftWiki?.image?.length === 0) {
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            image: undefined,
+          },
+        })
         setHideImageInput(false)
         setPaths([])
       }

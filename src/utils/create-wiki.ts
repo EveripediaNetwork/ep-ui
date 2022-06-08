@@ -8,7 +8,6 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   WikiRootBlocks,
-  CreateNewWikiSlug,
   EditorContentOverride,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
@@ -69,7 +68,6 @@ export const saveImage = async (image: Image) => {
 
     return IpfsHash
   } catch (err) {
-    console.log(err)
     return null
   }
 }
@@ -98,7 +96,7 @@ export const useCreateWikiEffects = (
     if (!slug) {
       setIsNewCreateWiki(true)
       // fetch draft data from local storage
-      const draft = getDraftFromLocalStorage(CreateNewWikiSlug)
+      const draft = getDraftFromLocalStorage()
       if (draft) {
         dispatch({
           type: 'wiki/setInitialWikiState',
@@ -111,7 +109,12 @@ export const useCreateWikiEffects = (
         })
       } else {
         dispatch({ type: 'wiki/reset' })
-        dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            content: EditorContentOverride.KEYWORD + initialEditorValue,
+          },
+        })
       }
     } else {
       setIsNewCreateWiki(false)

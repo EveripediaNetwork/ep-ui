@@ -8,16 +8,25 @@ import {
   CreateNewWikiSlug,
 } from '@/types/Wiki'
 
+const getCurrentSlug = () => {
+  let slug = window.location.search.split('=')[1]
+  if (!slug) slug = CreateNewWikiSlug
+  return slug
+}
+
 export const saveDraftInLocalStorage = (wiki: Wiki) => {
-  if (!wiki.id) return
-  console.log('saving draft to local storage')
+  // get slug from url
+  const slug = getCurrentSlug()
+  // save draft to local storage
   const wikiData = JSON.stringify(wiki)
   const timestamp = new Date().getTime()
   const wikiDataWithTimestamp = `${wikiData}|${timestamp}`
-  localStorage.setItem(`draftData-${wiki.id}`, wikiDataWithTimestamp)
+  localStorage.setItem(`draftData-${slug}`, wikiDataWithTimestamp)
 }
 
-export const getDraftFromLocalStorage = (slug: string) => {
+export const getDraftFromLocalStorage = () => {
+  // get slug from url
+  const slug = getCurrentSlug()
   // fetch draft data from local storage
   const draftData = localStorage.getItem(`draftData-${slug}`)
   if (!draftData) return undefined
@@ -25,19 +34,17 @@ export const getDraftFromLocalStorage = (slug: string) => {
   const wiki = JSON.parse(wikiData)
   const draftTimestamp = parseInt(timestamp, 10)
   const currentTimestamp = new Date().getTime()
-
   // check if draft is older than 24 hour
   const cacheLimit = 24 * 60 * 60 * 1000
   if (currentTimestamp - draftTimestamp > cacheLimit) {
     localStorage.removeItem(`draftData-${slug}`)
     return undefined
   }
-
-  console.log('WIKI FETCHED FROM DRAFTS: ', wiki)
   // if draft is not older than 24 hour, return wiki
   return wiki
 }
-export const removeDraftFromLocalStorage = (slug?: string) => {
+export const removeDraftFromLocalStorage = () => {
+  const slug = getCurrentSlug()
   if (slug) localStorage.removeItem(`draftData-${slug}`)
 }
 
@@ -88,7 +95,6 @@ const wikiSlice = createSlice({
         content: action.payload,
       }
       if (newState.content.trim()) {
-        console.log(newState.content)
         saveDraftInLocalStorage(newState)
       }
       return newState

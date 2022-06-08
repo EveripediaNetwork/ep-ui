@@ -332,8 +332,8 @@ const CreateWikiContent = () => {
   useEffect(() => {
     // get draft wiki if it exists
     let draft: Wiki | undefined
-    if (isNewCreateWiki) draft = getDraftFromLocalStorage(CreateNewWikiSlug)
-    else if (wikiData) draft = getDraftFromLocalStorage(wikiData.id)
+    if (isNewCreateWiki) draft = getDraftFromLocalStorage()
+    else if (wikiData) draft = getDraftFromLocalStorage()
 
     if (!toast.isActive('draft-loaded') && draft) {
       toast({
@@ -345,7 +345,7 @@ const CreateWikiContent = () => {
               size="xs"
               variant="outline"
               onClick={() => {
-                removeDraftFromLocalStorage(draft?.id)
+                removeDraftFromLocalStorage()
                 // reload the page to remove the draft
                 window.location.reload()
               }}
@@ -367,7 +367,7 @@ const CreateWikiContent = () => {
 
   useEffect(() => {
     let initWikiData: Wiki | undefined
-    if (wikiData) initWikiData = getDraftFromLocalStorage(wikiData.id)
+    if (wikiData) initWikiData = getDraftFromLocalStorage()
 
     // combine draft wiki data with existing wikidata images
     // if the draft doesn't modify the images
