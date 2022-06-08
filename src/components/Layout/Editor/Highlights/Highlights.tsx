@@ -64,6 +64,8 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     isToResetImage,
     deleteImage: handleDeleteImage,
     initialImage,
+    showFetchedImage: true,
+    textType: 'main image',
   }
   const { t } = useTranslation()
   return (
@@ -83,6 +85,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           setImage={handleSetImage}
           setHideDropzone={setHideDropzone}
           deleteImage={handleDeleteImage}
+          showFetchedImage
         />
       )}
       <VStack align="start" spacing={2}>

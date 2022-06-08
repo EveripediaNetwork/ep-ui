@@ -3,15 +3,17 @@ import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
 type ImageInputType = {
-  setHideDropzone: (hide: boolean) => void
-  setImage: (f: ArrayBuffer) => void
-  deleteImage: () => void
+  setHideDropzone?: (hide: boolean) => void
+  setImage: (name: string, f: ArrayBuffer) => void
+  deleteImage?: () => void
+  showFetchedImage: boolean
 }
 
 const ImageInput = ({
   setHideDropzone,
   setImage,
   deleteImage,
+  showFetchedImage,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
   const toast = useToast()
@@ -20,7 +22,10 @@ const ImageInput = ({
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     setImageSrc(event.target.value)
-    setHideDropzone(true)
+
+    if (setHideDropzone) {
+      setHideDropzone(true)
+    }
     try {
       const response = await fetch(
         `https://images.weserv.nl/?url=${event.target.value}`,
@@ -29,8 +34,19 @@ const ImageInput = ({
           headers: {},
         },
       )
+      if (response.status !== 200) {
+        toast({
+          title: 'Image could not be fetched. Ensure you have the right link',
+          status: 'error',
+          duration: 2000,
+        })
+        return
+      }
       const data = await response.arrayBuffer()
-      setImage(Buffer.from(data))
+      setImage(event.target.value, Buffer.from(data))
+      if (!showFetchedImage) {
+        setImageSrc('')
+      }
       toast({
         title: 'Image successfully Fetched',
         status: 'success',
@@ -43,18 +59,17 @@ const ImageInput = ({
         duration: 2000,
       })
     }
-    return null
   }
   const { t } = useTranslation()
   return (
     <Flex
-      mt={imgSrc ? 0 : -20}
+      mt={imgSrc && showFetchedImage ? 0 : -20}
       mb={5}
       direction="column"
       justifyContent="center"
       alignItems="center"
     >
-      {imgSrc ? (
+      {imgSrc && showFetchedImage ? (
         <Flex
           direction="column"
           justifyContent="center"
@@ -76,8 +91,10 @@ const ImageInput = ({
             bg="red.400"
             onClick={() => {
               setImageSrc(undefined)
-              setHideDropzone(false)
-              deleteImage()
+              if (deleteImage && setHideDropzone) {
+                setHideDropzone(false)
+                deleteImage()
+              }
             }}
           >
             Clear
@@ -87,6 +104,7 @@ const ImageInput = ({
         <Input
           w="90%"
           textAlign="center"
+          value={imgSrc}
           onChange={handleOnImageInputChanges}
           placeholder={`${t('pasteMainImgLabel')}`}
         />

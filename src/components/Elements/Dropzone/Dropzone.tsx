@@ -5,23 +5,23 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 
 import config from '@/config'
-import { useTranslation } from 'react-i18next'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
   dropZoneActions: {
-    setHideImageInput: (hide: boolean) => void
-    setImage: (f: ArrayBuffer) => void
-    deleteImage: () => void
-    isToResetImage: boolean
-    initialImage: string | undefined
+    setHideImageInput?: (hide: boolean) => void
+    setImage: (name: string, f: ArrayBuffer) => void
+    deleteImage?: () => void
+    isToResetImage?: boolean
+    initialImage?: string | undefined
+    showFetchedImage: boolean
+    textType: string
   }
 }
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
-  const { t } = useTranslation()
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
   const dispatch = useDispatch()
@@ -32,6 +32,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     setImage,
     deleteImage,
     initialImage,
+    showFetchedImage,
+    textType,
   } = dropZoneActions
 
   const onDrop = useCallback(
@@ -48,22 +50,24 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           const fileSize = binaryStr.byteLength / 1024 ** 2
           if (fileSize > 10) {
             toast({
-              title: 'File size is larger than 8mb',
+              title: 'File size is larger than 10mb',
               status: 'error',
               duration: 3000,
             })
-            setHideImageInput(false)
+            if (setHideImageInput) setHideImageInput(false)
             setPaths([])
             return
           }
 
           // set image to state
-          setImage(binaryStr as ArrayBuffer)
+          setImage(f.name, binaryStr as ArrayBuffer)
         }
 
         reader.readAsArrayBuffer(f)
       })
-      setHideImageInput(true)
+      if (setHideImageInput) {
+        setHideImageInput(true)
+      }
     },
     [setHideImageInput, setImage, toast],
   )
@@ -76,8 +80,11 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   useEffect(() => {
     if (initialImage) {
-      setHideImageInput(true)
-      setPaths([`${config.pinataBaseUrl}${initialImage}`])
+      const path = `${config.pinataBaseUrl}${initialImage}`
+      if (setHideImageInput) {
+        setHideImageInput(true)
+      }
+      setPaths([path])
     }
   }, [initialImage, setHideImageInput])
 
@@ -91,7 +98,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
             image: undefined,
           },
         })
-        setHideImageInput(false)
+        if (setHideImageInput) setHideImageInput(false)
         setPaths([])
       }
     }
@@ -100,7 +107,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   return (
     <Box>
-      {paths.length === 0 ? (
+      {paths.length === 0 || !showFetchedImage ? (
         <Box
           display="flex"
           padding="10px"
@@ -111,7 +118,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           justifyContent="center"
           alignItems="center"
           maxH="345px"
-          minH="300px"
+          minH={!showFetchedImage ? '165px' : '300px'}
           _hover={{
             boxShadow: 'md',
             borderColor: 'brand.400',
@@ -122,43 +129,54 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           {isDragActive ? (
             <Text textAlign="center">Drop the files here ...</Text>
           ) : (
-            <Text textAlign="center" opacity="0.5" maxW="xs">
-              {`${t('dragMainImgLabel')}`}
-            </Text>
+            <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
+              <Text textAlign="center" opacity="0.5">
+                Drag and drop a <b>{textType}</b>, or click to select.
+              </Text>
+              <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                (10mb max)
+              </Text>
+            </Box>
           )}
         </Box>
       ) : (
-        <Flex direction="column" w="full" h="full" justify="center">
-          {paths.map(path => (
-            <Image
-              mx="auto"
-              priority
-              h="255px"
-              w="full"
-              borderRadius={4}
-              overflow="hidden"
-              key={path}
-              src={path}
-              alt="highlight"
-            />
-          ))}
-          <Button
-            w="25%"
-            fontWeight="bold"
-            fontSize="20px"
-            m="auto"
-            mt="5px"
-            shadow="md"
-            bg="red.400"
-            onClick={() => {
-              setPaths([])
-              setHideImageInput(false)
-              deleteImage()
-            }}
-          >
-            <RiCloseLine />
-          </Button>
-        </Flex>
+        <>
+          {showFetchedImage && (
+            <Flex direction="column" w="full" h="full" justify="center">
+              {paths.map(path => (
+                <Image
+                  mx="auto"
+                  priority
+                  h="255px"
+                  w="full"
+                  borderRadius={4}
+                  overflow="hidden"
+                  key={path}
+                  src={path}
+                  alt="highlight"
+                />
+              ))}
+              <Button
+                w="25%"
+                fontWeight="bold"
+                fontSize="20px"
+                m="auto"
+                mt="5px"
+                shadow="md"
+                bg="red.400"
+                onClick={() => {
+                  setPaths([])
+                  if (setHideImageInput && deleteImage) {
+                    setHideImageInput(false)
+                    deleteImage()
+                  }
+                }}
+              >
+                <RiCloseLine />
+              </Button>
+            </Flex>
+          )}
+        </>
       )}
     </Box>
   )
