@@ -120,7 +120,7 @@ const MediaModal = ({
         <Divider />
         <ModalBody>
           <Box mt="3">
-            <Text fontWeight="bold">Local Files</Text>
+            <Text fontWeight="bold">Uploads</Text>
             {wiki.media !== undefined && wiki.media?.length > 0 && (
               <Box
                 my={4}
