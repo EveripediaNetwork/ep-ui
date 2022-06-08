@@ -235,6 +235,15 @@ const CreateWikiContent = () => {
         setOpenOverrideExistingWikiDialog(true)
         return
       }
+      if (isNewCreateWiki) {
+        dispatch({
+          type: 'wiki/updateMetadata',
+          payload: {
+            id: EditSpecificMetaIds.COMMIT_MESSAGE,
+            value: override ? 'Wiki Overridden 🔄' : 'New Wiki Created 🎉',
+          },
+        })
+      }
 
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
@@ -547,13 +556,6 @@ const CreateWikiContent = () => {
           // Publish button without commit message at new create wiki
           <Button
             onClick={() => {
-              dispatch({
-                type: 'wiki/updateMetadata',
-                payload: {
-                  id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                  value: 'New Wiki Created 🎉',
-                },
-              })
               saveOnIpfs()
             }}
           >
