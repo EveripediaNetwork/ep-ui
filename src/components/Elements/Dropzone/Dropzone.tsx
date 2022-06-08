@@ -93,7 +93,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           justifyContent="center"
           alignItems="center"
           maxH="345px"
-          minH={!showFetchedImage ? "165px": "300px"}
+          minH={!showFetchedImage ? '165px' : '300px'}
           _hover={{
             boxShadow: 'md',
             borderColor: 'brand.400',
@@ -104,7 +104,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           {isDragActive ? (
             <Text textAlign="center">Drop the files here ...</Text>
           ) : (
-            <Box px="8" mb={!showFetchedImage ? "10": "1"}>
+            <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
               <Text textAlign="center" opacity="0.5">
                 Drag and drop a <b>{textType}</b>, or click to select.
               </Text>

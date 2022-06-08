@@ -61,9 +61,10 @@ const MediaModal = ({
   }
 
   const handleSetImage = (name: string, value: ArrayBuffer) => {
-    if(wiki.media !== undefined && wiki.media?.length >= 8){
+    if (wiki.media !== undefined && wiki.media?.length >= 8) {
       toast({
-        title: 'You cannot upload more than 8 media. You can delete some existing media to create more spaces',
+        title:
+          'You cannot upload more than 8 media. You can delete some existing media to create more spaces',
         status: 'error',
         duration: 3000,
       })
@@ -135,7 +136,6 @@ const MediaModal = ({
                   columns={{ base: 1, md: 2 }}
                   spacingY={6}
                   spacingX={12}
-                  
                 >
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
@@ -155,7 +155,7 @@ const MediaModal = ({
                           <RiImageLine size="40" />
                         )}
                       </Box>
-                      <VStack >
+                      <VStack>
                         <Flex w="full" gap={16}>
                           {media.name && (
                             <Box flex="1">
