@@ -61,6 +61,14 @@ const MediaModal = ({
   }
 
   const handleSetImage = (name: string, value: ArrayBuffer) => {
+    if(wiki.media !== undefined && wiki.media?.length >= 8){
+      toast({
+        title: 'You cannot upload more than 8 media. You can delete some existing media to create more spaces',
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
     const id = `${uuidv4()}_${MEDIA_POST_DEFAULT_ID}`
     const fileSize = value.byteLength / 1024 ** 2
     if (fileSize > 10) {
@@ -117,11 +125,17 @@ const MediaModal = ({
                 my={4}
                 display="flex"
                 justifyContent={{ base: 'center', md: 'left' }}
+                maxH="162px"
+                border="1px solid #CBD5E0"
+                p={6}
+                borderRadius={8}
+                overflow="auto"
               >
                 <SimpleGrid
                   columns={{ base: 1, md: 2 }}
-                  spacing={6}
+                  spacingY={6}
                   spacingX={12}
+                  
                 >
                   {wiki.media.map(media => (
                     <Flex key={media.id} gap={4} color="linkColor">
@@ -131,21 +145,24 @@ const MediaModal = ({
                             cursor="pointer"
                             flexShrink={0}
                             imageURL={constructMediaUrl(media)}
-                            h={{ base: '50px', lg: '60px' }}
-                            w={{ base: '50px', lg: '60px' }}
+                            h={{ base: '30px', lg: '40px' }}
+                            w={{ base: '30px', lg: '40px' }}
                             borderRadius="lg"
                             overflow="hidden"
+                            mt="1"
                           />
                         ) : (
-                          <RiImageLine size="50" />
+                          <RiImageLine size="40" />
                         )}
                       </Box>
-                      <VStack>
+                      <VStack >
                         <Flex w="full" gap={16}>
                           {media.name && (
-                            <Text fontSize="sm">
-                              {shortenText(media.name, 8)}
-                            </Text>
+                            <Box flex="1">
+                              <Text fontSize="sm">
+                                {shortenText(media.name, 8)}
+                              </Text>
+                            </Box>
                           )}
                           <Box mt={1}>
                             <RiCloseLine
@@ -159,7 +176,7 @@ const MediaModal = ({
                         <Box w="full">
                           <Progress
                             value={checkMediaDefaultId(media.id) ? 50 : 100}
-                            h="5px"
+                            h="3px"
                             colorScheme="green"
                             size="sm"
                           />

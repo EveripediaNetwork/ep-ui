@@ -23,6 +23,7 @@ const ImageInput = ({
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     setImageSrc(event.target.value)
+
     if (setHideDropzone) {
       setHideDropzone(true)
     }
@@ -44,6 +45,9 @@ const ImageInput = ({
       }
       const data = await response.arrayBuffer()
       setImage(event.target.value, new buffer.Buffer(data as Buffer))
+      if(!showFetchedImage){
+        setImageSrc('')
+      }
       toast({
         title: 'Image successfully Fetched',
         status: 'success',
@@ -101,6 +105,7 @@ const ImageInput = ({
         <Input
           w="90%"
           textAlign="center"
+          value={imgSrc}
           onChange={handleOnImageInputChanges}
           placeholder={`${t('pasteMainImgLabel')}`}
         />
