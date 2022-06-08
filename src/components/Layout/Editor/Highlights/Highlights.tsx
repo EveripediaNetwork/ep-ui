@@ -42,7 +42,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
 
-  const handleSetImage = async (value: ArrayBuffer) => {
+  const handleSetImage = async (_: string, value: ArrayBuffer) => {
     // upload image to ipfs
     const IPFSHash = await saveImage({ type: value, id: '' })
 
