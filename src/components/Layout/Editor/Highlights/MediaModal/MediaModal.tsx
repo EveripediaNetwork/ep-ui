@@ -156,11 +156,11 @@ const MediaModal = ({
                         )}
                       </Box>
                       <VStack>
-                        <Flex w="full" gap={16}>
+                        <Flex w="full" >
                           {media.name && (
                             <Box flex="1">
                               <Text fontSize="sm">
-                                {shortenText(media.name, 8)}
+                                {shortenText(media.name, 15)}
                               </Text>
                             </Box>
                           )}
