@@ -397,17 +397,18 @@ export const calculateEditInfo = (
     blocksChanged.push(WikiRootBlocks.SUMMARY)
   const prevImgId = prevWiki.images && prevWiki.images[0].id
   const currImgId = currWiki.images && currWiki.images[0].id
-  if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
-
+  if (prevImgId !== currImgId) {
+    blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
+  }
   // common metadata changes
   Object.values(CommonMetaIds).forEach(id => {
     if (
-      getWikiMetadataById(prevWiki, id)?.value !==
-      getWikiMetadataById(currWiki, id)?.value
-    )
+      (getWikiMetadataById(prevWiki, id)?.value || '') !==
+      (getWikiMetadataById(currWiki, id)?.value || '')
+    ) {
       blocksChanged.push(id)
+    }
   })
-
   // update blocks changed metadata in redux state
   dispatch({
     type: 'wiki/updateMetadata',
