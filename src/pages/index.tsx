@@ -20,7 +20,7 @@ export const Index: NextPage = () => {
     <Flex
       direction="column"
       mx="auto"
-      w="fit-content"
+      w="full"
       px={{ base: 6, lg: 20 }}
       py={{ base: 6, lg: 20 }}
       gap={10}
