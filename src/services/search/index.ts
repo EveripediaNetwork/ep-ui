@@ -3,10 +3,11 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_CATEGORIES_BY_TITLE,
+  GET_TAGS_BY_ID,
   GET_WIKIS_BY_TITLE,
-} from '@/services/nav-search/queries'
+} from '@/services/search/queries'
 import config from '@/config'
-import { WikiPreview } from '@/types/Wiki'
+import { Tag, WikiPreview } from '@/types/Wiki'
 
 export type Category = {
   id: string
@@ -23,6 +24,10 @@ type GetWikisByTitleResponse = {
 
 type GetCategoriesByTitleResponse = {
   categoryByTitle: Category[]
+}
+
+type GetTagsByIdResponse = {
+  tagsById: Tag[]
 }
 
 export const navSearchApi = createApi({
@@ -53,13 +58,22 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetCategoriesByTitleResponse) =>
         response.categoryByTitle,
     }),
+    getTagsById: builder.query<Tag[], string>({
+      query: (id: string) => ({
+        document: GET_TAGS_BY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: GetTagsByIdResponse) => response.tagsById,
+    }),
   }),
 })
 
 export const {
   useGetWikisByTitleQuery,
   useGetCategoriesByTitleQuery,
+  useGetTagsByIdQuery,
   util: { getRunningOperationPromises },
 } = navSearchApi
 
-export const { getWikisByTitle, getCategoriesByTitle } = navSearchApi.endpoints
+export const { getWikisByTitle, getCategoriesByTitle, getTagsById } =
+  navSearchApi.endpoints

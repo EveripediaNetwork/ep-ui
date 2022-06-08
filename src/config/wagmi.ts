@@ -12,7 +12,7 @@ import config from './index'
 type Connector = MetaMaskConnector | WalletConnectConnector | MagicConnector
 
 export const { chains, provider } = configureChains(
-  [chain.polygon, chain.polygonMumbai],
+  [chain.polygonMumbai, chain.polygon],
   [
     alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
     infuraProvider({ infuraId: config.infuraId, weight: 2 }),

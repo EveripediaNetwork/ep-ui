@@ -9,7 +9,7 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import { debounce } from 'debounce'
-import { getWikisByTitle } from '@/services/nav-search'
+import { getWikisByTitle } from '@/services/search'
 import { store } from '@/store/store'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WikiPreview } from '@/types/Wiki'

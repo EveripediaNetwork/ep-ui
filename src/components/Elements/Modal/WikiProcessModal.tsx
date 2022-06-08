@@ -46,7 +46,7 @@ const WikiProcessModal = ({
 }: WikiProcessType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const router = useRouter()
-
+  if (!isOpen) return null
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -58,7 +58,7 @@ const WikiProcessModal = ({
       closeOnOverlayClick={false}
     >
       <AlertDialogOverlay />
-      <AlertDialogContent>
+      <AlertDialogContent w={{ base: '90vw', md: 'unset' }}>
         <Box p={8}>
           <Flex>
             <Text flex="1" fontSize="lg" fontWeight="bold">
@@ -99,7 +99,7 @@ const WikiProcessModal = ({
               </Text>
             </Center>
             <Center mt="16">
-              <Stack direction="row" spacing={6}>
+              <Stack direction={{ base: 'column', md: 'row' }} spacing={6}>
                 <Button
                   onClick={() => {
                     router.push(`/wiki/${wikiId}`)

@@ -26,7 +26,7 @@ import {
   SearchItem,
   SEARCH_TYPES,
   useNavSearch,
-} from '@/services/nav-search/utils'
+} from '@/services/search/utils'
 
 import { useRouter } from 'next/router'
 import config from '@/config'

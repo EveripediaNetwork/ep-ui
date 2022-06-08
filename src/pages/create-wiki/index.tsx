@@ -74,9 +74,11 @@ import {
   useCreateWikiContext,
   errorMessage,
   isVerifiedContentLinks,
+  isWikiExists,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
+import OverrideExistingWikiDialog from '@/components/Elements/Modal/OverrideExistingWikiDialog'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -127,6 +129,10 @@ const CreateWikiContent = () => {
     setSubmittingWiki,
     wikiHash,
     isNewCreateWiki,
+    openOverrideExistingWikiDialog,
+    setOpenOverrideExistingWikiDialog,
+    existingWikiData,
+    setExistingWikiData,
     activeStep,
     setActiveStep,
     loadingState,
@@ -212,7 +218,7 @@ const CreateWikiContent = () => {
     return true
   }
 
-  const saveOnIpfs = async () => {
+  const saveOnIpfs = async (override?: boolean) => {
     if (!isValidWiki()) return
 
     logEvent({
@@ -221,6 +227,15 @@ const CreateWikiContent = () => {
     })
 
     if (accountData) {
+      if (
+        isNewCreateWiki &&
+        !override &&
+        (await isWikiExists(getWikiSlug(), setExistingWikiData))
+      ) {
+        setOpenOverrideExistingWikiDialog(true)
+        return
+      }
+
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
@@ -568,6 +583,16 @@ const CreateWikiContent = () => {
             </Center>
           </Skeleton>
         </Box>
+        <OverrideExistingWikiDialog
+          isOpen={openOverrideExistingWikiDialog}
+          publish={() => {
+            setOpenOverrideExistingWikiDialog(false)
+            saveOnIpfs(true)
+          }}
+          onClose={() => setOpenOverrideExistingWikiDialog(false)}
+          slug={getWikiSlug()}
+          existingWikiData={existingWikiData}
+        />
         <WikiProcessModal
           wikiId={wikiId}
           msg={msg}

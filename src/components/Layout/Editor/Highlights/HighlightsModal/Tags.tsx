@@ -1,18 +1,26 @@
-import React, { memo, useState } from 'react'
-import { Stack, Text, chakra } from '@chakra-ui/react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { Stack, Text, chakra, Box, useDisclosure } from '@chakra-ui/react'
 import * as tagsInput from '@zag-js/tags-input'
-import { useMachine, useSetup } from '@zag-js/react'
+import { mergeProps, useMachine, useSetup } from '@zag-js/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
+import { useTagSearch } from '@/services/search/utils'
 
 const MAX_LENGTH = 15
 
 const Tags = () => {
   const dispatch = useAppDispatch()
   const [tagState, setTagState] = useState({ invalid: false, msg: '' })
-
+  const { setQuery, results } = useTagSearch()
+  const [editTagIndex, setEditTagIndex] = useState<number>(-1)
   const currentWiki = useAppSelector(state => state.wiki)
+  const [suggestionSelectionId, setSuggestionSelectionId] = useState<number>(-1)
+  const {
+    isOpen: isOpenSuggestions,
+    onOpen: onOpenSuggestions,
+    onClose: onCloseSuggestions,
+  } = useDisclosure()
 
   const [state, send] = useMachine(
     tagsInput.machine({
@@ -44,6 +52,70 @@ const Tags = () => {
   )
   const ref = useSetup({ send, id: '1' })
   const api = tagsInput.connect(state, send)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  const handleKeyPress = useCallback(
+    (e: { key: string | number; preventDefault: () => void }) => {
+      const keyMap: Record<string, () => void> = {
+        ArrowDown() {
+          if (suggestionSelectionId < results.length - 1)
+            setSuggestionSelectionId(p => p + 1)
+        },
+        ArrowUp() {
+          if (suggestionSelectionId > 0) setSuggestionSelectionId(p => p - 1)
+        },
+        Enter() {
+          setQuery('')
+          setSuggestionSelectionId(-1)
+          inputRef.current?.focus()
+          if (suggestionSelectionId === -1) return
+          if (editTagIndex === -1)
+            api.setValue([...api.value, results[suggestionSelectionId]?.id])
+          else {
+            api.setValue(
+              api.value.map((_, index) =>
+                index === editTagIndex
+                  ? results[suggestionSelectionId]?.id
+                  : api.value[index],
+              ),
+            )
+          }
+        },
+      }
+      const exec = keyMap[e.key]
+      if (exec) {
+        e.preventDefault()
+        exec()
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [results, suggestionSelectionId, editTagIndex, setQuery],
+  )
+
+  useEffect(() => {
+    if (results.length > 0) {
+      window.addEventListener('keydown', handleKeyPress)
+      onOpenSuggestions()
+    } else {
+      window.removeEventListener('keydown', handleKeyPress)
+      onCloseSuggestions()
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [results, handleKeyPress, onOpenSuggestions, onCloseSuggestions])
+
+  const InputProps = mergeProps(api.inputProps, {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSuggestionSelectionId(-1)
+      setEditTagIndex(-1)
+      setQuery(e.target.value)
+    },
+    onBlur: () => {
+      setSuggestionSelectionId(-1)
+      onCloseSuggestions()
+    },
+  })
 
   return (
     <Stack spacing="4">
@@ -53,32 +125,104 @@ const Tags = () => {
       <chakra.div
         rounded="md"
         border="solid 1px"
-        borderColor="gray.300"
-        _dark={{ borderColor: 'whiteAlpha.300', bg: 'gray.700' }}
-        p="5"
+        borderColor="borderColor"
+        p={3}
+        pos="relative"
       >
-        <chakra.div ref={ref} {...api.rootProps} sx={{ ...tagsInputStyle }}>
-          {api.value.map((value, index) => (
-            <span key={index}>
-              <div {...api.getTagProps({ index, value })}>
-                <span>{value} </span>
-                <button
-                  type="button"
-                  {...api.getTagDeleteButtonProps({ index, value })}
-                >
-                  &#x2715;
-                </button>
-              </div>
-              <input {...api.getTagInputProps({ index, value })} />
-            </span>
-          ))}
-          <input placeholder="Add tag..." {...api.inputProps} />
+        <chakra.div
+          ref={ref}
+          display="flex"
+          alignItems="center"
+          {...api.rootProps}
+          sx={{ ...tagsInputStyle }}
+        >
+          {api.value.map((value, index) => {
+            const TagInputProps = mergeProps(
+              api.getTagInputProps({ index, value }),
+              {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSuggestionSelectionId(-1)
+                  setEditTagIndex(index)
+                  setQuery(e.target.value)
+                },
+                onBlur: () => {
+                  setSuggestionSelectionId(-1)
+                  onCloseSuggestions()
+                },
+              },
+            )
+            return (
+              <chakra.span key={index} whiteSpace="nowrap">
+                <div {...api.getTagProps({ index, value })}>
+                  <span>{value} </span>
+                  <button
+                    type="button"
+                    {...api.getTagDeleteButtonProps({ index, value })}
+                  >
+                    &#x2715;
+                  </button>
+                </div>
+                <input {...TagInputProps} />
+              </chakra.span>
+            )
+          })}
+          {api.value.length < 5 && (
+            <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
+          )}
         </chakra.div>
         {tagState.invalid ? (
-          <Text fontSize="xs" color="red">
+          <Text fontSize="xs" color="red.300">
             {tagState.msg}
           </Text>
         ) : null}
+        {isOpenSuggestions && (
+          <Box
+            pos="absolute"
+            zIndex={2}
+            top="110%"
+            left={0}
+            right={0}
+            borderRadius={4}
+            boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
+            bgColor="cardBg"
+            borderWidth={1}
+            borderColor="borderColor"
+          >
+            {results.map((tag, i) => (
+              <Box
+                key={tag.id}
+                onClick={() => {
+                  if (editTagIndex === -1) api.addValue(tag.id)
+                  else
+                    api.setValue(
+                      api.value.map((_, index) =>
+                        index === editTagIndex ? tag.id : api.value[index],
+                      ),
+                    )
+                  setQuery('')
+                  setSuggestionSelectionId(-1)
+                  inputRef.current?.focus()
+                }}
+                bgColor={
+                  suggestionSelectionId === i ? 'hoverBg' : 'transparent'
+                }
+                w="full"
+                textAlign="left"
+                p={2}
+                borderTopWidth={i > 0 ? 1 : 0}
+                cursor="pointer"
+                sx={{
+                  '&:hover, &:focus, &:active': {
+                    bg: 'hoverBg',
+                    outline: 'none',
+                  },
+                }}
+              >
+                <Text color="linkColor">{tag.id}</Text>
+              </Box>
+            ))}
+          </Box>
+        )}
       </chakra.div>
     </Stack>
   )

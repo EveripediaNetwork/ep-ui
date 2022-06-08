@@ -19,8 +19,9 @@ import { submitVerifiableSignature } from '@/utils/postSignature'
 import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { useGetWikiQuery } from '@/services/wikis'
+import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { PageTemplate } from '@/data/pageTemplate'
+import { store } from '@/store/store'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -275,6 +276,9 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
+  const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
+    useState<boolean>(false)
+  const [existingWikiData, setExistingWikiData] = useState<Wiki>()
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loadingState, setIsLoading] = useState<
     'error' | 'loading' | undefined
@@ -305,6 +309,10 @@ export const useCreateWikiState = (router: NextRouter) => {
     setWikiHash,
     isNewCreateWiki,
     setIsNewCreateWiki,
+    openOverrideExistingWikiDialog,
+    setOpenOverrideExistingWikiDialog,
+    existingWikiData,
+    setExistingWikiData,
     activeStep,
     setActiveStep,
     loadingState,
@@ -433,4 +441,14 @@ export const isVerifiedContentLinks = (content: string) => {
     return true
   })
   return isValid
+}
+
+export const isWikiExists = async (
+  slug: string,
+  setExistingWikiData: (data: Wiki) => void,
+) => {
+  const { data, isError } = await store.dispatch(getWiki.initiate(slug))
+  if (isError) return false
+  if (data) setExistingWikiData(data)
+  return true
 }

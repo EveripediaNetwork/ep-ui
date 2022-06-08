@@ -25,7 +25,12 @@ export const BlogPostPage = (props: BlogPostProps) => {
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
-      <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
+      <chakra.div
+        w="min(90%, 1100px)"
+        px={{ lg: '44' }}
+        mx="auto"
+        my={{ base: '10', lg: '16' }}
+      >
         <Heading
           mt={8}
           mb={4}
@@ -40,15 +45,23 @@ export const BlogPostPage = (props: BlogPostProps) => {
         </Text>
 
         <Image
-          h={{ base: '224px', md: '342px', lg: '729px' }}
+          h={{ base: '300px', md: '393px' }}
           src={`/images${post.image_url}`}
           mt="14"
         />
 
-        <Stack spacing="15" mt="12">
+        <Stack
+          spacing="15"
+          mt="12"
+          sx={{
+            p: {
+              lineHeight: '26px',
+            },
+          }}
+        >
           {/* Post Content Start */}
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               Stats
             </Text>
             <p>
@@ -68,7 +81,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
             </p>
           </Stack>
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               BrainDAO Blue Chip NFT Proposal
             </Text>
             <p>
@@ -103,7 +116,7 @@ export const BlogPostPage = (props: BlogPostProps) => {
             </p>
           </Stack>
           <Stack>
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               Brainies
             </Text>
             <p>
@@ -147,17 +160,19 @@ export const BlogPostPage = (props: BlogPostProps) => {
           </Stack>
 
           <Stack spacing="8">
-            <Text fontSize="4xl" fontWeight="bold" noOfLines={3}>
+            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               You might like
             </Text>
             <SimpleGrid
+              alignSelf="center"
+              w="fit-content"
               mt={{ base: '15', md: '16' }}
-              columns={{ base: 1, md: 2, lg: 3 }}
+              columns={{ base: 1, md: 2 }}
               spacingX="5"
               spacingY="14"
             >
-              {postSuggestions.map((blogPost, i) => (
-                <BlogPost post={blogPost} key={i} />
+              {postSuggestions.slice(-2).map((blogPost, i) => (
+                <BlogPost maxW="420px" post={blogPost} key={i} />
               ))}
             </SimpleGrid>
           </Stack>
