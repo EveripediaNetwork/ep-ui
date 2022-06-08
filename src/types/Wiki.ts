@@ -36,7 +36,6 @@ export enum CommonMetaIds {
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
   COINGECKO_PROFILE = 'coingecko_profile',
-  COMMIT_MESSAGE = 'commit-message',
 }
 
 export enum EditSpecificMetaIds {

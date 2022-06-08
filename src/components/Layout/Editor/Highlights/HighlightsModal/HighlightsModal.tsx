@@ -199,7 +199,7 @@ const HighlightsModal = ({
                 }
               >
                 {categoryOptions?.map(o => (
-                  <option key={o.title}>{o.title}</option>
+                  <option key={o.id}>{o.id}</option>
                 ))}
               </Select>
             </Flex>
