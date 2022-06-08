@@ -156,7 +156,7 @@ const MediaModal = ({
                         )}
                       </Box>
                       <VStack>
-                        <Flex w="full" >
+                        <Flex w="full">
                           {media.name && (
                             <Box flex="1">
                               <Text fontSize="sm">
