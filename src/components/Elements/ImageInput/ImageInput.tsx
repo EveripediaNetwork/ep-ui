@@ -1,11 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
-import buffer from 'buffer'
 import { useTranslation } from 'react-i18next'
 
 type ImageInputType = {
   setHideDropzone: (hide: boolean) => void
-  setImage: (name: string, f: ArrayBuffer) => void
+  setImage: (f: ArrayBuffer) => void
   deleteImage: () => void
 }
 
@@ -31,8 +30,7 @@ const ImageInput = ({
         },
       )
       const data = await response.arrayBuffer()
-
-      setImage(event.target.value, new buffer.Buffer(data as Buffer))
+      setImage(Buffer.from(data))
       toast({
         title: 'Image successfully Fetched',
         status: 'success',

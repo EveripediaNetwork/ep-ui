@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-import buffer from 'buffer'
 
 import config from '@/config'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +11,7 @@ import { Image } from '../Image/Image'
 type DropzoneType = {
   dropZoneActions: {
     setHideImageInput: (hide: boolean) => void
-    setImage: (name: string, f: ArrayBuffer) => void
+    setImage: (f: ArrayBuffer) => void
     deleteImage: () => void
     isToResetImage: boolean
     initialImage: string | undefined
@@ -20,7 +19,9 @@ type DropzoneType = {
 }
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
+  const { t } = useTranslation()
   const [paths, setPaths] = useState<Array<string>>([])
+  const toast = useToast()
   const { data: accountData } = useAccount()
   const {
     setHideImageInput,
@@ -38,15 +39,30 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
         const reader = new FileReader()
 
         reader.onload = () => {
-          const binaryStr = new buffer.Buffer(reader.result as Buffer)
-          setImage(f.name, binaryStr as ArrayBuffer)
+          const binaryStr = Buffer.from(reader.result as Buffer)
+
+          // validate image
+          const fileSize = binaryStr.byteLength / 1024 ** 2
+          if (fileSize > 10) {
+            toast({
+              title: 'File size is larger than 8mb',
+              status: 'error',
+              duration: 3000,
+            })
+            setHideImageInput(false)
+            setPaths([])
+            return
+          }
+
+          // set image to state
+          setImage(binaryStr as ArrayBuffer)
         }
 
         reader.readAsArrayBuffer(f)
       })
       setHideImageInput(true)
     },
-    [setPaths, setHideImageInput, setImage],
+    [setHideImageInput, setImage, toast],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -57,9 +73,8 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   useEffect(() => {
     if (initialImage) {
-      const path = `${config.pinataBaseUrl}${initialImage}`
       setHideImageInput(true)
-      setPaths([path])
+      setPaths([`${config.pinataBaseUrl}${initialImage}`])
     }
   }, [initialImage, setHideImageInput])
 
@@ -71,7 +86,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
-  const { t } = useTranslation()
+
   return (
     <Box>
       {paths.length === 0 ? (

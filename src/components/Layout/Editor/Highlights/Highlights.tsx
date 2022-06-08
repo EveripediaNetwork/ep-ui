@@ -1,4 +1,4 @@
-import React, { useContext, useState, memo } from 'react'
+import React, { useState, memo } from 'react'
 import {
   Flex,
   Text,
@@ -18,8 +18,9 @@ import { ImageInput, Dropzone } from '@/components/Elements'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
-import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import { saveImage } from '@/utils/create-wiki'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
 import MediaModal from './MediaModal/MediaModal'
 import SummaryInput from './SummaryInput'
@@ -31,24 +32,31 @@ type HightLightsType = {
 
 const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const dispatch = useDispatch()
   const {
     isOpen: isMediaOpen,
     onOpen: mediaOpen,
     onClose: mediaClose,
   } = useDisclosure()
-  const { updateImageState } = useContext<ImageStateType>(ImageContext)
   const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
 
-  const handleSetImage = (name: string, value: ArrayBuffer) => {
-    // update isWikiBeingEdited
-    updateImageState(ImageKey.IS_WIKI_BEING_EDITED, false)
-    updateImageState(ImageKey.IMAGE, { id: name, type: value })
+  const handleSetImage = async (value: ArrayBuffer) => {
+    // upload image to ipfs
+    const IPFSHash = await saveImage({ type: value, id: '' })
+
+    // update image state
+    dispatch({
+      type: 'wiki/addWikiImageIPFS',
+      payload: IPFSHash,
+    })
   }
 
   const handleDeleteImage = () =>
-    updateImageState(ImageKey.IMAGE, { type: new ArrayBuffer(0), id: '' })
+    dispatch({
+      type: 'wiki/deleteWikiImages',
+    })
 
   const dropZoneActions = {
     setImage: handleSetImage,

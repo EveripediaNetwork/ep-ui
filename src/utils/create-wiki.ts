@@ -55,8 +55,7 @@ export const saveImage = async (image: Image) => {
   })
 
   formData.append('operations', POST_IMG)
-  const map = `{"0": ["variables.file"]}`
-  formData.append('map', map)
+  formData.append('map', `{"0": ["variables.file"]}`)
   formData.append('0', blob)
 
   try {
@@ -70,6 +69,7 @@ export const saveImage = async (image: Image) => {
 
     return IpfsHash
   } catch (err) {
+    console.log(err)
     return null
   }
 }

@@ -1,5 +1,4 @@
 import React, {
-  useContext,
   useEffect,
   useRef,
   memo,
@@ -51,7 +50,6 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { getDeadline } from '@/utils/getDeadline'
-import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
@@ -67,7 +65,6 @@ import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  saveImage,
   calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
@@ -93,8 +90,6 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
-    useContext<ImageStateType>(ImageContext)
   const { data: accountData } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
@@ -157,22 +152,10 @@ const CreateWikiContent = () => {
   const { saveHashInTheBlockchain, signing, verifyTrxHash } =
     useGetSignedHash(deadline)
 
-  const getImageHash = async () =>
-    isWikiBeingEdited ? ipfsHash : saveImage(image)
-
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
-  const getImageArrayBufferLength = () =>
-    (image.type as ArrayBuffer).byteLength === 0
-
   const isValidWiki = () => {
-    if (
-      isWikiBeingEdited === false &&
-      (!image ||
-        image.type === null ||
-        image.type === undefined ||
-        getImageArrayBufferLength())
-    ) {
+    if (wiki.images?.length === 0) {
       toast({
         title: 'Add a main image on the right column to continue',
         status: 'error',
@@ -243,23 +226,6 @@ const CreateWikiContent = () => {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      // Build the wiki object
-      const imageHash = await getImageHash()
-
-      if (!imageHash) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        logEvent({
-          action: 'SUBMIT_WIKI_ERROR',
-          params: {
-            reason: 'NO_IMAGE',
-            address: accountData?.address,
-            slug: getWikiSlug(),
-          },
-        })
-        return
-      }
-
       let interWiki = { ...wiki }
       if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
@@ -271,7 +237,6 @@ const CreateWikiContent = () => {
             id: accountData.address,
           },
           content: String(wiki.content).replace(/\n/gm, '  \n'),
-          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         }
       }
 
@@ -419,13 +384,6 @@ const CreateWikiContent = () => {
       initWikiData.images &&
       initWikiData.images.length > 0
     ) {
-      // update isWikiBeingEdited
-      updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
-      // update image hash
-      updateImageState(ImageKey.IPFS_HASH, String(initWikiData?.images[0].id))
-
-      const { id, title, summary, content, tags, categories, media } =
-        initWikiData
       let { metadata } = initWikiData
 
       // fetch the currently stored meta data of page that are not edit specific
@@ -445,19 +403,15 @@ const CreateWikiContent = () => {
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
-          id,
-          title,
-          summary,
+          ...initWikiData,
           content:
-            EditorContentOverride.KEYWORD + content.replace(/ {2}\n/gm, '\n'),
-          tags,
-          categories,
+            EditorContentOverride.KEYWORD +
+            initWikiData.content.replace(/ {2}\n/gm, '\n'),
           metadata,
-          media,
         },
       })
     }
-  }, [dispatch, toast, updateImageState, wikiData])
+  }, [dispatch, toast, wikiData])
 
   useEffect(() => {
     if (txHash) verifyTrxHash()
@@ -642,8 +596,8 @@ const CreateWikiContent = () => {
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights
-                initialImage={ipfsHash}
-                isToResetImage={isNewCreateWiki}
+                initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
+                isToResetImage={false}
               />
             </Center>
           </Skeleton>

@@ -33,6 +33,7 @@ export const getDraftFromLocalStorage = (slug: string) => {
     return undefined
   }
 
+  console.log('WIKI FETCHED FROM DRAFTS: ', wiki)
   // if draft is not older than 24 hour, return wiki
   return wiki
 }
@@ -134,6 +135,23 @@ const wikiSlice = createSlice({
         return newState
       }
       return state
+    },
+    addWikiImageIPFS(state, action) {
+      if (state.media) {
+        const newState = {
+          ...state,
+          images: [{ id: action.payload, type: 'image/jpeg, image/png' }],
+        }
+        saveDraftInLocalStorage(newState)
+        return newState
+      }
+      return state
+    },
+    deleteWikiImages(state) {
+      const newState = state
+      delete newState.images
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     removeMedia(state, action) {
       if (state.media) {
