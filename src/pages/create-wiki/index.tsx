@@ -597,7 +597,7 @@ const CreateWikiContent = () => {
             <Center>
               <Highlights
                 initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
-                isToResetImage={false}
+                isToResetImage={isNewCreateWiki}
               />
             </Center>
           </Skeleton>

@@ -6,6 +6,8 @@ import { useAccount } from 'wagmi'
 
 import config from '@/config'
 import { useTranslation } from 'react-i18next'
+import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import { CreateNewWikiSlug } from '@/types/Wiki'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
@@ -80,9 +82,12 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   useEffect(() => {
     if (isToResetImage) {
-      deleteImage()
-      setHideImageInput(false)
-      setPaths([])
+      const draftWiki = getDraftFromLocalStorage(CreateNewWikiSlug)
+      if (draftWiki?.image?.length === 0) {
+        deleteImage()
+        setHideImageInput(false)
+        setPaths([])
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
