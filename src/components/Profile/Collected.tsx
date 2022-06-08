@@ -55,7 +55,7 @@ const Collected = () => {
     if (address) {
       fetchMoreWikis()
     }
-  }, [address, fetchMoreWikis])
+  }, [address])
 
   const [sentryRef] = useInfiniteScroll({
     loading,
