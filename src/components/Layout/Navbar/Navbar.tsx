@@ -28,10 +28,10 @@ import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNo
 import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { StaticContent } from '@/components/StaticElement'
+import { logEvent } from '@/utils/googleAnalytics'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
-import { logEvent } from '@/utils/googleAnalytics'
 
 const Navbar = () => {
   const router = useRouter()
@@ -60,7 +60,7 @@ const Navbar = () => {
   const handleWalletIconAction = () => {
     logEvent({
       action: 'OPEN_DRAWER',
-      params: { address: accountData?.address }
+      params: { address: accountData?.address },
     })
     if (isHamburgerOpen) {
       setHamburger(false)
