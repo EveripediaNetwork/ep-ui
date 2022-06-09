@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Image, Spinner, Text } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
-import WalletDetailsWrapper from './WalletDetailsWrapper'
 import { logEvent } from '@/utils/googleAnalytics'
+import WalletDetailsWrapper from './WalletDetailsWrapper'
 
 const ConnectorDetails = ({
   imageLink,
