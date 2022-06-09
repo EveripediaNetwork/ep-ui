@@ -56,6 +56,7 @@ const Collected = () => {
       fetchMoreWikis()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
   const [sentryRef] = useInfiniteScroll({
