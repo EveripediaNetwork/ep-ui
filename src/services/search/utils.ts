@@ -82,7 +82,7 @@ export const useNavSearch = () => {
       logEvent({
         action: 'SEARCH_ITEM',
         params: {
-          data:query,
+          data: query,
         },
       })
       debouncedFetchResults(query, res => {
