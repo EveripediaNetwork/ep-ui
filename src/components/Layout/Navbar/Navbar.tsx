@@ -31,6 +31,7 @@ import { StaticContent } from '@/components/StaticElement'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Navbar = () => {
   const router = useRouter()
@@ -57,6 +58,10 @@ const Navbar = () => {
   const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
 
   const handleWalletIconAction = () => {
+    logEvent({
+      action: 'OPEN_DRAWER',
+      params: { address: accountData?.address }
+    })
     if (isHamburgerOpen) {
       setHamburger(false)
     }
