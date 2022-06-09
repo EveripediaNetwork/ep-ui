@@ -30,7 +30,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 
 const Connectors = () => {
   const { isConnecting, connectors, connect, error } = useConnect()
-  const { data: accountData} = useAccount()
+  const { data: accountData } = useAccount()
   const { userBalance } = useFetchWalletBalance(accountData?.address)
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
     (state: RootState) => state.user,
@@ -39,13 +39,13 @@ const Connectors = () => {
   const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
-  
-  useEffect(()=>{
-    if(error){
+
+  useEffect(() => {
+    if (error) {
       logEvent({
         action: 'LOGIN_ERROR',
-        params: { reason: error.message}
-      }) 
+        params: { reason: error.message },
+      })
     }
   }, [error])
   useEffect(() => {
