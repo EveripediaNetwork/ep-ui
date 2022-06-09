@@ -30,18 +30,18 @@ import { logEvent } from '@/utils/googleAnalytics'
 
 const Connectors = () => {
   const { isConnecting, connectors, connect } = useConnect({
-    onError(error){
+    onError(error) {
       logEvent({
         action: 'LOGIN_ERROR',
         params: { reason: error.message },
       })
     },
-    onConnect(data){
+    onConnect(data) {
       logEvent({
         action: 'LOGIN_SUCCESS',
-        params: { address: data.account},
+        params: { address: data.account },
       })
-    }
+    },
   })
   const { data: accountData } = useAccount()
   const { userBalance } = useFetchWalletBalance(accountData?.address)
@@ -53,7 +53,6 @@ const Connectors = () => {
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
 
-  
   useEffect(() => {
     if (userBalance && !walletDetails) {
       dispatch(updateWalletDetails(userBalance))
