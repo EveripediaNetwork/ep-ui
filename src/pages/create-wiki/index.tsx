@@ -1,5 +1,4 @@
 import React, {
-  useContext,
   useEffect,
   useRef,
   memo,
@@ -18,7 +17,6 @@ import {
   CloseButton,
   Center,
   Skeleton,
-  useToast,
   Box,
   HStack,
   Input,
@@ -35,6 +33,7 @@ import {
   PopoverBody,
   PopoverFooter,
   Tag,
+  Text,
 } from '@chakra-ui/react'
 import {
   getRunningOperationPromises,
@@ -51,7 +50,6 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { getDeadline } from '@/utils/getDeadline'
-import { ImageContext, ImageKey, ImageStateType } from '@/context/image.context'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
@@ -60,13 +58,13 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   EditorContentOverride,
+  CreateNewWikiSlug,
 } from '@/types/Wiki'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  saveImage,
   calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
@@ -79,6 +77,10 @@ import {
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
 import OverrideExistingWikiDialog from '@/components/Elements/Modal/OverrideExistingWikiDialog'
+import {
+  getDraftFromLocalStorage,
+  removeDraftFromLocalStorage,
+} from '@/store/slices/wiki.slice'
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -88,10 +90,6 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-
-  const toast = useToast()
-  const { image, ipfsHash, updateImageState, isWikiBeingEdited } =
-    useContext<ImageStateType>(ImageContext)
   const { data: accountData } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
@@ -120,6 +118,7 @@ const CreateWikiContent = () => {
     isLoadingWiki,
     wikiData,
     dispatch,
+    toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -153,22 +152,10 @@ const CreateWikiContent = () => {
   const { saveHashInTheBlockchain, signing, verifyTrxHash } =
     useGetSignedHash(deadline)
 
-  const getImageHash = async () =>
-    isWikiBeingEdited ? ipfsHash : saveImage(image)
-
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
-  const getImageArrayBufferLength = () =>
-    (image.type as ArrayBuffer).byteLength === 0
-
   const isValidWiki = () => {
-    if (
-      isWikiBeingEdited === false &&
-      (!image ||
-        image.type === null ||
-        image.type === undefined ||
-        getImageArrayBufferLength())
-    ) {
+    if (wiki.images?.length === 0) {
       toast({
         title: 'Add a main image on the right column to continue',
         status: 'error',
@@ -248,25 +235,8 @@ const CreateWikiContent = () => {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      // Build the wiki object
-      const imageHash = await getImageHash()
-
-      if (!imageHash) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        logEvent({
-          action: 'SUBMIT_WIKI_ERROR',
-          params: {
-            reason: 'NO_IMAGE',
-            address: accountData?.address,
-            slug: getWikiSlug(),
-          },
-        })
-        return
-      }
-
       let interWiki = { ...wiki }
-      if (interWiki.id === '') interWiki.id = getWikiSlug()
+      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
       if (accountData.address) {
@@ -276,7 +246,6 @@ const CreateWikiContent = () => {
             id: accountData.address,
           },
           content: String(wiki.content).replace(/\n/gm, '  \n'),
-          images: [{ id: imageHash, type: 'image/jpeg, image/png' }],
         }
       }
 
@@ -343,11 +312,22 @@ const CreateWikiContent = () => {
     signing ||
     isLoadingWiki
 
-  const handleOnEditorChanges = (val: string | undefined) => {
-    dispatch({
-      type: 'wiki/setContent',
-      payload: val || ' ',
-    })
+  const handleOnEditorChanges = (
+    val: string | undefined,
+    isInitSet?: boolean,
+  ) => {
+    if (isInitSet)
+      dispatch({
+        type: 'wiki/setInitialWikiState',
+        payload: {
+          content: val || ' ',
+        },
+      })
+    else
+      dispatch({
+        type: 'wiki/setContent',
+        payload: val || ' ',
+      })
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
@@ -359,25 +339,68 @@ const CreateWikiContent = () => {
   }, [activeStep])
 
   useEffect(() => {
-    if (
-      wikiData &&
-      wikiData.content.length > 0 &&
-      wikiData.images &&
-      wikiData.images.length > 0
-    ) {
-      // update isWikiBeingEdited
-      updateImageState(ImageKey.IS_WIKI_BEING_EDITED, true)
-      // update image hash
-      updateImageState(ImageKey.IPFS_HASH, String(wikiData?.images[0].id))
+    // get draft wiki if it exists
+    let draft: Wiki | undefined
+    if (isNewCreateWiki) draft = getDraftFromLocalStorage()
+    else if (wikiData) draft = getDraftFromLocalStorage()
 
-      const { id, title, summary, content, tags, categories, media } = wikiData
-      let { metadata } = wikiData
+    if (!toast.isActive('draft-loaded') && draft) {
+      toast({
+        id: 'draft-loaded',
+        title: (
+          <HStack w="full" justify="space-between" align="center">
+            <Text>Loaded from saved draft</Text>
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => {
+                removeDraftFromLocalStorage()
+                // reload the page to remove the draft
+                window.location.reload()
+              }}
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: '#0000002a',
+                },
+              }}
+            >
+              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Fetch Latest'}
+            </Button>
+          </HStack>
+        ),
+        status: 'info',
+        duration: 5000,
+      })
+    }
+  }, [isNewCreateWiki, toast, wikiData])
+
+  useEffect(() => {
+    let initWikiData: Wiki | undefined
+    if (wikiData) initWikiData = getDraftFromLocalStorage()
+
+    // combine draft wiki data with existing wikidata images
+    // if the draft doesn't modify the images
+    if (initWikiData && wikiData && !initWikiData.images)
+      if (wikiData.images && wikiData.images.length > 0)
+        initWikiData.images = wikiData.images
+
+    // if there is no draft stored, use fetched wiki data
+    if (!initWikiData) initWikiData = wikiData
+
+    if (
+      initWikiData &&
+      initWikiData.content.length > 0 &&
+      initWikiData.images &&
+      initWikiData.images.length > 0
+    ) {
+      let { metadata } = initWikiData
 
       // fetch the currently stored meta data of page that are not edit specific
       // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
+      const wikiDt = initWikiData
       metadata = [
         ...Object.values(CommonMetaIds).map(mId => {
-          const meta = getWikiMetadataById(wikiData, mId)
+          const meta = getWikiMetadataById(wikiDt, mId)
           return { id: mId, value: meta?.value || '' }
         }),
         ...Object.values(EditSpecificMetaIds).map(mId => ({
@@ -386,22 +409,18 @@ const CreateWikiContent = () => {
         })),
       ]
 
-      const transformedContent = content.replace(/ {2}\n/gm, '\n')
       dispatch({
-        type: 'wiki/setCurrentWiki',
+        type: 'wiki/setInitialWikiState',
         payload: {
-          id,
-          title,
-          summary,
-          content: EditorContentOverride.KEYWORD + transformedContent,
-          tags,
-          categories,
+          ...initWikiData,
+          content:
+            EditorContentOverride.KEYWORD +
+            initWikiData.content.replace(/ {2}\n/gm, '\n'),
           metadata,
-          media,
         },
       })
     }
-  }, [dispatch, updateImageState, wikiData])
+  }, [dispatch, toast, wikiData])
 
   useEffect(() => {
     if (txHash) verifyTrxHash()
@@ -579,7 +598,7 @@ const CreateWikiContent = () => {
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights
-                initialImage={ipfsHash}
+                initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
                 isToResetImage={isNewCreateWiki}
               />
             </Center>

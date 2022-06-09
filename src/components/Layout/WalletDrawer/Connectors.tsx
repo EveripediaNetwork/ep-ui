@@ -116,7 +116,7 @@ const Connectors = () => {
               <Center
                 borderBottomRadius="lg"
                 color="white"
-                height="50"
+                height="12"
                 bg={bg}
                 mt={2}
                 cursor="pointer"

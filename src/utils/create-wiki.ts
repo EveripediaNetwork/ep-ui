@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -8,7 +8,7 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   WikiRootBlocks,
-  MData,
+  EditorContentOverride,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -20,7 +20,8 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
-import { PageTemplate } from '@/data/pageTemplate'
+import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 
 export const initialEditorValue = ` `
@@ -53,8 +54,7 @@ export const saveImage = async (image: Image) => {
   })
 
   formData.append('operations', POST_IMG)
-  const map = `{"0": ["variables.file"]}`
-  formData.append('map', map)
+  formData.append('map', `{"0": ["variables.file"]}`)
   formData.append('0', blob)
 
   try {
@@ -82,15 +82,8 @@ export const useCreateWikiEffects = (
     isPublished: boolean
   }>,
 ) => {
-  const {
-    slug,
-    wikiData,
-    activeStep,
-    setIsNewCreateWiki,
-
-    dispatch,
-    isLoadingWiki,
-  } = useCreateWikiContext()
+  const { slug, activeStep, setIsNewCreateWiki, dispatch } =
+    useCreateWikiContext()
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -102,51 +95,32 @@ export const useCreateWikiEffects = (
   useEffect(() => {
     if (!slug) {
       setIsNewCreateWiki(true)
-      dispatch({ type: 'wiki/reset' })
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+      // fetch draft data from local storage
+      const draft = getDraftFromLocalStorage()
+      if (draft) {
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            ...draft,
+            content:
+              EditorContentOverride.KEYWORD +
+              draft.content.replace(/ {2}\n/gm, '\n'),
+          },
+        })
+      } else {
+        dispatch({ type: 'wiki/reset' })
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            content: EditorContentOverride.KEYWORD + initialEditorValue,
+          },
+        })
+      }
     } else {
       setIsNewCreateWiki(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, slug])
-
-  useEffect(() => {
-    if (isLoadingWiki === false && !wikiData)
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingWiki, wikiData])
-
-  const updatePageTypeTemplate = useCallback(() => {
-    const meta = [
-      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
-      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
-    ]
-    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
-
-    dispatch({
-      type: 'wiki/setContent',
-      payload: String(pageType?.templateText),
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wiki.metadata])
-
-  // update the page type template when the page type changes
-  const presentPageType = useMemo(
-    () =>
-      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
-        ?.value,
-    [wiki?.metadata],
-  )
-  useEffect(() => {
-    if (presentPageType) {
-      let isMdPageTemplate = false
-      PageTemplate.forEach(p => {
-        if (p.templateText === wiki.content) isMdPageTemplate = true
-      })
-      if (isMdPageTemplate || wiki.content === ' ') updatePageTypeTemplate()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [presentPageType])
 }
 
 export const useGetSignedHash = (deadline: number) => {
@@ -276,6 +250,7 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
+  const toast = useToast()
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -297,6 +272,7 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
+    toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -397,17 +373,18 @@ export const calculateEditInfo = (
     blocksChanged.push(WikiRootBlocks.SUMMARY)
   const prevImgId = prevWiki.images && prevWiki.images[0].id
   const currImgId = currWiki.images && currWiki.images[0].id
-  if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
-
+  if (prevImgId !== currImgId) {
+    blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
+  }
   // common metadata changes
   Object.values(CommonMetaIds).forEach(id => {
     if (
-      getWikiMetadataById(prevWiki, id)?.value !==
-      getWikiMetadataById(currWiki, id)?.value
-    )
+      (getWikiMetadataById(prevWiki, id)?.value || '') !==
+      (getWikiMetadataById(currWiki, id)?.value || '')
+    ) {
       blocksChanged.push(id)
+    }
   })
-
   // update blocks changed metadata in redux state
   dispatch({
     type: 'wiki/updateMetadata',
@@ -442,7 +419,6 @@ export const isVerifiedContentLinks = (content: string) => {
   })
   return isValid
 }
-
 export const isWikiExists = async (
   slug: string,
   setExistingWikiData: (data: Wiki) => void,

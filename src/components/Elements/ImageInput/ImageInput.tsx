@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
-import buffer from 'buffer'
 import { useTranslation } from 'react-i18next'
 
 type ImageInputType = {
@@ -44,7 +43,7 @@ const ImageInput = ({
         return
       }
       const data = await response.arrayBuffer()
-      setImage(event.target.value, new buffer.Buffer(data as Buffer))
+      setImage(event.target.value, Buffer.from(data))
       if (!showFetchedImage) {
         setImageSrc('')
       }
