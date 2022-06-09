@@ -15,7 +15,6 @@ import { store } from '@/store/store'
 import { getCategoriesLinks } from '@/services/categories'
 import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
-import { ImageProvider } from '@/context/image.context'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
@@ -66,9 +65,7 @@ const App = (props: EpAppProps) => {
           <Fonts />
           <WagmiConfig client={client}>
             <Layout noFooter={Component.noFooter}>
-              <ImageProvider>
-                <Component {...pageProps} />
-              </ImageProvider>
+              <Component {...pageProps} />
             </Layout>
           </WagmiConfig>
         </ChakraProvider>

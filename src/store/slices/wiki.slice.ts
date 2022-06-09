@@ -5,10 +5,51 @@ import {
   MData,
   CommonMetaIds,
   EditSpecificMetaIds,
+  CreateNewWikiSlug,
 } from '@/types/Wiki'
 
+const getCurrentSlug = () => {
+  let slug = window.location.search.split('=')[1]
+  if (!slug) slug = CreateNewWikiSlug
+  return slug
+}
+
+export const saveDraftInLocalStorage = (wiki: Wiki) => {
+  // get slug from url
+  const slug = getCurrentSlug()
+  // save draft to local storage
+  const wikiData = JSON.stringify(wiki)
+  const timestamp = new Date().getTime()
+  const wikiDataWithTimestamp = `${wikiData}|${timestamp}`
+  localStorage.setItem(`draftData-${slug}`, wikiDataWithTimestamp)
+}
+
+export const getDraftFromLocalStorage = () => {
+  // get slug from url
+  const slug = getCurrentSlug()
+  // fetch draft data from local storage
+  const draftData = localStorage.getItem(`draftData-${slug}`)
+  if (!draftData) return undefined
+  const [wikiData, timestamp] = draftData.split('|')
+  const wiki = JSON.parse(wikiData)
+  const draftTimestamp = parseInt(timestamp, 10)
+  const currentTimestamp = new Date().getTime()
+  // check if draft is older than 24 hour
+  const cacheLimit = 24 * 60 * 60 * 1000
+  if (currentTimestamp - draftTimestamp > cacheLimit) {
+    localStorage.removeItem(`draftData-${slug}`)
+    return undefined
+  }
+  // if draft is not older than 24 hour, return wiki
+  return wiki
+}
+export const removeDraftFromLocalStorage = () => {
+  const slug = getCurrentSlug()
+  if (slug) localStorage.removeItem(`draftData-${slug}`)
+}
+
 const initialState: Wiki = {
-  id: '',
+  id: CreateNewWikiSlug,
   version: 1,
   language: LanguagesISOEnum.EN,
   title: '',
@@ -34,11 +75,18 @@ const wikiSlice = createSlice({
   name: 'wiki',
   initialState,
   reducers: {
+    setInitialWikiState(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    },
     setCurrentWiki(state, action) {
       const newState = {
         ...state,
         ...action.payload,
       }
+      saveDraftInLocalStorage(newState)
       return newState
     },
     setContent(state, action) {
@@ -46,50 +94,82 @@ const wikiSlice = createSlice({
         ...state,
         content: action.payload,
       }
+      if (newState.content.trim()) {
+        saveDraftInLocalStorage(newState)
+      }
       return newState
     },
     updateCategories(state, action) {
-      return {
+      const newState = {
         ...state,
         categories: [action.payload],
       }
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     deleteCategories(state) {
-      return {
+      const newState = {
         ...state,
         categories: [],
       }
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     addTag(state, action) {
-      return {
+      const newState = {
         ...state,
         tags: [...state.tags, action.payload],
       }
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     setTags(state, action) {
-      return {
+      const newState = {
         ...state,
         tags: action.payload,
       }
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     addMedia(state, action) {
       if (state.media) {
-        return {
+        const newState = {
           ...state,
           media: [...state.media, action.payload],
         }
+        saveDraftInLocalStorage(newState)
+        return newState
       }
       return state
+    },
+    addWikiImageIPFS(state, action) {
+      if (state.media) {
+        const newState = {
+          ...state,
+          images: [{ id: action.payload, type: 'image/jpeg, image/png' }],
+        }
+        saveDraftInLocalStorage(newState)
+        return newState
+      }
+      return state
+    },
+    deleteWikiImages(state) {
+      const newState = state
+      delete newState.images
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     removeMedia(state, action) {
       if (state.media) {
         const updatedMedia = state.media.filter(
           media => media.id !== action.payload.id,
         )
-        return {
+        const newState = {
           ...state,
           media: updatedMedia,
         }
+        saveDraftInLocalStorage(newState)
+        return newState
       }
       return state
     },
@@ -103,21 +183,25 @@ const wikiSlice = createSlice({
           ...updatedMedia[findMediaIndex],
           ...{ id: action.payload.hash },
         }
-        return {
+        const newState = {
           ...state,
           media: updatedMedia,
         }
+        saveDraftInLocalStorage(newState)
+        return newState
       }
       return state
     },
     updateMetadata(state, action) {
       const ob = action.payload
-      return {
+      const newState = {
         ...state,
         metadata: state.metadata.map((m: MData) =>
           m.id === ob.id ? { ...m, value: ob.value } : m,
         ),
       }
+      saveDraftInLocalStorage(newState)
+      return newState
     },
     reset() {
       return initialState

@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-import buffer from 'buffer'
 
 import config from '@/config'
+import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import { useDispatch } from 'react-redux'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
@@ -22,6 +23,8 @@ type DropzoneType = {
 
 const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
+  const toast = useToast()
+  const dispatch = useDispatch()
   const { data: accountData } = useAccount()
   const {
     setHideImageInput,
@@ -41,7 +44,22 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
         const reader = new FileReader()
 
         reader.onload = () => {
-          const binaryStr = new buffer.Buffer(reader.result as Buffer)
+          const binaryStr = Buffer.from(reader.result as Buffer)
+
+          // validate image
+          const fileSize = binaryStr.byteLength / 1024 ** 2
+          if (fileSize > 10) {
+            toast({
+              title: 'File size is larger than 10mb',
+              status: 'error',
+              duration: 3000,
+            })
+            if (setHideImageInput) setHideImageInput(false)
+            setPaths([])
+            return
+          }
+
+          // set image to state
           setImage(f.name, binaryStr as ArrayBuffer)
         }
 
@@ -51,7 +69,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
         setHideImageInput(true)
       }
     },
-    [setPaths, setHideImageInput, setImage],
+    [setHideImageInput, setImage, toast],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -72,14 +90,21 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
 
   useEffect(() => {
     if (isToResetImage) {
-      if (deleteImage && setHideImageInput) {
-        deleteImage()
-        setHideImageInput(false)
+      const draftWiki = getDraftFromLocalStorage()
+      if (!draftWiki || draftWiki?.image?.length === 0) {
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            image: undefined,
+          },
+        })
+        if (setHideImageInput) setHideImageInput(false)
+        setPaths([])
       }
-      setPaths([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isToResetImage, setHideImageInput])
+
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
