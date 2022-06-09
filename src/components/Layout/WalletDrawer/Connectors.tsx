@@ -29,7 +29,20 @@ import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { logEvent } from '@/utils/googleAnalytics'
 
 const Connectors = () => {
-  const { isConnecting, connectors, connect, error } = useConnect()
+  const { isConnecting, connectors, connect } = useConnect({
+    onError(error){
+      logEvent({
+        action: 'LOGIN_ERROR',
+        params: { reason: error.message },
+      })
+    },
+    onConnect(data){
+      logEvent({
+        action: 'LOGIN_SUCCESS',
+        params: { address: data.account},
+      })
+    }
+  })
   const { data: accountData } = useAccount()
   const { userBalance } = useFetchWalletBalance(accountData?.address)
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
@@ -40,14 +53,7 @@ const Connectors = () => {
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
 
-  useEffect(() => {
-    if (error) {
-      logEvent({
-        action: 'LOGIN_ERROR',
-        params: { reason: error.message },
-      })
-    }
-  }, [error])
+  
   useEffect(() => {
     if (userBalance && !walletDetails) {
       dispatch(updateWalletDetails(userBalance))
