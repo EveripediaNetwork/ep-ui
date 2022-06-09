@@ -307,7 +307,7 @@ const CreateWikiContent = () => {
       )
 
       if (wikiResult && 'data' in wikiResult)
-        saveHashInTheBlockchain(String(wikiResult.data))
+        saveHashInTheBlockchain(String(wikiResult.data), getWikiSlug())
       else {
         setIsLoading('error')
         setMsg(errorMessage)
@@ -404,7 +404,7 @@ const CreateWikiContent = () => {
   }, [dispatch, updateImageState, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash()
+    if (txHash) verifyTrxHash(getWikiSlug())
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {

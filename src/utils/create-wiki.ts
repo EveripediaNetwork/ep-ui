@@ -22,6 +22,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { PageTemplate } from '@/data/pageTemplate'
 import { store } from '@/store/store'
+import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -171,7 +172,7 @@ export const useGetSignedHash = (deadline: number) => {
 
   const { refetch } = useWaitForTransaction({ hash: txHash })
 
-  const saveHashInTheBlockchain = async (ipfs: string) => {
+  const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
 
     signTypedDataAsync({
@@ -189,15 +190,31 @@ export const useGetSignedHash = (deadline: number) => {
         } else {
           setIsLoading('error')
           setMsg(errorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: 'SIGN_TRANSACTION_ERROR',
+              address: accountData?.address,
+              slug: wikiSlug,
+            },
+          })
         }
       })
       .catch(() => {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'SIGN_TRANSACTION_ERROR',
+            address: accountData?.address,
+            slug: wikiSlug,
+          },
+        })
       })
   }
 
-  const verifyTrxHash = useCallback(async () => {
+  const verifyTrxHash = useCallback(async (wikiSlug: string) => {
     const timer = setInterval(() => {
       try {
         const checkTrx = async () => {
@@ -205,9 +222,16 @@ export const useGetSignedHash = (deadline: number) => {
           if (trx.error || trx.data?.status === 0) {
             setIsLoading('error')
             setMsg(errorMessage)
+            logEvent({
+              action: 'SUBMIT_WIKI_ERROR',
+              params: {
+                reason: 'TRANSACTION_VERIFICATION_ERROR',
+                address: accountData?.address,
+                slug: wikiSlug,
+              },
+            })
             clearInterval(timer)
           }
-
           if (
             trx &&
             trx.data &&
@@ -224,6 +248,14 @@ export const useGetSignedHash = (deadline: number) => {
       } catch (err) {
         setIsLoading('error')
         setMsg(errorMessage)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: 'TRANSACTION_VERIFICATION_ERROR',
+            address: accountData?.address,
+            slug: wikiSlug,
+          },
+        })
         clearInterval(timer)
       }
     }, 3000)
@@ -252,6 +284,14 @@ export const useGetSignedHash = (deadline: number) => {
         } catch (err) {
           setIsLoading('error')
           setMsg(errorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: 'VERIFIABLE_SIGNATURE_SUBMISSION_ERROR',
+              address: accountData?.address,
+              data,
+            },
+          })
         }
       }
     }
