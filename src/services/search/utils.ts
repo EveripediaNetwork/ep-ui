@@ -7,6 +7,7 @@ import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { Tag, WikiPreview } from '@/types/Wiki'
+import { logEvent } from '@/utils/googleAnalytics'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
@@ -78,6 +79,12 @@ export const useNavSearch = () => {
   useEffect(() => {
     if (query && query.length >= 3) {
       setIsLoading(true)
+      logEvent({
+        action: 'SEARCH_ITEM',
+        params: {
+          data:query,
+        },
+      })
       debouncedFetchResults(query, res => {
         setResults(res)
         setIsLoading(false)
