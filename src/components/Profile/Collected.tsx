@@ -73,7 +73,7 @@ const Collected = () => {
         maxW="1050px"
         w="100%"
         mx="auto"
-        columns={[1, 2, 3]}
+        columns={{ base: 1, md: 2, lg: 3 }}
         spacingX={6}
         spacingY={12}
       >
