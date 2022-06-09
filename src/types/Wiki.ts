@@ -28,12 +28,12 @@ export enum EditorContentOverride {
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
-  FACEBOOK_PROFILE = 'facebook-profile',
-  INSTAGRAM_PROFILE = 'instagram-profile',
-  TWITTER_PROFILE = 'twitter-profile',
-  LINKEDIN_PROFILE = 'linkedin-profile',
-  YOUTUBE_PROFILE = 'youtube-profile',
-  COINGECKO_PROFILE = 'coingecko-profile',
+  FACEBOOK_PROFILE = 'facebook_profile',
+  INSTAGRAM_PROFILE = 'instagram_profile',
+  TWITTER_PROFILE = 'twitter_profile',
+  LINKEDIN_PROFILE = 'linkedin_profile',
+  YOUTUBE_PROFILE = 'youtube_profile',
+  COINGECKO_PROFILE = 'coingecko_profile',
 }
 
 export enum EditSpecificMetaIds {
