@@ -54,8 +54,8 @@ const Collected = () => {
   useEffect(() => {
     if (address) {
       fetchMoreWikis()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
   const [sentryRef] = useInfiniteScroll({
@@ -76,7 +76,6 @@ const Collected = () => {
         minChildWidth={displaySize}
         w="full"
         spacing="4"
-        border="2px solid black"
       >
         {wikis.map((item, i) => (
           <WikiPreviewCard wiki={item} key={i} />
