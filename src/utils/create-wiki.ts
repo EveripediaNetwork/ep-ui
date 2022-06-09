@@ -214,53 +214,56 @@ export const useGetSignedHash = (deadline: number) => {
       })
   }
 
-  const verifyTrxHash = useCallback(async (wikiSlug: string) => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await refetch()
-          if (trx.error || trx.data?.status === 0) {
-            setIsLoading('error')
-            setMsg(errorMessage)
-            logEvent({
-              action: 'SUBMIT_WIKI_ERROR',
-              params: {
-                reason: 'TRANSACTION_VERIFICATION_ERROR',
-                address: accountData?.address,
-                slug: wikiSlug,
-              },
-            })
-            clearInterval(timer)
+  const verifyTrxHash = useCallback(
+    async (wikiSlug: string) => {
+      const timer = setInterval(() => {
+        try {
+          const checkTrx = async () => {
+            const trx = await refetch()
+            if (trx.error || trx.data?.status === 0) {
+              setIsLoading('error')
+              setMsg(errorMessage)
+              logEvent({
+                action: 'SUBMIT_WIKI_ERROR',
+                params: {
+                  reason: 'TRANSACTION_VERIFICATION_ERROR',
+                  address: accountData?.address,
+                  slug: wikiSlug,
+                },
+              })
+              clearInterval(timer)
+            }
+            if (
+              trx &&
+              trx.data &&
+              trx.data.status === 1 &&
+              trx.data.confirmations > 1
+            ) {
+              setIsLoading(undefined)
+              setActiveStep(3)
+              setMsg(successMessage)
+              clearInterval(timer)
+            }
           }
-          if (
-            trx &&
-            trx.data &&
-            trx.data.status === 1 &&
-            trx.data.confirmations > 1
-          ) {
-            setIsLoading(undefined)
-            setActiveStep(3)
-            setMsg(successMessage)
-            clearInterval(timer)
-          }
+          checkTrx()
+        } catch (err) {
+          setIsLoading('error')
+          setMsg(errorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: 'TRANSACTION_VERIFICATION_ERROR',
+              address: accountData?.address,
+              slug: wikiSlug,
+            },
+          })
+          clearInterval(timer)
         }
-        checkTrx()
-      } catch (err) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        logEvent({
-          action: 'SUBMIT_WIKI_ERROR',
-          params: {
-            reason: 'TRANSACTION_VERIFICATION_ERROR',
-            address: accountData?.address,
-            slug: wikiSlug,
-          },
-        })
-        clearInterval(timer)
-      }
-    }, 3000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch])
+      }, 3000)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [refetch],
+  )
 
   useEffect(() => {
     const getSignedTxHash = async () => {
