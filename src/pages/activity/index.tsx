@@ -34,7 +34,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
-          pageView(`${router.asPath}/${updatedOffset}`)
+          pageView(`${router.asPath}?fetchedItems=${updatedOffset}`)
           const data = result.data || []
           const updatedActivities = [...LatestActivityData, ...data]
           setLatestActivityData(updatedActivities)

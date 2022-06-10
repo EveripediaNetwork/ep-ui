@@ -56,7 +56,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
-          pageView(`${router.asPath}/${updatedOffset}`)
+          pageView(`${router.asPath}?fetchedItems=${updatedOffset}`)
           const { data } = result
           const updatedWiki = [...wikisByTag, ...data]
           setWikisByTag(updatedWiki)
