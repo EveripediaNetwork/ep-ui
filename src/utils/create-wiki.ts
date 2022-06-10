@@ -195,6 +195,7 @@ export const useGetSignedHash = (deadline: number) => {
       })
       .catch(err => {
         setIsLoading('error')
+        setMsg(errorMessage)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
           params: {
