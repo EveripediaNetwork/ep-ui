@@ -29,6 +29,7 @@ import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
+import { pageView } from '@/utils/googleAnalytics'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -62,6 +63,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
+          pageView(`${router.asPath}/${updatedOffset}`)
           const { data } = result
           const updatedWiki = [...wikisInCategory, ...data]
           setWikisInCategory(updatedWiki)

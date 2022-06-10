@@ -22,6 +22,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { PageTemplate } from '@/data/pageTemplate'
 import { store } from '@/store/store'
+import { Dict } from '@chakra-ui/utils'
 import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
@@ -190,23 +191,15 @@ export const useGetSignedHash = (deadline: number) => {
         } else {
           setIsLoading('error')
           setMsg(errorMessage)
-          logEvent({
-            action: 'SUBMIT_WIKI_ERROR',
-            params: {
-              reason: 'SIGN_TRANSACTION_ERROR',
-              address: accountData?.address,
-              slug: wikiSlug,
-            },
-          })
         }
       })
-      .catch(() => {
+      .catch(err => {
         setIsLoading('error')
-        setMsg(errorMessage)
+        console.log(err)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
           params: {
-            reason: 'SIGN_TRANSACTION_ERROR',
+            reason: err.err[0]?.message || errorMessage,
             address: accountData?.address,
             slug: wikiSlug,
           },
@@ -285,12 +278,13 @@ export const useGetSignedHash = (deadline: number) => {
             setActiveStep(2)
           }
         } catch (err) {
+          const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(errorMessage)
+          setMsg(errorObject.response.errors[0].extensions.exception.reason)
           logEvent({
             action: 'SUBMIT_WIKI_ERROR',
             params: {
-              reason: 'VERIFIABLE_SIGNATURE_SUBMISSION_ERROR',
+              reason: errorObject.response.errors[0].extensions.exception.reason,
               address: accountData?.address,
               data,
             },

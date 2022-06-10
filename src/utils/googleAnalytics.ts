@@ -1,6 +1,6 @@
 import { GTagParams } from '@/types/global'
 
-export const pageView = (url: URL) => {
+export const pageView = (url: URL | string) => {
   const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string
   if (typeof window.gtag !== 'undefined') {
     window.gtag('event', 'page_view', {

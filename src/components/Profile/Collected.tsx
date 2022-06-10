@@ -10,6 +10,7 @@ import { Wiki } from '@/types/Wiki'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { store } from '@/store/store'
 import { useTranslation } from 'react-i18next'
+import { pageView } from '@/utils/googleAnalytics'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 const Collected = () => {
@@ -32,6 +33,7 @@ const Collected = () => {
             }),
           )
           if (result.data && result.data?.length > 0) {
+            pageView(`${router.asPath}/${fetchOffset}`)
             const data = result.data || []
             const updatedWiki = [...wikis, ...data]
             setWikis(updatedWiki)

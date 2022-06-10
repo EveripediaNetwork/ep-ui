@@ -306,9 +306,9 @@ const CreateWikiContent = () => {
         postWiki.initiate({ data: finalWiki }),
       )
 
-      if (wikiResult && 'data' in wikiResult)
+      if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data), getWikiSlug())
-      else {
+      } else {
         setIsLoading('error')
         setMsg(errorMessage)
         logEvent({
