@@ -198,7 +198,7 @@ export const useGetSignedHash = (deadline: number) => {
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
           params: {
-            reason:  err.message,
+            reason: err.message,
             address: accountData?.address,
             slug: wikiSlug,
           },
