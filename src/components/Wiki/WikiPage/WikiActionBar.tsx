@@ -53,7 +53,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       py={{ base: 4, md: 'calc(50vh - 150px )' }}
       mt={{ base: 0, md: 0 }}
       borderColor="borderColor"
-      w={{ lg: '5%', base: '100%' }}
+      w={{ lg: '8%', base: '100%', '2xl': '5%' }}
     >
       <Flex
         direction={{ base: 'row', md: 'column' }}
