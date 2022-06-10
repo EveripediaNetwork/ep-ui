@@ -7,7 +7,6 @@ import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import { Tag, WikiPreview } from '@/types/Wiki'
-import { logEvent } from '@/utils/googleAnalytics'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'

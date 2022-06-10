@@ -195,11 +195,10 @@ export const useGetSignedHash = (deadline: number) => {
       })
       .catch(err => {
         setIsLoading('error')
-        console.log(err)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
           params: {
-            reason: err.err[0]?.message || errorMessage,
+            reason:  err.message,
             address: accountData?.address,
             slug: wikiSlug,
           },
@@ -240,12 +239,13 @@ export const useGetSignedHash = (deadline: number) => {
           }
           checkTrx()
         } catch (err) {
+          const errorObject = err as Dict
           setIsLoading('error')
           setMsg(errorMessage)
           logEvent({
             action: 'SUBMIT_WIKI_ERROR',
             params: {
-              reason: 'TRANSACTION_VERIFICATION_ERROR',
+              reason: errorObject.message,
               address: accountData?.address,
               slug: wikiSlug,
             },
