@@ -79,12 +79,6 @@ export const useNavSearch = () => {
   useEffect(() => {
     if (query && query.length >= 3) {
       setIsLoading(true)
-      logEvent({
-        action: 'SEARCH_ITEM',
-        params: {
-          data: query,
-        },
-      })
       debouncedFetchResults(query, res => {
         setResults(res)
         setIsLoading(false)
