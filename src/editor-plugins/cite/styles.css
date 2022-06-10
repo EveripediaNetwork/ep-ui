@@ -4,3 +4,7 @@
 .toastui-editor-dark .cite__popupBtn {
   background-image: url(./assets/cite-icon-dark.png) !important;
 }
+
+.toastui-editor p{ 
+  line-height: 1.625 !important
+}

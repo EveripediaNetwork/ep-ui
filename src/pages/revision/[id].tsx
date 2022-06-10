@@ -153,7 +153,7 @@ const Revision = () => {
               >
                 <WikiActionBar wiki={wiki?.content[0]} />
                 {wiki ? (
-                  <Box>
+                  <Box w="100%">
                     <Flex
                       w="100%"
                       justify="space-between"
