@@ -284,7 +284,8 @@ export const useGetSignedHash = (deadline: number) => {
           logEvent({
             action: 'SUBMIT_WIKI_ERROR',
             params: {
-              reason: errorObject.response.errors[0].extensions.exception.reason,
+              reason:
+                errorObject.response.errors[0].extensions.exception.reason,
               address: accountData?.address,
               data,
             },
