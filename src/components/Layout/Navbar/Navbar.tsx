@@ -173,7 +173,7 @@ const Navbar = () => {
                 <HStack width="150px">
                   <Logo />
                   <Heading
-                    size="md"
+                    fontSize={{ base: 10, sm: 17, lg: 20 }}
                     color="gray.900"
                     _dark={{ color: 'white' }}
                   >
