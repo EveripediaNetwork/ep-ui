@@ -107,10 +107,16 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           src={`/images/categories/${categoryData.id}.jpg`}
           height="250px"
         />
-        <Heading fontSize={{ base: 20, sm: 20, lg: 36 }} maxW="80%" mx="auto" textAlign="center" mt={8} >
+        <Heading
+          fontSize={{ base: 20, sm: 20, lg: 36 }}
+          maxW="80%"
+          mx="auto"
+          textAlign="center"
+          mt={8}
+        >
           {categoryData?.title}
         </Heading>
-        <Flex mx="auto" justifyContent="center" mt={5} >
+        <Flex mx="auto" justifyContent="center" mt={5}>
           <Icon
             as={categoryIcon}
             borderRadius="100px"
@@ -123,8 +129,8 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             padding={1}
           />
         </Flex>
-        
-        <ToggleText  mt={4} text={categoryData?.description || ''} />
+
+        <ToggleText mt={4} text={categoryData?.description || ''} />
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">
