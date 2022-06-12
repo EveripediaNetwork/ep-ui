@@ -63,7 +63,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
-          pageView(`${router.asPath}?fetchedItems=${updatedOffset}`)
+          pageView(`${router.asPath}?page=${updatedOffset}`)
           const { data } = result
           const updatedWiki = [...wikisInCategory, ...data]
           setWikisInCategory(updatedWiki)

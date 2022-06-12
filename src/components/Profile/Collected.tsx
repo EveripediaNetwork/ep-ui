@@ -33,7 +33,7 @@ const Collected = () => {
             }),
           )
           if (result.data && result.data?.length > 0) {
-            pageView(`${router.asPath}?fetchedItems=${fetchOffset}`)
+            pageView(`${router.asPath}?page=${fetchOffset}`)
             const data = result.data || []
             const updatedWiki = [...wikis, ...data]
             setWikis(updatedWiki)
