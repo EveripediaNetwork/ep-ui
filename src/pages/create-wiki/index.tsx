@@ -73,7 +73,7 @@ import {
   defaultErrorMessage,
   isVerifiedContentLinks,
   isWikiExists,
-  ProcessErrorMessage,
+  ValidationErrorMessage,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
@@ -291,7 +291,7 @@ const CreateWikiContent = () => {
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
             logReason = wikiError.error
-            setMsg(ProcessErrorMessage(logReason))
+            setMsg(ValidationErrorMessage(logReason))
           } else {
             setMsg(defaultErrorMessage)
           }

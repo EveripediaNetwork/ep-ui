@@ -31,7 +31,7 @@ export const initialMsg =
 export const defaultErrorMessage =
   'Oops, An Error Occurred. Wiki could not be created'
 export const successMessage = 'Wiki has been created successfully.'
-export const ProcessErrorMessage = (type: string) => {
+export const ValidationErrorMessage = (type: string) => {
   switch (type) {
     case ValidatorCodes.CATEGORY:
       return 'Category must be a valid category name.'
@@ -49,6 +49,8 @@ export const ProcessErrorMessage = (type: string) => {
       return 'No External URL are allowed.'
     case ValidatorCodes.METADATA:
       return 'Wiki metadata is incorrect. Please check the wiki.'
+    case ValidatorCodes.SUMMARY:
+      return 'Summary must be no more than 128 characters.'
     default:
       return 'An error occurred.'
   }
