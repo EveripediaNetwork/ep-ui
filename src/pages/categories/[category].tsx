@@ -108,7 +108,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           height="250px"
         />
         <Heading
-          fontSize={{ base: 20, lg: 36 }}
+          fontSize={{ base: 25, lg: 36 }}
           maxW="80%"
           mx="auto"
           textAlign="center"
