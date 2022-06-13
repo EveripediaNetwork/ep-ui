@@ -44,7 +44,7 @@ export const ProcessErrorMessage = (type: string) => {
     case ValidatorCodes.IMAGE:
       return 'Images must be no more than 5 and no less than 1.'
     case ValidatorCodes.TAG:
-      return 'Tags must be a valid tag name.'
+      return 'Tags must be no more than 5'
     case ValidatorCodes.URL:
       return 'No External URL are allowed.'
     case ValidatorCodes.METADATA:
