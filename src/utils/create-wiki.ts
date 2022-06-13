@@ -190,9 +190,9 @@ export const useGetSignedHash = (deadline: number) => {
           setMsg(defaultErrorMessage)
         }
       })
-      .catch(() => {
+      .catch(err => {
         setIsLoading('error')
-        setMsg(defaultErrorMessage)
+        setMsg(err.message)
       })
   }
 
