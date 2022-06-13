@@ -70,9 +70,10 @@ import {
   useGetSignedHash,
   useCreateWikiEffects,
   useCreateWikiContext,
-  errorMessage,
+  defaultErrorMessage,
   isVerifiedContentLinks,
   isWikiExists,
+  ProcessErrorMessage,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
@@ -279,11 +280,26 @@ const CreateWikiContent = () => {
         saveHashInTheBlockchain(String(wikiResult.data))
       else {
         setIsLoading('error')
-        setMsg(errorMessage)
+        let logReason = 'NO_IPFS'
+        // get error message from wikiResult
+        if (wikiResult && 'error' in wikiResult) {
+          const rawErrMsg = wikiResult.error.message
+          const prefix = 'Http Exception:'
+          if (rawErrMsg?.startsWith(prefix)) {
+            const errObjString = rawErrMsg.substring(prefix.length)
+            const errObj = JSON.parse(errObjString)
+            const wikiError =
+              errObj.response.errors[0].extensions.exception.response
+            logReason = wikiError.error
+            setMsg(ProcessErrorMessage(logReason))
+          } else {
+            setMsg(defaultErrorMessage)
+          }
+        }
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
           params: {
-            reason: 'NO_IPFS',
+            reason: logReason,
             address: accountData?.address,
             slug: getWikiSlug(),
           },
