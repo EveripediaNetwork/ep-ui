@@ -24,6 +24,8 @@ import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
+import { Dict } from '@chakra-ui/utils'
+import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -170,7 +172,7 @@ export const useGetSignedHash = (deadline: number) => {
 
   const { refetch } = useWaitForTransaction({ hash: txHash })
 
-  const saveHashInTheBlockchain = async (ipfs: string) => {
+  const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
 
     signTypedDataAsync({
@@ -193,8 +195,17 @@ export const useGetSignedHash = (deadline: number) => {
       .catch(err => {
         setIsLoading('error')
         setMsg(err.message)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: err.message,
+            address: accountData?.address,
+            slug: wikiSlug,
+          },
+        })
       })
   }
+
 
   const verifyTrxHash = useCallback(async () => {
     const timer = setInterval(() => {
@@ -204,6 +215,14 @@ export const useGetSignedHash = (deadline: number) => {
           if (trx.error || trx.data?.status === 0) {
             setIsLoading('error')
             setMsg(defaultErrorMessage)
+            logEvent({
+              action: 'SUBMIT_WIKI_ERROR',
+              params: {
+                reason: 'TRANSACTION_VERIFICATION_ERROR',
+                address: accountData?.address,
+                slug: wikiSlug,
+              },
+            })
             clearInterval(timer)
           }
 
@@ -218,6 +237,20 @@ export const useGetSignedHash = (deadline: number) => {
             setMsg(successMessage)
             clearInterval(timer)
           }
+          checkTrx()
+        } catch (err) {
+          const errorObject = err as Dict
+          setIsLoading('error')
+          setMsg(errorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: errorObject.message,
+              address: accountData?.address,
+              slug: wikiSlug,
+            },
+          })
+          clearInterval(timer)
         }
         checkTrx()
       } catch (err) {
@@ -249,8 +282,18 @@ export const useGetSignedHash = (deadline: number) => {
             setActiveStep(2)
           }
         } catch (err) {
+          const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(defaultErrorMessage)
+          setMsg(errorObject.response.errors[0].extensions.exception.reason)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason:
+                errorObject.response.errors[0].extensions.exception.reason,
+              address: accountData?.address,
+              data,
+            },
+          })
         }
       }
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Image, Spinner, Text } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
+import { logEvent } from '@/utils/googleAnalytics'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 
 const ConnectorDetails = ({
@@ -16,6 +17,10 @@ const ConnectorDetails = ({
 }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const handleConnect = (i: Connector) => {
+    logEvent({
+      action: 'LOGIN_ATTEMPT',
+      params: { provider: i.name },
+    })
     setIsClicked(true)
     connect(i)
   }
