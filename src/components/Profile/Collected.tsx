@@ -70,11 +70,11 @@ const Collected = () => {
       )}
       <SimpleGrid
         ref={sentryRef}
-        maxW="1050px"
+        maxW="1200px"
         w="100%"
         mx="auto"
         columns={{ base: 1, md: 2, lg: 3 }}
-        spacingX={6}
+        spacingX={3}
         spacingY={12}
       >
         {wikis.map((item, i) => (
