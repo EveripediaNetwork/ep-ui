@@ -9,7 +9,7 @@ import {
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { HStack, Flex, Spinner, Box } from '@chakra-ui/react'
+import { HStack, Flex, Spinner, Box, Heading } from '@chakra-ui/react'
 import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
 import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
 import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
@@ -17,16 +17,45 @@ import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { CommonMetaIds } from '@/types/Wiki'
+import { BaseCategory, CommonMetaIds, Media } from '@/types/Wiki'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
+import { RelatedWikis } from '@/components/Wiki/WikiPage/InsightComponents/RelatedWikis'
+import TwitterTimeline from '@/components/Wiki/WikiPage/InsightComponents/TwitterTimeline'
+
+const MobileMeta = (wiki: {
+  metadata: any[]
+  categories: BaseCategory[]
+  media?: Media[]
+}) => {
+  const { metadata, categories, media } = wiki
+  const twitterLink = metadata.find(
+    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+  )?.value
+
+  return (
+    <Flex
+      p={4}
+      mx={{ base: 'auto', md: 0 }}
+      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
+      display={{ base: 'block', lg: 'none' }}
+      flexDirection="row"
+    >
+      {!!twitterLink && <TwitterTimeline url={twitterLink} />}
+      {categories?.length !== 0 && <RelatedWikis categories={categories} />}
+      {media && media.length > 0 && <RelatedMediaGrid media={media} />}
+    </Flex>
+  )
+}
 
 const Wiki = () => {
   const router = useRouter()
 
   const { slug } = router.query
+
   const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
     skip: router.isFallback,
   })
@@ -99,9 +128,46 @@ const Wiki = () => {
                     justify="space-between"
                     direction={{ base: 'column', md: 'row' }}
                   >
-                    <WikiMainContent wiki={wiki} />
-                    <WikiInsights wiki={wiki} />
+                    <Flex
+                      display={{ lg: 'flex', base: 'none', md: 'flex' }}
+                      flexDirection={{
+                        base: 'column-reverse',
+                        lg: 'row',
+                        md: 'row',
+                      }}
+                    >
+                      <WikiMainContent wiki={wiki} mobileView={false} />
+                      <WikiInsights wiki={wiki} />
+                    </Flex>
+                    <Flex
+                      display={{ lg: 'none', base: 'block', md: 'none' }}
+                      flexDirection={{
+                        base: 'column-reverse',
+                        lg: 'row',
+                        md: 'row',
+                      }}
+                    >
+                      <Heading mb={2} p={4}>
+                        {wiki?.title}
+                      </Heading>
+                      <WikiInsights wiki={wiki} />
+                      <WikiMainContent wiki={wiki} mobileView />
+                    </Flex>
                   </Flex>
+                  {wiki.media && wiki.media.length > 0 && (
+                    <RelatedMediaGrid media={wiki.media} />
+                  )}
+                  <Flex
+                    display={{ base: 'block', lg: 'none', md: 'none' }}
+                    flexDirection="column"
+                  >
+                    <MobileMeta
+                      metadata={wiki.metadata}
+                      categories={wiki.categories}
+                      media={wiki.media}
+                    />
+                  </Flex>
+
                   <WikiReferences
                     references={JSON.parse(
                       getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)

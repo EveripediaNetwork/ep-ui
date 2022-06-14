@@ -51,6 +51,7 @@ export const WikiDetails = ({
         fontWeight="600"
         w="100%"
         textAlign="center"
+        display={{ base: 'none', lg: 'block', md: 'block' }}
       >
         {title}
       </Heading>

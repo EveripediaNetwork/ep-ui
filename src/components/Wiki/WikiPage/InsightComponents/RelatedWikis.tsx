@@ -72,9 +72,9 @@ export const RelatedWikis = ({
     })
   }, [categories])
   return (
-    <VStack w="100%" spacing={4} borderRadius={2}>
+    <VStack w="100%" spacing={4} borderRadius={2} mb="5">
       <WikiAccordion mt="-3px" title="Related Articles">
-        <VStack align="start">
+        <VStack align="start" w="100%">
           {wikis.slice(0, 4).map(wiki => (
             <RelatedWikiCard key={wiki.id} wiki={wiki} />
           ))}
