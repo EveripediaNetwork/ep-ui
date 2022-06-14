@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { Image } from '@/components/Elements/Image/Image'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import {
   getCategoriesById,
   getRunningOperationPromises,
@@ -129,11 +128,17 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             padding={1}
           />
         </Flex>
-        <Flex textAlign="center" justifyContent="center" fontWeight="400" mx="auto" width={{ base: 400, lg: 900 }}>
-            <Text mt={3} mb={3}>
-              {categoryData?.description || ''}
-            </Text>
-          </Flex>
+        <Flex
+          textAlign="center"
+          justifyContent="center"
+          fontWeight="400"
+          mx="auto"
+          width={{ base: 400, lg: 900 }}
+        >
+          <Text mt={3} mb={3}>
+            {categoryData?.description || ''}
+          </Text>
+        </Flex>
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">

@@ -26,7 +26,6 @@ export const Collections = () => (
         </CustomTab>
       ))}
     </TabList>
-
     <TabPanels>
       {SECTIONS.map((section, sid) => (
         <TabPanel key={sid} p="0">
