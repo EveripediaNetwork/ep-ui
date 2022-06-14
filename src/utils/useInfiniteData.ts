@@ -6,7 +6,6 @@ import { Dict } from '@chakra-ui/utils'
 type Opts = {
   initiator: Dict
   arg: Dict<string>
-  noOffset?: boolean
 }
 
 export const useInfiniteData = <T>(opts: Opts) => {
