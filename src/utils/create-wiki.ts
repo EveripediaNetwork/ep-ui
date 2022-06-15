@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -8,7 +8,8 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   WikiRootBlocks,
-  MData,
+  EditorContentOverride,
+  ValidatorCodes,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -20,14 +21,42 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
-import { PageTemplate } from '@/data/pageTemplate'
+import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
+import { Dict } from '@chakra-ui/utils'
+import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
 export const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
-export const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
+export const defaultErrorMessage =
+  'Oops, An Error Occurred. Wiki could not be created'
 export const successMessage = 'Wiki has been created successfully.'
+export const ValidationErrorMessage = (type: string) => {
+  switch (type) {
+    case ValidatorCodes.CATEGORY:
+      return 'Category must be a valid category name.'
+    case ValidatorCodes.LANGUAGE:
+      return 'Language linked to wiki must be a valid language name.'
+    case ValidatorCodes.USER:
+      return 'Transaction is not signed by the user.'
+    case ValidatorCodes.WORDS:
+      return 'Wiki must have at least 150 characters.'
+    case ValidatorCodes.IMAGE:
+      return 'Images must be no more than 5 and no less than 1.'
+    case ValidatorCodes.TAG:
+      return 'Tags must be no more than 5'
+    case ValidatorCodes.URL:
+      return 'No External URL are allowed.'
+    case ValidatorCodes.METADATA:
+      return 'Wiki metadata is incorrect. Please check the wiki.'
+    case ValidatorCodes.SUMMARY:
+      return 'Summary must be no more than 128 characters.'
+    default:
+      return 'An error occurred.'
+  }
+}
 
 export const domain = {
   name: 'EP',
@@ -53,8 +82,7 @@ export const saveImage = async (image: Image) => {
   })
 
   formData.append('operations', POST_IMG)
-  const map = `{"0": ["variables.file"]}`
-  formData.append('map', map)
+  formData.append('map', `{"0": ["variables.file"]}`)
   formData.append('0', blob)
 
   try {
@@ -82,15 +110,8 @@ export const useCreateWikiEffects = (
     isPublished: boolean
   }>,
 ) => {
-  const {
-    slug,
-    wikiData,
-    activeStep,
-    setIsNewCreateWiki,
-
-    dispatch,
-    isLoadingWiki,
-  } = useCreateWikiContext()
+  const { slug, activeStep, setIsNewCreateWiki, dispatch } =
+    useCreateWikiContext()
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -102,51 +123,32 @@ export const useCreateWikiEffects = (
   useEffect(() => {
     if (!slug) {
       setIsNewCreateWiki(true)
-      dispatch({ type: 'wiki/reset' })
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
+      // fetch draft data from local storage
+      const draft = getDraftFromLocalStorage()
+      if (draft) {
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            ...draft,
+            content:
+              EditorContentOverride.KEYWORD +
+              draft.content.replace(/ {2}\n/gm, '\n'),
+          },
+        })
+      } else {
+        dispatch({ type: 'wiki/reset' })
+        dispatch({
+          type: 'wiki/setInitialWikiState',
+          payload: {
+            content: EditorContentOverride.KEYWORD + initialEditorValue,
+          },
+        })
+      }
     } else {
       setIsNewCreateWiki(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, slug])
-
-  useEffect(() => {
-    if (isLoadingWiki === false && !wikiData)
-      dispatch({ type: 'wiki/setContent', payload: initialEditorValue })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingWiki, wikiData])
-
-  const updatePageTypeTemplate = useCallback(() => {
-    const meta = [
-      getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE),
-      getWikiMetadataById(wiki, CommonMetaIds.TWITTER_PROFILE),
-    ]
-    const pageType = PageTemplate.find(p => p.type === meta[0]?.value)
-
-    dispatch({
-      type: 'wiki/setContent',
-      payload: String(pageType?.templateText),
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wiki.metadata])
-
-  // update the page type template when the page type changes
-  const presentPageType = useMemo(
-    () =>
-      wiki?.metadata?.find((m: MData) => m.id === CommonMetaIds.PAGE_TYPE)
-        ?.value,
-    [wiki?.metadata],
-  )
-  useEffect(() => {
-    if (presentPageType) {
-      let isMdPageTemplate = false
-      PageTemplate.forEach(p => {
-        if (p.templateText === wiki.content) isMdPageTemplate = true
-      })
-      if (isMdPageTemplate || wiki.content === ' ') updatePageTypeTemplate()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [presentPageType])
 }
 
 export const useGetSignedHash = (deadline: number) => {
@@ -163,15 +165,15 @@ export const useGetSignedHash = (deadline: number) => {
   const { data: accountData } = useAccount()
 
   const {
-    data,
-    error,
+    data: signData,
+    error: signError,
     isLoading: signing,
     signTypedDataAsync,
   } = useSignTypedData()
 
   const { refetch } = useWaitForTransaction({ hash: txHash })
 
-  const saveHashInTheBlockchain = async (ipfs: string) => {
+  const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
 
     signTypedDataAsync({
@@ -188,59 +190,86 @@ export const useGetSignedHash = (deadline: number) => {
           setActiveStep(1)
         } else {
           setIsLoading('error')
-          setMsg(errorMessage)
+          setMsg(defaultErrorMessage)
         }
       })
-      .catch(() => {
+      .catch(err => {
         setIsLoading('error')
-        setMsg(errorMessage)
+        setMsg(err.message)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: err.message,
+            address: accountData?.address,
+            slug: wikiSlug,
+          },
+        })
       })
   }
 
-  const verifyTrxHash = useCallback(async () => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await refetch()
-          if (trx.error || trx.data?.status === 0) {
-            setIsLoading('error')
-            setMsg(errorMessage)
-            clearInterval(timer)
+  const verifyTrxHash = useCallback(
+    async (wikiSlug: string) => {
+      const timer = setInterval(() => {
+        try {
+          const checkTrx = async () => {
+            const trx = await refetch()
+            if (trx.error || trx.data?.status === 0) {
+              setIsLoading('error')
+              setMsg(defaultErrorMessage)
+              logEvent({
+                action: 'SUBMIT_WIKI_ERROR',
+                params: {
+                  reason: 'TRANSACTION_VERIFICATION_ERROR',
+                  address: accountData?.address,
+                  slug: wikiSlug,
+                },
+              })
+              clearInterval(timer)
+            }
+            if (
+              trx &&
+              trx.data &&
+              trx.data.status === 1 &&
+              trx.data.confirmations > 1
+            ) {
+              setIsLoading(undefined)
+              setActiveStep(3)
+              setMsg(successMessage)
+              clearInterval(timer)
+            }
           }
-
-          if (
-            trx &&
-            trx.data &&
-            trx.data.status === 1 &&
-            trx.data.confirmations > 1
-          ) {
-            setIsLoading(undefined)
-            setActiveStep(3)
-            setMsg(successMessage)
-            clearInterval(timer)
-          }
+          checkTrx()
+        } catch (err) {
+          const errorObject = err as Dict
+          setIsLoading('error')
+          setMsg(defaultErrorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: errorObject.message,
+              address: accountData?.address,
+              slug: wikiSlug,
+            },
+          })
+          clearInterval(timer)
         }
-        checkTrx()
-      } catch (err) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        clearInterval(timer)
-      }
-    }, 3000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch])
+      }, 3000)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [refetch],
+  )
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (data && wikiHash && accountData && accountData.address) {
-        if (error) {
-          setMsg(errorMessage)
+      if (signData && wikiHash && accountData && accountData.address) {
+        if (signError) {
+          setMsg(defaultErrorMessage)
           setIsLoading('error')
           return
         }
         try {
           const hash = await submitVerifiableSignature(
-            data,
+            signData,
             wikiHash,
             accountData?.address,
             deadline,
@@ -250,14 +279,24 @@ export const useGetSignedHash = (deadline: number) => {
             setActiveStep(2)
           }
         } catch (err) {
+          const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(errorMessage)
+          setMsg(errorObject.response.errors[0].extensions.exception.reason)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason:
+                errorObject.response.errors[0].extensions.exception.reason,
+              address: accountData?.address,
+              data: signData,
+            },
+          })
         }
       }
     }
     getSignedTxHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [signData, signError])
 
   return { signing, saveHashInTheBlockchain, verifyTrxHash }
 }
@@ -276,6 +315,7 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
+  const toast = useToast()
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -297,6 +337,7 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
+    toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
     isWritingCommitMsg,
@@ -397,17 +438,18 @@ export const calculateEditInfo = (
     blocksChanged.push(WikiRootBlocks.SUMMARY)
   const prevImgId = prevWiki.images && prevWiki.images[0].id
   const currImgId = currWiki.images && currWiki.images[0].id
-  if (prevImgId !== currImgId) blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
-
+  if (prevImgId !== currImgId) {
+    blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
+  }
   // common metadata changes
   Object.values(CommonMetaIds).forEach(id => {
     if (
-      getWikiMetadataById(prevWiki, id)?.value !==
-      getWikiMetadataById(currWiki, id)?.value
-    )
+      (getWikiMetadataById(prevWiki, id)?.value || '') !==
+      (getWikiMetadataById(currWiki, id)?.value || '')
+    ) {
       blocksChanged.push(id)
+    }
   })
-
   // update blocks changed metadata in redux state
   dispatch({
     type: 'wiki/updateMetadata',
@@ -442,7 +484,6 @@ export const isVerifiedContentLinks = (content: string) => {
   })
   return isValid
 }
-
 export const isWikiExists = async (
   slug: string,
   setExistingWikiData: (data: Wiki) => void,

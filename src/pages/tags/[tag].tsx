@@ -20,6 +20,7 @@ import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE, FETCH_DELAY_TIME } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
+import { pageView } from '@/utils/googleAnalytics'
 
 interface TagPageProps {
   tagId: string
@@ -55,6 +56,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
+          pageView(`${router.asPath}?page=${updatedOffset}`)
           const { data } = result
           const updatedWiki = [...wikisByTag, ...data]
           setWikisByTag(updatedWiki)

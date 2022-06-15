@@ -12,6 +12,8 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { Activity as ActivityType } from '@/types/ActivityDataType'
 import { useTranslation } from 'react-i18next'
+import { pageView } from '@/utils/googleAnalytics'
+import { useRouter } from 'next/router'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -20,6 +22,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
+  const router = useRouter()
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
     setTimeout(() => {
@@ -31,6 +34,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
           }),
         )
         if (result.data && result.data?.length > 0) {
+          pageView(`${router.asPath}?page=${updatedOffset}`)
           const data = result.data || []
           const updatedActivities = [...LatestActivityData, ...data]
           setLatestActivityData(updatedActivities)

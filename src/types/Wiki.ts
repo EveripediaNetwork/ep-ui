@@ -25,6 +25,8 @@ export enum EditorContentOverride {
   KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
 }
 
+export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
+
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
@@ -34,6 +36,19 @@ export enum CommonMetaIds {
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
   COINGECKO_PROFILE = 'coingecko_profile',
+}
+
+export enum ValidatorCodes {
+  VALID_WIKI = 'VALID_WIKI',
+  LANGUAGE = 'LANGUAGE_ERROR',
+  USER = 'USER_ERROR',
+  WORDS = 'WORD_COUNT_ERROR',
+  CATEGORY = 'CATEGORY_ERROR',
+  IMAGE = 'IMAGE_ERROR',
+  TAG = 'TAG_ERROR',
+  URL = 'EXTERNAL_URL_ERROR',
+  METADATA = 'METADATA_ERROR',
+  SUMMARY = 'SUMMARY_ERROR',
 }
 
 export enum EditSpecificMetaIds {
