@@ -66,7 +66,7 @@ export const WikiDetails = ({
                   {categories?.map((category, i) => (
                     <Link
                       key={i}
-                      target="_blank"
+                      isExternal
                       href={`/categories/${category.id}`}
                       color="brand.500"
                     >

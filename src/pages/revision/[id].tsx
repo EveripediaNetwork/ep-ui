@@ -190,7 +190,7 @@ const Revision = () => {
               >
                 <WikiActionBar wiki={wiki?.content[0]} />
                 {wiki ? (
-                  <Box w="100%">
+                  <Box w="full">
                     <Flex
                       display={{ lg: 'flex', base: 'none', md: 'flex' }}
                       flexDirection={{
@@ -214,7 +214,6 @@ const Revision = () => {
                       flexDirection={{
                         base: 'column-reverse',
                         lg: 'row',
-                        md: 'row',
                       }}
                     >
                       <Heading mb={2} p={4}>

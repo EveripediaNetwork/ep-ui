@@ -27,7 +27,7 @@ import { RelatedWikis } from '@/components/Wiki/WikiPage/InsightComponents/Relat
 import TwitterTimeline from '@/components/Wiki/WikiPage/InsightComponents/TwitterTimeline'
 
 const MobileMeta = (wiki: {
-  metadata: any[]
+  metadata: { id: string; value: string }[]
   categories: BaseCategory[]
   media?: Media[]
 }) => {
