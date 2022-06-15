@@ -40,7 +40,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     setOffset,
   } = useInfiniteData<Wiki>({
     initiator: getTagWikis,
-    arg: { tag },
+    arg: { id: tag },
   })
 
   useEffect(() => {

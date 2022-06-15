@@ -6,16 +6,17 @@ import { Dict } from '@chakra-ui/utils'
 type Opts = {
   initiator: Dict
   arg: Dict<string>
+  defaultLoading?: boolean
 }
 
 export const useInfiniteData = <T>(opts: Opts) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [data, setData] = useState<T[] | []>([])
   const [offset, setOffset] = useState<number>(0)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(opts.defaultLoading || false)
   const updatedOffset = offset + ITEM_PER_PAGE
 
-  const fetcher = (noOffset?: boolean) =>
+  const fetcher = (noOffset?: boolean) => {
     setTimeout(() => {
       const fetchNewWikis = async () => {
         const result = await store.dispatch(
@@ -27,8 +28,7 @@ export const useInfiniteData = <T>(opts: Opts) => {
         )
         if (result.data && result.data?.length > 0) {
           const { data: resData } = result
-          const updatedWiki = [...data, ...resData]
-          setData(updatedWiki)
+          setData(prevData => [...prevData, ...resData])
           setOffset(updatedOffset)
           if (resData.length < ITEM_PER_PAGE) {
             setHasMore(false)
@@ -41,6 +41,7 @@ export const useInfiniteData = <T>(opts: Opts) => {
       }
       fetchNewWikis()
     }, FETCH_DELAY_TIME)
+  }
 
   return {
     fetcher,

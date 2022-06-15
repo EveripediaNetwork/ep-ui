@@ -23,7 +23,8 @@ const Collected = () => {
     hasMore,
   } = useInfiniteData<Wiki>({
     initiator: getUserWikis,
-    arg: { address },
+    arg: { id: address },
+    defaultLoading: true,
   })
 
   useEffect(() => {
