@@ -14,7 +14,6 @@ import { StaticContent } from '@/components/StaticElement'
 interface MobileNavItemProps {
   navItem: NavItem
   handleClick: (item: NavItem) => void
-  setHamburger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
