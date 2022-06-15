@@ -22,6 +22,7 @@ const NetworkErrorNotification = ({
   switchNetwork: () => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
+  if (!isOpen) return null
   return (
     <AlertDialog
       motionPreset="slideInBottom"

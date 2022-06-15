@@ -38,6 +38,19 @@ export enum CommonMetaIds {
   COINGECKO_PROFILE = 'coingecko_profile',
 }
 
+export enum ValidatorCodes {
+  VALID_WIKI = 'VALID_WIKI',
+  LANGUAGE = 'LANGUAGE_ERROR',
+  USER = 'USER_ERROR',
+  WORDS = 'WORD_COUNT_ERROR',
+  CATEGORY = 'CATEGORY_ERROR',
+  IMAGE = 'IMAGE_ERROR',
+  TAG = 'TAG_ERROR',
+  URL = 'EXTERNAL_URL_ERROR',
+  METADATA = 'METADATA_ERROR',
+  SUMMARY = 'SUMMARY_ERROR',
+}
+
 export enum EditSpecificMetaIds {
   COMMIT_MESSAGE = 'commit-message',
   WORDS_CHANGED = 'words-changed',

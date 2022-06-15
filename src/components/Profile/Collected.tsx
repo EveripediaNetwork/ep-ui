@@ -1,5 +1,6 @@
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { FilterLayout } from '@/components/Profile/FilterLayout'
+import { useProfileContext } from '@/components/Profile/utils'
 import { getUserWikis } from '@/services/wikis'
 import { Center, SimpleGrid, Text, Spinner } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
@@ -11,6 +12,7 @@ import { useInfiniteData } from '@/utils/useInfiniteData'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
 const Collected = () => {
+  const { displaySize } = useProfileContext()
   const router = useRouter()
   const address = router.query.profile as string
 
@@ -46,12 +48,9 @@ const Collected = () => {
       )}
       <SimpleGrid
         ref={sentryRef}
-        maxW="1050px"
-        w="100%"
-        mx="auto"
-        columns={{ base: 1, md: 2, lg: 3 }}
-        spacingX={6}
-        spacingY={12}
+        minChildWidth={displaySize}
+        w="full"
+        spacing="4"
       >
         {wikis.map((item, i) => (
           <WikiPreviewCard wiki={item} key={i} />
