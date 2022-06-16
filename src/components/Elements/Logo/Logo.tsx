@@ -6,7 +6,7 @@ const Logo = () => (
   <Img
     alt="BrainDao"
     minW="44px"
-    width={{ base: 5, sm: 9, lg: 15 }}
+    width="44px"
     src="/images/braindao-logo.svg"
   />
 )

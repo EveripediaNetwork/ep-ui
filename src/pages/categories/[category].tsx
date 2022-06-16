@@ -123,8 +123,8 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             borderWidth="5px"
             bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             color="#0000002f"
-            width={{ base: 6, sm: 13, lg: 15 }}
-            height={{ base: 6, sm: 13, lg: 15 }}
+            width={{ base: 14, lg: 15 }}
+            height={{ base: 14, lg: 15 }}
             padding={1}
           />
         </Flex>
