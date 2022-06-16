@@ -9,6 +9,7 @@ import {
   EditSpecificMetaIds,
   WikiRootBlocks,
   EditorContentOverride,
+  ValidatorCodes,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -23,12 +24,39 @@ import { getWiki, useGetWikiQuery } from '@/services/wikis'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
+import { Dict } from '@chakra-ui/utils'
+import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
 export const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
-export const errorMessage = 'Oops, An Error Occurred. Wiki could not be created'
+export const defaultErrorMessage =
+  'Oops, An Error Occurred. Wiki could not be created'
 export const successMessage = 'Wiki has been created successfully.'
+export const ValidationErrorMessage = (type: string) => {
+  switch (type) {
+    case ValidatorCodes.CATEGORY:
+      return 'Category must be a valid category name.'
+    case ValidatorCodes.LANGUAGE:
+      return 'Language linked to wiki must be a valid language name.'
+    case ValidatorCodes.USER:
+      return 'Transaction is not signed by the user.'
+    case ValidatorCodes.WORDS:
+      return 'Wiki must have at least 150 characters.'
+    case ValidatorCodes.IMAGE:
+      return 'Images must be no more than 5 and no less than 1.'
+    case ValidatorCodes.TAG:
+      return 'Tags must be no more than 5'
+    case ValidatorCodes.URL:
+      return 'No External URL are allowed.'
+    case ValidatorCodes.METADATA:
+      return 'Wiki metadata is incorrect. Please check the wiki.'
+    case ValidatorCodes.SUMMARY:
+      return 'Summary must be no more than 128 characters.'
+    default:
+      return 'An error occurred.'
+  }
+}
 
 export const domain = {
   name: 'EP',
@@ -137,15 +165,15 @@ export const useGetSignedHash = (deadline: number) => {
   const { data: accountData } = useAccount()
 
   const {
-    data,
-    error,
+    data: signData,
+    error: signError,
     isLoading: signing,
     signTypedDataAsync,
   } = useSignTypedData()
 
   const { refetch } = useWaitForTransaction({ hash: txHash })
 
-  const saveHashInTheBlockchain = async (ipfs: string) => {
+  const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
 
     signTypedDataAsync({
@@ -162,59 +190,86 @@ export const useGetSignedHash = (deadline: number) => {
           setActiveStep(1)
         } else {
           setIsLoading('error')
-          setMsg(errorMessage)
+          setMsg(defaultErrorMessage)
         }
       })
-      .catch(() => {
+      .catch(err => {
         setIsLoading('error')
-        setMsg(errorMessage)
+        setMsg(err.message)
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          params: {
+            reason: err.message,
+            address: accountData?.address,
+            slug: wikiSlug,
+          },
+        })
       })
   }
 
-  const verifyTrxHash = useCallback(async () => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await refetch()
-          if (trx.error || trx.data?.status === 0) {
-            setIsLoading('error')
-            setMsg(errorMessage)
-            clearInterval(timer)
+  const verifyTrxHash = useCallback(
+    async (wikiSlug: string) => {
+      const timer = setInterval(() => {
+        try {
+          const checkTrx = async () => {
+            const trx = await refetch()
+            if (trx.error || trx.data?.status === 0) {
+              setIsLoading('error')
+              setMsg(defaultErrorMessage)
+              logEvent({
+                action: 'SUBMIT_WIKI_ERROR',
+                params: {
+                  reason: 'TRANSACTION_VERIFICATION_ERROR',
+                  address: accountData?.address,
+                  slug: wikiSlug,
+                },
+              })
+              clearInterval(timer)
+            }
+            if (
+              trx &&
+              trx.data &&
+              trx.data.status === 1 &&
+              trx.data.confirmations > 1
+            ) {
+              setIsLoading(undefined)
+              setActiveStep(3)
+              setMsg(successMessage)
+              clearInterval(timer)
+            }
           }
-
-          if (
-            trx &&
-            trx.data &&
-            trx.data.status === 1 &&
-            trx.data.confirmations > 1
-          ) {
-            setIsLoading(undefined)
-            setActiveStep(3)
-            setMsg(successMessage)
-            clearInterval(timer)
-          }
+          checkTrx()
+        } catch (err) {
+          const errorObject = err as Dict
+          setIsLoading('error')
+          setMsg(defaultErrorMessage)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason: errorObject.message,
+              address: accountData?.address,
+              slug: wikiSlug,
+            },
+          })
+          clearInterval(timer)
         }
-        checkTrx()
-      } catch (err) {
-        setIsLoading('error')
-        setMsg(errorMessage)
-        clearInterval(timer)
-      }
-    }, 3000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch])
+      }, 3000)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [refetch],
+  )
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (data && wikiHash && accountData && accountData.address) {
-        if (error) {
-          setMsg(errorMessage)
+      if (signData && wikiHash && accountData && accountData.address) {
+        if (signError) {
+          setMsg(defaultErrorMessage)
           setIsLoading('error')
           return
         }
         try {
           const hash = await submitVerifiableSignature(
-            data,
+            signData,
             wikiHash,
             accountData?.address,
             deadline,
@@ -224,14 +279,24 @@ export const useGetSignedHash = (deadline: number) => {
             setActiveStep(2)
           }
         } catch (err) {
+          const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(errorMessage)
+          setMsg(errorObject.response.errors[0].extensions.exception.reason)
+          logEvent({
+            action: 'SUBMIT_WIKI_ERROR',
+            params: {
+              reason:
+                errorObject.response.errors[0].extensions.exception.reason,
+              address: accountData?.address,
+              data: signData,
+            },
+          })
         }
       }
     }
     getSignedTxHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [signData, signError])
 
   return { signing, saveHashInTheBlockchain, verifyTrxHash }
 }

@@ -92,7 +92,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                     handleClick={item => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
-                    setHamburger={setHamburger}
                   />
                 ))}
 
@@ -102,7 +101,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                     handleClick={handleWalletButtonClick}
                     key={mobileWalletDetails.label}
                     navItem={mobileWalletDetails}
-                    setHamburger={setHamburger}
                   />
                 </Box>
               )}

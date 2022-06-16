@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import {
@@ -26,8 +26,9 @@ import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
-import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
+import { useInfiniteData } from '@/utils/useInfiniteData'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -36,47 +37,27 @@ type CategoryPageProps = NextPage & {
 
 const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const categoryIcon = getBootStrapIcon(categoryData.icon)
-  const [wikisInCategory, setWikisInCategory] = useState<Wiki[] | []>([])
   const router = useRouter()
   const category = router.query.category as string
-  const [hasMore, setHasMore] = useState<boolean>(true)
-  const [offset, setOffset] = useState<number>(0)
-  const [loading, setLoading] = useState<boolean>(false)
+  const {
+    data: wikisInCategory,
+    setData: setWikisInCategory,
+    setHasMore,
+    fetcher: fetchMoreWikis,
+    loading,
+    hasMore,
+    setOffset,
+  } = useInfiniteData<Wiki>({
+    initiator: getWikisByCategory,
+    arg: { category },
+  })
 
   useEffect(() => {
     setHasMore(true)
     setOffset(0)
     setWikisInCategory(wikis)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, wikis])
-
-  const fetchMoreWikis = () => {
-    const updatedOffset = offset + ITEM_PER_PAGE
-    setTimeout(() => {
-      const fetchNewWikis = async () => {
-        const result = await store.dispatch(
-          getWikisByCategory.initiate({
-            category,
-            limit: ITEM_PER_PAGE,
-            offset: updatedOffset,
-          }),
-        )
-        if (result.data && result.data?.length > 0) {
-          const { data } = result
-          const updatedWiki = [...wikisInCategory, ...data]
-          setWikisInCategory(updatedWiki)
-          setOffset(updatedOffset)
-          if (data.length < ITEM_PER_PAGE) {
-            setHasMore(false)
-            setLoading(false)
-          }
-        } else {
-          setHasMore(false)
-          setLoading(false)
-        }
-      }
-      fetchNewWikis()
-    }, FETCH_DELAY_TIME)
-  }
 
   const [sentryRef] = useInfiniteScroll({
     loading,

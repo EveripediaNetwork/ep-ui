@@ -41,3 +41,6 @@ dist/**
 .idea
 lsp
 .vscode
+
+# Sentry
+.sentryclirc

@@ -124,6 +124,9 @@ html {
 :where(.toastui-editor-contents h4) {
   font-size: 16px;
 }
+.toastui-editor-contents ul {
+  list-style-type: disc !important;
+}
 .toastui-editor-contents li {
   list-style-type: unset !important;
 }
