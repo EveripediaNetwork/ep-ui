@@ -114,9 +114,9 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          width={{ base: 400, lg: 900 }}
+          px={5}
         >
-          <Text mt={3} mb={3}>
+          <Text mt={3} mb={3} >
             {categoryData?.description || ''}
           </Text>
         </Flex>
