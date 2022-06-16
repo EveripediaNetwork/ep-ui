@@ -25,6 +25,7 @@ const moduleExports = {
 
 const sentryWebpackPluginOptions = {
   silent: true,
+  dryRun: process.env.VERCEL_ENV !== "production",
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
 
