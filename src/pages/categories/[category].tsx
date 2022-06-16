@@ -116,7 +116,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           mx="auto"
           px={5}
         >
-          <Text mt={3} mb={3} >
+          <Text mt={3} mb={3}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
