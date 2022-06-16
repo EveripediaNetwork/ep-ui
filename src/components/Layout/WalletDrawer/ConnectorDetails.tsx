@@ -33,7 +33,7 @@ const ConnectorDetails = ({
       <>
         <Image boxSize="24px" src={imageLink} />
         <Text flex="1" as="strong" ml="15">
-          {w.name}
+          {w.name === 'Magic' ? 'Email / Social Media' : w.name}
         </Text>
         {w.name === 'MetaMask' && !isClicked && (
           <Text fontSize="sm" fontWeight="medium" color="gray.500">
