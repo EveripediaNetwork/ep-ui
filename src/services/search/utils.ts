@@ -97,19 +97,15 @@ export const useTagSearch = () => {
       )
       if (wikiCategories && isCategoryInCategoryList) {
         // get all tags from wiki categories
-        const tagsForWikiCategories = wikiCategories.map(category => {
-          return TagsByCategory[category.id as keyof typeof TagsByCategory]
-        })
-
-        // flatten tags
-        const tagsFlat = tagsForWikiCategories.flat()
-
+        const tagsForWikiCategories = wikiCategories
+          .map(category => {
+            return TagsByCategory[category.id as keyof typeof TagsByCategory]
+          })
+          .flat()
         // search tags in tagsFlat with query
-        const fuseScoped = new Fuse(tagsFlat)
+        const fuseScoped = new Fuse(tagsForWikiCategories)
         const res = decorateAndLimit(fuseScoped.search(query))
         setResults(res)
-
-        // filter tags by query
       } else {
         const res = decorateAndLimit(fuse.search(query))
         setResults(res)
