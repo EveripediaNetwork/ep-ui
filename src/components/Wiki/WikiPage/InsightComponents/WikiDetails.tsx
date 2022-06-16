@@ -51,6 +51,7 @@ export const WikiDetails = ({
         fontWeight="600"
         w="100%"
         textAlign="center"
+        display={{ base: 'none', lg: 'block', md: 'block' }}
       >
         {title}
       </Heading>
@@ -65,12 +66,11 @@ export const WikiDetails = ({
                   {categories?.map((category, i) => (
                     <Link
                       key={i}
-                      m="3px !important"
+                      isExternal
                       href={`/categories/${category.id}`}
+                      color="brand.500"
                     >
-                      <Tag key={i} whiteSpace="nowrap">
-                        {category.id}
-                      </Tag>
+                      {category.id}
                     </Link>
                   ))}
                 </HStack>

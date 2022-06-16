@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { VStack } from '@chakra-ui/react'
+import { Flex, VStack } from '@chakra-ui/react'
 import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
@@ -46,11 +46,11 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
     <VStack
       maxW="500px"
       borderLeftWidth={{ base: 0, md: '1px' }}
-      w={{ base: '100%', md: '50%' }}
+      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       mx={{ base: 'auto', md: 0 }}
       p={4}
       spacing={4}
-      pt={24}
+      pt={{ lg: '24', base: '10' }}
     >
       <WikiDetails
         wikiTitle={wiki}
@@ -81,13 +81,15 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
         lastUpdated={wiki.updated || dateTime}
       />
 
-      {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-      {wiki.categories.length !== 0 && (
-        <RelatedWikis categories={wiki.categories} />
-      )}
-      {wiki.media && wiki.media.length > 0 && (
-        <RelatedMediaGrid media={wiki.media} />
-      )}
+      <Flex display={{ base: 'none', lg: 'block', md: 'block' }} gap={6}>
+        {!!twitterLink && <TwitterTimeline url={twitterLink} />}
+        {wiki.categories.length !== 0 && (
+          <RelatedWikis categories={wiki.categories} />
+        )}
+        {wiki.media && wiki.media.length > 0 && (
+          <RelatedMediaGrid media={wiki.media} />
+        )}
+      </Flex>
     </VStack>
   )
 }
