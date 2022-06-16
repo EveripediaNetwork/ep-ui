@@ -51,7 +51,7 @@ const WikiMainContent = ({
   return (
     <Box
       p={4}
-      w={{ base: '100%', lg: '50%', '2xl': '62%' }}
+      w={{ base: '100%', lg: '50%', '2xl': '62%', md: '45%' }}
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
