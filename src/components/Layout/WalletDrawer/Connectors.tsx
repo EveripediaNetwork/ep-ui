@@ -26,15 +26,28 @@ import {
 import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
 import { RootState } from '@/store/store'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Connectors = () => {
-  const { isConnecting, connectors, connect } = useConnect()
+  const { isConnecting, connectors, connect } = useConnect({
+    onError(error) {
+      logEvent({
+        action: 'LOGIN_ERROR',
+        params: { reason: error.message },
+      })
+    },
+    onConnect(data) {
+      logEvent({
+        action: 'LOGIN_SUCCESS',
+        params: { address: data.account },
+      })
+    },
+  })
   const { data: accountData } = useAccount()
   const { userBalance } = useFetchWalletBalance(accountData?.address)
   const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
     (state: RootState) => state.user,
   )
-
   const dispatch = useDispatch()
   const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =

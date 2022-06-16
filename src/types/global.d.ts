@@ -7,6 +7,8 @@ export type GTagParams = {
   address?: string
   slug?: string
   reason?: string
+  provider?: string
+  data?: string | undefined
 }
 
 declare global {

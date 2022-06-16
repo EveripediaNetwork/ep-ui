@@ -1,4 +1,6 @@
-module.exports = {
+const { withSentryConfig } = require('@sentry/nextjs');
+
+const moduleExports = {
   reactStrictMode: true,
   webpack5: true,
   webpack(config) {
@@ -20,3 +22,11 @@ module.exports = {
     ], // for demo data
   },
 }
+
+const sentryWebpackPluginOptions = {
+  silent: true,
+  dryRun: process.env.VERCEL_ENV !== "production",
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
