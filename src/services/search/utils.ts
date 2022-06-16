@@ -1,8 +1,5 @@
-import {
-  getCategoriesByTitle,
-  getTagsById,
-  getWikisByTitle,
-} from '@/services/search'
+import { TagsByCategory } from '@/data/TagsByCategory'
+import { getCategoriesByTitle, getWikisByTitle } from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
@@ -10,6 +7,7 @@ import { Tag, WikiPreview } from '@/types/Wiki'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
+import Fuse from 'fuse.js'
 
 type Results = {
   articles: WikiPreview[]
@@ -39,11 +37,6 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
-export const fetchTagsList = async (query: string) => {
-  const { data } = await store.dispatch(getTagsById.initiate(query))
-  return data
-}
-
 const debouncedFetchResults = debounce(
   (query: string, cb: (data: Results) => void) => {
     Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
@@ -54,16 +47,6 @@ const debouncedFetchResults = debounce(
     )
   },
   500,
-)
-
-const debouncedFetchTags = debounce(
-  (query: string, cb: (data: Tag[]) => void) => {
-    Promise.all([fetchTagsList(query)]).then(res => {
-      const [tags = []] = res
-      cb(tags)
-    })
-  },
-  50,
 )
 
 export const useNavSearch = () => {
@@ -90,21 +73,51 @@ export const useNavSearch = () => {
 
 export const useTagSearch = () => {
   const [query, setQuery] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-
   const [results, setResults] = useState<Tag[]>([])
 
+  // get all tags from TagsByCategory
+  const tags = Object.values(TagsByCategory).flat()
+  const fuse = new Fuse(tags, {
+    threshold: 0.3,
+  })
+
+  const decorateAndLimit = (res: Fuse.FuseResult<string>[]) => {
+    return res
+      .map(tag => {
+        return { id: tag.item }
+      })
+      .slice(0, 6)
+  }
   useEffect(() => {
     if (query && query.length >= 1) {
-      setIsLoading(true)
-      debouncedFetchTags(query, res => {
+      const wikiCategories = store.getState().wiki.categories
+      // check if category.id is in TagsByCategory keys
+      const isCategoryInCategoryList = wikiCategories.some(category =>
+        Object.keys(TagsByCategory).includes(category.id),
+      )
+      if (wikiCategories && isCategoryInCategoryList) {
+        // get all tags from wiki categories
+        const tagsForWikiCategories = wikiCategories.map(category => {
+          return TagsByCategory[category.id as keyof typeof TagsByCategory]
+        })
+
+        // flatten tags
+        const tagsFlat = tagsForWikiCategories.flat()
+
+        // search tags in tagsFlat with query
+        const fuseScoped = new Fuse(tagsFlat)
+        const res = decorateAndLimit(fuseScoped.search(query))
         setResults(res)
-        setIsLoading(false)
-      })
+
+        // filter tags by query
+      } else {
+        const res = decorateAndLimit(fuse.search(query))
+        setResults(res)
+      }
     } else {
       setResults([])
     }
   }, [query])
 
-  return { query, setQuery, isLoading, results }
+  return { query, setQuery, results }
 }
