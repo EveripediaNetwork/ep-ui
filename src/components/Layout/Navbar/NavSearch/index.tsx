@@ -11,10 +11,6 @@ import {
   Avatar,
   Text,
   useEventListener,
-  InputRightElement,
-  HStack,
-  VisuallyHidden,
-  Kbd,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -71,14 +67,6 @@ export const NavSearch = (props: NavSearchProps) => {
     resolvedUnrenderedArticles + resolvedUnrenderedCategories
 
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [actionKey, setActionKey] = React.useState(ACTION_KEY_APPLE)
-  React.useEffect(() => {
-    if (typeof navigator === 'undefined') return
-    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent)
-    if (!isMac) {
-      setActionKey(ACTION_KEY_DEFAULT)
-    }
-  }, [])
 
   useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
@@ -256,25 +244,6 @@ export const NavSearch = (props: NavSearchProps) => {
           ref={inputRef}
           {...inputProps}
         />
-        <InputRightElement pointerEvents="none">
-          <HStack>
-            <VisuallyHidden>Press </VisuallyHidden>
-            <Kbd color="gray.500" rounded="2px">
-              <chakra.div
-                as="abbr"
-                title={actionKey[1]}
-                textDecoration="none !important"
-              >
-                {actionKey[0]}
-              </chakra.div>
-            </Kbd>
-            <VisuallyHidden> and </VisuallyHidden>
-            <Kbd color="gray.500" rounded="2px">
-              K
-            </Kbd>
-            <VisuallyHidden> to search</VisuallyHidden>
-          </HStack>
-        </InputRightElement>
       </InputGroup>
 
       <AutoCompleteList p="0" mx={4} shadow="lg" maxH="auto" {...listProps}>
