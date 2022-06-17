@@ -19,7 +19,7 @@ import {
   Spinner,
   useToast,
 } from '@chakra-ui/react'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
