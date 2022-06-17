@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   Center,
   Flex,
@@ -10,6 +10,7 @@ import {
   HTMLChakraProps,
   Avatar,
   Text,
+  useEventListener,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -45,6 +46,8 @@ const ItemPaths = {
 
 const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
+const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
+const ACTION_KEY_APPLE = ['⌘', 'Command']
 
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
@@ -62,6 +65,28 @@ export const NavSearch = (props: NavSearchProps) => {
     unrenderedCategories > 0 ? unrenderedCategories : 0
   const totalUnrendered =
     resolvedUnrenderedArticles + resolvedUnrenderedCategories
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [actionKey, setActionKey] = React.useState(ACTION_KEY_APPLE)
+  React.useEffect(() => {
+    if (typeof navigator === 'undefined') return
+    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent)
+    if (!isMac) {
+      setActionKey(ACTION_KEY_DEFAULT)
+    }
+  }, [])
+
+  useEventListener('keydown', event => {
+    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
+    const hotkey = isMac ? 'metaKey' : 'ctrlKey'
+    if (
+      (event.key.toLowerCase() === 'k' && event[hotkey]) ||
+      event.key === '/'
+    ) {
+      event.preventDefault()
+      inputRef.current?.focus()
+    }
+  })
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -225,6 +250,7 @@ export const NavSearch = (props: NavSearchProps) => {
             textOverflow: 'ellipsis',
             width: '96%',
           }}
+          ref={inputRef}
           {...inputProps}
         />
       </InputGroup>
