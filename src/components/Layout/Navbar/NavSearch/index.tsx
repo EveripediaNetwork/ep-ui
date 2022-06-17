@@ -11,6 +11,10 @@ import {
   Avatar,
   Text,
   useEventListener,
+  InputRightElement,
+  HStack,
+  VisuallyHidden,
+  Kbd,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -248,11 +252,30 @@ export const NavSearch = (props: NavSearchProps) => {
           placeholder="Search wikis, categories and tags"
           _placeholderShown={{
             textOverflow: 'ellipsis',
-            width: '96%',
+            // width: '96%',
           }}
           ref={inputRef}
           {...inputProps}
         />
+        <InputRightElement pointerEvents="none">
+          <HStack>
+            <VisuallyHidden>Press </VisuallyHidden>
+            <Kbd color="gray.500" rounded="2px">
+              <chakra.div
+                as="abbr"
+                title={actionKey[1]}
+                textDecoration="none !important"
+              >
+                {actionKey[0]}
+              </chakra.div>
+            </Kbd>
+            <VisuallyHidden> and </VisuallyHidden>
+            <Kbd color="gray.500" rounded="2px">
+              K
+            </Kbd>
+            <VisuallyHidden> to search</VisuallyHidden>
+          </HStack>
+        </InputRightElement>
       </InputGroup>
 
       <AutoCompleteList p="0" mx={4} shadow="lg" maxH="auto" {...listProps}>
