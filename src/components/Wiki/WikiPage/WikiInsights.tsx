@@ -83,7 +83,11 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             lastUpdated={wiki.updated || dateTime}
           />
 
-          <Flex display={{ base: 'none', lg: 'block', md: 'block' }} gap={6}>
+          <Flex
+            w="100%"
+            display={{ base: 'none', lg: 'block', md: 'block' }}
+            gap={6}
+          >
             {!!twitterLink && <TwitterTimeline url={twitterLink} />}
             {wiki.categories.length !== 0 && (
               <RelatedWikis categories={wiki.categories} />
