@@ -252,7 +252,6 @@ export const NavSearch = (props: NavSearchProps) => {
           placeholder="Search wikis, categories and tags"
           _placeholderShown={{
             textOverflow: 'ellipsis',
-            // width: '96%',
           }}
           ref={inputRef}
           {...inputProps}
