@@ -23,6 +23,7 @@ import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { ColorModeToggle } from './ColorModeToggle'
+import { LogOutBttn } from './Logout'
 
 type MobileNavType = {
   toggleWalletDrawer: () => void
@@ -105,9 +106,10 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                 </Box>
               )}
               <Menu>
-                <Box>
+                <Flex gap="4" direction="column">
                   <ColorModeToggle isInMobileMenu />
-                </Box>
+                  <LogOutBttn isInMobileMenu />
+                </Flex>
               </Menu>
             </Box>
           </Box>
