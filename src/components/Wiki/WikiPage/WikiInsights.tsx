@@ -50,7 +50,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       mx={{ base: 'auto', md: 0 }}
       p={4}
-      pt={{ lg: '24', base: '10' }}
+      pt={{ md: '24', base: '10' }}
     >
       <ReactStickyBox offsetTop={100} offsetBottom={20}>
         <VStack spacing={4}>
