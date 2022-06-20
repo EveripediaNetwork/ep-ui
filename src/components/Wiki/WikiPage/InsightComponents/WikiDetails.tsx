@@ -147,19 +147,22 @@ export const WikiDetails = ({
               </Text>
             </Td>
           </Tr>
-          <Tr>
-            <Td whiteSpace="nowrap">
-              <Text py="2">Created By</Text>
-            </Td>
-            <Td>
-              <HStack py="2">
-                <DisplayAvatar address={createdBy} size="24" />
-                <Link href={`/account/${createdBy}`} color="brand.500">
-                  {username || shortenAccount(createdBy || '')}
-                </Link>
-              </HStack>
-            </Td>
-          </Tr>
+          {
+            createdBy &&
+            <Tr>
+              <Td whiteSpace="nowrap">
+                <Text py="2">Created By</Text>
+              </Td>
+              <Td>
+                <HStack py="2">
+                  <DisplayAvatar address={createdBy} size="24" />
+                  <Link href={`/account/${createdBy}`} color="brand.500">
+                    {username || shortenAccount(createdBy || '')}
+                  </Link>
+                </HStack>
+              </Td>
+            </Tr>
+          }
         </Tbody>
       </Table>
     </VStack>
