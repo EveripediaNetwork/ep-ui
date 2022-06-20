@@ -58,7 +58,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
         createdTime={wiki?.created}
         ipfsHash={ipfs || wiki.ipfs}
         txHash={wiki.transactionHash}
-        createdBy={wiki.author.id}
+        createdBy={wiki.author?.id}
         imgSrc={getWikiImageUrl(wiki)}
       />
 
