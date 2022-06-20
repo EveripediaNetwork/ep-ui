@@ -70,8 +70,8 @@ const initialState: Wiki = {
   user: {
     id: '',
   },
-  author:{
-    id: ''
+  author: {
+    id: '',
   },
   media: [],
 }
