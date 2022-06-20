@@ -147,8 +147,7 @@ export const WikiDetails = ({
               </Text>
             </Td>
           </Tr>
-          {
-            createdBy &&
+          {createdBy && (
             <Tr>
               <Td whiteSpace="nowrap">
                 <Text py="2">Created By</Text>
@@ -162,7 +161,7 @@ export const WikiDetails = ({
                 </HStack>
               </Td>
             </Tr>
-          }
+          )}
         </Tbody>
       </Table>
     </VStack>
