@@ -27,7 +27,7 @@ export const WikiDetails = ({
   createdTime,
   ipfsHash,
   txHash,
-  lastEditor,
+  createdBy,
   imgSrc,
 }: {
   wikiTitle: WikiPreview
@@ -35,11 +35,11 @@ export const WikiDetails = ({
   createdTime: string | undefined
   ipfsHash: string | undefined
   txHash: string | undefined
-  lastEditor: string | undefined
+  createdBy: string | undefined
   imgSrc?: string
 }) => {
   const { title, tags } = wikiTitle
-  const [, username] = useENSData(lastEditor || '')
+  const [, username] = useENSData(createdBy || '')
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
@@ -153,9 +153,9 @@ export const WikiDetails = ({
             </Td>
             <Td>
               <HStack py="2">
-                <DisplayAvatar address={lastEditor} size="24" />
-                <Link href={`/account/${lastEditor}`} color="brand.500">
-                  {username || shortenAccount(lastEditor || '')}
+                <DisplayAvatar address={createdBy} size="24" />
+                <Link href={`/account/${createdBy}`} color="brand.500">
+                  {username || shortenAccount(createdBy || '')}
                 </Link>
               </HStack>
             </Td>
