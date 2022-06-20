@@ -11,7 +11,6 @@ import { customLinkRenderer } from '@/utils/customLinkRender'
 interface WikiMainContentProps {
   wiki: Wiki | undefined
   editedTimestamp?: string
-  mobileView: boolean
 }
 const MarkdownRender = React.memo(
   ({ wikiContent }: { wikiContent?: string }) => {
@@ -41,11 +40,7 @@ const MarkdownRender = React.memo(
   },
 )
 
-const WikiMainContent = ({
-  wiki,
-  editedTimestamp,
-  mobileView,
-}: WikiMainContentProps) => {
+const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -55,14 +50,14 @@ const WikiMainContent = ({
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
-      mb={mobileView ? '0rem' : '3rem'}
+      mb={{ base: '0rem', md: '3rem' }}
     >
       <Flex
         mt={22}
         flexDir={{ base: 'column', md: 'row' }}
         gap={2}
         align="center"
-        display={mobileView ? 'none' : 'block'}
+        display={{ base: 'none', md: 'block' }}
       >
         <Heading mb={8}>{wiki?.title}</Heading>
         {editedTimestamp && (

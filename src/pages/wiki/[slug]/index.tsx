@@ -122,52 +122,32 @@ const Wiki = () => {
             >
               <WikiActionBar wiki={wiki} />
               {wiki ? (
-                <Box>
+                <Box w="100%">
                   <Flex
                     w="100%"
                     justify="space-between"
-                    direction={{ base: 'column', md: 'row' }}
+                    direction={{ base: 'column-reverse', md: 'row' }}
                   >
-                    <Flex
-                      display={{ lg: 'flex', base: 'none', md: 'flex' }}
-                      flexDirection={{
-                        base: 'column-reverse',
-                        lg: 'row',
-                        md: 'row',
-                      }}
+                    <WikiMainContent wiki={wiki} />
+                    <WikiInsights wiki={wiki} />
+                    <Heading
+                      mt={8}
+                      mb={-4}
+                      display={{ base: 'block', md: 'none' }}
+                      textAlign="center"
+                      px={4}
                     >
-                      <WikiMainContent wiki={wiki} mobileView={false} />
-                      <WikiInsights wiki={wiki} />
-                    </Flex>
-                    <Flex
-                      display={{ lg: 'none', base: 'block', md: 'none' }}
-                      flexDirection={{
-                        base: 'column-reverse',
-                        lg: 'row',
-                        md: 'row',
-                      }}
-                    >
-                      <Heading mt={8} mb={-4} textAlign="center" px={4}>
-                        {wiki?.title}
-                      </Heading>
-                      <WikiInsights wiki={wiki} />
-                      <WikiMainContent wiki={wiki} mobileView />
-                    </Flex>
+                      {wiki?.title}
+                    </Heading>
                   </Flex>
-                  {wiki.media && wiki.media.length > 0 && (
-                    <RelatedMediaGrid media={wiki.media} />
-                  )}
-                  <Flex
-                    display={{ base: 'block', md: 'none' }}
-                    flexDirection="column"
-                  >
+                  <RelatedMediaGrid media={wiki.media} />
+                  <Flex display={{ base: 'block', md: 'none' }}>
                     <MobileMeta
                       metadata={wiki.metadata}
                       categories={wiki.categories}
                       media={wiki.media}
                     />
                   </Flex>
-
                   <WikiReferences
                     references={JSON.parse(
                       getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)
