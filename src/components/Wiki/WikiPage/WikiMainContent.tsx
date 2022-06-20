@@ -51,7 +51,7 @@ const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
-      mb={{ base: '0rem', md: '3rem' }}
+      mb={{ md: '3rem' }}
     >
       <Flex
         mt={22}
