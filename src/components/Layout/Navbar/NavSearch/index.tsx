@@ -46,8 +46,6 @@ const ItemPaths = {
 
 const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
-const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
-const ACTION_KEY_APPLE = ['⌘', 'Command']
 
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
