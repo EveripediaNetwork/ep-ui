@@ -1,6 +1,5 @@
 import { Wiki } from '@/types/Wiki'
-import { getReadableDate } from '@/utils/getFormattedDate'
-import { Box, Flex, Heading, Tag, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -10,7 +9,6 @@ import { customLinkRenderer } from '@/utils/customLinkRender'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
-  editedTimestamp?: string
 }
 const MarkdownRender = React.memo(
   ({ wikiContent }: { wikiContent?: string }) => {
@@ -40,7 +38,7 @@ const MarkdownRender = React.memo(
   },
 )
 
-const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
+const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -53,20 +51,7 @@ const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
       borderColor="borderColor"
       mb={{ md: '3rem' }}
     >
-      <Flex
-        mt={22}
-        flexDir={{ base: 'column', md: 'row' }}
-        gap={2}
-        align="center"
-        display={{ base: 'none', md: 'block' }}
-      >
-        <Heading mb={8}>{wiki?.title}</Heading>
-        {editedTimestamp && (
-          <Tag whiteSpace="nowrap">
-            Edited {getReadableDate(editedTimestamp)}
-          </Tag>
-        )}
-      </Flex>
+      <Heading my={8}>{wiki?.title}</Heading>
       <Box
         className={`markdown-body ${
           colorMode === 'dark' ? 'markdown-body-dark' : ''

@@ -1,6 +1,6 @@
 import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, Heading, HStack } from '@chakra-ui/react'
+import { Box, Flex, Heading, HStack, chakra } from '@chakra-ui/react'
 import React from 'react'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
@@ -37,7 +37,7 @@ const MobileMeta = (wiki: {
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {categories?.length !== 0 && <RelatedWikis categories={categories} />}
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
-    </Flex>
+    </chakra.div>
   )
 }
 
@@ -88,7 +88,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
                 categories={wiki.categories}
                 media={wiki.media}
               />
-            </Flex>
+            </chakra.div>
             <WikiReferences
               references={JSON.parse(
                 getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ||
