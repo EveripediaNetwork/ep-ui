@@ -77,7 +77,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
                 {wiki?.title}
               </Heading>
             </Flex>
-            <Flex
+            <chakra.div
               display={{
                 base: 'block',
                 md: 'none',
