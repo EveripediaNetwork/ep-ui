@@ -52,18 +52,17 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       p={4}
       pt={{ md: '24', base: '10' }}
     >
-      
       <ReactStickyBox offsetTop={100} offsetBottom={20}>
         <VStack spacing={4}>
           <WikiDetails
-          wikiTitle={wiki}
-          categories={wiki.categories}
-          createdTime={wiki?.created}
-          ipfsHash={ipfs || wiki.ipfs}
-          txHash={wiki.transactionHash}
-          createdBy={wiki.author?.id}
-          imgSrc={getWikiImageUrl(wiki)}
-        />
+            wikiTitle={wiki}
+            categories={wiki.categories}
+            createdTime={wiki?.created}
+            ipfsHash={ipfs || wiki.ipfs}
+            txHash={wiki.transactionHash}
+            createdBy={wiki.author?.id}
+            imgSrc={getWikiImageUrl(wiki)}
+          />
           {!!coingeckoLink && (
             <>
               <ProfileSummary wiki={wiki} />
