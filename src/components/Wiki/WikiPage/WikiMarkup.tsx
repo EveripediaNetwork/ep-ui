@@ -28,12 +28,11 @@ const MobileMeta = (wiki: {
   )?.value
 
   return (
-    <Flex
+    <chakra.div
       p={4}
       mx={{ base: 'auto', md: 0 }}
       w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       display={{ base: 'block', lg: 'none' }}
-      flexDirection="row"
     >
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       {categories?.length !== 0 && <RelatedWikis categories={categories} />}
