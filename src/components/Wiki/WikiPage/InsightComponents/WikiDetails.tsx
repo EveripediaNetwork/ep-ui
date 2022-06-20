@@ -62,7 +62,7 @@ export const WikiDetails = ({
             <Tr>
               <Td py={1}>Categories</Td>
               <Td py={1}>
-                <HStack  flexWrap="wrap" justify="start">
+                <HStack flexWrap="wrap" justify="start">
                   {categories?.map((category, i) => (
                     <Link
                       key={i}
@@ -101,7 +101,7 @@ export const WikiDetails = ({
                 <Text>IPFS</Text>
               </HStack>
             </Td>
-            <Td display="flex" align="center"  >
+            <Td display="flex" align="center">
               <HStack gap={1} py="2">
                 <SiIpfs />
                 <Link
@@ -109,9 +109,7 @@ export const WikiDetails = ({
                   href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
                   color="brand.500"
                 >
-                   <Text>
-                    {shortenAccount(ipfsHash || '')}
-                  </Text>  
+                  <Text>{shortenAccount(ipfsHash || '')}</Text>
                 </Link>
               </HStack>
             </Td>
@@ -129,39 +127,33 @@ export const WikiDetails = ({
                 href={`${config.blockExplorerUrl}/tx/${txHash}`}
                 color="brand.500"
               >
-                <Text >
-                  {shortenAccount(txHash || '')}
-                </Text>
+                <Text>{shortenAccount(txHash || '')}</Text>
               </Link>
             </Td>
           </Tr>
           <Tr>
             <Td whiteSpace="nowrap">
-              <Text py="2">
-                Created
-              </Text>
+              <Text py="2">Created</Text>
             </Td>
             <Td>
               <Text>
                 {createdTime
-                    ? new Date(createdTime).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })
-                    : '-'}
+                  ? new Date(createdTime).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                  : '-'}
               </Text>
             </Td>
           </Tr>
           <Tr>
             <Td whiteSpace="nowrap">
-              <Text py="2">
-                Created By
-              </Text>
+              <Text py="2">Created By</Text>
             </Td>
             <Td>
               <HStack py="2">
-                <DisplayAvatar address={lastEditor} size="24"/>
+                <DisplayAvatar address={lastEditor} size="24" />
                 <Link href={`/account/${lastEditor}`} color="brand.500">
                   {username || shortenAccount(lastEditor || '')}
                 </Link>

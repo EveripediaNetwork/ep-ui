@@ -31,7 +31,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   const commitMessage = wiki.metadata.find(
     meta => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
-
+  
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   useEffect(() => {
     const fetchTokenData = async () => {
