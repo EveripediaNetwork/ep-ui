@@ -4,6 +4,7 @@ import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
+import ReactStickyBox from 'react-sticky-box'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -49,47 +50,54 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       mx={{ base: 'auto', md: 0 }}
       p={4}
-      spacing={4}
-      pt={{ lg: '24', base: '10' }}
+      pt={{ md: '24', base: '10' }}
     >
-      <WikiDetails
-        wikiTitle={wiki}
-        categories={wiki.categories}
-        createdTime={wiki?.created}
-        ipfsHash={ipfs || wiki.ipfs}
-        txHash={wiki.transactionHash}
-        createdBy={wiki.author?.id}
-        imgSrc={getWikiImageUrl(wiki)}
-      />
-
-      {!!coingeckoLink && (
-        <>
-          <ProfileSummary wiki={wiki} />
-          <ProfileStatistics tokenStats={tokenStats} />
-          {tokenStats && (
-            <CurrencyConverter
-              token={getTokenFromURI(coingeckoLink)}
-              tokenStats={tokenStats}
-            />
+      
+      <ReactStickyBox offsetTop={100} offsetBottom={20}>
+        <VStack spacing={4}>
+          <WikiDetails
+          wikiTitle={wiki}
+          categories={wiki.categories}
+          createdTime={wiki?.created}
+          ipfsHash={ipfs || wiki.ipfs}
+          txHash={wiki.transactionHash}
+          createdBy={wiki.author?.id}
+          imgSrc={getWikiImageUrl(wiki)}
+        />
+          {!!coingeckoLink && (
+            <>
+              <ProfileSummary wiki={wiki} />
+              <ProfileStatistics tokenStats={tokenStats} />
+              {tokenStats && (
+                <CurrencyConverter
+                  token={getTokenFromURI(coingeckoLink)}
+                  tokenStats={tokenStats}
+                />
+              )}
+            </>
           )}
-        </>
-      )}
 
-      <WikiCommitMessage
-        commitMessage={commitMessage}
-        user={wiki.user}
-        lastUpdated={wiki.updated || dateTime}
-      />
+          <WikiCommitMessage
+            commitMessage={commitMessage}
+            user={wiki.user}
+            lastUpdated={wiki.updated || dateTime}
+          />
 
-      <Flex display={{ base: 'none', lg: 'block', md: 'block' }} gap={6}>
-        {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-        {wiki.categories.length !== 0 && (
-          <RelatedWikis categories={wiki.categories} />
-        )}
-        {wiki.media && wiki.media.length > 0 && (
-          <RelatedMediaGrid media={wiki.media} />
-        )}
-      </Flex>
+          <Flex
+            w="100%"
+            display={{ base: 'none', lg: 'block', md: 'block' }}
+            gap={6}
+          >
+            {!!twitterLink && <TwitterTimeline url={twitterLink} />}
+            {wiki.categories.length !== 0 && (
+              <RelatedWikis categories={wiki.categories} />
+            )}
+            {wiki.media && wiki.media.length > 0 && (
+              <RelatedMediaGrid media={wiki.media} />
+            )}
+          </Flex>
+        </VStack>
+      </ReactStickyBox>
     </VStack>
   )
 }

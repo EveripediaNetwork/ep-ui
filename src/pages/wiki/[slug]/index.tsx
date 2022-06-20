@@ -147,7 +147,7 @@ const Wiki = () => {
                         md: 'row',
                       }}
                     >
-                      <Heading mb={2} p={4}>
+                      <Heading mt={8} mb={-4} textAlign="center" px={4}>
                         {wiki?.title}
                       </Heading>
                       <WikiInsights wiki={wiki} />
@@ -158,7 +158,7 @@ const Wiki = () => {
                     <RelatedMediaGrid media={wiki.media} />
                   )}
                   <Flex
-                    display={{ base: 'block', lg: 'none', md: 'none' }}
+                    display={{ base: 'block', md: 'none' }}
                     flexDirection="column"
                   >
                     <MobileMeta
