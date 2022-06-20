@@ -24,7 +24,7 @@ import config from '@/config'
 export const WikiDetails = ({
   wikiTitle,
   categories,
-  lastEdited,
+  createdTime,
   ipfsHash,
   txHash,
   lastEditor,
@@ -32,7 +32,7 @@ export const WikiDetails = ({
 }: {
   wikiTitle: WikiPreview
   categories: BaseCategory[]
-  lastEdited: string | undefined
+  createdTime: string | undefined
   ipfsHash: string | undefined
   txHash: string | undefined
   lastEditor: string | undefined
@@ -62,7 +62,7 @@ export const WikiDetails = ({
             <Tr>
               <Td py={1}>Categories</Td>
               <Td py={1}>
-                <HStack marginLeft={-2} flexWrap="wrap" justify="start">
+                <HStack  flexWrap="wrap" justify="start">
                   {categories?.map((category, i) => (
                     <Link
                       key={i}
@@ -96,32 +96,24 @@ export const WikiDetails = ({
             </Tr>
           )}
           <Tr>
-            <Td>Last Edit</Td>
             <Td>
-              {lastEdited
-                ? new Date(lastEdited).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })
-                : '-'}
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <HStack spacing={3}>
+              <HStack spacing={3} py="2">
                 <Text>IPFS</Text>
               </HStack>
             </Td>
-            <Td display="flex" align="center" gap={3}>
-              <SiIpfs />
-              <Link
-                target="_blank"
-                href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                color="brand.500"
-              >
-                {shortenAccount(ipfsHash || '')}
-              </Link>
+            <Td display="flex" align="center"  >
+              <HStack gap={1} py="2">
+                <SiIpfs />
+                <Link
+                  target="_blank"
+                  href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
+                  color="brand.500"
+                >
+                   <Text>
+                    {shortenAccount(ipfsHash || '')}
+                  </Text>  
+                </Link>
+              </HStack>
             </Td>
           </Tr>
           <Tr>
@@ -137,15 +129,39 @@ export const WikiDetails = ({
                 href={`${config.blockExplorerUrl}/tx/${txHash}`}
                 color="brand.500"
               >
-                {shortenAccount(txHash || '')}
+                <Text >
+                  {shortenAccount(txHash || '')}
+                </Text>
               </Link>
             </Td>
           </Tr>
           <Tr>
-            <Td whiteSpace="nowrap">latest Editor</Td>
+            <Td whiteSpace="nowrap">
+              <Text py="2">
+                Created
+              </Text>
+            </Td>
             <Td>
-              <HStack>
-                <DisplayAvatar address={lastEditor} />
+              <Text>
+                {createdTime
+                    ? new Date(createdTime).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })
+                    : '-'}
+              </Text>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td whiteSpace="nowrap">
+              <Text py="2">
+                Created By
+              </Text>
+            </Td>
+            <Td>
+              <HStack py="2">
+                <DisplayAvatar address={lastEditor} size="24"/>
                 <Link href={`/account/${lastEditor}`} color="brand.500">
                   {username || shortenAccount(lastEditor || '')}
                 </Link>
