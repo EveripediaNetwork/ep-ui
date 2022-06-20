@@ -79,7 +79,6 @@ export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
                 {wiki?.title}
               </Heading>
             </Flex>
-            <RelatedMediaGrid media={wiki.media} />
             <Flex
               display={{
                 base: 'block',

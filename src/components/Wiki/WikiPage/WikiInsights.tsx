@@ -50,7 +50,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       minW="min(380px, 90vw)"
       borderLeftWidth={{ base: 0, md: '1px' }}
       mx={{ base: 'auto', md: 0 }}
-      p={4}
+      p={{ base: 0, md: 4 }}
       pt={{ md: '24', base: '10' }}
     >
       <Box as="aside" ref={stickyRef} w="100%">
