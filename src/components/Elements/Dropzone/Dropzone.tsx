@@ -118,7 +118,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
           justifyContent="center"
           alignItems="center"
           maxH="345px"
-          minH={!showFetchedImage ? '165px' : '300px'}
+          minH={!showFetchedImage ? '165px' : '30vh'}
           _hover={{
             boxShadow: 'md',
             borderColor: 'brand.400',

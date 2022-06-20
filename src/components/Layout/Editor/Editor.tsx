@@ -118,7 +118,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   }, [editorRef, markdown, onChange])
 
   return (
-    <Box ref={containerRef} m={0} w="100%" h="100%">
+    <Box ref={containerRef} m={0} w="full" h="full">
       <ToastUIEditorJSX
         plugins={[wikiLink, cite, media]}
         height="100%"

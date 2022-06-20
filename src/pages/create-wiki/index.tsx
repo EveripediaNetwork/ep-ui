@@ -42,7 +42,7 @@ import {
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 
@@ -82,6 +82,10 @@ import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
+
+type PageWithoutFooter = NextPage & {
+  noFooter?: boolean
+}
 
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
@@ -466,7 +470,7 @@ const CreateWikiContent = () => {
         p={3}
         justifyContent="space-between"
         mx="auto"
-        mb={4}
+        mb={3}
         mt={2}
         w="96%"
       >
@@ -605,12 +609,12 @@ const CreateWikiContent = () => {
         gap={8}
         px={{ base: 4, xl: 8 }}
       >
-        <Box h="635px" w="full">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="635px">
+        <Box h="full" w="full">
+          <Skeleton isLoaded={!isLoadingWiki} w="full" h="75vh">
             <Editor markdown={wiki.content} onChange={handleOnEditorChanges} />
           </Skeleton>
         </Box>
-        <Box minH="635px">
+        <Box>
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
             <Center>
               <Highlights
@@ -678,6 +682,12 @@ const CreateWiki = () => {
   )
 }
 
+const Page: PageWithoutFooter = authenticatedRoute(
+  memo(CreateWiki) as unknown as () => JSX.Element,
+)
+
+Page.noFooter = true
+
 export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
@@ -689,6 +699,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 
-export default authenticatedRoute(
-  memo(CreateWiki) as unknown as () => JSX.Element,
-)
+export default Page

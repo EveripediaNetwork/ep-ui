@@ -53,6 +53,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       py={{ base: 4, md: 'calc(50vh - 150px )' }}
       mt={{ base: 0, md: 0 }}
       borderColor="borderColor"
+      w={{ lg: '8%', base: '100%', md: '10%', '2xl': '5%' }}
     >
       <Flex
         direction={{ base: 'row', md: 'column' }}
@@ -62,17 +63,26 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       >
         {actionBarItems.map((item, index) => (
           <VStack
-            cursor={item.isDisabled ? 'not-allowed' : 'pointer'}
+            cursor={
+              item.isDisabled || wiki === undefined ? 'not-allowed' : 'pointer'
+            }
             color={
               // eslint-disable-next-line no-nested-ternary
               item.isActive
                 ? 'brand.600'
-                : item.isDisabled
+                : // eslint-disable-next-line no-nested-ternary
+                item.isDisabled
+                ? 'wikiActionBtnDisabled'
+                : wiki === undefined
                 ? 'wikiActionBtnDisabled'
                 : 'unset'
             }
             key={index}
-            onClick={!item.isDisabled ? item.handleClick : undefined}
+            onClick={
+              !item.isDisabled && wiki !== undefined
+                ? item.handleClick
+                : undefined
+            }
           >
             <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
             <Text fontSize={{ base: '12px', sm: '14px' }}>{item.label}</Text>

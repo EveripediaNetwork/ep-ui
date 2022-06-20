@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import {
@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { Image } from '@/components/Elements/Image/Image'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import {
   getCategoriesById,
   getRunningOperationPromises,
@@ -27,9 +26,9 @@ import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
-import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
-import { pageView } from '@/utils/googleAnalytics'
+import { useInfiniteData } from '@/utils/useInfiniteData'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -38,48 +37,27 @@ type CategoryPageProps = NextPage & {
 
 const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
   const categoryIcon = getBootStrapIcon(categoryData.icon)
-  const [wikisInCategory, setWikisInCategory] = useState<Wiki[] | []>([])
   const router = useRouter()
   const category = router.query.category as string
-  const [hasMore, setHasMore] = useState<boolean>(true)
-  const [offset, setOffset] = useState<number>(0)
-  const [loading, setLoading] = useState<boolean>(false)
+  const {
+    data: wikisInCategory,
+    setData: setWikisInCategory,
+    setHasMore,
+    fetcher: fetchMoreWikis,
+    loading,
+    hasMore,
+    setOffset,
+  } = useInfiniteData<Wiki>({
+    initiator: getWikisByCategory,
+    arg: { category },
+  })
 
   useEffect(() => {
     setHasMore(true)
     setOffset(0)
     setWikisInCategory(wikis)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, wikis])
-
-  const fetchMoreWikis = () => {
-    const updatedOffset = offset + ITEM_PER_PAGE
-    setTimeout(() => {
-      const fetchNewWikis = async () => {
-        const result = await store.dispatch(
-          getWikisByCategory.initiate({
-            category,
-            limit: ITEM_PER_PAGE,
-            offset: updatedOffset,
-          }),
-        )
-        if (result.data && result.data?.length > 0) {
-          pageView(`${router.asPath}?page=${updatedOffset}`)
-          const { data } = result
-          const updatedWiki = [...wikisInCategory, ...data]
-          setWikisInCategory(updatedWiki)
-          setOffset(updatedOffset)
-          if (data.length < ITEM_PER_PAGE) {
-            setHasMore(false)
-            setLoading(false)
-          }
-        } else {
-          setHasMore(false)
-          setLoading(false)
-        }
-      }
-      fetchNewWikis()
-    }, FETCH_DELAY_TIME)
-  }
 
   const [sentryRef] = useInfiniteScroll({
     loading,
@@ -109,7 +87,16 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           src={`/images/categories/${categoryData.id}.jpg`}
           height="250px"
         />
-        <Flex mx="auto" justifyContent="center" mt={12}>
+        <Heading
+          fontSize={{ base: 25, lg: 36 }}
+          maxW="80%"
+          mx="auto"
+          textAlign="center"
+          mt={8}
+        >
+          {categoryData?.title}
+        </Heading>
+        <Flex mx="auto" justifyContent="center" mt={5}>
           <Icon
             as={categoryIcon}
             borderRadius="100px"
@@ -117,16 +104,22 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             borderWidth="5px"
             bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             color="#0000002f"
-            width="60px"
-            height="60px"
-            padding={2}
+            width={{ base: 14, lg: 15 }}
+            height={{ base: 14, lg: 15 }}
+            padding={1}
           />
         </Flex>
-        <Heading fontSize={40} maxW="80%" mx="auto" textAlign="center" mt={4}>
-          {categoryData?.title}
-        </Heading>
-
-        <ToggleText my={8} text={categoryData?.description || ''} />
+        <Flex
+          textAlign="center"
+          justifyContent="center"
+          fontWeight="400"
+          mx="auto"
+          px={5}
+        >
+          <Text mt={3} mb={3}>
+            {categoryData?.description || ''}
+          </Text>
+        </Flex>
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">
