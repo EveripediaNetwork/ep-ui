@@ -21,7 +21,7 @@ interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
-  const stickyRef = useStickyBox({ offsetTop: 20, offsetBottom: 20 })
+  const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
@@ -46,9 +46,9 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
 
   return (
     <VStack
-      maxW="500px"
+      maxW="450px"
+      minW="min(380px, 90vw)"
       borderLeftWidth={{ base: 0, md: '1px' }}
-      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       mx={{ base: 'auto', md: 0 }}
       p={4}
       pt={{ md: '24', base: '10' }}

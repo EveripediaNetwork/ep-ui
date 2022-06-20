@@ -45,8 +45,9 @@ const WikiMainContent = ({ wiki, editedTimestamp }: WikiMainContentProps) => {
 
   return (
     <Box
-      p={4}
-      w={{ base: '100%', lg: '50%', '2xl': '62%', md: '45%' }}
+      py={4}
+      px={{ base: 4, lg: 14 }}
+      maxW="900px"
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
       borderColor="borderColor"

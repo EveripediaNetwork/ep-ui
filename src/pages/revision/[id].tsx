@@ -3,20 +3,7 @@ import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import {
-  HStack,
-  Flex,
-  Spinner,
-  Text,
-  Button,
-  Box,
-  Heading,
-} from '@chakra-ui/react'
-import WikiActionBar from '@/components/Wiki/WikiPage/WikiActionBar'
-import WikiMainContent from '@/components/Wiki/WikiPage/WikiMainContent'
-import WikiInsights from '@/components/Wiki/WikiPage/WikiInsights'
-import WikiTableOfContents from '@/components/Wiki/WikiPage/WikiTableOfContents'
-import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
+import { Flex, Spinner, Text, Button, Box } from '@chakra-ui/react'
 import {
   getActivityById,
   getLatestIPFSByWiki,
@@ -25,41 +12,11 @@ import {
   getRunningOperationPromises,
 } from '@/services/activities'
 import Link from 'next/link'
-import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, CommonMetaIds, Media } from '@/types/Wiki'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
-import { RelatedWikis } from '@/components/Wiki/WikiPage/InsightComponents/RelatedWikis'
-import TwitterTimeline from '@/components/Wiki/WikiPage/InsightComponents/TwitterTimeline'
-
-const MobileMeta = (wiki: {
-  metadata: { id: string; value: string }[]
-  categories: BaseCategory[]
-  media?: Media[]
-}) => {
-  const { metadata, categories, media } = wiki
-  const twitterLink = metadata.find(
-    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
-  )?.value
-
-  return (
-    <Flex
-      p={4}
-      mx={{ base: 'auto', md: 0 }}
-      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
-      display={{ base: 'block', lg: 'none' }}
-      flexDirection="row"
-    >
-      {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-      {categories?.length !== 0 && <RelatedWikis categories={categories} />}
-      {media && media.length > 0 && <RelatedMediaGrid media={media} />}
-    </Flex>
-  )
-}
+import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 
 const Revision = () => {
   const router = useRouter()
@@ -182,75 +139,7 @@ const Revision = () => {
                 </Link>
               </Flex>
             )}
-            <HStack m="0 !important" align="stretch" justify="stretch">
-              <Flex
-                w="100%"
-                justify="space-between"
-                direction={{ base: 'column', md: 'row' }}
-              >
-                <WikiActionBar wiki={wiki?.content[0]} />
-                {wiki ? (
-                  <Box w="full">
-                    <Flex
-                      display={{ lg: 'flex', base: 'none', md: 'flex' }}
-                      flexDirection={{
-                        base: 'column-reverse',
-                        lg: 'row',
-                        md: 'row',
-                      }}
-                    >
-                      <WikiMainContent
-                        wiki={wiki.content[0]}
-                        mobileView={false}
-                      />
-                      <WikiInsights
-                        dateTime={wiki.datetime}
-                        wiki={wiki.content[0]}
-                        ipfs={wiki.ipfs}
-                      />
-                    </Flex>
-                    <Flex
-                      display={{ lg: 'none', base: 'block', md: 'none' }}
-                      flexDirection={{
-                        base: 'column-reverse',
-                        lg: 'row',
-                      }}
-                    >
-                      <Heading mb={2} p={4}>
-                        {wiki.content[0]?.title}
-                      </Heading>
-                      <WikiInsights
-                        dateTime={wiki.datetime}
-                        wiki={wiki.content[0]}
-                        ipfs={wiki.ipfs}
-                      />
-                      <WikiMainContent wiki={wiki.content[0]} mobileView />
-                    </Flex>
-                    <Flex
-                      display={{ base: 'block', lg: 'none', md: 'none' }}
-                      flexDirection="column"
-                    >
-                      <MobileMeta
-                        metadata={wiki.content[0].metadata}
-                        categories={wiki.content[0].categories}
-                        media={wiki.content[0].media}
-                      />
-                    </Flex>
-                    <WikiReferences
-                      references={JSON.parse(
-                        getWikiMetadataById(
-                          wiki.content[0],
-                          CommonMetaIds.REFERENCES,
-                        )?.value || '[]',
-                      )}
-                    />
-                  </Box>
-                ) : (
-                  <WikiNotFound />
-                )}
-              </Flex>
-              {!isTocEmpty && <WikiTableOfContents isAlertAtTop={!isLatest} />}
-            </HStack>
+            <WikiMarkup wiki={wiki?.content[0]} isTocEmpty={isTocEmpty} />
           </Box>
         )}
       </main>
