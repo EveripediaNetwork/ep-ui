@@ -69,7 +69,6 @@ export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
                 mt={8}
                 mb={-4}
                 display={{
-                  base: 'block',
                   md: 'none',
                 }}
                 textAlign="center"
