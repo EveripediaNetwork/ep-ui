@@ -8,7 +8,7 @@ import {
   Tooltip,
   TooltipProps,
   Skeleton,
-  Box
+  Box,
 } from '@chakra-ui/react'
 import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
@@ -64,29 +64,29 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          <Box mt={`${isSticky ? 0 : "-11"}`}>
-          <DisplayAvatar
-            boxSize="32"
-            overflow="hidden"
-            borderWidth={2}
-            borderColor="white"
-            rounded="full"
-            justifySelf="center"
-            {...(isSticky && { mt: 0, boxSize: 12 })}
-            address={address}
-            wrapperProps={{
-              zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
-            }}
-            svgProps={{
-              mt: isSticky ? 0 : '-64px',
-              boxSize: isSticky ? '16' : '32',
-              overflow: 'hidden',
-              borderWidth: 2,
-              borderColor: 'white',
-              rounded: 'full',
-              justifySelf: 'center',
-            }}
-          />
+          <Box mt={`${isSticky ? 0 : '-11'}`}>
+            <DisplayAvatar
+              boxSize="32"
+              overflow="hidden"
+              borderWidth={2}
+              borderColor="white"
+              rounded="full"
+              justifySelf="center"
+              {...(isSticky && { mt: 0, boxSize: 12 })}
+              address={address}
+              wrapperProps={{
+                zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
+              }}
+              svgProps={{
+                mt: isSticky ? 0 : '-64px',
+                boxSize: isSticky ? '16' : '32',
+                overflow: 'hidden',
+                borderWidth: 2,
+                borderColor: 'white',
+                rounded: 'full',
+                justifySelf: 'center',
+              }}
+            />
           </Box>
 
           <Skeleton isLoaded={!loading}>
