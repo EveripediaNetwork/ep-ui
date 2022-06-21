@@ -1,19 +1,16 @@
 import React from 'react'
-
-import { CheckIcon, SettingsIcon } from '@chakra-ui/icons'
+import { SettingsIcon } from '@chakra-ui/icons'
 import {
   Flex,
   chakra,
   IconButton,
-  Button,
-  Text,
-  useClipboard,
   ButtonGroup,
   Tooltip,
   TooltipProps,
   Skeleton,
+  Box
 } from '@chakra-ui/react'
-import { FaEthereum, FaShareAlt } from 'react-icons/fa'
+import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
@@ -34,7 +31,6 @@ export const UserDetails = (props: UserDetailsProps) => {
   const { headerIsSticky } = useProfileContext()
   const [, username, loading] = useENSData(address)
 
-  const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -68,8 +64,8 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
+          <Box mt={`${isSticky ? 0 : "-11"}`}>
           <DisplayAvatar
-            mt="-64px"
             boxSize="32"
             overflow="hidden"
             borderWidth={2}
@@ -91,6 +87,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               justifySelf: 'center',
             }}
           />
+          </Box>
 
           <Skeleton isLoaded={!loading}>
             <chakra.span
@@ -132,23 +129,6 @@ export const UserDetails = (props: UserDetailsProps) => {
 
       {!isSticky && (
         <Flex gap="3" direction="column" px="6" w="full" align="center">
-          <Flex align="center" gap="2" color="gray.500">
-            <chakra.span fontWeight="medium">{username}</chakra.span>
-            <Button
-              variant="outline"
-              rounded="full"
-              color="gray.500"
-              h="fit-content"
-              leftIcon={<FaEthereum />}
-              p="2"
-              onClick={onCopy}
-              rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
-            >
-              <Text w="24" noOfLines={1}>
-                {address}
-              </Text>
-            </Button>
-          </Flex>
           <chakra.span color="gray.500">Joined November 2020</chakra.span>
         </Flex>
       )}
