@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   Center,
   Flex,
@@ -10,6 +10,7 @@ import {
   HTMLChakraProps,
   Avatar,
   Text,
+  useEventListener,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -62,6 +63,20 @@ export const NavSearch = (props: NavSearchProps) => {
     unrenderedCategories > 0 ? unrenderedCategories : 0
   const totalUnrendered =
     resolvedUnrenderedArticles + resolvedUnrenderedCategories
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEventListener('keydown', event => {
+    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
+    const hotkey = isMac ? 'metaKey' : 'ctrlKey'
+    if (
+      (event.key.toLowerCase() === 'k' && event[hotkey]) ||
+      event.key === '/'
+    ) {
+      event.preventDefault()
+      inputRef.current?.focus()
+    }
+  })
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
@@ -223,8 +238,8 @@ export const NavSearch = (props: NavSearchProps) => {
           placeholder="Search wikis, categories and tags"
           _placeholderShown={{
             textOverflow: 'ellipsis',
-            width: '96%',
           }}
+          ref={inputRef}
           {...inputProps}
         />
       </InputGroup>

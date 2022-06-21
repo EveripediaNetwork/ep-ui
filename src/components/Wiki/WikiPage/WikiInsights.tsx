@@ -58,13 +58,12 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
           <WikiDetails
             wikiTitle={wiki}
             categories={wiki.categories}
-            lastEdited={wiki.updated || wiki?.created || dateTime}
+            createdTime={wiki?.created}
             ipfsHash={ipfs || wiki.ipfs}
             txHash={wiki.transactionHash}
-            lastEditor={wiki.user?.id}
+            createdBy={wiki.author?.id}
             imgSrc={getWikiImageUrl(wiki)}
           />
-
           {!!coingeckoLink && (
             <>
               <ProfileSummary wiki={wiki} />
