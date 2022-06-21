@@ -122,7 +122,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
       spacing={4}
     >
       <HStack>
-        <Text fontSize="14px" color="linkColor">
+        <Text fontSize="14px" fontWeight="bold" color="linkColor">
           {title}
         </Text>
         {titleTag && (

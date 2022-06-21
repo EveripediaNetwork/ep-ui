@@ -128,7 +128,12 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
       direction="column"
       mt={{ base: '10', lg: '20' }}
       gap={10}
+      px={{ base: 6, lg: 20 }}
       align="center"
+      _dark={{
+        bgImage: '/images/homepage-bg-dark.png',
+      }}
+      bgImage="/images/homepage-bg-white.png"
     >
       <Text align="center" fontWeight="bold" fontSize="2xl">
         {`${t('trendingWIkis')}`}
