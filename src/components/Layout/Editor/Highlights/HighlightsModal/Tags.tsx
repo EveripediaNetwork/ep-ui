@@ -112,8 +112,10 @@ const Tags = () => {
       setQuery(e.target.value)
     },
     onBlur: () => {
-      setSuggestionSelectionId(-1)
-      onCloseSuggestions()
+      setTimeout(() => {
+        setSuggestionSelectionId(-1)
+        onCloseSuggestions()
+      }, 100)
     },
   })
 
@@ -146,8 +148,10 @@ const Tags = () => {
                   setQuery(e.target.value)
                 },
                 onBlur: () => {
-                  setSuggestionSelectionId(-1)
-                  onCloseSuggestions()
+                  setTimeout(() => {
+                    setSuggestionSelectionId(-1)
+                    onCloseSuggestions()
+                  }, 100)
                 },
               },
             )
