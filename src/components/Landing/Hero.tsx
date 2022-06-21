@@ -107,6 +107,7 @@ export const Hero = ({ wiki }: HeroProps) => {
       justify="center"
       w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
+      px={{ base: 3, lg: 10 }}
     >
       <VStack
         alignItems={{ base: 'center', lg: 'start' }}

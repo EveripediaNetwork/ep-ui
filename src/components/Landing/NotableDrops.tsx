@@ -57,7 +57,14 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
   if (!isMounted) return null
 
   return (
-    <Box mt={{ base: '10', lg: '20' }} textAlign="center">
+    <Box
+      mt={{ base: '10', lg: '20' }}
+      textAlign="center"
+      _dark={{
+        bgImage: '/images/homepage-bg-dark.png',
+      }}
+      bgImage="/images/homepage-bg-white.png"
+    >
       <Heading textAlign="center" mb={4} fontWeight="bold" fontSize="2xl">
         {`${t('trendingWIkis')}`}
       </Heading>
