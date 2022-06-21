@@ -47,7 +47,6 @@ const ItemPaths = {
 const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
 
-
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
