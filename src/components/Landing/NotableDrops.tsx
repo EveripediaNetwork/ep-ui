@@ -59,6 +59,7 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
   return (
     <Box
       mt={{ base: '10', lg: '20' }}
+      px={{ base: 3, md: 8 }}
       textAlign="center"
       _dark={{
         bgImage: '/images/homepage-bg-dark.png',
@@ -68,7 +69,7 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
       <Heading textAlign="center" mb={4} fontWeight="bold" fontSize="2xl">
         {`${t('trendingWIkis')}`}
       </Heading>
-      <Box maxW="1160px" mx={{ base: -2, md: 'auto' }}>
+      <Box maxW="1160px" mx="auto">
         <Carousel
           settings={{
             dots: true,
