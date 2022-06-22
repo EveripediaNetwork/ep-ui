@@ -444,6 +444,7 @@ const CreateWikiContent = () => {
 
   useEffect(() => {
     if (txHash) verifyTrxHash(getWikiSlug())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
