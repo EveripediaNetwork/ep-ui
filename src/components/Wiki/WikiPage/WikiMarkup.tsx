@@ -15,6 +15,7 @@ import WikiTableOfContents from './WikiTableOfContents'
 interface WikiLayoutProps {
   wiki?: Wiki
   isTocEmpty: boolean
+  ipfs?: string
 }
 
 const MobileMeta = (wiki: {
@@ -41,7 +42,7 @@ const MobileMeta = (wiki: {
   )
 }
 
-export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -64,7 +65,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty }: WikiLayoutProps) => {
               }}
             >
               <WikiMainContent wiki={wiki} />
-              <WikiInsights wiki={wiki} />
+              <WikiInsights wiki={wiki} ipfs={ipfs} />
               <Heading
                 mt={8}
                 mb={-4}

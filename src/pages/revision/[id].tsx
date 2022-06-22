@@ -139,7 +139,11 @@ const Revision = () => {
                 </Link>
               </Flex>
             )}
-            <WikiMarkup wiki={wiki?.content[0]} isTocEmpty={isTocEmpty} />
+            <WikiMarkup
+              wiki={wiki?.content[0]}
+              isTocEmpty={isTocEmpty}
+              ipfs={wiki?.ipfs}
+            />
           </Box>
         )}
       </main>
