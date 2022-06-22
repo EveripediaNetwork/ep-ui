@@ -160,7 +160,7 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
   query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
     userById(id: $id) {
       wikisCreated(offset: $offset, limit: $limit) {
-        content{
+        content {
           id
           ipfs
           title

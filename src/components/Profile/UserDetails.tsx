@@ -85,7 +85,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               }}
             />
           </Box>
-          
+
           <Skeleton isLoaded={!loading}>
             <chakra.span
               fontSize={isSticky ? '2xl' : '3xl'}

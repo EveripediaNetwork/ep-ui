@@ -1,15 +1,14 @@
-import Collected from '@/components/Profile/Collected'
 import {
   Tabs,
   TabList,
   TabPanels,
   TabPanel,
   Icon,
-  chakra
+  chakra,
 } from '@chakra-ui/react'
-import React, { Component } from 'react'
+import React from 'react'
 import { TiDocumentAdd } from 'react-icons/ti'
-import {RiEdit2Line} from 'react-icons/ri'
+import { RiEdit2Line } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 import UserCreatedWikis from './UserWikis/UserCreatedWikis'
 import UserEditedWikis from './UserWikis/UserEditedWikis'

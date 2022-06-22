@@ -15,7 +15,7 @@ import {
 } from '@/services/wikis/queries'
 import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
-import {Activity} from '@/types/ActivityDataType'
+import { Activity } from '@/types/ActivityDataType'
 
 type GetWikisResponse = {
   wikis: Wiki[]
@@ -38,8 +38,6 @@ type GetUserWikiResponse = {
     wikisCreated: Activity[]
   }
 }
-
-
 
 type GetWikisByCategoryResponse = {
   wikisByCategory: Wiki[]
@@ -116,10 +114,9 @@ export const wikiApi = createApi({
           variables: { id, limit, offset },
         }
       },
-      transformResponse: (response: GetUserWikiResponse) =>{
+      transformResponse: (response: GetUserWikiResponse) => {
         return response.userById.wikisCreated
-      }
-        
+      },
     }),
     getTagWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => ({

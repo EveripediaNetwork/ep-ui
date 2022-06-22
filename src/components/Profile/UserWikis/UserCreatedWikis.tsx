@@ -41,15 +41,15 @@ const UserCreatedWikis = () => {
     hasNextPage: hasMore,
     onLoadMore: () => fetchMoreWikis(),
   })
-  
+
   return (
-    <Box pt="10" px={{base: 8, lg: 0}}>
+    <Box pt="10" px={{ base: 8, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState />
         </Center>
       )}
-      <Collected wikis={wikis}/>
+      <Collected wikis={wikis} />
       {loading || hasMore ? (
         <Center ref={sentryRef} w="full" h="16">
           <Spinner size="xl" />
