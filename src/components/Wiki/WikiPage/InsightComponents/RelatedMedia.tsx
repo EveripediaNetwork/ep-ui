@@ -5,7 +5,8 @@ import { Media } from '@/types/Wiki'
 import { constructMediaUrl } from '@/utils/mediaUtils'
 import WikiAccordion from '../../WikiAccordion'
 
-const RelatedMediaGrid = ({ media }: { media: Media[] }) => {
+const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
+  if (!media || media.length === 0) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">

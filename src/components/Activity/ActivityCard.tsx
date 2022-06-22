@@ -23,7 +23,7 @@ interface ActivityCardProps {
   brief: string
   editor: string
   lastModTimeStamp?: string
-  wiki: Omit<Wiki, 'metadata' | 'version' | 'language'>
+  wiki: Omit<Wiki, 'metadata' | 'version' | 'language' | 'author'>
   activityId?: string
   wikiId?: string
   type?: string

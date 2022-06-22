@@ -1,201 +1,108 @@
 import {
   Text,
-  TextProps,
-  Box,
-  Flex,
-  HStack,
   LinkBox,
   LinkOverlay,
   chakra,
+  Heading,
+  Box,
 } from '@chakra-ui/react'
-import React, { useCallback, useEffect, useState } from 'react'
-import isMobile from 'ismobilejs'
+import React from 'react'
 import NextLink from 'next/link'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
+import { Carousel } from '../Elements'
 
-const arrowStyles: TextProps = {
-  cursor: 'pointer',
-  pos: 'absolute',
-  top: '50%',
-  w: 'auto',
-  mt: '-22px',
-  p: '16px',
-  color: 'white',
-  fontWeight: 'bold',
-  fontSize: '18px',
-  transition: '0.6s ease',
-  borderRadius: '0 3px 3px 0',
-  userSelect: 'none',
-  _hover: {
-    opacity: 0.8,
-    bg: 'black',
-  },
+interface NotableWikiCardProps {
+  wiki: Wiki
 }
 
-const useCarousel = (drops: Wiki[]) => {
-  const [slideColumns, setSlideColumns] = useState(3)
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const dropsCount = drops.length
-
-  const firstSlideInGroupOfLastSlide = dropsCount - slideColumns
-
-  const lastSlideInSight = currentSlide === firstSlideInGroupOfLastSlide
-
-  const prevSlide = () => {
-    setCurrentSlide(s => (s === 0 ? firstSlideInGroupOfLastSlide : s - 1))
-  }
-  const nextSlide = () => {
-    setCurrentSlide(s => (lastSlideInSight ? 0 : s + 1))
-  }
-  const setSlide = (wiki: number) => {
-    setCurrentSlide(
-      wiki > firstSlideInGroupOfLastSlide ? firstSlideInGroupOfLastSlide : wiki,
-    )
-  }
-
-  return {
-    slideColumns,
-    setSlideColumns,
-    currentSlide,
-    prevSlide,
-    nextSlide,
-    setSlide,
-  }
+const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
+  return (
+    <LinkBox key={`wiki-${wiki.id}`} flex="none" overflow="hidden" padding={2}>
+      <chakra.div
+        rounded="lg"
+        bg="grey"
+        overflow="hidden"
+        h="520px"
+        maxW="400px"
+        mx="auto"
+      >
+        <WikiImage imageURL={getWikiImageUrl(wiki)} objectFit="cover" h="96" />
+        <chakra.div color="white" pt={4} px={8} gap={4} textAlign="center">
+          <Text fontSize="xl" fontWeight="bold">
+            <NextLink href={`/wiki/${wiki.id}`} passHref>
+              <LinkOverlay>{wiki.title}</LinkOverlay>
+            </NextLink>
+          </Text>
+          <Text mb="6" fontSize="md" noOfLines={2}>
+            {getWikiSummary(wiki, WikiSummarySize.Medium)}
+          </Text>
+        </chakra.div>
+      </chakra.div>
+    </LinkBox>
+  )
 }
 
 export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
   const { t } = useTranslation()
+  const [isMounted, setIsMounted] = React.useState(false)
 
-  const {
-    slideColumns,
-    setSlideColumns,
-    currentSlide,
-    setSlide,
-    prevSlide,
-    nextSlide,
-  } = useCarousel(drops)
-
-  const mountSlideColumns = useCallback(() => {
-    const isOnMobile = isMobile(window?.navigator)
-    if (isOnMobile.any) setSlideColumns(isOnMobile.phone ? 1 : 2)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => {
+    setIsMounted(true)
   }, [])
 
-  useEffect(() => {
-    mountSlideColumns()
-  }, [mountSlideColumns])
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  const carouselStyle = {
-    transition: 'all .5s',
-    ml: `-${(currentSlide * 100) / slideColumns}%`,
-  }
-
-  const containerWidth = `${24 * slideColumns}rem`
-
-  const carouselDots = (
-    <HStack justify="center" w="full">
-      {Array.from({ length: drops.length }).map((_, wiki) => (
-        <Box
-          key={`dots-${drops[wiki].id}`}
-          cursor="pointer"
-          boxSize={3}
-          m="0 2px"
-          bg={currentSlide === wiki ? 'brand.500' : 'brand.200'}
-          rounded="50%"
-          display="inline-block"
-          transition="background-color 0.6s ease"
-          _hover={{ bg: 'brand.500' }}
-          onClick={() => setSlide(wiki)}
-        />
-      ))}
-    </HStack>
-  )
+  if (!isMounted) return null
 
   return (
-    <Flex
-      direction="column"
+    <Box
       mt={{ base: '10', lg: '20' }}
-      gap={10}
-      align="center"
+      px={{ base: 3, md: 8 }}
+      textAlign="center"
+      _dark={{
+        bgImage: '/images/homepage-bg-dark.png',
+      }}
+      bgImage="/images/homepage-bg-white.png"
     >
-      <Text align="center" fontWeight="bold" fontSize="2xl">
+      <Heading textAlign="center" mb={4} fontWeight="bold" fontSize="2xl">
         {`${t('trendingWIkis')}`}
-      </Text>
-
-      <Flex
-        w={{ base: '85vw', md: containerWidth }}
-        maxW="90vw"
-        overflow="hidden"
-        pos="relative"
-      >
-        <Flex sx={{ w: `calc(100%/${slideColumns})` }} {...carouselStyle}>
-          {drops.map((wiki, sid) => (
-            <LinkBox
-              pos="relative"
-              key={`wiki-${wiki.id}`}
-              boxSize="full"
-              flex="none"
-              overflow="hidden"
-              pr={
-                sid === currentSlide + (slideColumns - 1) || slideColumns === 1
-                  ? 0
-                  : 4
-              }
-            >
-              <chakra.div
-                rounded="lg"
-                shadow="xl"
-                h="100%"
-                bg="grey"
-                overflow="hidden"
-              >
-                <WikiImage
-                  imageURL={getWikiImageUrl(wiki)}
-                  boxSize="full"
-                  objectFit="cover"
-                  h="96"
-                />
-                <chakra.div
-                  color="white"
-                  pt={4}
-                  px={8}
-                  gap={4}
-                  textAlign="center"
-                >
-                  <Text fontSize="xl" fontWeight="bold">
-                    <NextLink href={`/wiki/${wiki.id}`} passHref>
-                      <LinkOverlay>{wiki.title}</LinkOverlay>
-                    </NextLink>
-                  </Text>
-                  <Text mb="6" fontSize="md" noOfLines={2}>
-                    {getWikiSummary(wiki, WikiSummarySize.Medium)}
-                  </Text>
-                </chakra.div>
-              </chakra.div>
-            </LinkBox>
+      </Heading>
+      <Box maxW="1160px" mx="auto">
+        <Carousel
+          settings={{
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [
+              {
+                breakpoint: 1000,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  initialSlide: 2,
+                },
+              },
+              {
+                breakpoint: 680,
+                settings: {
+                  arrows: false,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                },
+              },
+            ],
+          }}
+        >
+          {drops.map(wiki => (
+            <NotableWikiCard wiki={wiki} />
           ))}
-        </Flex>
-        <Text {...arrowStyles} left="0" onClick={prevSlide} zIndex="popover">
-          &#10094;
-        </Text>
-        <Text {...arrowStyles} right="0" onClick={nextSlide} zIndex="popover">
-          &#10095;
-        </Text>
-      </Flex>
-      {carouselDots}
-    </Flex>
+        </Carousel>
+      </Box>
+    </Box>
   )
 }
 

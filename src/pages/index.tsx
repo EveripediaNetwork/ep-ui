@@ -21,13 +21,8 @@ export const Index: NextPage = () => {
       direction="column"
       mx="auto"
       w="full"
-      px={{ base: 6, lg: 20 }}
       py={{ base: 6, lg: 20 }}
       gap={10}
-      _dark={{
-        bgImage: '/images/homepage-bg-dark.png',
-      }}
-      bgImage="/images/homepage-bg-white.png"
     >
       <Hero wiki={wiki} />
       <NotableDrops drops={data} />

@@ -51,6 +51,9 @@ export const GET_WIKI_BY_ID = gql`
       user {
         id
       }
+      author {
+        id
+      }
     }
   }
 `
