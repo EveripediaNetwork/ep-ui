@@ -21,26 +21,31 @@ const FAQ = () => {
         {
           header: t('getterStartedTwoHead'),
           body: t('getterStartedTwoBody'),
-        },{
+        },
+        {
           header: t('getterStartedThreeHead'),
           body: t('getterStartedThreeBody'),
-        },{
+        },
+        {
           header: t('getterStartedFourHead'),
           body: t('getterStartedFourBody'),
-        },{
+        },
+        {
           header: t('getterStartedFiveHead'),
           body: t('getterStartedFiveBody'),
-        },{
+        },
+        {
           header: t('getterStartedSixHead'),
           body: t('getterStartedSixBody'),
-        },{
+        },
+        {
           header: t('getterStartedSevenHead'),
           body: t('getterStartedSevenBody'),
-        },{
+        },
+        {
           header: t('getterStartedEightHead'),
           body: t('getterStartedEightBody'),
         },
-        
       ],
     },
     {
@@ -54,20 +59,23 @@ const FAQ = () => {
         {
           header: t('usingEveripediaTwoHead'),
           body: t('usingEveripediaTwoBody'),
-        },{
+        },
+        {
           header: t('usingEveripediaThreeHead'),
           body: t('usingEveripediaThreeBody'),
-        },{
+        },
+        {
           header: t('usingEveripediaFourHead'),
           body: t('usingEveripediaFourBody'),
-        },{
+        },
+        {
           header: t('usingEveripediaFiveHead'),
           body: t('usingEveripediaFiveBody'),
-        },{
+        },
+        {
           header: t('usingEveripediaSixHead'),
           body: t('usingEveripediaSixBody'),
         },
-       
       ],
     },
     {
