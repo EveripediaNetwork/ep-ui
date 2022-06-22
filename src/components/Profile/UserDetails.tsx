@@ -4,11 +4,11 @@ import {
   Flex,
   chakra,
   IconButton,
+  Box,
   ButtonGroup,
   Tooltip,
   TooltipProps,
   Skeleton,
-  Box,
 } from '@chakra-ui/react'
 import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
@@ -30,7 +30,6 @@ export const UserDetails = (props: UserDetailsProps) => {
 
   const { headerIsSticky } = useProfileContext()
   const [, username, loading] = useENSData(address)
-
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -56,7 +55,6 @@ export const UserDetails = (props: UserDetailsProps) => {
       />
       <Flex align="center" justify="space-between" w="full" px="6">
         <chakra.span flex="1" />
-
         <Flex
           direction={isSticky ? 'row' : 'column'}
           align="center"
@@ -64,7 +62,7 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          <Box mt={`${isSticky ? 0 : '-11'}`}>
+          <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
               boxSize="32"
               overflow="hidden"
@@ -78,7 +76,6 @@ export const UserDetails = (props: UserDetailsProps) => {
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
               svgProps={{
-                mt: isSticky ? 0 : '-64px',
                 boxSize: isSticky ? '16' : '32',
                 overflow: 'hidden',
                 borderWidth: 2,
@@ -88,7 +85,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               }}
             />
           </Box>
-
+          
           <Skeleton isLoaded={!loading}>
             <chakra.span
               fontSize={isSticky ? '2xl' : '3xl'}

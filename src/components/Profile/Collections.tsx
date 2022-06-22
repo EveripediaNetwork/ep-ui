@@ -5,16 +5,18 @@ import {
   TabPanels,
   TabPanel,
   Icon,
-  chakra,
+  chakra
 } from '@chakra-ui/react'
-import React from 'react'
-import { FaPaintRoller } from 'react-icons/fa'
+import React, { Component } from 'react'
 import { TiDocumentAdd } from 'react-icons/ti'
+import {RiEdit2Line} from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
+import UserCreatedWikis from './UserWikis/UserCreatedWikis'
+import UserEditedWikis from './UserWikis/UserEditedWikis'
 
 const SECTIONS = [
-  { label: 'Wikis', icon: TiDocumentAdd, component: Collected },
-  { label: 'NFTs', icon: FaPaintRoller },
+  { label: 'Wikis', icon: TiDocumentAdd, component: UserCreatedWikis },
+  { label: 'Edits', icon: RiEdit2Line, component: UserEditedWikis },
 ]
 
 export const Collections = () => (

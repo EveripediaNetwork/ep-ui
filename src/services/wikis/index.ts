@@ -11,9 +11,11 @@ import {
   POST_IMG,
   GET_PREVIEW_WIKI_BY_ID,
   GET_TAG_WIKIS_BY_ID,
+  GET_USER_CREATED_WIKIS_BY_ID,
 } from '@/services/wikis/queries'
 import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
+import {Activity} from '@/types/ActivityDataType'
 
 type GetWikisResponse = {
   wikis: Wiki[]
@@ -33,8 +35,11 @@ type GetWikiResponse = {
 type GetUserWikiResponse = {
   userById: {
     wikis: Wiki[]
+    wikisCreated: Activity[]
   }
 }
+
+
 
 type GetWikisByCategoryResponse = {
   wikisByCategory: Wiki[]
@@ -104,6 +109,18 @@ export const wikiApi = createApi({
       transformResponse: (response: GetUserWikiResponse) =>
         response.userById.wikis,
     }),
+    getUserCreatedWikis: builder.query<Activity[], WikiArg>({
+      query: ({ id, limit, offset }: WikiArg) => {
+        return {
+          document: GET_USER_CREATED_WIKIS_BY_ID,
+          variables: { id, limit, offset },
+        }
+      },
+      transformResponse: (response: GetUserWikiResponse) =>{
+        return response.userById.wikisCreated
+      }
+        
+    }),
     getTagWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => ({
         document: GET_TAG_WIKIS_BY_ID,
@@ -155,6 +172,7 @@ export const {
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   useGetTagWikisQuery,
+  useGetUserCreatedWikisQuery,
   util: { getRunningOperationPromises },
 } = wikiApi
 
@@ -168,4 +186,5 @@ export const {
   getTagWikis,
   postWiki,
   postImage,
+  getUserCreatedWikis,
 } = wikiApi.endpoints
