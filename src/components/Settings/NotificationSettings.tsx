@@ -73,7 +73,7 @@ const NotificationSettings = () => {
           />
         ))}
       </VStack>
-      <Button disabled type="submit" mt={8} size="lg">
+      <Button type="submit" mt={8} size="lg">
         Save
       </Button>
     </form>
