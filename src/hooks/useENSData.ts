@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
 import { AvatarResolver } from '@ensdomains/ens-avatar'
-import config from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
+import { provider } from '@/utils/getProvider'
 
 export const useENSData = (address: string | undefined | null) => {
   const [avatar, setAvatar] = useState<string>()
@@ -14,7 +13,7 @@ export const useENSData = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getAvatar = async (addrs: string) => {
-      const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
+      
       const name = await provider.lookupAddress(addrs)
       let avatarURI
       if (name) {
