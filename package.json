@@ -1,7 +1,7 @@
 {
   "name": "ep-ui",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "dev": "next dev --port 4000",
     "build": "next build",

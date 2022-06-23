@@ -113,6 +113,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         currentMd !== 'Write\nPreview\n\nMarkdown\nWYSIWYG'
       ) {
         onChange(currentMd)
+      } else if (currentMd.trim() === '') {
+        onChange(' ')
       }
     }
   }, [editorRef, markdown, onChange])

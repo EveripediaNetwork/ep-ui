@@ -160,7 +160,7 @@ const CreateWikiContent = () => {
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const isValidWiki = () => {
-    if (wiki.images?.length === 0) {
+    if (!wiki.images?.length) {
       toast({
         title: 'Add a main image on the right column to continue',
         status: 'error',
@@ -444,6 +444,7 @@ const CreateWikiContent = () => {
 
   useEffect(() => {
     if (txHash) verifyTrxHash(getWikiSlug())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {

@@ -77,7 +77,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
       borderColor="borderColor"
       borderRadius="7px"
       padding="15px"
-      h="75vh"
+      h="auto"
     >
       <SummaryInput />
       {!hideDropzone && <Dropzone dropZoneActions={dropZoneActions} />}
