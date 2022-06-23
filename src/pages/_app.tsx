@@ -43,7 +43,6 @@ const client = createClient({
 
 const App = (props: EpAppProps) => {
   const { Component, pageProps, router } = props
-
   useEffect(() => {
     const handleRouteChange = (url: URL) => {
       pageView(url)

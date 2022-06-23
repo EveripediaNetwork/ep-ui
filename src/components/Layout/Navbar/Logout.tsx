@@ -24,7 +24,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}
           onClick={userAccount?.data && handleLogOut}
           cursor={userAccount?.data ? 'pointer' : 'not-allowed'}
-          display={userAccount?.data ? '1' : 'none'}
+          display={userAccount?.data ? 'flex' : 'none'}
         >
           <Icon
             fontSize="4xl"
@@ -40,7 +40,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
             color="linkColor"
             flex="auto"
           >
-            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Logout</span>
+            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Log out</span>
           </Flex>
         </MenuItem>
       </Flex>

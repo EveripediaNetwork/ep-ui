@@ -13,11 +13,15 @@ import {
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Network, Networks } from '@/data/NetworkData'
 import networkMap from '@/utils/networkMap'
+import config from '@/config'
 
 const NetworkMenu = () => {
   const [currentNetwork, setCurrentNetwork] = useState<Network>(Networks[0])
 
-  const { chainId } = networkMap.MUMBAI_TESTNET
+  const { chainId } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
 
   const handleNetworkSwitch = (newNetwork: Network) => {
     if (newNetwork.chainId === chainId) {
