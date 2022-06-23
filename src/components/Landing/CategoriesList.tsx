@@ -31,6 +31,7 @@ const CategoriesList = () => {
         fontWeight="semibold"
         fontSize="2xl"
         mb={0}
+        px={{ base: 6, lg: 20 }}
       >
         {`${t('browseCategory')}`}
       </Text>
@@ -41,6 +42,8 @@ const CategoriesList = () => {
         columns={[1, 2, 3]}
         spacingX={6}
         spacingY={12}
+        py={{ base: 6, lg: 0 }}
+        px={{ base: 6, lg: 0 }}
       >
         {categories.map(category => (
           <LinkBox

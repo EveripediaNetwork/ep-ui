@@ -13,6 +13,7 @@ import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
+import config from '@/config'
 
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
@@ -32,6 +33,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
+import { LogOutBttn } from './Logout'
 
 const Navbar = () => {
   const router = useRouter()
@@ -55,7 +57,10 @@ const Navbar = () => {
 
   const dispatch = useDispatch()
 
-  const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
+  const { chainId, chainName, rpcUrls } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
 
   const handleWalletIconAction = () => {
     logEvent({
@@ -205,6 +210,7 @@ const Navbar = () => {
                   >
                     <ProfileLink />
                     <ColorModeToggle isInMobileMenu={false} />
+                    <LogOutBttn isInMobileMenu={false} />
                   </NavMenu>
                 </Box>
                 <Icon
