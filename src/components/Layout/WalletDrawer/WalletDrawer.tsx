@@ -19,13 +19,9 @@ import {
   Spinner,
   useToast,
 } from '@chakra-ui/react'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
-import {
-  RiArrowLeftSLine,
-  RiLogoutBoxRLine,
-  RiRefreshLine,
-} from 'react-icons/ri'
+import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { UseToastOptions } from '@chakra-ui/toast'
 import shortenAccount from '@/utils/shortenAccount'
@@ -34,10 +30,7 @@ import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useDispatch } from 'react-redux'
 
-import {
-  setStateToDefault,
-  updateWalletDetails,
-} from '@/store/slices/user-slice'
+import { updateWalletDetails } from '@/store/slices/user-slice'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
@@ -65,7 +58,6 @@ const WalletDrawer = ({
   setHamburger,
 }: WalletDrawerType) => {
   const { data: accountData } = useAccount()
-  const { disconnect } = useDisconnect()
   const [, username] = useENSData(accountData?.address)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
@@ -87,11 +79,6 @@ const WalletDrawer = ({
         toast(toastProperties)
       })
     }
-  }
-
-  const handleLogOut = () => {
-    disconnect()
-    dispatch(setStateToDefault())
   }
 
   return isOpen ? (
@@ -156,15 +143,6 @@ const WalletDrawer = ({
                         </Flex>
                       </MenuItem>
                       <Divider />
-                      <MenuItem
-                        onClick={handleLogOut}
-                        py={3}
-                        icon={<RiLogoutBoxRLine size={25} />}
-                      >
-                        <Text fontSize="small" fontWeight="bold">
-                          Logout
-                        </Text>
-                      </MenuItem>
                     </MenuList>
                   )}
                 </Menu>
