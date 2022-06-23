@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { AvatarResolver } from '@ensdomains/ens-avatar'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
 import { provider } from '@/utils/getProvider'
@@ -17,10 +16,7 @@ export const useENSData = (address: string | undefined | null) => {
       let avatarURI
       if (name) {
         setUsername(name)
-        const avt = new AvatarResolver(provider, { cache: 300 })
-        avatarURI = await avt.getAvatar(name, {
-          /* jsdomWindow: jsdom (on nodejs) */
-        })
+        avatarURI = await provider.getAvatar(name)
         if (avatarURI) setAvatar(avatarURI)
       }
       setLoading(false)
