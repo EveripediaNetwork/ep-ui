@@ -40,7 +40,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
             color="linkColor"
             flex="auto"
           >
-            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Logout</span>
+            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Log out</span>
           </Flex>
         </MenuItem>
       </Flex>
