@@ -13,7 +13,6 @@ export const useENSData = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getAvatar = async (addrs: string) => {
-      
       const name = await provider.lookupAddress(addrs)
       let avatarURI
       if (name) {
