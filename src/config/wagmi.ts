@@ -10,15 +10,13 @@ import { AlchemyProvider, Network } from '@ethersproject/providers'
 import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector | MagicConnector
-
-export const { chains, provider } = configureChains(
-  [chain.polygonMumbai, chain.polygon],
-  [
-    alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
-    infuraProvider({ infuraId: config.infuraId, weight: 2 }),
-    publicProvider({ weight: 3 }),
-  ],
-)
+const chainArray =
+  config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
+export const { chains, provider } = configureChains(chainArray, [
+  alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
+  infuraProvider({ infuraId: config.infuraId, weight: 2 }),
+  publicProvider({ weight: 3 }),
+])
 
 const network: Network = {
   name: config.alchemyChain,

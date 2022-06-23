@@ -21,7 +21,7 @@ interface NotableWikiCardProps {
 
 const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
   return (
-    <LinkBox key={`wiki-${wiki.id}`} flex="none" overflow="hidden" padding={2}>
+    <LinkBox flex="none" overflow="hidden" padding={2}>
       <chakra.div
         rounded="lg"
         bg="grey"
@@ -98,7 +98,7 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
           }}
         >
           {drops.map(wiki => (
-            <NotableWikiCard wiki={wiki} />
+            <NotableWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
           ))}
         </Carousel>
       </Box>

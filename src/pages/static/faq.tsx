@@ -15,16 +15,36 @@ const FAQ = () => {
       icon: RiFlagFill,
       data: [
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('getterStartedOneHead'),
+          body: t('getterStartedOneBody'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('getterStartedTwoHead'),
+          body: t('getterStartedTwoBody'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('getterStartedThreeHead'),
+          body: t('getterStartedThreeBody'),
+        },
+        {
+          header: t('getterStartedFourHead'),
+          body: t('getterStartedFourBody'),
+        },
+        {
+          header: t('getterStartedFiveHead'),
+          body: t('getterStartedFiveBody'),
+        },
+        {
+          header: t('getterStartedSixHead'),
+          body: t('getterStartedSixBody'),
+        },
+        {
+          header: t('getterStartedSevenHead'),
+          body: t('getterStartedSevenBody'),
+        },
+        {
+          header: t('getterStartedEightHead'),
+          body: t('getterStartedEightBody'),
         },
       ],
     },
@@ -33,16 +53,28 @@ const FAQ = () => {
       icon: FaMousePointer,
       data: [
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaOneHead'),
+          body: t('usingEveripediaOneBody'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaTwoHead'),
+          body: t('usingEveripediaTwoBody'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaThreeHead'),
+          body: t('usingEveripediaThreeBody'),
+        },
+        {
+          header: t('usingEveripediaFourHead'),
+          body: t('usingEveripediaFourBody'),
+        },
+        {
+          header: t('usingEveripediaFiveHead'),
+          body: t('usingEveripediaFiveBody'),
+        },
+        {
+          header: t('usingEveripediaSixHead'),
+          body: t('usingEveripediaSixBody'),
         },
       ],
     },
@@ -51,16 +83,16 @@ const FAQ = () => {
       icon: RiSettings2Fill,
       data: [
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaFiveHead'),
+          body: t('usingEveripediaFiveHead'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaFiveHead'),
+          body: t('usingEveripediaFiveHead'),
         },
         {
-          header: t('faqOneHead'),
-          body: t('faqOneBody'),
+          header: t('usingEveripediaFiveHead'),
+          body: t('usingEveripediaFiveHead'),
         },
       ],
     },

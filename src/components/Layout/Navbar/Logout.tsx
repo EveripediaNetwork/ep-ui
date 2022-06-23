@@ -21,9 +21,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           minH="48px"
           px={isInMobileMenu ? 0 : 3}
           bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
-          _hover={{ bgColor: 'transparent' }}
-          _active={{ bgColor: 'transparent' }}
-          _focus={{ bgColor: 'transparent' }}
+          sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}
           onClick={userAccount?.data && handleLogOut}
           cursor={userAccount?.data ? 'pointer' : 'not-allowed'}
           display={userAccount?.data ? '1' : 'none'}
