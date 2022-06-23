@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 
 export const authenticatedRoute = <P extends object>(
-  WrappedComponent: () => JSX.Element,
+  WrappedComponent: () => JSX.Element | null,
 ) => {
   const AuthenticatedRoute = (props: P) => {
     const router = useRouter()

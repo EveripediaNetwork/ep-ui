@@ -86,6 +86,7 @@
     "uuid": "^8.3.2",
     "wagmi": "^0.4.3",
     "walletlink": "^2.5.0",
+    "web3-token": "^0.2.9",
     "yarn": "^1.22.18"
   },
   "devDependencies": {

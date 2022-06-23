@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import NotificationSettings from '@/components/Settings/NotificationSettings'
@@ -7,18 +7,25 @@ import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import AdvancedSettings from '@/components/Settings/AdvancedSettings'
+import { useWeb3Token } from '@/hooks/useWeb3Token'
+import SignTokenMessage from './SignTokenMessage'
 
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
+  const { token } = useWeb3Token()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  if (!token) return <SignTokenMessage />
 
   return (
-    <HStack bgColor="pageBg" alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
+    <HStack alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
       <Box
         display={{ base: 'none', lg: 'block' }}
         p={{ base: 8, lg: 12 }}
         borderRightWidth="1px"
-        borderColor="borderColor"
         pr={8}
       >
         <Text
