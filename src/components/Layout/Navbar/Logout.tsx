@@ -24,7 +24,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}
           onClick={userAccount?.data && handleLogOut}
           cursor={userAccount?.data ? 'pointer' : 'not-allowed'}
-          display={userAccount?.data ? '1' : 'none'}
+          display={userAccount?.data ? 'flex' : 'none'}
         >
           <Icon
             fontSize="4xl"
