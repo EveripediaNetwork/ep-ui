@@ -6,14 +6,16 @@ import {
   Icon,
   Button,
   HStack,
-  Box,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
 } from '@chakra-ui/react'
-import React, { Dispatch, SetStateAction } from 'react'
-import {
-  RiArrowLeftLine,
-  RiErrorWarningFill,
-  RiSettings4Line,
-} from 'react-icons/ri'
+import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import { RiErrorWarningFill, RiSettings4Line } from 'react-icons/ri'
 
 interface SignTokenMessageProps {
   error?: string
@@ -24,25 +26,29 @@ const SignTokenMessage = ({
   error,
   reopenSigningDialog,
 }: SignTokenMessageProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  useEffect(() => {
+    if (error) onOpen()
+  }, [error, onOpen])
+
   return (
-    <Center p={4} mt="15vh" mb="15vh">
-      <VStack>
-        <Icon as={RiSettings4Line} fontSize={42} />
-        <Heading textAlign="center">Authenticate to continue</Heading>
-        <Text pb={4} maxW="380px" textAlign="center">
-          To make changes to your profile, authenticate your wallet to continue.
-        </Text>
-        {error && (
-          <Box
-            bgColor="cardBg"
-            boxShadow="rgb(4 17 29 / 20%) 0px 0px 8px 0px"
-            flexDirection="column"
-            alignItems="stretch"
-            mt="10px"
-            maxW="md"
-            rounded="lg"
-            p={4}
-          >
+    <>
+      <Center p={4} mt="25vh" mb="25vh">
+        <VStack>
+          <Icon as={RiSettings4Line} fontSize={42} />
+          <Heading textAlign="center">Authenticate to continue</Heading>
+          <Text pb={4} maxW="380px" textAlign="center">
+            To make changes to your profile, authenticate your wallet to
+            continue.
+          </Text>
+        </VStack>
+      </Center>
+
+      <Modal isOpen={isOpen} isCentered onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
             <HStack justifyContent="space-between">
               <HStack spacing={4}>
                 <Center
@@ -55,17 +61,12 @@ const SignTokenMessage = ({
                 </Center>
                 <Heading fontSize="25px">Notice</Heading>
               </HStack>
-
-              <Button
-                variant="link"
-                leftIcon={<RiArrowLeftLine />}
-                onClick={() => reopenSigningDialog(true)}
-              >
-                Go back
-              </Button>
             </HStack>
-            <VStack mt={4}>
-              <Text pb={4}>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack pb={4} spacing={4}>
+              <Text>
                 Sign the prompt to make changes to your profile page. Rejecting
                 the prompt will prevent access to your profile settings page.
               </Text>
@@ -76,10 +77,10 @@ const SignTokenMessage = ({
                 Try again
               </Button>
             </VStack>
-          </Box>
-        )}
-      </VStack>
-    </Center>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 
