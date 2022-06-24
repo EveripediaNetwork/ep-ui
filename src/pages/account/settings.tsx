@@ -13,12 +13,13 @@ import SignTokenMessage from './SignTokenMessage'
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
-  const { token } = useWeb3Token()
+  const { token, reSignToken, error } = useWeb3Token()
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
-  if (!token) return <SignTokenMessage />
+  if (!token)
+    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 
   return (
     <HStack alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
