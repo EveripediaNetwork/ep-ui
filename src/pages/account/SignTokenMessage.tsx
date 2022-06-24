@@ -63,7 +63,7 @@ const SignTokenMessage = ({
               </HStack>
             </HStack>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton m={2} />
           <ModalBody>
             <VStack pb={4} spacing={4}>
               <Text>
