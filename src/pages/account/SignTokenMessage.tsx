@@ -4,15 +4,16 @@ import {
   VStack,
   Text,
   Icon,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   Button,
   HStack,
+  Box,
 } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
-import { RiSettings4Line } from 'react-icons/ri'
+import {
+  RiArrowLeftLine,
+  RiErrorWarningFill,
+  RiSettings4Line,
+} from 'react-icons/ri'
 
 interface SignTokenMessageProps {
   error?: string
@@ -24,50 +25,58 @@ const SignTokenMessage = ({
   reopenSigningDialog,
 }: SignTokenMessageProps) => {
   return (
-    <Center p={4} mt="20vh" mb="20vh">
+    <Center p={4} mt="15vh" mb="15vh">
       <VStack>
         <Icon as={RiSettings4Line} fontSize={42} />
-        <Heading>Authenticate to continue</Heading>
+        <Heading textAlign="center">Authenticate to continue</Heading>
         <Text pb={4} maxW="380px" textAlign="center">
           To make changes to your profile, authenticate your wallet to continue.
         </Text>
         {error && (
-          <Alert
-            bgColor="transparent"
-            borderWidth="1px"
+          <Box
+            bgColor="cardBg"
+            boxShadow="rgb(4 17 29 / 20%) 0px 0px 8px 0px"
             flexDirection="column"
             alignItems="stretch"
             mt="10px"
+            maxW="md"
             rounded="lg"
-            p={0}
-            status="error"
+            p={4}
           >
-            <HStack p={2} justifyContent="space-between">
-              <HStack ml={2}>
-                <AlertIcon />
-                <AlertTitle color="red.500" fontSize="lg">
-                  Authentication Failed
-                </AlertTitle>
+            <HStack justifyContent="space-between">
+              <HStack spacing={4}>
+                <Center
+                  bgColor="dimColor"
+                  w="35px"
+                  h="35px"
+                  borderRadius="full"
+                >
+                  <Icon as={RiErrorWarningFill} fontSize={25} />
+                </Center>
+                <Heading fontSize="25px">Notice</Heading>
               </HStack>
 
+              <Button
+                variant="link"
+                leftIcon={<RiArrowLeftLine />}
+                onClick={() => reopenSigningDialog(true)}
+              >
+                Go back
+              </Button>
+            </HStack>
+            <VStack mt={4}>
+              <Text pb={4}>
+                Sign the prompt to make changes to your profile page. Rejecting
+                the prompt will prevent access to your profile settings page.
+              </Text>
               <Button
                 variant="outline"
                 onClick={() => reopenSigningDialog(true)}
               >
                 Try again
               </Button>
-            </HStack>
-            <AlertDescription
-              textAlign="center"
-              maxW="md"
-              p={4}
-              borderTopWidth="1px"
-            >
-              You must authenticate your wallet to access your profile settings.
-              Rejecting the prompt will prevent access. Click on try again to
-              continue.
-            </AlertDescription>
-          </Alert>
+            </VStack>
+          </Box>
         )}
       </VStack>
     </Center>
