@@ -66,7 +66,7 @@ const SignTokenMessage = ({
           <ModalCloseButton m={2} />
           <ModalBody>
             <VStack pb={4} spacing={4}>
-              <Text>
+              <Text textAlign="center">
                 Sign the prompt to make changes to your profile page. Rejecting
                 the prompt will prevent access to your profile settings page.
               </Text>
