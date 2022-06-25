@@ -78,16 +78,12 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         <Divider />
         <Box mt={7}>
           <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
-            You are seeing the wikis that are tagged with 
-            <Link
-            mx={1}
-            href={`/tags/${tagId}`}
-            color="brand.500"
-            passHref
-            >
+            You are seeing the wikis that are tagged with
+            <Link mx={1} href={`/tags/${tagId}`} color="brand.500" passHref>
               {tagId}
             </Link>
-            . If you are interested in seeing other topics in common, you can click on other tags.
+            . If you are interested in seeing other topics in common, you can
+            click on other tags.
           </Text>
           {wikis.length > 0 ? (
             <>
