@@ -23,7 +23,7 @@ import { shortenText } from '@/utils/shortenText'
 const WikiPreviewCard = ({
   wiki,
   showLatestEditor = false,
-  lastUpdated
+  lastUpdated,
 }: {
   wiki: Wiki
   showLatestEditor?: boolean
@@ -33,10 +33,9 @@ const WikiPreviewCard = ({
   const [, username] = useENSData(wiki.user?.id || '')
   const getLatestEdited = () => {
     let lastEditedTime = null
-    if(updated){
+    if (updated) {
       lastEditedTime = getReadableDate(updated)
-    }
-    else if(lastUpdated){
+    } else if (lastUpdated) {
       lastEditedTime = getReadableDate(lastUpdated)
     }
     return lastEditedTime

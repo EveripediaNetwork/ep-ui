@@ -27,7 +27,7 @@ const UserEditedWikis = () => {
   })
 
   useEffect(() => {
-    if(!firstTimeFetch.current){
+    if (!firstTimeFetch.current) {
       if (address) {
         fetchMoreWikis(true)
         firstTimeFetch.current = true
@@ -45,11 +45,11 @@ const UserEditedWikis = () => {
   return (
     <Box pt="10" px={{ base: 10, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
-        <Center >
+        <Center>
           <EmptyState />
         </Center>
       )}
-      <Collected  wikis={wikis} />
+      <Collected wikis={wikis} />
       {loading || hasMore ? (
         <Center ref={editedWikisSentryRef} w="full" h="16">
           <Spinner size="xl" />

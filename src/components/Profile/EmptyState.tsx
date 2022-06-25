@@ -1,5 +1,5 @@
 import { ProfileEmptyState } from '@/components/Elements/icons/ProfileEmptyState'
-import { Button, Flex, Text, Box } from '@chakra-ui/react'
+import { Button, Flex, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 

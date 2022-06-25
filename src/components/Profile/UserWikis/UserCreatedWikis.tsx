@@ -26,7 +26,7 @@ const UserCreatedWikis = () => {
   })
 
   useEffect(() => {
-    if(!firstTimeFetch.current){
+    if (!firstTimeFetch.current) {
       if (address) {
         fetchMoreWikis(true)
         firstTimeFetch.current = true

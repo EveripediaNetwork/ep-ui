@@ -14,7 +14,11 @@ const Collected = ({ wikis }: { wikis: Activity[] }) => {
       spacingY={12}
     >
       {wikis.map((item, i) => (
-        <WikiPreviewCard lastUpdated={item.datetime} wiki={item.content[0]} key={i} />
+        <WikiPreviewCard
+          lastUpdated={item.datetime}
+          wiki={item.content[0]}
+          key={i}
+        />
       ))}
     </SimpleGrid>
   )
