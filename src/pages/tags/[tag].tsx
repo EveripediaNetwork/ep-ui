@@ -16,6 +16,7 @@ import { getRunningOperationPromises } from '@/services/categories'
 import { store } from '@/store/store'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getTagWikis } from '@/services/wikis'
+import Link from '@/components/Elements/Link/Link'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
@@ -70,22 +71,32 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         }}
       />
       <Box bgColor="pageBg" border="solid 1px transparent" pb={12}>
-        <Heading fontSize={40} textAlign="center" mt={4}>
-          {tagId}
+        <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
+          Wikis with this tag
         </Heading>
 
         <Divider />
-        <Box mt={16}>
-          <Heading fontSize={25} textAlign="center">
-            Wikis with this tag
-          </Heading>
+        <Box mt={7}>
+          <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
+            You are seeing the wikis that are tagged with 
+            <Link
+            mx={1}
+            href={`/tags/${tagId}`}
+            color="brand.500"
+            passHref
+            >
+              {tagId}
+            </Link>
+            . If you are interested in seeing other topics in common, you can click on other tags.
+          </Text>
           {wikis.length > 0 ? (
             <>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
                 width="min(90%, 1200px)"
+                mt={17}
                 mx="auto"
-                my={12}
+                mb={12}
                 gap={8}
               >
                 {wikisByTag.map((wiki, i) => (
