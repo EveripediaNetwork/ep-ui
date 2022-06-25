@@ -54,7 +54,7 @@ const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
         )}
         <Text color="linkColor" cursor="pointer" ml="auto">
           {navItem.subItem && <RiArrowRightSLine />}
-        </Text>  
+        </Text>
       </LinkBox>
     </StaticContent>
   )
