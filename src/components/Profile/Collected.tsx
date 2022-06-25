@@ -1,9 +1,9 @@
 import { SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
-import { Wiki } from '@/types/Wiki'
+import { Activity } from '@/types/ActivityDataType'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
 
-const Collected = ({ wikis }: { wikis: Wiki[] }) => {
+const Collected = ({ wikis }: { wikis: Activity[] }) => {
   return (
     <SimpleGrid
       maxW="1200px"
@@ -14,7 +14,7 @@ const Collected = ({ wikis }: { wikis: Wiki[] }) => {
       spacingY={12}
     >
       {wikis.map((item, i) => (
-        <WikiPreviewCard wiki={item} key={i} />
+        <WikiPreviewCard lastUpdated={item.datetime} wiki={item.content[0]} key={i} />
       ))}
     </SimpleGrid>
   )

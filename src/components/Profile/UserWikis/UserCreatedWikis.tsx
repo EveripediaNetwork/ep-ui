@@ -1,42 +1,41 @@
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { getUserCreatedWikis } from '@/services/wikis'
 import { Center, Text, Spinner, Box } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { EmptyState } from '@/components/Profile/EmptyState'
-import { Wiki } from '@/types/Wiki'
 import { useInfiniteData } from '@/utils/useInfiniteData'
 import { useTranslation } from 'react-i18next'
+import { Activity } from '@/types/ActivityDataType'
 import Collected from '../Collected'
 
 const UserCreatedWikis = () => {
   const router = useRouter()
   const address = router.query.profile as string
   const { t } = useTranslation()
-
+  const firstTimeFetch = useRef(false)
   const {
     data: wikis,
     fetcher: fetchMoreWikis,
     loading,
     hasMore,
-  } = useInfiniteData<Wiki>({
+  } = useInfiniteData<Activity>({
     initiator: getUserCreatedWikis,
     arg: { id: address },
     defaultLoading: true,
   })
 
-  console.log(wikis)
-  console.log(wikis)
-  console.log(wikis)
-
   useEffect(() => {
-    if (address) {
-      fetchMoreWikis(true)
+    if(!firstTimeFetch.current){
+      if (address) {
+        fetchMoreWikis(true)
+        firstTimeFetch.current = true
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
-  const [sentryRef] = useInfiniteScroll({
+  const [createdWikisSentryRef] = useInfiniteScroll({
     loading,
     hasNextPage: hasMore,
     onLoadMore: () => fetchMoreWikis(),
@@ -51,7 +50,7 @@ const UserCreatedWikis = () => {
       )}
       <Collected wikis={wikis} />
       {loading || hasMore ? (
-        <Center ref={sentryRef} w="full" h="16">
+        <Center ref={createdWikisSentryRef} w="full" h="16">
           <Spinner size="xl" />
         </Center>
       ) : (

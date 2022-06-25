@@ -23,12 +23,24 @@ import { shortenText } from '@/utils/shortenText'
 const WikiPreviewCard = ({
   wiki,
   showLatestEditor = false,
+  lastUpdated
 }: {
   wiki: Wiki
   showLatestEditor?: boolean
+  lastUpdated?: string
 }) => {
   const { updated, title, id } = wiki
   const [, username] = useENSData(wiki.user?.id || '')
+  const getLatestEdited = () => {
+    let lastEditedTime = null
+    if(updated){
+      lastEditedTime = getReadableDate(updated)
+    }
+    else if(lastUpdated){
+      lastEditedTime = getReadableDate(lastUpdated)
+    }
+    return lastEditedTime
+  }
   return (
     <LinkBox
       w="100%"
@@ -79,33 +91,11 @@ const WikiPreviewCard = ({
                 </HStack>
               )}
               <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
-                Last Edited {updated && getReadableDate(updated)}
+                Last Edited {getLatestEdited()}
               </Text>
             </HStack>
           </Box>
         </Flex>
-        {/* <Flex
-          flexDirection="column"
-          
-        >
-          <Text fontSize="md" opacity={0.7}>
-            {getWikiSummary(wiki, WikiSummarySize.Small)}
-          </Text>
-          <Spacer/>
-          <HStack flexWrap="wrap" mt={2} justify="space-between">
-            {showLatestEditor && (
-              <HStack fontSize="sm" py={2} color="brand.500">
-                <DisplayAvatar address={wiki.user?.id} />
-                <Link href={`/account/${wiki.user?.id}`}>
-                  {username || shortenAccount(wiki.user?.id || '')}
-                </Link>
-              </HStack>
-            )}
-            <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
-              Last Edited {updated && getReadableDate(updated)}
-            </Text>
-          </HStack>
-        </Flex> */}
       </Stack>
     </LinkBox>
   )
