@@ -127,9 +127,8 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
     <Flex
       direction="column"
       mt={{ base: '10', lg: '20' }}
-      gap={10}
-      px={{ base: 6, lg: 20 }}
-      align="center"
+      px={{ base: 3, md: 8 }}
+      textAlign="center"
       _dark={{
         bgImage: '/images/homepage-bg-dark.png',
       }}
