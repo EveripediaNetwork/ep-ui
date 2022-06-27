@@ -75,8 +75,6 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      console.log(`${isConnected} here it is`)
-
       if (chainDetails !== chainId && isConnected) {
         setOpenSwitch(true)
       }
