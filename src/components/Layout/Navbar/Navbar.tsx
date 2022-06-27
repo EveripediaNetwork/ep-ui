@@ -53,7 +53,7 @@ const Navbar = () => {
     useState<ProviderDataType | null>(null)
 
   const { data: accountData } = useAccount()
-  const {isConnected} = useConnect()
+  const { isConnected } = useConnect()
 
   const dispatch = useDispatch()
 
@@ -75,7 +75,7 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      console.log(isConnected +" here it is")
+      console.log(`${isConnected} here it is`)
 
       if (chainDetails !== chainId && isConnected) {
         setOpenSwitch(true)
@@ -106,7 +106,7 @@ const Navbar = () => {
       setDetectedProvider(provider as ProviderDataType)
       if (provider) getConnectedChain(provider)
     }
-    
+
     if (!detectedProvider) {
       getDetectedProvider()
     } else {
