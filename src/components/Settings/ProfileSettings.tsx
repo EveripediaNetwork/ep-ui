@@ -18,6 +18,7 @@ import {
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
+import { saveImage } from '@/utils/create-wiki'
 import ImageUpload from './ImageUpload'
 
 const ProfileSettings = () => {
@@ -104,6 +105,23 @@ const ProfileSettings = () => {
       return
     }
 
+    let profilePictureIPFS: string | null = null
+    let coverPictureIPFS: string | null = null
+
+    if (profilePicture) {
+      profilePictureIPFS = await saveImage({
+        id: 'profile-picture',
+        type: profilePicture,
+      })
+    }
+
+    if (coverPicture) {
+      coverPictureIPFS = await saveImage({
+        id: 'cover-picture',
+        type: coverPicture,
+      })
+    }
+
     // aggregate data from all states
     const data = {
       username: inputUsername.value,
@@ -114,8 +132,8 @@ const ProfileSettings = () => {
         twitter,
         website,
       },
-      profilePicture,
-      coverPicture,
+      profilePicture: profilePictureIPFS,
+      coverPicture: coverPictureIPFS,
     }
 
     // TODO: Send the data to backend
