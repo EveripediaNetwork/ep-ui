@@ -7,7 +7,6 @@ import {
   useGetPromotedWikisQuery,
 } from '@/services/wikis'
 import { Hero } from '@/components/Landing/Hero'
-// import { NotableDrops } from '@/components/Landing/NotableDrops'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import { store } from '@/store/store'
 import { NotableDrops } from '@/components/Landing/NotableDrops'

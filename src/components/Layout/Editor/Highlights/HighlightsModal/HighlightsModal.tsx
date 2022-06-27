@@ -18,6 +18,7 @@ import {
   Input,
   ButtonGroup,
   IconButton,
+  Tooltip,
 } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -256,43 +257,45 @@ const HighlightsModal = ({
               {socialMedia.length > 0 && (
                 <ButtonGroup spacing="7" pt="3">
                   {socialMedia.map(network => (
-                    <IconButton
-                      key={network.id}
-                      aria-label={network.label}
-                      bg="gray.100"
-                      color="black"
-                      _hover={{
-                        bg: 'gray.100',
-                      }}
-                      _dark={{
-                        color: 'white',
-                        bg: 'whiteAlpha.100',
-                      }}
-                      rounded="full"
-                      icon={
-                        <>
-                          {network.icon}{' '}
-                          <chakra.span
-                            pos="absolute"
-                            top="-1px"
-                            right="-1px"
-                            px={2}
-                            py={1}
-                            fontSize="xs"
-                            fontWeight="bold"
-                            lineHeight="none"
-                            color="red.100"
-                            transform="translate(50%,-50%)"
-                            bg="red.400"
-                            _hover={{ bg: 'red.500' }}
-                            rounded="full"
-                            onClick={() => removeSocialMedia(network.id)}
-                          >
-                            x
-                          </chakra.span>
-                        </>
-                      }
-                    />
+                    <Tooltip label={network.label}>
+                      <IconButton
+                        key={network.id}
+                        aria-label={network.label}
+                        bg="gray.100"
+                        color="black"
+                        _hover={{
+                          bg: 'gray.100',
+                        }}
+                        _dark={{
+                          color: 'white',
+                          bg: 'whiteAlpha.100',
+                        }}
+                        rounded="full"
+                        icon={
+                          <>
+                            {network.icon}{' '}
+                            <chakra.span
+                              pos="absolute"
+                              top="-1px"
+                              right="-1px"
+                              px={2}
+                              py={1}
+                              fontSize="xs"
+                              fontWeight="bold"
+                              lineHeight="none"
+                              color="red.100"
+                              transform="translate(50%,-50%)"
+                              bg="red.400"
+                              _hover={{ bg: 'red.500' }}
+                              rounded="full"
+                              onClick={() => removeSocialMedia(network.id)}
+                            >
+                              x
+                            </chakra.span>
+                          </>
+                        }
+                      />
+                    </Tooltip>
                   ))}
                 </ButtonGroup>
               )}
