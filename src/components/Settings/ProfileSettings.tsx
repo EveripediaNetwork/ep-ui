@@ -36,6 +36,7 @@ const ProfileSettings = () => {
   const [twitter, setTwitter] = React.useState<string>('')
   const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
   const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   const { data: accountData } = useAccount()
   const [, username] = useENSData(accountData?.address)
@@ -82,6 +83,7 @@ const ProfileSettings = () => {
   // form submission handler
   const handleProfileSettingsSave = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
 
     // Validate all fields
     setInputUsername({
@@ -117,7 +119,7 @@ const ProfileSettings = () => {
 
     if (coverPicture) {
       coverPictureIPFS = await saveImage({
-        id: 'cover-picture',
+        id: 'cover-image',
         type: coverPicture,
       })
     }
@@ -146,6 +148,7 @@ const ProfileSettings = () => {
       duration: 5000,
       isClosable: true,
     })
+    setIsLoading(false)
   }
 
   return (
@@ -297,7 +300,18 @@ const ProfileSettings = () => {
           </FormControl>
         </VStack>
       </Flex>
-      <Button type="submit" size="lg" width={8} mt={8}>
+      <Button
+        isLoading={isLoading}
+        loadingText="Submitting"
+        type="submit"
+        _disabled={{
+          _hover: {
+            backgroundColor: 'brand.400 !important',
+          },
+        }}
+        size="lg"
+        mt={8}
+      >
         Save
       </Button>
     </form>
