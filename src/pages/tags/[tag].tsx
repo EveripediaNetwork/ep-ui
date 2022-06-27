@@ -70,7 +70,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           description: `Wikis with ${tagId} tag`,
         }}
       />
-      <Box bgColor="pageBg" border="solid 1px transparent" pb={12}>
+      <Box bgColor="pageBg" mt={-2} border="solid 1px transparent" pb={12}>
         <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
           Wikis with this tag
         </Heading>
