@@ -54,7 +54,7 @@ const UserCreatedWikis = () => {
           <Spinner size="xl" />
         </Center>
       ) : (
-        <Center mt="10">
+        <Center m="10">
           <Text fontWeight="semibold">{t('seenItAll')}</Text>
         </Center>
       )}
