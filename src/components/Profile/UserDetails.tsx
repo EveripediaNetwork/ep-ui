@@ -53,7 +53,7 @@ export const UserDetails = (props: UserDetailsProps) => {
           description: `${username || 'Unnamed'} profile page`,
         }}
       />
-      <Flex align="center" justify="space-between" w="full" px="6">
+      <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
         <chakra.span flex="1" />
         <Flex
           direction={isSticky ? 'row' : 'column'}
