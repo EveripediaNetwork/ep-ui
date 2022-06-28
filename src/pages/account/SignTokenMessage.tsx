@@ -34,7 +34,7 @@ const SignTokenMessage = ({
 
   return (
     <>
-      <Center p={4} mt="25vh" mb="25vh">
+      <Center p={4} my="25vh">
         <VStack>
           <Icon as={RiSettings4Line} fontSize={42} />
           <Heading textAlign="center">Authenticate to continue</Heading>
