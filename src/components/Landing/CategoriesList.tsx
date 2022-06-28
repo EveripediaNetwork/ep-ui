@@ -43,7 +43,7 @@ const CategoriesList = () => {
         spacingX={6}
         spacingY={12}
         p={{ base: 6, lg: 0 }}
-        >
+      >
         {categories.map(category => (
           <LinkBox
             key={category.id}
