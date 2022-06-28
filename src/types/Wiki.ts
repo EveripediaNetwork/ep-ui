@@ -137,6 +137,7 @@ export interface Wiki {
   language: LanguagesISOEnum
   updated?: string
   created?: string
+  author: User
 }
 
 export type WikiPreview = Pick<

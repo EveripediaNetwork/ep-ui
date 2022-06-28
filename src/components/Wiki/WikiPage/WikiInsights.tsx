@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Flex, VStack } from '@chakra-ui/react'
+import { Box, Flex, VStack } from '@chakra-ui/react'
 import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
-import ReactStickyBox from 'react-sticky-box'
+import { useStickyBox } from 'react-sticky-box'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -21,6 +21,7 @@ interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
+  const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
@@ -45,25 +46,24 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
 
   return (
     <VStack
-      maxW="500px"
+      maxW="450px"
+      minW="min(380px, 90vw)"
       borderLeftWidth={{ base: 0, md: '1px' }}
-      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
       mx={{ base: 'auto', md: 0 }}
-      p={4}
+      p={{ base: 0, md: 4 }}
       pt={{ md: '24', base: '10' }}
     >
-      <ReactStickyBox offsetTop={100} offsetBottom={20}>
+      <Box as="aside" ref={stickyRef} w="100%">
         <VStack spacing={4}>
           <WikiDetails
             wikiTitle={wiki}
             categories={wiki.categories}
-            lastEdited={wiki.updated || wiki?.created || dateTime}
+            createdTime={wiki?.created}
             ipfsHash={ipfs || wiki.ipfs}
             txHash={wiki.transactionHash}
-            lastEditor={wiki.user?.id}
+            createdBy={wiki.author?.id}
             imgSrc={getWikiImageUrl(wiki)}
           />
-
           {!!coingeckoLink && (
             <>
               <ProfileSummary wiki={wiki} />
@@ -97,7 +97,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             )}
           </Flex>
         </VStack>
-      </ReactStickyBox>
+      </Box>
     </VStack>
   )
 }

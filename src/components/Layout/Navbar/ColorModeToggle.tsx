@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Icon,
-  MenuItem,
-  Switch,
-  useColorMode,
-  Divider,
-} from '@chakra-ui/react'
+import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 
@@ -19,7 +12,6 @@ export const ColorModeToggle = ({
 
   return (
     <>
-      {!isInMobileMenu && <Divider />}
       <MenuItem
         minH="48px"
         px={isInMobileMenu ? 0 : 3}

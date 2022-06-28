@@ -11,9 +11,9 @@ import {
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line } from 'react-icons/ri'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { useDispatch } from 'react-redux'
-
+import config from '@/config'
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
 import { Logo } from '@/components/Elements/'
@@ -32,6 +32,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
+import { LogOutBttn } from './Logout'
 
 const Navbar = () => {
   const router = useRouter()
@@ -52,10 +53,14 @@ const Navbar = () => {
     useState<ProviderDataType | null>(null)
 
   const { data: accountData } = useAccount()
+  const { isConnected } = useConnect()
 
   const dispatch = useDispatch()
 
-  const { chainId, chainName, rpcUrls } = networkMap.MUMBAI_TESTNET
+  const { chainId, chainName, rpcUrls } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
 
   const handleWalletIconAction = () => {
     logEvent({
@@ -70,11 +75,11 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      if (chainDetails !== chainId) {
+      if (chainDetails !== chainId && isConnected) {
         setOpenSwitch(true)
       }
     },
-    [chainId],
+    [chainId, isConnected],
   )
 
   useEffect(() => {
@@ -103,6 +108,7 @@ const Navbar = () => {
     if (!detectedProvider) {
       getDetectedProvider()
     } else {
+      getConnectedChain(detectedProvider)
       detectedProvider.on('chainChanged', handleChainChanged)
     }
 
@@ -111,7 +117,7 @@ const Navbar = () => {
         detectedProvider.removeListener('chainChanged', handleChainChanged)
       }
     }
-  }, [detectedProvider, handleChainChanged, dispatch])
+  }, [detectedProvider, handleChainChanged, dispatch, isConnected])
 
   const handleSwitchNetwork = async () => {
     try {
@@ -205,6 +211,7 @@ const Navbar = () => {
                   >
                     <ProfileLink />
                     <ColorModeToggle isInMobileMenu={false} />
+                    <LogOutBttn isInMobileMenu={false} />
                   </NavMenu>
                 </Box>
                 <Icon

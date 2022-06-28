@@ -39,7 +39,7 @@ const WikiCommitMessage = ({
             p={4}
             spacing={2}
           >
-            <Text fontSize="sm" color="linkColor">
+            <Text fontSize="sm" fontWeight="bold" color="linkColor">
               Reason for edit:
             </Text>
             <Text fontSize="xs" color="linkColor">
