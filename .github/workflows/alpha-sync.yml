@@ -24,12 +24,12 @@ jobs:
           destination_branch: 'alpha'
           pr_title: '[Automated] Merge ${{ github.ref_name }} into Alpha'
           pr_body: 'Automated Pull Request'
+          pr_label: 'auto-merge'
 
-      # https://github.com/marketplace/actions/enable-pull-request-automerge
+      # https://github.com/marketplace/actions/pull-request-merge
       - name: enable automerge
-        if: steps.open-pr.outputs.pr_number != ''
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: sudo-bot/action-pull-request-merge@v1.1.1
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          pull-request-number: ${{ steps.open-pr.outputs.pr_number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.open-pr.outputs.pr_number }}
           merge-method: merge
