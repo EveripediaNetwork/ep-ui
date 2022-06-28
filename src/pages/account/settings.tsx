@@ -22,10 +22,10 @@ const Settings = () => {
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 
   return (
-    <HStack alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
+    <HStack alignItems="stretch" pb={8} my={-8}>
       <Box
         display={{ base: 'none', lg: 'block' }}
-        p={12)
+        p={12}
         borderRightWidth="1px"
         pr={8}
       >
@@ -59,6 +59,7 @@ const Settings = () => {
           />
         </VStack>
       </Box>
+
       <VStack
         p={{ base: 4, lg: 12 }}
         pt={{ base: 14, lg: 24 }}
