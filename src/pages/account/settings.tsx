@@ -25,7 +25,7 @@ const Settings = () => {
     <HStack alignItems="stretch" my={8} mt={-8} mb={-8} pb={8}>
       <Box
         display={{ base: 'none', lg: 'block' }}
-        p={{ base: 8, lg: 12 }}
+        p={12)
         borderRightWidth="1px"
         pr={8}
       >
