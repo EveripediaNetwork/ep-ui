@@ -7,7 +7,7 @@ on:
 
 jobs:
   main:
-    name: Create PR Release to Alphas
+    name: Create PR Release to Alpha
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
