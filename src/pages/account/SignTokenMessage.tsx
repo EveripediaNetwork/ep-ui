@@ -53,8 +53,7 @@ const SignTokenMessage = ({
               <HStack spacing={4}>
                 <Center
                   bgColor="dimColor"
-                  w="35px"
-                  h="35px"
+                  boxSize="35px"
                   borderRadius="full"
                 >
                   <Icon as={RiErrorWarningFill} fontSize={25} />
