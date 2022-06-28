@@ -11,10 +11,9 @@ import {
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line } from 'react-icons/ri'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import config from '@/config'
-
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
 import { Logo } from '@/components/Elements/'
@@ -54,6 +53,7 @@ const Navbar = () => {
     useState<ProviderDataType | null>(null)
 
   const { data: accountData } = useAccount()
+  const { isConnected } = useConnect()
 
   const dispatch = useDispatch()
 
@@ -75,11 +75,11 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      if (chainDetails !== chainId) {
+      if (chainDetails !== chainId && isConnected) {
         setOpenSwitch(true)
       }
     },
-    [chainId],
+    [chainId, isConnected],
   )
 
   useEffect(() => {
@@ -108,6 +108,7 @@ const Navbar = () => {
     if (!detectedProvider) {
       getDetectedProvider()
     } else {
+      getConnectedChain(detectedProvider)
       detectedProvider.on('chainChanged', handleChainChanged)
     }
 
@@ -116,7 +117,7 @@ const Navbar = () => {
         detectedProvider.removeListener('chainChanged', handleChainChanged)
       }
     }
-  }, [detectedProvider, handleChainChanged, dispatch])
+  }, [detectedProvider, handleChainChanged, dispatch, isConnected])
 
   const handleSwitchNetwork = async () => {
     try {
