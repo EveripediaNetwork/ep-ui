@@ -610,7 +610,7 @@ const CreateWikiContent = () => {
         gap={8}
         px={{ base: 4, xl: 8 }}
       >
-        <Box h="full" w="full">
+        <Box h="full" w="full" position="sticky" top="90px">
           <Skeleton isLoaded={!isLoadingWiki} w="full" h="75vh">
             <Editor markdown={wiki.content} onChange={handleOnEditorChanges} />
           </Skeleton>
