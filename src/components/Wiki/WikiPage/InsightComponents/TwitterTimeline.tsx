@@ -31,7 +31,6 @@ const TwitterTimeline = ({ url }: { url: string }) => {
             <TwitterTimelineEmbed
               options={{ height: 400 }}
               theme={colorMode}
-              transparent
               sourceType="url"
               noScrollbar
               borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
