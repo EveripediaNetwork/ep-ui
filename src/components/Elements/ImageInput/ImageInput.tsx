@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
-import { Button, Flex, Input, Image, useToast } from '@chakra-ui/react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
+import { Flex, Image, Input, useToast } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
+import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 
 type ImageInputType = {
   setHideDropzone?: (hide: boolean) => void
@@ -17,15 +18,33 @@ const ImageInput = ({
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
   const toast = useToast()
+  const { t } = useTranslation()
+
+  const removeImage = useCallback(() => {
+    setImageSrc(undefined)
+    if (deleteImage && setHideDropzone) {
+      setHideDropzone(false)
+      deleteImage()
+    }
+  }, [deleteImage, setHideDropzone])
 
   const handleOnImageInputChanges = async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
+    if (!event.target.value.match(/^(http|https):\/\//)) {
+      setImageSrc(undefined)
+      toast({
+        title: 'Paste a valid image URL',
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
     setImageSrc(event.target.value)
-
     if (setHideDropzone) {
       setHideDropzone(true)
     }
+
     try {
       const response = await fetch(
         `https://images.weserv.nl/?url=${event.target.value}`,
@@ -35,6 +54,7 @@ const ImageInput = ({
         },
       )
       if (response.status !== 200) {
+        removeImage()
         toast({
           title: 'Image could not be fetched. Ensure you have the right link',
           status: 'error',
@@ -53,6 +73,7 @@ const ImageInput = ({
         duration: 2000,
       })
     } catch (error) {
+      removeImage()
       toast({
         title: 'Image could not be fetched. Ensure you have the right link',
         status: 'error',
@@ -60,22 +81,17 @@ const ImageInput = ({
       })
     }
   }
-  const { t } = useTranslation()
+
   return (
     <Flex
       mt={imgSrc && showFetchedImage ? 0 : -20}
-      mb={7}
+      mb={imgSrc && showFetchedImage ? 0 : 7}
       direction="column"
       justifyContent="center"
       alignItems="center"
     >
       {imgSrc && showFetchedImage ? (
-        <Flex
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          gap={5}
-        >
+        <EditorMainImageWrapper removeImage={removeImage}>
           <Image
             objectFit="cover"
             h="255px"
@@ -85,26 +101,12 @@ const ImageInput = ({
             src={imgSrc}
             alt="Input"
           />
-          <Button
-            w="25%"
-            shadow="md"
-            bg="red.400"
-            onClick={() => {
-              setImageSrc(undefined)
-              if (deleteImage && setHideDropzone) {
-                setHideDropzone(false)
-                deleteImage()
-              }
-            }}
-          >
-            Clear
-          </Button>
-        </Flex>
+        </EditorMainImageWrapper>
       ) : (
         <Input
           w="90%"
           textAlign="center"
-          value={imgSrc}
+          value=""
           onChange={handleOnImageInputChanges}
           placeholder={`${t('pasteMainImgLabel')}`}
         />
