@@ -3,22 +3,13 @@ import {
   Flex,
   Text,
   useDisclosure,
-  Badge,
   Button,
-  Table,
-  Tbody,
-  Td,
-  Tr,
   Box,
   HStack,
 } from '@chakra-ui/react'
-import { RiFolder3Line, RiSurveyLine, RiFilmLine } from 'react-icons/ri'
+import { RiFilmLine } from 'react-icons/ri'
 
 import { ImageInput, Dropzone } from '@/components/Elements'
-import { useAppSelector } from '@/store/hook'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { BaseCategory, Wiki, CommonMetaIds } from '@/types/Wiki'
-import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { saveImage } from '@/utils/create-wiki'
 import HighlightsModal from './HighlightsModal/HighlightsModal'
@@ -38,7 +29,6 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     onOpen: mediaOpen,
     onClose: mediaClose,
   } = useDisclosure()
-  const currentWiki = useAppSelector(state => state.wiki)
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
 
@@ -67,7 +57,6 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     showFetchedImage: true,
     textType: 'main image',
   }
-  const { t } = useTranslation()
   return (
     <Flex
       direction="column"
@@ -89,14 +78,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           showFetchedImage
         />
       )}
-      <HStack
-        // flexDirection={{ base: 'row', '2xl': 'column' }}
-        borderWidth="1px"
-        justify="space-between"
-        // alignItems={{ base: 'center', '2xl': 'unset' }}
-        gap={2}
-        p={2}
-      >
+      <HStack borderWidth="1px" justify="space-between" gap={2} p={2}>
         <Flex ml={2} gap={2} color="linkColor">
           <Box mt={1}>
             <RiFilmLine size="16" />
@@ -108,48 +90,14 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
         </Button>
       </HStack>
       <Flex direction="column" justifyContent="center" alignItems="center">
-        <Table size="sm" variant="simple" mb={2}>
-          <Tbody borderWidth="1px" overflow="hidden">
-            <Tr>
-              <Td color="linkColor" display="flex" gap={2}>
-                <RiFolder3Line /> <Text>{`${t('pageTypeLabel')}`}</Text>
-              </Td>
-              <Td>
-                {
-                  getWikiMetadataById(
-                    currentWiki as Wiki,
-                    CommonMetaIds.PAGE_TYPE,
-                  )?.value
-                }
-              </Td>
-            </Tr>
-            <Tr>
-              <Td color="linkColor" display="flex" gap={2}>
-                <RiSurveyLine /> <Text>{`${t('categoryTypeLabel')}`}</Text>
-              </Td>
-              <Td borderColor="inherit">
-                {currentWiki.categories?.map((c: BaseCategory, i) => (
-                  <Badge variant="outline" m={0} key={i}>
-                    {c.title}
-                  </Badge>
-                ))}
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
         <Flex
           w="full"
           direction="row"
           justifyContent="center"
           alignItems="center"
         >
-          <Button
-            size="sm"
-            variant="outline"
-            color="linkColor"
-            onClick={onOpen}
-          >
-            Edit
+          <Button w="full" variant="outline" color="linkColor" onClick={onOpen}>
+            Edit Wiki Details
           </Button>
         </Flex>
       </Flex>

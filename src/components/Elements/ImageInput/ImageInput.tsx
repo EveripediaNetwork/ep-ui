@@ -98,6 +98,7 @@ const ImageInput = ({
             w="full"
             borderRadius={4}
             overflow="hidden"
+            bgColor="dimColor"
             src={imgSrc}
             alt="Input"
           />
