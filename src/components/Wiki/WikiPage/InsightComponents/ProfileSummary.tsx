@@ -1,6 +1,5 @@
 import React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
-import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import {
   Center,
   HStack,
@@ -9,7 +8,6 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { sampleProfileSummary } from '@/data/WikiInsightsData'
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { SOCIAL_MEDIA_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
 
@@ -33,9 +31,9 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
         gap={2}
         title="Profile Summary"
       >
-        {sampleProfileSummary.map((item, index) => (
+        {/* {sampleProfileSummary.map((item, index) => (
           <AccordionWidget key={index} {...item} />
-        ))}
+        ))} */}
 
         {socialMetaData.length !== 0 && (
           <HStack
@@ -58,7 +56,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
                     li => li.id === social.id,
                   )?.icon
                   return (
-                    <Link target="_blank" href={`//${social.value}`} key={i}>
+                    <Link target="_blank" href={social.value} key={i}>
                       <IconButton
                         key={i}
                         aria-label="open social"
