@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Flex,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
@@ -108,62 +115,83 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
-        <Box
-          display="flex"
-          padding="10px"
-          border="1px"
-          borderColor="borderColor"
-          borderStyle="dashed"
-          borderRadius="5px"
-          justifyContent="center"
-          alignItems="center"
-          maxH="345px"
-          minH={!showFetchedImage ? '165px' : '30vh'}
-          _hover={{
-            boxShadow: 'md',
-            borderColor: 'brand.400',
-          }}
-          {...getRootProps()}
-        >
-          <input disabled={!accountData?.address} {...getInputProps()} />
-          {isDragActive ? (
-            <Text textAlign="center">Drop the files here ...</Text>
-          ) : (
-            <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
-              <Text textAlign="center" opacity="0.5">
-                Drag and drop a <b>{textType}</b>, or click to select.
-              </Text>
-              <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                (10mb max)
-              </Text>
-            </Box>
-          )}
-        </Box>
+        <AspectRatio ratio={4 / 3}>
+          <Box
+            display="flex"
+            padding="10px"
+            border="1px"
+            borderColor="borderColor"
+            borderStyle="dashed"
+            borderRadius="5px"
+            justifyContent="center"
+            alignItems="center"
+            h="full"
+            _hover={{
+              boxShadow: 'md',
+              borderColor: 'brand.400',
+            }}
+            {...getRootProps()}
+          >
+            <input disabled={!accountData?.address} {...getInputProps()} />
+            {isDragActive ? (
+              <Text textAlign="center">Drop the files here ...</Text>
+            ) : (
+              <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
+                <Text textAlign="center" opacity="0.5">
+                  Drag and drop a <b>{textType}</b>, or click to select.
+                </Text>
+                <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                  (10mb max)
+                </Text>
+              </Box>
+            )}
+          </Box>
+        </AspectRatio>
       ) : (
         <>
           {showFetchedImage && (
-            <Flex direction="column" w="full" h="full" justify="center">
+            <Flex
+              pos="relative"
+              direction="column"
+              w="full"
+              h="full"
+              justify="center"
+            >
               {paths.map(path => (
-                <Image
-                  mx="auto"
-                  priority
-                  h="255px"
-                  w="full"
-                  borderRadius={4}
-                  overflow="hidden"
-                  key={path}
-                  src={path}
-                  alt="highlight"
-                />
+                <AspectRatio ratio={4 / 3}>
+                  <Image
+                    mx="auto"
+                    priority
+                    h="full"
+                    w="full"
+                    borderRadius={4}
+                    overflow="hidden"
+                    key={path}
+                    src={path}
+                    alt="highlight"
+                  />
+                </AspectRatio>
               ))}
               <Button
-                w="25%"
                 fontWeight="bold"
+                pos="absolute"
+                top="0"
+                right="0"
+                transform="translate(50%, -50%)"
+                borderRadius="full"
                 fontSize="20px"
-                m="auto"
-                mt="5px"
-                shadow="md"
+                p={0}
+                size="xs"
+                boxSize={7}
+                borderWidth="3px"
+                borderColor="chakra-body-bg"
                 bg="red.400"
+                sx={{
+                  '&:hover, &:focus, &:active': {
+                    bg: 'red.500',
+                    color: 'white',
+                  },
+                }}
                 onClick={() => {
                   setPaths([])
                   if (setHideImageInput && deleteImage) {

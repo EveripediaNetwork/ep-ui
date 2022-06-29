@@ -10,7 +10,7 @@ import {
   Td,
   Tr,
   Box,
-  VStack,
+  HStack,
 } from '@chakra-ui/react'
 import { RiFolder3Line, RiSurveyLine, RiFilmLine } from 'react-icons/ri'
 
@@ -71,7 +71,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   return (
     <Flex
       direction="column"
-      gap={5}
+      gap={{ base: 3, '2xl': 5 }}
       w={{ base: 'full', xl: '400px' }}
       border="1px"
       borderColor="borderColor"
@@ -89,17 +89,24 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           showFetchedImage
         />
       )}
-      <VStack align="start" spacing={2}>
-        <Flex gap={2} color="linkColor">
+      <HStack
+        // flexDirection={{ base: 'row', '2xl': 'column' }}
+        borderWidth="1px"
+        justify="space-between"
+        // alignItems={{ base: 'center', '2xl': 'unset' }}
+        gap={2}
+        p={2}
+      >
+        <Flex ml={2} gap={2} color="linkColor">
           <Box mt={1}>
             <RiFilmLine size="16" />
           </Box>
           <Text>Media</Text>
         </Flex>
-        <Button onClick={mediaOpen} mt="2" size="sm">
-          <Text fontSize="sm">Add new image or video</Text>
+        <Button maxW="190px" onClick={mediaOpen} px={3} size="sm">
+          <Text fontSize="sm">Add images/videos</Text>
         </Button>
-      </VStack>
+      </HStack>
       <Flex direction="column" justifyContent="center" alignItems="center">
         <Table size="sm" variant="simple" mb={2}>
           <Tbody borderWidth="1px" overflow="hidden">
@@ -136,7 +143,12 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
           justifyContent="center"
           alignItems="center"
         >
-          <Button variant="outline" color="linkColor" onClick={onOpen}>
+          <Button
+            size="sm"
+            variant="outline"
+            color="linkColor"
+            onClick={onOpen}
+          >
             Edit
           </Button>
         </Flex>

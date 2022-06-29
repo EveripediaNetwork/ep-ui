@@ -64,7 +64,7 @@ const ImageInput = ({
   return (
     <Flex
       mt={imgSrc && showFetchedImage ? 0 : -20}
-      mb={5}
+      mb={7}
       direction="column"
       justifyContent="center"
       alignItems="center"
