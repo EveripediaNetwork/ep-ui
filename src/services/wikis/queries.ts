@@ -156,6 +156,80 @@ export const GET_USER_WIKIS_BY_ID = gql`
   }
 `
 
+export const GET_USER_CREATED_WIKIS_BY_ID = gql`
+  query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
+    userById(id: $id) {
+      wikisCreated(offset: $offset, limit: $limit) {
+        datetime
+        content {
+          id
+          ipfs
+          title
+          created
+          updated
+          summary
+          content
+          categories {
+            id
+            title
+          }
+          tags {
+            id
+          }
+          images {
+            id
+            type
+          }
+          metadata {
+            id
+            value
+          }
+          user {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
+export const GET_USER_EDITED_WIKIS_BY_ID = gql`
+  query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
+    userById(id: $id) {
+      wikisEdited(offset: $offset, limit: $limit) {
+        datetime
+        content {
+          id
+          ipfs
+          title
+          created
+          updated
+          summary
+          content
+          categories {
+            id
+            title
+          }
+          tags {
+            id
+          }
+          images {
+            id
+            type
+          }
+          metadata {
+            id
+            value
+          }
+          user {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
 export const GET_WIKIS_BY_CATEGORY = gql`
   query GetUserWikisByCategory($category: String!, $offset: Int, $limit: Int) {
     wikisByCategory(category: $category, offset: $offset, limit: $limit) {

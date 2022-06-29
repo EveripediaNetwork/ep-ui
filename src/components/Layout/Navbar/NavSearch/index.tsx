@@ -69,10 +69,7 @@ export const NavSearch = (props: NavSearchProps) => {
   useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
-    if (
-      (event.key.toLowerCase() === 'k' && event[hotkey]) ||
-      event.key === '/'
-    ) {
+    if (event.key.toLowerCase() === 'k' && event[hotkey]) {
       event.preventDefault()
       inputRef.current?.focus()
     }

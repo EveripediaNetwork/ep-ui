@@ -29,7 +29,7 @@ export const CustomTab = React.forwardRef<
           bottom: 0,
           left: 0,
           content: "''",
-          h: 1,
+          h: '2px',
           w: 'full',
           pos: 'absolute',
           borderTopRadius: 'base',

@@ -90,6 +90,8 @@ export const GET_ACTIVITIES_BY_ID = gql`
           id
         }
         summary
+        created
+        updated
         user {
           id
         }
