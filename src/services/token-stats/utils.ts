@@ -5,7 +5,7 @@ export const getTokenFromURI = (coingeckoUrl: string) =>
   coingeckoUrl
     .split('/')
     .reverse()
-    .find(c => /\w+/.test(c))
+    .find(c => /\w+/.test(c)) as string
 
 export const fetchTokenStats = async (coingeckoUrl?: string) => {
   if (!coingeckoUrl) return undefined
