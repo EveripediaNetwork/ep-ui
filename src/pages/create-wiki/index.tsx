@@ -463,7 +463,7 @@ const CreateWikiContent = () => {
   if (!mounted) return null
 
   return (
-    <Box scrollBehavior="auto" maxW="1900px" mx="auto" mb={8}>
+    <Box scrollBehavior="auto" maxW="1900px" mx="auto">
       <HStack
         boxShadow="sm"
         borderRadius={4}
@@ -607,7 +607,7 @@ const CreateWikiContent = () => {
         flexDirection={{ base: 'column', xl: 'row' }}
         justify="center"
         align="stretch"
-        gap={8}
+        gap={4}
         px={{ base: 4, xl: 8 }}
       >
         <Box h="full" w="full" position={{ xl: 'sticky' }} top="90px">

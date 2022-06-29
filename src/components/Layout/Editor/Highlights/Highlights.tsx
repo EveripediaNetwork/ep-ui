@@ -60,7 +60,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   return (
     <Flex
       direction="column"
-      gap={{ base: 3, '2xl': 5 }}
+      gap={4}
       w={{ base: 'full', xl: '400px' }}
       border="1px"
       borderColor="borderColor"
