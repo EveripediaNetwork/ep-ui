@@ -8,15 +8,30 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import AdvancedSettings from '@/components/Settings/AdvancedSettings'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
+import { useSettingsData } from '@/services/settings/utils'
+import { useAccount } from 'wagmi'
+import { settingsApiClient } from '@/services/settings'
 import SignTokenMessage from './SignTokenMessage'
 
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
+  const { data: accountData } = useAccount()
+  const { setAccount, settingsData } = useSettingsData()
+
+  useEffect(() => {
+    if (accountData?.address && token) {
+      settingsApiClient.setHeader('authorization', token)
+      setAccount('0x5456afea3aa035088fe1f9aa36509b320360a89e')
+    }
+  }, [accountData?.address, setAccount, token])
+
+  console.log(settingsData)
+
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
-  if (!mounted) return null
+  if (!mounted) return <></>
 
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />

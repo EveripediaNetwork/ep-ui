@@ -13,6 +13,7 @@ import { categoriesApi } from '@/services/categories'
 import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
+import { settingsApi } from '@/services/settings'
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [navSearchApi.reducerPath]: navSearchApi.reducer,
     [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
+    [settingsApi.reducerPath]: settingsApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })

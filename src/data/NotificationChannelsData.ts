@@ -1,6 +1,7 @@
-import { NotificationChannelDataType } from '@/types/NotificationChannelDataType'
-
-export const NotificationChannelsData: NotificationChannelDataType = [
+export const NotificationChannelsData: {
+  title: string
+  description: string
+}[] = [
   {
     title: 'Everipedia NewsLetter',
     description: 'Occasional updates from the Everipedia team',
