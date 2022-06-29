@@ -19,6 +19,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import shortenAccount from '@/utils/shortenAccount'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -92,7 +93,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               fontWeight="semibold"
               letterSpacing="tighter"
             >
-              {username || 'Unnamed'}
+              {username || shortenAccount(address)}
             </chakra.span>
           </Skeleton>
         </Flex>
