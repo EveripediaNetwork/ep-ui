@@ -48,10 +48,10 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <NextSeo
-        title={`${username || 'Unnamed'} Profile Page - Everipedia`}
+        title={`${username || address} Profile Page - Everipedia`}
         openGraph={{
-          title: `${username || 'Unnamed'} Profile Page - Everipedia`,
-          description: `${username || 'Unnamed'} profile page`,
+          title: `${username || address} Profile Page - Everipedia`,
+          description: `${username || address} profile page`,
         }}
       />
       <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
@@ -125,11 +125,6 @@ export const UserDetails = (props: UserDetailsProps) => {
         </chakra.span>
       </Flex>
 
-      {!isSticky && (
-        <Flex gap="3" direction="column" px="6" w="full" align="center">
-          <chakra.span color="gray.500">Joined November 2020</chakra.span>
-        </Flex>
-      )}
     </>
   )
 }
