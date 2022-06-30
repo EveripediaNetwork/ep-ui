@@ -23,7 +23,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
-import { RiFolder3Line, RiSurveyLine } from 'react-icons/ri'
+import { RiSurveyLine } from 'react-icons/ri'
 import { GiTwoCoins } from 'react-icons/gi'
 import {
   AiOutlineFacebook,
@@ -32,7 +32,7 @@ import {
   AiOutlineLinkedin,
   AiOutlineYoutube,
 } from 'react-icons/ai'
-import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
+import { CommonMetaIds, MData } from '@/types/Wiki'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 import { slugifyText } from '@/utils/slugify'
 
@@ -113,14 +113,6 @@ const HighlightsModal = ({
     updateSocialMedia(currentSocialMedia, currentSocialLink)
   }
 
-  const getWikiAttribute = (attr: string) => {
-    const attribute = currentWiki.metadata.find(att => att.id === attr)?.value
-    return {
-      isDefined: !!attribute,
-      value: attribute,
-    }
-  }
-
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
@@ -138,38 +130,6 @@ const HighlightsModal = ({
         </chakra.div>
         <ModalBody>
           <Stack spacing="4">
-            {/* PAGE TYPE SELECTION  */}
-            <Flex gap="2.5" align="center" mt={1}>
-              <RiFolder3Line /> <Text whiteSpace="nowrap">Page Type</Text>
-              <Select
-                maxW="52"
-                ml="auto"
-                onChange={event => {
-                  if (event.target.value)
-                    dispatch({
-                      type: 'wiki/updateMetadata',
-                      payload: {
-                        id: CommonMetaIds.PAGE_TYPE,
-                        value: event.target.value,
-                      },
-                    })
-                }}
-                value={String(
-                  currentWiki.metadata.find(
-                    (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
-                  )?.value,
-                )}
-                placeholder={
-                  getWikiAttribute('page-type').isDefined
-                    ? ''
-                    : 'Select Page Type'
-                }
-              >
-                {Object.values(PageTypeName).map(o => (
-                  <option key={o}>{o}</option>
-                ))}
-              </Select>
-            </Flex>
             {/* CATEGORY SELECTION */}
             <Flex gap="2.5" align="center">
               <RiSurveyLine />
