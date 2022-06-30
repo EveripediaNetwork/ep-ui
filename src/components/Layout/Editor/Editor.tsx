@@ -98,10 +98,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
 
   // when there is a change in the editor, update the markdown
   const handleOnEditorChange = useCallback(() => {
-    const currentMd = editorRef.current
-      ?.getInstance()
-      .getMarkdown()
-      .toString() as string
+    const currentMd = editorRef.current?.getInstance().getMarkdown().toString()
+
     if (markdown !== currentMd) {
       if (
         markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
@@ -113,7 +111,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
         currentMd !== 'Write\nPreview\n\nMarkdown\nWYSIWYG'
       ) {
         onChange(currentMd)
-      } else if (currentMd.trim() === '') {
+      } else if (currentMd?.trim() === '') {
         onChange(' ')
       }
     }
