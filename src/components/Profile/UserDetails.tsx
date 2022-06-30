@@ -124,7 +124,6 @@ export const UserDetails = (props: UserDetailsProps) => {
           </ButtonGroup>
         </chakra.span>
       </Flex>
-
     </>
   )
 }
