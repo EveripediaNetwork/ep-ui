@@ -79,6 +79,7 @@ const HighlightsModal = ({
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
   const [currentSocialMedia, setCurrentSocialMedia] = useState<string>()
+
   const [currentSocialLink, setCurrentSocialLink] = useState<string>()
 
   const socialMedia = SOCIAL_MEDIA_OPTIONS.filter(
@@ -120,6 +121,18 @@ const HighlightsModal = ({
       value: attribute,
     }
   }
+
+  const atttributeExists = (attr?: string) =>
+    attr ? getWikiAttribute(attr).isDefined : false
+
+  React.useEffect(() => {
+    if (currentSocialMedia && atttributeExists(currentSocialMedia)) {
+      setCurrentSocialLink(getWikiAttribute(currentSocialMedia).value)
+    } else {
+      setCurrentSocialLink('')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSocialMedia])
 
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
@@ -230,13 +243,12 @@ const HighlightsModal = ({
                   minW="25"
                   value={currentSocialMedia}
                   onChange={event => {
-                    setCurrentSocialMedia(event.target.value)
+                    const attr = event.target.value
+                    setCurrentSocialMedia(attr)
                   }}
                   placeholder="Select Network"
                 >
-                  {SOCIAL_MEDIA_OPTIONS.filter(
-                    med => !socialMedia.includes(med),
-                  ).map(med => (
+                  {SOCIAL_MEDIA_OPTIONS.map(med => (
                     <chakra.option key={med.id} value={med.id}>
                       {med.label}
                     </chakra.option>
@@ -251,7 +263,7 @@ const HighlightsModal = ({
                   type="url"
                 />
                 <Button colorScheme="blue" mx="auto" onClick={addSocialMedia}>
-                  Add
+                  {atttributeExists(currentSocialMedia) ? 'Update' : 'Add'}
                 </Button>
               </Flex>
               {socialMedia.length > 0 && (
@@ -260,6 +272,7 @@ const HighlightsModal = ({
                     <Tooltip label={network.label}>
                       <IconButton
                         key={network.id}
+                        onClick={() => setCurrentSocialMedia(network.id)}
                         aria-label={network.label}
                         bg="gray.100"
                         color="black"
