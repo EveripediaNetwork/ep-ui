@@ -189,14 +189,14 @@ const CreateWikiContent = () => {
       return false
     }
 
-    if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
-      toast({
-        title: 'Add a page type to continue',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
+    // if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
+    //   toast({
+    //     title: 'Add a page type to continue',
+    //     status: 'error',
+    //     duration: 3000,
+    //   })
+    //   return false
+    // }
 
     if (!isVerifiedContentLinks(wiki.content)) {
       toast({
