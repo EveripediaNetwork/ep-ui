@@ -18,7 +18,6 @@ import {
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
-import { saveImage } from '@/utils/create-wiki'
 import { usePostUserProfileMutation } from '@/services/settings'
 import { ProfileDataType } from '@/types/SettingsType'
 import ImageUpload from './ImageUpload'
@@ -40,14 +39,13 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [website, setWebsite] = React.useState<string>('')
   const [instagram, setInstagram] = React.useState<string>('')
   const [twitter, setTwitter] = React.useState<string>('')
-  const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
-  const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
+  const [avatarIPFSHash, setAvatarIPFSHash] = React.useState<string>('')
+  const [bannerIPFSHash, setBannerIPFSHash] = React.useState<string>('')
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   const { data: accountData } = useAccount()
-  const [, username] = useENSData(accountData?.address)
-
-  const clipboard = useClipboard(username || '')
+  const [, userENSAddr] = useENSData(accountData?.address)
+  const clipboard = useClipboard(accountData?.address || '')
   const toast = useToast()
 
   const bioRef = React.useRef<HTMLTextAreaElement>(null)
@@ -57,12 +55,17 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   // set initial values
   React.useEffect(() => {
     if (settingsData) {
-      setInputUsername({ value: settingsData.username || '', error: '' })
+      setInputUsername({
+        value: settingsData.username || userENSAddr || '',
+        error: '',
+      })
       setInputBio({ value: settingsData.bio || '', error: '' })
       setInputEmail({ value: settingsData.email || '', error: '' })
       setWebsite(settingsData.links[0].website || '')
       setInstagram(settingsData.links[0].instagram || '')
       setTwitter(settingsData.links[0].twitter || '')
+      setAvatarIPFSHash(settingsData.avatar || '')
+      setBannerIPFSHash(settingsData.banner || '')
     }
   }, [settingsData])
 
@@ -125,28 +128,11 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       return
     }
 
-    let profilePictureIPFS: string | null = null
-    let coverPictureIPFS: string | null = null
-
-    if (profilePicture) {
-      profilePictureIPFS = await saveImage({
-        id: 'profile-picture',
-        type: profilePicture,
-      })
-    }
-
-    if (coverPicture) {
-      coverPictureIPFS = await saveImage({
-        id: 'cover-image',
-        type: coverPicture,
-      })
-    }
-
     // aggregate data from all states
     const data: Partial<ProfileDataType> = {
       id: accountData?.address,
       username: inputUsername.value,
-      bio: inputUsername.value,
+      bio: inputBio.value,
       email: inputEmail.value,
       links: [
         {
@@ -155,8 +141,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           website,
         },
       ],
-      avatar: profilePictureIPFS,
-      banner: coverPictureIPFS,
+      avatar: avatarIPFSHash,
+      banner: bannerIPFSHash,
     }
 
     await postUserProfile({ profileInfo: data })
@@ -303,19 +289,19 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
               w="140px"
               h="140px"
               rounded="full"
-              setSelectedImage={setProfilePicture}
-              selectedImage={profilePicture}
+              setImgIPFSHash={setAvatarIPFSHash}
+              imgIPFSHash={avatarIPFSHash}
             />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="profile-banner">Profile Banner</FormLabel>
             <ImageUpload
               defaultImage="/images/default-user-avatar.png"
-              w="min(300px, 100%)"
+              w="300px"
               h="120px"
               borderRadius="lg"
-              setSelectedImage={setCoverPicture}
-              selectedImage={coverPicture}
+              setImgIPFSHash={setBannerIPFSHash}
+              imgIPFSHash={bannerIPFSHash}
             />
           </FormControl>
         </VStack>

@@ -64,7 +64,7 @@ const NotificationSettings = () => {
   return (
     <form onSubmit={handleNotificationSettingsSave}>
       <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
-        {NotificationChannelsData.map((n, i) => (
+        {NotificationChannelsData.map((n: any, i: number) => (
           <NotificationSettingBox
             key={n.title}
             title={n.title}
