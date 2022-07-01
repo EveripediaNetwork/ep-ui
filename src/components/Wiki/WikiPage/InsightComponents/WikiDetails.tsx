@@ -10,6 +10,7 @@ import {
   Tr,
   VStack,
   Box,
+  AspectRatio,
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
@@ -55,7 +56,9 @@ export const WikiDetails = ({
       >
         {title}
       </Heading>
-      <WikiImage bgColor="dimColor" imageURL={imgSrc} w="100%" h="320px" />
+      <AspectRatio w="100%" ratio={4 / 3}>
+        <WikiImage bgColor="dimColor" imageURL={imgSrc} />
+      </AspectRatio>
       <Table size="sm" variant="simple">
         <Tbody>
           {categories.length !== 0 && (
