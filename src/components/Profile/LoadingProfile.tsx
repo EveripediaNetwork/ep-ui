@@ -78,9 +78,6 @@ export const LoadingProfile = (props: LoadingProfileProps) => {
               <chakra.span fontWeight="medium">userName</chakra.span>
             </Skeleton>
           </Flex>
-          <Skeleton>
-            <chakra.span color="gray.500">Joined November 2020</chakra.span>
-          </Skeleton>
         </Flex>
       )}
     </>

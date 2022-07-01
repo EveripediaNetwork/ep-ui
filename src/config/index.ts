@@ -20,6 +20,7 @@ const config = {
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   magicLinkApiKey: String(process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
+  baseArchiveUrl: 'https://archive.everipedia.org',
 }
 
 export default config

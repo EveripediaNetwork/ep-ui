@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
+import { AspectRatio, Box, Text, useToast } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
-import { RiCloseLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 
 import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
+import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
 
 type DropzoneType = {
@@ -108,73 +108,61 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
-        <Box
-          display="flex"
-          padding="10px"
-          border="1px"
-          borderColor="borderColor"
-          borderStyle="dashed"
-          borderRadius="5px"
-          justifyContent="center"
-          alignItems="center"
-          maxH="345px"
-          minH={!showFetchedImage ? '165px' : '30vh'}
-          _hover={{
-            boxShadow: 'md',
-            borderColor: 'brand.400',
-          }}
-          {...getRootProps()}
-        >
-          <input disabled={!accountData?.address} {...getInputProps()} />
-          {isDragActive ? (
-            <Text textAlign="center">Drop the files here ...</Text>
-          ) : (
-            <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
-              <Text textAlign="center" opacity="0.5">
-                Drag and drop a <b>{textType}</b>, or click to select.
-              </Text>
-              <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                (10mb max)
-              </Text>
-            </Box>
-          )}
-        </Box>
+        <AspectRatio ratio={4 / 3}>
+          <Box
+            display="flex"
+            padding="10px"
+            border="1px"
+            borderColor="borderColor"
+            borderStyle="dashed"
+            borderRadius="5px"
+            justifyContent="center"
+            alignItems="center"
+            h="full"
+            _hover={{
+              boxShadow: 'md',
+              borderColor: 'brand.400',
+            }}
+            {...getRootProps()}
+          >
+            <input disabled={!accountData?.address} {...getInputProps()} />
+            {isDragActive ? (
+              <Text textAlign="center">Drop the files here ...</Text>
+            ) : (
+              <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
+                <Text textAlign="center" opacity="0.5">
+                  Drag and drop a <b>{textType}</b>, or click to select.
+                </Text>
+                <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                  (10mb max)
+                </Text>
+              </Box>
+            )}
+          </Box>
+        </AspectRatio>
       ) : (
         <>
           {showFetchedImage && (
-            <Flex direction="column" w="full" h="full" justify="center">
-              {paths.map(path => (
-                <Image
-                  mx="auto"
-                  priority
-                  h="255px"
-                  w="full"
-                  borderRadius={4}
-                  overflow="hidden"
-                  key={path}
-                  src={path}
-                  alt="highlight"
-                />
-              ))}
-              <Button
-                w="25%"
-                fontWeight="bold"
-                fontSize="20px"
-                m="auto"
-                mt="5px"
-                shadow="md"
-                bg="red.400"
-                onClick={() => {
-                  setPaths([])
-                  if (setHideImageInput && deleteImage) {
-                    setHideImageInput(false)
-                    deleteImage()
-                  }
-                }}
-              >
-                <RiCloseLine />
-              </Button>
-            </Flex>
+            <EditorMainImageWrapper
+              removeImage={() => {
+                setPaths([])
+                if (setHideImageInput && deleteImage) {
+                  setHideImageInput(false)
+                  deleteImage()
+                }
+              }}
+            >
+              <Image
+                objectFit="cover"
+                h="255px"
+                w="full"
+                borderRadius={4}
+                priority
+                overflow="hidden"
+                src={paths[0]}
+                alt="Input"
+              />
+            </EditorMainImageWrapper>
           )}
         </>
       )}

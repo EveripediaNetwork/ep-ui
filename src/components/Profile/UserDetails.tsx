@@ -1,19 +1,16 @@
 import React from 'react'
-
-import { CheckIcon, SettingsIcon } from '@chakra-ui/icons'
+import { SettingsIcon } from '@chakra-ui/icons'
 import {
   Flex,
   chakra,
   IconButton,
-  Button,
-  Text,
-  useClipboard,
+  Box,
   ButtonGroup,
   Tooltip,
   TooltipProps,
   Skeleton,
 } from '@chakra-ui/react'
-import { FaEthereum, FaShareAlt } from 'react-icons/fa'
+import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
@@ -22,6 +19,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import shortenAccount from '@/utils/shortenAccount'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -33,8 +31,6 @@ export const UserDetails = (props: UserDetailsProps) => {
 
   const { headerIsSticky } = useProfileContext()
   const [, username, loading] = useENSData(address)
-
-  const { hasCopied, onCopy } = useClipboard(address || '')
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -52,15 +48,14 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <NextSeo
-        title={`${username || 'Unnamed'} Profile Page - Everipedia`}
+        title={`${username || address} Profile Page - Everipedia`}
         openGraph={{
-          title: `${username || 'Unnamed'} Profile Page - Everipedia`,
-          description: `${username || 'Unnamed'} profile page`,
+          title: `${username || address} Profile Page - Everipedia`,
+          description: `${username || address} profile page`,
         }}
       />
-      <Flex align="center" justify="space-between" w="full" px="6">
+      <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
         <chakra.span flex="1" />
-
         <Flex
           direction={isSticky ? 'row' : 'column'}
           align="center"
@@ -68,29 +63,29 @@ export const UserDetails = (props: UserDetailsProps) => {
           flex="1"
           justifyContent="center"
         >
-          <DisplayAvatar
-            mt="-64px"
-            boxSize="32"
-            overflow="hidden"
-            borderWidth={2}
-            borderColor="white"
-            rounded="full"
-            justifySelf="center"
-            {...(isSticky && { mt: 0, boxSize: 12 })}
-            address={address}
-            wrapperProps={{
-              zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
-            }}
-            svgProps={{
-              mt: isSticky ? 0 : '-64px',
-              boxSize: isSticky ? '16' : '32',
-              overflow: 'hidden',
-              borderWidth: 2,
-              borderColor: 'white',
-              rounded: 'full',
-              justifySelf: 'center',
-            }}
-          />
+          <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
+            <DisplayAvatar
+              boxSize="32"
+              overflow="hidden"
+              borderWidth={2}
+              borderColor="white"
+              rounded="full"
+              justifySelf="center"
+              {...(isSticky && { mt: 0, boxSize: 12 })}
+              address={address}
+              wrapperProps={{
+                zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
+              }}
+              svgProps={{
+                boxSize: isSticky ? '16' : '32',
+                overflow: 'hidden',
+                borderWidth: 2,
+                borderColor: 'white',
+                rounded: 'full',
+                justifySelf: 'center',
+              }}
+            />
+          </Box>
 
           <Skeleton isLoaded={!loading}>
             <chakra.span
@@ -98,7 +93,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               fontWeight="semibold"
               letterSpacing="tighter"
             >
-              {username || 'Unnamed'}
+              {username || shortenAccount(address)}
             </chakra.span>
           </Skeleton>
         </Flex>
@@ -129,29 +124,6 @@ export const UserDetails = (props: UserDetailsProps) => {
           </ButtonGroup>
         </chakra.span>
       </Flex>
-
-      {!isSticky && (
-        <Flex gap="3" direction="column" px="6" w="full" align="center">
-          <Flex align="center" gap="2" color="gray.500">
-            <chakra.span fontWeight="medium">{username}</chakra.span>
-            <Button
-              variant="outline"
-              rounded="full"
-              color="gray.500"
-              h="fit-content"
-              leftIcon={<FaEthereum />}
-              p="2"
-              onClick={onCopy}
-              rightIcon={hasCopied ? <CheckIcon color="green" /> : undefined}
-            >
-              <Text w="24" noOfLines={1}>
-                {address}
-              </Text>
-            </Button>
-          </Flex>
-          <chakra.span color="gray.500">Joined November 2020</chakra.span>
-        </Flex>
-      )}
     </>
   )
 }
