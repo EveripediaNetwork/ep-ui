@@ -19,9 +19,15 @@ import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
 import { saveImage } from '@/utils/create-wiki'
+import { usePostUserProfileMutation } from '@/services/settings'
+import { ProfileDataType } from '@/types/SettingsType'
 import ImageUpload from './ImageUpload'
 
-const ProfileSettings = () => {
+interface ProfileSettingsProps {
+  settingsData?: ProfileDataType
+}
+const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
+  const [postUserProfile] = usePostUserProfileMutation()
   interface StrEntry {
     value: string
     error: string
@@ -47,6 +53,18 @@ const ProfileSettings = () => {
   const bioRef = React.useRef<HTMLTextAreaElement>(null)
   const usernameRef = React.useRef<HTMLInputElement>(null)
   const emailRef = React.useRef<HTMLInputElement>(null)
+
+  // set initial values
+  React.useEffect(() => {
+    if (settingsData) {
+      setInputUsername({ value: settingsData.username || '', error: '' })
+      setInputBio({ value: settingsData.bio || '', error: '' })
+      setInputEmail({ value: settingsData.email || '', error: '' })
+      setWebsite(settingsData.links[0].website || '')
+      setInstagram(settingsData.links[0].instagram || '')
+      setTwitter(settingsData.links[0].twitter || '')
+    }
+  }, [settingsData])
 
   // Validation Functions
   const validateUsername = (name: string): string => {
@@ -125,21 +143,23 @@ const ProfileSettings = () => {
     }
 
     // aggregate data from all states
-    const data = {
+    const data: Partial<ProfileDataType> = {
+      id: accountData?.address,
       username: inputUsername.value,
       bio: inputUsername.value,
       email: inputEmail.value,
-      link: {
-        instagram,
-        twitter,
-        website,
-      },
-      profilePicture: profilePictureIPFS,
-      coverPicture: coverPictureIPFS,
+      links: [
+        {
+          instagram,
+          twitter,
+          website,
+        },
+      ],
+      avatar: profilePictureIPFS,
+      banner: coverPictureIPFS,
     }
 
-    // TODO: Send the data to backend
-    console.log(data)
+    await postUserProfile({ profileInfo: data })
 
     toast({
       title: 'Profile Settings Saved',

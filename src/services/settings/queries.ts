@@ -8,6 +8,7 @@ export const GET_USER_PROFILE = gql`
       bio
       email
       banner
+      avatar
       links {
         twitter
         website
@@ -25,13 +26,14 @@ export const GET_USER_PROFILE = gql`
   }
 `
 export const POST_USER_PROFILE = gql`
-  query getUserProfile($id: String!) {
-    getProfile(id: $id) {
+  mutation getUserProfile($profileInfo: String!) {
+    createProfile(profileInfo: $profileInfo) {
       id
       username
       bio
       email
       banner
+      avatar
       links {
         twitter
         website

@@ -19,7 +19,7 @@ export type ProfileDataType = {
     twitter: string | null
     website: string | null
     instagram: string | null
-  }
+  }[]
   notifications: ProfileNotificationsType
   advancedSettings: AdvancedSettingsType
 }

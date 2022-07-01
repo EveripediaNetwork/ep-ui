@@ -23,11 +23,9 @@ const Settings = () => {
   useEffect(() => {
     if (accountData?.address && token) {
       settingsApiClient.setHeader('authorization', token)
-      setAccount('0x5456afea3aa035088fe1f9aa36509b320360a89e')
+      setAccount(accountData.address)
     }
   }, [accountData?.address, setAccount, token])
-
-  console.log(settingsData)
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
@@ -85,7 +83,9 @@ const Settings = () => {
         <Heading textTransform="capitalize">
           {tab || 'Profile'} Settings
         </Heading>
-        {(tab === 'profile' || !tab) && <ProfileSettings />}
+        {(tab === 'profile' || !tab) && (
+          <ProfileSettings settingsData={settingsData} />
+        )}
         {tab === 'notifications' && <NotificationSettings />}
         {tab === 'advanced' && <AdvancedSettings />}
       </VStack>
