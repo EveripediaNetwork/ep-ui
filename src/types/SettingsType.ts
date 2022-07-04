@@ -4,6 +4,12 @@ export type ProfileNotificationsType = {
   WIKI_OF_THE_MONTH: boolean
 }
 
+export type ProfileLinksType = {
+  twitter: string | null
+  website: string | null
+  instagram: string | null
+}
+
 export type AdvancedSettingsType = {
   SIGN_EDITS_WITH_RELAYER: boolean
 }
@@ -15,11 +21,7 @@ export type ProfileDataType = {
   email: string | null
   banner: string | null
   avatar: string | null
-  links: {
-    twitter: string | null
-    website: string | null
-    instagram: string | null
-  }[]
-  notifications: ProfileNotificationsType
-  advancedSettings: AdvancedSettingsType
+  links: ProfileLinksType[]
+  notifications: ProfileNotificationsType[]
+  advancedSettings: AdvancedSettingsType[]
 }

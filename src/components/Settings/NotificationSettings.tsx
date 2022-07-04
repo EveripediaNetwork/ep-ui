@@ -9,20 +9,24 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
+import { usePostUserProfileMutation } from '@/services/settings'
+import { ProfileNotificationsType } from '@/types/SettingsType'
 
 interface NotificationSettingBoxProps {
+  id: string
   title: string
   description: string
   isLast?: boolean
 }
 
 const NotificationSettingBox = ({
+  id,
   title,
   description,
   isLast,
 }: NotificationSettingBoxProps) => (
   <Box p={4} borderBottomWidth={isLast ? 0 : '1px'}>
-    <Checkbox name={title} colorScheme="pink" size="lg">
+    <Checkbox name={id} colorScheme="pink" size="lg">
       <VStack align="left" spacing={2} ml={4}>
         <Heading fontSize="md">{title}</Heading>
         <Text opacity={0.8} fontSize="md">
@@ -35,6 +39,7 @@ const NotificationSettingBox = ({
 
 const NotificationSettings = () => {
   const toast = useToast()
+  const [postUserProfile] = usePostUserProfileMutation()
 
   const handleNotificationSettingsSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -47,13 +52,15 @@ const NotificationSettings = () => {
     )
 
     // get all the checked and unchecked checkboxes with their names
-    const data = checkboxes.map(checkbox => ({
-      name: checkbox.name,
-      value: checkbox.checked,
-    }))
+    let data = {}
+    checkboxes.forEach(checkbox => {
+      data = { ...data, [checkbox.name]: checkbox.checked }
+    })
 
-    // TODO: Send the data to backend
-    console.log(data)
+    // send the data to the server
+    postUserProfile({
+      profileInfo: { notifications: [data as ProfileNotificationsType] },
+    })
 
     toast({
       title: 'Notification settings saved!',
@@ -64,9 +71,10 @@ const NotificationSettings = () => {
   return (
     <form onSubmit={handleNotificationSettingsSave}>
       <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
-        {NotificationChannelsData.map((n: any, i: number) => (
+        {NotificationChannelsData.map((n, i) => (
           <NotificationSettingBox
-            key={n.title}
+            key={n.id}
+            id={n.id}
             title={n.title}
             description={n.description}
             isLast={NotificationChannelsData.length - 1 === i}
