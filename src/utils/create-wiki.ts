@@ -10,6 +10,7 @@ import {
   WikiRootBlocks,
   EditorContentOverride,
   ValidatorCodes,
+  whiteListedDomains,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -465,13 +466,6 @@ export const calculateEditInfo = (
 }
 
 export const isVerifiedContentLinks = (content: string) => {
-  const whitelistedDomains = [
-    'youtube.com/watch',
-    'youtu.be',
-    'vimeo.com',
-    'alpha.everipedia.org/wiki',
-    'ipfs.everipedia.org/ipfs',
-  ]
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
   markdownLinks?.every(link => {
@@ -479,7 +473,7 @@ export const isVerifiedContentLinks = (content: string) => {
     if (url && url.charAt(0) !== '#') {
       // check if url is of whitelisted domains
       const validURLRecognizer = new RegExp(
-        `^https?://(www\\.)?(${whitelistedDomains.join('|')})`,
+        `^https?://(www\\.)?(${whiteListedDomains.join('|')})`,
       )
       isValid = validURLRecognizer.test(url)
       return isValid
