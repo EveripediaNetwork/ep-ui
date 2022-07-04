@@ -18,6 +18,7 @@ export const GET_USER_PROFILE = gql`
         EVERIPEDIA_NOTIFICATIONS
         WIKI_OF_THE_DAY
         WIKI_OF_THE_MONTH
+        EDIT_NOTIFICATIONS
       }
       advancedSettings {
         SIGN_EDITS_WITH_RELAYER
@@ -43,6 +44,7 @@ export const POST_USER_PROFILE = gql`
         EVERIPEDIA_NOTIFICATIONS
         WIKI_OF_THE_DAY
         WIKI_OF_THE_MONTH
+        EDIT_NOTIFICATIONS
       }
       advancedSettings {
         SIGN_EDITS_WITH_RELAYER

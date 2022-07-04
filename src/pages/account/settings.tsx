@@ -86,7 +86,12 @@ const Settings = () => {
         {(tab === 'profile' || !tab) && (
           <ProfileSettings settingsData={settingsData} />
         )}
-        {tab === 'notifications' && <NotificationSettings />}
+        {tab === 'notifications' && (
+          <NotificationSettings
+            address={accountData?.address}
+            savedNotificationPrefs={settingsData?.notifications[0]}
+          />
+        )}
         {tab === 'advanced' && <AdvancedSettings />}
       </VStack>
     </HStack>

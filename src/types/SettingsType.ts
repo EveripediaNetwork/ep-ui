@@ -2,6 +2,7 @@ export type ProfileNotificationsType = {
   EVERIPEDIA_NOTIFICATIONS: boolean
   WIKI_OF_THE_DAY: boolean
   WIKI_OF_THE_MONTH: boolean
+  EDIT_NOTIFICATIONS: boolean
 }
 
 export type ProfileLinksType = {
