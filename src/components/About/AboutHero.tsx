@@ -40,21 +40,6 @@ const AboutHero = () => {
           letterSpacing="wider"
           mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
-        <Box textAlign={{ base: 'center', lg: 'left' }}>
-          <ButtonGroup
-            mx="auto"
-            mt={{ base: 10, lg: 10, md: 10 }}
-            size="lg"
-            spacing={{ base: 4, lg: 8 }}
-          >
-            <LinkButton href="/user/profile" w={{ base: 32, lg: 40 }}>
-              {`${t('aboutSignUpBttn')}`}
-            </LinkButton>
-            <LinkButton href="/iq" w={{ base: 32, lg: 40 }} variant="outline">
-              {`${t('aboutgoTo')}`}
-            </LinkButton>
-          </ButtonGroup>
-        </Box>
       </Box>
       <Image
         src={`/images/${aboutHeroSrc}`}
