@@ -98,7 +98,13 @@ export const UserDetails = (props: UserDetailsProps) => {
           </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
-          <ButtonGroup isAttached variant="outline" ml="auto" my="6" {...(isSticky && {my:"4" })}>
+          <ButtonGroup
+            isAttached
+            variant="outline"
+            ml="auto"
+            my="6"
+            {...(isSticky && { my: '4' })}
+          >
             <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"
@@ -107,7 +113,7 @@ export const UserDetails = (props: UserDetailsProps) => {
                 icon={<FaShareAlt />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
-                {...(isSticky && {boxSize: 6, rounded:"4" })}
+                {...(isSticky && { boxSize: 6, rounded: '4' })}
               />
             </Tooltip>
             <Tooltip label={t('settingBttnText')} {...tooltipProps}>
@@ -120,7 +126,7 @@ export const UserDetails = (props: UserDetailsProps) => {
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
                 disabled={address !== data?.address}
-                {...(isSticky && {boxSize: 6, rounded:"4" })}
+                {...(isSticky && { boxSize: 6, rounded: '4' })}
               />
             </Tooltip>
           </ButtonGroup>
