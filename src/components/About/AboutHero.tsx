@@ -1,14 +1,12 @@
 import React from 'react'
 import {
   Box,
-  ButtonGroup,
   Heading,
   HStack,
   Image,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
 
 const AboutHero = () => {
