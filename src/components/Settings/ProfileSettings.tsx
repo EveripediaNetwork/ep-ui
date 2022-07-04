@@ -67,7 +67,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       setAvatarIPFSHash(settingsData.avatar || '')
       setBannerIPFSHash(settingsData.banner || '')
     }
-  }, [settingsData])
+  }, [settingsData, userENSAddr])
 
   // Validation Functions
   const validateUsername = (name: string): string => {
@@ -117,14 +117,17 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     // if any field is invalid, focus on the first invalid one
     if (inputUsername.error) {
       usernameRef.current?.focus()
+      setIsLoading(false)
       return
     }
     if (inputBio.error) {
       bioRef.current?.focus()
+      setIsLoading(false)
       return
     }
     if (inputEmail.error) {
       emailRef.current?.focus()
+      setIsLoading(false)
       return
     }
 
