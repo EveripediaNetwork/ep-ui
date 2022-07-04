@@ -11,6 +11,7 @@ import { Dict } from '@chakra-ui/utils'
 import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
 import media from '@/editor-plugins/media'
+import { PasteListener } from '@/utils/PasteListener'
 
 const ToastUIEditorJSX = ToastUIEditor as unknown as (
   props: Dict,
@@ -71,8 +72,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   // when markdown changes, update the editor
   const updateEditorText = useCallback((text: string) => {
     const editorInstance = editorRef.current?.getInstance()
-    if (editorInstance?.getMarkdown() !== text)
-      editorInstance?.setMarkdown(text, false)
+    if (editorInstance && editorInstance.getMarkdown() !== text)
+      editorInstance.setMarkdown(text, false)
   }, [])
 
   useEffect(() => {
@@ -116,6 +117,14 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
       }
     }
   }, [editorRef, markdown, onChange])
+
+  useEffect(() => {
+    const editorWrapper = document.querySelector(
+      'div.ProseMirror.toastui-editor-contents',
+    )
+    editorWrapper?.addEventListener('paste', PasteListener, true)
+    return () => editorWrapper?.removeEventListener('paste', PasteListener)
+  }, [])
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">

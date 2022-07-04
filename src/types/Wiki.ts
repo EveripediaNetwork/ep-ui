@@ -152,3 +152,11 @@ export type WikiPreview = Pick<
   | 'user'
   | 'updated'
 >
+
+export const whiteListedDomains = [
+  'youtube.com/watch',
+  'youtu.be',
+  'vimeo.com',
+  'alpha.everipedia.org/wiki',
+  'ipfs.everipedia.org/ipfs',
+]
