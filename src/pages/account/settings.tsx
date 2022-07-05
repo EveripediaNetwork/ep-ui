@@ -8,7 +8,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import AdvancedSettings from '@/components/Settings/AdvancedSettings'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { useSettingsData } from '@/services/profile/utils'
+import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SignTokenMessage from './SignTokenMessage'
@@ -18,7 +18,7 @@ const Settings = () => {
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
   const { data: accountData } = useAccount()
-  const { setAccount, settingsData } = useSettingsData()
+  const { setAccount, profileData } = useUserProfileData()
 
   useEffect(() => {
     if (accountData?.address && token) {
@@ -84,12 +84,12 @@ const Settings = () => {
           {tab || 'Profile'} Settings
         </Heading>
         {(tab === 'profile' || !tab) && (
-          <ProfileSettings settingsData={settingsData} />
+          <ProfileSettings settingsData={profileData} />
         )}
         {tab === 'notifications' && (
           <NotificationSettings
             address={accountData?.address}
-            savedNotificationPrefs={settingsData?.notifications[0]}
+            savedNotificationPrefs={profileData?.notifications[0]}
           />
         )}
         {tab === 'advanced' && <AdvancedSettings />}

@@ -3,19 +3,19 @@ import { ProfileDataType } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
 import { getUserProfile } from '.'
 
-export const useSettingsData = () => {
-  const [settingsData, setSettingsData] = useState<ProfileDataType>()
-  const [account, setAccount] = useState<string>()
+export const useUserProfileData = (address?: string) => {
+  const [profileData, setProfileData] = useState<ProfileDataType>()
+  const [account, setAccount] = useState<string>(address || '')
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (!account) return
     const fetchSettings = async () => {
       try {
-        const { data: fetchedSettingsData } = await store.dispatch(
+        const { data: fetchedProfileData } = await store.dispatch(
           getUserProfile.initiate(account),
         )
-        setSettingsData(fetchedSettingsData)
+        setProfileData(fetchedProfileData)
         setLoading(false)
       } catch (err) {
         setLoading(false)
@@ -24,5 +24,5 @@ export const useSettingsData = () => {
     fetchSettings()
   }, [account])
 
-  return { setAccount, settingsData, loading }
+  return { setAccount, profileData, loading }
 }
