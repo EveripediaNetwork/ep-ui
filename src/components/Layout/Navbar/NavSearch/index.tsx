@@ -73,7 +73,7 @@ export const NavSearch = (props: NavSearchProps) => {
     const interactiveElementIsFocused =
       el?.closest('input, [contenteditable=true], [role="dialog"]') !== null
     if (
-      ((event.key.toLowerCase() === 'k' && event[hotkey]) ||
+      ((event.key && event.key.toLowerCase() === 'k' && event[hotkey]) ||
         event.key === '/') &&
       !interactiveElementIsFocused
     ) {
