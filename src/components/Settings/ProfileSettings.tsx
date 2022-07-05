@@ -42,6 +42,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [avatarIPFSHash, setAvatarIPFSHash] = React.useState<string>('')
   const [bannerIPFSHash, setBannerIPFSHash] = React.useState<string>('')
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isAvatarLoading, setIsAvatarLoading] = React.useState<boolean>(false)
+  const [isBannerLoading, setIsBannerLoading] = React.useState<boolean>(false)
 
   const { data: accountData } = useAccount()
   const [, userENSAddr] = useENSData(accountData?.address)
@@ -294,6 +296,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
               rounded="full"
               setImgIPFSHash={setAvatarIPFSHash}
               imgIPFSHash={avatarIPFSHash}
+              isLoading={isAvatarLoading}
+              setIsLoading={setIsAvatarLoading}
             />
           </FormControl>
           <FormControl>
@@ -305,17 +309,22 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
               borderRadius="lg"
               setImgIPFSHash={setBannerIPFSHash}
               imgIPFSHash={bannerIPFSHash}
+              isLoading={isBannerLoading}
+              setIsLoading={setIsBannerLoading}
             />
           </FormControl>
         </VStack>
       </Flex>
       <Button
         isLoading={isLoading}
+        disabled={isAvatarLoading || isBannerLoading}
         loadingText="Submitting"
         type="submit"
         _disabled={{
+          backgroundColor: 'gray.300',
+          cursor: 'not-allowed',
           _hover: {
-            backgroundColor: 'brand.400 !important',
+            backgroundColor: 'gray.400 !important',
           },
         }}
         size="lg"

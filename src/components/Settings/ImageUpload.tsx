@@ -8,16 +8,19 @@ interface ImageUploadProps extends NextChakraImageProps {
   defaultImage: string
   setImgIPFSHash: (id: string) => void
   imgIPFSHash: string | null
+  isLoading: boolean
+  setIsLoading: (isLoading: boolean) => void
 }
 
 const ImageUpload = ({
   defaultImage,
   setImgIPFSHash,
   imgIPFSHash,
+  isLoading,
+  setIsLoading,
   ...rest
 }: Omit<ImageUploadProps, 'src'>) => {
   const imageRef = useRef<HTMLInputElement | null>(null)
-  const [isLoading, setIsLoading] = React.useState(false)
   const toast = useToast()
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
