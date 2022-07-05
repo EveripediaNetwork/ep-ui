@@ -18,8 +18,8 @@ import {
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
-import { usePostUserProfileMutation } from '@/services/settings'
-import { ProfileDataType } from '@/types/SettingsType'
+import { usePostUserProfileMutation } from '@/services/profile'
+import { ProfileDataType } from '@/types/ProfileType'
 import ImageUpload from './ImageUpload'
 
 interface ProfileSettingsProps {

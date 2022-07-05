@@ -9,8 +9,8 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
-import { usePostUserProfileMutation } from '@/services/settings'
-import { ProfileNotificationsType } from '@/types/SettingsType'
+import { usePostUserProfileMutation } from '@/services/profile'
+import { ProfileNotificationsType } from '@/types/ProfileType'
 
 interface NotificationSettingBoxProps {
   id: string

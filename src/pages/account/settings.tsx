@@ -8,9 +8,9 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import AdvancedSettings from '@/components/Settings/AdvancedSettings'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { useSettingsData } from '@/services/settings/utils'
+import { useSettingsData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
-import { settingsApiClient } from '@/services/settings'
+import { profileApiClient } from '@/services/profile'
 import SignTokenMessage from './SignTokenMessage'
 
 const Settings = () => {
@@ -22,7 +22,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (accountData?.address && token) {
-      settingsApiClient.setHeader('authorization', token)
+      profileApiClient.setHeader('authorization', token)
       setAccount(accountData.address)
     }
   }, [accountData?.address, setAccount, token])

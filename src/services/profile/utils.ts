@@ -1,5 +1,5 @@
 import { store } from '@/store/store'
-import { ProfileDataType } from '@/types/SettingsType'
+import { ProfileDataType } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
 import { getUserProfile } from '.'
 

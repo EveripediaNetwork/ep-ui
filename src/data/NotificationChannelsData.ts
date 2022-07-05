@@ -1,4 +1,4 @@
-import { ProfileNotificationsType } from '@/types/SettingsType'
+import { ProfileNotificationsType } from '@/types/ProfileType'
 
 export const NotificationChannelsData: {
   isChecked: boolean

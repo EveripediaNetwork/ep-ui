@@ -47,7 +47,7 @@ const Profile: PageWithoutFooter = () => {
 
   return (
     <ProfileProvider value={profileContext}>
-      <Flex direction="column" align="center" pos="relative">
+      <Flex mt={-2} direction="column" align="center" pos="relative">
         <Image
           width="full"
           height="56"
