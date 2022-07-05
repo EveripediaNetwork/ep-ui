@@ -23,7 +23,6 @@ const UserInfo = () => {
         borderTopWidth={headerIsSticky ? '1px' : '0px'}
         shadow="md"
         opacity={headerIsSticky ? 1 : 0}
-        transition="all .03s ease"
       >
         <UserDetails hide />
       </Flex>
