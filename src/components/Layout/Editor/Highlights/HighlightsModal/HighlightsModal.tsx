@@ -35,8 +35,10 @@ import {
 import { CommonMetaIds, MData } from '@/types/Wiki'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 import { slugifyText } from '@/utils/slugify'
+import { BsGlobe } from 'react-icons/bs'
+import { FaEthereum } from 'react-icons/fa'
 
-export const SOCIAL_MEDIA_OPTIONS = [
+export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
@@ -67,6 +69,18 @@ export const SOCIAL_MEDIA_OPTIONS = [
     label: 'Coingecko',
     icon: <GiTwoCoins />,
   },
+  {
+    id: CommonMetaIds.WEBSITE,
+    label: 'Website',
+    icon: <BsGlobe />,
+    tests: [/https:\/\/(www.)?\w+.\w+/],
+  },
+  {
+    id: CommonMetaIds.CONTRACT_URL,
+    label: 'Contract URL',
+    icon: <FaEthereum />,
+    tests: [/https:\/\/(www.)?\w+.\w+/],
+  },
 ]
 
 const HighlightsModal = ({
@@ -78,15 +92,15 @@ const HighlightsModal = ({
   const currentWiki = useAppSelector(state => state.wiki)
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
-  const [currentSocialMedia, setCurrentSocialMedia] = useState<string>()
+  const [currentLink, setCurrentLink] = useState<string>()
 
-  const [currentSocialLink, setCurrentSocialLink] = useState<string>()
+  const [currentLinkValue, setCurrentLinkValue] = useState<string>()
 
-  const socialMedia = SOCIAL_MEDIA_OPTIONS.filter(
+  const linksWithValue = LINK_OPTIONS.filter(
     med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
 
-  const removeSocialMedia = (network: string) => {
+  const removeLink = (network: string) => {
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {
@@ -96,7 +110,7 @@ const HighlightsModal = ({
     })
   }
 
-  const updateSocialMedia = (network?: string, link?: string) => {
+  const updateLink = (network?: string, link?: string) => {
     if (network && link) {
       dispatch({
         type: 'wiki/updateMetadata',
@@ -105,13 +119,13 @@ const HighlightsModal = ({
           value: link,
         },
       })
-      setCurrentSocialMedia('')
-      setCurrentSocialLink('')
+      setCurrentLink('')
+      setCurrentLinkValue('')
     }
   }
 
-  const addSocialMedia = () => {
-    updateSocialMedia(currentSocialMedia, currentSocialLink)
+  const addLink = () => {
+    updateLink(currentLink, currentLinkValue)
   }
 
   const getWikiAttribute = (attr: string) => {
@@ -126,13 +140,13 @@ const HighlightsModal = ({
     attr ? getWikiAttribute(attr).isDefined : false
 
   React.useEffect(() => {
-    if (currentSocialMedia && atttributeExists(currentSocialMedia)) {
-      setCurrentSocialLink(getWikiAttribute(currentSocialMedia).value)
+    if (currentLink && atttributeExists(currentLink)) {
+      setCurrentLinkValue(getWikiAttribute(currentLink).value)
     } else {
-      setCurrentSocialLink('')
+      setCurrentLinkValue('')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSocialMedia])
+  }, [currentLink])
 
   return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
@@ -189,7 +203,7 @@ const HighlightsModal = ({
             {/* TAGS ADDITIONS */}
             <Tags />
 
-            {/* SOCIAL PROFILES */}
+            {/* LINKS */}
             <Stack
               rounded="md"
               borderWidth={1}
@@ -197,7 +211,7 @@ const HighlightsModal = ({
               p={4}
               spacing="3"
             >
-              <Text fontWeight="semibold">Social Profiles</Text>
+              <Text fontWeight="semibold">Links</Text>
               <Flex
                 rounded="md"
                 border="solid 1px"
@@ -209,14 +223,14 @@ const HighlightsModal = ({
               >
                 <Select
                   minW="25"
-                  value={currentSocialMedia}
+                  value={currentLink}
                   onChange={event => {
                     const attr = event.target.value
-                    setCurrentSocialMedia(attr)
+                    setCurrentLink(attr)
                   }}
-                  placeholder="Select Network"
+                  placeholder="Select option"
                 >
-                  {SOCIAL_MEDIA_OPTIONS.map(med => (
+                  {LINK_OPTIONS.map(med => (
                     <chakra.option key={med.id} value={med.id}>
                       {med.label}
                     </chakra.option>
@@ -224,23 +238,23 @@ const HighlightsModal = ({
                 </Select>
                 <Input
                   placeholder="Enter link"
-                  value={currentSocialLink}
+                  value={currentLinkValue}
                   onChange={event => {
-                    setCurrentSocialLink(event.target.value)
+                    setCurrentLinkValue(event.target.value)
                   }}
                   type="url"
                 />
-                <Button colorScheme="blue" mx="auto" onClick={addSocialMedia}>
-                  {atttributeExists(currentSocialMedia) ? 'Update' : 'Add'}
+                <Button colorScheme="blue" mx="auto" onClick={addLink}>
+                  {atttributeExists(currentLink) ? 'Update' : 'Add'}
                 </Button>
               </Flex>
-              {socialMedia.length > 0 && (
+              {linksWithValue.length > 0 && (
                 <ButtonGroup spacing="7" pt="3">
-                  {socialMedia.map(network => (
+                  {linksWithValue.map(network => (
                     <Tooltip label={network.label}>
                       <IconButton
                         key={network.id}
-                        onClick={() => setCurrentSocialMedia(network.id)}
+                        onClick={() => setCurrentLink(network.id)}
                         aria-label={network.label}
                         bg="gray.100"
                         color="black"
@@ -269,7 +283,7 @@ const HighlightsModal = ({
                               bg="red.400"
                               _hover={{ bg: 'red.500' }}
                               rounded="full"
-                              onClick={() => removeSocialMedia(network.id)}
+                              onClick={() => removeLink(network.id)}
                             >
                               x
                             </chakra.span>

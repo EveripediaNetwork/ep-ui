@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
-import { SOCIAL_MEDIA_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
+import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -20,7 +20,7 @@ const parseLink = (link: string) =>
 
 const ProfileSummary = (props: ProfileSummaryProps) => {
   const { wiki } = props
-  const linkIds = SOCIAL_MEDIA_OPTIONS.map(link => link.id)
+  const linkIds = LINK_OPTIONS.map(link => link.id)
   const socialMetaData = wiki.metadata.filter(
     meta => !!meta.value && linkIds.includes(meta.id as CommonMetaIds),
   )
@@ -55,9 +55,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
             <Center>
               <HStack spacing={2}>
                 {socialMetaData.map((social, i) => {
-                  const ico = SOCIAL_MEDIA_OPTIONS.find(
-                    li => li.id === social.id,
-                  )?.icon
+                  const ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
                   return (
                     <Link
                       target="_blank"
