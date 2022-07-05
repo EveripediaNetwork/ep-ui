@@ -37,7 +37,8 @@ export const store = configureStore({
       .concat(categoriesApi.middleware)
       .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware)
-      .concat(tokenStatsApi.middleware),
+      .concat(tokenStatsApi.middleware)
+      .concat(profileApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
