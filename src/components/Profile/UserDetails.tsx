@@ -102,8 +102,7 @@ export const UserDetails = (props: UserDetailsProps) => {
             isAttached
             variant="outline"
             ml="auto"
-            my="6"
-            {...(isSticky && { my: '4' })}
+            my={isSticky ? 4 : 6}
           >
             <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
