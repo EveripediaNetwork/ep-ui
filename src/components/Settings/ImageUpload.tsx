@@ -1,6 +1,6 @@
 import config from '@/config'
 import { saveImage } from '@/utils/create-wiki'
-import { Box, Spinner, Toast } from '@chakra-ui/react'
+import { Box, Spinner, useToast } from '@chakra-ui/react'
 import React, { memo, useRef } from 'react'
 import { Image, NextChakraImageProps } from '../Elements/Image/Image'
 
@@ -18,8 +18,8 @@ const ImageUpload = ({
 }: Omit<ImageUploadProps, 'src'>) => {
   const imageRef = useRef<HTMLInputElement | null>(null)
   const [isLoading, setIsLoading] = React.useState(false)
+  const toast = useToast()
 
-  // On each change let user have access to a selected file
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
     if (file) {
@@ -29,12 +29,11 @@ const ImageUpload = ({
         type: file,
       })
       if (!IPFSHash) {
-        Toast({
+        toast({
           title: 'Error uploading image',
           status: 'error',
         })
-      }
-      setImgIPFSHash(IPFSHash)
+      } else setImgIPFSHash(IPFSHash)
       setIsLoading(false)
     }
   }
