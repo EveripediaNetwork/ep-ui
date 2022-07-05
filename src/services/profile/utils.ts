@@ -1,10 +1,10 @@
 import { store } from '@/store/store'
-import { ProfileDataType } from '@/types/ProfileType'
+import { ProfileSettingsData } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
 import { getUserProfile } from '.'
 
 export const useUserProfileData = (address?: string) => {
-  const [profileData, setProfileData] = useState<ProfileDataType>()
+  const [profileData, setProfileData] = useState<ProfileSettingsData>()
   const [account, setAccount] = useState<string>(address || '')
   const [loading, setLoading] = useState<boolean>(true)
 

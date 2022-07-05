@@ -19,11 +19,11 @@ import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
 import { usePostUserProfileMutation } from '@/services/profile'
-import { ProfileDataType } from '@/types/ProfileType'
+import { ProfileSettingsData } from '@/types/ProfileType'
 import ImageUpload from './ImageUpload'
 
 interface ProfileSettingsProps {
-  settingsData?: ProfileDataType
+  settingsData?: ProfileSettingsData
 }
 const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [postUserProfile] = usePostUserProfileMutation()
@@ -132,7 +132,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
 
     // aggregate data from all states
-    const data: Partial<ProfileDataType> = {
+    const data: Partial<ProfileSettingsData> = {
       id: accountData?.address,
       username: inputUsername.value,
       bio: inputBio.value,

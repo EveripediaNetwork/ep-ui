@@ -1,8 +1,8 @@
-import { ProfileNotificationsType } from '@/types/ProfileType'
+import { ProfileNotifications } from '@/types/ProfileType'
 
 export const NotificationChannelsData: {
   isChecked: boolean
-  id: keyof ProfileNotificationsType
+  id: keyof ProfileNotifications
   title: string
   description: string
 }[] = [

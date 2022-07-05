@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
 import { usePostUserProfileMutation } from '@/services/profile'
-import { ProfileNotificationsType } from '@/types/ProfileType'
+import { ProfileNotifications } from '@/types/ProfileType'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -62,7 +62,7 @@ const NotificationSettingBox = ({
 
 interface NotificationSettingsProps {
   address?: string
-  savedNotificationPrefs?: ProfileNotificationsType
+  savedNotificationPrefs?: ProfileNotifications
 }
 
 const NotificationSettings = ({
@@ -107,7 +107,7 @@ const NotificationSettings = ({
     postUserProfile({
       profileInfo: {
         id: address,
-        notifications: [data as ProfileNotificationsType],
+        notifications: [data as ProfileNotifications],
       },
     })
 

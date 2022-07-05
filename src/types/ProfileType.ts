@@ -1,28 +1,36 @@
-export type ProfileNotificationsType = {
+export type ProfileNotifications = {
   EVERIPEDIA_NOTIFICATIONS: boolean
   WIKI_OF_THE_DAY: boolean
   WIKI_OF_THE_MONTH: boolean
   EDIT_NOTIFICATIONS: boolean
 }
 
-export type ProfileLinksType = {
+export type ProfileLinks = {
   twitter: string | null
   website: string | null
   instagram: string | null
 }
 
-export type AdvancedSettingsType = {
+export type AdvancedSettings = {
   SIGN_EDITS_WITH_RELAYER: boolean
 }
 
-export type ProfileDataType = {
+export type ProfileSettingsData = {
   id: string
   username: string
   bio: string | null
   email: string | null
   banner: string | null
   avatar: string | null
-  links: ProfileLinksType[]
-  notifications: ProfileNotificationsType[]
-  advancedSettings: AdvancedSettingsType[]
+  links: ProfileLinks[]
+  notifications: ProfileNotifications[]
+  advancedSettings: AdvancedSettings[]
+}
+
+export type ProfileData = {
+  id: string
+  username: string
+  bio: string | null
+  banner: string | null
+  avatar: string | null
 }

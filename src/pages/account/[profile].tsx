@@ -4,6 +4,7 @@ import { useProfile } from '@/components/Profile/useProfile'
 import UserInfo from '@/components/Profile/UserInfo'
 import { ProfileProvider } from '@/components/Profile/utils'
 import config from '@/config'
+import { useUserProfileData } from '@/services/profile/utils'
 import { validateAddress } from '@/utils/validateAddress'
 import { Flex, Spinner, Box } from '@chakra-ui/react'
 import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
@@ -20,6 +21,7 @@ const Profile: PageWithoutFooter = () => {
   const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
   const address = router.query.profile as string
   const [loading, setLoading] = useState<boolean>(true)
+  const { profileData } = useUserProfileData(address)
 
   useEffect(() => {
     if (address) {
@@ -52,7 +54,8 @@ const Profile: PageWithoutFooter = () => {
           width="full"
           height="56"
           objectFit="cover"
-          src="https://lh3.googleusercontent.com/1xS2CAb5FcEtqJKjgPQNhbNwRgbB9_ypoD9TEgV02rTC06x_TaVxczHBrbEmjLtdoSfoY8Uc1bo-tTv48GsV0rTcOwdgYWGLd7ZHkj4=h600"
+          bgColor="gray.100"
+          src={`${config.pinataBaseUrl}/ipfs/${profileData?.banner}`}
         />
         {!loading ? (
           <>

@@ -20,6 +20,7 @@ import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import shortenAccount from '@/utils/shortenAccount'
+import { useUserProfileData } from '@/services/profile/utils'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -28,9 +29,10 @@ export const UserDetails = (props: UserDetailsProps) => {
   const router = useRouter()
   const { data } = useAccount()
   const address = router.query.profile as string
+  const { profileData } = useUserProfileData(address)
 
   const { headerIsSticky } = useProfileContext()
-  const [, username, loading] = useENSData(address)
+  const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
 
   const tooltipProps: Partial<TooltipProps> = {
@@ -48,10 +50,10 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <NextSeo
-        title={`${username || address} Profile Page - Everipedia`}
+        title={`${ensUserName || address} Profile Page - Everipedia`}
         openGraph={{
-          title: `${username || address} Profile Page - Everipedia`,
-          description: `${username || address} profile page`,
+          title: `${ensUserName || address} Profile Page - Everipedia`,
+          description: `${ensUserName || address} profile page`,
         }}
       />
       <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
@@ -93,7 +95,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               fontWeight="semibold"
               letterSpacing="tighter"
             >
-              {username || shortenAccount(address)}
+              {profileData?.username || ensUserName || shortenAccount(address)}
             </chakra.span>
           </Skeleton>
         </Flex>
