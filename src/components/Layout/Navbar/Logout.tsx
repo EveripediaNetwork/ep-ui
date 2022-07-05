@@ -12,6 +12,7 @@ export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const handleLogOut = () => {
     disconnect()
     dispatch(setStateToDefault())
+    localStorage.removeItem('USER_TOKEN')
   }
   return (
     <>
