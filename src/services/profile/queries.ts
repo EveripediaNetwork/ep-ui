@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-export const GET_USER_PROFILE = gql`
+export const GET_USER_SETTINGS = gql`
   query getUserProfile($id: String!) {
     getProfile(id: $id) {
       id
@@ -26,7 +26,23 @@ export const GET_USER_PROFILE = gql`
     }
   }
 `
-export const POST_USER_PROFILE = gql`
+export const GET_USER_PROFILE = gql`
+  query getUserProfile($id: String!) {
+    getProfile(id: $id) {
+      id
+      username
+      bio
+      banner
+      avatar
+      links {
+        twitter
+        website
+        instagram
+      }
+    }
+  }
+`
+export const POST_USER_SETTINGS = gql`
   mutation getUserProfile($profileInfo: String!) {
     createProfile(profileInfo: $profileInfo) {
       id

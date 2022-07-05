@@ -21,10 +21,11 @@ const Profile: PageWithoutFooter = () => {
   const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
   const address = router.query.profile as string
   const [loading, setLoading] = useState<boolean>(true)
-  const { profileData } = useUserProfileData(address)
+  const { profileData, setAccount } = useUserProfileData(address)
 
   useEffect(() => {
     if (address) {
+      setAccount(address)
       if (!validateAddress(address)) {
         const lookUpAddress = async () => {
           const resolvedAddress = (await provider.resolveName(
@@ -55,7 +56,7 @@ const Profile: PageWithoutFooter = () => {
           height="56"
           objectFit="cover"
           bgColor="gray.100"
-          src={`${config.pinataBaseUrl}/ipfs/${profileData?.banner}`}
+          src={`${config.pinataBaseUrl}${profileData?.banner}`}
         />
         {!loading ? (
           <>
@@ -73,4 +74,4 @@ const Profile: PageWithoutFooter = () => {
 }
 Profile.noFooter = true
 
-export default Profile
+export default React.memo(Profile)

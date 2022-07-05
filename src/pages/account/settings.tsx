@@ -18,7 +18,9 @@ const Settings = () => {
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
   const { data: accountData } = useAccount()
-  const { setAccount, profileData } = useUserProfileData()
+  const { setAccount, profileData } = useUserProfileData('', {
+    withAllSettings: true,
+  })
 
   useEffect(() => {
     if (accountData?.address && token) {
