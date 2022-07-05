@@ -5,7 +5,7 @@ import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useDisconnect, useAccount } from 'wagmi'
 
-export const LogOutBttn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
+export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const userAccount = useAccount()
   const dispatch = useDispatch()
   const { disconnect } = useDisconnect()
