@@ -42,7 +42,7 @@ const UserCreatedWikis = () => {
   })
 
   return (
-    <Box pt="10" px={{ base: 8, lg: 0 }}>
+    <Box py="10" px={{ base: 10, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState />
@@ -54,9 +54,11 @@ const UserCreatedWikis = () => {
           <Spinner size="xl" />
         </Center>
       ) : (
-        <Center m="10">
-          <Text fontWeight="semibold">{t('seenItAll')}</Text>
-        </Center>
+        !(wikis.length < 1 && !hasMore) && (
+          <Center mt="10">
+            <Text fontWeight="semibold">{t('seenItAll')}</Text>
+          </Center>
+        )
       )}
     </Box>
   )

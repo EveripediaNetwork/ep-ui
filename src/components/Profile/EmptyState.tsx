@@ -6,7 +6,7 @@ import React from 'react'
 export const EmptyState = () => {
   return (
     <Flex flexDir="column" textAlign="center" align="center">
-      <ProfileEmptyState />
+      <ProfileEmptyState maxBlockSize="40vw" />
       <Text fontWeight="bold" fontSize="3xl" mt="8">
         Create your first Wiki
       </Text>
