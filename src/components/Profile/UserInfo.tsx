@@ -19,8 +19,9 @@ const UserInfo = () => {
         top="70px"
         bg="white"
         _dark={{ bg: 'gray.800' }}
-        zIndex={headerIsSticky ? 'sticky' : -1}
-        shadow="lg"
+        zIndex={headerIsSticky ? 1300 : -1}
+        borderTopWidth={headerIsSticky ? '1px' : '0px'}
+        shadow="md"
         opacity={headerIsSticky ? 1 : 0}
         transition="all .03s ease"
       >

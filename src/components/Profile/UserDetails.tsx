@@ -1,5 +1,4 @@
 import React from 'react'
-import { SettingsIcon } from '@chakra-ui/icons'
 import {
   Flex,
   chakra,
@@ -10,7 +9,6 @@ import {
   TooltipProps,
   Skeleton,
 } from '@chakra-ui/react'
-import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
@@ -21,6 +19,7 @@ import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import shortenAccount from '@/utils/shortenAccount'
 import { useUserProfileData } from '@/services/profile/utils'
+import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -73,7 +72,7 @@ export const UserDetails = (props: UserDetailsProps) => {
               borderColor="white"
               rounded="full"
               justifySelf="center"
-              {...(isSticky && { mt: 0, boxSize: 12 })}
+              {...(isSticky && { mt: 0, boxSize: 9 })}
               address={address}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
@@ -91,7 +90,7 @@ export const UserDetails = (props: UserDetailsProps) => {
 
           <Skeleton isLoaded={!loading}>
             <chakra.span
-              fontSize={isSticky ? 'md' : '3xl'}
+              fontSize={isSticky ? 'lg' : '3xl'}
               fontWeight="semibold"
               letterSpacing="tighter"
             >
@@ -111,10 +110,10 @@ export const UserDetails = (props: UserDetailsProps) => {
                 mr="-px"
                 boxSize="12"
                 aria-label="Share"
-                icon={<FaShareAlt />}
+                icon={<RiShareFill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
-                {...(isSticky && { boxSize: 6, rounded: '4' })}
+                {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
             <Tooltip label={t('settingBttnText')} {...tooltipProps}>
@@ -122,12 +121,12 @@ export const UserDetails = (props: UserDetailsProps) => {
                 cursor="pointer"
                 boxSize="12"
                 aria-label="Settings"
-                icon={<SettingsIcon />}
+                icon={<RiSettings5Fill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
                 disabled={address !== data?.address}
-                {...(isSticky && { boxSize: 6, rounded: '4' })}
+                {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
           </ButtonGroup>
