@@ -24,7 +24,7 @@ const AboutHero = () => {
     >
       <Box mb={{ base: 10, lg: 0 }}>
         <Heading
-          textAlign={{ base: 'center', md: 'center', lg: 'left' }}
+          textAlign={{ base: 'center', lg: 'left' }}
           mt={10}
           mb={{ base: 5, lg: 10 }}
           letterSpacing="wider"
