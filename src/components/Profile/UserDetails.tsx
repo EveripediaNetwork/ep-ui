@@ -23,8 +23,7 @@ import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
 
 export type UserDetailsProps = { hide?: boolean }
 
-export const UserDetails = (props: UserDetailsProps) => {
-  const { hide } = props
+export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
   const { data } = useAccount()
   const address = router.query.profile as string
@@ -55,7 +54,14 @@ export const UserDetails = (props: UserDetailsProps) => {
           description: `${ensUserName || address} profile page`,
         }}
       />
-      <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
+      <Flex
+        flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
+        align="center"
+        justify="space-between"
+        w="full"
+        px={{ base: '0', lg: '6' }}
+        gap={3}
+      >
         <chakra.span flex="1" />
         <Flex
           direction={isSticky ? 'row' : 'column'}
@@ -99,12 +105,7 @@ export const UserDetails = (props: UserDetailsProps) => {
           </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
-          <ButtonGroup
-            isAttached
-            variant="outline"
-            ml="auto"
-            my={isSticky ? 4 : 6}
-          >
+          <ButtonGroup isAttached variant="outline" ml="auto" my={4}>
             <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"

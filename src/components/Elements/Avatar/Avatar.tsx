@@ -25,7 +25,7 @@ const DisplayAvatar = ({
   address,
   svgProps,
   wrapperProps,
-  size = 25,
+  size = 26,
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
@@ -40,7 +40,7 @@ const DisplayAvatar = ({
   if (profileData?.avatar) {
     content = (
       <Avatar
-        size="xs"
+        boxSize={size}
         src={`${config.pinataBaseUrl}${profileData.avatar}`}
         {...rest}
       />

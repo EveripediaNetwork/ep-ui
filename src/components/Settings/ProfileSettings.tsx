@@ -154,7 +154,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
 
     toast({
       title: 'Profile Settings Saved',
-      description: 'Your profile settings have been saved.',
+      description:
+        'Your profile settings have been saved. Refresh the page to see the changes.',
       status: 'success',
       duration: 5000,
       isClosable: true,
