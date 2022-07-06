@@ -23,7 +23,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
-import { RiFolder3Line, RiSurveyLine } from 'react-icons/ri'
+import { RiSurveyLine } from 'react-icons/ri'
 import { GiTwoCoins } from 'react-icons/gi'
 import {
   AiOutlineFacebook,
@@ -32,40 +32,63 @@ import {
   AiOutlineLinkedin,
   AiOutlineYoutube,
 } from 'react-icons/ai'
-import { CommonMetaIds, MData, PageTypeName } from '@/types/Wiki'
-import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import { CommonMetaIds, MData } from '@/types/Wiki'
+import { BsGlobe } from 'react-icons/bs'
+import { FaEthereum } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
+import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 
-export const SOCIAL_MEDIA_OPTIONS = [
+export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
     icon: <AiOutlineFacebook />,
+    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
   },
   {
     id: CommonMetaIds.INSTAGRAM_PROFILE,
     label: 'Instagram',
     icon: <AiOutlineInstagram />,
+    tests: [/https:\/\/(www.)?instagram.com\/\w+/],
   },
   {
     id: CommonMetaIds.TWITTER_PROFILE,
     label: 'Twitter',
     icon: <AiOutlineTwitter />,
+    tests: [/https:\/\/(www.)?twitter.com\/\w+/],
   },
   {
     id: CommonMetaIds.LINKEDIN_PROFILE,
     label: 'Linkedin',
     icon: <AiOutlineLinkedin />,
+    tests: [/https:\/\/(www.)?linkedin.com\/in\/\w+/],
   },
   {
     id: CommonMetaIds.YOUTUBE_PROFILE,
     label: 'Youtube',
     icon: <AiOutlineYoutube />,
+    tests: [/https:\/\/(www.)?youtube.com\/\w+/],
   },
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
     label: 'Coingecko',
     icon: <GiTwoCoins />,
+    tests: [
+      /https:\/\/(www.)?coinmarketcap.com\/currencies\/\w+/,
+      /https:\/\/(www.)?coingecko.com\/en\/coins\//,
+    ],
+  },
+  {
+    id: CommonMetaIds.WEBSITE,
+    label: 'Website',
+    icon: <BsGlobe />,
+    tests: [/https:\/\/(www.)?\w+.\w+/],
+  },
+  {
+    id: CommonMetaIds.CONTRACT_URL,
+    label: 'Contract URL',
+    icon: <FaEthereum />,
+    tests: [/https:\/\/(www.)?\w+.\w+/],
   },
 ]
 
@@ -78,14 +101,15 @@ const HighlightsModal = ({
   const currentWiki = useAppSelector(state => state.wiki)
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
-  const [currentSocialMedia, setCurrentSocialMedia] = useState<string>()
-  const [currentSocialLink, setCurrentSocialLink] = useState<string>()
+  const [currentLink, setCurrentLink] = useState<string>()
+  const [currentLinkValue, setCurrentLinkValue] = useState<string>()
+  const [error, setError] = useState<string>('')
 
-  const socialMedia = SOCIAL_MEDIA_OPTIONS.filter(
+  const linksWithValue = LINK_OPTIONS.filter(
     med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
 
-  const removeSocialMedia = (network: string) => {
+  const removeLink = (network: string) => {
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {
@@ -95,7 +119,7 @@ const HighlightsModal = ({
     })
   }
 
-  const updateSocialMedia = (network?: string, link?: string) => {
+  const updateLink = (network?: string, link?: string) => {
     if (network && link) {
       dispatch({
         type: 'wiki/updateMetadata',
@@ -104,13 +128,22 @@ const HighlightsModal = ({
           value: link,
         },
       })
-      setCurrentSocialMedia('')
-      setCurrentSocialLink('')
+      setCurrentLink('')
+      setCurrentLinkValue('')
     }
   }
 
-  const addSocialMedia = () => {
-    updateSocialMedia(currentSocialMedia, currentSocialLink)
+  const upsertLinks = () => {
+    if (currentLinkValue) {
+      const link = LINK_OPTIONS.find(l => l.id === currentLink)
+      const linkIsValid = link?.tests?.some(t => t.test(currentLinkValue))
+      if (linkIsValid) {
+        updateLink(currentLink, currentLinkValue)
+        setError('')
+      } else {
+        setError(`Invalid ${link?.label} url format`)
+      }
+    }
   }
 
   const getWikiAttribute = (attr: string) => {
@@ -121,7 +154,20 @@ const HighlightsModal = ({
     }
   }
 
-  return isOpen ? (
+  const atttributeExists = (attr?: string) =>
+    attr ? getWikiAttribute(attr).isDefined : false
+
+  React.useEffect(() => {
+    if (currentLink && atttributeExists(currentLink)) {
+      setCurrentLinkValue(getWikiAttribute(currentLink).value)
+    } else {
+      setCurrentLinkValue('')
+    }
+    setError('')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLink])
+
+  return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
@@ -138,38 +184,6 @@ const HighlightsModal = ({
         </chakra.div>
         <ModalBody>
           <Stack spacing="4">
-            {/* PAGE TYPE SELECTION  */}
-            <Flex gap="2.5" align="center" mt={1}>
-              <RiFolder3Line /> <Text whiteSpace="nowrap">Page Type</Text>
-              <Select
-                maxW="52"
-                ml="auto"
-                onChange={event => {
-                  if (event.target.value)
-                    dispatch({
-                      type: 'wiki/updateMetadata',
-                      payload: {
-                        id: CommonMetaIds.PAGE_TYPE,
-                        value: event.target.value,
-                      },
-                    })
-                }}
-                value={String(
-                  currentWiki.metadata.find(
-                    (m: MData) => m.id === CommonMetaIds.PAGE_TYPE,
-                  )?.value,
-                )}
-                placeholder={
-                  getWikiAttribute('page-type').isDefined
-                    ? ''
-                    : 'Select Page Type'
-                }
-              >
-                {Object.values(PageTypeName).map(o => (
-                  <option key={o}>{o}</option>
-                ))}
-              </Select>
-            </Flex>
             {/* CATEGORY SELECTION */}
             <Flex gap="2.5" align="center">
               <RiSurveyLine />
@@ -208,7 +222,7 @@ const HighlightsModal = ({
             {/* TAGS ADDITIONS */}
             <Tags />
 
-            {/* SOCIAL PROFILES */}
+            {/* LINKS */}
             <Stack
               rounded="md"
               borderWidth={1}
@@ -216,7 +230,7 @@ const HighlightsModal = ({
               p={4}
               spacing="3"
             >
-              <Text fontWeight="semibold">Social Profiles</Text>
+              <Text fontWeight="semibold">Links</Text>
               <Flex
                 rounded="md"
                 border="solid 1px"
@@ -228,15 +242,14 @@ const HighlightsModal = ({
               >
                 <Select
                   minW="25"
-                  value={currentSocialMedia}
+                  value={currentLink}
                   onChange={event => {
-                    setCurrentSocialMedia(event.target.value)
+                    const attr = event.target.value
+                    setCurrentLink(attr)
                   }}
-                  placeholder="Select Network"
+                  placeholder="Select option"
                 >
-                  {SOCIAL_MEDIA_OPTIONS.filter(
-                    med => !socialMedia.includes(med),
-                  ).map(med => (
+                  {LINK_OPTIONS.map(med => (
                     <chakra.option key={med.id} value={med.id}>
                       {med.label}
                     </chakra.option>
@@ -244,22 +257,24 @@ const HighlightsModal = ({
                 </Select>
                 <Input
                   placeholder="Enter link"
-                  value={currentSocialLink}
+                  value={currentLinkValue}
                   onChange={event => {
-                    setCurrentSocialLink(event.target.value)
+                    setCurrentLinkValue(event.target.value)
                   }}
                   type="url"
                 />
-                <Button colorScheme="blue" mx="auto" onClick={addSocialMedia}>
-                  Add
+                <Button colorScheme="blue" mx="auto" onClick={upsertLinks}>
+                  {atttributeExists(currentLink) ? 'Update' : 'Add'}
                 </Button>
               </Flex>
-              {socialMedia.length > 0 && (
+              <chakra.span color="red.300">{error}</chakra.span>
+              {linksWithValue.length > 0 && (
                 <ButtonGroup spacing="7" pt="3">
-                  {socialMedia.map(network => (
+                  {linksWithValue.map(network => (
                     <Tooltip label={network.label}>
                       <IconButton
                         key={network.id}
+                        onClick={() => setCurrentLink(network.id)}
                         aria-label={network.label}
                         bg="gray.100"
                         color="black"
@@ -288,7 +303,7 @@ const HighlightsModal = ({
                               bg="red.400"
                               _hover={{ bg: 'red.500' }}
                               rounded="full"
-                              onClick={() => removeSocialMedia(network.id)}
+                              onClick={() => removeLink(network.id)}
                             >
                               x
                             </chakra.span>
@@ -310,7 +325,7 @@ const HighlightsModal = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  ) : null
+  )
 }
 
 export default HighlightsModal

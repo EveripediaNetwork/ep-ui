@@ -143,7 +143,7 @@ const ActivityCard = ({
       </NextLink>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
-          <HStack w={{ base: '50%', md: '70%' }}>
+          <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
               cursor="pointer"
               as="h2"

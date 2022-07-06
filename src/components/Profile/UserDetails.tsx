@@ -19,6 +19,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import shortenAccount from '@/utils/shortenAccount'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -47,10 +48,10 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <NextSeo
-        title={`${username || 'Unnamed'} Profile Page - Everipedia`}
+        title={`${username || address} Profile Page - Everipedia`}
         openGraph={{
-          title: `${username || 'Unnamed'} Profile Page - Everipedia`,
-          description: `${username || 'Unnamed'} profile page`,
+          title: `${username || address} Profile Page - Everipedia`,
+          description: `${username || address} profile page`,
         }}
       />
       <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
@@ -76,7 +77,7 @@ export const UserDetails = (props: UserDetailsProps) => {
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
               svgProps={{
-                boxSize: isSticky ? '16' : '32',
+                boxSize: isSticky ? '10' : '32',
                 overflow: 'hidden',
                 borderWidth: 2,
                 borderColor: 'white',
@@ -88,16 +89,21 @@ export const UserDetails = (props: UserDetailsProps) => {
 
           <Skeleton isLoaded={!loading}>
             <chakra.span
-              fontSize={isSticky ? '2xl' : '3xl'}
+              fontSize={isSticky ? 'md' : '3xl'}
               fontWeight="semibold"
               letterSpacing="tighter"
             >
-              {username || 'Unnamed'}
+              {username || shortenAccount(address)}
             </chakra.span>
           </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
-          <ButtonGroup isAttached variant="outline" ml="auto" my="6">
+          <ButtonGroup
+            isAttached
+            variant="outline"
+            ml="auto"
+            my={isSticky ? 4 : 6}
+          >
             <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"
@@ -106,6 +112,7 @@ export const UserDetails = (props: UserDetailsProps) => {
                 icon={<FaShareAlt />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
+                {...(isSticky && { boxSize: 6, rounded: '4' })}
               />
             </Tooltip>
             <Tooltip label={t('settingBttnText')} {...tooltipProps}>
@@ -118,17 +125,12 @@ export const UserDetails = (props: UserDetailsProps) => {
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
                 disabled={address !== data?.address}
+                {...(isSticky && { boxSize: 6, rounded: '4' })}
               />
             </Tooltip>
           </ButtonGroup>
         </chakra.span>
       </Flex>
-
-      {!isSticky && (
-        <Flex gap="3" direction="column" px="6" w="full" align="center">
-          <chakra.span color="gray.500">Joined November 2020</chakra.span>
-        </Flex>
-      )}
     </>
   )
 }

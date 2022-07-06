@@ -46,13 +46,12 @@ const ImageInput = ({
     }
 
     try {
-      const response = await fetch(
-        `https://images.weserv.nl/?url=${event.target.value}`,
-        {
-          method: 'GET',
-          headers: {},
-        },
-      )
+      const imageUrl = event.target.value
+      const FullUrl = `https://everipedia-cors.vercel.app/?url=${imageUrl}`
+      const response = await fetch(FullUrl, {
+        method: 'GET',
+        headers: {},
+      })
       if (response.status !== 200) {
         removeImage()
         toast({

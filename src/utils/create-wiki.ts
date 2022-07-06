@@ -10,6 +10,7 @@ import {
   WikiRootBlocks,
   EditorContentOverride,
   ValidatorCodes,
+  whiteListedDomains,
 } from '@/types/Wiki'
 import diff from 'fast-diff'
 import { getWordCount } from '@/utils/getWordCount'
@@ -21,7 +22,10 @@ import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
-import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
+import {
+  getDraftFromLocalStorage,
+  removeDraftFromLocalStorage,
+} from '@/store/slices/wiki.slice'
 import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
@@ -235,6 +239,7 @@ export const useGetSignedHash = (deadline: number) => {
               setIsLoading(undefined)
               setActiveStep(3)
               setMsg(successMessage)
+              removeDraftFromLocalStorage()
               clearInterval(timer)
             }
           }
@@ -254,8 +259,8 @@ export const useGetSignedHash = (deadline: number) => {
           clearInterval(timer)
         }
       }, 3000)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [refetch],
   )
 
@@ -461,13 +466,6 @@ export const calculateEditInfo = (
 }
 
 export const isVerifiedContentLinks = (content: string) => {
-  const whitelistedDomains = [
-    'youtube.com/watch',
-    'youtu.be',
-    'vimeo.com',
-    'alpha.everipedia.org/wiki',
-    'ipfs.everipedia.org/ipfs',
-  ]
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
   markdownLinks?.every(link => {
@@ -475,7 +473,7 @@ export const isVerifiedContentLinks = (content: string) => {
     if (url && url.charAt(0) !== '#') {
       // check if url is of whitelisted domains
       const validURLRecognizer = new RegExp(
-        `^https?://(www\\.)?(${whitelistedDomains.join('|')})`,
+        `^https?://(www\\.)?(${whiteListedDomains.join('|')})`,
       )
       isValid = validURLRecognizer.test(url)
       return isValid

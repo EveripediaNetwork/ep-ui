@@ -189,15 +189,6 @@ const CreateWikiContent = () => {
       return false
     }
 
-    if (getWikiMetadataById(wiki, CommonMetaIds.PAGE_TYPE)?.value === null) {
-      toast({
-        title: 'Add a page type to continue',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
     if (!isVerifiedContentLinks(wiki.content)) {
       toast({
         title: 'Please remove all external links from the content',
@@ -336,23 +327,17 @@ const CreateWikiContent = () => {
     val: string | undefined,
     isInitSet?: boolean,
   ) => {
-    const newVal = val
-      ?.replace(/[<]br[^>]*[>]/, '\n')
-      ?.replace(/[<][/]br[^>]*[>]/, '\n')
-      .replace(/<[^>]+>/gm, '')
-      .replace(/\\/g, '')
-
     if (isInitSet)
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
-          content: newVal || ' ',
+          content: val || ' ',
         },
       })
     else
       dispatch({
         type: 'wiki/setContent',
-        payload: newVal || ' ',
+        payload: val || ' ',
       })
   }
 
