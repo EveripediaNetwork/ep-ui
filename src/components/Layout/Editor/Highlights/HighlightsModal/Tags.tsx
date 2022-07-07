@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
 import { useTagSearch } from '@/services/search/utils'
 
-const MAX_LENGTH = 15
+const MAX_LENGTH = 20
 
 const Tags = () => {
   const dispatch = useAppDispatch()

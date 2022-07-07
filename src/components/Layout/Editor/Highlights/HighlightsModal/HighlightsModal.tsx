@@ -206,7 +206,7 @@ const HighlightsModal = ({
                     })
                   }
                 }}
-                value={currentWiki.categories[0]?.title}
+                defaultValue={currentWiki.categories[0]?.id}
                 placeholder={
                   currentWiki.categories.length > 0
                     ? undefined
