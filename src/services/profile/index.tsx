@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
+  GET_USERNAME_TAKEN,
   GET_USER_PROFILE,
   GET_USER_SETTINGS,
   POST_USER_SETTINGS,
@@ -21,6 +22,10 @@ type SetProfileResponse = {
   }
 }
 
+type IsUsernameTakenData = {
+  usernameTaken: boolean
+}
+
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
@@ -38,6 +43,14 @@ export const profileApi = createApi({
         variables: { id },
       }),
       transformResponse: (response: UserProfileData) => response.getProfile,
+    }),
+    getUsernameTaken: builder.query<boolean, string>({
+      query: (username: string) => ({
+        document: GET_USERNAME_TAKEN,
+        variables: { username },
+      }),
+      transformResponse: (response: IsUsernameTakenData) =>
+        response.usernameTaken,
     }),
     postUserProfile: builder.mutation<
       ProfileSettingsData,
@@ -58,9 +71,14 @@ export const profileApi = createApi({
 export const {
   useGetUserSettingsQuery,
   useGetUserProfileQuery,
+  useGetUsernameTakenQuery,
   usePostUserProfileMutation,
   util: { getRunningOperationPromises },
 } = profileApi
 
-export const { getUserSettings, getUserProfile, postUserProfile } =
-  profileApi.endpoints
+export const {
+  getUserSettings,
+  getUserProfile,
+  getUsernameTaken,
+  postUserProfile,
+} = profileApi.endpoints

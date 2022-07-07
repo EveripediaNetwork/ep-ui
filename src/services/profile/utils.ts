@@ -1,7 +1,7 @@
 import { store } from '@/store/store'
 import { ProfileSettingsData } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
-import { getUserProfile, getUserSettings } from '.'
+import { getUsernameTaken, getUserProfile, getUserSettings } from '.'
 
 interface UserProfileOptions {
   withAllSettings: boolean
@@ -38,4 +38,9 @@ export const useUserProfileData = (
   }, [account, options?.withAllSettings])
 
   return { setAccount, profileData, loading }
+}
+
+export const isUserNameTaken = async (username: string) => {
+  const { data } = await store.dispatch(getUsernameTaken.initiate(username))
+  return data
 }

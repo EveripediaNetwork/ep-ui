@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useCallback } from 'react'
 import {
   Flex,
   Input,
@@ -20,6 +20,7 @@ import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
 import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileSettingsData } from '@/types/ProfileType'
+import { isUserNameTaken } from '@/services/profile/utils'
 import ImageUpload from './ImageUpload'
 
 interface ProfileSettingsProps {
@@ -71,6 +72,24 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
   }, [settingsData, userENSAddr])
 
+  const checkUsername = useCallback(async () => {
+    if (inputUsername.value.length > 2) {
+      if (
+        (await isUserNameTaken(inputUsername.value)) &&
+        settingsData?.username !== inputUsername.value
+      ) {
+        setInputUsername({
+          value: inputUsername.value,
+          error: 'Username is taken',
+        })
+      }
+    }
+  }, [inputUsername.value, settingsData?.username])
+
+  React.useEffect(() => {
+    checkUsername()
+  }, [checkUsername])
+
   // Validation Functions
   const validateUsername = (name: string): string => {
     if (!name) return 'Username is required'
@@ -83,7 +102,6 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     if (!/^[a-zA-Z0-9_]+$/.test(name)) {
       return 'Username can only contain letters, numbers and underscores'
     }
-    // TODO: Check if name is taken
     return ''
   }
   const validateBio = (bio: string): string => {
@@ -117,6 +135,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     setInputEmail({ ...inputEmail, error: validateEmail(inputEmail.value) })
 
     // if any field is invalid, focus on the first invalid one
+    checkUsername()
     if (inputUsername.error) {
       usernameRef.current?.focus()
       setIsLoading(false)

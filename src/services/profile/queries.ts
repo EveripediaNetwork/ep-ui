@@ -68,3 +68,9 @@ export const POST_USER_SETTINGS = gql`
     }
   }
 `
+
+export const GET_USERNAME_TAKEN = gql`
+  query getUsernameTaken($username: String!) {
+    usernameTaken(username: $username)
+  }
+`
