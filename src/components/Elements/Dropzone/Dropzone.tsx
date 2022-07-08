@@ -19,9 +19,15 @@ type DropzoneType = {
     showFetchedImage: boolean
     textType: string
   }
+  dropzonePlaceHolderTitle?: string
+  dropzonePlaceHolderSize?: string
 }
 
-const Dropzone = ({ dropZoneActions }: DropzoneType) => {
+const Dropzone = ({
+  dropZoneActions,
+  dropzonePlaceHolderTitle,
+  dropzonePlaceHolderSize,
+}: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
   const dispatch = useDispatch()
@@ -130,12 +136,25 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
               <Text textAlign="center">Drop the files here ...</Text>
             ) : (
               <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
-                <Text textAlign="center" opacity="0.5">
-                  Drag and drop a <b>{textType}</b>, or click to select.
-                </Text>
-                <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                  (10mb max)
-                </Text>
+                {dropzonePlaceHolderTitle ? (
+                  <>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      {dropzonePlaceHolderTitle}
+                    </Text>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      {dropzonePlaceHolderSize}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Text textAlign="center" opacity="0.5">
+                      Drag and drop a <b>{textType}</b>, or click to select.
+                    </Text>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      (10mb max)
+                    </Text>
+                  </>
+                )}
               </Box>
             )}
           </Box>
