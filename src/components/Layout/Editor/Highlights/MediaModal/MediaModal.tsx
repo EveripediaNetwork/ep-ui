@@ -95,7 +95,7 @@ const MediaModal = ({
   const dropZoneActions = {
     setImage: handleSetImage,
     showFetchedImage: false,
-    textType: 'image or video',
+    textType: 'image',
   }
 
   return isOpen ? (
@@ -113,7 +113,7 @@ const MediaModal = ({
             </Text>
             <Text fontSize="sm" fontWeight="normal">
               Adding media makes an article more interactive and engaging. You
-              can upload jpg, gif and png files.
+              can upload jpg, gif and png files or link to youtube videos.
             </Text>
           </VStack>
         </ModalHeader>
@@ -144,7 +144,11 @@ const MediaModal = ({
                           <WikiImage
                             cursor="pointer"
                             flexShrink={0}
-                            imageURL={constructMediaUrl(media)}
+                            imageURL={
+                              media.source !== 'YOUTUBE'
+                                ? constructMediaUrl(media)
+                                : `https://i3.ytimg.com/vi/${media.name}/maxresdefault.jpg`
+                            }
                             h={{ base: '30px', lg: '40px' }}
                             w={{ base: '30px', lg: '40px' }}
                             borderRadius="lg"
@@ -204,8 +208,16 @@ const MediaModal = ({
               py={5}
               mb={3}
             >
-              <Dropzone dropZoneActions={dropZoneActions} />
-              <ImageInput setImage={handleSetImage} showFetchedImage={false} />
+              <Dropzone
+                dropZoneActions={dropZoneActions}
+                dropzonePlaceHolderTitle={`Drag and drop an ${dropZoneActions.textType} or click to select.`}
+                dropzonePlaceHolderSize="(10mb max)"
+              />
+              <ImageInput
+                setImage={handleSetImage}
+                showFetchedImage={false}
+                modalUpload
+              />
             </Flex>
             {wiki.media !== undefined && wiki.media?.length > 0 && (
               <Box mb={8} justifyContent="center" display="flex">

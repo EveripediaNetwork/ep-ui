@@ -24,7 +24,11 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                 data-caption={m?.caption}
               >
                 <Image
-                  src={constructMediaUrl(m)}
+                  src={
+                    m.source !== 'YOUTUBE'
+                      ? constructMediaUrl(m)
+                      : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
+                  }
                   h="100%"
                   w="100%"
                   objectFit="cover"
