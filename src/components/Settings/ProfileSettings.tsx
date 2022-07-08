@@ -27,7 +27,8 @@ interface ProfileSettingsProps {
   settingsData?: ProfileSettingsData
 }
 const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
-  const [postUserProfile] = usePostUserProfileMutation()
+  const [postUserProfile, { error: postUserError }] =
+    usePostUserProfileMutation()
   interface StrEntry {
     value: string
     error: string
@@ -99,8 +100,13 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     if (name.length > 20) {
       return 'Username must be less than 20 characters long'
     }
-    if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+    if (!/^[a-z0-9]+(.eth)$|^[a-zA-Z0-9_]+$/.test(name)) {
       return 'Username can only contain letters, numbers and underscores'
+    }
+    if (name.endsWith('.eth')) {
+      if (name !== userENSAddr) {
+        return 'The account address is not linked with this ens address'
+      }
     }
     return ''
   }
@@ -171,11 +177,22 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
 
     await postUserProfile({ profileInfo: data })
 
+    // TODO: Error checking
+
+    let toastTitle = 'Profile Settings Saved'
+    let toastMessage =
+      'Your profile settings have been saved. Refresh the page to see the changes.'
+    let toastType: 'success' | 'error' = 'success'
+    if (postUserError) {
+      toastTitle = 'Profile Settings Failed'
+      toastMessage =
+        "We couldn't save your profile settings. Refresh the page and try again."
+      toastType = 'error'
+    }
     toast({
-      title: 'Profile Settings Saved',
-      description:
-        'Your profile settings have been saved. Refresh the page to see the changes.',
-      status: 'success',
+      title: toastTitle,
+      description: toastMessage,
+      status: toastType,
       duration: 5000,
       isClosable: true,
     })

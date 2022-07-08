@@ -55,7 +55,11 @@ const Profile: PageWithoutFooter = () => {
           width="full"
           height="56"
           objectFit="cover"
-          bgColor="gray.100"
+          bgColor="profileBannerBg"
+          backgroundImage="/images/homepage-bg-white.png"
+          _dark={{
+            backgroundImage: '/images/homepage-bg-dark.png',
+          }}
           src={`${config.pinataBaseUrl}${profileData?.banner}`}
         />
         {!loading ? (

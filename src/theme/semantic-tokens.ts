@@ -45,6 +45,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.700',
     },
+    profileBannerBg: {
+      default: 'gray.100',
+      _dark: 'gray.700',
+    },
     historyCommentBg: {
       default: 'white',
       _dark: 'gray.600',

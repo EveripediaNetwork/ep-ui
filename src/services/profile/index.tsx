@@ -16,12 +16,6 @@ type UserProfileData = {
   getProfile: ProfileSettingsData
 }
 
-type SetProfileResponse = {
-  createProfile: {
-    UserProfile: ProfileSettingsData
-  }
-}
-
 type IsUsernameTakenData = {
   usernameTaken: boolean
 }
@@ -62,8 +56,6 @@ export const profileApi = createApi({
           profileInfo: JSON.stringify(profileInfo),
         },
       }),
-      transformResponse: (response: SetProfileResponse) =>
-        response.createProfile.UserProfile,
     }),
   }),
 })
