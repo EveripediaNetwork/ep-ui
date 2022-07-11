@@ -1,7 +1,7 @@
 import React from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
+import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import CategoryCard from '@/components/Categories/CategoryCard'
 
@@ -14,6 +14,8 @@ import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
+const CATEGORY_HEADER =
+  'Explore different wikis in different categories of Everipedia Ranging from NFTs, to DAOs and so on.'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
@@ -25,6 +27,7 @@ const Categories: NextPage = () => {
           title="Wiki Category"
           openGraph={{
             title: 'Wiki Category',
+            description: CATEGORY_HEADER,
           }}
         />
       )}
@@ -40,11 +43,19 @@ const Categories: NextPage = () => {
         >
           {`${t('wikiCategory')}`}
         </Heading>
+        <Flex
+          textAlign="center"
+          justifyContent="center"
+          fontWeight="400"
+          mx="auto"
+          px={6}
+        >
+          <Text mt={3} mb={7}>
+            {CATEGORY_HEADER}
+          </Text>
+        </Flex>
         <Divider />
         <Box mt={16}>
-          <Heading fontSize={25} textAlign="center">
-            {`${t('trendingCategory')}`}
-          </Heading>
           <SimpleGrid
             columns={{ base: 1, sm: 2, lg: 3 }}
             width="min(90%, 1200px)"
