@@ -5,7 +5,9 @@ import UserInfo from '@/components/Profile/UserInfo'
 import { ProfileProvider } from '@/components/Profile/utils'
 import { UserProfileHeader } from '@/components/SEO/UserProfile'
 import config from '@/config'
+import { getUserAddressFromUsername } from '@/services/profile'
 import { useUserProfileData } from '@/services/profile/utils'
+import { store } from '@/store/store'
 import { Flex, Spinner, Box } from '@chakra-ui/react'
 import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
 import { GetServerSideProps, NextPage } from 'next'
@@ -70,8 +72,15 @@ Profile.noFooter = true
 export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
 
-  // TODO: check if userIdentifier is from user profile and redirect to profile page
+  // Redirect from regular ethereum address
+  const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
+  if (ethAddressRegex.test(userIdentifier)) {
+    return {
+      props: {},
+    }
+  }
 
+  // Redirect from ens domain
   if (userIdentifier.endsWith('.eth')) {
     const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
     const resolvedAddress = (await provider.resolveName(
@@ -86,8 +95,26 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     }
   }
+
+  // Redirect from username
+  const { isError, data: address } = await store.dispatch(
+    getUserAddressFromUsername.initiate(userIdentifier),
+  )
+  if (!isError) {
+    return {
+      redirect: {
+        destination: `/account/${address}`,
+        permanent: false,
+      },
+    }
+  }
+
+  // Redirect to 404 if no match
   return {
-    props: {},
+    redirect: {
+      destination: `/404`,
+      permanent: false,
+    },
   }
 }
 
