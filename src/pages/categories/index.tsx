@@ -14,8 +14,6 @@ import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
-const CATEGORY_HEADER =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non lobortis nisi. Etiam hendrerit eros vel mollis rutrum. Mauris eleifend et nunc eget placerat. Aenean quam dolor, faucibus sed dolor sed, sodales tempor dui. Quisque pulvinar diam eget tempor convallis. Phasellus ipsum tortor, sagittis nec rhoncus eu, cursus nec diam. Pellentesque condimentum, nulla at egestas egestas, lorem sem pellentesque mi, nec imperdiet enim metus eget felis.'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
@@ -27,7 +25,6 @@ const Categories: NextPage = () => {
           title="Wiki Category"
           openGraph={{
             title: 'Wiki Category',
-            description: CATEGORY_HEADER,
           }}
         />
       )}
