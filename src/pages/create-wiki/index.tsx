@@ -45,6 +45,7 @@ import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
 import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
+import ReactCanvasConfetti from 'react-canvas-confetti'
 
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
@@ -82,6 +83,7 @@ import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
+import useConfetti from '@/hooks/useConfetti'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -98,6 +100,7 @@ const CreateWikiContent = () => {
   const { data: accountData } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
+  const { fireConfetti, confettiProps } = useConfetti()
 
   const commitMessageLimitAlertStyle = {
     sx: {
@@ -346,8 +349,9 @@ const CreateWikiContent = () => {
   useEffect(() => {
     if (activeStep === 3) {
       prevEditedWiki.current.isPublished = true
+      fireConfetti()
     }
-  }, [activeStep])
+  }, [activeStep, fireConfetti])
 
   useEffect(() => {
     // get draft wiki if it exists
@@ -455,6 +459,7 @@ const CreateWikiContent = () => {
 
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto">
+      <ReactCanvasConfetti {...confettiProps} />
       <HStack
         boxShadow="sm"
         borderRadius={4}
