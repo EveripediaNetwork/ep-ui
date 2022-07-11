@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
 const CATEGORY_HEADER =
-  'Explore different wikis in different categories of Everipedia Ranging from NFTs, to DAOs and so on.'
+  'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
