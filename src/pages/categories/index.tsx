@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import CategoryCard from '@/components/Categories/CategoryCard'
 
 import {
@@ -34,10 +33,16 @@ const Categories: NextPage = () => {
       )}
       <Box mt="-12" bgColor="pageBg" pb={12}>
         <Image src="/images/categories-backdrop.png" height="250px" />
-        <Heading fontSize={40} textAlign="center" mt={12}>
+        <Heading
+          fontSize={{ base: 25, lg: 36 }}
+          maxW="80%"
+          mx="auto"
+          textAlign="center"
+          mt={8}
+          p={10}
+        >
           {`${t('wikiCategory')}`}
         </Heading>
-        <ToggleText my={8} text={CATEGORY_HEADER} />
         <Divider />
         <Box mt={16}>
           <Heading fontSize={25} textAlign="center">
