@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import NotificationSettings from '@/components/Settings/NotificationSettings'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
-import AdvancedSettings from '@/components/Settings/AdvancedSettings'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
-import ProfileSettings from '@/components/Settings/ProfileSettings'
+import dynamic from 'next/dynamic'
 import SignTokenMessage from './SignTokenMessage'
+
+const NotificationSettings = dynamic(
+  () => import('@/components/Settings/NotificationSettings'),
+)
+const ProfileSettings = dynamic(
+  () => import('@/components/Settings/ProfileSettings'),
+)
+const AdvancedSettings = dynamic(
+  () => import('@/components/Settings/AdvancedSettings'),
+)
 
 const Settings = () => {
   const { query } = useRouter()
