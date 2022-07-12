@@ -5,7 +5,7 @@ import RemoveMarkdown from 'remove-markdown'
 export enum WikiSummarySize {
   Small = 65,
   Medium = 70,
-  Big = 250,
+  Big = 160,
 }
 
 export const getWikiSummary = (
