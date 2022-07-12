@@ -42,6 +42,17 @@ export const PasteListener = (e: Event) => {
       toRemoveLinks[i].removeAttribute('href')
     }
 
+    const divTags = sanitizedPaste.getElementsByTagName('div')
+    for (let i = 0; i < divTags.length; i += 1) {
+      const div = divTags[i]
+      const className = div.getAttribute('class')
+      if (className?.match(/Typography__Paragraph/)) {
+        const newDiv = document.createElement('div')
+        newDiv.innerHTML = `${div.innerHTML}<p/>`
+        div.parentNode?.replaceChild(newDiv, div)
+      }
+    }
+
     const transformedPasteHTML = sanitizedPaste.body.innerHTML
       .replace(/<br *\/?>/g, '<p/>') // fixes <br>s not being inserted to editor
       .replace(/\[[0-9]+\](?!( *(<\/sup>)? *<\/a>))/g, '') // removes cite marks which are not wrapped in <a>
