@@ -32,8 +32,9 @@ import {
   AiOutlineLinkedin,
   AiOutlineYoutube,
 } from 'react-icons/ai'
+import { BsReddit, BsGithub, BsTelegram, BsGlobe } from 'react-icons/bs'
+import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
-import { BsGlobe } from 'react-icons/bs'
 import { FaEthereum } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
@@ -44,6 +45,30 @@ export const LINK_OPTIONS = [
     label: 'Facebook',
     icon: <AiOutlineFacebook />,
     tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.REDDIT_URL,
+    label: 'Reddit',
+    icon: <BsReddit />,
+    tests: [/https:\/\/www\.reddit\.com\/user\//i],
+  },
+  {
+    id: CommonMetaIds.EMAIL_URL,
+    label: 'Email',
+    icon: <MdEmail />,
+    tests: [/mailto:/i],
+  },
+  {
+    id: CommonMetaIds.GITHUB_URL,
+    label: 'Github',
+    icon: <BsGithub />,
+    tests: [/https:\/\/github\.com\//i],
+  },
+  {
+    id: CommonMetaIds.TELEGRAM_URL,
+    label: 'Telegram',
+    icon: <BsTelegram />,
+    tests: [/https:\/\/t\.me\//i],
   },
   {
     id: CommonMetaIds.INSTAGRAM_PROFILE,
@@ -88,7 +113,7 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.CONTRACT_URL,
     label: 'Contract URL',
     icon: <FaEthereum />,
-    tests: [/https:\/\/(www.)?\w+.\w+/],
+    tests: [],
   },
 ]
 
@@ -108,7 +133,6 @@ const HighlightsModal = ({
   const linksWithValue = LINK_OPTIONS.filter(
     med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
-
   const removeLink = (network: string) => {
     dispatch({
       type: 'wiki/updateMetadata',
@@ -167,7 +191,7 @@ const HighlightsModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLink])
 
-  return (
+  return isOpen ? (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
@@ -269,7 +293,7 @@ const HighlightsModal = ({
               </Flex>
               <chakra.span color="red.300">{error}</chakra.span>
               {linksWithValue.length > 0 && (
-                <ButtonGroup spacing="7" pt="3">
+                <ButtonGroup gap="4" flexWrap="wrap" pt="3">
                   {linksWithValue.map(network => (
                     <Tooltip label={network.label}>
                       <IconButton
@@ -325,7 +349,7 @@ const HighlightsModal = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  ) : null
 }
 
 export default HighlightsModal
