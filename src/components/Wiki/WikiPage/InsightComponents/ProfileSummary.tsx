@@ -36,7 +36,7 @@ const SocialProfiles = ({
         <HStack
           bgColor="wikiCardItemBg"
           borderRadius={4}
-          // justify="space-between"
+          justify="space-between"
           align="center"
           p={4}
         >
@@ -66,7 +66,7 @@ const SocialProfiles = ({
                         minW={3}
                         icon={ico}
                         variant="link"
-                        fontSize="27px"
+                        fontSize="20px"
                       />
                     </Link>
                   )
@@ -84,6 +84,13 @@ const OfficialSite = ({
 }: {
   socialMetaData: SocialMetaDataInterface[]
 }) => {
+  if (
+    socialMetaData.filter((item: { id: string }) => {
+      return item.id === 'website'
+    }).length === 0
+  ) {
+    return null
+  }
   return (
     <>
       {socialMetaData.length !== 0 && (
@@ -130,6 +137,13 @@ const ContractLink = ({
 }: {
   socialMetaData: SocialMetaDataInterface[]
 }) => {
+  if (
+    socialMetaData.filter((item: { id: string }) => {
+      return item.id === 'contract_url'
+    }).length === 0
+  ) {
+    return null
+  }
   return (
     <>
       {socialMetaData.length !== 0 && (

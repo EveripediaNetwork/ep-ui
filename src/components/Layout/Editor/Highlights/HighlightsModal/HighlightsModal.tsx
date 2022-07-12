@@ -24,16 +24,18 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { RiSurveyLine } from 'react-icons/ri'
-import {
-  AiOutlineFacebook,
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-  AiOutlineLinkedin,
-  AiOutlineYoutube,
-} from 'react-icons/ai'
-import { BsReddit, BsGithub, BsTelegram, BsGlobe } from 'react-icons/bs'
+import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
+import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
+import TwitterIcon from '@/components/Icons/twitterIcon'
+import RedditIcon from '@/components/Icons/redditIcon'
+import InstagramIcon from '@/components/Icons/instagramIcon'
+import FacebookIcon from '@/components/Icons/facebookIcon'
+import GithubIcon from '@/components/Icons/githubIcon'
+import TelegramIcon from '@/components/Icons/telegramIcon'
+import EmailIcon from '@/components/Icons/emailIcon'
+
 import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
@@ -44,7 +46,7 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.REDDIT_URL,
     label: 'Reddit',
-    icon: <BsReddit />,
+    icon: <RedditIcon />,
     tests: [/https:\/\/www\.reddit\.com\/user\//i],
   },
   {
@@ -56,25 +58,25 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.GITHUB_URL,
     label: 'Github',
-    icon: <BsGithub />,
+    icon: <GithubIcon />,
     tests: [/https:\/\/github\.com\//i],
   },
   {
     id: CommonMetaIds.TELEGRAM_URL,
     label: 'Telegram',
-    icon: <BsTelegram />,
+    icon: <TelegramIcon />,
     tests: [/https:\/\/t\.me\//i],
   },
   {
     id: CommonMetaIds.INSTAGRAM_PROFILE,
     label: 'Instagram',
-    icon: <AiOutlineInstagram />,
+    icon: <InstagramIcon />,
     tests: [/https:\/\/(www.)?instagram.com\/\w+/],
   },
   {
     id: CommonMetaIds.TWITTER_PROFILE,
     label: 'Twitter',
-    icon: <AiOutlineTwitter />,
+    icon: <TwitterIcon />,
     tests: [/https:\/\/(www.)?twitter.com\/\w+/],
   },
   {
@@ -110,7 +112,7 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
-    icon: <AiOutlineFacebook />,
+    icon: <FacebookIcon />,
     tests: [/https:\/\/(www.)?facebook.com\/\w+/],
   },
   {
@@ -194,8 +196,8 @@ const HighlightsModal = ({
     setError('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLink])
-
-  return isOpen ? (
+  if (!isOpen) return null
+  return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
@@ -353,7 +355,7 @@ const HighlightsModal = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  ) : null
+  )
 }
 
 export default HighlightsModal

@@ -3,7 +3,7 @@ import { Icon, IconProps } from '@chakra-ui/react'
 
 const CoinGeckoIcon = (props: IconProps) => {
   return (
-    <Icon width="5" height="5" viewBox="0 0 24 24" fill="none" {...props}>
+    <Icon viewBox="0 0 24 24" fill="none" {...props}>
       <g clipPath="url(#clip0_4840_35888)">
         <path
           d="M12 6.14306C12.5406 6.17558 14.4955 6.7087 15 7C14.5796 5.97478 13.1645 5.83832 12 6.14306Z"
