@@ -161,12 +161,11 @@ const ContractLink = ({
                     >
                       <Flex align="center" gap="2">
                         <Text>
-                          `{social.value.slice(0, 6)}...
+                          {social.value.slice(0, 6)}...
                           {social.value.substring(
                             social.value.length - 4,
                             social.value.length,
                           )}
-                          `
                         </Text>
                         <FiExternalLink color="#ff5caa" fontSize="18px" />
                       </Flex>

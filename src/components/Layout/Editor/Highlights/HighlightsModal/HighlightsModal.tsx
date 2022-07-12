@@ -32,20 +32,17 @@ import {
   AiOutlineLinkedin,
   AiOutlineYoutube,
 } from 'react-icons/ai'
-import { BsReddit, BsGithub, BsTelegram, BsGlobe } from 'react-icons/bs'
+import { BsReddit, BsGithub, BsTelegram } from 'react-icons/bs'
+import CoinGeckoIcon from '@/components/Icons/coingecko'
+import CoinMarketCap from '@/components/Icons/coinmarketcap'
 import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
-import { FaEthereum } from 'react-icons/fa'
+import { BsGlobe } from 'react-icons/bs'
+import { FaEthereum, FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 
 export const LINK_OPTIONS = [
-  {
-    id: CommonMetaIds.FACEBOOK_PROFILE,
-    label: 'Facebook',
-    icon: <AiOutlineFacebook />,
-    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
-  },
   {
     id: CommonMetaIds.REDDIT_URL,
     label: 'Reddit',
@@ -56,7 +53,7 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.EMAIL_URL,
     label: 'Email',
     icon: <MdEmail />,
-    tests: [/mailto:/i],
+    tests: [/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/],
   },
   {
     id: CommonMetaIds.GITHUB_URL,
@@ -97,11 +94,8 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
     label: 'Coingecko',
-    icon: <GiTwoCoins />,
-    tests: [
-      /https:\/\/(www.)?coinmarketcap.com\/currencies\/\w+/,
-      /https:\/\/(www.)?coingecko.com\/en\/coins\//,
-    ],
+    icon: <CoinGeckoIcon />,
+    tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
   },
   {
     id: CommonMetaIds.WEBSITE,
@@ -112,8 +106,20 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.CONTRACT_URL,
     label: 'Contract URL',
-    icon: <FaEthereum />,
-    tests: [],
+    icon: <FaFileContract />,
+    tests: [/i/],
+  },
+  {
+    id: CommonMetaIds.FACEBOOK_PROFILE,
+    label: 'Facebook',
+    icon: <AiOutlineFacebook />,
+    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.COIN_MARKET_CAP,
+    label: 'Coin Market Cap',
+    icon: <CoinMarketCap />,
+    tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
 ]
 

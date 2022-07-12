@@ -42,6 +42,7 @@ export enum CommonMetaIds {
   EMAIL_URL = 'email_url',
   GITHUB_URL = 'github_profile',
   TELEGRAM_URL = 'telegram_profile',
+  COIN_MARKET_CAP = 'coinmarketcap_icon',
 }
 
 export enum ValidatorCodes {
