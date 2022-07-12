@@ -24,7 +24,6 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { RiSurveyLine } from 'react-icons/ri'
-import { GiTwoCoins } from 'react-icons/gi'
 import {
   AiOutlineFacebook,
   AiOutlineInstagram,
@@ -32,13 +31,12 @@ import {
   AiOutlineLinkedin,
   AiOutlineYoutube,
 } from 'react-icons/ai'
-import { BsReddit, BsGithub, BsTelegram } from 'react-icons/bs'
+import { BsReddit, BsGithub, BsTelegram, BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
 import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
-import { BsGlobe } from 'react-icons/bs'
-import { FaEthereum, FaFileContract } from 'react-icons/fa'
+import { FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 
