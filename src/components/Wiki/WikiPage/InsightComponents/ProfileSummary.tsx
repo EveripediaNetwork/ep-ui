@@ -209,9 +209,6 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
         gap={2}
         title="Profile Summary"
       >
-        {/* {sampleProfileSummary.map((item, index) => (
-          <AccordionWidget key={index} {...item} />
-        ))} */}
         <ContractLink socialMetaData={socialMetaData} />
         <OfficialSite socialMetaData={socialMetaData} />
         <SocialProfiles socialMetaData={socialMetaData} />
