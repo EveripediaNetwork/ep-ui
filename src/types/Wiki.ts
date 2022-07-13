@@ -1,3 +1,5 @@
+import { ProfileData } from './ProfileType'
+
 export interface BaseCategory {
   id: string
   title: string
@@ -81,6 +83,7 @@ export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
+  profile: ProfileData | null
 }
 
 export enum PageTypeName {

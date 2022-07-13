@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { Wiki } from '@/types/Wiki'
-import shortenAccount from '@/utils/shortenAccount'
 import NextLink from 'next/link'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
@@ -21,11 +20,12 @@ import { useENSData } from '@/hooks/useENSData'
 import CustomAvatar from 'boring-avatars'
 import { AvatarColorArray } from '@/data/AvatarData'
 import { getWikiSummary } from '@/utils/getWikiSummary'
+import { getUsername } from '@/utils/getUsername'
 import { WikiImage } from '../WikiImage'
 
 const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
-  const [avatar, username] = useENSData(wiki?.user?.id)
+  const [avatar, userEnsDomain] = useENSData(wiki?.user?.id)
   const [mounted, setMounted] = useState(false)
 
   useEffect(function mountApp() {
@@ -87,7 +87,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
             <Text fontSize="14px" color="linkColor">
               <NextLink href={`/account/${wiki?.user?.id}`} passHref>
                 <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {username || shortenAccount(wiki?.user?.id || '')}
+                  {getUsername(wiki?.user, userEnsDomain)}
                 </Link>
               </NextLink>
             </Text>

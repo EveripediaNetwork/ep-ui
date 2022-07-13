@@ -117,6 +117,9 @@ export const GET_PROMOTED_WIKIS = gql`
       }
       user {
         id
+        profile {
+          username
+        }
       }
     }
   }
