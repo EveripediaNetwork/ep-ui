@@ -10,6 +10,8 @@ import {
   Skeleton,
   Text,
   VStack,
+  useClipboard,
+  useToast,
 } from '@chakra-ui/react'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
@@ -34,6 +36,13 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const { headerIsSticky } = useProfileContext()
   const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
+  const customLink = `${window.origin}/account/${
+    profileData?.username || address || ensUserName
+  }`
+
+  const clipboard = useClipboard(customLink || '')
+
+  const toast = useToast()
 
   const tooltipProps: Partial<TooltipProps> = {
     placement: 'top',
@@ -121,6 +130,14 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 icon={<RiShareFill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
+                onClick={() => {
+                  clipboard.onCopy()
+                  toast({
+                    title: 'Profile Link Copied to Clipboard!',
+                    status: 'success',
+                    duration: 1000,
+                  })
+                }}
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>

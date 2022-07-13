@@ -1,9 +1,8 @@
 import React from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import { Divider, Box, Heading, SimpleGrid } from '@chakra-ui/react'
+import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 import CategoryCard from '@/components/Categories/CategoryCard'
 
 import {
@@ -16,7 +15,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
 const CATEGORY_HEADER =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non lobortis nisi. Etiam hendrerit eros vel mollis rutrum. Mauris eleifend et nunc eget placerat. Aenean quam dolor, faucibus sed dolor sed, sodales tempor dui. Quisque pulvinar diam eget tempor convallis. Phasellus ipsum tortor, sagittis nec rhoncus eu, cursus nec diam. Pellentesque condimentum, nulla at egestas egestas, lorem sem pellentesque mi, nec imperdiet enim metus eget felis.'
+  'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
@@ -34,15 +33,29 @@ const Categories: NextPage = () => {
       )}
       <Box mt="-12" bgColor="pageBg" pb={12}>
         <Image src="/images/categories-backdrop.png" height="250px" />
-        <Heading fontSize={40} textAlign="center" mt={12}>
+        <Heading
+          fontSize={{ base: 25, lg: 36 }}
+          maxW="80%"
+          mx="auto"
+          textAlign="center"
+          mt={8}
+          p={10}
+        >
           {`${t('wikiCategory')}`}
         </Heading>
-        <ToggleText my={8} text={CATEGORY_HEADER} />
+        <Flex
+          textAlign="center"
+          justifyContent="center"
+          fontWeight="400"
+          mx="auto"
+          px={6}
+        >
+          <Text mt={3} mb={7}>
+            {CATEGORY_HEADER}
+          </Text>
+        </Flex>
         <Divider />
         <Box mt={16}>
-          <Heading fontSize={25} textAlign="center">
-            {`${t('trendingCategory')}`}
-          </Heading>
           <SimpleGrid
             columns={{ base: 1, sm: 2, lg: 3 }}
             width="min(90%, 1200px)"

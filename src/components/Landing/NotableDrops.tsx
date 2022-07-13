@@ -46,7 +46,7 @@ const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
   )
 }
 
-export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
+const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
   const { t } = useTranslation()
   const [isMounted, setIsMounted] = React.useState(false)
 
@@ -111,6 +111,7 @@ export const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
   )
 }
 
+export default NotableDrops
 interface NotableDropsProps {
   drops: Wiki[] | undefined
 }
