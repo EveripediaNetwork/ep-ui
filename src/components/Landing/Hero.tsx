@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Avatar,
   Box,
   ButtonGroup,
   Heading,
@@ -17,15 +16,14 @@ import NextLink from 'next/link'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
 import { useENSData } from '@/hooks/useENSData'
-import CustomAvatar from 'boring-avatars'
-import { AvatarColorArray } from '@/data/AvatarData'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getUsername } from '@/utils/getUsername'
 import { WikiImage } from '../WikiImage'
+import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
-  const [avatar, userEnsDomain] = useENSData(wiki?.user?.id)
+  const [userEnsDomain] = useENSData(wiki?.user?.id)
   const [mounted, setMounted] = useState(false)
 
   useEffect(function mountApp() {
@@ -72,16 +70,11 @@ const HeroCard = ({ wiki }: HeroProps) => {
           <Flex gap={3}>
             <NextLink href={`/account/${wiki?.user?.id}`} passHref>
               <Box>
-                {avatar ? (
-                  <Avatar size="xs" src={avatar} />
-                ) : (
-                  <CustomAvatar
-                    size="20"
-                    variant="pixel"
-                    name="Unnamed"
-                    colors={AvatarColorArray}
-                  />
-                )}
+                <DisplayAvatar
+                  size="20"
+                  address={wiki?.user.id}
+                  avatarIPFS={wiki?.user.profile?.avatar}
+                />
               </Box>
             </NextLink>
             <Text fontSize="14px" color="linkColor">

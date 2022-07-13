@@ -3,6 +3,7 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_USERNAME_TAKEN,
   GET_USER_ADDRESS_FROM_USERNAME,
+  GET_USER_AVATAR,
   GET_USER_PROFILE,
   GET_USER_SETTINGS,
   POST_USER_SETTINGS,
@@ -19,10 +20,6 @@ type UserProfileData = {
 
 type IsUsernameTakenData = {
   usernameTaken: boolean
-}
-
-type UserAddressFromUsernameData = {
-  getProfile: ProfileSettingsData
 }
 
 export const profileApi = createApi({
@@ -51,13 +48,20 @@ export const profileApi = createApi({
       transformResponse: (response: IsUsernameTakenData) =>
         response.usernameTaken,
     }),
+    getUserAvatar: builder.query<string, string>({
+      query: (id: string) => ({
+        document: GET_USER_AVATAR,
+        variables: { id },
+      }),
+      transformResponse: (response: UserProfileData) =>
+        response.getProfile.avatar || '',
+    }),
     getUserAddressFromUsername: builder.query<string, string>({
       query: (username: string) => ({
         document: GET_USER_ADDRESS_FROM_USERNAME,
         variables: { username },
       }),
-      transformResponse: (response: UserAddressFromUsernameData) =>
-        response.getProfile.id,
+      transformResponse: (response: UserProfileData) => response.getProfile.id,
     }),
     postUserProfile: builder.mutation<
       ProfileSettingsData,
@@ -78,6 +82,7 @@ export const {
   useGetUserProfileQuery,
   useGetUsernameTakenQuery,
   usePostUserProfileMutation,
+  useGetUserAvatarQuery,
   useGetUserAddressFromUsernameQuery,
   util: { getRunningOperationPromises },
 } = profileApi
@@ -86,6 +91,7 @@ export const {
   getUserSettings,
   getUserProfile,
   getUsernameTaken,
+  getUserAvatar,
   getUserAddressFromUsername,
   postUserProfile,
 } = profileApi.endpoints

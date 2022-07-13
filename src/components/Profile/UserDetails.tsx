@@ -84,6 +84,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
               justifySelf="center"
               {...(isSticky && { mt: 0, boxSize: 9 })}
               address={address}
+              avatarIPFS={profileData?.avatar}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}

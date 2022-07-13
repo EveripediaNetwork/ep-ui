@@ -1,16 +1,23 @@
 import { store } from '@/store/store'
 import { ProfileSettingsData } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
-import { getUsernameTaken, getUserProfile, getUserSettings } from '.'
+import {
+  getUserAvatar,
+  getUsernameTaken,
+  getUserProfile,
+  getUserSettings,
+} from '.'
 
 interface UserProfileOptions {
-  withAllSettings: boolean
+  withAllSettings?: boolean
+  onlyAvatar?: boolean
 }
 export const useUserProfileData = (
   address?: string,
   options?: UserProfileOptions,
 ) => {
   const [profileData, setProfileData] = useState<ProfileSettingsData>()
+  const [avatar, setAvatar] = useState<string>()
   const [account, setAccount] = useState<string>(address || '')
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -23,6 +30,11 @@ export const useUserProfileData = (
             getUserSettings.initiate(account),
           )
           setProfileData(fetchedProfileData)
+        } else if (options?.onlyAvatar) {
+          const { data: fetchedUserProfileAvatar } = await store.dispatch(
+            getUserAvatar.initiate(account),
+          )
+          setAvatar(fetchedUserProfileAvatar)
         } else {
           const { data: fetchedProfileData } = await store.dispatch(
             getUserProfile.initiate(account),
@@ -35,9 +47,9 @@ export const useUserProfileData = (
       }
     }
     fetchSettings()
-  }, [account, options?.withAllSettings])
+  }, [account, options?.onlyAvatar, options?.withAllSettings])
 
-  return { setAccount, profileData, loading }
+  return { setAccount, profileData, loading, avatar }
 }
 
 export const isUserNameTaken = async (username: string) => {

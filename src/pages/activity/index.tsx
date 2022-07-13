@@ -26,7 +26,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
     setTimeout(() => {
-      const fetchNewActivites = async () => {
+      const fetchNewActivities = async () => {
         const result = await store.dispatch(
           getLatestActivities.initiate({
             limit: ITEM_PER_PAGE,
@@ -44,7 +44,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
           setLoading(false)
         }
       }
-      fetchNewActivites()
+      fetchNewActivities()
     }, FETCH_DELAY_TIME)
   }
 
@@ -60,7 +60,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       key={activity.id}
       title={activity.content[0].title}
       brief={getWikiSummary(activity?.content[0])}
-      editor={activity.content[0].user.id}
+      editor={activity.content[0].user}
       lastModTimeStamp={activity.datetime}
       wiki={activity.content[0]}
       activityId={activity.id}

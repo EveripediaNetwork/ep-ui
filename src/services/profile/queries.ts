@@ -82,3 +82,11 @@ export const GET_USER_ADDRESS_FROM_USERNAME = gql`
     }
   }
 `
+
+export const GET_USER_AVATAR = gql`
+  query getUserAvatar($id: String!) {
+    getProfile(id: $id) {
+      avatar
+    }
+  }
+`
