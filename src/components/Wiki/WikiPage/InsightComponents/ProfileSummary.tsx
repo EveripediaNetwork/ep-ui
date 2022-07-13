@@ -40,7 +40,7 @@ const SocialProfiles = ({
           align="center"
           p={4}
         >
-          <HStack spacing={2}>
+          <HStack>
             <Text fontSize="14px" fontWeight="bold" color="linkColor">
               Social Profiles:
             </Text>
