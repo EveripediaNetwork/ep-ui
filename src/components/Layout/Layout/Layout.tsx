@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Stack } from '@chakra-ui/react'
-import Navbar from '@/components/Layout/Navbar/Navbar'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import { useAccount } from 'wagmi'
@@ -8,6 +7,8 @@ import { useAccount } from 'wagmi'
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   ssr: false,
 }) as () => JSX.Element
+
+const Navbar = dynamic(() => import('@/components/Layout/Navbar/Navbar'))
 
 const Layout = ({
   children,

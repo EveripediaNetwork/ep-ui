@@ -98,7 +98,7 @@ const HeroCard = ({ wiki }: HeroProps) => {
   )
 }
 
-export const Hero = ({ wiki }: HeroProps) => {
+const Hero = ({ wiki }: HeroProps) => {
   const { t } = useTranslation()
 
   return (
@@ -154,6 +154,7 @@ export const Hero = ({ wiki }: HeroProps) => {
   )
 }
 
+export default Hero
 interface HeroProps {
   wiki: Wiki | undefined
 }
