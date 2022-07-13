@@ -47,7 +47,7 @@ const History = () => {
           <ActivityCard
             title={wiki.title}
             brief={getWikiSummary(wiki)}
-            editor={wiki.user.id}
+            editor={wiki.user}
             lastModTimeStamp={wiki.updated}
             wiki={wiki}
             wikiId={wiki.id}
