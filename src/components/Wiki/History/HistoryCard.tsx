@@ -19,6 +19,8 @@ import { format } from 'date-fns'
 import { shortenText } from '@/utils/shortenText'
 import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
+import { User } from '@/types/Wiki'
+import { getUsername } from '@/utils/getUsername'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -70,7 +72,7 @@ interface HistoryCardProps {
   activityId: string
   isRightAligned?: boolean
   isFullWidth?: boolean
-  lastEditor?: string
+  lastEditor?: User
   lastEditedTime?: string
   transactionAddress?: string
   IPFS?: string
@@ -84,7 +86,7 @@ export const HistoryCard = ({
   activityId,
   isRightAligned,
   isFullWidth,
-  lastEditor = '',
+  lastEditor = { id: '' },
   lastEditedTime,
   transactionAddress = '',
   IPFS = '',
@@ -93,7 +95,7 @@ export const HistoryCard = ({
   percentChanged,
   blocksChanged = '',
 }: HistoryCardProps) => {
-  const [, username] = useENSData(lastEditor)
+  const [, userENSDomain] = useENSData(lastEditor.id)
 
   // validate wordsChanged, percentChanged
   let checkedWordsChanged = '0'
@@ -131,9 +133,12 @@ export const HistoryCard = ({
       <HStack justify="space-between">
         {/* Username and Avatar of the last editor */}
         <HStack>
-          <DisplayAvatar address={lastEditor} />
+          <DisplayAvatar
+            address={lastEditor.id}
+            avatarIPFS={lastEditor.profile?.avatar}
+          />
           <Link href={`/account/${lastEditor}`} color="brand.500">
-            {username || shortenAccount(lastEditor)}
+            {getUsername(lastEditor, userENSDomain)}
           </Link>
         </HStack>
 

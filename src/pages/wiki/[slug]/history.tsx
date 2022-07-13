@@ -86,7 +86,7 @@ const History = () => {
                   activityId={activity.id}
                   isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}
                   isFullWidth={isHistoryFullWidth}
-                  lastEditor={activity.content[0].user.id}
+                  lastEditor={activity.content[0].user}
                   lastEditedTime={activity.datetime}
                   transactionAddress={activity.content[0].transactionHash}
                   IPFS={activity.ipfs}
