@@ -38,6 +38,11 @@ export enum CommonMetaIds {
   COINGECKO_PROFILE = 'coingecko_profile',
   WEBSITE = 'website',
   CONTRACT_URL = 'contract_url',
+  REDDIT_URL = 'reddit_profile',
+  EMAIL_URL = 'email_url',
+  GITHUB_URL = 'github_profile',
+  TELEGRAM_URL = 'telegram_profile',
+  COIN_MARKET_CAP = 'coinmarketcap_url',
 }
 
 export enum ValidatorCodes {

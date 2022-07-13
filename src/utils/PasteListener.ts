@@ -39,7 +39,7 @@ export const PasteListener = (e: Event) => {
       }
     }
     for (let i = 0; i < toRemoveLinks.length; i += 1) {
-      toRemoveLinks[i].remove()
+      toRemoveLinks[i].removeAttribute('href')
     }
 
     const transformedPasteHTML = sanitizedPaste.body.innerHTML

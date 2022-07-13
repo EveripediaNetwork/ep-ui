@@ -45,13 +45,18 @@ const Connectors = () => {
   })
   const { data: accountData } = useAccount()
   const { userBalance } = useFetchWalletBalance(accountData?.address)
-  const { walletDetails, totalBalance, balanceBreakdown } = useSelector(
+  const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
   const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
+  const hiIQData = {
+    formatted: `${hiiq?.hiiqBalance}`,
+    symbol: `${hiiq?.symbol}`,
+    tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
+  }
 
   useEffect(() => {
     if (userBalance && !walletDetails) {
@@ -151,6 +156,16 @@ const Connectors = () => {
                     <Divider />
                   </React.Fragment>
                 ))}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      balance={shortenBalance(Number(hiiq?.hiiqBalance))}
+                      tokensArray={[hiIQData?.tokensArray]}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>

@@ -6,10 +6,15 @@ import {
   getRunningOperationPromises,
   useGetPromotedWikisQuery,
 } from '@/services/wikis'
-import { Hero } from '@/components/Landing/Hero'
-import CategoriesList from '@/components/Landing/CategoriesList'
 import { store } from '@/store/store'
-import { NotableDrops } from '@/components/Landing/NotableDrops'
+import dynamic from 'next/dynamic'
+
+const Hero = dynamic(() => import('@/components/Landing/Hero'))
+const NotableDrops = dynamic(() => import('@/components/Landing/NotableDrops'))
+
+const CategoriesList = dynamic(
+  () => import('@/components/Landing/CategoriesList'),
+)
 
 export const Index: NextPage = () => {
   const result = useGetPromotedWikisQuery()
