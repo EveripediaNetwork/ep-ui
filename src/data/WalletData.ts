@@ -21,4 +21,8 @@ export const tokenDetails: { [key: string]: { name: string; logo: string } } = {
     name: 'everipedia',
     logo: 'braindao-logo.svg',
   },
+  HiIQ: {
+    name: 'HiIQ',
+    logo: 'braindao-logo.svg',
+  },
 }

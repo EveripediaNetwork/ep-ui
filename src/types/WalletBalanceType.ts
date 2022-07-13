@@ -43,3 +43,12 @@ export type TokenDetailsType = {
   price: number
   token: string | undefined
 } | null
+
+export type HiIQDetailsType = {
+  hiiqBalance: number
+  iqBalance: number
+  iqPrice: number
+  lockEndDate?: Date
+  symbol: string
+  totalUsdBalance: number
+}

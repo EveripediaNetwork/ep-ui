@@ -33,6 +33,7 @@ import { useDispatch } from 'react-redux'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
+import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 
 const toastProperties: UseToastOptions = {
@@ -59,6 +60,7 @@ const WalletDrawer = ({
 }: WalletDrawerType) => {
   const { data: accountData } = useAccount()
   const [, username] = useENSData(accountData?.address)
+  useHiIQBalance(accountData?.address)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
   const toast = useToast()
