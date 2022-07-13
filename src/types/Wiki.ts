@@ -83,7 +83,7 @@ export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
-  profile: ProfileData | null
+  profile?: ProfileData | null
 }
 
 export enum PageTypeName {
