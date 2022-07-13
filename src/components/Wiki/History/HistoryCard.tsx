@@ -137,7 +137,7 @@ export const HistoryCard = ({
             address={lastEditor.id}
             avatarIPFS={lastEditor.profile?.avatar}
           />
-          <Link href={`/account/${lastEditor}`} color="brand.500">
+          <Link href={`/account/${lastEditor.id}`} color="brand.500">
             {getUsername(lastEditor, userENSDomain)}
           </Link>
         </HStack>
