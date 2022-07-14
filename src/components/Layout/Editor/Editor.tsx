@@ -3,26 +3,19 @@ import { Box, useColorMode } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@toast-ui/editor/dist/toastui-editor.css'
-import type {
-  Editor as ToastUIEditor,
-  EditorProps,
-} from '@toast-ui/react-editor'
-
+import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
+import wikiLink from '@/editor-plugins/wikiLink'
+import cite from '@/editor-plugins/cite'
 import { EditorContentOverride } from '@/types/Wiki'
+import { Dict } from '@chakra-ui/utils'
 import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
+import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/PasteListener'
-import dynamic from 'next/dynamic'
 
-const ToastUIEditorJSX = dynamic(() => import('./EditorWithRef'), {
-  ssr: false,
-})
-
-const EditorWithForwardedRef = React.forwardRef(
-  (props: EditorProps, ref: React.ForwardedRef<ToastUIEditor>) => (
-    <ToastUIEditorJSX {...props} forwardedRef={ref} />
-  ),
-)
+const ToastUIEditorJSX = ToastUIEditor as unknown as (
+  props: Dict,
+) => JSX.Element
 
 type EditorType = {
   onChange: (value: string | undefined, isInitSet?: boolean) => void
@@ -135,7 +128,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
-      <EditorWithForwardedRef
+      <ToastUIEditorJSX
+        plugins={[wikiLink, cite, media]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}
