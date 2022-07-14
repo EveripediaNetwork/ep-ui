@@ -46,7 +46,7 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.REDDIT_URL,
     label: 'Reddit',
     icon: <RedditIcon />,
-    tests: [/https:\/\/www\.reddit\.com\/user\//i],
+    tests: [/https:\/\/www\.reddit\.com\/r\//i],
   },
   {
     id: CommonMetaIds.EMAIL_URL,
