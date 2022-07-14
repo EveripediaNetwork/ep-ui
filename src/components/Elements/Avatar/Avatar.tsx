@@ -28,7 +28,6 @@ const DisplayAvatar = ({
   avatarIPFS,
   wrapperProps,
   size = 26,
-  mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
@@ -50,7 +49,6 @@ const DisplayAvatar = ({
     content = (
       <Avatar
         boxSize={`${size}px`}
-        mt="2px"
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         {...rest}
       />
@@ -75,7 +73,6 @@ const DisplayAvatar = ({
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
         as={RiAccountCircleLine}
-        mt={mt}
       />
     )
   }
