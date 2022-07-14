@@ -24,6 +24,8 @@ const moduleExports = {
       'lh3.googleusercontent.com',
       'gateway.pinata.cloud',
       'i3.ytimg.com',
+      'alpha.everipedia.org',
+      'beta.everipedia.org',
     ],
   },
 }

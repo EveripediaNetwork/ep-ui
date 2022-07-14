@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { AspectRatio, Box, Text, useToast } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  Box,
+  ResponsiveValue,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { useAccount } from 'wagmi'
 
@@ -21,12 +27,14 @@ type DropzoneType = {
   }
   dropzonePlaceHolderTitle?: string
   dropzonePlaceHolderSize?: string
+  aspectRatio?: ResponsiveValue<number>
 }
 
 const Dropzone = ({
   dropZoneActions,
   dropzonePlaceHolderTitle,
   dropzonePlaceHolderSize,
+  aspectRatio,
 }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
@@ -114,7 +122,7 @@ const Dropzone = ({
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
-        <AspectRatio ratio={4 / 3}>
+        <AspectRatio ratio={aspectRatio || 4 / 3}>
           <Box
             display="flex"
             padding="10px"
