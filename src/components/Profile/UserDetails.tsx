@@ -8,6 +8,8 @@ import {
   Tooltip,
   TooltipProps,
   Skeleton,
+  Text,
+  VStack,
   useClipboard,
   useToast,
 } from '@chakra-ui/react'
@@ -16,12 +18,12 @@ import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
-import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import shortenAccount from '@/utils/shortenAccount'
 import { useUserProfileData } from '@/services/profile/utils'
 import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
+import UserSocialLinks from './UserSocialLinks'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -56,13 +58,6 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   if (loading) return <LoadingProfile hide={hide} />
   return (
     <>
-      <NextSeo
-        title={`${ensUserName || address} Profile Page - Everipedia`}
-        openGraph={{
-          title: `${ensUserName || address} Profile Page - Everipedia`,
-          description: `${ensUserName || address} profile page`,
-        }}
-      />
       <Flex
         flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
         align="center"
@@ -89,6 +84,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
               justifySelf="center"
               {...(isSticky && { mt: 0, boxSize: 9 })}
               address={address}
+              avatarIPFS={profileData?.avatar}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
@@ -104,13 +100,25 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
           </Box>
 
           <Skeleton isLoaded={!loading}>
-            <chakra.span
-              fontSize={isSticky ? 'lg' : '3xl'}
-              fontWeight="semibold"
-              letterSpacing="tighter"
-            >
-              {profileData?.username || ensUserName || shortenAccount(address)}
-            </chakra.span>
+            <VStack>
+              <chakra.span
+                fontSize={isSticky ? 'lg' : '3xl'}
+                fontWeight="semibold"
+                letterSpacing="tighter"
+              >
+                {profileData?.username ||
+                  ensUserName ||
+                  shortenAccount(address)}
+              </chakra.span>
+              {profileData && !isSticky && (
+                <VStack spacing={4}>
+                  <Text maxW="min(400px, 80vw)" textAlign="center">
+                    {profileData.bio}
+                  </Text>
+                  <UserSocialLinks links={profileData?.links[0]} />
+                </VStack>
+              )}
+            </VStack>
           </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">

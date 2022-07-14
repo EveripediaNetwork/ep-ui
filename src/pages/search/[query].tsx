@@ -52,7 +52,7 @@ const SearchQuery = () => {
         key={article.id}
         title={article.title}
         brief={getWikiSummary({ content: article.content })}
-        editor={article.user.id}
+        editor={article.user}
         wiki={article}
         wikiId={article.id}
         lastModTimeStamp={article.updated}

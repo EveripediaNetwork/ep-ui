@@ -111,8 +111,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     return ''
   }
   const validateBio = (bio: string): string => {
-    if (bio.length > 140) {
-      return 'Bio must be 140 characters or less'
+    if (bio.length > 85) {
+      return 'Bio must be 85 characters or less'
     }
     return ''
   }
@@ -257,7 +257,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           {/* PROFILE: LINKS */}
           <FormControl>
             <FormLabel htmlFor="links">Links</FormLabel>
-            <Box borderWidth="1px" borderRadius="md">
+            <Box overflow="hidden" borderWidth="1px" borderRadius="md">
               {/* LINKS: Twitter */}
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -294,8 +294,16 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
                   _focus={{ borderBottomColor: 'inherit' }}
                   value={website}
                   onChange={e => setWebsite(e.target.value)}
+                  type="url"
                   variant="flushed"
-                  placeholder="yoursite.io"
+                  _invalid={{
+                    bgColor: '#FF000022',
+                  }}
+                  isInvalid={
+                    website.length !== 0 &&
+                    !/^(http|https):\/\/[^ "]+$/.test(website)
+                  }
+                  placeholder="https://yoursite.io"
                 />
               </InputGroup>
             </Box>
@@ -354,7 +362,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       </Flex>
       <Button
         isLoading={isLoading}
-        disabled={isAvatarLoading || isBannerLoading}
+        disabled={isLoading || isAvatarLoading || isBannerLoading}
         loadingText="Submitting"
         type="submit"
         _disabled={{

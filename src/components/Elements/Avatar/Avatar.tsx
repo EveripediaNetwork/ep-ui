@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import CustomAvatar from 'boring-avatars'
 import {
   Avatar,
-  chakra,
+  Center,
   ChakraProps,
   CSSObject,
   HTMLChakraProps,
@@ -11,12 +11,13 @@ import {
 import { AvatarColorArray } from '@/data/AvatarData'
 import { RiAccountCircleLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
-import { useUserProfileData } from '@/services/profile/utils'
 import config from '@/config'
+import { useUserProfileData } from '@/services/profile/utils'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
   svgProps?: CSSObject
+  avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
   mt?: number | string
@@ -24,24 +25,33 @@ type DisplayAvatarProps = ChakraProps & {
 const DisplayAvatar = ({
   address,
   svgProps,
+  avatarIPFS,
   wrapperProps,
   size = 26,
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
-  const { profileData, setAccount } = useUserProfileData()
+  const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
+    undefined,
+    {
+      onlyAvatar: true,
+    },
+  )
   let content = null
 
   useEffect(() => {
-    if (address) setAccount(address)
-  }, [address, setAccount])
+    if (address && !avatarIPFS) {
+      setAccount(address)
+    }
+  }, [address, avatarIPFS, setAccount])
 
-  if (profileData?.avatar) {
+  if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Avatar
-        boxSize={size}
-        src={`${config.pinataBaseUrl}${profileData.avatar}`}
+        boxSize={`${size}px`}
+        mt="2px"
+        src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         {...rest}
       />
     )
@@ -71,7 +81,7 @@ const DisplayAvatar = ({
   }
 
   return (
-    <chakra.span
+    <Center
       {...wrapperProps}
       sx={{
         svg: {
@@ -80,7 +90,7 @@ const DisplayAvatar = ({
       }}
     >
       {content}
-    </chakra.span>
+    </Center>
   )
 }
 

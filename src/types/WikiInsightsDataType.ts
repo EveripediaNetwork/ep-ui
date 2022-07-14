@@ -1,3 +1,5 @@
+import { User } from './Wiki'
+
 export type WikiInsights =
   | {
       type: 'statistic'
@@ -10,10 +12,16 @@ export type WikiInsights =
       }
     }
   | {
-      type: 'url' | 'address' | 'text' | 'account'
+      type: 'url' | 'address' | 'text'
       title: string
       titleTag?: string
       content: string
+    }
+  | {
+      type: 'account'
+      title: string
+      titleTag?: string
+      content: User
     }
   | {
       type: 'explorers'
