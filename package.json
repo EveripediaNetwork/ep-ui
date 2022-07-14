@@ -10,11 +10,12 @@
     "test": "echo \"Next-app tests\"",
     "lint": "eslint src --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\" --loglevel warn",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
-    "postinstall": "yarn gen:theme-typings"
+    "postinstall": "yarn gen:theme-typings",
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.0",
@@ -28,8 +29,8 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@ensdomains/ens-avatar": "^0.1.2",
-    "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/bignumber": "^5.6.2",
+    "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",
     "@ethersproject/units": "^5.6.1",
     "@everipedia/wagmi-magic-connector": "0.3.6",
@@ -88,6 +89,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@chakra-ui/cli": "^2.0.0",
+    "@next/bundle-analyzer": "^12.2.2",
     "@storybook/react": "^6.4.12",
     "@types/debounce": "^1.2.1",
     "@types/react": "^18.0.9",
@@ -95,6 +97,7 @@
     "@types/react-slick": "^0.23.8",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.13.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.2",
     "eslint-config-airbnb-typescript": "^16.1.4",
