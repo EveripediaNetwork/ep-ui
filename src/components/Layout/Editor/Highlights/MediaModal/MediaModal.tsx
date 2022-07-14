@@ -212,6 +212,7 @@ const MediaModal = ({
                 dropZoneActions={dropZoneActions}
                 dropzonePlaceHolderTitle={`Drag and drop an ${dropZoneActions.textType} or click to select.`}
                 dropzonePlaceHolderSize="(10mb max)"
+                aspectRatio={8 / 3}
               />
               <ImageInput
                 setImage={handleSetImage}
