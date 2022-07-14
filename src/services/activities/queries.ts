@@ -16,6 +16,10 @@ export const GET_ACTIVITIES = gql`
         summary
         user {
           id
+          profile {
+            username
+            avatar
+          }
         }
         categories {
           id
@@ -56,6 +60,10 @@ export const GET_ACTIVITIES_BY_WIKI = gql`
         summary
         user {
           id
+          profile {
+            username
+            avatar
+          }
         }
         categories {
           id
@@ -94,6 +102,10 @@ export const GET_ACTIVITIES_BY_ID = gql`
         updated
         user {
           id
+          profile {
+            username
+            avatar
+          }
         }
         categories {
           id

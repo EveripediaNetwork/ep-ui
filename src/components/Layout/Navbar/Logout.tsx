@@ -22,7 +22,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       <Flex>
         <MenuItem
           minH="48px"
-          borderTopWidth="1px"
+          borderTopWidth={isInMobileMenu ? 0 : '1px'}
           px={isInMobileMenu ? 0 : 3}
           bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
           sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}

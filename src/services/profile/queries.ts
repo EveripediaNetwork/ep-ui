@@ -74,3 +74,19 @@ export const GET_USERNAME_TAKEN = gql`
     usernameTaken(username: $username)
   }
 `
+
+export const GET_USER_ADDRESS_FROM_USERNAME = gql`
+  query getUserAddressFromUsername($username: String!) {
+    getProfile(username: $username) {
+      id
+    }
+  }
+`
+
+export const GET_USER_AVATAR = gql`
+  query getUserAvatar($id: String!) {
+    getProfile(id: $id) {
+      avatar
+    }
+  }
+`

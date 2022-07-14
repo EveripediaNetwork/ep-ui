@@ -17,8 +17,8 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import Link from 'next/link'
 import { useENSData } from '@/hooks/useENSData'
-import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
+import { getUsername } from '@/utils/getUsername'
 
 const WikiPreviewCard = ({
   wiki,
@@ -30,7 +30,7 @@ const WikiPreviewCard = ({
   lastUpdated?: string
 }) => {
   const { updated, title, id } = wiki
-  const [, username] = useENSData(wiki.user?.id || '')
+  const [, userENSDomain] = useENSData(wiki.user?.id || '')
   const getLatestEdited = () => {
     let lastEditedTime = null
     if (updated) {
@@ -83,9 +83,12 @@ const WikiPreviewCard = ({
             <HStack flexWrap="wrap" mt={2} justify="space-between">
               {showLatestEditor && (
                 <HStack fontSize="sm" py={2} color="brand.500">
-                  <DisplayAvatar address={wiki.user?.id} />
+                  <DisplayAvatar
+                    address={wiki.user?.id}
+                    avatarIPFS={wiki.user.profile?.avatar}
+                  />
                   <Link href={`/account/${wiki.user?.id}`}>
-                    {username || shortenAccount(wiki.user?.id || '')}
+                    {getUsername(wiki.user, userENSDomain)}
                   </Link>
                 </HStack>
               )}

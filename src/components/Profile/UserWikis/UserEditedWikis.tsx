@@ -43,7 +43,7 @@ const UserEditedWikis = () => {
   })
 
   return (
-    <Box py="10" px={{ base: 10, lg: 0 }}>
+    <Box py="10" px={{ base: 6, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState />
