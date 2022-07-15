@@ -1,90 +1,11 @@
 import React from 'react'
-import {
-  Box,
-  ButtonGroup,
-  Heading,
-  chakra,
-  Flex,
-  Text,
-  VStack,
-  Stack,
-  Link,
-} from '@chakra-ui/react'
+import { ButtonGroup, Heading, Text, VStack, Stack } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
-import { Wiki } from '@/types/Wiki'
-import NextLink from 'next/link'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
-import { useENSData } from '@/hooks/useENSData'
-import { getWikiSummary } from '@/utils/getWikiSummary'
-import { getUsername } from '@/utils/getUsername'
-import { WikiImage } from '../WikiImage'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { Wiki } from '@/types/Wiki'
+import { HeroCard } from './HeroCard'
 
-const CARD_DETAILS_LENGTH = 50
-const HeroCard = ({ wiki }: HeroProps) => {
-  const [userEnsDomain] = useENSData(wiki?.user?.id)
-
-  return (
-    <NextLink href={`/wiki/${wiki?.id}`} passHref>
-      <Flex
-        alignSelf="center"
-        direction="column"
-        shadow="lg"
-        rounded="lg"
-        bg="white"
-        color="black"
-        cursor="pointer"
-        _hover={{ shadow: '2xl' }}
-        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
-        w="full"
-      >
-        <WikiImage
-          cursor="pointer"
-          flexShrink={0}
-          imageURL={getWikiImageUrl(wiki)}
-          h={{ base: 80, lg: 320 }}
-          w={{ base: '100%', lg: '100%' }}
-          borderRadius="none"
-          overflow="hidden"
-          roundedTop="lg"
-        />
-        <Flex
-          direction="column"
-          justify="space-between"
-          fontWeight="semibold"
-          p={4}
-        >
-          <chakra.span>{wiki?.title}</chakra.span>
-          <Text fontSize="xs" fontWeight="light" my={2}>
-            {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
-          </Text>
-
-          <Flex gap={3}>
-            <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-              <Box>
-                <DisplayAvatar
-                  size="20"
-                  address={wiki?.user.id}
-                  avatarIPFS={wiki?.user.profile?.avatar}
-                />
-              </Box>
-            </NextLink>
-            <Text fontSize="14px" color="linkColor">
-              <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-                <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {getUsername(wiki?.user, userEnsDomain)}
-                </Link>
-              </NextLink>
-            </Text>
-          </Flex>
-        </Flex>
-      </Flex>
-    </NextLink>
-  )
-}
-
-const Hero = ({ wiki }: HeroProps) => {
+const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
   const { t } = useTranslation()
 
   return (
@@ -141,6 +62,3 @@ const Hero = ({ wiki }: HeroProps) => {
 }
 
 export default Hero
-interface HeroProps {
-  wiki: Wiki | undefined
-}

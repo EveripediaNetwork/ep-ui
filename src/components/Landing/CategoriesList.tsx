@@ -37,7 +37,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         columns={[1, 2, 3]}
         spacingX={6}
         spacingY={12}
-        p={{ base: 6, lg: 0 }}
+        px={6}
       >
         {categories.map(category => (
           <LinkBox

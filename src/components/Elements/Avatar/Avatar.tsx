@@ -13,6 +13,7 @@ import { RiAccountCircleLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { useUserProfileData } from '@/services/profile/utils'
+import { Image } from '../Image/Image'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
@@ -47,10 +48,11 @@ const DisplayAvatar = ({
 
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
-      <Avatar
-        boxSize={`${size}px`}
+      <Image
+        imgH={`${size}px`}
+        imgW={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
-        {...rest}
+        borderRadius="full"
       />
     )
   } else if (avatar) {
