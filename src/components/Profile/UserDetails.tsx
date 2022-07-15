@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         >
           <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
-              boxSize="32"
+              size={isSticky ? '30' : '130'}
               overflow="hidden"
               borderWidth={2}
               borderColor="white"

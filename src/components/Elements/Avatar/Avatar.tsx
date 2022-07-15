@@ -21,7 +21,6 @@ type DisplayAvatarProps = ChakraProps & {
   avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
-  mt?: number | string
 }
 const DisplayAvatar = ({
   address,
@@ -53,6 +52,7 @@ const DisplayAvatar = ({
         imgW={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
+        {...(rest as any)}
       />
     )
   } else if (avatar) {
