@@ -1,7 +1,7 @@
 import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, Heading, HStack, chakra } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex, Heading, HStack, chakra, Spinner } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
@@ -43,6 +43,16 @@ const MobileMeta = (wiki: {
 }
 
 export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
+  const [mounted, setMounted] = useState(false)
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+  if (!mounted)
+    return (
+      <Flex justify="center" align="center" h="50vh">
+        <Spinner size="xl" />
+      </Flex>
+    )
   return (
     <HStack align="stretch" justify="stretch">
       <Flex

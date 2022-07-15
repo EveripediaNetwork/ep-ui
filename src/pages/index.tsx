@@ -1,22 +1,26 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/react'
-import { getPromotedWikis, getRunningOperationPromises } from '@/services/wikis'
+import {
+  getPromotedWikis,
+  getRunningOperationPromises as getWikisRunningOperationPromises,
+} from '@/services/wikis'
 import { store } from '@/store/store'
-import dynamic from 'next/dynamic'
 import { Wiki } from '@/types/Wiki'
-
-const Hero = dynamic(() => import('@/components/Landing/Hero'))
-const NotableDrops = dynamic(() => import('@/components/Landing/NotableDrops'))
-
-const CategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'),
-)
+import Hero from '@/components/Landing/Hero'
+import NotableDrops from '@/components/Landing/NotableDrops'
+import CategoriesList from '@/components/Landing/CategoriesList'
+import {
+  getCategories,
+  getRunningOperationPromises as getCategoriesRunningOperationPromises,
+} from '@/services/categories'
+import { Category } from '@/types/CategoryDataTypes'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
+  categories: Category[]
 }
 
-export const Index = ({ promotedWikis }: HomePageProps) => {
+export const Index = ({ promotedWikis, categories }: HomePageProps) => {
   return (
     <Flex
       direction="column"
@@ -27,7 +31,7 @@ export const Index = ({ promotedWikis }: HomePageProps) => {
     >
       <Hero wiki={promotedWikis && promotedWikis[0]} />
       <NotableDrops drops={promotedWikis} />
-      <CategoriesList />
+      <CategoriesList categories={categories} />
     </Flex>
   )
 }
@@ -36,10 +40,14 @@ export async function getServerSideProps() {
   const { data: promotedWikis } = await store.dispatch(
     getPromotedWikis.initiate(),
   )
-  await Promise.all(getRunningOperationPromises())
+  const { data: categories } = await store.dispatch(getCategories.initiate())
+
+  await Promise.all(getWikisRunningOperationPromises())
+  await Promise.all(getCategoriesRunningOperationPromises())
   return {
     props: {
       promotedWikis,
+      categories,
     },
   }
 }

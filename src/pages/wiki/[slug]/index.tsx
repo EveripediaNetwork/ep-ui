@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { skipToken } from '@reduxjs/toolkit/query'
 import {
   getRunningOperationPromises,
   getWiki,
   getWikisByCategory,
-  useGetWikiQuery,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
-import { Box, Flex, Spinner } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
+import { Wiki as WikiType } from '@/types/Wiki'
 
-const Wiki = () => {
+interface WikiProps {
+  wiki: WikiType
+}
+
+const Wiki = ({ wiki }: WikiProps) => {
   const router = useRouter()
 
   const { slug } = router.query
 
-  const result = useGetWikiQuery(typeof slug === 'string' ? slug : skipToken, {
-    skip: router.isFallback,
-  })
-  const { isLoading, error, data: wiki } = result
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
 
   // get the link id if available to scroll to the correct position
@@ -42,23 +41,6 @@ const Wiki = () => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
 
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted)
-    return (
-      wiki && (
-        <WikiHeader
-          title={wiki.title}
-          description={getWikiSummary(wiki)}
-          mainImage={getWikiImageUrl(wiki)}
-        />
-      )
-    )
-
   return (
     <>
       {wiki && (
@@ -69,15 +51,9 @@ const Wiki = () => {
         />
       )}
       <main>
-        {!error && (router.isFallback || isLoading) ? (
-          <Flex justify="center" align="center" h="50vh">
-            <Spinner size="xl" />
-          </Flex>
-        ) : (
-          <Box mt={-2}>
-            <WikiMarkup wiki={wiki} isTocEmpty={isTocEmpty} />
-          </Box>
-        )}
+        <Box mt={-2}>
+          <WikiMarkup wiki={wiki} isTocEmpty={isTocEmpty} />
+        </Box>
       </main>
     </>
   )
@@ -85,16 +61,16 @@ const Wiki = () => {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
-  if (typeof slug === 'string') {
-    store.dispatch(getWiki.initiate(slug)).then(res => {
-      res?.data?.categories.map(category =>
-        getWikisByCategory.initiate({ category: category.id }),
-      )
-    })
-  }
+  if (typeof slug !== 'string') return { props: {} }
+  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
+
+  wiki?.categories.map(category =>
+    getWikisByCategory.initiate({ category: category.id }),
+  )
+
   await Promise.all(getRunningOperationPromises())
   return {
-    props: {},
+    props: { wiki },
   }
 }
 

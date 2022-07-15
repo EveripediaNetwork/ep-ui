@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   LinkBox,
   LinkOverlay,
@@ -8,19 +8,14 @@ import {
   Center,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import { useGetCategoriesQuery } from '@/services/categories'
-import { Category } from '@/types/CategoryDataTypes'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
+import { Category } from '@/types/CategoryDataTypes'
 
-const CategoriesList = () => {
-  const { data: categoriesData } = useGetCategoriesQuery()
-  const [categories, setCategories] = React.useState<Category[]>([])
-
-  useEffect(() => {
-    setCategories(categoriesData || [])
-  }, [categoriesData])
-
+interface CategoriesListProps {
+  categories: Category[]
+}
+const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
 
   return (
