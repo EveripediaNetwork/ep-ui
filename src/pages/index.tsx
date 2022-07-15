@@ -1,13 +1,9 @@
 import React from 'react'
-import { NextPage } from 'next'
 import { Flex } from '@chakra-ui/react'
-import {
-  getPromotedWikis,
-  getRunningOperationPromises,
-  useGetPromotedWikisQuery,
-} from '@/services/wikis'
+import { getPromotedWikis, getRunningOperationPromises } from '@/services/wikis'
 import { store } from '@/store/store'
 import dynamic from 'next/dynamic'
+import { Wiki } from '@/types/Wiki'
 
 const Hero = dynamic(() => import('@/components/Landing/Hero'))
 const NotableDrops = dynamic(() => import('@/components/Landing/NotableDrops'))
@@ -16,10 +12,11 @@ const CategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
 )
 
-export const Index: NextPage = () => {
-  const result = useGetPromotedWikisQuery()
-  const { data } = result
-  const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
+interface HomePageProps {
+  promotedWikis: Wiki[]
+}
+
+export const Index = ({ promotedWikis }: HomePageProps) => {
   return (
     <Flex
       direction="column"
@@ -28,18 +25,22 @@ export const Index: NextPage = () => {
       py={{ base: 6, lg: 20 }}
       gap={10}
     >
-      <Hero wiki={wiki} />
-      <NotableDrops drops={data} />
+      <Hero wiki={promotedWikis && promotedWikis[0]} />
+      <NotableDrops drops={promotedWikis} />
       <CategoriesList />
     </Flex>
   )
 }
 
 export async function getServerSideProps() {
-  store.dispatch(getPromotedWikis.initiate())
+  const { data: promotedWikis } = await store.dispatch(
+    getPromotedWikis.initiate(),
+  )
   await Promise.all(getRunningOperationPromises())
   return {
-    props: {},
+    props: {
+      promotedWikis,
+    },
   }
 }
 

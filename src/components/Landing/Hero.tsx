@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Box,
   ButtonGroup,
@@ -24,13 +24,6 @@ import DisplayAvatar from '../Elements/Avatar/Avatar'
 const CARD_DETAILS_LENGTH = 50
 const HeroCard = ({ wiki }: HeroProps) => {
   const [userEnsDomain] = useENSData(wiki?.user?.id)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
 
   return (
     <NextLink href={`/wiki/${wiki?.id}`} passHref>
