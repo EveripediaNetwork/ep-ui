@@ -58,9 +58,9 @@ const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
 
   return (
     <Box
-      mt={{ base: '10', lg: '20' }}
+      mt={10}
       px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 10 }}
+      py={{ base: 5, md: 20 }}
       textAlign="center"
       _dark={{
         bgImage: '/images/homepage-bg-dark.png',

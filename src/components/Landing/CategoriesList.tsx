@@ -22,7 +22,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
     <>
       <Text
         align="center"
-        mt={{ base: '10', lg: '20' }}
+        mt={10}
         fontWeight="semibold"
         fontSize="2xl"
         mb={0}
