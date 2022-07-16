@@ -13,7 +13,7 @@ import { RiAccountCircleLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { useUserProfileData } from '@/services/profile/utils'
-import { Image } from '../Image/Image'
+import { Image, NextChakraImageProps } from '../Image/Image'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
@@ -31,6 +31,7 @@ const DisplayAvatar = ({
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
+
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,
     {
@@ -52,7 +53,7 @@ const DisplayAvatar = ({
         imgW={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
-        {...(rest as any)}
+        {...(rest as Omit<NextChakraImageProps, 'src'>)}
       />
     )
   } else if (avatar) {
