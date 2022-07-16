@@ -8,27 +8,64 @@ import {
   RiWallet2Line,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import { CategoryLink } from '@/types/CategoryDataTypes'
+import {
+  BsCurrencyBitcoin,
+  BsCurrencyExchange,
+  BsFillFileImageFill,
+  BsFillPeopleFill,
+  BsFillPersonFill,
+  BsRecycle,
+} from 'react-icons/bs'
 
-export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
+export const NAV_ITEMS: NavItem[] = [
   {
     id: 1,
     label: 'Explore',
     href: '#',
     icon: RiCompass3Fill,
     subItem: [
-      // destructure categories and add to subItem by mapping
-      ...categories
-        .map(({ title, id, icon }, i) => ({
-          id: parseInt(`10${i}${2}`, 10),
-          label: title,
-          href: `/categories/${id}`,
-          hasImage: true,
-          /* eslint-disable */
-          icon: require(`react-icons/bs`)[icon],
-          /* eslint-enable */
-        }))
-        .slice(0, 9),
+      {
+        id: 101,
+        label: 'NFTs',
+        icon: BsFillFileImageFill,
+        href: '/categories/nft',
+        hasImage: true,
+      },
+      {
+        id: 102,
+        label: 'Decentralized Finance',
+        icon: BsRecycle,
+        href: '/categories/defi',
+        hasImage: true,
+      },
+      {
+        id: 103,
+        label: 'Exchanges',
+        icon: BsCurrencyExchange,
+        href: '/categories/exchanges',
+        hasImage: true,
+      },
+      {
+        id: 104,
+        label: 'Cryptocurrencies',
+        icon: BsCurrencyBitcoin,
+        href: '/categories/cryptocurrencies',
+        hasImage: true,
+      },
+      {
+        id: 105,
+        label: 'DAOs',
+        icon: BsFillPeopleFill,
+        href: '/categories/daos',
+        hasImage: true,
+      },
+      {
+        id: 106,
+        label: 'People in crypto',
+        icon: BsFillPersonFill,
+        href: '/categories/people',
+        hasImage: true,
+      },
     ],
   },
   {
@@ -88,13 +125,11 @@ export const mobileWalletDetails: NavItem = {
 }
 
 export const MOBILE_NAV_ITEMS = ({
-  categories,
   address,
 }: {
-  categories: CategoryLink[]
   address: string | undefined
 }): NavItem[] => [
-  ...NAV_ITEMS(categories),
+  ...NAV_ITEMS,
   {
     id: 7,
     label: 'Account',
@@ -104,7 +139,7 @@ export const MOBILE_NAV_ITEMS = ({
       {
         id: 701,
         label: 'Profile',
-        href: `/account/${address}`, // TODO: get address
+        href: `/account/${address}`,
         hasImage: false,
       },
       {

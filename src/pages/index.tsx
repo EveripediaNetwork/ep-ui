@@ -46,8 +46,8 @@ export async function getServerSideProps() {
   await Promise.all(getCategoriesRunningOperationPromises())
   return {
     props: {
-      promotedWikis,
-      categories,
+      promotedWikis: promotedWikis || [],
+      categories: categories || [],
     },
   }
 }

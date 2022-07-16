@@ -21,7 +21,6 @@ import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
-import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 
@@ -34,7 +33,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   const { data: accountData } = useAccount()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { data: categoriesLinks } = useGetCategoriesLinksQuery()
   const iconSize = 20
 
   const handleClick = (currentNav: NavItem | null) => {
@@ -86,7 +84,6 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
               pb={6}
             >
               {MOBILE_NAV_ITEMS({
-                categories: categoriesLinks || [],
                 address: accountData?.address,
               })
                 .filter(i => i.label !== 'Account' || accountData)
