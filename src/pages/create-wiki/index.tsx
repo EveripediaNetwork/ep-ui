@@ -163,7 +163,6 @@ const CreateWikiContent = () => {
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const isValidWiki = () => {
-
     if (!wiki.title) {
       toast({
         title: `Add a Title at the top for this Wiki to continue `,
@@ -604,7 +603,6 @@ const CreateWikiContent = () => {
             onClick={() => {
               saveOnIpfs()
             }}
-            
           >
             Publish
           </Button>
