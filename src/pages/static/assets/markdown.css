@@ -188,11 +188,17 @@
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
-  max-width: 100%;
-  word-break: break-word;
-  margin: 0 auto;
 }
-
+.markdown-body .table-container {
+  overflow-x: auto;
+  max-width: calc(100vw - 850px);
+  margin: 0;
+}
+@media only screen and (max-width: 400px) {
+  .markdown-body .table-container {
+    max-width: 90vw;
+  }
+}
 .markdown-body td,
 .markdown-body th {
   padding: 0;
