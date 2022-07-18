@@ -64,9 +64,9 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             createdBy={wiki.author?.id}
             imgSrc={getWikiImageUrl(wiki)}
           />
+          <ProfileSummary wiki={wiki} />
           {!!coingeckoLink && (
             <>
-              <ProfileSummary wiki={wiki} />
               <ProfileStatistics tokenStats={tokenStats} />
               {tokenStats && (
                 <CurrencyConverter
