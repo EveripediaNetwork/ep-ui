@@ -2053,7 +2053,7 @@
   dependencies:
     "@ethersproject/bignumber" "^5.6.2"
 
-"@ethersproject/contracts@5.6.2", "@ethersproject/contracts@^5.5.0":
+"@ethersproject/contracts@5.6.2", "@ethersproject/contracts@^5.5.0", "@ethersproject/contracts@^5.6.2":
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.6.2.tgz#20b52e69ebc1b74274ff8e3d4e508de971c287bc"
   integrity sha512-hguUA57BIKi6WY0kHvZp6PwPlWF87MCeB4B7Z7AbUpTxfFXFdn/3b0GmjZPagIHS+3yhcBJDnuEfU4Xz+Ks/8g==
@@ -2254,7 +2254,7 @@
     "@ethersproject/rlp" "^5.6.1"
     "@ethersproject/signing-key" "^5.6.2"
 
-"@ethersproject/units@5.6.1":
+"@ethersproject/units@5.6.1", "@ethersproject/units@^5.6.1":
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/@ethersproject/units/-/units-5.6.1.tgz#ecc590d16d37c8f9ef4e89e2005bda7ddc6a4e6f"
   integrity sha512-rEfSEvMQ7obcx3KWD5EWWx77gqv54K6BKiZzKxkQJqtpriVsICrktIQmKl8ReNToPeIYPnFHpXvKpi068YFZXw==
@@ -3622,6 +3622,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/canvas-confetti@1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/canvas-confetti/-/canvas-confetti-1.4.2.tgz#35c99fc904492fdcc6515c742509e04f3527211c"
+  integrity sha512-t45KUDHlwrD9PJVRHc5z1SlXhO82BQEgMKUXGEV1KnWLFMPA6Y5LfUsLTHHzH9KcKDHZLEiYYH5nIDcjRKWNTg==
+
 "@types/debounce@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@types/debounce/-/debounce-1.2.1.tgz#79b65710bc8b6d44094d286aecf38e44f9627852"
@@ -3846,6 +3851,11 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
+
+"@types/remove-markdown@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@types/remove-markdown/-/remove-markdown-0.3.1.tgz#82bc3664c313f50f7c77f1bb59935f567689dc63"
+  integrity sha512-JpJNEJEsmmltyL2LdE8KRjJ0L2ad5vgLibqNj85clohT9AyTrfN6jvHxStPshDkmtcL/ShFu0p2tbY7DBS1mqQ==
 
 "@types/scheduler@*":
   version "0.16.2"
@@ -5117,6 +5127,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+base-64@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
+  integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
+
 base-x@^3.0.2:
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.9.tgz#6349aaabb58526332de9f60995e548a53fe21320"
@@ -5164,7 +5179,7 @@ big.js@^5.2.2:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@^9.0.0:
+bignumber.js@^9.0.0, bignumber.js@^9.0.1:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
@@ -5661,6 +5676,11 @@ caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001332:
   version "1.0.30001343"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001343.tgz#8e1107e30d9a4d2f63782b48ae0a3ce34e2f9c2a"
   integrity sha512-8KeCrAtPMabo/XW14B+R9sZYoClx1n0b+WYgwDKZPtWR3TcdvWzdSy7mPyFEmR5WU1St9v1PW6sdO5dkFOEzfA==
+
+canvas-confetti@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/canvas-confetti/-/canvas-confetti-1.5.1.tgz#bf5b8622ef3bcd347378a972fc4194a89cfe0c9b"
+  integrity sha512-Ncz+oZJP6OvY7ti4E1slxVlyAV/3g7H7oQtcCDXgwGgARxPnwYY9PW5Oe+I8uvspYNtuHviAdgA0LfcKFWJfpg==
 
 case-sensitive-paths-webpack-plugin@^2.3.0:
   version "2.4.0"
@@ -7489,6 +7509,17 @@ ethereumjs-util@^6.0.0:
     ethjs-util "0.1.6"
     rlp "^2.2.3"
 
+ethereumjs-util@^7.1.0:
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.1.5.tgz#9ecf04861e4fbbeed7465ece5f23317ad1129181"
+  integrity sha512-SDl5kKrQAudFBUe5OJM9Ac6WmMyYmXX/6sTmLZ3ffG2eY6ZIGBes3pEDxNN6V72WyOw4CPD5RomKdsa8DAAwLg==
+  dependencies:
+    "@types/bn.js" "^5.1.0"
+    bn.js "^5.1.2"
+    create-hash "^1.1.2"
+    ethereum-cryptography "^0.1.3"
+    rlp "^2.2.4"
+
 ethereumjs-util@^7.1.4:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.1.4.tgz#a6885bcdd92045b06f596c7626c3e89ab3312458"
@@ -9271,6 +9302,13 @@ is-utf8@^0.2.0:
   resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
   integrity sha1-Sw2hRCEE0bM2NA6AeX6GXPOffXI=
 
+is-valid-domain@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/is-valid-domain/-/is-valid-domain-0.1.6.tgz#3c85469d2938f170c8f82ce6e52df8ad9fca8105"
+  integrity sha512-ZKtq737eFkZr71At8NxOFcP9O1K89gW3DkdrGMpp1upr/ueWjj+Weh4l9AI4rN0Gt8W2M1w7jrG2b/Yv83Ljpg==
+  dependencies:
+    punycode "^2.1.1"
+
 is-weakref@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-weakref/-/is-weakref-1.0.2.tgz#9529f383a9338205e89765e0392efc2f100f06f2"
@@ -10652,7 +10690,7 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-ms@2.1.3, ms@^2.1.1:
+ms@2.1.3, ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
@@ -10827,6 +10865,13 @@ node-releases@^2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
   integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
+
+normalize-hex@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/normalize-hex/-/normalize-hex-0.0.2.tgz#5491c43759db2f06b7168d8419f4925c271ab27e"
+  integrity sha512-E2dx7XJQnjsm6SkS4G6GGvIXRHaLeWAZE2D2N3aia+OpIif2UT8y4S0KCjrX3WmFDSeFnlNOp0FSHFjLeJ4SJw==
+  dependencies:
+    bn.js "^4.11.8"
 
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.5.0:
   version "2.5.0"
@@ -11315,7 +11360,7 @@ parse-entities@^2.0.0:
     is-decimal "^1.0.0"
     is-hexadecimal "^1.0.0"
 
-parse-headers@^2.0.0:
+parse-headers@^2.0.0, parse-headers@^2.0.4:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/parse-headers/-/parse-headers-2.0.5.tgz#069793f9356a54008571eb7f9761153e6c770da9"
   integrity sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==
@@ -11890,7 +11935,7 @@ punycode@^1.2.4:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
   integrity sha1-wNWmOycYgArY4esPpSachN1BhF4=
 
-punycode@^2.1.0:
+punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
@@ -12012,6 +12057,14 @@ rc@^1.2.8:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-canvas-confetti@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-canvas-confetti/-/react-canvas-confetti-1.3.0.tgz#128d181381a1a37138ab3f2b212139f2aab0a614"
+  integrity sha512-5qBYTux3GKIu77SZ72oZYk4yvy1r4Z8q/BgIuO7mZrkqv/wH9vM7Yr/BzcqApGy9qZtIctF1Q41EYyw3aSDBmg==
+  dependencies:
+    "@types/canvas-confetti" "1.4.2"
+    canvas-confetti "1.5.1"
 
 react-clientside-effect@^1.2.6:
   version "1.2.6"
@@ -12535,6 +12588,11 @@ remove-accents@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
   integrity sha1-CkPTqq4egNuRngeuJUsoXZ4ce7U=
+
+remove-markdown@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/remove-markdown/-/remove-markdown-0.5.0.tgz#a596264bbd60b9ceab2e2ae86e5789eee91aee32"
+  integrity sha512-x917M80K97K5IN1L8lUvFehsfhR8cYjGQ/yAMRI9E7JIKivtl5Emo5iD13DhMr+VojzMCiYk8V2byNPwT/oapg==
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
@@ -13649,6 +13707,13 @@ to-fast-properties@^2.0.0:
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
 
+to-hex@0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/to-hex/-/to-hex-0.0.17.tgz#ade8a93c889373ec07d10296adcdb59ed8344c3b"
+  integrity sha512-2ekdx8fg6exBSh0js2QHPQVMUDgRbwJrjk+UyAOIxwo/pFbVrlQ85+BrGvWQv/0pQb+jJIsB11ugqyOZER/B5w==
+  dependencies:
+    normalize-hex "0.0.2"
+
 to-object-path@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/to-object-path/-/to-object-path-0.3.0.tgz#297588b7b0e7e0ac08e04e672f85c1f4999e17af"
@@ -14534,6 +14599,19 @@ web3-providers-ws@1.5.2:
     eventemitter3 "4.0.4"
     web3-core-helpers "1.5.2"
     websocket "^1.0.32"
+
+web3-token@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/web3-token/-/web3-token-0.2.9.tgz#a9992dd90c12938d073712749281d52905d18c3f"
+  integrity sha512-Zsq3aH+pf1kQxiSvMUXwzG9wFOXEcXyXkw2/dJlBnoSywP5yUUxjajNbnCRCRedRk8DJ31XhxQ8BEtXj9H6GvQ==
+  dependencies:
+    base-64 "^1.0.0"
+    bignumber.js "^9.0.1"
+    ethereumjs-util "^7.1.0"
+    is-valid-domain "^0.1.6"
+    ms "^2.1.3"
+    parse-headers "^2.0.4"
+    to-hex "0.0.17"
 
 web3-utils@1.5.2:
   version "1.5.2"

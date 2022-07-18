@@ -21,6 +21,7 @@ export const Image = ({
       priority={priority}
       placeholder={placeholder}
       blurDataURL={blurDataURL}
+      loading={priority ? 'eager' : 'lazy'}
     />
   </Box>
 )

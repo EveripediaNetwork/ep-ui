@@ -6,22 +6,22 @@ import {
   Box,
   Link,
   Tag,
-  useBreakpointValue,
   Flex,
+  Stack,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import shortenAccount from '@/utils/shortenAccount'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { Wiki } from '@/types/Wiki'
+import { User, Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
+import { getUsername } from '@/utils/getUsername'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 interface ActivityCardProps {
   title: string
   brief: string
-  editor: string
+  editor: User
   lastModTimeStamp?: string
   wiki: Omit<Wiki, 'metadata' | 'version' | 'language' | 'author'>
   activityId?: string
@@ -57,66 +57,6 @@ const ActivityCard = ({
     ? `/revision/${activityId}`
     : `/wiki/${wikiId}`
   const router = useRouter()
-  const editDetails = useBreakpointValue({
-    base: (
-      <Box>
-        <HStack>
-          <DisplayAvatar address={wiki.user?.id} size="20" />
-          <Text fontSize="14px" color="linkColor">
-            <NextLink href={`/account/${editor}`} passHref>
-              <Link href="passRef" color="brand.500" fontWeight="bold">
-                {shortenAccount(editor)}
-              </Link>
-            </NextLink>
-          </Text>
-        </HStack>
-        {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
-      </Box>
-    ),
-    md: (
-      <Flex justifyContent="space-between" w="full">
-        <Box>
-          <HStack flex="1">
-            <DisplayAvatar address={wiki.user?.id} size="20" />
-            <Text fontSize="14px" color="linkColor">
-              <NextLink href={`/account/${editor}`} passHref>
-                <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {shortenAccount(editor)}
-                </Link>
-              </NextLink>
-            </Text>
-          </HStack>
-        </Box>
-        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
-      </Flex>
-    ),
-    lg: (
-      <Flex justifyContent="space-between" w="full">
-        <Box>
-          <HStack flex="1">
-            <DisplayAvatar address={wiki.user?.id} size="20" />
-            <Text fontSize="14px" color="linkColor">
-              <NextLink href={`/account/${editor}`} passHref>
-                <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {shortenAccount(editor || '')}
-                </Link>
-              </NextLink>
-            </Text>
-            <HStack spacing={2}>
-              {wiki.tags.map((tag, index) => (
-                <NextLink href={`/tags/${tag.id}`} key={index} passHref>
-                  <Tag as="a" whiteSpace="nowrap" key={index}>
-                    <Text px={4}>{tag.id}</Text>
-                  </Tag>
-                </NextLink>
-              ))}
-            </HStack>
-          </HStack>
-        </Box>
-        <Box>{lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}</Box>
-      </Flex>
-    ),
-  })
 
   return (
     <HStack
@@ -191,7 +131,40 @@ const ActivityCard = ({
         <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
         </Box>
-        {editDetails}
+        <Stack
+          direction={{ base: 'column', md: 'row' }}
+          justifyContent="space-between"
+          w="full"
+        >
+          <Box>
+            <HStack flex="1">
+              <DisplayAvatar
+                address={editor.id}
+                avatarIPFS={editor.profile?.avatar}
+                size="20"
+              />
+              <Text fontSize="14px" color="linkColor">
+                <NextLink href={`/account/${editor.id}`} passHref>
+                  <Link href="passRef" color="brand.500" fontWeight="bold">
+                    {getUsername(editor)}
+                  </Link>
+                </NextLink>
+              </Text>
+              <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
+                {wiki.tags.map((tag, index) => (
+                  <NextLink href={`/tags/${tag.id}`} key={index} passHref>
+                    <Tag as="a" whiteSpace="nowrap" key={index}>
+                      <Text px={4}>{tag.id}</Text>
+                    </Tag>
+                  </NextLink>
+                ))}
+              </HStack>
+            </HStack>
+          </Box>
+          <Box>
+            {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
+          </Box>
+        </Stack>
       </Box>
     </HStack>
   )

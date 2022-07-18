@@ -2,7 +2,6 @@ import config from '@/config'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { Media } from '@/types/Wiki'
 
-const YOUTUBE_DEFAULT_URL = 'https://www.youtube.com/watch?v='
 const VIMEO_DEFAULT_URL = 'https://vimeo.com/'
 
 export const checkMediaDefaultId = (id: string) => {
@@ -13,7 +12,7 @@ export const constructMediaUrl = (media: Media) => {
   let url
   switch (media.source) {
     case 'YOUTUBE':
-      url = YOUTUBE_DEFAULT_URL + media.id
+      url = `https://i3.ytimg.com/vi/${media.id}/maxresdefault.jpg`
       break
     case 'VIMEO':
       url = VIMEO_DEFAULT_URL + media.id

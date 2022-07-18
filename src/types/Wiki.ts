@@ -1,3 +1,5 @@
+import { ProfileData } from './ProfileType'
+
 export interface BaseCategory {
   id: string
   title: string
@@ -38,6 +40,11 @@ export enum CommonMetaIds {
   COINGECKO_PROFILE = 'coingecko_profile',
   WEBSITE = 'website',
   CONTRACT_URL = 'contract_url',
+  REDDIT_URL = 'reddit_profile',
+  EMAIL_URL = 'email_url',
+  GITHUB_URL = 'github_profile',
+  TELEGRAM_URL = 'telegram_profile',
+  COIN_MARKET_CAP = 'coinmarketcap_url',
 }
 
 export enum ValidatorCodes {
@@ -76,6 +83,7 @@ export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
+  profile?: ProfileData | null
 }
 
 export enum PageTypeName {
@@ -160,5 +168,6 @@ export const whiteListedDomains = [
   'youtu.be',
   'vimeo.com',
   'alpha.everipedia.org/wiki',
+  'beta.everipedia.org/wiki',
   'ipfs.everipedia.org/ipfs',
 ]

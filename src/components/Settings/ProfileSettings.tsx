@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useCallback } from 'react'
 import {
   Flex,
   Input,
@@ -18,9 +18,17 @@ import {
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
+import { usePostUserProfileMutation } from '@/services/profile'
+import { ProfileSettingsData } from '@/types/ProfileType'
+import { isUserNameTaken } from '@/services/profile/utils'
 import ImageUpload from './ImageUpload'
 
-const ProfileSettings = () => {
+interface ProfileSettingsProps {
+  settingsData?: ProfileSettingsData
+}
+const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
+  const [postUserProfile, { error: postUserError }] =
+    usePostUserProfileMutation()
   interface StrEntry {
     value: string
     error: string
@@ -33,19 +41,55 @@ const ProfileSettings = () => {
   const [website, setWebsite] = React.useState<string>('')
   const [instagram, setInstagram] = React.useState<string>('')
   const [twitter, setTwitter] = React.useState<string>('')
-  const [profilePicture, setProfilePicture] = React.useState<null | File>(null)
-  const [coverPicture, setCoverPicture] = React.useState<null | File>(null)
-  const [buttonDisabled] = React.useState<boolean>(true)
+  const [avatarIPFSHash, setAvatarIPFSHash] = React.useState<string>('')
+  const [bannerIPFSHash, setBannerIPFSHash] = React.useState<string>('')
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isAvatarLoading, setIsAvatarLoading] = React.useState<boolean>(false)
+  const [isBannerLoading, setIsBannerLoading] = React.useState<boolean>(false)
 
   const { data: accountData } = useAccount()
-  const [, username] = useENSData(accountData?.address)
-
-  const clipboard = useClipboard(username || '')
+  const [, userENSAddr] = useENSData(accountData?.address)
+  const clipboard = useClipboard(accountData?.address || '')
   const toast = useToast()
 
   const bioRef = React.useRef<HTMLTextAreaElement>(null)
   const usernameRef = React.useRef<HTMLInputElement>(null)
   const emailRef = React.useRef<HTMLInputElement>(null)
+
+  // set initial values
+  React.useEffect(() => {
+    if (settingsData) {
+      setInputUsername({
+        value: settingsData.username || userENSAddr || '',
+        error: '',
+      })
+      setInputBio({ value: settingsData.bio || '', error: '' })
+      setInputEmail({ value: settingsData.email || '', error: '' })
+      setWebsite(settingsData.links[0].website || '')
+      setInstagram(settingsData.links[0].instagram || '')
+      setTwitter(settingsData.links[0].twitter || '')
+      setAvatarIPFSHash(settingsData.avatar || '')
+      setBannerIPFSHash(settingsData.banner || '')
+    }
+  }, [settingsData, userENSAddr])
+
+  const checkUsername = useCallback(async () => {
+    if (inputUsername.value.length > 2) {
+      if (
+        (await isUserNameTaken(inputUsername.value)) &&
+        settingsData?.username !== inputUsername.value
+      ) {
+        setInputUsername({
+          value: inputUsername.value,
+          error: 'Username is taken',
+        })
+      }
+    }
+  }, [inputUsername.value, settingsData?.username])
+
+  React.useEffect(() => {
+    checkUsername()
+  }, [checkUsername])
 
   // Validation Functions
   const validateUsername = (name: string): string => {
@@ -56,15 +100,19 @@ const ProfileSettings = () => {
     if (name.length > 20) {
       return 'Username must be less than 20 characters long'
     }
-    if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+    if (!/^[a-z0-9]+(.eth)$|^[a-zA-Z0-9_]+$/.test(name)) {
       return 'Username can only contain letters, numbers and underscores'
     }
-    // TODO: Check if name is taken
+    if (name.endsWith('.eth')) {
+      if (name !== userENSAddr) {
+        return 'The account address is not linked with this ens address'
+      }
+    }
     return ''
   }
   const validateBio = (bio: string): string => {
-    if (bio.length > 140) {
-      return 'Bio must be 140 characters or less'
+    if (bio.length > 85) {
+      return 'Bio must be 85 characters or less'
     }
     return ''
   }
@@ -82,6 +130,7 @@ const ProfileSettings = () => {
   // form submission handler
   const handleProfileSettingsSave = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
 
     // Validate all fields
     setInputUsername({
@@ -92,43 +141,62 @@ const ProfileSettings = () => {
     setInputEmail({ ...inputEmail, error: validateEmail(inputEmail.value) })
 
     // if any field is invalid, focus on the first invalid one
+    checkUsername()
     if (inputUsername.error) {
       usernameRef.current?.focus()
+      setIsLoading(false)
       return
     }
     if (inputBio.error) {
       bioRef.current?.focus()
+      setIsLoading(false)
       return
     }
     if (inputEmail.error) {
       emailRef.current?.focus()
+      setIsLoading(false)
       return
     }
 
     // aggregate data from all states
-    const data = {
+    const data: Partial<ProfileSettingsData> = {
+      id: accountData?.address,
       username: inputUsername.value,
-      bio: inputUsername.value,
+      bio: inputBio.value,
       email: inputEmail.value,
-      link: {
-        instagram,
-        twitter,
-        website,
-      },
-      profilePicture,
-      coverPicture,
+      links: [
+        {
+          instagram,
+          twitter,
+          website,
+        },
+      ],
+      avatar: avatarIPFSHash,
+      banner: bannerIPFSHash,
     }
 
-    // TODO: Send the data to backend
-    console.log(data)
+    await postUserProfile({ profileInfo: data })
 
+    // TODO: Error checking
+
+    let toastTitle = 'Profile Settings Saved'
+    let toastMessage =
+      'Your profile settings have been saved. Refresh the page to see the changes.'
+    let toastType: 'success' | 'error' = 'success'
+    if (postUserError) {
+      toastTitle = 'Profile Settings Failed'
+      toastMessage =
+        "We couldn't save your profile settings. Refresh the page and try again."
+      toastType = 'error'
+    }
     toast({
-      title: 'Profile Settings Saved',
-      description: 'Your profile settings have been saved.',
-      status: 'success',
+      title: toastTitle,
+      description: toastMessage,
+      status: toastType,
       duration: 5000,
       isClosable: true,
     })
+    setIsLoading(false)
   }
 
   return (
@@ -189,7 +257,7 @@ const ProfileSettings = () => {
           {/* PROFILE: LINKS */}
           <FormControl>
             <FormLabel htmlFor="links">Links</FormLabel>
-            <Box borderWidth="1px" borderRadius="md">
+            <Box overflow="hidden" borderWidth="1px" borderRadius="md">
               {/* LINKS: Twitter */}
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -226,8 +294,16 @@ const ProfileSettings = () => {
                   _focus={{ borderBottomColor: 'inherit' }}
                   value={website}
                   onChange={e => setWebsite(e.target.value)}
+                  type="url"
                   variant="flushed"
-                  placeholder="yoursite.io"
+                  _invalid={{
+                    bgColor: '#FF000022',
+                  }}
+                  isInvalid={
+                    website.length !== 0 &&
+                    !/^(http|https):\/\/[^ "]+$/.test(website)
+                  }
+                  placeholder="https://yoursite.io"
                 />
               </InputGroup>
             </Box>
@@ -263,28 +339,40 @@ const ProfileSettings = () => {
               w="140px"
               h="140px"
               rounded="full"
-              setSelectedImage={setProfilePicture}
-              selectedImage={profilePicture}
+              setImgIPFSHash={setAvatarIPFSHash}
+              imgIPFSHash={avatarIPFSHash}
+              isLoading={isAvatarLoading}
+              setIsLoading={setIsAvatarLoading}
             />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="profile-banner">Profile Banner</FormLabel>
             <ImageUpload
               defaultImage="/images/default-user-avatar.png"
-              w="min(300px, 100%)"
+              w="300px"
               h="120px"
               borderRadius="lg"
-              setSelectedImage={setCoverPicture}
-              selectedImage={coverPicture}
+              setImgIPFSHash={setBannerIPFSHash}
+              imgIPFSHash={bannerIPFSHash}
+              isLoading={isBannerLoading}
+              setIsLoading={setIsBannerLoading}
             />
           </FormControl>
         </VStack>
       </Flex>
       <Button
-        disabled={buttonDisabled}
+        isLoading={isLoading}
+        disabled={isLoading || isAvatarLoading || isBannerLoading}
+        loadingText="Submitting"
         type="submit"
+        _disabled={{
+          backgroundColor: 'gray.300',
+          cursor: 'not-allowed',
+          _hover: {
+            backgroundColor: 'gray.400 !important',
+          },
+        }}
         size="lg"
-        width={8}
         mt={8}
       >
         Save

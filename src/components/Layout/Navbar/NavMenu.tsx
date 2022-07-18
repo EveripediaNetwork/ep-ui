@@ -58,6 +58,7 @@ const NavMenu = ({
           bg="subMenuBg"
           onMouseEnter={() => setVisibleMenu(navItem.id)}
           mt={-1}
+          mr={4}
         >
           {navItem.subItem?.map((item, key) => (
             <Link

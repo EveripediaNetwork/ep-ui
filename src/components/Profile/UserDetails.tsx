@@ -1,5 +1,4 @@
 import React from 'react'
-import { SettingsIcon } from '@chakra-ui/icons'
 import {
   Flex,
   chakra,
@@ -9,29 +8,41 @@ import {
   Tooltip,
   TooltipProps,
   Skeleton,
+  Text,
+  VStack,
+  useClipboard,
+  useToast,
 } from '@chakra-ui/react'
-import { FaShareAlt } from 'react-icons/fa'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
-import { NextSeo } from 'next-seo'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import shortenAccount from '@/utils/shortenAccount'
+import { useUserProfileData } from '@/services/profile/utils'
+import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
+import UserSocialLinks from './UserSocialLinks'
 
 export type UserDetailsProps = { hide?: boolean }
 
-export const UserDetails = (props: UserDetailsProps) => {
-  const { hide } = props
+export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
   const { data } = useAccount()
   const address = router.query.profile as string
+  const { profileData } = useUserProfileData(address)
 
   const { headerIsSticky } = useProfileContext()
-  const [, username, loading] = useENSData(address)
+  const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
+  const customLink = `${window.origin}/account/${
+    profileData?.username || address || ensUserName
+  }`
+
+  const clipboard = useClipboard(customLink || '')
+
+  const toast = useToast()
 
   const tooltipProps: Partial<TooltipProps> = {
     placement: 'top',
@@ -47,14 +58,14 @@ export const UserDetails = (props: UserDetailsProps) => {
   if (loading) return <LoadingProfile hide={hide} />
   return (
     <>
-      <NextSeo
-        title={`${username || address} Profile Page - Everipedia`}
-        openGraph={{
-          title: `${username || address} Profile Page - Everipedia`,
-          description: `${username || address} profile page`,
-        }}
-      />
-      <Flex align="center" justify="space-between" w="full" px="6" gap={3}>
+      <Flex
+        flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
+        align="center"
+        justify="space-between"
+        w="full"
+        px={{ base: '0', lg: '6' }}
+        gap={3}
+      >
         <chakra.span flex="1" />
         <Flex
           direction={isSticky ? 'row' : 'column'}
@@ -71,8 +82,9 @@ export const UserDetails = (props: UserDetailsProps) => {
               borderColor="white"
               rounded="full"
               justifySelf="center"
-              {...(isSticky && { mt: 0, boxSize: 12 })}
+              {...(isSticky && { mt: 0, boxSize: 9 })}
               address={address}
+              avatarIPFS={profileData?.avatar}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
@@ -88,31 +100,46 @@ export const UserDetails = (props: UserDetailsProps) => {
           </Box>
 
           <Skeleton isLoaded={!loading}>
-            <chakra.span
-              fontSize={isSticky ? 'md' : '3xl'}
-              fontWeight="semibold"
-              letterSpacing="tighter"
-            >
-              {username || shortenAccount(address)}
-            </chakra.span>
+            <VStack>
+              <chakra.span
+                fontSize={isSticky ? 'lg' : '3xl'}
+                fontWeight="semibold"
+                letterSpacing="tighter"
+              >
+                {profileData?.username ||
+                  ensUserName ||
+                  shortenAccount(address)}
+              </chakra.span>
+              {profileData && !isSticky && (
+                <VStack spacing={4}>
+                  <Text maxW="min(400px, 80vw)" textAlign="center">
+                    {profileData.bio}
+                  </Text>
+                  <UserSocialLinks links={profileData?.links[0]} />
+                </VStack>
+              )}
+            </VStack>
           </Skeleton>
         </Flex>
         <chakra.span display="flex" flex="1">
-          <ButtonGroup
-            isAttached
-            variant="outline"
-            ml="auto"
-            my={isSticky ? 4 : 6}
-          >
+          <ButtonGroup isAttached variant="outline" ml="auto" my={4}>
             <Tooltip label={t('shareBttnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"
                 boxSize="12"
                 aria-label="Share"
-                icon={<FaShareAlt />}
+                icon={<RiShareFill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
-                {...(isSticky && { boxSize: 6, rounded: '4' })}
+                onClick={() => {
+                  clipboard.onCopy()
+                  toast({
+                    title: 'Profile Link Copied to Clipboard!',
+                    status: 'success',
+                    duration: 1000,
+                  })
+                }}
+                {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
             <Tooltip label={t('settingBttnText')} {...tooltipProps}>
@@ -120,12 +147,12 @@ export const UserDetails = (props: UserDetailsProps) => {
                 cursor="pointer"
                 boxSize="12"
                 aria-label="Settings"
-                icon={<SettingsIcon />}
+                icon={<RiSettings5Fill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
                 disabled={address !== data?.address}
-                {...(isSticky && { boxSize: 6, rounded: '4' })}
+                {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
           </ButtonGroup>

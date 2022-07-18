@@ -29,7 +29,7 @@ const WikiCommitMessage = ({
         gap={2}
         title="Commit Info"
       >
-        <AccordionWidget title="Edited by:" type="account" content={user.id} />
+        <AccordionWidget title="Edited by:" type="account" content={user} />
         <AccordionWidget title="Edited in:" type="text" content={lastEdited} />
         {commitMessage && (
           <VStack

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomAvatar from 'boring-avatars'
 import {
   Avatar,
-  chakra,
+  Center,
   ChakraProps,
   CSSObject,
   HTMLChakraProps,
@@ -11,10 +11,13 @@ import {
 import { AvatarColorArray } from '@/data/AvatarData'
 import { RiAccountCircleLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
+import config from '@/config'
+import { useUserProfileData } from '@/services/profile/utils'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
   svgProps?: CSSObject
+  avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
   mt?: number | string
@@ -22,14 +25,35 @@ type DisplayAvatarProps = ChakraProps & {
 const DisplayAvatar = ({
   address,
   svgProps,
+  avatarIPFS,
   wrapperProps,
-  size = 25,
-  mt = 2,
+  size = 26,
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar, ,] = useENSData(address)
+  const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
+    undefined,
+    {
+      onlyAvatar: true,
+    },
+  )
   let content = null
-  if (avatar) {
+
+  useEffect(() => {
+    if (address && !avatarIPFS) {
+      setAccount(address)
+    }
+  }, [address, avatarIPFS, setAccount])
+
+  if (avatarIPFS || fetchedAvatarIPFS) {
+    content = (
+      <Avatar
+        boxSize={`${size}px`}
+        src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
+        {...rest}
+      />
+    )
+  } else if (avatar) {
     content = <Avatar size="xs" src={avatar} {...rest} />
   } else if (address && !avatar) {
     content = (
@@ -49,13 +73,12 @@ const DisplayAvatar = ({
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
         as={RiAccountCircleLine}
-        mt={mt}
       />
     )
   }
 
   return (
-    <chakra.span
+    <Center
       {...wrapperProps}
       sx={{
         svg: {
@@ -64,7 +87,7 @@ const DisplayAvatar = ({
       }}
     >
       {content}
-    </chakra.span>
+    </Center>
   )
 }
 

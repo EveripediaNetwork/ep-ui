@@ -20,7 +20,7 @@ const AdvancedSettings = () => {
       if (typeof window !== 'undefined') {
         // getting the settings from local storage
         const storedIsSigningOptionRelayer: string | null =
-          await localStorage.getItem('IS_SIGNING_OPTION_RELAYER')
+          localStorage.getItem('IS_SIGNING_OPTION_RELAYER')
 
         // setting the state with the values from local storage
         if (storedIsSigningOptionRelayer) {

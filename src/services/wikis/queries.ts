@@ -50,6 +50,10 @@ export const GET_WIKI_BY_ID = gql`
       }
       user {
         id
+        profile {
+          username
+          avatar
+        }
       }
       author {
         id
@@ -85,6 +89,10 @@ export const GET_WIKIS = gql`
       }
       user {
         id
+        profile {
+          username
+          avatar
+        }
       }
     }
   }
@@ -117,6 +125,10 @@ export const GET_PROMOTED_WIKIS = gql`
       }
       user {
         id
+        profile {
+          username
+          avatar
+        }
       }
     }
   }
@@ -150,6 +162,10 @@ export const GET_USER_WIKIS_BY_ID = gql`
         }
         user {
           id
+          profile {
+            username
+            avatar
+          }
         }
       }
     }
@@ -186,6 +202,10 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           }
           user {
             id
+            profile {
+              username
+              avatar
+            }
           }
         }
       }
@@ -223,6 +243,10 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
           }
           user {
             id
+            profile {
+              username
+              avatar
+            }
           }
         }
       }
@@ -256,6 +280,10 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       }
       user {
         id
+        profile {
+          username
+          avatar
+        }
       }
     }
   }
@@ -289,6 +317,10 @@ export const GET_TAG_WIKIS_BY_ID = gql`
         }
         user {
           id
+          profile {
+            username
+            avatar
+          }
         }
       }
     }

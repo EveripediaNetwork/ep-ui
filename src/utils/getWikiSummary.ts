@@ -1,4 +1,5 @@
 import { Wiki, WikiPreview } from '@/types/Wiki'
+import RemoveMarkdown from 'remove-markdown'
 import { shortenText } from './shortenText'
 
 export enum WikiSummarySize {
@@ -11,5 +12,11 @@ export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiPreview,
   size: WikiSummarySize = WikiSummarySize.Big,
 ) => {
-  return shortenText(wiki.summary || wiki.content || '', size)
+  if (wiki.summary) return shortenText(wiki.summary, size)
+  if (wiki.content) {
+    const trimmedContent = shortenText(wiki.content, size + 100)
+    const cleanedContentSummary = RemoveMarkdown(trimmedContent)
+    return shortenText(cleanedContentSummary, size)
+  }
+  return ''
 }

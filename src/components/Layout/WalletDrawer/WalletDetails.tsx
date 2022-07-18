@@ -22,7 +22,7 @@ const WalletDetails = ({
         <Image
           boxSize="23px"
           mr={3}
-          src={`/images/${symbol && tokenDetails[symbol].logo}`}
+          src={`/images/${symbol && tokenDetails[symbol]?.logo}`}
         />
         <Text as="strong" fontWeight="extrabold">
           {symbol}

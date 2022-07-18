@@ -23,10 +23,11 @@ import {
 import shortenAccount from '@/utils/shortenAccount'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
+import { getUsername } from '@/utils/getUsername'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
-  const [, username] = useENSData(
+  const [, userENSDomain] = useENSData(
     type === 'address' && typeof content === 'string' ? content : '',
   )
   const contentTemplate = () => {
@@ -62,12 +63,16 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
         </HStack>
       )
     }
-    if (type === 'account' && typeof content === 'string') {
+    if (type === 'account') {
       return (
         <HStack>
-          <DisplayAvatar size="16" address={content} />
-          <Link fontSize="xs" href={`/account/${content}`} color="brand.500">
-            {username || shortenAccount(content || '')}
+          <DisplayAvatar
+            size="16"
+            address={content.id}
+            avatarIPFS={content.profile?.avatar}
+          />
+          <Link fontSize="xs" href={`/account/${content.id}`} color="brand.500">
+            {getUsername(content, userENSDomain)}
           </Link>
         </HStack>
       )

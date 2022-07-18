@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { AspectRatio, Box, Text, useToast } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  Box,
+  ResponsiveValue,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { useAccount } from 'wagmi'
 
@@ -19,9 +25,17 @@ type DropzoneType = {
     showFetchedImage: boolean
     textType: string
   }
+  dropzonePlaceHolderTitle?: string
+  dropzonePlaceHolderSize?: string
+  aspectRatio?: ResponsiveValue<number>
 }
 
-const Dropzone = ({ dropZoneActions }: DropzoneType) => {
+const Dropzone = ({
+  dropZoneActions,
+  dropzonePlaceHolderTitle,
+  dropzonePlaceHolderSize,
+  aspectRatio,
+}: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
   const dispatch = useDispatch()
@@ -108,7 +122,7 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
-        <AspectRatio ratio={4 / 3}>
+        <AspectRatio ratio={aspectRatio || 4 / 3}>
           <Box
             display="flex"
             padding="10px"
@@ -130,12 +144,25 @@ const Dropzone = ({ dropZoneActions }: DropzoneType) => {
               <Text textAlign="center">Drop the files here ...</Text>
             ) : (
               <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
-                <Text textAlign="center" opacity="0.5">
-                  Drag and drop a <b>{textType}</b>, or click to select.
-                </Text>
-                <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                  (10mb max)
-                </Text>
+                {dropzonePlaceHolderTitle ? (
+                  <>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      {dropzonePlaceHolderTitle}
+                    </Text>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      {dropzonePlaceHolderSize}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Text textAlign="center" opacity="0.5">
+                      Drag and drop a <b>{textType}</b>, or click to select.
+                    </Text>
+                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      (10mb max)
+                    </Text>
+                  </>
+                )}
               </Box>
             )}
           </Box>

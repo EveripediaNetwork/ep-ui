@@ -24,37 +24,58 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { RiSurveyLine } from 'react-icons/ri'
-import { GiTwoCoins } from 'react-icons/gi'
-import {
-  AiOutlineFacebook,
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-  AiOutlineLinkedin,
-  AiOutlineYoutube,
-} from 'react-icons/ai'
-import { CommonMetaIds, MData } from '@/types/Wiki'
+import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
 import { BsGlobe } from 'react-icons/bs'
-import { FaEthereum } from 'react-icons/fa'
+import CoinGeckoIcon from '@/components/Icons/coingecko'
+import CoinMarketCap from '@/components/Icons/coinmarketcap'
+import TwitterIcon from '@/components/Icons/twitterIcon'
+import RedditIcon from '@/components/Icons/redditIcon'
+import InstagramIcon from '@/components/Icons/instagramIcon'
+import FacebookIcon from '@/components/Icons/facebookIcon'
+import GithubIcon from '@/components/Icons/githubIcon'
+import TelegramIcon from '@/components/Icons/telegramIcon'
+
+import { MdEmail } from 'react-icons/md'
+import { CommonMetaIds, MData } from '@/types/Wiki'
+import { FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 
 export const LINK_OPTIONS = [
   {
-    id: CommonMetaIds.FACEBOOK_PROFILE,
-    label: 'Facebook',
-    icon: <AiOutlineFacebook />,
-    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+    id: CommonMetaIds.REDDIT_URL,
+    label: 'Reddit',
+    icon: <RedditIcon />,
+    tests: [/https:\/\/www\.reddit\.com\/r\//i],
+  },
+  {
+    id: CommonMetaIds.EMAIL_URL,
+    label: 'Email',
+    icon: <MdEmail />,
+    tests: [/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/],
+  },
+  {
+    id: CommonMetaIds.GITHUB_URL,
+    label: 'Github',
+    icon: <GithubIcon />,
+    tests: [/https:\/\/github\.com\//i],
+  },
+  {
+    id: CommonMetaIds.TELEGRAM_URL,
+    label: 'Telegram',
+    icon: <TelegramIcon />,
+    tests: [/https:\/\/t\.me\//i],
   },
   {
     id: CommonMetaIds.INSTAGRAM_PROFILE,
     label: 'Instagram',
-    icon: <AiOutlineInstagram />,
+    icon: <InstagramIcon />,
     tests: [/https:\/\/(www.)?instagram.com\/\w+/],
   },
   {
     id: CommonMetaIds.TWITTER_PROFILE,
     label: 'Twitter',
-    icon: <AiOutlineTwitter />,
+    icon: <TwitterIcon />,
     tests: [/https:\/\/(www.)?twitter.com\/\w+/],
   },
   {
@@ -72,11 +93,8 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
     label: 'Coingecko',
-    icon: <GiTwoCoins />,
-    tests: [
-      /https:\/\/(www.)?coinmarketcap.com\/currencies\/\w+/,
-      /https:\/\/(www.)?coingecko.com\/en\/coins\//,
-    ],
+    icon: <CoinGeckoIcon />,
+    tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
   },
   {
     id: CommonMetaIds.WEBSITE,
@@ -87,8 +105,20 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.CONTRACT_URL,
     label: 'Contract URL',
-    icon: <FaEthereum />,
-    tests: [/https:\/\/(www.)?\w+.\w+/],
+    icon: <FaFileContract />,
+    tests: [/i/],
+  },
+  {
+    id: CommonMetaIds.FACEBOOK_PROFILE,
+    label: 'Facebook',
+    icon: <FacebookIcon />,
+    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.COIN_MARKET_CAP,
+    label: 'Coin Market Cap',
+    icon: <CoinMarketCap />,
+    tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
 ]
 
@@ -108,7 +138,6 @@ const HighlightsModal = ({
   const linksWithValue = LINK_OPTIONS.filter(
     med => !!currentWiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
-
   const removeLink = (network: string) => {
     dispatch({
       type: 'wiki/updateMetadata',
@@ -166,7 +195,7 @@ const HighlightsModal = ({
     setError('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLink])
-
+  if (!isOpen) return null
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
@@ -206,7 +235,7 @@ const HighlightsModal = ({
                     })
                   }
                 }}
-                value={currentWiki.categories[0]?.title}
+                defaultValue={currentWiki.categories[0]?.id}
                 placeholder={
                   currentWiki.categories.length > 0
                     ? undefined
@@ -269,7 +298,7 @@ const HighlightsModal = ({
               </Flex>
               <chakra.span color="red.300">{error}</chakra.span>
               {linksWithValue.length > 0 && (
-                <ButtonGroup spacing="7" pt="3">
+                <ButtonGroup gap="4" flexWrap="wrap" pt="3">
                   {linksWithValue.map(network => (
                     <Tooltip label={network.label}>
                       <IconButton

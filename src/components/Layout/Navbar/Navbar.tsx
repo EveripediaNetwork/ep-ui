@@ -32,7 +32,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
-import { LogOutBttn } from './Logout'
+import { LogOutBtn } from './Logout'
 
 const Navbar = () => {
   const router = useRouter()
@@ -211,7 +211,7 @@ const Navbar = () => {
                   >
                     <ProfileLink />
                     <ColorModeToggle isInMobileMenu={false} />
-                    <LogOutBttn isInMobileMenu={false} />
+                    <LogOutBtn isInMobileMenu={false} />
                   </NavMenu>
                 </Box>
                 <Icon

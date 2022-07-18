@@ -1,4 +1,4 @@
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require('@sentry/nextjs')
 
 const moduleExports = {
   reactStrictMode: true,
@@ -18,15 +18,18 @@ const moduleExports = {
       'everipedia.org',
       'ipfs.everipedia.org',
       'lh3.googleusercontent.com',
-      'gateway.pinata.cloud'
-    ], // for demo data
+      'gateway.pinata.cloud',
+      'i3.ytimg.com',
+      'alpha.everipedia.org',
+      'beta.everipedia.org',
+    ],
   },
 }
 
 const sentryWebpackPluginOptions = {
   silent: true,
-  dryRun: process.env.VERCEL_ENV !== "production",
+  dryRun: process.env.VERCEL_ENV !== 'production',
   // https://github.com/getsentry/sentry-webpack-plugin#options.
-};
+}
 
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)

@@ -39,7 +39,18 @@ export const PasteListener = (e: Event) => {
       }
     }
     for (let i = 0; i < toRemoveLinks.length; i += 1) {
-      toRemoveLinks[i].remove()
+      toRemoveLinks[i].removeAttribute('href')
+    }
+
+    const divTags = sanitizedPaste.getElementsByTagName('div')
+    for (let i = 0; i < divTags.length; i += 1) {
+      const div = divTags[i]
+      const className = div.getAttribute('class')
+      if (className?.match(/Typography__Paragraph/)) {
+        const newDiv = document.createElement('div')
+        newDiv.innerHTML = `${div.innerHTML}<p/>`
+        div.parentNode?.replaceChild(newDiv, div)
+      }
     }
 
     const transformedPasteHTML = sanitizedPaste.body.innerHTML
