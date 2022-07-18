@@ -187,11 +187,10 @@
 .markdown-body table {
   border-spacing: 0;
   border-collapse: collapse;
-  display: block;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
+  word-break: break-word;
   margin: 0 auto;
-  overflow: auto;
 }
 
 .markdown-body td,
