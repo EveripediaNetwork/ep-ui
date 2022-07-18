@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
 import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
+import { customTableRenderer } from '@/utils/customTableRender'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
@@ -30,6 +31,7 @@ const MarkdownRender = React.memo(
           h5: addToTOC,
           h6: addToTOC,
           a: customLinkRenderer,
+          table: customTableRenderer,
         }}
       >
         {wikiContent}
