@@ -23,7 +23,6 @@ import {
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
-import { RiSurveyLine } from 'react-icons/ri'
 import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
 import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
