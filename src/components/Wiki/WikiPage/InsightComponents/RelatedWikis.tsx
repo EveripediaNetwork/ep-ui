@@ -1,20 +1,13 @@
 import React, { useEffect } from 'react'
 import { BaseCategory, Wiki, WikiPreview } from '@/types/Wiki'
-import {
-  VStack,
-  Text,
-  HStack,
-  Box,
-  LinkBox,
-  LinkOverlay,
-} from '@chakra-ui/react'
+import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { getWikisByCategory } from '@/services/wikis'
 import { store } from '@/store/store'
-import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
@@ -36,13 +29,12 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
           overflow="hidden"
         />
         <Box>
-          <NextLink href={`/wiki/${id}`} passHref>
-            <LinkOverlay>
-              <Text fontSize="16px" fontWeight="500">
-                {title}
-              </Text>
-            </LinkOverlay>
-          </NextLink>
+          x{' '}
+          <LinkOverlay href={`/wiki/${id}`}>
+            <Text fontSize="16px" fontWeight="500">
+              {title}
+            </Text>
+          </LinkOverlay>
           <Text fontSize="13px" mt={0.5} wordBreak="break-word">
             {getWikiSummary(wiki, WikiSummarySize.Small)}
           </Text>

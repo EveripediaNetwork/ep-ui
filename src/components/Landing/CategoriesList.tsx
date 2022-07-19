@@ -7,7 +7,6 @@ import {
   Spinner,
   Center,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
@@ -64,9 +63,9 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
               fontSize="lg"
               size="md"
             >
-              <NextLink href={`/categories/${category.id}`} passHref>
-                <LinkOverlay>{category.title}</LinkOverlay>
-              </NextLink>
+              <LinkOverlay href={`/categories/${category.id}`}>
+                {category.title}
+              </LinkOverlay>
             </Text>
           </LinkBox>
         ))}

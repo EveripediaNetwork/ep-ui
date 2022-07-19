@@ -6,7 +6,6 @@ import {
   Icon,
   Link,
   LinkBox,
-  LinkOverlay,
   Tag,
   Text,
   Tooltip,
@@ -21,6 +20,7 @@ import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
