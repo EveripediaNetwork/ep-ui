@@ -9,7 +9,7 @@ type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
 const LinkOverlay = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
   let linkProps = {}
-  if (!(href.includes('create-wiki') || href.includes('about'))) {
+  if (href.includes('create-wiki') || href.includes('about')) {
     linkProps = {
       prefetch: false,
     }
