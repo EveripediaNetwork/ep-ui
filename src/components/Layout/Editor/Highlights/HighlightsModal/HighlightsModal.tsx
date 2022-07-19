@@ -215,8 +215,7 @@ const HighlightsModal = ({
           <Stack spacing="4">
             {/* CATEGORY SELECTION */}
             <Flex gap="2.5" align="center">
-              <RiSurveyLine />
-              <Text whiteSpace="nowrap">Category</Text>
+              <Text fontWeight="semibold">Category</Text>
               <Select
                 maxW="52"
                 ml="auto"
