@@ -76,7 +76,6 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               )}
             </>
           )}
-
           <WikiCommitMessage
             commitMessage={commitMessage}
             user={wiki.user}

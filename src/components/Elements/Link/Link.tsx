@@ -7,14 +7,18 @@ import React from 'react'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
-const Link = ({ href, children, ...props }: ChakraLinkAndNextProps) => (
-  <NextLink
-    href={href}
-    prefetch={!(href.includes('create-wiki') || href.includes('about'))}
-    passHref
-  >
-    <ChakraLink {...props}>{children}</ChakraLink>
-  </NextLink>
-)
+const Link = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
+  let linkProps = {}
+  if (!(href.includes('create-wiki') || href.includes('about'))) {
+    linkProps = {
+      prefetch: false,
+    }
+  }
+  return (
+    <NextLink href={href} passHref {...{ linkProps }}>
+      <ChakraLink {...props}>{children}</ChakraLink>
+    </NextLink>
+  )
+}
 
 export default Link
