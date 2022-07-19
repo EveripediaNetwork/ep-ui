@@ -1,4 +1,11 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import {
   Box,
   Collapse,
@@ -8,6 +15,7 @@ import {
   useDisclosure,
   HStack,
   Heading,
+  SkeletonCircle,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { RiWallet2Line } from 'react-icons/ri'
@@ -34,6 +42,44 @@ import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
 import { LogOutBtn } from './Logout'
 
+interface ProfileNavMenuProps {
+  setVisibleMenu: Dispatch<SetStateAction<number | null>>
+  visibleMenu: number | null
+  address?: string
+}
+
+const ProfileNavMenu = ({
+  setVisibleMenu,
+  visibleMenu,
+  address,
+}: ProfileNavMenuProps) => {
+  const [mounted, setMounted] = useState(false)
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  return (
+    <Box onMouseLeave={() => setVisibleMenu(null)}>
+      <NavMenu
+        navItem={NAV_ICON}
+        setVisibleMenu={setVisibleMenu}
+        visibleMenu={visibleMenu}
+        label={
+          mounted ? (
+            <DisplayAvatar address={address} size="25" />
+          ) : (
+            <SkeletonCircle size="25px" />
+          )
+        }
+      >
+        <ProfileLink />
+        <ColorModeToggle isInMobileMenu={false} />
+        <LogOutBtn isInMobileMenu={false} />
+      </NavMenu>
+    </Box>
+  )
+}
+
 const Navbar = () => {
   const router = useRouter()
 
@@ -46,8 +92,6 @@ const Navbar = () => {
   const [openSwitch, setOpenSwitch] = useState<boolean>(false)
 
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
-
-  const [mounted, setMounted] = useState(false)
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
@@ -149,12 +193,6 @@ const Navbar = () => {
     return null
   }
 
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
   return (
     <>
       <Box
@@ -202,18 +240,11 @@ const Navbar = () => {
                 }}
               >
                 <DesktopNav />
-                <Box onMouseLeave={() => setVisibleMenu(null)}>
-                  <NavMenu
-                    navItem={NAV_ICON}
-                    setVisibleMenu={setVisibleMenu}
-                    visibleMenu={visibleMenu}
-                    label={<DisplayAvatar address={accountData?.address} />}
-                  >
-                    <ProfileLink />
-                    <ColorModeToggle isInMobileMenu={false} />
-                    <LogOutBtn isInMobileMenu={false} />
-                  </NavMenu>
-                </Box>
+                <ProfileNavMenu
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  address={accountData?.address}
+                />
                 <Icon
                   color="linkColor"
                   cursor="pointer"

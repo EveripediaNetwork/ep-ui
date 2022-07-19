@@ -1,25 +1,26 @@
 import React from 'react'
-import { NextPage } from 'next'
 import { Flex } from '@chakra-ui/react'
 import {
   getPromotedWikis,
-  getRunningOperationPromises,
-  useGetPromotedWikisQuery,
+  getRunningOperationPromises as getWikisRunningOperationPromises,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import dynamic from 'next/dynamic'
+import { Wiki } from '@/types/Wiki'
+import Hero from '@/components/Landing/Hero'
+import NotableDrops from '@/components/Landing/NotableDrops'
+import CategoriesList from '@/components/Landing/CategoriesList'
+import {
+  getCategories,
+  getRunningOperationPromises as getCategoriesRunningOperationPromises,
+} from '@/services/categories'
+import { Category } from '@/types/CategoryDataTypes'
 
-const Hero = dynamic(() => import('@/components/Landing/Hero'))
-const NotableDrops = dynamic(() => import('@/components/Landing/NotableDrops'))
+interface HomePageProps {
+  promotedWikis: Wiki[]
+  categories: Category[]
+}
 
-const CategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'),
-)
-
-export const Index: NextPage = () => {
-  const result = useGetPromotedWikisQuery()
-  const { data } = result
-  const wiki = data && data.length > 0 ? data[0] : undefined // TODO: remove from array
+export const Index = ({ promotedWikis, categories }: HomePageProps) => {
   return (
     <Flex
       direction="column"
@@ -28,18 +29,26 @@ export const Index: NextPage = () => {
       py={{ base: 6, lg: 20 }}
       gap={10}
     >
-      <Hero wiki={wiki} />
-      <NotableDrops drops={data} />
-      <CategoriesList />
+      <Hero wiki={promotedWikis && promotedWikis[0]} />
+      <NotableDrops drops={promotedWikis} />
+      <CategoriesList categories={categories} />
     </Flex>
   )
 }
 
 export async function getServerSideProps() {
-  store.dispatch(getPromotedWikis.initiate())
-  await Promise.all(getRunningOperationPromises())
+  const { data: promotedWikis } = await store.dispatch(
+    getPromotedWikis.initiate(),
+  )
+  const { data: categories } = await store.dispatch(getCategories.initiate())
+
+  await Promise.all(getWikisRunningOperationPromises())
+  await Promise.all(getCategoriesRunningOperationPromises())
   return {
-    props: {},
+    props: {
+      promotedWikis: promotedWikis || [],
+      categories: categories || [],
+    },
   }
 }
 
