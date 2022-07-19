@@ -22,6 +22,7 @@ const WikiAccordion = ({
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
+
   return (
     <Box
       w="100%"

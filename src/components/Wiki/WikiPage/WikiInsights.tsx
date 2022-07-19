@@ -61,7 +61,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             createdTime={wiki?.created}
             ipfsHash={ipfs || wiki.ipfs}
             txHash={wiki.transactionHash}
-            createdBy={wiki.author?.id}
+            createdBy={wiki.author}
             imgSrc={getWikiImageUrl(wiki)}
           />
           <ProfileSummary wiki={wiki} />
@@ -76,7 +76,6 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               )}
             </>
           )}
-
           <WikiCommitMessage
             commitMessage={commitMessage}
             user={wiki.user}
