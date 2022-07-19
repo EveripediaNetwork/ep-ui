@@ -1,15 +1,9 @@
 import React from 'react'
-import {
-  Icon,
-  useDisclosure,
-  Text,
-  LinkBox,
-  LinkOverlay,
-} from '@chakra-ui/react'
+import { Icon, useDisclosure, Text, LinkBox } from '@chakra-ui/react'
 import { RiArrowRightSLine } from 'react-icons/ri'
-import Link from 'next/link'
 import { NavItem } from '@/types/NavItemType'
 import { StaticContent } from '@/components/StaticElement'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
 
 interface MobileNavItemProps {
   navItem: NavItem
@@ -46,11 +40,14 @@ const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
             {navItem.label}
           </Text>
         ) : (
-          <Link href={navItem.href} passHref>
-            <LinkOverlay fontWeight={600} color="linkColor" mr="auto">
-              {navItem.label}
-            </LinkOverlay>
-          </Link>
+          <LinkOverlay
+            href={navItem.href}
+            fontWeight={600}
+            color="linkColor"
+            mr="auto"
+          >
+            {navItem.label}
+          </LinkOverlay>
         )}
         <Text color="linkColor" cursor="pointer" ml="auto">
           {navItem.subItem && <RiArrowRightSLine />}

@@ -1,7 +1,7 @@
 import { ProfileEmptyState } from '@/components/Elements/icons/ProfileEmptyState'
 import { Button, Flex, Text } from '@chakra-ui/react'
-import Link from 'next/link'
 import React from 'react'
+import { Link } from '../Elements'
 
 export const EmptyState = () => {
   return (

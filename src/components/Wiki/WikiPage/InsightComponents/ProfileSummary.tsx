@@ -200,6 +200,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
   const socialMetaData = wiki.metadata.filter(
     meta => !!meta.value && linkIds.includes(meta.id as CommonMetaIds),
   )
+  if (!socialMetaData.length) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion

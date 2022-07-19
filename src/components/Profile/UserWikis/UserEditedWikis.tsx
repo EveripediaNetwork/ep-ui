@@ -51,7 +51,7 @@ const UserEditedWikis = () => {
       )}
       <Collected wikis={wikis} />
       {loading || hasMore ? (
-        <Center ref={editedWikisSentryRef} w="full" h="16">
+        <Center mt={8} ref={editedWikisSentryRef} w="full" h="16">
           <Spinner size="xl" />
         </Center>
       ) : (

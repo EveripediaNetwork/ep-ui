@@ -163,6 +163,35 @@ const CreateWikiContent = () => {
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const isValidWiki = () => {
+    if (!wiki.title) {
+      toast({
+        title: `Add a Title at the top for this Wiki to continue `,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    const words = getWordCount(wiki.content || '')
+
+    if (words < MINIMUM_WORDS) {
+      toast({
+        title: `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue, you have written ${words}`,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (!isVerifiedContentLinks(wiki.content)) {
+      toast({
+        title: 'Please remove all external links from the content',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
     if (!wiki.images?.length) {
       toast({
         title: 'Add a main image on the right column to continue',
@@ -175,26 +204,6 @@ const CreateWikiContent = () => {
     if (wiki.categories.length === 0) {
       toast({
         title: 'Add one category to continue',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
-    const words = getWordCount(wiki.content || '')
-
-    if (words < MINIMUM_WORDS) {
-      toast({
-        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
-    if (!isVerifiedContentLinks(wiki.content)) {
-      toast({
-        title: 'Please remove all external links from the content',
         status: 'error',
         duration: 3000,
       })
@@ -457,18 +466,6 @@ const CreateWikiContent = () => {
 
   if (!mounted) return null
 
-  const handlePublishDisable = () => {
-    if (
-      +wiki.content.split(' ').length >= 150 &&
-      wiki.title &&
-      wiki.images &&
-      +wiki.categories.length >= 1
-    ) {
-      return true
-    }
-    return false
-  }
-
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto">
       <ReactCanvasConfetti {...confettiProps} />
@@ -606,7 +603,6 @@ const CreateWikiContent = () => {
             onClick={() => {
               saveOnIpfs()
             }}
-            disabled={!handlePublishDisable()}
           >
             Publish
           </Button>

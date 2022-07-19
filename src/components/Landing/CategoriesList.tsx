@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   LinkBox,
   LinkOverlay,
@@ -7,27 +7,21 @@ import {
   Spinner,
   Center,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
-import { useGetCategoriesQuery } from '@/services/categories'
-import { Category } from '@/types/CategoryDataTypes'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
+import { Category } from '@/types/CategoryDataTypes'
 
-const CategoriesList = () => {
-  const { data: categoriesData } = useGetCategoriesQuery()
-  const [categories, setCategories] = React.useState<Category[]>([])
-
-  useEffect(() => {
-    setCategories(categoriesData || [])
-  }, [categoriesData])
-
+interface CategoriesListProps {
+  categories: Category[]
+}
+const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
 
   return (
     <>
       <Text
         align="center"
-        mt={{ base: '10', lg: '20' }}
+        mt={10}
         fontWeight="semibold"
         fontSize="2xl"
         mb={0}
@@ -42,7 +36,7 @@ const CategoriesList = () => {
         columns={[1, 2, 3]}
         spacingX={6}
         spacingY={12}
-        p={{ base: 6, lg: 0 }}
+        px={6}
       >
         {categories.map(category => (
           <LinkBox
@@ -69,9 +63,9 @@ const CategoriesList = () => {
               fontSize="lg"
               size="md"
             >
-              <NextLink href={`/categories/${category.id}`} passHref>
-                <LinkOverlay>{category.title}</LinkOverlay>
-              </NextLink>
+              <LinkOverlay href={`/categories/${category.id}`}>
+                {category.title}
+              </LinkOverlay>
             </Text>
           </LinkBox>
         ))}
