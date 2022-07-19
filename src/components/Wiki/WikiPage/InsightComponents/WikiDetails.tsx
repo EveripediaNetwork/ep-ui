@@ -9,7 +9,6 @@ import {
   Text,
   Tr,
   VStack,
-  Box,
   AspectRatio,
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
@@ -86,12 +85,8 @@ export const WikiDetails = ({
               <Td py={1}>
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {tags?.map((tag, i) => (
-                    <Link key={i} href={`/tags/${tag.id}`} passHref>
-                      <Box py={1}>
-                        <Tag key={i} whiteSpace="nowrap" as="a">
-                          {tag.id}
-                        </Tag>
-                      </Box>
+                    <Link key={i} href={`/tags/${tag.id}`} py={1}>
+                      <Tag whiteSpace="nowrap">{tag.id}</Tag>
                     </Link>
                   ))}
                 </HStack>

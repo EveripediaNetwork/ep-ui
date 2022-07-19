@@ -12,7 +12,11 @@ const UserSocialLinks = ({ links }: ProfileLinksProps) => {
     <HStack justify="center" spacing={4}>
       {socials.map(key => {
         return (
-          <Link position="relative" href={dt[key].urlPrefix(links[key] || '')}>
+          <Link
+            position="relative"
+            rel="nofollow"
+            href={dt[key].urlPrefix(links[key] || '')}
+          >
             <Tooltip hasArrow label={dt[key].label}>
               <span>
                 <Icon

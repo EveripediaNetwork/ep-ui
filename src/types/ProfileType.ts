@@ -31,6 +31,7 @@ export type ProfileData = {
   id: string
   username: string
   bio: string | null
+  links: ProfileLinks[]
   banner: string | null
   avatar: string | null
 }

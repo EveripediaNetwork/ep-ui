@@ -5,29 +5,22 @@ import UserInfo from '@/components/Profile/UserInfo'
 import { ProfileProvider } from '@/components/Profile/utils'
 import { UserProfileHeader } from '@/components/SEO/UserProfile'
 import config from '@/config'
-import { getUserAddressFromUsername } from '@/services/profile'
-import { useUserProfileData } from '@/services/profile/utils'
+import { getUserAddressFromUsername, getUserProfile } from '@/services/profile'
 import { store } from '@/store/store'
-import { Flex, Spinner, Box } from '@chakra-ui/react'
+import { ProfileData } from '@/types/ProfileType'
+import { Flex } from '@chakra-ui/react'
 import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-export type PageWithoutFooter = NextPage & {
-  noFooter?: boolean
+interface ProfileProps {
+  profileData: ProfileData
 }
 
-const Profile: PageWithoutFooter = () => {
+const Profile = ({ profileData }: ProfileProps) => {
   const router = useRouter()
   const address = router.query.profile as string
-  const { profileData, setAccount, loading } = useUserProfileData(address)
-
-  useEffect(() => {
-    if (address) {
-      setAccount(address)
-    }
-  }, [address, setAccount])
 
   const profileContext = useProfile()
 
@@ -52,22 +45,15 @@ const Profile: PageWithoutFooter = () => {
             }}
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
           />
-          {!loading ? (
-            <>
-              <UserInfo />
-              <Collections />
-            </>
-          ) : (
-            <Box mt="20">
-              <Spinner size="xl" />
-            </Box>
-          )}
+          <UserInfo />
+          <Collections />
         </Flex>
       </ProfileProvider>
     </>
   )
 }
-Profile.noFooter = true
+
+Profile.footer = false
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
@@ -75,8 +61,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
   // Redirect from regular ethereum address
   const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
   if (ethAddressRegex.test(userIdentifier)) {
+    const { data: profileData } = await store.dispatch(
+      getUserProfile.initiate(userIdentifier),
+    )
     return {
-      props: {},
+      props: {
+        profileData: profileData || null,
+      },
     }
   }
 

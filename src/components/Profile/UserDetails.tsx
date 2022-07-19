@@ -36,7 +36,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const { headerIsSticky } = useProfileContext()
   const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
-  const customLink = `${window.origin}/account/${
+  const customLink = `${process.env.NEXT_PUBLIC_DOMAIN}/account/${
     profileData?.username || address || ensUserName
   }`
 
@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         >
           <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
-              boxSize="32"
+              size={isSticky ? '35' : '130'}
               overflow="hidden"
               borderWidth={2}
               borderColor="white"

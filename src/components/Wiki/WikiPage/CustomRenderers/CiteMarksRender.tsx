@@ -20,14 +20,14 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const { slug } = router.query
   let wiki: Wiki | undefined
   const id = href?.split('#cite-id-')[1]
-  const [count, setCount] = React.useState(0)
-
+  const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
+
   useEffect(() => {
     const onHashChanged = () => {
       setIsActive(window.location.hash === `#cite-mark-${id}-${count}`)
@@ -66,7 +66,12 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
     wiki = revisionData?.content[0]
   }
 
-  if (!wiki)
+  const [mounted, setMounted] = useState(false)
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!wiki || !mounted)
     return (
       <Link as="sup" id={`cite-mark-${id}-${count}`} href={href}>
         <Text
