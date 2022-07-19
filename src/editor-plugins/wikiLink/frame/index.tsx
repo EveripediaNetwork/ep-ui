@@ -42,17 +42,20 @@ const WikiLinkFrame = ({
     null,
   )
 
-  const cleanComponentState = () => {
+  useEffect(() => {
     setSearch('')
     setResults([])
     setWikiSelected(null)
-  }
-
-  useEffect(() => {
-    cleanComponentState()
     const windowSelection = window.getSelection()?.toString()
     setUserSelectedText(windowSelection || null)
     setSearch(windowSelection || '')
+    if (windowSelection && windowSelection.length > 3) {
+      setLoading(true)
+      debouncedFetchWikis(windowSelection, data => {
+        setResults(data.slice(0, 6))
+        setLoading(false)
+      })
+    }
   }, [triggerMount])
 
   useEffect(() => {
@@ -77,7 +80,6 @@ const WikiLinkFrame = ({
     }
 
     eventEmitter.emit('command', 'wikiLink', payload)
-    cleanComponentState()
     eventEmitter.emit('closePopup')
   }
 
