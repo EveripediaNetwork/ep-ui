@@ -95,6 +95,7 @@
 }
 .wikiLink__noResultsMsg {
   text-align: center;
+  margin-top: 10px;
 }
 
 /* LOADER STYLES */

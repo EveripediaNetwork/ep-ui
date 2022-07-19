@@ -1,3 +1,4 @@
+import config from '@/config'
 import { getWikisByTitle } from '@/services/search'
 import { store } from '@/store/store'
 import { WikiPreview } from '@/types/Wiki'
@@ -23,7 +24,13 @@ const debouncedFetchWikis = debounce(
   500,
 )
 
-const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
+const WikiLinkFrame = ({
+  editorContext,
+  triggerMount,
+}: {
+  editorContext: PluginContext
+  triggerMount: boolean
+}) => {
   const { eventEmitter } = editorContext
   const [search, setSearch] = React.useState('')
   const [results, setResults] = React.useState<WikiPreview[]>([])
@@ -34,17 +41,19 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const [userSelectedText, setUserSelectedText] = React.useState<string | null>(
     null,
   )
-  useEffect(() => {
-    const windowSelection = window.getSelection()?.toString()
-    setUserSelectedText(windowSelection || null)
-    setSearch(windowSelection || '')
-  }, [])
 
   const cleanComponentState = () => {
     setSearch('')
     setResults([])
     setWikiSelected(null)
   }
+
+  useEffect(() => {
+    cleanComponentState()
+    const windowSelection = window.getSelection()?.toString()
+    setUserSelectedText(windowSelection || null)
+    setSearch(windowSelection || '')
+  }, [triggerMount])
 
   useEffect(() => {
     if (search.length > 3) {
@@ -61,10 +70,13 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
 
   const handleWikiLinkSubmit = () => {
     if (!wikiSelected) return
-    eventEmitter.emit('command', 'wikiLink', {
-      url: wikiSelected.id,
-      text: userSelectedText === '' ? wikiSelected.title : userSelectedText,
-    })
+
+    const payload = {
+      url: `${config.publicDomain}/wiki/${wikiSelected.id}`,
+      text: userSelectedText || wikiSelected.title,
+    }
+
+    eventEmitter.emit('command', 'wikiLink', payload)
     cleanComponentState()
     eventEmitter.emit('closePopup')
   }
@@ -82,7 +94,9 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       </div>
       {wikiSelected && (
         <div className="wikiLink__previewContainer">
-          <h3 className="wikiLink__previewTitle">{wikiSelected.title}</h3>
+          <h3 className="wikiLink__previewTitle">
+            {shortenText(wikiSelected.title, 30)}
+          </h3>
           <div className="wikiLink__previewTagsContainer">
             {wikiSelected.tags?.map(tag => (
               <span
@@ -111,6 +125,9 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </div>
         </Center>
       )}
+      {!loading && search.length > 3 && results.length === 0 && (
+        <div className="wikiLink__noResultsMsg">No results found</div>
+      )}
       {results.length > 0 && (
         <div className="wikiLink__resultsContainer">
           {results.map(wiki => (
@@ -120,7 +137,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
               className="wikiLink__wikiResult"
               onClick={() => setWikiSelected(wiki)}
             >
-              {shortenText(wiki.title, 70)}
+              {shortenText(wiki.title, 30)}
             </button>
           ))}
         </div>
@@ -143,7 +160,21 @@ const WikiLinkGuardFrame = ({
 }: {
   editorContext: PluginContext
 }) => {
-  return <WikiLinkFrame editorContext={editorContext} />
+  const [triggerCleanup, setTriggerCleanup] = React.useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      const popupBtn = document.querySelector('.wikiLink__popupBtn')
+      popupBtn?.addEventListener('click', () => {
+        setTriggerCleanup(p => !p)
+      })
+    }, 500)
+  }, [])
+  return (
+    <WikiLinkFrame
+      editorContext={editorContext}
+      triggerMount={triggerCleanup}
+    />
+  )
 }
 
 export default WikiLinkGuardFrame
