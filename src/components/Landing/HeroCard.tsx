@@ -1,13 +1,14 @@
 import { useENSData } from '@/hooks/useENSData'
 import React from 'react'
-import NextLink from 'next/link'
-import { Flex, Text, chakra, Link, Box } from '@chakra-ui/react'
+import { Flex, Text, chakra, LinkBox } from '@chakra-ui/react'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getUsername } from '@/utils/getUsername'
 import { WikiImage } from '../WikiImage'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { Link } from '../Elements'
+import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
 const CARD_DETAILS_LENGTH = 50
 
@@ -15,10 +16,11 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
   const [userEnsDomain] = useENSData(wiki?.user?.id)
 
   return (
-    <NextLink href={`/wiki/${wiki?.id}`} passHref>
+    <LinkBox display="grid" placeItems="center">
       <Flex
         alignSelf="center"
         direction="column"
+        bgColor="red"
         shadow="lg"
         rounded="lg"
         bg="white"
@@ -43,31 +45,33 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           fontWeight="semibold"
           p={4}
         >
-          <chakra.span>{wiki?.title}</chakra.span>
+          <LinkOverlay href={`/wiki/${wiki?.id}`}>
+            <chakra.span>{wiki?.title}</chakra.span>
+          </LinkOverlay>
           <Text fontSize="xs" fontWeight="light" my={2}>
             {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
           </Text>
 
           <Flex gap={3}>
-            <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-              <Box>
-                <DisplayAvatar
-                  size="20"
-                  address={wiki?.user.id}
-                  avatarIPFS={wiki?.user.profile?.avatar}
-                />
-              </Box>
-            </NextLink>
+            <Link href={`/account/${wiki?.user?.id}`}>
+              <DisplayAvatar
+                size="20"
+                address={wiki?.user.id}
+                avatarIPFS={wiki?.user.profile?.avatar}
+              />
+            </Link>
             <Text fontSize="14px" color="linkColor">
-              <NextLink href={`/account/${wiki?.user?.id}`} passHref>
-                <Link href="passRef" color="brand.500" fontWeight="bold">
-                  {getUsername(wiki?.user, userEnsDomain)}
-                </Link>
-              </NextLink>
+              <Link
+                href={`/account/${wiki?.user?.id}`}
+                color="brand.500"
+                fontWeight="bold"
+              >
+                {getUsername(wiki?.user, userEnsDomain)}
+              </Link>
             </Text>
           </Flex>
         </Flex>
       </Flex>
-    </NextLink>
+    </LinkBox>
   )
 }

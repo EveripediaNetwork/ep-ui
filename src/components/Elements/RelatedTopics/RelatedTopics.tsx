@@ -1,13 +1,6 @@
 import React from 'react'
-import {
-  VStack,
-  Heading,
-  Divider,
-  List,
-  ListItem,
-  Link,
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { VStack, Heading, Divider, List, ListItem } from '@chakra-ui/react'
+import Link from '../Link/Link'
 
 interface RelatedTopicsProp {
   topics: Array<{ name: string; url: string; isSectionLink?: boolean }>
@@ -28,9 +21,9 @@ const RelatedTopics = ({ topics }: RelatedTopicsProp) => (
     <List spacing={2}>
       {topics.map(topic => (
         <ListItem mt="20px">
-          <NextLink href={topic.url} scroll={!!topic.isSectionLink} passHref>
+          <Link href={topic.url} scroll={!!topic.isSectionLink} passHref>
             <Link href="passRef">{topic.name}</Link>
-          </NextLink>
+          </Link>
         </ListItem>
       ))}
     </List>
