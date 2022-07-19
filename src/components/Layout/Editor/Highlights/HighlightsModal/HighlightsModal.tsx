@@ -23,7 +23,6 @@ import {
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
-import { RiSurveyLine } from 'react-icons/ri'
 import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
 import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
@@ -215,8 +214,7 @@ const HighlightsModal = ({
           <Stack spacing="4">
             {/* CATEGORY SELECTION */}
             <Flex gap="2.5" align="center">
-              <RiSurveyLine />
-              <Text whiteSpace="nowrap">Category</Text>
+              <Text fontWeight="semibold">Category</Text>
               <Select
                 maxW="52"
                 ml="auto"
