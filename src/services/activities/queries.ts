@@ -118,6 +118,13 @@ export const GET_ACTIVITIES_BY_ID = gql`
           id
           value
         }
+        author {
+          id
+          profile {
+            username
+            avatar
+          }
+        }
       }
       datetime
       ipfs

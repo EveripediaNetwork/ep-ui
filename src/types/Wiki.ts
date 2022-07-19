@@ -86,6 +86,10 @@ export interface User {
   profile?: ProfileData | null
 }
 
+export interface Author {
+  id: string | null
+  profile?: ProfileData | null
+}
 export enum PageTypeName {
   GENERIC = 'generic',
   PERSON = 'Person',
@@ -147,7 +151,7 @@ export interface Wiki {
   language: LanguagesISOEnum
   updated?: string
   created?: string
-  author: User
+  author: Author
 }
 
 export type WikiPreview = Pick<

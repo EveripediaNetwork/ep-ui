@@ -6,18 +6,17 @@ import {
   Icon,
   LinkBox,
   Text,
-  LinkOverlay,
 } from '@chakra-ui/react'
 import React from 'react'
 import { FaEthereum } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
-import NextLink from 'next/link'
 
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { shortenText } from '@/utils/shortenText'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
 export type CollectionItemProps = {
   item: Wiki
@@ -42,11 +41,9 @@ export const CollectionItem = (props: CollectionItemProps) => {
         </AspectRatio>
         <Flex direction="column" px="3" fontSize="xs" py="2" mb="3">
           <Flex align="center">
-            <NextLink href={`/wiki/${id}`} passHref>
-              <LinkOverlay>
-                <chakra.span color="gray.500"> {title}</chakra.span>
-              </LinkOverlay>
-            </NextLink>
+            <LinkOverlay href={`/wiki/${id}`}>
+              <chakra.span color="gray.500"> {title}</chakra.span>
+            </LinkOverlay>
             {updated && (
               <>
                 <chakra.span ml="auto" color="gray.500">

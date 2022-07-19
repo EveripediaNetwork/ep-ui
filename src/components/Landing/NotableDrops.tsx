@@ -1,19 +1,12 @@
-import {
-  Text,
-  LinkBox,
-  LinkOverlay,
-  chakra,
-  Heading,
-  Box,
-} from '@chakra-ui/react'
+import { Text, LinkBox, chakra, Heading, Box } from '@chakra-ui/react'
 import React from 'react'
-import NextLink from 'next/link'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
 import { Carousel } from '../Elements'
+import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
 interface NotableWikiCardProps {
   wiki: Wiki
@@ -30,12 +23,10 @@ const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
         maxW="400px"
         mx="auto"
       >
-        <WikiImage imageURL={getWikiImageUrl(wiki)} objectFit="cover" h="96" />
+        <WikiImage imageURL={getWikiImageUrl(wiki)} imgH="380" imgW="400" />
         <chakra.div color="white" pt={4} px={8} gap={4} textAlign="center">
           <Text fontSize="xl" fontWeight="bold">
-            <NextLink href={`/wiki/${wiki.id}`} passHref>
-              <LinkOverlay>{wiki.title}</LinkOverlay>
-            </NextLink>
+            <LinkOverlay href={`/wiki/${wiki.id}`}>{wiki.title}</LinkOverlay>
           </Text>
           <Text mb="6" fontSize="md" noOfLines={2}>
             {getWikiSummary(wiki, WikiSummarySize.Medium)}
@@ -58,9 +49,9 @@ const NotableDrops = ({ drops = [] }: NotableDropsProps) => {
 
   return (
     <Box
-      mt={{ base: '10', lg: '20' }}
+      mt={10}
       px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 10 }}
+      py={{ base: 5, md: 20 }}
       textAlign="center"
       _dark={{
         bgImage: '/images/homepage-bg-dark.png',

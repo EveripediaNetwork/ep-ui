@@ -31,7 +31,7 @@ import {
 
 import { useRouter } from 'next/router'
 import config from '@/config'
-import Link from 'next/link'
+import { Link } from '@/components/Elements'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>

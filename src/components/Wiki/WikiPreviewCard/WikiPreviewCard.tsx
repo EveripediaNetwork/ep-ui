@@ -3,7 +3,6 @@ import {
   Spacer,
   HStack,
   LinkBox,
-  LinkOverlay,
   Stack,
   Text,
   Flex,
@@ -15,10 +14,11 @@ import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
-import Link from 'next/link'
 import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/shortenText'
 import { getUsername } from '@/utils/getUsername'
+import { Link } from '@/components/Elements'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
 
 const WikiPreviewCard = ({
   wiki,
