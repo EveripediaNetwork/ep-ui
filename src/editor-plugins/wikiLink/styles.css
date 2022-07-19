@@ -15,6 +15,11 @@
   justify-content: center;
   gap: 10px;
 }
+
+.wikiLink__input {
+  display: block;
+  width: 100% !important;
+}
 .wikiLink__resultsContainer {
   display: flex;
   flex-direction: column;
@@ -78,6 +83,10 @@
 }
 .toastui-editor-dark .wikiLink__previewTag {
   color: #333 !important;
+}
+.wikiLink_linkButton {
+  width: 100%;
+  margin-top: 10px;
 }
 .toastui-editor-ok-button[disabled] {
   cursor: not-allowed;

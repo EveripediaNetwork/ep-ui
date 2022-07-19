@@ -3,6 +3,7 @@ import { store } from '@/store/store'
 import { WikiPreview } from '@/types/Wiki'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { shortenText } from '@/utils/shortenText'
+import { Center } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor/dist/toastui-editor-viewer'
 import { debounce } from 'debounce'
 import React, { useEffect } from 'react'
@@ -26,6 +27,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const { eventEmitter } = editorContext
   const [search, setSearch] = React.useState('')
   const [results, setResults] = React.useState<WikiPreview[]>([])
+  const [loading, setLoading] = React.useState(false)
   const [wikiSelected, setWikiSelected] = React.useState<WikiPreview | null>(
     null,
   )
@@ -35,11 +37,25 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   useEffect(() => {
     const windowSelection = window.getSelection()?.toString()
     setUserSelectedText(windowSelection || null)
+    setSearch(windowSelection || '')
   }, [])
+
+  const cleanComponentState = () => {
+    setSearch('')
+    setResults([])
+    setWikiSelected(null)
+  }
 
   useEffect(() => {
     if (search.length > 3) {
-      debouncedFetchWikis(search, setResults)
+      setLoading(true)
+      debouncedFetchWikis(search, data => {
+        setResults(data.slice(0, 6))
+        setLoading(false)
+      })
+    } else {
+      setResults([])
+      setWikiSelected(null)
     }
   }, [search])
 
@@ -49,6 +65,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       url: wikiSelected.id,
       text: userSelectedText === '' ? wikiSelected.title : userSelectedText,
     })
+    cleanComponentState()
     eventEmitter.emit('closePopup')
   }
 
@@ -56,50 +73,77 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     <div>
       <div className="wikiLink__inputContainer">
         <input
+          className="wikiLink__input"
           value={search}
           onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="Search Wiki"
         />
-        {wikiSelected && (
-          <div className="wikiLink__previewContainer">
-            <h3 className="wikiLink__previewTitle">{wikiSelected.title}</h3>
-            <div className="wikiLink__previewTagsContainer">
-              {wikiSelected.tags?.map(tag => (
-                <span className="wikiLink__previewTag">{tag.id}</span>
-              ))}
-            </div>
-            <p className="wikiLink__previewContent">
-              {getWikiSummary(wikiSelected, WikiSummarySize.Medium)}
-            </p>
-          </div>
-        )}
-        {results.length > 0 && (
-          <div className="wikiLink__resultsContainer">
-            {results.map(wiki => (
-              <button
-                key={wiki.id}
-                type="button"
-                className="wikiLink__wikiResult"
-                onClick={() => setWikiSelected(wiki)}
+      </div>
+      {wikiSelected && (
+        <div className="wikiLink__previewContainer">
+          <h3 className="wikiLink__previewTitle">{wikiSelected.title}</h3>
+          <div className="wikiLink__previewTagsContainer">
+            {wikiSelected.tags?.map(tag => (
+              <span
+                style={{
+                  backgroundColor: `hsl(${Math.floor(
+                    Math.random() * 360,
+                  )}, 10%, 80%)`,
+                }}
+                className="wikiLink__previewTag"
               >
-                {shortenText(wiki.title, 70)}
-              </button>
+                {tag.id}
+              </span>
             ))}
           </div>
-        )}
-        {wikiSelected && (
-          <button
-            type="button"
-            onClick={handleWikiLinkSubmit}
-            className="toastui-editor-ok-button"
-          >
-            Link
-          </button>
-        )}
-      </div>
+          <p className="wikiLink__previewContent">
+            {getWikiSummary(wikiSelected, WikiSummarySize.Medium)}
+          </p>
+        </div>
+      )}
+      {loading && (
+        <Center>
+          <div className="wikiLink__loader">
+            <div />
+            <div />
+            <div />
+          </div>
+        </Center>
+      )}
+      {results.length > 0 && (
+        <div className="wikiLink__resultsContainer">
+          {results.map(wiki => (
+            <button
+              key={wiki.id}
+              type="button"
+              className="wikiLink__wikiResult"
+              onClick={() => setWikiSelected(wiki)}
+            >
+              {shortenText(wiki.title, 70)}
+            </button>
+          ))}
+        </div>
+      )}
+      {wikiSelected && (
+        <button
+          type="button"
+          onClick={handleWikiLinkSubmit}
+          className="toastui-editor-ok-button wikiLink_linkButton"
+        >
+          Link
+        </button>
+      )}
     </div>
   )
 }
 
-export default WikiLinkFrame
+const WikiLinkGuardFrame = ({
+  editorContext,
+}: {
+  editorContext: PluginContext
+}) => {
+  return <WikiLinkFrame editorContext={editorContext} />
+}
+
+export default WikiLinkGuardFrame
