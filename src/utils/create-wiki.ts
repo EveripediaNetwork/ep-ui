@@ -469,9 +469,9 @@ export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
   markdownLinks?.every(link => {
-    const url = link.match(/\((.*?)\)/g)?.[0].replace(/\(|\)/g, '')
+    const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
+    const url = linkMatch?.[2]
     if (url && url.charAt(0) !== '#') {
-      // check if url is of whitelisted domains
       const validURLRecognizer = new RegExp(
         `^https?://(www\\.)?(${whiteListedDomains.join('|')})`,
       )
