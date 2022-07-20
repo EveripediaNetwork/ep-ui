@@ -158,7 +158,7 @@ export const WikiDetails = ({
                     avatarIPFS={createdBy.profile?.avatar}
                     size="24"
                   />
-                  <Link href={`/account/${createdBy}`} color="brand.500">
+                  <Link href={`/account/${createdBy.id}`} color="brand.500">
                     {getUsername(createdBy, username)}
                   </Link>
                 </HStack>
