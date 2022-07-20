@@ -27,7 +27,7 @@ const WikiAccordion = ({
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue({ base: base, xl: xl })
+  const isDefaultOpen = useBreakpointValue({ base, xl })
 
   return (
     <Box
