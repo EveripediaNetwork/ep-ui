@@ -166,7 +166,7 @@ export const useGetSignedHash = (deadline: number) => {
     txHash,
   } = useCreateWikiContext()
 
-  const { data: accountData } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
 
   const {
     data: signData,
@@ -185,7 +185,7 @@ export const useGetSignedHash = (deadline: number) => {
       types,
       value: {
         ipfs,
-        user: accountData?.address,
+        user: userAddress,
         deadline,
       },
     })
@@ -204,7 +204,7 @@ export const useGetSignedHash = (deadline: number) => {
           action: 'SUBMIT_WIKI_ERROR',
           params: {
             reason: err.message,
-            address: accountData?.address,
+            address: userAddress,
             slug: wikiSlug,
           },
         })
@@ -224,7 +224,7 @@ export const useGetSignedHash = (deadline: number) => {
                 action: 'SUBMIT_WIKI_ERROR',
                 params: {
                   reason: 'TRANSACTION_VERIFICATION_ERROR',
-                  address: accountData?.address,
+                  address: userAddress,
                   slug: wikiSlug,
                 },
               })
@@ -252,7 +252,7 @@ export const useGetSignedHash = (deadline: number) => {
             action: 'SUBMIT_WIKI_ERROR',
             params: {
               reason: errorObject.message,
-              address: accountData?.address,
+              address: userAddress,
               slug: wikiSlug,
             },
           })
@@ -266,7 +266,7 @@ export const useGetSignedHash = (deadline: number) => {
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (signData && wikiHash && accountData && accountData.address) {
+      if (signData && wikiHash && isUserConnected && userAddress) {
         if (signError) {
           setMsg(defaultErrorMessage)
           setIsLoading('error')
@@ -276,7 +276,7 @@ export const useGetSignedHash = (deadline: number) => {
           const hash = await submitVerifiableSignature(
             signData,
             wikiHash,
-            accountData?.address,
+            userAddress,
             deadline,
           )
           if (hash) {
@@ -292,7 +292,7 @@ export const useGetSignedHash = (deadline: number) => {
             params: {
               reason:
                 errorObject.response.errors[0].extensions.exception.reason,
-              address: accountData?.address,
+              address: userAddress,
               data: signData,
             },
           })

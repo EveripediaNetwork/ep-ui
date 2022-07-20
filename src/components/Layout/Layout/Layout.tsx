@@ -17,8 +17,7 @@ const Layout = ({
   children: React.ReactNode
   noFooter?: boolean
 }) => {
-  const { data } = useAccount()
-  const address = data?.address
+  const { address: userAddress } = useAccount()
   return (
     <>
       <Script
@@ -28,15 +27,15 @@ const Layout = ({
       />
       <Script id="google-analytics-config" strategy="lazyOnload">
         {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-                user_id: '${address}',
-                page_path: window.location.pathname,
-                send_page_view: false
-                });
-            `}
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+          user_id: '${userAddress}',
+          page_path: window.location.pathname,
+          send_page_view: false
+          });
+        `}
       </Script>
       <Stack justify="space-between" minH="100vh" spacing={0}>
         <Navbar />

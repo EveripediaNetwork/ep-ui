@@ -97,7 +97,7 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { data: accountData } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
   const { fireConfetti, confettiProps } = useConfetti()
@@ -218,10 +218,10 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: accountData?.address, slug: getWikiSlug() },
+      params: { address: userAddress, slug: getWikiSlug() },
     })
 
-    if (accountData) {
+    if (isUserConnected) {
       if (
         isNewCreateWiki &&
         !override &&
@@ -247,11 +247,11 @@ const CreateWikiContent = () => {
       if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
-      if (accountData.address) {
+      if (userAddress) {
         interWiki = {
           ...interWiki,
           user: {
-            id: accountData.address,
+            id: userAddress,
           },
           content: String(wiki.content).replace(/\n/gm, '  \n'),
         }
@@ -308,7 +308,7 @@ const CreateWikiContent = () => {
           action: 'SUBMIT_WIKI_ERROR',
           params: {
             reason: logReason,
-            address: accountData?.address,
+            address: userAddress,
             slug: getWikiSlug(),
           },
         })
@@ -332,7 +332,7 @@ const CreateWikiContent = () => {
   const disableSaveButton = () =>
     isWritingCommitMsg ||
     submittingWiki ||
-    !accountData?.address ||
+    !userAddress ||
     signing ||
     isLoadingWiki
 

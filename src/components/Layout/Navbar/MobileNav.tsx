@@ -30,7 +30,7 @@ type MobileNavType = {
 }
 
 const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
-  const { data: accountData } = useAccount()
+  const { isConnected: isUserConnected, address: userAddress } = useAccount()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const iconSize = 20
@@ -67,7 +67,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
           <Box
             px={{ base: 4, md: 8 }}
             h={{
-              base: !accountData
+              base: !isUserConnected
                 ? 'max(calc(100vh - 300px), 350px)'
                 : 'max(calc(100vh - 240px), 350px)',
               md: 'calc(100vh - 180px)',
@@ -78,15 +78,15 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
               flexDirection="column"
               justifyContent="space-between"
               mt={5}
-              h={!accountData ? 'min(100%, 400px)' : 'min(100%, 500px)'}
+              h={!isUserConnected ? 'min(100%, 400px)' : 'min(100%, 500px)'}
               bg="subMenuBg"
               px={6}
               pb={6}
             >
               {MOBILE_NAV_ITEMS({
-                address: accountData?.address,
+                address: userAddress,
               })
-                .filter(i => i.label !== 'Account' || accountData)
+                .filter(i => i.label !== 'Account' || isUserConnected)
                 .map(navItem => (
                   <MobileNavItem
                     handleClick={item => handleClick(item)}
@@ -95,7 +95,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
                   />
                 ))}
 
-              {accountData && (
+              {isUserConnected && (
                 <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
                   <MobileNavItem
                     handleClick={handleWalletButtonClick}
@@ -124,7 +124,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
         )}
       </Box>
       <Box display={{ lg: 'block', xl: 'none' }}>
-        {!showSubNav && !accountData && (
+        {!showSubNav && !isUserConnected && (
           <Box mb={3} px={6} display={{ sm: 'flex', md: 'none' }}>
             <Button onClick={handleWalletButtonClick} size="lg" w="full">
               <Text>Connect wallet</Text>
