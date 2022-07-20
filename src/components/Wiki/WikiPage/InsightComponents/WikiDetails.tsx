@@ -73,7 +73,7 @@ export const WikiDetails = ({
                       href={`/categories/${category.id}`}
                       color="brand.500"
                     >
-                      {category.id}
+                      {category.title}
                     </Link>
                   ))}
                 </HStack>
