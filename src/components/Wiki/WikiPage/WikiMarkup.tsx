@@ -60,7 +60,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
               w="100%"
               justify="space-between"
               direction={{
-                base: 'column',
+                base: 'column-reverse',
                 md: 'row',
               }}
             >

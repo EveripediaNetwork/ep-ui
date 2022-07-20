@@ -9,7 +9,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   if (!media || media.length === 0) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
-      <WikiAccordion title="Media">
+      <WikiAccordion title="Media" IsOpen={false}>
         <SimpleGrid columns={3} spacing={5}>
           {media.map((m, i) => (
             <AspectRatio ratio={1} key={i}>

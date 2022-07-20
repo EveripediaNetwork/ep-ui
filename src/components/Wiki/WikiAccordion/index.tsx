@@ -6,22 +6,26 @@ import {
   IconButton,
   useDisclosure,
   BoxProps,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
 interface AccordionProps {
   title: string
   withNoDarkBg?: boolean
+  IsOpen: boolean
   children: React.ReactNode
 }
 
 const WikiAccordion = ({
   title,
   withNoDarkBg,
+  IsOpen,
   children,
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
+  const isDefaultOpen = useBreakpointValue({ base: IsOpen, xl: !IsOpen })
 
   return (
     <Box
@@ -53,7 +57,7 @@ const WikiAccordion = ({
           {title}
         </Text>
       </HStack>
-      {!isOpen && (
+      {isOpen === isDefaultOpen && (
         <Box p={2} mt={1} {...rest}>
           {children}
         </Box>
