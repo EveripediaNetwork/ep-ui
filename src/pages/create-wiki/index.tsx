@@ -295,6 +295,7 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            console.error({...errObj});
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
             logReason = wikiError.error
