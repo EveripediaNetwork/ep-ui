@@ -6,6 +6,7 @@ import { User, Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
+import NextLink from 'next/link'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { Link } from '../Elements'
 
@@ -135,19 +136,21 @@ const ActivityCard = ({
                 size="20"
               />
               <Text fontSize="14px" color="linkColor">
-                <Link href={`/account/${editor.id}`} passHref>
-                  <Link href="passRef" color="brand.500" fontWeight="bold">
-                    {getUsername(editor)}
-                  </Link>
+                <Link
+                  href={`/account/${editor.id}`}
+                  color="brand.500"
+                  fontWeight="bold"
+                >
+                  {getUsername(editor)}
                 </Link>
               </Text>
               <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
                 {wiki.tags.map((tag, index) => (
-                  <Link href={`/tags/${tag.id}`} key={index} passHref>
+                  <NextLink href={`/tags/${tag.id}`} key={index} passHref>
                     <Tag as="a" whiteSpace="nowrap" key={index}>
                       <Text px={4}>{tag.id}</Text>
                     </Tag>
-                  </Link>
+                  </NextLink>
                 ))}
               </HStack>
             </HStack>
