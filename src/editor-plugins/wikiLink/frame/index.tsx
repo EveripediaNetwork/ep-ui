@@ -24,13 +24,7 @@ const debouncedFetchWikis = debounce(
   500,
 )
 
-const WikiLinkFrame = ({
-  editorContext,
-  triggerMount,
-}: {
-  editorContext: PluginContext
-  triggerMount: boolean
-}) => {
+const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const { eventEmitter } = editorContext
   const [search, setSearch] = React.useState('')
   const [results, setResults] = React.useState<WikiPreview[]>([])
@@ -41,6 +35,16 @@ const WikiLinkFrame = ({
   const [userSelectedText, setUserSelectedText] = React.useState<string | null>(
     null,
   )
+  const [triggerCleanup, setTriggerCleanup] = React.useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      const popupBtn = document.querySelector('.wikiLink__popupBtn')
+      popupBtn?.addEventListener('click', () => {
+        setTriggerCleanup(p => !p)
+      })
+    }, 500)
+  }, [])
 
   useEffect(() => {
     setSearch('')
@@ -56,7 +60,7 @@ const WikiLinkFrame = ({
         setLoading(false)
       })
     }
-  }, [triggerMount])
+  }, [triggerCleanup])
 
   useEffect(() => {
     if (search.length > 3) {
@@ -157,26 +161,4 @@ const WikiLinkFrame = ({
   )
 }
 
-const WikiLinkGuardFrame = ({
-  editorContext,
-}: {
-  editorContext: PluginContext
-}) => {
-  const [triggerCleanup, setTriggerCleanup] = React.useState(false)
-  useEffect(() => {
-    setTimeout(() => {
-      const popupBtn = document.querySelector('.wikiLink__popupBtn')
-      popupBtn?.addEventListener('click', () => {
-        setTriggerCleanup(p => !p)
-      })
-    }, 500)
-  }, [])
-  return (
-    <WikiLinkFrame
-      editorContext={editorContext}
-      triggerMount={triggerCleanup}
-    />
-  )
-}
-
-export default WikiLinkGuardFrame
+export default WikiLinkFrame
