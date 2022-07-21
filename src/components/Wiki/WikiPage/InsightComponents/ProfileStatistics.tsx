@@ -76,6 +76,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
         flexDir="column"
         gap={2}
         title="Statistics"
+        collapsed={{ base: true, xl: false }}
       >
         {profileStatistics.map((item, index) => (
           <AccordionWidget key={index} {...item} />
