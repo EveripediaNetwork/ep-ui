@@ -58,6 +58,7 @@ export enum ValidatorCodes {
   URL = 'EXTERNAL_URL_ERROR',
   METADATA = 'METADATA_ERROR',
   SUMMARY = 'SUMMARY_ERROR',
+  ID_ERROR = 'ID_ERROR',
 }
 
 export enum EditSpecificMetaIds {

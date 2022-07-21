@@ -57,6 +57,8 @@ export const ValidationErrorMessage = (type: string) => {
       return 'Wiki metadata is incorrect. Please check the wiki.'
     case ValidatorCodes.SUMMARY:
       return 'Summary must be no more than 128 characters.'
+    case ValidatorCodes.ID_ERROR:
+      return 'ID is incorrect. Please check the wiki.'
     default:
       return 'An error occurred.'
   }
