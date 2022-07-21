@@ -13,21 +13,19 @@ import { RiArrowDownSLine } from 'react-icons/ri'
 interface AccordionProps {
   title: string
   withNoDarkBg?: boolean
-  base: boolean
-  xl: boolean
+  collapsed?: {base: boolean, xl: boolean}
   children: React.ReactNode
 }
 
 const WikiAccordion = ({
   title,
   withNoDarkBg,
-  base,
-  xl,
+  collapsed,
   children,
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue({ base, xl })
+  const isDefaultOpen = useBreakpointValue(collapsed? collapsed : {base:false , xl:false})
 
   return (
     <Box
