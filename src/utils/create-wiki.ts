@@ -59,6 +59,8 @@ export const ValidationErrorMessage = (type: string) => {
       return 'Summary must be no more than 128 characters.'
     case ValidatorCodes.ID_ERROR:
       return 'ID is incorrect. Please check the wiki.'
+    case ValidatorCodes.GLOBAL_RATE_LIMIT:
+      return 'You have reached the global rate limit. Please try again to submit the wiki later after 75hrs. the wiki will be saved locally as draft in your browser.'
     default:
       return 'An error occurred.'
   }

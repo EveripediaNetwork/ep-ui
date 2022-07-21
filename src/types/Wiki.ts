@@ -59,6 +59,7 @@ export enum ValidatorCodes {
   METADATA = 'METADATA_ERROR',
   SUMMARY = 'SUMMARY_ERROR',
   ID_ERROR = 'ID_ERROR',
+  GLOBAL_RATE_LIMIT = 'GLOBAL_RATE_LIMIT',
 }
 
 export enum EditSpecificMetaIds {
