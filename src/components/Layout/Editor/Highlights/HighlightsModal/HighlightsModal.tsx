@@ -39,6 +39,7 @@ import { CommonMetaIds, MData } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import EmailIcon from '@/components/Icons/emailIcon'
 
 export const LINK_OPTIONS = [
   {
@@ -50,7 +51,7 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.EMAIL_URL,
     label: 'Email',
-    icon: <MdEmail />,
+    icon: <EmailIcon />,
     tests: [/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/],
   },
   {
