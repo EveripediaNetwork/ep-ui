@@ -34,7 +34,6 @@ import FacebookIcon from '@/components/Icons/facebookIcon'
 import GithubIcon from '@/components/Icons/githubIcon'
 import TelegramIcon from '@/components/Icons/telegramIcon'
 
-import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
