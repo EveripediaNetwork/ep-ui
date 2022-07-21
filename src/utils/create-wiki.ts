@@ -46,7 +46,7 @@ export const ValidationErrorMessage = (type: string) => {
     case ValidatorCodes.USER:
       return 'Transaction is not signed by the user.'
     case ValidatorCodes.WORDS:
-      return 'Wiki must have at least 150 characters.'
+      return 'Wiki must have at least 100 words.'
     case ValidatorCodes.IMAGE:
       return 'Images must be no more than 5 and no less than 1.'
     case ValidatorCodes.TAG:
@@ -77,7 +77,7 @@ export const types = {
   ],
 }
 
-export const MINIMUM_WORDS = 150
+export const MINIMUM_WORDS = 100
 
 export const saveImage = async (image: Image) => {
   const formData = new FormData()
