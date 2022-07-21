@@ -209,6 +209,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
         flexDir="column"
         gap={2}
         title="Profile Summary"
+        collapsed={{ base: true, xl: false }}
       >
         <ContractLink socialMetaData={socialMetaData} />
         <OfficialSite socialMetaData={socialMetaData} />
