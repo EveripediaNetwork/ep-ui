@@ -23,7 +23,6 @@ import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import networkMap from '@/utils/networkMap'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import { ProviderDataType } from '@/types/ProviderDataType'
-import { StaticContent } from '@/components/StaticElement'
 import { logEvent } from '@/utils/googleAnalytics'
 import dynamic from 'next/dynamic'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
@@ -253,18 +252,16 @@ const Navbar = () => {
           setHamburger={setHamburger}
         />
 
-        <StaticContent>
-          <Collapse
-            in={isHamburgerOpen}
-            animateOpacity
-            style={{ margin: '0 -15px' }}
-          >
-            <MobileNav
-              setHamburger={setHamburger}
-              toggleWalletDrawer={onToggle}
-            />
-          </Collapse>
-        </StaticContent>
+        <Collapse
+          in={isHamburgerOpen}
+          animateOpacity
+          style={{ margin: '0 -15px' }}
+        >
+          <MobileNav
+            setHamburger={setHamburger}
+            toggleWalletDrawer={onToggle}
+          />
+        </Collapse>
       </Box>
       <NetworkErrorNotification
         switchNetwork={handleSwitchNetwork}
