@@ -21,6 +21,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
         alignSelf="center"
         direction="column"
         bgColor="red"
+        _dark={{ bgColor: 'gray.700', color: 'white' }}
         shadow="lg"
         rounded="lg"
         bg="white"

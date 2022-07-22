@@ -12,6 +12,7 @@ import {
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
 import { FiExternalLink } from 'react-icons/fi'
+import {shortenText} from '@/utils/shortenText'
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -117,10 +118,10 @@ const OfficialSite = ({
                     <Link
                       rel="nofollow"
                       target="_blank"
-                      href={parseLink(social.value)}
+                      href={parseLink((social.value).trim())}
                       color="brand.500"
                     >
-                      <Text>{social.value}</Text>
+                      <Text>{shortenText(social.value, 20)}</Text>
                     </Link>
                   )
                 })}
