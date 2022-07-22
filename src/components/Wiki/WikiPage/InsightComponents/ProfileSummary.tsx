@@ -118,7 +118,7 @@ const OfficialSite = ({
                     <Link
                       rel="nofollow"
                       target="_blank"
-                      href={parseLink((social.value).trim())}
+                      href={parseLink(social.value.trim())}
                       color="brand.500"
                     >
                       <Text>{shortenText(social.value, 20)}</Text>
