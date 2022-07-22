@@ -60,6 +60,7 @@ const SocialProfiles = ({
                       href={parseLink(social.value)}
                       key={i}
                       rel="nofollow"
+                      display='flex'
                     >
                       <IconButton
                         color="secondaryDark"
