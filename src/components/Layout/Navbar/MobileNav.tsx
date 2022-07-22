@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Flex,
@@ -46,6 +46,14 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   const handleWalletButtonClick = () => {
     setHamburger(false)
     toggleWalletDrawer()
+  }
+
+  const [isMounted, setIsMounted] = useState<boolean>(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+  if (!isMounted) {
+    return null
   }
 
   return (
