@@ -12,7 +12,7 @@ import {
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
 import { FiExternalLink } from 'react-icons/fi'
-import {shortenText} from '@/utils/shortenText'
+import { shortenText } from '@/utils/shortenText'
 
 type ProfileSummaryProps = {
   wiki: Wiki
