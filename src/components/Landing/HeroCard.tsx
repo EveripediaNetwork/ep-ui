@@ -13,7 +13,7 @@ import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 const CARD_DETAILS_LENGTH = 50
 
 export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
-  const [userEnsDomain] = useENSData(wiki?.user?.id)
+  const [, username] = useENSData(wiki?.user?.id)
 
   return (
     <LinkBox display="grid" placeItems="center">
@@ -66,7 +66,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
                 color="brand.500"
                 fontWeight="bold"
               >
-                {getUsername(wiki?.user, userEnsDomain)}
+                {getUsername(wiki?.user, username)}
               </Link>
             </Text>
           </Flex>
