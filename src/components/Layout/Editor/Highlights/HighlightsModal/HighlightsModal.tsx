@@ -19,6 +19,7 @@ import {
   ButtonGroup,
   IconButton,
   Tooltip,
+  Icon,
 } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -34,89 +35,89 @@ import FacebookIcon from '@/components/Icons/facebookIcon'
 import GithubIcon from '@/components/Icons/githubIcon'
 import TelegramIcon from '@/components/Icons/telegramIcon'
 
-import { MdEmail } from 'react-icons/md'
 import { CommonMetaIds, MData } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import EmailIcon from '@/components/Icons/emailIcon'
 
 export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.REDDIT_URL,
     label: 'Reddit',
-    icon: <RedditIcon />,
+    icon: RedditIcon,
     tests: [/https:\/\/www\.reddit\.com\/r\//i],
   },
   {
     id: CommonMetaIds.EMAIL_URL,
     label: 'Email',
-    icon: <MdEmail />,
+    icon: EmailIcon,
     tests: [/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/],
   },
   {
     id: CommonMetaIds.GITHUB_URL,
     label: 'Github',
-    icon: <GithubIcon />,
+    icon: GithubIcon,
     tests: [/https:\/\/github\.com\//i],
   },
   {
     id: CommonMetaIds.TELEGRAM_URL,
     label: 'Telegram',
-    icon: <TelegramIcon />,
+    icon: TelegramIcon,
     tests: [/https:\/\/t\.me\//i],
   },
   {
     id: CommonMetaIds.INSTAGRAM_PROFILE,
     label: 'Instagram',
-    icon: <InstagramIcon />,
+    icon: InstagramIcon,
     tests: [/https:\/\/(www.)?instagram.com\/\w+/],
   },
   {
     id: CommonMetaIds.TWITTER_PROFILE,
     label: 'Twitter',
-    icon: <TwitterIcon />,
+    icon: TwitterIcon,
     tests: [/https:\/\/(www.)?twitter.com\/\w+/],
   },
   {
     id: CommonMetaIds.LINKEDIN_PROFILE,
     label: 'Linkedin',
-    icon: <AiOutlineLinkedin />,
+    icon: AiOutlineLinkedin,
     tests: [/https:\/\/(www.)?linkedin.com\/in\/\w+/],
   },
   {
     id: CommonMetaIds.YOUTUBE_PROFILE,
     label: 'Youtube',
-    icon: <AiOutlineYoutube />,
+    icon: AiOutlineYoutube,
     tests: [/https:\/\/(www.)?youtube.com\/\w+/],
   },
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
     label: 'Coingecko',
-    icon: <CoinGeckoIcon />,
+    icon: CoinGeckoIcon,
     tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
   },
   {
     id: CommonMetaIds.WEBSITE,
     label: 'Website',
-    icon: <BsGlobe />,
+    icon: BsGlobe,
     tests: [/https:\/\/(www.)?\w+.\w+/],
   },
   {
     id: CommonMetaIds.CONTRACT_URL,
     label: 'Contract URL',
-    icon: <FaFileContract />,
+    icon: FaFileContract,
     tests: [/i/],
   },
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,
     label: 'Facebook',
-    icon: <FacebookIcon />,
+    icon: FacebookIcon,
     tests: [/https:\/\/(www.)?facebook.com\/\w+/],
   },
   {
     id: CommonMetaIds.COIN_MARKET_CAP,
     label: 'Coin Market Cap',
-    icon: <CoinMarketCap />,
+    icon: CoinMarketCap,
     tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
 ]
@@ -317,7 +318,7 @@ const HighlightsModal = ({
                         rounded="full"
                         icon={
                           <>
-                            {network.icon}{' '}
+                            <Icon as={network.icon} />
                             <chakra.span
                               pos="absolute"
                               top="-1px"

@@ -18,4 +18,6 @@ export const colors = {
   default: 'white',
   white: '#ffffff',
   black: '#000000',
+  darkGrey: '#b3b7bd',
+  secondaryDark: '#4A5568',
 }
