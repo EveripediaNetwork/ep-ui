@@ -9,6 +9,7 @@ import {
   Link,
   Text,
   VStack,
+  Wrap,
 } from '@chakra-ui/react'
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
@@ -47,12 +48,12 @@ const SocialProfiles = ({
             </Text>
           </HStack>
           <Center>
-            <HStack flexWrap="wrap">
+            <Wrap>
               {socialMetaData
                 .filter((item: { id: string }) => {
                   return item.id !== 'website' && item.id !== 'contract_url'
                 })
-                .map((social: { value: string; id: string }, i: any) => {
+                .map((social: { value: string; id: string }, i: number) => {
                   const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
                   return (
                     <Link
@@ -79,7 +80,7 @@ const SocialProfiles = ({
                     </Link>
                   )
                 })}
-            </HStack>
+            </Wrap>
           </Center>
         </HStack>
       )}
