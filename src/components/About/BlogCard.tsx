@@ -14,11 +14,7 @@ const BlogCard = ({
   body: string
 }) => {
   return (
-    <Center
-      onClick={() => window.open('https://everipedia.org/blog')}
-      cursor="pointer"
-      py={6}
-    >
+    <Center onClick={() => window.open('/blog')} cursor="pointer" py={6}>
       <Box
         maxW="445px"
         h="445px"

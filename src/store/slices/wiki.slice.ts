@@ -36,8 +36,8 @@ export const getDraftFromLocalStorage = () => {
   const wiki = JSON.parse(wikiData)
   const draftTimestamp = parseInt(timestamp, 10)
   const currentTimestamp = new Date().getTime()
-  // check if draft is older than 24 hour
-  const cacheLimit = 24 * 60 * 60 * 1000
+  // check if draft is older than 75 hour
+  const cacheLimit = 75 * 60 * 60 * 1000
   if (currentTimestamp - draftTimestamp > cacheLimit) {
     localStorage.removeItem(`draftData-${slug}`)
     return undefined
