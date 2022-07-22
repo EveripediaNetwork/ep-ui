@@ -18,38 +18,34 @@ import config from '@/config'
 import detectEthereumProvider from '@metamask/detect-provider'
 import Link from '@/components/Elements/Link/Link'
 import { Logo } from '@/components/Elements/'
-import { NAV_ICON } from '@/data/NavItemData'
-import NavMenu from '@/components/Layout/Navbar/NavMenu'
-import { ColorModeToggle } from '@/components/Layout/Navbar/ColorModeToggle'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
 import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
 import networkMap from '@/utils/networkMap'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
-import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { StaticContent } from '@/components/StaticElement'
 import { logEvent } from '@/utils/googleAnalytics'
+import dynamic from 'next/dynamic'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
-import { LogOutBtn } from './Logout'
+
+const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
+  ssr: false,
+  loading: () => (
+    <Box pr={4}>
+      <SkeletonCircle size="25px" startColor="gray.500" endColor="gray.500" />
+    </Box>
+  ),
+})
 
 const Navbar = () => {
   const router = useRouter()
-
   const { isOpen, onClose, onToggle } = useDisclosure()
-
   const loginButtonRef = useRef<HTMLButtonElement>(null)
-
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-
   const [openSwitch, setOpenSwitch] = useState<boolean>(false)
-
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
-
-  const [mounted, setMounted] = useState(false)
-
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -147,12 +143,6 @@ const Navbar = () => {
     return null
   }
 
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
   return (
     <>
       <Box
@@ -200,28 +190,11 @@ const Navbar = () => {
                 }}
               >
                 <DesktopNav />
-                <Box onMouseLeave={() => setVisibleMenu(null)}>
-                  <NavMenu
-                    navItem={NAV_ICON}
-                    setVisibleMenu={setVisibleMenu}
-                    visibleMenu={visibleMenu}
-                    label={
-                      mounted ? (
-                        <DisplayAvatar address={userAddress} size="25" />
-                      ) : (
-                        <SkeletonCircle
-                          size="25px"
-                          startColor="gray.500"
-                          endColor="gray.500"
-                        />
-                      )
-                    }
-                  >
-                    <ProfileLink />
-                    <ColorModeToggle isInMobileMenu={false} />
-                    <LogOutBtn isInMobileMenu={false} />
-                  </NavMenu>
-                </Box>
+                <ProfileNavMenu
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  address={userAddress}
+                />
                 <Icon
                   color="linkColor"
                   cursor="pointer"
