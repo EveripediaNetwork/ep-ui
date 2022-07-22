@@ -143,6 +143,7 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
               aria-label="convert"
               cursor="pointer"
               _dark={{ bgColor: 'gray.800' }}
+              variant="ghost"
               sx={{
                 '&:hover, &:focus, &:active': {
                   filter: 'brightness(95%)',
