@@ -39,7 +39,7 @@ const Dropzone = ({
   const [paths, setPaths] = useState<Array<string>>([])
   const toast = useToast()
   const dispatch = useDispatch()
-  const { data: accountData } = useAccount()
+  const { address: userAddress } = useAccount()
   const {
     setHideImageInput,
     isToResetImage,
@@ -139,7 +139,7 @@ const Dropzone = ({
             }}
             {...getRootProps()}
           >
-            <input disabled={!accountData?.address} {...getInputProps()} />
+            <input disabled={!userAddress} {...getInputProps()} />
             {isDragActive ? (
               <Text textAlign="center">Drop the files here ...</Text>
             ) : (

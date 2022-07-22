@@ -29,7 +29,7 @@ export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
-  const { data } = useAccount()
+  const { address: userAddress } = useAccount()
   const address = router.query.profile as string
   const { profileData } = useUserProfileData(address)
 
@@ -151,7 +151,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
-                disabled={address !== data?.address}
+                disabled={address !== userAddress}
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
