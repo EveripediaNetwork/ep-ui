@@ -58,13 +58,13 @@ const WalletDrawer = ({
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
-  const { data: accountData } = useAccount()
-  const [, username] = useENSData(accountData?.address)
-  useHiIQBalance(accountData?.address)
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const [, username] = useENSData(userAddress)
+  useHiIQBalance(userAddress)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
   const toast = useToast()
-  const { refreshBalance } = useFetchWalletBalance(accountData?.address)
+  const { refreshBalance } = useFetchWalletBalance(userAddress)
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
@@ -73,7 +73,7 @@ const WalletDrawer = ({
   }
 
   const handleAccountRefresh = () => {
-    if (typeof accountData?.address !== 'undefined') {
+    if (typeof userAddress !== 'undefined') {
       setAccountRefreshLoader(true)
       refreshBalance().then(response => {
         dispatch(updateWalletDetails(response))
@@ -110,13 +110,13 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={accountData?.address} />
+              <DisplayAvatar address={userAddress} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                    My Wallet {accountData && <ChevronDownIcon />}
+                    My Wallet {isUserConnected && <ChevronDownIcon />}
                   </MenuButton>
-                  {accountData && (
+                  {isUserConnected && (
                     <MenuList>
                       <MenuItem py={3}>
                         <Image
@@ -148,11 +148,9 @@ const WalletDrawer = ({
                     </MenuList>
                   )}
                 </Menu>
-                {accountData && (
+                {isUserConnected && (
                   <Text color="gray.500" pl={1} fontSize="sm">
-                    {username ||
-                      (accountData?.address &&
-                        shortenAccount(accountData?.address))}
+                    {username || (userAddress && shortenAccount(userAddress))}
                   </Text>
                 )}
               </Box>

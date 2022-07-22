@@ -25,17 +25,17 @@ const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
-  const { data: accountData } = useAccount()
+  const { address: userAddress } = useAccount()
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
 
   useEffect(() => {
-    if (accountData?.address && token) {
+    if (userAddress && token) {
       profileApiClient.setHeader('authorization', token)
-      setAccount(accountData.address)
+      setAccount(userAddress)
     }
-  }, [accountData?.address, setAccount, token])
+  }, [userAddress, setAccount, token])
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
@@ -98,7 +98,7 @@ const Settings = () => {
         )}
         {tab === 'notifications' && (
           <NotificationSettings
-            address={accountData?.address}
+            address={userAddress}
             savedNotificationPrefs={profileData?.notifications[0]}
           />
         )}

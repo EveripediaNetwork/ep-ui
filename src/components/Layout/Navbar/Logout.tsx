@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useDisconnect, useAccount } from 'wagmi'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
-  const userAccount = useAccount()
+  const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
   const { disconnect } = useDisconnect()
   const handleLogOut = () => {
@@ -26,9 +26,9 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           px={isInMobileMenu ? 0 : 3}
           bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
           sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}
-          onClick={userAccount?.data && handleLogOut}
-          cursor={userAccount?.data ? 'pointer' : 'not-allowed'}
-          display={userAccount?.data ? 'flex' : 'none'}
+          onClick={isUserConnected ? handleLogOut : undefined}
+          cursor={isUserConnected ? 'pointer' : 'not-allowed'}
+          display={isUserConnected ? 'flex' : 'none'}
         >
           <Icon
             fontSize="4xl"

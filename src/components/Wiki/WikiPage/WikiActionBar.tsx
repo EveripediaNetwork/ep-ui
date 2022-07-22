@@ -12,7 +12,7 @@ interface WikiActionBarProps {
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   const router = useRouter()
-  const { data: accountData } = useAccount()
+  const { address: userAddress } = useAccount()
   const actionBarItems: {
     label: string
     icon: IconType
@@ -30,7 +30,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'Edit',
       icon: RiEdit2Line,
-      isDisabled: accountData?.address === undefined,
+      isDisabled: userAddress === undefined,
       isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
         router.push(`/create-wiki?slug=${wiki?.id}`)
