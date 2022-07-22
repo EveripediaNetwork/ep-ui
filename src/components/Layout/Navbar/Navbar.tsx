@@ -30,12 +30,10 @@ import { ProfileLink } from '@/components/Layout/Navbar/ProfileLink'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { StaticContent } from '@/components/StaticElement'
 import { logEvent } from '@/utils/googleAnalytics'
-import dynamic from 'next/dynamic'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
 import { LogOutBtn } from './Logout'
-
 
 const Navbar = () => {
   const router = useRouter()
@@ -211,7 +209,11 @@ const Navbar = () => {
                       mounted ? (
                         <DisplayAvatar address={userAddress} size="25" />
                       ) : (
-                        <SkeletonCircle size="25px" startColor="gray.500" endColor="gray.500" />
+                        <SkeletonCircle
+                          size="25px"
+                          startColor="gray.500"
+                          endColor="gray.500"
+                        />
                       )
                     }
                   >
