@@ -5,6 +5,7 @@ export const PasteListener = (e: Event) => {
   e.stopPropagation()
 
   const { clipboardData } = e as ClipboardEvent
+
   const pasteHTML = clipboardData?.getData('text/html')
 
   if (pasteHTML) {
@@ -58,5 +59,10 @@ export const PasteListener = (e: Event) => {
       .replace(/\[[0-9]+\](?!( *(<\/sup>)? *<\/a>))/g, '') // removes cite marks which are not wrapped in <a>
 
     document.execCommand('insertHTML', false, transformedPasteHTML)
+  } else {
+    const pasteText = clipboardData?.getData('text/plain')
+    if (pasteText) {
+      document.execCommand('insertHTML', false, pasteText)
+    }
   }
 }
