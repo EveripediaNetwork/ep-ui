@@ -48,7 +48,7 @@ const Categories: NextPage = () => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          maxW={{ base: "70%", md: "60%", lg: "40%" }}
+          maxW={{ base: '70%', md: '60%', lg: '40%' }}
           px={6}
         >
           <Text mt={3} mb={7} mx={14}>

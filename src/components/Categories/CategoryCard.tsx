@@ -67,9 +67,9 @@ const CategoryCard = ({
 
         <Box p={8}>
           <LinkOverlay href={`/categories/${categoryId}`}>
-              <Heading textAlign="center" size="sm" my="10px">
-                {title}
-              </Heading>
+            <Heading textAlign="center" size="sm" my="10px">
+              {title}
+            </Heading>
           </LinkOverlay>
           <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
             {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT

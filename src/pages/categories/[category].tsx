@@ -20,7 +20,6 @@ import {
 } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
-import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
@@ -98,7 +97,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           textAlign="center"
           justifyContent="center"
           fontWeight="400"
-          maxW={{ base: "70%", md: "60%", lg: "40%" }}
+          maxW={{ base: '70%', md: '60%', lg: '40%' }}
           mx="auto"
           px={5}
         >
