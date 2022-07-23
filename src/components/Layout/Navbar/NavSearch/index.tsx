@@ -133,7 +133,7 @@ export const NavSearch = (props: NavSearchProps) => {
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
         return (
           <AutoCompleteItem
-            key={article.id}
+            key={`${article.id}${article.updated}`}
             value={value}
             getValue={art => art.title}
             label={article.title}
@@ -145,7 +145,7 @@ export const NavSearch = (props: NavSearchProps) => {
                 {article.title}
               </chakra.span>
               <Text noOfLines={1} maxW="full" fontSize="xs">
-                {article.content}
+                {article.content.replace(/[^a-zA-Z0-9 ]/g, '')}
               </Text>
             </Flex>
             <Flex gap="1" ml="auto">
