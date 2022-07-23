@@ -257,19 +257,18 @@ const CreateWikiContent = () => {
         }
       }
 
-      if (!isNewCreateWiki) {
-        // calculate edit info for current wiki and previous wiki
-        // previous wiki varies if editor is trying to publish
-        // more than two edits to chain in same session
-
+      if (!isNewCreateWiki || override) {
+        let prevWiki: Wiki | undefined
         if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          calculateEditInfo(prevEditedWiki.current.wiki, interWiki, dispatch)
+          prevWiki = prevEditedWiki.current.wiki
+        } else if (override && existingWikiData) {
+          prevWiki = existingWikiData
         } else if (wikiData) {
-          calculateEditInfo(wikiData, interWiki, dispatch)
+          prevWiki = wikiData
         }
+        if (prevWiki) calculateEditInfo(prevWiki, interWiki, dispatch)
       }
 
-      // Build the wiki object after edit info has been calculated
       const finalWiki = {
         ...interWiki,
         metadata: store.getState().wiki.metadata.filter(meta => {
