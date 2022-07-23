@@ -6,7 +6,6 @@ import {
   Box,
   Heading,
   SimpleGrid,
-  Icon,
   Flex,
   Text,
   Button,
@@ -36,7 +35,6 @@ type CategoryPageProps = NextPage & {
 }
 
 const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
-  const categoryIcon = getBootStrapIcon(categoryData.icon)
   const router = useRouter()
   const category = router.query.category as string
   const {
@@ -96,27 +94,15 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         >
           {categoryData?.title}
         </Heading>
-        <Flex mx="auto" justifyContent="center" mt={5}>
-          <Icon
-            as={categoryIcon}
-            borderRadius="100px"
-            overflow="hidden"
-            borderWidth="5px"
-            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
-            color="#0000002f"
-            width={{ base: 14, lg: 15 }}
-            height={{ base: 14, lg: 15 }}
-            padding={1}
-          />
-        </Flex>
         <Flex
           textAlign="center"
           justifyContent="center"
           fontWeight="400"
+          maxW={{ base: "70%", md: "60%", lg: "40%" }}
           mx="auto"
           px={5}
         >
-          <Text mt={3} mb={3}>
+          <Text my={5} mx={14}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
