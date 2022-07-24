@@ -13,6 +13,7 @@ import {
   useEventListener,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import {
   AutoComplete,
   AutoCompleteGroup,
@@ -145,7 +146,7 @@ export const NavSearch = (props: NavSearchProps) => {
                 {article.title}
               </chakra.span>
               <Text noOfLines={1} maxW="full" fontSize="xs">
-                {article.content.replace(/[^a-zA-Z0-9 ]/g, '')}
+                {getWikiSummary(article, WikiSummarySize.Small)}
               </Text>
             </Flex>
             <Flex gap="1" ml="auto">
