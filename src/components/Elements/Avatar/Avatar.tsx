@@ -57,7 +57,7 @@ const DisplayAvatar = ({
       />
     )
   } else if (avatar) {
-    content = <Avatar size="xs" src={avatar} {...rest} />
+    content = <Avatar h={`${size}px`} w={`${size}px`} src={avatar} {...rest} />
   } else if (address && !avatar) {
     content = (
       <CustomAvatar
