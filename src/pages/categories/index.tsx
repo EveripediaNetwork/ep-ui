@@ -48,8 +48,8 @@ const Categories: NextPage = () => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          maxW={{ base: '70%', md: '60%', lg: '40%' }}
-          px={6}
+          maxW={{ base: '70%', lg: '60%' }}
+          px={5}
         >
           <Text mt={3} mb={7} mx={14}>
             {CATEGORY_HEADER}
