@@ -2368,10 +2368,10 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
-"@everipedia/wagmi-magic-connector@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@everipedia/wagmi-magic-connector/-/wagmi-magic-connector-0.6.2.tgz#8bb0dbbe33f01d97dd8084a1ca4a35c89a261118"
-  integrity sha512-OnlJ/ci+OEOUNXe1dHlm8q+YHWDqLlHIHpmRCFZNcJuVtSv/L4+PRUmwioG3ridPNcBxLDnJydxjU54saPyLkQ==
+"@everipedia/wagmi-magic-connector@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@everipedia/wagmi-magic-connector/-/wagmi-magic-connector-0.6.3.tgz#7fdf6a571b8243f67d670216399ab314ced65a6e"
+  integrity sha512-8jDYoskOsUjJ/XUYYA9OhxyDR2aWgx9FdZPYMhaZI5h2kCuaptuPTyxbwEfA+x5RPzJ/Lf9PadXNQr1yS8S7DA==
   dependencies:
     "@changesets/cli" "^2.23.0"
     "@magic-ext/oauth" "^2.1.1"
