@@ -97,7 +97,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           textAlign="center"
           justifyContent="center"
           fontWeight="400"
-          maxW={{ base: '70%', md: '60%', lg: '40%' }}
+          maxW="70%"
           mx="auto"
           px={5}
         >
