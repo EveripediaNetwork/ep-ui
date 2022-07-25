@@ -6,36 +6,36 @@ import WalletDetailsWrapper from './WalletDetailsWrapper'
 
 const ConnectorDetails = ({
   imageLink,
-  w,
+  connector,
   connect,
   loading,
 }: {
   imageLink: string
-  w: Connector
-  connect: (w: Connector) => void
+  connector: Connector
+  connect: (args: { connector: Connector }) => void
   loading?: boolean
 }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
-  const handleConnect = (i: Connector) => {
+  const handleConnect = (selectedConnector: Connector) => {
     logEvent({
       action: 'LOGIN_ATTEMPT',
-      params: { provider: i.name },
+      params: { provider: selectedConnector.name },
     })
     setIsClicked(true)
-    connect(i)
+    connect({ connector: selectedConnector })
   }
   useEffect(() => {
     if (!loading) setIsClicked(false)
   }, [loading])
 
   return (
-    <WalletDetailsWrapper hasHover w={w} connect={handleConnect}>
+    <WalletDetailsWrapper hasHover w={connector} connect={handleConnect}>
       <>
         <Image boxSize="24px" src={imageLink} />
         <Text flex="1" as="strong" ml="15">
-          {w.name === 'Magic' ? 'Email / Social Media' : w.name}
+          {connector.name === 'Magic' ? 'Email / Social Media' : connector.name}
         </Text>
-        {w.name === 'MetaMask' && !isClicked && (
+        {connector.name === 'MetaMask' && !isClicked && (
           <Text fontSize="sm" fontWeight="medium" color="gray.500">
             popular
           </Text>

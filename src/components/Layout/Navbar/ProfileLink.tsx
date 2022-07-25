@@ -5,15 +5,15 @@ import { RiAccountCircleFill } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 
 export const ProfileLink = () => {
-  const { data } = useAccount()
+  const { address: userAddress } = useAccount()
   const router = useRouter()
   const [link, setLink] = useState(
-    data?.address ? `/account/${data?.address}` : '/login',
+    userAddress ? `/account/${userAddress}` : '/login',
   )
 
   useEffect(() => {
-    setLink(data?.address ? `/account/${data?.address}` : '/login')
-  }, [data?.address])
+    setLink(userAddress ? `/account/${userAddress}` : '/login')
+  }, [userAddress])
 
   return (
     <MenuItem

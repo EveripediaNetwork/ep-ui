@@ -4,14 +4,17 @@ import {
   Center,
   Flex,
   HStack,
+  Icon,
   IconButton,
   Link,
   Text,
   VStack,
+  Wrap,
 } from '@chakra-ui/react'
 import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
 import { FiExternalLink } from 'react-icons/fi'
+import { shortenText } from '@/utils/shortenText'
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -46,32 +49,39 @@ const SocialProfiles = ({
             </Text>
           </HStack>
           <Center>
-            <HStack flexWrap="wrap">
+            <Wrap>
               {socialMetaData
                 .filter((item: { id: string }) => {
                   return item.id !== 'website' && item.id !== 'contract_url'
                 })
-                .map((social: { value: string; id: string }, i: any) => {
-                  const ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
+                .map((social: { value: string; id: string }, i: number) => {
+                  const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
                   return (
                     <Link
                       target="_blank"
                       href={parseLink(social.value)}
                       key={i}
                       rel="nofollow"
+                      display="flex"
                     >
                       <IconButton
+                        color="secondaryDark"
+                        _hover={{ color: 'brand.500' }}
+                        _dark={{
+                          color: 'darkGrey',
+                          _hover: { color: 'brand.500' },
+                        }}
                         key={i}
-                        aria-label="open social"
+                        aria-label={`Open ${social.id}`}
                         minW={3}
-                        icon={ico}
+                        icon={<Icon as={Ico} />}
                         variant="link"
                         fontSize="20px"
                       />
                     </Link>
                   )
                 })}
-            </HStack>
+            </Wrap>
           </Center>
         </HStack>
       )}
@@ -117,10 +127,10 @@ const OfficialSite = ({
                     <Link
                       rel="nofollow"
                       target="_blank"
-                      href={parseLink(social.value)}
+                      href={parseLink(social.value.trim())}
                       color="brand.500"
                     >
-                      <Text>{social.value}</Text>
+                      <Text>{shortenText(social.value, 20)}</Text>
                     </Link>
                   )
                 })}
@@ -200,6 +210,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
   const socialMetaData = wiki.metadata.filter(
     meta => !!meta.value && linkIds.includes(meta.id as CommonMetaIds),
   )
+  if (!socialMetaData.length) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion
@@ -208,6 +219,7 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
         flexDir="column"
         gap={2}
         title="Profile Summary"
+        collapsed={{ base: true, xl: false }}
       >
         <ContractLink socialMetaData={socialMetaData} />
         <OfficialSite socialMetaData={socialMetaData} />

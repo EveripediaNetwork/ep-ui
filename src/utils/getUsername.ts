@@ -1,7 +1,7 @@
-import { User } from '@/types/Wiki'
+import { Author, User } from '@/types/Wiki'
 import shortenAccount from './shortenAccount'
 
-export const getUsername = (user?: User, ensDomain?: string) => {
+export const getUsername = (user?: User | Author, ensDomain?: string) => {
   if (!user) {
     return 'Unknown'
   }
@@ -11,5 +11,5 @@ export const getUsername = (user?: User, ensDomain?: string) => {
   if (ensDomain) {
     return ensDomain
   }
-  return shortenAccount(user.id)
+  return user.id ? shortenAccount(user.id) : 'Unknown'
 }

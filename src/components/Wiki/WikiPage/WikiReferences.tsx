@@ -7,11 +7,11 @@ import {
   Tag,
   Text,
   LinkBox,
-  LinkOverlay,
   Link,
   Flex,
 } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
 
 interface WikiReferencesProps {
   references: CiteReference[]

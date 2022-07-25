@@ -97,7 +97,7 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { data: accountData } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
   const { fireConfetti, confettiProps } = useConfetti()
@@ -163,6 +163,35 @@ const CreateWikiContent = () => {
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const isValidWiki = () => {
+    if (!wiki.title) {
+      toast({
+        title: `Add a Title at the top for this Wiki to continue `,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    const words = getWordCount(wiki.content || '')
+
+    if (words < MINIMUM_WORDS) {
+      toast({
+        title: `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue, you have written ${words}`,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (!isVerifiedContentLinks(wiki.content)) {
+      toast({
+        title: 'Please remove all external links from the content',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
     if (!wiki.images?.length) {
       toast({
         title: 'Add a main image on the right column to continue',
@@ -181,26 +210,6 @@ const CreateWikiContent = () => {
       return false
     }
 
-    const words = getWordCount(wiki.content || '')
-
-    if (words < MINIMUM_WORDS) {
-      toast({
-        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
-    if (!isVerifiedContentLinks(wiki.content)) {
-      toast({
-        title: 'Please remove all external links from the content',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
     return true
   }
 
@@ -209,10 +218,10 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: accountData?.address, slug: getWikiSlug() },
+      params: { address: userAddress, slug: getWikiSlug() },
     })
 
-    if (accountData) {
+    if (isUserConnected) {
       if (
         isNewCreateWiki &&
         !override &&
@@ -238,29 +247,28 @@ const CreateWikiContent = () => {
       if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
       setWikiId(interWiki.id)
 
-      if (accountData.address) {
+      if (userAddress) {
         interWiki = {
           ...interWiki,
           user: {
-            id: accountData.address,
+            id: userAddress,
           },
           content: String(wiki.content).replace(/\n/gm, '  \n'),
         }
       }
 
-      if (!isNewCreateWiki) {
-        // calculate edit info for current wiki and previous wiki
-        // previous wiki varies if editor is trying to publish
-        // more than two edits to chain in same session
-
+      if (!isNewCreateWiki || override) {
+        let prevWiki: Wiki | undefined
         if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          calculateEditInfo(prevEditedWiki.current.wiki, interWiki, dispatch)
+          prevWiki = prevEditedWiki.current.wiki
+        } else if (override && existingWikiData) {
+          prevWiki = existingWikiData
         } else if (wikiData) {
-          calculateEditInfo(wikiData, interWiki, dispatch)
+          prevWiki = wikiData
         }
+        if (prevWiki) calculateEditInfo(prevWiki, interWiki, dispatch)
       }
 
-      // Build the wiki object after edit info has been calculated
       const finalWiki = {
         ...interWiki,
         metadata: store.getState().wiki.metadata.filter(meta => {
@@ -286,6 +294,7 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            console.error({ ...errObj })
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
             logReason = wikiError.error
@@ -298,7 +307,7 @@ const CreateWikiContent = () => {
           action: 'SUBMIT_WIKI_ERROR',
           params: {
             reason: logReason,
-            address: accountData?.address,
+            address: userAddress,
             slug: getWikiSlug(),
           },
         })
@@ -322,7 +331,7 @@ const CreateWikiContent = () => {
   const disableSaveButton = () =>
     isWritingCommitMsg ||
     submittingWiki ||
-    !accountData?.address ||
+    !userAddress ||
     signing ||
     isLoadingWiki
 
@@ -456,18 +465,6 @@ const CreateWikiContent = () => {
   }, [])
 
   if (!mounted) return null
-
-  const handlePublishDisable = () => {
-    if (
-      +wiki.content.split(' ').length >= 150 &&
-      wiki.title &&
-      wiki.images &&
-      +wiki.categories.length >= 1
-    ) {
-      return true
-    }
-    return false
-  }
 
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto">
@@ -606,7 +603,6 @@ const CreateWikiContent = () => {
             onClick={() => {
               saveOnIpfs()
             }}
-            disabled={!handlePublishDisable()}
           >
             Publish
           </Button>

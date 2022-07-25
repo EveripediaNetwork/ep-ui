@@ -38,7 +38,6 @@ const Categories: NextPage = () => {
           maxW="80%"
           mx="auto"
           textAlign="center"
-          mt={8}
           p={10}
         >
           {`${t('wikiCategory')}`}
@@ -48,9 +47,10 @@ const Categories: NextPage = () => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          px={6}
+          maxW={{ base: '70%', lg: '60%' }}
+          px={5}
         >
-          <Text mt={3} mb={7}>
+          <Text mb={7} mx={14}>
             {CATEGORY_HEADER}
           </Text>
         </Flex>

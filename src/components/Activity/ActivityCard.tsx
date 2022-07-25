@@ -1,22 +1,14 @@
 import React from 'react'
-import {
-  HStack,
-  Heading,
-  Text,
-  Box,
-  Link,
-  Tag,
-  Flex,
-  Stack,
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { HStack, Heading, Text, Box, Tag, Flex, Stack } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { User, Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
+import NextLink from 'next/link'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { Link } from '../Elements'
 
 interface ActivityCardProps {
   title: string
@@ -70,7 +62,7 @@ const ActivityCard = ({
       py={{ base: 3, lg: 3 }}
       w="full"
     >
-      <NextLink href={activityCardLinkRoute} passHref>
+      <Link href={activityCardLinkRoute} passHref>
         <WikiImage
           cursor="pointer"
           flexShrink={0}
@@ -80,7 +72,7 @@ const ActivityCard = ({
           borderRadius="lg"
           overflow="hidden"
         />
-      </NextLink>
+      </Link>
       <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
           <HStack w={{ base: '83%', md: '70%' }}>
@@ -113,7 +105,7 @@ const ActivityCard = ({
           {wiki.categories.length && (
             <HStack>
               {wiki.categories?.map((category, i) => (
-                <NextLink key={i} href={`/categories/${category.id}`} passHref>
+                <Link key={i} href={`/categories/${category.id}`} passHref>
                   <Text
                     as="a"
                     display={{ base: 'none', md: 'block' }}
@@ -123,7 +115,7 @@ const ActivityCard = ({
                   >
                     {category.title ? category.title : category.id}
                   </Text>
-                </NextLink>
+                </Link>
               ))}
             </HStack>
           )}
@@ -144,11 +136,13 @@ const ActivityCard = ({
                 size="20"
               />
               <Text fontSize="14px" color="linkColor">
-                <NextLink href={`/account/${editor.id}`} passHref>
-                  <Link href="passRef" color="brand.500" fontWeight="bold">
-                    {getUsername(editor)}
-                  </Link>
-                </NextLink>
+                <Link
+                  href={`/account/${editor.id}`}
+                  color="brand.500"
+                  fontWeight="bold"
+                >
+                  {getUsername(editor)}
+                </Link>
               </Text>
               <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
                 {wiki.tags.map((tag, index) => (

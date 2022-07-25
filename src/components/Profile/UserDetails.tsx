@@ -29,14 +29,14 @@ export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
-  const { data } = useAccount()
+  const { address: userAddress } = useAccount()
   const address = router.query.profile as string
   const { profileData } = useUserProfileData(address)
 
   const { headerIsSticky } = useProfileContext()
   const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
-  const customLink = `${window.origin}/account/${
+  const customLink = `${process.env.NEXT_PUBLIC_DOMAIN}/account/${
     profileData?.username || address || ensUserName
   }`
 
@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         >
           <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
-              boxSize="32"
+              size={isSticky ? '35' : '130'}
               overflow="hidden"
               borderWidth={2}
               borderColor="white"
@@ -151,7 +151,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
-                disabled={address !== data?.address}
+                disabled={address !== userAddress}
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>

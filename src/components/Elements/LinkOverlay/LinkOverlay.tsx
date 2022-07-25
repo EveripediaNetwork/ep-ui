@@ -1,13 +1,13 @@
 import NextLink, { LinkProps } from 'next/link'
 import {
-  Link as ChakraLink,
+  LinkOverlay as ChakraLinkOverlay,
   LinkProps as ChakraLinkProps,
 } from '@chakra-ui/react'
 import React from 'react'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
-const Link = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
+const LinkOverlay = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
   let linkProps = {}
   if (href.includes('create-wiki') || href.includes('about')) {
     linkProps = {
@@ -15,10 +15,15 @@ const Link = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
     }
   }
   return (
-    <NextLink href={href} passHref {...{ linkProps }}>
-      <ChakraLink {...props}>{children}</ChakraLink>
+    <NextLink
+      href={href}
+      prefetch={!(href.includes('create-wiki') || href.includes('about'))}
+      passHref
+      {...linkProps}
+    >
+      <ChakraLinkOverlay {...props}>{children}</ChakraLinkOverlay>
     </NextLink>
   )
 }
 
-export default Link
+export default LinkOverlay

@@ -9,18 +9,18 @@ import {
   Text,
   Tr,
   VStack,
-  Box,
   AspectRatio,
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
-import { BaseCategory, WikiPreview } from '@/types/Wiki'
+import { Author, BaseCategory, WikiPreview } from '@/types/Wiki'
 import Link from '@/components/Elements/Link/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
+import { getUsername } from '@/utils/getUsername'
 
 export const WikiDetails = ({
   wikiTitle,
@@ -33,14 +33,14 @@ export const WikiDetails = ({
 }: {
   wikiTitle: WikiPreview
   categories: BaseCategory[]
-  createdTime: string | undefined
-  ipfsHash: string | undefined
-  txHash: string | undefined
-  createdBy: string | undefined
+  createdTime?: string
+  ipfsHash?: string
+  txHash?: string
+  createdBy?: Author
   imgSrc?: string
 }) => {
   const { title, tags } = wikiTitle
-  const [, username] = useENSData(createdBy || '')
+  const [, username] = useENSData(createdBy?.id || '')
   return (
     <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
       <Heading
@@ -73,7 +73,7 @@ export const WikiDetails = ({
                       href={`/categories/${category.id}`}
                       color="brand.500"
                     >
-                      {category.id}
+                      {category.title}
                     </Link>
                   ))}
                 </HStack>
@@ -86,12 +86,8 @@ export const WikiDetails = ({
               <Td py={1}>
                 <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                   {tags?.map((tag, i) => (
-                    <Link key={i} href={`/tags/${tag.id}`} passHref>
-                      <Box py={1}>
-                        <Tag key={i} whiteSpace="nowrap" as="a">
-                          {tag.id}
-                        </Tag>
-                      </Box>
+                    <Link key={i} href={`/tags/${tag.id}`} py={1}>
+                      <Tag whiteSpace="nowrap">{tag.id}</Tag>
                     </Link>
                   ))}
                 </HStack>
@@ -157,9 +153,13 @@ export const WikiDetails = ({
               </Td>
               <Td>
                 <HStack py="2">
-                  <DisplayAvatar address={createdBy} size="24" />
-                  <Link href={`/account/${createdBy}`} color="brand.500">
-                    {username || shortenAccount(createdBy || '')}
+                  <DisplayAvatar
+                    address={createdBy.id}
+                    avatarIPFS={createdBy.profile?.avatar}
+                    size="24"
+                  />
+                  <Link href={`/account/${createdBy.id}`} color="brand.500">
+                    {getUsername(createdBy, username)}
                   </Link>
                 </HStack>
               </Td>

@@ -46,7 +46,7 @@ export const ValidationErrorMessage = (type: string) => {
     case ValidatorCodes.USER:
       return 'Transaction is not signed by the user.'
     case ValidatorCodes.WORDS:
-      return 'Wiki must have at least 150 characters.'
+      return 'Wiki must have at least 100 words.'
     case ValidatorCodes.IMAGE:
       return 'Images must be no more than 5 and no less than 1.'
     case ValidatorCodes.TAG:
@@ -57,6 +57,10 @@ export const ValidationErrorMessage = (type: string) => {
       return 'Wiki metadata is incorrect. Please check the wiki.'
     case ValidatorCodes.SUMMARY:
       return 'Summary must be no more than 128 characters.'
+    case ValidatorCodes.ID_ERROR:
+      return 'ID is incorrect. Please check the wiki.'
+    case ValidatorCodes.GLOBAL_RATE_LIMIT:
+      return 'You have reached the rate limit. Please try again later'
     default:
       return 'An error occurred.'
   }
@@ -77,7 +81,7 @@ export const types = {
   ],
 }
 
-export const MINIMUM_WORDS = 150
+export const MINIMUM_WORDS = 100
 
 export const saveImage = async (image: Image) => {
   const formData = new FormData()
@@ -166,7 +170,7 @@ export const useGetSignedHash = (deadline: number) => {
     txHash,
   } = useCreateWikiContext()
 
-  const { data: accountData } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
 
   const {
     data: signData,
@@ -185,7 +189,7 @@ export const useGetSignedHash = (deadline: number) => {
       types,
       value: {
         ipfs,
-        user: accountData?.address,
+        user: userAddress,
         deadline,
       },
     })
@@ -204,7 +208,7 @@ export const useGetSignedHash = (deadline: number) => {
           action: 'SUBMIT_WIKI_ERROR',
           params: {
             reason: err.message,
-            address: accountData?.address,
+            address: userAddress,
             slug: wikiSlug,
           },
         })
@@ -224,7 +228,7 @@ export const useGetSignedHash = (deadline: number) => {
                 action: 'SUBMIT_WIKI_ERROR',
                 params: {
                   reason: 'TRANSACTION_VERIFICATION_ERROR',
-                  address: accountData?.address,
+                  address: userAddress,
                   slug: wikiSlug,
                 },
               })
@@ -252,7 +256,7 @@ export const useGetSignedHash = (deadline: number) => {
             action: 'SUBMIT_WIKI_ERROR',
             params: {
               reason: errorObject.message,
-              address: accountData?.address,
+              address: userAddress,
               slug: wikiSlug,
             },
           })
@@ -266,7 +270,7 @@ export const useGetSignedHash = (deadline: number) => {
 
   useEffect(() => {
     const getSignedTxHash = async () => {
-      if (signData && wikiHash && accountData && accountData.address) {
+      if (signData && wikiHash && isUserConnected && userAddress) {
         if (signError) {
           setMsg(defaultErrorMessage)
           setIsLoading('error')
@@ -276,7 +280,7 @@ export const useGetSignedHash = (deadline: number) => {
           const hash = await submitVerifiableSignature(
             signData,
             wikiHash,
-            accountData?.address,
+            userAddress,
             deadline,
           )
           if (hash) {
@@ -292,7 +296,7 @@ export const useGetSignedHash = (deadline: number) => {
             params: {
               reason:
                 errorObject.response.errors[0].extensions.exception.reason,
-              address: accountData?.address,
+              address: userAddress,
               data: signData,
             },
           })
@@ -469,9 +473,9 @@ export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
   markdownLinks?.every(link => {
-    const url = link.match(/\((.*?)\)/g)?.[0].replace(/\(|\)/g, '')
+    const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
+    const url = linkMatch?.[2]
     if (url && url.charAt(0) !== '#') {
-      // check if url is of whitelisted domains
       const validURLRecognizer = new RegExp(
         `^https?://(www\\.)?(${whiteListedDomains.join('|')})`,
       )

@@ -58,6 +58,8 @@ export enum ValidatorCodes {
   URL = 'EXTERNAL_URL_ERROR',
   METADATA = 'METADATA_ERROR',
   SUMMARY = 'SUMMARY_ERROR',
+  ID_ERROR = 'ID_ERROR',
+  GLOBAL_RATE_LIMIT = 'GLOBAL_RATE_LIMIT',
 }
 
 export enum EditSpecificMetaIds {
@@ -86,6 +88,10 @@ export interface User {
   profile?: ProfileData | null
 }
 
+export interface Author {
+  id: string | null
+  profile?: ProfileData | null
+}
 export enum PageTypeName {
   GENERIC = 'generic',
   PERSON = 'Person',
@@ -147,7 +153,7 @@ export interface Wiki {
   language: LanguagesISOEnum
   updated?: string
   created?: string
-  author: User
+  author: Author
 }
 
 export type WikiPreview = Pick<
