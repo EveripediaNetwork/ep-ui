@@ -1,10 +1,32 @@
 import { whiteListedDomains } from '@/types/Wiki'
 
+function pasteContents(text: string, type: 'plain' | 'html' = 'plain') {
+  const range = document.getSelection()?.getRangeAt(0)
+  const selection = window.getSelection()
+
+  if (!range || !selection) return
+
+  range.deleteContents()
+  if (type === 'html') {
+    const htmlNode = document.createElement('div')
+    htmlNode.innerHTML = text
+    range.insertNode(htmlNode)
+  } else {
+    const textNode = document.createTextNode(text)
+    range.insertNode(textNode)
+  }
+
+  selection.removeAllRanges()
+  selection.addRange(range)
+  selection.collapseToEnd()
+}
+
 export const PasteListener = (e: Event) => {
   e.preventDefault()
   e.stopPropagation()
 
   const { clipboardData } = e as ClipboardEvent
+
   const pasteHTML = clipboardData?.getData('text/html')
 
   if (pasteHTML) {
@@ -54,9 +76,20 @@ export const PasteListener = (e: Event) => {
     }
 
     const transformedPasteHTML = sanitizedPaste.body.innerHTML
-      .replace(/<br *\/?>/g, '<p/>') // fixes <br>s not being inserted to editor
-      .replace(/\[[0-9]+\](?!( *(<\/sup>)? *<\/a>))/g, '') // removes cite marks which are not wrapped in <a>
+      // fixes <br>s not being inserted to editor
+      .replace(/<br *\/?>/g, '<p/>')
+      // removes cite marks which are not wrapped in <a>
+      .replace(/\[[0-9]+\](?!( *(<\/sup>)? *<\/a>))/g, '')
+      // removes startFragment and endFragment from clipboard data from windows
+      // due to newlines inserted at starting and ending of selection
+      .replace('\n\x3C!--StartFragment-->', '')
+      .replace('<!--EndFragment-->\n\n', '')
 
-    document.execCommand('insertHTML', false, transformedPasteHTML)
+    pasteContents(transformedPasteHTML, 'html')
+  } else {
+    const pasteText = clipboardData?.getData('text/plain')
+    if (pasteText) {
+      pasteContents(pasteText)
+    }
   }
 }

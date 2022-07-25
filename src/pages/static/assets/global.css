@@ -117,7 +117,7 @@ html {
 .toastui-editor-contents :where(h1, h2, h3, h4, h5, h6) {
   border-bottom: none !important;
   padding-bottom: 0 !important;
-  margin: 24px 0 16px !important;
+  margin: 16px 0 !important;
   font-weight: 600;
   line-height: 1.25;
   scroll-margin-top: 80px;
