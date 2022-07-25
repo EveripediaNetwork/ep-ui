@@ -13,6 +13,7 @@ import {
   useEventListener,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
+import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import {
   AutoComplete,
   AutoCompleteGroup,
@@ -131,6 +132,8 @@ export const NavSearch = (props: NavSearchProps) => {
           article.images && article.images[0].id
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
+        // This negates the bug that is casued by two wikis with the same title.
+        value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
             key={article.id}
@@ -145,7 +148,7 @@ export const NavSearch = (props: NavSearchProps) => {
                 {article.title}
               </chakra.span>
               <Text noOfLines={1} maxW="full" fontSize="xs">
-                {article.content}
+                {getWikiSummary(article, WikiSummarySize.Small)}
               </Text>
             </Flex>
             <Flex gap="1" ml="auto">
