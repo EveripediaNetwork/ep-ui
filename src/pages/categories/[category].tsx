@@ -101,12 +101,12 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           mx="auto"
           px={5}
         >
-          <Text my={5} mx={14}>
+          <Text my={8} mx={14}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
         <Divider />
-        <Box mt={16}>
+        <Box mt={10}>
           <Heading fontSize={25} textAlign="center">
             {t('wikiInCategory')}
           </Heading>
@@ -116,7 +116,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
                 columns={{ base: 1, sm: 2, lg: 3 }}
                 width="min(90%, 1300px)"
                 mx="auto"
-                my={12}
+                my={10}
                 gap={8}
               >
                 {wikisInCategory.map((wiki, i) => (
