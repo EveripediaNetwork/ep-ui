@@ -132,9 +132,11 @@ export const NavSearch = (props: NavSearchProps) => {
           article.images && article.images[0].id
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
+        //This negates the bug that is casued by two wikis with the same title.
+        value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
-            key={`${article.id}${article.updated}`}
+            key={article.id}
             value={value}
             getValue={art => art.title}
             label={article.title}
