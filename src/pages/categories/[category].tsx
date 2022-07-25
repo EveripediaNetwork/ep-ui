@@ -6,7 +6,6 @@ import {
   Box,
   Heading,
   SimpleGrid,
-  Icon,
   Flex,
   Text,
   Button,
@@ -21,7 +20,6 @@ import {
 } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
-import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getWikisByCategory } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
@@ -36,7 +34,6 @@ type CategoryPageProps = NextPage & {
 }
 
 const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
-  const categoryIcon = getBootStrapIcon(categoryData.icon)
   const router = useRouter()
   const category = router.query.category as string
   const {
@@ -96,32 +93,20 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         >
           {categoryData?.title}
         </Heading>
-        <Flex mx="auto" justifyContent="center" mt={5}>
-          <Icon
-            as={categoryIcon}
-            borderRadius="100px"
-            overflow="hidden"
-            borderWidth="5px"
-            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
-            color="#0000002f"
-            width={{ base: 14, lg: 15 }}
-            height={{ base: 14, lg: 15 }}
-            padding={1}
-          />
-        </Flex>
         <Flex
           textAlign="center"
           justifyContent="center"
           fontWeight="400"
+          maxW="70%"
           mx="auto"
           px={5}
         >
-          <Text mt={3} mb={3}>
+          <Text my={8} mx={14}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
         <Divider />
-        <Box mt={16}>
+        <Box mt={10}>
           <Heading fontSize={25} textAlign="center">
             {t('wikiInCategory')}
           </Heading>
@@ -131,7 +116,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
                 columns={{ base: 1, sm: 2, lg: 3 }}
                 width="min(90%, 1300px)"
                 mx="auto"
-                my={12}
+                my={10}
                 gap={8}
               >
                 {wikisInCategory.map((wiki, i) => (
