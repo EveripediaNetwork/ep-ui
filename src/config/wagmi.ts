@@ -10,6 +10,7 @@ import config from './index'
 
 const chainArray =
   config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
+
 export const { chains, provider } = configureChains(chainArray, [
   alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
   infuraProvider({ infuraId: config.infuraId, weight: 2 }),
@@ -30,6 +31,7 @@ export const connectors = [
     },
   }),
   new MagicConnector({
+    chains,
     options: {
       apiKey: config.magicLinkApiKey,
       oauthOptions: {
