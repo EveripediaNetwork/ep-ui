@@ -1,3 +1,4 @@
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { AspectRatio, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { RiCloseLine } from 'react-icons/ri'
@@ -12,7 +13,7 @@ export const EditorMainImageWrapper = ({
 }: EditorMainImageProps) => {
   return (
     <Flex pos="relative" direction="column" w="full" h="full" justify="center">
-      <AspectRatio ratio={4 / 3}>{children}</AspectRatio>
+      <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>{children}</AspectRatio>
       <Button
         fontWeight="bold"
         pos="absolute"
