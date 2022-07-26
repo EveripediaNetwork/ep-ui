@@ -69,7 +69,7 @@ export const ValidationErrorMessage = (type: string) => {
 export const domain = {
   name: 'EP',
   version: '1',
-  chainId: config.chainId,
+  chainId: Number(config.chainId),
   verifyingContract: config.wikiContractAddress,
 }
 
@@ -183,7 +183,6 @@ export const useGetSignedHash = (deadline: number) => {
 
   const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
-
     signTypedDataAsync({
       domain,
       types,

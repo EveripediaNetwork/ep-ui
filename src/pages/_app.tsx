@@ -31,28 +31,17 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
-type CreateClientConnectors = CreateClientArgs['connectors']
-const createClientConnectors = connectors as CreateClientConnectors
-
 const client = createClient({
   autoConnect: true,
-  connectors: createClientConnectors,
+  connectors,
   provider,
 })
 
-const App = (props: EpAppProps) => {
-  const { Component, pageProps, router } = props
+const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      pageView(url)
-    }
-
+    const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
-
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
   return (

@@ -88,7 +88,6 @@ const DisplayAvatar = ({
           ...svgProps,
         },
       }}
-      bgColor="gray.400"
       borderRadius="full"
     >
       {content}
