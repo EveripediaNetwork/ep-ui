@@ -100,8 +100,6 @@ const getWikiInternalLinks = (content: string): number => {
     }
   })
 
-  console.log({ internalLinksCount })
-
   return internalLinksCount
 }
 
@@ -152,16 +150,6 @@ export const calculateWikiScore = (wiki: Wiki): number => {
   const tagsScore = countQuality(IDEAL_TAGS_COUNT, tagsCount)
   const summaryScore = countQuality(IDEAL_SUMMARY_LENGTH, summaryWordCount)
   const socialsScore = countQuality(IDEAL_SOCIAL_MEDIA_COUNT, socialsCount)
-
-  console.log({
-    contentScore,
-    internalLinksScore,
-    citationScore,
-    mediaScore,
-    tagsScore,
-    summaryScore,
-    socialsScore,
-  })
 
   const sumOfWeights =
     CONTENT_SCORE_WEIGHT +
