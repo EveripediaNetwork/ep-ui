@@ -521,7 +521,6 @@ const CreateWikiContent = () => {
                   loadingText="Loading"
                   disabled={disableSaveButton()}
                   onClick={() => setIsWritingCommitMsg(true)}
-                  mb={24}
                 >
                   Publish
                 </Button>
