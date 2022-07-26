@@ -49,7 +49,7 @@ const WikiScoreIndicator = ({ wiki }: { wiki: Wiki }) => {
             value={score}
             color={color}
           >
-            <CircularProgressLabel>{score}</CircularProgressLabel>
+            <CircularProgressLabel fontSize="xs">{score}</CircularProgressLabel>
           </CircularProgress>
         </span>
       </PopoverTrigger>
