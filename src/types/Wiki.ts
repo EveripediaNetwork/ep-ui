@@ -47,6 +47,21 @@ export enum CommonMetaIds {
   COIN_MARKET_CAP = 'coinmarketcap_url',
 }
 
+export const WikiPossibleSocialsList = [
+  CommonMetaIds.FACEBOOK_PROFILE,
+  CommonMetaIds.INSTAGRAM_PROFILE,
+  CommonMetaIds.TWITTER_PROFILE,
+  CommonMetaIds.LINKEDIN_PROFILE,
+  CommonMetaIds.YOUTUBE_PROFILE,
+  CommonMetaIds.COINGECKO_PROFILE,
+  CommonMetaIds.WEBSITE,
+  CommonMetaIds.REDDIT_URL,
+  CommonMetaIds.EMAIL_URL,
+  CommonMetaIds.GITHUB_URL,
+  CommonMetaIds.TELEGRAM_URL,
+  CommonMetaIds.COIN_MARKET_CAP,
+]
+
 export enum ValidatorCodes {
   VALID_WIKI = 'VALID_WIKI',
   LANGUAGE = 'LANGUAGE_ERROR',
@@ -79,10 +94,9 @@ export enum WikiRootBlocks {
 }
 
 export interface MData {
-  id: string
+  id: CommonMetaIds | EditSpecificMetaIds
   value: string
 }
-export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
@@ -149,7 +163,7 @@ export interface Wiki {
   images?: Image[]
   media?: Media[]
   user: User
-  metadata: UpdatedMetaDataInterface
+  metadata: MData[]
   version: number
   language: LanguagesISOEnum
   updated?: string

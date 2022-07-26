@@ -125,7 +125,9 @@ const getSocialsCount = (wiki: Wiki): number => {
   let socialsCount = 0
   wiki.metadata.forEach(meta => {
     if (WikiPossibleSocialsList.includes(meta.id as CommonMetaIds)) {
-      socialsCount += 1
+      if (meta.value) {
+        socialsCount += 1
+      }
     }
   })
   return socialsCount
