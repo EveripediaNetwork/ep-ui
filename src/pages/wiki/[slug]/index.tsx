@@ -40,12 +40,11 @@ const Wiki = ({ wiki }: WikiProps) => {
   useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
-
   return (
     <>
       {wiki && (
         <WikiHeader
-          title={wiki.title}
+          title={`${wiki.title} [${wiki?.categories[0]?.title}]`}
           description={getWikiSummary(wiki)}
           mainImage={getWikiImageUrl(wiki)}
         />
