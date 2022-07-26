@@ -475,7 +475,7 @@ export const calculateEditInfo = (
     type: 'wiki/updateMetadata',
     payload: {
       id: EditSpecificMetaIds.WIKI_SCORE,
-      value: wikiScore.toString(),
+      value: wikiScore.toFixed(2),
     },
   })
 }
