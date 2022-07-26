@@ -21,6 +21,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { getUsername } from '@/utils/getUsername'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 
 export const WikiDetails = ({
   wikiTitle,
@@ -56,7 +57,7 @@ export const WikiDetails = ({
       >
         {title}
       </Heading>
-      <AspectRatio w="100%" ratio={4 / 3}>
+      <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
         <WikiImage bgColor="dimColor" imageURL={imgSrc} />
       </AspectRatio>
       <Table size="sm" variant="simple">

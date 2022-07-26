@@ -12,6 +12,7 @@ import { useAccount } from 'wagmi'
 import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
 
@@ -122,7 +123,7 @@ const Dropzone = ({
   return (
     <Box>
       {paths.length === 0 || !showFetchedImage ? (
-        <AspectRatio ratio={aspectRatio || 4 / 3}>
+        <AspectRatio ratio={aspectRatio || WIKI_IMAGE_ASPECT_RATIO}>
           <Box
             display="flex"
             padding="10px"

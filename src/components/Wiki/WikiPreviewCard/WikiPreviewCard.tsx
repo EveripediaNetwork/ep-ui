@@ -7,6 +7,7 @@ import {
   Text,
   Flex,
   Box,
+  AspectRatio,
 } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
@@ -19,6 +20,7 @@ import { shortenText } from '@/utils/shortenText'
 import { getUsername } from '@/utils/getUsername'
 import { Link } from '@/components/Elements'
 import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 
 const WikiPreviewCard = ({
   wiki,
@@ -46,12 +48,13 @@ const WikiPreviewCard = ({
       h="100%"
       bgColor="cardBg"
       boxShadow="xl"
-      rounded="xl"
+      rounded="lg"
       overflow="hidden"
       cursor="pointer"
     >
-      <WikiImage h={200} imageURL={getWikiImageUrl(wiki)} layout="fill" />
-
+      <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
+        <WikiImage imageURL={getWikiImageUrl(wiki)} />
+      </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>
           <Text

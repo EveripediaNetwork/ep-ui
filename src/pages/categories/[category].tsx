@@ -114,7 +114,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
             <>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
-                width="min(90%, 1300px)"
+                width={{ base: '90%', lg: 'min(80%, 1300px)' }}
                 mx="auto"
                 my={10}
                 gap={8}
