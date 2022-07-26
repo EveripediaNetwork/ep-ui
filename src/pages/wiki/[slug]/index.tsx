@@ -44,7 +44,7 @@ const Wiki = ({ wiki }: WikiProps) => {
     <>
       {wiki && (
         <WikiHeader
-          title={`${wiki.title} [${wiki?.categories[0]?.title}]`}
+          title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
           description={getWikiSummary(wiki)}
           mainImage={getWikiImageUrl(wiki)}
         />
