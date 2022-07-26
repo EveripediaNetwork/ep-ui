@@ -48,7 +48,7 @@ const WikiPreviewCard = ({
       h="100%"
       bgColor="cardBg"
       boxShadow="xl"
-      rounded="xl"
+      rounded="lg"
       overflow="hidden"
       cursor="pointer"
     >
