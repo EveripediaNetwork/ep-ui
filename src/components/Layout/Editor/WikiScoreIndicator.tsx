@@ -8,10 +8,12 @@ const WikiScoreIndicator = ({ wiki }: { wiki: Wiki }) => {
   if (!score) return null
 
   let color = 'green.400'
-  if (score < 20) {
+  if (score < 30) {
     color = 'red.400'
-  } else if (score < 40) {
+  } else if (score < 50) {
     color = 'orange.400'
+  } else if (score < 70) {
+    color = 'yellow.400'
   }
 
   return (
