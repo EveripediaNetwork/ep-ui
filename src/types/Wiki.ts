@@ -67,6 +67,7 @@ export enum EditSpecificMetaIds {
   WORDS_CHANGED = 'words-changed',
   PERCENT_CHANGED = 'percent-changed',
   BLOCKS_CHANGED = 'blocks-changed',
+  WIKI_SCORE = 'wiki-score',
 }
 
 export enum WikiRootBlocks {
