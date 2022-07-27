@@ -30,6 +30,7 @@ import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from './googleAnalytics'
+import { calculateWikiScore } from './calculateWikiScore'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -449,6 +450,7 @@ export const calculateEditInfo = (
   if (prevImgId !== currImgId) {
     blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
   }
+
   // common metadata changes
   Object.values(CommonMetaIds).forEach(id => {
     if (
@@ -464,6 +466,16 @@ export const calculateEditInfo = (
     payload: {
       id: EditSpecificMetaIds.BLOCKS_CHANGED,
       value: blocksChanged.join(','),
+    },
+  })
+
+  // calculate wiki score and update wiki with score
+  const wikiScore = calculateWikiScore(currWiki)
+  dispatch({
+    type: 'wiki/updateMetadata',
+    payload: {
+      id: EditSpecificMetaIds.WIKI_SCORE,
+      value: wikiScore.toFixed(2),
     },
   })
 }
@@ -485,6 +497,7 @@ export const isVerifiedContentLinks = (content: string) => {
   })
   return isValid
 }
+
 export const isWikiExists = async (
   slug: string,
   setExistingWikiData: (data: Wiki) => void,

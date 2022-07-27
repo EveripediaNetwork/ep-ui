@@ -84,6 +84,7 @@ import {
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
+import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -501,112 +502,118 @@ const CreateWikiContent = () => {
             placeholder={`${t('wikiTitlePlaceholder')}`}
           />
         </InputGroup>
-        {!isNewCreateWiki ? (
-          // Publish button with commit message for wiki edit
-          <Popover onClose={() => setIsWritingCommitMsg(false)}>
-            <PopoverTrigger>
-              <Button
-                isLoading={submittingWiki}
-                _disabled={{
-                  opacity: disableSaveButton() ? 0.5 : undefined,
-                  _hover: {
-                    bgColor: 'grey !important',
-                    cursor: 'not-allowed',
-                  },
-                }}
-                loadingText="Loading"
-                disabled={disableSaveButton()}
-                onClick={() => setIsWritingCommitMsg(true)}
-                mb={24}
-              >
-                Publish
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent m={4}>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>
-                Commit Message <small>(Optional)</small>{' '}
-              </PopoverHeader>
-              <PopoverBody>
-                <Tag
-                  mb={{ base: 2, lg: 2 }}
-                  variant="solid"
-                  colorScheme={
-                    // eslint-disable-next-line no-nested-ternary
-                    commitMessageLimitAlert
-                      ? 'red'
-                      : (commitMessage?.length || '') > 50
-                      ? 'green'
-                      : 'yellow'
-                  }
-                >
-                  {commitMessage?.length || 0}/128
-                </Tag>
-                <Textarea
-                  value={commitMessage}
-                  placeholder="Enter what changed..."
-                  {...(commitMessageLimitAlert
-                    ? commitMessageLimitAlertStyle
-                    : baseStyle)}
-                  onChange={(e: { target: { value: string } }) => {
-                    if (e.target.value.length <= 128) {
-                      setCommitMessage(e.target.value)
-                      dispatch({
-                        type: 'wiki/updateMetadata',
-                        payload: {
-                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: e.target.value,
-                        },
-                      })
-                    } else {
-                      setCommitMessageLimitAlert(true)
-                      setTimeout(() => setCommitMessageLimitAlert(false), 2000)
-                    }
+
+        <HStack gap={5}>
+          <WikiScoreIndicator wiki={wiki} />
+          {!isNewCreateWiki ? (
+            // Publish button with commit message for wiki edit
+            <Popover onClose={() => setIsWritingCommitMsg(false)}>
+              <PopoverTrigger>
+                <Button
+                  isLoading={submittingWiki}
+                  _disabled={{
+                    opacity: disableSaveButton() ? 0.5 : undefined,
+                    _hover: {
+                      bgColor: 'grey !important',
+                      cursor: 'not-allowed',
+                    },
                   }}
-                />
-              </PopoverBody>
-              <PopoverFooter>
-                <HStack spacing={2} justify="right">
-                  <Button
-                    onClick={() => {
-                      dispatch({
-                        type: 'wiki/updateMetadata',
-                        payload: {
-                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: '',
-                        },
-                      })
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
-                    }}
-                    float="right"
-                    variant="outline"
+                  loadingText="Loading"
+                  disabled={disableSaveButton()}
+                  onClick={() => setIsWritingCommitMsg(true)}
+                >
+                  Publish
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent m={4}>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>
+                  Commit Message <small>(Optional)</small>{' '}
+                </PopoverHeader>
+                <PopoverBody>
+                  <Tag
+                    mb={{ base: 2, lg: 2 }}
+                    variant="solid"
+                    colorScheme={
+                      // eslint-disable-next-line no-nested-ternary
+                      commitMessageLimitAlert
+                        ? 'red'
+                        : (commitMessage?.length || '') > 50
+                        ? 'green'
+                        : 'yellow'
+                    }
                   >
-                    Skip
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
+                    {commitMessage?.length || 0}/128
+                  </Tag>
+                  <Textarea
+                    value={commitMessage}
+                    placeholder="Enter what changed..."
+                    {...(commitMessageLimitAlert
+                      ? commitMessageLimitAlertStyle
+                      : baseStyle)}
+                    onChange={(e: { target: { value: string } }) => {
+                      if (e.target.value.length <= 128) {
+                        setCommitMessage(e.target.value)
+                        dispatch({
+                          type: 'wiki/updateMetadata',
+                          payload: {
+                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                            value: e.target.value,
+                          },
+                        })
+                      } else {
+                        setCommitMessageLimitAlert(true)
+                        setTimeout(
+                          () => setCommitMessageLimitAlert(false),
+                          2000,
+                        )
+                      }
                     }}
-                  >
-                    Submit
-                  </Button>
-                </HStack>
-              </PopoverFooter>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          // Publish button without commit message at new create wiki
-          <Button
-            onClick={() => {
-              saveOnIpfs()
-            }}
-          >
-            Publish
-          </Button>
-        )}
+                  />
+                </PopoverBody>
+                <PopoverFooter>
+                  <HStack spacing={2} justify="right">
+                    <Button
+                      onClick={() => {
+                        dispatch({
+                          type: 'wiki/updateMetadata',
+                          payload: {
+                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
+                            value: '',
+                          },
+                        })
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                      float="right"
+                      variant="outline"
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </HStack>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            // Publish button without commit message at new create wiki
+            <Button
+              onClick={() => {
+                saveOnIpfs()
+              }}
+            >
+              Publish
+            </Button>
+          )}
+        </HStack>
       </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
