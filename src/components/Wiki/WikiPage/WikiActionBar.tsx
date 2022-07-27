@@ -1,16 +1,20 @@
 import React from 'react'
-import { VStack, Icon, Text, Flex } from '@chakra-ui/react'
+import { VStack, Icon, Text, Flex, useDisclosure } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
+import {BiShareAlt} from 'react-icons/bi'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
+import ShareWikiModal from './CustomModals/ShareWikiModal'
+
 
 interface WikiActionBarProps {
   wiki: Wiki | undefined
 }
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const { address: userAddress } = useAccount()
   const actionBarItems: {
@@ -44,6 +48,15 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         router.push(`/wiki/${wiki?.id}/history`)
       },
     },
+    {
+      label: 'Share',
+      icon: BiShareAlt,
+      isDisabled: !wiki,
+      isActive: router.asPath === ``,
+      handleClick: () => {
+        onOpen()
+      },
+    }
   ]
   return (
     <VStack
@@ -55,6 +68,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       borderColor="borderColor"
       w={{ lg: '8%', base: '100%', md: '10%', '2xl': '5%' }}
     >
+      <ShareWikiModal isOpen={isOpen} onClose={onClose} {...wiki}/>
       <Flex
         direction={{ base: 'row', md: 'column' }}
         gap={{ base: 6, sm: 8 }}
