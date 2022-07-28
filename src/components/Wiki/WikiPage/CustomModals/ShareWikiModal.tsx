@@ -69,7 +69,7 @@ const ShareWikiModal = ({
   ...rest
 }: Partial<ModalProps>) => {
   const router = useRouter()
-  const url = `${config.publicDomain}wiki/${router.query.slug}`
+  const url = `${config.publicDomain}/wiki/${router.query.slug}`
   const { hasCopied, onCopy } = useClipboard(url)
   if (!isOpen) return null
   return (
