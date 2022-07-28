@@ -97,11 +97,11 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           textAlign="center"
           justifyContent="center"
           fontWeight="400"
-          maxW={{ base: '90%',md:'70%', lg: '60%' }}
+          maxW={{ base: '90%', md: '70%', lg: '60%' }}
           mx="auto"
           px={1}
         >
-          <Text my={8} mx={{base: '1', md: '8', lg: '14'}}>
+          <Text my={8} mx={{ base: '1', md: '8', lg: '14 '}}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
