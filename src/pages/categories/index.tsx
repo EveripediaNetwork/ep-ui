@@ -47,10 +47,10 @@ const Categories: NextPage = () => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          maxW={{ base: '90%',md:'70%', lg: '60%' }}
+          maxW={{ base: '90%', md: '70%', lg: '60%' }}
           px={5}
         >
-          <Text mb={7} mx={{base: '5', md: '8', lg: '14'}}>
+          <Text mb={7} mx={{ base: '5', md: '8', lg: '14' }}>
             {CATEGORY_HEADER}
           </Text>
         </Flex>
