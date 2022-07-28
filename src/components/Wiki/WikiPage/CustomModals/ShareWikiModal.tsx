@@ -68,11 +68,9 @@ const ShareWikiModal = ({
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
-  const router = useRouter();
+  const router = useRouter()
   const url = `${config.publicDomain}wiki/${router.query.slug}`
-  const { hasCopied, onCopy } = useClipboard(
-    url
-  )
+  const { hasCopied, onCopy } = useClipboard(url)
   if (!isOpen) return null
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
@@ -105,8 +103,10 @@ const ShareWikiModal = ({
                 whiteSpace="nowrap"
                 href={router.asPath}
                 color="#2D3748"
-                _dark={{ color: '#b1b2b5'}}
-              >{url}</Link>
+                _dark={{ color: '#b1b2b5' }}
+              >
+                {url}
+              </Link>
             </Box>
           </Flex>
 
@@ -114,12 +114,10 @@ const ShareWikiModal = ({
             <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
               Or share via:
             </Text>
-            <Wrap mt="1rem" spacing='5'>
+            <Wrap mt="1rem" spacing="5">
               {SHARING_OPTIONS.map(item => {
                 return (
-                  <item.label
-                    url={url}
-                  >
+                  <item.label url={url}>
                     <Icon as={item.icon} fontSize="40px" />
                   </item.label>
                 )
