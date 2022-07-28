@@ -21,6 +21,7 @@ import {
   RedditShareButton,
   TelegramShareButton,
   LinkedinShareButton,
+  EmailShareButton,
 } from 'react-share'
 import TwitterIconColor from '@/components/Icons/twitterIconColor'
 import FacebookIconColor from '@/components/Icons/facebookIconColor'
@@ -28,6 +29,8 @@ import RedditIconColor from '@/components/Icons/redditIconColor'
 import TelegramIconColor from '@/components/Icons/telegramIconColor'
 import WhatsappIconColor from '@/components/Icons/whatsappIconColor'
 import LinkedinIconColor from '@/components/Icons/linkedinIconColor'
+import EmailIconColor from '@/components/Icons/emailIconColor'
+import config from '@/config'
 
 const SHARING_OPTIONS = [
   {
@@ -54,6 +57,10 @@ const SHARING_OPTIONS = [
     label: LinkedinShareButton,
     icon: LinkedinIconColor,
   },
+  {
+    label: EmailShareButton,
+    icon: EmailIconColor,
+  },
 ]
 
 const ShareWikiModal = ({
@@ -61,9 +68,10 @@ const ShareWikiModal = ({
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
-  const router = useRouter()
+  const router = useRouter();
+  const url = `${config.publicDomain}wiki/${router.query.slug}`
   const { hasCopied, onCopy } = useClipboard(
-    `https://alpha.everipedia.org${router.asPath}`,
+    url
   )
   if (!isOpen) return null
   return (
@@ -97,8 +105,8 @@ const ShareWikiModal = ({
                 whiteSpace="nowrap"
                 href={router.asPath}
                 color="#2D3748"
-                _dark={{ color: '#b1b2b5' }}
-              >{`https://alpha.everipedia.org${router.asPath}`}</Link>
+                _dark={{ color: '#b1b2b5'}}
+              >{url}</Link>
             </Box>
           </Flex>
 
@@ -106,11 +114,11 @@ const ShareWikiModal = ({
             <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
               Or share via:
             </Text>
-            <Wrap mt="1rem">
+            <Wrap mt="1rem" spacing='5'>
               {SHARING_OPTIONS.map(item => {
                 return (
                   <item.label
-                    url={`https://alpha.everipedia.org${router.asPath}`}
+                    url={url}
                   >
                     <Icon as={item.icon} fontSize="40px" />
                   </item.label>
