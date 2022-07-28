@@ -101,7 +101,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           mx="auto"
           px={1}
         >
-          <Text my={8} mx={{ base: '1', md: '8', lg: '14 '}}>
+          <Text my={8} mx={{ base: '1', md: '8', lg: '14' }}>
             {categoryData?.description || ''}
           </Text>
         </Flex>
