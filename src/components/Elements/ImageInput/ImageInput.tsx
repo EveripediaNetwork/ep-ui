@@ -35,7 +35,7 @@ const ImageInput = ({
     }
   }, [deleteImage, setHideDropzone])
 
-  const linkRecogniser = (url: string) => {
+  const linkRecognizer = (url: string) => {
     const validYTLinkReg =
       /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
 
@@ -74,6 +74,7 @@ const ImageInput = ({
     if (!showFetchedImage) {
       setImageSrc('')
     }
+
     toast({
       title: 'Image successfully Fetched',
       status: 'success',
@@ -94,9 +95,9 @@ const ImageInput = ({
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const url = event.target.value
-    const urlType = linkRecogniser(url)
+    const urlType = linkRecognizer(url)
 
-    if (!urlType) {
+    if (!urlType.type) {
       setImageSrc(undefined)
       toast({
         title: 'Paste a valid image URL',
