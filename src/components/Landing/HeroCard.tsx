@@ -30,6 +30,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
         _hover={{ shadow: '2xl' }}
         maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
         w="full"
+        overflow='clip'
       >
         <WikiImage
           cursor="pointer"
@@ -39,6 +40,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           imgW="450"
           borderRadius="none"
           roundedTop="lg"
+          ml='-5'
         />
         <Flex
           direction="column"
