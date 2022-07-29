@@ -1,24 +1,11 @@
 import { whiteListedDomains } from '@/types/Wiki'
 
 function pasteContents(text: string, type: 'plain' | 'html' = 'plain') {
-  const range = document.getSelection()?.getRangeAt(0)
-  const selection = window.getSelection()
-
-  if (!range || !selection) return
-
-  range.deleteContents()
   if (type === 'html') {
-    const htmlNode = document.createElement('div')
-    htmlNode.innerHTML = text
-    range.insertNode(htmlNode)
+    document.execCommand('insertHTML', false, text)
   } else {
-    const textNode = document.createTextNode(text)
-    range.insertNode(textNode)
+    document.execCommand('insertText', false, text)
   }
-
-  selection.removeAllRanges()
-  selection.addRange(range)
-  selection.collapseToEnd()
 }
 
 export const PasteListener = (e: Event) => {
