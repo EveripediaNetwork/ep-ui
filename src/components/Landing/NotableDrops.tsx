@@ -23,7 +23,7 @@ const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
         maxW="400px"
         mx="auto"
       >
-        <WikiImage imageURL={getWikiImageUrl(wiki)} imgH="380" imgW="400" />
+        <WikiImage imageURL={getWikiImageUrl(wiki)} objectFit="cover" h="96" />
         <chakra.div color="white" pt={4} px={8} gap={4} textAlign="center">
           <Text fontSize="xl" fontWeight="bold">
             <LinkOverlay href={`/wiki/${wiki.id}`}>{wiki.title}</LinkOverlay>
