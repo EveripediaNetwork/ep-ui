@@ -8,7 +8,7 @@ import config from '@/config'
 import { getUserAddressFromUsername, getUserProfile } from '@/services/profile'
 import { store } from '@/store/store'
 import { ProfileData } from '@/types/ProfileType'
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -25,7 +25,7 @@ const Profile = ({ profileData }: ProfileProps) => {
   const profileContext = useProfile()
 
   return (
-    <>
+    <Box key={address}>
       <UserProfileHeader
         username={profileData?.username || address}
         bio={profileData?.bio}
@@ -49,7 +49,7 @@ const Profile = ({ profileData }: ProfileProps) => {
           <Collections />
         </Flex>
       </ProfileProvider>
-    </>
+    </Box>
   )
 }
 
