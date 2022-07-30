@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import ReactCrop, { centerCrop, Crop, makeAspectCrop } from 'react-image-crop'
 import {
   Button,
@@ -37,7 +37,7 @@ const centerAspectCrop = (
   )
 }
 
-const canvasPreview = async (
+const canvasPreview = (
   image: HTMLImageElement,
   canvas: HTMLCanvasElement,
   crop: Crop,
@@ -104,6 +104,7 @@ const ImageCrop = ({
 }: ImageCropProps) => {
   const [crop, setCrop] = useState<Crop>()
   const previewCropRef = useRef(null)
+  const [saving, setSaving] = useState(false)
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     if (crop) return
@@ -114,9 +115,9 @@ const ImageCrop = ({
   const handleImageCrop = () => {
     if (!previewCropRef.current || !crop) return
 
+    setSaving(true)
     const canvas = document.createElement('canvas')
     canvasPreview(previewCropRef.current, canvas, crop, 1, 0)
-
     canvas.toBlob(b => {
       if (b) {
         const reader = new FileReader()
@@ -125,12 +126,19 @@ const ImageCrop = ({
           if (reader.result) {
             setDisplayImage(URL.createObjectURL(b))
             setImage('image', reader.result as ArrayBuffer)
+            setSaving(false)
             onClose()
           }
         }
       }
     }, 'image/jpeg')
   }
+
+  const initialDisplayImageUrl = useMemo(
+    () =>
+      URL.createObjectURL(new Blob([imgArrayBuffer], { type: 'image/jpeg' })),
+    [imgArrayBuffer],
+  )
 
   return (
     <Modal isCentered isOpen={imgArrayBuffer !== null} onClose={onClose}>
@@ -152,7 +160,7 @@ const ImageCrop = ({
                 maxH="50vh !important"
                 objectFit="cover"
                 ref={previewCropRef}
-                src={URL.createObjectURL(new Blob([imgArrayBuffer]))}
+                src={initialDisplayImageUrl}
                 alt="crop"
                 onLoad={onImageLoad}
               />
@@ -161,6 +169,9 @@ const ImageCrop = ({
         </ModalBody>
         <ModalFooter>
           <Button
+            isLoading={saving}
+            disabled={!crop}
+            loadingText="Saving..."
             leftIcon={<RiCropLine />}
             colorScheme="brand"
             mr={3}
