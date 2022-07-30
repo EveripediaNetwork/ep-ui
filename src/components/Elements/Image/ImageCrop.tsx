@@ -93,14 +93,14 @@ interface ImageCropProps {
   imgArrayBuffer: ArrayBuffer
   onClose: () => void
   setImage: (name: string, f: ArrayBuffer) => void
-  setImageInput: (url: string) => void
+  setDisplayImage: (url: string) => void
 }
 
 const ImageCrop = ({
   imgArrayBuffer,
   onClose,
   setImage,
-  setImageInput,
+  setDisplayImage,
 }: ImageCropProps) => {
   const [crop, setCrop] = useState<Crop>()
   const previewCropRef = useRef(null)
@@ -126,7 +126,7 @@ const ImageCrop = ({
         reader.readAsArrayBuffer(b)
         reader.onload = () => {
           if (reader.result) {
-            setImageInput(URL.createObjectURL(b))
+            setDisplayImage(URL.createObjectURL(b))
             setImage('image', reader.result as ArrayBuffer)
             onClose()
           }

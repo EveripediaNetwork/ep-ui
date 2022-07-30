@@ -142,7 +142,7 @@ const ImageInput = ({
           imgArrayBuffer={toCropImg}
           setImage={setImage}
           onClose={() => setToCropImg(null)}
-          setImageInput={setImageSrc}
+          setDisplayImage={setImageSrc}
         />
       )}
       <Flex
