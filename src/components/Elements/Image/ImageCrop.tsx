@@ -135,7 +135,7 @@ const ImageCrop = ({
   return (
     <Modal isCentered isOpen={imgArrayBuffer !== null} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w="min(95vw, 500px)">
         <ModalHeader pb={0}>Crop Image</ModalHeader>
         <ModalBody>
           <Text mb={4}>

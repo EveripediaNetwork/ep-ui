@@ -102,12 +102,13 @@ const MediaModal = ({
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
+        w="min(95vw, 500px)"
         _dark={{
           bg: 'gray.800',
         }}
       >
         <ModalHeader>
-          <VStack align="start" w={{ base: '100%', md: '90%', lg: '80%' }}>
+          <VStack align="start">
             <Text fontSize="lg" fontWeight="bold">
               Add Image or Video to Media Gallery
             </Text>
