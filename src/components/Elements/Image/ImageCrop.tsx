@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactCrop, { centerCrop, Crop, makeAspectCrop } from 'react-image-crop'
 import {
   Button,
@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   Skeleton,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import 'react-image-crop/dist/ReactCrop.css'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
@@ -42,8 +43,6 @@ const canvasPreview = (
   image: HTMLImageElement,
   canvas: HTMLCanvasElement,
   crop: Crop,
-  scale = 1,
-  rotate = 0,
 ) => {
   const ctx = canvas.getContext('2d')
 
@@ -64,7 +63,6 @@ const canvasPreview = (
   const cropX = crop.x * scaleX
   const cropY = crop.y * scaleY
 
-  const rotateRads = rotate * (Math.PI / 180)
   const centerX = image.naturalWidth / 2
   const centerY = image.naturalHeight / 2
 
@@ -72,8 +70,6 @@ const canvasPreview = (
 
   ctx.translate(-cropX, -cropY)
   ctx.translate(centerX, centerY)
-  ctx.rotate(rotateRads)
-  ctx.scale(scale, scale)
   ctx.translate(-centerX, -centerY)
   ctx.drawImage(
     image,
@@ -91,26 +87,31 @@ const canvasPreview = (
 }
 
 interface ImageCropProps {
-  imgArrayBuffer: ArrayBuffer
+  imageToCrop: ArrayBuffer | string
   onClose: () => void
   setImage: (name: string, f: ArrayBuffer) => void
   setDisplayImage: (url: string) => void
 }
 
 const ImageCrop = ({
-  imgArrayBuffer,
+  imageToCrop,
   onClose,
   setImage,
   setDisplayImage,
 }: ImageCropProps) => {
+  console.log(imageToCrop)
   const [crop, setCrop] = useState<Crop>()
   const previewCropRef = useRef(null)
   const [saving, setSaving] = useState(false)
+  const [initialDisplayImageUrl, setInitialDisplayImageUrl] = useState<string>()
+  const [isInitialImageLoaded, setIsInitialImageLoaded] = useState(false)
+  const toast = useToast()
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     if (crop) return
     const { width, height } = e.currentTarget
     setCrop(centerAspectCrop(width, height, WIKI_IMAGE_ASPECT_RATIO))
+    setIsInitialImageLoaded(true)
   }
 
   const handleImageCrop = () => {
@@ -118,7 +119,7 @@ const ImageCrop = ({
 
     setSaving(true)
     const canvas = document.createElement('canvas')
-    canvasPreview(previewCropRef.current, canvas, crop, 1, 0)
+    canvasPreview(previewCropRef.current, canvas, crop)
     canvas.toBlob(b => {
       if (b) {
         const reader = new FileReader()
@@ -131,26 +132,38 @@ const ImageCrop = ({
             onClose()
           }
         }
+      } else {
+        if (!toast.isActive('image-crop-error')) {
+          toast({
+            id: 'image-crop-error',
+            title: 'Cannot crop image',
+            description:
+              'Try selecting a different area of image or upload a new image',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
+        }
+        setSaving(false)
       }
     }, 'image/jpeg')
   }
 
-  const [isMounted, setIsMounted] = useState(false)
-  const initialDisplayImageUrl = useMemo(
-    () =>
-      isMounted &&
-      URL.createObjectURL(new Blob([imgArrayBuffer], { type: 'image/jpeg' })),
-    [imgArrayBuffer, isMounted],
-  )
-
   useEffect(() => {
-    setTimeout(() => {
-      setIsMounted(true)
-    }, 500)
-  }, [])
+    if (typeof imageToCrop !== 'string') {
+      setTimeout(() => {
+        const url = URL.createObjectURL(
+          new Blob([imageToCrop], { type: 'image/jpeg' }),
+        )
+        setInitialDisplayImageUrl(url)
+      }, 500)
+    } else {
+      setInitialDisplayImageUrl(imageToCrop)
+    }
+  }, [imageToCrop])
 
   return (
-    <Modal isCentered isOpen={imgArrayBuffer !== null} onClose={onClose}>
+    <Modal isCentered isOpen={imageToCrop !== null} onClose={onClose}>
       <ModalOverlay />
       <ModalContent w="min(95vw, 500px)">
         <ModalHeader pb={0}>Crop Image</ModalHeader>
@@ -159,26 +172,29 @@ const ImageCrop = ({
             Drag the rectangle to adjust the crop area and click the crop and
             save button to save the image.
           </Text>
-          <Center>
-            {initialDisplayImageUrl ? (
+          <Skeleton
+            isLoaded={isInitialImageLoaded}
+            w="100%"
+            h="300px"
+            bgColor="black"
+          >
+            <Center h="100%">
               <ReactCrop
                 aspect={WIKI_IMAGE_ASPECT_RATIO}
                 crop={crop}
                 onChange={c => setCrop(c)}
               >
                 <Image
-                  h="300px"
-                  objectFit="cover"
+                  crossOrigin="anonymous"
+                  maxH="300px !important"
+                  objectFit="contain"
                   ref={previewCropRef}
                   src={initialDisplayImageUrl}
-                  alt="crop"
                   onLoad={onImageLoad}
                 />
               </ReactCrop>
-            ) : (
-              <Skeleton w="100%" h="300px" />
-            )}
-          </Center>
+            </Center>
+          </Skeleton>
         </ModalBody>
         <ModalFooter>
           <Button

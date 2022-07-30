@@ -3,7 +3,6 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, Image, Input, useToast } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { dataURLtoArrayBuffer } from '@/utils/dataURLtoArrayBuffer'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'
 
@@ -23,7 +22,7 @@ const ImageInput = ({
   modalUpload,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
-  const [toCropImg, setToCropImg] = useState<ArrayBuffer | null>(null)
+  const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>()
   const toast = useToast()
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -142,7 +141,7 @@ const ImageInput = ({
     <>
       {toCropImg && (
         <ImageCrop
-          imgArrayBuffer={toCropImg}
+          imageToCrop={toCropImg}
           setImage={setImage}
           onClose={() => setToCropImg(null)}
           setDisplayImage={setImageSrc}
@@ -157,9 +156,7 @@ const ImageInput = ({
       >
         {imgSrc && showFetchedImage ? (
           <EditorMainImageWrapper
-            cropImage={() =>
-              dataURLtoArrayBuffer(imgSrc).then(i => i && setToCropImg(i))
-            }
+            cropImage={() => setToCropImg(imgSrc)}
             removeImage={removeImage}
           >
             <Image

@@ -13,7 +13,6 @@ import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { dataURLtoArrayBuffer } from '@/utils/dataURLtoArrayBuffer'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
 import ImageCrop from '../Image/ImageCrop'
@@ -42,7 +41,7 @@ const Dropzone = ({
   mediaModal,
 }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
-  const [toCropImg, setToCropImg] = useState<ArrayBuffer | null>(null)
+  const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>(null)
   const toast = useToast()
   const dispatch = useDispatch()
   const { address: userAddress } = useAccount()
@@ -134,7 +133,7 @@ const Dropzone = ({
     <>
       {toCropImg && (
         <ImageCrop
-          imgArrayBuffer={toCropImg}
+          imageToCrop={toCropImg}
           onClose={() => setToCropImg(null)}
           setImage={setImage}
           setDisplayImage={img => setPaths([img])}
@@ -191,9 +190,7 @@ const Dropzone = ({
           <>
             {showFetchedImage && (
               <EditorMainImageWrapper
-                cropImage={() =>
-                  dataURLtoArrayBuffer(paths[0]).then(i => i && setToCropImg(i))
-                }
+                cropImage={() => setToCropImg(paths[0])}
                 removeImage={() => {
                   setPaths([])
                   if (setHideImageInput && deleteImage) {
