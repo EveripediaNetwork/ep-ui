@@ -25,43 +25,41 @@ export const EditorMainImageWrapper = ({
         isAttached
         colorScheme="gray.600"
         pos="absolute"
-        top={2}
-        left={2}
+        top={3}
+        left={3}
         zIndex={1}
         spacing={2}
       >
         <Tooltip label="Delete Image">
           <IconButton
             onClick={removeImage}
-            borderRadius="sm"
             aria-label="Remove image"
             icon={<RiDeleteBinLine />}
             variant="outline"
-            background="blackAlpha.500"
-            color="whiteAlpha.700"
+            background="whiteAlpha.800"
+            color="blackAlpha.700"
             sx={{
               '&:hover, &:focus, &:active': {
-                background: 'blackAlpha.400',
+                background: 'whiteAlpha.800',
               },
             }}
-            size="xs"
+            size="sm"
           />
         </Tooltip>
         <Tooltip label="Crop image">
           <IconButton
             onClick={cropImage}
-            borderRadius="sm"
             aria-label="Remove image"
             icon={<RiCropLine />}
             variant="outline"
-            background="blackAlpha.500"
-            color="whiteAlpha.700"
+            background="whiteAlpha.800"
+            color="blackAlpha.700"
             sx={{
               '&:hover, &:focus, &:active': {
-                background: 'blackAlpha.400',
+                background: 'whiteAlpha.800',
               },
             }}
-            size="xs"
+            size="sm"
           />
         </Tooltip>
       </ButtonGroup>
