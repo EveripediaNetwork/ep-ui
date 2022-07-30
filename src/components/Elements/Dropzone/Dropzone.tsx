@@ -13,6 +13,7 @@ import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { dataURLtoArrayBuffer } from '@/utils/dataURLtoArrayBuffer'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
 import ImageCrop from '../Image/ImageCrop'
@@ -190,6 +191,9 @@ const Dropzone = ({
           <>
             {showFetchedImage && (
               <EditorMainImageWrapper
+                cropImage={() =>
+                  dataURLtoArrayBuffer(paths[0]).then(i => i && setToCropImg(i))
+                }
                 removeImage={() => {
                   setPaths([])
                   if (setHideImageInput && deleteImage) {

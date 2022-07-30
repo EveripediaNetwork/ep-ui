@@ -1,43 +1,71 @@
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { AspectRatio, Button, Flex } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  ButtonGroup,
+  Flex,
+  IconButton,
+  Tooltip,
+} from '@chakra-ui/react'
 import React from 'react'
-import { RiCloseLine } from 'react-icons/ri'
+import { RiCropLine, RiDeleteBinLine } from 'react-icons/ri'
 
 interface EditorMainImageProps {
   removeImage: () => void
   children?: React.ReactNode
+  cropImage: () => void
 }
 export const EditorMainImageWrapper = ({
   removeImage,
+  cropImage,
   children,
 }: EditorMainImageProps) => {
   return (
     <Flex pos="relative" direction="column" w="full" h="full" justify="center">
-      <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>{children}</AspectRatio>
-      <Button
-        fontWeight="bold"
+      <ButtonGroup
+        isAttached
+        colorScheme="gray.600"
         pos="absolute"
-        top="0"
-        right="0"
-        transform="translate(50%, -50%)"
-        borderRadius="full"
-        fontSize="20px"
-        p={0}
-        size="xs"
-        boxSize={7}
-        borderWidth="3px"
-        borderColor="chakra-body-bg"
-        bg="red.400"
-        sx={{
-          '&:hover, &:focus, &:active': {
-            bg: 'red.500',
-            color: 'white',
-          },
-        }}
-        onClick={removeImage}
+        top={2}
+        left={2}
+        zIndex={1}
+        spacing={2}
       >
-        <RiCloseLine />
-      </Button>
+        <Tooltip label="Delete Image">
+          <IconButton
+            onClick={removeImage}
+            borderRadius="sm"
+            aria-label="Remove image"
+            icon={<RiDeleteBinLine />}
+            variant="outline"
+            background="blackAlpha.500"
+            color="whiteAlpha.700"
+            sx={{
+              '&:hover, &:focus, &:active': {
+                background: 'blackAlpha.400',
+              },
+            }}
+            size="xs"
+          />
+        </Tooltip>
+        <Tooltip label="Crop image">
+          <IconButton
+            onClick={cropImage}
+            borderRadius="sm"
+            aria-label="Remove image"
+            icon={<RiCropLine />}
+            variant="outline"
+            background="blackAlpha.500"
+            color="whiteAlpha.700"
+            sx={{
+              '&:hover, &:focus, &:active': {
+                background: 'blackAlpha.400',
+              },
+            }}
+            size="xs"
+          />
+        </Tooltip>
+      </ButtonGroup>
+      <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>{children}</AspectRatio>
     </Flex>
   )
 }

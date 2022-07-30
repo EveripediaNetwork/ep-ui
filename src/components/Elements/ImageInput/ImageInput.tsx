@@ -3,6 +3,7 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, Image, Input, useToast } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import { dataURLtoArrayBuffer } from '@/utils/dataURLtoArrayBuffer'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'
 
@@ -155,7 +156,12 @@ const ImageInput = ({
         alignItems="center"
       >
         {imgSrc && showFetchedImage ? (
-          <EditorMainImageWrapper removeImage={removeImage}>
+          <EditorMainImageWrapper
+            cropImage={() =>
+              dataURLtoArrayBuffer(imgSrc).then(i => i && setToCropImg(i))
+            }
+            removeImage={removeImage}
+          >
             <Image
               objectFit="cover"
               h="255px"
