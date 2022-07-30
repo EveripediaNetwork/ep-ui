@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import ReactCrop, { centerCrop, Crop, makeAspectCrop } from 'react-image-crop'
 import {
   Button,
@@ -11,6 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   Text,
 } from '@chakra-ui/react'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -134,11 +135,19 @@ const ImageCrop = ({
     }, 'image/jpeg')
   }
 
+  const [isMounted, setIsMounted] = useState(false)
   const initialDisplayImageUrl = useMemo(
     () =>
+      isMounted &&
       URL.createObjectURL(new Blob([imgArrayBuffer], { type: 'image/jpeg' })),
-    [imgArrayBuffer],
+    [imgArrayBuffer, isMounted],
   )
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsMounted(true)
+    }, 500)
+  }, [])
 
   return (
     <Modal isCentered isOpen={imgArrayBuffer !== null} onClose={onClose}>
@@ -151,20 +160,24 @@ const ImageCrop = ({
             save button to save the image.
           </Text>
           <Center>
-            <ReactCrop
-              aspect={WIKI_IMAGE_ASPECT_RATIO}
-              crop={crop}
-              onChange={c => setCrop(c)}
-            >
-              <Image
-                maxH="50vh !important"
-                objectFit="cover"
-                ref={previewCropRef}
-                src={initialDisplayImageUrl}
-                alt="crop"
-                onLoad={onImageLoad}
-              />
-            </ReactCrop>
+            {initialDisplayImageUrl ? (
+              <ReactCrop
+                aspect={WIKI_IMAGE_ASPECT_RATIO}
+                crop={crop}
+                onChange={c => setCrop(c)}
+              >
+                <Image
+                  h="300px"
+                  objectFit="cover"
+                  ref={previewCropRef}
+                  src={initialDisplayImageUrl}
+                  alt="crop"
+                  onLoad={onImageLoad}
+                />
+              </ReactCrop>
+            ) : (
+              <Skeleton w="100%" h="300px" />
+            )}
           </Center>
         </ModalBody>
         <ModalFooter>
