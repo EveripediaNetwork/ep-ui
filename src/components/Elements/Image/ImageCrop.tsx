@@ -99,7 +99,6 @@ const ImageCrop = ({
   setImage,
   setDisplayImage,
 }: ImageCropProps) => {
-  console.log(imageToCrop)
   const [crop, setCrop] = useState<Crop>()
   const previewCropRef = useRef(null)
   const [saving, setSaving] = useState(false)
