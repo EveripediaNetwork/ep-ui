@@ -93,7 +93,7 @@ const Dropzone = ({
         setHideImageInput(true)
       }
     },
-    [setHideImageInput, setImage, toast],
+    [mediaModal, setHideImageInput, setImage, toast],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

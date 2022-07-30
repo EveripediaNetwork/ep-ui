@@ -105,12 +105,9 @@ const ImageCrop = ({
   const [crop, setCrop] = useState<Crop>()
   const previewCropRef = useRef(null)
 
-  console.log(crop)
-
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     if (crop) return
     const { width, height } = e.currentTarget
-    console.log('onImageLoad', width, height)
     setCrop(centerAspectCrop(width, height, WIKI_IMAGE_ASPECT_RATIO))
   }
 
