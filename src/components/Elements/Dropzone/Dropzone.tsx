@@ -30,6 +30,7 @@ type DropzoneType = {
   dropzonePlaceHolderTitle?: string
   dropzonePlaceHolderSize?: string
   aspectRatio?: ResponsiveValue<number>
+  mediaModal?: boolean
 }
 
 const Dropzone = ({
@@ -37,6 +38,7 @@ const Dropzone = ({
   dropzonePlaceHolderTitle,
   dropzonePlaceHolderSize,
   aspectRatio,
+  mediaModal,
 }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
   const [toCropImg, setToCropImg] = useState<ArrayBuffer | null>(null)
@@ -77,7 +79,11 @@ const Dropzone = ({
           }
 
           // set image to state
-          setToCropImg(binaryStr)
+          if (mediaModal) {
+            setImage(f.name, binaryStr)
+          } else {
+            setToCropImg(binaryStr)
+          }
           setImage(f.name, binaryStr as ArrayBuffer)
         }
 

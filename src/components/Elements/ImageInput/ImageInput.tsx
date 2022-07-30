@@ -69,7 +69,9 @@ const ImageInput = ({
     }
     const data = await response.arrayBuffer()
 
-    setToCropImg(data)
+    if (modalUpload) {
+      setImage('image', data)
+    } else setToCropImg(data)
 
     if (!showFetchedImage) {
       setImageSrc('')
