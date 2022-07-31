@@ -7,6 +7,7 @@ import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'
 
 type ImageInputType = {
+  imageUploading?: boolean
   setHideDropzone?: (hide: boolean) => void
   setImage: (name: string, f: ArrayBuffer) => void
   deleteImage?: () => void
@@ -15,6 +16,7 @@ type ImageInputType = {
 }
 
 const ImageInput = ({
+  imageUploading,
   setHideDropzone,
   setImage,
   deleteImage,
@@ -156,6 +158,7 @@ const ImageInput = ({
       >
         {imgSrc && showFetchedImage ? (
           <EditorMainImageWrapper
+            imageUploading={imageUploading}
             cropImage={() => setToCropImg(imgSrc)}
             removeImage={removeImage}
           >

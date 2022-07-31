@@ -18,6 +18,7 @@ import { Image } from '../Image/Image'
 import ImageCrop from '../Image/ImageCrop'
 
 type DropzoneType = {
+  imageUploading?: boolean
   dropZoneActions: {
     setHideImageInput?: (hide: boolean) => void
     setImage: (name: string, f: ArrayBuffer) => void
@@ -34,6 +35,7 @@ type DropzoneType = {
 }
 
 const Dropzone = ({
+  imageUploading,
   dropZoneActions,
   dropzonePlaceHolderTitle,
   dropzonePlaceHolderSize,
@@ -190,6 +192,7 @@ const Dropzone = ({
           <>
             {showFetchedImage && (
               <EditorMainImageWrapper
+                imageUploading={imageUploading}
                 cropImage={() => setToCropImg(paths[0])}
                 removeImage={() => {
                   setPaths([])
