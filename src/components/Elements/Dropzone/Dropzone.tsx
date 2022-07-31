@@ -15,8 +15,10 @@ import { useDispatch } from 'react-redux'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
+import ImageCrop from '../Image/ImageCrop'
 
 type DropzoneType = {
+  imageUploading?: boolean
   dropZoneActions: {
     setHideImageInput?: (hide: boolean) => void
     setImage: (name: string, f: ArrayBuffer) => void
@@ -29,15 +31,19 @@ type DropzoneType = {
   dropzonePlaceHolderTitle?: string
   dropzonePlaceHolderSize?: string
   aspectRatio?: ResponsiveValue<number>
+  mediaModal?: boolean
 }
 
 const Dropzone = ({
+  imageUploading,
   dropZoneActions,
   dropzonePlaceHolderTitle,
   dropzonePlaceHolderSize,
   aspectRatio,
+  mediaModal,
 }: DropzoneType) => {
   const [paths, setPaths] = useState<Array<string>>([])
+  const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>(null)
   const toast = useToast()
   const dispatch = useDispatch()
   const { address: userAddress } = useAccount()
@@ -75,6 +81,11 @@ const Dropzone = ({
           }
 
           // set image to state
+          if (mediaModal) {
+            setImage(f.name, binaryStr)
+          } else {
+            setToCropImg(binaryStr)
+          }
           setImage(f.name, binaryStr as ArrayBuffer)
         }
 
@@ -84,7 +95,7 @@ const Dropzone = ({
         setHideImageInput(true)
       }
     },
-    [setHideImageInput, setImage, toast],
+    [mediaModal, setHideImageInput, setImage, toast],
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -121,80 +132,92 @@ const Dropzone = ({
   }, [isToResetImage, setHideImageInput])
 
   return (
-    <Box>
-      {paths.length === 0 || !showFetchedImage ? (
-        <AspectRatio ratio={aspectRatio || WIKI_IMAGE_ASPECT_RATIO}>
-          <Box
-            display="flex"
-            padding="10px"
-            border="1px"
-            borderColor="borderColor"
-            borderStyle="dashed"
-            borderRadius="5px"
-            justifyContent="center"
-            alignItems="center"
-            h="full"
-            _hover={{
-              boxShadow: 'md',
-              borderColor: 'brand.400',
-            }}
-            {...getRootProps()}
-          >
-            <input disabled={!userAddress} {...getInputProps()} />
-            {isDragActive ? (
-              <Text textAlign="center">Drop the files here ...</Text>
-            ) : (
-              <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
-                {dropzonePlaceHolderTitle ? (
-                  <>
-                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                      {dropzonePlaceHolderTitle}
-                    </Text>
-                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                      {dropzonePlaceHolderSize}
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <Text textAlign="center" opacity="0.5">
-                      Drag and drop a <b>{textType}</b>, or click to select.
-                    </Text>
-                    <Text textAlign="center" opacity="0.5" fontWeight="bold">
-                      (10mb max)
-                    </Text>
-                  </>
-                )}
-              </Box>
-            )}
-          </Box>
-        </AspectRatio>
-      ) : (
-        <>
-          {showFetchedImage && (
-            <EditorMainImageWrapper
-              removeImage={() => {
-                setPaths([])
-                if (setHideImageInput && deleteImage) {
-                  setHideImageInput(false)
-                  deleteImage()
-                }
-              }}
-            >
-              <Image
-                objectFit="cover"
-                h="255px"
-                w="full"
-                borderRadius={4}
-                priority
-                overflow="hidden"
-                src={paths[0]}
-                alt="Input"
-              />
-            </EditorMainImageWrapper>
-          )}
-        </>
+    <>
+      {toCropImg && (
+        <ImageCrop
+          imageToCrop={toCropImg}
+          onClose={() => setToCropImg(null)}
+          setImage={setImage}
+          setDisplayImage={img => setPaths([img])}
+        />
       )}
-    </Box>
+      <Box>
+        {paths.length === 0 || !showFetchedImage ? (
+          <AspectRatio ratio={aspectRatio || WIKI_IMAGE_ASPECT_RATIO}>
+            <Box
+              display="flex"
+              padding="10px"
+              border="1px"
+              borderColor="borderColor"
+              borderStyle="dashed"
+              borderRadius="5px"
+              justifyContent="center"
+              alignItems="center"
+              h="full"
+              _hover={{
+                boxShadow: 'md',
+                borderColor: 'brand.400',
+              }}
+              {...getRootProps()}
+            >
+              <input disabled={!userAddress} {...getInputProps()} />
+              {isDragActive ? (
+                <Text textAlign="center">Drop the files here ...</Text>
+              ) : (
+                <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
+                  {dropzonePlaceHolderTitle ? (
+                    <>
+                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                        {dropzonePlaceHolderTitle}
+                      </Text>
+                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                        {dropzonePlaceHolderSize}
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Text textAlign="center" opacity="0.5">
+                        Drag and drop a <b>{textType}</b>, or click to select.
+                      </Text>
+                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                        (10mb max)
+                      </Text>
+                    </>
+                  )}
+                </Box>
+              )}
+            </Box>
+          </AspectRatio>
+        ) : (
+          <>
+            {showFetchedImage && (
+              <EditorMainImageWrapper
+                imageUploading={imageUploading}
+                cropImage={() => setToCropImg(paths[0])}
+                removeImage={() => {
+                  setPaths([])
+                  if (setHideImageInput && deleteImage) {
+                    setHideImageInput(false)
+                    deleteImage()
+                  }
+                }}
+              >
+                <Image
+                  objectFit="cover"
+                  h="255px"
+                  w="full"
+                  borderRadius={4}
+                  priority
+                  overflow="hidden"
+                  src={paths[0]}
+                  alt="Input"
+                />
+              </EditorMainImageWrapper>
+            )}
+          </>
+        )}
+      </Box>
+    </>
   )
 }
 

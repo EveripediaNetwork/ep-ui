@@ -4,8 +4,10 @@ import { Flex, Image, Input, useToast } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
+import ImageCrop from '../Image/ImageCrop'
 
 type ImageInputType = {
+  imageUploading?: boolean
   setHideDropzone?: (hide: boolean) => void
   setImage: (name: string, f: ArrayBuffer) => void
   deleteImage?: () => void
@@ -14,6 +16,7 @@ type ImageInputType = {
 }
 
 const ImageInput = ({
+  imageUploading,
   setHideDropzone,
   setImage,
   deleteImage,
@@ -21,9 +24,11 @@ const ImageInput = ({
   modalUpload,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
+  const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>()
   const toast = useToast()
   const { t } = useTranslation()
   const dispatch = useDispatch()
+
   const removeImage = useCallback(() => {
     setImageSrc(undefined)
     if (deleteImage && setHideDropzone) {
@@ -32,7 +37,7 @@ const ImageInput = ({
     }
   }, [deleteImage, setHideDropzone])
 
-  const linkRecogniser = (url: string) => {
+  const linkRecognizer = (url: string) => {
     const validYTLinkReg =
       /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
 
@@ -65,10 +70,15 @@ const ImageInput = ({
       return
     }
     const data = await response.arrayBuffer()
-    setImage(imageUrl, Buffer.from(data))
+
+    if (modalUpload) {
+      setImage('image', data)
+    } else setToCropImg(data)
+
     if (!showFetchedImage) {
       setImageSrc('')
     }
+
     toast({
       title: 'Image successfully Fetched',
       status: 'success',
@@ -89,9 +99,9 @@ const ImageInput = ({
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const url = event.target.value
-    const urlType = linkRecogniser(url)
+    const urlType = linkRecognizer(url)
 
-    if (!urlType) {
+    if (!urlType.type) {
       setImageSrc(undefined)
       toast({
         title: 'Paste a valid image URL',
@@ -100,6 +110,7 @@ const ImageInput = ({
       })
       return
     }
+
     if (urlType.type === 'youtube') {
       const videoID = urlType?.value
       dispatch({
@@ -114,6 +125,7 @@ const ImageInput = ({
     }
 
     setImageSrc(event.target.value)
+
     if (setHideDropzone) {
       setHideDropzone(true)
     }
@@ -128,40 +140,54 @@ const ImageInput = ({
   }
 
   return (
-    <Flex
-      mt={imgSrc && showFetchedImage ? 0 : -20}
-      mb={imgSrc && showFetchedImage ? 0 : 7}
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      {imgSrc && showFetchedImage ? (
-        <EditorMainImageWrapper removeImage={removeImage}>
-          <Image
-            objectFit="cover"
-            h="255px"
-            w="full"
-            borderRadius={4}
-            overflow="hidden"
-            bgColor="dimColor"
-            src={imgSrc}
-            alt="Input"
-          />
-        </EditorMainImageWrapper>
-      ) : (
-        <Input
-          w="90%"
-          textAlign="center"
-          value=""
-          onChange={handleOnImageInputChanges}
-          placeholder={
-            modalUpload
-              ? `${t('pasteModalMainImgLabel')}`
-              : `${t('pasteMainImgLabel')}`
-          }
+    <>
+      {toCropImg && (
+        <ImageCrop
+          imageToCrop={toCropImg}
+          setImage={setImage}
+          onClose={() => setToCropImg(null)}
+          setDisplayImage={setImageSrc}
         />
       )}
-    </Flex>
+      <Flex
+        mt={imgSrc && showFetchedImage ? 0 : -20}
+        mb={imgSrc && showFetchedImage ? 0 : 7}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {imgSrc && showFetchedImage ? (
+          <EditorMainImageWrapper
+            imageUploading={imageUploading}
+            cropImage={() => setToCropImg(imgSrc)}
+            removeImage={removeImage}
+          >
+            <Image
+              objectFit="cover"
+              h="255px"
+              w="full"
+              borderRadius={4}
+              overflow="hidden"
+              bgColor="dimColor"
+              src={imgSrc}
+              alt="Input"
+            />
+          </EditorMainImageWrapper>
+        ) : (
+          <Input
+            w="90%"
+            textAlign="center"
+            value=""
+            onChange={handleOnImageInputChanges}
+            placeholder={
+              modalUpload
+                ? `${t('pasteModalMainImgLabel')}`
+                : `${t('pasteMainImgLabel')}`
+            }
+          />
+        )}
+      </Flex>
+    </>
   )
 }
 

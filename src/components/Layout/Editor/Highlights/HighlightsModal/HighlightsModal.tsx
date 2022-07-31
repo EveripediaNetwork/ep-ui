@@ -200,6 +200,7 @@ const HighlightsModal = ({
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
+        w="min(95vw, 600px)"
         _dark={{
           bg: 'gray.800',
         }}

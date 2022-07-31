@@ -1,10 +1,11 @@
 import { useENSData } from '@/hooks/useENSData'
 import React from 'react'
-import { Flex, Text, chakra, LinkBox } from '@chakra-ui/react'
+import { Flex, Text, chakra, LinkBox, AspectRatio } from '@chakra-ui/react'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getUsername } from '@/utils/getUsername'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '../WikiImage'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { Link } from '../Elements'
@@ -29,17 +30,17 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
         maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
-        w="full"
+        w="900px"
       >
-        <WikiImage
-          cursor="pointer"
-          flexShrink={0}
-          imageURL={getWikiImageUrl(wiki)}
-          imgH="320"
-          imgW="450"
-          borderRadius="none"
-          roundedTop="lg"
-        />
+        <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
+          <WikiImage
+            cursor="pointer"
+            flexShrink={0}
+            imageURL={getWikiImageUrl(wiki)}
+            borderRadius="none"
+            roundedTop="lg"
+          />
+        </AspectRatio>
         <Flex
           direction="column"
           justify="space-between"
