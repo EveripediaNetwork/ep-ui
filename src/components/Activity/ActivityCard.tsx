@@ -1,5 +1,5 @@
 import React from 'react'
-import { HStack, Heading, Text, Box, Tag, Flex, Stack } from '@chakra-ui/react'
+import { HStack, Heading, Text, Box, Tag, Flex, Stack, AspectRatio } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { User, Wiki } from '@/types/Wiki'
@@ -61,19 +61,20 @@ const ActivityCard = ({
       px={{ base: 3, lg: 5 }}
       py={{ base: 3, lg: 3 }}
       w="full"
+      align='normal'
     >
       <Link href={activityCardLinkRoute} passHref>
-        <WikiImage
-          cursor="pointer"
-          flexShrink={0}
-          imageURL={getWikiImageUrl(wiki)}
-          h={{ base: 70, lg: 100 }}
-          w={{ base: 70, lg: 100 }}
-          borderRadius="lg"
-          overflow="hidden"
-        />
+      <AspectRatio w='156px' >
+          <WikiImage
+            cursor="pointer"
+            flexShrink={0}
+            imageURL={getWikiImageUrl(wiki)}
+            borderRadius="lg"
+            overflow="hidden"
+          />
+        </AspectRatio>
       </Link>
-      <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
+      <Flex w="90%" flexDir='column' justify='space-between' mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
@@ -159,7 +160,7 @@ const ActivityCard = ({
             {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
           </Box>
         </Stack>
-      </Box>
+      </Flex>
     </HStack>
   )
 }
