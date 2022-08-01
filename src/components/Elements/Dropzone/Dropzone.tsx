@@ -86,7 +86,6 @@ const Dropzone = ({
           } else {
             setToCropImg(binaryStr)
           }
-          setImage(f.name, binaryStr as ArrayBuffer)
         }
 
         reader.readAsArrayBuffer(f)
