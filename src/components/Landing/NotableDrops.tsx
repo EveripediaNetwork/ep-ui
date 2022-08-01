@@ -1,10 +1,18 @@
-import { Text, LinkBox, chakra, Heading, Box } from '@chakra-ui/react'
+import {
+  Text,
+  LinkBox,
+  chakra,
+  Heading,
+  Box,
+  AspectRatio,
+} from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Carousel } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
@@ -19,11 +27,17 @@ const NotableWikiCard = ({ wiki }: NotableWikiCardProps) => {
         rounded="lg"
         bg="grey"
         overflow="hidden"
-        h="520px"
+        h="410px"
         maxW="400px"
         mx="auto"
       >
-        <WikiImage imageURL={getWikiImageUrl(wiki)} objectFit="cover" h="96" />
+        <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
+          <WikiImage
+            imageURL={getWikiImageUrl(wiki)}
+            objectFit="cover"
+            h="100%"
+          />
+        </AspectRatio>
         <chakra.div color="white" pt={4} px={8} gap={4} textAlign="center">
           <Text fontSize="xl" fontWeight="bold">
             <LinkOverlay href={`/wiki/${wiki.id}`}>{wiki.title}</LinkOverlay>
