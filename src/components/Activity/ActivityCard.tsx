@@ -1,5 +1,14 @@
 import React from 'react'
-import { HStack, Heading, Text, Box, Tag, Flex, Stack, AspectRatio } from '@chakra-ui/react'
+import {
+  HStack,
+  Heading,
+  Text,
+  Box,
+  Tag,
+  Flex,
+  Stack,
+  AspectRatio,
+} from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { User, Wiki } from '@/types/Wiki'
@@ -61,10 +70,10 @@ const ActivityCard = ({
       px={{ base: 3, lg: 5 }}
       py={{ base: 3, lg: 3 }}
       w="full"
-      align='normal'
+      align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-      <AspectRatio w='156px' >
+        <AspectRatio w="156px">
           <WikiImage
             cursor="pointer"
             flexShrink={0}
@@ -74,7 +83,7 @@ const ActivityCard = ({
           />
         </AspectRatio>
       </Link>
-      <Flex w="90%" flexDir='column' justify='space-between' mx="auto">
+      <Flex w="90%" flexDir="column" justify="space-between" mx="auto">
         <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
