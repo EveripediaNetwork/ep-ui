@@ -23,7 +23,6 @@ const UserEditedWikis = () => {
   } = useInfiniteData<Activity>({
     initiator: getUserEditedWikis,
     arg: { id: address },
-    defaultLoading: true,
   })
 
   useEffect(() => {
