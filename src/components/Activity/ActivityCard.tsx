@@ -73,7 +73,7 @@ const ActivityCard = ({
       align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-        <AspectRatio w={{ base: '120px', md: '140px', lg: '156px' }}>
+        <AspectRatio w={{ base: '150px', md: '140px', lg: '156px' }}>
           <WikiImage
             cursor="pointer"
             flexShrink={0}
@@ -84,7 +84,7 @@ const ActivityCard = ({
         </AspectRatio>
       </Link>
       <Flex w="90%" flexDir="column" justify="space-between" mx="auto" px={4}>
-        <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
+        <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }} >
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
               cursor="pointer"
@@ -122,6 +122,7 @@ const ActivityCard = ({
                     color="brand.500"
                     fontWeight="bold"
                     cursor="pointer"
+                    fontSize={{base:"12px", lg: "14px"}}
                   >
                     {category.title ? category.title : category.id}
                   </Text>
@@ -130,7 +131,7 @@ const ActivityCard = ({
             </HStack>
           )}
         </Flex>
-        <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
+        <Box mb="2" mt="-5%" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
         </Box>
         <Stack
