@@ -28,7 +28,7 @@ export const NAV_ITEMS: NavItem[] = [
         id: 101,
         label: 'NFTs',
         icon: BsFillFileImageFill,
-        href: '/categories/nft',
+        href: '/categories/nfts',
         hasImage: true,
       },
       {
