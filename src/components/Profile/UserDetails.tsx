@@ -59,11 +59,11 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   return (
     <>
       <Flex
-        flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
+        flexDir={{ base: isSticky ? 'row' : 'column', sm: 'row' }}
         align="center"
         justify="space-between"
         w="full"
-        px={{ base: '0', lg: '6' }}
+        px={{ base: '0', sm: '6' }}
         gap={3}
       >
         <chakra.span flex="1" />
