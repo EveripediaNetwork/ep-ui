@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Heading,
-  Text,
-  Stack,
-  VStack,
-  Icon,
-  CircularProgress,
-  CircularProgressLabel,
-  Flex,
-} from '@chakra-ui/react'
+import { Heading, Text, Stack, Icon } from '@chakra-ui/react'
 
 import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
@@ -114,7 +104,7 @@ const Admin = () => {
       </Text>
 
       <Stack spacing={8} py={7} direction={{ base: 'column', md: 'row' }}>
-        {wikiMetaData.map((item) => {
+        {wikiMetaData.map(item => {
           const { value, detailHeader, weeklyValue, percent, color } = item
           return (
             <WikiDetailsCards
