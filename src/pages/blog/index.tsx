@@ -2,6 +2,9 @@ import { BLOG_POSTS } from '@/components/Blog/data'
 import { chakra, Heading, SimpleGrid } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
+import { store } from '@/store/store'
+import { GetServerSideProps } from 'next'
+import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
 
 export const Blog = () => {
   const [mounted, setMounted] = useState(false)
@@ -30,6 +33,22 @@ export const Blog = () => {
       </chakra.div>
     </chakra.div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const entries = await store.dispatch(
+    getBlogEntries.initiate('justincast.eth'),
+  )
+
+  await Promise.all(getRunningOperationPromises())
+
+  console.log(entries)
+
+  return {
+    props: {
+      entries,
+    },
+  }
 }
 
 export default Blog

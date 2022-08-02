@@ -14,6 +14,7 @@ import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
+import { MirrorApi } from '@/services/blog'
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     citeMarks: citeMarksReducer,
     toc: tocReducer,
     ens: ensReducer,
+    [MirrorApi.reducerPath]: MirrorApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
@@ -33,6 +35,7 @@ export const store = configureStore({
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
+      .concat(MirrorApi.middleware)
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(activitiesApi.middleware)

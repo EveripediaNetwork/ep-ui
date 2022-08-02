@@ -15,6 +15,7 @@ import {
   BsFillPeopleFill,
   BsFillPersonFill,
   BsRecycle,
+  BsNewspaper,
 } from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
@@ -64,6 +65,13 @@ export const NAV_ITEMS: NavItem[] = [
         label: 'People in crypto',
         icon: BsFillPersonFill,
         href: '/categories/people',
+        hasImage: true,
+      },
+      {
+        id: 107,
+        label: 'Blog',
+        icon: BsNewspaper,
+        href: '/blog',
         hasImage: true,
       },
     ],
