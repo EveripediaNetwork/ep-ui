@@ -164,7 +164,6 @@ const CreateWikiContent = () => {
   const getWikiSlug = () => slugifyText(String(wiki.title))
 
   const isValidWiki = () => {
-    return true
     if (!wiki.title) {
       toast({
         title: `Add a Title at the top for this Wiki to continue `,
@@ -277,8 +276,6 @@ const CreateWikiContent = () => {
           return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
         }),
       }
-
-      console.log(finalWiki)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
