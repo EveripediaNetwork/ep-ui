@@ -73,7 +73,7 @@ const ActivityCard = ({
       align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-        <AspectRatio w={{ base: '150px', md: '140px', lg: '156px' }}>
+        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }}>
           <WikiImage
             cursor="pointer"
             flexShrink={0}
@@ -133,7 +133,7 @@ const ActivityCard = ({
         </Flex>
         <Box
           mb="2"
-          mt="-5%"
+          mt="-2%"
           maxW={{ base: '70%', lg: '80%' }}
           overflow="hidden"
         >
