@@ -79,6 +79,7 @@
     "react-slick": "^0.28.1",
     "react-sticky-box": "^1.0.2",
     "react-twitter-embed": "^4.0.4",
+    "recharts": "2.1.12",
     "remark-gfm": "^3.0.1",
     "remove-markdown": "^0.5.0",
     "slick-carousel": "^1.8.1",
