@@ -110,14 +110,16 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   ensUserName ||
                   shortenAccount(address)}
               </chakra.span>
-              {profileData && !isSticky && (
+              {!isSticky && (
                 <VStack spacing={4}>
-                  <Text maxW="min(400px, 80vw)" textAlign="center">
-                    {profileData.bio}
-                  </Text>
+                  {profileData && (
+                    <Text maxW="min(400px, 80vw)" textAlign="center">
+                      {profileData.bio}
+                    </Text>
+                  )}
                   <UserSocialLinks
                     links={profileData?.links[0]}
-                    address={userAddress}
+                    address={userAddress || ''}
                   />
                 </VStack>
               )}
