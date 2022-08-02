@@ -1,5 +1,13 @@
 import React from 'react'
-import { HStack, Flex, VStack, Heading, Box, Text, Select } from '@chakra-ui/react'
+import {
+  HStack,
+  Flex,
+  VStack,
+  Heading,
+  Box,
+  Text,
+  Select,
+} from '@chakra-ui/react'
 import {
   ResponsiveContainer,
   LineChart,
@@ -9,8 +17,8 @@ import {
   Line,
   Legend,
 } from 'recharts'
-import { UserDataPie } from './UserDataPie'
 import { MdArrowDropDown } from 'react-icons/md'
+import { UserDataPie } from './UserDataPie'
 
 export const WikiDataGraph = ({
   piedata,
@@ -18,11 +26,11 @@ export const WikiDataGraph = ({
   colors,
 }: {
   piedata: Array<{ name: string; value: number }>
-  data: Array<{ name: string; "Wikis Created": number; "Wikis Edited": number }>
+  data: Array<{ name: string; 'Wikis Created': number; 'Wikis Edited': number }>
   colors: Array<string>
 }) => {
-    const currentYear = new Date().getFullYear()
-    console.log(data)
+  const currentYear = new Date().getFullYear()
+  console.log(data)
   return (
     <HStack spacing={4} py="4" w="full">
       <Box rounded="xl" borderWidth="1px" p={4} w="75%">
@@ -35,17 +43,17 @@ export const WikiDataGraph = ({
               Track wikis created and wikis edited
             </Text>
           </VStack>
-          <Select w='20%' icon={<MdArrowDropDown />}>
-            <option value='option1'>{`Weekly (${currentYear})`}</option>
-            <option value='option1'>{`Monthly (${currentYear})`}</option>
-            <option value='option1'>{`Yearly (${currentYear})`}</option>
-        </Select>
+          <Select w="20%" icon={<MdArrowDropDown />}>
+            <option value="option1">{`Weekly (${currentYear})`}</option>
+            <option value="option1">{`Monthly (${currentYear})`}</option>
+            <option value="option1">{`Yearly (${currentYear})`}</option>
+          </Select>
         </Flex>
         <Box p={5}>
-        <Legend iconType="circle" wrapperStyle={{ top: 300 }} />
+          <Legend iconType="circle" wrapperStyle={{ top: 300 }} />
           <ResponsiveContainer width="100%" height={300}>
             <LineChart width={500} height={300} data={data}>
-            <Legend iconType="circle" verticalAlign="top" align="right" />
+              <Legend iconType="circle" verticalAlign="top" align="right" />
               <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
               <YAxis />
               <Tooltip />

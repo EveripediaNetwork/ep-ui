@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text, Stack, Icon } from '@chakra-ui/react'
+import { Heading, Text, Stack } from '@chakra-ui/react'
 
 import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
@@ -9,38 +9,38 @@ const Admin = () => {
   const data = [
     {
       name: 'Mon',
-      "Wikis Created": 40,
-      "Wikis Edited": 24,
+      'Wikis Created': 40,
+      'Wikis Edited': 24,
     },
     {
       name: 'Tue',
-      "Wikis Created": 30,
-      "Wikis Edited": 13,
+      'Wikis Created': 30,
+      'Wikis Edited': 13,
     },
     {
       name: 'Wed',
-      "Wikis Created": 20,
-      "Wikis Edited": 18,
+      'Wikis Created': 20,
+      'Wikis Edited': 18,
     },
     {
       name: 'Thur',
-      "Wikis Created": 27,
-      "Wikis Edited": 14,
+      'Wikis Created': 27,
+      'Wikis Edited': 14,
     },
     {
       name: 'Fri',
-      "Wikis Created": 18,
-      "Wikis Edited": 48,
+      'Wikis Created': 18,
+      'Wikis Edited': 48,
     },
     {
       name: 'Sat',
-      "Wikis Created": 23,
-      "Wikis Edited": 38,
+      'Wikis Created': 23,
+      'Wikis Edited': 38,
     },
     {
       name: 'Sun',
-      "Wikis Created": 34,
-      "Wikis Edited": 43,
+      'Wikis Created': 34,
+      'Wikis Edited': 43,
     },
   ]
 
@@ -105,7 +105,8 @@ const Admin = () => {
 
       <Stack spacing={8} py={7} direction={{ base: 'column', md: 'row' }}>
         {wikiMetaData.map(item => {
-          const { value, detailHeader, weeklyValue, percent, color, icon } = item
+          const { value, detailHeader, weeklyValue, percent, color, icon } =
+            item
           return (
             <WikiDetailsCards
               detailHeader={detailHeader}
