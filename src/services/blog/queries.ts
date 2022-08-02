@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-export const FETCH_PUBLICATIONS = gql`
+export const FETCH_PUBLICATION_INFO = gql`
   query PublicationInfo($publicationAddress: String!) {
     projectFeed(projectAddress: $publicationAddress) {
       displayName
@@ -19,6 +19,31 @@ export const FETCH_PUBLICATIONS = gql`
         address
         displayName
         avatarURL
+      }
+    }
+  }
+`
+
+export const FETCH_TRANSACTIONS = gql`
+  query FetchTransactions($addresses: [String!]!) {
+    transactions(
+      first: 100
+      tags: [
+        { name: "App-Name", values: ["MirrorXYZ"] }
+        { name: "Contributor", values: $addresses }
+      ]
+    ) {
+      edges {
+        node {
+          id
+          block {
+            timestamp
+          }
+          tags {
+            name
+            value
+          }
+        }
       }
     }
   }

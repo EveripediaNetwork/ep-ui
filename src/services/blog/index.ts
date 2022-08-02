@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { FETCH_PUBLICATIONS } from './queries'
+import { FETCH_PUBLICATION_INFO, FETCH_TRANSACTIONS } from './queries'
 
 export const MirrorApi = createApi({
   reducerPath: 'mirror',
@@ -18,9 +18,9 @@ export const MirrorApi = createApi({
     requestHeaders: { origin: 'https://mirror.xyz' },
   }),
   endpoints: builder => ({
-    getBlogEntries: builder.query<any, string>({
+    getPublicationInfo: builder.query<any, string>({
       query: (publicationAddress: string) => ({
-        document: FETCH_PUBLICATIONS,
+        document: FETCH_PUBLICATION_INFO,
         variables: { publicationAddress },
       }),
       transformResponse: (response: any) => response,
@@ -28,9 +28,40 @@ export const MirrorApi = createApi({
   }),
 })
 
+export const ArweaveApi = createApi({
+  reducerPath: 'arweave',
+  refetchOnMountOrArgChange: 30,
+  refetchOnFocus: true,
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+    return null
+  },
+  baseQuery: graphqlRequestBaseQuery({
+    url: 'https://arweave.net/graphql',
+  }),
+  endpoints: builder => ({
+    getBlogEntries: builder.query<any, any>({
+      query: (addresses: Array<string>) => ({
+        document: FETCH_TRANSACTIONS,
+        variables: { addresses },
+      }),
+      transformResponse: (response: any) => response,
+    }),
+  }),
+})
+
+export const {
+  useGetPublicationInfoQuery,
+  // util: { getRunningOperationPromises },
+} = MirrorApi
+
+export const { getPublicationInfo } = MirrorApi.endpoints
+
 export const {
   useGetBlogEntriesQuery,
   util: { getRunningOperationPromises },
-} = MirrorApi
+} = ArweaveApi
 
-export const { getBlogEntries } = MirrorApi.endpoints
+export const { getBlogEntries } = ArweaveApi.endpoints
