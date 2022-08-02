@@ -26,6 +26,7 @@ const moduleExports = {
       'i3.ytimg.com',
       'alpha.everipedia.org',
       'beta.everipedia.org',
+      'images.mirror-media.xyz',
     ],
   },
 }

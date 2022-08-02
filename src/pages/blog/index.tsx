@@ -27,7 +27,7 @@ const formatEntry = async (entry: any, transactionId: any, timestamp: any) => ({
   image_sizes: 50,
 })
 
-export const Blog = () => {
+export const Blog = ({ blogEntries }: any) => {
   const [mounted, setMounted] = useState(false)
   React.useEffect(() => {
     setMounted(true)
@@ -47,9 +47,10 @@ export const Blog = () => {
           spacingX="5"
           spacingY="14"
         >
-          {BLOG_POSTS.map((post, i) => (
-            <BlogPost post={post} key={i} />
-          ))}
+
+          {blogEntries ? blogEntries.map((b: any, i: number) => (
+            <BlogPost post={b} key={i} />
+          )) : null}
         </SimpleGrid>
       </chakra.div>
     </chakra.div>
@@ -89,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       return acc
     }, [])
 
-  const result = (
+  const blogEntries = (
     await Promise.all(
       entryPaths.map(async (entry: any) =>
         formatEntry(
@@ -114,13 +115,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
       return acc
     }, [])
 
-  console.log(result)
+  // console.log(blogEntries)
   console.log(publicationInfo)
   // console.log(entries.data.transactions.edges)
 
   return {
     props: {
-      entries,
+      blogEntries,
     },
   }
 }
