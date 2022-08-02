@@ -1,4 +1,3 @@
-import { BLOG_POSTS } from '@/components/Blog/data'
 import { chakra, Heading, SimpleGrid } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
@@ -47,10 +46,11 @@ export const Blog = ({ blogEntries }: any) => {
           spacingX="5"
           spacingY="14"
         >
-
-          {blogEntries ? blogEntries.map((b: any, i: number) => (
-            <BlogPost post={b} key={i} />
-          )) : null}
+          {blogEntries
+            ? blogEntries.map((b: any, i: number) => (
+                <BlogPost post={b} key={i} />
+              ))
+            : null}
         </SimpleGrid>
       </chakra.div>
     </chakra.div>
