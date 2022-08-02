@@ -19,7 +19,6 @@ export const WikiDataGraph = ({
   data: Array<{ name: string; pv: number; uv: number }>
   colors: Array<string>
 }) => {
-  console.log(data)
   return (
     <HStack spacing={4} py="4" w="full">
       <Box rounded="xl" borderWidth="1px" p={4} w="75%">
