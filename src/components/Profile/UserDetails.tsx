@@ -59,11 +59,11 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   return (
     <>
       <Flex
-        flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
+        flexDir={{ base: isSticky ? 'row' : 'column', sm: 'row' }}
         align="center"
         justify="space-between"
         w="full"
-        px={{ base: '0', lg: '6' }}
+        px={{ base: '0', sm: '6' }}
         gap={3}
       >
         <chakra.span flex="1" />
@@ -110,12 +110,17 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   ensUserName ||
                   shortenAccount(address)}
               </chakra.span>
-              {profileData && !isSticky && (
+              {!isSticky && (
                 <VStack spacing={4}>
-                  <Text maxW="min(400px, 80vw)" textAlign="center">
-                    {profileData.bio}
-                  </Text>
-                  <UserSocialLinks links={profileData?.links[0]} />
+                  {profileData && (
+                    <Text maxW="min(400px, 80vw)" textAlign="center">
+                      {profileData.bio}
+                    </Text>
+                  )}
+                  <UserSocialLinks
+                    links={profileData?.links[0]}
+                    address={userAddress || ''}
+                  />
                 </VStack>
               )}
             </VStack>
