@@ -115,7 +115,10 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   <Text maxW="min(400px, 80vw)" textAlign="center">
                     {profileData.bio}
                   </Text>
-                  <UserSocialLinks links={profileData?.links[0]} />
+                  <UserSocialLinks
+                    links={profileData?.links[0]}
+                    address={userAddress}
+                  />
                 </VStack>
               )}
             </VStack>
