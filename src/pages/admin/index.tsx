@@ -9,38 +9,38 @@ const Admin = () => {
   const data = [
     {
       name: 'Mon',
-      uv: 40,
-      pv: 24,
+      "Wikis Created": 40,
+      "Wikis Edited": 24,
     },
     {
       name: 'Tue',
-      uv: 30,
-      pv: 13,
+      "Wikis Created": 30,
+      "Wikis Edited": 13,
     },
     {
       name: 'Wed',
-      uv: 20,
-      pv: 18,
+      "Wikis Created": 20,
+      "Wikis Edited": 18,
     },
     {
       name: 'Thur',
-      uv: 27,
-      pv: 14,
+      "Wikis Created": 27,
+      "Wikis Edited": 14,
     },
     {
       name: 'Fri',
-      uv: 18,
-      pv: 48,
+      "Wikis Created": 18,
+      "Wikis Edited": 48,
     },
     {
       name: 'Sat',
-      uv: 23,
-      pv: 38,
+      "Wikis Created": 23,
+      "Wikis Edited": 38,
     },
     {
       name: 'Sun',
-      uv: 34,
-      pv: 43,
+      "Wikis Created": 34,
+      "Wikis Edited": 43,
     },
   ]
 
@@ -105,11 +105,11 @@ const Admin = () => {
 
       <Stack spacing={8} py={7} direction={{ base: 'column', md: 'row' }}>
         {wikiMetaData.map(item => {
-          const { value, detailHeader, weeklyValue, percent, color } = item
+          const { value, detailHeader, weeklyValue, percent, color, icon } = item
           return (
             <WikiDetailsCards
               detailHeader={detailHeader}
-              icon={Icon}
+              icon={icon}
               currentValue={value.toString()}
               weeklyValue={weeklyValue}
               percent={percent}

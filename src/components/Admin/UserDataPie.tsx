@@ -8,7 +8,7 @@ export const UserDataPie = ({
   colors,
 }: {
   piedata: Array<{ name: string; value: number }>
-  data: Array<{ name: string; pv: number; uv: number }>
+  data: Array<{ name: string; "Wikis Created": number; "Wikis Edited": number }>
   colors: Array<string>
 }) => {
   return (
@@ -30,7 +30,19 @@ export const UserDataPie = ({
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
-        <Legend layout="horizontal" verticalAlign="bottom" align="center" />
+        <Legend 
+        payload={
+          piedata.map(
+            (item, index) => ({
+              id: item.name,
+              type: "circle",
+              value: item.name,
+              color: colors[index % colors.length]
+            })
+          )
+        }
+         layout="horizontal" verticalAlign="bottom" align="center" 
+        />
       </PieChart>
     </Box>
   )
