@@ -16,9 +16,12 @@ import {
   Tooltip,
   Line,
   Legend,
+  Label,
+  CartesianGrid,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 import { UserDataPie } from './UserDataPie'
+import { offset } from '@chakra-ui/utils'
 
 export const WikiDataGraph = ({
   piedata,
@@ -50,20 +53,45 @@ export const WikiDataGraph = ({
           </Select>
         </Flex>
         <Box p={5}>
-          <Legend iconType="circle" wrapperStyle={{ top: 300 }} />
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart width={500} height={300} data={data}>
+          <ResponsiveContainer width="100%">
+            <LineChart width={500} data={data}>
               <Legend iconType="circle" verticalAlign="top" align="right" />
-              <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-              <YAxis />
+              <XAxis
+                padding={{ left: 30 }}
+                axisLine={false}
+                tickLine={false}
+                minTickGap={20}
+                tickMargin={50}
+                dataKey="name"
+                label={{ position: 'insideBottom', value: 'week', height: 100 }}
+                dy={-65}
+              />
+              <YAxis
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                dx={40}
+                dy={-20}
+                label={{
+                  position: 'center',
+                  value: 'no of wikis',
+                  angle: '270',
+                }}
+              />
               <Tooltip />
               <Line
                 type="monotone"
                 dataKey="Wikis Created"
                 stroke="#FF69B4"
                 activeDot={{ r: 8 }}
+                strokeWidth={2.1}
               />
-              <Line type="monotone" dataKey="Wikis Edited" stroke="#FFC0CB" />
+              <Line
+                type="monotone"
+                dataKey="Wikis Edited"
+                stroke="#FFC0CB"
+                strokeWidth={2.1}
+              />
             </LineChart>
           </ResponsiveContainer>
         </Box>
