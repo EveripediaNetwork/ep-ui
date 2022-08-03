@@ -16,12 +16,9 @@ import {
   Tooltip,
   Line,
   Legend,
-  Label,
-  CartesianGrid,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 import { UserDataPie } from './UserDataPie'
-import { offset } from '@chakra-ui/utils'
 
 export const WikiDataGraph = ({
   piedata,
