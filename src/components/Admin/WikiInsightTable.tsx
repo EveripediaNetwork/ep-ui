@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-import { InsightTableWikiCreated } from './InsightTableWikiCreated'
+import { InsightTableWikiCreated } from './InsightTableWikiCreatedWiki'
 
 export const WikiInsightTable = () => {
   const wikiData = [
