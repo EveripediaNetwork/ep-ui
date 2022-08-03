@@ -81,11 +81,7 @@ export const WikiDataGraph = ({
                 stroke="#FF69B4"
                 activeDot={{ r: 8 }}
               />
-              <Line
-                type="monotone"
-                dataKey="Wikis Edited"
-                stroke="#FFC0CB"
-              />
+              <Line type="monotone" dataKey="Wikis Edited" stroke="#FFC0CB" />
             </LineChart>
           </ResponsiveContainer>
         </Box>
