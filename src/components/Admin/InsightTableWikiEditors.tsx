@@ -40,15 +40,29 @@ export const InsightTableWikiEditors = (
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="#F7FAFC">
+        <Thead bg="#2d3748" color="">
           <Tr>
-            <Th>Names</Th>
-            <Th>No. of created wikis</Th>
-            <Th>No. of edited wikis</Th>
-            <Th>Total No. of wikis</Th>
-            <Th>Last created wiki</Th>
-            <Th>Lastest activity</Th>
-            <Th>Action</Th>
+            <Th textTransform="none" fontWeight="semibold">
+              Names
+            </Th>
+            <Th textTransform="none" fontWeight="normal">
+              No. of created wikis
+            </Th>
+            <Th textTransform="none" fontWeight="medium">
+              No. of edited wikis
+            </Th>
+            <Th textTransform="none" fontWeight="medium">
+              Total No. of wikis
+            </Th>
+            <Th textTransform="none" fontWeight="medium">
+              Last created wiki
+            </Th>
+            <Th textTransform="none" fontWeight="medium">
+              Lastest activity
+            </Th>
+            <Th textTransform="none" fontWeight="medium">
+              Action
+            </Th>
           </Tr>
         </Thead>
         <Tbody>

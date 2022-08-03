@@ -129,9 +129,10 @@ const Admin = () => {
         })}
       </Stack>
       <WikiDataGraph piedata={piedata} colors={COLORS} data={data} />
-
-      <WikiInsightTable />
-      <WikiEditorsInsightTable />
+      <Stack spacing={15} direction="column">
+        <WikiInsightTable />
+        <WikiEditorsInsightTable />
+      </Stack>
     </Stack>
   )
 }
