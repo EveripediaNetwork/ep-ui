@@ -7,6 +7,7 @@ import {
   Box,
   Text,
   Select,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
@@ -16,6 +17,7 @@ import {
   Tooltip,
   Line,
   Legend,
+  Label,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 import { UserDataPie } from './UserDataPie'
@@ -30,6 +32,7 @@ export const WikiDataGraph = ({
   colors: Array<string>
 }) => {
   const currentYear = new Date().getFullYear()
+  const labelColor = useColorModeValue('#718096', '#6c7079')
   return (
     <HStack spacing={4} py="4" w="full">
       <Box rounded="xl" borderWidth="1px" p={4} w="75%">
@@ -59,29 +62,42 @@ export const WikiDataGraph = ({
                 minTickGap={20}
                 tickMargin={50}
                 dataKey="name"
-                label={{ position: 'insideBottom', value: 'week', height: 100 }}
                 dy={-65}
-              />
+              >
+                <Label
+                  position="insideBottom"
+                  style={{ fill: labelColor }}
+                  value="Week"
+                />
+              </XAxis>
               <YAxis
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
                 dx={40}
                 dy={-20}
-                label={{
-                  position: 'center',
-                  value: 'no of wikis',
-                  angle: '270',
-                }}
-              />
+              >
+                <Label
+                  angle={270}
+                  position="center"
+                  style={{ fill: labelColor }}
+                  value="No. of wikis"
+                />
+              </YAxis>
               <Tooltip />
               <Line
                 type="monotone"
                 dataKey="Wikis Created"
                 stroke="#FF69B4"
                 activeDot={{ r: 8 }}
+                strokeWidth={2.2}
               />
-              <Line type="monotone" dataKey="Wikis Edited" stroke="#FFC0CB" />
+              <Line
+                type="monotone"
+                dataKey="Wikis Edited"
+                stroke="#FFC0CB"
+                strokeWidth={2.2}
+              />
             </LineChart>
           </ResponsiveContainer>
         </Box>
