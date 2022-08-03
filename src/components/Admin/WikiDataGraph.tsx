@@ -30,7 +30,6 @@ export const WikiDataGraph = ({
   colors: Array<string>
 }) => {
   const currentYear = new Date().getFullYear()
-  console.log(data)
   return (
     <HStack spacing={4} py="4" w="full">
       <Box rounded="xl" borderWidth="1px" p={4} w="75%">
@@ -50,7 +49,7 @@ export const WikiDataGraph = ({
           </Select>
         </Flex>
         <Box p={5}>
-          <ResponsiveContainer width="100%">
+          <ResponsiveContainer width="100%" height={300}>
             <LineChart width={500} data={data}>
               <Legend iconType="circle" verticalAlign="top" align="right" />
               <XAxis
@@ -81,13 +80,11 @@ export const WikiDataGraph = ({
                 dataKey="Wikis Created"
                 stroke="#FF69B4"
                 activeDot={{ r: 8 }}
-                strokeWidth={2.1}
               />
               <Line
                 type="monotone"
                 dataKey="Wikis Edited"
                 stroke="#FFC0CB"
-                strokeWidth={2.1}
               />
             </LineChart>
           </ResponsiveContainer>
