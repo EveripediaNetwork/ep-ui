@@ -110,10 +110,8 @@ export const WikiEditorsInsightTable = () => {
       <Flex justifyContent="flex-end" p={5}>
         <Flex gap={5}>
           <InputGroup w="100%">
-            <InputLeftElement
-              pointerEvents="none"
-            >
-                <FiSearch color="#667085" />
+            <InputLeftElement pointerEvents="none">
+              <FiSearch color="#667085" />
             </InputLeftElement>
             <Input type="tel" placeholder="Search" />
           </InputGroup>
