@@ -87,7 +87,14 @@ const Admin = () => {
   const COLORS = ['#FF69B4', '#FFC0CB']
 
   return (
-    <Stack direction="column" justify="center" mx="auto" w="full" px="20">
+    <Stack
+      direction="column"
+      justify="center"
+      mx="auto"
+      pb={5}
+      w="full"
+      px="20"
+    >
       <Heading
         as="h4"
         mt="4"
