@@ -119,7 +119,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   )}
                   <UserSocialLinks
                     links={profileData?.links[0]}
-                    address={userAddress || ''}
+                    address={address || ''}
                   />
                 </VStack>
               )}
