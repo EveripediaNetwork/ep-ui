@@ -47,7 +47,11 @@ const Navbar = () => {
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const {
+    address: userAddress,
+    isConnected: isUserConnected,
+    connector,
+  } = useAccount()
   const dispatch = useDispatch()
 
   const { chainId, chainName, rpcUrls } =
@@ -68,11 +72,11 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      if (chainDetails !== chainId && isUserConnected) {
-        setOpenSwitch(true)
+      if (chainDetails !== chainId && isUserConnected && connector) {
+        if (connector.id !== 'magic') setOpenSwitch(true)
       }
     },
-    [chainId, isUserConnected],
+    [chainId, connector, isUserConnected],
   )
 
   useEffect(() => {
