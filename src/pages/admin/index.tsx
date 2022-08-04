@@ -1,10 +1,10 @@
 import React from 'react'
-import { Heading, Text, Stack } from '@chakra-ui/react'
+import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
 import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
-import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorsInsightTable'
+import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiInsightTable'
 
 const Admin = () => {
@@ -87,14 +87,7 @@ const Admin = () => {
   const COLORS = ['#FF69B4', '#FFC0CB']
 
   return (
-    <Stack
-      direction="column"
-      justify="center"
-      mx="auto"
-      pb={5}
-      w="full"
-      px="20"
-    >
+    <Box py={4} w={{ base: '90%', lg: '90%' }} mx="auto">
       <Heading
         as="h4"
         mt="4"
@@ -133,7 +126,7 @@ const Admin = () => {
         <WikiInsightTable />
         <WikiEditorsInsightTable />
       </Stack>
-    </Stack>
+    </Box>
   )
 }
 export default Admin

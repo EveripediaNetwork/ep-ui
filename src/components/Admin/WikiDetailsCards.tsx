@@ -29,7 +29,7 @@ export const WikiDetailsCards = ({
 }: WikidetailsProps) => {
   return (
     <Box
-      w="90%"
+      w={{ lg: '90%', base: '100%' }}
       px="5"
       py="4"
       cursor="pointer"

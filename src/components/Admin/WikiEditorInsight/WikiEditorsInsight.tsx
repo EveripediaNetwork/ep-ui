@@ -429,6 +429,9 @@ export const WikiEditorsInsightTable = () => {
           justify="space-between"
           p={4}
           w="full"
+          display="flex"
+          flexDirection={{ lg: 'row', base: 'column' }}
+          gap={5}
         >
           <PaginationPrevious
             bg="white"

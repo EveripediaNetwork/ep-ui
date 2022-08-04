@@ -41,7 +41,6 @@ export const InsightTableWikiCreated = (
 ) => {
   const { wikiCreatedInsightData } = props
 
-  console.log(wikiCreatedInsightData)
   return (
     <TableContainer w="100%">
       <Table>

@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  HStack,
   Flex,
   VStack,
   Heading,
@@ -34,8 +33,8 @@ export const WikiDataGraph = ({
   const currentYear = new Date().getFullYear()
   const labelColor = useColorModeValue('#718096', '#6c7079')
   return (
-    <HStack spacing={4} py="4" w="full">
-      <Box rounded="xl" borderWidth="1px" p={4} w="75%">
+    <Flex gap={4} py="4" w="full" flexDir={{ base: 'column', lg: 'row' }}>
+      <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '75%', base: '100%' }}>
         <Flex justifyContent="space-between" pt="2" pb="10">
           <VStack spacing={2} w="full">
             <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
@@ -103,6 +102,6 @@ export const WikiDataGraph = ({
         </Box>
       </Box>
       <UserDataPie piedata={piedata} colors={colors} data={data} />
-    </HStack>
+    </Flex>
   )
 }

@@ -12,10 +12,13 @@ import {
   Tr,
   AspectRatio,
   Icon,
+  Button,
+  useDisclosure,
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { WikiImage } from '../WikiImage'
+import { WikiImage } from '../../WikiImage'
+import { DeleteEditorModal } from './DeleteEditorModal'
 
 interface WikiInsightDataInterface {
   editorName: string
@@ -35,32 +38,35 @@ export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
   const { wikiInsightData } = props
-
-  console.log(wikiInsightData)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="#2d3748" color="">
+        <Thead bg="#F7FAFC">
           <Tr>
-            <Th textTransform="none" fontWeight="semibold">
+            <Th
+              color="#718096"
+              textTransform="capitalize"
+              fontWeight="semibold"
+            >
               Names
             </Th>
-            <Th textTransform="none" fontWeight="normal">
+            <Th color="#718096" textTransform="capitalize" fontWeight="normal">
               No. of created wikis
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               No. of edited wikis
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               Total No. of wikis
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               Last created wiki
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               Lastest activity
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               Action
             </Th>
           </Tr>
@@ -110,17 +116,31 @@ export const InsightTableWikiEditors = (
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>
                   <Td>
-                    <Icon
-                      fontSize="20px"
-                      cursor="pointer"
-                      color="#718096"
-                      as={RiDeleteBin6Line}
-                    />
+                    <Button
+                      w="fit-content"
+                      bg="none"
+                      _hover={{ bg: 'none' }}
+                      _active={{ bg: 'none', outline: 'none' }}
+                      _focus={{ bg: 'none', outline: 'none' }}
+                      p="0"
+                      m="0"
+                    >
+                      <Icon
+                        fontSize="20px"
+                        cursor="pointer"
+                        color="#718096"
+                        as={RiDeleteBin6Line}
+                        onClick={() => {
+                          onOpen()
+                        }}
+                      />
+                    </Button>
                   </Td>
                 </Tr>
               </>
             )
           })}
+          <DeleteEditorModal isOpen={isOpen} onClose={onClose} />
         </Tbody>
       </Table>
     </TableContainer>
