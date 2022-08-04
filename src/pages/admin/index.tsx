@@ -9,7 +9,6 @@ import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsi
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { profileApiClient } from '@/services/profile'
 import { useUserProfileData } from '@/services/profile/utils'
-import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
 import SignTokenMessage from '../account/SignTokenMessage'
 
