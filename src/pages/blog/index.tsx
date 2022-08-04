@@ -5,11 +5,7 @@ import { store } from '@/store/store'
 import { useAppDispatch } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
-import {
-  getBlogEntries,
-  getPublicationInfo,
-  getRunningOperationPromises,
-} from '@/services/blog'
+import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
 import arweave from '@/config/arweave'
 import { formatEntry } from '@/utils/formatEntry'
 
@@ -41,8 +37,8 @@ export const Blog = ({ blogEntries }: any) => {
         >
           {blogEntries
             ? blogEntries.map((b: any, i: number) => (
-              <BlogPost post={b} key={i} />
-            ))
+                <BlogPost post={b} key={i} />
+              ))
             : null}
         </SimpleGrid>
       </chakra.div>
