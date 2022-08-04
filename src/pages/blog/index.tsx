@@ -1,36 +1,29 @@
 import { chakra, Heading, SimpleGrid } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { store } from '@/store/store'
+import { useAppDispatch } from '@/store/hook'
+import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
-import slugify from 'slugify'
 import {
   getBlogEntries,
   getPublicationInfo,
   getRunningOperationPromises,
 } from '@/services/blog'
 import arweave from '@/config/arweave'
-
-const formatEntry = async (entry: any, transactionId: any, timestamp: any) => ({
-  title: entry.content.title,
-  slug: slugify(entry.content.title),
-  body: entry.content.body,
-  timestamp,
-  digest: entry.originalDigest ?? entry.digest,
-  contributor: entry.authorship.contributor,
-  transaction: transactionId,
-  cover_image:
-    (entry.content.body
-      .split('\n\n')[0]
-      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1] || null,
-  image_sizes: 50,
-})
+import { formatEntry } from '@/utils/formatEntry'
 
 export const Blog = ({ blogEntries }: any) => {
   const [mounted, setMounted] = useState(false)
-  React.useEffect(() => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (blogEntries) dispatch(setBlogs(blogEntries))
+  }, [blogEntries])
 
   if (!mounted) return null
 
@@ -48,8 +41,8 @@ export const Blog = ({ blogEntries }: any) => {
         >
           {blogEntries
             ? blogEntries.map((b: any, i: number) => (
-                <BlogPost post={b} key={i} />
-              ))
+              <BlogPost post={b} key={i} />
+            ))
             : null}
         </SimpleGrid>
       </chakra.div>
@@ -58,9 +51,9 @@ export const Blog = ({ blogEntries }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const publicationInfo = await store.dispatch(
-    getPublicationInfo.initiate('m1guelpf.eth'),
-  )
+  // const publicationInfo = await store.dispatch(
+  //   getPublicationInfo.initiate('m1guelpf.eth'),
+  // )
 
   const entries = await store.dispatch(
     getBlogEntries.initiate(['0xE340b00B6B622C136fFA5CFf130eC8edCdDCb39D']),
@@ -116,7 +109,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }, [])
 
   // console.log(blogEntries)
-  console.log(publicationInfo)
+  console.log(blogEntries)
   // console.log(entries.data.transactions.edges)
 
   return {

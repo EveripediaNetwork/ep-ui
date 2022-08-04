@@ -1,9 +1,9 @@
-import {
-  BlogPost as BlogPostType,
-  SAMPLE_BLOG_POSTS,
-} from '@/components/Blog/data'
-import { GetServerSideProps, NextPage } from 'next'
-import React from 'react'
+// import {
+//   BlogPost as BlogPostType,
+// } from '@/components/Blog/data'
+import { GetServerSideProps } from 'next'
+import React, { useEffect, useState } from 'react'
+import arweave from '@/config/arweave'
 import {
   Button,
   chakra,
@@ -12,16 +12,68 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { BlogPost } from '@/components/Blog/BlogPost'
+// import { BlogPost } from '@/components/Blog/BlogPost'
 import { Image } from '@/components/Elements/Image/Image'
+import { useAppSelector } from '@/store/hook'
+import { Blog } from '@/store/slices/blog-slice'
+import { store } from '@/store/store'
+import { getSingleBlogEntry } from '@/services/blog'
+import { formatEntry } from '@/utils/formatEntry'
 
-type BlogPostProps = NextPage & {
-  post: BlogPostType
-  postSuggestions: BlogPostType[]
-}
+// type BlogPostProps = NextPage & {
+//   post: BlogPostType
+//   postSuggestions: BlogPostType[]
+// }
 
-export const BlogPostPage = (props: BlogPostProps) => {
-  const { post, postSuggestions } = props
+export const BlogPostPage = ({ slug }: any) => {
+  // const { post, postSuggestions } = props
+
+  const blogResult = useAppSelector(state =>
+    state.blog && slug
+      ? Object.values(state.blog).find(b => b.slug === slug)
+      : null,
+  )
+  const [blog, setBlog] = useState<Blog | undefined | null>(blogResult)
+
+  useEffect(() => {
+    if (!blog && slug) {
+      const getBlogEntry = async () => {
+        const {
+          data: {
+            transactions: {
+              edges: {
+                0: {
+                  node: {
+                    id: transactionId,
+                    block: { timestamp },
+                  },
+                },
+              },
+            },
+          },
+        } = await store.dispatch(getSingleBlogEntry.initiate(slug))
+
+        const formatted = await formatEntry(
+          JSON.parse(
+            String(
+              await arweave.transactions.getData(transactionId, {
+                decode: true,
+                string: true,
+              }),
+            ),
+          ),
+          transactionId,
+          timestamp,
+        )
+
+        console.log(formatted)
+
+        setBlog(formatted)
+      }
+
+      getBlogEntry()
+    }
+  }, [blog, slug])
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
@@ -31,25 +83,28 @@ export const BlogPostPage = (props: BlogPostProps) => {
         mx="auto"
         my={{ base: '10', lg: '16' }}
       >
-        <Heading
-          mt={8}
-          mb={4}
-          as="h1"
-          fontSize={{ base: '3xl', lg: '5xl' }}
-          letterSpacing="wide"
-        >
-          {post.title}
-        </Heading>
-        <Text color="gray.600" _dark={{ color: 'gray.400' }}>
-          {post.date}
-        </Text>
+        {blog ? (
+          <>
+            <Heading
+              mt={8}
+              mb={4}
+              as="h1"
+              fontSize={{ base: '3xl', lg: '5xl' }}
+              letterSpacing="wide"
+            >
+              {blog.title}
+            </Heading>
+            <Text color="gray.600" _dark={{ color: 'gray.400' }}>
+              {blog.timestamp.toString()}
+            </Text>
 
-        <Image
-          h={{ base: '300px', md: '393px' }}
-          src={`/images${post.image_url}`}
-          mt="14"
-        />
-
+            <Image
+              h={{ base: '300px', md: '393px' }}
+              src={blog.cover_image}
+              mt="14"
+            />
+          </>
+        ) : null}
         <Stack
           spacing="15"
           mt="12"
@@ -171,9 +226,9 @@ export const BlogPostPage = (props: BlogPostProps) => {
               spacingX="5"
               spacingY="14"
             >
-              {postSuggestions.slice(-2).map((blogPost, i) => (
+              {/* {postSuggestions.slice(-2).map((blogPost, i) => (
                 <BlogPost maxW="420px" post={blogPost} key={i} />
-              ))}
+              ))} */}
             </SimpleGrid>
           </Stack>
         </Stack>
@@ -183,11 +238,10 @@ export const BlogPostPage = (props: BlogPostProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const postSlug: string = context.params?.slug as string
+  const slug: string = context.params?.digest as string
   return {
     props: {
-      post: SAMPLE_BLOG_POSTS.find(po => po.slug === postSlug),
-      postSuggestions: SAMPLE_BLOG_POSTS,
+      slug,
     },
   }
 }

@@ -1,7 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { FETCH_PUBLICATION_INFO, FETCH_TRANSACTIONS } from './queries'
+import {
+  FETCH_PUBLICATION_INFO,
+  FETCH_SINGLE_TRANSACTION,
+  FETCH_TRANSACTIONS,
+} from './queries'
 
 export const MirrorApi = createApi({
   reducerPath: 'mirror',
@@ -49,6 +53,13 @@ export const ArweaveApi = createApi({
       }),
       transformResponse: (response: any) => response,
     }),
+    getSingleBlogEntry: builder.query<any, any>({
+      query: (digest: string) => ({
+        document: FETCH_SINGLE_TRANSACTION,
+        variables: { digest },
+      }),
+      transformResponse: (response: any) => response,
+    }),
   }),
 })
 
@@ -61,7 +72,8 @@ export const { getPublicationInfo } = MirrorApi.endpoints
 
 export const {
   useGetBlogEntriesQuery,
+  useGetSingleBlogEntryQuery,
   util: { getRunningOperationPromises },
 } = ArweaveApi
 
-export const { getBlogEntries } = ArweaveApi.endpoints
+export const { getBlogEntries, getSingleBlogEntry } = ArweaveApi.endpoints

@@ -25,7 +25,7 @@ export const BlogPost = (props: any) => {
       {/* <img height={50} src={post.cover_image} alt="" /> */}
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
         <Flex flex="auto" align="center">
-          <LinkOverlay href={`/blog/${post.slug}`}>
+          <LinkOverlay href={`/blog/${post.digest}`}>
             <Text fontSize="2xl" fontWeight="bold" noOfLines={3}>
               {post.title}
             </Text>

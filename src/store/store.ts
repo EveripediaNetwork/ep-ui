@@ -7,6 +7,7 @@ import {
   ensReducer,
   citeMarksReducer,
   tocReducer,
+  blogReducer,
 } from '@/store/slices'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
@@ -25,6 +26,7 @@ export const store = configureStore({
     citeMarks: citeMarksReducer,
     toc: tocReducer,
     ens: ensReducer,
+    blog: blogReducer,
     [MirrorApi.reducerPath]: MirrorApi.reducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
