@@ -72,6 +72,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                   <LinkOverlay
                     fontWeight="500"
                     rel="nofollow"
+                    target="_blank"
                     p="0 !important"
                     href={ref.url}
                   >
