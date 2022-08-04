@@ -2,6 +2,7 @@ import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { Box, Flex, Heading, HStack, chakra } from '@chakra-ui/react'
 import React from 'react'
+import dynamic from 'next/dynamic'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
@@ -10,11 +11,15 @@ import WikiActionBar from './WikiActionBar'
 import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
 import WikiReferences from './WikiReferences'
-import WikiTableOfContents from './WikiTableOfContents'
+import WikiTableOfContentsSkeleton from './WikiTableOfContentsSkeleton'
+
+const WikiTableOfContents = dynamic(() => import('./WikiTableOfContents'), {
+  ssr: false,
+  loading: () => <WikiTableOfContentsSkeleton />,
+})
 
 interface WikiLayoutProps {
   wiki?: Wiki
-  isTocEmpty: boolean
   ipfs?: string
 }
 
@@ -42,7 +47,7 @@ const MobileMeta = (wiki: {
   )
 }
 
-export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -101,7 +106,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
           <WikiNotFound />
         )}
       </Flex>
-      {!isTocEmpty && <WikiTableOfContents />}
+      <WikiTableOfContents />
     </HStack>
   )
 }
