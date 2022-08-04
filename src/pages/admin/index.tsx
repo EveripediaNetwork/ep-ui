@@ -5,7 +5,7 @@ import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
-import { WikiInsightTable } from '@/components/Admin/WikiInsightTable'
+import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 
 const Admin = () => {
   const data = [

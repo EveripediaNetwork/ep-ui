@@ -13,6 +13,7 @@ import {
   Icon,
   Tag,
   TagLabel,
+  HStack,
 } from '@chakra-ui/react'
 import React from 'react'
 import {
@@ -20,7 +21,8 @@ import {
   RiArrowDownLine,
   RiQuestionLine,
 } from 'react-icons/ri'
-import { WikiImage } from '../WikiImage'
+import { BsDot } from 'react-icons/bs'
+import { WikiImage } from '../../WikiImage'
 
 interface WikiCreatedInsightDataInterface {
   Wiki: { title: string; img: string }
@@ -41,28 +43,40 @@ export const InsightTableWikiCreated = (
 ) => {
   const { wikiCreatedInsightData } = props
 
+  const bgTags = [
+    {
+      bg: '#F9F5FF',
+      color: '#FE6FB5',
+    },
+    {
+      bg: '#EBF8FF',
+      color: '#385C8A',
+    },
+  ]
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="#2d3748" color="">
+        <Thead bg="#F7FAFC">
           <Tr>
-            <Th textTransform="none" fontWeight="semibold">
+            <Th color="#718096" textTransform="none" fontWeight="medium">
               Wiki Title
             </Th>
-            <Th textTransform="none" fontWeight="normal">
+            <Th color="#718096" textTransform="none" fontWeight="medium">
               Date/Time
             </Th>
-            <Th textTransform="none" fontWeight="medium">
+            <Th color="#718096" textTransform="none" fontWeight="medium">
               Tags
             </Th>
-            <Th textTransform="none" fontWeight="medium">
-              Status
-              <Icon
-                fontSize="10px"
-                cursor="pointer"
-                color="#718096"
-                as={RiArrowDownLine}
-              />
+            <Th color="#718096" textTransform="none" fontWeight="medium">
+              <HStack spacing={3}>
+                <Text>Status</Text>
+                <Icon
+                  fontSize="10px"
+                  cursor="pointer"
+                  color="#718096"
+                  as={RiArrowDownLine}
+                />
+              </HStack>
             </Th>
             <Th />
           </Tr>
@@ -93,15 +107,15 @@ export const InsightTableWikiCreated = (
                     <Text color="#718096">{item.DateTime}</Text>
                   </Td>
                   <Td>
-                    <Flex w="100%" p={5} gap={2} align="center">
+                    <Flex w="100%" p={5} gap={3} align="center">
                       {item.Tags.map((tag, i) => (
                         <Tag
                           key={i}
-                          size="sm"
+                          size="md"
                           borderRadius="full"
                           variant="solid"
-                          bg="#FFE5F1"
-                          color="#FF5CAA"
+                          bg={bgTags[i].bg}
+                          color={bgTags[i].color}
                         >
                           <TagLabel>{tag}</TagLabel>
                         </Tag>
@@ -110,40 +124,63 @@ export const InsightTableWikiCreated = (
                   </Td>
                   <Td>
                     <Tag
-                      size="sm"
+                      size="md"
                       borderRadius="full"
                       variant="solid"
-                      bg="#FFE5F1"
-                      color="#FF5CAA"
+                      color={item.status === 'Active' ? '#38A169' : '#DD6B20'}
+                      bg={item.status === 'Active' ? '#F0FFF4' : '#FFF5F5'}
+                      px="2"
                     >
-                      <TagLabel>{item.status}</TagLabel>
+                      <HStack spacing={2}>
+                        <Icon
+                          fontSize="20px"
+                          cursor="pointer"
+                          color={
+                            item.status === 'Active' ? '#38A169' : '#DD6B20'
+                          }
+                          as={BsDot}
+                        />
+                        <TagLabel>{item.status}</TagLabel>
+                      </HStack>
                     </Tag>
                   </Td>
                   <Td>
                     <Flex w="100%" p={5} gap={2} align="center">
-                      <Text color="#718096" cursor="pointer">
-                        {item.statusDropdown[0]}
+                      <HStack spacing={2}>
+                        <Text
+                          color="#718096"
+                          cursor="pointer"
+                          fontWeight="semibold"
+                        >
+                          {item.statusDropdown[0]}
+                        </Text>
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
                           color="#718096"
                           as={RiArrowDropDownLine}
                         />
-                      </Text>
+                      </HStack>
                       {!item.promoted ? (
-                        <Text color="#FF5CAA" cursor="pointer">
+                        <Text
+                          color="#FF5CAA"
+                          cursor="pointer"
+                          fontWeight="semibold"
+                        >
                           Promoted
                         </Text>
                       ) : (
-                        <Text color="#718096" cursor="pointer">
-                          Promote
+                        <HStack spacing={2}>
+                          <Text color="#E2E8F0" cursor="pointer">
+                            Promote
+                          </Text>
                           <Icon
                             fontSize="20px"
                             cursor="pointer"
                             color="#718096"
                             as={RiQuestionLine}
                           />
-                        </Text>
+                        </HStack>
                       )}
                     </Flex>
                   </Td>
