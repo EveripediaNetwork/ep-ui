@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
 import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
@@ -6,6 +6,12 @@ import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
+import { useWeb3Token } from '@/hooks/useWeb3Token'
+import { profileApiClient } from '@/services/profile'
+import { useUserProfileData } from '@/services/profile/utils'
+import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
+import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
   const data = [
@@ -85,6 +91,26 @@ const Admin = () => {
     { name: 'Visitors', value: 300 },
   ]
   const COLORS = ['#FF69B4', '#FFC0CB']
+  // const { query } = useRouter()
+  const { token, reSignToken, error } = useWeb3Token()
+  const { address: userAddress } = useAccount()
+  const { setAccount } = useUserProfileData('', {
+    withAllSettings: true,
+  })
+
+  useEffect(() => {
+    if (userAddress && token) {
+      profileApiClient.setHeader('authorization', token)
+      setAccount(userAddress)
+    }
+  }, [userAddress, setAccount, token])
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return <></>
+
+  if (!token)
+    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 
   return (
     <Box py={4} w={{ base: '90%', lg: '90%' }} mx="auto">
