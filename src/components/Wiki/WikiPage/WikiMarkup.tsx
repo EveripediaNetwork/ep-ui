@@ -100,7 +100,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
           <WikiNotFound />
         )}
       </Flex>
-      <WikiTableOfContents />
+      {wiki?.content.includes('# ') && <WikiTableOfContents />}
     </HStack>
   )
 }
