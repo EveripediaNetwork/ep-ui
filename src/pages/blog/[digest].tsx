@@ -13,30 +13,37 @@ import {
   Text,
 } from '@chakra-ui/react'
 // import { BlogPost } from '@/components/Blog/BlogPost'
-import { Image } from '@/components/Elements/Image/Image'
+// import { Image } from '@/components/Elements/Image/Image'
 import { useAppSelector } from '@/store/hook'
 import { Blog } from '@/store/slices/blog-slice'
 import { store } from '@/store/store'
 import { getSingleBlogEntry } from '@/services/blog'
 import { formatEntry } from '@/utils/formatEntry'
+import ReactMarkdown from 'react-markdown'
 
 // type BlogPostProps = NextPage & {
 //   post: BlogPostType
 //   postSuggestions: BlogPostType[]
 // }
 
-export const BlogPostPage = ({ slug }: any) => {
+export const BlogPostPage = ({ digest }: any) => {
   // const { post, postSuggestions } = props
 
   const blogResult = useAppSelector(state =>
-    state.blog && slug
-      ? Object.values(state.blog).find(b => b.slug === slug)
+    state.blog && digest
+      ? Object.values(state.blog).find(b => b.digest === digest)
       : null,
   )
+
+  // const blogResult = useAppSelector(state =>
+  //   state.blog
+  // )
   const [blog, setBlog] = useState<Blog | undefined | null>(blogResult)
 
+  console.log(blogResult)
+
   useEffect(() => {
-    if (!blog && slug) {
+    if (!blogResult) {
       const getBlogEntry = async () => {
         const {
           data: {
@@ -51,7 +58,8 @@ export const BlogPostPage = ({ slug }: any) => {
               },
             },
           },
-        } = await store.dispatch(getSingleBlogEntry.initiate(slug))
+        } = await store.dispatch(getSingleBlogEntry.initiate(digest))
+        // console.log(await store.dispatch(getSingleBlogEntry.initiate(digest)))
 
         const formatted = await formatEntry(
           JSON.parse(
@@ -73,7 +81,7 @@ export const BlogPostPage = ({ slug }: any) => {
 
       getBlogEntry()
     }
-  }, [blog, slug])
+  }, [blogResult])
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
@@ -95,14 +103,16 @@ export const BlogPostPage = ({ slug }: any) => {
               {blog.title}
             </Heading>
             <Text color="gray.600" _dark={{ color: 'gray.400' }}>
-              {blog.timestamp.toString()}
+              {/* {blog.timestamp.toString()} */}
             </Text>
 
-            <Image
+            {/* <Image
               h={{ base: '300px', md: '393px' }}
               src={blog.cover_image}
               mt="14"
-            />
+            /> */}
+
+            <ReactMarkdown>{blog.body}</ReactMarkdown>
           </>
         ) : null}
         <Stack
@@ -115,7 +125,7 @@ export const BlogPostPage = ({ slug }: any) => {
           }}
         >
           {/* Post Content Start */}
-          <Stack>
+          {/* <Stack>
             <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
               Stats
             </Text>
@@ -181,7 +191,7 @@ export const BlogPostPage = ({ slug }: any) => {
               NFT game #DeFi. We’ll be dropping more info soon. If you haven’t
               already make sure to join our discord.
             </p>
-          </Stack>
+          </Stack> */}
           {/* Post Content End */}
 
           <Stack
@@ -238,10 +248,10 @@ export const BlogPostPage = ({ slug }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const slug: string = context.params?.digest as string
+  const digest: string = context.params?.digest as string
   return {
     props: {
-      slug,
+      digest,
     },
   }
 }

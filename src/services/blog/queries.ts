@@ -53,7 +53,7 @@ export const FETCH_SINGLE_TRANSACTION = gql`
   query FetchTransaction($digest: String!) {
     transactions(
       tags: [
-        { name: "Original-Content-Digest", values: [$digest] }
+        { name: "Content-Digest", values: [$digest] }
         { name: "App-Name", values: "MirrorXYZ" }
       ]
     ) {

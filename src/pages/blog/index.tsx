@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   // )
 
   const entries = await store.dispatch(
-    getBlogEntries.initiate(['0xE340b00B6B622C136fFA5CFf130eC8edCdDCb39D']),
+    getBlogEntries.initiate(['0xAe65930180ef4d86dbD1844275433E9e1d6311ED']),
   )
 
   await Promise.all(getRunningOperationPromises())
@@ -62,6 +62,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       const tags = Object.fromEntries(
         node.tags.map((tag: any) => [tag.name, tag.value]),
       )
+      console.log(node.block.timestamp)
 
       return {
         slug: tags['Original-Content-Digest'],
@@ -84,12 +85,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
       entryPaths.map(async (entry: any) =>
         formatEntry(
           JSON.parse(
-            String(
-              await arweave.transactions.getData(entry.path, {
-                decode: true,
-                string: true,
-              }),
-            ),
+            await arweave.transactions.getData(entry.path, {
+              decode: true,
+              string: true,
+            }),
           ),
           entry.slug,
           entry.timestamp,

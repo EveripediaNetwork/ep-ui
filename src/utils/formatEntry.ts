@@ -8,10 +8,10 @@ export const formatEntry = async (
   title: entry.content.title,
   slug: slugify(entry.content.title),
   body: entry.content.body,
-  timestamp: new Date(timestamp * 1000),
   digest: entry.originalDigest ?? entry.digest,
   contributor: entry.authorship.contributor,
   transaction: transactionId,
+  timestamp,
   cover_image:
     (entry.content.body
       .split('\n\n')[0]

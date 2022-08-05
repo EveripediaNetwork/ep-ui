@@ -27,6 +27,7 @@ const moduleExports = {
       'alpha.everipedia.org',
       'beta.everipedia.org',
       'images.mirror-media.xyz',
+      'cdn.buttercms.com',
     ],
   },
 }

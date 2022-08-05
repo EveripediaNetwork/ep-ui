@@ -2,12 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export type Blog = {
   slug: string
+  digest: string
   cover_image: string
   contributor: string
   body: string
   image_sizes: number
   title: string
-  timestamp: number | Date
+  timestamp?: number
   transaction: string
 }
 
