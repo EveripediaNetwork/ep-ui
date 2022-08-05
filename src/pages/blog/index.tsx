@@ -37,8 +37,8 @@ export const Blog = ({ blogEntries }: any) => {
         >
           {blogEntries
             ? blogEntries.map((b: any, i: number) => (
-                <BlogPost post={b} key={i} />
-              ))
+              <BlogPost post={b} key={i} />
+            ))
             : null}
         </SimpleGrid>
       </chakra.div>
@@ -85,10 +85,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
       entryPaths.map(async (entry: any) =>
         formatEntry(
           JSON.parse(
-            await arweave.transactions.getData(entry.path, {
+            String(await arweave.transactions.getData(entry.path, {
               decode: true,
               string: true,
-            }),
+            })),
           ),
           entry.slug,
           entry.timestamp,
