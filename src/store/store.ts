@@ -14,6 +14,7 @@ import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
+import { adminApi } from '@/services/admin'
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [navSearchApi.reducerPath]: navSearchApi.reducer,
     [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
+    [adminApi.reducerPath]: adminApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
   },
   middleware: gDM =>
@@ -38,7 +40,8 @@ export const store = configureStore({
       .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware)
       .concat(tokenStatsApi.middleware)
-      .concat(profileApi.middleware),
+      .concat(profileApi.middleware)
+      .concat(adminApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
 import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
@@ -8,11 +8,56 @@ import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/Wi
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { profileApiClient } from '@/services/profile'
+import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
+import {
+  useGetWikisCreatedCountQuery,
+  useGetWikisEditedCountQuery,
+} from '@/services/admin'
+import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
+  const getMonday = useMemo(() => {
+    const d = new Date()
+    const day = d.getDay()
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1) // adjust when day is sunday
+    return new Date(d.setDate(diff))
+  }, [])
+
+  const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
+
+  const startDate = Math.floor(getMonday.getTime() / 1000)
+
+  console.log(endDate, startDate)
+
+  const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
+    startDate,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
+    startDate,
+    endDate,
+    interval: 'year',
+  })
+
+  console.log({ weeklyWikiEditedCountData, weeklyWikiCreatedCountData })
+
   const data = [
     {
       name: 'Mon',
@@ -54,19 +99,27 @@ const Admin = () => {
   const wikiMetaData = [
     {
       icon: RiEditFill,
-      value: 500,
-      weeklyValue: '1k',
+      value: totalWikisEditedCountData
+        ? totalWikisEditedCountData[0]?.amount
+        : 0,
+      weeklyValue: weeklyWikiEditedCountData
+        ? weeklyWikiEditedCountData[0].amount
+        : 0,
       percent: 40,
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
     },
     {
       icon: RiEditFill,
-      value: 500,
-      weeklyValue: '1k',
+      value: totalWikisCreatedCountData
+        ? totalWikisCreatedCountData[0]?.amount
+        : 0,
+      weeklyValue: weeklyWikiCreatedCountData
+        ? weeklyWikiCreatedCountData[0]?.amount
+        : 0,
       percent: 40,
       color: 'pink.400',
-      detailHeader: 'Total no of Edited Wikis',
+      detailHeader: 'Total no of Created Wikis',
     },
     {
       icon: RiUser3Fill,
@@ -104,15 +157,11 @@ const Admin = () => {
     }
   }, [userAddress, setAccount, token])
 
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <></>
-
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 
   return (
-    <Box py={4} w={{ base: '90%', lg: '90%' }} mx="auto">
+    <Box py={4} w="90%" mx="auto">
       <Heading
         as="h4"
         mt="4"
@@ -139,7 +188,7 @@ const Admin = () => {
               detailHeader={detailHeader}
               icon={icon}
               currentValue={value.toString()}
-              weeklyValue={weeklyValue}
+              weeklyValue={weeklyValue.toString()}
               percent={percent}
               color={color}
             />
@@ -154,4 +203,7 @@ const Admin = () => {
     </Box>
   )
 }
-export default Admin
+
+export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
+  ssr: false,
+})

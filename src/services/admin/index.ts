@@ -1,0 +1,65 @@
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { HYDRATE } from 'next-redux-wrapper'
+import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
+import { WIKIS_EDITED, WIKIS_CREATED } from '@/services/admin/queries'
+import config from '@/config'
+import { WikisModifiedCount } from '@/types/admin'
+
+type WikisModifiedCountArgs = {
+  startDate: number
+  endDate: number
+  interval: string
+}
+
+type WikisEditedCountResponse = {
+  wikisEdited: WikisModifiedCount[]
+}
+
+type WikisCreatedCountResponse = {
+  wikisCreated: WikisModifiedCount[]
+}
+
+export const adminApi = createApi({
+  reducerPath: 'adminApi',
+  refetchOnMountOrArgChange: 30,
+  refetchOnFocus: true,
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+    return null
+  },
+  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
+  endpoints: builder => ({
+    getWikisEditedCount: builder.query<
+      WikisModifiedCount[],
+      WikisModifiedCountArgs
+    >({
+      query: ({ startDate, endDate, interval }: WikisModifiedCountArgs) => ({
+        document: WIKIS_EDITED,
+        variables: { startDate, endDate, interval },
+      }),
+      transformResponse: (response: WikisEditedCountResponse) =>
+        response.wikisEdited,
+    }),
+    getWikisCreatedCount: builder.query<
+      WikisModifiedCount[],
+      WikisModifiedCountArgs
+    >({
+      query: ({ startDate, endDate, interval }: WikisModifiedCountArgs) => ({
+        document: WIKIS_CREATED,
+        variables: { startDate, endDate, interval },
+      }),
+      transformResponse: (response: WikisCreatedCountResponse) =>
+        response.wikisCreated,
+    }),
+  }),
+})
+
+export const {
+  useGetWikisCreatedCountQuery,
+  useGetWikisEditedCountQuery,
+  util: { getRunningOperationPromises },
+} = adminApi
+
+export const { getWikisCreatedCount, getWikisEditedCount } = adminApi.endpoints
