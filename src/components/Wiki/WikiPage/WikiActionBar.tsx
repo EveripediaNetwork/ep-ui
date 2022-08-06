@@ -65,7 +65,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       py={{ base: 4, md: 'calc(50vh - 150px )' }}
       mt={{ base: 0, md: 0 }}
       borderColor="borderColor"
-      w={{ lg: '8%', base: '100%', md: '10%', '2xl': '5%' }}
+      maxW={{ base: 'unset', md: '120px' }}
     >
       <ShareWikiModal isOpen={isOpen} onClose={onClose} {...wiki} />
       <Flex

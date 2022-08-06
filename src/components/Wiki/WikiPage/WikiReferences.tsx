@@ -18,6 +18,7 @@ interface WikiReferencesProps {
 }
 const WikiReferences = ({ references }: WikiReferencesProps) => {
   const [currentLocationHash, setCurrentLocationHash] = useState('')
+
   useEffect(() => {
     const onHashChanged = () => {
       setCurrentLocationHash(window.location.hash)
@@ -83,6 +84,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                   {citeMarks[ref.id] &&
                     Array.from(Array(citeMarks[ref.id])).map((_, i) => (
                       <Link
+                        key={i}
                         href={`#cite-mark-${ref.id}-${i + 1}`}
                         color="brand.500"
                         ml="0 !important"
