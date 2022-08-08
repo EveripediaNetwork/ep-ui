@@ -142,7 +142,7 @@ export const NavSearch = (props: NavSearchProps) => {
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
         // This negates the bug that is casued by two wikis with the same title.
-        // value.title = `${article.title}${article.id}`
+        value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
             key={article.id}
