@@ -22,15 +22,13 @@ const Admin = () => {
   const getMonday = useMemo(() => {
     const d = new Date()
     const day = d.getDay()
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1) // adjust when day is sunday
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1)
     return new Date(d.setDate(diff))
   }, [])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
   const startDate = Math.floor(getMonday.getTime() / 1000)
-
-  console.log(endDate, startDate)
 
   const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     startDate: 0,
@@ -56,7 +54,11 @@ const Admin = () => {
     interval: 'year',
   })
 
-  console.log({ weeklyWikiEditedCountData, weeklyWikiCreatedCountData })
+  const { data: GraphWikiEditedCountData } = useGetWikisCreatedCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
 
   const data = [
     {
@@ -103,7 +105,7 @@ const Admin = () => {
         ? totalWikisEditedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiEditedCountData
-        ? weeklyWikiEditedCountData[0].amount
+        ? weeklyWikiEditedCountData[0]?.amount
         : 0,
       percent: 40,
       color: 'pink.400',
@@ -188,7 +190,7 @@ const Admin = () => {
               detailHeader={detailHeader}
               icon={icon}
               currentValue={value.toString()}
-              weeklyValue={weeklyValue.toString()}
+              weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
               percent={percent}
               color={color}
             />
