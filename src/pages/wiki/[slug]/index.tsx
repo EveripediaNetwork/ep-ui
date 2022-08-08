@@ -24,22 +24,17 @@ const Wiki = ({ wiki }: WikiProps) => {
 
   const { slug } = router.query
 
-  const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
+  const toc = useAppSelector(state => state.toc)
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
-    if (!isTocEmpty) {
+    if (!(toc.length === 0)) {
       const linkId = window.location.hash
       if (linkId) router.push(`/wiki/${slug}${linkId}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTocEmpty])
-
-  const toc = useAppSelector(state => state.toc)
-
-  useEffect(() => {
-    setIsTocEmpty(toc.length === 0)
   }, [toc])
+
   return (
     <>
       {wiki && (
@@ -51,7 +46,7 @@ const Wiki = ({ wiki }: WikiProps) => {
       )}
       <main>
         <Box mt={-2}>
-          <WikiMarkup wiki={wiki} isTocEmpty={isTocEmpty} />
+          <WikiMarkup wiki={wiki} />
         </Box>
       </main>
     </>

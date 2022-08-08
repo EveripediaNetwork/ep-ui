@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
+import { StaticContent } from '@/components/StaticElement'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
@@ -22,7 +23,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
   const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
+  const isDefaultOpen = useBreakpointValue({ base: false, xs: true, xl: false })
   const [activeId, setActiveId] = React.useState<string | null>()
 
   // the below ref is used to store all the heading that are in view
@@ -93,13 +94,11 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
       <VStack
         display={{ base: 'none', md: 'block' }}
         borderLeftWidth="1px"
-        minW="240px"
-        maxW="20vw"
+        w="20vw"
         px={6}
         py="30px"
       >
         <VStack
-          w="100%"
           spacing={4}
           align="start"
           position="sticky"
@@ -112,41 +111,44 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
               onClick={onToggle}
             />
           </Flex>
-          <VStack
-            as="nav"
-            spacing={4}
-            h="calc(100vh - (70px + 90px))"
-            w="100%"
-            overflowY="scroll"
-            pr={4}
-            align="start"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '4px',
-              },
-              '&::-webkit-scrollbar-track': {
-                width: '6px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                background: colorMode === 'light' ? '#0000002a' : '#3f444e',
-                borderRadius: '24px',
-              },
-            }}
-          >
-            {toc.map(({ level, id, title }) => (
-              <Box pl={`calc(${(level - 1) * 20}px)`}>
-                <Text
-                  color={activeId === id ? 'brand.500' : 'unset'}
-                  boxShadow={activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'}
-                  outlineColor="brand.500"
-                  key={id}
-                  pl={2}
-                >
-                  <Link href={`#${id}`}>{title}</Link>
-                </Text>
-              </Box>
-            ))}
-          </VStack>
+          <StaticContent>
+            <VStack
+              as="nav"
+              spacing={4}
+              h="calc(100vh - (70px + 90px))"
+              overflowY="scroll"
+              pr={4}
+              w="100%"
+              align="start"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '4px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: colorMode === 'light' ? '#0000002a' : '#3f444e',
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              {toc.map(({ level, id, title }) => (
+                <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
+                  <Text
+                    color={activeId === id ? 'brand.500' : 'unset'}
+                    boxShadow={
+                      activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
+                    }
+                    outlineColor="brand.500"
+                    pl={2}
+                  >
+                    <Link href={`#${id}`}>{title}</Link>
+                  </Text>
+                </Box>
+              ))}
+            </VStack>
+          </StaticContent>
         </VStack>
       </VStack>
     )
