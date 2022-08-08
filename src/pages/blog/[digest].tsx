@@ -20,6 +20,10 @@ import { store } from '@/store/store'
 import { getSingleBlogEntry } from '@/services/blog'
 import { formatEntry } from '@/utils/formatEntry'
 import ReactMarkdown from 'react-markdown'
+import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
+import { unified } from 'unified'
 
 // type BlogPostProps = NextPage & {
 //   post: BlogPostType
@@ -35,14 +39,10 @@ export const BlogPostPage = ({ digest }: any) => {
       : null,
   )
 
-  // const blogResult = useAppSelector(state =>
-  //   state.blog
-  // )
   const [blog, setBlog] = useState<Blog | undefined | null>(blogResult)
 
-  console.log(blogResult)
-
   useEffect(() => {
+    console.log(blogResult)
     if (!blogResult) {
       const getBlogEntry = async () => {
         const {
@@ -74,7 +74,13 @@ export const BlogPostPage = ({ digest }: any) => {
           timestamp,
         )
 
-        console.log(formatted)
+        formatted.body = await unified()
+          .use(remarkParse) // Parse markdown
+          .use(remarkStringify) // Serialize markdown
+          .process(formatted.body)
+
+        formatted.body = String(formatted.body)
+        console.log(formatted.body)
 
         setBlog(formatted)
       }
@@ -102,8 +108,8 @@ export const BlogPostPage = ({ digest }: any) => {
             >
               {blog.title}
             </Heading>
-            <Text color="gray.600" _dark={{ color: 'gray.400' }}>
-              {/* {blog.timestamp.toString()} */}
+            <Text color="gray.600" mb={3} _dark={{ color: 'gray.400' }}>
+              {new Date((blog.timestamp || 0) * 1000).toDateString()}
             </Text>
 
             {/* <Image
@@ -112,7 +118,12 @@ export const BlogPostPage = ({ digest }: any) => {
               mt="14"
             /> */}
 
-            <ReactMarkdown>{blog.body}</ReactMarkdown>
+            <ReactMarkdown
+              components={components}
+              transformLinkUri={uriTransformer}
+            >
+              {blog.body}
+            </ReactMarkdown>
           </>
         ) : null}
         <Stack
@@ -124,76 +135,6 @@ export const BlogPostPage = ({ digest }: any) => {
             },
           }}
         >
-          {/* Post Content Start */}
-          {/* <Stack>
-            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
-              Stats
-            </Text>
-            <p>
-              With our new BrainDAO proposal and the teaser for Brainies, IQ
-              holders have staked a record of more than 1 billion HiIQ by
-              locking more than 340 million IQ tokens. The APR is currently over
-              140% as of writing. IQ stakers earn both IQ token rewards and the
-              chance to win NFTs in NFT raffles. The majority of the stakers
-              have locked their IQ up for over 3.5 years to earn maximum APR.
-              This guide explains how to start staking IQ with HiIQ. HiIQ was
-              created to incentivize IQ holders to become long-term holders who
-              stake and lock up their IQ tokens with IQ token rewards and NFT
-              raffles. The HiIQ staking system allows IQ holders to choose how
-              long they want to lock up their IQ for, the more IQ and the longer
-              they lock up their IQ for the greater the amount of rewards and
-              the greater chance they will have to gain limited edition NFTs.
-            </p>
-          </Stack>
-          <Stack>
-            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
-              BrainDAO Blue Chip NFT Proposal
-            </Text>
-            <p>
-              Our new BrainDAO Blue Chip NFTs proposal passed with over 685m
-              HiIQ votes which was more than half of the total HiIQ supply. With
-              this proposal passing governance,we are allocating 200 ETH worth
-              of funds from the BrainDAO treasury to go towards the purchase of
-              Blue Chip NFTs from major NFT projects such as Bored Ape Yacht
-              Club, CryptoPunks, Art Blocks, Cool Cats, Doodles, Azuki, Zipcy’s
-              SuperNormal, The Sandbox, Decentraland, World of Women, Invisible
-              Friends, Boss Beauties, Cyberkongz, and Wolf Game among others.
-              The funds will also be used to mint derivative NFTs and
-              whitelisted NFTs related to Blue Chip NFT projects such as the
-              Gucci 10KTF NFTs which were reserved for the holders of Bored Apes
-              and several other Blue Chip NFT collections. Once the Blue Chip
-              NFTs are acquired, BrainDAO will then start receiving/minting
-              derivatives from its NFT portfolio on a regular basis as these
-              Blue Chip NFT projects expand. This will allow BrianDAO to
-              regularly raffle off NFT derivatives from leading projects to IQ
-              holders. Regularly giving away NFTs from Blue Chip projects. Over
-              the last year, Bored Ape holders received over $145,000 in
-              airdrops if BrainDAO acquires a Bored Ape and that trend continues
-              BrainDAO could potentially distribute NFTs and tokens worth
-              $145,000 to IQ stakers! This will greatly incentivize anyone
-              interested in NFTs to get and stake IQ increasing demand for IQ
-              and reducing the supply of IQ. BrainDAO will also hold the IP
-              rights from its portfolio of Blue Chip NFTs bringing valuable IP
-              to the IQ ecosystem. BrainDAO will grant IQ stakers the right to
-              create derivative NFTs based on the NFTs in the portfolio.
-              BrainDAO will also be able to use the intellectual property rights
-              from this portfolio to create new NFT derivatives for IQ stakers.
-            </p>
-          </Stack>
-          <Stack>
-            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
-              Brainies
-            </Text>
-            <p>
-              We’re very excited to introduce Brainies to everyone. They are
-              just around the corner for HiIQ stakers to win. Brainies are
-              coming soon IQ stakers can catch’em all! Brainies will change the
-              NFT game #DeFi. We’ll be dropping more info soon. If you haven’t
-              already make sure to join our discord.
-            </p>
-          </Stack> */}
-          {/* Post Content End */}
-
           <Stack
             alignItems="center"
             spacing={{ base: 2, md: 4, lg: 8 }}

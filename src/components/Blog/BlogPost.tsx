@@ -35,7 +35,7 @@ export const BlogPost = (props: any) => {
           {post.desccription}
         </Text> */}
         <Text color="gray.400" _dark={{ color: 'whiteAlpha.400' }}>
-          {post.timestamp}
+          {new Date((post.timestamp || 0) * 1000).toDateString()}
         </Text>
       </Flex>
     </LinkBox>
