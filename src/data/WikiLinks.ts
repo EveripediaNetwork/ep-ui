@@ -119,6 +119,13 @@ export const LINK_OPTIONS = [
     tests: [/i/],
   },
   {
+    id: CommonMetaIds.ETHERSCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'Etherscan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?etherscan.io\/\w+/],
+  },
+  {
     id: CommonMetaIds.BSCSCAN_PROFILE,
     type: LinkType.EXPLORER,
     label: 'BSScan',
