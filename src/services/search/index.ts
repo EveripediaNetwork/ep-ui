@@ -33,9 +33,8 @@ type GetCategoriesByTitleResponse = {
 }
 
 type GetUsernamesByTitleResponse = {
-  getProfileLikeUsername : Username[]
+  getProfileLikeUsername: Username[]
 }
-
 
 export const navSearchApi = createApi({
   reducerPath: 'navSearchApi',
@@ -83,4 +82,5 @@ export const {
   util: { getRunningOperationPromises },
 } = navSearchApi
 
-export const { getWikisByTitle, getCategoriesByTitle, getUsernamesByTitle } = navSearchApi.endpoints
+export const { getWikisByTitle, getCategoriesByTitle, getUsernamesByTitle } =
+  navSearchApi.endpoints

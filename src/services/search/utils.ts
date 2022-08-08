@@ -1,5 +1,9 @@
 import { TagsByCategory } from '@/data/TagsByCategory'
-import { getCategoriesByTitle, getWikisByTitle, getUsernamesByTitle } from '@/services/search'
+import {
+  getCategoriesByTitle,
+  getWikisByTitle,
+  getUsernamesByTitle,
+} from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
@@ -28,10 +32,12 @@ export const SEARCH_TYPES = {
   ARTICLE: 'ARTICLE',
   CATEGORY: 'CATEGORY',
   USERNAME: 'USERNAME',
-
 } as const
 
-export const fillType = (item: WikiPreview | Category | Username, type: SearchItem) => {
+export const fillType = (
+  item: WikiPreview | Category | Username,
+  type: SearchItem,
+) => {
   return { ...item, type }
 }
 
@@ -49,18 +55,20 @@ export const fetchCategoriesList = async (query: string) => {
 
 export const fetchUsernamesList = async (query: string) => {
   const { data } = await store.dispatch(getUsernamesByTitle.initiate(query))
-  console.log({data, query})
+  console.log({ data, query })
   return data
 }
 
 const debouncedFetchResults = debounce(
   (query: string, cb: (data: Results) => void) => {
-    Promise.all([fetchWikisList(query), fetchCategoriesList(query), fetchUsernamesList(query)]).then(
-      res => {
-        const [articles = [], categories = [], usernames = []] = res
-        cb({ articles, categories, usernames })
-      },
-    )
+    Promise.all([
+      fetchWikisList(query),
+      fetchCategoriesList(query),
+      fetchUsernamesList(query),
+    ]).then(res => {
+      const [articles = [], categories = [], usernames = []] = res
+      cb({ articles, categories, usernames })
+    })
   },
   500,
 )
