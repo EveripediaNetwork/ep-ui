@@ -32,34 +32,56 @@ export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
 export enum CommonMetaIds {
   PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
+
+  // contact info
+  WEBSITE = 'website',
+  EMAIL_URL = 'email_url',
+
+  // social Links
   FACEBOOK_PROFILE = 'facebook_profile',
   INSTAGRAM_PROFILE = 'instagram_profile',
   TWITTER_PROFILE = 'twitter_profile',
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
-  COINGECKO_PROFILE = 'coingecko_profile',
-  WEBSITE = 'website',
-  CONTRACT_URL = 'contract_url',
+  DISCORD_PROFILE = 'discord_profile',
   REDDIT_URL = 'reddit_profile',
-  EMAIL_URL = 'email_url',
-  GITHUB_URL = 'github_profile',
   TELEGRAM_URL = 'telegram_profile',
+  GITHUB_URL = 'github_profile',
+
+  // blockchain related links
+  CONTRACT_URL = 'contract_url',
   COIN_MARKET_CAP = 'coinmarketcap_url',
+  COINGECKO_PROFILE = 'coingecko_profile',
+  ARBISCAN_PROFILE = 'arbiscan_profile',
+  POLYGONSCAN_PROFILE = 'polygonscan_profile',
+  BSCSCAN_PROFILE = 'bscscan_profile',
+  OPTIMISTIC_ETHERSCAN_PROFILE = 'optimistic_etherscan_profile',
 }
 
 export const WikiPossibleSocialsList = [
+  // contact info
+  CommonMetaIds.WEBSITE,
+  CommonMetaIds.EMAIL_URL,
+
+  // social Links
   CommonMetaIds.FACEBOOK_PROFILE,
   CommonMetaIds.INSTAGRAM_PROFILE,
   CommonMetaIds.TWITTER_PROFILE,
   CommonMetaIds.LINKEDIN_PROFILE,
   CommonMetaIds.YOUTUBE_PROFILE,
-  CommonMetaIds.COINGECKO_PROFILE,
-  CommonMetaIds.WEBSITE,
   CommonMetaIds.REDDIT_URL,
-  CommonMetaIds.EMAIL_URL,
-  CommonMetaIds.GITHUB_URL,
   CommonMetaIds.TELEGRAM_URL,
+  CommonMetaIds.DISCORD_PROFILE,
+  CommonMetaIds.GITHUB_URL,
+
+  // blockchain related links
+  CommonMetaIds.CONTRACT_URL,
   CommonMetaIds.COIN_MARKET_CAP,
+  CommonMetaIds.COINGECKO_PROFILE,
+  CommonMetaIds.ARBISCAN_PROFILE,
+  CommonMetaIds.POLYGONSCAN_PROFILE,
+  CommonMetaIds.BSCSCAN_PROFILE,
+  CommonMetaIds.OPTIMISTIC_ETHERSCAN_PROFILE,
 ]
 
 export enum ValidatorCodes {

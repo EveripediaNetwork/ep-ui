@@ -1,6 +1,7 @@
 import React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import {
+  Box,
   Center,
   Flex,
   HStack,
@@ -11,10 +12,11 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react'
-import { CommonMetaIds, Wiki } from '@/types/Wiki'
-import { LINK_OPTIONS } from '@/components/Layout/Editor/Highlights/HighlightsModal/HighlightsModal'
+import { CommonMetaIds, Wiki, WikiPossibleSocialsList } from '@/types/Wiki'
 import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/shortenText'
+import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
+import { RiExternalLinkLine } from 'react-icons/ri'
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -28,11 +30,47 @@ interface SocialMetaDataInterface {
   value: string
 }
 
-const SocialProfiles = ({
-  socialMetaData,
-}: {
+interface SocialMetaDataDisplayProps {
   socialMetaData: SocialMetaDataInterface[]
-}) => {
+}
+
+const ExplorerProfiles = ({ socialMetaData }: SocialMetaDataDisplayProps) => {
+  return (
+    <HStack
+      bgColor="wikiCardItemBg"
+      borderRadius={4}
+      justify="space-between"
+      align="start"
+      p={4}
+    >
+      <Text fontSize="14px" fontWeight="bold" color="linkColor">
+        Explorers
+      </Text>
+      <Box>
+        {socialMetaData.map(item => (
+          <HStack>
+            <Link
+              color="brand.500"
+              fontSize="14px"
+              key={item.id}
+              href={parseLink(item.value)}
+              isExternal
+              _hover={{
+                color: 'linkColorHover',
+                textDecoration: 'underline',
+              }}
+            >
+              {LINK_OPTIONS.find(option => option.id === item.id)?.label}
+            </Link>
+            <Icon color="brand.500" as={RiExternalLinkLine} />
+          </HStack>
+        ))}
+      </Box>
+    </HStack>
+  )
+}
+
+const SocialProfiles = ({ socialMetaData }: SocialMetaDataDisplayProps) => {
   return (
     <>
       {socialMetaData.length !== 0 && (
@@ -51,10 +89,12 @@ const SocialProfiles = ({
           <Center>
             <Wrap>
               {socialMetaData
-                .filter((item: { id: string }) => {
-                  return item.id !== 'website' && item.id !== 'contract_url'
-                })
-                .map((social: { value: string; id: string }, i: number) => {
+                .filter(
+                  item =>
+                    LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+                    LinkType.SOCIAL,
+                )
+                .map((social, i: number) => {
                   const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
                   return (
                     <Link
@@ -89,128 +129,63 @@ const SocialProfiles = ({
   )
 }
 
-const OfficialSite = ({
-  socialMetaData,
-}: {
-  socialMetaData: SocialMetaDataInterface[]
-}) => {
-  if (
-    socialMetaData.filter((item: { id: string }) => {
-      return item.id === 'website'
-    }).length === 0
-  ) {
-    return null
-  }
-  return (
-    <>
-      {socialMetaData.length !== 0 && (
-        <HStack
-          bgColor="wikiCardItemBg"
-          borderRadius={4}
-          justify="space-between"
-          align="center"
-          p={4}
+const ProfileListItem = ({ text, link }: { text: string; link: string }) => (
+  <HStack
+    bgColor="wikiCardItemBg"
+    borderRadius={4}
+    justify="space-between"
+    align="center"
+    p={4}
+  >
+    <HStack spacing={2}>
+      <Text fontSize="14px" fontWeight="bold" color="linkColor">
+        {text}
+      </Text>
+    </HStack>
+    <Center>
+      <HStack flexWrap="wrap" justifyContent="space-between">
+        <Link
+          rel="nofollow"
+          target="_blank"
+          href={parseLink(link)}
+          color="brand.500"
         >
-          <HStack spacing={2}>
-            <Text fontSize="14px" fontWeight="bold" color="linkColor">
-              Official site:
-            </Text>
-          </HStack>
-          <Center>
-            <HStack flexWrap="wrap" justifyContent="space-between">
-              {socialMetaData
-                .filter((item: { id: string }) => {
-                  return item.id === 'website'
-                })
-                .map((social: { value: string }) => {
-                  return (
-                    <Link
-                      rel="nofollow"
-                      target="_blank"
-                      href={parseLink(social.value.trim())}
-                      color="brand.500"
-                    >
-                      <Text>{shortenText(social.value, 20)}</Text>
-                    </Link>
-                  )
-                })}
-            </HStack>
-          </Center>
-        </HStack>
-      )}
-    </>
-  )
-}
+          <Flex align="center" gap="2">
+            <Text fontSize="14px">{shortenText(link, 20)}</Text>
+            <FiExternalLink color="#ff5caa" fontSize="18px" />
+          </Flex>
+        </Link>
+      </HStack>
+    </Center>
+  </HStack>
+)
 
-const ContractLink = ({
-  socialMetaData,
-}: {
-  socialMetaData: SocialMetaDataInterface[]
-}) => {
-  if (
-    socialMetaData.filter((item: { id: string }) => {
-      return item.id === 'contract_url'
-    }).length === 0
-  ) {
-    return null
-  }
-  return (
-    <>
-      {socialMetaData.length !== 0 && (
-        <HStack
-          bgColor="wikiCardItemBg"
-          borderRadius={4}
-          justify="space-between"
-          align="center"
-          p={4}
-        >
-          <HStack spacing={2}>
-            <Text fontSize="14px" fontWeight="bold" color="linkColor">
-              Contract:
-            </Text>
-          </HStack>
-          <Center>
-            <HStack flexWrap="wrap" justifyContent="space-between">
-              {socialMetaData
-                .filter((item: { id: string }) => {
-                  return item.id === 'contract_url'
-                })
-                .map((social: { value: string }) => {
-                  return (
-                    <Link
-                      rel="nofollow"
-                      target="_blank"
-                      href={parseLink(social.value)}
-                      color="brand.500"
-                    >
-                      <Flex align="center" gap="2">
-                        <Text>
-                          {social.value.slice(0, 6)}...
-                          {social.value.substring(
-                            social.value.length - 4,
-                            social.value.length,
-                          )}
-                        </Text>
-                        <FiExternalLink color="#ff5caa" fontSize="18px" />
-                      </Flex>
-                    </Link>
-                  )
-                })}
-            </HStack>
-          </Center>
-        </HStack>
-      )}
-    </>
+const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
+  const socialMetaData = wiki.metadata.filter(meta =>
+    WikiPossibleSocialsList.includes(meta.id as CommonMetaIds),
   )
-}
 
-const ProfileSummary = (props: ProfileSummaryProps) => {
-  const { wiki } = props
-  const linkIds = LINK_OPTIONS.map(link => link.id)
-  const socialMetaData = wiki.metadata.filter(
-    meta => !!meta.value && linkIds.includes(meta.id as CommonMetaIds),
-  )
   if (!socialMetaData.length) return null
+
+  const socialLinksData = socialMetaData.filter(
+    item =>
+      LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+      LinkType.SOCIAL,
+  )
+  const explorerLinksData = socialMetaData.filter(
+    item =>
+      LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+      LinkType.EXPLORER,
+  )
+
+  const contractURL = socialMetaData.find(
+    item => item.id === CommonMetaIds.CONTRACT_URL,
+  )?.value
+
+  const websiteLink = socialMetaData.find(
+    item => item.id === CommonMetaIds.WEBSITE,
+  )?.value
+
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion
@@ -221,9 +196,12 @@ const ProfileSummary = (props: ProfileSummaryProps) => {
         title="Profile Summary"
         collapsed={{ base: true, xl: false }}
       >
-        <ContractLink socialMetaData={socialMetaData} />
-        <OfficialSite socialMetaData={socialMetaData} />
-        <SocialProfiles socialMetaData={socialMetaData} />
+        {contractURL && <ProfileListItem text="Contract" link={contractURL} />}
+        {websiteLink && (
+          <ProfileListItem text="Official Website" link={websiteLink} />
+        )}
+        <SocialProfiles socialMetaData={socialLinksData} />
+        <ExplorerProfiles socialMetaData={explorerLinksData} />
       </WikiAccordion>
     </VStack>
   )
