@@ -140,7 +140,7 @@ export const NavSearch = (props: NavSearchProps) => {
         const articleImage = `${config.pinataBaseUrl}${
           article.images && article.images[0].id
         }`
-        const value = fillType(article, SEARCH_TYPES.ARTICLE);
+        const value = fillType(article, SEARCH_TYPES.ARTICLE)
         // This negates the bug that is casued by two wikis with the same title.
         // value.title = `${article.title}${article.id}`
         return (
