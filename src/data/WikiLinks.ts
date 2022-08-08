@@ -84,11 +84,25 @@ export const LINK_OPTIONS = [
     tests: [/https:\/\/(www.)?youtube.com\/\w+/],
   },
   {
+    id: CommonMetaIds.FACEBOOK_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Facebook',
+    icon: FacebookIcon,
+    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+  },
+  {
     id: CommonMetaIds.COINGECKO_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Coingecko',
     icon: CoinGeckoIcon,
     tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
+  },
+  {
+    id: CommonMetaIds.COIN_MARKET_CAP,
+    type: LinkType.SOCIAL,
+    label: 'Coin Market Cap',
+    icon: CoinMarketCap,
+    tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
   {
     id: CommonMetaIds.WEBSITE,
@@ -103,20 +117,6 @@ export const LINK_OPTIONS = [
     label: 'Contract URL',
     icon: FaFileContract,
     tests: [/i/],
-  },
-  {
-    id: CommonMetaIds.FACEBOOK_PROFILE,
-    type: LinkType.SOCIAL,
-    label: 'Facebook',
-    icon: FacebookIcon,
-    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
-  },
-  {
-    id: CommonMetaIds.COIN_MARKET_CAP,
-    type: LinkType.SOCIAL,
-    label: 'Coin Market Cap',
-    icon: CoinMarketCap,
-    tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
   {
     id: CommonMetaIds.BSCSCAN_PROFILE,

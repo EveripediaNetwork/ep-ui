@@ -28,7 +28,7 @@ import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { MData } from '@/types/Wiki'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
-import { LINK_OPTIONS } from '@/data/WikiLinks'
+import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -188,11 +188,35 @@ const HighlightsModal = ({
                   }}
                   placeholder="Select option"
                 >
-                  {LINK_OPTIONS.map(med => (
-                    <chakra.option key={med.id} value={med.id}>
-                      {med.label}
-                    </chakra.option>
-                  ))}
+                  <optgroup label="Socials">
+                    {LINK_OPTIONS.filter(
+                      option => option.type === LinkType.SOCIAL,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Explorers">
+                    {LINK_OPTIONS.filter(
+                      option => option.type === LinkType.EXPLORER,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Other">
+                    {LINK_OPTIONS.filter(
+                      option =>
+                        option.type !== LinkType.SOCIAL &&
+                        option.type !== LinkType.EXPLORER,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
                 </Select>
                 <Input
                   placeholder="Enter link"
