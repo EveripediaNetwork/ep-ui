@@ -2,7 +2,6 @@ import React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import {
   Box,
-  Center,
   Flex,
   HStack,
   Icon,
@@ -25,111 +24,11 @@ type ProfileSummaryProps = {
 const parseLink = (link: string) =>
   link.startsWith('http') ? link : `https://${link}`
 
-interface SocialMetaDataInterface {
-  id: string
-  value: string
+interface ProfileListItemProps {
+  title: string
+  children: React.ReactNode
 }
-
-interface SocialMetaDataDisplayProps {
-  socialMetaData: SocialMetaDataInterface[]
-}
-
-const ExplorerProfiles = ({ socialMetaData }: SocialMetaDataDisplayProps) => {
-  return (
-    <HStack
-      bgColor="wikiCardItemBg"
-      borderRadius={4}
-      justify="space-between"
-      align="start"
-      p={4}
-    >
-      <Text fontSize="14px" fontWeight="bold" color="linkColor">
-        Explorers
-      </Text>
-      <Box>
-        {socialMetaData.map(item => (
-          <HStack>
-            <Link
-              color="brand.500"
-              fontSize="14px"
-              key={item.id}
-              href={parseLink(item.value)}
-              isExternal
-              _hover={{
-                color: 'linkColorHover',
-                textDecoration: 'underline',
-              }}
-            >
-              {LINK_OPTIONS.find(option => option.id === item.id)?.label}
-            </Link>
-            <Icon color="brand.500" as={RiExternalLinkLine} />
-          </HStack>
-        ))}
-      </Box>
-    </HStack>
-  )
-}
-
-const SocialProfiles = ({ socialMetaData }: SocialMetaDataDisplayProps) => {
-  return (
-    <>
-      {socialMetaData.length !== 0 && (
-        <HStack
-          bgColor="wikiCardItemBg"
-          borderRadius={4}
-          justify="space-between"
-          align="center"
-          p={4}
-        >
-          <HStack>
-            <Text fontSize="14px" fontWeight="bold" color="linkColor">
-              Social Profiles:
-            </Text>
-          </HStack>
-          <Center>
-            <Wrap>
-              {socialMetaData
-                .filter(
-                  item =>
-                    LINK_OPTIONS.find(option => option.id === item.id)?.type ===
-                    LinkType.SOCIAL,
-                )
-                .map((social, i: number) => {
-                  const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
-                  return (
-                    <Link
-                      target="_blank"
-                      href={parseLink(social.value)}
-                      key={i}
-                      rel="nofollow"
-                      display="flex"
-                    >
-                      <IconButton
-                        color="secondaryDark"
-                        _hover={{ color: 'brand.500' }}
-                        _dark={{
-                          color: 'darkGrey',
-                          _hover: { color: 'brand.500' },
-                        }}
-                        key={i}
-                        aria-label={`Open ${social.id}`}
-                        minW={3}
-                        icon={<Icon as={Ico} />}
-                        variant="link"
-                        fontSize="20px"
-                      />
-                    </Link>
-                  )
-                })}
-            </Wrap>
-          </Center>
-        </HStack>
-      )}
-    </>
-  )
-}
-
-const ProfileListItem = ({ text, link }: { text: string; link: string }) => (
+const ProfileListItem = ({ title, children }: ProfileListItemProps) => (
   <HStack
     bgColor="wikiCardItemBg"
     borderRadius={4}
@@ -137,26 +36,10 @@ const ProfileListItem = ({ text, link }: { text: string; link: string }) => (
     align="center"
     p={4}
   >
-    <HStack spacing={2}>
-      <Text fontSize="14px" fontWeight="bold" color="linkColor">
-        {text}
-      </Text>
-    </HStack>
-    <Center>
-      <HStack flexWrap="wrap" justifyContent="space-between">
-        <Link
-          rel="nofollow"
-          target="_blank"
-          href={parseLink(link)}
-          color="brand.500"
-        >
-          <Flex align="center" gap="2">
-            <Text fontSize="14px">{shortenText(link, 20)}</Text>
-            <FiExternalLink color="#ff5caa" fontSize="18px" />
-          </Flex>
-        </Link>
-      </HStack>
-    </Center>
+    <Text fontSize="14px" fontWeight="bold" color="linkColor">
+      {title}:
+    </Text>
+    <Box>{children}</Box>
   </HStack>
 )
 
@@ -196,12 +79,97 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         title="Profile Summary"
         collapsed={{ base: true, xl: false }}
       >
-        {contractURL && <ProfileListItem text="Contract" link={contractURL} />}
-        {websiteLink && (
-          <ProfileListItem text="Official Website" link={websiteLink} />
+        {contractURL && (
+          <ProfileListItem title="Contract">
+            <Link
+              rel="nofollow"
+              target="_blank"
+              href={parseLink(contractURL)}
+              color="brand.500"
+            >
+              <Flex align="center" gap="2">
+                <Text fontSize="14px">{shortenText(contractURL, 20)}</Text>
+                <FiExternalLink color="#ff5caa" fontSize="18px" />
+              </Flex>
+            </Link>
+          </ProfileListItem>
         )}
-        <SocialProfiles socialMetaData={socialLinksData} />
-        <ExplorerProfiles socialMetaData={explorerLinksData} />
+        {websiteLink && (
+          <ProfileListItem title="Official Website">
+            <Link
+              rel="nofollow"
+              target="_blank"
+              href={parseLink(websiteLink)}
+              color="brand.500"
+            >
+              <Flex align="center" gap="2">
+                <Text fontSize="14px">{shortenText(websiteLink, 20)}</Text>
+                <FiExternalLink color="#ff5caa" fontSize="18px" />
+              </Flex>
+            </Link>
+          </ProfileListItem>
+        )}
+        {socialLinksData.length > 0 && (
+          <ProfileListItem title="Social Profiles">
+            <Wrap spacing={2}>
+              {socialLinksData
+                .filter(
+                  item =>
+                    LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+                    LinkType.SOCIAL,
+                )
+                .map((social, i: number) => {
+                  const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
+                  return (
+                    <Link
+                      target="_blank"
+                      href={parseLink(social.value)}
+                      key={i}
+                      rel="nofollow"
+                      display="flex"
+                    >
+                      <IconButton
+                        color="secondaryDark"
+                        _hover={{ color: 'brand.500' }}
+                        _dark={{
+                          color: 'darkGrey',
+                          _hover: { color: 'brand.500' },
+                        }}
+                        key={i}
+                        aria-label={`Open ${social.id}`}
+                        minW={3}
+                        icon={<Icon as={Ico} />}
+                        variant="link"
+                        fontSize="20px"
+                      />
+                    </Link>
+                  )
+                })}
+            </Wrap>
+          </ProfileListItem>
+        )}
+        {explorerLinksData.length > 0 && (
+          <ProfileListItem title="Explorers">
+            {explorerLinksData.map(item => (
+              <HStack>
+                <Link
+                  color="brand.500"
+                  fontSize="14px"
+                  key={item.id}
+                  href={parseLink(item.value)}
+                  isExternal
+                  _hover={{
+                    color: 'linkColorHover',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  {LINK_OPTIONS.find(option => option.id === item.id)?.label}
+                </Link>
+                <Icon color="brand.500" as={RiExternalLinkLine} />
+              </HStack>
+            ))}
+          </ProfileListItem>
+        )}
       </WikiAccordion>
     </VStack>
   )
