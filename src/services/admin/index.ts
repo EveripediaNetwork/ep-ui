@@ -1,9 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { WIKIS_EDITED, WIKIS_CREATED } from '@/services/admin/queries'
+import {
+  WIKIS_EDITED,
+  WIKIS_CREATED,
+  CREATED_WIKIS_TABLE,
+} from '@/services/admin/queries'
 import config from '@/config'
-import { WikisModifiedCount } from '@/types/admin'
+import { WikisModifiedCount, CreatedWikisCount } from '@/types/admin'
 
 type WikisModifiedCountArgs = {
   startDate: number
@@ -18,6 +22,9 @@ type WikisEditedCountResponse = {
 type WikisCreatedCountResponse = {
   wikisCreated: WikisModifiedCount[]
 }
+type CreatedWikiCountResponse = {
+  wikis: CreatedWikisCount[]
+}
 
 export const adminApi = createApi({
   reducerPath: 'adminApi',
@@ -31,6 +38,13 @@ export const adminApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
+    getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
+      query: (offset: number) => ({
+        document: CREATED_WIKIS_TABLE,
+        variables: { offset },
+      }),
+      transformResponse: (response: CreatedWikiCountResponse) => response.wikis,
+    }),
     getWikisEditedCount: builder.query<
       WikisModifiedCount[],
       WikisModifiedCountArgs
@@ -57,9 +71,14 @@ export const adminApi = createApi({
 })
 
 export const {
+  useGetAllCreatedWikiCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
-export const { getWikisCreatedCount, getWikisEditedCount } = adminApi.endpoints
+export const {
+  getAllCreatedWikiCount,
+  getWikisCreatedCount,
+  getWikisEditedCount,
+} = adminApi.endpoints

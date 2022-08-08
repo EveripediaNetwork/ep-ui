@@ -23,3 +23,27 @@ export const WIKIS_CREATED = gql`
     }
   }
 `
+
+export const CREATED_WIKIS_TABLE = gql`
+  query Wikis($offset: Int!) {
+    wikis(offset: $offset) {
+      title
+      images {
+        id
+        type
+      }
+      author {
+        id
+        profile {
+          username
+        }
+      }
+      created
+      tags {
+        id
+      }
+      promoted
+      hidden
+    }
+  }
+`

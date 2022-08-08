@@ -15,27 +15,21 @@ import {
   TagLabel,
   HStack,
 } from '@chakra-ui/react'
+import config from '@/config'
 import React from 'react'
+import shortenAccount from '@/utils/shortenAccount'
+import { shortenText } from '@/utils/shortenText'
 import {
   RiArrowDropDownLine,
   RiArrowDownLine,
   RiQuestionLine,
 } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
+import { Wikis } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 
-interface WikiCreatedInsightDataInterface {
-  Wiki: { title: string; img: string }
-  editorAddress: string
-  DateTime: string
-  Tags: string[]
-  status: string
-  statusDropdown: string[]
-  promoted: boolean
-}
-
 type InsightTableWikiCreatedProps = {
-  wikiCreatedInsightData: WikiCreatedInsightDataInterface[]
+  wikiCreatedInsightData: Wikis[]
 }
 
 export const InsightTableWikiCreated = (
@@ -92,23 +86,29 @@ export const InsightTableWikiCreated = (
                         <WikiImage
                           cursor="pointer"
                           flexShrink={0}
-                          imageURL={item.Wiki.img}
+                          imageURL={`${config.pinataBaseUrl}${
+                            item.images ? item.images[0].id : ''
+                          }  `}
                         />
                       </AspectRatio>
                       <Flex flexDirection="column">
-                        <Text>{item.Wiki.title}</Text>
+                        <Text>{shortenText(item.title, 20)}</Text>
                         <Text color="#718096" fontSize="sm">
-                          {item.editorAddress}
+                          {item.author.profile?.username
+                            ? item.author.profile.username
+                            : shortenAccount(
+                                item.author.id ? item.author.id : '',
+                              )}
                         </Text>
                       </Flex>
                     </Flex>
                   </Td>
                   <Td>
-                    <Text color="#718096">{item.DateTime}</Text>
+                    <Text color="#718096">{item.created}</Text>
                   </Td>
                   <Td>
                     <Flex w="100%" p={5} gap={3} align="center">
-                      {item.Tags.map((tag, i) => (
+                      {item.tags.map((tag, i) => (
                         <Tag
                           key={i}
                           size="md"
@@ -117,7 +117,7 @@ export const InsightTableWikiCreated = (
                           bg={bgTags[i].bg}
                           color={bgTags[i].color}
                         >
-                          <TagLabel>{tag}</TagLabel>
+                          <TagLabel>{tag.id}</TagLabel>
                         </Tag>
                       ))}
                     </Flex>
@@ -127,20 +127,20 @@ export const InsightTableWikiCreated = (
                       size="md"
                       borderRadius="full"
                       variant="solid"
-                      color={item.status === 'Active' ? '#38A169' : '#DD6B20'}
-                      bg={item.status === 'Active' ? '#F0FFF4' : '#FFF5F5'}
+                      color={item.hidden ? '#38A169' : '#DD6B20'}
+                      bg={item.hidden ? '#F0FFF4' : '#FFF5F5'}
                       px="2"
                     >
                       <HStack spacing={2}>
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color={
-                            item.status === 'Active' ? '#38A169' : '#DD6B20'
-                          }
+                          color={item.hidden ? '#38A169' : '#DD6B20'}
                           as={BsDot}
                         />
-                        <TagLabel>{item.status}</TagLabel>
+                        <TagLabel>
+                          {item.hidden ? 'Archived' : 'Active'}
+                        </TagLabel>
                       </HStack>
                     </Tag>
                   </Td>
@@ -152,7 +152,7 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                         >
-                          {item.statusDropdown[0]}
+                          {item.hidden ? 'Archived' : 'Active'}
                         </Text>
                         <Icon
                           fontSize="20px"
