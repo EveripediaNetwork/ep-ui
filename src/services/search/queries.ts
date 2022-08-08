@@ -36,3 +36,17 @@ export const GET_CATEGORIES_BY_TITLE = gql`
     }
   }
 `
+
+
+export const GET_USERNAME_BY_TITLE = gql`
+query getProfileLikeUsername($username: String!){
+  getProfileLikeUsername (
+    username : $username
+  ){
+    id
+    username
+    bio
+    avatar
+  }
+} 
+`

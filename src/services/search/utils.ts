@@ -1,5 +1,5 @@
 import { TagsByCategory } from '@/data/TagsByCategory'
-import { getCategoriesByTitle, getWikisByTitle } from '@/services/search'
+import { getCategoriesByTitle, getWikisByTitle, getUsernamesByTitle } from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
@@ -9,9 +9,17 @@ import { debounce } from 'debounce'
 import { useEffect, useState } from 'react'
 import Fuse from 'fuse.js'
 
+export type Username = {
+  id: string
+  username: string
+  bio: string
+  avatar: string
+}
+
 type Results = {
   articles: WikiPreview[]
   categories: Category[]
+  usernames: Username[]
 }
 
 export type SearchItem = keyof typeof SEARCH_TYPES
@@ -19,9 +27,11 @@ export type SearchItem = keyof typeof SEARCH_TYPES
 export const SEARCH_TYPES = {
   ARTICLE: 'ARTICLE',
   CATEGORY: 'CATEGORY',
+  USERNAME: 'USERNAME',
+
 } as const
 
-export const fillType = (item: WikiPreview | Category, type: SearchItem) => {
+export const fillType = (item: WikiPreview | Category | Username, type: SearchItem) => {
   return { ...item, type }
 }
 
@@ -37,12 +47,18 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
+export const fetchUsernamesList = async (query: string) => {
+  const { data } = await store.dispatch(getUsernamesByTitle.initiate(query))
+  console.log({data, query})
+  return data
+}
+
 const debouncedFetchResults = debounce(
   (query: string, cb: (data: Results) => void) => {
-    Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
+    Promise.all([fetchWikisList(query), fetchCategoriesList(query), fetchUsernamesList(query)]).then(
       res => {
-        const [articles = [], categories = []] = res
-        cb({ articles, categories })
+        const [articles = [], categories = [], usernames = []] = res
+        cb({ articles, categories, usernames })
       },
     )
   },
@@ -56,6 +72,7 @@ export const useNavSearch = () => {
   const [results, setResults] = useState<Results>({
     articles: [],
     categories: [],
+    usernames: [],
   })
 
   useEffect(() => {

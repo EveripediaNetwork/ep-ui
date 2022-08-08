@@ -4,6 +4,7 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_CATEGORIES_BY_TITLE,
   GET_WIKIS_BY_TITLE,
+  GET_USERNAME_BY_TITLE,
 } from '@/services/search/queries'
 import config from '@/config'
 import { WikiPreview } from '@/types/Wiki'
@@ -16,6 +17,12 @@ export type Category = {
   heroImage: string
   icon: string
 }
+export type Username = {
+  id: string
+  username: string
+  bio: string
+  avatar: string
+}
 
 type GetWikisByTitleResponse = {
   wikisByTitle: WikiPreview[]
@@ -24,6 +31,11 @@ type GetWikisByTitleResponse = {
 type GetCategoriesByTitleResponse = {
   categoryByTitle: Category[]
 }
+
+type GetUsernamesByTitleResponse = {
+  getProfileLikeUsername : Username[]
+}
+
 
 export const navSearchApi = createApi({
   reducerPath: 'navSearchApi',
@@ -53,13 +65,22 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetCategoriesByTitleResponse) =>
         response.categoryByTitle,
     }),
+    getUsernamesByTitle: builder.query<Username[], string>({
+      query: (username: string) => ({
+        document: GET_USERNAME_BY_TITLE,
+        variables: { username },
+      }),
+      transformResponse: (response: GetUsernamesByTitleResponse) =>
+        response.getProfileLikeUsername,
+    }),
   }),
 })
 
 export const {
   useGetWikisByTitleQuery,
   useGetCategoriesByTitleQuery,
+  useGetUsernamesByTitleQuery,
   util: { getRunningOperationPromises },
 } = navSearchApi
 
-export const { getWikisByTitle, getCategoriesByTitle } = navSearchApi.endpoints
+export const { getWikisByTitle, getCategoriesByTitle, getUsernamesByTitle } = navSearchApi.endpoints

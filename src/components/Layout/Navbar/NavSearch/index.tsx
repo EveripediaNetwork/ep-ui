@@ -43,10 +43,12 @@ export type NavSearchProps = {
 const ItemPaths = {
   [SEARCH_TYPES.ARTICLE]: '/wiki/',
   [SEARCH_TYPES.CATEGORY]: '/categories/',
+  [SEARCH_TYPES.USERNAME]: '/account/',
 }
 
 const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
+const USERNAMES_LIMIT = 4
 
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
@@ -55,17 +57,20 @@ export const NavSearch = (props: NavSearchProps) => {
 
   const unrenderedArticles = results.articles.length - ARTICLES_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
+  const unrenderedUsernames = results.usernames.length - USERNAMES_LIMIT
   const noResults =
-    results.articles.length === 0 && results.categories.length === 0
+    results.articles.length === 0 && results.categories.length === 0 && results.usernames.length === 0
 
   const resolvedUnrenderedArticles =
     unrenderedArticles > 0 ? unrenderedArticles : 0
   const resolvedUnrenderedCategories =
     unrenderedCategories > 0 ? unrenderedCategories : 0
+  const resolvedUnrenderedUsernames =
+    unrenderedUsernames > 0 ? unrenderedUsernames : 0
   const totalUnrendered =
-    resolvedUnrenderedArticles + resolvedUnrenderedCategories
+    resolvedUnrenderedArticles + resolvedUnrenderedCategories + resolvedUnrenderedUsernames
 
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null) 
 
   useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
@@ -175,6 +180,37 @@ export const NavSearch = (props: NavSearchProps) => {
       })}
     </>
   )
+  
+
+  console.log({results})
+  const usernamesSearchList = (
+    <>
+      {results.usernames?.slice(0, USERNAMES_LIMIT).map(username => {
+        const usernameAvatar = `${config.pinataBaseUrl}${username.avatar}`
+        const value = fillType(username, SEARCH_TYPES.USERNAME)
+        
+        return (
+          <AutoCompleteItem
+            key={username.id}
+            value={value}
+            getValue={acc => acc.username}
+            label={username.bio}
+            {...generalItemStyles}
+          >
+            <Avatar src={usernameAvatar} name={username.username} size="xs" />
+            <Flex direction="column">
+              <chakra.span fontWeight="semibold" fontSize="sm">
+                {username.username}
+              </chakra.span>
+              <Text noOfLines={1} maxW="full" fontSize="xs">
+              {username.bio}
+              </Text>
+            </Flex>
+          </AutoCompleteItem>
+        )
+      })}
+    </>
+  )
 
   const categoriesSearchList = (
     <>
@@ -213,6 +249,12 @@ export const NavSearch = (props: NavSearchProps) => {
         </AutoCompleteGroupTitle>
         {categoriesSearchList}
       </AutoCompleteGroup>
+      <AutoCompleteGroup>
+        <AutoCompleteGroupTitle {...titleStyles}>
+          Accounts
+        </AutoCompleteGroupTitle>
+        {usernamesSearchList}
+      </AutoCompleteGroup>
     </>
   )
 
@@ -242,7 +284,7 @@ export const NavSearch = (props: NavSearchProps) => {
           ml={4}
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search wikis, categories and tags"
+          placeholder="Search wikis, categories, tags and usernames"
           _placeholderShown={{
             textOverflow: 'ellipsis',
           }}
