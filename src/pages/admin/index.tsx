@@ -84,7 +84,7 @@ const Admin = () => {
 
     dataObj.push({
       name:
-      // eslint-disable-next-line
+        // eslint-disable-next-line
         graphFilter !== 'week'
           ? graphFilter === 'year'
             ? createCountStart?.split('-')[0]
