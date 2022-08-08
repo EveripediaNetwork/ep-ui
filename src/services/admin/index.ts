@@ -10,9 +10,9 @@ import config from '@/config'
 import { WikisModifiedCount, CreatedWikisCount } from '@/types/admin'
 
 type WikisModifiedCountArgs = {
-  startDate: number
-  endDate: number
-  interval: string
+  startDate?: number
+  endDate?: number
+  interval?: string
 }
 
 type WikisEditedCountResponse = {

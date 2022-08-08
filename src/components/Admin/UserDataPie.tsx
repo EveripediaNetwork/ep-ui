@@ -7,8 +7,12 @@ export const UserDataPie = ({
   data,
   colors,
 }: {
-  piedata: Array<{ name: string; value: number }>
-  data: Array<{ name: string; 'Wikis Created': number; 'Wikis Edited': number }>
+  piedata: Array<{ name: string | undefined; value: number | undefined }>
+  data: Array<{
+    name: string | undefined
+    'Wikis Created': number | undefined
+    'Wikis Edited': number | undefined
+  }>
   colors: Array<string>
 }) => {
   return (

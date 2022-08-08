@@ -114,8 +114,8 @@ export const InsightTableWikiCreated = (
                           size="md"
                           borderRadius="full"
                           variant="solid"
-                          bg={bgTags[i].bg}
-                          color={bgTags[i].color}
+                          bg={bgTags[i]?.bg}
+                          color={bgTags[i]?.color}
                         >
                           <TagLabel>{tag.id}</TagLabel>
                         </Tag>

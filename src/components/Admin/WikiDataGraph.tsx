@@ -25,10 +25,16 @@ export const WikiDataGraph = ({
   piedata,
   data,
   colors,
+  handleGraphFilterChange,
 }: {
-  piedata: Array<{ name: string; value: number }>
-  data: Array<{ name: string; 'Wikis Created': number; 'Wikis Edited': number }>
+  piedata: Array<{ name: string | undefined; value: number | undefined }>
+  data: Array<{
+    name: string | undefined
+    'Wikis Created': number | undefined
+    'Wikis Edited': number | undefined
+  }>
   colors: Array<string>
+  handleGraphFilterChange: any
 }) => {
   const currentYear = new Date().getFullYear()
   const labelColor = useColorModeValue('#718096', '#6c7079')
@@ -44,10 +50,16 @@ export const WikiDataGraph = ({
               Track wikis created and wikis edited
             </Text>
           </VStack>
-          <Select w="20%" icon={<MdArrowDropDown />}>
-            <option value="option1">{`Weekly (${currentYear})`}</option>
-            <option value="option1">{`Monthly (${currentYear})`}</option>
-            <option value="option1">{`Yearly (${currentYear})`}</option>
+          <Select
+            w="20%"
+            icon={<MdArrowDropDown />}
+            onChange={e => {
+              handleGraphFilterChange(e.target.value)
+            }}
+          >
+            <option value="week">{`Weekly (${currentYear})`}</option>
+            <option value="month">{`Monthly (${currentYear})`}</option>
+            <option value="year">{`Yearly (${currentYear})`}</option>
           </Select>
         </Flex>
         <Box p={5}>
@@ -61,13 +73,9 @@ export const WikiDataGraph = ({
                 minTickGap={20}
                 tickMargin={50}
                 dataKey="name"
-                dy={-65}
+                dy={-45}
               >
-                <Label
-                  position="insideBottom"
-                  style={{ fill: labelColor }}
-                  value="Week"
-                />
+                <Label position="insideBottom" style={{ fill: labelColor }} />
               </XAxis>
               <YAxis
                 tickLine={false}

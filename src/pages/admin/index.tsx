@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
 import {
@@ -35,6 +35,7 @@ const Admin = () => {
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
   const startDate = Math.floor(getMonday.getTime() / 1000)
+  const [graphFilter, setGraphFilter] = useState<string>('week')
 
   const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     startDate: 0,
@@ -61,51 +62,39 @@ const Admin = () => {
   })
   const { data: wikiData } = useGetAllCreatedWikiCountQuery(30)
 
-  console.log({ wikiData })
-
-  const { data: GraphWikiEditedCountData } = useGetWikisCreatedCountQuery({
-    startDate: 0,
-    endDate,
-    interval: 'year',
+  const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
+    interval: graphFilter,
   })
 
-  const data = [
-    {
-      name: 'Mon',
-      'Wikis Created': 40,
-      'Wikis Edited': 24,
-    },
-    {
-      name: 'Tue',
-      'Wikis Created': 30,
-      'Wikis Edited': 13,
-    },
-    {
-      name: 'Wed',
-      'Wikis Created': 20,
-      'Wikis Edited': 18,
-    },
-    {
-      name: 'Thur',
-      'Wikis Created': 27,
-      'Wikis Edited': 14,
-    },
-    {
-      name: 'Fri',
-      'Wikis Created': 18,
-      'Wikis Edited': 48,
-    },
-    {
-      name: 'Sat',
-      'Wikis Created': 23,
-      'Wikis Edited': 38,
-    },
-    {
-      name: 'Sun',
-      'Wikis Created': 34,
-      'Wikis Edited': 43,
-    },
-  ]
+  const { data: GraphWikisEditedCountData } = useGetWikisEditedCountQuery({
+    interval: graphFilter,
+  })
+
+  const dataObj: Array<{
+    name: string | undefined
+    'Wikis Created': number | undefined
+    'Wikis Edited': number
+  }> = []
+  GraphWikisEditedCountData?.map((item, index) => {
+    const editedCount = GraphWikisEditedCountData[index].amount
+    const createdCount =
+      GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.amount
+    const createCountStart =
+      GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.startOn
+
+    dataObj.push({
+      name:
+      // eslint-disable-next-line
+        graphFilter !== 'week'
+          ? graphFilter === 'year'
+            ? createCountStart?.split('-')[0]
+            : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
+          : createCountStart?.split('T')[0],
+      'Wikis Created': createdCount,
+      'Wikis Edited': editedCount,
+    })
+    return null
+  })
 
   const wikiMetaData = [
     {
@@ -206,9 +195,16 @@ const Admin = () => {
           )
         })}
       </Stack>
-      <WikiDataGraph piedata={piedata} colors={COLORS} data={data} />
+      <WikiDataGraph
+        piedata={piedata}
+        colors={COLORS}
+        data={dataObj}
+        handleGraphFilterChange={(e: string) => {
+          return setGraphFilter(e)
+        }}
+      />
       <Stack spacing={15} direction="column">
-        <WikiInsightTable wiki={wikiData || []} />
+        <WikiInsightTable wiki={wikiData} />
         <WikiEditorsInsightTable />
       </Stack>
     </Box>
