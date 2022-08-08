@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
-import { RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
+import { RiNewspaperFill, RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
@@ -12,6 +12,7 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import {
+  useGetAllCreatedWikiCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
 } from '@/services/admin'
@@ -55,7 +56,10 @@ const Admin = () => {
     endDate,
     interval: 'year',
   })
+  const { data: wikiData } = useGetAllCreatedWikiCountQuery(30)
 
+  console.log({ wikiData })
+  
   console.log({ weeklyWikiEditedCountData, weeklyWikiCreatedCountData })
 
   const data = [
@@ -98,12 +102,12 @@ const Admin = () => {
 
   const wikiMetaData = [
     {
-      icon: RiEditFill,
+      icon: RiNewspaperFill,
       value: totalWikisEditedCountData
         ? totalWikisEditedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiEditedCountData
-        ? weeklyWikiEditedCountData[0].amount
+        ? weeklyWikiEditedCountData[0]?.amount
         : 0,
       percent: 40,
       color: 'pink.400',
@@ -188,7 +192,7 @@ const Admin = () => {
               detailHeader={detailHeader}
               icon={icon}
               currentValue={value.toString()}
-              weeklyValue={weeklyValue.toString()}
+              weeklyValue={weeklyValue?.toString()}
               percent={percent}
               color={color}
             />
@@ -197,12 +201,13 @@ const Admin = () => {
       </Stack>
       <WikiDataGraph piedata={piedata} colors={COLORS} data={data} />
       <Stack spacing={15} direction="column">
-        <WikiInsightTable />
+        <WikiInsightTable wiki={wikiData? wikiData : []} />
         <WikiEditorsInsightTable />
       </Stack>
     </Box>
   )
 }
+
 
 export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
   ssr: false,

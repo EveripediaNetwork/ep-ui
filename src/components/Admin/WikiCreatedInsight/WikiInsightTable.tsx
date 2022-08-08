@@ -22,130 +22,141 @@ import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
+import { Wikis } from '@/types/admin'
 
-export const WikiInsightTable = () => {
-  const wikiData = [
-    {
-      Wiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Jan 6, 2022 - 12:22am',
-      Tags: ['Normal', 'Promoted'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-    {
-      Wiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Apr 11, 2022 - 19:22am',
-      Tags: ['Normal'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: true,
-    },
-    {
-      Wiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Apr 11, 2022 - 19:22am',
-      Tags: ['Normal'],
-      status: 'Archived',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: true,
-    },
-    {
-      Wiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Jan 6, 2022 - 12:22am',
-      Tags: ['Normal', 'Promoted'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-    {
-      Wiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Jan 6, 2022 - 12:22am',
-      Tags: ['Normal', 'Promoted'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-    {
-      Wiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Apr 11, 2022 - 19:22am',
-      Tags: ['Normal'],
-      status: 'Archived',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: true,
-    },
-    {
-      Wiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Jan 6, 2022 - 12:22am',
-      Tags: ['Normal', 'Promoted'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-    {
-      Wiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Jan 6, 2022 - 12:22am',
-      Tags: ['Normal', 'Promoted'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-    {
-      Wiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Apr 11, 2022 - 19:22am',
-      Tags: ['Normal'],
-      status: 'Active',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: true,
-    },
-    {
-      Wiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      editorAddress: 'Kesar.eth',
-      DateTime: 'Apr 11, 2022 - 19:22am',
-      Tags: ['Normal'],
-      status: 'Archived',
-      statusDropdown: ['Archive', 'Active'],
-      promoted: false,
-    },
-  ]
+
+interface WikisProps {
+  wiki: Wikis[]
+}
+
+
+export const WikiInsightTable = ({ wiki }: WikisProps) => {
+  // const wikiData = [
+  //   {
+  //     Wiki: {
+  //       title: 'Sushiswap',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Jan 6, 2022 - 12:22am',
+  //     Tags: ['Normal', 'Promoted'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'Flying Jeans',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Apr 11, 2022 - 19:22am',
+  //     Tags: ['Normal'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: true,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'From Mars',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Apr 11, 2022 - 19:22am',
+  //     Tags: ['Normal'],
+  //     status: 'Archived',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: true,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'Flying Jeans',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Jan 6, 2022 - 12:22am',
+  //     Tags: ['Normal', 'Promoted'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'From Mars',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Jan 6, 2022 - 12:22am',
+  //     Tags: ['Normal', 'Promoted'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'From Mars',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Apr 11, 2022 - 19:22am',
+  //     Tags: ['Normal'],
+  //     status: 'Archived',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: true,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'Sushiswap',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Jan 6, 2022 - 12:22am',
+  //     Tags: ['Normal', 'Promoted'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'From Mars',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Jan 6, 2022 - 12:22am',
+  //     Tags: ['Normal', 'Promoted'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'Flying Jeans',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Apr 11, 2022 - 19:22am',
+  //     Tags: ['Normal'],
+  //     status: 'Active',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: true,
+  //   },
+  //   {
+  //     Wiki: {
+  //       title: 'From Mars',
+  //       img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
+  //     },
+  //     editorAddress: 'Kesar.eth',
+  //     DateTime: 'Apr 11, 2022 - 19:22am',
+  //     Tags: ['Normal'],
+  //     status: 'Archived',
+  //     statusDropdown: ['Archive', 'Active'],
+  //     promoted: false,
+  //   },
+  // ]
+
+
+  console.log(wiki)
+ 
 
   const {
     pages,
@@ -158,7 +169,7 @@ export const WikiInsightTable = () => {
     // pageSize,
     // setPageSize,
   } = usePagination({
-    total: wikiData.length,
+    total: wiki? wiki.length : 0,
     limits: {
       outer: 3,
       inner: 3,
@@ -218,7 +229,7 @@ export const WikiInsightTable = () => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        <InsightTableWikiCreated wikiCreatedInsightData={wikiData} />
+        <InsightTableWikiCreated wikiCreatedInsightData={wiki? wiki : [ ]} />
       </Flex>
       <Pagination
         pagesCount={10}
