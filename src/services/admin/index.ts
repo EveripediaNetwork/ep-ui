@@ -1,7 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { WIKIS_EDITED, WIKIS_CREATED, CREATED_WIKIS_TABLE } from '@/services/admin/queries'
+import {
+  WIKIS_EDITED,
+  WIKIS_CREATED,
+  CREATED_WIKIS_TABLE,
+} from '@/services/admin/queries'
 import config from '@/config'
 import { WikisModifiedCount, CreatedWikisCount } from '@/types/admin'
 
@@ -11,8 +15,6 @@ type WikisModifiedCountArgs = {
   interval: string
 }
 
-
-
 type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
 }
@@ -21,7 +23,7 @@ type WikisCreatedCountResponse = {
   wikisCreated: WikisModifiedCount[]
 }
 type CreatedWikiCountResponse = {
-   wikis: CreatedWikisCount[]
+  wikis: CreatedWikisCount[]
 }
 
 export const adminApi = createApi({
@@ -36,13 +38,12 @@ export const adminApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number >({
-      query: ( offset: number) => ({
+    getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
+      query: (offset: number) => ({
         document: CREATED_WIKIS_TABLE,
         variables: { offset },
       }),
-      transformResponse: (response: CreatedWikiCountResponse) =>
-        response.wikis,
+      transformResponse: (response: CreatedWikiCountResponse) => response.wikis,
     }),
     getWikisEditedCount: builder.query<
       WikisModifiedCount[],
@@ -66,7 +67,6 @@ export const adminApi = createApi({
       transformResponse: (response: WikisCreatedCountResponse) =>
         response.wikisCreated,
     }),
-    
   }),
 })
 
@@ -77,4 +77,8 @@ export const {
   util: { getRunningOperationPromises },
 } = adminApi
 
-export const { getAllCreatedWikiCount, getWikisCreatedCount, getWikisEditedCount,  } = adminApi.endpoints
+export const {
+  getAllCreatedWikiCount,
+  getWikisCreatedCount,
+  getWikisEditedCount,
+} = adminApi.endpoints

@@ -54,11 +54,5 @@ export interface Wikis {
 
 export type CreatedWikisCount = Pick<
   Wikis,
-  | 'title'
-  | 'images'
-  | 'author'
-  | 'created'
-  | 'tags'
-  | 'promoted'
-  | 'hidden'
+  'title' | 'images' | 'author' | 'created' | 'tags' | 'promoted' | 'hidden'
 >

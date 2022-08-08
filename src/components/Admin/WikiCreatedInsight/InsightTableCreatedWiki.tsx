@@ -17,18 +17,16 @@ import {
 } from '@chakra-ui/react'
 import config from '@/config'
 import React from 'react'
-import  shortenAccount  from '@/utils/shortenAccount'
-import { shortenText }  from '@/utils/shortenText'
+import shortenAccount from '@/utils/shortenAccount'
+import { shortenText } from '@/utils/shortenText'
 import {
   RiArrowDropDownLine,
   RiArrowDownLine,
   RiQuestionLine,
 } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
-import { WikiImage } from '../../WikiImage'
 import { Wikis } from '@/types/admin'
-
-
+import { WikiImage } from '../../WikiImage'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -88,13 +86,19 @@ export const InsightTableWikiCreated = (
                         <WikiImage
                           cursor="pointer"
                           flexShrink={0}
-                          imageURL={`${config.pinataBaseUrl}${item.images? item.images[0].id : ''}  `}
+                          imageURL={`${config.pinataBaseUrl}${
+                            item.images ? item.images[0].id : ''
+                          }  `}
                         />
                       </AspectRatio>
                       <Flex flexDirection="column">
                         <Text>{shortenText(item.title, 20)}</Text>
                         <Text color="#718096" fontSize="sm">
-                          {item.author.profile?.username? item.author.profile.username : shortenAccount(item.author.id? item.author.id : '' ) }
+                          {item.author.profile?.username
+                            ? item.author.profile.username
+                            : shortenAccount(
+                                item.author.id ? item.author.id : '',
+                              )}
                         </Text>
                       </Flex>
                     </Flex>
@@ -131,12 +135,12 @@ export const InsightTableWikiCreated = (
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color={
-                            item.hidden ? '#38A169' : '#DD6B20'
-                          }
+                          color={item.hidden ? '#38A169' : '#DD6B20'}
                           as={BsDot}
                         />
-                        <TagLabel>{item.hidden? 'Archived' : 'Active'}</TagLabel>
+                        <TagLabel>
+                          {item.hidden ? 'Archived' : 'Active'}
+                        </TagLabel>
                       </HStack>
                     </Tag>
                   </Td>
@@ -148,7 +152,7 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                         >
-                          {item.hidden? 'Archived' : 'Active'}
+                          {item.hidden ? 'Archived' : 'Active'}
                         </Text>
                         <Icon
                           fontSize="20px"

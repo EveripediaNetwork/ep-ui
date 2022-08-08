@@ -1,7 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 import { Heading, Text, Stack, Box } from '@chakra-ui/react'
 
-import { RiNewspaperFill, RiEditFill, RiUser3Fill, RiUserSearchFill } from 'react-icons/ri'
+import {
+  RiNewspaperFill,
+  RiEditFill,
+  RiUser3Fill,
+  RiUserSearchFill,
+} from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
@@ -59,7 +64,7 @@ const Admin = () => {
   const { data: wikiData } = useGetAllCreatedWikiCountQuery(30)
 
   console.log({ wikiData })
-  
+
   console.log({ weeklyWikiEditedCountData, weeklyWikiCreatedCountData })
 
   const data = [
@@ -201,13 +206,12 @@ const Admin = () => {
       </Stack>
       <WikiDataGraph piedata={piedata} colors={COLORS} data={data} />
       <Stack spacing={15} direction="column">
-        <WikiInsightTable wiki={wikiData? wikiData : []} />
+        <WikiInsightTable wiki={wikiData || []} />
         <WikiEditorsInsightTable />
       </Stack>
     </Box>
   )
 }
-
 
 export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
   ssr: false,

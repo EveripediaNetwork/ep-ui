@@ -21,14 +21,12 @@ import {
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 import { Wikis } from '@/types/admin'
-
+import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 interface WikisProps {
   wiki: Wikis[]
 }
-
 
 export const WikiInsightTable = ({ wiki }: WikisProps) => {
   // const wikiData = [
@@ -154,9 +152,7 @@ export const WikiInsightTable = ({ wiki }: WikisProps) => {
   //   },
   // ]
 
-
   console.log(wiki)
- 
 
   const {
     pages,
@@ -169,7 +165,7 @@ export const WikiInsightTable = ({ wiki }: WikisProps) => {
     // pageSize,
     // setPageSize,
   } = usePagination({
-    total: wiki? wiki.length : 0,
+    total: wiki ? wiki.length : 0,
     limits: {
       outer: 3,
       inner: 3,
@@ -229,7 +225,7 @@ export const WikiInsightTable = ({ wiki }: WikisProps) => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        <InsightTableWikiCreated wikiCreatedInsightData={wiki? wiki : [ ]} />
+        <InsightTableWikiCreated wikiCreatedInsightData={wiki || []} />
       </Flex>
       <Pagination
         pagesCount={10}
