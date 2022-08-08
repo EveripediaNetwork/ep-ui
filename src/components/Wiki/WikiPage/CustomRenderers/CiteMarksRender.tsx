@@ -71,22 +71,7 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
     setMounted(true)
   }, [])
 
-  if (!wiki || !mounted)
-    return (
-      <Link as="sup" id={`cite-mark-${id}-${count}`} href={href}>
-        <Text
-          as="sup"
-          id={`cite-mark-${id}-${count}`}
-          scrollMarginTop="50vh"
-          bgColor={isActive ? '#e160a12a' : 'transparent'}
-          boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
-          borderRadius={2}
-          zIndex={-1}
-        >
-          {text}
-        </Text>
-      </Link>
-    )
+  if (!wiki || !mounted) return null
 
   const referencesString = getWikiMetadataById(
     wiki,
@@ -110,6 +95,7 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
           onBlur={() => {}}
           href={href}
           borderRadius="100px"
+          _focus={{ outline: 'none', textDecoration: 'underline' }}
         >
           <Text
             as="sup"
