@@ -111,7 +111,7 @@ const tsFormat = (value: string) => {
 }
 
 export const shouldEmbed = (url: string) => {
-  return routeToBlock([], new URL(url)) !== undefined
+  return routeToBlock([] as any, new URL(url) as any) !== undefined
 }
 
 const NFT = ({
