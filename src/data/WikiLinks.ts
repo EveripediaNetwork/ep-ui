@@ -74,7 +74,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Linkedin',
     icon: AiOutlineLinkedin,
-    tests: [/https:\/\/(www.)?linkedin.com\/in\/\w+/],
+    tests: [/https:\/\/(www.)?linkedin.com\/(in|company)\/\w+/],
   },
   {
     id: CommonMetaIds.YOUTUBE_PROFILE,
