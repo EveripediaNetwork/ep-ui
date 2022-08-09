@@ -245,16 +245,13 @@ const CreateWikiContent = () => {
 
       const finalWiki = {
         ...wiki,
-        user: {
-          id: userAddress,
-        },
+        user: { id: userAddress },
         content: String(wiki.content).replace(/\n/gm, '  \n'),
+        metadata: wiki.metadata.filter(metadata => metadata.value !== ''),
       }
 
       if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
       setWikiId(finalWiki.id)
-
-      console.log({ finalWiki })
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
@@ -274,6 +271,7 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            // eslint-disable-next-line no-console
             console.error({ ...errObj })
             const wikiError =
               errObj.response.errors[0].extensions.exception.response

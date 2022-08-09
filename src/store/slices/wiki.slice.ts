@@ -60,12 +60,10 @@ const initialState: Wiki = {
   categories: [],
   tags: [],
   metadata: [
-    ...Object.values(CommonMetaIds).map(mID => {
-      let value = ''
-      if (mID === CommonMetaIds.PAGE_TYPE) value = 'generic'
-      return { id: mID, value }
-    }),
-    ...Object.values(EditSpecificMetaIds).map(mID => ({ id: mID, value: '' })),
+    ...Object.values({ ...CommonMetaIds, ...EditSpecificMetaIds }).map(mID => ({
+      id: mID,
+      value: '',
+    })),
   ],
   user: {
     id: '',

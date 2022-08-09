@@ -30,7 +30,6 @@ export enum EditorContentOverride {
 export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
 
 export enum CommonMetaIds {
-  PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
 
   // other info
@@ -103,6 +102,10 @@ export enum ValidatorCodes {
 
 export enum EditSpecificMetaIds {
   COMMIT_MESSAGE = 'commit-message',
+  WORDS_CHANGED = 'words-changed',
+  PERCENT_CHANGED = 'percent-changed',
+  BLOCKS_CHANGED = 'blocks-changed',
+  WIKI_SCORE = 'wiki-score',
 }
 
 export interface MData {
