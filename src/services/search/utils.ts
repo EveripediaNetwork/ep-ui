@@ -19,7 +19,10 @@ export type Username = {
   bio: string
   avatar: string
 }
-
+type UsernameArgs = {
+  id: string
+  username: string
+}
 type Results = {
   articles: WikiPreview[]
   categories: Category[]
@@ -53,9 +56,8 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
-export const fetchUsernamesList = async (query: string) => {
+export const fetchUsernamesList = async (query: UsernameArgs) => {
   const { data } = await store.dispatch(getUsernamesByTitle.initiate(query))
-  console.log({ data, query })
   return data
 }
 
@@ -64,7 +66,7 @@ const debouncedFetchResults = debounce(
     Promise.all([
       fetchWikisList(query),
       fetchCategoriesList(query),
-      fetchUsernamesList(query),
+      fetchUsernamesList({ id: query, username: query }),
     ]).then(res => {
       const [articles = [], categories = [], usernames = []] = res
       cb({ articles, categories, usernames })

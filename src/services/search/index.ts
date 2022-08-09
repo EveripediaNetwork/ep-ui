@@ -23,7 +23,10 @@ export type Username = {
   bio: string
   avatar: string
 }
-
+type UsernameArgs = {
+  id: string
+  username: string
+}
 type GetWikisByTitleResponse = {
   wikisByTitle: WikiPreview[]
 }
@@ -64,10 +67,10 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetCategoriesByTitleResponse) =>
         response.categoryByTitle,
     }),
-    getUsernamesByTitle: builder.query<Username[], string>({
-      query: (username: string) => ({
+    getUsernamesByTitle: builder.query<Username[], UsernameArgs>({
+      query: ({ id, username }) => ({
         document: GET_USERNAME_BY_TITLE,
-        variables: { username },
+        variables: { id, username },
       }),
       transformResponse: (response: GetUsernamesByTitleResponse) =>
         response.getProfileLikeUsername,
