@@ -66,7 +66,6 @@ import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
   useCreateWikiEffects,
@@ -222,7 +221,7 @@ const CreateWikiContent = () => {
       params: { address: userAddress, slug: getWikiSlug() },
     })
 
-    if (isUserConnected) {
+    if (isUserConnected && userAddress) {
       if (
         isNewCreateWiki &&
         !override &&
@@ -244,38 +243,18 @@ const CreateWikiContent = () => {
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      let interWiki = { ...wiki }
-      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
-      setWikiId(interWiki.id)
-
-      if (userAddress) {
-        interWiki = {
-          ...interWiki,
-          user: {
-            id: userAddress,
-          },
-          content: String(wiki.content).replace(/\n/gm, '  \n'),
-        }
-      }
-
-      if (!isNewCreateWiki || override) {
-        let prevWiki: Wiki | undefined
-        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          prevWiki = prevEditedWiki.current.wiki
-        } else if (override && existingWikiData) {
-          prevWiki = existingWikiData
-        } else if (wikiData) {
-          prevWiki = wikiData
-        }
-        if (prevWiki) calculateEditInfo(prevWiki, interWiki, dispatch)
-      }
-
       const finalWiki = {
-        ...interWiki,
-        metadata: store.getState().wiki.metadata.filter(meta => {
-          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
-        }),
+        ...wiki,
+        user: {
+          id: userAddress,
+        },
+        content: String(wiki.content).replace(/\n/gm, '  \n'),
       }
+
+      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
+      setWikiId(finalWiki.id)
+
+      console.log({ finalWiki })
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
@@ -389,7 +368,9 @@ const CreateWikiContent = () => {
                 },
               }}
             >
-              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Reset to current wiki content'}
+              {draft?.id === CreateNewWikiSlug
+                ? 'Reset State'
+                : 'Reset to current wiki content'}
             </Button>
           </HStack>
         ),

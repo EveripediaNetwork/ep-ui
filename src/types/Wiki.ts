@@ -103,18 +103,6 @@ export enum ValidatorCodes {
 
 export enum EditSpecificMetaIds {
   COMMIT_MESSAGE = 'commit-message',
-  WORDS_CHANGED = 'words-changed',
-  PERCENT_CHANGED = 'percent-changed',
-  BLOCKS_CHANGED = 'blocks-changed',
-  WIKI_SCORE = 'wiki-score',
-}
-
-export enum WikiRootBlocks {
-  TITLE = 'title',
-  CONTENT = 'content',
-  WIKI_IMAGE = 'wiki-image',
-  SUMMARY = 'summary',
-  TAGS = 'tags',
 }
 
 export interface MData {
