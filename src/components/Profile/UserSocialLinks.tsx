@@ -50,6 +50,9 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
                 aria-label="etherscan"
                 as={EtherscanIcon}
                 boxSize="22px"
+                _dark={{
+                  filter: 'invert(100%) hue-rotate(180deg)',
+                }}
                 mt="-9px"
                 _hover={{
                   opacity: 0.7,
