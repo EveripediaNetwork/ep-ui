@@ -2,7 +2,7 @@ import { TagsByCategory } from '@/data/TagsByCategory'
 import {
   getCategoriesByTitle,
   getWikisByTitle,
-  getUsernamesByTitle,
+  getAccountsByTitle,
 } from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -13,20 +13,20 @@ import { debounce } from 'debounce'
 import { useEffect, useState } from 'react'
 import Fuse from 'fuse.js'
 
-export type Username = {
+export type Account = {
   id: string
   username: string
   bio: string
   avatar: string
 }
-type UsernameArgs = {
+type AccountArgs = {
   id: string
   username: string
 }
 type Results = {
   articles: WikiPreview[]
   categories: Category[]
-  usernames: Username[]
+  accounts: Account[]
 }
 
 export type SearchItem = keyof typeof SEARCH_TYPES
@@ -34,11 +34,11 @@ export type SearchItem = keyof typeof SEARCH_TYPES
 export const SEARCH_TYPES = {
   ARTICLE: 'ARTICLE',
   CATEGORY: 'CATEGORY',
-  USERNAME: 'USERNAME',
+  ACCOUNT: 'ACCOUNT',
 } as const
 
 export const fillType = (
-  item: WikiPreview | Category | Username,
+  item: WikiPreview | Category | Account,
   type: SearchItem,
 ) => {
   return { ...item, type }
@@ -56,8 +56,8 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
-export const fetchUsernamesList = async (query: UsernameArgs) => {
-  const { data } = await store.dispatch(getUsernamesByTitle.initiate(query))
+export const fetchAccountsList = async (query: AccountArgs) => {
+  const { data } = await store.dispatch(getAccountsByTitle.initiate(query))
   return data
 }
 
@@ -66,10 +66,10 @@ const debouncedFetchResults = debounce(
     Promise.all([
       fetchWikisList(query),
       fetchCategoriesList(query),
-      fetchUsernamesList({ id: query, username: query }),
+      fetchAccountsList({ id: query, username: query }),
     ]).then(res => {
-      const [articles = [], categories = [], usernames = []] = res
-      cb({ articles, categories, usernames })
+      const [articles = [], categories = [], accounts = []] = res
+      cb({ articles, categories, accounts })
     })
   },
   500,
@@ -82,7 +82,7 @@ export const useNavSearch = () => {
   const [results, setResults] = useState<Results>({
     articles: [],
     categories: [],
-    usernames: [],
+    accounts: [],
   })
 
   useEffect(() => {

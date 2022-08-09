@@ -17,13 +17,13 @@ export type Category = {
   heroImage: string
   icon: string
 }
-export type Username = {
+export type Account = {
   id: string
   username: string
   bio: string
   avatar: string
 }
-type UsernameArgs = {
+type AccountArgs = {
   id: string
   username: string
 }
@@ -35,8 +35,8 @@ type GetCategoriesByTitleResponse = {
   categoryByTitle: Category[]
 }
 
-type GetUsernamesByTitleResponse = {
-  getProfileLikeUsername: Username[]
+type GetAccountsByTitleResponse = {
+  getProfileLikeUsername: Account[]
 }
 
 export const navSearchApi = createApi({
@@ -67,12 +67,12 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetCategoriesByTitleResponse) =>
         response.categoryByTitle,
     }),
-    getUsernamesByTitle: builder.query<Username[], UsernameArgs>({
+    getAccountsByTitle: builder.query<Account[], AccountArgs>({
       query: ({ id, username }) => ({
         document: GET_USERNAME_BY_TITLE,
         variables: { id, username },
       }),
-      transformResponse: (response: GetUsernamesByTitleResponse) =>
+      transformResponse: (response: GetAccountsByTitleResponse) =>
         response.getProfileLikeUsername,
     }),
   }),
@@ -81,9 +81,9 @@ export const navSearchApi = createApi({
 export const {
   useGetWikisByTitleQuery,
   useGetCategoriesByTitleQuery,
-  useGetUsernamesByTitleQuery,
+  useGetAccountsByTitleQuery,
   util: { getRunningOperationPromises },
 } = navSearchApi
 
-export const { getWikisByTitle, getCategoriesByTitle, getUsernamesByTitle } =
+export const { getWikisByTitle, getCategoriesByTitle, getAccountsByTitle } =
   navSearchApi.endpoints
