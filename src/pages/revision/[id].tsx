@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
@@ -72,26 +72,18 @@ const Revision = () => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
 
-  const [mounted, setMounted] = useState(false)
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted)
-    return (
-      wiki && (
-        <WikiHeader
-          title={wiki.content[0].title}
-          description={getWikiSummary(wiki.content[0])}
-          mainImage={getWikiImageUrl(wiki.content[0])}
-        />
-      )
-    )
-
   return (
     <>
       {wiki && (
         <WikiHeader
+          slug={wiki.content[0].id as string}
+          author={
+            wiki.content[0].author.profile?.username ||
+            wiki.content[0].author.id ||
+            ''
+          }
+          dateModified={wiki.content[0].updated}
+          datePublished={wiki.content[0].created}
           title={wiki.content[0].title}
           description={getWikiSummary(wiki.content[0])}
           mainImage={getWikiImageUrl(wiki.content[0])}
