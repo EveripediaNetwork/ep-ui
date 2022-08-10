@@ -19,10 +19,7 @@ const blogSlice = createSlice({
   initialState,
   reducers: {
     setBlogs(state, action) {
-      const newState = {
-        ...state,
-        ...action.payload,
-      }
+      const newState = [...state, ...action.payload]
 
       return newState
     },

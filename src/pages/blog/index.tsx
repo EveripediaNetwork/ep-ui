@@ -6,8 +6,7 @@ import { useAppDispatch } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
 import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
-import arweave from '@/config/arweave'
-import { formatEntry } from '@/utils/formatEntry'
+import { getBlogentriesFormatted, getEntryPaths } from '@/utils/blog.utils'
 
 export const Blog = ({ blogEntries }: any) => {
   const [mounted, setMounted] = useState(false)
@@ -57,57 +56,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await Promise.all(getRunningOperationPromises())
 
-  const entryPaths = entries.data.transactions.edges
-    .map(({ node }: any) => {
-      const tags = Object.fromEntries(
-        node.tags.map((tag: any) => [tag.name, tag.value]),
-      )
-      console.log(node.block.timestamp)
+  const entryPaths = getEntryPaths(entries)
+  console.log(entryPaths)
 
-      return {
-        slug: tags['Original-Content-Digest'],
-        path: node.id,
-        timestamp: node.block.timestamp,
-      }
-    })
-    .filter((entry: any) => entry.slug && entry.slug !== '')
-    .reduce((acc: any, current: any) => {
-      const x = acc.findIndex((entry: any) => entry.slug === current.slug)
-      if (x === -1) return acc.concat([current])
-
-      acc[x].timestamp = current.timestamp
-
-      return acc
-    }, [])
-
-  const blogEntries = (
-    await Promise.all(
-      entryPaths.map(async (entry: any) =>
-        formatEntry(
-          JSON.parse(
-            String(
-              await arweave.transactions.getData(entry.path, {
-                decode: true,
-                string: true,
-              }),
-            ),
-          ),
-          entry.slug,
-          entry.timestamp,
-        ),
-      ),
-    )
-  )
-    .sort((a, b) => b.timestamp - a.timestamp)
-    .reduce((acc, current) => {
-      const x = acc.find((entry: any) => entry.slug === current.slug)
-      if (!x) return acc.concat([current])
-      return acc
-    }, [])
-
-  // console.log(blogEntries)
-  console.log(blogEntries)
-  // console.log(entries.data.transactions.edges)
+  const blogEntries = await getBlogentriesFormatted(entryPaths)
 
   return {
     props: {

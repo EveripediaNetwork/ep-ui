@@ -1,6 +1,3 @@
-// import {
-//   BlogPost as BlogPostType,
-// } from '@/components/Blog/data'
 import { GetServerSideProps } from 'next'
 import React, { useEffect, useState } from 'react'
 import arweave from '@/config/arweave'
@@ -12,37 +9,58 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-// import { BlogPost } from '@/components/Blog/BlogPost'
-// import { Image } from '@/components/Elements/Image/Image'
-import { useAppSelector } from '@/store/hook'
-import { Blog } from '@/store/slices/blog-slice'
+import { useAppSelector, useAppDispatch } from '@/store/hook'
+import { Blog, setBlogs } from '@/store/slices/blog-slice'
 import { store } from '@/store/store'
-import { getSingleBlogEntry } from '@/services/blog'
-import { formatEntry } from '@/utils/formatEntry'
+import { getBlogEntries, getSingleBlogEntry } from '@/services/blog'
+import {
+  formatEntry,
+  getBlogentriesFormatted,
+  getEntryPaths,
+} from '@/utils/blog.utils'
 import ReactMarkdown from 'react-markdown'
 import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import { unified } from 'unified'
+import { BlogPost } from '@/components/Blog/BlogPost'
 
-// type BlogPostProps = NextPage & {
-//   post: BlogPostType
-//   postSuggestions: BlogPostType[]
-// }
+type BlogPostType = {
+  digest: string
+}
 
-export const BlogPostPage = ({ digest }: any) => {
-  // const { post, postSuggestions } = props
+export const BlogPostPage = ({ digest }: BlogPostType) => {
+  const dispatch = useAppDispatch()
+
+  const blogPosts = useAppSelector(state => [state.blog])
 
   const blogResult = useAppSelector(state =>
     state.blog && digest
       ? Object.values(state.blog).find(b => b.digest === digest)
       : null,
   )
-
   const [blog, setBlog] = useState<Blog | undefined | null>(blogResult)
 
   useEffect(() => {
-    console.log(blogResult)
+    if (!blogPosts || blogPosts.length === 0) {
+      const populateBlogs = async () => {
+        const entries = await store.dispatch(
+          getBlogEntries.initiate([
+            '0xAe65930180ef4d86dbD1844275433E9e1d6311ED',
+          ]),
+        )
+
+        const entryPaths = getEntryPaths(entries)
+
+        const blogEntries = await getBlogentriesFormatted(entryPaths)
+        dispatch(setBlogs(blogEntries))
+      }
+
+      populateBlogs()
+    }
+  }, [blogPosts])
+
+  useEffect(() => {
     if (!blogResult) {
       const getBlogEntry = async () => {
         const {
@@ -59,7 +77,6 @@ export const BlogPostPage = ({ digest }: any) => {
             },
           },
         } = await store.dispatch(getSingleBlogEntry.initiate(digest))
-        // console.log(await store.dispatch(getSingleBlogEntry.initiate(digest)))
 
         const formatted = await formatEntry(
           JSON.parse(
@@ -80,7 +97,6 @@ export const BlogPostPage = ({ digest }: any) => {
           .process(formatted.body)
 
         formatted.body = String(formatted.body)
-        console.log(formatted.body)
 
         setBlog(formatted)
       }
@@ -111,12 +127,6 @@ export const BlogPostPage = ({ digest }: any) => {
             <Text color="gray.600" mb={3} _dark={{ color: 'gray.400' }}>
               {new Date((blog.timestamp || 0) * 1000).toDateString()}
             </Text>
-
-            {/* <Image
-              h={{ base: '300px', md: '393px' }}
-              src={blog.cover_image}
-              mt="14"
-            /> */}
 
             <ReactMarkdown
               components={components}
@@ -165,23 +175,25 @@ export const BlogPostPage = ({ digest }: any) => {
             </Button>
           </Stack>
 
-          <Stack spacing="8">
-            <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
-              You might like
-            </Text>
-            <SimpleGrid
-              alignSelf="center"
-              w="fit-content"
-              mt={{ base: '15', md: '16' }}
-              columns={{ base: 1, md: 2 }}
-              spacingX="5"
-              spacingY="14"
-            >
-              {/* {postSuggestions.slice(-2).map((blogPost, i) => (
-                <BlogPost maxW="420px" post={blogPost} key={i} />
-              ))} */}
-            </SimpleGrid>
-          </Stack>
+          {blogPosts && blogPosts.length > 1 ? (
+            <Stack spacing="8">
+              <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
+                You might like
+              </Text>
+              <SimpleGrid
+                alignSelf="center"
+                w="fit-content"
+                mt={{ base: '15', md: '16' }}
+                columns={{ base: 1, md: 2 }}
+                spacingX="5"
+                spacingY="14"
+              >
+                {blogPosts.slice(-1).map((blogPost, i) => (
+                  <BlogPost maxW="420px" post={blogPost} key={i} />
+                ))}
+              </SimpleGrid>
+            </Stack>
+          ) : null}
         </Stack>
       </chakra.div>
     </chakra.div>
