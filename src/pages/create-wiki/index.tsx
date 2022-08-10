@@ -389,7 +389,9 @@ const CreateWikiContent = () => {
                 },
               }}
             >
-              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Reset to current wiki content'}
+              {draft?.id === CreateNewWikiSlug
+                ? 'Reset State'
+                : 'Reset to current wiki content'}
             </Button>
           </HStack>
         ),
