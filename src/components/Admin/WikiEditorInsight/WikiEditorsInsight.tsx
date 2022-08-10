@@ -113,7 +113,9 @@ export const WikiEditorsInsightTable = () => {
   })
 
   const increasePagination = () => {
-    return editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    return (
+      editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    )
   }
 
   return (
