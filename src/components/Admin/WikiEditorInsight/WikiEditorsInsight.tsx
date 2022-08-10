@@ -1,3 +1,4 @@
+import { useGetEditorsQuery } from '@/services/admin'
 import {
   Pagination,
   PaginationContainer,
@@ -20,329 +21,74 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 
 export const WikiEditorsInsightTable = () => {
-  const wikiInsightData = [
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
+  const [paginateOffset, setPaginateOffset] = useState<number>(0)
+  const { data: editors } = useGetEditorsQuery({
+    limit: 10,
+    offset: paginateOffset,
+  })
+  const [editorsData, setEditorsData] = useState<
+    Array<{
+      editorName: string
+      createdWikis: {
+        content: {
+          title: string
+          images: {
+            id: string
+          }[]
+        }[]
+        datetime: string
+        id: string
+        ipfs: string
+        wikiId: string
+      }[]
+      editiedWikis: {
+        content: {
+          title: string
+          images: {
+            id: string
+          }[]
+        }[]
+        datetime: string
+        id: string
+        ipfs: string
+        wikiId: string
+      }[]
       lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
+        content: {
+          title: string
+          images: {
+            id: string
+          }[]
+        }[]
+      }
+      editorAvatar: string
+      latestActivity: string
+      editorAddress: string
+    }>
+  >()
+  const newObj: any = []
+  editors?.map(item => {
+    newObj.push({
+      editorName: item?.profile?.username ? item?.profile?.username : 'Unknown',
+      editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : 'james.png',
+      editorAddress: item?.id,
+      createdWikis: item?.wikisCreated,
+      editiedWikis: item?.wikisEdited,
+      lastCreatedWiki: item?.wikisCreated[0],
       latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Mike Drawn',
-      editorAvatar:
-        'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZkRriG5pzevdGvLMh6EVUKkaobTUykw7AhGtTswW35DM&w=3840&q=95',
-      editorAddress: 'FxSegd...2358',
-      createdWikis: 93,
-      editiedWikis: 122,
-      lastCreatedWiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Mike Drawn',
-      editorAvatar:
-        'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZkRriG5pzevdGvLMh6EVUKkaobTUykw7AhGtTswW35DM&w=3840&q=95',
-      editorAddress: 'FxSegd...2358',
-      createdWikis: 93,
-      editiedWikis: 122,
-      lastCreatedWiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Mike Drawn',
-      editorAvatar:
-        'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZkRriG5pzevdGvLMh6EVUKkaobTUykw7AhGtTswW35DM&w=3840&q=95',
-      editorAddress: 'FxSegd...2358',
-      createdWikis: 93,
-      editiedWikis: 122,
-      lastCreatedWiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Mike Drawn',
-      editorAvatar:
-        'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZkRriG5pzevdGvLMh6EVUKkaobTUykw7AhGtTswW35DM&w=3840&q=95',
-      editorAddress: 'FxSegd...2358',
-      createdWikis: 93,
-      editiedWikis: 122,
-      lastCreatedWiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Mike Drawn',
-      editorAvatar:
-        'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZkRriG5pzevdGvLMh6EVUKkaobTUykw7AhGtTswW35DM&w=3840&q=95',
-      editorAddress: 'FxSegd...2358',
-      createdWikis: 93,
-      editiedWikis: 122,
-      lastCreatedWiki: {
-        title: 'From Mars',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmZxbkyAGqJt6yUo74QsoKeP6WLWRTn7921Qwxwngxv977&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-    {
-      editorName: 'Joe Dohn',
-      editorAvatar: 'https://bit.ly/dan-abramov',
-      editorAddress: '0xFe9d...2358',
-      createdWikis: 3,
-      editiedWikis: 12,
-      lastCreatedWiki: {
-        title: 'Sushiswap',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmNqqvGLEyTanEHowse84GtXoqVmZDBDKdA846u3RRaGck&w=3840&q=95',
-      },
-      latestActivity: 'Jan 6, 2022 - 12:22am',
-    },
-    {
-      editorName: 'Lucy Xander',
-      editorAvatar:
-        'https://www.the.com/__PUBLIC_LIGHT/assets/RpJA1-grace-headshot.jpg',
-      editorAddress: '0xSegd...2358',
-      createdWikis: 12,
-      editiedWikis: 8,
-      lastCreatedWiki: {
-        title: 'Flying Jeans',
-        img: 'https://alpha.everipedia.org/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmaow6d3nriW4XoaVqTVWsJMr5bME4JFrNsGXDuijMYocZ&w=3840&q=95',
-      },
-      latestActivity: 'Apr 11, 2022 - 19:22am',
-    },
-  ]
+    })
+    return null
+  })
+
+  useEffect(() => {
+    setEditorsData(newObj)
+  }, [editors])
   const {
     pages,
     // pagesCount,
@@ -354,17 +100,22 @@ export const WikiEditorsInsightTable = () => {
     // pageSize,
     // setPageSize,
   } = usePagination({
-    total: wikiInsightData.length,
+    total: editorsData?.length,
     limits: {
       outer: 3,
       inner: 3,
     },
     initialState: {
-      pageSize: 5,
+      pageSize: 2,
       isDisabled: false,
       currentPage: 1,
     },
   })
+
+  const increasePagination = () => {
+    return editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+  }
+
   return (
     <Flex
       flexDir="column"
@@ -414,15 +165,13 @@ export const WikiEditorsInsightTable = () => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        <InsightTableWikiEditors wikiInsightData={wikiInsightData} />
+        <InsightTableWikiEditors wikiInsightData={editorsData} />
       </Flex>
       <Pagination
         pagesCount={10}
         currentPage={1}
         isDisabled={false}
-        onPageChange={() => {
-          console.log('hey')
-        }}
+        onPageChange={() => {}}
       >
         <PaginationContainer
           align="center"
@@ -493,7 +242,9 @@ export const WikiEditorsInsightTable = () => {
           </PaginationPageGroup>
           <PaginationNext
             bg="white"
-            onClick={() => null}
+            onClick={() => {
+              increasePagination()
+            }}
             _hover={{ bg: 'none' }}
             _active={{ bg: 'none' }}
           >

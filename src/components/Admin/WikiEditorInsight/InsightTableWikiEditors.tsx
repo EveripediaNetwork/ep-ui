@@ -1,3 +1,4 @@
+import config from '@/config'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import {
   Flex,
@@ -22,16 +23,45 @@ import { DeleteEditorModal } from './DeleteEditorModal'
 
 interface WikiInsightDataInterface {
   editorName: string
-  createdWikis: number
-  editiedWikis: number
-  lastCreatedWiki: { title: string; img: string }
+  createdWikis: {
+    content: {
+      title: string
+      images: {
+        id: string
+      }[]
+    }[]
+    datetime: string
+    id: string
+    ipfs: string
+    wikiId: string
+  }[]
+  editiedWikis: {
+    content: {
+      title: string
+      images: {
+        id: string
+      }[]
+    }[]
+    datetime: string
+    id: string
+    ipfs: string
+    wikiId: string
+  }[]
+  lastCreatedWiki: {
+    content: {
+      title: string
+      images: {
+        id: string
+      }[]
+    }[]
+  }
   editorAvatar: string
   latestActivity: string
   editorAddress: string
 }
 
 type InsightTableWikiEditorsProps = {
-  wikiInsightData: WikiInsightDataInterface[]
+  wikiInsightData: WikiInsightDataInterface[] | undefined
 }
 
 export const InsightTableWikiEditors = (
@@ -72,7 +102,7 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiInsightData.map(item => {
+          {wikiInsightData?.map(item => {
             return (
               <>
                 <Tr>
@@ -92,14 +122,14 @@ export const InsightTableWikiEditors = (
                     </Flex>
                   </Td>
                   <Td>
-                    <Text color="#718096">{item.createdWikis}</Text>
+                    <Text color="#718096">{item.createdWikis.length}</Text>
                   </Td>
                   <Td>
-                    <Text color="#718096">{item.editiedWikis}</Text>
+                    <Text color="#718096">{item.editiedWikis.length}</Text>
                   </Td>
                   <Td>
                     <Text color="#718096">
-                      {item.createdWikis + item.editiedWikis}
+                      {item.createdWikis.length + item.editiedWikis.length}
                     </Text>
                   </Td>
                   <Td>
@@ -108,10 +138,14 @@ export const InsightTableWikiEditors = (
                         <WikiImage
                           cursor="pointer"
                           flexShrink={0}
-                          imageURL={item.lastCreatedWiki.img}
+                          imageURL={`${config.pinataBaseUrl}${
+                            item.lastCreatedWiki?.content
+                              ? item.lastCreatedWiki.content[0].images[0].id
+                              : ''
+                          }`}
                         />
                       </AspectRatio>
-                      <Text>{item.lastCreatedWiki.title}</Text>
+                      <Text>{item.lastCreatedWiki?.content[0]?.title}</Text>
                     </Flex>
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>

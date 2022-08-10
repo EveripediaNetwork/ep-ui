@@ -47,3 +47,58 @@ export const CREATED_WIKIS_TABLE = gql`
     }
   }
 `
+
+export const EDITORS_TABLE = gql`
+  query Editors($limit: Int!, $offset: Int!) {
+    users(limit: $limit, offset: $offset) {
+      id
+      profile {
+        username
+        avatar
+      }
+      wikisEdited {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+      wikisCreated {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
+// query {
+//   users(limit: 10) {
+//     id
+//     profile {
+//       username
+//     }
+//     wikis {id}
+//     wikisEdited {
+//       id
+//       wikiId
+//       datetime
+//     }
+//     wikisCreated {
+//       id
+//       datetime
+//     }
+//   }
+// }

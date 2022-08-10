@@ -56,3 +56,32 @@ export type CreatedWikisCount = Pick<
   Wikis,
   'title' | 'images' | 'author' | 'created' | 'tags' | 'promoted' | 'hidden'
 >
+
+export interface Editors {
+  id: string
+  profile: { username: string | null; avatar: string }
+  wikisCreated: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+  }[]
+  wikisEdited: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+  }[]
+}
