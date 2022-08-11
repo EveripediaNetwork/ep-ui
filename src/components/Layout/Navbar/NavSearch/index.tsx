@@ -43,10 +43,12 @@ export type NavSearchProps = {
 const ItemPaths = {
   [SEARCH_TYPES.ARTICLE]: '/wiki/',
   [SEARCH_TYPES.CATEGORY]: '/categories/',
+  [SEARCH_TYPES.ACCOUNT]: '/account/',
 }
 
 const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
+const ACCOUNTS_LIMIT = 4
 
 export const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
@@ -55,15 +57,22 @@ export const NavSearch = (props: NavSearchProps) => {
 
   const unrenderedArticles = results.articles.length - ARTICLES_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
+  const unrenderedAccounts = results.accounts.length - ACCOUNTS_LIMIT
   const noResults =
-    results.articles.length === 0 && results.categories.length === 0
+    results.articles.length === 0 &&
+    results.categories.length === 0 &&
+    results.accounts.length === 0
 
   const resolvedUnrenderedArticles =
     unrenderedArticles > 0 ? unrenderedArticles : 0
   const resolvedUnrenderedCategories =
     unrenderedCategories > 0 ? unrenderedCategories : 0
+  const resolvedUnrenderedAccounts =
+    unrenderedAccounts > 0 ? unrenderedAccounts : 0
   const totalUnrendered =
-    resolvedUnrenderedArticles + resolvedUnrenderedCategories
+    resolvedUnrenderedArticles +
+    resolvedUnrenderedCategories +
+    resolvedUnrenderedAccounts
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -133,7 +142,7 @@ export const NavSearch = (props: NavSearchProps) => {
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
         // This negates the bug that is casued by two wikis with the same title.
-        value.title = `${article.title}${article.id}`
+        // value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
             key={article.id}
@@ -169,6 +178,35 @@ export const NavSearch = (props: NavSearchProps) => {
                   {tag.id}
                 </chakra.div>
               ))}
+            </Flex>
+          </AutoCompleteItem>
+        )
+      })}
+    </>
+  )
+
+  const accountsSearchList = (
+    <>
+      {results.accounts?.slice(0, ACCOUNTS_LIMIT).map(account => {
+        const accountAvatar = `${config.pinataBaseUrl}${account.avatar}`
+        const value = fillType(account, SEARCH_TYPES.ACCOUNT)
+
+        return (
+          <AutoCompleteItem
+            key={account.id}
+            value={value}
+            getValue={acc => acc.username}
+            label={account.bio}
+            {...generalItemStyles}
+          >
+            <Avatar src={accountAvatar} name={account.username} size="xs" />
+            <Flex direction="column">
+              <chakra.span fontWeight="semibold" fontSize="sm">
+                {account.username}
+              </chakra.span>
+              <Text noOfLines={1} maxW="full" fontSize="xs">
+                {account.bio}
+              </Text>
             </Flex>
           </AutoCompleteItem>
         )
@@ -213,6 +251,12 @@ export const NavSearch = (props: NavSearchProps) => {
         </AutoCompleteGroupTitle>
         {categoriesSearchList}
       </AutoCompleteGroup>
+      <AutoCompleteGroup>
+        <AutoCompleteGroupTitle {...titleStyles}>
+          Accounts
+        </AutoCompleteGroupTitle>
+        {accountsSearchList}
+      </AutoCompleteGroup>
     </>
   )
 
@@ -242,7 +286,7 @@ export const NavSearch = (props: NavSearchProps) => {
           ml={4}
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search wikis, categories and tags"
+          placeholder="Search wikis, categories, tags and accounts"
           _placeholderShown={{
             textOverflow: 'ellipsis',
           }}
