@@ -14,6 +14,7 @@ import {
   Tag,
   TagLabel,
   HStack,
+  Link,
 } from '@chakra-ui/react'
 import config from '@/config'
 import React from 'react'
@@ -36,7 +37,6 @@ export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
 ) => {
   const { wikiCreatedInsightData } = props
-
   const bgTags = [
     {
       bg: '#F9F5FF',
@@ -50,7 +50,7 @@ export const InsightTableWikiCreated = (
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="#F7FAFC">
+        <Thead bg="wikiTitleBg">
           <Tr>
             <Th color="#718096" textTransform="none" fontWeight="medium">
               Wiki Title
@@ -92,35 +92,49 @@ export const InsightTableWikiCreated = (
                         />
                       </AspectRatio>
                       <Flex flexDirection="column">
-                        <Text>{shortenText(item.title, 20)}</Text>
+                        <Link href={`/wiki/${item.id}`} py={1}>
+                          <Text>{shortenText(item.title, 20)}</Text>
+                        </Link>
                         <Text color="#718096" fontSize="sm">
-                          {item.author.profile?.username
-                            ? item.author.profile.username
-                            : shortenAccount(
-                                item.author.id ? item.author.id : '',
-                              )}
+                          <Link href={`/account/${item.author.id}`} py={1}>
+                            {item.author.profile?.username
+                              ? item.author.profile.username
+                              : shortenAccount(
+                                  item.author.id ? item.author.id : '',
+                                )}
+                          </Link>
                         </Text>
                       </Flex>
                     </Flex>
                   </Td>
                   <Td>
-                    <Text color="#718096">{item.created}</Text>
+                    <Text color="#718096">
+                      {item.created
+                        ? new Date(item.created).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : '-'}
+                    </Text>
                   </Td>
-                  <Td>
-                    <Flex w="100%" p={5} gap={3} align="center">
+                  <Td py={1}>
+                    <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                       {item.tags.map((tag, i) => (
-                        <Tag
-                          key={i}
-                          size="md"
-                          borderRadius="full"
-                          variant="solid"
-                          bg={bgTags[i]?.bg}
-                          color={bgTags[i]?.color}
-                        >
-                          <TagLabel>{tag.id}</TagLabel>
-                        </Tag>
+                        <Link key={i} href={`/tags/${tag.id}`} py={1}>
+                          <Tag
+                            key={i}
+                            size="md"
+                            borderRadius="full"
+                            variant="solid"
+                            bg={bgTags[i]?.bg}
+                            color={bgTags[i]?.color}
+                          >
+                            <TagLabel>{tag.id}</TagLabel>
+                          </Tag>
+                        </Link>
                       ))}
-                    </Flex>
+                    </HStack>
                   </Td>
                   <Td>
                     <Tag
