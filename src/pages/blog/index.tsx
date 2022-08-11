@@ -7,10 +7,10 @@ import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
 import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
 import { getBlogentriesFormatted, getEntryPaths } from '@/utils/blog.utils'
-import { EntryPath } from '@/types/Blog'
+import { EntryPath, Blog as BlogType } from '@/types/Blog'
 import config from '@/config'
 
-export const Blog = ({ blogEntries }: any) => {
+export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   const [mounted, setMounted] = useState(false)
   const dispatch = useAppDispatch()
 
@@ -37,7 +37,7 @@ export const Blog = ({ blogEntries }: any) => {
           spacingY="14"
         >
           {blogEntries
-            ? blogEntries.map((b: any, i: number) => (
+            ? blogEntries.map((b, i: number) => (
               <BlogPost post={b} key={i} />
             ))
             : null}
@@ -48,7 +48,6 @@ export const Blog = ({ blogEntries }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-
   const entries = await store.dispatch(
     getBlogEntries.initiate([config.blogAccount]),
   )

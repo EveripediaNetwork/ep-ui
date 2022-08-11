@@ -21,7 +21,9 @@ export const formatEntry = async (
   image_sizes: 50,
 })
 
-export const getEntryPaths = ({ transactions }: RawTransactions): EntryPath[] => {
+export const getEntryPaths = ({
+  transactions,
+}: RawTransactions): EntryPath[] => {
   return transactions.edges
     .map(({ node }) => {
       const tags = Object.fromEntries(
@@ -34,7 +36,7 @@ export const getEntryPaths = ({ transactions }: RawTransactions): EntryPath[] =>
         timestamp: node.block.timestamp,
       }
     })
-    .filter((entry) => entry.slug && entry.slug !== '')
+    .filter(entry => entry.slug && entry.slug !== '')
     .reduce((acc: EntryPath[], current) => {
       const x = acc.findIndex((entry: EntryPath) => entry.slug === current.slug)
       if (x === -1) return acc.concat([current])

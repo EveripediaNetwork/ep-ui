@@ -47,9 +47,7 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
     if (!blogPosts || blogPosts.length === 0) {
       const populateBlogs = async () => {
         const entries = await store.dispatch(
-          getBlogEntries.initiate([
-            config.blogAccount,
-          ]),
+          getBlogEntries.initiate([config.blogAccount]),
         )
 
         const entryPaths = getEntryPaths(entries.data)

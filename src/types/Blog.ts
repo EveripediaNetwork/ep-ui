@@ -10,17 +10,17 @@ export type Blog = {
   transaction: string
 }
 
-type EntryPathPicked = Pick<Blog, "slug" | "timestamp">
+type EntryPathPicked = Pick<Blog, 'slug' | 'timestamp'>
 
 export interface EntryPath extends EntryPathPicked {
   path: string
 }
 
 export type BlogNode = {
-  id: string,
+  id: string
   block: {
     timestamp: number
-  },
+  }
   tags: Array<BlogTag>
 }
 

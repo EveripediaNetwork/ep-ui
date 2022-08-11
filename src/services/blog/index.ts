@@ -1,10 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import {
-  FETCH_SINGLE_TRANSACTION,
-  FETCH_TRANSACTIONS,
-} from './queries'
+import { FETCH_SINGLE_TRANSACTION, FETCH_TRANSACTIONS } from './queries'
 
 export const ArweaveApi = createApi({
   reducerPath: 'arweave',
