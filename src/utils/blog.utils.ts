@@ -1,5 +1,6 @@
 import slugify from 'slugify'
 import arweave from '@/config/arweave'
+import { Blog, BlogTag, EntryPath, RawTransactions } from '@/types/Blog'
 
 export const formatEntry = async (
   entry: any,
@@ -20,11 +21,11 @@ export const formatEntry = async (
   image_sizes: 50,
 })
 
-export const getEntryPaths = (entries: any) => {
-  return entries.data.transactions.edges
-    .map(({ node }: any) => {
+export const getEntryPaths = ({ transactions }: RawTransactions): EntryPath[] => {
+  return transactions.edges
+    .map(({ node }) => {
       const tags = Object.fromEntries(
-        node.tags.map((tag: any) => [tag.name, tag.value]),
+        node.tags.map((tag: BlogTag) => [tag.name, tag.value]),
       )
 
       return {
@@ -33,9 +34,9 @@ export const getEntryPaths = (entries: any) => {
         timestamp: node.block.timestamp,
       }
     })
-    .filter((entry: any) => entry.slug && entry.slug !== '')
-    .reduce((acc: any, current: any) => {
-      const x = acc.findIndex((entry: any) => entry.slug === current.slug)
+    .filter((entry) => entry.slug && entry.slug !== '')
+    .reduce((acc: EntryPath[], current) => {
+      const x = acc.findIndex((entry: EntryPath) => entry.slug === current.slug)
       if (x === -1) return acc.concat([current])
 
       acc[x].timestamp = current.timestamp
@@ -44,10 +45,12 @@ export const getEntryPaths = (entries: any) => {
     }, [])
 }
 
-export const getBlogentriesFormatted = async (entryPaths: any) => {
+export const getBlogentriesFormatted = async (
+  entryPaths: EntryPath[],
+): Promise<Blog[]> => {
   return (
     await Promise.all(
-      entryPaths.map(async (entry: any) =>
+      entryPaths.map(async (entry: EntryPath) =>
         formatEntry(
           JSON.parse(
             String(
@@ -64,8 +67,8 @@ export const getBlogentriesFormatted = async (entryPaths: any) => {
     )
   )
     .sort((a, b) => b.timestamp - a.timestamp)
-    .reduce((acc, current) => {
-      const x = acc.find((entry: any) => entry.slug === current.slug)
+    .reduce((acc: Blog[], current) => {
+      const x = acc.find((entry: Blog) => entry.slug === current.slug)
       if (!x) return acc.concat([current])
       return acc
     }, [])

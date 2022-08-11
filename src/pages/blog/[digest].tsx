@@ -10,7 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
-import { Blog, setBlogs } from '@/store/slices/blog-slice'
+import { setBlogs } from '@/store/slices/blog-slice'
 import { store } from '@/store/store'
 import { getBlogEntries, getSingleBlogEntry } from '@/services/blog'
 import {
@@ -24,6 +24,8 @@ import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import { unified } from 'unified'
 import { BlogPost } from '@/components/Blog/BlogPost'
+import { Blog } from '@/types/Blog'
+import config from '@/config'
 
 type BlogPostType = {
   digest: string
@@ -46,11 +48,11 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
       const populateBlogs = async () => {
         const entries = await store.dispatch(
           getBlogEntries.initiate([
-            '0xAe65930180ef4d86dbD1844275433E9e1d6311ED',
+            config.blogAccount,
           ]),
         )
 
-        const entryPaths = getEntryPaths(entries)
+        const entryPaths = getEntryPaths(entries.data)
 
         const blogEntries = await getBlogentriesFormatted(entryPaths)
         dispatch(setBlogs(blogEntries))

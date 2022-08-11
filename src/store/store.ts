@@ -15,7 +15,7 @@ import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
-import { ArweaveApi, MirrorApi } from '@/services/blog'
+import { ArweaveApi } from '@/services/blog'
 
 export const store = configureStore({
   reducer: {
@@ -27,7 +27,6 @@ export const store = configureStore({
     toc: tocReducer,
     ens: ensReducer,
     blog: blogReducer,
-    [MirrorApi.reducerPath]: MirrorApi.reducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
@@ -39,7 +38,6 @@ export const store = configureStore({
   middleware: gDM =>
     gDM({ serializableCheck: true })
       .concat(ArweaveApi.middleware)
-      .concat(MirrorApi.middleware)
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(activitiesApi.middleware)

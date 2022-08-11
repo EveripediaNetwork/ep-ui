@@ -21,6 +21,7 @@ const config = {
   magicLinkApiKey: String(process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   baseArchiveUrl: 'https://archive.everipedia.org',
+  blogAccount: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT
 }
 
 export default config

@@ -7,6 +7,8 @@ import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
 import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
 import { getBlogentriesFormatted, getEntryPaths } from '@/utils/blog.utils'
+import { EntryPath } from '@/types/Blog'
+import config from '@/config'
 
 export const Blog = ({ blogEntries }: any) => {
   const [mounted, setMounted] = useState(false)
@@ -36,8 +38,8 @@ export const Blog = ({ blogEntries }: any) => {
         >
           {blogEntries
             ? blogEntries.map((b: any, i: number) => (
-                <BlogPost post={b} key={i} />
-              ))
+              <BlogPost post={b} key={i} />
+            ))
             : null}
         </SimpleGrid>
       </chakra.div>
@@ -46,18 +48,14 @@ export const Blog = ({ blogEntries }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // const publicationInfo = await store.dispatch(
-  //   getPublicationInfo.initiate('m1guelpf.eth'),
-  // )
 
   const entries = await store.dispatch(
-    getBlogEntries.initiate(['0xAe65930180ef4d86dbD1844275433E9e1d6311ED']),
+    getBlogEntries.initiate([config.blogAccount]),
   )
 
   await Promise.all(getRunningOperationPromises())
 
-  const entryPaths = getEntryPaths(entries)
-  console.log(entryPaths)
+  const entryPaths: EntryPath[] = getEntryPaths(entries.data)
 
   const blogEntries = await getBlogentriesFormatted(entryPaths)
 

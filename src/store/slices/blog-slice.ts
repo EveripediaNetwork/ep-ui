@@ -1,16 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-export type Blog = {
-  slug: string
-  digest: string
-  cover_image: string
-  contributor: string
-  body: string
-  image_sizes: number
-  title: string
-  timestamp?: number
-  transaction: string
-}
+import { Blog } from '@/types/Blog'
 
 const initialState: Array<Blog> = []
 

@@ -1,29 +1,5 @@
 import { gql } from 'graphql-request'
 
-export const FETCH_PUBLICATION_INFO = gql`
-  query PublicationInfo($publicationAddress: String!) {
-    projectFeed(projectAddress: $publicationAddress) {
-      displayName
-      avatarURL
-      domain
-      headerImage {
-        url
-      }
-      theme {
-        colorMode
-        accent
-      }
-      description
-      mailingListURL
-      members {
-        address
-        displayName
-        avatarURL
-      }
-    }
-  }
-`
-
 export const FETCH_TRANSACTIONS = gql`
   query FetchTransactions($addresses: [String!]!) {
     transactions(
