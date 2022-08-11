@@ -1,5 +1,4 @@
 import { useGetEditorsQuery } from '@/services/admin'
-import { usePagination } from '@ajna/pagination'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
   Text,
