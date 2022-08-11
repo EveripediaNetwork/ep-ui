@@ -43,6 +43,7 @@ export interface Author {
 }
 
 export interface Wikis {
+  id: string
   title: string
   images?: Image[]
   author: Author
@@ -54,7 +55,7 @@ export interface Wikis {
 
 export type CreatedWikisCount = Pick<
   Wikis,
-  'title' | 'images' | 'author' | 'created' | 'tags' | 'promoted' | 'hidden'
+  'id' | 'title' | 'images' | 'author' | 'created' | 'tags' | 'promoted' | 'hidden'
 >
 
 export interface Editors {

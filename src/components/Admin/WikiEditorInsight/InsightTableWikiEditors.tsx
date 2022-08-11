@@ -15,8 +15,11 @@ import {
   Icon,
   Button,
   useDisclosure,
+  Link,
 } from '@chakra-ui/react'
 import React from 'react'
+import shortenAccount from '@/utils/shortenAccount'
+import { shortenText } from '@/utils/shortenText'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { WikiImage } from '../../WikiImage'
 import { DeleteEditorModal } from './DeleteEditorModal'
@@ -72,7 +75,7 @@ export const InsightTableWikiEditors = (
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="#F7FAFC">
+        <Thead bg='wikiTitleBg'>
           <Tr>
             <Th
               color="#718096"
@@ -107,21 +110,25 @@ export const InsightTableWikiEditors = (
               <>
                 <Tr>
                   <Td>
-                    <Flex align="center" gap={2}>
-                      <Avatar
-                        boxSize="40px"
-                        name={item.editorName}
-                        src={item.editorAvatar}
-                      />
-                      <Flex flexDirection="column">
-                        <Text>{item.editorName}</Text>
-                        <Text color="#718096" fontSize="sm">
-                          {item.editorAddress}
-                        </Text>
+                    <Link href={`/account/${item.editorAddress}`} py={1} >
+                      <Flex align="center" gap={2}>
+                        <Avatar
+                          boxSize="40px"
+                          name={item.editorName}
+                          src={item.editorAvatar}
+                        />
+                        <Flex flexDirection="column">
+                          <Text>{item.editorName}</Text>
+                          <Text color="#718096" fontSize="sm">
+                          
+                              {shortenAccount(item.editorAddress)}
+                            
+                          </Text>
+                        </Flex>
                       </Flex>
-                    </Flex>
+                    </Link>
                   </Td>
-                  <Td>
+                  <Td >
                     <Text color="#718096">{item.createdWikis.length}</Text>
                   </Td>
                   <Td>
@@ -133,6 +140,7 @@ export const InsightTableWikiEditors = (
                     </Text>
                   </Td>
                   <Td>
+                  <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1} >
                     <Flex flexDir="row" align="center" gap={2}>
                       <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
                         <WikiImage
@@ -145,8 +153,9 @@ export const InsightTableWikiEditors = (
                           }`}
                         />
                       </AspectRatio>
-                      <Text>{item.lastCreatedWiki?.content[0]?.title}</Text>
+                      <Text>{item.lastCreatedWiki?.content[0]? shortenText(item.lastCreatedWiki?.content[0].title,18) : ''}</Text>
                     </Flex>
+                  </Link>
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>
                   <Td>
@@ -160,7 +169,7 @@ export const InsightTableWikiEditors = (
                       m="0"
                     >
                       <Icon
-                        fontSize="20px"
+                        fontSize="18px"
                         cursor="pointer"
                         color="#718096"
                         as={RiDeleteBin6Line}
