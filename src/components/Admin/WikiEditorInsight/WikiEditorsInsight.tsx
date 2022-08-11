@@ -1,14 +1,5 @@
 import { useGetEditorsQuery } from '@/services/admin'
-import {
-  Pagination,
-  PaginationContainer,
-  PaginationPrevious,
-  PaginationPageGroup,
-  PaginationSeparator,
-  PaginationPage,
-  PaginationNext,
-  usePagination,
-} from '@ajna/pagination'
+import { usePagination } from '@ajna/pagination'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
   Text,
@@ -32,6 +23,7 @@ export const WikiEditorsInsightTable = () => {
     limit: 10,
     offset: paginateOffset,
   })
+  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [editorsData, setEditorsData] = useState<
     Array<{
       editorName: string
@@ -76,7 +68,7 @@ export const WikiEditorsInsightTable = () => {
   editors?.map(item => {
     newObj.push({
       editorName: item?.profile?.username ? item?.profile?.username : 'Unknown',
-      editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : 'james.png',
+      editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
       editorAddress: item?.id,
       createdWikis: item?.wikisCreated,
       editiedWikis: item?.wikisEdited,
@@ -86,35 +78,23 @@ export const WikiEditorsInsightTable = () => {
     return null
   })
 
+  editors?.filter(item => {
+    return item.wikisCreated.length > 0
+  })
+
   useEffect(() => {
     setEditorsData(newObj)
   }, [editors])
-  const {
-    pages,
-    // pagesCount,
-    // offset,
-    // currentPage,
-    // setCurrentPage,
-    // setIsDisabled,
-    // isDisabled,
-    // pageSize,
-    // setPageSize,
-  } = usePagination({
-    total: editorsData?.length,
-    limits: {
-      outer: 3,
-      inner: 3,
-    },
-    initialState: {
-      pageSize: 2,
-      isDisabled: false,
-      currentPage: 1,
-    },
-  })
 
   const increasePagination = () => {
     return (
       editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    )
+  }
+
+  const decreasePagination = () => {
+    return (
+      editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
     )
   }
 
@@ -169,97 +149,36 @@ export const WikiEditorsInsightTable = () => {
       <Flex pb={5}>
         <InsightTableWikiEditors wikiInsightData={editorsData} />
       </Flex>
-      <Pagination
-        pagesCount={10}
-        currentPage={1}
-        isDisabled={false}
-        onPageChange={() => {}}
-      >
-        <PaginationContainer
-          align="center"
-          justify="space-between"
-          p={4}
-          w="full"
-          display="flex"
-          flexDirection={{ lg: 'row', base: 'column' }}
-          gap={5}
-        >
-          <PaginationPrevious
-            bg="white"
-            onClick={() => null}
-            _hover={{ bg: 'none' }}
-            _active={{ bg: 'none' }}
-          >
-            <Button
-              leftIcon={<ArrowBackIcon />}
-              color="black"
-              variant="outline"
-            >
-              Previous
-            </Button>
-          </PaginationPrevious>
-          <PaginationPageGroup
-            isInline
-            align="center"
-            separator={
-              <PaginationSeparator
-                onClick={() =>
-                  console.log(
-                    'Im executing my own function along with Separator component functionality',
-                  )
-                }
-                bg="blue.300"
-                fontSize="sm"
-                w={7}
-                jumpSize={11}
-              />
+      <Flex justify="space-between" w="95%" m="0 auto">
+        <Button
+          leftIcon={<ArrowBackIcon />}
+          color="black"
+          variant="outline"
+          disabled={!activatePrevious}
+          onClick={() => {
+            decreasePagination()
+            if (editorsData && editorsData?.length >= 10) {
+              setActivatePrevious(false)
             }
-          >
-            {pages.map((page: number) => (
-              <PaginationPage
-                w={7}
-                key={`pagination_page_${page}`}
-                page={page}
-                p={5}
-                onClick={() =>
-                  console.log(
-                    'Im executing my own function along with Page component functionality',
-                  )
-                }
-                fontSize="sm"
-                _hover={{
-                  bg: '#FFE5F1',
-                  color: 'brand.500',
-                }}
-                _current={{
-                  bg: '#FFE5F1',
-                  fontSize: 'sm',
-                  color: 'brand.500',
-                  w: 7,
-                }}
-                bg="transparent"
-                color="#718096"
-              />
-            ))}
-          </PaginationPageGroup>
-          <PaginationNext
-            bg="white"
-            onClick={() => {
-              increasePagination()
-            }}
-            _hover={{ bg: 'none' }}
-            _active={{ bg: 'none' }}
-          >
-            <Button
-              rightIcon={<ArrowForwardIcon />}
-              color="black"
-              variant="outline"
-            >
-              Next
-            </Button>
-          </PaginationNext>
-        </PaginationContainer>
-      </Pagination>
+          }}
+        >
+          Previous
+        </Button>
+        <Button
+          rightIcon={<ArrowForwardIcon />}
+          color="black"
+          variant="outline"
+          onClick={() => {
+            increasePagination()
+            if (editorsData && editorsData?.length >= 10) {
+              setActivatePrevious(true)
+            }
+          }}
+          disabled={paginateOffset > 10}
+        >
+          Next
+        </Button>
+      </Flex>
     </Flex>
   )
 }
