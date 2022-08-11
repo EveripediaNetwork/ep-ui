@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Heading, Text } from '@chakra-ui/react'
 import routeToBlock from 'react-embed/lib/routeToBlock'
 
@@ -6,11 +6,11 @@ export const shouldEmbed = (url: string) => {
   return routeToBlock([] as any, new URL(url) as any) !== undefined
 }
 
-const BlockQuote = ({ children }: any) => {
+const BlockQuote = ({ children }: { children: ReactNode[] }) => {
   return <blockquote>{children}</blockquote>
 }
 
-const Block = ({ children }: any) => {
+const Block = ({ children }: { children: ReactNode[] }) => {
   const blockAwareChildren = children.map((child: any) => {
     if (child.props.node) child.props.node.blockSize = children.length
 
@@ -20,7 +20,7 @@ const Block = ({ children }: any) => {
   return <Text>{blockAwareChildren}</Text>
 }
 
-const h1 = ({ children }: any) => {
+const h1 = ({ children }: { children: ReactNode[] }) => {
   return (
     <Heading as="h1" mt={8} mb={4}>
       {children}
@@ -28,7 +28,7 @@ const h1 = ({ children }: any) => {
   )
 }
 
-const h2 = ({ children }: any) => {
+const h2 = ({ children }: { children: ReactNode[] }) => {
   return (
     <Heading as="h2" mt={8} mb={4}>
       {children}
@@ -36,7 +36,7 @@ const h2 = ({ children }: any) => {
   )
 }
 
-const h3 = ({ children }: any) => {
+const h3 = ({ children }: { children: ReactNode[] }) => {
   return (
     <Heading as="h3" mt={8} mb={4}>
       {children}
