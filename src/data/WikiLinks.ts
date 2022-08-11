@@ -32,7 +32,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Discord',
     icon: DiscordIcon,
-    tests: [/https:\/\/discord\.gg\//i],
+    tests: [/https:\/\/discord\.(gg|com)\//i],
   },
   {
     id: CommonMetaIds.EMAIL_URL,
