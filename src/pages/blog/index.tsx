@@ -37,9 +37,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
           spacingY="14"
         >
           {blogEntries
-            ? blogEntries.map((b, i: number) => (
-              <BlogPost post={b} key={i} />
-            ))
+            ? blogEntries.map((b, i: number) => <BlogPost post={b} key={i} />)
             : null}
         </SimpleGrid>
       </chakra.div>
