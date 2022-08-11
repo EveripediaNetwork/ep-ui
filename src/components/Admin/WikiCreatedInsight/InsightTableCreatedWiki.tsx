@@ -36,7 +36,7 @@ type InsightTableWikiCreatedProps = {
 export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
 ) => {
-  const { wikiCreatedInsightData } = props 
+  const { wikiCreatedInsightData } = props
   const bgTags = [
     {
       bg: '#F9F5FF',
@@ -50,7 +50,7 @@ export const InsightTableWikiCreated = (
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg='wikiTitleBg'>
+        <Thead bg="wikiTitleBg">
           <Tr>
             <Th color="#718096" textTransform="none" fontWeight="medium">
               Wiki Title
@@ -92,47 +92,46 @@ export const InsightTableWikiCreated = (
                         />
                       </AspectRatio>
                       <Flex flexDirection="column">
-                      <Link href={`/wiki/${item.id}`} py={1}>
-                        <Text>{shortenText(item.title, 20)}</Text>
-                      </Link>
-                        <Text color="#718096" fontSize="sm">
-                        <Link href={`/account/${item.author.id}`} py={1}>
-                          {item.author.profile?.username
-                            ? item.author.profile.username
-                            : shortenAccount(
-                                item.author.id ? item.author.id : '',
-                              )}
+                        <Link href={`/wiki/${item.id}`} py={1}>
+                          <Text>{shortenText(item.title, 20)}</Text>
                         </Link>
+                        <Text color="#718096" fontSize="sm">
+                          <Link href={`/account/${item.author.id}`} py={1}>
+                            {item.author.profile?.username
+                              ? item.author.profile.username
+                              : shortenAccount(
+                                  item.author.id ? item.author.id : '',
+                                )}
+                          </Link>
                         </Text>
                       </Flex>
                     </Flex>
                   </Td>
                   <Td>
                     <Text color="#718096">
-                      {
-                      item.created? new Date(item.created).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })
-                    : '-'
-                    }
-                      </Text>
+                      {item.created
+                        ? new Date(item.created).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : '-'}
+                    </Text>
                   </Td>
                   <Td py={1}>
                     <HStack marginLeft={-2} flexWrap="wrap" justify="start">
                       {item.tags.map((tag, i) => (
                         <Link key={i} href={`/tags/${tag.id}`} py={1}>
                           <Tag
-                              key={i}
-                              size="md"
-                              borderRadius="full"
-                              variant="solid"
-                              bg={bgTags[i]?.bg}
-                              color={bgTags[i]?.color}
-                            >
-                              <TagLabel>{tag.id}</TagLabel>
-                            </Tag>
+                            key={i}
+                            size="md"
+                            borderRadius="full"
+                            variant="solid"
+                            bg={bgTags[i]?.bg}
+                            color={bgTags[i]?.color}
+                          >
+                            <TagLabel>{tag.id}</TagLabel>
+                          </Tag>
                         </Link>
                       ))}
                     </HStack>

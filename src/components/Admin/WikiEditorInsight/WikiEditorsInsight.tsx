@@ -128,13 +128,7 @@ export const WikiEditorsInsightTable = () => {
       borderRadius="sm"
       rounded="lg"
     >
-      <Flex
-       borderBottomWidth="1px"
-        w="100%"
-        p={5}
-        gap={2}
-        align="center"
-      >
+      <Flex borderBottomWidth="1px" w="100%" p={5} gap={2} align="center">
         <Text fontSize="lg">Editors</Text>
         <Tag
           size="sm"

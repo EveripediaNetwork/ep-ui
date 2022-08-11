@@ -55,7 +55,14 @@ export interface Wikis {
 
 export type CreatedWikisCount = Pick<
   Wikis,
-  'id' | 'title' | 'images' | 'author' | 'created' | 'tags' | 'promoted' | 'hidden'
+  | 'id'
+  | 'title'
+  | 'images'
+  | 'author'
+  | 'created'
+  | 'tags'
+  | 'promoted'
+  | 'hidden'
 >
 
 export interface Editors {

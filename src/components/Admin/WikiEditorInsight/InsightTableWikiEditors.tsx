@@ -75,7 +75,7 @@ export const InsightTableWikiEditors = (
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg='wikiTitleBg'>
+        <Thead bg="wikiTitleBg">
           <Tr>
             <Th
               color="#718096"
@@ -110,7 +110,7 @@ export const InsightTableWikiEditors = (
               <>
                 <Tr>
                   <Td>
-                    <Link href={`/account/${item.editorAddress}`} py={1} >
+                    <Link href={`/account/${item.editorAddress}`} py={1}>
                       <Flex align="center" gap={2}>
                         <Avatar
                           boxSize="40px"
@@ -120,15 +120,13 @@ export const InsightTableWikiEditors = (
                         <Flex flexDirection="column">
                           <Text>{item.editorName}</Text>
                           <Text color="#718096" fontSize="sm">
-                          
-                              {shortenAccount(item.editorAddress)}
-                            
+                            {shortenAccount(item.editorAddress)}
                           </Text>
                         </Flex>
                       </Flex>
                     </Link>
                   </Td>
-                  <Td >
+                  <Td>
                     <Text color="#718096">{item.createdWikis.length}</Text>
                   </Td>
                   <Td>
@@ -140,22 +138,29 @@ export const InsightTableWikiEditors = (
                     </Text>
                   </Td>
                   <Td>
-                  <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1} >
-                    <Flex flexDir="row" align="center" gap={2}>
-                      <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
-                        <WikiImage
-                          cursor="pointer"
-                          flexShrink={0}
-                          imageURL={`${config.pinataBaseUrl}${
-                            item.lastCreatedWiki?.content
-                              ? item.lastCreatedWiki.content[0].images[0].id
-                              : ''
-                          }`}
-                        />
-                      </AspectRatio>
-                      <Text>{item.lastCreatedWiki?.content[0]? shortenText(item.lastCreatedWiki?.content[0].title,18) : ''}</Text>
-                    </Flex>
-                  </Link>
+                    <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1}>
+                      <Flex flexDir="row" align="center" gap={2}>
+                        <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
+                          <WikiImage
+                            cursor="pointer"
+                            flexShrink={0}
+                            imageURL={`${config.pinataBaseUrl}${
+                              item.lastCreatedWiki?.content
+                                ? item.lastCreatedWiki.content[0].images[0].id
+                                : ''
+                            }`}
+                          />
+                        </AspectRatio>
+                        <Text>
+                          {item.lastCreatedWiki?.content[0]
+                            ? shortenText(
+                                item.lastCreatedWiki?.content[0].title,
+                                18,
+                              )
+                            : ''}
+                        </Text>
+                      </Flex>
+                    </Link>
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>
                   <Td>
