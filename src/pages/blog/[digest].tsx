@@ -186,9 +186,11 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
                 spacingX="5"
                 spacingY="14"
               >
-                {blogPosts.filter(bp => bp.digest !== digest).map((b, i) => (
-                  <BlogPost maxW="420px" post={b} key={i} />
-                ))}
+                {blogPosts
+                  .filter(bp => bp.digest !== digest)
+                  .map((b, i) => (
+                    <BlogPost maxW="420px" post={b} key={i} />
+                  ))}
               </SimpleGrid>
             </Stack>
           ) : null}
