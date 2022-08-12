@@ -2,7 +2,7 @@ import { chakra, Heading, SimpleGrid } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { store } from '@/store/store'
-import { useAppDispatch } from '@/store/hook'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
 import { getBlogEntries, getRunningOperationPromises } from '@/services/blog'
@@ -13,13 +13,14 @@ import config from '@/config'
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   const [mounted, setMounted] = useState(false)
   const dispatch = useAppDispatch()
+  const blogPosts = useAppSelector(state => state.blog)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
   useEffect(() => {
-    if (blogEntries) dispatch(setBlogs(blogEntries))
+    if (blogPosts.length === 0) dispatch(setBlogs(blogEntries))
   }, [blogEntries])
 
   if (!mounted) return null

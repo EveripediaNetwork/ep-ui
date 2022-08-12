@@ -34,7 +34,8 @@ type BlogPostType = {
 export const BlogPostPage = ({ digest }: BlogPostType) => {
   const dispatch = useAppDispatch()
 
-  const blogPosts = useAppSelector(state => [state.blog])
+  const blogPosts = useAppSelector(state => state.blog)
+  const [suggestions, setSuggestions] = useState<Blog[]>([])
 
   const blogResult = useAppSelector(state =>
     state.blog && digest
@@ -54,6 +55,7 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
 
         const blogEntries = await getBlogentriesFormatted(entryPaths)
         dispatch(setBlogs(blogEntries))
+        setSuggestions(blogEntries.filter(e => e.digest !== digest))
       }
 
       populateBlogs()
@@ -175,7 +177,7 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
             </Button>
           </Stack>
 
-          {blogPosts && blogPosts.length > 1 ? (
+          {suggestions && suggestions.length > 0 ? (
             <Stack spacing="8">
               <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
                 You might like
@@ -188,8 +190,8 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
                 spacingX="5"
                 spacingY="14"
               >
-                {blogPosts.slice(-1).map((blogPost, i) => (
-                  <BlogPost maxW="420px" post={blogPost} key={i} />
+                {suggestions.map((b, i) => (
+                  <BlogPost maxW="420px" post={b} key={i} />
                 ))}
               </SimpleGrid>
             </Stack>

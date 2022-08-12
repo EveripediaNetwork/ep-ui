@@ -17,14 +17,14 @@ export const ArweaveApi = createApi({
     url: 'https://arweave.net/graphql',
   }),
   endpoints: builder => ({
-    getBlogEntries: builder.query<any, any>({
+    getBlogEntries: builder.query<any, Array<string>>({
       query: (addresses: Array<string>) => ({
         document: FETCH_TRANSACTIONS,
         variables: { addresses },
       }),
       transformResponse: (response: any) => response,
     }),
-    getSingleBlogEntry: builder.query<any, any>({
+    getSingleBlogEntry: builder.query<any, string>({
       query: (digest: string) => ({
         document: FETCH_SINGLE_TRANSACTION,
         variables: { digest },
