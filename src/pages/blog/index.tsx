@@ -13,17 +13,13 @@ import config from '@/config'
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   const [mounted, setMounted] = useState(false)
   const dispatch = useAppDispatch()
-  const blogPosts = useAppSelector(state => state.blog)
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (blogPosts.length === 0) dispatch(setBlogs(blogEntries))
-  }, [blogEntries])
-
-  if (!mounted) return null
+    if (mounted === false) {
+      dispatch(setBlogs(blogEntries))
+      setMounted(true)
+    }
+  }, [mounted])
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>

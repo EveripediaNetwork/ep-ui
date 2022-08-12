@@ -35,7 +35,6 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
   const dispatch = useAppDispatch()
 
   const blogPosts = useAppSelector(state => state.blog)
-  const [suggestions, setSuggestions] = useState<Blog[]>([])
 
   const blogResult = useAppSelector(state =>
     state.blog && digest
@@ -55,7 +54,6 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
 
         const blogEntries = await getBlogentriesFormatted(entryPaths)
         dispatch(setBlogs(blogEntries))
-        setSuggestions(blogEntries.filter(e => e.digest !== digest))
       }
 
       populateBlogs()
@@ -63,49 +61,47 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
   }, [blogPosts])
 
   useEffect(() => {
-    if (!blogResult) {
-      const getBlogEntry = async () => {
-        const {
-          data: {
-            transactions: {
-              edges: {
-                0: {
-                  node: {
-                    id: transactionId,
-                    block: { timestamp },
-                  },
+    const getBlogEntry = async () => {
+      const {
+        data: {
+          transactions: {
+            edges: {
+              0: {
+                node: {
+                  id: transactionId,
+                  block: { timestamp },
                 },
               },
             },
           },
-        } = await store.dispatch(getSingleBlogEntry.initiate(digest))
+        },
+      } = await store.dispatch(getSingleBlogEntry.initiate(digest))
 
-        const formatted = await formatEntry(
-          JSON.parse(
-            String(
-              await arweave.transactions.getData(transactionId, {
-                decode: true,
-                string: true,
-              }),
-            ),
+      const formatted = await formatEntry(
+        JSON.parse(
+          String(
+            await arweave.transactions.getData(transactionId, {
+              decode: true,
+              string: true,
+            }),
           ),
-          transactionId,
-          timestamp,
-        )
+        ),
+        transactionId,
+        timestamp,
+      )
 
-        formatted.body = await unified()
-          .use(remarkParse) // Parse markdown
-          .use(remarkStringify) // Serialize markdown
-          .process(formatted.body)
+      formatted.body = await unified()
+        .use(remarkParse) // Parse markdown
+        .use(remarkStringify) // Serialize markdown
+        .process(formatted.body)
 
-        formatted.body = String(formatted.body)
+      formatted.body = String(formatted.body)
 
-        setBlog(formatted)
-      }
-
-      getBlogEntry()
+      setBlog(formatted)
     }
-  }, [blogResult])
+
+    getBlogEntry()
+  }, [digest])
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={8}>
@@ -177,7 +173,7 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
             </Button>
           </Stack>
 
-          {suggestions && suggestions.length > 0 ? (
+          {blogPosts.length > 0 ? (
             <Stack spacing="8">
               <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
                 You might like
@@ -190,7 +186,7 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
                 spacingX="5"
                 spacingY="14"
               >
-                {suggestions.map((b, i) => (
+                {blogPosts.filter(bp => bp.digest !== digest).map((b, i) => (
                   <BlogPost maxW="420px" post={b} key={i} />
                 ))}
               </SimpleGrid>
