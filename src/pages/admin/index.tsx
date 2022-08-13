@@ -17,7 +17,6 @@ import { authenticatedRoute } from '@/components/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import {
-  useGetAllCreatedWikiCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
 } from '@/services/admin'
@@ -60,7 +59,6 @@ const Admin = () => {
     endDate,
     interval: 'year',
   })
-  const { data: wikiData } = useGetAllCreatedWikiCountQuery(30)
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
@@ -204,7 +202,7 @@ const Admin = () => {
         }}
       />
       <Stack spacing={15} direction="column">
-        <WikiInsightTable wiki={wikiData} />
+        <WikiInsightTable />
         <WikiEditorsInsightTable />
       </Stack>
     </Box>

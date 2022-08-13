@@ -168,7 +168,7 @@ export const WikiEditorsInsightTable = () => {
               setActivatePrevious(true)
             }
           }}
-          disabled={paginateOffset > 10}
+          disabled={!editorsData && editorsData?.length == 0}
         >
           Next
         </Button>

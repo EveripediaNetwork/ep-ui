@@ -26,7 +26,7 @@ export const WIKIS_CREATED = gql`
 
 export const CREATED_WIKIS_TABLE = gql`
   query Wikis($offset: Int!) {
-    wikis(offset: $offset) {
+    wikis(limit: 10, offset: $offset) {
       id
       title
       images {
