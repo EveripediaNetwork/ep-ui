@@ -90,7 +90,7 @@ export const WikiInsightTable = () => {
           disabled={!activatePrevious}
           onClick={() => {
             decreasePagination()
-            if (paginateOffset == 0) {
+            if (paginateOffset === 0) {
               setActivatePrevious(false)
             }
           }}
@@ -107,7 +107,7 @@ export const WikiInsightTable = () => {
               setActivatePrevious(true)
             }
           }}
-          disabled={!wiki || wiki.length == 0}
+          disabled={!wiki || wiki.length === 0}
         >
           Next
         </Button>
