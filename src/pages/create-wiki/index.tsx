@@ -248,7 +248,9 @@ const CreateWikiContent = () => {
         user: { id: userAddress },
         content: String(wiki.content).replace(/\n/gm, '  \n'),
         metadata: [
-          ...wiki.metadata.filter(m => m.value !== ''),
+          ...wiki.metadata.filter(
+            m => m.value !== '' && m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+          ),
           { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
         ],
       }
