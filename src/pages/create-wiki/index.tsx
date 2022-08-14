@@ -249,10 +249,10 @@ const CreateWikiContent = () => {
         content: String(wiki.content).replace(/\n/gm, '  \n'),
         metadata: [
           ...wiki.metadata.filter(
-            m => m.value !== '' && m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
           ),
           { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
-        ],
+        ].filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
