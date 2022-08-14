@@ -221,6 +221,9 @@ const CreateWikiContent = () => {
       params: { address: userAddress, slug: getWikiSlug() },
     })
 
+    let wikiCommitMessage =
+      getWikiMetadataById(wiki, EditSpecificMetaIds.COMMIT_MESSAGE)?.value || ''
+
     if (isUserConnected && userAddress) {
       if (
         isNewCreateWiki &&
@@ -230,14 +233,11 @@ const CreateWikiContent = () => {
         setOpenOverrideExistingWikiDialog(true)
         return
       }
+
       if (isNewCreateWiki) {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-            value: override ? 'Wiki Overridden 🔄' : 'New Wiki Created 🎉',
-          },
-        })
+        wikiCommitMessage = override
+          ? 'Wiki Overridden 🔄'
+          : 'New Wiki Created 🎉'
       }
 
       setOpenTxDetailsDialog(true)
@@ -247,13 +247,18 @@ const CreateWikiContent = () => {
         ...wiki,
         user: { id: userAddress },
         content: String(wiki.content).replace(/\n/gm, '  \n'),
-        metadata: wiki.metadata.filter(metadata => metadata.value !== ''),
+        metadata: [
+          ...wiki.metadata.filter(m => m.value !== ''),
+          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
+        ],
       }
 
       if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
       setWikiId(finalWiki.id)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
+
+      console.log({ finalWiki })
 
       const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),

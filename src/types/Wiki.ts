@@ -122,19 +122,6 @@ export interface Author {
   id: string | null
   profile?: ProfileData | null
 }
-export enum PageTypeName {
-  GENERIC = 'generic',
-  PERSON = 'Person',
-  EVENT = 'Event',
-  DAPP = 'Dapp',
-  NFT = 'NFT',
-  TOKEN = 'Token',
-}
-
-export type PageType = {
-  type: PageTypeName
-  templateText: string
-}
 
 export interface CiteReference {
   id: string

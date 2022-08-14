@@ -200,7 +200,7 @@ const wikiSlice = createSlice({
       const newState = {
         ...state,
         metadata: state.metadata.map((m: MData) =>
-          m.id === ob.id ? { ...m, value: ob.value } : m,
+          m.id === ob.id ? { id: ob.id, value: ob.value } : m,
         ),
       }
       saveDraftInLocalStorage(newState)
