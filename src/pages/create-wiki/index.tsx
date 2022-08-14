@@ -441,7 +441,7 @@ const CreateWikiContent = () => {
         payload: {
           ...initWikiData,
           content:
-            EditorContentOverride.KEYWORD +
+            EditorContentOverride +
             initWikiData.content.replace(/ {2}\n/gm, '\n'),
           metadata,
         },
