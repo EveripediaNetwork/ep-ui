@@ -174,9 +174,9 @@ export const WikiEditorsInsightTable = () => {
           color="black"
           variant="outline"
           onClick={() => {
-           if( allowNext) { 
-            increasePagination()
-           }
+            if (allowNext) {
+              increasePagination()
+            }
             setAllowNext(false)
             if (editorsData && editorsData?.length >= 7) {
               setActivatePrevious(true)
