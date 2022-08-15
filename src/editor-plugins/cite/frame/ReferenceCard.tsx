@@ -72,7 +72,7 @@ export const ReferenceCard = ({
     }
     store.dispatch({
       type: 'wiki/setContent',
-      payload: EditorContentOverride.KEYWORD + newContent,
+      payload: EditorContentOverride + newContent,
     })
 
     // =======================

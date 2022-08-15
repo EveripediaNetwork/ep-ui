@@ -20,9 +20,18 @@ const SECTIONS = [
 
 export const Collections = () => (
   <Tabs alignSelf="self-start" w="full" mt="6">
-    <TabList>
+    <TabList pl={5}>
       {SECTIONS.map((section, sid) => (
-        <CustomTab key={sid} fontWeight="semibold">
+        <CustomTab
+          _selected={{
+            color: 'brand.500 !important',
+            _after: {
+              background: 'brand.500 !important',
+            },
+          }}
+          key={sid}
+          fontWeight="semibold"
+        >
           <Icon fontSize="2xl" as={section.icon} mr="3" /> {section.label}{' '}
         </CustomTab>
       ))}

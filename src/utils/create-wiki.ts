@@ -133,8 +133,7 @@ export const useCreateWikiEffects = (
           payload: {
             ...draft,
             content:
-              EditorContentOverride.KEYWORD +
-              draft.content.replace(/ {2}\n/gm, '\n'),
+              EditorContentOverride + draft.content.replace(/ {2}\n/gm, '\n'),
           },
         })
       } else {
@@ -142,7 +141,7 @@ export const useCreateWikiEffects = (
         dispatch({
           type: 'wiki/setInitialWikiState',
           payload: {
-            content: EditorContentOverride.KEYWORD + initialEditorValue,
+            content: EditorContentOverride + initialEditorValue,
           },
         })
       }
