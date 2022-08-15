@@ -5,16 +5,10 @@ import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
   Wiki,
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  WikiRootBlocks,
   EditorContentOverride,
   ValidatorCodes,
   whiteListedDomains,
 } from '@/types/Wiki'
-import diff from 'fast-diff'
-import { getWordCount } from '@/utils/getWordCount'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
 import { submitVerifiableSignature } from '@/utils/postSignature'
@@ -30,7 +24,6 @@ import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from './googleAnalytics'
-import { calculateWikiScore } from './calculateWikiScore'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -373,110 +366,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     txError,
     setTxError,
   }
-}
-
-export const calculateEditInfo = (
-  prevWiki: Wiki,
-  currWiki: Wiki,
-  dispatch: ReturnType<typeof useAppDispatch>,
-) => {
-  const calculateContentChanged = () => {
-    // check if content has changed
-    const prevContent = prevWiki?.content
-    const currContent = currWiki?.content
-
-    // calculate percent changed and number of words changed in prevContent and currContent
-    let contentAdded = 0
-    let contentRemoved = 0
-    let contentUnchanged = 0
-
-    let wordsAdded = 0
-    let wordsRemoved = 0
-
-    diff(prevContent, currContent).forEach(part => {
-      if (part[0] === 1) {
-        contentAdded += part[1].length
-        wordsAdded += getWordCount(part[1])
-      }
-      if (part[0] === -1) {
-        contentRemoved += part[1].length
-        wordsRemoved += getWordCount(part[1])
-      }
-      if (part[0] === 0) {
-        contentUnchanged += part[1].length
-      }
-    })
-
-    const percentChanged =
-      ((contentAdded + contentRemoved) / contentUnchanged) * 100
-    const wordsChanged = wordsAdded + wordsRemoved
-
-    // update metadata in redux state
-    dispatch({
-      type: 'wiki/updateMetadata',
-      payload: {
-        id: EditSpecificMetaIds.WORDS_CHANGED,
-        value: wordsChanged.toString(),
-      },
-    })
-
-    dispatch({
-      type: 'wiki/updateMetadata',
-      payload: {
-        id: EditSpecificMetaIds.PERCENT_CHANGED,
-        value: percentChanged.toFixed(2),
-      },
-    })
-  }
-
-  // calculate which blocks have changed
-  const blocksChanged = []
-
-  // root level block changes
-  if (prevWiki.content !== currWiki.content) {
-    blocksChanged.push(WikiRootBlocks.CONTENT)
-    calculateContentChanged()
-  }
-  if (prevWiki.title !== currWiki.title)
-    blocksChanged.push(WikiRootBlocks.TITLE)
-  if (prevWiki.categories !== currWiki.categories)
-    blocksChanged.push('categories')
-  if (prevWiki.tags !== currWiki.tags) blocksChanged.push(WikiRootBlocks.TAGS)
-  if (prevWiki.summary !== currWiki.summary)
-    blocksChanged.push(WikiRootBlocks.SUMMARY)
-  const prevImgId = prevWiki.images && prevWiki.images[0].id
-  const currImgId = currWiki.images && currWiki.images[0].id
-  if (prevImgId !== currImgId) {
-    blocksChanged.push(WikiRootBlocks.WIKI_IMAGE)
-  }
-
-  // common metadata changes
-  Object.values(CommonMetaIds).forEach(id => {
-    if (
-      (getWikiMetadataById(prevWiki, id)?.value || '') !==
-      (getWikiMetadataById(currWiki, id)?.value || '')
-    ) {
-      blocksChanged.push(id)
-    }
-  })
-  // update blocks changed metadata in redux state
-  dispatch({
-    type: 'wiki/updateMetadata',
-    payload: {
-      id: EditSpecificMetaIds.BLOCKS_CHANGED,
-      value: blocksChanged.join(','),
-    },
-  })
-
-  // calculate wiki score and update wiki with score
-  const wikiScore = calculateWikiScore(currWiki)
-  dispatch({
-    type: 'wiki/updateMetadata',
-    payload: {
-      id: EditSpecificMetaIds.WIKI_SCORE,
-      value: wikiScore.toFixed(2),
-    },
-  })
 }
 
 export const isVerifiedContentLinks = (content: string) => {

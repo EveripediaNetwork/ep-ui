@@ -66,7 +66,6 @@ import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
   useCreateWikiEffects,
@@ -222,7 +221,10 @@ const CreateWikiContent = () => {
       params: { address: userAddress, slug: getWikiSlug() },
     })
 
-    if (isUserConnected) {
+    let wikiCommitMessage =
+      getWikiMetadataById(wiki, EditSpecificMetaIds.COMMIT_MESSAGE)?.value || ''
+
+    if (isUserConnected && userAddress) {
       if (
         isNewCreateWiki &&
         !override &&
@@ -231,51 +233,30 @@ const CreateWikiContent = () => {
         setOpenOverrideExistingWikiDialog(true)
         return
       }
+
       if (isNewCreateWiki) {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-            value: override ? 'Wiki Overridden 🔄' : 'New Wiki Created 🎉',
-          },
-        })
+        wikiCommitMessage = override
+          ? 'Wiki Overridden 🔄'
+          : 'New Wiki Created 🎉'
       }
 
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      let interWiki = { ...wiki }
-      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
-      setWikiId(interWiki.id)
-
-      if (userAddress) {
-        interWiki = {
-          ...interWiki,
-          user: {
-            id: userAddress,
-          },
-          content: String(wiki.content).replace(/\n/gm, '  \n'),
-        }
-      }
-
-      if (!isNewCreateWiki || override) {
-        let prevWiki: Wiki | undefined
-        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          prevWiki = prevEditedWiki.current.wiki
-        } else if (override && existingWikiData) {
-          prevWiki = existingWikiData
-        } else if (wikiData) {
-          prevWiki = wikiData
-        }
-        if (prevWiki) calculateEditInfo(prevWiki, interWiki, dispatch)
-      }
-
       const finalWiki = {
-        ...interWiki,
-        metadata: store.getState().wiki.metadata.filter(meta => {
-          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
-        }),
+        ...wiki,
+        user: { id: userAddress },
+        content: String(wiki.content).replace(/\n/gm, '  \n'),
+        metadata: [
+          ...wiki.metadata.filter(
+            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+          ),
+          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
+        ].filter(m => m.value),
       }
+
+      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
+      setWikiId(finalWiki.id)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
@@ -295,6 +276,7 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            // eslint-disable-next-line no-console
             console.error({ ...errObj })
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
