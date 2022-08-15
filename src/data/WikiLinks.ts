@@ -88,7 +88,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Facebook',
     icon: FacebookIcon,
-    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
+    tests: [/https:\/\/(www.)?((web|m).)?facebook.com\/\w+/],
   },
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
