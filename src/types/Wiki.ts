@@ -23,10 +23,7 @@ export interface Media {
   source: 'IPFS_IMG' | 'VIMEO' | 'YOUTUBE' | 'IPFS_VID'
 }
 
-export enum EditorContentOverride {
-  KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
-}
-
+export const EditorContentOverride = '%OVERRIDE@EDITOR@MARKDOWN%'
 export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
 
 export enum CommonMetaIds {
