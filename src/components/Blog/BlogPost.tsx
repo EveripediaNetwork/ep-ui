@@ -1,14 +1,16 @@
 import React from 'react'
-import { Flex, LinkBox, LinkBoxProps, Text } from '@chakra-ui/react'
+import { Flex, LinkBox, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import type { BlogPost as BlogPostType } from '@/components/Blog/data'
+import { Blog } from '@/types/Blog'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
-export type BlogPostProps = { post: BlogPostType } & LinkBoxProps
+type BlogPostType = {
+  maxW?: string
+  post: Blog
+  key: number
+}
 
-export const BlogPost = (props: any) => {
-  const { post, ...rest } = props
-
+export const BlogPost = ({ post, ...rest }: BlogPostType) => {
   return (
     <LinkBox
       display="flex"

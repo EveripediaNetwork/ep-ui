@@ -49,6 +49,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await Promise.all(getRunningOperationPromises())
 
+  if (!entries.data) return { props: {} }
+
   const entryPaths: EntryPath[] = getEntryPaths(entries.data)
 
   const blogEntries = await getBlogentriesFormatted(entryPaths)

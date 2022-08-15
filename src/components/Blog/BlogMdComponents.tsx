@@ -44,7 +44,14 @@ const h3 = ({ children }: { children: ReactNode[] }) => {
   )
 }
 
-const a = ({ href, children, ...props }: any) => {
+const a = ({
+  href,
+  children,
+  ...props
+}: {
+  href?: string | undefined
+  children: ReactNode[]
+}) => {
   return (
     <a
       href={href}

@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
+import { RawTransactions } from '@/types/Blog'
 import { FETCH_SINGLE_TRANSACTION, FETCH_TRANSACTIONS } from './queries'
 
 export const ArweaveApi = createApi({
@@ -17,19 +18,20 @@ export const ArweaveApi = createApi({
     url: 'https://arweave.net/graphql',
   }),
   endpoints: builder => ({
-    getBlogEntries: builder.query<any, Array<string>>({
+    getBlogEntries: builder.query<RawTransactions, Array<string>>({
       query: (addresses: Array<string>) => ({
         document: FETCH_TRANSACTIONS,
         variables: { addresses },
       }),
-      transformResponse: (response: any) => response,
+      transformResponse: (response: RawTransactions): RawTransactions =>
+        response,
     }),
-    getSingleBlogEntry: builder.query<any, string>({
+    getSingleBlogEntry: builder.query<RawTransactions, string>({
       query: (digest: string) => ({
         document: FETCH_SINGLE_TRANSACTION,
         variables: { digest },
       }),
-      transformResponse: (response: any) => response,
+      transformResponse: (response: RawTransactions) => response,
     }),
   }),
 })

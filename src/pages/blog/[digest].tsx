@@ -50,6 +50,8 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
           getBlogEntries.initiate([config.blogAccount]),
         )
 
+        if (!entries.data) return
+
         const entryPaths = getEntryPaths(entries.data)
 
         const blogEntries = await getBlogentriesFormatted(entryPaths)
@@ -62,20 +64,24 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
 
   useEffect(() => {
     const getBlogEntry = async () => {
+      const singleEntry = await store.dispatch(
+        getSingleBlogEntry.initiate(digest),
+      )
+
+      if (!singleEntry.data) return
+
       const {
-        data: {
-          transactions: {
-            edges: {
-              0: {
-                node: {
-                  id: transactionId,
-                  block: { timestamp },
-                },
+        transactions: {
+          edges: {
+            0: {
+              node: {
+                id: transactionId,
+                block: { timestamp },
               },
             },
           },
         },
-      } = await store.dispatch(getSingleBlogEntry.initiate(digest))
+      } = singleEntry.data
 
       const formatted = await formatEntry(
         JSON.parse(
