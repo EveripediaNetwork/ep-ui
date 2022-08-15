@@ -10,7 +10,12 @@ import {
   Text,
   ButtonGroup,
   Button,
+  Flex,
+  Icon,
+  HStack,
 } from '@chakra-ui/react'
+
+import { AiFillExclamationCircle } from 'react-icons/ai'
 
 export const DeleteEditorModal = ({
   onClose = () => {},
@@ -23,7 +28,7 @@ export const DeleteEditorModal = ({
       onClose={onClose}
       isOpen={isOpen}
       isCentered
-      size={{ lg: 'xl', base: 'sm' }}
+      size={{ lg: 'lg', base: 'sm' }}
       {...rest}
     >
       <ModalOverlay />
@@ -32,21 +37,34 @@ export const DeleteEditorModal = ({
           bg: 'gray.800',
         }}
       >
-        <ModalBody px="0rem">
-          <Box borderBottom="1px solid #E2E8F0" p="2">
-            <Heading fontSize="xl" color="#1A202C">
-              Delete Editor
-            </Heading>
-          </Box>
-          <Box borderBottom="1px solid #E2E8F0" pb={12} px={2}>
-            <Text color="#718096">
-              Are you sure you want to delete this editor?
+        <ModalBody p="5">
+          <HStack py="2" px="2">
+            <Box bg="#2d3748" px="2" py="2" pb="0" rounded="full">
+              <Icon
+                fontSize="20px"
+                cursor="pointer"
+                color="white"
+                as={AiFillExclamationCircle}
+              />
+            </Box>
+            <Heading fontSize="xl">Delete Editor</Heading>
+          </HStack>
+          <Flex
+            py={5}
+            alignItems="center"
+            justifyContent="space-between"
+            w="full"
+          >
+            <Text textAlign="center">
+              You are about to delete an editor. Do youwish to continue this
+              action?
             </Text>
-            <Text color="#718096">This action is not reversible </Text>
-          </Box>
-          <ButtonGroup px={2} pt={2}>
-            <Button variant="outline">Cancel</Button>
-            <Button>Yes, I am sure.</Button>
+          </Flex>
+          <ButtonGroup px={2} pt={2} w="full" spacing={8}>
+            <Button w="full" variant="outline">
+              Cancel
+            </Button>
+            <Button w="full">Delete</Button>
           </ButtonGroup>
         </ModalBody>
       </ModalContent>

@@ -15,19 +15,18 @@ import {
   TagLabel,
   HStack,
   Link,
+  useDisclosure,
+  Select,
 } from '@chakra-ui/react'
 import config from '@/config'
 import React from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import {
-  RiArrowDropDownLine,
-  RiArrowDownLine,
-  RiQuestionLine,
-} from 'react-icons/ri'
+import { RiArrowDownLine, RiQuestionLine } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
+import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -37,6 +36,7 @@ export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
 ) => {
   const { wikiCreatedInsightData } = props
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const bgTags = [
     {
       bg: '#F9F5FF',
@@ -47,6 +47,7 @@ export const InsightTableWikiCreated = (
       color: '#385C8A',
     },
   ]
+  const VisibilityOptions = ['Archived', 'Unarchive']
   return (
     <TableContainer w="100%">
       <Table>
@@ -153,55 +154,56 @@ export const InsightTableWikiCreated = (
                           as={BsDot}
                         />
                         <TagLabel>
-                          {item.hidden ? 'Archived' : 'Active'}
+                          {item.hidden ? 'Archived' : 'Unarchive'}
                         </TagLabel>
                       </HStack>
                     </Tag>
                   </Td>
                   <Td>
                     <Flex w="100%" p={5} gap={2} align="center">
-                      <HStack spacing={2}>
-                        <Text
-                          color="#718096"
-                          cursor="pointer"
-                          fontWeight="semibold"
+                      <HStack spacing={5}>
+                        <Select
+                          maxW="52"
+                          ml="auto"
+                          defaultValue={item.hidden ? 'Archived' : 'Unarchive'}
                         >
-                          {item.hidden ? 'Archived' : 'Active'}
-                        </Text>
-                        <Icon
-                          fontSize="20px"
-                          cursor="pointer"
-                          color="#718096"
-                          as={RiArrowDropDownLine}
-                        />
-                      </HStack>
-                      {!item.promoted ? (
-                        <Text
-                          color="#FF5CAA"
-                          cursor="pointer"
-                          fontWeight="semibold"
-                        >
-                          Promoted
-                        </Text>
-                      ) : (
-                        <HStack spacing={2}>
-                          <Text color="#E2E8F0" cursor="pointer">
-                            Promote
-                          </Text>
-                          <Icon
-                            fontSize="20px"
+                          {VisibilityOptions?.map((op, i) => (
+                            <option key={i}>{op}</option>
+                          ))}
+                        </Select>
+
+                        {item.promoted ? (
+                          <Text
+                            color="#FF5CAA"
                             cursor="pointer"
-                            color="#718096"
-                            as={RiQuestionLine}
-                          />
-                        </HStack>
-                      )}
+                            fontWeight="semibold"
+                          >
+                            Promoted
+                          </Text>
+                        ) : (
+                          <HStack spacing={2}>
+                            <Text color="#E2E8F0" cursor="pointer">
+                              Promote
+                            </Text>
+                            <Icon
+                              fontSize="20px"
+                              cursor="pointer"
+                              color="#718096"
+                              as={RiQuestionLine}
+                              onClick={() => {
+                                onOpen()
+                              }}
+                            />
+                          </HStack>
+                        )}
+                      </HStack>
                     </Flex>
                   </Td>
                 </Tr>
               </>
             )
           })}
+          <PromoteCreatedWikisModal isOpen={isOpen} onClose={onClose} />
         </Tbody>
       </Table>
     </TableContainer>

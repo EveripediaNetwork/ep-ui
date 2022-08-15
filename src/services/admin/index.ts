@@ -6,6 +6,7 @@ import {
   WIKIS_CREATED,
   CREATED_WIKIS_TABLE,
   EDITORS_TABLE,
+  EDITORS_COUNT,
 } from '@/services/admin/queries'
 import config from '@/config'
 import { WikisModifiedCount, CreatedWikisCount, Editors } from '@/types/admin'
@@ -20,6 +21,9 @@ type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
 }
 
+type WikisEditorsCountResponse = {
+  editorCount: { amount: number }
+}
 type WikisCreatedCountResponse = {
   wikisCreated: WikisModifiedCount[]
 }
@@ -48,6 +52,14 @@ export const adminApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
+    getEditorsCount: builder.query<{ amount: number }, WikisModifiedCountArgs>({
+      query: ({ startDate, endDate, interval }: WikisModifiedCountArgs) => ({
+        document: EDITORS_COUNT,
+        variables: { startDate, endDate, interval },
+      }),
+      transformResponse: (response: WikisEditorsCountResponse) =>
+        response.editorCount,
+    }),
     getEditors: builder.query<Editors[], EditorQueryParams>({
       query: ({ limit, offset }: { limit: number; offset: number }) => ({
         document: EDITORS_TABLE,
@@ -90,6 +102,7 @@ export const adminApi = createApi({
 export const {
   useGetAllCreatedWikiCountQuery,
   useGetEditorsQuery,
+  useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   util: { getRunningOperationPromises },
@@ -100,4 +113,5 @@ export const {
   getWikisCreatedCount,
   getWikisEditedCount,
   getEditors,
+  getEditorsCount,
 } = adminApi.endpoints

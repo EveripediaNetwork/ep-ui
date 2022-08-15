@@ -84,6 +84,13 @@ export const EDITORS_TABLE = gql`
     }
   }
 `
+export const EDITORS_COUNT = gql`
+  query EditorCount($startDate: Int, $endDate: Int, $interval: String) {
+    editorCount(startDate: $startDate, endDate: $endDate, interval: $interval) {
+      amount
+    }
+  }
+`
 
 // query {
 //   users(limit: 10) {

@@ -19,6 +19,7 @@ import { useAccount } from 'wagmi'
 import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
+  useGetEditorsCountQuery,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
@@ -58,6 +59,17 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
+    startDate,
+    interval: 'week',
+  })
+
+  const { data: totalEditorsCountData } = useGetEditorsCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({
     startDate,
     interval: 'week',
   })
@@ -107,7 +119,12 @@ const Admin = () => {
       weeklyValue: weeklyWikiEditedCountData
         ? weeklyWikiEditedCountData[0]?.amount
         : 0,
-      percent: 40,
+      percent: Math.round(
+        totalWikisEditedCountData && weeklyWikiEditedCountData
+          ? totalWikisEditedCountData[0].amount /
+              weeklyWikiEditedCountData[0].amount
+          : 0,
+      ),
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
     },
@@ -119,16 +136,25 @@ const Admin = () => {
       weeklyValue: weeklyWikiCreatedCountData
         ? weeklyWikiCreatedCountData[0]?.amount
         : 0,
-      percent: 40,
+      percent: Math.round(
+        totalWikisCreatedCountData && weeklyWikiCreatedCountData
+          ? totalWikisCreatedCountData[0].amount /
+              weeklyWikiCreatedCountData[0].amount
+          : 0,
+      ),
       color: 'pink.400',
       detailHeader: 'Total no of Created Wikis',
     },
     {
       icon: RiUser3Fill,
       detailHeader: 'Total no of Editors',
-      value: 500,
-      weeklyValue: '1k',
-      percent: 40,
+      value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
+      weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
+      percent: Math.round(
+        totalEditorsCountData && weeklyEditorsCountData
+          ? totalEditorsCountData.amount / weeklyEditorsCountData.amount
+          : 0,
+      ),
       color: 'pink.400',
     },
     {
@@ -181,7 +207,7 @@ const Admin = () => {
         Welcome to the admin dashboard
       </Text>
 
-      <Stack spacing={8} py={7} direction={{ base: 'column', md: 'row' }}>
+      <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
         {wikiMetaData.map(item => {
           const { value, detailHeader, weeklyValue, percent, color, icon } =
             item
