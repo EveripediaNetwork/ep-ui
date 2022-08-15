@@ -23,6 +23,7 @@ export const WikiEditorsInsightTable = () => {
     offset: paginateOffset,
   })
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
+  const [allowNext, setAllowNext] = useState<boolean>(true)
   const [editorsData, setEditorsData] = useState<
     Array<{
       editorName: string
@@ -64,18 +65,26 @@ export const WikiEditorsInsightTable = () => {
     }>
   >()
   const newObj: any = []
-  editors?.map(item => {
-    newObj.push({
-      editorName: item?.profile?.username ? item?.profile?.username : 'Unknown',
-      editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-      editorAddress: item?.id,
-      createdWikis: item?.wikisCreated,
-      editiedWikis: item?.wikisEdited,
-      lastCreatedWiki: item?.wikisCreated[0],
-      latestActivity: 'Jan 6, 2022 - 12:22am',
+  editors
+    ?.filter(item => {
+      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
     })
-    return null
-  })
+    ?.map(item => {
+      newObj.push({
+        editorName: item?.profile?.username
+          ? item?.profile?.username
+          : 'Unknown',
+        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+        editorAddress: item?.id,
+        createdWikis: item?.wikisCreated,
+        editiedWikis: item?.wikisEdited,
+        lastCreatedWiki: item?.wikisCreated[0]
+          ? item?.wikisCreated[0]
+          : item?.wikisEdited[0],
+        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+      })
+      return null
+    })
 
   editors?.filter(item => {
     return item.wikisCreated.length > 0
@@ -83,6 +92,7 @@ export const WikiEditorsInsightTable = () => {
 
   useEffect(() => {
     setEditorsData(newObj)
+    setAllowNext(true)
   }, [editors])
 
   const increasePagination = () => {
@@ -159,16 +169,24 @@ export const WikiEditorsInsightTable = () => {
           Previous
         </Button>
         <Button
+          disabled={editorsData && editorsData?.length < 9}
           rightIcon={<ArrowForwardIcon />}
           color="black"
           variant="outline"
           onClick={() => {
+           if( allowNext) { 
             increasePagination()
-            if (editorsData && editorsData?.length >= 10) {
+           }
+            setAllowNext(false)
+            if (editorsData && editorsData?.length >= 7) {
               setActivatePrevious(true)
             }
           }}
-          disabled={!editorsData || editorsData?.length === 0}
+          cursor={
+            !allowNext && editorsData && editorsData?.length >= 7
+              ? 'wait'
+              : 'pointer'
+          }
         >
           Next
         </Button>

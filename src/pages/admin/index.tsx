@@ -24,16 +24,20 @@ import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
-  const getMonday = useMemo(() => {
-    const d = new Date()
-    const day = d.getDay()
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1)
-    return new Date(d.setDate(diff))
+  const startDate = useMemo(() => {
+    let prevMonday = new Date()
+    prevMonday = new Date(
+      prevMonday.setDate(
+        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7),
+      ),
+    )
+    prevMonday.setHours(0, 0, 0, 0)
+
+    return Math.floor(prevMonday.getTime() / 1000)
   }, [])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
-  const startDate = Math.floor(getMonday.getTime() / 1000)
   const [graphFilter, setGraphFilter] = useState<string>('week')
 
   const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
@@ -44,8 +48,7 @@ const Admin = () => {
 
   const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
     startDate,
-    endDate,
-    interval: 'year',
+    interval: 'week',
   })
 
   const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
@@ -56,16 +59,17 @@ const Admin = () => {
 
   const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
     startDate,
-    endDate,
-    interval: 'year',
+    interval: 'week',
   })
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
+    startDate: 0,
   })
 
   const { data: GraphWikisEditedCountData } = useGetWikisEditedCountQuery({
     interval: graphFilter,
+    startDate: 0,
   })
 
   const dataObj: Array<{
@@ -185,7 +189,7 @@ const Admin = () => {
             <WikiDetailsCards
               detailHeader={detailHeader}
               icon={icon}
-              currentValue={value.toString()}
+              currentValue={value?.toString()}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
               percent={percent}
               color={color}
