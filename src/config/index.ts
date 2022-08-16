@@ -22,6 +22,7 @@ const config = {
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   baseArchiveUrl: 'https://archive.everipedia.org',
   blogAccount: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT || '',
+  blogAccount2: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2 || ''
 }
 
 export default config

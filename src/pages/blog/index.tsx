@@ -44,7 +44,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const entries = await store.dispatch(
-    getBlogEntries.initiate([config.blogAccount]),
+    getBlogEntries.initiate([config.blogAccount, config.blogAccount2]),
   )
 
   await Promise.all(getRunningOperationPromises())
