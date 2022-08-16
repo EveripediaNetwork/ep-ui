@@ -50,9 +50,6 @@ export const getEntryPaths = ({
 }
 
 const mapEntry = async (entry: EntryPath) => {
-  const status = await arweave.transactions.getStatus(entry.path)
-  console.log(status)
-
   try {
     const result = await arweave.transactions.getData(entry.path, {
       decode: true,

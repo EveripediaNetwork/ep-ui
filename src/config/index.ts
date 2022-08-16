@@ -23,6 +23,7 @@ const config = {
   baseArchiveUrl: 'https://archive.everipedia.org',
   blogAccount: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT || '',
   blogAccount2: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2 || '',
+  blogAccount3: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3 || ''
 }
 
 export default config
