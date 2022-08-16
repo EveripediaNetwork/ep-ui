@@ -23,14 +23,10 @@ export interface Media {
   source: 'IPFS_IMG' | 'VIMEO' | 'YOUTUBE' | 'IPFS_VID'
 }
 
-export enum EditorContentOverride {
-  KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
-}
-
+export const EditorContentOverride = '%OVERRIDE@EDITOR@MARKDOWN%'
 export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
 
 export enum CommonMetaIds {
-  PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
 
   // other info
@@ -109,14 +105,6 @@ export enum EditSpecificMetaIds {
   WIKI_SCORE = 'wiki-score',
 }
 
-export enum WikiRootBlocks {
-  TITLE = 'title',
-  CONTENT = 'content',
-  WIKI_IMAGE = 'wiki-image',
-  SUMMARY = 'summary',
-  TAGS = 'tags',
-}
-
 export interface MData {
   id: CommonMetaIds | EditSpecificMetaIds
   value: string
@@ -130,19 +118,6 @@ export interface User {
 export interface Author {
   id: string | null
   profile?: ProfileData | null
-}
-export enum PageTypeName {
-  GENERIC = 'generic',
-  PERSON = 'Person',
-  EVENT = 'Event',
-  DAPP = 'Dapp',
-  NFT = 'NFT',
-  TOKEN = 'Token',
-}
-
-export type PageType = {
-  type: PageTypeName
-  templateText: string
 }
 
 export interface CiteReference {
