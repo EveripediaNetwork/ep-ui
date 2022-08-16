@@ -47,6 +47,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     getBlogEntries.initiate([config.blogAccount, config.blogAccount2]),
   )
 
+  console.log(entries)
+
   await Promise.all(getRunningOperationPromises())
 
   if (!entries.data) return { props: {} }

@@ -30,6 +30,8 @@ export const getEntryPaths = ({
         node.tags.map((tag: BlogTag) => [tag.name, tag.value]),
       )
 
+      if (!node || !node.block) return { slug: '', path: '', timestamp: 0 }
+
       return {
         slug: tags['Original-Content-Digest'],
         path: node.id,
@@ -47,31 +49,49 @@ export const getEntryPaths = ({
     }, [])
 }
 
+const mapEntry = async (entry: EntryPath) => {
+  const status = await arweave.transactions.getStatus(entry.path)
+  console.log(status)
+
+  try {
+    const result = await arweave.transactions.getData(entry.path, {
+      decode: true,
+      string: true,
+    })
+
+    if (result)
+      return await formatEntry(
+        JSON.parse(result as string),
+        entry.slug,
+        entry.timestamp,
+      )
+
+    return undefined
+  } catch (error) {
+    console.log(error)
+  }
+
+  return undefined
+}
+
 export const getBlogentriesFormatted = async (
   entryPaths: EntryPath[],
 ): Promise<Blog[]> => {
   return (
     await Promise.all(
-      entryPaths.map(async (entry: EntryPath) =>
-        formatEntry(
-          JSON.parse(
-            String(
-              await arweave.transactions.getData(entry.path, {
-                decode: true,
-                string: true,
-              }),
-            ),
-          ),
-          entry.slug,
-          entry.timestamp,
-        ),
-      ),
+      entryPaths.map(async (entry: EntryPath) => mapEntry(entry)),
     )
   )
-    .sort((a, b) => b.timestamp - a.timestamp)
+    .sort((a, b) => {
+      if (a && b) return b.timestamp - a.timestamp
+
+      return 0
+    })
     .reduce((acc: Blog[], current) => {
-      const x = acc.find((entry: Blog) => entry.slug === current.slug)
-      if (!x) return acc.concat([current])
+      const x = acc.find(
+        (entry: Blog) => current && entry.slug === current.slug,
+      )
+      if (!x && current) return acc.concat([current])
       return acc
     }, [])
 }
