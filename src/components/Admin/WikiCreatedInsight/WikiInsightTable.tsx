@@ -85,7 +85,6 @@ export const WikiInsightTable = () => {
       <Flex justify="space-between" w="95%" m="0 auto">
         <Button
           leftIcon={<ArrowBackIcon />}
-          color="black"
           variant="outline"
           disabled={!activatePrevious}
           onClick={() => {
@@ -99,7 +98,6 @@ export const WikiInsightTable = () => {
         </Button>
         <Button
           rightIcon={<ArrowForwardIcon />}
-          color="black"
           variant="outline"
           onClick={() => {
             increasePagination()

@@ -156,7 +156,6 @@ export const WikiEditorsInsightTable = () => {
       <Flex justify="space-between" w="95%" m="0 auto">
         <Button
           leftIcon={<ArrowBackIcon />}
-          color="black"
           variant="outline"
           disabled={!activatePrevious}
           onClick={() => {
@@ -171,7 +170,6 @@ export const WikiEditorsInsightTable = () => {
         <Button
           disabled={editorsData && editorsData?.length < 9}
           rightIcon={<ArrowForwardIcon />}
-          color="black"
           variant="outline"
           onClick={() => {
             if (allowNext) {

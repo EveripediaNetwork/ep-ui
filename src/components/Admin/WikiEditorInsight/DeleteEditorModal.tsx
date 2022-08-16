@@ -56,7 +56,7 @@ export const DeleteEditorModal = ({
             w="full"
           >
             <Text textAlign="center">
-              You are about to delete an editor. Do youwish to continue this
+              You are about to delete an editor. Do you wish to continue this
               action?
             </Text>
           </Flex>

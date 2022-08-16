@@ -71,7 +71,7 @@ export const WikiDataGraph = ({
                 axisLine={false}
                 tickLine={false}
                 minTickGap={20}
-                tickMargin={50}
+                tickMargin={60}
                 dataKey="name"
                 dy={-45}
               >
