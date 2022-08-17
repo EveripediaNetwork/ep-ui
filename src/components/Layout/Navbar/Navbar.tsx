@@ -25,6 +25,7 @@ import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNo
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { logEvent } from '@/utils/googleAnalytics'
 import dynamic from 'next/dynamic'
+import SearchSEO from '@/components/SEO/Search'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
@@ -148,6 +149,7 @@ const Navbar = () => {
 
   return (
     <>
+      <SearchSEO />
       <Box
         boxShadow="sm"
         position="fixed"
