@@ -39,6 +39,10 @@ const Wiki = ({ wiki }: WikiProps) => {
     <>
       {wiki && (
         <WikiHeader
+          slug={slug as string}
+          author={wiki.author.profile?.username || wiki.author.id || ''}
+          dateModified={wiki.updated}
+          datePublished={wiki.created}
           title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
           description={getWikiSummary(wiki)}
           mainImage={getWikiImageUrl(wiki)}
