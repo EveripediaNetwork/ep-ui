@@ -42,33 +42,6 @@ export const useInfiniteData = <T>(opts: Opts) => {
     setTimeout(fetchNewWikis, FETCH_DELAY_TIME)
   }
 
-  // const fetcher = (noOffset?: boolean) => {
-  //   setTimeout(() => {
-  //     const fetchNewWikis = async () => {
-  //       const result = await store.dispatch(
-  //         opts.initiator.initiate({
-  //           ...opts.arg,
-  //           limit: ITEM_PER_PAGE,
-  //           offset: noOffset ? 0 : updatedOffset,
-  //         }),
-  //       )
-  //       if (result.data && result.data?.length > 0) {
-  //         const { data: resData } = result
-  //         setData(prevData => [...prevData, ...resData])
-  //         setOffset(updatedOffset)
-  //         if (resData.length < ITEM_PER_PAGE) {
-  //           setHasMore(false)
-  //           setLoading(false)
-  //         }
-  //       } else {
-  //         setHasMore(false)
-  //         setLoading(false)
-  //       }
-  //     }
-  //     fetchNewWikis()
-  //   }, FETCH_DELAY_TIME)
-  // }
-
   return {
     fetcher,
     hasMore,
