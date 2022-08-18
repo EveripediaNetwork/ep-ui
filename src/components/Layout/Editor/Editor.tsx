@@ -125,6 +125,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
     editorWrapper?.addEventListener('paste', PasteListener, true)
     return () => editorWrapper?.removeEventListener('paste', PasteListener)
   }, [])
+  const reWidgetRule = /{YOUTUBE@VID<=>(\S+)}/
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
@@ -143,6 +144,22 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           ['ul', 'ol', 'indent', 'outdent'],
           ['table', 'code'],
         ]}
+        customHTMLSanitizer={(html: string) => {
+          console.log(html)
+          return html
+        }}
+        // widgetRules={[
+        //   {
+        //     rule: reWidgetRule,
+        //     toDOM(text: any) {
+        //       const rule = reWidgetRule
+        //       const matched = text.match(rule)
+        //       const span = document.createElement('span')
+        //       span.innerHTML = text
+        //       return span
+        //     },
+        //   },
+        // ]}
       />
     </Box>
   )

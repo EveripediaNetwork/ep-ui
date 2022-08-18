@@ -11,6 +11,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Image,
 } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
@@ -21,6 +22,13 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   function handleImageClick(m: Media): void {
     editorContext.eventEmitter.emit('command', 'insertImage', {
       src: `${config.pinataBaseUrl}${m.id}`,
+      alt: m.name,
+    })
+  }
+
+  function handleVideoClick(m: Media): void {
+    editorContext.eventEmitter.emit('command', 'insertVideo', {
+      src: `${m.id}`,
       alt: m.name,
     })
   }
@@ -48,12 +56,12 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </Text>
           <SimpleGrid columns={3} gap={4}>
             {media.map(m => {
-              if (m.source === 'IPFS_IMG')
+              if (m.source === 'IPFS_IMG') {
                 return (
-                  <Box key={m.id} pos="relative">
+                  <Box key={m.id} pos="relative" h="100%">
                     <WikiImage
                       w="100%"
-                      h="100px"
+                      h="100%"
                       borderRadius="3px"
                       overflow="hidden"
                       key={m.id}
@@ -69,10 +77,30 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                       fontSize="1.5rem"
                       color="#ffffff"
                       bgColor="#0000004f"
-                      borderRadius="3px"
                     />
                   </Box>
                 )
+              }
+              if (m.source === 'YOUTUBE') {
+                return (
+                  <Box key={m.id} pos="relative" h="100%">
+                    <Image
+                      src={
+                        m.source !== 'YOUTUBE'
+                          ? constructMediaUrl(m)
+                          : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
+                      }
+                      onClick={() => handleVideoClick(m)}
+                      h="100%"
+                      w="100%"
+                      objectFit="cover"
+                      bgColor="gray.500"
+                      borderRadius="3px"
+                      cursor="pointer"
+                    />
+                  </Box>
+                )
+              }
               return null
             })}
           </SimpleGrid>

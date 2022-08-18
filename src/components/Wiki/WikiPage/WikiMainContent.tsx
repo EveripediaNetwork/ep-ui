@@ -32,6 +32,32 @@ const MarkdownRender = React.memo(
           h6: addToTOC,
           a: customLinkRenderer,
           table: customTableRenderer,
+          // eslint-disable-next-line
+          img: ({ node, ...props }) => {
+            // eslint-disable-next-line
+            const ytRegex =
+              // eslint-disable-next-line
+              /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
+            const isVideo = node?.properties?.src
+            if (isVideo) {
+              if (
+                ytRegex.test(isVideo.toString().split('watch').join('embed'))
+              ) {
+                const ytId = isVideo.toString().match(ytRegex)
+                if (ytId) {
+                  return (
+                    <iframe
+                      height="500px"
+                      src={`https://www.youtube.com/embed/${ytId[1]}`}
+                      width="100%"
+                      title="Iframe Example"
+                    />
+                  )
+                }
+              }
+            }
+            return <img {...props} alt="meta media" />
+          },
         }}
       >
         {wikiContent}

@@ -51,6 +51,18 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(tr.scrollIntoView())
         return true
       },
+      insertVideo: (payload, state, dispatch) => {
+        const text = `{YOUTUBE@VID<=>${payload.alt}}`
+        const { from, to } = state.selection
+        dispatch(state.tr.insertText(text, from, to))
+        return true
+
+        // const link = `![${"Youtube Video"}](${payload.src})`
+        // const { from, to } = state.selection
+        // const tr = state.tr.insertText(link, from, to)
+        // dispatch(tr.scrollIntoView())
+        // return true
+      },
     },
     wysiwygCommands: {
       insertImage: (payload, state, dispatch) => {
@@ -60,6 +72,17 @@ export default function media(context: PluginContext): PluginInfo {
         })
         dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
+      },
+      insertVideo: (payload, state, dispatch) => {
+        const text = `{YOUTUBE@VID<=>${payload.alt}}`
+        const { from, to } = state.selection
+        dispatch(state.tr.insertText(text, from, to))
+        return true
+
+        // const text =  `<iframe width="420" height="345" src="https://www.youtube.com/embed/${payload.alt}"></iframe>`
+        // const { from, to } = state.selection
+        // dispatch(state.tr.insertText(text, from, to))
+        // return true
       },
     },
   }
