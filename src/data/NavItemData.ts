@@ -1,11 +1,11 @@
 import {
   RiSettings5Fill,
-  RiAccountCircleFill,
+  RiUserLine,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
   RiAddBoxFill,
-  RiWallet2Line,
+  RiWalletLine,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import {
@@ -121,7 +121,7 @@ export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
   href: '#',
   id: 6,
-  icon: RiWallet2Line,
+  icon: RiWalletLine,
 }
 
 export const MOBILE_NAV_ITEMS = ({
@@ -133,7 +133,7 @@ export const MOBILE_NAV_ITEMS = ({
   {
     id: 7,
     label: 'Account',
-    icon: RiAccountCircleFill,
+    icon: RiUserLine,
     href: '#',
     subItem: [
       {
