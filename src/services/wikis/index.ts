@@ -13,6 +13,7 @@ import {
   GET_TAG_WIKIS_BY_ID,
   GET_USER_CREATED_WIKIS_BY_ID,
   GET_USER_EDITED_WIKIS_BY_ID,
+  GET_WIKI_SLUG_VALID,
 } from '@/services/wikis/queries'
 import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
@@ -65,6 +66,13 @@ type WikisByCategoryArg = {
   category: string
   limit?: number
   offset?: number
+}
+
+type GetIsWikiSlugValidResponse = {
+  validWikiSlug: {
+    valid?: boolean
+    id?: string
+  }
 }
 
 export const wikiApi = createApi({
@@ -131,6 +139,16 @@ export const wikiApi = createApi({
         return response.userById.wikisEdited
       },
     }),
+    getIsWikiSlugValid: builder.query<{ valid?: boolean; id?: string }, string>(
+      {
+        query: (slug: string) => ({
+          document: GET_WIKI_SLUG_VALID,
+          variables: { slug },
+        }),
+        transformResponse: (response: GetIsWikiSlugValidResponse) =>
+          response.validWikiSlug,
+      },
+    ),
     getTagWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => ({
         document: GET_TAG_WIKIS_BY_ID,
@@ -184,6 +202,7 @@ export const {
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
+  useGetIsWikiSlugValidQuery,
   util: { getRunningOperationPromises },
 } = wikiApi
 
@@ -199,4 +218,5 @@ export const {
   postImage,
   getUserCreatedWikis,
   getUserEditedWikis,
+  getIsWikiSlugValid,
 } = wikiApi.endpoints

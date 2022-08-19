@@ -36,6 +36,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import {
+  getIsWikiSlugValid,
   getRunningOperationPromises,
   getWiki,
   postWiki,
@@ -160,7 +161,14 @@ const CreateWikiContent = () => {
   const { saveHashInTheBlockchain, signing, verifyTrxHash } =
     useGetSignedHash(deadline)
 
-  const getWikiSlug = () => slugifyText(String(wiki.title))
+  const getWikiSlug = async () => {
+    const slug = slugifyText(String(wiki.title))
+    const { data: result } = await store.dispatch(
+      getIsWikiSlugValid.initiate(slug),
+    )
+    if (result?.id) return result.id
+    return slug
+  }
 
   const isValidWiki = () => {
     if (!wiki.title) {
@@ -218,7 +226,7 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: userAddress, slug: getWikiSlug() },
+      params: { address: userAddress, slug: await getWikiSlug() },
     })
 
     let wikiCommitMessage =
@@ -228,7 +236,7 @@ const CreateWikiContent = () => {
       if (
         isNewCreateWiki &&
         !override &&
-        (await isWikiExists(getWikiSlug(), setExistingWikiData))
+        (await isWikiExists(await getWikiSlug(), setExistingWikiData))
       ) {
         setOpenOverrideExistingWikiDialog(true)
         return
@@ -255,7 +263,7 @@ const CreateWikiContent = () => {
         ].filter(m => m.value),
       }
 
-      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = getWikiSlug()
+      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = await getWikiSlug()
       setWikiId(finalWiki.id)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
@@ -265,7 +273,7 @@ const CreateWikiContent = () => {
       )
 
       if (wikiResult && 'data' in wikiResult) {
-        saveHashInTheBlockchain(String(wikiResult.data), getWikiSlug())
+        saveHashInTheBlockchain(String(wikiResult.data), await getWikiSlug())
       } else {
         setIsLoading('error')
         let logReason = 'NO_IPFS'
@@ -291,7 +299,7 @@ const CreateWikiContent = () => {
           params: {
             reason: logReason,
             address: userAddress,
-            slug: getWikiSlug(),
+            slug: await getWikiSlug(),
           },
         })
       }
@@ -432,7 +440,10 @@ const CreateWikiContent = () => {
   }, [dispatch, toast, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(getWikiSlug())
+    async function verifyTransactionHash() {
+      if (txHash) verifyTrxHash(await getWikiSlug())
+    }
+    verifyTransactionHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
@@ -628,7 +639,7 @@ const CreateWikiContent = () => {
             saveOnIpfs(true)
           }}
           onClose={() => setOpenOverrideExistingWikiDialog(false)}
-          slug={getWikiSlug()}
+          getSlug={getWikiSlug}
           existingWikiData={existingWikiData}
         />
         <WikiProcessModal
