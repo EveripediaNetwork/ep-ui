@@ -125,7 +125,17 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
     editorWrapper?.addEventListener('paste', PasteListener, true)
     return () => editorWrapper?.removeEventListener('paste', PasteListener)
   }, [])
-  const reWidgetRule = /{YOUTUBE@VID<=>(\S+)}/
+  const reWidgetRule = /{YOUTUBE@VID=%=(\S+)}/
+
+  const insertYtSyntaxToEditor = (videoID: string) => {
+    const editorInstance = editorRef.current?.getInstance()
+    if (!editorInstance) {
+      return
+    }
+    const [start, end] = editorInstance.getSelection()
+
+    editorInstance?.replaceSelection(`{YOUTUBE@VID=%=${videoID}}`, start, end)
+  }
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
@@ -148,21 +158,31 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           console.log(html)
           return html
         }}
-        // widgetRules={[
-        //   {
-        //     rule: reWidgetRule,
-        //     toDOM(text: any) {
-        //       const rule = reWidgetRule
-        //       const matched = text.match(rule)
-        //       const span = document.createElement('span')
-        //       span.innerHTML = text
-        //       return span
-        //     },
-        //   },
-        // ]}
+        widgetRules={[
+          {
+            rule: reWidgetRule,
+            toDOM(text: any) {
+              const rule = reWidgetRule
+              const matched = text.match(rule)
+              const ytIframe = document.createElement('span')
+              console.log(matched)
+              ytIframe.innerHTML = `
+                <iframe src="https://www.youtube.com/embed/${matched[1]}">
+                </iframe>
+              `
+              return ytIframe
+            },
+          },
+        ]}
       />
     </Box>
   )
 }
 
 export default memo(Editor)
+
+// {YOUTUBE@VID<=>GU4iyaeFywo}
+
+{
+  /* <iframe width="1238" height="696" src="https://www.youtube.com/embed/RsadnWrUY84?list=RDGMEM6CZm14o9sc-Q22TIneLI8gVMRsadnWrUY84" title="Jacob Banks - Unknown (To You) (Live In London)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */
+}

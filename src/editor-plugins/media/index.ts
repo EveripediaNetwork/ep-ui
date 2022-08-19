@@ -52,7 +52,7 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: (payload, state, dispatch) => {
-        const text = `{YOUTUBE@VID<=>${payload.alt}}`
+        const text = `{YOUTUBE@VID=%=${payload.alt}`
         const { from, to } = state.selection
         dispatch(state.tr.insertText(text, from, to))
         return true
@@ -74,9 +74,14 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: (payload, state, dispatch) => {
-        const text = `{YOUTUBE@VID<=>${payload.alt}}`
+        const text = `{YOUTUBE@VID=%=${payload.alt}`
         const { from, to } = state.selection
         dispatch(state.tr.insertText(text, from, to))
+        setTimeout(() => { 
+          window.dispatchEvent(new KeyboardEvent('keydown', {
+            'key': '}'
+          }));
+        }, 50)
         return true
 
         // const text =  `<iframe width="420" height="345" src="https://www.youtube.com/embed/${payload.alt}"></iframe>`
