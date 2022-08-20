@@ -11,17 +11,68 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
+
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 
 export const WikiEditorsInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
+  const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
+
+  // sorting editors
+  const editorsSortByHighest = editors?.slice()
+  editorsSortByHighest?.sort(
+    (a, b) => b.wikisCreated.length - a.wikisCreated.length,
+  )
+
+  const editorsSortByLowest = editors?.slice()
+  editorsSortByLowest?.sort(
+    (a, b) => a.wikisCreated.length - b.wikisCreated.length,
+  )
+
+  const sortIcon = useMemo(() => {
+    if (sortTableBy === 'default') {
+      return <BiSort fontSize="1.3rem" />
+    }
+    if (sortTableBy === 'ascending') {
+      return <BiSortUp fontSize="1.3rem" />
+    }
+    if (sortTableBy === 'descending') {
+      return <BiSortDown fontSize="1.3rem" />
+    }
+    return <BiSort fontSize="1.3rem" />
+  }, [editors, sortTableBy])
+
+  const editorsFilteredArr = useMemo(() => {
+    if (sortTableBy === 'default') {
+      return editors
+    }
+    if (sortTableBy === 'ascending') {
+      return editorsSortByHighest
+    }
+    if (sortTableBy === 'descending') {
+      return editorsSortByLowest
+    }
+    return editors
+  }, [editors, sortTableBy])
+
+  const handleSortChange = () => {
+    if (sortTableBy === 'default') {
+      setSortTableBy('descending')
+    } else if (sortTableBy === 'descending') {
+      setSortTableBy('ascending')
+    } else if (sortTableBy === 'ascending') {
+      setSortTableBy('descending')
+    }
+  }
+
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [allowNext, setAllowNext] = useState<boolean>(true)
   const [editorsData, setEditorsData] = useState<
@@ -65,7 +116,7 @@ export const WikiEditorsInsightTable = () => {
     }>
   >()
   const newObj: any = []
-  editors
+  editorsFilteredArr
     ?.filter(item => {
       return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
     })
@@ -91,9 +142,10 @@ export const WikiEditorsInsightTable = () => {
   })
 
   useEffect(() => {
+    console.log('hd')
     setEditorsData(newObj)
     setAllowNext(true)
-  }, [editors])
+  }, [editors, sortTableBy])
 
   const increasePagination = () => {
     return (
@@ -138,6 +190,20 @@ export const WikiEditorsInsightTable = () => {
             </InputLeftElement>
             <Input type="tel" placeholder="Search" />
           </InputGroup>
+          <Button
+            onClick={() => {
+              handleSortChange()
+            }}
+            borderColor="#E2E8F0"
+            _dark={{ borderColor: '#2c323d' }}
+            py={2}
+            px={10}
+            rightIcon={sortIcon}
+            variant="outline"
+            fontWeight="light"
+          >
+            Sort
+          </Button>
           <Select
             cursor="pointer"
             w="40%"
