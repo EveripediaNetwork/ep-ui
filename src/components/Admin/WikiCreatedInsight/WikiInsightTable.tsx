@@ -180,7 +180,7 @@ export const WikiInsightTable = () => {
             cursor="pointer"
             w="50%"
             // onChange={e => {
-              // handleFilter(e.target.value)
+            // handleFilter(e.target.value)
             // }}
             placeholder="Filter"
             icon={<MdFilterList />}
