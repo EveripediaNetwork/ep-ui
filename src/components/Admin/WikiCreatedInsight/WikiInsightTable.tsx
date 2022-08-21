@@ -9,17 +9,19 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
+import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
-
+  const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
+
   const increasePagination = () => {
     return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset + 10)
   }
@@ -28,9 +30,102 @@ export const WikiInsightTable = () => {
     return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset - 10)
   }
 
+  const getDateVal = (val: string | number | Date) => {
+    const result = new Date(val).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
+    return result
+  }
+  // sorting creted wikis by date
+  const WikisSortByHighest = wiki?.slice()
+  WikisSortByHighest?.sort((a, b) => {
+    const DataA = getDateVal(b.created ? b.created : '')
+    const DataB = getDateVal(a.created ? a.created : '')
+    let Data = new Date(DataA).valueOf() - new Date(DataB).valueOf()
+    if (Data === 0) Data = b.title.trim().localeCompare(a.title.trim())
+    return Data
+  })
+
+  const WikisSortByLowest = wiki?.slice()
+  WikisSortByLowest?.sort((a, b) => {
+    const DataA = getDateVal(b.created ? b.created : '')
+    const DataB = getDateVal(a.created ? a.created : '')
+    let Data = new Date(DataB).valueOf() - new Date(DataA).valueOf()
+    if (Data === 0) Data = a.title.trim().localeCompare(b.title.trim())
+    return Data
+  })
+
+  const sortIcon = useMemo(() => {
+    if (sortTableBy === 'default') {
+      return <BiSort fontSize="1.3rem" />
+    }
+    if (sortTableBy === 'ascending') {
+      return <BiSortUp fontSize="1.3rem" />
+    }
+    if (sortTableBy === 'descending') {
+      return <BiSortDown fontSize="1.3rem" />
+    }
+    return <BiSort fontSize="1.3rem" />
+  }, [wiki, sortTableBy])
+
+  const wikiSorted = useMemo(() => {
+    if (sortTableBy === 'default') {
+      return wiki
+    }
+    if (sortTableBy === 'ascending') {
+      return WikisSortByHighest
+    }
+    if (sortTableBy === 'descending') {
+      return WikisSortByLowest
+    }
+    return wiki
+  }, [wiki, sortTableBy])
+
+  const handleSortChange = () => {
+    if (sortTableBy === 'default') {
+      setSortTableBy('descending')
+    } else if (sortTableBy === 'descending') {
+      setSortTableBy('ascending')
+    } else if (sortTableBy === 'ascending') {
+      setSortTableBy('descending')
+    }
+  }
+
+  const FilterArray = [
+    { id: 1, value: 'Promoted' },
+    { id: 2, value: 'Archived' },
+    { id: 3, value: 'Sponsored' },
+    { id: 4, value: 'Normal' },
+  ]
+
+  // const handleFilter = useMemo((id: number) => {
+  //   if (id == 1) {
+  //     wikiSorted
+  //       ?.filter(item => {
+  //         return item?.promoted
+  //       })
+  //   }
+  //   if (id == 2 ) {
+  //     wikiSorted
+  //       ?.filter(item => {
+  //         return item?.hidden
+  //       })
+  //   }
+  //   if (id == 3 ) {
+  //     // wikiSorted
+  //     //   ?.filter(item => {
+  //         return wikiSorted
+  //       // })
+  //   }
+
+  //   return wikiSorted
+  // }, [wikiSorted] )
+
   useEffect(() => {
-    setWikis(wiki)
-  }, [wiki])
+    setWikis(wikiSorted)
+  }, [wiki, sortTableBy])
 
   return (
     <Flex
@@ -67,15 +162,34 @@ export const WikiInsightTable = () => {
             </InputLeftElement>
             <Input type="tel" placeholder="Search" />
           </InputGroup>
+          <Button
+            onClick={() => {
+              handleSortChange()
+            }}
+            borderColor="#E2E8F0"
+            _dark={{ borderColor: '#2c323d' }}
+            py={2}
+            px={10}
+            leftIcon={sortIcon}
+            variant="outline"
+            fontWeight="light"
+          >
+            Sort
+          </Button>
           <Select
             cursor="pointer"
             w="50%"
+            // onChange={e => {
+              // handleFilter(e.target.value)
+            // }}
             placeholder="Filter"
             icon={<MdFilterList />}
           >
-            <option value="option1">Weekly</option>
-            <option value="option1">Monthly</option>
-            <option value="option1">Yearly</option>
+            {FilterArray.map(o => (
+              <option key={o.id} value={o.id}>
+                {o.value}
+              </option>
+            ))}
           </Select>
         </Flex>
       </Flex>
