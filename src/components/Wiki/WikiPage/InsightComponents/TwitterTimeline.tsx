@@ -19,7 +19,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
       <WikiAccordion title="Twitter Timeline">
         <Box
           h="400px"
-          bgColor="dimColor"
+          bgColor="white"
           _dark={{
             bgColor: 'dimColor',
           }}
