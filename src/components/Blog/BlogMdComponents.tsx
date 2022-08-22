@@ -1,45 +1,37 @@
 import React, { ReactNode } from 'react'
-import { Heading, Text } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import routeToBlock from 'react-embed/lib/routeToBlock'
 
-export const shouldEmbed = (url: string) => {
-  return routeToBlock([] as any, new URL(url) as any) !== undefined
-}
+export const shouldEmbed = (url: string) =>
+  routeToBlock([] as any, new URL(url) as any) !== undefined
 
-const BlockQuote = ({ children }: { children: ReactNode[] }) => {
-  return <blockquote>{children}</blockquote>
-}
+const BlockQuote = ({ children }: { children: ReactNode[] }) => (
+  <blockquote>{children}</blockquote>
+)
 
-const p = ({ children }: { children: ReactNode[] }) => {
+const p = ({ children }: { children: ReactNode[] }) => (
+  <p style={{ marginBottom: '16px', fontFamily: 'poppins, sans-serif' }}>
+    {children}
+  </p>
+)
 
-  return (
-    <p style={{ marginBottom: '16px', fontFamily: 'poppins, sans-serif' }}>{children}</p>
-  )
-}
+const h1 = ({ children }: { children: ReactNode[] }) => (
+  <Heading as="h1" mt={8} mb={4}>
+    {children}
+  </Heading>
+)
 
-const h1 = ({ children }: { children: ReactNode[] }) => {
-  return (
-    <Heading as="h1" mt={8} mb={4}>
-      {children}
-    </Heading>
-  )
-}
+const h2 = ({ children }: { children: ReactNode[] }) => (
+  <Heading as="h2" mt={8} mb={4}>
+    {children}
+  </Heading>
+)
 
-const h2 = ({ children }: { children: ReactNode[] }) => {
-  return (
-    <Heading as="h2" mt={8} mb={4}>
-      {children}
-    </Heading>
-  )
-}
-
-const h3 = ({ children }: { children: ReactNode[] }) => {
-  return (
-    <Heading as="h3" mt={8} mb={4}>
-      {children}
-    </Heading>
-  )
-}
+const h3 = ({ children }: { children: ReactNode[] }) => (
+  <Heading as="h3" mt={8} mb={4}>
+    {children}
+  </Heading>
+)
 
 const a = ({
   href,
@@ -73,14 +65,10 @@ export const uriTransformer = (uri: string) => {
   const url = (uri || '').trim()
   const first = url.charAt(0)
 
-  if (first === '#' || first === '/') {
-    return url
-  }
+  if (first === '#' || first === '/') return url
 
   const colon = url.indexOf(':')
-  if (colon === -1) {
-    return url
-  }
+  if (colon === -1) return url
 
   const { length } = allowedLinkProtocols
   let index = -1
@@ -92,20 +80,15 @@ export const uriTransformer = (uri: string) => {
     if (
       colon === protocol.length &&
       url.slice(0, protocol.length).toLowerCase() === protocol
-    ) {
+    )
       return url
-    }
   }
 
   index = url.indexOf('?')
-  if (index !== -1 && colon > index) {
-    return url
-  }
+  if (index !== -1 && colon > index) return url
 
   index = url.indexOf('#')
-  if (index !== -1 && colon > index) {
-    return url
-  }
+  if (index !== -1 && colon > index) return url
 
   return '#'
 }
