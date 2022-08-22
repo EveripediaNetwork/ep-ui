@@ -23,7 +23,7 @@ import {
 import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
-import { useGetActivityByIdQuery } from '@/services/activities'
+import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
@@ -307,13 +307,24 @@ export const useCreateWikiState = (router: NextRouter) => {
   const { slug, revision } = router.query
 
   const { isLoading: isLoadingLatestWiki, data: latestWikiData } =
-    useGetWikiQuery(!revision && typeof slug === 'string' ? slug : skipToken)
+    useGetWikiQuery(
+      typeof revision !== 'string' && typeof slug === 'string'
+        ? slug
+        : skipToken,
+    )
 
   const { isLoading: isLoadingRevisionWiki, data: revisionWikiData } =
-    useGetActivityByIdQuery(typeof revision === 'string' ? revision : skipToken)
+    useGetWikiByActivityIdQuery(
+      typeof revision === 'string' ? revision : skipToken,
+    )
+
+  console.log({
+    revision,
+    revisionWikiData,
+  })
 
   const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
-  const wikiData = revisionWikiData?.content[0] || latestWikiData
+  const wikiData = revisionWikiData || latestWikiData
 
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
