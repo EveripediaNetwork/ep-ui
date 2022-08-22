@@ -318,11 +318,6 @@ export const useCreateWikiState = (router: NextRouter) => {
       typeof revision === 'string' ? revision : skipToken,
     )
 
-  console.log({
-    revision,
-    revisionWikiData,
-  })
-
   const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
   const wikiData = revisionWikiData || latestWikiData
 
