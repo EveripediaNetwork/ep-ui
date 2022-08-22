@@ -105,87 +105,85 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiInsightData?.map(item => {
+          {wikiInsightData?.map((item, i) => {
             return (
-              <>
-                <Tr>
-                  <Td>
-                    <Link href={`/account/${item.editorAddress}`} py={1}>
-                      <Flex align="center" gap={2}>
-                        <Avatar
-                          boxSize="40px"
-                          name={item.editorName}
-                          src={item.editorAvatar}
-                        />
-                        <Flex flexDirection="column">
-                          <Text>{item.editorName}</Text>
-                          <Text color="#718096" fontSize="sm">
-                            {shortenAccount(item.editorAddress)}
-                          </Text>
-                        </Flex>
-                      </Flex>
-                    </Link>
-                  </Td>
-                  <Td>
-                    <Text color="#718096">{item.createdWikis.length}</Text>
-                  </Td>
-                  <Td>
-                    <Text color="#718096">{item.editiedWikis.length}</Text>
-                  </Td>
-                  <Td>
-                    <Text color="#718096">
-                      {item.createdWikis.length + item.editiedWikis.length}
-                    </Text>
-                  </Td>
-                  <Td>
-                    <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1}>
-                      <Flex flexDir="row" align="center" gap={2}>
-                        <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
-                          <WikiImage
-                            cursor="pointer"
-                            flexShrink={0}
-                            imageURL={`${config.pinataBaseUrl}${
-                              item.lastCreatedWiki?.content
-                                ? item.lastCreatedWiki.content[0].images[0].id
-                                : ''
-                            }`}
-                          />
-                        </AspectRatio>
-                        <Text>
-                          {item.lastCreatedWiki?.content[0]
-                            ? shortenText(
-                                item.lastCreatedWiki?.content[0].title,
-                                18,
-                              )
-                            : ''}
+              <Tr key={i}>
+                <Td>
+                  <Link href={`/account/${item.editorAddress}`} py={1}>
+                    <Flex align="center" gap={2}>
+                      <Avatar
+                        boxSize="40px"
+                        name={item.editorName}
+                        src={item.editorAvatar}
+                      />
+                      <Flex flexDirection="column">
+                        <Text>{item.editorName}</Text>
+                        <Text color="#718096" fontSize="sm">
+                          {shortenAccount(item.editorAddress)}
                         </Text>
                       </Flex>
-                    </Link>
-                  </Td>
-                  <Td color="#718096">{item.latestActivity}</Td>
-                  <Td>
-                    <Button
-                      w="fit-content"
-                      bg="none"
-                      _hover={{ bg: 'none' }}
-                      _active={{ bg: 'none', outline: 'none' }}
-                      _focus={{ bg: 'none', outline: 'none' }}
-                      p="0"
-                      m="0"
-                    >
-                      <Icon
-                        fontSize="18px"
-                        cursor="pointer"
-                        color="#718096"
-                        as={RiDeleteBin6Line}
-                        onClick={() => {
-                          onOpen()
-                        }}
-                      />
-                    </Button>
-                  </Td>
-                </Tr>
-              </>
+                    </Flex>
+                  </Link>
+                </Td>
+                <Td>
+                  <Text color="#718096">{item.createdWikis.length}</Text>
+                </Td>
+                <Td>
+                  <Text color="#718096">{item.editiedWikis.length}</Text>
+                </Td>
+                <Td>
+                  <Text color="#718096">
+                    {item.createdWikis.length + item.editiedWikis.length}
+                  </Text>
+                </Td>
+                <Td>
+                  <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1}>
+                    <Flex flexDir="row" align="center" gap={2}>
+                      <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
+                        <WikiImage
+                          cursor="pointer"
+                          flexShrink={0}
+                          imageURL={`${config.pinataBaseUrl}${
+                            item.lastCreatedWiki?.content
+                              ? item.lastCreatedWiki.content[0].images[0].id
+                              : ''
+                          }`}
+                        />
+                      </AspectRatio>
+                      <Text>
+                        {item.lastCreatedWiki?.content[0]
+                          ? shortenText(
+                              item.lastCreatedWiki?.content[0].title,
+                              18,
+                            )
+                          : ''}
+                      </Text>
+                    </Flex>
+                  </Link>
+                </Td>
+                <Td color="#718096">{item.latestActivity}</Td>
+                <Td>
+                  <Button
+                    w="fit-content"
+                    bg="none"
+                    _hover={{ bg: 'none' }}
+                    _active={{ bg: 'none', outline: 'none' }}
+                    _focus={{ bg: 'none', outline: 'none' }}
+                    p="0"
+                    m="0"
+                  >
+                    <Icon
+                      fontSize="18px"
+                      cursor="pointer"
+                      color="#718096"
+                      as={RiDeleteBin6Line}
+                      onClick={() => {
+                        onOpen()
+                      }}
+                    />
+                  </Button>
+                </Td>
+              </Tr>
             )
           })}
           <DeleteEditorModal isOpen={isOpen} onClose={onClose} />

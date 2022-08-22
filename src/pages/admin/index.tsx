@@ -208,13 +208,14 @@ const Admin = () => {
       </Text>
 
       <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
-        {wikiMetaData.map(item => {
+        {wikiMetaData.map((item, i) => {
           const { value, detailHeader, weeklyValue, percent, color, icon } =
             item
           return (
             <WikiDetailsCards
               detailHeader={detailHeader}
               icon={icon}
+              key={i}
               currentValue={value?.toString()}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
               percent={percent}
