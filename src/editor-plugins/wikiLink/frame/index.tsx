@@ -63,7 +63,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   }, [triggerCleanup])
 
   useEffect(() => {
-    if (search.length > 3) {
+    if (search.length >= 3) {
       setLoading(true)
       debouncedFetchWikis(search, data => {
         setResults(data.slice(0, 6))
@@ -131,7 +131,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </div>
         </Center>
       )}
-      {!loading && search.length > 3 && results.length === 0 && (
+      {!loading && search.length >= 3 && results.length === 0 && (
         <div className="wikiLink__noResultsMsg">No results found</div>
       )}
       {results.length > 0 && (
