@@ -272,8 +272,6 @@ const CreateWikiContent = () => {
         postWiki.initiate({ data: finalWiki }),
       )
 
-      console.log({ finalWiki, wikiResult })
-
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data), await getWikiSlug())
       } else {
