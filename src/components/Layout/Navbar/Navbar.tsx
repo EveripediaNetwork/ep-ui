@@ -11,7 +11,7 @@ import {
   SkeletonCircle,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { RiWallet2Line } from 'react-icons/ri'
+import { RiWalletLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import config from '@/config'
@@ -206,7 +206,7 @@ const Navbar = () => {
                   fontSize="3xl"
                   onClick={handleWalletIconAction}
                   fontWeight={600}
-                  as={RiWallet2Line}
+                  as={RiWalletLine}
                   onMouseEnter={() => setVisibleMenu(null)}
                   _hover={{
                     textDecoration: 'none',
@@ -227,7 +227,7 @@ const Navbar = () => {
                   fontSize="3xl"
                   onClick={handleWalletIconAction}
                   fontWeight={600}
-                  as={RiWallet2Line}
+                  as={RiWalletLine}
                   onMouseEnter={() => setVisibleMenu(null)}
                   _hover={{
                     textDecoration: 'none',
