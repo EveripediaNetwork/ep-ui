@@ -139,7 +139,7 @@ const Admin = () => {
       percent: Math.round(
         totalWikisCreatedCountData && weeklyWikiCreatedCountData
           ? totalWikisCreatedCountData[0].amount /
-              weeklyWikiCreatedCountData[0].amount
+              weeklyWikiCreatedCountData[0]?.amount
           : 0,
       ),
       color: 'pink.400',
