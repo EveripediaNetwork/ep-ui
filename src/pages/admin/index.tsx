@@ -119,12 +119,7 @@ const Admin = () => {
       weeklyValue: weeklyWikiEditedCountData
         ? weeklyWikiEditedCountData[0]?.amount
         : 0,
-      percent: Math.round(
-        totalWikisEditedCountData && weeklyWikiEditedCountData
-          ? totalWikisEditedCountData[0].amount /
-              weeklyWikiEditedCountData[0].amount
-          : 0,
-      ),
+      percent: 50,
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
     },
@@ -137,7 +132,6 @@ const Admin = () => {
         ? weeklyWikiCreatedCountData[0]?.amount
         : 0,
       percent: 50,
-      ),
       color: 'pink.400',
       detailHeader: 'Total no of Created Wikis',
     },
@@ -147,7 +141,6 @@ const Admin = () => {
       value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
       percent: 50,
-      ),
       color: 'pink.400',
     },
     {
