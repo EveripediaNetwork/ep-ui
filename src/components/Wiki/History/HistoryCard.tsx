@@ -21,6 +21,7 @@ import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
 import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import { LinkButton } from '@/components/Elements'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -206,6 +207,10 @@ export const HistoryCard = ({
           ))}
         </Flex>
       )}
+
+      <LinkButton mt={2} size="sm" href={`/create-wiki?revision=${activityId}`}>
+        Edit
+      </LinkButton>
 
       {/* Transaction address and restore button */}
       <HStack
