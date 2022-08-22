@@ -9,7 +9,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { RiAccountCircleLine } from 'react-icons/ri'
+import { RiUserLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { useUserProfileData } from '@/services/profile/utils'
@@ -75,7 +75,7 @@ const DisplayAvatar = ({
         color="gray.600"
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
-        as={RiAccountCircleLine}
+        as={RiUserLine}
       />
     )
   }
