@@ -37,17 +37,8 @@ export const InsightTableWikiCreated = (
 ) => {
   const { wikiCreatedInsightData } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const bgTags = [
-    {
-      bg: '#F9F5FF',
-      color: '#FE6FB5',
-    },
-    {
-      bg: '#EBF8FF',
-      color: '#385C8A',
-    },
-  ]
-  const VisibilityOptions = ['Archived', 'Unarchive']
+
+  const VisibilityOptions = ['Archive', 'Unarchive']
   return (
     <TableContainer w="100%">
       <Table>
@@ -108,32 +99,61 @@ export const InsightTableWikiCreated = (
                   </Flex>
                 </Td>
                 <Td>
-                  <Text color="#718096">
-                    {item.created
-                      ? new Date(item.created).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })
-                      : '-'}
-                  </Text>
+                  <HStack>
+                    <Text color="#718096">
+                      {item.created
+                        ? new Date(item.created).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : '-'}
+                    </Text>
+                    <Icon
+                      fontSize="20px"
+                      cursor="pointer"
+                      color="black"
+                      alignSelf="center"
+                      as={BsDot}
+                      justifySelf="center"
+                    />
+                    <Text color="#718096" textTransform="lowercase">
+                      {item.created
+                        ? new Date(item.created).toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: 'numeric',
+                          })
+                        : '-'}
+                    </Text>
+                  </HStack>
                 </Td>
                 <Td py={1}>
-                  <HStack marginLeft={-2} flexWrap="wrap" justify="start">
-                    {item.tags.map((tag, index) => (
-                      <Link key={index} href={`/tags/${tag.id}`} py={1}>
-                        <Tag
-                          key={index}
-                          size="md"
-                          borderRadius="full"
-                          variant="solid"
-                          bg={bgTags[index]?.bg}
-                          color={bgTags[index]?.color}
-                        >
-                          <TagLabel>{tag.id}</TagLabel>
-                        </Tag>
-                      </Link>
-                    ))}
+                  <HStack
+                    marginLeft={-2}
+                    flexWrap="wrap"
+                    justify="start"
+                    gap={2}
+                  >
+                    <Tag
+                      size="md"
+                      borderRadius="full"
+                      variant="solid"
+                      bg="#F9F5FF"
+                      color="#FE6FB5"
+                    >
+                      <TagLabel>Normal</TagLabel>
+                    </Tag>
+                    {item.promoted && (
+                      <Tag
+                        size="md"
+                        borderRadius="full"
+                        variant="solid"
+                        bg="#EBF8FF"
+                        color="#385C8A"
+                      >
+                        <TagLabel> Promoted </TagLabel>
+                      </Tag>
+                    )}
                   </HStack>
                 </Td>
                 <Td>
@@ -153,7 +173,7 @@ export const InsightTableWikiCreated = (
                         as={BsDot}
                       />
                       <TagLabel>
-                        {item.hidden ? 'Archived' : 'Unarchive'}
+                        {item.hidden ? 'Archive' : 'Unarchive'}
                       </TagLabel>
                     </HStack>
                   </Tag>
@@ -164,20 +184,23 @@ export const InsightTableWikiCreated = (
                       <Select
                         maxW="52"
                         ml="auto"
-                        defaultValue={item.hidden ? 'Archived' : 'Unarchive'}
+                        defaultValue={item.hidden ? 'Archive' : 'Unarchive'}
                       >
                         {VisibilityOptions?.map((op, p) => (
                           <option key={p}>{op}</option>
                         ))}
                       </Select>
 
-                      {item.promoted ? (
+                      {!item.promoted ? (
                         <Text
                           color="#FF5CAA"
                           cursor="pointer"
                           fontWeight="semibold"
+                          onClick={() => {
+                            onOpen()
+                          }}
                         >
-                          Promoted
+                          Promote
                         </Text>
                       ) : (
                         <HStack spacing={2}>
@@ -189,9 +212,6 @@ export const InsightTableWikiCreated = (
                             cursor="pointer"
                             color="#718096"
                             as={RiQuestionLine}
-                            onClick={() => {
-                              onOpen()
-                            }}
                           />
                         </HStack>
                       )}

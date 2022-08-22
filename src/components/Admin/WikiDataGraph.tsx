@@ -17,9 +17,11 @@ import {
   Line,
   Legend,
   Label,
+  PieChart,
+  Pie,
+  Cell,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
-import { UserDataPie } from './UserDataPie'
 
 export const WikiDataGraph = ({
   piedata,
@@ -39,8 +41,8 @@ export const WikiDataGraph = ({
   const currentYear = new Date().getFullYear()
   const labelColor = useColorModeValue('#718096', '#6c7079')
   return (
-    <Flex gap={4} py="4" w="full" flexDir={{ base: 'column', lg: 'row' }}>
-      <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '75%', base: '100%' }}>
+    <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
+      <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '68%', base: '100%' }}>
         <Flex justifyContent="space-between" pt="2" pb="10">
           <VStack spacing={2} w="full">
             <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
@@ -51,7 +53,7 @@ export const WikiDataGraph = ({
             </Text>
           </VStack>
           <Select
-            w="20%"
+            w="30%"
             icon={<MdArrowDropDown />}
             onChange={e => {
               handleGraphFilterChange(e.target.value)
@@ -95,21 +97,57 @@ export const WikiDataGraph = ({
               <Line
                 type="monotone"
                 dataKey="Wikis Created"
-                stroke="#FF69B4"
+                stroke="#FF5CAA"
                 activeDot={{ r: 8 }}
                 strokeWidth={2.2}
               />
               <Line
                 type="monotone"
                 dataKey="Wikis Edited"
-                stroke="#FFC0CB"
+                stroke="#FFb3d7"
                 strokeWidth={2.2}
               />
             </LineChart>
           </ResponsiveContainer>
         </Box>
       </Box>
-      <UserDataPie piedata={piedata} colors={colors} data={data} />
+
+      <Box rounded="xl" borderWidth="1px" p={6} w={{ lg: '31%', base: '100%' }}>
+        <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
+          User Data
+        </Heading>
+        <Flex alignItems="center" justifyContent="center" w="full">
+          <PieChart width={350} height={400}>
+            <Pie
+              data={piedata}
+              cx={170}
+              cy={200}
+              innerRadius={50}
+              outerRadius={130}
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {data.map((entry: any, index: any) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={colors[index % colors.length]}
+                />
+              ))}
+            </Pie>
+            <Legend
+              payload={piedata.map((item, index) => ({
+                id: item.name,
+                type: 'circle',
+                value: item.name,
+                color: colors[index % colors.length],
+              }))}
+              layout="horizontal"
+              verticalAlign="bottom"
+              align="center"
+            />
+          </PieChart>
+        </Flex>
+      </Box>
     </Flex>
   )
 }

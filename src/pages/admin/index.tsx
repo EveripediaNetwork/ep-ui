@@ -156,8 +156,7 @@ const Admin = () => {
     { name: 'Editors', value: 400 },
     { name: 'Visitors', value: 300 },
   ]
-  const COLORS = ['#FF69B4', '#FFC0CB']
-  // const { query } = useRouter()
+  const COLORS = ['#FF5DAA', '#FFB3D7']
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
   const { setAccount } = useUserProfileData('', {

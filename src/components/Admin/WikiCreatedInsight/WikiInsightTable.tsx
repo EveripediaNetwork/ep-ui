@@ -6,8 +6,13 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Select,
   Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuOptionGroup,
 } from '@chakra-ui/react'
 import React, { useEffect, useState, useMemo } from 'react'
 import { FiSearch } from 'react-icons/fi'
@@ -30,30 +35,32 @@ export const WikiInsightTable = () => {
     return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset - 10)
   }
 
-  const getDateVal = (val: string | number | Date) => {
-    const result = new Date(val).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    })
-    return result
-  }
   // sorting creted wikis by date
   const WikisSortByHighest = wiki?.slice()
   WikisSortByHighest?.sort((a, b) => {
-    const DataA = getDateVal(b.created ? b.created : '')
-    const DataB = getDateVal(a.created ? a.created : '')
-    let Data = new Date(DataA).valueOf() - new Date(DataB).valueOf()
-    if (Data === 0) Data = b.title.trim().localeCompare(a.title.trim())
+    const Data =
+      new Date(b.created ? b.created : '').valueOf() -
+      new Date(a.created ? a.created : '').valueOf()
     return Data
   })
 
   const WikisSortByLowest = wiki?.slice()
   WikisSortByLowest?.sort((a, b) => {
-    const DataA = getDateVal(b.created ? b.created : '')
-    const DataB = getDateVal(a.created ? a.created : '')
-    let Data = new Date(DataB).valueOf() - new Date(DataA).valueOf()
-    if (Data === 0) Data = a.title.trim().localeCompare(b.title.trim())
+    const Data =
+      new Date(a.created ? a.created : '').valueOf() -
+      new Date(b.created ? b.created : '').valueOf()
+    return Data
+  })
+
+  const WikisSortByAlpaUp = wiki?.slice()
+  WikisSortByAlpaUp?.sort((a, b) => {
+    const Data = a.title.trim().localeCompare(b.title.trim())
+    return Data
+  })
+
+  const WikisSortByAlpaDown = wiki?.slice()
+  WikisSortByAlpaDown?.sort((a, b) => {
+    const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
   })
 
@@ -61,10 +68,10 @@ export const WikiInsightTable = () => {
     if (sortTableBy === 'default') {
       return <BiSort fontSize="1.3rem" />
     }
-    if (sortTableBy === 'ascending') {
+    if (sortTableBy === 'Newest' || sortTableBy === 'AlpaUp') {
       return <BiSortUp fontSize="1.3rem" />
     }
-    if (sortTableBy === 'descending') {
+    if (sortTableBy === 'Oldest' || sortTableBy === 'AlpaDown') {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <BiSort fontSize="1.3rem" />
@@ -74,54 +81,41 @@ export const WikiInsightTable = () => {
     if (sortTableBy === 'default') {
       return wiki
     }
-    if (sortTableBy === 'ascending') {
+    if (sortTableBy === 'Newest') {
       return WikisSortByHighest
     }
-    if (sortTableBy === 'descending') {
+    if (sortTableBy === 'Oldest') {
       return WikisSortByLowest
+    }
+    if (sortTableBy === 'AlpaUp') {
+      return WikisSortByAlpaUp
+    }
+    if (sortTableBy === 'AlpaDown') {
+      return WikisSortByAlpaDown
     }
     return wiki
   }, [wiki, sortTableBy])
 
-  const handleSortChange = () => {
-    if (sortTableBy === 'default') {
-      setSortTableBy('descending')
-    } else if (sortTableBy === 'descending') {
-      setSortTableBy('ascending')
-    } else if (sortTableBy === 'ascending') {
-      setSortTableBy('descending')
+  const handleSortChange = (value: number) => {
+    if (value === 1) {
+      setSortTableBy('Newest')
+    } else if (value === 2) {
+      setSortTableBy('Oldest')
+    } else if (value === 3) {
+      setSortTableBy('AlpaUp')
+    } else if (value === 4) {
+      setSortTableBy('AlpaDown')
+    } else {
+      setSortTableBy('default')
     }
   }
 
-  const FilterArray = [
-    { id: 1, value: 'Promoted' },
-    { id: 2, value: 'Archived' },
-    { id: 3, value: 'Sponsored' },
-    { id: 4, value: 'Normal' },
+  const SortArray = [
+    { id: 1, value: 'Newest' },
+    { id: 2, value: 'Oldest' },
+    { id: 3, value: 'Alpabetical (A-Z)' },
+    { id: 4, value: 'Alpabetical (Z-A)' },
   ]
-
-  // const handleFilter = useMemo((id: number) => {
-  //   if (id == 1) {
-  //     wikiSorted
-  //       ?.filter(item => {
-  //         return item?.promoted
-  //       })
-  //   }
-  //   if (id == 2 ) {
-  //     wikiSorted
-  //       ?.filter(item => {
-  //         return item?.hidden
-  //       })
-  //   }
-  //   if (id == 3 ) {
-  //     // wikiSorted
-  //     //   ?.filter(item => {
-  //         return wikiSorted
-  //       // })
-  //   }
-
-  //   return wikiSorted
-  // }, [wikiSorted] )
 
   useEffect(() => {
     setWikis(wikiSorted)
@@ -162,37 +156,69 @@ export const WikiInsightTable = () => {
             </InputLeftElement>
             <Input type="tel" placeholder="Search" />
           </InputGroup>
-          <Button
-            onClick={() => {
-              handleSortChange()
-            }}
-            borderColor="#E2E8F0"
-            _dark={{ borderColor: '#2c323d' }}
-            py={2}
-            px={10}
-            leftIcon={sortIcon}
-            variant="outline"
-            fontWeight="light"
-          >
-            Sort
-          </Button>
-          <Select
-            cursor="pointer"
-            w="50%"
-            // onChange={e => {
-            // handleFilter(e.target.value)
-            // }}
-            placeholder="Filter"
-            icon={<MdFilterList />}
-          >
-            {FilterArray.map(o => (
-              <option key={o.id} value={o.id}>
-                {o.value}
-              </option>
-            ))}
-          </Select>
+          <Menu>
+            <MenuButton
+              transition="all 0.2s"
+              borderRadius="md"
+              _expanded={{ bg: 'brand.500', color: 'white' }}
+            >
+              <Button
+                borderColor="#E2E8F0"
+                _dark={{ borderColor: '#2c323d' }}
+                py={2}
+                px={5}
+                leftIcon={sortIcon}
+                variant="outline"
+                fontWeight="light"
+              >
+                Sort
+              </Button>
+            </MenuButton>
+            <MenuList>
+              {SortArray.map((o, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={() => {
+                    handleSortChange(o.id)
+                  }}
+                  py="1"
+                  px="3"
+                >
+                  {o.value}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+          <Menu closeOnSelect={false}>
+            <MenuButton
+              transition="all 0.2s"
+              borderRadius="md"
+              _expanded={{ bg: 'brand.500', color: 'white' }}
+            >
+              <Button
+                borderColor="#E2E8F0"
+                _dark={{ borderColor: '#2c323d' }}
+                py={2}
+                px={5}
+                rightIcon={<MdFilterList />}
+                variant="outline"
+                fontWeight="light"
+              >
+                Filter
+              </Button>
+            </MenuButton>
+            <MenuList>
+              <MenuOptionGroup title="Filters" type="checkbox">
+                <MenuItemOption value="1">Promoted</MenuItemOption>
+                <MenuItemOption value="2">Archived</MenuItemOption>
+                <MenuItemOption value="3">Sponsored</MenuItemOption>
+                <MenuItemOption value="4">Normal</MenuItemOption>
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
         </Flex>
       </Flex>
+
       <Flex pb={5}>
         <InsightTableWikiCreated wikiCreatedInsightData={wikis || []} />
       </Flex>
