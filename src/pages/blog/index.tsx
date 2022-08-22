@@ -22,9 +22,9 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   }, [mounted])
 
   return (
-    <chakra.div bgColor="pageBg" my={-8} py={8}>
+    <chakra.div bgColor="pageBg" my={-8} py={4}>
       <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
-        <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
+        <Heading my={12} as="h1" size="2xl" letterSpacing="wide">
           Everipedia Blog
         </Heading>
         <SimpleGrid
@@ -50,8 +50,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       config.blogAccount3,
     ]),
   )
-
-  console.log(entries)
 
   await Promise.all(getRunningOperationPromises())
 

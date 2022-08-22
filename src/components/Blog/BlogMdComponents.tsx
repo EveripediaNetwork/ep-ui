@@ -10,14 +10,11 @@ const BlockQuote = ({ children }: { children: ReactNode[] }) => {
   return <blockquote>{children}</blockquote>
 }
 
-const Block = ({ children }: { children: ReactNode[] }) => {
-  const blockAwareChildren = children.map((child: any) => {
-    if (child.props.node) child.props.node.blockSize = children.length
+const p = ({ children }: { children: ReactNode[] }) => {
 
-    return child
-  })
-
-  return <Text>{blockAwareChildren}</Text>
+  return (
+    <p style={{ marginBottom: '16px', fontFamily: 'poppins, sans-serif' }}>{children}</p>
+  )
 }
 
 const h1 = ({ children }: { children: ReactNode[] }) => {
@@ -56,7 +53,7 @@ const a = ({
     <a
       href={href}
       {...props}
-      style={{ color: 'blue', textDecoration: 'underline' }}
+      style={{ color: '#fe5caa', textDecoration: 'underline' }}
     >
       {children}
     </a>
@@ -119,5 +116,5 @@ export const components = {
   h3,
   a,
   blockquote: BlockQuote,
-  paragraph: Block,
+  p,
 }

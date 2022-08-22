@@ -26,15 +26,12 @@ import { unified } from 'unified'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { Blog } from '@/types/Blog'
 import config from '@/config'
+import { NextSeo } from 'next-seo'
 
-type BlogPostType = {
-  digest: string
-}
-
-export const BlogPostPage = ({ digest }: BlogPostType) => {
+export const BlogPostPage = ({ digest }: { digest: string }) => {
   const dispatch = useAppDispatch()
 
-  const blogPosts = useAppSelector(state => state.blog)
+  const blogPosts: Blog[] = useAppSelector(state => state.blog as Blog[])
 
   const blogResult = useAppSelector(state =>
     state.blog && digest
@@ -110,18 +107,19 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
   }, [digest])
 
   return (
-    <chakra.div bgColor="pageBg" my={-8} py={8}>
-      <chakra.div
-        w="min(90%, 1100px)"
-        px={{ lg: '44' }}
-        mx="auto"
-        my={{ base: '10', lg: '16' }}
-      >
+    <chakra.div bgColor="pageBg" my={-8} py={4}>
+      <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
         {blog ? (
           <>
+            <NextSeo
+              title={blog.title}
+              openGraph={{
+                title: blog.title,
+                images: [{ url: blog.cover_image }],
+              }}
+            />
             <Heading
-              mt={8}
-              mb={4}
+              my={4}
               as="h1"
               fontSize={{ base: '3xl', lg: '5xl' }}
               letterSpacing="wide"
@@ -193,8 +191,9 @@ export const BlogPostPage = ({ digest }: BlogPostType) => {
                 spacingY="14"
               >
                 {blogPosts
-                  .filter(bp => bp.digest !== digest)
-                  .map((b, i) => (
+                  .filter((bp: Blog) => bp.digest !== digest)
+                  .slice(0, 3)
+                  .map((b: Blog, i: number) => (
                     <BlogPost maxW="420px" post={b} key={i} />
                   ))}
               </SimpleGrid>
