@@ -6,6 +6,7 @@ import {
   Icon,
   Link,
   LinkBox,
+  Stack,
   Tag,
   Text,
   Tooltip,
@@ -21,6 +22,8 @@ import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
 import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import { LinkButton } from '@/components/Elements'
+import { RiHistoryLine } from 'react-icons/ri'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -69,6 +72,7 @@ const HistoryCardArrow = ({
 }
 
 interface HistoryCardProps {
+  isUserLoggedIn: boolean
   activityId: string
   isRightAligned?: boolean
   isFullWidth?: boolean
@@ -83,6 +87,7 @@ interface HistoryCardProps {
 }
 
 export const HistoryCard = ({
+  isUserLoggedIn,
   activityId,
   isRightAligned,
   isFullWidth,
@@ -179,7 +184,6 @@ export const HistoryCard = ({
           </Text>
         </Box>
       )}
-
       {/* What Changed tags */}
       {blocksChanged !== '' && (
         <Flex flexWrap="wrap" mt={2} justify="start" gap={2}>
@@ -211,39 +215,59 @@ export const HistoryCard = ({
       <HStack
         borderTopWidth={1}
         m={-4}
-        p={2}
         px={4}
-        mt={3}
+        py={isUserLoggedIn ? 4 : 2}
+        mt={4}
         justify="space-between"
+        align="end"
       >
-        <HStack>
-          <Text fontSize="sm" color="text.500">
-            IPFS:
-          </Text>
-          <Link
-            href={`${config.pinataBaseUrl}${IPFS}`}
-            color="brand.500"
-            ml={2}
-            isExternal
-            fontSize="sm"
+        <Stack
+          direction={isUserLoggedIn ? 'column' : 'row'}
+          justifyContent="space-between"
+          w="full"
+        >
+          <HStack>
+            <Text fontSize="sm" color="text.500">
+              {isUserLoggedIn ? 'TX Address:' : 'TX:'}
+            </Text>
+            <Link
+              href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
+              color="brand.500"
+              ml={2}
+              isExternal
+              fontSize="sm"
+            >
+              {shortenAccount(transactionAddress)}
+            </Link>
+          </HStack>
+          <HStack>
+            <Text fontSize="sm" color="text.500">
+              {isUserLoggedIn ? 'IPFS Hash:' : 'IPFS:'}
+            </Text>
+            <Link
+              href={`${config.pinataBaseUrl}${IPFS}`}
+              color="brand.500"
+              ml={2}
+              isExternal
+              fontSize="sm"
+            >
+              {shortenAccount(IPFS)}
+            </Link>
+          </HStack>
+        </Stack>
+        {isUserLoggedIn && (
+          <LinkButton
+            leftIcon={<RiHistoryLine />}
+            mt={4}
+            size="sm"
+            variant="outline"
+            px={6}
+            color="linkColor"
+            href={`/create-wiki?revision=${activityId}`}
           >
-            {shortenAccount(IPFS)}
-          </Link>
-        </HStack>
-        <HStack>
-          <Text fontSize="sm" color="text.500">
-            TX:
-          </Text>
-          <Link
-            href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
-            color="brand.500"
-            ml={2}
-            isExternal
-            fontSize="sm"
-          >
-            {shortenAccount(transactionAddress)}
-          </Link>
-        </HStack>
+            Restore
+          </LinkButton>
+        )}
       </HStack>
     </LinkBox>
   )

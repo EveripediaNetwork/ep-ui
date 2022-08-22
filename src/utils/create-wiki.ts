@@ -23,6 +23,7 @@ import {
 import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
+import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { logEvent } from './googleAnalytics'
 
 export const initialEditorValue = ` `
@@ -112,7 +113,7 @@ export const useCreateWikiEffects = (
     isPublished: boolean
   }>,
 ) => {
-  const { slug, activeStep, setIsNewCreateWiki, dispatch } =
+  const { slug, revision, activeStep, setIsNewCreateWiki, dispatch } =
     useCreateWikiContext()
 
   useEffect(() => {
@@ -123,7 +124,7 @@ export const useCreateWikiEffects = (
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
-    if (!slug) {
+    if (!slug && !revision) {
       setIsNewCreateWiki(true)
       // fetch draft data from local storage
       const draft = getDraftFromLocalStorage()
@@ -303,13 +304,23 @@ export const useGetSignedHash = (deadline: number) => {
 }
 
 export const useCreateWikiState = (router: NextRouter) => {
-  const { isLoading: isLoadingWiki, data: wikiData } = useGetWikiQuery(
-    typeof router.query.slug === 'string' ? router.query.slug : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
-  const { slug } = router.query
+  const { slug, revision } = router.query
+
+  const { isLoading: isLoadingLatestWiki, data: latestWikiData } =
+    useGetWikiQuery(
+      typeof revision !== 'string' && typeof slug === 'string'
+        ? slug
+        : skipToken,
+    )
+
+  const { isLoading: isLoadingRevisionWiki, data: revisionWikiData } =
+    useGetWikiByActivityIdQuery(
+      typeof revision === 'string' ? revision : skipToken,
+    )
+
+  const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
+  const wikiData = revisionWikiData || latestWikiData
+
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
@@ -338,6 +349,7 @@ export const useCreateWikiState = (router: NextRouter) => {
     wikiData,
     dispatch,
     slug,
+    revision,
     toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
