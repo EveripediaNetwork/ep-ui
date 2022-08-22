@@ -215,10 +215,11 @@ export const HistoryCard = ({
       <HStack
         borderTopWidth={1}
         m={-4}
-        p={2}
         px={4}
-        mt={3}
+        py={isUserLoggedIn ? 4 : 2}
+        mt={4}
         justify="space-between"
+        align="end"
       >
         <Stack
           direction={isUserLoggedIn ? 'column' : 'row'}
