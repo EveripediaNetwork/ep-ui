@@ -82,6 +82,11 @@ const countQuality = (idealCount: number, realCount: number): number => {
   return score
 }
 
+const getHostnameFromRegex = (url: string) => {
+  const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+  return matches && matches[1]
+}
+
 const getWikiInternalLinks = (content: string): number => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let internalLinksCount = 0
@@ -90,10 +95,10 @@ const getWikiInternalLinks = (content: string): number => {
     const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
     const url = linkMatch?.[2]
     if (url && url.charAt(0) !== '#') {
-      const urlURL = new URL(url)
+      const hostname = getHostnameFromRegex(url)
       if (
-        urlURL.hostname === 'everipedia.org' ||
-        urlURL.hostname.endsWith('.everipedia.org')
+        hostname === 'everipedia.org' ||
+        hostname?.endsWith('.everipedia.org')
       ) {
         internalLinksCount += 1
       }
