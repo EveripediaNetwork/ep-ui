@@ -103,7 +103,7 @@ const Admin = () => {
           ? graphFilter === 'year'
             ? createCountStart?.split('-')[0]
             : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
-          : createCountStart?.split('T')[0],
+          : `Week ${index + 1}`,
       'Wikis Created': createdCount,
       'Wikis Edited': editedCount,
     })
