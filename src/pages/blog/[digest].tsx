@@ -48,7 +48,10 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
     if (!blogPosts || blogPosts.length === 0) {
       const populateBlogs = async () => {
         const entries = await store.dispatch(
-          getBlogEntries.initiate([config.blogAccount]),
+          getBlogEntries.initiate([
+            // config.blogAccount, 
+            config.blogAccount2,
+            config.blogAccount3]),
         )
 
         if (!entries.data) return
@@ -192,7 +195,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
             </Button>
           </Stack>
 
-          {blogPosts.length > 0 ? (
+          {blogPosts.length > 1 ? (
             <Stack spacing="8">
               <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
                 You might like
