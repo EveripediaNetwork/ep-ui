@@ -10,16 +10,16 @@ import {
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
-  LineChart,
   XAxis,
   YAxis,
   Tooltip,
-  Line,
   Legend,
-  Label,
   PieChart,
   Pie,
   Cell,
+  Area,
+  AreaChart,
+  CartesianGrid,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 
@@ -39,7 +39,11 @@ export const WikiDataGraph = ({
   handleGraphFilterChange: any
 }) => {
   const currentYear = new Date().getFullYear()
-  const labelColor = useColorModeValue('#718096', '#6c7079')
+  const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
+  const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
+  const createdStroke = useColorModeValue('#FF5CAA', '#FF1A88')
+  const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
+
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
       <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '68%', base: '100%' }}>
@@ -66,48 +70,40 @@ export const WikiDataGraph = ({
         </Flex>
         <Box p={5}>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart width={500} data={data}>
-              <Legend iconType="circle" verticalAlign="top" align="right" />
-              <XAxis
-                padding={{ left: 30 }}
-                axisLine={false}
-                tickLine={false}
-                minTickGap={20}
-                tickMargin={60}
-                dataKey="name"
-                dy={-45}
-              >
-                <Label position="insideBottom" style={{ fill: labelColor }} />
-              </XAxis>
-              <YAxis
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                dx={40}
-                dy={-20}
-              >
-                <Label
-                  angle={270}
-                  position="center"
-                  style={{ fill: labelColor }}
-                  value="No. of wikis"
-                />
-              </YAxis>
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="Wikis Created"
-                stroke="#FF5CAA"
-                activeDot={{ r: 8 }}
-                strokeWidth={2.2}
-              />
-              <Line
+            <AreaChart width={730} height={250} data={data}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={createdFill} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={createdFill} stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={editedFill} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={editedFill} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="0" vertical={false} />
+              <Area
                 type="monotone"
                 dataKey="Wikis Edited"
-                stroke="#FFb3d7"
-                strokeWidth={2.2}
+                strokeWidth="2"
+                stroke={editedStroke}
+                fill="url(#colorUv)"
+                opacity="0.8"
+                fillOpacity={1}
               />
-            </LineChart>
+              <Area
+                type="monotone"
+                dataKey="Wikis Created"
+                strokeWidth="2"
+                opacity="1"
+                stroke={createdStroke}
+                fill="url(#colorUv)"
+                fillOpacity={1}
+              />
+              <Tooltip />
+            </AreaChart>
           </ResponsiveContainer>
         </Box>
       </Box>
