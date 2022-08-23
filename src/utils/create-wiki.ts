@@ -8,6 +8,7 @@ import {
   EditorContentOverride,
   ValidatorCodes,
   whiteListedDomains,
+  EditSpecificMetaIds,
 } from '@/types/Wiki'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
@@ -162,6 +163,8 @@ export const useGetSignedHash = (deadline: number) => {
     setTxHash,
     setActiveStep,
     txHash,
+    setCommitMessage,
+    dispatch,
   } = useCreateWikiContext()
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -236,6 +239,17 @@ export const useGetSignedHash = (deadline: number) => {
               setIsLoading(undefined)
               setActiveStep(3)
               setMsg(successMessage)
+              // clear all edit based metadata from redux state
+              Object.values(EditSpecificMetaIds).forEach(id => {
+                dispatch({
+                  type: 'wiki/updateMetadata',
+                  payload: {
+                    id,
+                    value: '',
+                  },
+                })
+              })
+              setCommitMessage('')
               removeDraftFromLocalStorage()
               clearInterval(timer)
             }
@@ -320,7 +334,7 @@ export const useCreateWikiState = (router: NextRouter) => {
 
   const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
   const wikiData = revisionWikiData || latestWikiData
-
+  const [commitMessage, setCommitMessage] = useState('')
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
@@ -347,6 +361,8 @@ export const useCreateWikiState = (router: NextRouter) => {
   return {
     isLoadingWiki,
     wikiData,
+    commitMessage,
+    setCommitMessage,
     dispatch,
     slug,
     revision,

@@ -100,7 +100,6 @@ const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setCommitMessage] = useState('')
   const { fireConfetti, confettiProps } = useConfetti()
 
   const commitMessageLimitAlertStyle = {
@@ -126,6 +125,8 @@ const CreateWikiContent = () => {
   const {
     isLoadingWiki,
     wikiData,
+    commitMessage,
+    setCommitMessage,
     dispatch,
     toast,
     openTxDetailsDialog,
@@ -136,6 +137,7 @@ const CreateWikiContent = () => {
     submittingWiki,
     setSubmittingWiki,
     wikiHash,
+    revision,
     isNewCreateWiki,
     openOverrideExistingWikiDialog,
     setOpenOverrideExistingWikiDialog,
@@ -229,8 +231,7 @@ const CreateWikiContent = () => {
       params: { address: userAddress, slug: await getWikiSlug() },
     })
 
-    let wikiCommitMessage =
-      getWikiMetadataById(wiki, EditSpecificMetaIds.COMMIT_MESSAGE)?.value || ''
+    let wikiCommitMessage = commitMessage || ''
 
     if (isUserConnected && userAddress) {
       if (
@@ -243,9 +244,13 @@ const CreateWikiContent = () => {
       }
 
       if (isNewCreateWiki) {
-        wikiCommitMessage = override
-          ? 'Wiki Overridden 🔄'
-          : 'New Wiki Created 🎉'
+        if (override) {
+          wikiCommitMessage = 'Wiki Overridden 🔄'
+        } else if (revision) {
+          wikiCommitMessage = `Reverted to ${revision} ⏪`
+        } else {
+          wikiCommitMessage = 'New Wiki Created 🎉'
+        }
       }
 
       setOpenTxDetailsDialog(true)
@@ -303,17 +308,6 @@ const CreateWikiContent = () => {
           },
         })
       }
-
-      // clear all edit based metadata from redux state
-      Object.values(EditSpecificMetaIds).forEach(id => {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id,
-            value: '',
-          },
-        })
-      })
 
       setSubmittingWiki(false)
     }
@@ -426,6 +420,10 @@ const CreateWikiContent = () => {
         })),
       ]
 
+      if (revision) {
+        setCommitMessage(`Reverted to ${revision} ⏪`)
+      }
+
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
@@ -437,7 +435,7 @@ const CreateWikiContent = () => {
         },
       })
     }
-  }, [dispatch, toast, wikiData])
+  }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -550,13 +548,6 @@ const CreateWikiContent = () => {
                     onChange={(e: { target: { value: string } }) => {
                       if (e.target.value.length <= 128) {
                         setCommitMessage(e.target.value)
-                        dispatch({
-                          type: 'wiki/updateMetadata',
-                          payload: {
-                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                            value: e.target.value,
-                          },
-                        })
                       } else {
                         setCommitMessageLimitAlert(true)
                         setTimeout(
@@ -571,13 +562,7 @@ const CreateWikiContent = () => {
                   <HStack spacing={2} justify="right">
                     <Button
                       onClick={() => {
-                        dispatch({
-                          type: 'wiki/updateMetadata',
-                          payload: {
-                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                            value: '',
-                          },
-                        })
+                        setCommitMessage('')
                         setIsWritingCommitMsg(false)
                         saveOnIpfs()
                       }}
