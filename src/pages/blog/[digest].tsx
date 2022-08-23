@@ -122,9 +122,14 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
                 images: [{ url: blog.cover_image }],
               }}
             />
-            <Box onClick={() => router.push('/blog')} display="flex" flexDirection="row" alignItems="center">
+            <Box
+              onClick={() => router.push('/blog')}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+            >
               <LeftArrow style={{ marginRight: '5px', fontSize: '20px' }} />{' '}
-              <Text textColor='#718096' fontFamily="Poppins" fontSize="md">
+              <Text textColor="#718096" fontFamily="Poppins" fontSize="md">
                 Go Back to Blog Page
               </Text>
             </Box>
