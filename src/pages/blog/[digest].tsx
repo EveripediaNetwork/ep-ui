@@ -49,9 +49,10 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
       const populateBlogs = async () => {
         const entries = await store.dispatch(
           getBlogEntries.initiate([
-            // config.blogAccount, 
+            // config.blogAccount,
             config.blogAccount2,
-            config.blogAccount3]),
+            config.blogAccount3,
+          ]),
         )
 
         if (!entries.data) return
