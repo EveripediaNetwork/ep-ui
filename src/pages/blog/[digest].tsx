@@ -1,7 +1,9 @@
 import { GetServerSideProps } from 'next'
 import React, { useEffect, useState } from 'react'
 import arweave from '@/config/arweave'
+import { MdKeyboardBackspace as LeftArrow } from 'react-icons/md'
 import {
+  Box,
   Button,
   chakra,
   Heading,
@@ -27,9 +29,11 @@ import { BlogPost } from '@/components/Blog/BlogPost'
 import { Blog } from '@/types/Blog'
 import config from '@/config'
 import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 
 export const BlogPostPage = ({ digest }: { digest: string }) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const blogPosts: Blog[] = useAppSelector(state => state.blog as Blog[])
 
@@ -118,6 +122,12 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
                 images: [{ url: blog.cover_image }],
               }}
             />
+            <Box onClick={() => router.push('/blog')} display="flex" flexDirection="row" alignItems="center">
+              <LeftArrow style={{ marginRight: '5px', fontSize: '20px' }} />{' '}
+              <Text textColor='#718096' fontFamily="Poppins" fontSize="md">
+                Go Back to Blog Page
+              </Text>
+            </Box>
             <Heading
               my={4}
               as="h1"
@@ -184,9 +194,9 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
               </Text>
               <SimpleGrid
                 alignSelf="center"
-                w="fit-content"
+                w="full"
                 mt={{ base: '15', md: '16' }}
-                columns={{ base: 1, md: 2 }}
+                columns={{ base: 2, md: 3 }}
                 spacingX="5"
                 spacingY="14"
               >
