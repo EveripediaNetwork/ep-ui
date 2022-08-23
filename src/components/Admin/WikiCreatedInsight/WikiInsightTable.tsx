@@ -11,9 +11,17 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuOptionGroup,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  Checkbox,
+  CheckboxGroup,
+  VStack,
+  HStack,
+  useDisclosure,
 } from '@chakra-ui/react'
+
 import React, { useEffect, useState, useMemo } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
@@ -26,6 +34,9 @@ export const WikiInsightTable = () => {
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
+  const [filterItems, setFilterItems] = useState<Array<[] | any>>()
+
+  const { isOpen, onToggle, onClose } = useDisclosure()
 
   const increasePagination = () => {
     return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset + 10)
@@ -36,33 +47,6 @@ export const WikiInsightTable = () => {
   }
 
   // sorting creted wikis by date
-  const WikisSortByHighest = wiki?.slice()
-  WikisSortByHighest?.sort((a, b) => {
-    const Data =
-      new Date(b.created ? b.created : '').valueOf() -
-      new Date(a.created ? a.created : '').valueOf()
-    return Data
-  })
-
-  const WikisSortByLowest = wiki?.slice()
-  WikisSortByLowest?.sort((a, b) => {
-    const Data =
-      new Date(a.created ? a.created : '').valueOf() -
-      new Date(b.created ? b.created : '').valueOf()
-    return Data
-  })
-
-  const WikisSortByAlpaUp = wiki?.slice()
-  WikisSortByAlpaUp?.sort((a, b) => {
-    const Data = a.title.trim().localeCompare(b.title.trim())
-    return Data
-  })
-
-  const WikisSortByAlpaDown = wiki?.slice()
-  WikisSortByAlpaDown?.sort((a, b) => {
-    const Data = b.title.trim().localeCompare(a.title.trim())
-    return Data
-  })
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -77,24 +61,12 @@ export const WikiInsightTable = () => {
     return <BiSort fontSize="1.3rem" />
   }, [wiki, sortTableBy])
 
-  const wikiSorted = useMemo(() => {
-    if (sortTableBy === 'default') {
-      return wiki
-    }
-    if (sortTableBy === 'Newest') {
-      return WikisSortByHighest
-    }
-    if (sortTableBy === 'Oldest') {
-      return WikisSortByLowest
-    }
-    if (sortTableBy === 'AlpaUp') {
-      return WikisSortByAlpaUp
-    }
-    if (sortTableBy === 'AlpaDown') {
-      return WikisSortByAlpaDown
-    }
-    return wiki
-  }, [wiki, sortTableBy])
+  enum FilterTypes {
+    promoted = 'promoted',
+    archived = 'archived',
+    sponsored = 'sponsored',
+    normal = 'normal',
+  }
 
   const handleSortChange = (value: number) => {
     if (value === 1) {
@@ -110,6 +82,24 @@ export const WikiInsightTable = () => {
     }
   }
 
+  const ApplyFilterItems = (e: any) => {
+    e.preventDefault()
+    // get all checkboxes from form
+    const checkboxes = Array.from(
+      e.currentTarget.querySelectorAll(
+        'input[type="checkbox"]',
+      ) as unknown as Array<HTMLInputElement>,
+    )
+
+    // get all the checked and unchecked checkboxes with their names
+    const data: string[] = []
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) data.push(checkbox.value)
+    })
+    setFilterItems(data)
+    onClose()
+  }
+
   const SortArray = [
     { id: 1, value: 'Newest' },
     { id: 2, value: 'Oldest' },
@@ -117,9 +107,71 @@ export const WikiInsightTable = () => {
     { id: 4, value: 'Alpabetical (Z-A)' },
   ]
 
+  const newWikis = useMemo(() => {
+    let filteredWikis = wiki
+    if (filterItems?.includes(FilterTypes.promoted)) {
+      filteredWikis = filteredWikis?.filter(item => item.promoted > 0)
+    }
+    if (filterItems?.includes(FilterTypes.archived)) {
+      filteredWikis = filteredWikis?.filter(item => item.hidden === true)
+    }
+    if (filterItems?.includes(FilterTypes.sponsored)) {
+      // will get sponsored wiki
+    }
+    if (filterItems?.includes(FilterTypes.normal)) {
+      // normal is the normal wiki
+      filteredWikis = wiki
+    }
+    return filteredWikis
+  }, [wiki, filterItems])
+
+  const WikisSortByHighest = newWikis?.slice()
+  WikisSortByHighest?.sort((a, b) => {
+    const Data =
+      new Date(b.created ? b.created : '').valueOf() -
+      new Date(a.created ? a.created : '').valueOf()
+    return Data
+  })
+
+  const WikisSortByLowest = newWikis?.slice()
+  WikisSortByLowest?.sort((a, b) => {
+    const Data =
+      new Date(a.created ? a.created : '').valueOf() -
+      new Date(b.created ? b.created : '').valueOf()
+    return Data
+  })
+
+  const WikisSortByAlpaUp = newWikis?.slice()
+  WikisSortByAlpaUp?.sort((a, b) => {
+    const Data = a.title.trim().localeCompare(b.title.trim())
+    return Data
+  })
+
+  const WikisSortByAlpaDown = newWikis?.slice()
+  WikisSortByAlpaDown?.sort((a, b) => {
+    const Data = b.title.trim().localeCompare(a.title.trim())
+    return Data
+  })
+
+  const wikiSorted = useMemo(() => {
+    if (sortTableBy === 'Newest') {
+      return WikisSortByHighest
+    }
+    if (sortTableBy === 'Oldest') {
+      return WikisSortByLowest
+    }
+    if (sortTableBy === 'AlpaUp') {
+      return WikisSortByAlpaUp
+    }
+    if (sortTableBy === 'AlpaDown') {
+      return WikisSortByAlpaDown
+    }
+    return newWikis
+  }, [newWikis, sortTableBy])
+
   useEffect(() => {
     setWikis(wikiSorted)
-  }, [wiki, sortTableBy])
+  }, [wiki, filterItems, sortTableBy])
 
   return (
     <Flex
@@ -189,39 +241,73 @@ export const WikiInsightTable = () => {
               ))}
             </MenuList>
           </Menu>
-          <Menu closeOnSelect={false}>
-            <MenuButton
-              transition="all 0.2s"
-              borderRadius="md"
-              _expanded={{ bg: 'brand.500', color: 'white' }}
-            >
+          <Popover isLazy isOpen={isOpen} onClose={onClose}>
+            <PopoverTrigger>
               <Button
-                borderColor="#E2E8F0"
                 _dark={{ borderColor: '#2c323d' }}
                 py={2}
-                px={5}
+                px={10}
                 rightIcon={<MdFilterList />}
                 variant="outline"
-                fontWeight="light"
+                fontWeight="medium"
+                onClick={onToggle}
               >
                 Filter
               </Button>
-            </MenuButton>
-            <MenuList>
-              <MenuOptionGroup title="Filters" type="checkbox">
-                <MenuItemOption value="1">Promoted</MenuItemOption>
-                <MenuItemOption value="2">Archived</MenuItemOption>
-                <MenuItemOption value="3">Sponsored</MenuItemOption>
-                <MenuItemOption value="4">Normal</MenuItemOption>
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
+            </PopoverTrigger>
+            <PopoverContent w="fit-content">
+              <PopoverBody>
+                <form onSubmit={e => ApplyFilterItems(e)}>
+                  <CheckboxGroup colorScheme="pink" defaultValue={filterItems}>
+                    <VStack
+                      spacing={1}
+                      w="fit-content"
+                      alignItems="flex-start"
+                      justifyContent="flex-start"
+                    >
+                      <Checkbox py={1} value="promoted">
+                        Promoted
+                      </Checkbox>
+
+                      <Checkbox py={1} value="archived">
+                        Archived
+                      </Checkbox>
+
+                      <Checkbox py={1} value="sponsored">
+                        Sponsored
+                      </Checkbox>
+
+                      <Checkbox py={1} value="normal">
+                        Normal
+                      </Checkbox>
+                    </VStack>
+                  </CheckboxGroup>
+                  <HStack gap={4} w="fit-content" pt="4">
+                    <Button
+                      type="button"
+                      p={2}
+                      onClick={() => {
+                        setFilterItems([])
+                        onClose()
+                      }}
+                    >
+                      Reset
+                    </Button>
+                    <Button type="submit" p={2}>
+                      Apply
+                    </Button>
+                  </HStack>
+                </form>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         </Flex>
       </Flex>
 
       <Flex pb={5}>
         <InsightTableWikiCreated wikiCreatedInsightData={wikis || []} />
       </Flex>
+
       <Flex justify="space-between" w="95%" m="0 auto">
         <Button
           leftIcon={<ArrowBackIcon />}
