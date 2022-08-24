@@ -4,6 +4,7 @@ import {
   getRunningOperationPromises,
   getWiki,
   getWikisByCategory,
+  usePostWikiViewCountMutation,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
@@ -25,6 +26,24 @@ const Wiki = ({ wiki }: WikiProps) => {
   const { slug } = router.query
 
   const toc = useAppSelector(state => state.toc)
+
+  const [incViewCount] = usePostWikiViewCountMutation()
+
+  useEffect(() => {
+    if (!slug) return
+    const visitedWikis: { slug: string; timestamp: number }[] = JSON.parse(
+      localStorage.getItem('VISITED_WIKIS') || '[]',
+    )
+    const visitedWiki = visitedWikis.find(w => w.slug === slug)
+    if (visitedWiki && Date.now() - visitedWiki.timestamp > 1000 * 60 * 60) {
+      visitedWiki.timestamp = Date.now()
+      incViewCount(slug as string)
+      if (visitedWikis.length > 20) {
+        visitedWikis.shift()
+      }
+      localStorage.setItem('VISITED_WIKIS', JSON.stringify(visitedWikis))
+    }
+  }, [incViewCount, slug])
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {

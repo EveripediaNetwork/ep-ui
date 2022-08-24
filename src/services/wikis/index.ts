@@ -55,7 +55,9 @@ type PostWikiResponse = {
     IpfsHash: string
   }
 }
-
+type PostWikiViewCountResponse = {
+  wikiViewCount: number
+}
 type WikiArg = {
   id: string
   limit?: number
@@ -183,6 +185,16 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiResponse) =>
         response.pinJSON.IpfsHash,
     }),
+    postWikiViewCount: builder.mutation<number, string>({
+      query: string => ({
+        document: POST_WIKI,
+        variables: {
+          id: string,
+        },
+      }),
+      transformResponse: (response: PostWikiViewCountResponse) =>
+        response.wikiViewCount,
+    }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
@@ -203,6 +215,9 @@ export const {
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
   useGetIsWikiSlugValidQuery,
+  usePostWikiMutation,
+  usePostImageMutation,
+  usePostWikiViewCountMutation,
   util: { getRunningOperationPromises },
 } = wikiApi
 
@@ -215,6 +230,7 @@ export const {
   getWikisByCategory,
   getTagWikis,
   postWiki,
+  postWikiViewCount,
   postImage,
   getUserCreatedWikis,
   getUserEditedWikis,
