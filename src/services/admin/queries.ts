@@ -121,7 +121,6 @@ export const SEARCHED_EDITORS = gql`
   }
 `
 
-
 export const EDITORS_COUNT = gql`
   query EditorCount($startDate: Int, $endDate: Int, $interval: String) {
     editorCount(startDate: $startDate, endDate: $endDate, interval: $interval) {
