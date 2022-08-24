@@ -12,15 +12,18 @@ import {
   Thead,
   Tr,
   AspectRatio,
-  Icon,
   Button,
   useDisclosure,
   Link,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react'
 import React from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import { BiChevronDown } from 'react-icons/bi'
 import { WikiImage } from '../../WikiImage'
 import { DeleteEditorModal } from './DeleteEditorModal'
 
@@ -71,7 +74,7 @@ export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
   const { wikiInsightData } = props
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onClose } = useDisclosure()
   return (
     <TableContainer w="100%">
       <Table>
@@ -163,25 +166,37 @@ export const InsightTableWikiEditors = (
                 </Td>
                 <Td color="#718096">{item.latestActivity}</Td>
                 <Td>
-                  <Button
-                    w="fit-content"
-                    bg="none"
-                    _hover={{ bg: 'none' }}
-                    _active={{ bg: 'none', outline: 'none' }}
-                    _focus={{ bg: 'none', outline: 'none' }}
-                    p="0"
-                    m="0"
-                  >
-                    <Icon
-                      fontSize="18px"
-                      cursor="pointer"
-                      color="#718096"
-                      as={RiDeleteBin6Line}
-                      onClick={() => {
-                        onOpen()
-                      }}
-                    />
-                  </Button>
+                  <Menu>
+                    <MenuButton
+                      transition="all 0.2s"
+                      borderRadius="md"
+                      _expanded={{ bg: 'brand.500', color: 'white' }}
+                      _hover={{ bg: 'none' }}
+                      _active={{ bg: 'none', outline: 'none' }}
+                      _focus={{ bg: 'none', outline: 'none' }}
+                    >
+                      <MenuButton
+                        as={Button}
+                        rightIcon={<BiChevronDown />}
+                        bg="transparent"
+                        color="#718096"
+                        _hover={{ bg: 'none' }}
+                        _active={{ bg: 'none', outline: 'none' }}
+                        _focus={{ bg: 'none', outline: 'none' }}
+                        fontWeight="medium"
+                      >
+                        Ban
+                      </MenuButton>
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={() => {}} py="5" px="3">
+                        Ban
+                      </MenuItem>
+                      <MenuItem onClick={() => {}} py="5" px="3">
+                        Unban
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
                 </Td>
               </Tr>
             )

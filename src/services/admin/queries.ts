@@ -86,37 +86,9 @@ export const EDITORS_TABLE = gql`
 `
 
 export const SEARCHED_EDITORS = gql`
-  query Editors($username: String!) {
-    getProfileLikeUsername(limit: $username) {
+  query Editors($username: String) {
+    getProfileLikeUsername(username: $username) {
       id
-      profile {
-        username
-        avatar
-      }
-      wikisEdited {
-        id
-        wikiId
-        datetime
-        ipfs
-        content {
-          title
-          images {
-            id
-          }
-        }
-      }
-      wikisCreated {
-        id
-        wikiId
-        datetime
-        ipfs
-        content {
-          title
-          images {
-            id
-          }
-        }
-      }
     }
   }
 `

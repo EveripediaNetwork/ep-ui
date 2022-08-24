@@ -30,7 +30,7 @@ export const WikiEditorsInsightTable = () => {
   })
 
   const { data: searchedEditors } = useGetSearchedEditorsQuery({
-    username: 'ilo',
+    username: 'sruj',
   })
 
   console.log(searchedEditors, 'search')
