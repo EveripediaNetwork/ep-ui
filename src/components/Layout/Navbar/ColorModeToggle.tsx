@@ -16,9 +16,12 @@ export const ColorModeToggle = ({
         minH="48px"
         px={isInMobileMenu ? 0 : 3}
         bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
-        _hover={{ bgColor: 'transparent' }}
-        _active={{ bgColor: 'transparent' }}
-        _focus={{ bgColor: 'transparent' }}
+        sx={{
+          '&:hover, &:active, &:focus': {
+            bgColor: !isInMobileMenu ? 'subMenuHoverBg' : 'transparent',
+          },
+        }}
+        onClick={toggleColorMode}
       >
         <Icon
           cursor="pointer"

@@ -29,6 +29,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
+    subMenuHoverBg: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.100',
+    },
     pageBg: {
       default: 'gray.100',
       _dark: '#212836',
