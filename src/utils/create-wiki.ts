@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -13,7 +13,12 @@ import {
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
 import { submitVerifiableSignature } from '@/utils/postSignature'
-import { useAccount, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import {
+  useAccount,
+  useFeeData,
+  useSignTypedData,
+  useWaitForTransaction,
+} from 'wagmi'
 import { NextRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { getWiki, useGetWikiQuery } from '@/services/wikis'
@@ -177,6 +182,13 @@ export const useGetSignedHash = (deadline: number) => {
   } = useSignTypedData()
 
   const { refetch } = useWaitForTransaction({ hash: txHash })
+  const { data: feeData } = useFeeData({
+    formatUnits: 'gwei',
+  })
+  const gasPrice = useMemo(
+    () => parseFloat(feeData?.formatted.gasPrice || '0'),
+    [feeData],
+  )
 
   const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
     setWikiHash(ipfs)
@@ -213,7 +225,12 @@ export const useGetSignedHash = (deadline: number) => {
 
   const verifyTrxHash = useCallback(
     async (wikiSlug: string) => {
+      let timePassed = 0
       const timer = setInterval(() => {
+        if (timePassed >= 60 * 1000 && gasPrice > 250) {
+          setMsg(`A little congestion on the polygon chain is causing a delay in the 
+          creation of your wiki.This would be resolved in a little while.`)
+        }
         try {
           const checkTrx = async () => {
             const trx = await refetch()
@@ -269,6 +286,7 @@ export const useGetSignedHash = (deadline: number) => {
           })
           clearInterval(timer)
         }
+        timePassed += 3000
       }, 3000)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
