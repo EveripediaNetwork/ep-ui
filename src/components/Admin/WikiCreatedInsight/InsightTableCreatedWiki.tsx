@@ -204,7 +204,7 @@ export const InsightTableWikiCreated = (
                         </Text>
                       ) : (
                         <HStack spacing={2}>
-                          <Text color="#E2E8F0" cursor="pointer">
+                          <Text color="#2c323d" cursor="pointer">
                             Promote
                           </Text>
                           <Icon

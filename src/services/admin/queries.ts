@@ -84,6 +84,44 @@ export const EDITORS_TABLE = gql`
     }
   }
 `
+
+export const SEARCHED_EDITORS = gql`
+  query Editors($username: String!) {
+    getProfileLikeUsername(limit: $username) {
+      id
+      profile {
+        username
+        avatar
+      }
+      wikisEdited {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+      wikisCreated {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
+
 export const EDITORS_COUNT = gql`
   query EditorCount($startDate: Int, $endDate: Int, $interval: String) {
     editorCount(startDate: $startDate, endDate: $endDate, interval: $interval) {
@@ -91,22 +129,3 @@ export const EDITORS_COUNT = gql`
     }
   }
 `
-
-// query {
-//   users(limit: 10) {
-//     id
-//     profile {
-//       username
-//     }
-//     wikis {id}
-//     wikisEdited {
-//       id
-//       wikiId
-//       datetime
-//     }
-//     wikisCreated {
-//       id
-//       datetime
-//     }
-//   }
-// }

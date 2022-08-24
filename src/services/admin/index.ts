@@ -7,6 +7,7 @@ import {
   CREATED_WIKIS_TABLE,
   EDITORS_TABLE,
   EDITORS_COUNT,
+  SEARCHED_EDITORS
 } from '@/services/admin/queries'
 import config from '@/config'
 import { WikisModifiedCount, CreatedWikisCount, Editors } from '@/types/admin'
@@ -35,9 +36,18 @@ type EditorsRes = {
   users: Editors[]
 }
 
+type SearchedEditorsRes = {
+  getProfileLikeUsername: Editors[]
+}
+
+
 type EditorQueryParams = {
   limit: number
   offset: number
+}
+
+type SearchedEditorQueryParams = {
+  username: string
 }
 
 export const adminApi = createApi({
@@ -66,6 +76,13 @@ export const adminApi = createApi({
         variables: { limit, offset },
       }),
       transformResponse: (response: EditorsRes) => response.users,
+    }),
+    getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
+      query: ({ username }: { username: string }) => ({
+        document: SEARCHED_EDITORS,
+        variables: { username },
+      }),
+      transformResponse: (response: SearchedEditorsRes) => response.getProfileLikeUsername,
     }),
     getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
@@ -105,6 +122,7 @@ export const {
   useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
+  useGetSearchedEditorsQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
@@ -113,5 +131,6 @@ export const {
   getWikisCreatedCount,
   getWikisEditedCount,
   getEditors,
+  getSearchedEditors,
   getEditorsCount,
 } = adminApi.endpoints

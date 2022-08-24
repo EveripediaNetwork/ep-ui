@@ -1,4 +1,7 @@
-import { useGetEditorsQuery } from '@/services/admin'
+import {
+  useGetEditorsQuery,
+  useGetSearchedEditorsQuery,
+} from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
   Text,
@@ -25,6 +28,12 @@ export const WikiEditorsInsightTable = () => {
     limit: 10,
     offset: paginateOffset,
   })
+
+  const { data: searchedEditors } = useGetSearchedEditorsQuery({
+    username: 'ilo',
+  })
+
+  console.log(searchedEditors, 'search')
 
   // sorting editors
   const editorsSortByHighest = editors?.slice()
