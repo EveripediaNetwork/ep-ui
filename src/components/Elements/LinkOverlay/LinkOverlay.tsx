@@ -15,12 +15,7 @@ const LinkOverlay = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
     }
   }
   return (
-    <NextLink
-      href={href}
-      prefetch={!(href.includes('create-wiki') || href.includes('about'))}
-      passHref
-      {...linkProps}
-    >
+    <NextLink href={href} passHref {...linkProps}>
       <ChakraLinkOverlay {...props}>{children}</ChakraLinkOverlay>
     </NextLink>
   )

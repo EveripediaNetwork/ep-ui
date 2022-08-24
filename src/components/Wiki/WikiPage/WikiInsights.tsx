@@ -46,15 +46,16 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
 
   return (
     <VStack
-      maxW="450px"
-      minW="min(380px, 90vw)"
       borderLeftWidth={{ base: 0, md: '1px' }}
-      mx={{ base: 'auto', md: 0 }}
       p={{ base: 0, md: 4 }}
       pt={{ md: '24', base: '10' }}
     >
       <Box as="aside" ref={stickyRef} w="100%">
-        <VStack spacing={4}>
+        <VStack
+          w={{ base: '90%', md: 'clamp(300px, 25vw, 430px)' }}
+          mx={{ base: 'auto', md: 0 }}
+          spacing={4}
+        >
           <WikiDetails
             wikiTitle={wiki}
             categories={wiki.categories}

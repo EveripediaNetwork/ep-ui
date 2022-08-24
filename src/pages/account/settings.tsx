@@ -95,7 +95,9 @@ const Settings = () => {
         {tab === 'notifications' && (
           <NotificationSettings
             address={userAddress}
-            savedNotificationPrefs={profileData?.notifications[0]}
+            savedNotificationPrefs={
+              profileData?.notifications && profileData?.notifications[0]
+            }
           />
         )}
         {tab === 'advanced' && <AdvancedSettings />}

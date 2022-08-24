@@ -15,10 +15,12 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useAccount } from 'wagmi'
 
 const History = () => {
   const router = useRouter()
   const { slug } = router.query
+  const { isConnected } = useAccount()
   const { data: wiki } = useGetWikiQuery(
     typeof slug === 'string' ? slug : skipToken,
     {
@@ -82,6 +84,7 @@ const History = () => {
             wikiHistory?.map((activity, index) => {
               return (
                 <HistoryCard
+                  isUserLoggedIn={isConnected}
                   key={activity.id}
                   activityId={activity.id}
                   isRightAligned={isHistoryFullWidth ? true : index % 2 === 0}

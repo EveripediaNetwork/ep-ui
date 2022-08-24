@@ -36,6 +36,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import {
+  getIsWikiSlugValid,
   getRunningOperationPromises,
   getWiki,
   postWiki,
@@ -66,7 +67,6 @@ import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
   useCreateWikiEffects,
@@ -100,7 +100,6 @@ const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setCommitMessage] = useState('')
   const { fireConfetti, confettiProps } = useConfetti()
 
   const commitMessageLimitAlertStyle = {
@@ -126,6 +125,8 @@ const CreateWikiContent = () => {
   const {
     isLoadingWiki,
     wikiData,
+    commitMessage,
+    setCommitMessage,
     dispatch,
     toast,
     openTxDetailsDialog,
@@ -136,6 +137,7 @@ const CreateWikiContent = () => {
     submittingWiki,
     setSubmittingWiki,
     wikiHash,
+    revision,
     isNewCreateWiki,
     openOverrideExistingWikiDialog,
     setOpenOverrideExistingWikiDialog,
@@ -161,7 +163,14 @@ const CreateWikiContent = () => {
   const { saveHashInTheBlockchain, signing, verifyTrxHash } =
     useGetSignedHash(deadline)
 
-  const getWikiSlug = () => slugifyText(String(wiki.title))
+  const getWikiSlug = async () => {
+    const slug = slugifyText(String(wiki.title))
+    const { data: result } = await store.dispatch(
+      getIsWikiSlugValid.initiate(slug),
+    )
+    if (result?.id) return result.id
+    return slug
+  }
 
   const isValidWiki = () => {
     if (!wiki.title) {
@@ -219,63 +228,48 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: userAddress, slug: getWikiSlug() },
+      params: { address: userAddress, slug: await getWikiSlug() },
     })
 
-    if (isUserConnected) {
+    let wikiCommitMessage = commitMessage || ''
+
+    if (isUserConnected && userAddress) {
       if (
         isNewCreateWiki &&
         !override &&
-        (await isWikiExists(getWikiSlug(), setExistingWikiData))
+        (await isWikiExists(await getWikiSlug(), setExistingWikiData))
       ) {
         setOpenOverrideExistingWikiDialog(true)
         return
       }
+
       if (isNewCreateWiki) {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-            value: override ? 'Wiki Overridden 🔄' : 'New Wiki Created 🎉',
-          },
-        })
+        if (override) {
+          wikiCommitMessage = 'Wiki Overridden 🔄'
+        } else if (revision) {
+          wikiCommitMessage = `Reverted to ${revision} ⏪`
+        } else {
+          wikiCommitMessage = 'New Wiki Created 🎉'
+        }
       }
 
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      let interWiki = { ...wiki }
-      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
-      setWikiId(interWiki.id)
-
-      if (userAddress) {
-        interWiki = {
-          ...interWiki,
-          user: {
-            id: userAddress,
-          },
-          content: String(wiki.content).replace(/\n/gm, '  \n'),
-        }
-      }
-
-      if (!isNewCreateWiki || override) {
-        let prevWiki: Wiki | undefined
-        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          prevWiki = prevEditedWiki.current.wiki
-        } else if (override && existingWikiData) {
-          prevWiki = existingWikiData
-        } else if (wikiData) {
-          prevWiki = wikiData
-        }
-        if (prevWiki) calculateEditInfo(prevWiki, interWiki, dispatch)
-      }
-
       const finalWiki = {
-        ...interWiki,
-        metadata: store.getState().wiki.metadata.filter(meta => {
-          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
-        }),
+        ...wiki,
+        user: { id: userAddress },
+        content: String(wiki.content).replace(/\n/gm, '  \n'),
+        metadata: [
+          ...wiki.metadata.filter(
+            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+          ),
+          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
+        ].filter(m => m.value),
       }
+
+      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = await getWikiSlug()
+      setWikiId(finalWiki.id)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
@@ -284,7 +278,7 @@ const CreateWikiContent = () => {
       )
 
       if (wikiResult && 'data' in wikiResult) {
-        saveHashInTheBlockchain(String(wikiResult.data), getWikiSlug())
+        saveHashInTheBlockchain(String(wikiResult.data), await getWikiSlug())
       } else {
         setIsLoading('error')
         let logReason = 'NO_IPFS'
@@ -295,6 +289,7 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            // eslint-disable-next-line no-console
             console.error({ ...errObj })
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
@@ -309,21 +304,10 @@ const CreateWikiContent = () => {
           params: {
             reason: logReason,
             address: userAddress,
-            slug: getWikiSlug(),
+            slug: await getWikiSlug(),
           },
         })
       }
-
-      // clear all edit based metadata from redux state
-      Object.values(EditSpecificMetaIds).forEach(id => {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id,
-            value: '',
-          },
-        })
-      })
 
       setSubmittingWiki(false)
     }
@@ -389,7 +373,9 @@ const CreateWikiContent = () => {
                 },
               }}
             >
-              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Fetch Latest'}
+              {draft?.id === CreateNewWikiSlug
+                ? 'Reset State'
+                : 'Reset to current wiki content'}
             </Button>
           </HStack>
         ),
@@ -434,21 +420,28 @@ const CreateWikiContent = () => {
         })),
       ]
 
+      if (revision) {
+        setCommitMessage(`Reverted to ${revision} ⏪`)
+      }
+
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
           ...initWikiData,
           content:
-            EditorContentOverride.KEYWORD +
+            EditorContentOverride +
             initWikiData.content.replace(/ {2}\n/gm, '\n'),
           metadata,
         },
       })
     }
-  }, [dispatch, toast, wikiData])
+  }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(getWikiSlug())
+    async function verifyTransactionHash() {
+      if (txHash) verifyTrxHash(await getWikiSlug())
+    }
+    verifyTransactionHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
@@ -555,13 +548,6 @@ const CreateWikiContent = () => {
                     onChange={(e: { target: { value: string } }) => {
                       if (e.target.value.length <= 128) {
                         setCommitMessage(e.target.value)
-                        dispatch({
-                          type: 'wiki/updateMetadata',
-                          payload: {
-                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                            value: e.target.value,
-                          },
-                        })
                       } else {
                         setCommitMessageLimitAlert(true)
                         setTimeout(
@@ -576,13 +562,7 @@ const CreateWikiContent = () => {
                   <HStack spacing={2} justify="right">
                     <Button
                       onClick={() => {
-                        dispatch({
-                          type: 'wiki/updateMetadata',
-                          payload: {
-                            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                            value: '',
-                          },
-                        })
+                        setCommitMessage('')
                         setIsWritingCommitMsg(false)
                         saveOnIpfs()
                       }}
@@ -644,7 +624,7 @@ const CreateWikiContent = () => {
             saveOnIpfs(true)
           }}
           onClose={() => setOpenOverrideExistingWikiDialog(false)}
-          slug={getWikiSlug()}
+          getSlug={getWikiSlug}
           existingWikiData={existingWikiData}
         />
         <WikiProcessModal
