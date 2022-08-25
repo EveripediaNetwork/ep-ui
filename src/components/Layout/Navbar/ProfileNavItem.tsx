@@ -1,6 +1,6 @@
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { NAV_ICON } from '@/data/NavItemData'
-import { Box } from '@chakra-ui/react'
+import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { ColorModeToggle } from './ColorModeToggle'
 import NavMenu from './NavMenu'
@@ -25,6 +25,7 @@ const ProfileNavMenu = ({
       visibleMenu={visibleMenu}
       label={<DisplayAvatar address={address} size="25" />}
     >
+      <Divider />
       <ProfileLink />
       <ColorModeToggle isInMobileMenu={false} />
       <LogOutBtn isInMobileMenu={false} />

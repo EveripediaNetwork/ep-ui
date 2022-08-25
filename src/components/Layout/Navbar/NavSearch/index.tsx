@@ -120,6 +120,7 @@ export const NavSearch = (props: NavSearchProps) => {
     fontWeight: 'normal',
     fontSize: 'md',
     textTransform: 'capitalize',
+    borderBottomWidth: 1,
     p: 4,
     m: 0,
   }
@@ -130,8 +131,10 @@ export const NavSearch = (props: NavSearchProps) => {
     px: 4,
     py: 2,
     gap: '2.5',
-    borderY: '1px',
-    borderColor: 'inherit',
+    borderBottomWidth: 1,
+    _last: {
+      borderBottomWidth: 0,
+    },
   }
 
   const articlesSearchList = (
@@ -168,7 +171,7 @@ export const NavSearch = (props: NavSearchProps) => {
                   fontSize="xs"
                   alignSelf="center"
                   px="2"
-                  borderWidth={1}
+                  borderBottomWidth={1}
                   rounded="md"
                   _dark={{
                     bg: 'gray.800',
@@ -279,11 +282,15 @@ export const NavSearch = (props: NavSearchProps) => {
         display={{ base: 'none', sm: 'none', md: 'block' }}
         {...inputGroupProps}
       >
-        <InputLeftElement ml={4} pointerEvents="none" h="full">
+        <InputLeftElement
+          ml={{ base: '15px', xl: 'unset' }}
+          pointerEvents="none"
+          h="full"
+        >
           <Search2Icon color="gray.300" />
         </InputLeftElement>
         <AutoCompleteInput
-          ml={4}
+          ml={{ base: '15px', xl: 'unset' }}
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search wikis, categories, tags and accounts"
@@ -295,7 +302,13 @@ export const NavSearch = (props: NavSearchProps) => {
         />
       </InputGroup>
 
-      <AutoCompleteList p="0" mx={4} shadow="lg" maxH="auto" {...listProps}>
+      <AutoCompleteList
+        mx={{ base: '15px', xl: 'unset' }}
+        p="0"
+        shadow="lg"
+        maxH="auto"
+        {...listProps}
+      >
         {isLoading ? loadingView : searchList}
 
         {totalUnrendered > 0 && !isLoading && (
