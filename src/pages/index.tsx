@@ -14,6 +14,7 @@ import {
   getRunningOperationPromises as getCategoriesRunningOperationPromises,
 } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
+import DiscoverMore from '@/components/Landing/DiscoverMore'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -26,12 +27,13 @@ export const Index = ({ promotedWikis, categories }: HomePageProps) => {
       direction="column"
       mx="auto"
       w="full"
-      py={{ base: 6, lg: 20 }}
+      pt={{ base: 6, lg: 20 }}
       gap={10}
     >
       <Hero wiki={promotedWikis && promotedWikis[0]} />
       <TrendingWikis drops={promotedWikis} />
       <CategoriesList categories={categories} />
+      <DiscoverMore />
     </Flex>
   )
 }

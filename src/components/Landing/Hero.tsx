@@ -28,7 +28,6 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           fontSize={{ base: '32', md: '54' }}
           fontWeight="700"
           lineHeight="1.1"
-          fontFamily="poppins"
         >
           {`${t('hero_title')}`}
         </Heading>
