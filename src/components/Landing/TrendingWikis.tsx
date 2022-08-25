@@ -6,6 +6,7 @@ import {
   Box,
   AspectRatio,
   Flex,
+  HStack,
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@/types/Wiki'
@@ -15,33 +16,36 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/getUsername'
+import { getReadableDate } from '@/utils/getFormattedDate'
 import { Carousel, Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
+  const getLatestEdited = () => {
+    let lastEditedTime = null
+    if (wiki.updated) {
+      lastEditedTime = getReadableDate(wiki.updated)
+    } else if (wiki.created) {
+      lastEditedTime = getReadableDate(wiki.created)
+    }
+    return lastEditedTime
+  }
   return (
-    <LinkBox flex="none" overflow="hidden" padding={2}>
-      <chakra.div
-        shadow="md"
-        rounded="lg"
-        overflow="hidden"
-        maxW="400px"
-        mx="auto"
-      >
+    <LinkBox flex="none">
+      <chakra.div p={2} mx="auto">
         <Flex
           alignSelf="center"
           direction="column"
-          bgColor="red"
-          _dark={{ bgColor: 'gray.700', color: 'white' }}
           textAlign="left"
           bg="white"
           color="black"
-          cursor="pointer"
+          _dark={{ bgColor: 'gray.700', color: 'white' }}
           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '388' }}
-          w="900px"
-          h="430px"
-          shadow="lg"
+          cursor="pointer"
+          rounded="lg"
+          shadow="md"
+          mx="auto"
         >
           <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
             <WikiImage
@@ -65,22 +69,27 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               {wiki && getWikiSummary(wiki, 80)}
             </Text>
 
-            <Flex gap={3}>
-              <Link href={`/account/${wiki?.user?.id}`}>
-                <DisplayAvatar
-                  size="20"
-                  address={wiki?.user.id}
-                  avatarIPFS={wiki?.user.profile?.avatar}
-                />
-              </Link>
-              <Link
-                href={`/account/${wiki?.user?.id}`}
-                color="brand.500 !important"
-                fontSize="sm"
-              >
-                {getUsername(wiki?.user)}
-              </Link>
-            </Flex>
+            <HStack justify="space-between">
+              <Flex gap={3}>
+                <Link href={`/account/${wiki?.user?.id}`}>
+                  <DisplayAvatar
+                    size="20"
+                    address={wiki?.user.id}
+                    avatarIPFS={wiki?.user.profile?.avatar}
+                  />
+                </Link>
+                <Link
+                  href={`/account/${wiki?.user?.id}`}
+                  color="brand.500 !important"
+                  fontSize="sm"
+                >
+                  {getUsername(wiki?.user)}
+                </Link>
+              </Flex>
+              <Text color="gray.400" fontWeight="400" fontSize="sm">
+                Last Edited {getLatestEdited()}
+              </Text>
+            </HStack>
           </Flex>
         </Flex>
       </chakra.div>
