@@ -17,6 +17,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'grey.200',
     },
+    brandLinkColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
@@ -29,9 +33,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
+    subMenuHoverBg: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.100',
+    },
     pageBg: {
       default: 'gray.100',
-      _dark: '#212836',
+      _dark: 'gray.800',
     },
     hoverBg: {
       default: 'gray.100',

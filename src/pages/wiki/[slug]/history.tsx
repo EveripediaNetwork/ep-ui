@@ -36,8 +36,8 @@ const History = () => {
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (
-    <Box bgColor="pageBg" my={-8} py={8}>
-      <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
+    <Box bgColor="pageBg" mt={-3} pt={8}>
+      <Box w="min(90%, 1100px)" mx="auto" mt={{ base: '10', lg: '16' }}>
         <Heading textAlign="center">Wiki History</Heading>
         <Text textAlign="center" mt={4} mb={8} color="linkColor">
           A timeline of changes for this wiki
@@ -64,7 +64,7 @@ const History = () => {
           w="100%"
           p={isHistoryFullWidth ? 0 : 4}
           pl={isHistoryFullWidth ? 2 : 4}
-          pt={18}
+          py={18}
         >
           {/* Border line */}
           {wikiHistory && wikiHistory?.length > 1 && (
@@ -75,7 +75,7 @@ const History = () => {
               w={isHistoryFullWidth ? '1px' : 'calc(50% + 1px)'}
               h="100%"
               borderRightWidth={2}
-              borderColor="brand.500"
+              borderColor="brandLinkColor"
             />
           )}
 

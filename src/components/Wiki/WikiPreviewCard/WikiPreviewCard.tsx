@@ -85,7 +85,7 @@ const WikiPreviewCard = ({
           <Box>
             <HStack flexWrap="wrap" mt={2} justify="space-between">
               {showLatestEditor && (
-                <HStack fontSize="sm" py={2} color="brand.500">
+                <HStack fontSize="sm" py={2} color="brandLinkColor">
                   <DisplayAvatar
                     address={wiki.user?.id}
                     avatarIPFS={wiki.user.profile?.avatar}

@@ -160,11 +160,11 @@ const Terms = () => (
           United States of America <br />
           or via email: webmaster@everipedia.org <br />
           or submit them via the{' '}
-          <Link color="brand.500" href="https://everipedia.org/contact-us">
+          <Link color="brandLinkColor" href="https://everipedia.org/contact-us">
             Contact Us
           </Link>{' '}
           submission form:{' '}
-          <Link color="brand.500" href="https://everipedia.org/contact-us">
+          <Link color="brandLinkColor" href="https://everipedia.org/contact-us">
             https://everipedia.org/contact-us
           </Link>
         </Text>
@@ -179,7 +179,7 @@ const Terms = () => (
           Everipedia&apos;s Content: Everipedia&apos;s articles are licensed
           under a{' '}
           <Link
-            color="brand.500"
+            color="brandLinkColor"
             href="https://creativecommons.org/licenses/by/4.0/"
           >
             Creative Commons Attribution 4.0 International License.

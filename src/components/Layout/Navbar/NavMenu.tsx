@@ -70,6 +70,7 @@ const NavMenu = ({
               color="linkColor"
               key={key}
             >
+              {item.label === 'Settings' && <Divider />}
               <MenuItem minH="48px" bg="subMenuBg">
                 {item.hasImage && (
                   <Icon

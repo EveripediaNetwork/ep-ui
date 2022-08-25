@@ -27,6 +27,7 @@ export const ProfileLink = () => {
         fontSize="4xl"
         fontWeight={600}
         as={RiAccountCircleFill}
+        color="linkColor"
         pr={3}
       />
       <Box fontSize="md" fontWeight={600} color="linkColor">

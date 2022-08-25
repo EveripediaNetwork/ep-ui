@@ -23,7 +23,6 @@ import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { UseToastOptions } from '@chakra-ui/toast'
 import shortenAccount from '@/utils/shortenAccount'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
@@ -35,15 +34,6 @@ import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
-
-const toastProperties: UseToastOptions = {
-  description: 'Account successfully refreshed',
-  status: 'success',
-  duration: 4000,
-  isClosable: true,
-  position: 'bottom-right',
-  variant: 'left-accent',
-}
 
 type WalletDrawerType = {
   isOpen: boolean
@@ -78,7 +68,13 @@ const WalletDrawer = ({
       refreshBalance().then(response => {
         dispatch(updateWalletDetails(response))
         setAccountRefreshLoader(false)
-        toast(toastProperties)
+        toast({
+          description: 'Account successfully refreshed',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
       })
     }
   }
@@ -117,7 +113,7 @@ const WalletDrawer = ({
                     My Wallet {isUserConnected && <ChevronDownIcon />}
                   </MenuButton>
                   {isUserConnected && (
-                    <MenuList>
+                    <MenuList py={0}>
                       <MenuItem py={3}>
                         <Image
                           boxSize="24px"
@@ -144,7 +140,6 @@ const WalletDrawer = ({
                           {accountRefreshLoading && <Spinner size="sm" />}
                         </Flex>
                       </MenuItem>
-                      <Divider />
                     </MenuList>
                   )}
                 </Menu>
