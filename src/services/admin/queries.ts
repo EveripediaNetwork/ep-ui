@@ -24,6 +24,14 @@ export const WIKIS_CREATED = gql`
   }
 `
 
+export const SEARCHED_EDITORS = gql`
+  query Editors($username: String) {
+    getProfileLikeUsername(username: $username) {
+      id
+    }
+  }
+`
+
 export const CREATED_WIKIS_TABLE = gql`
   query Wikis($offset: Int!) {
     wikis(limit: 10, offset: $offset) {
@@ -84,15 +92,6 @@ export const EDITORS_TABLE = gql`
     }
   }
 `
-
-export const SEARCHED_EDITORS = gql`
-  query Editors($username: String) {
-    getProfileLikeUsername(username: $username) {
-      id
-    }
-  }
-`
-
 export const EDITORS_COUNT = gql`
   query EditorCount($startDate: Int, $endDate: Int, $interval: String) {
     editorCount(startDate: $startDate, endDate: $endDate, interval: $interval) {
@@ -100,3 +99,71 @@ export const EDITORS_COUNT = gql`
     }
   }
 `
+export const HIDE_WIKI = gql`
+  mutation HideWiki($Id: String!) {
+    hideWiki(id: $Id) {
+      id
+      ipfs
+      transactionHash
+      created
+      updated
+      title
+      summary
+      content
+      categories {
+        id
+        title
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+      media {
+        name
+        id
+        size
+        source
+      }
+      metadata {
+        id
+        value
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      author {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
+
+// query {
+//   users(limit: 10) {
+//     id
+//     profile {
+//       username
+//     }
+//     wikis {id}
+//     wikisEdited {
+//       id
+//       wikiId
+//       datetime
+//     }
+//     wikisCreated {
+//       id
+//       datetime
+//     }
+//   }
+// }

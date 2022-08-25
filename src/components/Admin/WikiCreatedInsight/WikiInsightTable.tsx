@@ -107,6 +107,13 @@ export const WikiInsightTable = () => {
     { id: 4, value: 'Alpabetical (Z-A)' },
   ]
 
+  const FilterArray = [
+    { id: 'promoted', value: 'Promoted' },
+    { id: 'archived', value: 'Archived' },
+    { id: 'sponsored', value: 'Sponsored' },
+    { id: 'normal', value: 'Normal' },
+  ]
+
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
@@ -265,21 +272,11 @@ export const WikiInsightTable = () => {
                       alignItems="flex-start"
                       justifyContent="flex-start"
                     >
-                      <Checkbox py={1} value="promoted">
-                        Promoted
-                      </Checkbox>
-
-                      <Checkbox py={1} value="archived">
-                        Archived
-                      </Checkbox>
-
-                      <Checkbox py={1} value="sponsored">
-                        Sponsored
-                      </Checkbox>
-
-                      <Checkbox py={1} value="normal">
-                        Normal
-                      </Checkbox>
+                      {FilterArray.map((item, i) => (
+                        <Checkbox key={i} py={1} value={item.id}>
+                          {item.value}
+                        </Checkbox>
+                      ))}
                     </VStack>
                   </CheckboxGroup>
                   <HStack gap={4} w="fit-content" pt="4">
