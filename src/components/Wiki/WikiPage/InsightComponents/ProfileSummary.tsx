@@ -85,7 +85,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
               rel="nofollow"
               target="_blank"
               href={parseLink(contractURL)}
-              color="brand.500"
+              color="brandLinkColor"
             >
               <Flex align="center" gap="2">
                 <Text fontSize="14px">{shortenText(contractURL, 20)}</Text>
@@ -100,7 +100,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
               rel="nofollow"
               target="_blank"
               href={parseLink(websiteLink)}
-              color="brand.500"
+              color="brandLinkColor"
             >
               <Flex align="center" gap="2">
                 <Text fontSize="14px">{shortenText(websiteLink, 20)}</Text>
@@ -130,10 +130,10 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                     >
                       <IconButton
                         color="secondaryDark"
-                        _hover={{ color: 'brand.500' }}
+                        _hover={{ color: 'brandLinkColor' }}
                         _dark={{
                           color: 'darkGrey',
-                          _hover: { color: 'brand.500' },
+                          _hover: { color: 'brandLinkColor' },
                         }}
                         key={i}
                         aria-label={`Open ${social.id}`}
@@ -153,7 +153,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             {explorerLinksData.map(item => (
               <HStack>
                 <Link
-                  color="brand.500"
+                  color="brandLinkColor"
                   fontSize="14px"
                   key={item.id}
                   href={parseLink(item.value)}
@@ -165,7 +165,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                 >
                   {LINK_OPTIONS.find(option => option.id === item.id)?.label}
                 </Link>
-                <Icon color="brand.500" as={RiExternalLinkLine} />
+                <Icon color="brandLinkColor" as={RiExternalLinkLine} />
               </HStack>
             ))}
           </ProfileListItem>

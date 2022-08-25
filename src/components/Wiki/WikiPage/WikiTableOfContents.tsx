@@ -136,11 +136,11 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
               {toc.map(({ level, id, title }) => (
                 <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
                   <Text
-                    color={activeId === id ? 'brand.500' : 'unset'}
+                    color={activeId === id ? 'brandLinkColor' : 'unset'}
                     boxShadow={
                       activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
                     }
-                    outlineColor="brand.500"
+                    outlineColor="brandLinkColor"
                     pl={2}
                   >
                     <Link href={`#${id}`}>{title}</Link>

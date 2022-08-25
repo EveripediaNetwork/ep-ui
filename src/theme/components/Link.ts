@@ -5,7 +5,7 @@ import { LinkProps } from 'next/link'
 export const Link = {
   variants: {
     link: (props: Dict<LinkProps> | StyleFunctionProps) => ({
-      color: mode('brand.500', 'brand.700')(props),
+      color: mode('brandLinkColor', 'brand.700')(props),
     }),
   },
 }
