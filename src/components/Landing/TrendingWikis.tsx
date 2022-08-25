@@ -63,14 +63,22 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             p={4}
           >
             <LinkOverlay href={`/wiki/${wiki?.id}`}>
-              <Heading fontSize={24}>{wiki?.title}</Heading>
+              <Heading
+                width="90%"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+                fontSize={24}
+              >
+                {wiki?.title}
+              </Heading>
             </LinkOverlay>
             <Text fontSize="sm" maxW="90%" fontWeight="light" my={2}>
-              {wiki && getWikiSummary(wiki, 80)}
+              {wiki && getWikiSummary(wiki, 60)}
             </Text>
 
             <HStack justify="space-between">
-              <Flex gap={3}>
+              <Flex gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
                     size="20"
@@ -82,11 +90,23 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                   href={`/account/${wiki?.user?.id}`}
                   color="brand.500 !important"
                   fontSize="sm"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
                 >
                   {getUsername(wiki?.user)}
                 </Link>
               </Flex>
-              <Text color="gray.400" fontWeight="400" fontSize="sm">
+              <Text
+                width="50%"
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                color="gray.400"
+                fontWeight="400"
+                fontSize="sm"
+                textAlign="right"
+              >
                 Last Edited {getLatestEdited()}
               </Text>
             </HStack>
@@ -137,6 +157,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
             speed: 500,
             slidesToShow: 3,
             slidesToScroll: 3,
+
             responsive: [
               {
                 breakpoint: 1000,
