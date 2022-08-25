@@ -25,7 +25,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           borderTopWidth={isInMobileMenu ? 0 : '1px'}
           px={isInMobileMenu ? 0 : 3}
           bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
-          sx={{ '&:hover, &:focus, &:active': { bgColor: 'transparent' } }}
+          sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
           onClick={isUserConnected ? handleLogOut : undefined}
           cursor={isUserConnected ? 'pointer' : 'not-allowed'}
           display={isUserConnected ? 'flex' : 'none'}
