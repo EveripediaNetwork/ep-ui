@@ -104,10 +104,6 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
       px={{ base: 3, md: 8 }}
       py={{ base: 5, md: 20 }}
       textAlign="center"
-      _dark={{
-        bgImage: '/images/homepage-bg-dark.png',
-      }}
-      bgImage="/images/homepage-bg-white.png"
     >
       <Heading
         textAlign="center"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import {
   getPromotedWikis,
   getRunningOperationPromises as getWikisRunningOperationPromises,
@@ -23,16 +23,17 @@ interface HomePageProps {
 
 export const Index = ({ promotedWikis, categories }: HomePageProps) => {
   return (
-    <Flex
-      direction="column"
-      mx="auto"
-      w="full"
-      pt={{ base: 6, lg: 20 }}
-      gap={10}
-    >
+    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
       <Hero wiki={promotedWikis && promotedWikis[0]} />
-      <TrendingWikis drops={promotedWikis} />
-      <CategoriesList categories={categories} />
+      <Box
+        _dark={{
+          bgImage: '/images/homepage-bg-dark.png',
+        }}
+        bgImage="/images/homepage-bg-white.png"
+      >
+        <TrendingWikis drops={promotedWikis} />
+        <CategoriesList categories={categories} />
+      </Box>
       <DiscoverMore />
     </Flex>
   )

@@ -20,7 +20,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
 
   return (
-    <VStack spacing={2}>
+    <VStack mb={12} spacing={2}>
       <Heading
         textAlign="center"
         fontWeight="700"
