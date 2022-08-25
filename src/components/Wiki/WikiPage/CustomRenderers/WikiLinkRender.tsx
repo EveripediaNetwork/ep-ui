@@ -33,13 +33,11 @@ const WikiLinkRender = ({
   const linkRef = React.useRef<HTMLAnchorElement>(null)
   const { data: wiki } = useGetWikiPreviewQuery(slug)
 
-  const [mounted, setMounted] = React.useState(false)
-
+  const [isMounted, setIsMounted] = React.useState(false)
   React.useEffect(() => {
-    setMounted(true)
+    setIsMounted(true)
   }, [])
-
-  if (!mounted) {
+  if (!isMounted) {
     return <a href={href}>{text}</a>
   }
 
@@ -58,6 +56,7 @@ const WikiLinkRender = ({
           onFocus={() => {}}
           onBlur={() => {}}
           href={href}
+          color="brandLinkColor"
         >
           {text}
         </a>

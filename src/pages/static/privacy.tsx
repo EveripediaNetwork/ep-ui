@@ -276,7 +276,7 @@ const Privacy = () => (
           and disable cookies, and other tracking/recording tools. (To learn
           more about behavioral advertising and to learn how to opt-out, you may
           wish to visit{' '}
-          <Link href="http://aboutads.info" color="brand.500">
+          <Link href="http://aboutads.info" color="brandLinkColor">
             http://aboutads.info
           </Link>
           ). Depending on your mobile device, you may not be able to control
@@ -505,14 +505,14 @@ const Privacy = () => (
           or local laws, among other things.
           <br /> Bill text:{' '}
           <Link
-            color="brand.500"
+            color="brandLinkColor"
             href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375"
           >
             https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375
           </Link>
           <br />
           More info:{' '}
-          <Link color="brand.500" href="https://www.caprivacy.org/">
+          <Link color="brandLinkColor" href="https://www.caprivacy.org/">
             https://www.caprivacy.org/
           </Link>
         </Text>
