@@ -11,7 +11,7 @@ import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
-const CARD_DETAILS_LENGTH = 110
+const CARD_DETAILS_LENGTH = 100
 
 export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
   const [, username] = useENSData(wiki?.user?.id)

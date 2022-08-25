@@ -7,7 +7,7 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@/types/Wiki'
 import Hero from '@/components/Landing/Hero'
-import NotableDrops from '@/components/Landing/NotableDrops'
+import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import {
   getCategories,
@@ -30,7 +30,7 @@ export const Index = ({ promotedWikis, categories }: HomePageProps) => {
       gap={10}
     >
       <Hero wiki={promotedWikis && promotedWikis[0]} />
-      <NotableDrops drops={promotedWikis} />
+      <TrendingWikis drops={promotedWikis} />
       <CategoriesList categories={categories} />
     </Flex>
   )

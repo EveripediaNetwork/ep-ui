@@ -297,6 +297,7 @@ export const NavSearch = (props: NavSearchProps) => {
           _placeholderShown={{
             textOverflow: 'ellipsis',
           }}
+          fontSize="16"
           ref={inputRef}
           {...inputProps}
         />
