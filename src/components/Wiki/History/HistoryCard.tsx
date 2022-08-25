@@ -65,7 +65,7 @@ const HistoryCardArrow = ({
         w={2}
         h={2}
         borderRadius="100%"
-        bgColor="brand.500"
+        bgColor="brandLinkColor"
       />
     </HStack>
   )
@@ -142,7 +142,7 @@ export const HistoryCard = ({
             address={lastEditor.id}
             avatarIPFS={lastEditor.profile?.avatar}
           />
-          <Link href={`/account/${lastEditor.id}`} color="brand.500">
+          <Link href={`/account/${lastEditor.id}`} color="brandLinkColor">
             {getUsername(lastEditor, userENSDomain)}
           </Link>
         </HStack>
@@ -177,7 +177,7 @@ export const HistoryCard = ({
             as={MdFormatQuote}
             fontSize="20px"
             bgColor="cardBg"
-            color="brand.500"
+            color="brandLinkColor"
           />
           <Text fontSize="sm" color="text.500" my={2}>
             <i>{shortenText(commitMessage, 90)}</i>
@@ -232,7 +232,7 @@ export const HistoryCard = ({
             </Text>
             <Link
               href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
-              color="brand.500"
+              color="brandLinkColor"
               ml={2}
               isExternal
               fontSize="sm"
@@ -246,7 +246,7 @@ export const HistoryCard = ({
             </Text>
             <Link
               href={`${config.pinataBaseUrl}${IPFS}`}
-              color="brand.500"
+              color="brandLinkColor"
               ml={2}
               isExternal
               fontSize="sm"

@@ -95,6 +95,7 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
           onBlur={() => {}}
           href={href}
           borderRadius="100px"
+          color="brandLinkColor"
           _focus={{ outline: 'none', textDecoration: 'underline' }}
         >
           <Text
