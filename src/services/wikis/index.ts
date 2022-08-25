@@ -14,6 +14,7 @@ import {
   GET_USER_CREATED_WIKIS_BY_ID,
   GET_USER_EDITED_WIKIS_BY_ID,
   GET_WIKI_SLUG_VALID,
+  POST_WIKI_VIEW_COUNT,
 } from '@/services/wikis/queries'
 import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
@@ -187,7 +188,7 @@ export const wikiApi = createApi({
     }),
     postWikiViewCount: builder.mutation<number, string>({
       query: string => ({
-        document: POST_WIKI,
+        document: POST_WIKI_VIEW_COUNT,
         variables: {
           id: string,
         },
