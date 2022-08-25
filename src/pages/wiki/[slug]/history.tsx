@@ -36,7 +36,7 @@ const History = () => {
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (
-    <Box bgColor="gray.200" _dark={{ bgColor: 'gray.800' }} mt={-3} pt={8}>
+    <Box bgColor="pageBg" mt={-3} pt={8}>
       <Box w="min(90%, 1100px)" mx="auto" mt={{ base: '10', lg: '16' }}>
         <Heading textAlign="center">Wiki History</Heading>
         <Text textAlign="center" mt={4} mb={8} color="linkColor">
@@ -75,7 +75,7 @@ const History = () => {
               w={isHistoryFullWidth ? '1px' : 'calc(50% + 1px)'}
               h="100%"
               borderRightWidth={2}
-              borderColor="brand.500"
+              borderColor="brandLinkColor"
             />
           )}
 
