@@ -119,9 +119,11 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
           <PopoverArrow />
           <PopoverBody>
             <HStack
-              pb={2}
-              mb={2}
-              borderBottomWidth="1px"
+              flexWrap="wrap"
+              gap={1}
+              p={1}
+              mb={1}
+              borderBottomWidth={ref.description.trim().length ? '1px' : 0}
               justify="space-between"
             >
               <Tag colorScheme="blue" size="sm" fontWeight="medium">
@@ -147,7 +149,9 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
                 </Text>
               )}
             </HStack>
-            <Text m="2px !important">{ref.description}</Text>
+            <Text m="2px !important" fontSize="sm">
+              {ref.description}
+            </Text>
           </PopoverBody>
         </PopoverContent>
       )}
