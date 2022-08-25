@@ -37,7 +37,9 @@ const Wiki = ({ wiki }: WikiProps) => {
   }, [toc])
 
   useEffect(() => {
-    if (slug && typeof slug === 'string') incrementWikiViewCount(slug)
+    if (slug && typeof slug === 'string') {
+      incrementWikiViewCount(slug)
+    }
   }, [slug])
 
   return (
