@@ -24,9 +24,9 @@ export const Collections = () => (
       {SECTIONS.map((section, sid) => (
         <CustomTab
           _selected={{
-            color: 'brand.500 !important',
+            color: 'brandLinkColor !important',
             _after: {
-              background: 'brand.500 !important',
+              background: 'brandLinkColor !important',
             },
           }}
           key={sid}

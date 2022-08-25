@@ -42,7 +42,7 @@ export const ColorModeToggle = ({
           <Switch
             ml="auto"
             isChecked={colorMode === 'dark'}
-            onChange={toggleColorMode}
+            pointerEvents="none"
           />
         </Flex>
       </MenuItem>
