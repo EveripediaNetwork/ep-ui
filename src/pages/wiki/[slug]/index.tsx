@@ -4,7 +4,6 @@ import {
   getRunningOperationPromises,
   getWiki,
   getWikisByCategory,
-  usePostWikiViewCountMutation,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetServerSideProps } from 'next'
@@ -15,6 +14,7 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@/types/Wiki'
+import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
   wiki: WikiType
@@ -27,24 +27,6 @@ const Wiki = ({ wiki }: WikiProps) => {
 
   const toc = useAppSelector(state => state.toc)
 
-  const [incViewCount] = usePostWikiViewCountMutation()
-
-  useEffect(() => {
-    if (!slug) return
-    const visitedWikis: { slug: string; timestamp: number }[] = JSON.parse(
-      localStorage.getItem('VISITED_WIKIS') || '[]',
-    )
-    const visitedWiki = visitedWikis.find(w => w.slug === slug)
-    if (visitedWiki && Date.now() - visitedWiki.timestamp > 1000 * 60 * 60) {
-      visitedWiki.timestamp = Date.now()
-      incViewCount(slug as string)
-      if (visitedWikis.length > 20) {
-        visitedWikis.shift()
-      }
-      localStorage.setItem('VISITED_WIKIS', JSON.stringify(visitedWikis))
-    }
-  }, [incViewCount, slug])
-
   // get the link id if available to scroll to the correct position
   useEffect(() => {
     if (!(toc.length === 0)) {
@@ -53,6 +35,10 @@ const Wiki = ({ wiki }: WikiProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toc])
+
+  useEffect(() => {
+    if (slug && typeof slug === 'string') incrementWikiViewCount(slug)
+  }, [slug])
 
   return (
     <>
