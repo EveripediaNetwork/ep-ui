@@ -1,4 +1,7 @@
-import { useGetAllCreatedWikiCountQuery } from '@/services/admin'
+import {
+  useGetAllCreatedWikiCountQuery,
+  useGetSearchedWikisByTitleQuery,
+} from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
   Text,
@@ -33,19 +36,12 @@ export const WikiInsightTable = () => {
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
+  const [searchKeyWord, setsearchKeyWord] = useState<string>('')
+  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(searchKeyWord)
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
 
   const { isOpen, onToggle, onClose } = useDisclosure()
-
-  const increasePagination = () => {
-    return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset + 10)
-  }
-
-  const decreasePagination = () => {
-    return wiki && wiki?.length >= 10 && setPaginateOffset(paginateOffset - 10)
-  }
-
   // sorting creted wikis by date
 
   const sortIcon = useMemo(() => {
@@ -176,9 +172,29 @@ export const WikiInsightTable = () => {
     return newWikis
   }, [newWikis, sortTableBy])
 
+  const whichWiki = () => {
+    if (searchKeyWord.length < 1) {
+      setWikis(wikiSorted)
+    } else if (searchKeyWord.length > 0) {
+      setWikis(SearchedWikis)
+    }
+  }
+
+  const increasePagination = () => {
+    return (
+      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    )
+  }
+
+  const decreasePagination = () => {
+    return (
+      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset - 10)
+    )
+  }
+
   useEffect(() => {
-    setWikis(wikiSorted)
-  }, [wiki, filterItems, sortTableBy])
+    whichWiki()
+  }, [wiki, filterItems, sortTableBy, SearchedWikis, searchKeyWord])
 
   return (
     <Flex
@@ -213,7 +229,13 @@ export const WikiInsightTable = () => {
             <InputLeftElement pointerEvents="none">
               <FiSearch color="#667085" />
             </InputLeftElement>
-            <Input type="tel" placeholder="Search" />
+            <Input
+              type="text"
+              placeholder="Search"
+              onChange={e => {
+                setsearchKeyWord(e.target.value)
+              }}
+            />
           </InputGroup>
           <Menu>
             <MenuButton

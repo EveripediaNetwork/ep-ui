@@ -1,4 +1,3 @@
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import {
   Flex,
   Table,
@@ -9,7 +8,6 @@ import {
   Th,
   Thead,
   Tr,
-  AspectRatio,
   Icon,
   Tag,
   TagLabel,
@@ -21,6 +19,7 @@ import {
   Menu,
   MenuItem,
   MenuList,
+  Avatar,
 } from '@chakra-ui/react'
 import config from '@/config'
 import React, { useState } from 'react'
@@ -33,7 +32,6 @@ import {
 } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
-import { WikiImage } from '../../WikiImage'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
 
@@ -47,7 +45,8 @@ export const InsightTableWikiCreated = (
   const { wikiCreatedInsightData } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [wikiChosenId, setWikiChosenId] = useState('')
-
+  const [wikiChosenTitle, setWikiChosenTitle] = useState('')
+  const [wikiChosenIdPromote, setWikiChosenIdPromote] = useState('')
   const {
     isOpen: isOpenWikiHideNotification,
     onOpen: onOpenWikiHideNotification,
@@ -63,6 +62,11 @@ export const InsightTableWikiCreated = (
       onOpenWikiHideNotification()
       setWikiChosenId(wikiId)
     }
+  }
+  const shouldPromote = (wikiTitle: string, id: string) => {
+    setWikiChosenTitle(wikiTitle)
+    setWikiChosenIdPromote(id)
+    onOpen()
   }
 
   return (
@@ -99,25 +103,23 @@ export const InsightTableWikiCreated = (
               <Tr key={i}>
                 <Td>
                   <Flex flexDir="row" align="center" gap={2}>
-                    <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="50px">
-                      <WikiImage
-                        cursor="pointer"
-                        flexShrink={0}
-                        imageURL={`${config.pinataBaseUrl}${
-                          item.images ? item.images[0].id : ''
-                        }  `}
-                      />
-                    </AspectRatio>
+                    <Avatar
+                      cursor="pointer"
+                      name={item.author?.profile?.username}
+                      src={`${config.pinataBaseUrl}${
+                        item.images && item.images[0].id
+                      }  `}
+                    />
                     <Flex flexDirection="column">
                       <Link href={`/wiki/${item.id}`} py={1}>
                         <Text>{shortenText(item.title, 20)}</Text>
                       </Link>
                       <Text color="#718096" fontSize="sm">
-                        <Link href={`/account/${item.author.id}`} py={1}>
-                          {item.author.profile?.username
+                        <Link href={`/account/${item.author?.id}`} py={1}>
+                          {item.author?.profile?.username
                             ? item.author.profile.username
                             : shortenAccount(
-                                item.author.id ? item.author.id : '',
+                                item.author?.id ? item.author.id : '0x0',
                               )}
                         </Link>
                       </Text>
@@ -252,7 +254,7 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                           onClick={() => {
-                            onOpen()
+                            shouldPromote(item.title, item.id)
                           }}
                         >
                           Promote
@@ -281,7 +283,12 @@ export const InsightTableWikiCreated = (
             onClose={onCloseWikiHideNotification}
             wikiChosenId={wikiChosenId}
           />
-          <PromoteCreatedWikisModal isOpen={isOpen} onClose={onClose} />
+          <PromoteCreatedWikisModal
+            isOpen={isOpen}
+            onClose={onClose}
+            wikiChosenTitle={wikiChosenTitle}
+            wikiChosenId={wikiChosenIdPromote}
+          />
         </Tbody>
       </Table>
     </TableContainer>

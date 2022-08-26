@@ -9,14 +9,10 @@ import {
   EDITORS_COUNT,
   HIDE_WIKI,
   SEARCHED_EDITORS,
+  TOGGLE_USER
 } from '@/services/admin/queries'
 import config from '@/config'
-import {
-  WikisModifiedCount,
-  CreatedWikisCount,
-  Editors,
-  SearchedEditors,
-} from '@/types/admin'
+import { WikisModifiedCount, CreatedWikisCount, Editors, ToggleUser  } from '@/types/admin'
 import { Wiki } from '@/types/Wiki'
 
 type WikisModifiedCountArgs = {
@@ -25,6 +21,10 @@ type WikisModifiedCountArgs = {
   interval?: string
 }
 
+type ToggleUserArgs = {
+  id: string
+  active: boolean
+}
 type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
 }
@@ -107,16 +107,18 @@ export const adminApi = createApi({
         variables: { id },
       }),
     }),
-    getSearchedEditors: builder.query<
-      Editors[],
-      SearchedEditorQueryParams
-    >({
+    toggleUser: builder.mutation<ToggleUser, ToggleUserArgs>({
+      query: ({id, active}) => ({
+        document: TOGGLE_USER,
+        variables: { id, active },
+      }),
+    }),
+    getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
       query: ({ id }: { id: string }) => ({
         document: SEARCHED_EDITORS,
         variables: { id },
       }),
-      transformResponse: (response: SearchedEditorsRes) =>
-        response.usersById,
+      transformResponse: (response: SearchedEditorsRes) => response.usersById,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
@@ -139,6 +141,7 @@ export const {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   usePostHideWikiMutation,
+  useToggleUserMutation,
   useGetSearchedEditorsQuery,
   util: { getRunningOperationPromises },
 } = adminApi
@@ -150,5 +153,6 @@ export const {
   getEditors,
   getEditorsCount,
   postHideWiki,
+  toggleUser,
   getSearchedEditors,
 } = adminApi.endpoints

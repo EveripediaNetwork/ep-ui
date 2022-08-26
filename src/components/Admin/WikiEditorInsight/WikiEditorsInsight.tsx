@@ -1,6 +1,7 @@
 import {
   useGetEditorsQuery,
   useGetSearchedEditorsQuery,
+  useToggleUserMutation,
 } from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
@@ -42,6 +43,15 @@ export const WikiEditorsInsightTable = () => {
   editorsSortByLowest?.sort(
     (a, b) => a.wikisCreated.length - b.wikisCreated.length,
   )
+
+  const [toggleUser] = useToggleUserMutation()
+
+  const toggleUserFunc = async () => {
+    await toggleUser({
+      id: '0xAe65930180ef4d86dbD1844275433E9e1d6311ED',
+      active: false,
+    })
+  }
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -232,6 +242,7 @@ export const WikiEditorsInsightTable = () => {
           <Button
             onClick={() => {
               handleSortChange()
+              toggleUserFunc()
             }}
             borderColor="#E2E8F0"
             _dark={{ borderColor: '#2c323d' }}

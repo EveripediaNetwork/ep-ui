@@ -179,3 +179,11 @@ export const HIDE_WIKI = gql`
     }
   }
 `
+
+export const TOGGLE_USER = gql`
+  mutation ToggleUser($id: String!, $active: Boolean!) {
+    toggleUserStateById(id: $id, active: $active) {
+      id
+    }
+  }
+`
