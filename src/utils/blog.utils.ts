@@ -3,21 +3,22 @@ import arweave from '@/config/arweave'
 import { Blog, BlogTag, EntryPath, RawTransactions } from '@/types/Blog'
 
 export const formatEntry = async (
-  entry: any,
-  transactionId: any,
-  timestamp: any,
+  blog: Partial<Blog>,
+  transactionId: string,
+  timestamp: number,
 ) => ({
-  title: entry.content.title,
-  slug: slugify(entry.content.title),
-  body: entry.content.body,
-  digest: entry.originalDigest ?? entry.digest,
-  contributor: entry.authorship.contributor,
+  title: blog.title,
+  slug: slugify(blog.title || ''),
+  body: blog.body,
+  digest: blog.digest,
+  contributor: blog.contributor,
   transaction: transactionId,
   timestamp,
-  cover_image:
-    (entry.content.body
-      .split('\n\n')[0]
-      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1] || null,
+  cover_image: blog.body
+    ? (blog.body
+        .split('\n\n')[0]
+        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+    : null,
   image_sizes: 50,
 })
 
@@ -56,12 +57,23 @@ const mapEntry = async (entry: EntryPath) => {
       string: true,
     })
 
-    if (result)
-      return await formatEntry(
-        JSON.parse(result as string),
+    const parsedResult = JSON.parse(result as string)
+    const {
+      content: { title, body },
+      digest,
+      authorship: { contributor },
+      transactionId,
+    } = parsedResult
+
+    if (result) {
+      const formattedEntry = await formatEntry(
+        { title, body, digest, contributor, transaction: transactionId },
         entry.slug,
-        entry.timestamp,
+        entry.timestamp || 0,
       )
+
+      return formattedEntry
+    }
 
     return undefined
   } catch (error) {
@@ -88,7 +100,7 @@ export const getBlogentriesFormatted = async (
       const x = acc.find(
         (entry: Blog) => current && entry.slug === current.slug,
       )
-      if (!x && current) return acc.concat([current])
+      if (!x && current) return acc.concat([current as Blog])
       return acc
     }, [])
 }
