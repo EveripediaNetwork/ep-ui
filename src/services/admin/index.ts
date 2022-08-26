@@ -13,6 +13,7 @@ import {
 import config from '@/config'
 import { WikisModifiedCount, CreatedWikisCount, Editors } from '@/types/admin'
 import { Wiki } from '@/types/Wiki'
+import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
 
 type WikisModifiedCountArgs = {
   startDate?: number
@@ -32,6 +33,7 @@ type WikisCreatedCountResponse = {
 }
 type CreatedWikiCountResponse = {
   wikis: CreatedWikisCount[]
+  wikisByTitle: CreatedWikisCount[]
 }
 
 type EditorsRes = {
@@ -109,6 +111,14 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: SearchedEditorsRes) => response.usersById,
     }),
+    getSearchedWikisByTitle: builder.query<CreatedWikisCount[], string>({
+      query: (title: string) => ({
+        document: GET_WIKIS_BY_TITLE,
+        variables: { title },
+      }),
+      transformResponse: (response: CreatedWikiCountResponse) =>
+        response.wikisByTitle,
+    }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
       WikisModifiedCountArgs
@@ -126,6 +136,7 @@ export const adminApi = createApi({
 export const {
   useGetAllCreatedWikiCountQuery,
   useGetEditorsQuery,
+  useGetSearchedWikisByTitleQuery,
   useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
@@ -137,6 +148,7 @@ export const {
 export const {
   getAllCreatedWikiCount,
   getWikisCreatedCount,
+  getSearchedWikisByTitle,
   getWikisEditedCount,
   getEditors,
   getEditorsCount,

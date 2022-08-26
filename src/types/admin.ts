@@ -16,7 +16,10 @@ export type WikisModifiedCount = {
 export interface Tag {
   id: string
 }
-
+export interface Categories {
+  id: string
+  title: string
+}
 export interface Image {
   id: string
   type: ArrayBuffer | string | File | Blob
@@ -24,6 +27,12 @@ export interface Image {
 
 export type ProfileData = {
   username: string
+  avatar: string
+}
+
+export interface User {
+  id: string
+  profile: ProfileData
 }
 
 export interface Author {
@@ -40,6 +49,11 @@ export interface Wikis {
   tags: Tag[]
   promoted: number
   hidden: boolean
+  content: string
+  summary: string
+  updated: string
+  user: User
+  categories: Categories[]
 }
 
 export type CreatedWikisCount = Pick<
@@ -52,6 +66,11 @@ export type CreatedWikisCount = Pick<
   | 'tags'
   | 'promoted'
   | 'hidden'
+  | 'content'
+  | 'summary'
+  | 'updated'
+  | 'user'
+  | 'categories'
 >
 
 export interface Editors {

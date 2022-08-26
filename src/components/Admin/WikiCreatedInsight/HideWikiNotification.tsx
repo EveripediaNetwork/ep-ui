@@ -32,7 +32,7 @@ export const HideWikiNotification = ({
 
   const hideWiki = async () => {
     await postHideWiki(wikiId)
-
+    onClose()
     let toastTitle = 'Wiki Successfully Archived'
     let toastMessage =
       'The selected wiki has been archived. Refresh the page to see the changes.'
