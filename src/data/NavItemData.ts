@@ -16,6 +16,7 @@ import {
   BsFillPersonFill,
   BsRecycle,
   BsNewspaper,
+  BsBook,
 } from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
@@ -67,13 +68,6 @@ export const NAV_ITEMS: NavItem[] = [
         href: '/categories/people',
         hasImage: true,
       },
-      {
-        id: 107,
-        label: 'Blog',
-        icon: BsNewspaper,
-        href: '/blog',
-        hasImage: true,
-      },
     ],
   },
   {
@@ -84,21 +78,23 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 3,
-    label: 'Resources',
+    label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
       {
         id: 301,
         label: 'Help Center',
+        icon: BsBook,
         href: 'https://learn.everipedia.org',
-        hasImage: false,
+        hasImage: true,
       },
       {
         id: 302,
-        label: 'About us',
-        href: '/static/about',
-        hasImage: false,
+        label: 'Blog',
+        icon: BsNewspaper,
+        href: '/blog',
+        hasImage: true,
       },
     ],
   },

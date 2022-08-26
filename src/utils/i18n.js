@@ -15,7 +15,7 @@ export const resources = {
       hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Learn more about Everipedia',
+      learnMoreHeroBttn: 'Read more about Everipedia',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -197,7 +197,7 @@ export const resources = {
       hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Learn more about Everipedia',
+      learnMoreHeroBttn: 'Read more about Everipedia',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -340,7 +340,7 @@ export const resources = {
       hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Learn more about Everipedia',
+      learnMoreHeroBttn: 'Read more about Everipedia',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
