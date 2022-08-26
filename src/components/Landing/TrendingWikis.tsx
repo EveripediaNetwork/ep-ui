@@ -147,6 +147,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         fontSize={{ base: 'lg', lg: 22 }}
         mx="auto"
         mb={9}
+        px={4}
         maxW="750"
       >{`${t('trendingWikisDescription')}`}</Text>
       <Box maxW="1160px" mx="auto">

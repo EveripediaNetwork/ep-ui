@@ -32,6 +32,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         color="gray.500"
         fontSize={{ base: 'lg', lg: 22 }}
         pb={9}
+        px={4}
         textAlign="center"
         maxW="750"
       >{`${t('trendingWikisDescription')}`}</Text>
