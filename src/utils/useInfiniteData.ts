@@ -34,8 +34,10 @@ export const useInfiniteData = <T>(opts: Opts) => {
         setData(prevData => [...prevData, ...resData])
         if (resData.length < ITEM_PER_PAGE) setHasMore(false)
         else setHasMore(true)
+        if (resData.length === 0) setHasMore(false)
+      } else {
+        setHasMore(false)
       }
-      if (resData.length === 0) setHasMore(false)
       setLoading(false)
     }
 
