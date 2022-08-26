@@ -107,7 +107,10 @@ export const adminApi = createApi({
         variables: { id },
       }),
     }),
-    getSearchedEditors: builder.query<SearchedEditors[], SearchedEditorQueryParams>({
+    getSearchedEditors: builder.query<
+      SearchedEditors[],
+      SearchedEditorQueryParams
+    >({
       query: ({ username }: { username: string }) => ({
         document: SEARCHED_EDITORS,
         variables: { username },
