@@ -16,8 +16,8 @@ export const formatEntry = async (
   timestamp,
   cover_image: blog.body
     ? (blog.body
-        .split('\n\n')[0]
-        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+      .split('\n\n')[0]
+      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
     : null,
   image_sizes: 50,
 })
@@ -77,7 +77,7 @@ const mapEntry = async (entry: EntryPath) => {
 
     return undefined
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 
   return undefined
