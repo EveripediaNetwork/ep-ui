@@ -44,11 +44,11 @@ type EditorsRes = {
 }
 
 type SearchedEditorQueryParams = {
-  username: string
+  id: string
 }
 
 type SearchedEditorsRes = {
-  getProfileLikeUsername: SearchedEditors[]
+  usersById: Editors[]
 }
 
 type EditorQueryParams = {
@@ -108,15 +108,15 @@ export const adminApi = createApi({
       }),
     }),
     getSearchedEditors: builder.query<
-      SearchedEditors[],
+      Editors[],
       SearchedEditorQueryParams
     >({
-      query: ({ username }: { username: string }) => ({
+      query: ({ id }: { id: string }) => ({
         document: SEARCHED_EDITORS,
-        variables: { username },
+        variables: { id },
       }),
       transformResponse: (response: SearchedEditorsRes) =>
-        response.getProfileLikeUsername,
+        response.usersById,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],

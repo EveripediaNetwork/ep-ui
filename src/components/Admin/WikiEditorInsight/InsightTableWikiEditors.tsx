@@ -19,6 +19,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Box,
 } from '@chakra-ui/react'
 import React from 'react'
 import shortenAccount from '@/utils/shortenAccount'
@@ -76,7 +77,7 @@ export const InsightTableWikiEditors = (
 ) => {
   const { wikiInsightData: wikiEditorInsightData } = props
   const { isOpen, onClose } = useDisclosure()
-  return (
+  return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
     <TableContainer w="100%">
       <Table>
         <Thead bg="wikiTitleBg">
@@ -206,5 +207,9 @@ export const InsightTableWikiEditors = (
         </Tbody>
       </Table>
     </TableContainer>
+  ) : (
+    <Box textAlign="center" w="100%">
+      <Text>No data to display 🐌</Text>
+    </Box>
   )
 }

@@ -30,9 +30,8 @@ export const WikiEditorsInsightTable = () => {
     offset: paginateOffset,
   })
   const { data: searchedEditors } = useGetSearchedEditorsQuery({
-    username: searchKeyWord,
+    id: searchKeyWord,
   })
-
   // sorting editors
   const editorsSortByHighest = editors?.slice()
   editorsSortByHighest?.sort(
@@ -80,97 +79,106 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
+  interface EditorInterface {
+    editorName: string
+    createdWikis: {
+      content: {
+        title: string
+        images: {
+          id: string
+        }[]
+      }[]
+      datetime: string
+      id: string
+      ipfs: string
+      wikiId: string
+    }[]
+    editiedWikis: {
+      content: {
+        title: string
+        images: {
+          id: string
+        }[]
+      }[]
+      datetime: string
+      id: string
+      ipfs: string
+      wikiId: string
+    }[]
+    lastCreatedWiki: {
+      content: {
+        title: string
+        images: {
+          id: string
+        }[]
+      }[]
+    }
+    editorAvatar: string
+    latestActivity: string
+    editorAddress: string
+    active: boolean
+  }
+
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [allowNext, setAllowNext] = useState<boolean>(true)
-  const [editorsData, setEditorsData] = useState<
-    Array<{
-      editorName: string
-      createdWikis: {
-        content: {
-          title: string
-          images: {
-            id: string
-          }[]
-        }[]
-        datetime: string
-        id: string
-        ipfs: string
-        wikiId: string
-      }[]
-      editiedWikis: {
-        content: {
-          title: string
-          images: {
-            id: string
-          }[]
-        }[]
-        datetime: string
-        id: string
-        ipfs: string
-        wikiId: string
-      }[]
-      lastCreatedWiki: {
-        content: {
-          title: string
-          images: {
-            id: string
-          }[]
-        }[]
-      }
-      editorAvatar: string
-      latestActivity: string
-      editorAddress: string
-      active: boolean
-    }>
-  >()
+  const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
+  const [searchedEditorsData, setSearchedEditorsData] =
+    useState<Array<EditorInterface>>()
   const newObj: any = []
+  const newSearchObj: any = []
+  searchedEditors
+    ?.filter(item => {
+      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+    })
+    ?.forEach(item => {
+      newSearchObj.push({
+        editorName: item?.profile?.username
+          ? item?.profile?.username
+          : 'Unknown',
+        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+        editorAddress: item?.id,
+        createdWikis: item?.wikisCreated,
+        editiedWikis: item?.wikisEdited,
+        lastCreatedWiki: item?.wikisCreated[0]
+          ? item?.wikisCreated[0]
+          : item?.wikisEdited[0],
+        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+        active: item?.active,
+      })
+      return null
+    })
 
-  if (searchKeyWord.length > 0) {
-    searchedEditors
-      ?.filter(item => {
-        return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+  editorsFilteredArr
+    ?.filter(item => {
+      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+    })
+    ?.forEach(item => {
+      newObj.push({
+        editorName: item?.profile?.username
+          ? item?.profile?.username
+          : 'Unknown',
+        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+        editorAddress: item?.id,
+        createdWikis: item?.wikisCreated,
+        editiedWikis: item?.wikisEdited,
+        lastCreatedWiki: item?.wikisCreated[0]
+          ? item?.wikisCreated[0]
+          : item?.wikisEdited[0],
+        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+        active: item?.active,
       })
-      ?.forEach(item => {
-        newObj.push({
-          editorName: item?.username ? item?.username : 'Unknown',
-          editorAvatar: item?.avatar ? item?.avatar : '',
-          editorAddress: item?.id,
-          createdWikis: item?.wikisCreated,
-          editiedWikis: item?.wikisEdited,
-          lastCreatedWiki: item?.wikisCreated[0]
-            ? item?.wikisCreated[0]
-            : item?.wikisEdited[0],
-          latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        })
-        return null
-      })
-  } else if (searchKeyWord.length < 1) {
-    editorsFilteredArr
-      ?.filter(item => {
-        return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-      })
-      ?.forEach(item => {
-        newObj.push({
-          editorName: item?.profile?.username
-            ? item?.profile?.username
-            : 'Unknown',
-          editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-          editorAddress: item?.id,
-          createdWikis: item?.wikisCreated,
-          editiedWikis: item?.wikisEdited,
-          lastCreatedWiki: item?.wikisCreated[0]
-            ? item?.wikisCreated[0]
-            : item?.wikisEdited[0],
-          latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        })
-        return null
-      })
-  }
+      return null
+    })
 
   useEffect(() => {
     setEditorsData(newObj)
     setAllowNext(true)
-  }, [editors, sortTableBy, searchedEditors])
+  }, [editors, sortTableBy])
+
+  useEffect(() => {
+    setSearchedEditorsData(newSearchObj)
+    setAllowNext(true)
+  }, [searchedEditors])
 
   const increasePagination = () => {
     return (
@@ -248,9 +256,18 @@ export const WikiEditorsInsightTable = () => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        <InsightTableWikiEditors wikiInsightData={editorsData} />
+        {searchKeyWord.length > 0 ? (
+          <InsightTableWikiEditors wikiInsightData={searchedEditorsData} />
+        ) : (
+          <InsightTableWikiEditors wikiInsightData={editorsData} />
+        )}
       </Flex>
-      <Flex justify="space-between" w="95%" m="0 auto">
+      <Flex
+        justify="space-between"
+        w="95%"
+        m="0 auto"
+        display={searchKeyWord.length > 0 ? 'none' : 'flex'}
+      >
         <Button
           leftIcon={<ArrowBackIcon />}
           variant="outline"
