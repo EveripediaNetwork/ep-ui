@@ -279,7 +279,7 @@ export const NavSearch = (props: NavSearchProps) => {
       <InputGroup
         size="lg"
         maxW="800px"
-        display={{ base: 'none', sm: 'none', md: 'block' }}
+        display={{ base: 'none', md: 'block' }}
         {...inputGroupProps}
       >
         <InputLeftElement

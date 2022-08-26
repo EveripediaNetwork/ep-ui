@@ -1,23 +1,21 @@
 import {
   RiSettings5Fill,
-  RiUserLine,
+  RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
   RiAddBoxFill,
-  RiWalletLine,
+  RiWalletFill,
+  RiRecycleFill,
+  RiImage2Fill,
+  RiCoinFill,
+  RiBitCoinFill,
+  RiUser3Fill,
+  RiNewspaperFill,
+  RiBook2Fill,
+  RiTeamFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import {
-  BsCurrencyBitcoin,
-  BsCurrencyExchange,
-  BsFillFileImageFill,
-  BsFillPeopleFill,
-  BsFillPersonFill,
-  BsRecycle,
-  BsNewspaper,
-  BsBook,
-} from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -29,42 +27,42 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 101,
         label: 'NFTs',
-        icon: BsFillFileImageFill,
+        icon: RiImage2Fill,
         href: '/categories/nfts',
         hasImage: true,
       },
       {
         id: 102,
         label: 'Decentralized Finance',
-        icon: BsRecycle,
+        icon: RiRecycleFill,
         href: '/categories/defi',
         hasImage: true,
       },
       {
         id: 103,
         label: 'Exchanges',
-        icon: BsCurrencyExchange,
+        icon: RiCoinFill,
         href: '/categories/exchanges',
         hasImage: true,
       },
       {
         id: 104,
         label: 'Cryptocurrencies',
-        icon: BsCurrencyBitcoin,
+        icon: RiBitCoinFill,
         href: '/categories/cryptocurrencies',
         hasImage: true,
       },
       {
         id: 105,
         label: 'DAOs',
-        icon: BsFillPeopleFill,
+        icon: RiTeamFill,
         href: '/categories/daos',
         hasImage: true,
       },
       {
         id: 106,
         label: 'People in crypto',
-        icon: BsFillPersonFill,
+        icon: RiUser3Fill,
         href: '/categories/people',
         hasImage: true,
       },
@@ -85,14 +83,14 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 301,
         label: 'Help Center',
-        icon: BsBook,
+        icon: RiBook2Fill,
         href: 'https://learn.everipedia.org',
         hasImage: true,
       },
       {
         id: 302,
         label: 'Blog',
-        icon: BsNewspaper,
+        icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
@@ -125,7 +123,7 @@ export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
   href: '#',
   id: 6,
-  icon: RiWalletLine,
+  icon: RiWalletFill,
 }
 
 export const MOBILE_NAV_ITEMS = ({
@@ -137,7 +135,7 @@ export const MOBILE_NAV_ITEMS = ({
   {
     id: 7,
     label: 'Account',
-    icon: RiUserLine,
+    icon: RiUserFill,
     href: '#',
     subItem: [
       {

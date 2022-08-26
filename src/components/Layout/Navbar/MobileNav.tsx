@@ -60,12 +60,13 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
     <VStack justify="space-between" align="stretch" backgroundColor="subMenuBg">
       <Box borderTopWidth={1}>
         <NavSearch
-          inputGroupProps={{ display: { base: 'inherit', md: 'none' } }}
+          inputGroupProps={{
+            display: { base: 'inherit', md: 'none' },
+          }}
           inputProps={{
-            border: 'none',
-            rounded: 'none',
-            borderColor: 'transparent',
-            py: 8,
+            my: 2,
+            width: '90%',
+            mx: '5%',
           }}
           listProps={{ w: 'full', rounded: 'none', mt: 0 }}
         />
