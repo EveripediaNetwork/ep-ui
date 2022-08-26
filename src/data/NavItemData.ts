@@ -21,7 +21,7 @@ import {
 export const NAV_ITEMS: NavItem[] = [
   {
     id: 1,
-    label: 'Explore',
+    label: 'Categories',
     href: '#',
     icon: RiCompass3Fill,
     subItem: [
