@@ -26,11 +26,11 @@ const DiscoverMore = () => {
               href={`/tags/${tag.id}`}
               sx={{
                 '&:hover, &:focus, &:active': {
-                  bgColor: 'gray.200',
+                  bgColor: 'gray.100',
                   textDecoration: 'none',
                   boxShadow: 'none',
                   _dark: {
-                    bgColor: 'whiteAlpha.200',
+                    bgColor: 'whiteAlpha.100',
                   },
                 },
               }}
