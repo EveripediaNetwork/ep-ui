@@ -53,6 +53,7 @@ export const EDITORS_TABLE = gql`
   query Editors($limit: Int!, $offset: Int!) {
     users(limit: $limit, offset: $offset) {
       id
+      active
       profile {
         username
         avatar
@@ -89,6 +90,32 @@ export const SEARCHED_EDITORS = gql`
   query Editors($username: String) {
     getProfileLikeUsername(username: $username) {
       id
+      username
+      avatar
+      wikisEdited {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+      wikisCreated {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
     }
   }
 `

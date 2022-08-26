@@ -13,17 +13,6 @@ export type WikisModifiedCount = {
   startOn: string
   endOn: string
 }
-
-// export type CreatedWikisCount = {
-//   title: string
-//   images: Images[]
-//   author: { id: string; profile: { username: string } }
-//   created: string
-//   tags: Tags[]
-//   promoted: number
-//   hidden: boolean
-// }
-
 export interface Tag {
   id: string
 }
@@ -67,7 +56,38 @@ export type CreatedWikisCount = Pick<
 
 export interface Editors {
   id: string
+  active: boolean
   profile: { username: string | null; avatar: string }
+  wikisCreated: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+  }[]
+  wikisEdited: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+  }[]
+}
+
+export interface SearchedEditors {
+  id: string
+  username: string | null
+  avatar: string
   wikisCreated: {
     id: string
     wikiId: string

@@ -24,16 +24,14 @@ import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 export const WikiEditorsInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
+  const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
-
   const { data: searchedEditors } = useGetSearchedEditorsQuery({
-    username: 'sruj',
+    username: searchKeyWord,
   })
-
-  console.log(searchedEditors, 'search')
 
   // sorting editors
   const editorsSortByHighest = editors?.slice()
@@ -49,11 +47,9 @@ export const WikiEditorsInsightTable = () => {
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
       return <BiSort fontSize="1.3rem" />
-    }
-    if (sortTableBy === 'ascending') {
+    } else if (sortTableBy === 'ascending') {
       return <BiSortUp fontSize="1.3rem" />
-    }
-    if (sortTableBy === 'descending') {
+    } else if (sortTableBy === 'descending') {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <BiSort fontSize="1.3rem" />
@@ -62,11 +58,9 @@ export const WikiEditorsInsightTable = () => {
   const editorsFilteredArr = useMemo(() => {
     if (sortTableBy === 'default') {
       return editors
-    }
-    if (sortTableBy === 'ascending') {
+    } else if (sortTableBy === 'ascending') {
       return editorsSortByHighest
-    }
-    if (sortTableBy === 'descending') {
+    } else if (sortTableBy === 'descending') {
       return editorsSortByLowest
     }
     return editors
@@ -122,39 +116,97 @@ export const WikiEditorsInsightTable = () => {
       editorAvatar: string
       latestActivity: string
       editorAddress: string
+      active: boolean
     }>
   >()
   const newObj: any = []
-  editorsFilteredArr
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.map(item => {
-      newObj.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-      })
-      return null
-    })
 
-  editors?.filter(item => {
-    return item.wikisCreated.length > 0
-  })
+  if (searchKeyWord.length > 0) {
+    searchedEditors
+      ?.filter(item => {
+        return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+      })
+      ?.forEach(item => {
+        newObj.push({
+          editorName: item?.username ? item?.username : 'Unknown',
+          editorAvatar: item?.avatar ? item?.avatar : '',
+          editorAddress: item?.id,
+          createdWikis: item?.wikisCreated,
+          editiedWikis: item?.wikisEdited,
+          lastCreatedWiki: item?.wikisCreated[0]
+            ? item?.wikisCreated[0]
+            : item?.wikisEdited[0],
+          latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+        })
+        return null
+      })
+  } else if (searchKeyWord.length < 1) {
+    editorsFilteredArr
+      ?.filter(item => {
+        return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+      })
+      ?.forEach(item => {
+        newObj.push({
+          editorName: item?.profile?.username
+            ? item?.profile?.username
+            : 'Unknown',
+          editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+          editorAddress: item?.id,
+          createdWikis: item?.wikisCreated,
+          editiedWikis: item?.wikisEdited,
+          lastCreatedWiki: item?.wikisCreated[0]
+            ? item?.wikisCreated[0]
+            : item?.wikisEdited[0],
+          latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+        })
+        return null
+      })
+  }
+
+  // searchKeyWord.length > 0
+  //   ? searchedEditors
+  //       ?.filter(item => {
+  //         return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+  //       })
+  //       ?.forEach(item => {
+  //         newObj.push({
+  //           editorName: item?.username ? item?.username : 'Unknown',
+  //           editorAvatar: item?.avatar ? item?.avatar : '',
+  //           editorAddress: item?.id,
+  //           createdWikis: item?.wikisCreated,
+  //           editiedWikis: item?.wikisEdited,
+  //           lastCreatedWiki: item?.wikisCreated[0]
+  //             ? item?.wikisCreated[0]
+  //             : item?.wikisEdited[0],
+  //           latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+  //         })
+  //         return null
+  //       })
+  //   : editorsFilteredArr
+  //       ?.filter(item => {
+  //         return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+  //       })
+  //       ?.forEach(item => {
+  //         newObj.push({
+  //           editorName: item?.profile?.username
+  //             ? item?.profile?.username
+  //             : 'Unknown',
+  //           editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+  //           editorAddress: item?.id,
+  //           createdWikis: item?.wikisCreated,
+  //           editiedWikis: item?.wikisEdited,
+  //           lastCreatedWiki: item?.wikisCreated[0]
+  //             ? item?.wikisCreated[0]
+  //             : item?.wikisEdited[0],
+  //           latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+  //         })
+  //         return null
+  //       })
 
   useEffect(() => {
-    console.log('hd')
     setEditorsData(newObj)
     setAllowNext(true)
-  }, [editors, sortTableBy])
+  }, [editors, sortTableBy, searchedEditors])
 
   const increasePagination = () => {
     return (
@@ -197,7 +249,13 @@ export const WikiEditorsInsightTable = () => {
             <InputLeftElement pointerEvents="none">
               <FiSearch color="#667085" />
             </InputLeftElement>
-            <Input type="tel" placeholder="Search" />
+            <Input
+              type="text"
+              placeholder="Search"
+              onChange={e => {
+                setsearchKeyWord(e.target.value)
+              }}
+            />
           </InputGroup>
           <Button
             onClick={() => {
@@ -220,8 +278,8 @@ export const WikiEditorsInsightTable = () => {
             icon={<MdFilterList />}
           >
             <option value="option1">Weekly</option>
-            <option value="option1">Monthly</option>
-            <option value="option1">Yearly</option>
+            <option value="option2">Monthly</option>
+            <option value="option3">Yearly</option>
           </Select>
         </Flex>
       </Flex>

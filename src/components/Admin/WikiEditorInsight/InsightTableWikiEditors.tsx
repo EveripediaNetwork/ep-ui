@@ -27,7 +27,7 @@ import { BiChevronDown } from 'react-icons/bi'
 import { WikiImage } from '../../WikiImage'
 import { DeleteEditorModal } from './DeleteEditorModal'
 
-interface WikiInsightDataInterface {
+interface WikiEditorInsightDataInterface {
   editorName: string
   createdWikis: {
     content: {
@@ -64,16 +64,17 @@ interface WikiInsightDataInterface {
   editorAvatar: string
   latestActivity: string
   editorAddress: string
+  active: boolean
 }
 
 type InsightTableWikiEditorsProps = {
-  wikiInsightData: WikiInsightDataInterface[] | undefined
+  wikiInsightData: WikiEditorInsightDataInterface[] | undefined
 }
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
-  const { wikiInsightData } = props
+  const { wikiInsightData: wikiEditorInsightData } = props
   const { isOpen, onClose } = useDisclosure()
   return (
     <TableContainer w="100%">
@@ -108,7 +109,7 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiInsightData?.map((item, i) => {
+          {wikiEditorInsightData?.map((item, i) => {
             return (
               <Tr key={i}>
                 <Td>
@@ -185,7 +186,7 @@ export const InsightTableWikiEditors = (
                         _focus={{ bg: 'none', outline: 'none' }}
                         fontWeight="medium"
                       >
-                        Ban
+                        {item.active ? 'Ban' : 'Unban'}
                       </MenuButton>
                     </MenuButton>
                     <MenuList>
