@@ -240,7 +240,7 @@ const Navbar = () => {
                     isHamburgerOpen ? (
                       <CloseIcon w={4} h={4} />
                     ) : (
-                      <HamburgerIcon w={5} h={5} />
+                      <HamburgerIcon boxSize={{ base: 6, lg: 7 }} />
                     )
                   }
                   variant="ghost"
