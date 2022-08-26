@@ -242,7 +242,7 @@ const Navbar = () => {
                     ) : (
                       <HamburgerIcon
                         boxSize={{ base: 6, lg: 7 }}
-                        ml={{ base: 4, lg: 0 }}
+                        ml={{ base: 4, xl: 0 }}
                       />
                     )
                   }
