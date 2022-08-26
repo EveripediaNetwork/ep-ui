@@ -16,17 +16,26 @@ import {
   HStack,
   Link,
   useDisclosure,
-  Select,
+  MenuButton,
+  Button,
+  Menu,
+  MenuItem,
+  MenuList,
 } from '@chakra-ui/react'
 import config from '@/config'
-import React from 'react'
+import React, { useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import { RiArrowDownLine, RiQuestionLine } from 'react-icons/ri'
+import {
+  RiArrowDownLine,
+  RiQuestionLine,
+  RiArrowDropDownLine,
+} from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
+import { HideWikiNotification } from './HideWikiNotification'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -37,8 +46,25 @@ export const InsightTableWikiCreated = (
 ) => {
   const { wikiCreatedInsightData } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [wikiChosenId, setWikiChosenId] = useState('')
+
+  const {
+    isOpen: isOpenWikiHideNotification,
+    onOpen: onOpenWikiHideNotification,
+    onClose: onCloseWikiHideNotification,
+  } = useDisclosure()
 
   const VisibilityOptions = ['Archive', 'Unarchive']
+
+  const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
+    if (ishidden && e === 'Unarchive') {
+      // Unarchive funtion
+    } else if (!ishidden && e === 'Archive') {
+      onOpenWikiHideNotification()
+      setWikiChosenId(wikiId)
+    }
+  }
+
   return (
     <TableContainer w="100%">
       <Table>
@@ -181,16 +207,45 @@ export const InsightTableWikiCreated = (
                 <Td>
                   <Flex w="100%" p={5} gap={2} align="center">
                     <HStack spacing={5}>
-                      <Select
-                        maxW="52"
-                        ml="auto"
-                        defaultValue={item.hidden ? 'Archive' : 'Unarchive'}
-                      >
-                        {VisibilityOptions?.map((op, p) => (
-                          <option key={p}>{op}</option>
-                        ))}
-                      </Select>
-
+                      <Menu>
+                        <MenuButton
+                          transition="all 0.2s"
+                          borderRadius="md"
+                          _expanded={{ bg: 'brand.500', color: 'white' }}
+                        >
+                          <Button
+                            borderColor="#E2E8F0"
+                            _dark={{ borderColor: '#2c323d' }}
+                            py={2}
+                            px={5}
+                            variant="outline"
+                            fontWeight="light"
+                          >
+                            <Text px={2}> Archive </Text>
+                            <Icon
+                              fontSize="2xl"
+                              fontWeight="bold"
+                              cursor="pointer"
+                              color="#718096"
+                              as={RiArrowDropDownLine}
+                            />
+                          </Button>
+                        </MenuButton>
+                        <MenuList px={1}>
+                          {VisibilityOptions.map((o, m) => (
+                            <MenuItem
+                              key={m}
+                              onClick={() => {
+                                shouldArchive(o, item.hidden, item.id)
+                              }}
+                              py="1"
+                              px="1"
+                            >
+                              {o}
+                            </MenuItem>
+                          ))}
+                        </MenuList>
+                      </Menu>
                       {!item.promoted ? (
                         <Text
                           color="#FF5CAA"
@@ -204,7 +259,7 @@ export const InsightTableWikiCreated = (
                         </Text>
                       ) : (
                         <HStack spacing={2}>
-                          <Text color="#2c323d" cursor="pointer">
+                          <Text color="#E2E8F0" cursor="pointer">
                             Promote
                           </Text>
                           <Icon
@@ -221,6 +276,11 @@ export const InsightTableWikiCreated = (
               </Tr>
             )
           })}
+          <HideWikiNotification
+            isOpen={isOpenWikiHideNotification}
+            onClose={onCloseWikiHideNotification}
+            wikiChosenId={wikiChosenId}
+          />
           <PromoteCreatedWikisModal isOpen={isOpen} onClose={onClose} />
         </Tbody>
       </Table>

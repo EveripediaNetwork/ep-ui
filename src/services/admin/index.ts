@@ -7,6 +7,7 @@ import {
   CREATED_WIKIS_TABLE,
   EDITORS_TABLE,
   EDITORS_COUNT,
+  HIDE_WIKI,
   SEARCHED_EDITORS,
 } from '@/services/admin/queries'
 import config from '@/config'
@@ -16,6 +17,7 @@ import {
   Editors,
   SearchedEditors,
 } from '@/types/admin'
+import { Wiki } from '@/types/Wiki'
 
 type WikisModifiedCountArgs = {
   startDate?: number
@@ -41,6 +43,10 @@ type EditorsRes = {
   users: Editors[]
 }
 
+type SearchedEditorQueryParams = {
+  username: string
+}
+
 type SearchedEditorsRes = {
   getProfileLikeUsername: SearchedEditors[]
 }
@@ -48,10 +54,6 @@ type SearchedEditorsRes = {
 type EditorQueryParams = {
   limit: number
   offset: number
-}
-
-type SearchedEditorQueryParams = {
-  username: string
 }
 
 export const adminApi = createApi({
@@ -81,17 +83,6 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: EditorsRes) => response.users,
     }),
-    getSearchedEditors: builder.query<
-      SearchedEditors[],
-      SearchedEditorQueryParams
-    >({
-      query: ({ username }: { username: string }) => ({
-        document: SEARCHED_EDITORS,
-        variables: { username },
-      }),
-      transformResponse: (response: SearchedEditorsRes) =>
-        response.getProfileLikeUsername,
-    }),
     getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
         document: CREATED_WIKIS_TABLE,
@@ -109,6 +100,20 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: WikisEditedCountResponse) =>
         response.wikisEdited,
+    }),
+    postHideWiki: builder.mutation<Wiki, string>({
+      query: (id: string) => ({
+        document: HIDE_WIKI,
+        variables: { id },
+      }),
+    }),
+    getSearchedEditors: builder.query<SearchedEditors[], SearchedEditorQueryParams>({
+      query: ({ username }: { username: string }) => ({
+        document: SEARCHED_EDITORS,
+        variables: { username },
+      }),
+      transformResponse: (response: SearchedEditorsRes) =>
+        response.getProfileLikeUsername,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
@@ -130,6 +135,7 @@ export const {
   useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
+  usePostHideWikiMutation,
   useGetSearchedEditorsQuery,
   util: { getRunningOperationPromises },
 } = adminApi
@@ -139,6 +145,7 @@ export const {
   getWikisCreatedCount,
   getWikisEditedCount,
   getEditors,
-  getSearchedEditors,
   getEditorsCount,
+  postHideWiki,
+  getSearchedEditors,
 } = adminApi.endpoints

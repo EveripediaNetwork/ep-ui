@@ -47,9 +47,11 @@ export const WikiEditorsInsightTable = () => {
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
       return <BiSort fontSize="1.3rem" />
-    } else if (sortTableBy === 'ascending') {
+    }
+    if (sortTableBy === 'ascending') {
       return <BiSortUp fontSize="1.3rem" />
-    } else if (sortTableBy === 'descending') {
+    }
+    if (sortTableBy === 'descending') {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <BiSort fontSize="1.3rem" />
@@ -58,9 +60,11 @@ export const WikiEditorsInsightTable = () => {
   const editorsFilteredArr = useMemo(() => {
     if (sortTableBy === 'default') {
       return editors
-    } else if (sortTableBy === 'ascending') {
+    }
+    if (sortTableBy === 'ascending') {
       return editorsSortByHighest
-    } else if (sortTableBy === 'descending') {
+    }
+    if (sortTableBy === 'descending') {
       return editorsSortByLowest
     }
     return editors
@@ -162,46 +166,6 @@ export const WikiEditorsInsightTable = () => {
         return null
       })
   }
-
-  // searchKeyWord.length > 0
-  //   ? searchedEditors
-  //       ?.filter(item => {
-  //         return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-  //       })
-  //       ?.forEach(item => {
-  //         newObj.push({
-  //           editorName: item?.username ? item?.username : 'Unknown',
-  //           editorAvatar: item?.avatar ? item?.avatar : '',
-  //           editorAddress: item?.id,
-  //           createdWikis: item?.wikisCreated,
-  //           editiedWikis: item?.wikisEdited,
-  //           lastCreatedWiki: item?.wikisCreated[0]
-  //             ? item?.wikisCreated[0]
-  //             : item?.wikisEdited[0],
-  //           latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-  //         })
-  //         return null
-  //       })
-  //   : editorsFilteredArr
-  //       ?.filter(item => {
-  //         return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-  //       })
-  //       ?.forEach(item => {
-  //         newObj.push({
-  //           editorName: item?.profile?.username
-  //             ? item?.profile?.username
-  //             : 'Unknown',
-  //           editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-  //           editorAddress: item?.id,
-  //           createdWikis: item?.wikisCreated,
-  //           editiedWikis: item?.wikisEdited,
-  //           lastCreatedWiki: item?.wikisCreated[0]
-  //             ? item?.wikisCreated[0]
-  //             : item?.wikisEdited[0],
-  //           latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-  //         })
-  //         return null
-  //       })
 
   useEffect(() => {
     setEditorsData(newObj)

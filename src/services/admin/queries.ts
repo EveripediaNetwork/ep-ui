@@ -127,3 +127,71 @@ export const EDITORS_COUNT = gql`
     }
   }
 `
+export const HIDE_WIKI = gql`
+  mutation HideWiki($Id: String!) {
+    hideWiki(id: $Id) {
+      id
+      ipfs
+      transactionHash
+      created
+      updated
+      title
+      summary
+      content
+      categories {
+        id
+        title
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+      media {
+        name
+        id
+        size
+        source
+      }
+      metadata {
+        id
+        value
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      author {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
+
+// query {
+//   users(limit: 10) {
+//     id
+//     profile {
+//       username
+//     }
+//     wikis {id}
+//     wikisEdited {
+//       id
+//       wikiId
+//       datetime
+//     }
+//     wikisCreated {
+//       id
+//       datetime
+//     }
+//   }
+// }
