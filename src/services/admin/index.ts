@@ -11,12 +11,7 @@ import {
   SEARCHED_EDITORS,
 } from '@/services/admin/queries'
 import config from '@/config'
-import {
-  WikisModifiedCount,
-  CreatedWikisCount,
-  Editors,
-  SearchedEditors,
-} from '@/types/admin'
+import { WikisModifiedCount, CreatedWikisCount, Editors } from '@/types/admin'
 import { Wiki } from '@/types/Wiki'
 
 type WikisModifiedCountArgs = {
@@ -107,16 +102,12 @@ export const adminApi = createApi({
         variables: { id },
       }),
     }),
-    getSearchedEditors: builder.query<
-      Editors[],
-      SearchedEditorQueryParams
-    >({
+    getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
       query: ({ id }: { id: string }) => ({
         document: SEARCHED_EDITORS,
         variables: { id },
       }),
-      transformResponse: (response: SearchedEditorsRes) =>
-        response.usersById,
+      transformResponse: (response: SearchedEditorsRes) => response.usersById,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
