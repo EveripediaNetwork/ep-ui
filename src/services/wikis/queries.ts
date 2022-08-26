@@ -352,5 +352,11 @@ export const POST_WIKI = gql`
   }
 `
 
+export const POST_WIKI_VIEW_COUNT = gql`
+  mutation wikiViewCount($id: String!) {
+    wikiViewCount(id: $id)
+  }
+`
+
 export const POST_IMG =
   '{"query": "mutation pinImage($file: Upload!) { pinImage(fileUpload: $file){IpfsHash}} ", "variables": {"file": null}}'
