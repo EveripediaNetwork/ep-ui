@@ -74,7 +74,7 @@ const Revision = () => {
   }, [toc])
 
   useEffect(() => {
-    if (wiki) incrementWikiViewCount(wiki.id)
+    if (wiki) incrementWikiViewCount(wiki.content[0].id)
   }, [wiki])
 
   return (
