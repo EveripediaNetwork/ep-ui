@@ -26,7 +26,6 @@ import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
 import { BiChevronDown } from 'react-icons/bi'
 import { WikiImage } from '../../WikiImage'
-import { DeleteEditorModal } from './DeleteEditorModal'
 
 interface WikiEditorInsightDataInterface {
   editorName: string
@@ -70,13 +69,15 @@ interface WikiEditorInsightDataInterface {
 
 type InsightTableWikiEditorsProps = {
   wikiInsightData: WikiEditorInsightDataInterface[] | undefined
+  toggleUserFunc: (active: boolean, id: string) => void
 }
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
   const { wikiInsightData: wikiEditorInsightData } = props
-  const { isOpen, onClose } = useDisclosure()
+  const { toggleUserFunc } = props
+  const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
     <TableContainer w="100%">
       <Table>
@@ -191,10 +192,23 @@ export const InsightTableWikiEditors = (
                       </MenuButton>
                     </MenuButton>
                     <MenuList>
-                      <MenuItem onClick={() => {}} py="5" px="3">
+                      <MenuItem
+                        onClick={() => {
+                          onOpen()
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }}
+                        py="5"
+                        px="3"
+                      >
                         Ban
                       </MenuItem>
-                      <MenuItem onClick={() => {}} py="5" px="3">
+                      <MenuItem
+                        onClick={() => {
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }}
+                        py="5"
+                        px="3"
+                      >
                         Unban
                       </MenuItem>
                     </MenuList>
@@ -203,7 +217,6 @@ export const InsightTableWikiEditors = (
               </Tr>
             )
           })}
-          <DeleteEditorModal isOpen={isOpen} onClose={onClose} />
         </Tbody>
       </Table>
     </TableContainer>

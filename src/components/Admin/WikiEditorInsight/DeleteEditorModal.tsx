@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  ModalProps,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -20,8 +19,15 @@ import { AiFillExclamationCircle } from 'react-icons/ai'
 export const DeleteEditorModal = ({
   onClose = () => {},
   isOpen = false,
+  toggleUserFunc,
   ...rest
-}: Partial<ModalProps>) => {
+}: {
+  id: string
+  isActive: boolean
+  isOpen: boolean
+  toggleUserFunc: (ban: boolean) => void
+  onClose: () => void
+}) => {
   if (!isOpen) return null
   return (
     <Modal
@@ -47,7 +53,9 @@ export const DeleteEditorModal = ({
                 as={AiFillExclamationCircle}
               />
             </Box>
-            <Heading fontSize="xl">Delete Editor</Heading>
+            <Heading fontSize="xl">
+              {rest.isActive ? 'Ban' : 'Unban'} Editor
+            </Heading>
           </HStack>
           <Flex
             py={5}
@@ -56,15 +64,23 @@ export const DeleteEditorModal = ({
             w="full"
           >
             <Text textAlign="center">
-              You are about to delete an editor. Do you wish to continue this
+              You are about to ban an editor. Do you wish to continue with this
               action?
             </Text>
           </Flex>
           <ButtonGroup px={2} pt={2} w="full" spacing={8}>
-            <Button w="full" variant="outline">
+            <Button onClick={onClose} w="full" variant="outline">
               Cancel
             </Button>
-            <Button w="full">Delete</Button>
+            <Button
+              w="full"
+              onClick={() => {
+                toggleUserFunc(!rest.isActive)
+                onClose()
+              }}
+            >
+              {rest.isActive ? 'Ban' : 'Unban'}
+            </Button>
           </ButtonGroup>
         </ModalBody>
       </ModalContent>

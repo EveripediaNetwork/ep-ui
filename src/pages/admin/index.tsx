@@ -20,11 +20,24 @@ import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
+  adminApiClient,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
+  const { token, reSignToken, error } = useWeb3Token()
+  const { address: userAddress } = useAccount()
+  const { setAccount } = useUserProfileData('', {
+    withAllSettings: true,
+  })
+
+  useEffect(() => {
+    if (userAddress && token) {
+      adminApiClient.setHeader('authorization', token)
+      setAccount(userAddress)
+    }
+  }, [userAddress, setAccount, token])
   const startDate = useMemo(() => {
     let prevMonday = new Date()
     prevMonday = new Date(
@@ -170,11 +183,6 @@ const Admin = () => {
     { name: 'Visitors', value: 300 },
   ]
   const COLORS = ['#FF5DAA', '#FFB3D7']
-  const { token, reSignToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
-  const { setAccount } = useUserProfileData('', {
-    withAllSettings: true,
-  })
 
   useEffect(() => {
     if (userAddress && token) {

@@ -9,11 +9,20 @@ import {
   EDITORS_COUNT,
   HIDE_WIKI,
   SEARCHED_EDITORS,
-  TOGGLE_USER
+  TOGGLE_USER,
 } from '@/services/admin/queries'
 import config from '@/config'
-import { WikisModifiedCount, CreatedWikisCount, Editors, ToggleUser  } from '@/types/admin'
+import {
+  WikisModifiedCount,
+  CreatedWikisCount,
+  Editors,
+  ToggleUser,
+} from '@/types/admin'
 import { Wiki } from '@/types/Wiki'
+import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
+import { GraphQLClient } from 'graphql-request'
+
+export const adminApiClient = new GraphQLClient(config.graphqlUrl)
 
 type WikisModifiedCountArgs = {
   startDate?: number
@@ -37,6 +46,7 @@ type WikisCreatedCountResponse = {
 }
 type CreatedWikiCountResponse = {
   wikis: CreatedWikisCount[]
+  wikisByTitle: CreatedWikisCount[]
 }
 
 type EditorsRes = {
@@ -66,7 +76,7 @@ export const adminApi = createApi({
     }
     return null
   },
-  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
+  baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
   endpoints: builder => ({
     getEditorsCount: builder.query<{ amount: number }, WikisModifiedCountArgs>({
       query: ({ startDate, endDate, interval }: WikisModifiedCountArgs) => ({
@@ -107,18 +117,26 @@ export const adminApi = createApi({
         variables: { id },
       }),
     }),
-    toggleUser: builder.mutation<ToggleUser, ToggleUserArgs>({
-      query: ({id, active}) => ({
-        document: TOGGLE_USER,
-        variables: { id, active },
-      }),
-    }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
       query: ({ id }: { id: string }) => ({
         document: SEARCHED_EDITORS,
         variables: { id },
       }),
       transformResponse: (response: SearchedEditorsRes) => response.usersById,
+    }),
+    toggleUser: builder.mutation<ToggleUser, ToggleUserArgs>({
+      query: ({ id, active }) => ({
+        document: TOGGLE_USER,
+        variables: { id, active },
+      }),
+    }),
+    getSearchedWikisByTitle: builder.query<CreatedWikisCount[], string>({
+      query: (title: string) => ({
+        document: GET_WIKIS_BY_TITLE,
+        variables: { title },
+      }),
+      transformResponse: (response: CreatedWikiCountResponse) =>
+        response.wikisByTitle,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
@@ -137,6 +155,7 @@ export const adminApi = createApi({
 export const {
   useGetAllCreatedWikiCountQuery,
   useGetEditorsQuery,
+  useGetSearchedWikisByTitleQuery,
   useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
@@ -149,10 +168,11 @@ export const {
 export const {
   getAllCreatedWikiCount,
   getWikisCreatedCount,
+  getSearchedWikisByTitle,
   getWikisEditedCount,
   getEditors,
   getEditorsCount,
-  postHideWiki,
   toggleUser,
+  postHideWiki,
   getSearchedEditors,
 } = adminApi.endpoints

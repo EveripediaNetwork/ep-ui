@@ -14,18 +14,24 @@ import {
   InputLeftElement,
   Select,
   Button,
+  useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
 
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
+import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 
 export const WikiEditorsInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
+  const [editorToBeToggled, setEditorToBeToggled] = useState<{
+    id: string
+    active: boolean
+  }>({ id: '', active: false })
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
@@ -45,13 +51,6 @@ export const WikiEditorsInsightTable = () => {
   )
 
   const [toggleUser] = useToggleUserMutation()
-
-  const toggleUserFunc = async () => {
-    await toggleUser({
-      id: '0xAe65930180ef4d86dbD1844275433E9e1d6311ED',
-      active: false,
-    })
-  }
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -202,6 +201,7 @@ export const WikiEditorsInsightTable = () => {
     )
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Flex
       flexDir="column"
@@ -242,7 +242,6 @@ export const WikiEditorsInsightTable = () => {
           <Button
             onClick={() => {
               handleSortChange()
-              toggleUserFunc()
             }}
             borderColor="#E2E8F0"
             _dark={{ borderColor: '#2c323d' }}
@@ -268,9 +267,29 @@ export const WikiEditorsInsightTable = () => {
       </Flex>
       <Flex pb={5}>
         {searchKeyWord.length > 0 ? (
-          <InsightTableWikiEditors wikiInsightData={searchedEditorsData} />
+          <InsightTableWikiEditors
+            wikiInsightData={searchedEditorsData}
+            toggleUserFunc={(active: boolean, id: string) => {
+              const editorData = {
+                id,
+                active,
+              }
+              setEditorToBeToggled(editorData)
+              onOpen()
+            }}
+          />
         ) : (
-          <InsightTableWikiEditors wikiInsightData={editorsData} />
+          <InsightTableWikiEditors
+            toggleUserFunc={(active: boolean, id: string) => {
+              const editorData = {
+                id,
+                active,
+              }
+              setEditorToBeToggled(editorData)
+              onOpen()
+            }}
+            wikiInsightData={editorsData}
+          />
         )}
       </Flex>
       <Flex
@@ -314,6 +333,34 @@ export const WikiEditorsInsightTable = () => {
           Next
         </Button>
       </Flex>
+      <DeleteEditorModal
+        id={editorToBeToggled.id}
+        isActive={editorToBeToggled.active}
+        isOpen={isOpen}
+        onClose={onClose}
+        toggleUserFunc={(ban: boolean) => {
+          toggleUser({
+            id: editorToBeToggled.id,
+            active: ban,
+          })
+          setEditorsData(p =>
+            p?.map(user => {
+              if (user.editorAddress === editorToBeToggled.id) {
+                return { ...user, active: ban }
+              }
+              return user
+            }),
+          )
+          setSearchedEditorsData(p =>
+            p?.map(user => {
+              if (user.editorAddress === editorToBeToggled.id) {
+                return { ...user, active: ban }
+              }
+              return user
+            }),
+          )
+        }}
+      />
     </Flex>
   )
 }
