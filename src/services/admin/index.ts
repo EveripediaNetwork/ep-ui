@@ -9,7 +9,10 @@ import {
   EDITORS_COUNT,
   HIDE_WIKI,
   SEARCHED_EDITORS,
+  POST_PROMOTED_WIKI,
   TOGGLE_USER,
+  PROMOTED_WIKIS_TABLE,
+  HIDDEN_WIKIS_TABLE,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -34,6 +37,12 @@ type ToggleUserArgs = {
   id: string
   active: boolean
 }
+
+type PromoteWikiArgs = {
+  id: string
+  level: number
+}
+
 type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
 }
@@ -47,6 +56,8 @@ type WikisCreatedCountResponse = {
 type CreatedWikiCountResponse = {
   wikis: CreatedWikisCount[]
   wikisByTitle: CreatedWikisCount[]
+  promotedWikis: CreatedWikisCount[]
+  wikisHidden: CreatedWikisCount[]
 }
 
 type EditorsRes = {
@@ -100,6 +111,22 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: CreatedWikiCountResponse) => response.wikis,
     }),
+    getAllPromotedWikiCount: builder.query<CreatedWikisCount[], number>({
+      query: (offset: number) => ({
+        document: PROMOTED_WIKIS_TABLE,
+        variables: { offset },
+      }),
+      transformResponse: (response: CreatedWikiCountResponse) =>
+        response.promotedWikis,
+    }),
+    getAllHiddenWikiCount: builder.query<CreatedWikisCount[], number>({
+      query: (offset: number) => ({
+        document: HIDDEN_WIKIS_TABLE,
+        variables: { offset },
+      }),
+      transformResponse: (response: CreatedWikiCountResponse) =>
+        response.wikisHidden,
+    }),
     getWikisEditedCount: builder.query<
       WikisModifiedCount[],
       WikisModifiedCountArgs
@@ -138,6 +165,12 @@ export const adminApi = createApi({
       transformResponse: (response: CreatedWikiCountResponse) =>
         response.wikisByTitle,
     }),
+    postPromotedWiki: builder.mutation<Wiki, PromoteWikiArgs>({
+      query: ({ id, level }) => ({
+        document: POST_PROMOTED_WIKI,
+        variables: { id, level },
+      }),
+    }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],
       WikisModifiedCountArgs
@@ -160,13 +193,18 @@ export const {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   usePostHideWikiMutation,
+  usePostPromotedWikiMutation,
   useToggleUserMutation,
   useGetSearchedEditorsQuery,
+  useGetAllHiddenWikiCountQuery,
+  useGetAllPromotedWikiCountQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
 export const {
   getAllCreatedWikiCount,
+  getAllHiddenWikiCount,
+  getAllPromotedWikiCount,
   getWikisCreatedCount,
   getSearchedWikisByTitle,
   getWikisEditedCount,
@@ -174,5 +212,6 @@ export const {
   getEditorsCount,
   toggleUser,
   postHideWiki,
+  postPromotedWiki,
   getSearchedEditors,
 } = adminApi.endpoints

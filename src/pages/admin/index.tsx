@@ -132,12 +132,6 @@ const Admin = () => {
       weeklyValue: weeklyWikiEditedCountData
         ? weeklyWikiEditedCountData[0]?.amount
         : 0,
-      percent: Math.round(
-        totalWikisEditedCountData && weeklyWikiEditedCountData
-          ? weeklyWikiEditedCountData[0].amount /
-              totalWikisEditedCountData[0].amount
-          : 0,
-      ),
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
     },
@@ -149,12 +143,6 @@ const Admin = () => {
       weeklyValue: weeklyWikiCreatedCountData
         ? weeklyWikiCreatedCountData[0]?.amount
         : 0,
-      percent: Math.round(
-        totalWikisCreatedCountData && weeklyWikiCreatedCountData
-          ? weeklyWikiCreatedCountData[0].amount /
-              totalWikisCreatedCountData[0].amount
-          : 0,
-      ),
       color: 'pink.400',
       detailHeader: 'Total no of Created Wikis',
     },
@@ -163,17 +151,13 @@ const Admin = () => {
       detailHeader: 'Total no of Editors',
       value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
-      percent: Math.round(
-        (totalEditorsCountData ? totalEditorsCountData.amount : 0) /
-          (weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0),
-      ),
       color: 'pink.400',
     },
     {
       icon: RiUserSearchFill,
       value: 500,
       detailHeader: 'Total no of Visitors',
-      weeklyValue: '1k',
+      weeklyValue: 1000,
       percent: 40,
       color: 'pink.400',
     },
@@ -215,7 +199,7 @@ const Admin = () => {
 
       <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
         {wikiMetaData.map((item, i) => {
-          const { value, detailHeader, weeklyValue, percent, color, icon } =
+          const { value, detailHeader, weeklyValue, color, icon } =
             item
           return (
             <WikiDetailsCards
@@ -224,7 +208,7 @@ const Admin = () => {
               key={i}
               currentValue={value?.toString()}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
-              percent={percent}
+              percent={Math.round(weeklyValue / value)}
               color={color}
             />
           )

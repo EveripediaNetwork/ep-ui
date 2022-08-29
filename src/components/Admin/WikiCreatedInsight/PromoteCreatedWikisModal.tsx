@@ -39,7 +39,8 @@ export const PromoteCreatedWikisModal = ({
   wikiChosenId: string
 }) => {
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
-
+  const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
+  const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
 
   const ModalData = wiki?.filter(
@@ -47,11 +48,26 @@ export const PromoteCreatedWikisModal = ({
   )
   const Data = ModalData && ModalData[0]
 
+  const { nextStep, reset, activeStep } = useSteps({
+    initialStep: 0,
+  })
+
   const steps = [
     { label: 'Step 1', description: 'Select Promotion Type' },
     { label: 'Step 2', description: step2Titles },
     { label: 'Step 3', description: 'Promotion confirmation' },
   ]
+
+  // const [promoteWiki, { error: postHideWikiError }] =
+  //   usePostPromotedWikiMutation()
+
+  const Close = () => {
+    setStep2Titles('Promote to Homepage')
+    setbuttonOne('Promote to Hero section')
+    setbuttonTwo('Promote to Trending wikis')
+    reset()
+    onClose()
+  }
 
   const getWiki = (
     <>
@@ -59,10 +75,10 @@ export const PromoteCreatedWikisModal = ({
         <HStack
           bgColor="cardBg"
           justifyContent="flex-start"
-          borderWidth="1px"
+          borderWidth="2px"
           borderColor="cardBorder"
           borderRadius="lg"
-          boxShadow="0px 4px 8px rgba(0, 0, 0, 0.10)"
+          borderStyle="dotted"
           px={{ base: 3, lg: 5 }}
           py={{ base: 3, lg: 3 }}
           w="full"
@@ -178,13 +194,37 @@ export const PromoteCreatedWikisModal = ({
     </>
   )
 
-  const { nextStep, reset, activeStep } = useSteps({
-    initialStep: 0,
-  })
-
   const TrendingwikiSelected = () => {
-    setStep2Titles('Promote to Trending wiki')
-    nextStep()
+    if (activeStep === 0) {
+      setStep2Titles('Promote to Trending wiki')
+      nextStep()
+      setbuttonOne('cancel')
+      setbuttonTwo('Apply')
+    } else if (activeStep === 1) {
+      nextStep()
+      setbuttonOne('cancel')
+      setbuttonTwo('Promote')
+    } else if (activeStep === 2) {
+      if (step2Titles === 'Promote to Trending wiki') {
+        // promoteWiki(promoteWiki, 4)
+        // promote to homepage
+      } else {
+        // promoteWiki(promoteWiki, 4)
+        // promote to homepage
+      }
+    }
+  }
+
+  const HompageSelected = () => {
+    if (activeStep === 0) {
+      nextStep()
+      setbuttonOne('cancel')
+      setbuttonTwo('Apply')
+    } else if (activeStep === 1) {
+      Close()
+    } else if (activeStep === 2) {
+      Close()
+    }
   }
   if (!isOpen) return null
 
@@ -200,6 +240,9 @@ export const PromoteCreatedWikisModal = ({
           <VStack gap={4}>
             {step2Titles === 'Promote to Trending wiki' && (
               <Box w="full">
+                <Text fontWeight="bold" py="1">
+                  Select slot
+                </Text>
                 <Select cursor="pointer" w="20%">
                   <option> SORT 1 </option>
                   <option> SORT 2</option>
@@ -212,12 +255,27 @@ export const PromoteCreatedWikisModal = ({
           </VStack>
         </>
       )}
+      {activeStep === 2 && (
+        <>
+          {step2Titles === 'Promote to Trending wiki' ? (
+            <Text textAlign="center">
+              You are about to promote a wiki to the trending wiki. Do you wish
+              to continue this action?
+            </Text>
+          ) : (
+            <Text textAlign="center">
+              You are about to promote a wiki to the Homepage. Do you wish to
+              continue this action?
+            </Text>
+          )}
+        </>
+      )}
     </>
   )
 
   return (
     <Modal
-      onClose={onClose}
+      onClose={Close}
       isOpen={isOpen}
       isCentered
       size={{ lg: '3xl', base: 'sm' }}
@@ -236,7 +294,7 @@ export const PromoteCreatedWikisModal = ({
               fontSize="2xl"
               fontWeight={600}
               as={RiCloseLine}
-              onClick={onClose}
+              onClick={Close}
               alignSelf="center"
             />
           </Flex>
@@ -265,40 +323,27 @@ export const PromoteCreatedWikisModal = ({
                   </Step>
                 ))}
               </Steps>
-              {activeStep === steps.length ? (
-                <Flex px={4} py={4} width="100%" flexDirection="column">
-                  <Heading fontSize="xl" textAlign="center">
-                    Woohoo! All steps completed!
-                  </Heading>
-                  <Button mx="auto" mt={6} size="sm" onClick={reset}>
-                    Reset
+              <Flex width="100%" justify="center" pt={4} pb={5}>
+                <HStack gap={3}>
+                  <Button
+                    p={4}
+                    onClick={HompageSelected}
+                    size="sm"
+                    fontSize="xs"
+                  >
+                    {buttonOne}
                   </Button>
-                </Flex>
-              ) : (
-                <Flex width="100%" justify="center" pt={4} pb={5}>
-                  <HStack gap={3}>
-                    <Button
-                      p={4}
-                      onClick={TrendingwikiSelected}
-                      size="sm"
-                      fontSize="xs"
-                    >
-                      Promote to Hero section
-                    </Button>
-                    <Button
-                      size="sm"
-                      fontSize="xs"
-                      variant="ghost"
-                      borderWidth="1px"
-                      onClick={TrendingwikiSelected}
-                    >
-                      {activeStep === steps.length - 1
-                        ? 'Finish'
-                        : 'Promote to Trending wikis'}
-                    </Button>
-                  </HStack>
-                </Flex>
-              )}
+                  <Button
+                    size="sm"
+                    fontSize="xs"
+                    variant="ghost"
+                    borderWidth="1px"
+                    onClick={TrendingwikiSelected}
+                  >
+                    {buttonTwo}
+                  </Button>
+                </HStack>
+              </Flex>
             </Flex>
           </VStack>
         </ModalBody>

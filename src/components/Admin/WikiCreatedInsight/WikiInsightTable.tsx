@@ -1,6 +1,8 @@
 import {
   useGetAllCreatedWikiCountQuery,
   useGetSearchedWikisByTitleQuery,
+  useGetAllHiddenWikiCountQuery,
+  useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
@@ -19,7 +21,6 @@ import {
   PopoverContent,
   PopoverBody,
   Checkbox,
-  CheckboxGroup,
   VStack,
   HStack,
   useDisclosure,
@@ -35,12 +36,15 @@ export const WikiInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
+  const { data: promotedWikis } =
+    useGetAllPromotedWikiCountQuery(paginateOffset)
+  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(searchKeyWord)
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
-
+  const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
   // sorting creted wikis by date
 
@@ -86,7 +90,6 @@ export const WikiInsightTable = () => {
         'input[type="checkbox"]',
       ) as unknown as Array<HTMLInputElement>,
     )
-
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
     checkboxes.forEach(checkbox => {
@@ -113,10 +116,10 @@ export const WikiInsightTable = () => {
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
-      filteredWikis = filteredWikis?.filter(item => item.promoted > 0)
+      return promotedWikis
     }
     if (filterItems?.includes(FilterTypes.archived)) {
-      filteredWikis = filteredWikis?.filter(item => item.hidden === true)
+      return hidden
     }
     if (filterItems?.includes(FilterTypes.sponsored)) {
       // will get sponsored wiki
@@ -287,26 +290,31 @@ export const WikiInsightTable = () => {
             <PopoverContent w="fit-content">
               <PopoverBody>
                 <form onSubmit={e => ApplyFilterItems(e)}>
-                  <CheckboxGroup colorScheme="pink" defaultValue={filterItems}>
-                    <VStack
-                      spacing={1}
-                      w="fit-content"
-                      alignItems="flex-start"
-                      justifyContent="flex-start"
-                    >
-                      {FilterArray.map((item, i) => (
-                        <Checkbox key={i} py={1} value={item.id}>
-                          {item.value}
-                        </Checkbox>
-                      ))}
-                    </VStack>
-                  </CheckboxGroup>
+                  <VStack
+                    spacing={1}
+                    w="fit-content"
+                    alignItems="flex-start"
+                    justifyContent="flex-start"
+                  >
+                    {FilterArray.map((item, i) => (
+                      <Checkbox
+                        onChange={() => setChecked(i + 1)}
+                        key={i}
+                        colorScheme="pink"
+                        isChecked={checked === i + 1}
+                        py={1}
+                        value={item.id}
+                      >
+                        {item.value}
+                      </Checkbox>
+                    ))}
+                  </VStack>
                   <HStack gap={4} w="fit-content" pt="4">
                     <Button
                       type="button"
                       p={2}
                       onClick={() => {
-                        setFilterItems([])
+                        setChecked(0)
                         onClose()
                       }}
                     >
@@ -324,7 +332,13 @@ export const WikiInsightTable = () => {
       </Flex>
 
       <Flex pb={5}>
-        <InsightTableWikiCreated wikiCreatedInsightData={wikis || []} />
+        {wikis?.length && wikis.length > 0 ? (
+          <InsightTableWikiCreated wikiCreatedInsightData={wikis || []} />
+        ) : (
+          <Text pt="2" textAlign="center" w="full">
+            No data to display
+          </Text>
+        )}
       </Flex>
 
       <Flex justify="space-between" w="95%" m="0 auto">

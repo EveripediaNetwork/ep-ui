@@ -48,6 +48,54 @@ export const CREATED_WIKIS_TABLE = gql`
     }
   }
 `
+export const PROMOTED_WIKIS_TABLE = gql`
+  query PromotedWikis($offset: Int!) {
+    promotedWikis(limit: 10, offset: $offset) {
+      id
+      title
+      images {
+        id
+        type
+      }
+      author {
+        id
+        profile {
+          username
+        }
+      }
+      created
+      tags {
+        id
+      }
+      promoted
+      hidden
+    }
+  }
+`
+export const HIDDEN_WIKIS_TABLE = gql`
+  query HiddenWikis($offset: Int!) {
+    hiddenWikis(limit: 10, offset: $offset) {
+      id
+      title
+      images {
+        id
+        type
+      }
+      author {
+        id
+        profile {
+          username
+        }
+      }
+      created
+      tags {
+        id
+      }
+      promoted
+      hidden
+    }
+  }
+`
 
 export const EDITORS_TABLE = gql`
   query Editors($limit: Int!, $offset: Int!) {
@@ -179,6 +227,54 @@ export const HIDE_WIKI = gql`
     }
   }
 `
+export const POST_PROMOTED_WIKI = gql`
+  mutation postPromotedWiki($Id: String!, $Level: Int) {
+    promoteWiki(id: $Id, level: $Level) {
+      id
+      ipfs
+      transactionHash
+      created
+      updated
+      title
+      summary
+      content
+      categories {
+        id
+        title
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+      media {
+        name
+        id
+        size
+        source
+      }
+      metadata {
+        id
+        value
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      author {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+ `
 
 export const TOGGLE_USER = gql`
   mutation ToggleUser($id: String!, $active: Boolean) {
