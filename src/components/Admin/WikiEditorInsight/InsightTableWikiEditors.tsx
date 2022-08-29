@@ -83,9 +83,11 @@ export const InsightTableWikiEditors = (
   const filterBoolean = useMemo(() => {
     if (filterBy === 'Banned') {
       return false
-    } else if (filterBy === 'Active') {
+    }
+    if (filterBy === 'Active') {
       return true
-    } else return ''
+    }
+    return ''
   }, [filterBy])
 
   const { onOpen } = useDisclosure()
