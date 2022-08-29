@@ -293,7 +293,7 @@ export const NavSearch = (props: NavSearchProps) => {
           ml={{ base: '15px', xl: 'unset' }}
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search wikis, categories, tags and accounts"
+          placeholder="Search wikis, categories, tags and users"
           _placeholderShown={{
             textOverflow: 'ellipsis',
           }}
