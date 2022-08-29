@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import {
   getPromotedWikis,
   getRunningOperationPromises as getWikisRunningOperationPromises,
@@ -7,13 +7,14 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@/types/Wiki'
 import Hero from '@/components/Landing/Hero'
-import NotableDrops from '@/components/Landing/NotableDrops'
+import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import {
   getCategories,
   getRunningOperationPromises as getCategoriesRunningOperationPromises,
 } from '@/services/categories'
 import { Category } from '@/types/CategoryDataTypes'
+import DiscoverMore from '@/components/Landing/DiscoverMore'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -22,16 +23,18 @@ interface HomePageProps {
 
 export const Index = ({ promotedWikis, categories }: HomePageProps) => {
   return (
-    <Flex
-      direction="column"
-      mx="auto"
-      w="full"
-      py={{ base: 6, lg: 20 }}
-      gap={10}
-    >
+    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
       <Hero wiki={promotedWikis && promotedWikis[0]} />
-      <NotableDrops drops={promotedWikis} />
-      <CategoriesList categories={categories} />
+      <Box
+        _dark={{
+          bgImage: '/images/homepage-bg-dark.png',
+        }}
+        bgImage="/images/homepage-bg-white.png"
+      >
+        <TrendingWikis drops={promotedWikis} />
+        <CategoriesList categories={categories} />
+      </Box>
+      <DiscoverMore />
     </Flex>
   )
 }
