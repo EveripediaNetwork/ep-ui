@@ -199,8 +199,7 @@ const Admin = () => {
 
       <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
         {wikiMetaData.map((item, i) => {
-          const { value, detailHeader, weeklyValue, color, icon } =
-            item
+          const { value, detailHeader, weeklyValue, color, icon } = item
           return (
             <WikiDetailsCards
               detailHeader={detailHeader}

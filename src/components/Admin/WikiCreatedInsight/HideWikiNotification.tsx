@@ -13,22 +13,29 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
-import { usePostHideWikiMutation } from '@/services/admin'
+import {
+  usePostHideWikiMutation,
+  usePostUnHideWikiMutation,
+} from '@/services/admin'
 
 export const HideWikiNotification = ({
   onClose,
   isOpen,
   wikiChosenId,
+  IsHide,
 }: {
   isOpen: boolean
   onClose: () => void
   wikiChosenId: string
+  IsHide: boolean
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const wikiId = wikiChosenId
   const toast = useToast()
 
   const [postHideWiki, { error: postHideWikiError }] = usePostHideWikiMutation()
+  const [postUnHideWiki, { error: postUnHideWikiError }] =
+    usePostUnHideWikiMutation()
 
   const hideWiki = async () => {
     await postHideWiki(wikiId)
@@ -39,6 +46,28 @@ export const HideWikiNotification = ({
     let toastType: 'success' | 'error' = 'success'
     if (postHideWikiError) {
       toastTitle = 'Wiki Archive Failed'
+      toastMessage =
+        "We couldn't save your wiki changes. Refresh the page and try again."
+      toastType = 'error'
+    }
+    toast({
+      title: toastTitle,
+      description: toastMessage,
+      status: toastType,
+      duration: 5000,
+      isClosable: true,
+    })
+  }
+
+  const unHideWiki = async () => {
+    await postUnHideWiki(wikiId)
+    onClose()
+    let toastTitle = 'Wiki Successfully Unarchived'
+    let toastMessage =
+      'The selected wiki has been unarchived. Refresh the page to see the changes.'
+    let toastType: 'success' | 'error' = 'success'
+    if (postUnHideWikiError) {
+      toastTitle = 'Wiki Unarchive Failed'
       toastMessage =
         "We couldn't save your wiki changes. Refresh the page and try again."
       toastType = 'error'
@@ -75,7 +104,7 @@ export const HideWikiNotification = ({
               mr={5}
             />
             <Text flex="1" fontSize="xl" fontWeight="black">
-              Archive Wiki
+              {IsHide ? 'Archive' : 'Unarchive'} Wiki
             </Text>
             <Icon
               cursor="pointer"
@@ -92,15 +121,15 @@ export const HideWikiNotification = ({
             textAlign="center"
             fontWeight="normal"
           >
-            You are about to archive the selected wiki.Do you wish to continue
-            with this action?
+            You are about to {IsHide ? 'archive' : 'unarchive'} the selected
+            wiki.Do you wish to continue with this action?
           </Text>
           <ButtonGroup px={2} pt={2} w="full" spacing={8}>
             <Button w="full" variant="outline">
               Cancel
             </Button>
-            <Button w="full" onClick={hideWiki}>
-              Archive
+            <Button w="full" onClick={IsHide ? hideWiki : unHideWiki}>
+              {IsHide ? 'Archive' : 'Unarchive'}
             </Button>
           </ButtonGroup>
         </Box>

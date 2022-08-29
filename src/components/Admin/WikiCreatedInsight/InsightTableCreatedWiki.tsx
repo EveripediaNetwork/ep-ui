@@ -52,12 +52,15 @@ export const InsightTableWikiCreated = (
     onOpen: onOpenWikiHideNotification,
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
+  const [isHide, setIsHide] = useState(true)
 
   const VisibilityOptions = ['Archive', 'Unarchive']
 
   const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
     if (ishidden && e === 'Unarchive') {
-      // Unarchive funtion
+      setIsHide(false)
+      onOpenWikiHideNotification()
+      setWikiChosenId(wikiId)
     } else if (!ishidden && e === 'Archive') {
       onOpenWikiHideNotification()
       setWikiChosenId(wikiId)
@@ -282,6 +285,7 @@ export const InsightTableWikiCreated = (
             isOpen={isOpenWikiHideNotification}
             onClose={onCloseWikiHideNotification}
             wikiChosenId={wikiChosenId}
+            IsHide={isHide}
           />
           <PromoteCreatedWikisModal
             isOpen={isOpen}

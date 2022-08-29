@@ -227,6 +227,56 @@ export const HIDE_WIKI = gql`
     }
   }
 `
+
+export const UNHIDE_WIKI = gql`
+  mutation UnHideWiki($Id: String!) {
+    unhideWiki(id: $Id) {
+      id
+      ipfs
+      transactionHash
+      created
+      updated
+      title
+      summary
+      content
+      categories {
+        id
+        title
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+      media {
+        name
+        id
+        size
+        source
+      }
+      metadata {
+        id
+        value
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      author {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
 export const POST_PROMOTED_WIKI = gql`
   mutation postPromotedWiki($Id: String!, $Level: Int) {
     promoteWiki(id: $Id, level: $Level) {

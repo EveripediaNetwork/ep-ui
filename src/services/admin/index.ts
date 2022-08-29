@@ -13,6 +13,7 @@ import {
   TOGGLE_USER,
   PROMOTED_WIKIS_TABLE,
   HIDDEN_WIKIS_TABLE,
+  UNHIDE_WIKI,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -144,6 +145,12 @@ export const adminApi = createApi({
         variables: { id },
       }),
     }),
+    postUnHideWiki: builder.mutation<Wiki, string>({
+      query: (id: string) => ({
+        document: UNHIDE_WIKI,
+        variables: { id },
+      }),
+    }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
       query: ({ id }: { id: string }) => ({
         document: SEARCHED_EDITORS,
@@ -195,6 +202,7 @@ export const {
   usePostHideWikiMutation,
   usePostPromotedWikiMutation,
   useToggleUserMutation,
+  usePostUnHideWikiMutation,
   useGetSearchedEditorsQuery,
   useGetAllHiddenWikiCountQuery,
   useGetAllPromotedWikiCountQuery,
@@ -212,6 +220,7 @@ export const {
   getEditorsCount,
   toggleUser,
   postHideWiki,
+  postUnHideWiki,
   postPromotedWiki,
   getSearchedEditors,
 } = adminApi.endpoints
