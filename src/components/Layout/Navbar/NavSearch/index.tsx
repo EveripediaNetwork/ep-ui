@@ -279,7 +279,7 @@ export const NavSearch = (props: NavSearchProps) => {
       <InputGroup
         size="lg"
         maxW="800px"
-        display={{ base: 'none', sm: 'none', md: 'block' }}
+        display={{ base: 'none', md: 'block' }}
         {...inputGroupProps}
       >
         <InputLeftElement
@@ -293,10 +293,11 @@ export const NavSearch = (props: NavSearchProps) => {
           ml={{ base: '15px', xl: 'unset' }}
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search wikis, categories, tags and accounts"
+          placeholder="Search wikis, categories, tags and users"
           _placeholderShown={{
             textOverflow: 'ellipsis',
           }}
+          fontSize="16"
           ref={inputRef}
           {...inputProps}
         />

@@ -16,6 +16,7 @@ import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
 import { ArweaveApi } from '@/services/blog'
+import { tagsApi } from '@/services/tags'
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     [navSearchApi.reducerPath]: navSearchApi.reducer,
     [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [tagsApi.reducerPath]: tagsApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -43,7 +45,8 @@ export const store = configureStore({
       .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware)
       .concat(tokenStatsApi.middleware)
-      .concat(profileApi.middleware),
+      .concat(profileApi.middleware)
+      .concat(tagsApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

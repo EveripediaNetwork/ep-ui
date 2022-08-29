@@ -7,11 +7,14 @@ import {
   MenuItem,
   Divider,
   Box,
+  Text,
+  HStack,
 } from '@chakra-ui/react'
 import Link from '@/components/Elements/Link/Link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
+import { RiArrowDownSLine } from 'react-icons/ri'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -49,7 +52,12 @@ const NavMenu = ({
             : router.push(navItem.href)
         }
       >
-        {label}
+        <HStack>
+          <Text>{label}</Text>{' '}
+          {navItem.subItem && (label as string)?.length && (
+            <Icon as={RiArrowDownSLine} />
+          )}
+        </HStack>
       </MenuButton>
       {navItem.subItem && (
         <MenuList
