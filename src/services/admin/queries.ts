@@ -179,8 +179,8 @@ export const EDITORS_COUNT = gql`
   }
 `
 export const HIDE_WIKI = gql`
-  mutation HideWiki($Id: String!) {
-    hideWiki(id: $Id) {
+  mutation HideWiki($id: String!) {
+    hideWiki(id: $id) {
       id
       ipfs
       transactionHash
@@ -229,8 +229,8 @@ export const HIDE_WIKI = gql`
 `
 
 export const UNHIDE_WIKI = gql`
-  mutation UnHideWiki($Id: String!) {
-    unhideWiki(id: $Id) {
+  mutation UnHideWiki($id: String!) {
+    unhideWiki(id: $id) {
       id
       ipfs
       transactionHash
@@ -278,8 +278,8 @@ export const UNHIDE_WIKI = gql`
   }
 `
 export const POST_PROMOTED_WIKI = gql`
-  mutation postPromotedWiki($Id: String!, $Level: Int) {
-    promoteWiki(id: $Id, level: $Level) {
+  mutation postPromotedWiki($id: String!, $level: Int) {
+    promoteWiki(id: $id, level: $level) {
       id
       ipfs
       transactionHash

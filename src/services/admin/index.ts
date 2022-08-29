@@ -60,7 +60,20 @@ type CreatedWikiCountResponse = {
   promotedWikis: CreatedWikisCount[]
   wikisHidden: CreatedWikisCount[]
 }
+type PostHideWikiResponse = {
+  hideWiki: {
+    Wiki: Wiki
+  }
+  unhideWiki: {
+    Wiki: Wiki
+  }
+}
 
+type PostPromoteWikiResponse = {
+  promoteWiki: {
+    Wiki: Wiki
+  }
+}
 type EditorsRes = {
   users: Editors[]
 }
@@ -144,12 +157,16 @@ export const adminApi = createApi({
         document: HIDE_WIKI,
         variables: { id },
       }),
+      transformResponse: (response: PostHideWikiResponse) =>
+        response.hideWiki.Wiki,
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
         document: UNHIDE_WIKI,
         variables: { id },
       }),
+      transformResponse: (response: PostHideWikiResponse) =>
+        response.unhideWiki.Wiki,
     }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
       query: ({ id }: { id: string }) => ({
@@ -177,6 +194,8 @@ export const adminApi = createApi({
         document: POST_PROMOTED_WIKI,
         variables: { id, level },
       }),
+      transformResponse: (response: PostPromoteWikiResponse) =>
+        response.promoteWiki.Wiki,
     }),
     getWikisCreatedCount: builder.query<
       WikisModifiedCount[],

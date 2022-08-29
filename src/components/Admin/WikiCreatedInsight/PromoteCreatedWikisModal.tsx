@@ -19,7 +19,10 @@ import {
 } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import { RiCloseLine } from 'react-icons/ri'
-import { useGetSearchedWikisByTitleQuery } from '@/services/admin'
+import {
+  useGetSearchedWikisByTitleQuery,
+  usePostPromotedWikiMutation,
+} from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { WikiImage } from '@/components/WikiImage'
 import config from '@/config'
@@ -194,7 +197,7 @@ export const PromoteCreatedWikisModal = ({
     </>
   )
 
-  const TrendingwikiSelected = () => {
+  const TrendingwikiSelected = async () => {
     if (activeStep === 0) {
       setStep2Titles('Promote to Trending wiki')
       nextStep()
@@ -209,8 +212,25 @@ export const PromoteCreatedWikisModal = ({
         // promoteWiki(promoteWiki, 4)
         // promote to homepage
       } else {
-        // promoteWiki(promoteWiki, 4)
-        // promote to homepage
+        // await promoteWiki(promoteWiki, 4)
+        // Close()
+        // let toastTitle = 'Wiki Successfully Archived'
+        // let toastMessage =
+        //   'The selected wiki has been archived. Refresh the page to see the changes.'
+        // let toastType: 'success' | 'error' = 'success'
+        // if (postHideWikiError) {
+        //   toastTitle = 'Wiki Archive Failed'
+        //   toastMessage =
+        //     "We couldn't save your wiki changes. Refresh the page and try again."
+        //   toastType = 'error'
+        // }
+        // toast({
+        //   title: toastTitle,
+        //   description: toastMessage,
+        //   status: toastType,
+        //   duration: 5000,
+        //   isClosable: true,
+        // })
       }
     }
   }
