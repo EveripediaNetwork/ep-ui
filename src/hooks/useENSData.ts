@@ -3,10 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
 import { provider } from '@/utils/getProvider'
 
-export const useENSData = (
-  address: string | undefined | null,
-  skip = false,
-) => {
+export const useENSData = (address?: string | null, skip = false) => {
   const [avatar, setAvatar] = useState<string>()
   const [username, setUsername] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
