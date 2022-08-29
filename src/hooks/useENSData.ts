@@ -3,7 +3,10 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
 import { provider } from '@/utils/getProvider'
 
-export const useENSData = (address: string | undefined | null) => {
+export const useENSData = (
+  address: string | undefined | null,
+  skip = false,
+) => {
   const [avatar, setAvatar] = useState<string>()
   const [username, setUsername] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
@@ -11,6 +14,7 @@ export const useENSData = (address: string | undefined | null) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    if (skip) return
     const getAvatar = async (addrs: string) => {
       const name = await provider.lookupAddress(addrs)
       let avatarURI
