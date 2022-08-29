@@ -65,7 +65,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
 
       populateBlogs()
     }
-  }, [blogPosts])
+  }, [blogPosts, dispatch])
 
   useEffect(() => {
     const getBlogEntry = async () => {
@@ -88,27 +88,32 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
         },
       } = singleEntry.data
 
+      const result = await arweave.transactions.getData(transactionId, {
+        decode: true,
+        string: true,
+      })
+
+      const parsedResult = JSON.parse(result as string)
+      const {
+        content: { title, body },
+        digest: dg,
+        authorship: { contributor },
+      } = parsedResult
+
       const formatted = await formatEntry(
-        JSON.parse(
-          String(
-            await arweave.transactions.getData(transactionId, {
-              decode: true,
-              string: true,
-            }),
-          ),
-        ),
+        { title, body, digest: dg, contributor, transaction: transactionId },
         transactionId,
         timestamp,
       )
 
-      formatted.body = await unified()
-        .use(remarkParse) // Parse markdown
-        .use(remarkStringify) // Serialize markdown
-        .process(formatted.body)
+      formatted.body = String(
+        await unified()
+          .use(remarkParse) // Parse markdown
+          .use(remarkStringify) // Serialize markdown
+          .process(formatted.body as string),
+      )
 
-      formatted.body = String(formatted.body)
-
-      setBlog(formatted)
+      setBlog(formatted as Blog)
     }
 
     getBlogEntry()
