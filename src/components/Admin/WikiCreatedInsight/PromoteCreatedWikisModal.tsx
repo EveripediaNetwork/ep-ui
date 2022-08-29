@@ -19,10 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import { RiCloseLine } from 'react-icons/ri'
-import {
-  useGetSearchedWikisByTitleQuery,
-  usePostPromotedWikiMutation,
-} from '@/services/admin'
+import { useGetSearchedWikisByTitleQuery } from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { WikiImage } from '@/components/WikiImage'
 import config from '@/config'

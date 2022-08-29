@@ -28,6 +28,7 @@ export const WikiEditorsInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
+  const [filterEditors, setFilterEditors] = useState<string>('')
   const [editorToBeToggled, setEditorToBeToggled] = useState<{
     id: string
     active: boolean
@@ -258,39 +259,30 @@ export const WikiEditorsInsightTable = () => {
             w="40%"
             placeholder="Filter"
             icon={<MdFilterList />}
+            onChange={item => {
+              setFilterEditors(item.target.value)
+            }}
           >
-            <option value="option1">Weekly</option>
-            <option value="option2">Monthly</option>
-            <option value="option3">Yearly</option>
+            <option value="Banned">Banned Editors</option>
+            <option value="Active">Active Editors</option>
           </Select>
         </Flex>
       </Flex>
       <Flex pb={5}>
-        {searchKeyWord.length > 0 ? (
-          <InsightTableWikiEditors
-            wikiInsightData={searchedEditorsData}
-            toggleUserFunc={(active: boolean, id: string) => {
-              const editorData = {
-                id,
-                active,
-              }
-              setEditorToBeToggled(editorData)
-              onOpen()
-            }}
-          />
-        ) : (
-          <InsightTableWikiEditors
-            toggleUserFunc={(active: boolean, id: string) => {
-              const editorData = {
-                id,
-                active,
-              }
-              setEditorToBeToggled(editorData)
-              onOpen()
-            }}
-            wikiInsightData={editorsData}
-          />
-        )}
+        <InsightTableWikiEditors
+          wikiInsightData={
+            searchKeyWord.length > 0 ? searchedEditorsData : editorsData
+          }
+          toggleUserFunc={(active: boolean, id: string) => {
+            const editorData = {
+              id,
+              active,
+            }
+            setEditorToBeToggled(editorData)
+            onOpen()
+          }}
+          filterBy={filterEditors}
+        />
       </Flex>
       <Flex
         justify="space-between"
