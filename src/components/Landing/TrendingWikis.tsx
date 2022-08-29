@@ -31,6 +31,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
     }
     return lastEditedTime
   }
+
   return (
     <LinkBox flex="none">
       <chakra.div p={2} mx="auto">
@@ -120,11 +121,9 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
 const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
   const { t } = useTranslation()
   const [isMounted, setIsMounted] = React.useState(false)
-
   React.useEffect(() => {
     setIsMounted(true)
   }, [])
-
   if (!isMounted) return null
 
   return (
