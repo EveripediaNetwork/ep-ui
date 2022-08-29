@@ -1,10 +1,28 @@
-import { useGetTagsQuery } from '@/services/tags'
+import { getTags } from '@/services/tags'
+import { store } from '@/store/store'
+import { Tag } from '@/types/Wiki'
 import { Box, Heading, Wrap } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from '../Elements'
 
 const DiscoverMore = () => {
-  const { data } = useGetTagsQuery(15)
+  const [data, setData] = useState<Tag[] | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data: tagsData } = await store.dispatch(
+        getTags.initiate({
+          startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
+          endDate: Math.floor(Date.now() / 1000),
+        }),
+      )
+      if (tagsData) setData(tagsData)
+    }
+    fetchData()
+  }, [])
+
+  if (!data) return null
+
   return (
     <Box bgColor="gray.50" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
       <Box maxW="1020px" mx="auto" py={8} px={4}>

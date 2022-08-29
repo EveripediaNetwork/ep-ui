@@ -6,7 +6,7 @@ import { Tag } from '@/types/Wiki'
 import { GET_TAGS } from './queries'
 
 type GetTagsResponse = {
-  tags: Tag[]
+  mostUsedTags: Tag[]
 }
 
 export const tagsApi = createApi({
@@ -21,12 +21,15 @@ export const tagsApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getTags: builder.query<Tag[], number>({
-      query: (limit: number) => ({
+    getTags: builder.query<Tag[], { startDate: number; endDate: number }>({
+      query: ({ startDate, endDate }) => ({
         document: GET_TAGS,
-        variables: { limit },
+        variables: {
+          startDate,
+          endDate,
+        },
       }),
-      transformResponse: (response: GetTagsResponse) => response.tags,
+      transformResponse: (response: GetTagsResponse) => response.mostUsedTags,
     }),
   }),
 })
