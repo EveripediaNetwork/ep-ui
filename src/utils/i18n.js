@@ -12,7 +12,6 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
       learnMoreHeroBttn: 'Read more about Everipedia',
@@ -194,7 +193,6 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
       learnMoreHeroBttn: 'Read more about Everipedia',
@@ -337,7 +335,6 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
       exploreHeroBttn: 'Explore',
       createHeroBttn: 'Create',
       learnMoreHeroBttn: 'Read more about Everipedia',

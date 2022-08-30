@@ -1,5 +1,12 @@
 import React from 'react'
-import { ButtonGroup, Heading, Text, VStack, Stack } from '@chakra-ui/react'
+import {
+  ButtonGroup,
+  Heading,
+  Text,
+  VStack,
+  Stack,
+  chakra,
+} from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
 import { Wiki } from '@/types/Wiki'
@@ -29,7 +36,18 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           fontWeight="700"
           fontFamily="poppins"
         >
-          {`${t('hero_title')}`}
+          <chakra.span color="brandLinkColor">
+            An Ecosystem of Knowledge
+          </chakra.span>{' '}
+          <chakra.span
+            textDecoration="underline"
+            textDecorationColor="brandLinkColor"
+            textDecorationThickness="3px"
+            textUnderlineOffset={12}
+            fontWeight="500"
+          >
+            on the Blockchain.
+          </chakra.span>
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
