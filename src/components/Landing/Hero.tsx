@@ -39,15 +39,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           <chakra.span color="brandLinkColor">
             An Ecosystem of Knowledge
           </chakra.span>{' '}
-          <chakra.span
-            textDecoration="underline"
-            textDecorationColor="brandLinkColor"
-            textDecorationThickness="3px"
-            textUnderlineOffset={12}
-            fontWeight="500"
-          >
-            on the Blockchain.
-          </chakra.span>
+          on the Blockchain.
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
