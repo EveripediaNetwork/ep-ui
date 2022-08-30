@@ -21,7 +21,7 @@ const DesktopNav = () => {
   }, [router.events])
   const { t } = useTranslation()
   return (
-    <HStack spacing={4} onMouseLeave={() => setVisibleMenu(null)}>
+    <HStack onMouseLeave={() => setVisibleMenu(null)}>
       {NAV_ITEMS.map((navItem: NavItem) => {
         return (
           <NavMenu
