@@ -34,7 +34,6 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           w={{ base: '80%', md: '100%' }}
           fontSize={{ base: '32', md: '54' }}
           fontWeight="700"
-          fontFamily="poppins"
         >
           <chakra.span color="brandLinkColor">
             An Ecosystem of Knowledge
