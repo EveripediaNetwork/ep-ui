@@ -47,7 +47,7 @@ export const PromoteCreatedWikisModal = ({
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
   const [value, setValue] = useState('')
-  const homepageLevel: number = 4
+  const homepageLevel = 4
   const toast = useToast()
   const ModalData = wiki?.filter(
     item => item.id === wikiChosenId && item.title === wikiChosenTitle,
