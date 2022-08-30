@@ -125,7 +125,7 @@ const Connectors = () => {
                 {totalBalanceIsLoading ? (
                   <Spinner color="color" mt="1" />
                 ) : (
-                  <Text fontWeight="extrabold" fontSize="xl">
+                  <Text fontWeight="bold" fontSize="xl">
                     $
                     {totalBalance &&
                       dollarUSLocale.format(
@@ -142,7 +142,7 @@ const Connectors = () => {
                 mt={2}
                 cursor="pointer"
               >
-                <Text fontWeight="extrabold" fontSize="medium">
+                <Text fontWeight="bold" fontSize="medium">
                   Add Funds
                 </Text>
               </Center>

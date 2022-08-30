@@ -11,6 +11,7 @@ import {
   Avatar,
   Text,
   useEventListener,
+  Wrap,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
@@ -32,7 +33,7 @@ import {
 
 import { useRouter } from 'next/router'
 import config from '@/config'
-import { Link } from '@/components/Elements'
+import { Link, LinkButton } from '@/components/Elements'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -163,7 +164,7 @@ export const NavSearch = (props: NavSearchProps) => {
                 {getWikiSummary(article, WikiSummarySize.Small)}
               </Text>
             </Flex>
-            <Flex gap="1" ml="auto">
+            <Wrap w="full" justify="end" gap="1" ml="auto">
               {article.tags?.map(tag => (
                 <chakra.div
                   key={`${article.id}-${tag.id}`}
@@ -172,6 +173,7 @@ export const NavSearch = (props: NavSearchProps) => {
                   alignSelf="center"
                   px="2"
                   borderBottomWidth={1}
+                  bg="gray.100"
                   rounded="md"
                   _dark={{
                     bg: 'gray.800',
@@ -181,7 +183,7 @@ export const NavSearch = (props: NavSearchProps) => {
                   {tag.id}
                 </chakra.div>
               ))}
-            </Flex>
+            </Wrap>
           </AutoCompleteItem>
         )
       })}
@@ -314,11 +316,9 @@ export const NavSearch = (props: NavSearchProps) => {
 
         {totalUnrendered > 0 && !isLoading && (
           <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
-            <Link href={`/search/${query}`} passHref>
-              <Button variant="outline" as="a">
-                +View {totalUnrendered} more Results
-              </Button>
-            </Link>
+            <LinkButton href={`/search/${query}`} variant="outline">
+              +View {totalUnrendered} more Results
+            </LinkButton>
           </Flex>
         )}
       </AutoCompleteList>
