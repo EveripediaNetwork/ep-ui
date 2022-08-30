@@ -20,6 +20,7 @@ const WalletDetails = ({
     <>
       <HStack flex="1">
         <Image
+          objectFit="contain"
           boxSize="23px"
           mr={3}
           src={`/images/${symbol && tokenDetails[symbol]?.logo}`}
