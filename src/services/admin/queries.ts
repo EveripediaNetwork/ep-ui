@@ -183,47 +183,6 @@ export const HIDE_WIKI = gql`
     hideWiki(id: $id) {
       id
       ipfs
-      transactionHash
-      created
-      updated
-      title
-      summary
-      content
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-      media {
-        name
-        id
-        size
-        source
-      }
-      metadata {
-        id
-        value
-      }
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      author {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
     }
   }
 `
@@ -233,47 +192,6 @@ export const UNHIDE_WIKI = gql`
     unhideWiki(id: $id) {
       id
       ipfs
-      transactionHash
-      created
-      updated
-      title
-      summary
-      content
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-      media {
-        name
-        id
-        size
-        source
-      }
-      metadata {
-        id
-        value
-      }
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      author {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
     }
   }
 `
