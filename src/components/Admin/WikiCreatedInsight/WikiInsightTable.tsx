@@ -24,6 +24,7 @@ import {
   VStack,
   HStack,
   useDisclosure,
+  PopoverFooter,
 } from '@chakra-ui/react'
 
 import React, { useEffect, useState, useMemo } from 'react'
@@ -276,7 +277,9 @@ export const WikiInsightTable = () => {
           <Popover isLazy isOpen={isOpen} onClose={onClose}>
             <PopoverTrigger>
               <Button
-                _dark={{ borderColor: '#2c323d' }}
+                transition="all 0.2s"
+                borderRadius="md"
+                _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
                 px={10}
                 rightIcon={<MdFilterList />}
@@ -288,8 +291,8 @@ export const WikiInsightTable = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
-              <PopoverBody>
-                <form onSubmit={e => ApplyFilterItems(e)}>
+              <form onSubmit={e => ApplyFilterItems(e)}>
+                <PopoverBody py={3}>
                   <VStack
                     spacing={1}
                     w="fit-content"
@@ -309,23 +312,36 @@ export const WikiInsightTable = () => {
                       </Checkbox>
                     ))}
                   </VStack>
-                  <HStack gap={4} w="fit-content" pt="4">
+                </PopoverBody>
+                <PopoverFooter>
+                  <HStack gap={4} w="fit-content" px={2}>
                     <Button
                       type="button"
-                      p={2}
+                      px={6}
+                      py={1}
+                      variant="ghost"
+                      borderWidth="1px"
                       onClick={() => {
                         setChecked(0)
                         onClose()
                       }}
+                      rounded="lg"
+                      fontWeight="semibold"
                     >
                       Reset
                     </Button>
-                    <Button type="submit" p={2}>
+                    <Button
+                      type="submit"
+                      rounded="lg"
+                      px={6}
+                      py={1}
+                      fontWeight="semibold"
+                    >
                       Apply
                     </Button>
                   </HStack>
-                </form>
-              </PopoverBody>
+                </PopoverFooter>
+              </form>
             </PopoverContent>
           </Popover>
         </Flex>
