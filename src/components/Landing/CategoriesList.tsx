@@ -57,7 +57,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           >
             <Image
               bgColor="DimColor"
-              src={category.cardImage || '/'}
+              src={new URL(category.cardImage).pathname}
               h="200px"
               w="100%"
             />
