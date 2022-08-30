@@ -29,7 +29,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         {`${t('browseCategory')}`}
       </Heading>
       <Text
-        color="gray.500"
+        color="homeDescriptionColor"
         fontSize={{ base: 'lg', lg: 22 }}
         pb={9}
         px={4}
