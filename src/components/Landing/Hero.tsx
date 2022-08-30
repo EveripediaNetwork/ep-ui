@@ -33,7 +33,6 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
         <Heading
           w={{ base: '80%', md: '100%' }}
           fontSize={{ base: '32', md: '54' }}
-          fontWeight="700"
         >
           <chakra.span color="brandLinkColor">
             An Ecosystem of Knowledge
@@ -44,7 +43,6 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           w={{ base: '70%', md: '80%' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           pb={10}
-          letterSpacing="wider"
         >
           {`${t('iq_description')}`}
         </Text>
