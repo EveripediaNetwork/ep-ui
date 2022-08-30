@@ -16,10 +16,14 @@ import {
   Link,
   Stack,
   Select,
+  useToast,
 } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import { RiCloseLine } from 'react-icons/ri'
-import { useGetSearchedWikisByTitleQuery } from '@/services/admin'
+import {
+  useGetSearchedWikisByTitleQuery,
+  usePostPromotedWikiMutation,
+} from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { WikiImage } from '@/components/WikiImage'
 import config from '@/config'
@@ -42,7 +46,9 @@ export const PromoteCreatedWikisModal = ({
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
-
+  const [value, setValue] = useState('')
+  const homepageLevel = 4
+  const toast = useToast()
   const ModalData = wiki?.filter(
     item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
@@ -58,8 +64,8 @@ export const PromoteCreatedWikisModal = ({
     { label: 'Step 3', description: 'Promotion confirmation' },
   ]
 
-  // const [promoteWiki, { error: postHideWikiError }] =
-  //   usePostPromotedWikiMutation()
+  const [promoteWiki, { error: posTPromoteWikiError }] =
+    usePostPromotedWikiMutation()
 
   const Close = () => {
     setStep2Titles('Promote to Homepage')
@@ -206,28 +212,51 @@ export const PromoteCreatedWikisModal = ({
       setbuttonTwo('Promote')
     } else if (activeStep === 2) {
       if (step2Titles === 'Promote to Trending wiki') {
-        // promoteWiki(promoteWiki, 4)
-        // promote to homepage
+        await promoteWiki({
+          id: wikiChosenId,
+          level: Number(value),
+        })
+        Close()
+        let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
+        let toastMessage =
+          'The selected wiki has been promoted to the trending wikis. Refresh the page to see the changes.'
+        let toastType: 'success' | 'error' = 'success'
+        if (posTPromoteWikiError) {
+          toastTitle = 'Wiki Archive Failed'
+          toastMessage =
+            "We couldn't save your wiki changes. Refresh the page and try again."
+          toastType = 'error'
+        }
+        toast({
+          title: toastTitle,
+          description: toastMessage,
+          status: toastType,
+          duration: 5000,
+          isClosable: true,
+        })
       } else {
-        // await promoteWiki(promoteWiki, 4)
-        // Close()
-        // let toastTitle = 'Wiki Successfully Archived'
-        // let toastMessage =
-        //   'The selected wiki has been archived. Refresh the page to see the changes.'
-        // let toastType: 'success' | 'error' = 'success'
-        // if (postHideWikiError) {
-        //   toastTitle = 'Wiki Archive Failed'
-        //   toastMessage =
-        //     "We couldn't save your wiki changes. Refresh the page and try again."
-        //   toastType = 'error'
-        // }
-        // toast({
-        //   title: toastTitle,
-        //   description: toastMessage,
-        //   status: toastType,
-        //   duration: 5000,
-        //   isClosable: true,
-        // })
+        await promoteWiki({
+          id: wikiChosenId,
+          level: homepageLevel,
+        })
+        Close()
+        let toastTitle = 'Wiki Successfully Promoted to Homepage'
+        let toastMessage =
+          'The selected wiki has been promoted to the homepage. Refresh the page to see the changes.'
+        let toastType: 'success' | 'error' = 'success'
+        if (posTPromoteWikiError) {
+          toastTitle = 'Wiki Archive Failed'
+          toastMessage =
+            "We couldn't save your wiki changes. Refresh the page and try again."
+          toastType = 'error'
+        }
+        toast({
+          title: toastTitle,
+          description: toastMessage,
+          status: toastType,
+          duration: 5000,
+          isClosable: true,
+        })
       }
     }
   }
@@ -260,11 +289,15 @@ export const PromoteCreatedWikisModal = ({
                 <Text fontWeight="bold" py="1">
                   Select slot
                 </Text>
-                <Select cursor="pointer" w="20%">
-                  <option> SORT 1 </option>
-                  <option> SORT 2</option>
-                  <option> SORT 3 </option>
-                  <option> SORT 4 </option>
+                <Select
+                  cursor="pointer"
+                  w="20%"
+                  onChange={e => setValue(e.target.value)}
+                >
+                  <option value={1}> SORT 1 </option>
+                  <option value={2}> SORT 2</option>
+                  <option value={3}> SORT 3 </option>
+                  <option value={4}> SORT 4 </option>
                 </Select>
               </Box>
             )}
