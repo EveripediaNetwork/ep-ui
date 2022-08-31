@@ -51,22 +51,14 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
             {`${t('exploreHeroBttn')}`}
           </LinkButton>
           <LinkButton
-            href="/create-wiki"
+            href="/static/about"
             w={{ base: 32, lg: 40 }}
             variant="outline"
             bgColor="btnBgColor"
           >
-            {`${t('createHeroBttn')}`}
+            {`${t('learnMoreHeroBttn')}`}
           </LinkButton>
         </ButtonGroup>
-        <LinkButton
-          href="/static/about"
-          fontWeight="400"
-          variant="link"
-          color="brandLinkColor"
-        >
-          {`${t('learnMoreHeroBttn')}`}
-        </LinkButton>
       </VStack>
       <HeroCard wiki={wiki} />
     </Stack>

@@ -13,8 +13,7 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -194,8 +193,7 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -336,8 +334,7 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the world’s largest crypto knowledge base',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
