@@ -44,7 +44,6 @@ export async function getStaticProps() {
     getPromotedWikis.initiate(),
   )
   const { data: categories } = await store.dispatch(getCategories.initiate())
-
   await Promise.all(getWikisRunningOperationPromises())
   await Promise.all(getCategoriesRunningOperationPromises())
   return {
