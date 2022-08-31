@@ -6,7 +6,7 @@ import { Tag } from '@/types/Wiki'
 import { GET_TAGS } from './queries'
 
 type GetTagsResponse = {
-  mostUsedTags: Tag[]
+  tagsPopular: Tag[]
 }
 
 export const tagsApi = createApi({
@@ -29,7 +29,7 @@ export const tagsApi = createApi({
           endDate,
         },
       }),
-      transformResponse: (response: GetTagsResponse) => response.mostUsedTags,
+      transformResponse: (response: GetTagsResponse) => response.tagsPopular,
     }),
   }),
 })
