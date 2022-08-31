@@ -74,25 +74,8 @@ export const PROMOTED_WIKIS_TABLE = gql`
 `
 export const HIDDEN_WIKIS_TABLE = gql`
   query HiddenWikis($offset: Int!) {
-    hiddenWikis(limit: 10, offset: $offset) {
+    wikisHidden(offset: $offset) {
       id
-      title
-      images {
-        id
-        type
-      }
-      author {
-        id
-        profile {
-          username
-        }
-      }
-      created
-      tags {
-        id
-      }
-      promoted
-      hidden
     }
   }
 `
