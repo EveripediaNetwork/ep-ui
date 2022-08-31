@@ -48,7 +48,7 @@ export const Index = ({
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: promotedWikis } = await store.dispatch(
     getPromotedWikis.initiate(),
   )
