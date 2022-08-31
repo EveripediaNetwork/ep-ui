@@ -48,19 +48,17 @@ export const Index = ({
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const { data: promotedWikis } = await store.dispatch(
     getPromotedWikis.initiate(),
   )
   const { data: categories } = await store.dispatch(getCategories.initiate())
-
   const { data: tagsData } = await store.dispatch(
     getTags.initiate({
       startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
       endDate: Math.floor(Date.now() / 1000),
     }),
   )
-
   await Promise.all(getWikisRunningOperationPromises())
   await Promise.all(getCategoriesRunningOperationPromises())
   await Promise.all(getTagsRunningOperationPromises())

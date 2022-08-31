@@ -4,7 +4,10 @@ export const UserSocialLinksData = {
   twitter: {
     label: 'Twitter',
     icon: RiTwitterLine,
-    urlPrefix: (username?: string) => `https://twitter.com/${username}`,
+    urlPrefix: (username?: string) => {
+      if (username?.startsWith('https://twitter.com')) return username
+      return `https://twitter.com/${username}`
+    },
   },
   website: {
     label: 'Website',
@@ -14,6 +17,9 @@ export const UserSocialLinksData = {
   instagram: {
     label: 'Instagram',
     icon: RiInstagramLine,
-    urlPrefix: (username?: string) => `https://instagram.com/${username}`,
+    urlPrefix: (username?: string) => {
+      if (username?.startsWith('https://instagram.com')) return username
+      return `https://instagram.com/${username}`
+    },
   },
 }
