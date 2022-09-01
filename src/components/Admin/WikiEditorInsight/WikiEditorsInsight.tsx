@@ -2,6 +2,7 @@ import {
   useGetEditorsQuery,
   useGetSearchedEditorsQuery,
   useToggleUserMutation,
+  useGetHiddenEditorsQuery,
 } from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
@@ -34,6 +35,10 @@ export const WikiEditorsInsightTable = () => {
     active: boolean
   }>({ id: '', active: false })
   const { data: editors } = useGetEditorsQuery({
+    limit: 10,
+    offset: paginateOffset,
+  })
+  const { data: hiddeneditors } = useGetHiddenEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
@@ -134,8 +139,11 @@ export const WikiEditorsInsightTable = () => {
   const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
   const [searchedEditorsData, setSearchedEditorsData] =
     useState<Array<EditorInterface>>()
+  const [hiddenEditorsData, setHiddenEditorsData] =
+    useState<Array<EditorInterface>>()
   const newObj: any = []
   const newSearchObj: any = []
+  const hiddenEditorsArr: any = []
   searchedEditors
     ?.filter(item => {
       return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
@@ -180,6 +188,28 @@ export const WikiEditorsInsightTable = () => {
       return null
     })
 
+  hiddeneditors
+    ?.filter(item => {
+      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+    })
+    ?.forEach(item => {
+      hiddenEditorsArr.push({
+        editorName: item?.profile?.username
+          ? item?.profile?.username
+          : 'Unknown',
+        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
+        editorAddress: item?.id,
+        createdWikis: item?.wikisCreated,
+        editiedWikis: item?.wikisEdited,
+        lastCreatedWiki: item?.wikisCreated[0]
+          ? item?.wikisCreated[0]
+          : item?.wikisEdited[0],
+        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
+        active: item?.active,
+      })
+      return null
+    })
+
   useEffect(() => {
     setEditorsData(newObj)
     setAllowNext(true)
@@ -189,6 +219,10 @@ export const WikiEditorsInsightTable = () => {
     setSearchedEditorsData(newSearchObj)
     setAllowNext(true)
   }, [searchedEditors])
+
+  useEffect(() => {
+    setHiddenEditorsData(hiddenEditorsArr)
+  }, [hiddeneditors])
 
   const increasePagination = () => {
     return (
@@ -202,6 +236,17 @@ export const WikiEditorsInsightTable = () => {
     )
   }
 
+  let completeEditorTable = useMemo(() => {
+    if (searchKeyWord.length > 0) {
+      return searchedEditorsData
+    } else if (filterEditors === 'Banned') {
+      return hiddenEditorsData
+    } else {
+      return editorsData
+    }
+
+    return editorsData
+  }, [searchedEditorsData, editorsData, hiddenEditorsArr])
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Flex
@@ -269,20 +314,20 @@ export const WikiEditorsInsightTable = () => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        <InsightTableWikiEditors
-          wikiInsightData={
-            searchKeyWord.length > 0 ? searchedEditorsData : editorsData
-          }
-          toggleUserFunc={(active: boolean, id: string) => {
-            const editorData = {
-              id,
-              active,
-            }
-            setEditorToBeToggled(editorData)
-            onOpen()
-          }}
-          filterBy={filterEditors}
-        />
+        {
+          <InsightTableWikiEditors
+            wikiInsightData={completeEditorTable}
+            toggleUserFunc={(active: boolean, id: string) => {
+              const editorData = {
+                id,
+                active,
+              }
+              setEditorToBeToggled(editorData)
+              onOpen()
+            }}
+            filterBy={filterEditors}
+          />
+        }
       </Flex>
       <Flex
         justify="space-between"

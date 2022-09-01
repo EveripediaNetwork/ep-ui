@@ -117,6 +117,43 @@ export const EDITORS_TABLE = gql`
   }
 `
 
+export const HIDDEN_EDITORS_TABLE = gql`
+  query HiddenEditors($limit: Int!, $offset: Int!) {
+    usersHidden(limit: $limit, offset: $offset) {
+      id
+      active
+      profile {
+        username
+        avatar
+      }
+      wikisEdited {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+      wikisCreated {
+        id
+        wikiId
+        datetime
+        ipfs
+        content {
+          title
+          images {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
 export const SEARCHED_EDITORS = gql`
   query Editors($id: String!) {
     usersById(id: $id) {

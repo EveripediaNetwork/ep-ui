@@ -13,6 +13,7 @@ import {
   TOGGLE_USER,
   PROMOTED_WIKIS_TABLE,
   HIDDEN_WIKIS_TABLE,
+  HIDDEN_EDITORS_TABLE,
   UNHIDE_WIKI,
 } from '@/services/admin/queries'
 import config from '@/config'
@@ -78,6 +79,9 @@ type EditorsRes = {
   users: Editors[]
 }
 
+type HiddenEditorsRes = {
+  usersHidden: Editors[]
+}
 type SearchedEditorQueryParams = {
   id: string
 }
@@ -117,6 +121,13 @@ export const adminApi = createApi({
         variables: { limit, offset },
       }),
       transformResponse: (response: EditorsRes) => response.users,
+    }),
+    getHiddenEditors: builder.query<Editors[], EditorQueryParams>({
+      query: ({ limit, offset }: { limit: number; offset: number }) => ({
+        document: HIDDEN_EDITORS_TABLE,
+        variables: { limit, offset },
+      }),
+      transformResponse: (response: HiddenEditorsRes) => response.usersHidden,
     }),
     getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
@@ -225,6 +236,7 @@ export const {
   useGetSearchedEditorsQuery,
   useGetAllHiddenWikiCountQuery,
   useGetAllPromotedWikiCountQuery,
+  useGetHiddenEditorsQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
@@ -239,6 +251,7 @@ export const {
   getEditorsCount,
   toggleUser,
   postHideWiki,
+  getHiddenEditors,
   postUnHideWiki,
   postPromotedWiki,
   getSearchedEditors,
