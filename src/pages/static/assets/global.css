@@ -112,7 +112,7 @@ html {
 
 /* WYSIWYG MODE STYLES */
 .toastui-editor-contents * {
-  font-family: poppins, sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
 }
 .toastui-editor-contents :where(h1, h2, h3, h4, h5, h6) {
   border-bottom: none !important;
@@ -165,11 +165,11 @@ html[data-theme='dark'],
 /* MARKDOWN MODE STYLES */
 .md-mode :where(div) {
   font-weight: 400 !important;
-  font-family: poppins, sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
 }
 .toastui-editor-md-heading {
   font-weight: 600 !important;
-  font-family: poppins, sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
 }
 
 /* =========================== */

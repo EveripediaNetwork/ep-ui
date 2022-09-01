@@ -25,6 +25,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.900',
       _dark: 'grey.200',
     },
+    homeDescriptionColor: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.700',
+    },
     linkHoverColor: {
       default: 'gray.800',
       _dark: 'gray.400',

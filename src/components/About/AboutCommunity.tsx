@@ -14,13 +14,12 @@ const AboutCommunity = () => {
       mt="24"
     >
       <Heading
-        letterSpacing="wider"
         fontWeight="bold"
         lineHeight="shorter"
         textAlign={{ base: 'center', lg: 'center', md: 'center' }}
         size="lg"
       >{`${t('aboutTestimonialHeading')}`}</Heading>
-      <Text align="center" maxW="3xl" letterSpacing="wider">
+      <Text align="center" maxW="3xl">
         {`${t('aboutTestimonialContent')}`}
       </Text>
       <Box mt={8} w="100%" maxW="4xl">

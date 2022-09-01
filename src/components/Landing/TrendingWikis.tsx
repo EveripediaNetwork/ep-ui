@@ -142,7 +142,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         {`${t('trendingWikis')}`}
       </Heading>
       <Text
-        color="gray.500"
+        color="homeDescriptionColor"
         fontSize={{ base: 'lg', lg: 22 }}
         mx="auto"
         mb={9}
