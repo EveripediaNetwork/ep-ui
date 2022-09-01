@@ -287,8 +287,7 @@ export const PromoteCreatedWikisModal = ({
           Select the appropraite action you would like to take for this wiki
         </Text>
       )}
-      {activeStep === 1 && 
-      (
+      {activeStep === 1 && (
         <>
           <VStack gap={4}>
             {step2Titles === 'Promote to Trending wiki' && (
