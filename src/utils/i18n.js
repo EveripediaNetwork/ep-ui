@@ -11,9 +11,10 @@ export const resources = {
 
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the biggest Blockchain Encyclopedia',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      learnMoreHeroBttn: 'Learn More',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -191,9 +192,10 @@ export const resources = {
 
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the biggest Blockchain Encyclopedia',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      learnMoreHeroBttn: 'Learn More',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -332,9 +334,10 @@ export const resources = {
       // init
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the biggest Blockchain Encyclopedia',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      learnMoreHeroBttn: 'Learn More',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',

@@ -98,7 +98,12 @@ const Connectors = () => {
             bg="toolTipBg"
             label={tooltipText}
           >
-            <Text display="inline" fontWeight="bold" color="primary">
+            <Text
+              display="inline"
+              cursor="help"
+              fontWeight="bold"
+              color="brandLinkColor"
+            >
               Wallet&nbsp;
             </Text>
           </Tooltip>
