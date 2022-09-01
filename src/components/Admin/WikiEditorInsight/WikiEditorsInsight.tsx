@@ -16,6 +16,14 @@ import {
   Select,
   Button,
   useDisclosure,
+  Checkbox,
+  HStack,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverFooter,
+  PopoverTrigger,
+  VStack,
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
@@ -30,6 +38,12 @@ export const WikiEditorsInsightTable = () => {
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [filterEditors, setFilterEditors] = useState<string>('')
+  const [checked, setChecked] = useState(0)
+  const {
+    isOpen: isOpenFilter,
+    onToggle: onToggleFilter,
+    onClose: onCloseFilter,
+  } = useDisclosure()
   const [initiateFetchSearchEditors, setInitiateFetchSearchEditors] =
     useState<boolean>(true)
   const [initiateFilterEditors, setInitiateFilterEditors] =
@@ -144,7 +158,10 @@ export const WikiEditorsInsightTable = () => {
     editorAddress: string
     active: boolean
   }
-
+  const FilterArray = [
+    { id: 'Banned', value: 'Banned Editors' },
+    { id: 'Active', value: 'Active Editors' },
+  ]
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [allowNext, setAllowNext] = useState<boolean>(true)
   const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
@@ -246,6 +263,23 @@ export const WikiEditorsInsightTable = () => {
       editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
     )
   }
+  const ApplyFilterItems = (e: any) => {
+    e.preventDefault()
+    // get all checkboxes from form
+    const checkboxes = Array.from(
+      e.currentTarget.querySelectorAll(
+        'input[type="checkbox"]',
+      ) as unknown as Array<HTMLInputElement>,
+    )
+    // get all the checked and unchecked checkboxes with their names
+    const data: string[] = []
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) data.push(checkbox.value)
+    })
+    setFilterEditors(data[0])
+    setInitiateFilterEditors(false)
+    onCloseFilter()
+  }
 
   const completeEditorTable = useMemo(() => {
     if (searchKeyWord.length > 2) {
@@ -313,19 +347,76 @@ export const WikiEditorsInsightTable = () => {
           >
             Sort
           </Button>
-          <Select
-            cursor="pointer"
-            w="40%"
-            placeholder="Filter"
-            icon={<MdFilterList />}
-            onChange={item => {
-              setFilterEditors(item.target.value)
-              setInitiateFilterEditors(false)
-            }}
-          >
-            <option value="Banned">Banned Editors</option>
-            <option value="Active">Active Editors</option>
-          </Select>
+          <Popover isLazy isOpen={isOpenFilter} onClose={onCloseFilter}>
+            <PopoverTrigger>
+              <Button
+                transition="all 0.2s"
+                borderRadius="md"
+                _expanded={{ bg: 'brand.500', color: 'white' }}
+                py={2}
+                px={10}
+                rightIcon={<MdFilterList />}
+                variant="outline"
+                fontWeight="medium"
+                onClick={onToggleFilter}
+              >
+                Filter
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent w="fit-content">
+              <form onSubmit={e => ApplyFilterItems(e)}>
+                <PopoverBody py={3}>
+                  <VStack
+                    spacing={1}
+                    w="fit-content"
+                    alignItems="flex-start"
+                    justifyContent="flex-start"
+                  >
+                    {FilterArray.map((item, i) => (
+                      <Checkbox
+                        onChange={() => setChecked(i + 1)}
+                        key={i}
+                        colorScheme="pink"
+                        isChecked={checked === i + 1}
+                        py={1}
+                        value={item.id}
+                      >
+                        {item.value}
+                      </Checkbox>
+                    ))}
+                  </VStack>
+                </PopoverBody>
+                <PopoverFooter>
+                  <HStack gap={4} w="fit-content" px={2}>
+                    <Button
+                      type="button"
+                      px={6}
+                      py={1}
+                      variant="ghost"
+                      borderWidth="1px"
+                      onClick={() => {
+                        setChecked(0)
+                        onCloseFilter()
+                      }}
+                      rounded="lg"
+                      fontWeight="semibold"
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="submit"
+                      rounded="lg"
+                      px={6}
+                      py={1}
+                      fontWeight="semibold"
+                    >
+                      Apply
+                    </Button>
+                  </HStack>
+                </PopoverFooter>
+              </form>
+            </PopoverContent>
+          </Popover>
         </Flex>
       </Flex>
       <Flex pb={5}>
