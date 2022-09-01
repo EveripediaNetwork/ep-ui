@@ -37,12 +37,13 @@ import { HideWikiNotification } from './HideWikiNotification'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
+  hideWikisFunc: () => void
 }
 
 export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
 ) => {
-  const { wikiCreatedInsightData } = props
+  const { wikiCreatedInsightData, hideWikisFunc } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [wikiChosenId, setWikiChosenId] = useState('')
   const [wikiChosenTitle, setWikiChosenTitle] = useState('')
@@ -241,6 +242,7 @@ export const InsightTableWikiCreated = (
                             <MenuItem
                               key={m}
                               onClick={() => {
+                                hideWikisFunc()
                                 shouldArchive(o, item.hidden, item.id)
                               }}
                               py="1"
@@ -257,6 +259,7 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                           onClick={() => {
+                            hideWikisFunc()
                             shouldPromote(item.title, item.id)
                           }}
                         >

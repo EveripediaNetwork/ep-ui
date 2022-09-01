@@ -349,7 +349,12 @@ export const WikiInsightTable = () => {
 
       <Flex pb={5}>
         {wikis?.length && wikis.length > 0 ? (
-          <InsightTableWikiCreated wikiCreatedInsightData={wikis || []} />
+          <InsightTableWikiCreated
+            wikiCreatedInsightData={wikis || []}
+            hideWikisFunc={() => {
+              console.log(wiki)
+            }}
+          />
         ) : (
           <Text pt="2" textAlign="center" w="full">
             No data to display
