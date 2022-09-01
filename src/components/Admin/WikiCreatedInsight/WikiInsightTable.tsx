@@ -42,12 +42,7 @@ export const WikiInsightTable = () => {
     useState<boolean>(true)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
-    paginateOffset,
-    {
-      skip: initGetPromotedWikis,
-    },
-  )
+
   const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
     skip: initGetHiddenWikis,
   })
@@ -111,6 +106,14 @@ export const WikiInsightTable = () => {
     setFilterItems(data)
     onClose()
   }
+
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
+    paginateOffset,
+    {
+      skip: initGetPromotedWikis,
+    },
+  )
+
   const SortArray = [
     { id: 1, value: 'Newest' },
     { id: 2, value: 'Oldest' },
@@ -128,17 +131,26 @@ export const WikiInsightTable = () => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
       setInitGetPromotedWikis(false)
-      return promotedWikis
+      filteredWikis = promotedWikis
+      return filteredWikis
     }
     if (filterItems?.includes(FilterTypes.archived)) {
       setInitGetHiddenWikis(false)
-      return hidden
+      filteredWikis = hidden
+      return filteredWikis
     }
     if (filterItems?.includes(FilterTypes.normal)) {
       filteredWikis = wiki
     }
     return filteredWikis
-  }, [wiki, filterItems, initGetPromotedWikis, initGetHiddenWikis])
+  }, [
+    wiki,
+    filterItems,
+    initGetPromotedWikis,
+    initGetHiddenWikis,
+    promotedWikis,
+    hidden,
+  ])
 
   const WikisSortByHighest = newWikis?.slice()
   WikisSortByHighest?.sort((a, b) => {
@@ -182,7 +194,7 @@ export const WikiInsightTable = () => {
       return WikisSortByAlpaDown
     }
     return newWikis
-  }, [newWikis, sortTableBy, initGetPromotedWikis])
+  }, [newWikis, sortTableBy])
 
   const whichWiki = () => {
     if (searchKeyWord.length < 1) {
@@ -214,6 +226,8 @@ export const WikiInsightTable = () => {
     searchKeyWord,
     initGetSearchedWikis,
     SearchedWikis,
+    promotedWikis,
+    hidden,
     initGetPromotedWikis,
     initGetHiddenWikis,
   ])
