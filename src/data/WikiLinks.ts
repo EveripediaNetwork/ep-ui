@@ -1,4 +1,4 @@
-import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
+import { AiFillLinkedin, AiFillYoutube } from 'react-icons/ai'
 import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
@@ -73,14 +73,14 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.LINKEDIN_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Linkedin',
-    icon: AiOutlineLinkedin,
+    icon: AiFillLinkedin,
     tests: [/https:\/\/(www.)?linkedin.com\/(in|company)\/\w+/],
   },
   {
     id: CommonMetaIds.YOUTUBE_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Youtube',
-    icon: AiOutlineYoutube,
+    icon: AiFillYoutube,
     tests: [/https:\/\/(www.)?youtube.com\/\w+/],
   },
   {
