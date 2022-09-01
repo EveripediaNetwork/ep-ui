@@ -30,11 +30,12 @@ const Admin = () => {
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
   })
-
+  const [isTokenHeaderSet, setIsTokenHeaderSet] = useState(false)
   useEffect(() => {
     if (userAddress && token) {
       adminApiClient.setHeader('authorization', token)
       setAccount(userAddress)
+      setIsTokenHeaderSet(true)
     }
   }, [userAddress, setAccount, token])
   const startDate = useMemo(() => {
@@ -170,6 +171,9 @@ const Admin = () => {
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 
+  if (!isTokenHeaderSet) {
+    return null
+  }
   return (
     <Box py={4} w="90%" mx="auto">
       <Heading

@@ -47,7 +47,6 @@ export const WikiInsightTable = () => {
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
-  // sorting creted wikis by date
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
