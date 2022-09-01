@@ -21,6 +21,12 @@ export const GET_WIKIS_BY_TITLE = gql`
       user {
         id
       }
+      author {
+        id
+        profile {
+          username
+        }
+      }
     }
   }
 `

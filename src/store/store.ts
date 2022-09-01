@@ -15,6 +15,7 @@ import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
+import { adminApi } from '@/services/admin'
 import { ArweaveApi } from '@/services/blog'
 import { tagsApi } from '@/services/tags'
 
@@ -34,6 +35,7 @@ export const store = configureStore({
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [navSearchApi.reducerPath]: navSearchApi.reducer,
     [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
+    [adminApi.reducerPath]: adminApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
   },
