@@ -167,13 +167,6 @@ const Admin = () => {
   ]
   const COLORS = ['#FF5DAA', '#FFB3D7']
 
-  useEffect(() => {
-    if (userAddress && token) {
-      adminApiClient.setHeader('authorization', token)
-      setAccount(userAddress)
-    }
-  }, [userAddress, setAccount, token])
-
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
 

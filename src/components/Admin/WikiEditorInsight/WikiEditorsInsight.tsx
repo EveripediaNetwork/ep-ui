@@ -30,6 +30,10 @@ export const WikiEditorsInsightTable = () => {
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [filterEditors, setFilterEditors] = useState<string>('')
+  const [initiateFetchSearchEditors, setInitiateFetchSearchEditors] =
+    useState<boolean>(true)
+  const [initiateFilterEditors, setInitiateFilterEditors] =
+    useState<boolean>(true)
   const [editorToBeToggled, setEditorToBeToggled] = useState<{
     id: string
     active: boolean
@@ -38,13 +42,20 @@ export const WikiEditorsInsightTable = () => {
     limit: 10,
     offset: paginateOffset,
   })
-  const { data: hiddeneditors } = useGetHiddenEditorsQuery({
-    limit: 10,
-    offset: paginateOffset,
-  })
-  const { data: searchedEditors } = useGetSearchedEditorsQuery({
-    id: searchKeyWord,
-  })
+  const { data: hiddeneditors } = useGetHiddenEditorsQuery(
+    {
+      limit: 10,
+      offset: paginateOffset,
+    },
+    { skip: initiateFilterEditors },
+  )
+  const { data: searchedEditors, error } = useGetSearchedEditorsQuery(
+    {
+      id: searchKeyWord,
+    },
+    { skip: initiateFetchSearchEditors },
+  )
+
   // sorting editors
   const editorsSortByHighest = editors?.slice()
   editorsSortByHighest?.sort(
@@ -237,7 +248,7 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const completeEditorTable = useMemo(() => {
-    if (searchKeyWord.length > 0) {
+    if (searchKeyWord.length > 2) {
       return searchedEditorsData
     }
     if (filterEditors === 'Banned') {
@@ -282,6 +293,9 @@ export const WikiEditorsInsightTable = () => {
               placeholder="Search"
               onChange={e => {
                 setsearchKeyWord(e.target.value)
+                if (e.target.value.length > 2) {
+                  setInitiateFetchSearchEditors(false)
+                }
               }}
             />
           </InputGroup>
@@ -306,6 +320,7 @@ export const WikiEditorsInsightTable = () => {
             icon={<MdFilterList />}
             onChange={item => {
               setFilterEditors(item.target.value)
+              setInitiateFilterEditors(false)
             }}
           >
             <option value="Banned">Banned Editors</option>
