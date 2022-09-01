@@ -13,7 +13,7 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description: 'Everipedia is the biggest Blockchain Encyclopedia',
       exploreHeroBttn: 'Explore',
-      learnMoreHeroBttn: 'Learn',
+      learnMoreHeroBttn: 'Learn More',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
