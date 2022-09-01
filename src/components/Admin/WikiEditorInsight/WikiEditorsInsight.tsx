@@ -236,14 +236,14 @@ export const WikiEditorsInsightTable = () => {
     )
   }
 
-  let completeEditorTable = useMemo(() => {
+  const completeEditorTable = useMemo(() => {
     if (searchKeyWord.length > 0) {
       return searchedEditorsData
-    } else if (filterEditors === 'Banned') {
-      return hiddenEditorsData
-    } else {
-      return editorsData
     }
+    if (filterEditors === 'Banned') {
+      return hiddenEditorsData
+    }
+    return editorsData
 
     return editorsData
   }, [searchedEditorsData, editorsData, hiddenEditorsArr])
@@ -314,20 +314,18 @@ export const WikiEditorsInsightTable = () => {
         </Flex>
       </Flex>
       <Flex pb={5}>
-        {
-          <InsightTableWikiEditors
-            wikiInsightData={completeEditorTable}
-            toggleUserFunc={(active: boolean, id: string) => {
-              const editorData = {
-                id,
-                active,
-              }
-              setEditorToBeToggled(editorData)
-              onOpen()
-            }}
-            filterBy={filterEditors}
-          />
-        }
+        <InsightTableWikiEditors
+          wikiInsightData={completeEditorTable}
+          toggleUserFunc={(active: boolean, id: string) => {
+            const editorData = {
+              id,
+              active,
+            }
+            setEditorToBeToggled(editorData)
+            onOpen()
+          }}
+          filterBy={filterEditors}
+        />
       </Flex>
       <Flex
         justify="space-between"
