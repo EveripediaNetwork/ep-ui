@@ -11,11 +11,10 @@ export const resources = {
 
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -193,11 +192,10 @@ export const resources = {
 
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',
@@ -336,11 +334,10 @@ export const resources = {
       // init
       //Home page
       everipedia: 'Everipedia',
-      iq_description: 'Everipedia is the world’s largest crypto knowledge base',
-      hero_title: 'An Ecosystem of Knowledge on the Blockchain.',
+      iq_description:
+        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
       exploreHeroBttn: 'Explore',
-      createHeroBttn: 'Create',
-      learnMoreHeroBttn: 'Read more about Everipedia',
+      learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
         'The hotest wikis trending on everipedia right now and in the blockchain world.',

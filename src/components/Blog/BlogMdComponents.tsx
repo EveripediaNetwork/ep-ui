@@ -6,9 +6,7 @@ const BlockQuote = ({ children }: { children: ReactNode[] }) => (
 )
 
 const p = ({ children }: { children: ReactNode[] }) => (
-  <p style={{ marginBottom: '16px', fontFamily: 'poppins, sans-serif' }}>
-    {children}
-  </p>
+  <p style={{ marginBottom: '16px' }}>{children}</p>
 )
 
 const h1 = ({ children }: { children: ReactNode[] }) => (
