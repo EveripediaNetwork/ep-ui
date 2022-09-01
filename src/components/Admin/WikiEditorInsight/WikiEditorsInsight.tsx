@@ -49,7 +49,7 @@ export const WikiEditorsInsightTable = () => {
     },
     { skip: initiateFilterEditors },
   )
-  const { data: searchedEditors, error } = useGetSearchedEditorsQuery(
+  const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
       id: searchKeyWord,
     },
