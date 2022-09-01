@@ -35,11 +35,14 @@ import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
+  const [initGetHiddeWikis, setInitGetHiddeWikis] = useState<boolean>(true)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const { data: promotedWikis } =
     useGetAllPromotedWikiCountQuery(paginateOffset)
-  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset)
+  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
+    skip: initGetHiddeWikis,
+  })
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(searchKeyWord)
@@ -119,6 +122,7 @@ export const WikiInsightTable = () => {
       return promotedWikis
     }
     if (filterItems?.includes(FilterTypes.archived)) {
+      setInitGetHiddeWikis(false)
       return hidden
     }
     if (filterItems?.includes(FilterTypes.sponsored)) {
@@ -350,9 +354,7 @@ export const WikiInsightTable = () => {
         {wikis?.length && wikis.length > 0 ? (
           <InsightTableWikiCreated
             wikiCreatedInsightData={wikis || []}
-            hideWikisFunc={() => {
-              console.log(wiki)
-            }}
+            hideWikisFunc={() => {}}
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">
