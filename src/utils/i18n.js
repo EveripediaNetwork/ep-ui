@@ -17,8 +17,10 @@ export const resources = {
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hotest wikis trending on everipedia right now and in the blockchain world.',
+        'The hottest wikis trending on everipedia right now and in the blockchain world.',
       browseCategory: 'Wiki Categories',
+      browseCategoryDescription:
+        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
@@ -198,8 +200,10 @@ export const resources = {
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hotest wikis trending on everipedia right now and in the blockchain world.',
+        'The hottest wikis trending on everipedia right now and in the blockchain world.',
       browseCategory: 'Wiki Categories',
+      browseCategoryDescription:
+        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
@@ -340,8 +344,10 @@ export const resources = {
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hotest wikis trending on everipedia right now and in the blockchain world.',
+        'The hottest wikis trending on everipedia right now and in the blockchain world.',
       browseCategory: 'Wiki Categories',
+      browseCategoryDescription:
+        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
