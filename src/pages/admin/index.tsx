@@ -170,7 +170,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (userAddress && token) {
-      profileApiClient.setHeader('authorization', token)
+      adminApiClient.setHeader('authorization', token)
       setAccount(userAddress)
     }
   }, [userAddress, setAccount, token])
