@@ -30,14 +30,12 @@ const AboutHero = () => {
           fontSize={{ base: '32', md: '54' }}
           mt={10}
           mb={{ base: 5, lg: 10 }}
-          letterSpacing="wider"
           fontWeight="black"
           lineHeight="shorter"
         >{`${t('aboutHeroHeading')}`}</Heading>
         <Text
           textAlign={{ base: 'center', md: 'left', lg: 'left' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-          letterSpacing="wider"
           mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>

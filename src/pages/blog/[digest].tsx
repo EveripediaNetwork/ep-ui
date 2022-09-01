@@ -138,7 +138,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
               alignItems="center"
             >
               <LeftArrow style={{ marginRight: '5px', fontSize: '20px' }} />{' '}
-              <Text textColor="#718096" fontFamily="Poppins" fontSize="md">
+              <Text textColor="#718096" fontSize="md">
                 Go Back to Blog Page
               </Text>
             </Box>

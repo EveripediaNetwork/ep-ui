@@ -29,7 +29,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         {`${t('browseCategory')}`}
       </Heading>
       <Text
-        color="gray.500"
+        color="homeDescriptionColor"
         fontSize={{ base: 'lg', lg: 22 }}
         pb={9}
         px={4}
@@ -57,7 +57,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           >
             <Image
               bgColor="DimColor"
-              src={category.cardImage || '/'}
+              src={new URL(category.cardImage).pathname}
               h="200px"
               w="100%"
             />

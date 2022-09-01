@@ -52,7 +52,7 @@ const NavMenu = ({
             : router.push(navItem.href)
         }
       >
-        <HStack>
+        <HStack spacing={1}>
           <Text>{label}</Text>{' '}
           {navItem.subItem && (label as string)?.length && (
             <Icon as={RiArrowDownSLine} />

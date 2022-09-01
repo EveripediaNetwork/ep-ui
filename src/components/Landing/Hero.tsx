@@ -1,5 +1,12 @@
 import React from 'react'
-import { ButtonGroup, Heading, Text, VStack, Stack } from '@chakra-ui/react'
+import {
+  ButtonGroup,
+  Heading,
+  Text,
+  VStack,
+  Stack,
+  chakra,
+} from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
 import { Wiki } from '@/types/Wiki'
@@ -26,16 +33,16 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
         <Heading
           w={{ base: '80%', md: '100%' }}
           fontSize={{ base: '32', md: '54' }}
-          fontWeight="700"
-          fontFamily="poppins"
         >
-          {`${t('hero_title')}`}
+          <chakra.span color="brandLinkColor">
+            An Ecosystem of Knowledge
+          </chakra.span>{' '}
+          on the Blockchain.
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           pb={10}
-          letterSpacing="wider"
         >
           {`${t('iq_description')}`}
         </Text>
@@ -44,22 +51,14 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
             {`${t('exploreHeroBttn')}`}
           </LinkButton>
           <LinkButton
-            href="/create-wiki"
+            href="/static/about"
             w={{ base: 32, lg: 40 }}
             variant="outline"
             bgColor="btnBgColor"
           >
-            {`${t('createHeroBttn')}`}
+            {`${t('learnMoreHeroBttn')}`}
           </LinkButton>
         </ButtonGroup>
-        <LinkButton
-          href="/static/about"
-          fontWeight="400"
-          variant="link"
-          color="brandLinkColor"
-        >
-          {`${t('learnMoreHeroBttn')}`}
-        </LinkButton>
       </VStack>
       <HeroCard wiki={wiki} />
     </Stack>

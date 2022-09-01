@@ -6,7 +6,6 @@ import {
   Flex,
   Text,
   Center,
-  useColorModeValue,
   Spinner,
   Tooltip,
 } from '@chakra-ui/react'
@@ -80,7 +79,6 @@ const Connectors = () => {
     }
   }, [walletDetails, dispatch])
 
-  const bg = useColorModeValue('primary', 'brand.900')
   const tooltipText =
     'A crypto wallet is an application or hardware device that allows individuals to store and retrieve digital items.'
 
@@ -100,7 +98,12 @@ const Connectors = () => {
             bg="toolTipBg"
             label={tooltipText}
           >
-            <Text display="inline" fontWeight="bold" color="primary">
+            <Text
+              display="inline"
+              cursor="help"
+              fontWeight="bold"
+              color="brandLinkColor"
+            >
               Wallet&nbsp;
             </Text>
           </Tooltip>
@@ -111,11 +114,12 @@ const Connectors = () => {
         {isUserConnected ? (
           <>
             <Flex
-              border="1px"
-              borderColor="borderColor"
-              borderRadius="lg"
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
               direction="column"
-              mb={5}
+              mt={4}
+              mb={6}
               justifyContent="center"
               w="full"
             >
@@ -126,7 +130,7 @@ const Connectors = () => {
                 {totalBalanceIsLoading ? (
                   <Spinner color="color" mt="1" />
                 ) : (
-                  <Text fontWeight="extrabold" fontSize="xl">
+                  <Text fontWeight="bold" fontSize="xl">
                     $
                     {totalBalance &&
                       dollarUSLocale.format(
@@ -137,20 +141,19 @@ const Connectors = () => {
                 )}
               </Flex>
               <Center
-                borderBottomRadius="lg"
                 color="white"
-                height="12"
-                bg={bg}
+                height="16"
+                bg="brandLinkColor"
                 mt={2}
                 cursor="pointer"
               >
-                <Text fontWeight="extrabold" fontSize="medium">
+                <Text fontWeight="bold" fontSize="medium">
                   Add Funds
                 </Text>
               </Center>
             </Flex>
             {balanceBreakdown && walletDetails && walletDetails.length > 0 && (
-              <Box border="1px" borderColor="borderColor" borderRadius="lg">
+              <Box borderWidth="1px" borderRadius="md">
                 {walletDetails.map((details, key) => (
                   <React.Fragment key={key}>
                     <WalletDetails

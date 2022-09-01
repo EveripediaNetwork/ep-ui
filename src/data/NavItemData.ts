@@ -82,7 +82,7 @@ export const NAV_ITEMS: NavItem[] = [
     subItem: [
       {
         id: 301,
-        label: 'Help Center',
+        label: 'IQ Learn',
         icon: RiBook2Fill,
         href: 'https://learn.everipedia.org',
         hasImage: true,
