@@ -30,7 +30,10 @@ const DisplayAvatar = ({
   size = 26,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar, ,] = useENSData(address)
+  const [avatar, ,] = useENSData(
+    address,
+    avatarIPFS ? avatarIPFS?.length > 0 : false,
+  )
 
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,

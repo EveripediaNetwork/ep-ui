@@ -17,6 +17,7 @@ import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
+import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 const Revision = () => {
   const router = useRouter()
@@ -71,6 +72,10 @@ const Revision = () => {
   React.useEffect(() => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
+
+  useEffect(() => {
+    if (wiki) incrementWikiViewCount(wiki.content[0].id)
+  }, [wiki])
 
   return (
     <>

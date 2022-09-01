@@ -28,6 +28,10 @@
   text-decoration: none;
 }
 
+html[data-theme='dark'] .markdown-body a {
+  color: #ea3b87;
+}
+
 .markdown-body a:active,
 .markdown-body a:hover {
   outline-width: 0;

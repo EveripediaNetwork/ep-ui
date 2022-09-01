@@ -247,7 +247,7 @@ const CreateWikiContent = () => {
         if (override) {
           wikiCommitMessage = 'Wiki Overridden 🔄'
         } else if (revision) {
-          wikiCommitMessage = `Reverted to ${revision} ⏪`
+          wikiCommitMessage = `Reverted to revision ${revision} ⏪`
         } else {
           wikiCommitMessage = 'New Wiki Created 🎉'
         }
@@ -421,7 +421,7 @@ const CreateWikiContent = () => {
       ]
 
       if (revision) {
-        setCommitMessage(`Reverted to ${revision} ⏪`)
+        setCommitMessage(`Reverted to revision ${revision} ⏪`)
       }
 
       dispatch({

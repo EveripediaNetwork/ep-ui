@@ -82,7 +82,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
             color={
               // eslint-disable-next-line no-nested-ternary
               item.isActive
-                ? 'brand.600'
+                ? 'brandLinkColor'
                 : // eslint-disable-next-line no-nested-ternary
                 item.isDisabled
                 ? 'wikiActionBtnDisabled'

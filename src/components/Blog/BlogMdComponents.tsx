@@ -1,9 +1,5 @@
 import React, { ReactNode } from 'react'
 import { Heading } from '@chakra-ui/react'
-import routeToBlock from 'react-embed/lib/routeToBlock'
-
-export const shouldEmbed = (url: string) =>
-  routeToBlock([] as any, new URL(url) as any) !== undefined
 
 const BlockQuote = ({ children }: { children: ReactNode[] }) => (
   <blockquote>{children}</blockquote>

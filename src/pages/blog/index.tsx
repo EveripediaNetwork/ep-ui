@@ -19,7 +19,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
       dispatch(setBlogs(blogEntries))
       setMounted(true)
     }
-  }, [mounted])
+  }, [mounted, blogEntries, dispatch])
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={4}>
