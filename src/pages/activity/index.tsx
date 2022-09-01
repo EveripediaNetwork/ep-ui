@@ -6,7 +6,7 @@ import {
   getLatestActivities,
   getRunningOperationPromises,
 } from '@/services/activities'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { store } from '@/store/store'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
@@ -109,7 +109,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const activities = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
