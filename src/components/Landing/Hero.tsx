@@ -31,13 +31,14 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
         mt={5}
       >
         <Heading
-          w={{ base: '80%', md: '100%' }}
+          w={{ base: '90%', md: '100%' }}
           fontSize={{ base: '32', md: '54' }}
         >
-          <chakra.span color="brandLinkColor">
-            An Ecosystem of Knowledge
-          </chakra.span>{' '}
-          on the Blockchain.
+          The World&apos;s Largest
+          <br />
+          <chakra.span color="brandLinkColor">Blockchain & Crypto</chakra.span>
+          <br />
+          Encyclopedia
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
