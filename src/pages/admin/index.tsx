@@ -203,7 +203,11 @@ const Admin = () => {
               key={i}
               currentValue={value?.toString()}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
-              percent={Math.round(weeklyValue / value)}
+              percent={
+                Number.isNaN(weeklyValue / value)
+                  ? 0
+                  : Math.round(weeklyValue / value)
+              }
               color={color}
             />
           )

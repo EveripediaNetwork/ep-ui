@@ -45,7 +45,11 @@ export const PromoteCreatedWikisModal = ({
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
-  const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
+  const [initGetSearchedWikis, setInitGetSearchedWikis] =
+    useState<boolean>(true)
+  const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
+    skip: initGetSearchedWikis,
+  })
   const [value, setValue] = useState('')
   const homepageLevel = 4
   const toast = useToast()
@@ -204,6 +208,7 @@ export const PromoteCreatedWikisModal = ({
     if (activeStep === 0) {
       setStep2Titles('Promote to Trending wiki')
       nextStep()
+      setInitGetSearchedWikis(false)
       setbuttonOne('cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
@@ -264,6 +269,7 @@ export const PromoteCreatedWikisModal = ({
   const HompageSelected = () => {
     if (activeStep === 0) {
       nextStep()
+      setInitGetSearchedWikis(false)
       setbuttonOne('cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
@@ -281,7 +287,8 @@ export const PromoteCreatedWikisModal = ({
           Select the appropraite action you would like to take for this wiki
         </Text>
       )}
-      {activeStep === 1 && (
+      {activeStep === 1 && 
+      (
         <>
           <VStack gap={4}>
             {step2Titles === 'Promote to Trending wiki' && (

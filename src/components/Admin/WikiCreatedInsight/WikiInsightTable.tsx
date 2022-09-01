@@ -35,17 +35,28 @@ import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
-  const [initGetHiddeWikis, setInitGetHiddeWikis] = useState<boolean>(true)
+  const [initGetHiddenWikis, setInitGetHiddenWikis] = useState<boolean>(true)
+  const [initGetPromotedWikis, setInitGetPromotedWikis] =
+    useState<boolean>(true)
+  const [initGetSearchedWikis, setInitGetSearchedWikis] =
+    useState<boolean>(true)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const { data: promotedWikis } =
-    useGetAllPromotedWikiCountQuery(paginateOffset)
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
+    paginateOffset,
+    {
+      skip: initGetPromotedWikis,
+    },
+  )
   const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
-    skip: initGetHiddeWikis,
+    skip: initGetHiddenWikis,
   })
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
-  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(searchKeyWord)
+  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(
+    searchKeyWord,
+    { skip: initGetSearchedWikis },
+  )
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
   const [checked, setChecked] = useState(0)
@@ -67,7 +78,6 @@ export const WikiInsightTable = () => {
   enum FilterTypes {
     promoted = 'promoted',
     archived = 'archived',
-    sponsored = 'sponsored',
     normal = 'normal',
   }
 
@@ -101,7 +111,6 @@ export const WikiInsightTable = () => {
     setFilterItems(data)
     onClose()
   }
-
   const SortArray = [
     { id: 1, value: 'Newest' },
     { id: 2, value: 'Oldest' },
@@ -112,28 +121,24 @@ export const WikiInsightTable = () => {
   const FilterArray = [
     { id: 'promoted', value: 'Promoted' },
     { id: 'archived', value: 'Archived' },
-    { id: 'sponsored', value: 'Sponsored' },
     { id: 'normal', value: 'Normal' },
   ]
 
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
+      setInitGetPromotedWikis(false)
       return promotedWikis
     }
     if (filterItems?.includes(FilterTypes.archived)) {
-      setInitGetHiddeWikis(false)
+      setInitGetHiddenWikis(false)
       return hidden
     }
-    if (filterItems?.includes(FilterTypes.sponsored)) {
-      // will get sponsored wiki
-    }
     if (filterItems?.includes(FilterTypes.normal)) {
-      // normal is the normal wiki
       filteredWikis = wiki
     }
     return filteredWikis
-  }, [wiki, filterItems])
+  }, [wiki, filterItems, initGetPromotedWikis, initGetHiddenWikis])
 
   const WikisSortByHighest = newWikis?.slice()
   WikisSortByHighest?.sort((a, b) => {
@@ -177,12 +182,13 @@ export const WikiInsightTable = () => {
       return WikisSortByAlpaDown
     }
     return newWikis
-  }, [newWikis, sortTableBy])
+  }, [newWikis, sortTableBy, initGetPromotedWikis])
 
   const whichWiki = () => {
     if (searchKeyWord.length < 1) {
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 0) {
+      setInitGetSearchedWikis(false)
       setWikis(SearchedWikis)
     }
   }
@@ -201,7 +207,16 @@ export const WikiInsightTable = () => {
 
   useEffect(() => {
     whichWiki()
-  }, [wiki, filterItems, sortTableBy, SearchedWikis, searchKeyWord])
+  }, [
+    wiki,
+    filterItems,
+    sortTableBy,
+    searchKeyWord,
+    initGetSearchedWikis,
+    SearchedWikis,
+    initGetPromotedWikis,
+    initGetHiddenWikis,
+  ])
 
   return (
     <Flex
