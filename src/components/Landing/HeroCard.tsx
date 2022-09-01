@@ -11,7 +11,7 @@ import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
-const CARD_DETAILS_LENGTH = 50
+const CARD_DETAILS_LENGTH = 100
 
 export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
   const [, username] = useENSData(wiki?.user?.id)
@@ -29,7 +29,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '418' }}
+        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '388' }}
         w="900px"
       >
         <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
@@ -65,7 +65,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             <Text fontSize="14px" color="linkColor">
               <Link
                 href={`/account/${wiki?.user?.id}`}
-                color="brand.500"
+                color="brandLinkColor"
                 fontWeight="bold"
               >
                 {getUsername(wiki?.user, username)}

@@ -14,6 +14,7 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@/types/Wiki'
+import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
   wiki: WikiType
@@ -34,6 +35,12 @@ const Wiki = ({ wiki }: WikiProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toc])
+
+  useEffect(() => {
+    if (slug && typeof slug === 'string') {
+      incrementWikiViewCount(slug)
+    }
+  }, [slug])
 
   return (
     <>

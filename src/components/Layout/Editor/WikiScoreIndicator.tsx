@@ -72,7 +72,7 @@ const WikiScoreIndicator = ({ wiki }: { wiki: Wiki }) => {
               determining factors such as number of words, citations, tags,
               metalinks etc.{' '}
             </chakra.span>
-            <Link color="brand.500" href="/">
+            <Link color="brandLinkColor" href="/">
               learn more
             </Link>
           </Text>

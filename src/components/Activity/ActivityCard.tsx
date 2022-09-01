@@ -104,7 +104,7 @@ const ActivityCard = ({
             {type && (
               <Text
                 fontSize="sm"
-                color="brand.500"
+                color="brandLinkColor"
                 fontWeight="medium"
                 mb="8px !important"
               >
@@ -119,7 +119,7 @@ const ActivityCard = ({
                   <Text
                     as="a"
                     display={{ base: 'none', md: 'block' }}
-                    color="brand.500"
+                    color="brandLinkColor"
                     fontWeight="bold"
                     cursor="pointer"
                     fontSize={{ base: '12px', lg: '14px' }}
@@ -154,7 +154,7 @@ const ActivityCard = ({
               <Text fontSize="14px" color="linkColor">
                 <Link
                   href={`/account/${editor.id}`}
-                  color="brand.500"
+                  color="brandLinkColor"
                   fontWeight="bold"
                 >
                   {getUsername(editor)}

@@ -72,7 +72,7 @@ export const WikiDetails = ({
                       key={i}
                       isExternal
                       href={`/categories/${category.id}`}
-                      color="brand.500"
+                      color="brandLinkColor"
                     >
                       {category.title}
                     </Link>
@@ -107,7 +107,7 @@ export const WikiDetails = ({
                 <Link
                   target="_blank"
                   href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                  color="brand.500"
+                  color="brandLinkColor"
                 >
                   <Text>{shortenAccount(ipfsHash || '')}</Text>
                 </Link>
@@ -125,7 +125,7 @@ export const WikiDetails = ({
               <Link
                 target="_blank"
                 href={`${config.blockExplorerUrl}/tx/${txHash}`}
-                color="brand.500"
+                color="brandLinkColor"
               >
                 <Text>{shortenAccount(txHash || '')}</Text>
               </Link>
@@ -159,7 +159,10 @@ export const WikiDetails = ({
                     avatarIPFS={createdBy.profile?.avatar}
                     size="24"
                   />
-                  <Link href={`/account/${createdBy.id}`} color="brand.500">
+                  <Link
+                    href={`/account/${createdBy.id}`}
+                    color="brandLinkColor"
+                  >
                     {getUsername(createdBy, username)}
                   </Link>
                 </HStack>

@@ -66,7 +66,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
               },
             }}
           >
-            <Text color="brand.500">[{index + 1}] </Text>
+            <Text color="brandLinkColor">[{index + 1}] </Text>
             <Box>
               <Flex flexWrap="wrap" gap={2}>
                 <Tag colorScheme="brand" as="h3" size="sm">
@@ -86,7 +86,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                       <Link
                         key={i}
                         href={`#cite-mark-${ref.id}-${i + 1}`}
-                        color="brand.500"
+                        color="brandLinkColor"
                         ml="0 !important"
                         fontWeight="medium"
                         fontSize="sm"

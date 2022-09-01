@@ -2,6 +2,7 @@
   "name": "ep-ui",
   "version": "1.0.0",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --port 4000",
     "build": "next build",
