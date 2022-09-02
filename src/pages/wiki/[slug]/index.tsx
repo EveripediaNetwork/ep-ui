@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   getRunningOperationPromises,
   getWiki,
+  getWikiCreatorAndEditor,
   getWikisByCategory,
 } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -27,6 +28,8 @@ const Wiki = ({ wiki }: WikiProps) => {
 
   const toc = useAppSelector(state => state.toc)
 
+  const [wikiData, setWikiData] = useState<WikiType>(wiki)
+
   // get the link id if available to scroll to the correct position
   useEffect(() => {
     if (!(toc.length === 0)) {
@@ -37,27 +40,34 @@ const Wiki = ({ wiki }: WikiProps) => {
   }, [toc])
 
   useEffect(() => {
-    if (slug && typeof slug === 'string') {
-      incrementWikiViewCount(slug)
+    const fetchUserDataAndIncView = async () => {
+      if (slug && typeof slug === 'string') {
+        const { data } = await store.dispatch(
+          getWikiCreatorAndEditor.initiate(slug),
+        )
+        setWikiData(p => ({ ...p, ...data }))
+        incrementWikiViewCount(slug)
+      }
     }
+    fetchUserDataAndIncView()
   }, [slug])
 
   return (
     <>
-      {wiki && (
+      {wikiData && (
         <WikiHeader
           slug={slug as string}
-          author={wiki.author.profile?.username || wiki.author.id || ''}
-          dateModified={wiki.updated}
-          datePublished={wiki.created}
-          title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
-          description={getWikiSummary(wiki)}
-          mainImage={getWikiImageUrl(wiki)}
+          author={wikiData.author.profile?.username || wikiData.author.id || ''}
+          dateModified={wikiData.updated}
+          datePublished={wikiData.created}
+          title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
+          description={getWikiSummary(wikiData)}
+          mainImage={getWikiImageUrl(wikiData)}
         />
       )}
       <main>
         <Box mt={-2}>
-          <WikiMarkup wiki={wiki} />
+          <WikiMarkup wiki={wikiData} />
         </Box>
       </main>
     </>
