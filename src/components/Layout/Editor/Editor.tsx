@@ -164,7 +164,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
               const matched = text.match(rule)
               if (!matched) return null
               const ytIframe = document.createElement('div')
-              ytIframe.classList.add('toastui-editor-youtube-iframe')
+              ytIframe.classList.add('wiki-widget-yt-iframe')
               ytIframe.innerHTML = `
                 <iframe src="https://www.youtube.com/embed/${matched[1]}">
                 </iframe>

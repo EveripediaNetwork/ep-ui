@@ -415,7 +415,7 @@ export const useCreateWikiState = (router: NextRouter) => {
   }
 }
 
-const isValidUrl = (urlString: string) => {
+export const isValidUrl = (urlString: string) => {
   try {
     return Boolean(new URL(urlString))
   } catch (e) {

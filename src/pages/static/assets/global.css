@@ -14,6 +14,54 @@ html {
 }
 
 /* =========================== */
+/* CUSTOM WIKI WIDGETS STYLES */
+/* =========================== */
+
+.wiki-widget-yt-iframe {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+  box-sizing: border-box;
+}
+.wiki-widget-yt-iframe iframe {
+  border-radius: 4px;
+  background-color: #00000010;
+  width: 70%;
+  aspect-ratio: 16 / 9;
+  z-index: 1;
+}
+
+@media screen and (max-width: 900px) {
+  .wiki-widget-yt-iframe iframe {
+    width: 100%;
+  }
+}
+
+.wiki-widget-yt-iframe::before {
+  content: 'loading...';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gray;
+  animation: blink 1.2s linear infinite;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================== */
 /* EDITOR SHELL STYLES */
 /* =========================== */
 .ProseMirror,
@@ -109,43 +157,6 @@ html {
 /* =========================== */
 /* EDITOR CONTENT STYLES */
 /* =========================== */
-
-/* CUSTOM WIDGETS STYLES */
-.toastui-editor-youtube-iframe {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  margin: 10px;
-  position: relative;
-}
-.toastui-editor-youtube-iframe iframe {
-  border-radius: 4px;
-  background-color: #00000010;
-  width: 50%;
-  aspect-ratio: 16 / 9;
-  z-index: 1;
-}
-.toastui-editor-youtube-iframe::before {
-  content: 'loading...';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: gray;
-  animation: blink 1.2s linear infinite;
-}
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 
 /* WYSIWYG MODE STYLES */
 .toastui-editor-contents * {

@@ -3,6 +3,9 @@ import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
 import WikiLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WikiLinkRender'
 import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/CiteMarksRender'
 import config from '@/config'
+import { whiteListedLinkNames } from '@/types/Wiki'
+import WidgetLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WidgetLinkRender'
+import { isValidUrl } from './create-wiki'
 
 export const customLinkRenderer = ({
   children,
@@ -10,30 +13,39 @@ export const customLinkRenderer = ({
 }: React.PropsWithChildren<
   ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
 >) => {
-  // link is domain + /wiki/ + some slug
-  const wikiLinkRecognizer = new RegExp(`${config.publicDomain}/wiki/(.*)`)
-  const wikiSlug = props?.href?.match(wikiLinkRecognizer)?.[1]
+  const linkHref = props.href
+  const linkText = typeof children[0] === 'string' ? children[0] : ''
 
-  // Checks if the link is a wiki link
-  const isChildrenPresent =
-    children && typeof children[0] === 'string' && children[0].length > 0
-  const isWikiSlugPresent = wikiSlug && wikiSlug.length > 0
+  const wikiSlug = linkHref?.match(
+    new RegExp(`${config.publicDomain}/wiki/(.*)`),
+  )?.[1]
 
-  // render special hover component if the link is a wiki link
-  if (isChildrenPresent && isWikiSlugPresent && props.href) {
+  const isWikiLink = linkText.length > 0 && wikiSlug
+  if (isWikiLink) {
     return React.createElement(WikiLinkRender, {
-      text: children[0] as string,
-      href: props.href,
+      text: linkText,
+      href: linkHref,
       slug: wikiSlug,
     })
   }
 
-  // Check if the link is a cite-id
-  const isCiteIdPresent = props.href && props.href.match(/#cite-id-(.*)/)
+  const isCiteIdPresent = linkHref && linkHref.match(/#cite-id-(.*)/)
   if (isCiteIdPresent) {
     return React.createElement(CiteMarksRender, {
-      text: children[0] as string,
-      href: props.href,
+      text: linkText as string,
+      href: linkHref,
+    })
+  }
+
+  const isWidgetLink =
+    linkText &&
+    linkHref &&
+    whiteListedLinkNames.includes(linkText) &&
+    !isValidUrl(linkHref)
+  if (isWidgetLink) {
+    return React.createElement(WidgetLinkRender, {
+      text: linkText as string,
+      href: linkHref,
     })
   }
 
