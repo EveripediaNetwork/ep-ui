@@ -38,17 +38,17 @@ const Admin = () => {
       setIsTokenHeaderSet(true)
     }
   }, [userAddress, setAccount, token])
-  const startDate = useMemo(() => {
-    let prevMonday = new Date()
-    prevMonday = new Date(
-      prevMonday.setDate(
-        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7),
-      ),
-    )
-    prevMonday.setHours(0, 0, 0, 0)
+  // const startDate = useMemo(() => {
+  //   let prevMonday = new Date()
+  //   prevMonday = new Date(
+  //     prevMonday.setDate(
+  //       prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7),
+  //     ),
+  //   )
+  //   prevMonday.setHours(0, 0, 0, 0)
 
-    return Math.floor(prevMonday.getTime() / 1000)
-  }, [])
+  //   return Math.floor(prevMonday.getTime() / 1000)
+  // }, [])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
@@ -61,7 +61,7 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-    startDate,
+    startDate: 0,
     interval: 'week',
   })
 
@@ -72,7 +72,7 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
-    startDate,
+    startDate: 0,
     interval: 'week',
   })
 
@@ -83,8 +83,7 @@ const Admin = () => {
   })
 
   const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({
-    startDate,
-    interval: 'week',
+    startDate: 0,
   })
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
@@ -130,7 +129,8 @@ const Admin = () => {
         ? totalWikisEditedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiEditedCountData
-        ? weeklyWikiEditedCountData[0]?.amount
+        ? weeklyWikiEditedCountData[weeklyWikiEditedCountData.length - 1]
+            ?.amount
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
@@ -141,7 +141,8 @@ const Admin = () => {
         ? totalWikisCreatedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiCreatedCountData
-        ? weeklyWikiCreatedCountData[0]?.amount
+        ? weeklyWikiCreatedCountData[weeklyWikiCreatedCountData.length - 1]
+            ?.amount
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no of Created Wikis',

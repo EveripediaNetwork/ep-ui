@@ -108,9 +108,9 @@ export const adminApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
   endpoints: builder => ({
     getEditorsCount: builder.query<{ amount: number }, WikisModifiedCountArgs>({
-      query: ({ startDate, endDate, interval }: WikisModifiedCountArgs) => ({
+      query: ({ startDate, endDate }: WikisModifiedCountArgs) => ({
         document: EDITORS_COUNT,
-        variables: { startDate, endDate, interval },
+        variables: { startDate, endDate },
       }),
       transformResponse: (response: WikisEditorsCountResponse) =>
         response.editorCount,
