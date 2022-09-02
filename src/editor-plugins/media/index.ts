@@ -54,7 +54,7 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: payload => {
-        const text = `{YOUTUBE@VID=%=${payload.alt}}`
+        const text = `[YOUTUBE@VID](${payload.alt})`
         const editor = wikiEditorRef.current?.getInstance()
         if (editor) {
           const [start, end] = editor.getSelection()
@@ -73,7 +73,7 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: payload => {
-        const text = `{YOUTUBE@VID=%=${payload.alt}}`
+        const text = `[YOUTUBE@VID](${payload.alt})`
         const editor = wikiEditorRef.current?.getInstance()
         if (editor) {
           const [start, end] = editor.getSelection()

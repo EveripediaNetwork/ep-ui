@@ -134,7 +134,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
     editorWrapper?.addEventListener('paste', PasteListener, true)
     return () => editorWrapper?.removeEventListener('paste', PasteListener)
   }, [])
-  const reWidgetRule = /{YOUTUBE@VID=%=(\S+)}/
+  const reWidgetRule = /\[YOUTUBE@VID\]\((\S+)\)/
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
