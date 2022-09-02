@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { addENSAddress } from '@/store/slices/ens-slice'
-import { provider } from '@/utils/getProvider'
+import axios from 'axios'
+import config from '@/config'
 
 export const useENSData = (address?: string | null, skip = false) => {
   const [avatar, setAvatar] = useState<string>()
@@ -13,21 +14,28 @@ export const useENSData = (address?: string | null, skip = false) => {
   useEffect(() => {
     if (skip) return
     const getAvatar = async (addrs: string) => {
-      const name = await provider.lookupAddress(addrs)
-      let avatarURI
-      if (name) {
-        setUsername(name)
-        avatarURI = await provider.getAvatar(name)
-        if (avatarURI) setAvatar(avatarURI)
+      try {
+        const ensResponse = await axios.get(
+          `${config.publicDomain}/api/ens/${addrs.toLowerCase()}`,
+        )
+        const { name } = ensResponse.data
+        const avatarURI = ensResponse.data.avatar
+        if (name) {
+          setUsername(name)
+          if (avatarURI) setAvatar(avatarURI)
+        }
+        setLoading(false)
+        dispatch(
+          addENSAddress({
+            address: addrs,
+            username: name || null,
+            avatar: avatarURI || null,
+          }),
+        )
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
       }
-      setLoading(false)
-      dispatch(
-        addENSAddress({
-          address: addrs,
-          username: name || null,
-          avatar: avatarURI || null,
-        }),
-      )
     }
 
     if (!avatar && address) {
