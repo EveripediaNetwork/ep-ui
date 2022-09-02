@@ -6,6 +6,7 @@ export const GET_WIKIS_BY_TITLE = gql`
       id
       title
       content
+      summary
       updated
       tags {
         id
@@ -20,6 +21,12 @@ export const GET_WIKIS_BY_TITLE = gql`
       user {
         id
       }
+      author {
+        id
+        profile {
+          username
+        }
+      }
     }
   }
 `
@@ -32,6 +39,17 @@ export const GET_CATEGORIES_BY_TITLE = gql`
       cardImage
       heroImage
       icon
+    }
+  }
+`
+
+export const GET_USERNAME_BY_TITLE = gql`
+  query getProfileLikeUsername($id: String, $username: String) {
+    getProfileLikeUsername(id: $id, username: $username) {
+      id
+      username
+      bio
+      avatar
     }
   }
 `

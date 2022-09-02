@@ -9,10 +9,11 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { RiAccountCircleLine } from 'react-icons/ri'
+import { RiUserLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { useUserProfileData } from '@/services/profile/utils'
+import { Image, NextChakraImageProps } from '../Image/Image'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
@@ -20,7 +21,6 @@ type DisplayAvatarProps = ChakraProps & {
   avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
-  mt?: number | string
 }
 const DisplayAvatar = ({
   address,
@@ -28,10 +28,13 @@ const DisplayAvatar = ({
   avatarIPFS,
   wrapperProps,
   size = 26,
-  mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar, ,] = useENSData(address)
+  const [avatar, ,] = useENSData(
+    address,
+    avatarIPFS ? avatarIPFS?.length > 0 : false,
+  )
+
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,
     {
@@ -48,15 +51,16 @@ const DisplayAvatar = ({
 
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
-      <Avatar
-        boxSize={`${size}px`}
-        mt="2px"
+      <Image
+        h={`${size}px`}
+        w={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
-        {...rest}
+        borderRadius="full"
+        {...(rest as Omit<NextChakraImageProps, 'src'>)}
       />
     )
   } else if (avatar) {
-    content = <Avatar size="xs" src={avatar} {...rest} />
+    content = <Avatar h={`${size}px`} w={`${size}px`} src={avatar} {...rest} />
   } else if (address && !avatar) {
     content = (
       <CustomAvatar
@@ -74,8 +78,7 @@ const DisplayAvatar = ({
         color="gray.600"
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
-        as={RiAccountCircleLine}
-        mt={mt}
+        as={RiUserLine}
       />
     )
   }
@@ -88,6 +91,7 @@ const DisplayAvatar = ({
           ...svgProps,
         },
       }}
+      borderRadius="full"
     >
       {content}
     </Center>

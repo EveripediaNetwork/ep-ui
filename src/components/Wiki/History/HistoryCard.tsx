@@ -6,7 +6,7 @@ import {
   Icon,
   Link,
   LinkBox,
-  LinkOverlay,
+  Stack,
   Tag,
   Text,
   Tooltip,
@@ -21,6 +21,9 @@ import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
+import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import { LinkButton } from '@/components/Elements'
+import { RiHistoryLine } from 'react-icons/ri'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -62,13 +65,14 @@ const HistoryCardArrow = ({
         w={2}
         h={2}
         borderRadius="100%"
-        bgColor="brand.500"
+        bgColor="brandLinkColor"
       />
     </HStack>
   )
 }
 
 interface HistoryCardProps {
+  isUserLoggedIn: boolean
   activityId: string
   isRightAligned?: boolean
   isFullWidth?: boolean
@@ -83,6 +87,7 @@ interface HistoryCardProps {
 }
 
 export const HistoryCard = ({
+  isUserLoggedIn,
   activityId,
   isRightAligned,
   isFullWidth,
@@ -137,7 +142,7 @@ export const HistoryCard = ({
             address={lastEditor.id}
             avatarIPFS={lastEditor.profile?.avatar}
           />
-          <Link href={`/account/${lastEditor.id}`} color="brand.500">
+          <Link href={`/account/${lastEditor.id}`} color="brandLinkColor">
             {getUsername(lastEditor, userENSDomain)}
           </Link>
         </HStack>
@@ -172,14 +177,13 @@ export const HistoryCard = ({
             as={MdFormatQuote}
             fontSize="20px"
             bgColor="cardBg"
-            color="brand.500"
+            color="brandLinkColor"
           />
           <Text fontSize="sm" color="text.500" my={2}>
             <i>{shortenText(commitMessage, 90)}</i>
           </Text>
         </Box>
       )}
-
       {/* What Changed tags */}
       {blocksChanged !== '' && (
         <Flex flexWrap="wrap" mt={2} justify="start" gap={2}>
@@ -211,39 +215,59 @@ export const HistoryCard = ({
       <HStack
         borderTopWidth={1}
         m={-4}
-        p={2}
         px={4}
-        mt={3}
+        py={isUserLoggedIn ? 4 : 2}
+        mt={4}
         justify="space-between"
+        align="end"
       >
-        <HStack>
-          <Text fontSize="sm" color="text.500">
-            IPFS:
-          </Text>
-          <Link
-            href={`${config.pinataBaseUrl}${IPFS}`}
-            color="brand.500"
-            ml={2}
-            isExternal
-            fontSize="sm"
+        <Stack
+          direction={isUserLoggedIn ? 'column' : 'row'}
+          justifyContent="space-between"
+          w="full"
+        >
+          <HStack>
+            <Text fontSize="sm" color="text.500">
+              {isUserLoggedIn ? 'TX Address:' : 'TX:'}
+            </Text>
+            <Link
+              href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
+              color="brandLinkColor"
+              ml={2}
+              isExternal
+              fontSize="sm"
+            >
+              {shortenAccount(transactionAddress)}
+            </Link>
+          </HStack>
+          <HStack>
+            <Text fontSize="sm" color="text.500">
+              {isUserLoggedIn ? 'IPFS Hash:' : 'IPFS:'}
+            </Text>
+            <Link
+              href={`${config.pinataBaseUrl}${IPFS}`}
+              color="brandLinkColor"
+              ml={2}
+              isExternal
+              fontSize="sm"
+            >
+              {shortenAccount(IPFS)}
+            </Link>
+          </HStack>
+        </Stack>
+        {isUserLoggedIn && (
+          <LinkButton
+            leftIcon={<RiHistoryLine />}
+            mt={4}
+            size="sm"
+            variant="outline"
+            px={6}
+            color="linkColor"
+            href={`/create-wiki?revision=${activityId}`}
           >
-            {shortenAccount(IPFS)}
-          </Link>
-        </HStack>
-        <HStack>
-          <Text fontSize="sm" color="text.500">
-            TX:
-          </Text>
-          <Link
-            href={`${config.blockExplorerUrl}/tx/${transactionAddress}`}
-            color="brand.500"
-            ml={2}
-            isExternal
-            fontSize="sm"
-          >
-            {shortenAccount(transactionAddress)}
-          </Link>
-        </HStack>
+            Restore
+          </LinkButton>
+        )}
       </HStack>
     </LinkBox>
   )

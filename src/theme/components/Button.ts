@@ -11,7 +11,7 @@ export const Button = {
   },
   variants: {
     social: ({ colorMode }: ThemeProps) => ({
-      bg: colorMode === 'dark' ? 'brand.800' : 'brand.500',
+      bg: colorMode === 'dark' ? 'brand.800' : 'brandLinkColor',
       color: 'white',
       mr: 2,
       mb: 4,
@@ -25,7 +25,7 @@ export const Button = {
       },
     }),
     solid: ({ colorMode }: ThemeProps) => ({
-      bg: colorMode === 'dark' ? 'brand.800' : 'brand.500',
+      bg: colorMode === 'dark' ? 'brand.800' : 'brandLinkColor',
       color: 'white',
       fontSize: 'md',
       _hover: {

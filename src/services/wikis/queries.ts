@@ -57,6 +57,10 @@ export const GET_WIKI_BY_ID = gql`
       }
       author {
         id
+        profile {
+          username
+          avatar
+        }
       }
     }
   }
@@ -327,11 +331,30 @@ export const GET_TAG_WIKIS_BY_ID = gql`
   }
 `
 
+export const GET_WIKI_SLUG_VALID = gql`
+  query GetWikiSlugValid($slug: String!) {
+    validWikiSlug(id: $slug) {
+      ... on Slug {
+        id
+      }
+      ... on Valid {
+        valid
+      }
+    }
+  }
+`
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {
       IpfsHash
     }
+  }
+`
+
+export const POST_WIKI_VIEW_COUNT = gql`
+  mutation wikiViewCount($id: String!) {
+    wikiViewCount(id: $id)
   }
 `
 

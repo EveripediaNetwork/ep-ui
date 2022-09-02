@@ -36,6 +36,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import {
+  getIsWikiSlugValid,
   getRunningOperationPromises,
   getWiki,
   postWiki,
@@ -66,7 +67,6 @@ import {
   initialMsg,
   MINIMUM_WORDS,
   useCreateWikiState,
-  calculateEditInfo,
   CreateWikiProvider,
   useGetSignedHash,
   useCreateWikiEffects,
@@ -84,6 +84,7 @@ import {
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
+import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -97,9 +98,8 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { data: accountData } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
-  const [commitMessage, setCommitMessage] = useState('')
   const { fireConfetti, confettiProps } = useConfetti()
 
   const commitMessageLimitAlertStyle = {
@@ -125,6 +125,8 @@ const CreateWikiContent = () => {
   const {
     isLoadingWiki,
     wikiData,
+    commitMessage,
+    setCommitMessage,
     dispatch,
     toast,
     openTxDetailsDialog,
@@ -135,6 +137,7 @@ const CreateWikiContent = () => {
     submittingWiki,
     setSubmittingWiki,
     wikiHash,
+    revision,
     isNewCreateWiki,
     openOverrideExistingWikiDialog,
     setOpenOverrideExistingWikiDialog,
@@ -160,9 +163,45 @@ const CreateWikiContent = () => {
   const { saveHashInTheBlockchain, signing, verifyTrxHash } =
     useGetSignedHash(deadline)
 
-  const getWikiSlug = () => slugifyText(String(wiki.title))
+  const getWikiSlug = async () => {
+    const slug = slugifyText(String(wiki.title))
+    const { data: result } = await store.dispatch(
+      getIsWikiSlugValid.initiate(slug),
+    )
+    if (result?.id) return result.id
+    return slug
+  }
 
   const isValidWiki = () => {
+    if (!wiki.title) {
+      toast({
+        title: `Add a Title at the top for this Wiki to continue `,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    const words = getWordCount(wiki.content || '')
+
+    if (words < MINIMUM_WORDS) {
+      toast({
+        title: `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue, you have written ${words}`,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (!isVerifiedContentLinks(wiki.content)) {
+      toast({
+        title: 'Please remove all external links from the content',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
     if (!wiki.images?.length) {
       toast({
         title: 'Add a main image on the right column to continue',
@@ -181,26 +220,6 @@ const CreateWikiContent = () => {
       return false
     }
 
-    const words = getWordCount(wiki.content || '')
-
-    if (words < MINIMUM_WORDS) {
-      toast({
-        title: `Add a minimum of ${MINIMUM_WORDS} words to continue, you have written ${words}`,
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
-    if (!isVerifiedContentLinks(wiki.content)) {
-      toast({
-        title: 'Please remove all external links from the content',
-        status: 'error',
-        duration: 3000,
-      })
-      return false
-    }
-
     return true
   }
 
@@ -209,64 +228,48 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: accountData?.address, slug: getWikiSlug() },
+      params: { address: userAddress, slug: await getWikiSlug() },
     })
 
-    if (accountData) {
+    let wikiCommitMessage = commitMessage || ''
+
+    if (isUserConnected && userAddress) {
       if (
         isNewCreateWiki &&
         !override &&
-        (await isWikiExists(getWikiSlug(), setExistingWikiData))
+        (await isWikiExists(await getWikiSlug(), setExistingWikiData))
       ) {
         setOpenOverrideExistingWikiDialog(true)
         return
       }
+
       if (isNewCreateWiki) {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id: EditSpecificMetaIds.COMMIT_MESSAGE,
-            value: override ? 'Wiki Overridden 🔄' : 'New Wiki Created 🎉',
-          },
-        })
+        if (override) {
+          wikiCommitMessage = 'Wiki Overridden 🔄'
+        } else if (revision) {
+          wikiCommitMessage = `Reverted to revision ${revision} ⏪`
+        } else {
+          wikiCommitMessage = 'New Wiki Created 🎉'
+        }
       }
 
       setOpenTxDetailsDialog(true)
       setSubmittingWiki(true)
 
-      let interWiki = { ...wiki }
-      if (interWiki.id === CreateNewWikiSlug) interWiki.id = getWikiSlug()
-      setWikiId(interWiki.id)
-
-      if (accountData.address) {
-        interWiki = {
-          ...interWiki,
-          user: {
-            id: accountData.address,
-          },
-          content: String(wiki.content).replace(/\n/gm, '  \n'),
-        }
-      }
-
-      if (!isNewCreateWiki) {
-        // calculate edit info for current wiki and previous wiki
-        // previous wiki varies if editor is trying to publish
-        // more than two edits to chain in same session
-
-        if (prevEditedWiki.current.isPublished && prevEditedWiki.current.wiki) {
-          calculateEditInfo(prevEditedWiki.current.wiki, interWiki, dispatch)
-        } else if (wikiData) {
-          calculateEditInfo(wikiData, interWiki, dispatch)
-        }
-      }
-
-      // Build the wiki object after edit info has been calculated
       const finalWiki = {
-        ...interWiki,
-        metadata: store.getState().wiki.metadata.filter(meta => {
-          return meta.value !== '' || meta.id === CommonMetaIds.REFERENCES
-        }),
+        ...wiki,
+        user: { id: userAddress },
+        content: String(wiki.content).replace(/\n/gm, '  \n'),
+        metadata: [
+          ...wiki.metadata.filter(
+            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+          ),
+          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
+        ].filter(m => m.value),
       }
+
+      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = await getWikiSlug()
+      setWikiId(finalWiki.id)
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
@@ -275,7 +278,7 @@ const CreateWikiContent = () => {
       )
 
       if (wikiResult && 'data' in wikiResult) {
-        saveHashInTheBlockchain(String(wikiResult.data), getWikiSlug())
+        saveHashInTheBlockchain(String(wikiResult.data), await getWikiSlug())
       } else {
         setIsLoading('error')
         let logReason = 'NO_IPFS'
@@ -286,6 +289,8 @@ const CreateWikiContent = () => {
           if (rawErrMsg?.startsWith(prefix)) {
             const errObjString = rawErrMsg.substring(prefix.length)
             const errObj = JSON.parse(errObjString)
+            // eslint-disable-next-line no-console
+            console.error({ ...errObj })
             const wikiError =
               errObj.response.errors[0].extensions.exception.response
             logReason = wikiError.error
@@ -298,22 +303,11 @@ const CreateWikiContent = () => {
           action: 'SUBMIT_WIKI_ERROR',
           params: {
             reason: logReason,
-            address: accountData?.address,
-            slug: getWikiSlug(),
+            address: userAddress,
+            slug: await getWikiSlug(),
           },
         })
       }
-
-      // clear all edit based metadata from redux state
-      Object.values(EditSpecificMetaIds).forEach(id => {
-        dispatch({
-          type: 'wiki/updateMetadata',
-          payload: {
-            id,
-            value: '',
-          },
-        })
-      })
 
       setSubmittingWiki(false)
     }
@@ -322,7 +316,7 @@ const CreateWikiContent = () => {
   const disableSaveButton = () =>
     isWritingCommitMsg ||
     submittingWiki ||
-    !accountData?.address ||
+    !userAddress ||
     signing ||
     isLoadingWiki
 
@@ -379,7 +373,9 @@ const CreateWikiContent = () => {
                 },
               }}
             >
-              {draft?.id === CreateNewWikiSlug ? 'Reset State' : 'Fetch Latest'}
+              {draft?.id === CreateNewWikiSlug
+                ? 'Reset State'
+                : 'Reset to current wiki content'}
             </Button>
           </HStack>
         ),
@@ -424,21 +420,28 @@ const CreateWikiContent = () => {
         })),
       ]
 
+      if (revision) {
+        setCommitMessage(`Reverted to revision ${revision} ⏪`)
+      }
+
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
           ...initWikiData,
           content:
-            EditorContentOverride.KEYWORD +
+            EditorContentOverride +
             initWikiData.content.replace(/ {2}\n/gm, '\n'),
           metadata,
         },
       })
     }
-  }, [dispatch, toast, wikiData])
+  }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
   useEffect(() => {
-    if (txHash) verifyTrxHash(getWikiSlug())
+    async function verifyTransactionHash() {
+      if (txHash) verifyTrxHash(await getWikiSlug())
+    }
+    verifyTransactionHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
@@ -456,18 +459,6 @@ const CreateWikiContent = () => {
   }, [])
 
   if (!mounted) return null
-
-  const handlePublishDisable = () => {
-    if (
-      +wiki.content.split(' ').length >= 150 &&
-      wiki.title &&
-      wiki.images &&
-      +wiki.categories.length >= 1
-    ) {
-      return true
-    }
-    return false
-  }
 
   return (
     <Box scrollBehavior="auto" maxW="1900px" mx="auto">
@@ -504,113 +495,105 @@ const CreateWikiContent = () => {
             placeholder={`${t('wikiTitlePlaceholder')}`}
           />
         </InputGroup>
-        {!isNewCreateWiki ? (
-          // Publish button with commit message for wiki edit
-          <Popover onClose={() => setIsWritingCommitMsg(false)}>
-            <PopoverTrigger>
-              <Button
-                isLoading={submittingWiki}
-                _disabled={{
-                  opacity: disableSaveButton() ? 0.5 : undefined,
-                  _hover: {
-                    bgColor: 'grey !important',
-                    cursor: 'not-allowed',
-                  },
-                }}
-                loadingText="Loading"
-                disabled={disableSaveButton()}
-                onClick={() => setIsWritingCommitMsg(true)}
-                mb={24}
-              >
-                Publish
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent m={4}>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>
-                Commit Message <small>(Optional)</small>{' '}
-              </PopoverHeader>
-              <PopoverBody>
-                <Tag
-                  mb={{ base: 2, lg: 2 }}
-                  variant="solid"
-                  colorScheme={
-                    // eslint-disable-next-line no-nested-ternary
-                    commitMessageLimitAlert
-                      ? 'red'
-                      : (commitMessage?.length || '') > 50
-                      ? 'green'
-                      : 'yellow'
-                  }
-                >
-                  {commitMessage?.length || 0}/128
-                </Tag>
-                <Textarea
-                  value={commitMessage}
-                  placeholder="Enter what changed..."
-                  {...(commitMessageLimitAlert
-                    ? commitMessageLimitAlertStyle
-                    : baseStyle)}
-                  onChange={(e: { target: { value: string } }) => {
-                    if (e.target.value.length <= 128) {
-                      setCommitMessage(e.target.value)
-                      dispatch({
-                        type: 'wiki/updateMetadata',
-                        payload: {
-                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: e.target.value,
-                        },
-                      })
-                    } else {
-                      setCommitMessageLimitAlert(true)
-                      setTimeout(() => setCommitMessageLimitAlert(false), 2000)
-                    }
+
+        <HStack gap={5}>
+          <WikiScoreIndicator wiki={wiki} />
+          {!isNewCreateWiki ? (
+            // Publish button with commit message for wiki edit
+            <Popover onClose={() => setIsWritingCommitMsg(false)}>
+              <PopoverTrigger>
+                <Button
+                  isLoading={submittingWiki}
+                  _disabled={{
+                    opacity: disableSaveButton() ? 0.5 : undefined,
+                    _hover: {
+                      bgColor: 'grey !important',
+                      cursor: 'not-allowed',
+                    },
                   }}
-                />
-              </PopoverBody>
-              <PopoverFooter>
-                <HStack spacing={2} justify="right">
-                  <Button
-                    onClick={() => {
-                      dispatch({
-                        type: 'wiki/updateMetadata',
-                        payload: {
-                          id: EditSpecificMetaIds.COMMIT_MESSAGE,
-                          value: '',
-                        },
-                      })
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
-                    }}
-                    float="right"
-                    variant="outline"
+                  loadingText="Loading"
+                  disabled={disableSaveButton()}
+                  onClick={() => setIsWritingCommitMsg(true)}
+                >
+                  Publish
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent m={4}>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>
+                  Commit Message <small>(Optional)</small>{' '}
+                </PopoverHeader>
+                <PopoverBody>
+                  <Tag
+                    mb={{ base: 2, lg: 2 }}
+                    variant="solid"
+                    colorScheme={
+                      // eslint-disable-next-line no-nested-ternary
+                      commitMessageLimitAlert
+                        ? 'red'
+                        : (commitMessage?.length || '') > 50
+                        ? 'green'
+                        : 'yellow'
+                    }
                   >
-                    Skip
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setIsWritingCommitMsg(false)
-                      saveOnIpfs()
+                    {commitMessage?.length || 0}/128
+                  </Tag>
+                  <Textarea
+                    value={commitMessage}
+                    placeholder="Enter what changed..."
+                    {...(commitMessageLimitAlert
+                      ? commitMessageLimitAlertStyle
+                      : baseStyle)}
+                    onChange={(e: { target: { value: string } }) => {
+                      if (e.target.value.length <= 128) {
+                        setCommitMessage(e.target.value)
+                      } else {
+                        setCommitMessageLimitAlert(true)
+                        setTimeout(
+                          () => setCommitMessageLimitAlert(false),
+                          2000,
+                        )
+                      }
                     }}
-                  >
-                    Submit
-                  </Button>
-                </HStack>
-              </PopoverFooter>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          // Publish button without commit message at new create wiki
-          <Button
-            onClick={() => {
-              saveOnIpfs()
-            }}
-            disabled={!handlePublishDisable()}
-          >
-            Publish
-          </Button>
-        )}
+                  />
+                </PopoverBody>
+                <PopoverFooter>
+                  <HStack spacing={2} justify="right">
+                    <Button
+                      onClick={() => {
+                        setCommitMessage('')
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                      float="right"
+                      variant="outline"
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsWritingCommitMsg(false)
+                        saveOnIpfs()
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </HStack>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            // Publish button without commit message at new create wiki
+            <Button
+              onClick={() => {
+                saveOnIpfs()
+              }}
+            >
+              Publish
+            </Button>
+          )}
+        </HStack>
       </HStack>
       <Flex
         flexDirection={{ base: 'column', xl: 'row' }}
@@ -641,7 +624,7 @@ const CreateWikiContent = () => {
             saveOnIpfs(true)
           }}
           onClose={() => setOpenOverrideExistingWikiDialog(false)}
-          slug={getWikiSlug()}
+          getSlug={getWikiSlug}
           existingWikiData={existingWikiData}
         />
         <WikiProcessModal

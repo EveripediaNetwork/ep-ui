@@ -8,7 +8,6 @@ import {
   LinkOverlay,
   Icon,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import { CATEGORY_DESCRIPTION_WORD_LIMIT } from '@/data/Constants'
 import { Image } from '../Elements/Image/Image'
@@ -67,13 +66,11 @@ const CategoryCard = ({
         </Box>
 
         <Box p={8}>
-          <NextLink href={`/categories/${categoryId}`} passHref>
-            <LinkOverlay>
-              <Heading textAlign="center" size="sm" my="10px">
-                {title}
-              </Heading>
-            </LinkOverlay>
-          </NextLink>
+          <LinkOverlay href={`/categories/${categoryId}`}>
+            <Heading textAlign="center" size="sm" my="10px">
+              {title}
+            </Heading>
+          </LinkOverlay>
           <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
             {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
               ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')

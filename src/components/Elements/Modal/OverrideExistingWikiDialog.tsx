@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from 'react'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { Wiki } from '@/types/Wiki'
 import {
@@ -16,25 +17,34 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
-import React from 'react'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 
 interface OverrideExistingWikiDialogProps {
   isOpen: boolean
   onClose: () => void
   publish: () => void
-  slug: string
+  getSlug: () => Promise<string>
   existingWikiData?: Wiki
 }
 const OverrideExistingWikiDialog = ({
   isOpen,
   onClose,
   publish,
-  slug,
+  getSlug,
   existingWikiData,
 }: OverrideExistingWikiDialogProps) => {
-  const cancelRef = React.useRef<FocusableElement>(null)
+  const cancelRef = useRef<FocusableElement>(null)
+  const [slug, setSlug] = useState('')
+
+  useEffect(() => {
+    async function getWikiSlug() {
+      setSlug(await getSlug())
+    }
+    getWikiSlug()
+  }, [getSlug])
+
   if (!isOpen) return null
+
   return (
     <AlertDialog
       motionPreset="slideInBottom"

@@ -7,18 +7,18 @@ export const authenticatedRoute = <P extends object>(
 ) => {
   const AuthenticatedRoute = (props: P) => {
     const router = useRouter()
-    const { data } = useAccount()
+    const { address: userAddress } = useAccount()
 
     useEffect(() => {
-      if (!data?.address) {
+      if (!userAddress) {
         router.push({
           pathname: '/login',
           query: { from: router.asPath },
         })
       }
-    }, [data?.address, router])
+    }, [userAddress, router])
 
-    if (data?.address) {
+    if (userAddress) {
       return <WrappedComponent {...props} />
     }
     return null

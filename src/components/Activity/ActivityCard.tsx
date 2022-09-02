@@ -4,19 +4,20 @@ import {
   Heading,
   Text,
   Box,
-  Link,
   Tag,
   Flex,
   Stack,
+  AspectRatio,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { User, Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
+import NextLink from 'next/link'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
+import { Link } from '../Elements'
 
 interface ActivityCardProps {
   title: string
@@ -69,20 +70,21 @@ const ActivityCard = ({
       px={{ base: 3, lg: 5 }}
       py={{ base: 3, lg: 3 }}
       w="full"
+      align="normal"
     >
-      <NextLink href={activityCardLinkRoute} passHref>
-        <WikiImage
-          cursor="pointer"
-          flexShrink={0}
-          imageURL={getWikiImageUrl(wiki)}
-          h={{ base: 70, lg: 100 }}
-          w={{ base: 70, lg: 100 }}
-          borderRadius="lg"
-          overflow="hidden"
-        />
-      </NextLink>
-      <Box w="90%" px={4} p={{ base: 1, lg: 4 }} mx="auto">
-        <Flex mb={{ base: 0, md: 2 }} justifyContent="space-between">
+      <Link href={activityCardLinkRoute} passHref>
+        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }}>
+          <WikiImage
+            cursor="pointer"
+            flexShrink={0}
+            imageURL={getWikiImageUrl(wiki)}
+            borderRadius="lg"
+            overflow="hidden"
+          />
+        </AspectRatio>
+      </Link>
+      <Flex w="90%" flexDir="column" justify="space-between" mx="auto" px={4}>
+        <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
               cursor="pointer"
@@ -102,7 +104,7 @@ const ActivityCard = ({
             {type && (
               <Text
                 fontSize="sm"
-                color="brand.500"
+                color="brandLinkColor"
                 fontWeight="medium"
                 mb="8px !important"
               >
@@ -113,22 +115,28 @@ const ActivityCard = ({
           {wiki.categories.length && (
             <HStack>
               {wiki.categories?.map((category, i) => (
-                <NextLink key={i} href={`/categories/${category.id}`} passHref>
+                <Link key={i} href={`/categories/${category.id}`} passHref>
                   <Text
                     as="a"
                     display={{ base: 'none', md: 'block' }}
-                    color="brand.500"
+                    color="brandLinkColor"
                     fontWeight="bold"
                     cursor="pointer"
+                    fontSize={{ base: '12px', lg: '14px' }}
                   >
                     {category.title ? category.title : category.id}
                   </Text>
-                </NextLink>
+                </Link>
               ))}
             </HStack>
           )}
         </Flex>
-        <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
+        <Box
+          mb="2"
+          mt="-2%"
+          maxW={{ base: '70%', lg: '80%' }}
+          overflow="hidden"
+        >
           <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
         </Box>
         <Stack
@@ -144,11 +152,13 @@ const ActivityCard = ({
                 size="20"
               />
               <Text fontSize="14px" color="linkColor">
-                <NextLink href={`/account/${editor.id}`} passHref>
-                  <Link href="passRef" color="brand.500" fontWeight="bold">
-                    {getUsername(editor)}
-                  </Link>
-                </NextLink>
+                <Link
+                  href={`/account/${editor.id}`}
+                  color="brandLinkColor"
+                  fontWeight="bold"
+                >
+                  {getUsername(editor)}
+                </Link>
               </Text>
               <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
                 {wiki.tags.map((tag, index) => (
@@ -165,7 +175,7 @@ const ActivityCard = ({
             {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
           </Box>
         </Stack>
-      </Box>
+      </Flex>
     </HStack>
   )
 }

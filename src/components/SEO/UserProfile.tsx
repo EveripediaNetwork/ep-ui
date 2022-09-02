@@ -25,7 +25,7 @@ export const UserProfileHeader = ({
       <SocialProfileJsonLd
         type="Person"
         name={username}
-        url={`https://everipedia.org/account/${username}`}
+        url={`${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`}
         sameAs={
           socials.map(key =>
             dt[key].urlPrefix((links && links[key]) || ''),
@@ -36,7 +36,7 @@ export const UserProfileHeader = ({
         openGraph={{
           title: `${username} · Everipedia`,
           description: bio || 'check out this user on Everipedia',
-          url: `https://everipedia.org/account/${username}`,
+          url: `${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`,
           type: 'profile',
           profile: {
             username,

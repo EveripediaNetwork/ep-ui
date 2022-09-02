@@ -23,29 +23,64 @@ export interface Media {
   source: 'IPFS_IMG' | 'VIMEO' | 'YOUTUBE' | 'IPFS_VID'
 }
 
-export enum EditorContentOverride {
-  KEYWORD = '[OVERRIDE@EDITOR@MARKDOWN]',
-}
-
+export const EditorContentOverride = '%OVERRIDE@EDITOR@MARKDOWN%'
 export const CreateNewWikiSlug = '/*CREATE+NEW+WIKI*/'
 
 export enum CommonMetaIds {
-  PAGE_TYPE = 'page-type',
   REFERENCES = 'references',
+
+  // other info
+  WEBSITE = 'website',
+  CONTRACT_URL = 'contract_url',
+
+  // social Links
+  EMAIL_URL = 'email_url',
   FACEBOOK_PROFILE = 'facebook_profile',
   INSTAGRAM_PROFILE = 'instagram_profile',
   TWITTER_PROFILE = 'twitter_profile',
   LINKEDIN_PROFILE = 'linkedin_profile',
   YOUTUBE_PROFILE = 'youtube_profile',
-  COINGECKO_PROFILE = 'coingecko_profile',
-  WEBSITE = 'website',
-  CONTRACT_URL = 'contract_url',
+  DISCORD_PROFILE = 'discord_profile',
   REDDIT_URL = 'reddit_profile',
-  EMAIL_URL = 'email_url',
-  GITHUB_URL = 'github_profile',
   TELEGRAM_URL = 'telegram_profile',
+  GITHUB_URL = 'github_profile',
   COIN_MARKET_CAP = 'coinmarketcap_url',
+  COINGECKO_PROFILE = 'coingecko_profile',
+
+  // Explorers
+  ETHERSCAN_PROFILE = 'etherscan_profile',
+  ARBISCAN_PROFILE = 'arbiscan_profile',
+  POLYGONSCAN_PROFILE = 'polygonscan_profile',
+  BSCSCAN_PROFILE = 'bscscan_profile',
+  OPTIMISTIC_ETHERSCAN_PROFILE = 'optimistic_etherscan_profile',
 }
+
+export const WikiPossibleSocialsList = [
+  // other info
+  CommonMetaIds.WEBSITE,
+  CommonMetaIds.CONTRACT_URL,
+
+  // social Links
+  CommonMetaIds.EMAIL_URL,
+  CommonMetaIds.FACEBOOK_PROFILE,
+  CommonMetaIds.INSTAGRAM_PROFILE,
+  CommonMetaIds.TWITTER_PROFILE,
+  CommonMetaIds.LINKEDIN_PROFILE,
+  CommonMetaIds.YOUTUBE_PROFILE,
+  CommonMetaIds.REDDIT_URL,
+  CommonMetaIds.TELEGRAM_URL,
+  CommonMetaIds.DISCORD_PROFILE,
+  CommonMetaIds.GITHUB_URL,
+  CommonMetaIds.COIN_MARKET_CAP,
+  CommonMetaIds.COINGECKO_PROFILE,
+
+  // Explorers
+  CommonMetaIds.ETHERSCAN_PROFILE,
+  CommonMetaIds.ARBISCAN_PROFILE,
+  CommonMetaIds.POLYGONSCAN_PROFILE,
+  CommonMetaIds.BSCSCAN_PROFILE,
+  CommonMetaIds.OPTIMISTIC_ETHERSCAN_PROFILE,
+]
 
 export enum ValidatorCodes {
   VALID_WIKI = 'VALID_WIKI',
@@ -58,6 +93,8 @@ export enum ValidatorCodes {
   URL = 'EXTERNAL_URL_ERROR',
   METADATA = 'METADATA_ERROR',
   SUMMARY = 'SUMMARY_ERROR',
+  ID_ERROR = 'ID_ERROR',
+  GLOBAL_RATE_LIMIT = 'GLOBAL_RATE_LIMIT',
 }
 
 export enum EditSpecificMetaIds {
@@ -65,39 +102,22 @@ export enum EditSpecificMetaIds {
   WORDS_CHANGED = 'words-changed',
   PERCENT_CHANGED = 'percent-changed',
   BLOCKS_CHANGED = 'blocks-changed',
-}
-
-export enum WikiRootBlocks {
-  TITLE = 'title',
-  CONTENT = 'content',
-  WIKI_IMAGE = 'wiki-image',
-  SUMMARY = 'summary',
-  TAGS = 'tags',
+  WIKI_SCORE = 'wiki-score',
 }
 
 export interface MData {
-  id: string
+  id: CommonMetaIds | EditSpecificMetaIds
   value: string
 }
-export type UpdatedMetaDataInterface = Array<MData>
 
 export interface User {
   id: string
   profile?: ProfileData | null
 }
 
-export enum PageTypeName {
-  GENERIC = 'generic',
-  PERSON = 'Person',
-  EVENT = 'Event',
-  DAPP = 'Dapp',
-  NFT = 'NFT',
-  TOKEN = 'Token',
-}
-
-export type PageType = {
-  type: PageTypeName
-  templateText: string
+export interface Author {
+  id: string | null
+  profile?: ProfileData | null
 }
 
 export interface CiteReference {
@@ -142,12 +162,12 @@ export interface Wiki {
   images?: Image[]
   media?: Media[]
   user: User
-  metadata: UpdatedMetaDataInterface
+  metadata: MData[]
   version: number
   language: LanguagesISOEnum
   updated?: string
   created?: string
-  author: User
+  author: Author
 }
 
 export type WikiPreview = Pick<

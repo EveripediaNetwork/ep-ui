@@ -23,7 +23,6 @@ import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { UseToastOptions } from '@chakra-ui/toast'
 import shortenAccount from '@/utils/shortenAccount'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
@@ -35,15 +34,6 @@ import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
-
-const toastProperties: UseToastOptions = {
-  description: 'Account successfully refreshed',
-  status: 'success',
-  duration: 4000,
-  isClosable: true,
-  position: 'bottom-right',
-  variant: 'left-accent',
-}
 
 type WalletDrawerType = {
   isOpen: boolean
@@ -58,13 +48,13 @@ const WalletDrawer = ({
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
-  const { data: accountData } = useAccount()
-  const [, username] = useENSData(accountData?.address)
-  useHiIQBalance(accountData?.address)
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const [, username] = useENSData(userAddress)
+  useHiIQBalance(userAddress)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
   const toast = useToast()
-  const { refreshBalance } = useFetchWalletBalance(accountData?.address)
+  const { refreshBalance } = useFetchWalletBalance(userAddress)
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
@@ -73,12 +63,18 @@ const WalletDrawer = ({
   }
 
   const handleAccountRefresh = () => {
-    if (typeof accountData?.address !== 'undefined') {
+    if (typeof userAddress !== 'undefined') {
       setAccountRefreshLoader(true)
       refreshBalance().then(response => {
         dispatch(updateWalletDetails(response))
         setAccountRefreshLoader(false)
-        toast(toastProperties)
+        toast({
+          description: 'Account successfully refreshed',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
       })
     }
   }
@@ -110,14 +106,14 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={accountData?.address} />
+              <DisplayAvatar address={userAddress} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                    My Wallet {accountData && <ChevronDownIcon />}
+                    My Wallet {isUserConnected && <ChevronDownIcon />}
                   </MenuButton>
-                  {accountData && (
-                    <MenuList>
+                  {isUserConnected && (
+                    <MenuList py={0}>
                       <MenuItem py={3}>
                         <Image
                           boxSize="24px"
@@ -144,15 +140,12 @@ const WalletDrawer = ({
                           {accountRefreshLoading && <Spinner size="sm" />}
                         </Flex>
                       </MenuItem>
-                      <Divider />
                     </MenuList>
                   )}
                 </Menu>
-                {accountData && (
+                {isUserConnected && (
                   <Text color="gray.500" pl={1} fontSize="sm">
-                    {username ||
-                      (accountData?.address &&
-                        shortenAccount(accountData?.address))}
+                    {username || (userAddress && shortenAccount(userAddress))}
                   </Text>
                 )}
               </Box>

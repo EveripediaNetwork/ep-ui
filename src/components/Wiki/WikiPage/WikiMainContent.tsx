@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
 import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
+import { customTableRenderer } from '@/utils/customTableRender'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
@@ -56,6 +57,7 @@ const MarkdownRender = React.memo(
             }
             return <img {...props} alt="meta media" />
           },
+          table: customTableRenderer,
         }}
       >
         {wikiContent}
@@ -70,7 +72,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   return (
     <Box
       py={4}
-      px={{ base: 4, lg: 14 }}
+      px={{ base: 4, lg: 12 }}
       maxW="900px"
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}

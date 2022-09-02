@@ -1,6 +1,7 @@
 const config = {
-  iqAddress: '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  iqTestNetAddress: '0x5E959c60f86D17fb7D764AB69B654227d464E820',
+  iqAddress:
+    process.env.NEXT_PUBLIC_IQ_ADDRESS ||
+    '0x5E959c60f86D17fb7D764AB69B654227d464E820',
   wikiContractAddress:
     process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
     '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
@@ -21,6 +22,9 @@ const config = {
   magicLinkApiKey: String(process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   baseArchiveUrl: 'https://archive.everipedia.org',
+  // blogAccount: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT || '',
+  blogAccount2: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2 || '',
+  blogAccount3: process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3 || '',
 }
 
 export default config

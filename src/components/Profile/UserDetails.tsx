@@ -29,14 +29,14 @@ export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
-  const { data } = useAccount()
+  const { address: userAddress } = useAccount()
   const address = router.query.profile as string
   const { profileData } = useUserProfileData(address)
 
   const { headerIsSticky } = useProfileContext()
   const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
-  const customLink = `${window.origin}/account/${
+  const customLink = `${process.env.NEXT_PUBLIC_DOMAIN}/account/${
     profileData?.username || address || ensUserName
   }`
 
@@ -59,11 +59,11 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   return (
     <>
       <Flex
-        flexDir={{ base: isSticky ? 'row' : 'column', lg: 'row' }}
+        flexDir={{ base: isSticky ? 'row' : 'column', sm: 'row' }}
         align="center"
         justify="space-between"
         w="full"
-        px={{ base: '0', lg: '6' }}
+        px={{ base: '0', sm: '6' }}
         gap={3}
       >
         <chakra.span flex="1" />
@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         >
           <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
-              boxSize="32"
+              size={isSticky ? '35' : '130'}
               overflow="hidden"
               borderWidth={2}
               borderColor="white"
@@ -110,12 +110,17 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   ensUserName ||
                   shortenAccount(address)}
               </chakra.span>
-              {profileData && !isSticky && (
+              {!isSticky && (
                 <VStack spacing={4}>
-                  <Text maxW="min(400px, 80vw)" textAlign="center">
-                    {profileData.bio}
-                  </Text>
-                  <UserSocialLinks links={profileData?.links[0]} />
+                  {profileData && (
+                    <Text maxW="min(400px, 80vw)" textAlign="center">
+                      {profileData.bio}
+                    </Text>
+                  )}
+                  <UserSocialLinks
+                    links={profileData?.links[0]}
+                    address={address || ''}
+                  />
                 </VStack>
               )}
             </VStack>
@@ -151,7 +156,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
                 onClick={() => router.push('/account/settings')}
-                disabled={address !== data?.address}
+                disabled={address !== userAddress}
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>

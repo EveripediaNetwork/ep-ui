@@ -14,7 +14,6 @@ import WikiTableOfContents from './WikiTableOfContents'
 
 interface WikiLayoutProps {
   wiki?: Wiki
-  isTocEmpty: boolean
   ipfs?: string
 }
 
@@ -42,7 +41,7 @@ const MobileMeta = (wiki: {
   )
 }
 
-export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -101,7 +100,7 @@ export const WikiMarkup = ({ wiki, isTocEmpty, ipfs }: WikiLayoutProps) => {
           <WikiNotFound />
         )}
       </Flex>
-      {!isTocEmpty && <WikiTableOfContents />}
+      {wiki?.content.includes('# ') && <WikiTableOfContents />}
     </HStack>
   )
 }

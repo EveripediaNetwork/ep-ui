@@ -67,7 +67,7 @@ const ImageUpload = ({
             <Spinner
               size="xl"
               thickness="6px"
-              color="brand.500"
+              color="brandLinkColor"
               display="block"
             />
           </Box>

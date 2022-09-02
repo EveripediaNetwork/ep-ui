@@ -66,7 +66,7 @@ const MenuFooter = () => {
               <Link target="_blank" href="https://learn.everipedia.org/iq/">
                 {`${t('help')}`}
               </Link>
-              <Link target="_blank" href="https://everipedia.org/blog">
+              <Link target="_blank" href="/blog">
                 {`${t('blog')}`}
               </Link>
               <Link href="/static/faq">{`${t('faq')}`}</Link>

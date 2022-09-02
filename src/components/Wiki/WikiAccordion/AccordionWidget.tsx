@@ -36,7 +36,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
       return (
         <Link
           target="_blank"
-          color="brand.500"
+          color="brandLinkColor"
           fontSize="14px"
           href={contentURL}
         >
@@ -71,7 +71,11 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
             address={content.id}
             avatarIPFS={content.profile?.avatar}
           />
-          <Link fontSize="xs" href={`/account/${content.id}`} color="brand.500">
+          <Link
+            fontSize="xs"
+            href={`/account/${content.id}`}
+            color="brandLinkColor"
+          >
             {getUsername(content, userENSDomain)}
           </Link>
         </HStack>

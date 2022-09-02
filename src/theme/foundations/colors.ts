@@ -2,6 +2,7 @@ export const colors = {
   brand: {
     50: '#ffe5f1',
     100: '#ffcce4',
+    150: '#F7FAFC',
     200: '#ffb3d7',
     300: '#ff99ca',
     400: '#ff80bd',
@@ -18,4 +19,7 @@ export const colors = {
   default: 'white',
   white: '#ffffff',
   black: '#000000',
+  darkGrey: '#b3b7bd',
+  secondaryDark: '#4A5568',
+  tetiaryGray: '#E2E8F0',
 }

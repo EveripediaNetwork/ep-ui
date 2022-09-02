@@ -6,18 +6,18 @@ import { useAccount } from 'wagmi'
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false)
-  const { data } = useAccount()
+  const { address: userAddress } = useAccount()
   const router = useRouter()
 
   useEffect(() => {
-    if (data?.address) {
+    if (userAddress) {
       if (router.query.from) {
         router.push(`${router.query.from}`)
       } else {
         router.push('/')
       }
     }
-  }, [data?.address, router])
+  }, [userAddress, router])
 
   useEffect(() => {
     setIsMounted(true)
@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <Container centerContent mt="8" mb="24">
       <Box minW="min(90%, 300px)">
-        <Heading mb={4} fontWeight="extrabold" fontSize={23}>
+        <Heading mb={4} fontSize={23}>
           Connect your wallet
         </Heading>
         <Connectors />

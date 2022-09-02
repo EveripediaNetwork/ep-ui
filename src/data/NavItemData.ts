@@ -1,34 +1,71 @@
 import {
   RiSettings5Fill,
-  RiAccountCircleFill,
+  RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
   RiAddBoxFill,
-  RiWallet2Line,
+  RiWalletFill,
+  RiRecycleFill,
+  RiImage2Fill,
+  RiCoinFill,
+  RiBitCoinFill,
+  RiUser3Fill,
+  RiNewspaperFill,
+  RiBook2Fill,
+  RiTeamFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import { CategoryLink } from '@/types/CategoryDataTypes'
 
-export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
+export const NAV_ITEMS: NavItem[] = [
   {
     id: 1,
-    label: 'Explore',
+    label: 'Categories',
     href: '#',
     icon: RiCompass3Fill,
     subItem: [
-      // destructure categories and add to subItem by mapping
-      ...categories
-        .map(({ title, id, icon }, i) => ({
-          id: parseInt(`10${i}${2}`, 10),
-          label: title,
-          href: `/categories/${id}`,
-          hasImage: true,
-          /* eslint-disable */
-          icon: require(`react-icons/bs`)[icon],
-          /* eslint-enable */
-        }))
-        .slice(0, 9),
+      {
+        id: 101,
+        label: 'NFTs',
+        icon: RiImage2Fill,
+        href: '/categories/nfts',
+        hasImage: true,
+      },
+      {
+        id: 102,
+        label: 'Decentralized Finance',
+        icon: RiRecycleFill,
+        href: '/categories/defi',
+        hasImage: true,
+      },
+      {
+        id: 103,
+        label: 'Exchanges',
+        icon: RiCoinFill,
+        href: '/categories/exchanges',
+        hasImage: true,
+      },
+      {
+        id: 104,
+        label: 'Cryptocurrencies',
+        icon: RiBitCoinFill,
+        href: '/categories/cryptocurrencies',
+        hasImage: true,
+      },
+      {
+        id: 105,
+        label: 'DAOs',
+        icon: RiTeamFill,
+        href: '/categories/daos',
+        hasImage: true,
+      },
+      {
+        id: 106,
+        label: 'People in crypto',
+        icon: RiUser3Fill,
+        href: '/categories/people',
+        hasImage: true,
+      },
     ],
   },
   {
@@ -39,21 +76,23 @@ export const NAV_ITEMS = (categories: CategoryLink[]): NavItem[] => [
   },
   {
     id: 3,
-    label: 'Resources',
+    label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
       {
         id: 301,
-        label: 'Help Center',
+        label: 'IQ Learn',
+        icon: RiBook2Fill,
         href: 'https://learn.everipedia.org',
-        hasImage: false,
+        hasImage: true,
       },
       {
         id: 302,
-        label: 'About us',
-        href: '/static/about',
-        hasImage: false,
+        label: 'Blog',
+        icon: RiNewspaperFill,
+        href: '/blog',
+        hasImage: true,
       },
     ],
   },
@@ -84,27 +123,25 @@ export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
   href: '#',
   id: 6,
-  icon: RiWallet2Line,
+  icon: RiWalletFill,
 }
 
 export const MOBILE_NAV_ITEMS = ({
-  categories,
   address,
 }: {
-  categories: CategoryLink[]
   address: string | undefined
 }): NavItem[] => [
-  ...NAV_ITEMS(categories),
+  ...NAV_ITEMS,
   {
     id: 7,
     label: 'Account',
-    icon: RiAccountCircleFill,
+    icon: RiUserFill,
     href: '#',
     subItem: [
       {
         id: 701,
         label: 'Profile',
-        href: `/account/${address}`, // TODO: get address
+        href: `/account/${address}`,
         hasImage: false,
       },
       {

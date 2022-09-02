@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
@@ -25,21 +25,17 @@ const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
-  const { data: accountData } = useAccount()
+  const { address: userAddress } = useAccount()
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
 
   useEffect(() => {
-    if (accountData?.address && token) {
+    if (userAddress && token) {
       profileApiClient.setHeader('authorization', token)
-      setAccount(accountData.address)
+      setAccount(userAddress)
     }
-  }, [accountData?.address, setAccount, token])
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <></>
+  }, [userAddress, setAccount, token])
 
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
@@ -98,8 +94,10 @@ const Settings = () => {
         )}
         {tab === 'notifications' && (
           <NotificationSettings
-            address={accountData?.address}
-            savedNotificationPrefs={profileData?.notifications[0]}
+            address={userAddress}
+            savedNotificationPrefs={
+              profileData?.notifications && profileData?.notifications[0]
+            }
           />
         )}
         {tab === 'advanced' && <AdvancedSettings />}
@@ -108,4 +106,6 @@ const Settings = () => {
   )
 }
 
-export default authenticatedRoute(Settings)
+export default dynamic(() => Promise.resolve(authenticatedRoute(Settings)), {
+  ssr: false,
+})

@@ -20,14 +20,14 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const { slug } = router.query
   let wiki: Wiki | undefined
   const id = href?.split('#cite-id-')[1]
-  const [count, setCount] = React.useState(0)
-
+  const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
+
   useEffect(() => {
     const onHashChanged = () => {
       setIsActive(window.location.hash === `#cite-mark-${id}-${count}`)
@@ -66,22 +66,12 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
     wiki = revisionData?.content[0]
   }
 
-  if (!wiki)
-    return (
-      <Link as="sup" id={`cite-mark-${id}-${count}`} href={href}>
-        <Text
-          as="sup"
-          id={`cite-mark-${id}-${count}`}
-          scrollMarginTop="50vh"
-          bgColor={isActive ? '#e160a12a' : 'transparent'}
-          boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
-          borderRadius={2}
-          zIndex={-1}
-        >
-          {text}
-        </Text>
-      </Link>
-    )
+  const [mounted, setMounted] = useState(false)
+  useEffect(function mountApp() {
+    setMounted(true)
+  }, [])
+
+  if (!wiki || !mounted) return null
 
   const referencesString = getWikiMetadataById(
     wiki,
@@ -105,6 +95,8 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
           onBlur={() => {}}
           href={href}
           borderRadius="100px"
+          color="brandLinkColor"
+          _focus={{ outline: 'none', textDecoration: 'underline' }}
         >
           <Text
             as="sup"
@@ -128,9 +120,11 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
           <PopoverArrow />
           <PopoverBody>
             <HStack
-              pb={2}
-              mb={2}
-              borderBottomWidth="1px"
+              flexWrap="wrap"
+              gap={1}
+              p={1}
+              mb={1}
+              borderBottomWidth={ref.description.trim().length ? '1px' : 0}
               justify="space-between"
             >
               <Tag colorScheme="blue" size="sm" fontWeight="medium">
@@ -156,7 +150,9 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
                 </Text>
               )}
             </HStack>
-            <Text m="2px !important">{ref.description}</Text>
+            <Text m="2px !important" fontSize="sm">
+              {ref.description}
+            </Text>
           </PopoverBody>
         </PopoverContent>
       )}

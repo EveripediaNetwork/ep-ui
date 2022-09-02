@@ -47,9 +47,9 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [isAvatarLoading, setIsAvatarLoading] = React.useState<boolean>(false)
   const [isBannerLoading, setIsBannerLoading] = React.useState<boolean>(false)
 
-  const { data: accountData } = useAccount()
-  const [, userENSAddr] = useENSData(accountData?.address)
-  const clipboard = useClipboard(accountData?.address || '')
+  const { address: userAddress } = useAccount()
+  const [, userENSAddr] = useENSData(userAddress)
+  const clipboard = useClipboard(userAddress || '')
   const toast = useToast()
 
   const bioRef = React.useRef<HTMLTextAreaElement>(null)
@@ -160,7 +160,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
 
     // aggregate data from all states
     const data: Partial<ProfileSettingsData> = {
-      id: accountData?.address,
+      id: userAddress,
       username: inputUsername.value,
       bio: inputBio.value,
       email: inputEmail.value,
@@ -315,7 +315,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
                 cursor="pointer"
                 readOnly
                 _focus={{ outline: 'none' }}
-                value={accountData?.address}
+                value={userAddress}
                 onClick={() => {
                   clipboard.onCopy()
                   toast({
