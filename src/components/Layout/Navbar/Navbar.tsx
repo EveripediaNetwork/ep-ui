@@ -11,7 +11,7 @@ import {
   SkeletonCircle,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { RiWallet2Line } from 'react-icons/ri'
+import { RiWalletLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import config from '@/config'
@@ -25,6 +25,7 @@ import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNo
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { logEvent } from '@/utils/googleAnalytics'
 import dynamic from 'next/dynamic'
+import SearchSEO from '@/components/SEO/Search'
 import WalletDrawer from '../WalletDrawer/WalletDrawer'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
@@ -47,7 +48,11 @@ const Navbar = () => {
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const {
+    address: userAddress,
+    isConnected: isUserConnected,
+    connector,
+  } = useAccount()
   const dispatch = useDispatch()
 
   const { chainId, chainName, rpcUrls } =
@@ -68,11 +73,11 @@ const Navbar = () => {
 
   const handleChainChanged = useCallback(
     (chainDetails: string) => {
-      if (chainDetails !== chainId && isUserConnected) {
-        setOpenSwitch(true)
+      if (chainDetails !== chainId && isUserConnected && connector) {
+        if (connector.id !== 'magic') setOpenSwitch(true)
       }
     },
-    [chainId, isUserConnected],
+    [chainId, connector, isUserConnected],
   )
 
   useEffect(() => {
@@ -144,6 +149,7 @@ const Navbar = () => {
 
   return (
     <>
+      <SearchSEO />
       <Box
         boxShadow="sm"
         position="fixed"
@@ -200,7 +206,7 @@ const Navbar = () => {
                   fontSize="3xl"
                   onClick={handleWalletIconAction}
                   fontWeight={600}
-                  as={RiWallet2Line}
+                  as={RiWalletLine}
                   onMouseEnter={() => setVisibleMenu(null)}
                   _hover={{
                     textDecoration: 'none',
@@ -221,7 +227,7 @@ const Navbar = () => {
                   fontSize="3xl"
                   onClick={handleWalletIconAction}
                   fontWeight={600}
-                  as={RiWallet2Line}
+                  as={RiWalletLine}
                   onMouseEnter={() => setVisibleMenu(null)}
                   _hover={{
                     textDecoration: 'none',
@@ -234,7 +240,10 @@ const Navbar = () => {
                     isHamburgerOpen ? (
                       <CloseIcon w={4} h={4} />
                     ) : (
-                      <HamburgerIcon w={5} h={5} />
+                      <HamburgerIcon
+                        boxSize={{ base: 6, lg: 7 }}
+                        ml={{ base: 4, xl: 0 }}
+                      />
                     )
                   }
                   variant="ghost"

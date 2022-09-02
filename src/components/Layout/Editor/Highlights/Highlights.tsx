@@ -31,12 +31,13 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   } = useDisclosure()
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
+  const [wikiImageUploading, setWikiImageUploading] = useState(false)
 
   const handleSetImage = async (_: string, value: ArrayBuffer) => {
-    // upload image to ipfs
+    setWikiImageUploading(true)
     const IPFSHash = await saveImage({ type: value, id: '' })
+    setWikiImageUploading(false)
 
-    // update image state
     dispatch({
       type: 'wiki/addWikiImageIPFS',
       payload: IPFSHash,
@@ -69,9 +70,15 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
       h="auto"
     >
       <SummaryInput />
-      {!hideDropzone && <Dropzone dropZoneActions={dropZoneActions} />}
+      {!hideDropzone && (
+        <Dropzone
+          imageUploading={wikiImageUploading}
+          dropZoneActions={dropZoneActions}
+        />
+      )}
       {!hideImageInput && (
         <ImageInput
+          imageUploading={wikiImageUploading}
           setImage={handleSetImage}
           setHideDropzone={setHideDropzone}
           deleteImage={handleDeleteImage}

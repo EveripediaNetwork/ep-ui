@@ -7,7 +7,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
   const { data: iqData, refetch: refetchIqData } = useBalance({
     addressOrName,
-    token: config.iqTestNetAddress,
+    token: config.iqAddress,
   })
   const { data: maticData, refetch: refetchMaticData } = useBalance({
     addressOrName,

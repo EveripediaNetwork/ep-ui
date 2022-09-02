@@ -9,7 +9,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { AvatarColorArray } from '@/data/AvatarData'
-import { RiAccountCircleLine } from 'react-icons/ri'
+import { RiUserLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { useUserProfileData } from '@/services/profile/utils'
@@ -30,7 +30,10 @@ const DisplayAvatar = ({
   size = 26,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar, ,] = useENSData(address)
+  const [avatar, ,] = useENSData(
+    address,
+    avatarIPFS ? avatarIPFS?.length > 0 : false,
+  )
 
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,
@@ -49,8 +52,8 @@ const DisplayAvatar = ({
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
-        imgH={`${size}px`}
-        imgW={`${size}px`}
+        h={`${size}px`}
+        w={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
         {...(rest as Omit<NextChakraImageProps, 'src'>)}
@@ -75,7 +78,7 @@ const DisplayAvatar = ({
         color="gray.600"
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
-        as={RiAccountCircleLine}
+        as={RiUserLine}
       />
     )
   }
@@ -88,7 +91,6 @@ const DisplayAvatar = ({
           ...svgProps,
         },
       }}
-      bgColor="gray.400"
       borderRadius="full"
     >
       {content}

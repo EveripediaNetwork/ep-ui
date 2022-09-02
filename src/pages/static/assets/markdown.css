@@ -2,8 +2,7 @@
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
-  color: #24292f;
-  font-family: poppins, sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 16px;
   line-height: 1.625;
   word-wrap: break-word;
@@ -27,6 +26,10 @@
   background-color: transparent;
   color: #fe5caa;
   text-decoration: none;
+}
+
+html[data-theme='dark'] .markdown-body a {
+  color: #ea3b87;
 }
 
 .markdown-body a:active,

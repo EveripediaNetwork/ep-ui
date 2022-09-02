@@ -78,8 +78,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
 
   useEffect(() => {
     if (
-      markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
-      EditorContentOverride.KEYWORD
+      markdown.substring(0, EditorContentOverride.length) ===
+      EditorContentOverride
     )
       updateEditorText(markdown.substring(26))
     else updateEditorText(markdown)
@@ -103,8 +103,8 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
 
     if (markdown !== currentMd) {
       if (
-        markdown.substring(0, EditorContentOverride.KEYWORD.length) ===
-        EditorContentOverride.KEYWORD
+        markdown.substring(0, EditorContentOverride.length) ===
+        EditorContentOverride
       ) {
         onChange(markdown.substring(26), true)
       } else if (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
@@ -17,6 +17,7 @@ import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
+import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 const Revision = () => {
   const router = useRouter()
@@ -72,26 +73,22 @@ const Revision = () => {
     setIsTocEmpty(toc.length === 0)
   }, [toc])
 
-  const [mounted, setMounted] = useState(false)
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!mounted)
-    return (
-      wiki && (
-        <WikiHeader
-          title={wiki.content[0].title}
-          description={getWikiSummary(wiki.content[0])}
-          mainImage={getWikiImageUrl(wiki.content[0])}
-        />
-      )
-    )
+  useEffect(() => {
+    if (wiki) incrementWikiViewCount(wiki.content[0].id)
+  }, [wiki])
 
   return (
     <>
       {wiki && (
         <WikiHeader
+          slug={wiki.content[0].id as string}
+          author={
+            wiki.content[0].author.profile?.username ||
+            wiki.content[0].author.id ||
+            ''
+          }
+          dateModified={wiki.content[0].updated}
+          datePublished={wiki.content[0].created}
           title={wiki.content[0].title}
           description={getWikiSummary(wiki.content[0])}
           mainImage={getWikiImageUrl(wiki.content[0])}
@@ -139,11 +136,7 @@ const Revision = () => {
                 </Link>
               </Flex>
             )}
-            <WikiMarkup
-              wiki={wiki?.content[0]}
-              isTocEmpty={isTocEmpty}
-              ipfs={wiki?.ipfs}
-            />
+            <WikiMarkup wiki={wiki?.content[0]} ipfs={wiki?.ipfs} />
           </Box>
         )}
       </main>

@@ -72,7 +72,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   return (
     <Box
       py={4}
-      px={{ base: 4, lg: 14 }}
+      px={{ base: 4, lg: 12 }}
       maxW="900px"
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}

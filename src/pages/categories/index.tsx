@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
 const CATEGORY_HEADER =
-  'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.'
+  'Explore your endless curiosities in different categories on Everipedia, Ranging from NFTs, to DeFi, Cryptocurrencies and more.'
 const Categories: NextPage = () => {
   const router = useRouter()
   const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
@@ -47,10 +47,10 @@ const Categories: NextPage = () => {
           justifyContent="center"
           fontWeight="400"
           mx="auto"
-          maxW={{ base: '70%', lg: '60%' }}
+          maxW={{ base: '90%', md: '70%', lg: '60%' }}
           px={5}
         >
-          <Text mb={7} mx={14}>
+          <Text mb={7} mx={{ base: '5', md: '8', lg: '14' }}>
             {CATEGORY_HEADER}
           </Text>
         </Flex>

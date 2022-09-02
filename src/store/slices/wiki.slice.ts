@@ -60,12 +60,10 @@ const initialState: Wiki = {
   categories: [],
   tags: [],
   metadata: [
-    ...Object.values(CommonMetaIds).map(mID => {
-      let value = ''
-      if (mID === CommonMetaIds.PAGE_TYPE) value = 'generic'
-      return { id: mID, value }
-    }),
-    ...Object.values(EditSpecificMetaIds).map(mID => ({ id: mID, value: '' })),
+    ...Object.values({ ...CommonMetaIds, ...EditSpecificMetaIds }).map(mID => ({
+      id: mID,
+      value: '',
+    })),
   ],
   user: {
     id: '',
@@ -202,7 +200,7 @@ const wikiSlice = createSlice({
       const newState = {
         ...state,
         metadata: state.metadata.map((m: MData) =>
-          m.id === ob.id ? { ...m, value: ob.value } : m,
+          m.id === ob.id ? { id: ob.id, value: ob.value } : m,
         ),
       }
       saveDraftInLocalStorage(newState)

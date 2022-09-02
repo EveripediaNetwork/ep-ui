@@ -21,6 +21,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { getUsername } from '@/utils/getUsername'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 
 export const WikiDetails = ({
   wikiTitle,
@@ -56,7 +57,7 @@ export const WikiDetails = ({
       >
         {title}
       </Heading>
-      <AspectRatio w="100%" ratio={4 / 3}>
+      <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
         <WikiImage bgColor="dimColor" imageURL={imgSrc} />
       </AspectRatio>
       <Table size="sm" variant="simple">
@@ -71,7 +72,7 @@ export const WikiDetails = ({
                       key={i}
                       isExternal
                       href={`/categories/${category.id}`}
-                      color="brand.500"
+                      color="brandLinkColor"
                     >
                       {category.title}
                     </Link>
@@ -106,7 +107,7 @@ export const WikiDetails = ({
                 <Link
                   target="_blank"
                   href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                  color="brand.500"
+                  color="brandLinkColor"
                 >
                   <Text>{shortenAccount(ipfsHash || '')}</Text>
                 </Link>
@@ -124,7 +125,7 @@ export const WikiDetails = ({
               <Link
                 target="_blank"
                 href={`${config.blockExplorerUrl}/tx/${txHash}`}
-                color="brand.500"
+                color="brandLinkColor"
               >
                 <Text>{shortenAccount(txHash || '')}</Text>
               </Link>
@@ -158,7 +159,10 @@ export const WikiDetails = ({
                     avatarIPFS={createdBy.profile?.avatar}
                     size="24"
                   />
-                  <Link href={`/account/${createdBy.id}`} color="brand.500">
+                  <Link
+                    href={`/account/${createdBy.id}`}
+                    color="brandLinkColor"
+                  >
                     {getUsername(createdBy, username)}
                   </Link>
                 </HStack>

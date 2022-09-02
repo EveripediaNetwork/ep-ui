@@ -13,6 +13,8 @@ import {
   GET_TAG_WIKIS_BY_ID,
   GET_USER_CREATED_WIKIS_BY_ID,
   GET_USER_EDITED_WIKIS_BY_ID,
+  GET_WIKI_SLUG_VALID,
+  POST_WIKI_VIEW_COUNT,
 } from '@/services/wikis/queries'
 import { Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
@@ -54,7 +56,9 @@ type PostWikiResponse = {
     IpfsHash: string
   }
 }
-
+type PostWikiViewCountResponse = {
+  wikiViewCount: number
+}
 type WikiArg = {
   id: string
   limit?: number
@@ -65,6 +69,13 @@ type WikisByCategoryArg = {
   category: string
   limit?: number
   offset?: number
+}
+
+type GetIsWikiSlugValidResponse = {
+  validWikiSlug: {
+    valid?: boolean
+    id?: string
+  }
 }
 
 export const wikiApi = createApi({
@@ -131,6 +142,16 @@ export const wikiApi = createApi({
         return response.userById.wikisEdited
       },
     }),
+    getIsWikiSlugValid: builder.query<{ valid?: boolean; id?: string }, string>(
+      {
+        query: (slug: string) => ({
+          document: GET_WIKI_SLUG_VALID,
+          variables: { slug },
+        }),
+        transformResponse: (response: GetIsWikiSlugValidResponse) =>
+          response.validWikiSlug,
+      },
+    ),
     getTagWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => ({
         document: GET_TAG_WIKIS_BY_ID,
@@ -165,6 +186,16 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiResponse) =>
         response.pinJSON.IpfsHash,
     }),
+    postWikiViewCount: builder.mutation<number, string>({
+      query: string => ({
+        document: POST_WIKI_VIEW_COUNT,
+        variables: {
+          id: string,
+        },
+      }),
+      transformResponse: (response: PostWikiViewCountResponse) =>
+        response.wikiViewCount,
+    }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
@@ -184,6 +215,10 @@ export const {
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
+  useGetIsWikiSlugValidQuery,
+  usePostWikiMutation,
+  usePostImageMutation,
+  usePostWikiViewCountMutation,
   util: { getRunningOperationPromises },
 } = wikiApi
 
@@ -196,7 +231,9 @@ export const {
   getWikisByCategory,
   getTagWikis,
   postWiki,
+  postWikiViewCount,
   postImage,
   getUserCreatedWikis,
   getUserEditedWikis,
+  getIsWikiSlugValid,
 } = wikiApi.endpoints

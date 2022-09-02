@@ -1,14 +1,16 @@
 import React from 'react'
-import { Flex, LinkBox, LinkBoxProps, Text } from '@chakra-ui/react'
+import { Flex, LinkBox, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import type { BlogPost as BlogPostType } from '@/components/Blog/data'
+import { Blog } from '@/types/Blog'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
-export type BlogPostProps = { post: BlogPostType } & LinkBoxProps
+type BlogPostType = {
+  maxW?: string
+  post: Blog
+  key: number
+}
 
-export const BlogPost = (props: BlogPostProps) => {
-  const { post, ...rest } = props
-
+export const BlogPost = ({ post, ...rest }: BlogPostType) => {
   return (
     <LinkBox
       display="flex"
@@ -20,20 +22,17 @@ export const BlogPost = (props: BlogPostProps) => {
       overflowX="hidden"
       {...rest}
     >
-      <Image h="52" src={`/images${post.image_url}`} />
+      {post.cover_image ? <Image h="52" src={post.cover_image} /> : null}
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
         <Flex flex="auto" align="center">
-          <LinkOverlay href={`/blog/${post.slug}`}>
+          <LinkOverlay href={`/blog/${post.digest}`}>
             <Text fontSize="2xl" fontWeight="bold" noOfLines={3}>
               {post.title}
             </Text>
           </LinkOverlay>
         </Flex>
-        <Text _light={{ color: 'gray.600' }} mb="4" noOfLines={4}>
-          {post.desccription}
-        </Text>
         <Text color="gray.400" _dark={{ color: 'whiteAlpha.400' }}>
-          {post.date}
+          {new Date((post.timestamp || 0) * 1000).toDateString()}
         </Text>
       </Flex>
     </LinkBox>

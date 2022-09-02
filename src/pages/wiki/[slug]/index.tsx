@@ -14,6 +14,7 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@/types/Wiki'
+import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
   wiki: WikiType
@@ -24,35 +25,39 @@ const Wiki = ({ wiki }: WikiProps) => {
 
   const { slug } = router.query
 
-  const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
+  const toc = useAppSelector(state => state.toc)
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
-    if (!isTocEmpty) {
+    if (!(toc.length === 0)) {
       const linkId = window.location.hash
       if (linkId) router.push(`/wiki/${slug}${linkId}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTocEmpty])
-
-  const toc = useAppSelector(state => state.toc)
+  }, [toc])
 
   useEffect(() => {
-    setIsTocEmpty(toc.length === 0)
-  }, [toc])
+    if (slug && typeof slug === 'string') {
+      incrementWikiViewCount(slug)
+    }
+  }, [slug])
 
   return (
     <>
       {wiki && (
         <WikiHeader
-          title={wiki.title}
+          slug={slug as string}
+          author={wiki.author.profile?.username || wiki.author.id || ''}
+          dateModified={wiki.updated}
+          datePublished={wiki.created}
+          title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
           description={getWikiSummary(wiki)}
           mainImage={getWikiImageUrl(wiki)}
         />
       )}
       <main>
         <Box mt={-2}>
-          <WikiMarkup wiki={wiki} isTocEmpty={isTocEmpty} />
+          <WikiMarkup wiki={wiki} />
         </Box>
       </main>
     </>
