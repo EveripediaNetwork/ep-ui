@@ -34,8 +34,8 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         pb={9}
         px={4}
         textAlign="center"
-        maxW="750"
-      >{`${t('trendingWikisDescription')}`}</Text>
+        maxW="800"
+      >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
         maxW="1050px"
         w="100%"

@@ -120,11 +120,6 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
 
 const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
   const { t } = useTranslation()
-  const [isMounted, setIsMounted] = React.useState(false)
-  React.useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  if (!isMounted) return null
 
   return (
     <Box

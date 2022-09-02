@@ -19,6 +19,7 @@
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
+    "@ajna/pagination": "^1.4.19",
     "@chakra-ui/color-mode": "^2.0.0",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.0.0",
@@ -30,6 +31,7 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@ensdomains/ens-avatar": "^0.1.2",
+    "@ethersproject/address": "^5.7.0",
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",
@@ -81,6 +83,7 @@
     "react-slick": "^0.28.1",
     "react-sticky-box": "^1.0.2",
     "react-twitter-embed": "^4.0.4",
+    "recharts": "2.1.12",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.1",
     "remark-stringify": "^10.0.2",
