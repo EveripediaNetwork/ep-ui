@@ -121,7 +121,7 @@ html {
 .toastui-editor-youtube-iframe iframe {
   border-radius: 4px;
   background-color: #00000010;
-  height: 200px;
+  width: 50%;
   aspect-ratio: 16 / 9;
 }
 
