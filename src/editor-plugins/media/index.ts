@@ -52,11 +52,16 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: (payload, state, dispatch) => {
-        const link = `![${payload.name}](${payload.src})`
+        const text = `{YOUTUBE@VID=%=${payload.alt}`
         const { from, to } = state.selection
-        const tr = state.tr.insertText(link, from, to)
-        dispatch(tr.scrollIntoView())
+        dispatch(state.tr.insertText(text, from, to))
         return true
+
+        // const link = `![${"Youtube Video"}](${payload.src})`
+        // const { from, to } = state.selection
+        // const tr = state.tr.insertText(link, from, to)
+        // dispatch(tr.scrollIntoView())
+        // return true
       },
     },
     wysiwygCommands: {
@@ -69,12 +74,22 @@ export default function media(context: PluginContext): PluginInfo {
         return true
       },
       insertVideo: (payload, state, dispatch) => {
-        const img = state.schema.nodes.image.createAndFill({
-          imageUrl: payload.src,
-          altText: payload.alt,
-        })
-        dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
+        const text = `{YOUTUBE@VID=%=${payload.alt}`
+        const { from, to } = state.selection
+        dispatch(state.tr.insertText(text, from, to))
+        setTimeout(() => {
+          window.dispatchEvent(
+            new KeyboardEvent('keydown', {
+              key: '}',
+            }),
+          )
+        }, 50)
         return true
+
+        // const text =  `<iframe width="420" height="345" src="https://www.youtube.com/embed/${payload.alt}"></iframe>`
+        // const { from, to } = state.selection
+        // dispatch(state.tr.insertText(text, from, to))
+        // return true
       },
     },
   }
