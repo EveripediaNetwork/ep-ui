@@ -154,17 +154,17 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           ['table', 'code'],
         ]}
         customHTMLSanitizer={(html: string) => {
-          console.log(html)
           return html
         }}
         widgetRules={[
           {
             rule: reWidgetRule,
-            toDOM(text: any) {
+            toDOM(text: string) {
               const rule = reWidgetRule
               const matched = text.match(rule)
-              const ytIframe = document.createElement('span')
-              console.log(matched)
+              if (!matched) return null
+              const ytIframe = document.createElement('div')
+              ytIframe.classList.add('toastui-editor-youtube-iframe')
               ytIframe.innerHTML = `
                 <iframe src="https://www.youtube.com/embed/${matched[1]}">
                 </iframe>

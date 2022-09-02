@@ -110,6 +110,21 @@ html {
 /* EDITOR CONTENT STYLES */
 /* =========================== */
 
+/* CUSTOM WIDGETS STYLES */
+.toastui-editor-youtube-iframe {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+}
+.toastui-editor-youtube-iframe iframe {
+  border-radius: 4px;
+  background-color: #00000010;
+  height: 200px;
+  aspect-ratio: 16 / 9;
+}
+
 /* WYSIWYG MODE STYLES */
 .toastui-editor-contents * {
   font-family: Montserrat, sans-serif !important;
