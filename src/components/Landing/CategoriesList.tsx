@@ -34,7 +34,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         pb={9}
         px={4}
         textAlign="center"
-        maxW="750"
+        maxW="800"
       >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
         maxW="1050px"
