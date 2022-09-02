@@ -10,8 +10,13 @@ import { EditorContentOverride } from '@/types/Wiki'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
+// eslint-disable-next-line import/no-cycle
 import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/PasteListener'
+
+export const wikiEditorRef = {
+  current: null as ToastUIEditor | null,
+}
 
 const ToastUIEditorJSX = ToastUIEditor as unknown as (
   props: Dict,
@@ -27,6 +32,10 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { data: wikiData } = useGetWikiQuery(store.getState().wiki.id)
+
+  if (editorRef.current) {
+    wikiEditorRef.current = editorRef.current
+  }
 
   // insert undo redo buttons to editor
   useEffect(() => {

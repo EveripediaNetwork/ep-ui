@@ -10,6 +10,8 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import React from 'react'
+// eslint-disable-next-line import/no-cycle
+import { wikiEditorRef } from '@/components/Layout/Editor/Editor'
 import MediaFrame from './frame'
 
 interface PluginInfo {
@@ -73,23 +75,14 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
       },
-      insertVideo: (payload, state, dispatch) => {
-        const text = `{YOUTUBE@VID=%=${payload.alt}`
-        const { from, to } = state.selection
-        dispatch(state.tr.insertText(text, from, to))
-        setTimeout(() => {
-          window.dispatchEvent(
-            new KeyboardEvent('keydown', {
-              key: '}',
-            }),
-          )
-        }, 50)
+      insertVideo: payload => {
+        const text = `{YOUTUBE@VID=%=${payload.alt}}`
+        const editor = wikiEditorRef.current?.getInstance()
+        if (editor) {
+          const [start, end] = editor.getSelection()
+          editor.replaceSelection(text, start, end)
+        }
         return true
-
-        // const text =  `<iframe width="420" height="345" src="https://www.youtube.com/embed/${payload.alt}"></iframe>`
-        // const { from, to } = state.selection
-        // dispatch(state.tr.insertText(text, from, to))
-        // return true
       },
     },
   }
