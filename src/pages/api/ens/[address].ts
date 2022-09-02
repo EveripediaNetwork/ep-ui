@@ -49,13 +49,15 @@ const resolveAddress = async (
       .setHeader('Cache-Control', `s-maxage=300, stale-while-revalidate=3600`)
       .json({ address, name, displayName, avatar })
   } catch (error: unknown) {
-    res.status(500).json({
-      address,
-      name: null,
-      displayName,
-      avatar: null,
-      error: error.message,
-    })
+    if (error instanceof Error) {
+      res.status(500).json({
+        address,
+        name: null,
+        displayName,
+        avatar: null,
+        error: error.message,
+      })
+    }
   }
 }
 
@@ -71,13 +73,15 @@ const resolveName = async (name: string, res: NextApiResponse<Data>) => {
       .setHeader('Cache-Control', `s-maxage=300, stale-while-revalidate=3600`)
       .json({ address, name, displayName, avatar })
   } catch (error: unknown) {
-    res.status(500).json({
-      address: null,
-      name,
-      displayName,
-      avatar: null,
-      error: error.message,
-    })
+    if (error instanceof Error) {
+      res.status(500).json({
+        address: null,
+        name,
+        displayName,
+        avatar: null,
+        error: error.message,
+      })
+    }
   }
 }
 
