@@ -6,7 +6,7 @@ import {
   getWikisByCategory,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
@@ -64,7 +64,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
   const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
