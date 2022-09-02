@@ -77,10 +77,12 @@ export default function media(context: PluginContext): PluginInfo {
         const text = `{YOUTUBE@VID=%=${payload.alt}`
         const { from, to } = state.selection
         dispatch(state.tr.insertText(text, from, to))
-        setTimeout(() => { 
-          window.dispatchEvent(new KeyboardEvent('keydown', {
-            'key': '}'
-          }));
+        setTimeout(() => {
+          window.dispatchEvent(
+            new KeyboardEvent('keydown', {
+              key: '}',
+            }),
+          )
         }, 50)
         return true
 

@@ -127,16 +127,6 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   }, [])
   const reWidgetRule = /{YOUTUBE@VID=%=(\S+)}/
 
-  const insertYtSyntaxToEditor = (videoID: string) => {
-    const editorInstance = editorRef.current?.getInstance()
-    if (!editorInstance) {
-      return
-    }
-    const [start, end] = editorInstance.getSelection()
-
-    editorInstance?.replaceSelection(`{YOUTUBE@VID=%=${videoID}}`, start, end)
-  }
-
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
       <ToastUIEditorJSX
@@ -180,9 +170,3 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
 }
 
 export default memo(Editor)
-
-// {YOUTUBE@VID<=>GU4iyaeFywo}
-
-{
-  /* <iframe width="1238" height="696" src="https://www.youtube.com/embed/RsadnWrUY84?list=RDGMEM6CZm14o9sc-Q22TIneLI8gVMRsadnWrUY84" title="Jacob Banks - Unknown (To You) (Live In London)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */
-}
