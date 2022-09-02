@@ -171,13 +171,13 @@ export const WikiInsightTable = () => {
 
   const WikisSortByAlpaUp = newWikis?.slice()
   WikisSortByAlpaUp?.sort((a, b) => {
-    const Data = a.title.trim().localeCompare(b.title.trim())
+    const Data = a?.title?.trim().localeCompare(b.title.trim())
     return Data
   })
 
   const WikisSortByAlpaDown = newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
-    const Data = b.title.trim().localeCompare(a.title.trim())
+    const Data = b?.title?.trim().localeCompare(a.title.trim())
     return Data
   })
 

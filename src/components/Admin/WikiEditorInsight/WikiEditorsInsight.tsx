@@ -288,8 +288,6 @@ export const WikiEditorsInsightTable = () => {
       return hiddenEditorsData
     }
     return editorsData
-
-    return editorsData
   }, [searchedEditorsData, editorsData, hiddenEditorsArr])
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
@@ -396,6 +394,7 @@ export const WikiEditorsInsightTable = () => {
                       onClick={() => {
                         setChecked(0)
                         onCloseFilter()
+                        setFilterEditors('')
                       }}
                       rounded="lg"
                       fontWeight="semibold"
