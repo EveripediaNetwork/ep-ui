@@ -53,17 +53,14 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(tr.scrollIntoView())
         return true
       },
-      insertVideo: (payload, state, dispatch) => {
-        const text = `{YOUTUBE@VID=%=${payload.alt}`
-        const { from, to } = state.selection
-        dispatch(state.tr.insertText(text, from, to))
+      insertVideo: payload => {
+        const text = `{YOUTUBE@VID=%=${payload.alt}}`
+        const editor = wikiEditorRef.current?.getInstance()
+        if (editor) {
+          const [start, end] = editor.getSelection()
+          editor.replaceSelection(text, start, end)
+        }
         return true
-
-        // const link = `![${"Youtube Video"}](${payload.src})`
-        // const { from, to } = state.selection
-        // const tr = state.tr.insertText(link, from, to)
-        // dispatch(tr.scrollIntoView())
-        // return true
       },
     },
     wysiwygCommands: {
