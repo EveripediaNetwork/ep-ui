@@ -6,6 +6,7 @@ import {
   VStack,
   Stack,
   chakra,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +15,14 @@ import { HeroCard } from './HeroCard'
 
 const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
   const { t } = useTranslation()
+  const description = useBreakpointValue({
+    base: t('iq_descriptionShort'),
+    md: t('iq_description'),
+  })
+  const middleHeroText = useBreakpointValue({
+    base: 'Blockchain',
+    md: 'Blockchain & Crypto',
+  })
 
   return (
     <Stack
@@ -31,20 +40,21 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
         mt={5}
       >
         <Heading
-          w={{ base: '80%', md: '100%' }}
+          w={{ base: '90%', md: '100%' }}
           fontSize={{ base: '32', md: '54' }}
         >
-          <chakra.span color="brandLinkColor">
-            An Ecosystem of Knowledge
-          </chakra.span>{' '}
-          on the Blockchain.
+          The World&apos;s Largest
+          <br />
+          <chakra.span color="brandLinkColor">{middleHeroText}</chakra.span>
+          <br />
+          Encyclopedia
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           pb={10}
         >
-          {`${t('iq_description')}`}
+          {description}
         </Text>
         <ButtonGroup size="lg" spacing={{ base: 4, lg: 8 }}>
           <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
