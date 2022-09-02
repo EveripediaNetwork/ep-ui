@@ -56,7 +56,6 @@
     "chakra-ui-steps": "^1.7.2",
     "date-fns": "^2.28.0",
     "debounce": "^1.2.1",
-    "dompurify": "^2.3.10",
     "ethers": "^5.6.8",
     "framer-motion": "^6.5.1",
     "fuse.js": "^6.6.2",

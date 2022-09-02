@@ -153,9 +153,6 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           ['ul', 'ol', 'indent', 'outdent'],
           ['table', 'code'],
         ]}
-        customHTMLSanitizer={(html: string) => {
-          return html
-        }}
         widgetRules={[
           {
             rule: reWidgetRule,
