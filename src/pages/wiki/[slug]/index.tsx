@@ -6,7 +6,7 @@ import {
   getWikisByCategory,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
@@ -77,6 +77,10 @@ export const getStaticProps: GetStaticProps = async context => {
   return {
     props: { wiki },
   }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: true }
 }
 
 export default Wiki
