@@ -24,11 +24,13 @@ export const HideWikiNotification = ({
   isOpen,
   wikiChosenId,
   IsHide,
+  hideFunc,
 }: {
   isOpen: boolean
   onClose: () => void
   wikiChosenId: string
   IsHide: boolean
+  hideFunc: (done: boolean) => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const wikiId = wikiChosenId
@@ -41,6 +43,7 @@ export const HideWikiNotification = ({
   const hideWiki = () => {
     console.log(wikis, 'modal')
     postHideWiki(wikiId)
+    hideFunc(true)
     onClose()
     let toastTitle = 'Wiki Successfully Archived'
     let toastMessage =
@@ -63,6 +66,7 @@ export const HideWikiNotification = ({
 
   const unHideWiki = () => {
     postUnHideWiki(wikiId)
+    hideFunc(true)
     onClose()
     let toastTitle = 'Wiki Successfully Unarchived'
     let toastMessage =

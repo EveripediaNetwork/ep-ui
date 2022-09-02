@@ -40,6 +40,7 @@ export const WikiInsightTable = () => {
     useState<boolean>(true)
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
+  const [hideNotify, setHideNotify] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
 
@@ -230,6 +231,7 @@ export const WikiInsightTable = () => {
     hidden,
     initGetPromotedWikis,
     initGetHiddenWikis,
+    hideNotify,
   ])
 
   return (
@@ -383,7 +385,9 @@ export const WikiInsightTable = () => {
         {wikis?.length && wikis.length > 0 ? (
           <InsightTableWikiCreated
             wikiCreatedInsightData={wikis || []}
-            hideWikisFunc={() => {}}
+            hideWikisFunc={(clicked: boolean) => {
+              setHideNotify(clicked)
+            }}
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">

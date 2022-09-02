@@ -22,7 +22,7 @@ import {
   Avatar,
 } from '@chakra-ui/react'
 import config from '@/config'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
 import {
@@ -37,7 +37,7 @@ import { HideWikiNotification } from './HideWikiNotification'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
-  hideWikisFunc: () => void
+  hideWikisFunc: (clicked: boolean) => void
 }
 
 export const InsightTableWikiCreated = (
@@ -54,7 +54,7 @@ export const InsightTableWikiCreated = (
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
-
+  const [hideNotify, setHideNotify] = useState(false)
   const VisibilityOptions = ['Archive', 'Unarchive']
 
   const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
@@ -72,7 +72,9 @@ export const InsightTableWikiCreated = (
     setWikiChosenIdPromote(id)
     onOpen()
   }
-
+  useEffect(() => {
+    hideWikisFunc(hideNotify)
+  }, [hideNotify])
   return (
     <TableContainer w="100%">
       <Table>
@@ -242,7 +244,6 @@ export const InsightTableWikiCreated = (
                             <MenuItem
                               key={m}
                               onClick={() => {
-                                hideWikisFunc()
                                 shouldArchive(o, item.hidden, item.id)
                               }}
                               py="1"
@@ -259,7 +260,6 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                           onClick={() => {
-                            hideWikisFunc()
                             shouldPromote(item.title, item.id)
                           }}
                         >
@@ -289,6 +289,9 @@ export const InsightTableWikiCreated = (
             onClose={onCloseWikiHideNotification}
             wikiChosenId={wikiChosenId}
             IsHide={isHide}
+            hideFunc={(done: boolean) => {
+              setHideNotify(done)
+            }}
           />
           <PromoteCreatedWikisModal
             isOpen={isOpen}
