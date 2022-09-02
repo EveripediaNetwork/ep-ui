@@ -13,14 +13,15 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description:
         'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+      iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hottest wikis trending on everipedia right now and in the blockchain world.',
+        'The latest and trending wikis on everipedia and in the blockchain space.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
-        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
+        'Explore your endless curiosities in different categories on Everipedia, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
@@ -196,14 +197,15 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description:
         'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+      iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hottest wikis trending on everipedia right now and in the blockchain world.',
+        'The latest and trending wikis on everipedia and in the blockchain space.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
-        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
+        'Explore your endless curiosities in different categories on Everipedia, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
@@ -340,14 +342,15 @@ export const resources = {
       everipedia: 'Everipedia',
       iq_description:
         'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+      iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Trending Wikis',
       trendingWikisDescription:
-        'The hottest wikis trending on everipedia right now and in the blockchain world.',
+        'The latest and trending wikis on everipedia and in the blockchain space.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
-        'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.',
+        'Explore your endless curiosities in different categories on Everipedia, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
       updatesFooterHeading: 'Get updated with Everipedia',
       updatesFooterText:
         'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating Everipedia.',
