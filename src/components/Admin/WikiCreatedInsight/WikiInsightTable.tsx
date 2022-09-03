@@ -40,23 +40,24 @@ export const WikiInsightTable = () => {
     useState<boolean>(true)
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
-  const [hideNotify, setHideNotify] = useState<boolean>(false)
+    const [toggler, setToggler] =
+    useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
-  const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
-
-  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
-    skip: initGetHiddenWikis,
-  })
+  const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
-  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(
-    searchKeyWord,
-    { skip: initGetSearchedWikis },
-  )
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
+  const { data: hidden, refetch: hiddenRefresh } =
+    useGetAllHiddenWikiCountQuery(paginateOffset, {
+      skip: initGetHiddenWikis,
+    })
+  const { data: SearchedWikis, refetch: searchRefresh } = useGetSearchedWikisByTitleQuery(
+    searchKeyWord,
+    { skip: initGetSearchedWikis },
+  )
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -108,7 +109,7 @@ export const WikiInsightTable = () => {
     onClose()
   }
 
-  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
+  const { data: promotedWikis, refetch: promotedRefresh } = useGetAllPromotedWikiCountQuery(
     paginateOffset,
     {
       skip: initGetPromotedWikis,
@@ -171,13 +172,13 @@ export const WikiInsightTable = () => {
 
   const WikisSortByAlpaUp = newWikis?.slice()
   WikisSortByAlpaUp?.sort((a, b) => {
-    const Data = a?.title?.trim().localeCompare(b.title.trim())
+    const Data = a.title.trim().localeCompare(b.title.trim())
     return Data
   })
 
   const WikisSortByAlpaDown = newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
-    const Data = b?.title?.trim().localeCompare(a.title.trim())
+    const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
   })
 
@@ -220,6 +221,10 @@ export const WikiInsightTable = () => {
 
   useEffect(() => {
     whichWiki()
+    refetch()
+    hiddenRefresh()
+    promotedRefresh()
+    searchRefresh()
   }, [
     wiki,
     filterItems,
@@ -231,7 +236,8 @@ export const WikiInsightTable = () => {
     hidden,
     initGetPromotedWikis,
     initGetHiddenWikis,
-    hideNotify,
+    toggler
+
   ])
 
   return (
@@ -385,9 +391,7 @@ export const WikiInsightTable = () => {
         {wikis?.length && wikis.length > 0 ? (
           <InsightTableWikiCreated
             wikiCreatedInsightData={wikis || []}
-            hideWikisFunc={(clicked: boolean) => {
-              setHideNotify(clicked)
-            }}
+            hideWikisFunc={() => setToggler(!toggler)}
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">

@@ -37,7 +37,7 @@ import { HideWikiNotification } from './HideWikiNotification'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
-  hideWikisFunc: (clicked: boolean) => void
+  hideWikisFunc: () => void
 }
 
 export const InsightTableWikiCreated = (
@@ -73,8 +73,9 @@ export const InsightTableWikiCreated = (
     onOpen()
   }
   useEffect(() => {
-    hideWikisFunc(hideNotify)
+    hideWikisFunc()
   }, [hideNotify])
+  
   return (
     <TableContainer w="100%">
       <Table>
@@ -207,7 +208,7 @@ export const InsightTableWikiCreated = (
                         as={BsDot}
                       />
                       <TagLabel>
-                        {item.hidden ? 'Archive' : 'Unarchive'}
+                        {item.hidden ? 'Archived' : 'Unarchived'}
                       </TagLabel>
                     </HStack>
                   </Tag>
@@ -289,8 +290,8 @@ export const InsightTableWikiCreated = (
             onClose={onCloseWikiHideNotification}
             wikiChosenId={wikiChosenId}
             IsHide={isHide}
-            hideFunc={(done: boolean) => {
-              setHideNotify(done)
+            hideFunc={() => {
+              setHideNotify(!hideNotify)
             }}
           />
           <PromoteCreatedWikisModal
