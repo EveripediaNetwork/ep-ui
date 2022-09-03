@@ -40,8 +40,7 @@ export const WikiInsightTable = () => {
     useState<boolean>(true)
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
-    const [toggler, setToggler] =
-    useState<boolean>(false)
+  const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
@@ -54,10 +53,10 @@ export const WikiInsightTable = () => {
     useGetAllHiddenWikiCountQuery(paginateOffset, {
       skip: initGetHiddenWikis,
     })
-  const { data: SearchedWikis, refetch: searchRefresh } = useGetSearchedWikisByTitleQuery(
-    searchKeyWord,
-    { skip: initGetSearchedWikis },
-  )
+  const { data: SearchedWikis, refetch: searchRefresh } =
+    useGetSearchedWikisByTitleQuery(searchKeyWord, {
+      skip: initGetSearchedWikis,
+    })
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -109,12 +108,10 @@ export const WikiInsightTable = () => {
     onClose()
   }
 
-  const { data: promotedWikis, refetch: promotedRefresh } = useGetAllPromotedWikiCountQuery(
-    paginateOffset,
-    {
+  const { data: promotedWikis, refetch: promotedRefresh } =
+    useGetAllPromotedWikiCountQuery(paginateOffset, {
       skip: initGetPromotedWikis,
-    },
-  )
+    })
 
   const SortArray = [
     { id: 1, value: 'Newest' },
@@ -236,8 +233,7 @@ export const WikiInsightTable = () => {
     hidden,
     initGetPromotedWikis,
     initGetHiddenWikis,
-    toggler
-
+    toggler,
   ])
 
   return (
