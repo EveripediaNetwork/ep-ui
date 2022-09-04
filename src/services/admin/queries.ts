@@ -237,7 +237,7 @@ export const POST_PROMOTED_WIKI = gql`
       id
     }
   }
- `
+`
 
 export const TOGGLE_USER = gql`
   mutation ToggleUser($id: String!, $active: Boolean) {
