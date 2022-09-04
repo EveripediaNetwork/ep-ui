@@ -2,12 +2,10 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
-import { GetServerSideProps } from 'next'
-import { Flex, Spinner, Text, Button, Box } from '@chakra-ui/react'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { Flex, Text, Button, Box } from '@chakra-ui/react'
 import {
   getActivityById,
-  getLatestIPFSByWiki,
-  useGetActivityByIdQuery,
   useGetLatestIPFSByWikiQuery,
   getRunningOperationPromises,
 } from '@/services/activities'
@@ -18,24 +16,19 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
+import { Activity } from '@/types/ActivityDataType'
 
-const Revision = () => {
+interface RevisionPageProps {
+  wiki: Activity
+}
+const Revision = ({ wiki }: RevisionPageProps) => {
   const router = useRouter()
 
   const { id: ActivityId } = router.query
-  const {
-    isLoading,
-    error,
-    data: wiki,
-  } = useGetActivityByIdQuery(
-    typeof ActivityId === 'string' ? ActivityId : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
+
   const wikiId = wiki?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
     typeof wikiId === 'string' ? wikiId : skipToken,
@@ -95,65 +88,71 @@ const Revision = () => {
         />
       )}
 
-      <main>
-        {!error && (router.isFallback || isLoading) ? (
-          <Flex justify="center" align="center" h="50vh">
-            <Spinner size="xl" />
-          </Flex>
-        ) : (
-          <Box mt={-2}>
-            {!isLatest && (
-              <Flex
-                flexDir={{ base: 'column', md: 'row' }}
-                justify="center"
-                align="center"
-                gap={2}
-                bgColor="red.200"
-                _dark={{ bgColor: 'red.500' }}
-                w="100%"
-                p={2}
+      <Box mt={-2}>
+        {!isLatest && (
+          <Flex
+            flexDir={{ base: 'column', md: 'row' }}
+            justify="center"
+            align="center"
+            gap={2}
+            bgColor="red.200"
+            _dark={{ bgColor: 'red.500' }}
+            w="100%"
+            p={2}
+          >
+            <Text textAlign="center">
+              You are seeing an older version of this wiki.
+            </Text>
+            <Link href={`/wiki/${wiki?.content[0].id}`} passHref>
+              <Button
+                as="a"
+                maxW="120px"
+                variant="solid"
+                bgColor="dimColor"
+                sx={{
+                  '&:hover, &:focus, &:active': {
+                    bgColor: 'dimColor',
+                    textDecoration: 'underline',
+                  },
+                }}
+                px={4}
+                size="sm"
               >
-                <Text textAlign="center">
-                  You are seeing an older version of this wiki.
-                </Text>
-                <Link href={`/wiki/${wiki?.content[0].id}`} passHref>
-                  <Button
-                    as="a"
-                    maxW="120px"
-                    variant="solid"
-                    bgColor="dimColor"
-                    sx={{
-                      '&:hover, &:focus, &:active': {
-                        bgColor: 'dimColor',
-                        textDecoration: 'underline',
-                      },
-                    }}
-                    px={4}
-                    size="sm"
-                  >
-                    View Latest
-                  </Button>
-                </Link>
-              </Flex>
-            )}
-            <WikiMarkup wiki={wiki?.content[0]} ipfs={wiki?.ipfs} />
-          </Box>
+                View Latest
+              </Button>
+            </Link>
+          </Flex>
         )}
-      </main>
+        <WikiMarkup wiki={wiki?.content[0]} ipfs={wiki?.ipfs} />
+      </Box>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const id = context.params?.id
-  if (typeof id === 'string') {
-    store.dispatch(getActivityById.initiate(id))
-    store.dispatch(getLatestIPFSByWiki.initiate(id))
+  if (typeof id !== 'string') {
+    return {
+      notFound: true,
+    }
   }
+  const { data, error } = await store.dispatch(getActivityById.initiate(id))
   await Promise.all(getRunningOperationPromises())
-  return {
-    props: {},
+
+  if (error) {
+    return {
+      notFound: true,
+    }
   }
+
+  return {
+    props: {
+      wiki: data || [],
+    },
+  }
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: true }
 }
 
 export default Revision
