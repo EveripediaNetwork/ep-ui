@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
@@ -8,6 +8,7 @@ import {
   getActivityById,
   useGetLatestIPFSByWikiQuery,
   getRunningOperationPromises,
+  getWikiCreatorAndEditorByActivityId,
 } from '@/services/activities'
 import Link from 'next/link'
 import { useAppSelector } from '@/store/hook'
@@ -28,8 +29,9 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
+  const [wikiData, setWikiData] = useState<Activity>(wiki)
 
-  const wikiId = wiki?.content[0].id
+  const wikiId = wikiData?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
     typeof wikiId === 'string' ? wikiId : skipToken,
     {
@@ -46,12 +48,12 @@ const Revision = ({ wiki }: RevisionPageProps) => {
 
   // check if the current revision is the latest revision
   useEffect(() => {
-    if (latestIPFS && wiki && latestIPFS !== wiki?.ipfs) {
+    if (latestIPFS && wikiData && latestIPFS !== wikiData?.ipfs) {
       setIsLatest(false)
     } else {
       setIsLatest(true)
     }
-  }, [latestIPFS, wiki, wiki?.ipfs])
+  }, [latestIPFS, wikiData, wikiData?.ipfs])
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
@@ -67,24 +69,33 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   }, [toc])
 
   useEffect(() => {
-    if (wiki) incrementWikiViewCount(wiki.content[0].id)
-  }, [wiki])
+    const fetchUserDataAndIncView = async () => {
+      if (ActivityId && typeof ActivityId === 'string') {
+        const { data } = await store.dispatch(
+          getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
+        )
+        setWikiData(p => ({ ...p, content: { ...p.content, ...data } }))
+        incrementWikiViewCount(wikiData.content[0].id)
+      }
+    }
+    fetchUserDataAndIncView()
+  }, [ActivityId, wikiData])
 
   return (
     <>
-      {wiki && (
+      {wikiData && (
         <WikiHeader
-          slug={wiki.content[0].id as string}
+          slug={wikiData.content[0].id as string}
           author={
-            wiki.content[0].author.profile?.username ||
-            wiki.content[0].author.id ||
+            wikiData.content[0].author.profile?.username ||
+            wikiData.content[0].author.id ||
             ''
           }
-          dateModified={wiki.content[0].updated}
-          datePublished={wiki.content[0].created}
-          title={wiki.content[0].title}
-          description={getWikiSummary(wiki.content[0])}
-          mainImage={getWikiImageUrl(wiki.content[0])}
+          dateModified={wikiData.content[0].updated}
+          datePublished={wikiData.content[0].created}
+          title={wikiData.content[0].title}
+          description={getWikiSummary(wikiData.content[0])}
+          mainImage={getWikiImageUrl(wikiData.content[0])}
         />
       )}
 
@@ -101,9 +112,9 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             p={2}
           >
             <Text textAlign="center">
-              You are seeing an older version of this wiki.
+              You are seeing an older version of this wikiData.
             </Text>
-            <Link href={`/wiki/${wiki?.content[0].id}`} passHref>
+            <Link href={`/wikiData/${wikiData?.content[0].id}`} passHref>
               <Button
                 as="a"
                 maxW="120px"
@@ -123,7 +134,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             </Link>
           </Flex>
         )}
-        <WikiMarkup wiki={wiki?.content[0]} ipfs={wiki?.ipfs} />
+        <WikiMarkup wiki={wikiData?.content[0]} ipfs={wikiData?.ipfs} />
       </Box>
     </>
   )
@@ -136,19 +147,19 @@ export const getStaticProps: GetStaticProps = async context => {
       notFound: true,
     }
   }
+
   const { data, error } = await store.dispatch(getActivityById.initiate(id))
   await Promise.all(getRunningOperationPromises())
 
-  if (error) {
+  if (data && !error)
     return {
-      notFound: true,
+      props: {
+        wiki: data,
+      },
     }
-  }
 
   return {
-    props: {
-      wiki: data || [],
-    },
+    notFound: true,
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {

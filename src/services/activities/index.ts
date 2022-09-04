@@ -7,10 +7,12 @@ import {
   GET_ACTIVITIES_BY_WIKI,
   GET_LATEST_ACTIVITY_BY_WIKI,
   GET_WIKI_BY_ACTIVITY_ID,
+  GET_WIKI_CREATOR_AND_EDITOR_BY_ACTIVITY_ID,
 } from '@/services/activities/queries'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 import { Wiki } from '@/types/Wiki'
+import { User } from '@sentry/nextjs'
 
 type GetActivitiesResponse = {
   activities: Activity[]
@@ -32,6 +34,15 @@ type GetLatestActivityByWikiResponse = {
 type ActivitiesArg = {
   limit?: number
   offset?: number
+}
+
+type WikiCreatorAndEditor = {
+  user: User
+  author: User
+}
+
+type WikiCreatorAndEditorResponse = {
+  wiki: WikiCreatorAndEditor
 }
 
 export const activitiesApi = createApi({
@@ -70,6 +81,17 @@ export const activitiesApi = createApi({
       transformResponse: (response: GetActivityByIdResponse) =>
         response.activityById.content[0],
     }),
+    getWikiCreatorAndEditorByActivityId: builder.query<
+      WikiCreatorAndEditor,
+      string
+    >({
+      query: (id: string) => ({
+        document: GET_WIKI_CREATOR_AND_EDITOR_BY_ACTIVITY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: WikiCreatorAndEditorResponse) =>
+        response.wiki,
+    }),
     getLatestIPFSByWiki: builder.query<string, string>({
       query: (wikiId: string) => ({
         document: GET_LATEST_ACTIVITY_BY_WIKI,
@@ -104,4 +126,5 @@ export const {
   getLatestIPFSByWiki,
   getActivityById,
   getWikiByActivityId,
+  getWikiCreatorAndEditorByActivityId,
 } = activitiesApi.endpoints
