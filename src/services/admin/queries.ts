@@ -232,52 +232,11 @@ export const UNHIDE_WIKI = gql`
   }
 `
 export const POST_PROMOTED_WIKI = gql`
-  mutation postPromotedWiki($id: String!, $level: Int) {
+  mutation PromotedWiki($id: String!, $level: Int) {
     promoteWiki(id: $id, level: $level) {
       id
-      ipfs
-      transactionHash
-      created
-      updated
-      title
-      summary
-      content
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-      media {
-        name
-        id
-        size
-        source
-      }
-      metadata {
-        id
-        value
-      }
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      author {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
     }
+  }
  `
 
 export const TOGGLE_USER = gql`

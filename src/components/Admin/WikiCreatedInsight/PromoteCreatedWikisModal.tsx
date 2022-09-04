@@ -221,6 +221,7 @@ export const PromoteCreatedWikisModal = ({
           id: wikiChosenId,
           level: Number(value),
         })
+        console.log(Number(value))
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
         let toastMessage =
@@ -300,10 +301,11 @@ export const PromoteCreatedWikisModal = ({
                   w="20%"
                   onChange={e => setValue(e.target.value)}
                 >
-                  <option value={1}> SORT 1 </option>
-                  <option value={2}> SORT 2</option>
-                  <option value={3}> SORT 3 </option>
-                  <option value={4}> SORT 4 </option>
+                  {/* values are for testing */}
+                  <option value={0}> SORT 1 </option>
+                  <option value={7}> SORT 2</option>
+                  <option value={6}> SORT 3 </option>
+                  <option value={5}> SORT 4 </option>
                 </Select>
               </Box>
             )}
@@ -334,7 +336,7 @@ export const PromoteCreatedWikisModal = ({
       onClose={Close}
       isOpen={isOpen}
       isCentered
-      size={{ lg: '3xl', base: 'sm' }}
+      size={{ lg: '3xl', base: 'xl' }}
       {...rest}
     >
       <ModalOverlay />
@@ -380,7 +382,7 @@ export const PromoteCreatedWikisModal = ({
                 ))}
               </Steps>
               <Flex width="100%" justify="center" pt={4} pb={5}>
-                <HStack gap={3}>
+                <Stack gap={3} direction={{ base: 'column', lg: 'row' }}>
                   <Button
                     p={4}
                     onClick={HompageSelected}
@@ -398,7 +400,7 @@ export const PromoteCreatedWikisModal = ({
                   >
                     {buttonTwo}
                   </Button>
-                </HStack>
+                </Stack>
               </Flex>
             </Flex>
           </VStack>
