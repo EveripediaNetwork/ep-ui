@@ -359,6 +359,8 @@ export const WikiInsightTable = () => {
                       borderWidth="1px"
                       onClick={() => {
                         setChecked(0)
+                        setFilterItems([])
+                        setPaginateOffset(0)
                         onClose()
                       }}
                       rounded="lg"
