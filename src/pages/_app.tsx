@@ -18,7 +18,7 @@ import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
-import { provider, connectors } from '@/config/wagmi'
+import { provider } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
