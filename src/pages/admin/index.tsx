@@ -38,17 +38,6 @@ const Admin = () => {
       setIsTokenHeaderSet(true)
     }
   }, [userAddress, setAccount, token])
-  // const startDate = useMemo(() => {
-  //   let prevMonday = new Date()
-  //   prevMonday = new Date(
-  //     prevMonday.setDate(
-  //       prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7),
-  //     ),
-  //   )
-  //   prevMonday.setHours(0, 0, 0, 0)
-
-  //   return Math.floor(prevMonday.getTime() / 1000)
-  // }, [])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
@@ -82,9 +71,7 @@ const Admin = () => {
     interval: 'year',
   })
 
-  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({
-    startDate: 0,
-  })
+  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
