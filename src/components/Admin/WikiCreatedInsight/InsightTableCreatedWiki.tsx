@@ -208,9 +208,7 @@ export const InsightTableWikiCreated = (
                         color={!item.hidden ? '#38A169' : '#DD6B20'}
                         as={BsDot}
                       />
-                      <TagLabel>
-                        {item.hidden ? 'Archived' : 'Active'}
-                      </TagLabel>
+                      <TagLabel>{item.hidden ? 'Archived' : 'Active'}</TagLabel>
                     </HStack>
                   </Tag>
                 </Td>
