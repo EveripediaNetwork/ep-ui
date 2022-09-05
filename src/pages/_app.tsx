@@ -33,7 +33,7 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
 
 const client = createClient({
   autoConnect: true,
-  connectors,
+  // connectors,
   provider,
 })
 
