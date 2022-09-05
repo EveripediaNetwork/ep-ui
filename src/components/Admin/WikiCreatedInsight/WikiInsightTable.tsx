@@ -196,9 +196,9 @@ export const WikiInsightTable = () => {
   }, [newWikis, sortTableBy])
 
   const whichWiki = () => {
-    if (searchKeyWord.length < 1) {
+    if (searchKeyWord.length < 2) {
       setWikis(wikiSorted)
-    } else if (searchKeyWord.length > 0) {
+    } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
       setWikis(SearchedWikis)
     }
@@ -263,8 +263,8 @@ export const WikiInsightTable = () => {
         </Text>
       </Flex>
 
-      <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
-        <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
+      <Flex justifyContent="flex-end" p={5}>
+        <Flex gap={5}>
           <InputGroup w="100%">
             <InputLeftElement pointerEvents="none">
               <FiSearch color="#667085" />
@@ -291,7 +291,6 @@ export const WikiInsightTable = () => {
                 leftIcon={sortIcon}
                 variant="outline"
                 fontWeight="light"
-                w="100%"
               >
                 Sort
               </Button>

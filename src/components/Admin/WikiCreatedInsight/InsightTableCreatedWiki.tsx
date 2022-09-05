@@ -107,7 +107,7 @@ export const InsightTableWikiCreated = (
         <Tbody>
           {wikiCreatedInsightData.map((item, i) => {
             return (
-              <Tr key={i}>
+              <Tr key={i} my="-5">
                 <Td>
                   <Flex flexDir="row" align="center" gap={2}>
                     <Avatar
@@ -123,11 +123,12 @@ export const InsightTableWikiCreated = (
                       </Link>
                       <Text color="#718096" fontSize="sm">
                         <Link href={`/account/${item.author?.id}`} py={1}>
+                          {/* eslint-disable no-nested-ternary */}
                           {item.author?.profile?.username
                             ? item.author.profile.username
-                            : shortenAccount(
-                                item.author?.id ? item.author.id : '0x0',
-                              )}
+                            : item.author?.id
+                            ? shortenAccount(item.author.id)
+                            : 'UnKnown'}
                         </Link>
                       </Text>
                     </Flex>
@@ -214,7 +215,7 @@ export const InsightTableWikiCreated = (
                   </Tag>
                 </Td>
                 <Td>
-                  <Flex w="100%" p={5} gap={2} align="center">
+                  <Flex w="100%" gap={2} align="center">
                     <HStack spacing={5}>
                       <Menu>
                         <MenuButton
@@ -299,6 +300,9 @@ export const InsightTableWikiCreated = (
             onClose={onClose}
             wikiChosenTitle={wikiChosenTitle}
             wikiChosenId={wikiChosenIdPromote}
+            hideFunc={() => {
+              setHideNotify(!hideNotify)
+            }}
           />
         </Tbody>
       </Table>

@@ -23,6 +23,7 @@ import { RiCloseLine } from 'react-icons/ri'
 import {
   useGetSearchedWikisByTitleQuery,
   usePostPromotedWikiMutation,
+  useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { WikiImage } from '@/components/WikiImage'
@@ -35,29 +36,47 @@ export const PromoteCreatedWikisModal = ({
   isOpen = false,
   wikiChosenTitle,
   wikiChosenId,
+  hideFunc,
   ...rest
 }: {
   isOpen: boolean
   onClose: () => void
   wikiChosenTitle: string
   wikiChosenId: string
+  hideFunc: () => void
 }) => {
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
+
+  const getWikiIdUsingLevel = (level: number) => {
+    const data: any = promotedWikis && promotedWikis
+    let value: any
+    /* eslint-disable no-plusplus */
+
+    for (let index = 0; index < data.length; index++) {
+      if (data[index].promoted === level) {
+        value = data[index].id
+        return value
+      }
+    }
+    return value
+  }
+
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
   const [value, setValue] = useState('')
-  const homepageLevel = 4
+  const homepageLevel = 7 /* for dev */
+  // const homepageLevel = 4  /* for prod */
   const toast = useToast()
   const ModalData = wiki?.filter(
     item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData && ModalData[0]
-
   const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
   })
@@ -128,7 +147,7 @@ export const PromoteCreatedWikisModal = ({
                   {Data.title}
                 </Heading>
               </HStack>
-              {Data.categories.length && (
+              {Data.categories.length ? (
                 <HStack>
                   {Data.categories?.map((category, i) => (
                     <Link key={i} href={`/categories/${category.id}`}>
@@ -140,11 +159,13 @@ export const PromoteCreatedWikisModal = ({
                         cursor="pointer"
                         fontSize={{ base: '10px', lg: '12px' }}
                       >
-                        {category.title ? category.title : category.id}
+                        {category.title ? category.title : ''}
                       </Text>
                     </Link>
                   ))}
                 </HStack>
+              ) : (
+                <Text> </Text>
               )}
             </Flex>
             <Box
@@ -154,7 +175,7 @@ export const PromoteCreatedWikisModal = ({
               overflow="hidden"
             >
               <Text fontSize="sm" display={{ base: 'none', md: 'flex' }}>
-                {Data.summary}
+                {Data.summary ? Data.summary : 'No Summary'}
               </Text>
             </Box>
             <Stack
@@ -175,11 +196,12 @@ export const PromoteCreatedWikisModal = ({
                       color="brand.500"
                       fontWeight="bold"
                     >
+                      {/* eslint-disable no-nested-ternary */}
                       {Data.author?.profile?.username
                         ? Data.author.profile.username
-                        : shortenAccount(
-                            Data.author?.id ? Data.author.id : '0x0',
-                          )}
+                        : Data.author?.id
+                        ? shortenAccount(Data.author.id)
+                        : 'Unknown'}
                     </Link>
                   </Text>
                 </HStack>
@@ -221,7 +243,12 @@ export const PromoteCreatedWikisModal = ({
           id: wikiChosenId,
           level: Number(value),
         })
-        console.log(Number(value))
+        await promoteWiki({
+          id: getWikiIdUsingLevel(Number(value)),
+          level: 0,
+        })
+
+        hideFunc()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
         let toastMessage =
@@ -245,6 +272,13 @@ export const PromoteCreatedWikisModal = ({
           id: wikiChosenId,
           level: homepageLevel,
         })
+
+        await promoteWiki({
+          id: getWikiIdUsingLevel(homepageLevel),
+          level: 0,
+        })
+
+        hideFunc()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Homepage'
         let toastMessage =
@@ -301,11 +335,14 @@ export const PromoteCreatedWikisModal = ({
                   w="20%"
                   onChange={e => setValue(e.target.value)}
                 >
-                  {/* values are for testing */}
-                  <option value={0}> SORT 1 </option>
-                  <option value={7}> SORT 2</option>
-                  <option value={6}> SORT 3 </option>
-                  <option value={5}> SORT 4 </option>
+                  {/* values are for dev */}
+                  <option value={6}> SLOT 1 </option>
+                  <option value={5}> SLOT 2</option>
+
+                  {/* values are for prod
+                  <option value={3}> SLOT 1</option>
+                  <option value={2}> SLOT 2 </option>
+                  <option value={1}> SLOT 3 </option> */}
                 </Select>
               </Box>
             )}
