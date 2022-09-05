@@ -197,19 +197,19 @@ export const InsightTableWikiCreated = (
                     size="md"
                     borderRadius="full"
                     variant="solid"
-                    color={item.hidden ? '#38A169' : '#DD6B20'}
-                    bg={item.hidden ? '#F0FFF4' : '#FFF5F5'}
+                    color={!item.hidden ? '#38A169' : '#DD6B20'}
+                    bg={!item.hidden ? '#F0FFF4' : '#FFF5F5'}
                     px="2"
                   >
                     <HStack spacing={2}>
                       <Icon
                         fontSize="20px"
                         cursor="pointer"
-                        color={item.hidden ? '#38A169' : '#DD6B20'}
+                        color={!item.hidden ? '#38A169' : '#DD6B20'}
                         as={BsDot}
                       />
                       <TagLabel>
-                        {item.hidden ? 'Archived' : 'Unarchived'}
+                        {item.hidden ? 'Archived' : 'Active'}
                       </TagLabel>
                     </HStack>
                   </Tag>
