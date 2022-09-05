@@ -15,6 +15,7 @@ import {
   HIDDEN_WIKIS_TABLE,
   HIDDEN_EDITORS_TABLE,
   UNHIDE_WIKI,
+  GET_PAGE_COUNT,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -35,6 +36,12 @@ type WikisModifiedCountArgs = {
   interval?: string
 }
 
+type PageViewCountArgs = {
+  startDate?: number
+}
+type PageViewsCountResponse = {
+  pageViewsCount: { amount: number }
+}
 type ToggleUserArgs = {
   id: string
   active: boolean
@@ -121,6 +128,14 @@ export const adminApi = createApi({
         variables: { limit, offset },
       }),
       transformResponse: (response: EditorsRes) => response.users,
+    }),
+    getPageViewCount: builder.query<{ amount: number }, PageViewCountArgs>({
+      query: ({ startDate }: PageViewCountArgs) => ({
+        document: GET_PAGE_COUNT,
+        variables: { startDate },
+      }),
+      transformResponse: (response: PageViewsCountResponse) =>
+        response.pageViewsCount,
     }),
     getHiddenEditors: builder.query<Editors[], EditorQueryParams>({
       query: ({ limit, offset }: { limit: number; offset: number }) => ({
@@ -237,6 +252,7 @@ export const {
   useGetAllHiddenWikiCountQuery,
   useGetAllPromotedWikiCountQuery,
   useGetHiddenEditorsQuery,
+  useGetPageViewCountQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
@@ -251,6 +267,7 @@ export const {
   getEditorsCount,
   toggleUser,
   postHideWiki,
+  getPageViewCount,
   getHiddenEditors,
   postUnHideWiki,
   postPromotedWiki,

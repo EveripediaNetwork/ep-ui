@@ -20,6 +20,7 @@ import {
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
   adminApiClient,
+  useGetPageViewCountQuery,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
@@ -65,6 +66,9 @@ const Admin = () => {
     interval: 'week',
   })
 
+  const { data: WeekPageView } = useGetPageViewCountQuery({})
+
+  const { data: allTimePageView } = useGetPageViewCountQuery({ startDate: 0 })
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
     endDate,
@@ -143,9 +147,9 @@ const Admin = () => {
     },
     {
       icon: RiUserSearchFill,
-      value: 500,
+      value: allTimePageView && allTimePageView.amount,
       detailHeader: 'Total no of Visitors',
-      weeklyValue: 1000,
+      weeklyValue: WeekPageView && WeekPageView.amount,
       percent: 40,
       color: 'pink.400',
     },
@@ -189,13 +193,8 @@ const Admin = () => {
               detailHeader={detailHeader}
               icon={icon}
               key={i}
-              currentValue={value?.toString()}
+              currentValue={value || 0}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
-              percent={
-                Number.isNaN(weeklyValue / value)
-                  ? 0
-                  : Math.round(weeklyValue / value)
-              }
               color={color}
             />
           )

@@ -1,5 +1,13 @@
 import { gql } from 'graphql-request'
 
+export const GET_PAGE_COUNT = gql`
+  query PageViewCount($startDate: Int) {
+    pageViewsCount(startDate: $startDate) {
+      amount
+    }
+  }
+`
+
 export const WIKIS_EDITED = gql`
   query WikisEdited($startDate: Int, $endDate: Int, $interval: String) {
     wikisEdited(startDate: $startDate, endDate: $endDate, interval: $interval) {
