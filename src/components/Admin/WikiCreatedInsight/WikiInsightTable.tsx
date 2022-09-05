@@ -263,8 +263,8 @@ export const WikiInsightTable = () => {
         </Text>
       </Flex>
 
-      <Flex justifyContent="flex-end" p={5}>
-        <Flex gap={5}>
+      <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
+        <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
           <InputGroup w="100%">
             <InputLeftElement pointerEvents="none">
               <FiSearch color="#667085" />
@@ -291,6 +291,7 @@ export const WikiInsightTable = () => {
                 leftIcon={sortIcon}
                 variant="outline"
                 fontWeight="light"
+                w="100%"
               >
                 Sort
               </Button>
