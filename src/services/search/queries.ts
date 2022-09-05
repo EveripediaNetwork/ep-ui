@@ -8,6 +8,7 @@ export const GET_WIKIS_BY_TITLE = gql`
       content
       summary
       updated
+      created
       tags {
         id
       }
@@ -21,6 +22,7 @@ export const GET_WIKIS_BY_TITLE = gql`
       user {
         id
       }
+      promoted
       author {
         id
         profile {

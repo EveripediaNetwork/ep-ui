@@ -419,7 +419,7 @@ export const PromoteCreatedWikisModal = ({
                 ))}
               </Steps>
               <Flex width="100%" justify="center" pt={4} pb={5}>
-                <Stack gap={3} direction={{ base: 'column', lg: 'row' }}>
+                <HStack gap={3} >
                   <Button
                     p={4}
                     onClick={HompageSelected}
@@ -437,7 +437,7 @@ export const PromoteCreatedWikisModal = ({
                   >
                     {buttonTwo}
                   </Button>
-                </Stack>
+                </HStack>
               </Flex>
             </Flex>
           </VStack>
