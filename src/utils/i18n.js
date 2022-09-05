@@ -12,7 +12,7 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description:
-        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+        'Start your crypto journey with Everipedia! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
@@ -196,7 +196,7 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description:
-        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+        'Start your crypto journey with Everipedia! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
@@ -341,7 +341,7 @@ export const resources = {
       //Home page
       everipedia: 'Everipedia',
       iq_description:
-        'Start your crypto journey with Everipedia! The biggest blockchain encyclopedia for exploring your deepest curiosities.',
+        'Start your crypto journey with Everipedia! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with Everipedia!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
