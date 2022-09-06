@@ -35,18 +35,28 @@ import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
+  const [initGetHiddenWikis, setInitGetHiddenWikis] = useState<boolean>(true)
+  const [initGetPromotedWikis, setInitGetPromotedWikis] =
+    useState<boolean>(true)
+  const [initGetSearchedWikis, setInitGetSearchedWikis] =
+    useState<boolean>(true)
+  const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
-  const { data: wiki } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const { data: promotedWikis } =
-    useGetAllPromotedWikiCountQuery(paginateOffset)
-  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset)
+  const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<Array<[] | any>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
-  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(searchKeyWord)
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
+  const { data: hidden, refetch: hiddenRefresh } =
+    useGetAllHiddenWikiCountQuery(paginateOffset, {
+      skip: initGetHiddenWikis,
+    })
+  const { data: SearchedWikis, refetch: searchRefresh } =
+    useGetSearchedWikisByTitleQuery(searchKeyWord, {
+      skip: initGetSearchedWikis,
+    })
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -64,7 +74,6 @@ export const WikiInsightTable = () => {
   enum FilterTypes {
     promoted = 'promoted',
     archived = 'archived',
-    sponsored = 'sponsored',
     normal = 'normal',
   }
 
@@ -99,6 +108,11 @@ export const WikiInsightTable = () => {
     onClose()
   }
 
+  const { data: promotedWikis, refetch: promotedRefresh } =
+    useGetAllPromotedWikiCountQuery(paginateOffset, {
+      skip: initGetPromotedWikis,
+    })
+
   const SortArray = [
     { id: 1, value: 'Newest' },
     { id: 2, value: 'Oldest' },
@@ -109,27 +123,33 @@ export const WikiInsightTable = () => {
   const FilterArray = [
     { id: 'promoted', value: 'Promoted' },
     { id: 'archived', value: 'Archived' },
-    { id: 'sponsored', value: 'Sponsored' },
     { id: 'normal', value: 'Normal' },
   ]
 
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
-      return promotedWikis
+      setInitGetPromotedWikis(false)
+      filteredWikis = promotedWikis
+      return filteredWikis
     }
     if (filterItems?.includes(FilterTypes.archived)) {
-      return hidden
-    }
-    if (filterItems?.includes(FilterTypes.sponsored)) {
-      // will get sponsored wiki
+      setInitGetHiddenWikis(false)
+      filteredWikis = hidden
+      return filteredWikis
     }
     if (filterItems?.includes(FilterTypes.normal)) {
-      // normal is the normal wiki
       filteredWikis = wiki
     }
     return filteredWikis
-  }, [wiki, filterItems])
+  }, [
+    wiki,
+    filterItems,
+    initGetPromotedWikis,
+    initGetHiddenWikis,
+    promotedWikis,
+    hidden,
+  ])
 
   const WikisSortByHighest = newWikis?.slice()
   WikisSortByHighest?.sort((a, b) => {
@@ -176,9 +196,10 @@ export const WikiInsightTable = () => {
   }, [newWikis, sortTableBy])
 
   const whichWiki = () => {
-    if (searchKeyWord.length < 1) {
+    if (searchKeyWord.length < 2) {
       setWikis(wikiSorted)
-    } else if (searchKeyWord.length > 0) {
+    } else if (searchKeyWord.length > 2) {
+      setInitGetSearchedWikis(false)
       setWikis(SearchedWikis)
     }
   }
@@ -197,7 +218,23 @@ export const WikiInsightTable = () => {
 
   useEffect(() => {
     whichWiki()
-  }, [wiki, filterItems, sortTableBy, SearchedWikis, searchKeyWord])
+    refetch()
+    hiddenRefresh()
+    promotedRefresh()
+    searchRefresh()
+  }, [
+    wiki,
+    filterItems,
+    sortTableBy,
+    searchKeyWord,
+    initGetSearchedWikis,
+    SearchedWikis,
+    promotedWikis,
+    hidden,
+    initGetPromotedWikis,
+    initGetHiddenWikis,
+    toggler,
+  ])
 
   return (
     <Flex
@@ -322,6 +359,8 @@ export const WikiInsightTable = () => {
                       borderWidth="1px"
                       onClick={() => {
                         setChecked(0)
+                        setFilterItems([])
+                        setPaginateOffset(0)
                         onClose()
                       }}
                       rounded="lg"
@@ -350,9 +389,7 @@ export const WikiInsightTable = () => {
         {wikis?.length && wikis.length > 0 ? (
           <InsightTableWikiCreated
             wikiCreatedInsightData={wikis || []}
-            hideWikisFunc={() => {
-              console.log(wiki)
-            }}
+            hideWikisFunc={() => setToggler(!toggler)}
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">

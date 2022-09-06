@@ -20,6 +20,7 @@ import {
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
   adminApiClient,
+  useGetPageViewCountQuery,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
@@ -38,17 +39,6 @@ const Admin = () => {
       setIsTokenHeaderSet(true)
     }
   }, [userAddress, setAccount, token])
-  const startDate = useMemo(() => {
-    let prevMonday = new Date()
-    prevMonday = new Date(
-      prevMonday.setDate(
-        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7),
-      ),
-    )
-    prevMonday.setHours(0, 0, 0, 0)
-
-    return Math.floor(prevMonday.getTime() / 1000)
-  }, [])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
@@ -61,7 +51,7 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-    startDate,
+    startDate: 0,
     interval: 'week',
   })
 
@@ -72,20 +62,20 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
-    startDate,
+    startDate: 0,
     interval: 'week',
   })
 
+  const { data: WeekPageView } = useGetPageViewCountQuery({})
+
+  const { data: allTimePageView } = useGetPageViewCountQuery({ startDate: 0 })
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
     endDate,
     interval: 'year',
   })
 
-  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({
-    startDate,
-    interval: 'week',
-  })
+  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
@@ -130,7 +120,8 @@ const Admin = () => {
         ? totalWikisEditedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiEditedCountData
-        ? weeklyWikiEditedCountData[0]?.amount
+        ? weeklyWikiEditedCountData[weeklyWikiEditedCountData.length - 1]
+            ?.amount
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
@@ -141,7 +132,8 @@ const Admin = () => {
         ? totalWikisCreatedCountData[0]?.amount
         : 0,
       weeklyValue: weeklyWikiCreatedCountData
-        ? weeklyWikiCreatedCountData[0]?.amount
+        ? weeklyWikiCreatedCountData[weeklyWikiCreatedCountData.length - 1]
+            ?.amount
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no of Created Wikis',
@@ -155,9 +147,9 @@ const Admin = () => {
     },
     {
       icon: RiUserSearchFill,
-      value: 500,
+      value: allTimePageView && allTimePageView.amount,
       detailHeader: 'Total no of Visitors',
-      weeklyValue: 1000,
+      weeklyValue: WeekPageView && WeekPageView.amount,
       percent: 40,
       color: 'pink.400',
     },
@@ -201,9 +193,8 @@ const Admin = () => {
               detailHeader={detailHeader}
               icon={icon}
               key={i}
-              currentValue={value?.toString()}
+              currentValue={value || 0}
               weeklyValue={weeklyValue ? weeklyValue.toString() : '0'}
-              percent={Math.round(weeklyValue / value)}
               color={color}
             />
           )

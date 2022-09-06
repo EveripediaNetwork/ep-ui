@@ -22,7 +22,7 @@ import {
   Avatar,
 } from '@chakra-ui/react'
 import config from '@/config'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
 import {
@@ -54,7 +54,7 @@ export const InsightTableWikiCreated = (
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
-
+  const [hideNotify, setHideNotify] = useState(false)
   const VisibilityOptions = ['Archive', 'Unarchive']
 
   const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
@@ -72,6 +72,9 @@ export const InsightTableWikiCreated = (
     setWikiChosenIdPromote(id)
     onOpen()
   }
+  useEffect(() => {
+    hideWikisFunc()
+  }, [hideNotify])
 
   return (
     <TableContainer w="100%">
@@ -104,7 +107,7 @@ export const InsightTableWikiCreated = (
         <Tbody>
           {wikiCreatedInsightData.map((item, i) => {
             return (
-              <Tr key={i}>
+              <Tr key={i} my="-5">
                 <Td>
                   <Flex flexDir="row" align="center" gap={2}>
                     <Avatar
@@ -120,11 +123,12 @@ export const InsightTableWikiCreated = (
                       </Link>
                       <Text color="#718096" fontSize="sm">
                         <Link href={`/account/${item.author?.id}`} py={1}>
+                          {/* eslint-disable no-nested-ternary */}
                           {item.author?.profile?.username
                             ? item.author.profile.username
-                            : shortenAccount(
-                                item.author?.id ? item.author.id : '0x0',
-                              )}
+                            : item.author?.id
+                            ? shortenAccount(item.author.id)
+                            : 'UnKnown'}
                         </Link>
                       </Text>
                     </Flex>
@@ -193,25 +197,23 @@ export const InsightTableWikiCreated = (
                     size="md"
                     borderRadius="full"
                     variant="solid"
-                    color={item.hidden ? '#38A169' : '#DD6B20'}
-                    bg={item.hidden ? '#F0FFF4' : '#FFF5F5'}
+                    color={!item.hidden ? '#38A169' : '#DD6B20'}
+                    bg={!item.hidden ? '#F0FFF4' : '#FFF5F5'}
                     px="2"
                   >
                     <HStack spacing={2}>
                       <Icon
                         fontSize="20px"
                         cursor="pointer"
-                        color={item.hidden ? '#38A169' : '#DD6B20'}
+                        color={!item.hidden ? '#38A169' : '#DD6B20'}
                         as={BsDot}
                       />
-                      <TagLabel>
-                        {item.hidden ? 'Archive' : 'Unarchive'}
-                      </TagLabel>
+                      <TagLabel>{item.hidden ? 'Archived' : 'Active'}</TagLabel>
                     </HStack>
                   </Tag>
                 </Td>
                 <Td>
-                  <Flex w="100%" p={5} gap={2} align="center">
+                  <Flex w="100%" gap={2} align="center">
                     <HStack spacing={5}>
                       <Menu>
                         <MenuButton
@@ -242,7 +244,6 @@ export const InsightTableWikiCreated = (
                             <MenuItem
                               key={m}
                               onClick={() => {
-                                hideWikisFunc()
                                 shouldArchive(o, item.hidden, item.id)
                               }}
                               py="1"
@@ -259,7 +260,6 @@ export const InsightTableWikiCreated = (
                           cursor="pointer"
                           fontWeight="semibold"
                           onClick={() => {
-                            hideWikisFunc()
                             shouldPromote(item.title, item.id)
                           }}
                         >
@@ -289,12 +289,18 @@ export const InsightTableWikiCreated = (
             onClose={onCloseWikiHideNotification}
             wikiChosenId={wikiChosenId}
             IsHide={isHide}
+            hideFunc={() => {
+              setHideNotify(!hideNotify)
+            }}
           />
           <PromoteCreatedWikisModal
             isOpen={isOpen}
             onClose={onClose}
             wikiChosenTitle={wikiChosenTitle}
             wikiChosenId={wikiChosenIdPromote}
+            hideFunc={() => {
+              setHideNotify(!hideNotify)
+            }}
           />
         </Tbody>
       </Table>
