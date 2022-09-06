@@ -17,6 +17,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
         <Wrap mt={8} spacing={4}>
           {tagsData?.map(tag => (
             <Link
+              as="lI"
               borderWidth="1px"
               px={4}
               py={1}
