@@ -1,5 +1,13 @@
 import { gql } from 'graphql-request'
 
+export const GET_PAGE_COUNT = gql`
+  query PageViewCount($startDate: Int) {
+    pageViewsCount(startDate: $startDate) {
+      amount
+    }
+  }
+`
+
 export const WIKIS_EDITED = gql`
   query WikisEdited($startDate: Int, $endDate: Int, $interval: String) {
     wikisEdited(startDate: $startDate, endDate: $endDate, interval: $interval) {
@@ -74,8 +82,24 @@ export const PROMOTED_WIKIS_TABLE = gql`
 `
 export const HIDDEN_WIKIS_TABLE = gql`
   query HiddenWikis($offset: Int!) {
-    wikisHidden(offset: $offset) {
+    wikisHidden(limit: 10, offset: $offset) {
       id
+      title
+      images {
+        type
+      }
+      author {
+        id
+        profile {
+          username
+        }
+      }
+      created
+      tags {
+        id
+      }
+      promoted
+      hidden
     }
   }
 `
@@ -192,8 +216,8 @@ export const SEARCHED_EDITORS = gql`
 `
 
 export const EDITORS_COUNT = gql`
-  query EditorCount($startDate: Int, $endDate: Int, $interval: String) {
-    editorCount(startDate: $startDate, endDate: $endDate, interval: $interval) {
+  query EditorCount($startDate: Int, $endDate: Int) {
+    editorCount(startDate: $startDate, endDate: $endDate) {
       amount
     }
   }
@@ -216,53 +240,12 @@ export const UNHIDE_WIKI = gql`
   }
 `
 export const POST_PROMOTED_WIKI = gql`
-  mutation postPromotedWiki($id: String!, $level: Int) {
+  mutation PromotedWiki($id: String!, $level: Int) {
     promoteWiki(id: $id, level: $level) {
       id
-      ipfs
-      transactionHash
-      created
-      updated
-      title
-      summary
-      content
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-      media {
-        name
-        id
-        size
-        source
-      }
-      metadata {
-        id
-        value
-      }
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      author {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
     }
- `
+  }
+`
 
 export const TOGGLE_USER = gql`
   mutation ToggleUser($id: String!, $active: Boolean) {

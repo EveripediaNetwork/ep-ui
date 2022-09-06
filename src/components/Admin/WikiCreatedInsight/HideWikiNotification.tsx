@@ -14,7 +14,6 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import {
-  useGetAllCreatedWikiCountQuery,
   usePostHideWikiMutation,
   usePostUnHideWikiMutation,
 } from '@/services/admin'
@@ -24,23 +23,24 @@ export const HideWikiNotification = ({
   isOpen,
   wikiChosenId,
   IsHide,
+  hideFunc,
 }: {
   isOpen: boolean
   onClose: () => void
   wikiChosenId: string
   IsHide: boolean
+  hideFunc: () => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const wikiId = wikiChosenId
   const toast = useToast()
-  const { data: wikis } = useGetAllCreatedWikiCountQuery(0)
   const [postHideWiki, { error: postHideWikiError }] = usePostHideWikiMutation()
   const [postUnHideWiki, { error: postUnHideWikiError }] =
     usePostUnHideWikiMutation()
 
   const hideWiki = () => {
-    console.log(wikis, 'modal')
     postHideWiki(wikiId)
+    hideFunc()
     onClose()
     let toastTitle = 'Wiki Successfully Archived'
     let toastMessage =
@@ -63,6 +63,7 @@ export const HideWikiNotification = ({
 
   const unHideWiki = () => {
     postUnHideWiki(wikiId)
+    hideFunc()
     onClose()
     let toastTitle = 'Wiki Successfully Unarchived'
     let toastMessage =
