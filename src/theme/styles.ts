@@ -6,6 +6,7 @@ export const styles = {
       transition: 'background-color 0.2s',
       lineHeight: 'base',
       fontDisplay: 'swap',
+      fontWeight: '500',
     },
   },
 }
