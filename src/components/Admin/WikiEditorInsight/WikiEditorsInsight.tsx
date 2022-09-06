@@ -340,7 +340,6 @@ export const WikiEditorsInsightTable = () => {
             px={10}
             rightIcon={sortIcon}
             variant="outline"
-            fontWeight="light"
           >
             Sort
           </Button>

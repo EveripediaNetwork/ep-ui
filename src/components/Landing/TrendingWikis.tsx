@@ -74,7 +74,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 {wiki?.title}
               </Heading>
             </LinkOverlay>
-            <Text fontSize="sm" maxW="90%" fontWeight="light" my={2}>
+            <Text fontSize="sm" maxW="90%" color="homeDescriptionColor" my={2}>
               {wiki && getWikiSummary(wiki, 60)}
             </Text>
 

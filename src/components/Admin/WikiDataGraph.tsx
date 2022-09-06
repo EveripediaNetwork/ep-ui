@@ -52,7 +52,7 @@ export const WikiDataGraph = ({
             <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
               Wiki Data
             </Heading>
-            <Text fontSize="sm" fontWeight="light" w="full">
+            <Text fontSize="sm" w="full">
               Track wikis created and wikis edited
             </Text>
           </VStack>
