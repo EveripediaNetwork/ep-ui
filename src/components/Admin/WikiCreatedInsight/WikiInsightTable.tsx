@@ -290,6 +290,7 @@ export const WikiInsightTable = () => {
                 px={5}
                 leftIcon={sortIcon}
                 variant="outline"
+                fontWeight="medium"
               >
                 Sort
               </Button>
@@ -317,7 +318,7 @@ export const WikiInsightTable = () => {
                 _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
                 px={10}
-                rightIcon={<MdFilterList />}
+                rightIcon={<MdFilterList fontSize="25px" />}
                 variant="outline"
                 fontWeight="medium"
                 onClick={onToggle}

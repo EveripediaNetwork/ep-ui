@@ -20,6 +20,7 @@ import {
   MenuItem,
   MenuList,
   Avatar,
+  Box,
 } from '@chakra-ui/react'
 import config from '@/config'
 import React, { useEffect, useState } from 'react'
@@ -82,19 +83,20 @@ export const InsightTableWikiCreated = (
         <Thead bg="wikiTitleBg">
           <Tr>
             <Th color="#718096" textTransform="none" fontWeight="medium">
-              Wiki Title
+              <Text fontWeight="bold">Wiki Title</Text>
             </Th>
             <Th color="#718096" textTransform="none" fontWeight="medium">
-              Date/Time
+              <Text fontWeight="bold">Date/Time</Text>
             </Th>
             <Th color="#718096" textTransform="none" fontWeight="medium">
-              Tags
+              <Text fontWeight="bold">Tags</Text>
             </Th>
             <Th color="#718096" textTransform="none" fontWeight="medium">
               <HStack spacing={3}>
-                <Text>Status</Text>
+                <Text fontWeight="bold">Status</Text>
                 <Icon
-                  fontSize="10px"
+                  fontSize="15px"
+                  fontWeight="black"
                   cursor="pointer"
                   color="#718096"
                   as={RiArrowDownLine}
@@ -176,8 +178,9 @@ export const InsightTableWikiCreated = (
                       variant="solid"
                       bg="#F9F5FF"
                       color="#FE6FB5"
+                      py="2"
                     >
-                      <TagLabel>Normal</TagLabel>
+                      <TagLabel fontWeight="bold">Normal</TagLabel>
                     </Tag>
                     {item.promoted && (
                       <Tag
@@ -199,16 +202,21 @@ export const InsightTableWikiCreated = (
                     variant="solid"
                     color={!item.hidden ? '#38A169' : '#DD6B20'}
                     bg={!item.hidden ? '#F0FFF4' : '#FFF5F5'}
-                    px="2"
+                    py="2"
                   >
                     <HStack spacing={2}>
-                      <Icon
-                        fontSize="20px"
-                        cursor="pointer"
-                        color={!item.hidden ? '#38A169' : '#DD6B20'}
-                        as={BsDot}
+                      <Box
+                        w="8px"
+                        h="8px"
+                        bg={!item.hidden ? '#38A169' : '#DD6B20'}
+                        borderRadius="100px"
                       />
-                      <TagLabel>{item.hidden ? 'Archived' : 'Active'}</TagLabel>
+                      <TagLabel
+                        fontWeight="bold"
+                        color={!item.hidden ? '#38A169' : '#9C4221'}
+                      >
+                        {item.hidden ? 'Archived' : 'Active'}
+                      </TagLabel>
                     </HStack>
                   </Tag>
                 </Td>

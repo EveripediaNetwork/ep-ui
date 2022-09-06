@@ -57,7 +57,7 @@ export const WikiDataGraph = ({
             </Text>
           </VStack>
           <Select
-            w="30%"
+            w={{ lg: '20%', base: '40%' }}
             icon={<MdArrowDropDown />}
             onChange={e => {
               handleGraphFilterChange(e.target.value)
