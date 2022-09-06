@@ -64,8 +64,8 @@ export const DeleteEditorModal = ({
             w="full"
           >
             <Text textAlign="center">
-              You are about to ban an editor. Do you wish to continue with this
-              action?
+              You are about to {rest.isActive ? 'ban' : 'unban'} an editor. Do
+              you wish to continue with this action?
             </Text>
           </Flex>
           <ButtonGroup px={2} pt={2} w="full" spacing={8}>
