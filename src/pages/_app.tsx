@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode, useEffect, useState } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -18,7 +18,7 @@ import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
-import { provider } from '@/config/wagmi'
+import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
@@ -31,18 +31,28 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-const client = createClient({
+const defaultClient = createClient({
   autoConnect: true,
-  // connectors,
   provider,
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
+  const [client, setClient] = useState(defaultClient)
+
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
+
+  useEffect(() => {
+    const clientWithConnectors = createClient({
+      autoConnect: true,
+      connectors,
+      provider,
+    })
+    setClient(clientWithConnectors)
+  }, [])
 
   return (
     <StrictMode>
