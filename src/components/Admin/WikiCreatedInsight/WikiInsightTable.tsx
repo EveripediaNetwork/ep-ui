@@ -30,7 +30,8 @@ import {
 import React, { useEffect, useState, useMemo } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
+import { BiSortDown, BiSortUp } from 'react-icons/bi'
+import { RiArrowUpDownLine } from 'react-icons/ri'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
@@ -60,7 +61,7 @@ export const WikiInsightTable = () => {
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
-      return <BiSort fontSize="1.3rem" />
+      return <RiArrowUpDownLine fontSize="1.3rem" />
     }
     if (sortTableBy === 'Newest' || sortTableBy === 'AlpaUp') {
       return <BiSortUp fontSize="1.3rem" />
@@ -68,7 +69,7 @@ export const WikiInsightTable = () => {
     if (sortTableBy === 'Oldest' || sortTableBy === 'AlpaDown') {
       return <BiSortDown fontSize="1.3rem" />
     }
-    return <BiSort fontSize="1.3rem" />
+    return <RiArrowUpDownLine fontSize="1.3rem" />
   }, [wiki, sortTableBy])
 
   enum FilterTypes {
@@ -318,12 +319,12 @@ export const WikiInsightTable = () => {
                 _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
                 px={10}
-                rightIcon={<MdFilterList fontSize="25px" />}
+                leftIcon={<MdFilterList fontSize="25px" />}
                 variant="outline"
                 fontWeight="medium"
                 onClick={onToggle}
               >
-                Filter
+                Filters
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
