@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect, useState } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -31,28 +31,18 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-const defaultClient = createClient({
+const client = createClient({
   autoConnect: true,
+  connectors,
   provider,
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
-  const [client, setClient] = useState(defaultClient)
-
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
-
-  useEffect(() => {
-    const clientWithConnectors = createClient({
-      autoConnect: true,
-      connectors,
-      provider,
-    })
-    setClient(clientWithConnectors)
-  }, [])
 
   return (
     <StrictMode>
