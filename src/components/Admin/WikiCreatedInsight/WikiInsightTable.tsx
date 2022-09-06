@@ -290,7 +290,6 @@ export const WikiInsightTable = () => {
                 px={5}
                 leftIcon={sortIcon}
                 variant="outline"
-                fontWeight="light"
               >
                 Sort
               </Button>

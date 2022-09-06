@@ -50,7 +50,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           <LinkOverlay href={`/wiki/${wiki?.id}`}>
             <chakra.span>{wiki?.title}</chakra.span>
           </LinkOverlay>
-          <Text fontSize="xs" fontWeight="light" my={2}>
+          <Text fontSize="xs" color="homeDescriptionColor" my={2}>
             {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
           </Text>
 
