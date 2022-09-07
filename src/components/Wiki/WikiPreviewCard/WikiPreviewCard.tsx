@@ -53,7 +53,7 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage imageURL={getWikiImageUrl(wiki)} />
+        <WikiImage imageURL={getWikiImageUrl(wiki)} alt={wiki.title} />
       </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>

@@ -6,6 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const moduleExports = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   webpack5: true,
   webpack(config) {
     config.module.rules.push({

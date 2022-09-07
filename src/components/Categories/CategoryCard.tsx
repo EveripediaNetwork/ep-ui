@@ -47,7 +47,13 @@ const CategoryCard = ({
 ;"
       >
         <Box w="100%" position="relative">
-          <Image src={imageCard} width="100%" height="150px" alt={title} />
+          <Image
+            src={imageCard}
+            width="100%"
+            height="150px"
+            alt={title}
+            loading="lazy"
+          />
           <Box position="absolute" bottom="0" left="50%">
             <Icon
               transform="translateX(-50%) translateY(50%)"
