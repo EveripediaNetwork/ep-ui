@@ -12,8 +12,6 @@ import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
-import { getCategoriesLinks } from '@/services/categories'
-import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
@@ -71,14 +69,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ToastContainer />
     </StrictMode>
   )
-}
-
-export const getServerSideProps = async () => {
-  store.dispatch(getCategoriesLinks.initiate())
-  await Promise.all(getRunningOperationPromises())
-  return {
-    props: {},
-  }
 }
 
 export default App
