@@ -6,13 +6,13 @@ type ChakraAndNextProps = ButtonProps & LinkProps
 
 const LinkButton = ({ href, children, ...props }: ChakraAndNextProps) => {
   let linkProps = {}
-  if (href.href.includes('create-wiki') || href.href.includes('about')) {
+  if (String(href).includes('create-wiki') || String(href).includes('about')) {
     linkProps = {
       prefetch: false,
     }
   }
   return (
-    <Link href={href.href} passHref {...{ linkProps }}>
+    <Link href={href} passHref {...{ linkProps }}>
       <Button as="a" {...props}>
         {children}
       </Button>
