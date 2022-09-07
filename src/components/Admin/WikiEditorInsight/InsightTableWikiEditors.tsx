@@ -101,25 +101,25 @@ export const InsightTableWikiEditors = (
               textTransform="capitalize"
               fontWeight="semibold"
             >
-              Names
+              <Text fontWeight="bold">Names</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="normal">
-              No. of created wikis
+              <Text fontWeight="bold">No. of created wikis</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              No. of edited wikis
+              <Text fontWeight="bold">No. of edited wikis</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              Total No. of wikis
+              <Text fontWeight="bold">Total No. of wikis</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              Last created wiki
+              <Text fontWeight="bold">Last created wiki</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              Lastest activity
+              <Text fontWeight="bold">Lastest activity</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              Status
+              <Text fontWeight="bold">Status</Text>
             </Th>
             <Th color="#718096" textTransform="capitalize" fontWeight="medium">
               Action
