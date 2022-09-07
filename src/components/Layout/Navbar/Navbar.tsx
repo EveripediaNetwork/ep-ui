@@ -198,7 +198,6 @@ const Navbar = () => {
                 <ProfileNavMenu
                   setVisibleMenu={setVisibleMenu}
                   visibleMenu={visibleMenu}
-                  address={userAddress}
                 />
                 <Icon
                   color="linkColor"
