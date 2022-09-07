@@ -21,6 +21,9 @@ import {
   MenuList,
   Avatar,
   Box,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react'
 import config from '@/config'
 import React, { useEffect, useState } from 'react'
@@ -30,11 +33,13 @@ import {
   RiArrowDownLine,
   RiQuestionLine,
   RiArrowDropDownLine,
+  RiCloseLine,
 } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
+import { FocusableElement } from '@chakra-ui/utils'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -47,6 +52,7 @@ export const InsightTableWikiCreated = (
   const { wikiCreatedInsightData, hideWikisFunc } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [wikiChosenId, setWikiChosenId] = useState('')
+  const [sectionType, setsectionType] = useState('')
   const [wikiChosenTitle, setWikiChosenTitle] = useState('')
   const [wikiChosenIdPromote, setWikiChosenIdPromote] = useState('')
   const {
@@ -54,10 +60,25 @@ export const InsightTableWikiCreated = (
     onOpen: onOpenWikiHideNotification,
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
+  const cancelRef = React.useRef<FocusableElement>(null)
+  const {
+    isOpen: isOpenPromotion,
+    onOpen: onOpenPromotion,
+    onClose: onClosePromotion,
+  } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
   const [hideNotify, setHideNotify] = useState(false)
   const VisibilityOptions = ['Archive', 'Unarchive']
 
+  const findSection = (promotedNum: number) => {
+    let num = wikiCreatedInsightData && wikiCreatedInsightData[0].promoted
+    if (promotedNum === num) {
+      setsectionType('hero section')
+    } else {
+      setsectionType('trending wiki section')
+    }
+    onOpenPromotion()
+  }
   const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
     if (ishidden && e === 'Unarchive') {
       setIsHide(false)
@@ -295,8 +316,15 @@ export const InsightTableWikiCreated = (
                           Promote
                         </Text>
                       ) : (
-                        <HStack spacing={2}>
-                          <Text color="#E2E8F0" cursor="pointer">
+                        <HStack
+                          spacing={2}
+                          onClick={() => findSection(item.promoted)}
+                        >
+                          <Text
+                            color="#E2E8F0"
+                            _dark={{ color: '#495a68' }}
+                            cursor="pointer"
+                          >
                             Promote
                           </Text>
                           <Icon
@@ -313,6 +341,50 @@ export const InsightTableWikiCreated = (
               </Tr>
             )
           })}
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={onClosePromotion}
+            isOpen={isOpenPromotion}
+            isCentered
+          >
+            <AlertDialogOverlay />
+
+            <AlertDialogContent>
+              <Box p={8}>
+                <Flex>
+                  <Icon
+                    cursor="pointer"
+                    fontSize="3xl"
+                    fontWeight={600}
+                    as={RiQuestionLine}
+                    color="#898787"
+                    mr={5}
+                  />
+                  <Text flex="1" fontSize="xl" fontWeight="black">
+                    Promotion Details
+                  </Text>
+                  <Icon
+                    cursor="pointer"
+                    fontSize="3xl"
+                    fontWeight={600}
+                    as={RiCloseLine}
+                    onClick={onClosePromotion}
+                  />
+                </Flex>
+                <Text
+                  my="6"
+                  w="90%"
+                  lineHeight="2"
+                  textAlign="center"
+                  fontWeight="normal"
+                >
+                  This wiki is currently promoted to the {sectionType} of the
+                  home page
+                </Text>
+              </Box>
+            </AlertDialogContent>
+          </AlertDialog>
           <HideWikiNotification
             isOpen={isOpenWikiHideNotification}
             onClose={onCloseWikiHideNotification}

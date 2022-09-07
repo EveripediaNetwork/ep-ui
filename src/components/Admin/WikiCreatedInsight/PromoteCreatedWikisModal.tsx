@@ -48,6 +48,8 @@ export const PromoteCreatedWikisModal = ({
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
+  const [homepageLevel, sethomepageLevel] = useState(0)
+  const [promotionArray, setPromotionArray] = useState<Array<[] | any>>()
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
   const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
@@ -66,12 +68,23 @@ export const PromoteCreatedWikisModal = ({
     return value
   }
 
+  const arrs = () => {
+    const arr: any[] = []
+    const data: any = promotedWikis && promotedWikis
+    let firtLevel = data[0].promoted
+    sethomepageLevel(firtLevel)
+    for (let index = 1; index < data.length; index++) {
+      arr.push(data[index].promoted)
+    }
+
+    setPromotionArray(arr)
+  }
+
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
   const [value, setValue] = useState('')
-  const homepageLevel = 7 /* for dev */
-  // const homepageLevel = 4  /* for prod */
+
   const toast = useToast()
   const ModalData = wiki?.filter(
     item => item.id === wikiChosenId && item.title === wikiChosenTitle,
@@ -223,6 +236,7 @@ export const PromoteCreatedWikisModal = ({
   const TrendingwikiSelected = async () => {
     if (activeStep === 0) {
       setStep2Titles('Promote to Trending wiki')
+      arrs()
       nextStep()
       setInitGetSearchedWikis(false)
       setbuttonOne('cancel')
@@ -298,6 +312,7 @@ export const PromoteCreatedWikisModal = ({
   const HompageSelected = () => {
     if (activeStep === 0) {
       setStep2Titles('Promote to Hero Section')
+      arrs()
       nextStep()
       setInitGetSearchedWikis(false)
       setbuttonOne('cancel')
@@ -330,14 +345,11 @@ export const PromoteCreatedWikisModal = ({
                   w="20%"
                   onChange={e => setValue(e.target.value)}
                 >
-                  {/* values are for dev */}
-                  <option value={6}> SLOT 1 </option>
-                  <option value={5}> SLOT 2</option>
-
-                  {/* values are for prod
-                  <option value={3}> SLOT 1</option>
-                  <option value={2}> SLOT 2 </option>
-                  <option value={1}> SLOT 3 </option> */}
+                  {promotionArray?.map((item, i) => (
+                    <option key={i} value={item}>
+                      SLOT {i + 1}
+                    </option>
+                  ))}
                 </Select>
               </Box>
             )}
