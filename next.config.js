@@ -30,8 +30,6 @@ const moduleExports = {
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     })
-
-    console.log({...config});
     return config
   },
   styledComponents: true,
