@@ -1,4 +1,4 @@
-.markdown-body {
+.markdownBody {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
@@ -8,100 +8,100 @@
   word-wrap: break-word;
 }
 
-.markdown-body details,
-.markdown-body figcaption,
-.markdown-body figure {
+.markdownBody details,
+.markdownBody figcaption,
+.markdownBody figure {
   display: block;
 }
 
-.markdown-body summary {
+.markdownBody summary {
   display: list-item;
 }
 
-.markdown-body [hidden] {
+.markdownBody [hidden] {
   display: none !important;
 }
 
-.markdown-body a {
+.markdownBody a {
   background-color: transparent;
   color: #fe5caa;
   text-decoration: none;
 }
 
-html[data-theme='dark'] .markdown-body a {
+html[data-theme='dark'] .markdownBody a {
   color: #ea3b87;
 }
 
-.markdown-body a:active,
-.markdown-body a:hover {
+.markdownBody a:active,
+.markdownBody a:hover {
   outline-width: 0;
 }
 
-.markdown-body abbr[title] {
+.markdownBody abbr[title] {
   border-bottom: none;
   text-decoration: underline dotted;
 }
 
-.markdown-body b,
-.markdown-body strong {
+.markdownBody b,
+.markdownBody strong {
   font-weight: 600;
 }
 
-.markdown-body dfn {
+.markdownBody dfn {
   font-style: italic;
 }
 
-.markdown-body h1 {
+.markdownBody h1 {
   margin: 0.67em 0;
   padding-bottom: 0.3em;
   font-size: 2em;
 }
 
-.markdown-body mark {
+.markdownBody mark {
   background-color: #fff8c5;
   color: #24292f;
 }
 
-.markdown-body small {
+.markdownBody small {
   font-size: 90%;
 }
 
-.markdown-body sub,
-.markdown-body sup {
+.markdownBody sub,
+.markdownBody sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
 
-.markdown-body sub {
+.markdownBody sub {
   bottom: -0.25em;
 }
 
-.markdown-body sup {
+.markdownBody sup {
   top: -0.5em;
 }
 
-.markdown-body img {
+.markdownBody img {
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
   background-color: #ffffff;
 }
 
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre,
-.markdown-body samp {
+.markdownBody code,
+.markdownBody kbd,
+.markdownBody pre,
+.markdownBody samp {
   font-family: monospace, monospace;
   font-size: 1em;
 }
 
-.markdown-body figure {
+.markdownBody figure {
   margin: 1em 40px;
 }
 
-.markdown-body hr {
+.markdownBody hr {
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
@@ -113,7 +113,7 @@ html[data-theme='dark'] .markdown-body a {
   border: 0;
 }
 
-.markdown-body input {
+.markdownBody input {
   font: inherit;
   margin: 0;
   overflow: visible;
@@ -122,100 +122,100 @@ html[data-theme='dark'] .markdown-body a {
   line-height: inherit;
 }
 
-.markdown-body [type='button'],
-.markdown-body [type='reset'],
-.markdown-body [type='submit'] {
+.markdownBody [type='button'],
+.markdownBody [type='reset'],
+.markdownBody [type='submit'] {
   -webkit-appearance: button;
 }
 
-.markdown-body [type='button']::-moz-focus-inner,
-.markdown-body [type='reset']::-moz-focus-inner,
-.markdown-body [type='submit']::-moz-focus-inner {
+.markdownBody [type='button']::-moz-focus-inner,
+.markdownBody [type='reset']::-moz-focus-inner,
+.markdownBody [type='submit']::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
 
-.markdown-body [type='button']:-moz-focusring,
-.markdown-body [type='reset']:-moz-focusring,
-.markdown-body [type='submit']:-moz-focusring {
+.markdownBody [type='button']:-moz-focusring,
+.markdownBody [type='reset']:-moz-focusring,
+.markdownBody [type='submit']:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
-.markdown-body [type='checkbox'],
-.markdown-body [type='radio'] {
+.markdownBody [type='checkbox'],
+.markdownBody [type='radio'] {
   box-sizing: border-box;
   padding: 0;
 }
 
-.markdown-body [type='number']::-webkit-inner-spin-button,
-.markdown-body [type='number']::-webkit-outer-spin-button {
+.markdownBody [type='number']::-webkit-inner-spin-button,
+.markdownBody [type='number']::-webkit-outer-spin-button {
   height: auto;
 }
 
-.markdown-body [type='search'] {
+.markdownBody [type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
 
-.markdown-body [type='search']::-webkit-search-cancel-button,
-.markdown-body [type='search']::-webkit-search-decoration {
+.markdownBody [type='search']::-webkit-search-cancel-button,
+.markdownBody [type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
-.markdown-body ::-webkit-input-placeholder {
+.markdownBody ::-webkit-input-placeholder {
   color: inherit;
   opacity: 0.54;
 }
 
-.markdown-body ::-webkit-file-upload-button {
+.markdownBody ::-webkit-file-upload-button {
   -webkit-appearance: button;
   font: inherit;
 }
 
-.markdown-body a:hover {
+.markdownBody a:hover {
   text-decoration: underline;
 }
 
-.markdown-body hr::before {
+.markdownBody hr::before {
   display: table;
   content: '';
 }
 
-.markdown-body hr::after {
+.markdownBody hr::after {
   display: table;
   clear: both;
   content: '';
 }
 
-.markdown-body table {
+.markdownBody table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
 }
-.markdown-body .table-container {
+.markdownBody .table-container {
   overflow-x: auto;
   max-width: calc(100vw - 850px);
   margin: 0;
 }
 @media only screen and (max-width: 400px) {
-  .markdown-body .table-container {
+  .markdownBody .table-container {
     max-width: 90vw;
   }
 }
-.markdown-body td,
-.markdown-body th {
+.markdownBody td,
+.markdownBody th {
   padding: 0;
 }
 
-.markdown-body details summary {
+.markdownBody details summary {
   cursor: pointer;
 }
 
-.markdown-body details:not([open]) > *:not(summary) {
+.markdownBody details:not([open]) > *:not(summary) {
   display: none !important;
 }
 
-.markdown-body kbd {
+.markdownBody kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
@@ -230,12 +230,12 @@ html[data-theme='dark'] .markdown-body a {
   box-shadow: inset 0 -1px 0 rgba(175, 184, 193, 0.2);
 }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
+.markdownBody h1,
+.markdownBody h2,
+.markdownBody h3,
+.markdownBody h4,
+.markdownBody h5,
+.markdownBody h6 {
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 500;
@@ -243,75 +243,75 @@ html[data-theme='dark'] .markdown-body a {
   scroll-margin-top: 80px;
 }
 
-.markdown-body h2 {
+.markdownBody h2 {
   padding-bottom: 0.3em;
   font-size: 1.5em;
 }
 
-.markdown-body h3 {
+.markdownBody h3 {
   font-weight: 600;
   font-size: 1.25em;
 }
 
-.markdown-body h4 {
+.markdownBody h4 {
   font-weight: 600;
   font-size: 1em;
 }
 
-.markdown-body h5 {
+.markdownBody h5 {
   font-weight: 600;
   font-size: 0.875em;
 }
 
-.markdown-body h6 {
+.markdownBody h6 {
   font-weight: 600;
   font-size: 0.85em;
   color: #57606a;
 }
 
-.markdown-body p {
+.markdownBody p {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.markdown-body blockquote {
+.markdownBody blockquote {
   margin: 0;
   padding: 0 1em;
   color: #57606a;
   border-left: 0.25em solid #d0d7de;
 }
 
-.markdown-body ul,
-.markdown-body ol {
+.markdownBody ul,
+.markdownBody ol {
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 2em;
 }
 
-.markdown-body ol ol,
-.markdown-body ul ol {
+.markdownBody ol ol,
+.markdownBody ul ol {
   list-style-type: lower-roman;
 }
 
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
+.markdownBody ul ul ol,
+.markdownBody ul ol ol,
+.markdownBody ol ul ol,
+.markdownBody ol ol ol {
   list-style-type: lower-alpha;
 }
 
-.markdown-body dd {
+.markdownBody dd {
   margin-left: 0;
 }
 
-.markdown-body tt,
-.markdown-body code {
+.markdownBody tt,
+.markdownBody code {
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
     Liberation Mono, monospace;
   font-size: 12px;
 }
 
-.markdown-body pre {
+.markdownBody pre {
   margin-top: 0;
   margin-bottom: 0;
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
@@ -320,142 +320,142 @@ html[data-theme='dark'] .markdown-body a {
   word-wrap: normal;
 }
 
-.markdown-body ::placeholder {
+.markdownBody ::placeholder {
   color: #6e7781;
   opacity: 1;
 }
 
-.markdown-body input::-webkit-outer-spin-button,
-.markdown-body input::-webkit-inner-spin-button {
+.markdownBody input::-webkit-outer-spin-button,
+.markdownBody input::-webkit-inner-spin-button {
   margin: 0;
   -webkit-appearance: none;
   appearance: none;
 }
 
-.markdown-body [data-catalyst] {
+.markdownBody [data-catalyst] {
   display: block;
 }
 
-.markdown-body::before {
+.markdownBody::before {
   display: table;
   content: '';
 }
 
-.markdown-body::after {
+.markdownBody::after {
   display: table;
   clear: both;
   content: '';
 }
 
-.markdown-body > *:first-child {
+.markdownBody > *:first-child {
   margin-top: 0 !important;
 }
 
-.markdown-body > *:last-child {
+.markdownBody > *:last-child {
   margin-bottom: 0 !important;
 }
 
-.markdown-body a:not([href]) {
+.markdownBody a:not([href]) {
   color: inherit;
   text-decoration: none;
 }
 
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre,
-.markdown-body details {
+.markdownBody p,
+.markdownBody blockquote,
+.markdownBody ul,
+.markdownBody ol,
+.markdownBody dl,
+.markdownBody table,
+.markdownBody pre,
+.markdownBody details {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.markdown-body blockquote > :first-child {
+.markdownBody blockquote > :first-child {
   margin-top: 0;
 }
 
-.markdown-body blockquote > :last-child {
+.markdownBody blockquote > :last-child {
   margin-bottom: 0;
 }
 
-.markdown-body sup > a::before {
+.markdownBody sup > a::before {
   content: '[';
 }
 
-.markdown-body sup > a::after {
+.markdownBody sup > a::after {
   content: ']';
 }
 
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
+.markdownBody h1:hover .anchor,
+.markdownBody h2:hover .anchor,
+.markdownBody h3:hover .anchor,
+.markdownBody h4:hover .anchor,
+.markdownBody h5:hover .anchor,
+.markdownBody h6:hover .anchor {
   text-decoration: none;
 }
 
-.markdown-body h1 tt,
-.markdown-body h1 code,
-.markdown-body h2 tt,
-.markdown-body h2 code,
-.markdown-body h3 tt,
-.markdown-body h3 code,
-.markdown-body h4 tt,
-.markdown-body h4 code,
-.markdown-body h5 tt,
-.markdown-body h5 code,
-.markdown-body h6 tt,
-.markdown-body h6 code {
+.markdownBody h1 tt,
+.markdownBody h1 code,
+.markdownBody h2 tt,
+.markdownBody h2 code,
+.markdownBody h3 tt,
+.markdownBody h3 code,
+.markdownBody h4 tt,
+.markdownBody h4 code,
+.markdownBody h5 tt,
+.markdownBody h5 code,
+.markdownBody h6 tt,
+.markdownBody h6 code {
   padding: 0 0.2em;
   font-size: inherit;
 }
 
-.markdown-body ul.no-list,
-.markdown-body ol.no-list {
+.markdownBody ul.no-list,
+.markdownBody ol.no-list {
   padding: 0;
   list-style-type: none;
 }
 
-.markdown-body ol[type='1'] {
+.markdownBody ol[type='1'] {
   list-style-type: decimal;
 }
 
-.markdown-body ol[type='a'] {
+.markdownBody ol[type='a'] {
   list-style-type: lower-alpha;
 }
 
-.markdown-body ol[type='i'] {
+.markdownBody ol[type='i'] {
   list-style-type: lower-roman;
 }
 
-.markdown-body div > ol:not([type]) {
+.markdownBody div > ol:not([type]) {
   list-style-type: decimal;
 }
 
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
+.markdownBody ul ul,
+.markdownBody ul ol,
+.markdownBody ol ol,
+.markdownBody ol ul {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.markdown-body li > p {
+.markdownBody li > p {
   margin-top: 16px;
 }
 
-.markdown-body li + li {
+.markdownBody li + li {
   margin-top: 0.25em;
 }
 
-.markdown-body dl {
+.markdownBody dl {
   padding: 0;
 }
 
-.markdown-body dl dt {
+.markdownBody dl dt {
   padding: 0;
   margin-top: 16px;
   font-size: 1em;
@@ -463,48 +463,48 @@ html[data-theme='dark'] .markdown-body a {
   font-weight: 600;
 }
 
-.markdown-body dl dd {
+.markdownBody dl dd {
   padding: 0 16px;
   margin-bottom: 16px;
 }
 
-.markdown-body table th {
+.markdownBody table th {
   font-weight: 600;
 }
 
-.markdown-body table th,
-.markdown-body table td {
+.markdownBody table th,
+.markdownBody table td {
   padding: 6px 13px;
   border: 1px solid #d0d7de;
 }
 
-.markdown-body table tr {
+.markdownBody table tr {
   background-color: transparent;
   border-top: 1px solid hsla(210, 18%, 87%, 1);
 }
 
-.markdown-body table tr:nth-child(2n) {
+.markdownBody table tr:nth-child(2n) {
   background-color: #8181812a;
 }
 
-.markdown-body table img {
+.markdownBody table img {
   background-color: transparent;
 }
 
-.markdown-body img {
+.markdownBody img {
   margin: 0 auto;
 }
 
-.markdown-body img[align='right'] {
+.markdownBody img[align='right'] {
   padding-left: 20px;
 }
 
-.markdown-body img[align='left'] {
+.markdownBody img[align='left'] {
   padding-right: 20px;
 }
 
-.markdown-body code,
-.markdown-body tt {
+.markdownBody code,
+.markdownBody tt {
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
@@ -512,20 +512,20 @@ html[data-theme='dark'] .markdown-body a {
   border-radius: 6px;
 }
 
-.markdown-body code br,
-.markdown-body tt br {
+.markdownBody code br,
+.markdownBody tt br {
   display: none;
 }
 
-.markdown-body del code {
+.markdownBody del code {
   text-decoration: inherit;
 }
 
-.markdown-body pre code {
+.markdownBody pre code {
   font-size: 100%;
 }
 
-.markdown-body pre > code {
+.markdownBody pre > code {
   padding: 0;
   margin: 0;
   word-break: normal;
@@ -534,8 +534,8 @@ html[data-theme='dark'] .markdown-body a {
   border: 0;
 }
 
-.markdown-body pre code,
-.markdown-body pre tt {
+.markdownBody pre code,
+.markdownBody pre tt {
   display: inline;
   max-width: auto;
   padding: 0;
@@ -547,10 +547,10 @@ html[data-theme='dark'] .markdown-body a {
   border: 0;
 }
 
-.markdown-body ::-webkit-calendar-picker-indicator {
+.markdownBody ::-webkit-calendar-picker-indicator {
   filter: invert(50%);
 }
-.markdown-body details {
+.markdownBody details {
   border: 1px solid #d0d7de;
   background-color: #0000002a;
   margin-bottom: 2rem;
@@ -558,28 +558,28 @@ html[data-theme='dark'] .markdown-body a {
   border-radius: 8px;
 }
 
-.markdown-body summary {
+.markdownBody summary {
   cursor: pointer;
 }
 
-.markdown-body summary > * {
+.markdownBody summary > * {
   display: inline;
 }
 
 /* DARK MODE STYLES */
 
-.markdown-body-dark {
+.markdownBodyDark {
   color: #eeeeee;
 }
-.markdown-body-dark h6 {
+.markdownBodyDark h6 {
   color: #c5c5c5;
 }
 
-.markdown-body-dark hr {
+.markdownBodyDark hr {
   background-color: #40444e;
 }
 
-.markdown-body-dark blockquote {
+.markdownBodyDark blockquote {
   color: #a9b6c5;
   border-left: 0.25em solid #4c5566;
 }
