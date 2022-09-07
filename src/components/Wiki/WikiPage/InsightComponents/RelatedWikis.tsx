@@ -27,6 +27,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
           flexShrink={0}
           borderRadius={4}
           overflow="hidden"
+          alt={wiki.title}
         />
         <Box>
           <LinkOverlay href={`/wiki/${id}`}>

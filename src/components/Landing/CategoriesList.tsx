@@ -60,6 +60,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
               src={new URL(category.cardImage).pathname}
               h="200px"
               w="100%"
+              alt={category.title}
             />
 
             <Text
