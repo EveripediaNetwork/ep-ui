@@ -37,9 +37,9 @@ import {
 } from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
+import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
-import { FocusableElement } from '@chakra-ui/utils'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -71,7 +71,7 @@ export const InsightTableWikiCreated = (
   const VisibilityOptions = ['Archive', 'Unarchive']
 
   const findSection = (promotedNum: number) => {
-    let num = wikiCreatedInsightData && wikiCreatedInsightData[0].promoted
+    const num = wikiCreatedInsightData && wikiCreatedInsightData[0].promoted
     if (promotedNum === num) {
       setsectionType('hero section')
     } else {

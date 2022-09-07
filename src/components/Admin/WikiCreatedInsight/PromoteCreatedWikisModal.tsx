@@ -71,7 +71,7 @@ export const PromoteCreatedWikisModal = ({
   const arrs = () => {
     const arr: any[] = []
     const data: any = promotedWikis && promotedWikis
-    let firtLevel = data[0].promoted
+    const firtLevel = data[0].promoted
     sethomepageLevel(firtLevel)
     for (let index = 1; index < data.length; index++) {
       arr.push(data[index].promoted)
