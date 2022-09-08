@@ -23,7 +23,7 @@ const network: Network = {
 }
 
 export const connectors = [
-  new MetaMaskConnector({ chains, options: { shimDisconnect: false } }),
+  new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
   new WalletConnectConnector({
     chains,
     options: {
