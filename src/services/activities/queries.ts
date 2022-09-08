@@ -182,3 +182,38 @@ export const GET_WIKI_BY_ACTIVITY_ID = gql`
     }
   }
 `
+
+export const GET_WIKI_CREATOR_AND_EDITOR_BY_ACTIVITY_ID = gql`
+  query GetActivities($offset: Int, $limit: Int) {
+    activities(offset: $offset, limit: $limit) {
+      id
+      wikiId
+      type
+      content {
+        id
+        title
+        block
+        tags {
+          id
+        }
+        summary
+        user {
+          id
+          profile {
+            username
+            avatar
+          }
+        }
+        categories {
+          id
+          title
+        }
+        images {
+          id
+        }
+      }
+      datetime
+      ipfs
+    }
+  }
+`

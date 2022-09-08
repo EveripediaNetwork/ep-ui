@@ -66,6 +66,27 @@ export const GET_WIKI_BY_ID = gql`
   }
 `
 
+export const GET_WIKI_CREATOR_AND_EDITOR = gql`
+  query GetWiki($id: String!) {
+    wiki(id: $id) {
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      author {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
+
 export const GET_WIKIS = gql`
   query GetWikis {
     wikis {
