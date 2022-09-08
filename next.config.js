@@ -6,8 +6,25 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const moduleExports = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   webpack5: true,
-  webpack(config) {
+  webpack(config, {isServer}) {
+    config.mode = process.env.VERCEL_ENV !== 'production' ? 'production' : 'production';
+    config.optimization.moduleIds = 'named';
+    config.optimization.runtimeChunk = 'single';
+
+    if (!isServer) {
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        '@sentry': {
+          test: /[\\/]node_modules[\\/](@sentry)[\\/]/,
+          name: '@sentry',
+          priority: 10,
+          reuseExistingChunk: false,
+        },
+      };
+    }
+
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
@@ -26,6 +43,7 @@ const moduleExports = {
       'i3.ytimg.com',
       'alpha.everipedia.org',
       'beta.everipedia.org',
+      'iq.wiki',
       'images.mirror-media.xyz',
       'cdn.buttercms.com',
     ],

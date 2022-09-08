@@ -3,6 +3,8 @@ import SliderClass, { Settings } from 'react-slick'
 import { Icon, Box } from '@chakra-ui/react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { IconType } from 'react-icons/lib'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const Slider = SliderClass as unknown as (props: {
   children: React.ReactNode

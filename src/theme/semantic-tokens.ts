@@ -27,7 +27,7 @@ export const semanticTokens: SemanticTokens = {
     },
     homeDescriptionColor: {
       default: 'gray.500',
-      _dark: 'whiteAlpha.700',
+      _dark: 'whiteAlpha.900',
     },
     linkHoverColor: {
       default: 'gray.800',
@@ -115,7 +115,7 @@ export const semanticTokens: SemanticTokens = {
     },
     fadedText: {
       default: 'gray.600',
-      _dark: 'whiteAlpha.700',
+      _dark: 'whiteAlpha.900',
     },
     divider: {
       default: 'gray.200',

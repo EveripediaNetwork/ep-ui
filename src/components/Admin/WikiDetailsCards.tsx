@@ -13,9 +13,8 @@ import {
 interface WikidetailsProps {
   detailHeader: string
   icon: any
-  currentValue: string
+  currentValue: number
   weeklyValue: string
-  percent: number
   color: string
 }
 
@@ -24,7 +23,6 @@ export const WikiDetailsCards = ({
   icon,
   currentValue,
   weeklyValue,
-  percent,
   color,
 }: WikidetailsProps) => {
   return (
@@ -61,9 +59,13 @@ export const WikiDetailsCards = ({
               {weeklyValue} this week
             </Text>
           </VStack>
-          <CircularProgress value={percent} color={color} size="45px">
+          <CircularProgress
+            value={Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)}
+            color={color}
+            size="45px"
+          >
             <CircularProgressLabel fontSize="xs">
-              {percent}%
+              {Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)}%
             </CircularProgressLabel>
           </CircularProgress>
         </Flex>

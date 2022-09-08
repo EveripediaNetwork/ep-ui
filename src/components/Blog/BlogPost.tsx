@@ -22,7 +22,9 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
       overflowX="hidden"
       {...rest}
     >
-      {post.cover_image ? <Image h="52" src={post.cover_image} /> : null}
+      {post.cover_image ? (
+        <Image h="52" src={post.cover_image} loading="lazy" alt={post.title} />
+      ) : null}
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
         <Flex flex="auto" align="center">
           <LinkOverlay href={`/blog/${post.digest}`}>
