@@ -98,6 +98,7 @@ const getWikiInternalLinks = (content: string): number => {
       const hostname = getHostnameFromRegex(url)
       if (
         hostname === 'everipedia.org' ||
+        hostname === 'iq.wiki' ||
         hostname?.endsWith('.everipedia.org')
       ) {
         internalLinksCount += 1
