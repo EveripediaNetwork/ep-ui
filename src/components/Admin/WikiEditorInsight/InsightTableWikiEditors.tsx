@@ -12,20 +12,17 @@ import {
   Thead,
   Tr,
   AspectRatio,
-  Button,
   useDisclosure,
   Link,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Box,
   Tag,
+  HStack,
+  Icon,
 } from '@chakra-ui/react'
 import React, { useMemo } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import { BiChevronDown } from 'react-icons/bi'
+import { RiQuestionLine } from 'react-icons/ri'
 import { WikiImage } from '../../WikiImage'
 
 interface WikiEditorInsightDataInterface {
@@ -196,52 +193,39 @@ export const InsightTableWikiEditors = (
                     </Tag>
                   </Td>
                   <Td>
-                    <Menu>
-                      <MenuButton
-                        transition="all 0.2s"
-                        borderRadius="md"
-                        _expanded={{ bg: 'brand.500', color: 'white' }}
-                        _hover={{ bg: 'none' }}
-                        _active={{ bg: 'none', outline: 'none' }}
-                        _focus={{ bg: 'none', outline: 'none' }}
-                        w="fit-content"
+                    {item.active ? (
+                      <Text
+                        cursor="pointer"
+                        fontWeight="medium"
+                        onClick={() => {
+                          onOpen()
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }}
                       >
-                        <MenuButton
-                          as={Button}
-                          rightIcon={<BiChevronDown />}
-                          bg="transparent"
-                          color="#718096"
-                          _hover={{ bg: 'none' }}
-                          _active={{ bg: 'none', outline: 'none' }}
-                          _focus={{ bg: 'none', outline: 'none' }}
-                          fontWeight="medium"
-                          p="0"
-                        >
-                          {item.active ? 'Ban' : 'Unban'}
-                        </MenuButton>
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
-                          onClick={() => {
-                            onOpen()
-                            toggleUserFunc(item.active, item.editorAddress)
-                          }}
-                          py="5"
-                          px="3"
+                        Ban
+                      </Text>
+                    ) : (
+                      <HStack
+                        spacing={2}
+                        onClick={() =>
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }
+                      >
+                        <Text
+                          color="#E2E8F0"
+                          _dark={{ color: '#495a68' }}
+                          cursor="pointer"
                         >
                           Ban
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => {
-                            toggleUserFunc(item.active, item.editorAddress)
-                          }}
-                          py="5"
-                          px="3"
-                        >
-                          Unban
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
+                        </Text>
+                        <Icon
+                          fontSize="20px"
+                          cursor="pointer"
+                          color="#F11a82"
+                          as={RiQuestionLine}
+                        />
+                      </HStack>
+                    )}
                   </Td>
                 </Tr>
               )
