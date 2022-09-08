@@ -107,7 +107,7 @@ export const HideWikiNotification = ({
               mr={5}
             />
             <Text flex="1" fontSize="xl" fontWeight="black">
-              {IsHide ? 'Archive' : 'Unarchive'} Wiki
+              {IsHide ? 'Archive Wiki' : 'Archive Wiki Details'}
             </Text>
             <Icon
               cursor="pointer"
@@ -124,10 +124,11 @@ export const HideWikiNotification = ({
             textAlign="center"
             fontWeight="normal"
           >
-            You are about to {IsHide ? 'archive' : 'unarchive'} the selected
-            wiki. Do you wish to continue with this action?
+            {IsHide
+              ? ' You are about to archive the selected wiki. Do you wish to continue with this action?'
+              : 'This archive is currently archived. Do you want to unarchive this wiki?'}
           </Text>
-          <ButtonGroup px={2} pt={2} w="full" spacing={8}>
+          <ButtonGroup px={2} pt={2} w="full" spacing={8} onClick={onClose}>
             <Button w="full" variant="outline">
               Cancel
             </Button>

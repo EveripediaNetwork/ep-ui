@@ -313,7 +313,6 @@ export const WikiEditorsInsightTable = () => {
           <TagLabel>100 Users</TagLabel>
         </Tag>
       </Flex>
-
       <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
         <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
           <InputGroup w="100%">
