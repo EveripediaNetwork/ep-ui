@@ -361,12 +361,12 @@ export const PromoteCreatedWikisModal = ({
         <>
           {step2Titles === 'Promote to Trending wiki' ? (
             <Text textAlign="center">
-              You are about to promote a wiki to the trending wiki. Do you wish
+              You are about to promote a wiki to the Trending wiki section of the homepage. Do you wish
               to continue this action?
             </Text>
           ) : (
             <Text textAlign="center">
-              You are about to promote a wiki to the Homepage. Do you wish to
+              You are about to promote a wiki to the hero section of the homepage. Do you wish to
               continue this action?
             </Text>
           )}
