@@ -105,6 +105,9 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 overflow="hidden"
                 textOverflow="ellipsis"
                 color="gray.400"
+                _dark={{
+                  color: 'whiteAlpha.900',
+                }}
                 fontWeight="400"
                 fontSize="sm"
                 textAlign="right"
