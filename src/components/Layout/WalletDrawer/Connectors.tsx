@@ -26,8 +26,14 @@ import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
 import { RootState } from '@/store/store'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { logEvent } from '@/utils/googleAnalytics'
+import { useRouter } from 'next/router'
 
-const Connectors = () => {
+interface ConnectorsProps {
+  openWalletDrawer?: () => void
+}
+
+const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
+  const router = useRouter()
   const { connectors, connect } = useConnect({
     onError(error) {
       logEvent({
@@ -40,6 +46,7 @@ const Connectors = () => {
         action: 'LOGIN_SUCCESS',
         params: { address: data.account },
       })
+      router.push(router.asPath).then(openWalletDrawer)
     },
   })
 

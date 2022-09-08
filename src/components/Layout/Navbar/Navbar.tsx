@@ -41,7 +41,7 @@ const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
 
 const Navbar = () => {
   const router = useRouter()
-  const { isOpen, onClose, onToggle } = useDisclosure()
+  const { isOpen, onClose, onToggle, onOpen } = useDisclosure()
   const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
   const [openSwitch, setOpenSwitch] = useState<boolean>(false)
@@ -256,6 +256,7 @@ const Navbar = () => {
         <WalletDrawer
           isOpen={isOpen}
           onClose={onClose}
+          onOpen={onOpen}
           finalFocusRef={loginButtonRef}
           setHamburger={setHamburger}
         />

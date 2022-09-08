@@ -38,6 +38,7 @@ import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 type WalletDrawerType = {
   isOpen: boolean
   onClose: () => void
+  onOpen: () => void
   finalFocusRef: RefObject<FocusableElement>
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -45,6 +46,7 @@ type WalletDrawerType = {
 const WalletDrawer = ({
   isOpen,
   onClose,
+  onOpen,
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
@@ -155,7 +157,7 @@ const WalletDrawer = ({
         </DrawerHeader>
         <Divider />
         <DrawerBody shadow="sm">
-          <Connectors />
+          <Connectors openWalletDrawer={onOpen} />
         </DrawerBody>
       </DrawerContent>
     </Drawer>
