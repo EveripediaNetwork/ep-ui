@@ -40,7 +40,7 @@ export const Index = ({
         }}
         bgImage="/images/homepage-bg-white.png"
       >
-        <TrendingWikis drops={promotedWikis} />
+        <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
         <CategoriesList categories={categories} />
       </Box>
       <DiscoverMore tagsData={popularTags} />
