@@ -8,21 +8,21 @@ interface SEOHeaderProps {
 
 const SEOHeader = ({ router }: SEOHeaderProps) => (
   <DefaultSeo
-    title="Everipedia"
-    titleTemplate="%s · Everipedia"
+    title="IQ.Wiki"
+    titleTemplate="%s · IQ.Wiki"
     description="World's largest crypto knowledge base"
-    canonical={`https://everipedia.org${router.asPath || ''}`}
+    canonical={`https://iq.wiki${router.asPath || ''}`}
     openGraph={{
-      title: 'Everipedia',
+      title: 'IQ.Wiki',
       description: "World's largest crypto knowledge base",
       type: 'website',
-      site_name: 'Everipedia',
+      site_name: 'IQ.Wiki',
       images: [
         {
           url: `https://i.imgur.com/u42cq1C.png`,
           width: 1024,
           height: 512,
-          alt: 'Everipedia',
+          alt: 'IQ.Wiki',
         },
       ],
     }}
