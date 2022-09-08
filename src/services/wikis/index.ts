@@ -15,8 +15,9 @@ import {
   GET_USER_EDITED_WIKIS_BY_ID,
   GET_WIKI_SLUG_VALID,
   POST_WIKI_VIEW_COUNT,
+  GET_WIKI_CREATOR_AND_EDITOR,
 } from '@/services/wikis/queries'
-import { Wiki, WikiPreview } from '@/types/Wiki'
+import { User, Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 
@@ -78,6 +79,14 @@ type GetIsWikiSlugValidResponse = {
   }
 }
 
+type WikiCreatorAndEditor = {
+  user: User
+  author: User
+}
+type WikiCreatorAndEditorResponse = {
+  wiki: WikiCreatorAndEditor
+}
+
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -109,6 +118,14 @@ export const wikiApi = createApi({
     getWiki: builder.query<Wiki, string>({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
       transformResponse: (response: GetWikiResponse) => response.wiki,
+    }),
+    getWikiCreatorAndEditor: builder.query<WikiCreatorAndEditor, string>({
+      query: (id: string) => ({
+        document: GET_WIKI_CREATOR_AND_EDITOR,
+        variables: { id },
+      }),
+      transformResponse: (response: WikiCreatorAndEditorResponse) =>
+        response.wiki,
     }),
     getUserWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => {
@@ -226,6 +243,7 @@ export const {
   getWikis,
   getPromotedWikis,
   getWiki,
+  getWikiCreatorAndEditor,
   getWikiPreview,
   getUserWikis,
   getWikisByCategory,

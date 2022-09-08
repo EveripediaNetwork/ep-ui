@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
-import { GetServerSideProps } from 'next'
-import { Flex, Spinner, Text, Button, Box } from '@chakra-ui/react'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { Flex, Text, Button, Box } from '@chakra-ui/react'
 import {
   getActivityById,
-  getLatestIPFSByWiki,
-  useGetActivityByIdQuery,
   useGetLatestIPFSByWikiQuery,
   getRunningOperationPromises,
+  getWikiCreatorAndEditorByActivityId,
 } from '@/services/activities'
 import Link from 'next/link'
 import { useAppSelector } from '@/store/hook'
@@ -18,25 +17,21 @@ import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
+import { Activity } from '@/types/ActivityDataType'
 
-const Revision = () => {
+interface RevisionPageProps {
+  wiki: Activity
+}
+const Revision = ({ wiki }: RevisionPageProps) => {
   const router = useRouter()
 
   const { id: ActivityId } = router.query
-  const {
-    isLoading,
-    error,
-    data: wiki,
-  } = useGetActivityByIdQuery(
-    typeof ActivityId === 'string' ? ActivityId : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
-  const wikiId = wiki?.content[0].id
+  const [wikiData, setWikiData] = useState<Activity>(wiki)
+
+  const wikiId = wikiData?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
     typeof wikiId === 'string' ? wikiId : skipToken,
     {
@@ -53,12 +48,12 @@ const Revision = () => {
 
   // check if the current revision is the latest revision
   useEffect(() => {
-    if (latestIPFS && wiki && latestIPFS !== wiki?.ipfs) {
+    if (latestIPFS && wikiData && latestIPFS !== wikiData?.ipfs) {
       setIsLatest(false)
     } else {
       setIsLatest(true)
     }
-  }, [latestIPFS, wiki, wiki?.ipfs])
+  }, [latestIPFS, wikiData, wikiData?.ipfs])
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
@@ -74,86 +69,101 @@ const Revision = () => {
   }, [toc])
 
   useEffect(() => {
-    if (wiki) incrementWikiViewCount(wiki.content[0].id)
-  }, [wiki])
+    const fetchUserDataAndIncView = async () => {
+      if (ActivityId && typeof ActivityId === 'string') {
+        const { data } = await store.dispatch(
+          getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
+        )
+        setWikiData(p => ({ ...p, content: { ...p.content, ...data } }))
+        incrementWikiViewCount(wikiData.content[0].id)
+      }
+    }
+    fetchUserDataAndIncView()
+  }, [ActivityId, wikiData])
 
   return (
     <>
-      {wiki && (
+      {wikiData && (
         <WikiHeader
-          slug={wiki.content[0].id as string}
+          slug={wikiData.content[0].id as string}
           author={
-            wiki.content[0].author.profile?.username ||
-            wiki.content[0].author.id ||
+            wikiData.content[0].author.profile?.username ||
+            wikiData.content[0].author.id ||
             ''
           }
-          dateModified={wiki.content[0].updated}
-          datePublished={wiki.content[0].created}
-          title={wiki.content[0].title}
-          description={getWikiSummary(wiki.content[0])}
-          mainImage={getWikiImageUrl(wiki.content[0])}
+          dateModified={wikiData.content[0].updated}
+          datePublished={wikiData.content[0].created}
+          title={wikiData.content[0].title}
+          description={getWikiSummary(wikiData.content[0])}
+          mainImage={getWikiImageUrl(wikiData.content[0])}
         />
       )}
 
-      <main>
-        {!error && (router.isFallback || isLoading) ? (
-          <Flex justify="center" align="center" h="50vh">
-            <Spinner size="xl" />
-          </Flex>
-        ) : (
-          <Box mt={-2}>
-            {!isLatest && (
-              <Flex
-                flexDir={{ base: 'column', md: 'row' }}
-                justify="center"
-                align="center"
-                gap={2}
-                bgColor="red.200"
-                _dark={{ bgColor: 'red.500' }}
-                w="100%"
-                p={2}
+      <Box mt={-2}>
+        {!isLatest && (
+          <Flex
+            flexDir={{ base: 'column', md: 'row' }}
+            justify="center"
+            align="center"
+            gap={2}
+            bgColor="red.200"
+            _dark={{ bgColor: 'red.500' }}
+            w="100%"
+            p={2}
+          >
+            <Text textAlign="center">
+              You are seeing an older version of this wikiData.
+            </Text>
+            <Link href={`/wikiData/${wikiData?.content[0].id}`} passHref>
+              <Button
+                as="a"
+                maxW="120px"
+                variant="solid"
+                bgColor="dimColor"
+                sx={{
+                  '&:hover, &:focus, &:active': {
+                    bgColor: 'dimColor',
+                    textDecoration: 'underline',
+                  },
+                }}
+                px={4}
+                size="sm"
               >
-                <Text textAlign="center">
-                  You are seeing an older version of this wiki.
-                </Text>
-                <Link href={`/wiki/${wiki?.content[0].id}`} passHref>
-                  <Button
-                    as="a"
-                    maxW="120px"
-                    variant="solid"
-                    bgColor="dimColor"
-                    sx={{
-                      '&:hover, &:focus, &:active': {
-                        bgColor: 'dimColor',
-                        textDecoration: 'underline',
-                      },
-                    }}
-                    px={4}
-                    size="sm"
-                  >
-                    View Latest
-                  </Button>
-                </Link>
-              </Flex>
-            )}
-            <WikiMarkup wiki={wiki?.content[0]} ipfs={wiki?.ipfs} />
-          </Box>
+                View Latest
+              </Button>
+            </Link>
+          </Flex>
         )}
-      </main>
+        <WikiMarkup wiki={wikiData?.content[0]} ipfs={wikiData?.ipfs} />
+      </Box>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const id = context.params?.id
-  if (typeof id === 'string') {
-    store.dispatch(getActivityById.initiate(id))
-    store.dispatch(getLatestIPFSByWiki.initiate(id))
+  if (typeof id !== 'string') {
+    return {
+      notFound: true,
+    }
   }
+
+  const { data, error } = await store.dispatch(getActivityById.initiate(id))
   await Promise.all(getRunningOperationPromises())
+
+  if (data && !error)
+    return {
+      props: {
+        wiki: data,
+      },
+    }
+
   return {
-    props: {},
+    notFound: true,
   }
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: true }
 }
 
 export default Revision

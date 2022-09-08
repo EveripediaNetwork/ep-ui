@@ -189,6 +189,7 @@ export const whiteListedDomains = [
   'vimeo.com',
   'alpha.everipedia.org/wiki',
   'beta.everipedia.org/wiki',
+  'iq.wiki/wiki',
   'ipfs.everipedia.org/ipfs',
 ]
 

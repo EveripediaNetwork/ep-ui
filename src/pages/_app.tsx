@@ -1,9 +1,6 @@
-import React, { StrictMode, useEffect, useState } from 'react'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import './static/assets/global.css'
-import './static/assets/dark-mode.css'
-import './static/assets/markdown.css'
+import React, { StrictMode, useEffect } from 'react'
+import '../styles/global.css'
+import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
@@ -29,11 +26,6 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-const defaultClient = createClient({
-  autoConnect: true,
-  provider,
-})
-
 const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
@@ -41,16 +33,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
-  const [client, setClient] = useState(defaultClient)
-
-  useEffect(() => {
-    const clientWithConnectors = createClient({
-      autoConnect: true,
-      connectors,
-      provider,
-    })
-    setClient(clientWithConnectors)
-  }, [])
+  const clientWithConnectors = createClient({
+    autoConnect: true,
+    connectors,
+    provider,
+  })
 
   return (
     <StrictMode>
@@ -59,7 +46,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
-          <WagmiConfig client={client}>
+          <WagmiConfig client={clientWithConnectors}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
