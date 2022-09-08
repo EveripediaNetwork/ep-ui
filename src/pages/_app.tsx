@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect, useState } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
