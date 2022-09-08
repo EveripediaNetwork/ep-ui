@@ -39,8 +39,8 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
                 },
               }}
               _dark={{
-                color: 'whiteAlpha.600',
-                borderColor: 'whiteAlpha.200',
+                color: 'whiteAlpha.900',
+                borderColor: 'whiteAlpha.700',
               }}
             >
               {tag.id}
