@@ -14,6 +14,11 @@ import {
   HStack,
   Link,
   useDisclosure,
+  MenuButton,
+  Button,
+  Menu,
+  MenuItem,
+  MenuList,
   Avatar,
   Box,
   AlertDialog,
@@ -24,7 +29,12 @@ import config from '@/config'
 import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import { RiArrowDownLine, RiQuestionLine, RiCloseLine } from 'react-icons/ri'
+import {
+  RiArrowDownLine,
+  RiQuestionLine,
+  RiArrowDropDownLine,
+  RiCloseLine,
+} from 'react-icons/ri'
 import { BsDot } from 'react-icons/bs'
 import { Wikis } from '@/types/admin'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -58,6 +68,7 @@ export const InsightTableWikiCreated = (
   } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
   const [hideNotify, setHideNotify] = useState(false)
+  const VisibilityOptions = ['Archive', 'Unarchive']
 
   const findSection = (promotedNum: number) => {
     const num = wikiCreatedInsightData && wikiCreatedInsightData[0].promoted
@@ -68,12 +79,12 @@ export const InsightTableWikiCreated = (
     }
     onOpenPromotion()
   }
-  const shouldArchive = (ishidden: boolean, wikiId: string) => {
-    if (ishidden) {
+  const shouldArchive = (e: string, ishidden: boolean, wikiId: string) => {
+    if (ishidden && e === 'Unarchive') {
       setIsHide(false)
       onOpenWikiHideNotification()
       setWikiChosenId(wikiId)
-    } else if (!ishidden) {
+    } else if (!ishidden && e === 'Archive') {
       onOpenWikiHideNotification()
       setWikiChosenId(wikiId)
     }
@@ -247,9 +258,51 @@ export const InsightTableWikiCreated = (
                     gap={2}
                     alignItems="center"
                     justifyContent="flex-end"
-                    pr={5}
                   >
                     <HStack spacing={5}>
+                      <Menu>
+                        <MenuButton
+                          transition="all 0.2s"
+                          borderRadius="md"
+                          _expanded={{ bg: 'brand.500', color: 'white' }}
+                        >
+                          <Button
+                            borderColor="#E2E8F0"
+                            _dark={{ borderColor: '#2c323d' }}
+                            py={2}
+                            px={5}
+                            variant="outline"
+                            fontWeight="light"
+                          >
+                            <Text px={2}> Archive </Text>
+                            <Icon
+                              fontSize="2xl"
+                              fontWeight="bold"
+                              cursor="pointer"
+                              color="#718096"
+                              as={RiArrowDropDownLine}
+                            />
+                          </Button>
+                        </MenuButton>
+                        <MenuList px={1}>
+                          {VisibilityOptions.map((o, m) => (
+                            <MenuItem
+                              key={m}
+                              onClick={() => {
+                                shouldArchive(o, item.hidden, item.id)
+                              }}
+                              py="1"
+                              px="1"
+                              isDisabled={
+                                (!item.hidden && o === 'Unarchive') ||
+                                (item.hidden && o === 'Archive')
+                              }
+                            >
+                              {o}
+                            </MenuItem>
+                          ))}
+                        </MenuList>
+                      </Menu>
                       {!item.promoted ? (
                         <Text
                           color="#FF5CAA"
@@ -277,38 +330,7 @@ export const InsightTableWikiCreated = (
                           <Icon
                             fontSize="20px"
                             cursor="pointer"
-                            color="#F11a82"
-                            as={RiQuestionLine}
-                          />
-                        </HStack>
-                      )}
-
-                      {!item.hidden ? (
-                        <Text
-                          cursor="pointer"
-                          fontWeight="medium"
-                          onClick={() => {
-                            shouldArchive(item.hidden, item.id)
-                          }}
-                        >
-                          Archive
-                        </Text>
-                      ) : (
-                        <HStack
-                          spacing={2}
-                          onClick={() => shouldArchive(item.hidden, item.id)}
-                        >
-                          <Text
-                            color="#E2E8F0"
-                            _dark={{ color: '#495a68' }}
-                            cursor="pointer"
-                          >
-                            Archive
-                          </Text>
-                          <Icon
-                            fontSize="20px"
-                            cursor="pointer"
-                            color="#F11a82"
+                            color="#718096"
                             as={RiQuestionLine}
                           />
                         </HStack>

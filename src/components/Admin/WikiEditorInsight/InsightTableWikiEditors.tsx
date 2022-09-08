@@ -142,21 +142,27 @@ export const InsightTableWikiEditors = (
                           src={item.editorAvatar}
                         />
                         <Flex flexDirection="column">
-                          <Text>{item.editorName}</Text>
-                          <Text color="#718096" fontSize="sm">
+                          <Text opacity={item.active ? 1 : 0.3}>
+                            {item.editorName}
+                          </Text>
+                          <Text
+                            color="#718096"
+                            fontSize="sm"
+                            opacity={item.active ? 1 : 0.3}
+                          >
                             {shortenAccount(item.editorAddress)}
                           </Text>
                         </Flex>
                       </Flex>
                     </Link>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">{item.createdWikis.length}</Text>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">{item.editiedWikis.length}</Text>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">
                       {item.createdWikis.length + item.editiedWikis.length}
                     </Text>
@@ -175,7 +181,7 @@ export const InsightTableWikiEditors = (
                             }`}
                           />
                         </AspectRatio>
-                        <Text>
+                        <Text opacity={item.active ? 1 : 0.1}>
                           {item.lastCreatedWiki?.content[0]
                             ? shortenText(
                                 item.lastCreatedWiki?.content[0].title,
@@ -188,11 +194,25 @@ export const InsightTableWikiEditors = (
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>
                   <Td>
-                    <Tag colorScheme={item.active ? 'green' : 'red'}>
+                    <Tag
+                      bg={item.active ? '#F0FFF4' : '#FBD38D'}
+                      display="flex"
+                      w="fit-content"
+                      gap="2"
+                      py="1"
+                      borderRadius="100px"
+                      color={item.active ? '#276749' : '#9C4221'}
+                    >
+                      <Box
+                        w="8px"
+                        h="8px"
+                        bg={item.active ? '#38A169' : '#DD6B20'}
+                        borderRadius="100px"
+                      />
                       {item.active ? 'Active' : 'Banned'}
                     </Tag>
                   </Td>
-                  <Td>
+                  <Td _dark={{ opacity: item.active ? 1 : 0.5 }}>
                     {item.active ? (
                       <Text
                         cursor="pointer"
