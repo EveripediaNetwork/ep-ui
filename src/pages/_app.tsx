@@ -5,7 +5,6 @@ import '@/editor-plugins/pluginStyles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProviderClass } from 'react-redux'
-import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
@@ -13,9 +12,12 @@ import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
-import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
+
+const WagmiProvider = React.lazy(
+  () => import('@/components/WagmiProviderWrapper'),
+)
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -25,12 +27,6 @@ const ReduxProvider = ReduxProviderClass as unknown as (
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
-
-const client = createClient({
-  autoConnect: true,
-  connectors,
-  provider,
-})
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
@@ -44,14 +40,14 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider resetCSS theme={chakraTheme}>
-          <Fonts />
-          <WagmiConfig client={client}>
+        <WagmiProvider>
+          <ChakraProvider resetCSS theme={chakraTheme}>
+            <Fonts />
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
-          </WagmiConfig>
-        </ChakraProvider>
+          </ChakraProvider>
+        </WagmiProvider>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
