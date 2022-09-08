@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 
 interface WikiActionBarProps {
-  wiki: Wiki | undefined
+  wiki?: Wiki | null
 }
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
