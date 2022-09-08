@@ -125,7 +125,7 @@ export const HideWikiNotification = ({
             fontWeight="normal"
           >
             You are about to {IsHide ? 'archive' : 'unarchive'} the selected
-            wiki.Do you wish to continue with this action?
+            wiki. Do you wish to continue with this action?
           </Text>
           <ButtonGroup px={2} pt={2} w="full" spacing={8}>
             <Button w="full" variant="outline">

@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode, useEffect, useState } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './static/assets/global.css'
@@ -12,8 +12,6 @@ import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
-import { getCategoriesLinks } from '@/services/categories'
-import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
@@ -31,9 +29,8 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-const client = createClient({
+const defaultClient = createClient({
   autoConnect: true,
-  connectors,
   provider,
 })
 
@@ -43,6 +40,17 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
+
+  const [client, setClient] = useState(defaultClient)
+
+  useEffect(() => {
+    const clientWithConnectors = createClient({
+      autoConnect: true,
+      connectors,
+      provider,
+    })
+    setClient(clientWithConnectors)
+  }, [])
 
   return (
     <StrictMode>
@@ -61,14 +69,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ToastContainer />
     </StrictMode>
   )
-}
-
-export const getServerSideProps = async () => {
-  store.dispatch(getCategoriesLinks.initiate())
-  await Promise.all(getRunningOperationPromises())
-  return {
-    props: {},
-  }
 }
 
 export default App

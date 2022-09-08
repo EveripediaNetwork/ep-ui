@@ -25,8 +25,9 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
-import { BiSortDown, BiSort, BiSortUp } from 'react-icons/bi'
+import { BiSortDown, BiSortUp } from 'react-icons/bi'
 
+import { RiArrowUpDownLine } from 'react-icons/ri'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { DeleteEditorModal } from './DeleteEditorModal'
@@ -84,7 +85,7 @@ export const WikiEditorsInsightTable = () => {
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
-      return <BiSort fontSize="1.3rem" />
+      return <RiArrowUpDownLine fontSize="1.3rem" />
     }
     if (sortTableBy === 'ascending') {
       return <BiSortUp fontSize="1.3rem" />
@@ -92,7 +93,7 @@ export const WikiEditorsInsightTable = () => {
     if (sortTableBy === 'descending') {
       return <BiSortDown fontSize="1.3rem" />
     }
-    return <BiSort fontSize="1.3rem" />
+    return <RiArrowUpDownLine fontSize="1.3rem" />
   }, [editors, sortTableBy])
 
   const editorsFilteredArr = useMemo(() => {
@@ -340,7 +341,7 @@ export const WikiEditorsInsightTable = () => {
             px={10}
             rightIcon={sortIcon}
             variant="outline"
-            fontWeight="light"
+            fontWeight="medium"
           >
             Sort
           </Button>
@@ -352,12 +353,12 @@ export const WikiEditorsInsightTable = () => {
                 _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
                 px={10}
-                rightIcon={<MdFilterList />}
+                leftIcon={<MdFilterList fontSize="25px" />}
                 variant="outline"
-                fontWeight="medium"
                 onClick={onToggleFilter}
+                fontWeight="medium"
               >
-                Filter
+                Filters
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">

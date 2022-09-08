@@ -208,13 +208,7 @@ export const PromoteCreatedWikisModal = ({
               </Box>
               <Box>
                 {Data.updated && (
-                  <Text
-                    mt="1"
-                    fontSize="sm"
-                    fontWeight="light"
-                    opacity={0.6}
-                    whiteSpace="nowrap"
-                  >
+                  <Text mt="1" fontSize="sm" opacity={0.6} whiteSpace="nowrap">
                     {getReadableDate(Data.updated)}
                   </Text>
                 )}
@@ -303,6 +297,7 @@ export const PromoteCreatedWikisModal = ({
 
   const HompageSelected = () => {
     if (activeStep === 0) {
+      setStep2Titles('Promote to Hero Section')
       nextStep()
       setInitGetSearchedWikis(false)
       setbuttonOne('cancel')
@@ -319,7 +314,7 @@ export const PromoteCreatedWikisModal = ({
     <>
       {activeStep === 0 && (
         <Text textAlign="center">
-          Select the appropraite action you would like to take for this wiki
+          Select the appropriate action you would like to take for this wiki
         </Text>
       )}
       {activeStep === 1 && (
@@ -424,6 +419,7 @@ export const PromoteCreatedWikisModal = ({
                     p={4}
                     onClick={HompageSelected}
                     size="sm"
+                    variant="ghost"
                     fontSize="xs"
                   >
                     {buttonOne}
@@ -431,7 +427,6 @@ export const PromoteCreatedWikisModal = ({
                   <Button
                     size="sm"
                     fontSize="xs"
-                    variant="ghost"
                     borderWidth="1px"
                     onClick={TrendingwikiSelected}
                   >
