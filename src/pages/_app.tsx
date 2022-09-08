@@ -26,11 +26,6 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-const defaultClient = createClient({
-  autoConnect: true,
-  provider,
-})
-
 const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
@@ -38,16 +33,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
-  const [client, setClient] = useState(defaultClient)
-
-  useEffect(() => {
-    const clientWithConnectors = createClient({
-      autoConnect: true,
-      connectors,
-      provider,
-    })
-    setClient(clientWithConnectors)
-  }, [])
+  const clientWithConnectors = createClient({
+    autoConnect: true,
+    connectors,
+    provider,
+  })
 
   return (
     <StrictMode>
@@ -56,7 +46,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
-          <WagmiConfig client={client}>
+          <WagmiConfig client={clientWithConnectors}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
