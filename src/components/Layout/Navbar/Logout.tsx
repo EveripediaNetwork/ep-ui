@@ -1,5 +1,6 @@
 import { setStateToDefault } from '@/store/slices/user-slice'
 import { Flex, Icon, MenuItem } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
@@ -9,13 +10,12 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
   const { disconnect } = useDisconnect()
+  const router = useRouter()
   const handleLogOut = () => {
     disconnect()
     dispatch(setStateToDefault())
-    localStorage.removeItem('USER_TOKEN')
-    setTimeout(() => {
-      window.location.reload()
-    }, 500)
+    window.localStorage.removeItem('USER_TOKEN')
+    router.push(router.asPath)
   }
   return (
     <>
