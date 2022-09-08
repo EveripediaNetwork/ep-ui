@@ -128,7 +128,7 @@ export const HideWikiNotification = ({
               ? ' You are about to archive the selected wiki. Do you wish to continue with this action?'
               : 'This archive is currently archived. Do you want to unarchive this wiki?'}
           </Text>
-          <ButtonGroup px={2} pt={2} w="full" spacing={8}>
+          <ButtonGroup px={2} pt={2} w="full" spacing={8} onClick={onClose}>
             <Button w="full" variant="outline">
               Cancel
             </Button>
