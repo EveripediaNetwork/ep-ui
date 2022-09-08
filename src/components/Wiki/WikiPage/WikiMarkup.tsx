@@ -13,7 +13,7 @@ import WikiReferences from './WikiReferences'
 import WikiTableOfContents from './WikiTableOfContents'
 
 interface WikiLayoutProps {
-  wiki?: Wiki
+  wiki?: Wiki | null
   ipfs?: string
 }
 
