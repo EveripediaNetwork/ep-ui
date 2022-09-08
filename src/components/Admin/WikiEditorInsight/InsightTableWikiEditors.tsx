@@ -12,20 +12,17 @@ import {
   Thead,
   Tr,
   AspectRatio,
-  Button,
   useDisclosure,
   Link,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Box,
   Tag,
+  HStack,
+  Icon,
 } from '@chakra-ui/react'
 import React, { useMemo } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
-import { BiChevronDown } from 'react-icons/bi'
+import { RiQuestionLine } from 'react-icons/ri'
 import { WikiImage } from '../../WikiImage'
 
 interface WikiEditorInsightDataInterface {
@@ -145,21 +142,27 @@ export const InsightTableWikiEditors = (
                           src={item.editorAvatar}
                         />
                         <Flex flexDirection="column">
-                          <Text>{item.editorName}</Text>
-                          <Text color="#718096" fontSize="sm">
+                          <Text opacity={item.active ? 1 : 0.3}>
+                            {item.editorName}
+                          </Text>
+                          <Text
+                            color="#718096"
+                            fontSize="sm"
+                            opacity={item.active ? 1 : 0.3}
+                          >
                             {shortenAccount(item.editorAddress)}
                           </Text>
                         </Flex>
                       </Flex>
                     </Link>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">{item.createdWikis.length}</Text>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">{item.editiedWikis.length}</Text>
                   </Td>
-                  <Td>
+                  <Td opacity={item.active ? 1 : 0.3}>
                     <Text color="#718096">
                       {item.createdWikis.length + item.editiedWikis.length}
                     </Text>
@@ -178,7 +181,7 @@ export const InsightTableWikiEditors = (
                             }`}
                           />
                         </AspectRatio>
-                        <Text>
+                        <Text opacity={item.active ? 1 : 0.1}>
                           {item.lastCreatedWiki?.content[0]
                             ? shortenText(
                                 item.lastCreatedWiki?.content[0].title,
@@ -191,57 +194,58 @@ export const InsightTableWikiEditors = (
                   </Td>
                   <Td color="#718096">{item.latestActivity}</Td>
                   <Td>
-                    <Tag colorScheme={item.active ? 'green' : 'red'}>
+                    <Tag
+                      bg={item.active ? '#F0FFF4' : '#FBD38D'}
+                      display="flex"
+                      w="fit-content"
+                      gap="2"
+                      py="1"
+                      borderRadius="100px"
+                      color={item.active ? '#276749' : '#9C4221'}
+                    >
+                      <Box
+                        w="8px"
+                        h="8px"
+                        bg={item.active ? '#38A169' : '#DD6B20'}
+                        borderRadius="100px"
+                      />
                       {item.active ? 'Active' : 'Banned'}
                     </Tag>
                   </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton
-                        transition="all 0.2s"
-                        borderRadius="md"
-                        _expanded={{ bg: 'brand.500', color: 'white' }}
-                        _hover={{ bg: 'none' }}
-                        _active={{ bg: 'none', outline: 'none' }}
-                        _focus={{ bg: 'none', outline: 'none' }}
-                        w="fit-content"
+                  <Td _dark={{ opacity: item.active ? 1 : 0.5 }}>
+                    {item.active ? (
+                      <Text
+                        cursor="pointer"
+                        fontWeight="medium"
+                        onClick={() => {
+                          onOpen()
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }}
                       >
-                        <MenuButton
-                          as={Button}
-                          rightIcon={<BiChevronDown />}
-                          bg="transparent"
-                          color="#718096"
-                          _hover={{ bg: 'none' }}
-                          _active={{ bg: 'none', outline: 'none' }}
-                          _focus={{ bg: 'none', outline: 'none' }}
-                          fontWeight="medium"
-                          p="0"
-                        >
-                          {item.active ? 'Ban' : 'Unban'}
-                        </MenuButton>
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
-                          onClick={() => {
-                            onOpen()
-                            toggleUserFunc(item.active, item.editorAddress)
-                          }}
-                          py="5"
-                          px="3"
+                        Ban
+                      </Text>
+                    ) : (
+                      <HStack
+                        spacing={2}
+                        onClick={() =>
+                          toggleUserFunc(item.active, item.editorAddress)
+                        }
+                      >
+                        <Text
+                          color="#E2E8F0"
+                          _dark={{ color: '#495a68' }}
+                          cursor="pointer"
                         >
                           Ban
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => {
-                            toggleUserFunc(item.active, item.editorAddress)
-                          }}
-                          py="5"
-                          px="3"
-                        >
-                          Unban
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
+                        </Text>
+                        <Icon
+                          fontSize="20px"
+                          cursor="pointer"
+                          color="#F11a82"
+                          as={RiQuestionLine}
+                        />
+                      </HStack>
+                    )}
                   </Td>
                 </Tr>
               )

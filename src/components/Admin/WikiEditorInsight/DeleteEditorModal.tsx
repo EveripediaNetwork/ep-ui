@@ -54,7 +54,7 @@ export const DeleteEditorModal = ({
               />
             </Box>
             <Heading fontSize="xl">
-              {rest.isActive ? 'Ban' : 'Unban'} Editor
+              {rest.isActive ? 'Ban Editor' : 'Ban Editor Details'}
             </Heading>
           </HStack>
           <Flex
