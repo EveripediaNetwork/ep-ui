@@ -181,7 +181,7 @@ const Navbar = () => {
                     color="gray.900"
                     _dark={{ color: 'white' }}
                   >
-                    Everipedia
+                    IQ.wiki
                   </Heading>
                 </HStack>
               </Link>
