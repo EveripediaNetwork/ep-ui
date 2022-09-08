@@ -93,7 +93,7 @@
     "unified": "^10.1.2",
     "uuid": "^8.3.2",
     "wagmi": "^0.5.11",
-    "web3-token": "^0.2.9",
+    "web3-token": "^1.0.2",
     "yarn": "^1.22.18"
   },
   "devDependencies": {

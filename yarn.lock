@@ -4044,7 +4044,12 @@ big-integer@^1.6.16:
   resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.51.tgz#0df92a5d9880560d3ff2d5fd20245c889d130686"
   integrity sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==
 
-bignumber.js@^9.0.0, bignumber.js@^9.0.1, bignumber.js@^9.0.2:
+bignumber.js@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.0.tgz#805880f84a329b5eac6e7cb6f8274b6d82bdf075"
+  integrity sha512-t/OYhhJ2SD+YGBQcjY8GzzDHEk9f3nerxjtfa6tlMXfe7frs/WozhvCNoGvpM0P3bNf3Gq5ZRMlGr5f3r4/N8A==
+
+bignumber.js@^9.0.0, bignumber.js@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
@@ -5726,7 +5731,7 @@ ethereumjs-util@^6.0.0:
     ethjs-util "0.1.6"
     rlp "^2.2.3"
 
-ethereumjs-util@^7.1.0, ethereumjs-util@^7.1.5:
+ethereumjs-util@^7.1.5:
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.1.5.tgz#9ecf04861e4fbbeed7465ece5f23317ad1129181"
   integrity sha512-SDl5kKrQAudFBUe5OJM9Ac6WmMyYmXX/6sTmLZ3ffG2eY6ZIGBes3pEDxNN6V72WyOw4CPD5RomKdsa8DAAwLg==
@@ -8223,7 +8228,7 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
-parse-headers@^2.0.0, parse-headers@^2.0.4:
+parse-headers@^2.0.0, parse-headers@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/parse-headers/-/parse-headers-2.0.5.tgz#069793f9356a54008571eb7f9761153e6c770da9"
   integrity sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==
@@ -9842,11 +9847,12 @@ to-fast-properties@^2.0.0:
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
 
-to-hex@0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/to-hex/-/to-hex-0.0.17.tgz#ade8a93c889373ec07d10296adcdb59ed8344c3b"
-  integrity sha512-2ekdx8fg6exBSh0js2QHPQVMUDgRbwJrjk+UyAOIxwo/pFbVrlQ85+BrGvWQv/0pQb+jJIsB11ugqyOZER/B5w==
+to-hex@0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/to-hex/-/to-hex-0.0.18.tgz#0a23ec34df0b7ec0c7b4d05dbbf081edfc6672b0"
+  integrity sha512-twjjF944fl3eUQBpO7bETUhUyCtUFHWJkSLq9+K/Aw+yh3l/xIYaNUmybRqmxsYoZyv9au4aikDiWoJEOMKBDQ==
   dependencies:
+    bignumber.js "9.0.0"
     normalize-hex "0.0.2"
 
 to-readable-stream@^1.0.0:
@@ -10407,18 +10413,17 @@ web3-providers-ws@1.5.2:
     web3-core-helpers "1.5.2"
     websocket "^1.0.32"
 
-web3-token@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/web3-token/-/web3-token-0.2.9.tgz#a9992dd90c12938d073712749281d52905d18c3f"
-  integrity sha512-Zsq3aH+pf1kQxiSvMUXwzG9wFOXEcXyXkw2/dJlBnoSywP5yUUxjajNbnCRCRedRk8DJ31XhxQ8BEtXj9H6GvQ==
+web3-token@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/web3-token/-/web3-token-1.0.2.tgz#12432b2bc85cf31ea1322ad238684e94abed81b6"
+  integrity sha512-adXWSRcmP06ao9h+HE+xJYsJy1bBYXG6XctJvjQz5TdkESTN8SLMAH5/gXmqTJe2qVBSvRDG/DvD0ZTHkbFfDw==
   dependencies:
     base-64 "^1.0.0"
-    bignumber.js "^9.0.1"
-    ethereumjs-util "^7.1.0"
+    ethereumjs-util "^7.1.5"
     is-valid-domain "^0.1.6"
     ms "^2.1.3"
-    parse-headers "^2.0.4"
-    to-hex "0.0.17"
+    parse-headers "^2.0.5"
+    to-hex "0.0.18"
 
 web3-utils@1.5.2:
   version "1.5.2"
