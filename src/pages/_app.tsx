@@ -15,9 +15,7 @@ import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
-const WagmiProvider = React.lazy(
-  () => import('@/components/WagmiProviderWrapper'),
-)
+const Wagmi = React.lazy(() => import('@/components/WagmiProviderWrapper'))
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -40,14 +38,14 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <WagmiProvider>
+        <Wagmi>
           <ChakraProvider resetCSS theme={chakraTheme}>
             <Fonts />
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </ChakraProvider>
-        </WagmiProvider>
+        </Wagmi>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>

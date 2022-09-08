@@ -33,16 +33,19 @@ const Footer = () => {
   const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
-  const hanleLangChange = (userLang: string | string[]) => {
+
+  const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
       setLang(userLang)
       i18n.changeLanguage(userLang)
     }
   }
 
-  const storedLang = JSON.stringify(localStorage.storeLang)
+  const storedLang =
+    typeof window !== 'undefined' &&
+    JSON.stringify(window.localStorage.storeLang)
   useEffect(() => {
-    setLang(localStorage.storeLang)
+    if (storedLang) setLang(storedLang)
   }, [storedLang])
 
   return (
@@ -83,7 +86,7 @@ const Footer = () => {
                     {lang.toUpperCase()} <ChevronDownIcon />
                   </MenuButton>
                   <MenuList color="linkColor">
-                    <MenuOptionGroup type="radio" onChange={hanleLangChange}>
+                    <MenuOptionGroup type="radio" onChange={handleLangChange}>
                       {languageData.map(langObj => (
                         <MenuItemOption
                           key={langObj.id}
