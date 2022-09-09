@@ -27,7 +27,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
   return (
     <Stack
       direction={{ base: 'column', lg: 'row' }}
-      justify="center"
+      justify="space-between"
       w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
       px={{ base: 3, lg: 10 }}

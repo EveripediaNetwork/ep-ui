@@ -26,6 +26,7 @@ const moduleExports = {
       'gateway.pinata.cloud',
       'i3.ytimg.com',
       'alpha.everipedia.org',
+      'raw.githubusercontent.com',
       'beta.everipedia.org',
       'iq.wiki',
       'images.mirror-media.xyz',
