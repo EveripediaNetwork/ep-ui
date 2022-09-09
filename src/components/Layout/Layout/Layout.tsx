@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Box, Stack } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import Navbar from '../Navbar/Navbar'
 
-const Footer = React.lazy(() => import('@/components/Layout/Footer/Footer'))
-const NetworkErrorNotification = React.lazy(
+const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
+  suspense: true,
+})
+const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
-const GoogleAnalyticsScripts = React.lazy(
+const GoogleAnalyticsScripts = dynamic(
   () => import('@/components/Layout/Layout/GoogleAnalyticsScripts'),
 )
 
@@ -26,7 +29,7 @@ const Layout = ({
         <Box as="main" pt={20}>
           {children}
         </Box>
-        {!noFooter && <Footer />}
+        <Suspense>{!noFooter && <Footer />}</Suspense>
       </Stack>
 
       <NetworkErrorNotification />

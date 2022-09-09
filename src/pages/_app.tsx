@@ -11,11 +11,12 @@ import { store } from '@/store/store'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
+import dynamic from 'next/dynamic'
 import { Dict } from '@chakra-ui/utils'
 import chakraTheme from '../theme'
 import '../utils/i18n'
 
-const Wagmi = React.lazy(() => import('@/components/WagmiProviderWrapper'))
+const Wagmi = dynamic(() => import('@/components/WagmiProviderWrapper'))
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (

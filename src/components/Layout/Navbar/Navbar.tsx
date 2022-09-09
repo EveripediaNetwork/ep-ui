@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import {
   Box,
   Collapse,
@@ -24,12 +24,17 @@ const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
   ),
 })
 
-const Logo = React.lazy(() => import('@/components/Elements/Logo/Logo'))
-const NavSearch = React.lazy(
+const Logo = dynamic(() => import('@/components/Elements/Logo/Logo'))
+const NavSearch = dynamic(
   () => import('@/components/Layout/Navbar/NavSearch'),
+  {
+    suspense: true,
+  },
 )
-const MobileNav = React.lazy(() => import('./MobileNav'))
-const WalletDrawer = React.lazy(() => import('../WalletDrawer/WalletDrawer'))
+const MobileNav = dynamic(() => import('./MobileNav'))
+const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'), {
+  suspense: true,
+})
 
 const Navbar = () => {
   const drawerOperations = useDisclosure()
@@ -76,7 +81,9 @@ const Navbar = () => {
               </Heading>
             </HStack>
           </Link>
-          <NavSearch />
+          <Suspense>
+            <NavSearch />
+          </Suspense>
           <HStack
             ml={4}
             spacing={4}
@@ -121,11 +128,13 @@ const Navbar = () => {
             />
           </HStack>
         </Flex>
-        <WalletDrawer
-          toggleOperations={drawerOperations}
-          finalFocusRef={loginButtonRef}
-          setHamburger={setHamburger}
-        />
+        <Suspense>
+          <WalletDrawer
+            toggleOperations={drawerOperations}
+            finalFocusRef={loginButtonRef}
+            setHamburger={setHamburger}
+          />
+        </Suspense>
         <Collapse
           in={isHamburgerOpen}
           animateOpacity
