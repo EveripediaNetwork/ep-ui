@@ -139,9 +139,11 @@ const Admin = () => {
         }
         if (graphFilter === 'year') {
           return createCountStart?.split('-')[0]
-        } else if (graphFilter === 'month') {
+        }
+        if (graphFilter === 'month') {
           return `${new Date(item.endOn).toDateString().split(' ')[1]} `
-        } else if (graphFilter === 'day') {
+        }
+        if (graphFilter === 'day') {
           return `${new Date(item.endOn).toDateString().split(' ')[0]}`
         }
         return ''
