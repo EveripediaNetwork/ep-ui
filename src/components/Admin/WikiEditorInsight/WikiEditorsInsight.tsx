@@ -482,6 +482,7 @@ export const WikiEditorsInsightTable = () => {
             id: editorToBeToggled.id,
             active: ban,
           })
+          // Possibly apply conditon to this Optimistic state update
           setEditorsData(p =>
             p?.map(user => {
               if (user.editorAddress === editorToBeToggled.id) {
@@ -493,6 +494,15 @@ export const WikiEditorsInsightTable = () => {
           setSearchedEditorsData(p =>
             p?.map(user => {
               if (user.editorAddress === editorToBeToggled.id) {
+                return { ...user, active: ban }
+              }
+              return user
+            }),
+          )
+          setHiddenEditorsData(p =>
+            p?.map(user => {
+              if (user.editorAddress === editorToBeToggled.id) {
+                console.log(user)
                 return { ...user, active: ban }
               }
               return user
