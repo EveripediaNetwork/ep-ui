@@ -36,17 +36,17 @@ import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 
 type WalletDrawerType = {
-  isOpen: boolean
-  onClose: () => void
-  onOpen: () => void
+  toggleOperations: {
+    isOpen: boolean
+    onClose: () => void
+    onOpen: () => void
+  }
   finalFocusRef: RefObject<FocusableElement>
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const WalletDrawer = ({
-  isOpen,
-  onClose,
-  onOpen,
+  toggleOperations,
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
@@ -60,7 +60,7 @@ const WalletDrawer = ({
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
-    onClose()
+    toggleOperations.onClose()
     setHamburger(true)
   }
 
@@ -81,10 +81,10 @@ const WalletDrawer = ({
     }
   }
 
-  return isOpen ? (
+  return toggleOperations.isOpen ? (
     <Drawer
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={toggleOperations.isOpen}
+      onClose={toggleOperations.onClose}
       placement="right"
       finalFocusRef={finalFocusRef}
       trapFocus={false}
@@ -157,7 +157,7 @@ const WalletDrawer = ({
         </DrawerHeader>
         <Divider />
         <DrawerBody shadow="sm">
-          <Connectors openWalletDrawer={onOpen} />
+          <Connectors openWalletDrawer={toggleOperations.onOpen} />
         </DrawerBody>
       </DrawerContent>
     </Drawer>

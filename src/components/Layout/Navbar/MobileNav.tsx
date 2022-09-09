@@ -8,6 +8,7 @@ import {
   Divider,
   Menu,
   Text,
+  UseDisclosureReturn,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -20,16 +21,16 @@ import { useAccount } from 'wagmi'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
-import { NavSearch } from '@/components/Layout/Navbar/NavSearch'
+import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 
 type MobileNavType = {
-  toggleWalletDrawer: () => void
+  drawerOperations: UseDisclosureReturn
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
+const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const { isConnected: isUserConnected, address: userAddress } = useAccount()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
@@ -45,7 +46,7 @@ const MobileNav = ({ toggleWalletDrawer, setHamburger }: MobileNavType) => {
   }
   const handleWalletButtonClick = () => {
     setHamburger(false)
-    toggleWalletDrawer()
+    drawerOperations.onToggle()
   }
 
   const [isMounted, setIsMounted] = useState<boolean>(false)
