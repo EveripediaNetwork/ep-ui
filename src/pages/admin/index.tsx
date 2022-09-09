@@ -205,7 +205,14 @@ const Admin = () => {
   const COLORS = ['#FF5DAA', '#FFB3D7']
 
   if (!token)
-    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
+    return (
+      <SignTokenMessage
+        message="To make changes to your the admin panel, authenticate
+your wallet to continue"
+        reopenSigningDialog={reSignToken}
+        error={error}
+      />
+    )
 
   if (!isTokenHeaderSet) {
     return null
@@ -252,7 +259,7 @@ const Admin = () => {
           return setGraphFilter(e)
         }}
       />
-      <Stack spacing={15} direction="column">
+      <Stack spacing={15} direction="column" mb="3rem">
         <WikiInsightTable />
         <WikiEditorsInsightTable />
       </Stack>
