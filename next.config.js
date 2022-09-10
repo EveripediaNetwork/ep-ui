@@ -23,6 +23,7 @@ const moduleExports = {
   },
   styledComponents: true,
   images: {
+    minimumCacheTTL: 7200,
     domains: [
       'everipedia.org',
       'ipfs.everipedia.org',
