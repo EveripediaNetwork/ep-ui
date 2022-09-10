@@ -39,6 +39,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             imageURL={getWikiImageUrl(wiki)}
             borderRadius="none"
             roundedTop="lg"
+            priority
             alt={wiki?.title}
           />
         </AspectRatio>
