@@ -31,6 +31,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
       w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
       px={{ base: 3, lg: 10 }}
+      mt={{ base: 4, lg: 0 }}
     >
       <VStack
         alignItems={{ base: 'center', lg: 'start' }}
@@ -41,7 +42,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
       >
         <Heading
           w={{ base: '90%', md: '100%' }}
-          fontSize={{ base: '32', md: '54' }}
+          fontSize={{ base: '35', sm: '42', lg: '54' }}
         >
           The World&apos;s Largest
           <br />
@@ -51,7 +52,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
         </Heading>
         <Text
           w={{ base: '70%', md: '80%' }}
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          fontSize={{ base: 'md', lg: 'xl' }}
           pb={10}
         >
           {description}

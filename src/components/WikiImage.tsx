@@ -39,15 +39,6 @@ export const WikiImage = ({ imageURL, ...rest }: WikiImageProps) => {
       placeholder="blur"
       onError={() => setSrc(PLACEHOLDER_IMAGE)}
       blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-      sx={{
-        img:
-          src === PLACEHOLDER_IMAGE
-            ? {
-                minH: '50% !important',
-                minW: '50% !important',
-              }
-            : {},
-      }}
       {...rest}
     />
   )
