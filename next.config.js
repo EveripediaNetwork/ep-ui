@@ -1,5 +1,3 @@
-const { withSentryConfig } = require('@sentry/nextjs')
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -11,23 +9,11 @@ const moduleExports = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   webpack5: true,
-  webpack(config, {isServer}) {
-    config.mode = process.env.VERCEL_ENV !== 'production' ? 'production' : 'production';
-    config.optimization.moduleIds = 'named';
-    config.optimization.runtimeChunk = 'single';
-
-    if (!isServer) {
-      config.optimization.splitChunks.cacheGroups = {
-        ...config.optimization.splitChunks.cacheGroups,
-        '@sentry': {
-          test: /[\\/]node_modules[\\/](@sentry)[\\/]/,
-          name: '@sentry',
-          priority: 10,
-          reuseExistingChunk: false,
-        },
-      };
-    }
-
+  webpack(config) {
+    config.mode =
+      process.env.VERCEL_ENV !== 'production' ? 'production' : 'production'
+    config.optimization.moduleIds = 'named'
+    config.optimization.runtimeChunk = 'single'
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
@@ -37,14 +23,14 @@ const moduleExports = {
   },
   styledComponents: true,
   images: {
+    minimumCacheTTL: 7200,
     domains: [
-      'picsum.photos',
       'everipedia.org',
       'ipfs.everipedia.org',
-      'lh3.googleusercontent.com',
       'gateway.pinata.cloud',
       'i3.ytimg.com',
       'alpha.everipedia.org',
+      'raw.githubusercontent.com',
       'beta.everipedia.org',
       'iq.wiki',
       'images.mirror-media.xyz',
@@ -52,14 +38,4 @@ const moduleExports = {
     ],
   },
 }
-
-const sentryWebpackPluginOptions = {
-  silent: true,
-  dryRun: process.env.VERCEL_ENV !== 'production',
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
-}
-
-module.exports = withSentryConfig(
-  withBundleAnalyzer(moduleExports),
-  sentryWebpackPluginOptions,
-)
+module.exports = withBundleAnalyzer(moduleExports)

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   updateBalanceBreakdown,
   updateTotalBalance,
+  updateUserAddress,
   updateWalletDetails,
 } from '@/store/slices/user-slice'
 import WalletDetails from '@/components/Layout/WalletDrawer/WalletDetails'
@@ -34,6 +35,17 @@ interface ConnectorsProps {
 
 const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const router = useRouter()
+  const {
+    address: userAddress,
+    isConnected: isUserConnected,
+    isConnecting: isUserConnecting,
+  } = useAccount()
+  const { userBalance } = useFetchWalletBalance(userAddress)
+  const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
+    (state: RootState) => state.user,
+  )
+  const dispatch = useDispatch()
+
   const { connectors, connect } = useConnect({
     onError(error) {
       logEvent({
@@ -46,20 +58,11 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
         action: 'LOGIN_SUCCESS',
         params: { address: data.account },
       })
+      dispatch(updateUserAddress(data.account))
       router.push(router.asPath).then(openWalletDrawer)
     },
   })
 
-  const {
-    address: userAddress,
-    isConnected: isUserConnected,
-    isConnecting: isUserConnecting,
-  } = useAccount()
-  const { userBalance } = useFetchWalletBalance(userAddress)
-  const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
-    (state: RootState) => state.user,
-  )
-  const dispatch = useDispatch()
   const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)

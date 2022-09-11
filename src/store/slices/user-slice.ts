@@ -6,6 +6,7 @@ import {
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
+  address: string | null
   walletDetails: WalletBalanceType[] | null
   totalBalance: number | null | undefined
   balanceBreakdown: TokenDetailsType[] | null
@@ -13,6 +14,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
+  address: null,
   walletDetails: null,
   totalBalance: null,
   balanceBreakdown: null,
@@ -23,6 +25,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    updateUserAddress(state, action: PayloadAction<string>) {
+      state.address = action.payload
+    },
     updateWalletDetails: (
       state,
       action: PayloadAction<WalletBalanceType[] | null>,
@@ -57,6 +62,7 @@ export const {
   updateBalanceBreakdown,
   updateHiIQDetails,
   setStateToDefault,
+  updateUserAddress,
 } = userSlice.actions
 
 export default userSlice.reducer
