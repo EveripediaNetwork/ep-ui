@@ -1,15 +1,8 @@
 import React, { useState, useCallback } from 'react'
-import {
-  Box,
-  HStack,
-  IconButton,
-  Image,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, HStack, IconButton, Input, Text, VStack } from '@chakra-ui/react'
 import { RiArrowLeftRightLine } from 'react-icons/ri'
 import { TokenStats } from '@/services/token-stats'
+import { Image } from '@/components/Elements/Image/Image'
 
 const CurrencyBox = ({
   token,
@@ -34,11 +27,18 @@ const CurrencyBox = ({
         {token ? (
           <Image
             src={`https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/${token}.png`}
-            h="18px"
-            w="18px"
+            imgH="18px"
+            imgW="18px"
+            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
+            borderRadius="100px"
           />
         ) : (
-          <Image src="/images/usd-logo.svg" alt={tokenSymbol} />
+          <Image
+            src="/images/usd-logo.svg"
+            imgH="18px"
+            imgW="18px"
+            alt={tokenSymbol}
+          />
         )}
 
         <Text fontSize="14px">{tokenSymbol}</Text>

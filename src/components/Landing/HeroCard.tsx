@@ -12,6 +12,7 @@ import { Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 
 const CARD_DETAILS_LENGTH = 100
+const HERO_WIKI_IMG_WIDTH = 290
 
 export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
   const [, username] = useENSData(wiki?.user?.id)
@@ -29,8 +30,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
         color="black"
         cursor="pointer"
         _hover={{ shadow: '2xl' }}
-        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '388' }}
-        w="900px"
+        w={`min(${WIKI_IMAGE_ASPECT_RATIO * HERO_WIKI_IMG_WIDTH}px, 90vw)`}
       >
         <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
           <WikiImage
@@ -39,6 +39,10 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             imageURL={getWikiImageUrl(wiki)}
             borderRadius="none"
             roundedTop="lg"
+            overflow="hidden"
+            imgH={HERO_WIKI_IMG_WIDTH}
+            imgW={WIKI_IMAGE_ASPECT_RATIO * HERO_WIKI_IMG_WIDTH}
+            priority
             alt={wiki?.title}
           />
         </AspectRatio>
