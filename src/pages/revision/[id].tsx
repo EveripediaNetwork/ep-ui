@@ -30,6 +30,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
   const [wikiData, setWikiData] = useState(wiki)
+  const [isLoading, setIsLoading] = useState(true)
 
   const wikiId = wikiData?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
@@ -75,6 +76,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
           getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
         )
         setWikiData(wiki ? { ...wiki, ...data } : undefined)
+        setIsLoading(false)
         if (wiki) incrementWikiViewCount(wiki.content[0].id)
       }
     }
@@ -134,7 +136,11 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             </Link>
           </Flex>
         )}
-        <WikiMarkup wiki={wikiData?.content[0]} ipfs={wikiData?.ipfs} />
+        <WikiMarkup
+          wiki={wikiData?.content[0]}
+          ipfs={wikiData?.ipfs}
+          isLoading={isLoading}
+        />
       </Box>
     </>
   )
