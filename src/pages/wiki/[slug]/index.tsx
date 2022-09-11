@@ -29,6 +29,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   const toc = useAppSelector(state => state.toc)
 
   const [wikiData, setWikiData] = useState(wiki)
+  const [isLoading, setIsLoading] = useState(true)
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
@@ -46,6 +47,7 @@ const Wiki = ({ wiki }: WikiProps) => {
           getWikiCreatorAndEditor.initiate(slug),
         )
         setWikiData(wiki ? { ...wiki, ...data } : undefined)
+        setIsLoading(true)
         incrementWikiViewCount(slug)
       }
     }
@@ -66,7 +68,7 @@ const Wiki = ({ wiki }: WikiProps) => {
         />
       )}
       <Box as="main" mt={-2}>
-        <WikiMarkup wiki={wikiData} />
+        <WikiMarkup wiki={wikiData} isLoading={isLoading} />
       </Box>
     </>
   )
