@@ -34,6 +34,7 @@ import {
 import { useRouter } from 'next/router'
 import config from '@/config'
 import { Link, LinkButton } from '@/components/Elements'
+import SearchSEO from '@/components/SEO/Search'
 
 export type NavSearchProps = {
   inputGroupProps?: HTMLChakraProps<'div'>
@@ -51,7 +52,7 @@ const ARTICLES_LIMIT = 5
 const CATEGORIES_LIMIT = 2
 const ACCOUNTS_LIMIT = 4
 
-export const NavSearch = (props: NavSearchProps) => {
+const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
@@ -266,62 +267,67 @@ export const NavSearch = (props: NavSearchProps) => {
   )
 
   return (
-    <AutoComplete
-      closeOnSelect={false}
-      disableFilter
-      suggestWhenEmpty
-      emptyState={!isLoading && noResults && emptyState}
-      shouldRenderSuggestions={q => q.length >= 3}
-      openOnFocus={query.length >= 3}
-      onSelectOption={option => {
-        const { id, type } = option.item.originalValue
-        router.push(ItemPaths[type as SearchItem] + id)
-      }}
-    >
-      <InputGroup
-        size="lg"
-        maxW="800px"
-        display={{ base: 'none', md: 'block' }}
-        {...inputGroupProps}
+    <>
+      <SearchSEO />
+      <AutoComplete
+        closeOnSelect={false}
+        disableFilter
+        suggestWhenEmpty
+        emptyState={!isLoading && noResults && emptyState}
+        shouldRenderSuggestions={q => q.length >= 3}
+        openOnFocus={query.length >= 3}
+        onSelectOption={option => {
+          const { id, type } = option.item.originalValue
+          router.push(ItemPaths[type as SearchItem] + id)
+        }}
       >
-        <InputLeftElement
-          ml={{ base: '15px', xl: 'unset' }}
-          pointerEvents="none"
-          h="full"
+        <InputGroup
+          size="lg"
+          maxW="800px"
+          display={{ base: 'none', md: 'block' }}
+          {...inputGroupProps}
         >
-          <Search2Icon color="gray.300" />
-        </InputLeftElement>
-        <AutoCompleteInput
-          ml={{ base: '15px', xl: 'unset' }}
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="Search wikis, categories, tags and users"
-          _placeholderShown={{
-            textOverflow: 'ellipsis',
-          }}
-          fontSize="16"
-          ref={inputRef}
-          {...inputProps}
-        />
-      </InputGroup>
+          <InputLeftElement
+            ml={{ base: '15px', xl: 'unset' }}
+            pointerEvents="none"
+            h="full"
+          >
+            <Search2Icon color="gray.300" />
+          </InputLeftElement>
+          <AutoCompleteInput
+            ml={{ base: '15px', xl: 'unset' }}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search wikis, categories, tags and users"
+            _placeholderShown={{
+              textOverflow: 'ellipsis',
+            }}
+            fontSize="16"
+            ref={inputRef}
+            {...inputProps}
+          />
+        </InputGroup>
 
-      <AutoCompleteList
-        mx={{ base: '15px', xl: 'unset' }}
-        p="0"
-        shadow="lg"
-        maxH="auto"
-        {...listProps}
-      >
-        {isLoading ? loadingView : searchList}
+        <AutoCompleteList
+          mx={{ base: '15px', xl: 'unset' }}
+          p="0"
+          shadow="lg"
+          maxH="auto"
+          {...listProps}
+        >
+          {isLoading ? loadingView : searchList}
 
-        {totalUnrendered > 0 && !isLoading && (
-          <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
-            <LinkButton href={`/search/${query}`} variant="outline">
-              +View {totalUnrendered} more Results
-            </LinkButton>
-          </Flex>
-        )}
-      </AutoCompleteList>
-    </AutoComplete>
+          {totalUnrendered > 0 && !isLoading && (
+            <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
+              <LinkButton href={`/search/${query}`} variant="outline">
+                +View {totalUnrendered} more Results
+              </LinkButton>
+            </Flex>
+          )}
+        </AutoCompleteList>
+      </AutoComplete>
+    </>
   )
 }
+
+export default NavSearch

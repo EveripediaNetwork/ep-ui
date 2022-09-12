@@ -4,7 +4,6 @@ import {
   messagesReducer,
   userReducer,
   wikiReducer,
-  ensReducer,
   citeMarksReducer,
   tocReducer,
   blogReducer,
@@ -18,6 +17,7 @@ import { profileApi } from '@/services/profile'
 import { adminApi } from '@/services/admin'
 import { ArweaveApi } from '@/services/blog'
 import { tagsApi } from '@/services/tags'
+import { ensApi } from '@/services/ens'
 
 export const store = configureStore({
   reducer: {
@@ -27,7 +27,6 @@ export const store = configureStore({
     wiki: wikiReducer,
     citeMarks: citeMarksReducer,
     toc: tocReducer,
-    ens: ensReducer,
     blog: blogReducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
@@ -38,6 +37,7 @@ export const store = configureStore({
     [adminApi.reducerPath]: adminApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
+    [ensApi.reducerPath]: ensApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -47,8 +47,10 @@ export const store = configureStore({
       .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware)
       .concat(tokenStatsApi.middleware)
+      .concat(adminApi.middleware)
       .concat(profileApi.middleware)
-      .concat(tagsApi.middleware),
+      .concat(tagsApi.middleware)
+      .concat(ensApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

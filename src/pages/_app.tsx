@@ -5,17 +5,18 @@ import '@/editor-plugins/pluginStyles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProviderClass } from 'react-redux'
-import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
+import dynamic from 'next/dynamic'
 import { Dict } from '@chakra-ui/utils'
-import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
+
+const Wagmi = dynamic(() => import('@/components/WagmiProviderWrapper'))
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -33,25 +34,19 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
-  const clientWithConnectors = createClient({
-    autoConnect: true,
-    connectors,
-    provider,
-  })
-
   return (
     <StrictMode>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider resetCSS theme={chakraTheme}>
-          <Fonts />
-          <WagmiConfig client={clientWithConnectors}>
+        <Wagmi>
+          <ChakraProvider resetCSS theme={chakraTheme}>
+            <Fonts />
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
-          </WagmiConfig>
-        </ChakraProvider>
+          </ChakraProvider>
+        </Wagmi>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>

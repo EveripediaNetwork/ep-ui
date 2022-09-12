@@ -42,7 +42,7 @@ const Admin = () => {
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
-  const [graphFilter, setGraphFilter] = useState<string>('week')
+  const [graphFilter, setGraphFilter] = useState<string>('day')
 
   const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     startDate: 0,
@@ -87,31 +87,75 @@ const Admin = () => {
     startDate: 0,
   })
 
+  const { data: DayTunedgraphWikisCreatedCountData } =
+    useGetWikisCreatedCountQuery({
+      interval: graphFilter,
+    })
+
+  const { data: DayTunedgraphWikisEditedCountData } =
+    useGetWikisEditedCountQuery({
+      interval: graphFilter,
+    })
+
   const dataObj: Array<{
     name: string | undefined
     'Wikis Created': number | undefined
     'Wikis Edited': number
   }> = []
-  GraphWikisEditedCountData?.map((item, index) => {
-    const editedCount = GraphWikisEditedCountData[index].amount
-    const createdCount =
-      GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.amount
-    const createCountStart =
-      GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.startOn
+  if (graphFilter === 'day') {
+    DayTunedgraphWikisEditedCountData?.map((item, index) => {
+      const editedCount = DayTunedgraphWikisEditedCountData[index].amount
+      const createdCount =
+        DayTunedgraphWikisCreatedCountData &&
+        DayTunedgraphWikisCreatedCountData[index]?.amount
+      const createCountStart =
+        DayTunedgraphWikisCreatedCountData &&
+        DayTunedgraphWikisCreatedCountData[index]?.startOn
 
-    dataObj.push({
-      name:
-        // eslint-disable-next-line
-        graphFilter !== 'week'
-          ? graphFilter === 'year'
-            ? createCountStart?.split('-')[0]
-            : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
-          : `Week ${index + 1}`,
-      'Wikis Created': createdCount,
-      'Wikis Edited': editedCount,
+      dataObj.push({
+        name:
+          // eslint-disable-next-line
+          graphFilter !== 'day'
+            ? graphFilter === 'year'
+              ? createCountStart?.split('-')[0]
+              : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
+            : `${new Date(item.endOn).toDateString().split(' ')[0]} `,
+        'Wikis Created': createdCount,
+        'Wikis Edited': editedCount,
+      })
+      return null
     })
-    return null
-  })
+  } else {
+    GraphWikisEditedCountData?.map((item, index) => {
+      const editedCount = GraphWikisEditedCountData[index].amount
+      const createdCount =
+        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.amount
+      const createCountStart =
+        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.startOn
+
+      const getXaxis = () => {
+        if (graphFilter === 'week') {
+          return `Week ${index + 1}`
+        }
+        if (graphFilter === 'year') {
+          return createCountStart?.split('-')[0]
+        }
+        if (graphFilter === 'month') {
+          return `${new Date(item.endOn).toDateString().split(' ')[1]} `
+        }
+        if (graphFilter === 'day') {
+          return `${new Date(item.endOn).toDateString().split(' ')[0]}`
+        }
+        return ''
+      }
+      dataObj.push({
+        name: getXaxis(),
+        'Wikis Created': createdCount,
+        'Wikis Edited': editedCount,
+      })
+      return null
+    })
+  }
 
   const wikiMetaData = [
     {
@@ -161,7 +205,14 @@ const Admin = () => {
   const COLORS = ['#FF5DAA', '#FFB3D7']
 
   if (!token)
-    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
+    return (
+      <SignTokenMessage
+        message="To make changes to your the admin panel, authenticate
+your wallet to continue"
+        reopenSigningDialog={reSignToken}
+        error={error}
+      />
+    )
 
   if (!isTokenHeaderSet) {
     return null
@@ -208,7 +259,7 @@ const Admin = () => {
           return setGraphFilter(e)
         }}
       />
-      <Stack spacing={15} direction="column">
+      <Stack spacing={15} direction="column" mb="3rem">
         <WikiInsightTable />
         <WikiEditorsInsightTable />
       </Stack>

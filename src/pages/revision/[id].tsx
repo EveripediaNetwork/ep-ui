@@ -20,7 +20,7 @@ import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
 
 interface RevisionPageProps {
-  wiki: Activity
+  wiki?: Activity
 }
 const Revision = ({ wiki }: RevisionPageProps) => {
   const router = useRouter()
@@ -29,7 +29,8 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
-  const [wikiData, setWikiData] = useState<Activity>(wiki)
+  const [wikiData, setWikiData] = useState(wiki)
+  const [isLoading, setIsLoading] = useState(true)
 
   const wikiId = wikiData?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
@@ -74,12 +75,13 @@ const Revision = ({ wiki }: RevisionPageProps) => {
         const { data } = await store.dispatch(
           getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
         )
-        setWikiData(p => ({ ...p, content: { ...p.content, ...data } }))
-        incrementWikiViewCount(wikiData.content[0].id)
+        setWikiData(wiki ? { ...wiki, ...data } : undefined)
+        setIsLoading(false)
+        if (wiki) incrementWikiViewCount(wiki.content[0].id)
       }
     }
     fetchUserDataAndIncView()
-  }, [ActivityId, wikiData])
+  }, [ActivityId, wiki])
 
   return (
     <>
@@ -112,7 +114,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             p={2}
           >
             <Text textAlign="center">
-              You are seeing an older version of this wikiData.
+              You are seeing an older version of this wiki.
             </Text>
             <Link href={`/wikiData/${wikiData?.content[0].id}`} passHref>
               <Button
@@ -134,7 +136,11 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             </Link>
           </Flex>
         )}
-        <WikiMarkup wiki={wikiData?.content[0]} ipfs={wikiData?.ipfs} />
+        <WikiMarkup
+          wiki={wikiData?.content[0]}
+          ipfs={wikiData?.ipfs}
+          isLoading={isLoading}
+        />
       </Box>
     </>
   )

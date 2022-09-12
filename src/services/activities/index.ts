@@ -11,8 +11,7 @@ import {
 } from '@/services/activities/queries'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
-import { Wiki } from '@/types/Wiki'
-import { User } from '@sentry/nextjs'
+import { User, Wiki } from '@/types/Wiki'
 
 type GetActivitiesResponse = {
   activities: Activity[]

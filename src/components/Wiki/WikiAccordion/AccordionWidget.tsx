@@ -27,9 +27,7 @@ import { getUsername } from '@/utils/getUsername'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
-  const [, userENSDomain] = useENSData(
-    type === 'address' && typeof content === 'string' ? content : '',
-  )
+  const [, userENSDomain] = useENSData(type === 'account' ? content.id : '')
   const contentTemplate = () => {
     if (type === 'url') {
       const contentURL = content as string

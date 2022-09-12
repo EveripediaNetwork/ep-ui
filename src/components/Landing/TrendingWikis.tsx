@@ -17,11 +17,14 @@ import { useTranslation } from 'react-i18next'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/getUsername'
 import { getReadableDate } from '@/utils/getFormattedDate'
+import { useENSData } from '@/hooks/useENSData'
 import { Carousel, Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
+const TRENDING_WIKI_IMG_WIDTH = 300
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
+  const [, ensName] = useENSData(wiki.user.id)
   const getLatestEdited = () => {
     let lastEditedTime = null
     if (wiki.updated) {
@@ -56,6 +59,8 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               borderRadius="none"
               roundedTop="lg"
               alt={wiki.title}
+              imgH={TRENDING_WIKI_IMG_WIDTH}
+              imgW={WIKI_IMAGE_ASPECT_RATIO * TRENDING_WIKI_IMG_WIDTH}
             />
           </AspectRatio>
           <Flex
@@ -96,7 +101,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                   textOverflow="ellipsis"
                   whiteSpace="nowrap"
                 >
-                  {getUsername(wiki?.user)}
+                  {getUsername(wiki?.user, ensName)}
                 </Link>
               </Flex>
               <Text

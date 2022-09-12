@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 
 interface WikiActionBarProps {
-  wiki: Wiki | undefined
+  wiki?: Wiki | null
 }
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
@@ -64,7 +64,6 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       px={6}
       py={{ base: 4, md: 'calc(50vh - 150px )' }}
       mt={{ base: 0, md: 0 }}
-      borderColor="borderColor"
       maxW={{ base: 'unset', md: '120px' }}
     >
       <ShareWikiModal isOpen={isOpen} onClose={onClose} {...wiki} />

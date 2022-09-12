@@ -43,6 +43,7 @@ export const WikiDataGraph = ({
   const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
   const createdStroke = useColorModeValue('#FF5CAA', '#FF1A88')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
+  const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
 
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
@@ -57,12 +58,13 @@ export const WikiDataGraph = ({
             </Text>
           </VStack>
           <Select
-            w={{ lg: '20%', base: '40%' }}
+            w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
             onChange={e => {
               handleGraphFilterChange(e.target.value)
             }}
           >
+            <option value="day">{`Daily (${currentYear})`}</option>
             <option value="week">{`Weekly (${currentYear})`}</option>
             <option value="month">{`Monthly (${currentYear})`}</option>
             <option value="year">{`Yearly (${currentYear})`}</option>
@@ -102,7 +104,13 @@ export const WikiDataGraph = ({
                 fill="url(#colorUv)"
                 fillOpacity={1}
               />
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  borderRadius: '20px',
+                  background: toolTipBg,
+                  border: '0px',
+                }}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </Box>

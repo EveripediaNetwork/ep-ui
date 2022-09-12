@@ -14,24 +14,24 @@ export const useInfiniteData = <T>(opts: Opts) => {
   const [data, setData] = useState<T[] | []>([])
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(opts.defaultLoading || false)
+  const updatedOffset = offset + ITEM_PER_PAGE
 
   const fetcher = (noOffset?: boolean) => {
     if (loading) return
 
     const fetchNewWikis = async () => {
-      setOffset(p => p + ITEM_PER_PAGE)
-
       const result = await store.dispatch(
         opts.initiator.initiate({
           ...opts.arg,
           limit: ITEM_PER_PAGE,
-          offset: noOffset ? 0 : offset,
+          offset: noOffset ? 0 : updatedOffset,
         }),
       )
       const { data: resData } = result
 
-      if (resData) {
+      if (resData && resData.length > 0) {
         setData(prevData => [...prevData, ...resData])
+        setOffset(updatedOffset)
         if (resData.length < ITEM_PER_PAGE) setHasMore(false)
         else setHasMore(true)
         if (resData.length === 0) setHasMore(false)
