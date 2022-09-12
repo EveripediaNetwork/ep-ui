@@ -16,7 +16,6 @@ const FaqHeader = () => {
       <Text
         mt={{ base: 2, lg: 4, md: 2 }}
         fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        letterSpacing="wider"
         color="#4A5568"
       >{`${t('faqPhrase')}`}</Text>
     </Flex>

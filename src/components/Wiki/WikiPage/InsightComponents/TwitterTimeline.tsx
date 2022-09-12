@@ -18,14 +18,14 @@ const TwitterTimeline = ({ url }: { url: string }) => {
     <VStack w="100%" spacing={4} borderRadius={2} mb="5">
       <WikiAccordion title="Twitter Timeline">
         <Box
-          className="wikiTwitterTimelineWidget"
           h="400px"
           bgColor="white"
           _dark={{
             bgColor: 'dimColor',
           }}
-          borderRadius={4}
+          borderRadius={12}
           position="relative"
+          overflowY="scroll"
         >
           {snapOpen && (
             <TwitterTimelineEmbed
@@ -34,7 +34,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
               sourceType="url"
               noScrollbar
               borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-              url={`//${url}`}
+              url={url}
             />
           )}
         </Box>

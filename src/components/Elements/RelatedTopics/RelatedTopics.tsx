@@ -10,7 +10,8 @@ const RelatedTopics = ({ topics }: RelatedTopicsProp) => (
     position="sticky"
     top="100px"
     display="inline-block"
-    bgColor="pageBg"
+    bgColor="blackAlpha.50"
+    _dark={{ bgColor: 'whiteAlpha.50' }}
     p={10}
     borderRadius={12}
   >
@@ -21,8 +22,8 @@ const RelatedTopics = ({ topics }: RelatedTopicsProp) => (
     <List spacing={2}>
       {topics.map(topic => (
         <ListItem mt="20px">
-          <Link href={topic.url} scroll={!!topic.isSectionLink} passHref>
-            <Link href="passRef">{topic.name}</Link>
+          <Link href={topic.url} scroll={!!topic.isSectionLink}>
+            {topic.name}
           </Link>
         </ListItem>
       ))}

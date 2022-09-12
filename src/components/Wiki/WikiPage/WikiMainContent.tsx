@@ -7,6 +7,7 @@ import { store } from '@/store/store'
 import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
 import { customTableRenderer } from '@/utils/customTableRender'
+import styles from '../../../styles/markdown.module.css'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
@@ -46,7 +47,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   return (
     <Box
       py={4}
-      px={{ base: 4, lg: 14 }}
+      px={{ base: 4, lg: 12 }}
       maxW="900px"
       mx="auto"
       minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
@@ -55,8 +56,8 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     >
       <Heading my={8}>{wiki?.title}</Heading>
       <Box
-        className={`markdown-body ${
-          colorMode === 'dark' ? 'markdown-body-dark' : ''
+        className={`${styles.markdownBody} ${
+          colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
         <MarkdownRender wikiContent={wiki?.content} />

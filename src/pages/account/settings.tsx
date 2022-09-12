@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
@@ -36,10 +36,6 @@ const Settings = () => {
       setAccount(userAddress)
     }
   }, [userAddress, setAccount, token])
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <></>
 
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
@@ -99,7 +95,9 @@ const Settings = () => {
         {tab === 'notifications' && (
           <NotificationSettings
             address={userAddress}
-            savedNotificationPrefs={profileData?.notifications[0]}
+            savedNotificationPrefs={
+              profileData?.notifications && profileData?.notifications[0]
+            }
           />
         )}
         {tab === 'advanced' && <AdvancedSettings />}
@@ -108,4 +106,6 @@ const Settings = () => {
   )
 }
 
-export default authenticatedRoute(Settings)
+export default dynamic(() => Promise.resolve(authenticatedRoute(Settings)), {
+  ssr: false,
+})

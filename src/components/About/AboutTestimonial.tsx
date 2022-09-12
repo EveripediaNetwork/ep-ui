@@ -32,7 +32,7 @@ const AboutTestimonial = ({
         {author}
       </Text>
       <Flex direction={{ base: 'column', md: 'row' }}>
-        <Text color="brand.500">{designation}</Text> {location && '⠀•⠀'}
+        <Text color="brandLinkColor">{designation}</Text> {location && '⠀•⠀'}
         <Text>{location}</Text>
       </Flex>
     </Box>

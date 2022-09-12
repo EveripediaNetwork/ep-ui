@@ -1,59 +1,59 @@
 import React from 'react'
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
-import { Image } from '@/components/Elements/Image/Image'
 import CategoryCard from '@/components/Categories/CategoryCard'
 
-import {
-  getCategories,
-  getRunningOperationPromises,
-  useGetCategoriesQuery,
-} from '@/services/categories'
-import { store } from '@/store/store'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
+import { AllCategoriesData } from '@/data/AllCategoriesData'
 
 const CATEGORY_HEADER =
-  'Explore different wikis in different categories on Everipedia, Ranging from NFTs, to DAOs and so on.'
+  'Explore your endless curiosities in different categories on Everipedia, Ranging from NFTs, to DeFi, Cryptocurrencies and more.'
 const Categories: NextPage = () => {
-  const router = useRouter()
-  const { data } = useGetCategoriesQuery(undefined, { skip: router.isFallback })
   const { t } = useTranslation()
   return (
     <>
-      {data && (
-        <NextSeo
-          title="Wiki Category"
-          openGraph={{
-            title: 'Wiki Category',
-            description: CATEGORY_HEADER,
+      <NextSeo
+        title="Wiki Category"
+        openGraph={{
+          title: 'Wiki Category',
+          description: CATEGORY_HEADER,
+        }}
+      />
+      <Box mt="-12" pb={12}>
+        <Box
+          py={10}
+          pt={20}
+          width="full"
+          objectFit="cover"
+          bgColor="profileBannerBg"
+          backgroundImage="/images/homepage-bg-white.png"
+          _dark={{
+            backgroundImage: '/images/homepage-bg-dark.png',
           }}
-        />
-      )}
-      <Box mt="-12" bgColor="pageBg" pb={12}>
-        <Image src="/images/categories-backdrop.png" height="250px" />
-        <Heading
-          fontSize={{ base: 25, lg: 36 }}
-          maxW="80%"
-          mx="auto"
-          textAlign="center"
-          p={10}
         >
-          {`${t('wikiCategory')}`}
-        </Heading>
-        <Flex
-          textAlign="center"
-          justifyContent="center"
-          fontWeight="400"
-          mx="auto"
-          maxW={{ base: '70%', lg: '60%' }}
-          px={5}
-        >
-          <Text mb={7} mx={14}>
-            {CATEGORY_HEADER}
-          </Text>
-        </Flex>
+          <Heading
+            fontSize={{ base: 25, lg: 36 }}
+            maxW="80%"
+            mx="auto"
+            textAlign="center"
+            p={10}
+          >
+            {`${t('wikiCategory')}`}
+          </Heading>
+          <Flex
+            textAlign="center"
+            justifyContent="center"
+            fontWeight="400"
+            mx="auto"
+            maxW={{ base: '90%', md: '70%', lg: '60%' }}
+            px={5}
+          >
+            <Text mb={7} mx={{ base: '5', md: '8', lg: '14' }}>
+              {CATEGORY_HEADER}
+            </Text>
+          </Flex>
+        </Box>
         <Divider />
         <Box mt={16}>
           <SimpleGrid
@@ -63,7 +63,7 @@ const Categories: NextPage = () => {
             my={12}
             gap={8}
           >
-            {data?.map(
+            {AllCategoriesData?.map(
               category =>
                 category.cardImage && (
                   <CategoryCard
@@ -81,14 +81,6 @@ const Categories: NextPage = () => {
       </Box>
     </>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  store.dispatch(getCategories.initiate())
-  await Promise.all(getRunningOperationPromises())
-  return {
-    props: {},
-  }
 }
 
 export default Categories

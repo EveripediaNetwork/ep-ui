@@ -20,6 +20,7 @@ export const Image = ({
 }: NextChakraImageProps) => (
   <Box h={imgH} w={imgW} {...rest} overflow="hidden" position="relative">
     <NextImage
+      quality={95}
       objectFit="cover"
       objectPosition="center"
       layout={imgW && imgH ? 'fixed' : 'fill'}

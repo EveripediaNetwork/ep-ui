@@ -66,9 +66,7 @@ const MenuFooter = () => {
               <Link target="_blank" href="https://learn.everipedia.org/iq/">
                 {`${t('help')}`}
               </Link>
-              <Link target="_blank" href="/blog">
-                {`${t('blog')}`}
-              </Link>
+              <Link href="/blog">{`${t('blog')}`}</Link>
               <Link href="/static/faq">{`${t('faq')}`}</Link>
             </Stack>
           </GridItem>

@@ -17,30 +17,32 @@ export const useInfiniteData = <T>(opts: Opts) => {
   const updatedOffset = offset + ITEM_PER_PAGE
 
   const fetcher = (noOffset?: boolean) => {
-    setTimeout(() => {
-      const fetchNewWikis = async () => {
-        const result = await store.dispatch(
-          opts.initiator.initiate({
-            ...opts.arg,
-            limit: ITEM_PER_PAGE,
-            offset: noOffset ? 0 : updatedOffset,
-          }),
-        )
-        if (result.data && result.data?.length > 0) {
-          const { data: resData } = result
-          setData(prevData => [...prevData, ...resData])
-          setOffset(updatedOffset)
-          if (resData.length < ITEM_PER_PAGE) {
-            setHasMore(false)
-            setLoading(false)
-          }
-        } else {
-          setHasMore(false)
-          setLoading(false)
-        }
+    if (loading) return
+
+    const fetchNewWikis = async () => {
+      const result = await store.dispatch(
+        opts.initiator.initiate({
+          ...opts.arg,
+          limit: ITEM_PER_PAGE,
+          offset: noOffset ? 0 : updatedOffset,
+        }),
+      )
+      const { data: resData } = result
+
+      if (resData && resData.length > 0) {
+        setData(prevData => [...prevData, ...resData])
+        setOffset(updatedOffset)
+        if (resData.length < ITEM_PER_PAGE) setHasMore(false)
+        else setHasMore(true)
+        if (resData.length === 0) setHasMore(false)
+      } else {
+        setHasMore(false)
       }
-      fetchNewWikis()
-    }, FETCH_DELAY_TIME)
+      setLoading(false)
+    }
+
+    setLoading(true)
+    setTimeout(fetchNewWikis, FETCH_DELAY_TIME)
   }
 
   return {

@@ -1,6 +1,5 @@
 import { MagicConnector } from '@everipedia/wagmi-magic-connector'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -9,9 +8,9 @@ import { publicProvider } from 'wagmi/providers/public'
 import { AlchemyProvider, Network } from '@ethersproject/providers'
 import config from './index'
 
-type Connector = MetaMaskConnector | WalletConnectConnector | MagicConnector
 const chainArray =
   config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
+
 export const { chains, provider } = configureChains(chainArray, [
   alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
   infuraProvider({ infuraId: config.infuraId, weight: 2 }),
@@ -23,7 +22,7 @@ const network: Network = {
   chainId: Number(config.chainId),
 }
 
-export const connectors: Connector[] = [
+export const connectors = [
   new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
   new WalletConnectConnector({
     chains,
@@ -32,6 +31,7 @@ export const connectors: Connector[] = [
     },
   }),
   new MagicConnector({
+    chains,
     options: {
       apiKey: config.magicLinkApiKey,
       oauthOptions: {

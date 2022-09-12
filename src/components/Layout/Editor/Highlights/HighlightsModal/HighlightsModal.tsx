@@ -24,103 +24,11 @@ import {
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
-import { AiOutlineLinkedin, AiOutlineYoutube } from 'react-icons/ai'
-import { BsGlobe } from 'react-icons/bs'
-import CoinGeckoIcon from '@/components/Icons/coingecko'
-import CoinMarketCap from '@/components/Icons/coinmarketcap'
-import TwitterIcon from '@/components/Icons/twitterIcon'
-import RedditIcon from '@/components/Icons/redditIcon'
-import InstagramIcon from '@/components/Icons/instagramIcon'
-import FacebookIcon from '@/components/Icons/facebookIcon'
-import GithubIcon from '@/components/Icons/githubIcon'
-import TelegramIcon from '@/components/Icons/telegramIcon'
 
-import { CommonMetaIds, MData } from '@/types/Wiki'
-import { FaFileContract } from 'react-icons/fa'
+import { MData } from '@/types/Wiki'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
-import EmailIcon from '@/components/Icons/emailIcon'
-
-export const LINK_OPTIONS = [
-  {
-    id: CommonMetaIds.REDDIT_URL,
-    label: 'Reddit',
-    icon: RedditIcon,
-    tests: [/https:\/\/www\.reddit\.com\/r\//i],
-  },
-  {
-    id: CommonMetaIds.EMAIL_URL,
-    label: 'Email',
-    icon: EmailIcon,
-    tests: [/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/],
-  },
-  {
-    id: CommonMetaIds.GITHUB_URL,
-    label: 'Github',
-    icon: GithubIcon,
-    tests: [/https:\/\/github\.com\//i],
-  },
-  {
-    id: CommonMetaIds.TELEGRAM_URL,
-    label: 'Telegram',
-    icon: TelegramIcon,
-    tests: [/https:\/\/t\.me\//i],
-  },
-  {
-    id: CommonMetaIds.INSTAGRAM_PROFILE,
-    label: 'Instagram',
-    icon: InstagramIcon,
-    tests: [/https:\/\/(www.)?instagram.com\/\w+/],
-  },
-  {
-    id: CommonMetaIds.TWITTER_PROFILE,
-    label: 'Twitter',
-    icon: TwitterIcon,
-    tests: [/https:\/\/(www.)?twitter.com\/\w+/],
-  },
-  {
-    id: CommonMetaIds.LINKEDIN_PROFILE,
-    label: 'Linkedin',
-    icon: AiOutlineLinkedin,
-    tests: [/https:\/\/(www.)?linkedin.com\/in\/\w+/],
-  },
-  {
-    id: CommonMetaIds.YOUTUBE_PROFILE,
-    label: 'Youtube',
-    icon: AiOutlineYoutube,
-    tests: [/https:\/\/(www.)?youtube.com\/\w+/],
-  },
-  {
-    id: CommonMetaIds.COINGECKO_PROFILE,
-    label: 'Coingecko',
-    icon: CoinGeckoIcon,
-    tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
-  },
-  {
-    id: CommonMetaIds.WEBSITE,
-    label: 'Website',
-    icon: BsGlobe,
-    tests: [/https:\/\/(www.)?\w+.\w+/],
-  },
-  {
-    id: CommonMetaIds.CONTRACT_URL,
-    label: 'Contract URL',
-    icon: FaFileContract,
-    tests: [/i/],
-  },
-  {
-    id: CommonMetaIds.FACEBOOK_PROFILE,
-    label: 'Facebook',
-    icon: FacebookIcon,
-    tests: [/https:\/\/(www.)?facebook.com\/\w+/],
-  },
-  {
-    id: CommonMetaIds.COIN_MARKET_CAP,
-    label: 'Coin Market Cap',
-    icon: CoinMarketCap,
-    tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
-  },
-]
+import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -200,6 +108,7 @@ const HighlightsModal = ({
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
+        w="min(95vw, 600px)"
         _dark={{
           bg: 'gray.800',
         }}
@@ -279,11 +188,35 @@ const HighlightsModal = ({
                   }}
                   placeholder="Select option"
                 >
-                  {LINK_OPTIONS.map(med => (
-                    <chakra.option key={med.id} value={med.id}>
-                      {med.label}
-                    </chakra.option>
-                  ))}
+                  <optgroup label="Socials">
+                    {LINK_OPTIONS.filter(
+                      option => option.type === LinkType.SOCIAL,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Explorers">
+                    {LINK_OPTIONS.filter(
+                      option => option.type === LinkType.EXPLORER,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Other">
+                    {LINK_OPTIONS.filter(
+                      option =>
+                        option.type !== LinkType.SOCIAL &&
+                        option.type !== LinkType.EXPLORER,
+                    ).map(med => (
+                      <chakra.option key={med.id} value={med.id}>
+                        {med.label}
+                      </chakra.option>
+                    ))}
+                  </optgroup>
                 </Select>
                 <Input
                   placeholder="Enter link"

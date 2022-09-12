@@ -67,7 +67,6 @@ const WikiProcessModal = ({
             <Icon
               cursor="pointer"
               fontSize="2xl"
-              fontWeight="light"
               as={RiCloseLine}
               onClick={onClose}
             />

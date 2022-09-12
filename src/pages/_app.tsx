@@ -1,26 +1,22 @@
 import React, { StrictMode, useEffect } from 'react'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import './static/assets/global.css'
-import './static/assets/dark-mode.css'
-import './static/assets/markdown.css'
+import '../styles/global.css'
+import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProviderClass } from 'react-redux'
-import { createClient, WagmiConfig } from 'wagmi'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
-import { getCategoriesLinks } from '@/services/categories'
-import { getRunningOperationPromises } from '@/services/wikis'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
+import dynamic from 'next/dynamic'
 import { Dict } from '@chakra-ui/utils'
-import { provider, connectors } from '@/config/wagmi'
 import chakraTheme from '../theme'
 import '../utils/i18n'
+
+const Wagmi = dynamic(() => import('@/components/WagmiProviderWrapper'))
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -31,28 +27,11 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
-type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
-type CreateClientConnectors = CreateClientArgs['connectors']
-const createClientConnectors = connectors as CreateClientConnectors
-
-const client = createClient({
-  autoConnect: true,
-  connectors: createClientConnectors,
-  provider,
-})
-
-const App = (props: EpAppProps) => {
-  const { Component, pageProps, router } = props
+const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      pageView(url)
-    }
-
+    const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
-
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
   return (
@@ -60,26 +39,18 @@ const App = (props: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider resetCSS theme={chakraTheme}>
-          <Fonts />
-          <WagmiConfig client={client}>
+        <Wagmi>
+          <ChakraProvider resetCSS theme={chakraTheme}>
+            <Fonts />
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
-          </WagmiConfig>
-        </ChakraProvider>
+          </ChakraProvider>
+        </Wagmi>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
   )
-}
-
-export const getServerSideProps = async () => {
-  store.dispatch(getCategoriesLinks.initiate())
-  await Promise.all(getRunningOperationPromises())
-  return {
-    props: {},
-  }
 }
 
 export default App

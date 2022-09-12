@@ -27,16 +27,14 @@ import { getUsername } from '@/utils/getUsername'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
-  const [, userENSDomain] = useENSData(
-    type === 'address' && typeof content === 'string' ? content : '',
-  )
+  const [, userENSDomain] = useENSData(type === 'account' ? content.id : '')
   const contentTemplate = () => {
     if (type === 'url') {
       const contentURL = content as string
       return (
         <Link
           target="_blank"
-          color="brand.500"
+          color="brandLinkColor"
           fontSize="14px"
           href={contentURL}
         >
@@ -71,7 +69,11 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
             address={content.id}
             avatarIPFS={content.profile?.avatar}
           />
-          <Link fontSize="xs" href={`/account/${content.id}`} color="brand.500">
+          <Link
+            fontSize="xs"
+            href={`/account/${content.id}`}
+            color="brandLinkColor"
+          >
             {getUsername(content, userENSDomain)}
           </Link>
         </HStack>

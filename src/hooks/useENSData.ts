@@ -1,48 +1,25 @@
-import { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { addENSAddress } from '@/store/slices/ens-slice'
-import { provider } from '@/utils/getProvider'
+import { getEns } from '@/services/ens'
+import { store } from '@/store/store'
+import React from 'react'
 
-export const useENSData = (address: string | undefined | null) => {
-  const [avatar, setAvatar] = useState<string>()
-  const [username, setUsername] = useState<string>()
-  const [loading, setLoading] = useState<boolean>(false)
-  const ens = useAppSelector(state => state.ens)
-  const dispatch = useAppDispatch()
+export const useENSData = (address?: string | null, skip?: boolean) => {
+  const [avatar, setAvatar] = React.useState('')
+  const [displayName, setDisplayName] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
 
-  useEffect(() => {
-    const getAvatar = async (addrs: string) => {
-      const name = await provider.lookupAddress(addrs)
-      let avatarURI
-      if (name) {
-        setUsername(name)
-        avatarURI = await provider.getAvatar(name)
-        if (avatarURI) setAvatar(avatarURI)
+  React.useEffect(() => {
+    if (!address || skip) return
+    const fetchEnsData = async () => {
+      setLoading(true)
+      const { data } = await store.dispatch(getEns.initiate(address))
+      if (data) {
+        setAvatar(data.avatar)
+        setDisplayName(data.displayName)
       }
       setLoading(false)
-      dispatch(
-        addENSAddress({
-          address: addrs,
-          username: name || null,
-          avatar: avatarURI || null,
-        }),
-      )
     }
+    fetchEnsData()
+  }, [address, skip])
 
-    if (!avatar && address) {
-      // first look up the ENS in the redux ens slice
-      if (ens[address]) {
-        setAvatar(ens[address].avatar)
-        setUsername(ens[address].username)
-      }
-      // if it's not there, look it up in the blockchain
-      // and save data to the redux slice
-      else {
-        getAvatar(address)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, avatar, ens])
-
-  return [avatar, username, loading] as const
+  return [avatar, displayName, loading] as const
 }

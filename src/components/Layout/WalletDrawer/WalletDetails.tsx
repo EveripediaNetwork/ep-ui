@@ -20,19 +20,20 @@ const WalletDetails = ({
     <>
       <HStack flex="1">
         <Image
+          objectFit="contain"
           boxSize="23px"
           mr={3}
           src={`/images/${symbol && tokenDetails[symbol]?.logo}`}
         />
-        <Text as="strong" fontWeight="extrabold">
+        <Text as="strong" fontWeight="bold">
           {symbol}
         </Text>
       </HStack>
       <HStack>
         <VStack spacing="0" align="flex-end">
-          <Text fontWeight="extrabold">{balance}</Text>
+          <Text fontWeight="bold">{balance}</Text>
           <Text mr={3} color="GrayText" fontSize="smaller" fontWeight="bold">
-            ${shortenBalance(getTokenValue(tokensArray, symbol))} USD
+            ${shortenBalance(getTokenValue(tokensArray, symbol))}
           </Text>
         </VStack>
         <TokenDetailsMenu token={symbol} />

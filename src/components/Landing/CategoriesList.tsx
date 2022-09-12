@@ -6,6 +6,8 @@ import {
   SimpleGrid,
   Spinner,
   Center,
+  Heading,
+  VStack,
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
@@ -18,17 +20,22 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
 
   return (
-    <>
-      <Text
-        align="center"
-        mt={10}
-        fontWeight="semibold"
-        fontSize="2xl"
-        mb={0}
-        px={{ base: 6, lg: 20 }}
+    <VStack mt={10} mb={20} spacing={2}>
+      <Heading
+        textAlign="center"
+        fontWeight="700"
+        fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('browseCategory')}`}
-      </Text>
+      </Heading>
+      <Text
+        color="homeDescriptionColor"
+        fontSize={{ base: 'lg', lg: 22 }}
+        pb={9}
+        px={4}
+        textAlign="center"
+        maxW="800"
+      >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
         maxW="1050px"
         w="100%"
@@ -50,9 +57,10 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           >
             <Image
               bgColor="DimColor"
-              src={category.cardImage || '/'}
-              h="180px"
+              src={new URL(category.cardImage).pathname}
+              h="200px"
               w="100%"
+              alt={category.title}
             />
 
             <Text
@@ -75,7 +83,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           <Spinner size="xl" />
         </Center>
       )}
-    </>
+    </VStack>
   )
 }
 

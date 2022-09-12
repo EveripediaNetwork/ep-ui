@@ -1,5 +1,13 @@
 import React from 'react'
-import { ButtonGroup, Heading, Text, VStack, Stack } from '@chakra-ui/react'
+import {
+  ButtonGroup,
+  Heading,
+  Text,
+  VStack,
+  Stack,
+  chakra,
+  useBreakpointValue,
+} from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
 import { Wiki } from '@/types/Wiki'
@@ -7,54 +15,61 @@ import { HeroCard } from './HeroCard'
 
 const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
   const { t } = useTranslation()
+  const description = useBreakpointValue({
+    base: t('iq_descriptionShort'),
+    md: t('iq_description'),
+  })
+  const middleHeroText = useBreakpointValue({
+    base: 'Blockchain',
+    md: 'Blockchain & Crypto',
+  })
 
   return (
     <Stack
       direction={{ base: 'column', lg: 'row' }}
-      justify="center"
+      justify="space-between"
       w={{ base: 'full', lg: '90vw', xl: 'min(90%, 1150px)' }}
       mx="auto"
       px={{ base: 3, lg: 10 }}
+      mt={{ base: 4, lg: 0 }}
     >
       <VStack
         alignItems={{ base: 'center', lg: 'start' }}
         textAlign={{ base: 'center', lg: 'start' }}
-        spacing={{ base: 6, lg: 10 }}
+        spacing={4}
         mb={10}
         mt={5}
       >
         <Heading
-          w={{ base: '80%', md: '70%' }}
-          fontSize={{ base: '32', md: '44' }}
-          fontWeight="black"
-          lineHeight="normal"
-          letterSpacing="wider"
+          w={{ base: '90%', md: '100%' }}
+          fontSize={{ base: '35', sm: '42', lg: '54' }}
         >
-          {`${t('hero_title')}`}
+          The World&apos;s Largest
+          <br />
+          <chakra.span color="brandLinkColor">{middleHeroText}</chakra.span>
+          <br />
+          Encyclopedia
         </Heading>
         <Text
-          w={{ base: '70%', md: '60%' }}
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-          letterSpacing="wider"
+          w={{ base: '70%', md: '80%' }}
+          fontSize={{ base: 'md', lg: 'xl' }}
+          pb={10}
         >
-          {`${t('iq_description')}`}
+          {description}
         </Text>
-        <ButtonGroup size="lg" mt={{ lg: 10 }} spacing={{ base: 4, lg: 8 }}>
+        <ButtonGroup size="lg" spacing={{ base: 4, lg: 8 }}>
           <LinkButton href="/categories" w={{ base: 32, lg: 40 }}>
             {`${t('exploreHeroBttn')}`}
           </LinkButton>
           <LinkButton
-            href="/create-wiki"
+            href="/static/about"
             w={{ base: 32, lg: 40 }}
             variant="outline"
             bgColor="btnBgColor"
           >
-            {`${t('createHeroBttn')}`}
+            {`${t('learnMoreHeroBttn')}`}
           </LinkButton>
         </ButtonGroup>
-        <LinkButton href="/static/about" variant="link" color="blue.300">
-          {`${t('learnMoreHeroBttn')}`}
-        </LinkButton>
       </VStack>
       <HeroCard wiki={wiki} />
     </Stack>

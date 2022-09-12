@@ -14,7 +14,6 @@ const AboutFeatures = () => {
       mt="24"
     >
       <Heading
-        letterSpacing="wider"
         fontWeight="bold"
         lineHeight="shorter"
         textAlign="center"
@@ -25,7 +24,6 @@ const AboutFeatures = () => {
         maxW="3xl"
         textAlign="center"
         fontSize={{ base: 'sm', md: 'md', lg: 'md' }}
-        letterSpacing="wider"
         mb={4}
       >
         {`${t('aboutFeatContent')}`}

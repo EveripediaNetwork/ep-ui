@@ -5,7 +5,6 @@ import AboutFeatures from '@/components/About/AboutFeatures'
 import AboutAsSeenIn from '@/components/About/AboutAsSeenIn'
 import AboutCommunity from '@/components/About/AboutCommunity'
 import AboutOurTeam from '@/components/About/AboutOurTeam'
-import AboutLatestFromBlog from '@/components/About/AboutLatestFromBlog'
 
 const About = () => (
   <Box px={{ base: 6, lg: 16 }} py={{ lg: 20 }}>
@@ -14,7 +13,6 @@ const About = () => (
     <AboutCommunity />
     <AboutAsSeenIn />
     <AboutOurTeam />
-    <AboutLatestFromBlog />
   </Box>
 )
 

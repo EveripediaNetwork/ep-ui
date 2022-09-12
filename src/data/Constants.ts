@@ -2,3 +2,4 @@ export const ITEM_PER_PAGE = 12
 export const FETCH_DELAY_TIME = 3000
 export const CATEGORY_DESCRIPTION_WORD_LIMIT = 200
 export const MEDIA_POST_DEFAULT_ID = 'DEFAULT_ID'
+export const WIKI_IMAGE_ASPECT_RATIO = 4 / 3

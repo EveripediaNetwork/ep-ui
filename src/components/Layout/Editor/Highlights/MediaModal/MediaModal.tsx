@@ -102,12 +102,13 @@ const MediaModal = ({
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
       <ModalOverlay />
       <ModalContent
+        w="min(95vw, 600px)"
         _dark={{
           bg: 'gray.800',
         }}
       >
         <ModalHeader>
-          <VStack align="start" w={{ base: '100%', md: '90%', lg: '80%' }}>
+          <VStack align="start">
             <Text fontSize="lg" fontWeight="bold">
               Add Image or Video to Media Gallery
             </Text>
@@ -127,7 +128,7 @@ const MediaModal = ({
                 display="flex"
                 justifyContent={{ base: 'center', md: 'left' }}
                 maxH="162px"
-                border="1px solid #CBD5E0"
+                borderWidth="1px"
                 p={5}
                 borderRadius={8}
                 overflow="auto"
@@ -213,6 +214,7 @@ const MediaModal = ({
                 dropzonePlaceHolderTitle={`Drag and drop an ${dropZoneActions.textType} or click to select.`}
                 dropzonePlaceHolderSize="(10mb max)"
                 aspectRatio={8 / 3}
+                mediaModal
               />
               <ImageInput
                 setImage={handleSetImage}

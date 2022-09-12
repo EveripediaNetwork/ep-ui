@@ -8,13 +8,13 @@ import {
   LinkOverlay,
   Icon,
 } from '@chakra-ui/react'
-import { getBootStrapIcon } from '@/utils/getBootStrapIcon'
 import { CATEGORY_DESCRIPTION_WORD_LIMIT } from '@/data/Constants'
+import { IconType } from 'react-icons'
 import { Image } from '../Elements/Image/Image'
 
 interface CategoryCardProps {
   imageCard: string
-  coverIcon: string
+  coverIcon: IconType
   title: string
   brief: string
   categoryId: string
@@ -27,7 +27,6 @@ const CategoryCard = ({
   brief,
   categoryId,
 }: CategoryCardProps) => {
-  const CategoryIcon = getBootStrapIcon(coverIcon)
   return (
     <LinkBox
       as="article"
@@ -38,20 +37,19 @@ const CategoryCard = ({
       overflow="hidden"
       borderRadius="12px"
     >
-      <VStack
-        cursor="pointer"
-        boxShadow="box-shadow:
-  6.7px 6.7px 5.3px rgba(0, 0, 0, 0.008),
-  22.3px 22.3px 17.9px rgba(0, 0, 0, 0.012),
-  100px 100px 80px rgba(0, 0, 0, 0.02)
-;"
-      >
+      <VStack cursor="pointer">
         <Box w="100%" position="relative">
-          <Image src={imageCard} width="100%" height="150px" alt={title} />
+          <Image
+            src={imageCard}
+            width="100%"
+            height="150px"
+            alt={title}
+            loading="lazy"
+          />
           <Box position="absolute" bottom="0" left="50%">
             <Icon
               transform="translateX(-50%) translateY(50%)"
-              as={CategoryIcon}
+              as={coverIcon}
               borderRadius="100px"
               overflow="hidden"
               borderWidth="5px"
@@ -65,7 +63,7 @@ const CategoryCard = ({
           </Box>
         </Box>
 
-        <Box p={8}>
+        <Box p={5}>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Heading textAlign="center" size="sm" my="10px">
               {title}
