@@ -1,27 +1,33 @@
 import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, HStack, chakra, Spinner, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
-import dynamic from 'next/dynamic'
+import WikiNotFound from '../WIkiNotFound/WikiNotFound'
+import RelatedMediaGrid from './InsightComponents/RelatedMedia'
+// import dynamic from 'next/dynamic'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
+import TwitterTimeline from './InsightComponents/TwitterTimeline'
+import WikiActionBar from './WikiActionBar'
+import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
+import WikiReferences from './WikiReferences'
+import WikiTableOfContents from './WikiTableOfContents'
 
-const TwitterTimeline = dynamic(
-  () => import('./InsightComponents/TwitterTimeline'),
-)
-const WikiNotFound = dynamic(() => import('../WIkiNotFound/WikiNotFound'))
-const WikiActionBar = dynamic(() => import('./WikiActionBar'))
-const RelatedMediaGrid = dynamic(
-  () => import('./InsightComponents/RelatedMedia'),
-)
-const WikiInsights = dynamic(() => import('./WikiInsights'))
-const WikiReferences = dynamic(() => import('./WikiReferences'))
-const WikiTableOfContents = dynamic(() => import('./WikiTableOfContents'))
+// const TwitterTimeline = dynamic(
+//   () => import('./InsightComponents/TwitterTimeline'),
+// )
+// const WikiNotFound = dynamic(() => import('../WIkiNotFound/WikiNotFound'))
+// const WikiActionBar = dynamic(() => import('./WikiActionBar'))
+// const RelatedMediaGrid = dynamic(
+//   () => import('./InsightComponents/RelatedMedia'),
+// )
+// const WikiInsights = dynamic(() => import('./WikiInsights'))
+// const WikiReferences = dynamic(() => import('./WikiReferences'))
+// const WikiTableOfContents = dynamic(() => import('./WikiTableOfContents'))
 
 interface WikiLayoutProps {
   wiki?: Wiki | null
   ipfs?: string
-  isLoading: boolean
 }
 
 const MobileMeta = (wiki: {
@@ -48,7 +54,7 @@ const MobileMeta = (wiki: {
   )
 }
 
-export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -106,7 +112,7 @@ export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
             />
           </Box>
         ) : (
-          <>{isLoading ? <Spinner mx="auto" mt="8" /> : <WikiNotFound />}</>
+          <WikiNotFound />
         )}
       </Flex>
       {wiki?.content.includes('# ') && <WikiTableOfContents />}

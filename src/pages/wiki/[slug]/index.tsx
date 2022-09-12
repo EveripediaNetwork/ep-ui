@@ -18,7 +18,7 @@ import { Wiki as WikiType } from '@/types/Wiki'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
-  wiki?: WikiType | null
+  wiki: WikiType | null
 }
 
 const Wiki = ({ wiki }: WikiProps) => {
@@ -29,7 +29,6 @@ const Wiki = ({ wiki }: WikiProps) => {
   const toc = useAppSelector(state => state.toc)
 
   const [wikiData, setWikiData] = useState(wiki)
-  const [isLoading, setIsLoading] = useState(true)
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
@@ -46,8 +45,7 @@ const Wiki = ({ wiki }: WikiProps) => {
         const { data } = await store.dispatch(
           getWikiCreatorAndEditor.initiate(slug),
         )
-        setWikiData(wiki ? { ...wiki, ...data } : undefined)
-        setIsLoading(true)
+        setWikiData(wiki ? { ...wiki, ...data } : null)
         incrementWikiViewCount(slug)
       }
     }
@@ -68,7 +66,7 @@ const Wiki = ({ wiki }: WikiProps) => {
         />
       )}
       <Box as="main" mt={-2}>
-        <WikiMarkup wiki={wikiData} isLoading={isLoading} />
+        <WikiMarkup wiki={wikiData} />
       </Box>
     </>
   )
@@ -90,7 +88,7 @@ export const getStaticProps: GetStaticProps = async context => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: true }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export default Wiki
