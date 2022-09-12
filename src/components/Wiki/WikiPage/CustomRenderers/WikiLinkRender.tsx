@@ -33,14 +33,6 @@ const WikiLinkRender = ({
   const linkRef = React.useRef<HTMLAnchorElement>(null)
   const { data: wiki } = useGetWikiPreviewQuery(slug)
 
-  const [isMounted, setIsMounted] = React.useState(false)
-  React.useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  if (!isMounted) {
-    return <a href={href}>{text}</a>
-  }
-
   return (
     <Popover
       isOpen={isOpen}

@@ -6,9 +6,11 @@ import config from '@/config'
 
 export const customLinkRenderer = ({
   children,
+  referencesString,
   ...props
 }: React.PropsWithChildren<
-  ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
+  ComponentPropsWithoutRef<'a'> &
+    ReactMarkdownProps & { referencesString?: string }
 >) => {
   // link is domain + /wiki/ + some slug
   const wikiLinkRecognizer = new RegExp(`${config.publicDomain}/wiki/(.*)`)
@@ -34,6 +36,7 @@ export const customLinkRenderer = ({
     return React.createElement(CiteMarksRender, {
       text: children[0] as string,
       href: props.href,
+      referencesString,
     })
   }
 

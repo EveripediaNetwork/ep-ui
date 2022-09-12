@@ -1,45 +1,55 @@
-import { Wiki } from '@/types/Wiki'
+import { CommonMetaIds, Wiki } from '@/types/Wiki'
 import { Box, Heading, useColorMode } from '@chakra-ui/react'
-import React from 'react'
+import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
 import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
 import { customTableRenderer } from '@/utils/customTableRender'
+import { getWikiMetadataById } from '@/utils/getWikiFields'
 import styles from '../../../styles/markdown.module.css'
 
 interface WikiMainContentProps {
-  wiki: Wiki | undefined
+  wiki: Wiki
 }
-const MarkdownRender = React.memo(
-  ({ wikiContent }: { wikiContent?: string }) => {
-    store.dispatch({
-      type: 'citeMarks/reset',
-    })
-    store.dispatch({
-      type: 'toc/reset',
-    })
-    if (!wikiContent) return null
-    return (
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        components={{
-          h1: addToTOC,
-          h2: addToTOC,
-          h3: addToTOC,
-          h4: addToTOC,
-          h5: addToTOC,
-          h6: addToTOC,
-          a: customLinkRenderer,
-          table: customTableRenderer,
-        }}
-      >
-        {wikiContent}
-      </ReactMarkdown>
-    )
-  },
-)
+const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
+  store.dispatch({
+    type: 'citeMarks/reset',
+  })
+  store.dispatch({
+    type: 'toc/reset',
+  })
+
+  const referencesString = useMemo(
+    () => getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value,
+    [wiki],
+  )
+
+  if (!wiki.content) return null
+
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        h1: addToTOC,
+        h2: addToTOC,
+        h3: addToTOC,
+        h4: addToTOC,
+        h5: addToTOC,
+        h6: addToTOC,
+        a: props =>
+          customLinkRenderer({
+            ...props,
+            referencesString,
+          }),
+        table: customTableRenderer,
+      }}
+    >
+      {wiki.content}
+    </ReactMarkdown>
+  )
+})
 
 const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
@@ -60,7 +70,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
-        <MarkdownRender wikiContent={wiki?.content} />
+        <MarkdownRender wiki={wiki} />
       </Box>
     </Box>
   )
