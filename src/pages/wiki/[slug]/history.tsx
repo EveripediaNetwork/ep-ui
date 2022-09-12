@@ -9,7 +9,6 @@ import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
 import { EditSpecificMetaIds } from '@/types/Wiki'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { GetServerSideProps } from 'next'
@@ -48,7 +47,7 @@ const History = () => {
         {wiki && wikiHistory && wikiHistory?.length > 1 && (
           <ActivityCard
             title={wiki.title}
-            brief={getWikiSummary(wiki)}
+            brief={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
             wiki={wiki}
