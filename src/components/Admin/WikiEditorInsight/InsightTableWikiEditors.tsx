@@ -236,7 +236,7 @@ export const InsightTableWikiEditors = (
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
-                          Ban
+                          UnBan
                         </Text>
                         <Icon
                           fontSize="20px"
