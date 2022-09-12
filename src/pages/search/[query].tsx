@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
-
 import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { Category } from '@/services/search'

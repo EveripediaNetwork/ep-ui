@@ -175,7 +175,6 @@ export type WikiPreview = Pick<
   | 'id'
   | 'title'
   | 'summary'
-  | 'content'
   | 'tags'
   | 'images'
   | 'categories'
