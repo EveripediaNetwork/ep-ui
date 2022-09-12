@@ -58,7 +58,7 @@ export const WikiDetails = ({
         {title}
       </Heading>
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage bgColor="dimColor" imageURL={imgSrc} />
+        <WikiImage bgColor="dimColor" priority imageURL={imgSrc} />
       </AspectRatio>
       <Table size="sm" variant="simple">
         <Tbody>
