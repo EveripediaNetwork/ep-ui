@@ -20,11 +20,13 @@ import { RiErrorWarningFill, RiSettings4Line } from 'react-icons/ri'
 interface SignTokenMessageProps {
   error?: string
   reopenSigningDialog: Dispatch<SetStateAction<boolean>>
+  message?: string
 }
 
 const SignTokenMessage = ({
   error,
   reopenSigningDialog,
+  message,
 }: SignTokenMessageProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -39,8 +41,8 @@ const SignTokenMessage = ({
           <Icon as={RiSettings4Line} fontSize={42} />
           <Heading textAlign="center">Authenticate to continue</Heading>
           <Text pb={4} maxW="380px" textAlign="center">
-            To make changes to your profile, authenticate your wallet to
-            continue.
+            {message ||
+              'To make changes to your profile, authenticate your wallet to continue.'}
           </Text>
         </VStack>
       </Center>
