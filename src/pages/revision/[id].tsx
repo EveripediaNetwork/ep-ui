@@ -116,7 +116,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
             <Text textAlign="center">
               You are seeing an older version of this wiki.
             </Text>
-            <Link href={`/wikiData/${wikiData?.content[0].id}`} passHref>
+            <Link href={`/wiki/${wikiData?.content[0].id}`} passHref>
               <Button
                 as="a"
                 maxW="120px"
