@@ -1,20 +1,27 @@
 import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, Heading, HStack, chakra } from '@chakra-ui/react'
+import { Box, Flex, HStack, chakra, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
-import WikiNotFound from '../WIkiNotFound/WikiNotFound'
-import RelatedMediaGrid from './InsightComponents/RelatedMedia'
+import dynamic from 'next/dynamic'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
-import TwitterTimeline from './InsightComponents/TwitterTimeline'
-import WikiActionBar from './WikiActionBar'
-import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
-import WikiReferences from './WikiReferences'
-import WikiTableOfContents from './WikiTableOfContents'
+
+const TwitterTimeline = dynamic(
+  () => import('./InsightComponents/TwitterTimeline'),
+)
+const WikiNotFound = dynamic(() => import('../WIkiNotFound/WikiNotFound'))
+const WikiActionBar = dynamic(() => import('./WikiActionBar'))
+const RelatedMediaGrid = dynamic(
+  () => import('./InsightComponents/RelatedMedia'),
+)
+const WikiInsights = dynamic(() => import('./WikiInsights'))
+const WikiReferences = dynamic(() => import('./WikiReferences'))
+const WikiTableOfContents = dynamic(() => import('./WikiTableOfContents'))
 
 interface WikiLayoutProps {
   wiki?: Wiki | null
   ipfs?: string
+  isLoading: boolean
 }
 
 const MobileMeta = (wiki: {
@@ -41,7 +48,7 @@ const MobileMeta = (wiki: {
   )
 }
 
-export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -65,7 +72,9 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
             >
               <WikiMainContent wiki={wiki} />
               <WikiInsights wiki={wiki} ipfs={ipfs} />
-              <Heading
+              <Text
+                fontSize="4xl"
+                fontWeight="bold"
                 mt={8}
                 mb={-4}
                 display={{
@@ -75,7 +84,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
                 px={4}
               >
                 {wiki?.title}
-              </Heading>
+              </Text>
             </Flex>
             <chakra.div
               display={{
@@ -97,7 +106,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
             />
           </Box>
         ) : (
-          <WikiNotFound />
+          <>{isLoading ? <Spinner mx="auto" mt="8" /> : <WikiNotFound />}</>
         )}
       </Flex>
       {wiki?.content.includes('# ') && <WikiTableOfContents />}
