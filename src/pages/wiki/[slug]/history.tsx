@@ -7,7 +7,6 @@ import { store } from '@/store/store'
 import { Activity } from '@/types/ActivityDataType'
 import { EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
@@ -35,7 +34,7 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
         {wiki && wikiHistory && wikiHistory?.length > 1 && (
           <ActivityCard
             title={wiki.title}
-            brief={getWikiSummary(wiki)}
+            brief={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
             wiki={wiki}
