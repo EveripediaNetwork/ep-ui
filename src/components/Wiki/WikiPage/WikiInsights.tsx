@@ -12,7 +12,7 @@ import ProfileSummary from './InsightComponents/ProfileSummary'
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
-import WikiCommitMessage from './InsightComponents/WikiCommiMessage'
+import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 
 interface WikiInsightsProps {
   wiki: Wiki
