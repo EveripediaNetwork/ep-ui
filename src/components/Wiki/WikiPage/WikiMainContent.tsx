@@ -44,6 +44,16 @@ const MarkdownRender = React.memo(
 const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
 
+  let content = wiki?.content || ''
+
+  const matchRegex = /\$\$widget\d(.*?\))\$\$/
+  content.match(new RegExp(matchRegex, 'g'))?.forEach(match => {
+    const widgetContent = match.match(matchRegex)?.[1]
+    if (widgetContent) {
+      content = content.replaceAll(match, widgetContent)
+    }
+  })
+
   return (
     <Box
       py={4}
@@ -60,7 +70,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
-        <MarkdownRender wikiContent={wiki?.content} />
+        <MarkdownRender wikiContent={content} />
       </Box>
     </Box>
   )

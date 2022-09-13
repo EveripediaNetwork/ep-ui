@@ -1,5 +1,6 @@
 import { WikiImage } from '@/components/WikiImage'
 import config from '@/config'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { store } from '@/store/store'
 import { Media } from '@/types/Wiki'
 import { constructMediaUrl } from '@/utils/mediaUtils'
@@ -11,16 +12,25 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Image,
+  AspectRatio,
 } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
-import { RiImage2Fill } from 'react-icons/ri'
+import { RiImage2Line, RiVideoLine } from 'react-icons/ri'
 
 const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const [media, setMedia] = React.useState<Media[]>()
   function handleImageClick(m: Media): void {
     editorContext.eventEmitter.emit('command', 'insertImage', {
       src: `${config.pinataBaseUrl}${m.id}`,
+      alt: m.name,
+    })
+  }
+
+  function handleVideoClick(m: Media): void {
+    editorContext.eventEmitter.emit('command', 'insertVideo', {
+      src: `${m.id}`,
       alt: m.name,
     })
   }
@@ -48,31 +58,64 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           </Text>
           <SimpleGrid columns={3} gap={4}>
             {media.map(m => {
-              if (m.source === 'IPFS_IMG')
+              if (m.source === 'IPFS_IMG') {
                 return (
-                  <Box key={m.id} pos="relative">
-                    <WikiImage
-                      w="100%"
-                      h="100px"
-                      borderRadius="3px"
-                      overflow="hidden"
-                      key={m.id}
-                      onClick={() => handleImageClick(m)}
-                      cursor="pointer"
-                      imageURL={constructMediaUrl(m)}
-                    />
+                  <Box key={m.id} pos="relative" h="100%">
+                    <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
+                      <WikiImage
+                        w="100%"
+                        h="100%"
+                        borderRadius="3px"
+                        overflow="hidden"
+                        key={m.id}
+                        onClick={() => handleImageClick(m)}
+                        cursor="pointer"
+                        imageURL={constructMediaUrl(m)}
+                      />
+                    </AspectRatio>
                     <Icon
-                      as={RiImage2Fill}
+                      as={RiImage2Line}
                       pos="absolute"
                       bottom={0}
                       left={0}
                       fontSize="1.5rem"
                       color="#ffffff"
                       bgColor="#0000004f"
-                      borderRadius="3px"
                     />
                   </Box>
                 )
+              }
+              if (m.source === 'YOUTUBE') {
+                return (
+                  <Box key={m.id} pos="relative" h="100%">
+                    <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
+                      <Image
+                        src={
+                          m.source !== 'YOUTUBE'
+                            ? constructMediaUrl(m)
+                            : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
+                        }
+                        onClick={() => handleVideoClick(m)}
+                        h="100%"
+                        w="100%"
+                        objectFit="contain"
+                        bgColor="gray.500"
+                        borderRadius="3px"
+                        cursor="pointer"
+                      />
+                    </AspectRatio>
+                    <Icon
+                      as={RiVideoLine}
+                      pos="absolute"
+                      bottom={0}
+                      left={0}
+                      fontSize="1.5rem"
+                      color="#ffffff"
+                      bgColor="#0000004f"
+                    />
+                  </Box>
+                )
+              }
               return null
             })}
           </SimpleGrid>

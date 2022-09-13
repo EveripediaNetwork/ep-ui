@@ -10,6 +10,8 @@ import {
   PluginToolbarItem,
 } from '@toast-ui/editor/types/plugin'
 import React from 'react'
+// eslint-disable-next-line import/no-cycle
+import { wikiEditorRef } from '@/components/Layout/Editor/Editor'
 import MediaFrame from './frame'
 
 interface PluginInfo {
@@ -51,6 +53,15 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(tr.scrollIntoView())
         return true
       },
+      insertVideo: payload => {
+        const text = `[YOUTUBE@VID](${payload.alt})`
+        const editor = wikiEditorRef.current?.getInstance()
+        if (editor) {
+          const [start, end] = editor.getSelection()
+          editor.replaceSelection(text, start, end)
+        }
+        return true
+      },
     },
     wysiwygCommands: {
       insertImage: (payload, state, dispatch) => {
@@ -59,6 +70,15 @@ export default function media(context: PluginContext): PluginInfo {
           altText: payload.alt,
         })
         dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
+        return true
+      },
+      insertVideo: payload => {
+        const text = `[YOUTUBE@VID](${payload.alt})`
+        const editor = wikiEditorRef.current?.getInstance()
+        if (editor) {
+          const [start, end] = editor.getSelection()
+          editor.replaceSelection(text, start, end)
+        }
         return true
       },
     },
