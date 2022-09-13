@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useContext, useEffect, useRef, useState } from 'react'
 import {
   Box,
   Collapse,
@@ -13,6 +13,7 @@ import {
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
 
@@ -31,13 +32,14 @@ const NavSearch = dynamic(
     suspense: true,
   },
 )
-const MobileNav = dynamic(() => import('./MobileNav'))
+// const MobileNav = dynamic(() => import('./MobileNav'))
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'), {
   suspense: true,
 })
 
 const Navbar = () => {
   const drawerOperations = useDisclosure()
+  const { isWagmiWrapped } = useContext(WagmiStatusContext)
   const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
@@ -128,22 +130,22 @@ const Navbar = () => {
             />
           </HStack>
         </Flex>
-        <Suspense>
+        {isWagmiWrapped && (
           <WalletDrawer
-            toggleOperations={drawerOperations}
             finalFocusRef={loginButtonRef}
             setHamburger={setHamburger}
+            toggleOperations={drawerOperations}
           />
-        </Suspense>
+        )}
         <Collapse
           in={isHamburgerOpen}
           animateOpacity
           style={{ margin: '0 -15px' }}
         >
-          <MobileNav
+          {/* <MobileNav
             setHamburger={setHamburger}
             drawerOperations={drawerOperations}
-          />
+          /> */}
         </Collapse>
       </Box>
     </>

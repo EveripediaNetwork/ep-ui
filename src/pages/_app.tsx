@@ -11,12 +11,10 @@ import { store } from '@/store/store'
 import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
-import dynamic from 'next/dynamic'
 import { Dict } from '@chakra-ui/utils'
-import chakraTheme from '../theme'
 import '../utils/i18n'
-
-const Wagmi = dynamic(() => import('@/components/WagmiProviderWrapper'))
+import { DynamicWagmiProvider } from '@/components/Wagmi/DynamicWagmiProvider'
+import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -39,14 +37,14 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <Wagmi>
+        <DynamicWagmiProvider>
           <ChakraProvider resetCSS theme={chakraTheme}>
             <Fonts />
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </ChakraProvider>
-        </Wagmi>
+        </DynamicWagmiProvider>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>

@@ -2,7 +2,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { NAV_ICON } from '@/data/NavItemData'
 import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
-import { useAccount } from 'wagmi'
+import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
 import { ColorModeToggle } from './ColorModeToggle'
 import NavMenu from './NavMenu'
 import { ProfileLink } from './ProfileLink'
@@ -17,7 +17,7 @@ const ProfileNavMenu = ({
   setVisibleMenu,
   visibleMenu,
 }: ProfileNavMenuProps) => {
-  const { isConnected, address } = useAccount()
+  const userAddress = getUserAddressFromLS()
   return (
     <Box onMouseLeave={() => setVisibleMenu(null)}>
       <NavMenu
@@ -25,17 +25,13 @@ const ProfileNavMenu = ({
         setVisibleMenu={setVisibleMenu}
         visibleMenu={visibleMenu}
         label={
-          <DisplayAvatar
-            key={address}
-            address={isConnected ? address : undefined}
-            size="25"
-          />
+          <DisplayAvatar key={userAddress} address={userAddress} size="25" />
         }
       >
         <Divider />
         <ProfileLink />
         <ColorModeToggle isInMobileMenu={false} />
-        <LogOutBtn isInMobileMenu={false} />
+        {userAddress && <LogOutBtn isInMobileMenu={false} />}
       </NavMenu>
     </Box>
   )
