@@ -53,7 +53,7 @@ const NavMenu = ({
         }
       >
         <HStack spacing={1}>
-          <Text>{label}</Text>{' '}
+          <Text as="div">{label}</Text>{' '}
           {navItem.subItem && (label as string)?.length && (
             <Icon as={RiArrowDownSLine} />
           )}
