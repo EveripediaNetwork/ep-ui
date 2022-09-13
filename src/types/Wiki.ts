@@ -191,3 +191,5 @@ export const whiteListedDomains = [
   'iq.wiki/wiki',
   'ipfs.everipedia.org/ipfs',
 ]
+
+export const whiteListedLinkNames = ['YOUTUBE@VID']
