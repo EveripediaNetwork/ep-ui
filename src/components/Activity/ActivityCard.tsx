@@ -74,6 +74,7 @@ const ActivityCard = ({
             imageURL={getWikiImageUrl(wiki)}
             borderRadius="lg"
             overflow="hidden"
+            alt={wiki.title}
           />
         </AspectRatio>
       </Link>
@@ -94,7 +95,6 @@ const ActivityCard = ({
             >
               {title}
             </Heading>
-
             {type && (
               <Text
                 fontSize="sm"
@@ -144,6 +144,7 @@ const ActivityCard = ({
                 address={editor.id}
                 avatarIPFS={editor.profile?.avatar}
                 size="20"
+                alt={editor.profile?.username}
               />
               <Text fontSize="14px" color="linkColor">
                 <Link

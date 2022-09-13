@@ -58,7 +58,7 @@ export const WikiDetails = ({
         {title}
       </Heading>
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage bgColor="dimColor" imageURL={imgSrc} />
+        <WikiImage bgColor="dimColor" imageURL={imgSrc} alt={title} />
       </AspectRatio>
       <Table size="sm" variant="simple">
         <Tbody>
@@ -155,6 +155,7 @@ export const WikiDetails = ({
               <Td>
                 <HStack py="2">
                   <DisplayAvatar
+                    alt={createdBy.profile?.username}
                     address={createdBy.id}
                     avatarIPFS={createdBy.profile?.avatar}
                     size="24"

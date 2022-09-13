@@ -29,6 +29,7 @@ const ProfileNavMenu = ({
             key={address}
             address={isConnected ? address : undefined}
             size="25"
+            alt={address}
           />
         }
       >
