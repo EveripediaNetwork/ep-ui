@@ -10,12 +10,10 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
-
 import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { Category } from '@/services/search'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { WikiPreview } from '@/types/Wiki'
 import { Link } from '@/components/Elements'
 
@@ -51,7 +49,7 @@ const SearchQuery = () => {
       <ActivityCard
         key={article.id}
         title={article.title}
-        brief={getWikiSummary({ content: article.content })}
+        brief={article.summary}
         editor={article.user}
         wiki={article}
         wikiId={article.id}

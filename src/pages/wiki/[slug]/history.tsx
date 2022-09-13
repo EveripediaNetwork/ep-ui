@@ -1,38 +1,24 @@
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { HistoryCard } from '@/components/Wiki/History/HistoryCard'
 import { NoHistoryView } from '@/components/Wiki/History/NoHistoryView'
-import {
-  getActivityByWiki,
-  useGetActivityByWikiQuery,
-} from '@/services/activities'
-import { getRunningOperationPromises, useGetWikiQuery } from '@/services/wikis'
+import { getActivityByWiki } from '@/services/activities'
+import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
-import { EditSpecificMetaIds } from '@/types/Wiki'
+import { Activity } from '@/types/ActivityDataType'
+import { EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
-import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { GetServerSideProps } from 'next'
-import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 import { useAccount } from 'wagmi'
 
-const History = () => {
-  const router = useRouter()
-  const { slug } = router.query
+interface HistoryPageProps {
+  wikiHistory: Activity[]
+  wiki: Wiki
+}
+
+const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
   const { isConnected } = useAccount()
-  const { data: wiki } = useGetWikiQuery(
-    typeof slug === 'string' ? slug : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
-  const { data: wikiHistory } = useGetActivityByWikiQuery(
-    typeof slug === 'string' ? slug : skipToken,
-    {
-      skip: router.isFallback,
-    },
-  )
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (
@@ -48,7 +34,7 @@ const History = () => {
         {wiki && wikiHistory && wikiHistory?.length > 1 && (
           <ActivityCard
             title={wiki.title}
-            brief={getWikiSummary(wiki)}
+            brief={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
             wiki={wiki}
@@ -126,15 +112,22 @@ const History = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
-  if (typeof slug === 'string') {
-    store.dispatch(getActivityByWiki.initiate(slug))
-  }
-  await Promise.all(getRunningOperationPromises())
+  if (typeof slug !== 'string') return { notFound: true }
+  const { data: wikiHistory } = await store.dispatch(
+    getActivityByWiki.initiate(slug),
+  )
+  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
   return {
-    props: {},
+    props: {
+      wikiHistory,
+      wiki,
+    },
   }
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: true }
 }
 
 export default History

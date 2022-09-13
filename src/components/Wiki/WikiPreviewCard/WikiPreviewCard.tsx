@@ -12,7 +12,6 @@ import {
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
@@ -78,7 +77,7 @@ const WikiPreviewCard = ({
               overflow="hidden"
               orientation="vertical"
             >
-              {getWikiSummary(wiki, WikiSummarySize.Small)}
+              {wiki.summary}
             </Text>
           </Box>
           <Spacer />
