@@ -174,6 +174,7 @@ export interface Wiki {
 export type WikiPreview = Pick<
   Wiki,
   | 'id'
+  | 'hidden'
   | 'title'
   | 'summary'
   | 'tags'
