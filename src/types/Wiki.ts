@@ -168,6 +168,7 @@ export interface Wiki {
   updated?: string
   created?: string
   author: Author
+  hidden: boolean
 }
 
 export type WikiPreview = Pick<
