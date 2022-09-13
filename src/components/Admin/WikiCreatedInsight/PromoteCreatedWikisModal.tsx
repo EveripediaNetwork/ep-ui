@@ -199,6 +199,7 @@ export const PromoteCreatedWikisModal = ({
               <Box>
                 <HStack flex="1">
                   <DisplayAvatar
+                    alt={Data.author.profile?.username}
                     address={Data.author?.id}
                     avatarIPFS={Data.author.profile?.avatar}
                     size="20"
