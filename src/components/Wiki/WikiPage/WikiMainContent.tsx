@@ -44,7 +44,7 @@ const MarkdownRender = React.memo(
 const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
 
-  let content = wiki?.content || ''
+  let content = wiki?.content.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
   content.match(new RegExp(matchRegex, 'g'))?.forEach(match => {
