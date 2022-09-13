@@ -21,7 +21,7 @@ import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 
@@ -31,7 +31,7 @@ type MobileNavType = {
 }
 
 const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
-  const userAddress = getUserAddressFromLS()
+  const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const iconSize = 20

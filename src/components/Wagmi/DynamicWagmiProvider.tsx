@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 import dynamic from 'next/dynamic'
-import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 const WagmiProvider = dynamic(() => import('@/components/Wagmi/WagmiProvider'))
 
@@ -22,7 +22,7 @@ export const DynamicWagmiProvider = ({
   children: React.ReactNode | React.ReactNode[]
 }) => {
   const [isWagmiWrapped, setIsWagmiWrapped] = useState(
-    typeof getUserAddressFromLS() === 'string',
+    typeof getUserAddressFromCache() === 'string',
   )
 
   const value = useMemo(

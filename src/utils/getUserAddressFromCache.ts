@@ -1,4 +1,4 @@
-export const getUserAddressFromLS = () => {
+export const getUserAddressFromCache = () => {
   if (typeof window !== 'undefined') {
     const storedData = localStorage.getItem('wagmi.store')
     const data = JSON.parse(storedData as string)

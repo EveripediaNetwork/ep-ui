@@ -5,7 +5,7 @@ import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
-import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 
 interface WikiActionBarProps {
@@ -32,7 +32,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'Edit',
       icon: RiEdit2Line,
-      isDisabled: typeof getUserAddressFromLS() !== 'string',
+      isDisabled: typeof getUserAddressFromCache() !== 'string',
       isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
         router.push(`/create-wiki?slug=${wiki?.id}`)

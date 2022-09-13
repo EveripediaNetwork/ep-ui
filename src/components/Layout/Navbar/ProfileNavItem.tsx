@@ -2,7 +2,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { NAV_ICON } from '@/data/NavItemData'
 import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
-import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import NavMenu from './NavMenu'
 import { ProfileLink } from './ProfileLink'
@@ -17,7 +17,7 @@ const ProfileNavMenu = ({
   setVisibleMenu,
   visibleMenu,
 }: ProfileNavMenuProps) => {
-  const userAddress = getUserAddressFromLS()
+  const userAddress = getUserAddressFromCache()
   return (
     <Box onMouseLeave={() => setVisibleMenu(null)}>
       <NavMenu

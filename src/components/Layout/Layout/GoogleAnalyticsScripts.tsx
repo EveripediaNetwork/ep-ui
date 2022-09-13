@@ -1,4 +1,4 @@
-import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import Script from 'next/script'
 import React from 'react'
 
@@ -17,7 +17,7 @@ const GoogleAnalyticsScripts = () => {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-            user_id: '${getUserAddressFromLS()}',
+            user_id: '${getUserAddressFromCache()}',
             page_path: window.location.pathname,
             send_page_view: false
             });
