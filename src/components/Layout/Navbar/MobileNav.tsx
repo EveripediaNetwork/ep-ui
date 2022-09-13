@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Box,
   Flex,
@@ -22,6 +22,7 @@ import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 
@@ -34,6 +35,8 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
+  const { isWagmiWrapped } = useContext(WagmiStatusContext)
+
   const iconSize = 20
 
   const handleClick = (currentNav: NavItem | null) => {
@@ -47,14 +50,6 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const handleWalletButtonClick = () => {
     setHamburger(false)
     drawerOperations.onToggle()
-  }
-
-  const [isMounted, setIsMounted] = useState<boolean>(false)
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  if (!isMounted) {
-    return null
   }
 
   return (
@@ -117,7 +112,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               <Menu>
                 <Flex gap="4" direction="column">
                   <ColorModeToggle isInMobileMenu />
-                  <LogOutBtn isInMobileMenu />
+                  {isWagmiWrapped && <LogOutBtn isInMobileMenu />}
                 </Flex>
               </Menu>
             </Box>
@@ -133,6 +128,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
           </Box>
         )}
       </Box>
+
       <Box display={{ lg: 'block', xl: 'none' }}>
         {!showSubNav && !userAddress && (
           <Box mb={3} px={6} display={{ sm: 'flex', md: 'none' }}>

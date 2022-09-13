@@ -1,8 +1,7 @@
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import { store } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Icon, UseDisclosureReturn } from '@chakra-ui/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { RiWalletLine } from 'react-icons/ri'
 
 interface WalletNavMenuProps {
@@ -16,15 +15,12 @@ const WalletNavMenu = ({
   setHamburger,
   drawerOperations,
 }: WalletNavMenuProps) => {
-  const { setIsWagmiWrapped } = useContext(WagmiStatusContext)
-
   const handleWalletIconAction = () => {
     logEvent({
       action: 'OPEN_DRAWER',
       params: { address: store.getState().user.address ?? undefined },
     })
     setHamburger(false)
-    setIsWagmiWrapped(true)
     drawerOperations.onToggle()
   }
 
