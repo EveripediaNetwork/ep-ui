@@ -1,6 +1,7 @@
 import React from 'react'
-import Link, { LinkProps } from 'next/link'
+import { LinkProps } from 'next/link'
 import { Button, ButtonProps } from '@chakra-ui/react'
+import { LinkWrapper } from './LinkWrapper'
 
 type ChakraAndNextProps = ButtonProps & LinkProps
 
@@ -10,18 +11,12 @@ const LinkButton = ({
   children,
   ...props
 }: ChakraAndNextProps) => {
-  const linkProps = {
-    prefetch:
-      String(href).includes('create-wiki') || String(href).includes('about')
-        ? false
-        : prefetch,
-  }
   return (
-    <Link href={href} passHref {...{ linkProps }}>
+    <LinkWrapper href={href as string} prefetch={prefetch}>
       <Button as="a" {...props}>
         {children}
       </Button>
-    </Link>
+    </LinkWrapper>
   )
 }
 

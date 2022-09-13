@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
   <LinkBox

@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { Wiki, Tag as TagType } from '@/types/Wiki'
-import Link from '@/components/Elements/Link/Link'
+import Link from '@/components/Elements/LinkElements/Link'
 
 import shortenAccount from '@/utils/shortenAccount'
 

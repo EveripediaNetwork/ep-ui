@@ -1,17 +1,13 @@
-import NextLink, { LinkProps } from 'next/link'
-import {
-  LinkOverlay as ChakraLinkOverlay,
-  LinkProps as ChakraLinkProps,
-} from '@chakra-ui/react'
 import React from 'react'
+import { LinkProps as ChakraLinkProps } from '@chakra-ui/react'
+import NextLink, { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
-const LinkOverlay = ({
+export const LinkWrapper = ({
   href,
   prefetch,
   children,
-  ...props
 }: ChakraLinkAndNextProps) => {
   const linkProps = {
     prefetch:
@@ -20,10 +16,8 @@ const LinkOverlay = ({
         : prefetch,
   }
   return (
-    <NextLink href={href} passHref {...linkProps}>
-      <ChakraLinkOverlay {...props}>{children}</ChakraLinkOverlay>
+    <NextLink href={href} passHref {...{ linkProps }}>
+      {children}
     </NextLink>
   )
 }
-
-export default LinkOverlay

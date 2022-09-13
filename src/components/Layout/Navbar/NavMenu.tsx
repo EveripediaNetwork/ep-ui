@@ -10,7 +10,7 @@ import {
   Text,
   HStack,
 } from '@chakra-ui/react'
-import Link from '@/components/Elements/Link/Link'
+import Link from '@/components/Elements/LinkElements/Link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
