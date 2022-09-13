@@ -14,6 +14,9 @@ import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { WagmiNeededComponent } from '@/components/WrapperRoutes/WagmiNeededComponent'
+import { useDispatch } from 'react-redux'
+import { setDrawerOpen } from '@/store/slices/app-slice'
+import { store } from '@/store/store'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
 
@@ -36,7 +39,16 @@ const MobileNav = dynamic(() => import('./MobileNav'))
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
-  const drawerOperations = useDisclosure()
+  const dispatch = useDispatch()
+  const drawerOperations = useDisclosure({
+    defaultIsOpen: store.getState().app.isDrawerOpen,
+    onOpen: () => {
+      dispatch(setDrawerOpen(true))
+    },
+    onClose: () => {
+      dispatch(setDrawerOpen(false))
+    },
+  })
   const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
