@@ -82,6 +82,7 @@ const DisplayAvatar = ({
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
         as={RiUserLine}
+        title={alt}
       />
     )
   }
