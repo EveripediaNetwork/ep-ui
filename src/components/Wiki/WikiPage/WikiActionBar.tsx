@@ -5,7 +5,7 @@ import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
-import { useAccount } from 'wagmi'
+import { getUserAddressFromLS } from '@/utils/getUserAddressFromLS'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 
 interface WikiActionBarProps {
@@ -15,7 +15,6 @@ interface WikiActionBarProps {
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
-  const { isConnected } = useAccount()
   const actionBarItems: {
     label: string
     icon: IconType
@@ -33,7 +32,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'Edit',
       icon: RiEdit2Line,
-      isDisabled: !isConnected,
+      isDisabled: typeof getUserAddressFromLS() !== 'string',
       isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
         router.push(`/create-wiki?slug=${wiki?.id}`)
