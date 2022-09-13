@@ -13,7 +13,6 @@ import {
 import Link from 'next/link'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
@@ -94,7 +93,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
           dateModified={wikiData.content[0].updated}
           datePublished={wikiData.content[0].created}
           title={wikiData.content[0].title}
-          description={getWikiSummary(wikiData.content[0])}
+          description={wikiData.content[0].summary}
           mainImage={getWikiImageUrl(wikiData.content[0])}
         />
       )}

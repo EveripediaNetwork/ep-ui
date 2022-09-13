@@ -5,7 +5,6 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
     wiki(id: $id) {
       id
       title
-      content
       summary
       tags {
         id
@@ -128,12 +127,10 @@ export const GET_PROMOTED_WIKIS = gql`
     promotedWikis {
       id
       ipfs
-      content
       created
       updated
       title
       summary
-      content
       categories {
         id
         title

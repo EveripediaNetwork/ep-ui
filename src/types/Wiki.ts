@@ -154,7 +154,7 @@ export interface Wiki {
   id: string
   transactionHash?: string
   ipfs?: string
-  summary?: string
+  summary: string
   title: string
   content: string
   categories: BaseCategory[]
@@ -175,7 +175,6 @@ export type WikiPreview = Pick<
   | 'id'
   | 'title'
   | 'summary'
-  | 'content'
   | 'tags'
   | 'images'
   | 'categories'
@@ -192,3 +191,5 @@ export const whiteListedDomains = [
   'iq.wiki/wiki',
   'ipfs.everipedia.org/ipfs',
 ]
+
+export const whiteListedLinkNames = ['YOUTUBE@VID']

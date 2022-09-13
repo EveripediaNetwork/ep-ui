@@ -11,7 +11,6 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@/types/Wiki'
@@ -61,7 +60,7 @@ const Wiki = ({ wiki }: WikiProps) => {
           dateModified={wikiData.updated}
           datePublished={wikiData.created}
           title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
-          description={getWikiSummary(wikiData)}
+          description={wikiData.summary}
           mainImage={getWikiImageUrl(wikiData)}
         />
       )}
