@@ -72,7 +72,6 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
                 href={`/account/${wiki?.user?.id}`}
                 color="brandLinkColor"
                 fontWeight="bold"
-                prefetch={false}
               >
                 {getUsername(wiki?.user, username)}
               </Link>

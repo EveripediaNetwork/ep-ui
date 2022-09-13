@@ -7,12 +7,17 @@ import NextLink, { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
-const Link = ({ href, children, ...props }: ChakraLinkAndNextProps) => {
-  let linkProps = {}
-  if (href.includes('create-wiki') || href.includes('about')) {
-    linkProps = {
-      prefetch: false,
-    }
+const Link = ({
+  href,
+  prefetch,
+  children,
+  ...props
+}: ChakraLinkAndNextProps) => {
+  const linkProps = {
+    prefetch:
+      String(href).includes('create-wiki') || String(href).includes('about')
+        ? false
+        : prefetch,
   }
   return (
     <NextLink href={href} passHref {...{ linkProps }}>
