@@ -66,12 +66,7 @@ const DisplayAvatar = ({
     content = <Avatar h={`${size}px`} w={`${size}px`} src={avatar} {...rest} />
   } else if (address && !avatar) {
     content = (
-      <CustomAvatar
-        size={size}
-        variant="pixel"
-        name={alt}
-        colors={AvatarColorArray}
-      />
+      <CustomAvatar size={size} variant="pixel" colors={AvatarColorArray} />
     )
   } else {
     content = (
