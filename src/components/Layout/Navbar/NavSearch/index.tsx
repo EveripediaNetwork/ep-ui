@@ -37,7 +37,7 @@ import { Link, LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
 
 export type NavSearchProps = {
-  setHamburger?: React.Dispatch<React.SetStateAction<boolean>>
+  setHamburger: React.Dispatch<React.SetStateAction<boolean>>
   inputGroupProps?: HTMLChakraProps<'div'>
   inputProps?: HTMLChakraProps<'div'>
   listProps?: AutoCompleteListProps
