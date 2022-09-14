@@ -29,7 +29,7 @@ const ProfileNavMenu = ({
             key={userAddress}
             address={userAddress}
             size="25"
-            alt={address}
+            alt={userAddress}
           />
         }
       >
