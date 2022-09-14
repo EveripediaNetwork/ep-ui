@@ -37,14 +37,14 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <DynamicWagmiProvider>
-          <ChakraProvider resetCSS theme={chakraTheme}>
-            <Fonts />
+        <ChakraProvider resetCSS theme={chakraTheme}>
+          <Fonts />
+          <DynamicWagmiProvider>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
-          </ChakraProvider>
-        </DynamicWagmiProvider>
+          </DynamicWagmiProvider>
+        </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
