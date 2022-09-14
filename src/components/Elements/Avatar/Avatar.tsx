@@ -77,7 +77,7 @@ const DisplayAvatar = ({
       <CustomAvatar
         size={size}
         variant="pixel"
-        name={alt}
+        name={address}
         colors={AvatarColorArray}
       />
     )
