@@ -32,11 +32,11 @@ export const DynamicWagmiProvider = ({
     }),
     [isWagmiWrapped],
   )
-
+  const Wrapper = isWagmiWrapped ? WagmiProvider : React.Fragment
   return (
     <>
       <WagmiStatusContext.Provider value={value}>
-        {isWagmiWrapped ? <WagmiProvider>{children}</WagmiProvider> : children}
+        <Wrapper>{children}</Wrapper>
       </WagmiStatusContext.Provider>
     </>
   )
