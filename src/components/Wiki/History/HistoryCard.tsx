@@ -139,6 +139,7 @@ export const HistoryCard = ({
         {/* Username and Avatar of the last editor */}
         <HStack>
           <DisplayAvatar
+            alt={lastEditor.profile?.username}
             address={lastEditor.id}
             avatarIPFS={lastEditor.profile?.avatar}
           />

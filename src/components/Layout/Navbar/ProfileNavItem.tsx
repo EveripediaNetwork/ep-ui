@@ -25,7 +25,12 @@ const ProfileNavMenu = ({
         setVisibleMenu={setVisibleMenu}
         visibleMenu={visibleMenu}
         label={
-          <DisplayAvatar key={userAddress} address={userAddress} size="25" />
+          <DisplayAvatar
+            key={userAddress}
+            address={userAddress}
+            size="25"
+            alt={address}
+          />
         }
       >
         <Divider />

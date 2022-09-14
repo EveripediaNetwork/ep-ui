@@ -88,6 +88,7 @@ const WikiPreviewCard = ({
                   <DisplayAvatar
                     address={wiki.user?.id}
                     avatarIPFS={wiki.user.profile?.avatar}
+                    alt={wiki.user.profile?.username}
                   />
                   <Link href={`/account/${wiki.user?.id}`}>
                     {getUsername(wiki.user, userENSDomain)}

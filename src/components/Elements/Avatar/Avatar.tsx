@@ -21,6 +21,7 @@ type DisplayAvatarProps = ChakraProps & {
   avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number | string
+  alt: string | undefined
 }
 const DisplayAvatar = ({
   address,
@@ -28,6 +29,7 @@ const DisplayAvatar = ({
   avatarIPFS,
   wrapperProps,
   size = 26,
+  alt,
   ...rest
 }: DisplayAvatarProps) => {
   const [avatar] = useENSData(
@@ -56,6 +58,7 @@ const DisplayAvatar = ({
         imgW={`${size}px`}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
+        alt={alt}
         {...(rest as Omit<NextChakraImageProps, 'src'>)}
       />
     )
@@ -66,7 +69,7 @@ const DisplayAvatar = ({
       <CustomAvatar
         size={size}
         variant="pixel"
-        name="Unnamed"
+        name={alt}
         colors={AvatarColorArray}
       />
     )

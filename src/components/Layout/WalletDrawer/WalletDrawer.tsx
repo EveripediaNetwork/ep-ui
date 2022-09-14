@@ -108,7 +108,7 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={userAddress} />
+              <DisplayAvatar address={userAddress} alt={userAddress} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
