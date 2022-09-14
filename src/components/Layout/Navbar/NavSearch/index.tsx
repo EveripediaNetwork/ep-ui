@@ -323,7 +323,11 @@ const NavSearch = (props: NavSearchProps) => {
 
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
-              <LinkButton href={`/search/${query}`} variant="outline">
+              <LinkButton
+                href={`/search/${query}`}
+                variant="outline"
+                onClick={() => setHamburger(false)}
+              >
                 +View {totalUnrendered} more Results
               </LinkButton>
             </Flex>
