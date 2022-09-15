@@ -70,6 +70,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
             mx: '5%',
           }}
           listProps={{ w: 'full', rounded: 'none', mt: 0 }}
+          setHamburger={setHamburger}
         />
 
         <Divider />
