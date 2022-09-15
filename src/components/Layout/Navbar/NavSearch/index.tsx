@@ -37,6 +37,7 @@ import { Link, LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
 
 export type NavSearchProps = {
+  setHamburger: React.Dispatch<React.SetStateAction<boolean>>
   inputGroupProps?: HTMLChakraProps<'div'>
   inputProps?: HTMLChakraProps<'div'>
   listProps?: AutoCompleteListProps
@@ -53,7 +54,7 @@ const CATEGORIES_LIMIT = 2
 const ACCOUNTS_LIMIT = 4
 
 const NavSearch = (props: NavSearchProps) => {
-  const { inputGroupProps, inputProps, listProps } = props
+  const { inputGroupProps, inputProps, listProps, setHamburger } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
@@ -154,6 +155,7 @@ const NavSearch = (props: NavSearchProps) => {
             value={value}
             getValue={art => art.title}
             label={article.title}
+            onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
             <Avatar src={articleImage} name={article.title} size="xs" />
@@ -203,6 +205,7 @@ const NavSearch = (props: NavSearchProps) => {
             value={value}
             getValue={acc => acc.username}
             label={account.bio}
+            onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
             <Avatar src={accountAvatar} name={account.username} size="xs" />
@@ -230,6 +233,7 @@ const NavSearch = (props: NavSearchProps) => {
             value={value}
             getValue={art => art.title}
             label={category.title}
+            onClick={() => setHamburger(false)}
             {...generalItemStyles}
             alignItems="center"
           >
@@ -319,7 +323,11 @@ const NavSearch = (props: NavSearchProps) => {
 
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
-              <LinkButton href={`/search/${query}`} variant="outline">
+              <LinkButton
+                href={`/search/${query}`}
+                variant="outline"
+                onClick={() => setHamburger(false)}
+              >
                 +View {totalUnrendered} more Results
               </LinkButton>
             </Flex>
