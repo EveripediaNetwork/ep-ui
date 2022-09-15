@@ -19,6 +19,7 @@ export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {
       id
+      hidden
       ipfs
       transactionHash
       created

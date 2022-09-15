@@ -32,10 +32,7 @@ const DisplayAvatar = ({
   alt,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar] = useENSData(
-    address,
-    avatarIPFS ? avatarIPFS?.length > 0 : false,
-  )
+  const [avatar] = useENSData(address)
 
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,
@@ -69,7 +66,7 @@ const DisplayAvatar = ({
       <CustomAvatar
         size={size}
         variant="pixel"
-        name={alt}
+        name={address}
         colors={AvatarColorArray}
       />
     )
