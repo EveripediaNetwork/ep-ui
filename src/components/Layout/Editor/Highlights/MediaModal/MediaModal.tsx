@@ -65,10 +65,7 @@ const MediaModal = ({
   const handleSetImage = (name: string, value: ArrayBuffer) => {
     if (wiki.media !== undefined && wiki.media?.length >= MAX_MEDIA) {
       toast({
-        title:
-          'You cannot upload more than ' +
-          MAX_MEDIA +
-          ' media. You can delete some existing media to create more spaces',
+        title: `You cannot upload more than ${MAX_MEDIA} media. You can delete some existing media to create more spaces`,
         status: 'error',
         duration: 3000,
       })
