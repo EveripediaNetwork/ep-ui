@@ -18,7 +18,11 @@ export default class Document extends NextDocument {
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="viewport" content="width=device-width" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="black-translucent"
