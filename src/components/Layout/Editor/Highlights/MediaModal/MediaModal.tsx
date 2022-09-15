@@ -66,7 +66,9 @@ const MediaModal = ({
     if (wiki.media !== undefined && wiki.media?.length >= MAX_MEDIA) {
       toast({
         title:
-          'You cannot upload more than ' + MAX_MEDIA +' media. You can delete some existing media to create more spaces',
+          'You cannot upload more than ' +
+          MAX_MEDIA +
+          ' media. You can delete some existing media to create more spaces',
         status: 'error',
         duration: 3000,
       })
