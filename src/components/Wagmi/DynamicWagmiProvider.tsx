@@ -1,20 +1,9 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useMemo,
-  useState,
-} from 'react'
+import React, { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { WagmiStatusProvider } from '@/components/Wagmi/context'
 
 const WagmiProvider = dynamic(() => import('@/components/Wagmi/WagmiProvider'))
-
-const defaultUpdate: Dispatch<SetStateAction<boolean>> = () => true
-export const WagmiStatusContext = createContext({
-  isWagmiWrapped: false,
-  setIsWagmiWrapped: defaultUpdate,
-})
 
 export const DynamicWagmiProvider = ({
   children,
@@ -32,12 +21,11 @@ export const DynamicWagmiProvider = ({
     }),
     [isWagmiWrapped],
   )
-  const Wrapper = isWagmiWrapped ? WagmiProvider : React.Fragment
   return (
     <>
-      <WagmiStatusContext.Provider value={value}>
-        <Wrapper>{children}</Wrapper>
-      </WagmiStatusContext.Provider>
+      <WagmiStatusProvider value={value}>
+        <WagmiProvider>{children}</WagmiProvider>
+      </WagmiStatusProvider>
     </>
   )
 }

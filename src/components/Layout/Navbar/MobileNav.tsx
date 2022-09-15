@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Flex,
@@ -22,7 +22,7 @@ import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
+import { useWagmiStatus } from '@/components/Wagmi/context'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 
@@ -35,7 +35,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { isWagmiWrapped } = useContext(WagmiStatusContext)
+  const { isWagmiWrapped } = useWagmiStatus()
 
   const iconSize = 20
 

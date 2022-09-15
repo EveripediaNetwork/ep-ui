@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { WagmiStatusContext } from '../Wagmi/DynamicWagmiProvider'
+import React, { useEffect } from 'react'
+import { useWagmiStatus } from '../Wagmi/context'
 
 export const wagmiNeededRoute = <P extends object>(
   WrappedComponent: () => JSX.Element | null,
 ) => {
   const WagmiNeededRoute = (props: P) => {
-    const { isWagmiWrapped, setIsWagmiWrapped } = useContext(WagmiStatusContext)
+    const { isWagmiWrapped, setIsWagmiWrapped } = useWagmiStatus()
 
     useEffect(() => {
       setIsWagmiWrapped(true)
-    }, [setIsWagmiWrapped])
+    }, [])
 
     return <>{isWagmiWrapped && <WrappedComponent {...props} />}</>
   }

@@ -1,7 +1,7 @@
-import React, { Suspense, useContext } from 'react'
+import React, { Suspense } from 'react'
 import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
+import { useWagmiStatus } from '@/components/Wagmi/context'
 import Navbar from '../Navbar/Navbar'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
@@ -21,7 +21,7 @@ const Layout = ({
   children: React.ReactNode
   noFooter?: boolean
 }) => {
-  const { isWagmiWrapped } = useContext(WagmiStatusContext)
+  const { isWagmiWrapped } = useWagmiStatus()
 
   return (
     <>
