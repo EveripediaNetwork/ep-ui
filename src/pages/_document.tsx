@@ -22,7 +22,6 @@ export default class Document extends NextDocument {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
-
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="black-translucent"
