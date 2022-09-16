@@ -12,7 +12,9 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
 
   useEffect(() => {
     const getDetectedProvider = async () => {
-      const provider = await detectEthereumProvider()
+      const provider = await detectEthereumProvider({
+        silent: true,
+      })
       setDetectedProvider(provider as ProviderDataType)
     }
 

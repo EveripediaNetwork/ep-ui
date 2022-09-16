@@ -26,6 +26,8 @@ const Tags = () => {
     tagsInput.machine({
       value: currentWiki.tags.map(ta => ta.id),
       max: 5,
+      delimiter: '',
+      allowEditTag: false,
       validate(opts) {
         if (opts.inputValue.indexOf(' ') >= 0) {
           setTagState({ msg: "Name can't contain blank spaces", invalid: true })

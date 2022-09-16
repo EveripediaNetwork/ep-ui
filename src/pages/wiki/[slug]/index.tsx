@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps = async context => {
   if (wiki?.hidden) {
     return {
       redirect: {
-        destination: `/404`,
+        destination: `/404/?wiki=${wiki.title}`,
         permanent: false,
       },
     }

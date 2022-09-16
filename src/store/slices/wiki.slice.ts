@@ -55,6 +55,7 @@ const initialState: Wiki = {
   version: 1,
   language: LanguagesISOEnum.EN,
   title: '',
+  hidden: true,
   content: '',
   summary: '',
   categories: [],

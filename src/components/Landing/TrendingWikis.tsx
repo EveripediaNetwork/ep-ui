@@ -88,6 +88,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               <Flex gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
+                    alt={wiki?.user.profile?.username}
                     size="20"
                     address={wiki?.user.id}
                     avatarIPFS={wiki?.user.profile?.avatar}
