@@ -103,7 +103,6 @@ type EditorQueryParams = {
   offset: number
 }
 
-
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   refetchOnMountOrArgChange: 30,
