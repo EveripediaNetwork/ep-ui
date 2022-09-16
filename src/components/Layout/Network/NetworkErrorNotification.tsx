@@ -51,7 +51,9 @@ const NetworkErrorNotification = () => {
     }
 
     const getDetectedProvider = async () => {
-      const provider = (await detectEthereumProvider()) as ProviderDataType
+      const provider = (await detectEthereumProvider({
+        silent: true,
+      })) as ProviderDataType
       setDetectedProvider(provider as ProviderDataType)
       if (provider) getConnectedChain(provider)
     }
