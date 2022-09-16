@@ -65,8 +65,7 @@ const DisplayAvatar = ({
   } else if (avatar) {
     content = (
       <Avatar
-        h={`${size}px`}
-        w={`${size}px`}
+        boxSize={`${size}px`}
         src={avatar}
         name={alt}
         {...rest}
