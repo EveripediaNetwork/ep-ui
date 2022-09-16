@@ -1,4 +1,4 @@
-import { TagsByCategory } from '@/data/TagsByCategory'
+import { TagsSuggestions } from '@/data/TagsSuggestions'
 import {
   getCategoriesByTitle,
   getWikisByTitle,
@@ -102,8 +102,8 @@ export const useTagSearch = () => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Tag[]>([])
 
-  // get all tags from TagsByCategory
-  const tags = Object.values(TagsByCategory).flat()
+  // get all tags from TagsSuggestions
+  const tags = Object.values(TagsSuggestions).flat()
   const fuse = new Fuse(tags, {
     threshold: 0.3,
   })
@@ -117,26 +117,8 @@ export const useTagSearch = () => {
   }
   useEffect(() => {
     if (query && query.length >= 1) {
-      const wikiCategories = store.getState().wiki.categories
-      // check if category.id is in TagsByCategory keys
-      const isCategoryInCategoryList = wikiCategories.some(category =>
-        Object.keys(TagsByCategory).includes(category.id),
-      )
-      if (wikiCategories && isCategoryInCategoryList) {
-        // get all tags from wiki categories
-        const tagsForWikiCategories = wikiCategories
-          .map(category => {
-            return TagsByCategory[category.id as keyof typeof TagsByCategory]
-          })
-          .flat()
-        // search tags in tagsFlat with query
-        const fuseScoped = new Fuse(tagsForWikiCategories)
-        const res = decorateAndLimit(fuseScoped.search(query))
-        setResults(res)
-      } else {
-        const res = decorateAndLimit(fuse.search(query))
-        setResults(res)
-      }
+      const res = decorateAndLimit(fuse.search(query))
+      setResults(res)
     } else {
       setResults([])
     }

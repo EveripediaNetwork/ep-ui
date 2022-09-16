@@ -65,6 +65,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
                 size="20"
                 address={wiki?.user.id}
                 avatarIPFS={wiki?.user.profile?.avatar}
+                alt={wiki?.user.profile?.username}
               />
             </Link>
             <Text fontSize="14px" color="linkColor">
