@@ -9,6 +9,7 @@ import {
   CircularProgress,
   CircularProgressLabel,
 } from '@chakra-ui/react'
+import { useCheckIsAdminQuery } from '@/services/admin'
 
 interface WikidetailsProps {
   detailHeader: string
@@ -25,6 +26,8 @@ export const WikiDetailsCards = ({
   weeklyValue,
   color,
 }: WikidetailsProps) => {
+  const { data: checkIsAdmin } = useCheckIsAdminQuery(undefined)
+  console.log(checkIsAdmin)
   return (
     <Box
       w={{ lg: '90%', base: '100%' }}

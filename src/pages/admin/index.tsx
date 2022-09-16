@@ -21,6 +21,7 @@ import {
   useGetEditorsCountQuery,
   adminApiClient,
   useGetPageViewCountQuery,
+  useCheckIsAdminQuery,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import SignTokenMessage from '../account/SignTokenMessage'
@@ -39,6 +40,9 @@ const Admin = () => {
       setIsTokenHeaderSet(true)
     }
   }, [userAddress, setAccount, token])
+
+  const { data: checkIsAdmin } = useCheckIsAdminQuery(undefined)
+  console.log(checkIsAdmin)
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
