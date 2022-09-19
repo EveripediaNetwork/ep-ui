@@ -67,7 +67,7 @@ const ActivityCard = ({
       align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }}>
+        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }} h="100%">
           <WikiImage
             cursor="pointer"
             flexShrink={0}
@@ -78,7 +78,15 @@ const ActivityCard = ({
           />
         </AspectRatio>
       </Link>
-      <Flex w="90%" flexDir="column" justify="space-between" mx="auto" px={4}>
+      <Flex
+        w="90%"
+        flex-grow="1"
+        flexDir="column"
+        justify="space-between"
+        mx="auto"
+        px={4}
+        overflowX="hidden"
+      >
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading

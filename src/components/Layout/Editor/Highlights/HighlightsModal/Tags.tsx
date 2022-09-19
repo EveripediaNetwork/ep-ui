@@ -6,6 +6,7 @@ import { mergeProps, useMachine, useSetup } from '@zag-js/react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
 import { useTagSearch } from '@/services/search/utils'
+import { TagsSuggestions } from '@/data/TagsSuggestions'
 
 const MAX_LENGTH = 20
 
@@ -26,9 +27,17 @@ const Tags = () => {
     tagsInput.machine({
       value: currentWiki.tags.map(ta => ta.id),
       max: 5,
+      delimiter: '',
+      allowEditTag: false,
       validate(opts) {
+        if (!TagsSuggestions.includes(opts.inputValue)) {
+          return false
+        }
         if (opts.inputValue.indexOf(' ') >= 0) {
-          setTagState({ msg: "Name can't contain blank spaces", invalid: true })
+          setTagState({
+            msg: "Name can't contain blank spaces",
+            invalid: true,
+          })
           return false
         }
         if (opts.inputValue.length >= MAX_LENGTH) {
@@ -138,38 +147,19 @@ const Tags = () => {
           {...api.rootProps}
           sx={{ ...tagsInputStyle }}
         >
-          {api.value.map((value, index) => {
-            const TagInputProps = mergeProps(
-              api.getTagInputProps({ index, value }),
-              {
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSuggestionSelectionId(-1)
-                  setEditTagIndex(index)
-                  setQuery(e.target.value)
-                },
-                onBlur: () => {
-                  setTimeout(() => {
-                    setSuggestionSelectionId(-1)
-                    onCloseSuggestions()
-                  }, 100)
-                },
-              },
-            )
-            return (
-              <chakra.span key={index} whiteSpace="nowrap">
-                <div {...api.getTagProps({ index, value })}>
-                  <span>{value} </span>
-                  <button
-                    type="button"
-                    {...api.getTagDeleteButtonProps({ index, value })}
-                  >
-                    &#x2715;
-                  </button>
-                </div>
-                <input {...TagInputProps} />
-              </chakra.span>
-            )
-          })}
+          {api.value.map((value, index) => (
+            <chakra.span key={index} whiteSpace="nowrap">
+              <div {...api.getTagProps({ index, value })}>
+                <span>{value} </span>
+                <button
+                  type="button"
+                  {...api.getTagDeleteButtonProps({ index, value })}
+                >
+                  &#x2715;
+                </button>
+              </div>
+            </chakra.span>
+          ))}
           {api.value.length < 5 && (
             <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
           )}

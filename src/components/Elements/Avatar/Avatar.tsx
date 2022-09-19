@@ -32,10 +32,7 @@ const DisplayAvatar = ({
   alt,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar] = useENSData(
-    address,
-    avatarIPFS ? avatarIPFS?.length > 0 : false,
-  )
+  const [avatar] = useENSData(address)
 
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
     undefined,
@@ -63,13 +60,13 @@ const DisplayAvatar = ({
       />
     )
   } else if (avatar) {
-    content = <Avatar h={`${size}px`} w={`${size}px`} src={avatar} {...rest} />
+    content = <Avatar boxSize={`${size}px`} src={avatar} name={alt} {...rest} />
   } else if (address && !avatar) {
     content = (
       <CustomAvatar
         size={size}
         variant="pixel"
-        name={alt}
+        name={address}
         colors={AvatarColorArray}
       />
     )
@@ -82,6 +79,7 @@ const DisplayAvatar = ({
         _dark={{ color: 'gray.200' }}
         fontWeight={600}
         as={RiUserLine}
+        title={alt}
       />
     )
   }

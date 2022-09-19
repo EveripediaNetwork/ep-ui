@@ -80,6 +80,14 @@ export const getStaticProps: GetStaticProps = async context => {
     getWikisByCategory.initiate({ category: category.id }),
   )
 
+  if (wiki?.hidden) {
+    return {
+      redirect: {
+        destination: `/404/?wiki=${wiki.title}`,
+        permanent: false,
+      },
+    }
+  }
   await Promise.all(getRunningOperationPromises())
   return {
     props: { wiki: wiki || null },

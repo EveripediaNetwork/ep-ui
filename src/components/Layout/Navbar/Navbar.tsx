@@ -93,7 +93,7 @@ const Navbar = () => {
             </HStack>
           </Link>
           <Suspense>
-            <NavSearch />
+            <NavSearch setHamburger={setHamburger} />
           </Suspense>
           <HStack
             ml={4}
