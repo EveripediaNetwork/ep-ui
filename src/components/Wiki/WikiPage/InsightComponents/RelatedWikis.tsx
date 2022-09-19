@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
-import { BaseCategory, Wiki, WikiPreview } from '@/types/Wiki'
+import React from 'react'
+import { Wiki, WikiPreview } from '@/types/Wiki'
 import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
-import { getWikisByCategory } from '@/services/wikis'
-import { store } from '@/store/store'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
@@ -44,30 +42,16 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   )
 }
 export const RelatedWikis = ({
-  categories,
+  relatedWikis,
 }: {
-  categories: BaseCategory[] | undefined
+  relatedWikis: Wiki[] | null
 }) => {
-  const [wikis, setWikis] = React.useState<Wiki[] | []>([])
-  useEffect(() => {
-    categories?.forEach(category => {
-      store
-        .dispatch(getWikisByCategory.initiate({ category: category.id }))
-        .then(res => {
-          setWikis(prev => [
-            ...prev,
-            ...(res?.data?.filter(wiki => {
-              return !prev.some(w => w.id === wiki.id)
-            }) || []),
-          ])
-        })
-    })
-  }, [categories])
+  if (!relatedWikis) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2} mb="5">
       <WikiAccordion mt="-3px" title="Related Articles">
         <VStack align="start" w="100%">
-          {wikis.slice(0, 4).map(wiki => (
+          {relatedWikis.slice(0, 4).map(wiki => (
             <RelatedWikiCard key={wiki.id} wiki={wiki} />
           ))}
         </VStack>
