@@ -8,6 +8,7 @@ import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
 import { customTableRenderer } from '@/utils/customTableRender'
 import styles from '../../../styles/markdown.module.css'
+import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 
 interface WikiMainContentProps {
   wiki: Wiki | undefined
@@ -71,6 +72,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
         }`}
       >
         <MarkdownRender wikiContent={content} />
+        <WikiFlaggingSystem id={wiki?.id} />
       </Box>
     </Box>
   )
