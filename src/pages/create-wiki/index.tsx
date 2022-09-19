@@ -52,7 +52,7 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { getDeadline } from '@/utils/getDeadline'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import {

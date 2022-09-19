@@ -1,35 +1,29 @@
-import { BaseCategory, CommonMetaIds, Media, Wiki } from '@/types/Wiki'
+import { CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, HStack, chakra, Spinner, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
-import dynamic from 'next/dynamic'
+import WikiNotFound from '../WIkiNotFound/WikiNotFound'
+import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
+import TwitterTimeline from './InsightComponents/TwitterTimeline'
+import WikiActionBar from './WikiActionBar'
+import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
-
-const TwitterTimeline = dynamic(
-  () => import('./InsightComponents/TwitterTimeline'),
-)
-const WikiNotFound = dynamic(() => import('../WIkiNotFound/WikiNotFound'))
-const WikiActionBar = dynamic(() => import('./WikiActionBar'))
-const RelatedMediaGrid = dynamic(
-  () => import('./InsightComponents/RelatedMedia'),
-)
-const WikiInsights = dynamic(() => import('./WikiInsights'))
-const WikiReferences = dynamic(() => import('./WikiReferences'))
-const WikiTableOfContents = dynamic(() => import('./WikiTableOfContents'))
+import WikiReferences from './WikiReferences'
+import WikiTableOfContents from './WikiTableOfContents'
 
 interface WikiLayoutProps {
   wiki?: Wiki | null
+  relatedWikis: Wiki[] | null
   ipfs?: string
-  isLoading: boolean
 }
 
 const MobileMeta = (wiki: {
   metadata: { id: string; value: string }[]
-  categories: BaseCategory[]
+  relatedWikis: Wiki[] | null
   media?: Media[]
 }) => {
-  const { metadata, categories, media } = wiki
+  const { metadata, relatedWikis, media } = wiki
   const twitterLink = metadata.find(
     meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
@@ -42,13 +36,13 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', lg: 'none' }}
     >
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-      {categories?.length !== 0 && <RelatedWikis categories={categories} />}
+      <RelatedWikis relatedWikis={relatedWikis} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
     </chakra.div>
   )
 }
 
-export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -71,7 +65,11 @@ export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
               }}
             >
               <WikiMainContent wiki={wiki} />
-              <WikiInsights wiki={wiki} ipfs={ipfs} />
+              <WikiInsights
+                wiki={wiki}
+                ipfs={ipfs}
+                relatedWikis={relatedWikis}
+              />
               <Text
                 fontSize="4xl"
                 fontWeight="bold"
@@ -94,7 +92,7 @@ export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
             >
               <MobileMeta
                 metadata={wiki.metadata}
-                categories={wiki.categories}
+                relatedWikis={relatedWikis}
                 media={wiki.media}
               />
             </chakra.div>
@@ -106,7 +104,7 @@ export const WikiMarkup = ({ wiki, ipfs, isLoading }: WikiLayoutProps) => {
             />
           </Box>
         ) : (
-          <>{isLoading ? <Spinner mx="auto" mt="8" /> : <WikiNotFound />}</>
+          <WikiNotFound />
         )}
       </Flex>
       {wiki?.content.includes('# ') && <WikiTableOfContents />}

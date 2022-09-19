@@ -11,7 +11,7 @@ import {
   Flex,
 } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 interface WikiReferencesProps {
   references: CiteReference[]
