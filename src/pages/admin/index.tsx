@@ -218,7 +218,7 @@ const Admin = () => {
   if (!token)
     return (
       <SignTokenMessage
-        message="To make changes to your the admin panel, authenticate
+        message="To make changes to the admin panel, authenticate
 your wallet to continue"
         reopenSigningDialog={reSignToken}
         error={error}
