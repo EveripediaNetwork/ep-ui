@@ -17,11 +17,14 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
+import { getWikiPreviewsByCategory } from '@/services/wikis'
+import { Wiki } from '@/types/Wiki'
 
 interface RevisionPageProps {
-  wiki?: Activity
+  wiki: Activity
+  relatedWikis: Wiki[] | null
 }
-const Revision = ({ wiki }: RevisionPageProps) => {
+const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
   const router = useRouter()
 
   const { id: ActivityId } = router.query
@@ -29,7 +32,6 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
   const toc = useAppSelector(state => state.toc)
   const [wikiData, setWikiData] = useState(wiki)
-  const [isLoading, setIsLoading] = useState(true)
 
   const wikiId = wikiData?.content[0].id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
@@ -74,8 +76,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
         const { data } = await store.dispatch(
           getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
         )
-        setWikiData(wiki ? { ...wiki, ...data } : undefined)
-        setIsLoading(false)
+        setWikiData({ ...wiki, ...data })
         if (wiki) incrementWikiViewCount(wiki.content[0].id)
       }
     }
@@ -137,8 +138,8 @@ const Revision = ({ wiki }: RevisionPageProps) => {
         )}
         <WikiMarkup
           wiki={wikiData?.content[0]}
+          relatedWikis={relatedWikis}
           ipfs={wikiData?.ipfs}
-          isLoading={isLoading}
         />
       </Box>
     </>
@@ -153,13 +154,28 @@ export const getStaticProps: GetStaticProps = async context => {
     }
   }
 
-  const { data, error } = await store.dispatch(getActivityById.initiate(id))
+  const { data: activityData, error } = await store.dispatch(
+    getActivityById.initiate(id),
+  )
+
+  let relatedWikis = null
+  if (activityData?.content[0].categories) {
+    const { data } = await store.dispatch(
+      getWikiPreviewsByCategory.initiate({
+        category: activityData.content[0].categories[0].id || '',
+        limit: 4,
+      }),
+    )
+    relatedWikis = data
+  }
+
   await Promise.all(getRunningOperationPromises())
 
-  if (data && !error)
+  if (activityData && !error)
     return {
       props: {
-        wiki: data,
+        wiki: activityData,
+        relatedWikis,
       },
     }
 
@@ -168,7 +184,7 @@ export const getStaticProps: GetStaticProps = async context => {
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: true }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export default Revision

@@ -16,7 +16,7 @@ import { shortenText } from '@/utils/shortenText'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 export type CollectionItemProps = {
   item: Wiki
