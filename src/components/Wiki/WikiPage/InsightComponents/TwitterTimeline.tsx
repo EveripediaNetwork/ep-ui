@@ -33,7 +33,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
               theme={colorMode}
               sourceType="url"
               noScrollbar
-              tweetLimit="5"
+              tweetLimit={5}
               borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
               url={url}
             />
