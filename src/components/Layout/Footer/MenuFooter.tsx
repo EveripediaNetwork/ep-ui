@@ -55,8 +55,12 @@ const MenuFooter = () => {
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
               <Heading size="sm">{`${t('Everipedia')}`}</Heading>
-              <Link href="/static/about">{`${t('aboutUs')}`}</Link>
-              <Link href="/static/careers">{`${t('careers')}`}</Link>
+              <Link prefetch={false} href="/static/about">{`${t(
+                'aboutUs',
+              )}`}</Link>
+              <Link prefetch={false} href="/static/careers">{`${t(
+                'careers',
+              )}`}</Link>
               <Link href="/">{`${t('brainies')}`}</Link>
             </Stack>
           </GridItem>
@@ -66,16 +70,22 @@ const MenuFooter = () => {
               <Link target="_blank" href="https://learn.everipedia.org/iq/">
                 {`${t('help')}`}
               </Link>
-              <Link href="/blog">{`${t('blog')}`}</Link>
-              <Link href="/static/faq">{`${t('faq')}`}</Link>
+              <Link prefetch={false} href="/blog">{`${t('blog')}`}</Link>
+              <Link prefetch={false} href="/static/faq">{`${t('faq')}`}</Link>
             </Stack>
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
               <Heading size="sm">{`${t('policies')}`}</Heading>
-              <Link href="/static/guidelines">{`${t('guideLines')}`}</Link>
-              <Link href="/static/privacy">{`${t('privacyPolicy')}`}</Link>
-              <Link href="/static/terms">{`${t('termsOfService')}`}</Link>
+              <Link prefetch={false} href="/static/guidelines">{`${t(
+                'guideLines',
+              )}`}</Link>
+              <Link prefetch={false} href="/static/privacy">{`${t(
+                'privacyPolicy',
+              )}`}</Link>
+              <Link prefetch={false} href="/static/terms">{`${t(
+                'termsOfService',
+              )}`}</Link>
             </Stack>
           </GridItem>
         </SimpleGrid>
