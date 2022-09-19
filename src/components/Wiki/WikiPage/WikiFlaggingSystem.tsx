@@ -38,7 +38,7 @@ const FlaggingSystemModal = ({
       isOpen={isOpen}
       onClose={onClose}
       isCentered
-      size="2xl"
+      size={{ base: 'sm', md: '2xl' }}
       motionPreset="slideInBottom"
     >
       <ModalOverlay />
@@ -49,7 +49,7 @@ const FlaggingSystemModal = ({
             fontWeight={500}
             mt="3"
             pb="3"
-            fontSize="14px"
+            fontSize={{ base: '12px', md: '14px' }}
             borderBottomWidth="1px"
             borderBottomColor="gray.300"
             color="gray.800"
@@ -72,7 +72,7 @@ const FlaggingSystemModal = ({
               color="gray.800"
               borderColor="gray.300"
               placeholder="Write your text here...."
-              _dark={{ color: 'whiteAlpha.500', borderColor: 'whiteAlpha.200' }}
+              _dark={{ color: 'whiteAlpha.800', borderColor: 'whiteAlpha.200' }}
             />
           </form>
         </ModalBody>
@@ -82,6 +82,10 @@ const FlaggingSystemModal = ({
             fontSize="12px"
             fontWeight="400"
             _dark={{ background: 'brand.800' }}
+            w={{
+              base: 'full',
+              md: 'initial',
+            }}
           >
             Confirm
           </Button>
@@ -117,9 +121,9 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
             _dark={{ color: 'brand.800' }}
           >
             <Text as="span">Report to us.</Text>
-            <Box as="span" ml="5px">
+            <Flex as="span" ml="5px" alignItems="center">
               <Icon fontSize={{ base: '16px', sm: '20px' }} as={RiFlagFill} />
-            </Box>
+            </Flex>
           </Text>
         </Flex>
       </Box>
