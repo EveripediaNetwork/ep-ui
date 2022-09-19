@@ -23,8 +23,8 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
               py={1}
               fontSize={18}
               rounded="full"
-              borderColor="gray.200"
-              color="gray.500"
+              borderColor="gray.300"
+              color="gray.600"
               fontWeight="500"
               key={tag.id}
               href={`/tags/${tag.id}`}

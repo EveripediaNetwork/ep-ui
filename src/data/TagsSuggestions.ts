@@ -9,7 +9,6 @@ export const TagsSuggestions = [
   'BinanceSmartChain',
   'Solana',
   'Polkadot',
-  'Protocol',
   'Venture',
   'Collector',
   'Entertainment',
