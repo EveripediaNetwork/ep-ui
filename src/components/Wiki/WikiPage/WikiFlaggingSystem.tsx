@@ -77,7 +77,12 @@ const FlaggingSystemModal = ({
           </form>
         </ModalBody>
         <ModalFooter justifyContent="center">
-          <Button background="brand.500" fontSize="12px" fontWeight="400">
+          <Button
+            background="brand.500"
+            fontSize="12px"
+            fontWeight="400"
+            _dark={{ background: 'brand.800' }}
+          >
             Confirm
           </Button>
         </ModalFooter>
@@ -109,6 +114,7 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
             cursor="pointer"
             display="flex"
             onClick={onOpen}
+            _dark={{ color: 'brand.800' }}
           >
             <Text as="span">Report to us.</Text>
             <Box as="span" ml="5px">
