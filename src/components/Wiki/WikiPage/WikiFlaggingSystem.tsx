@@ -14,7 +14,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  ModalProps,
 } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
 
