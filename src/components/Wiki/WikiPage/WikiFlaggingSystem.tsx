@@ -53,6 +53,10 @@ const FlaggingSystemModal = ({
             borderBottomWidth="1px"
             borderBottomColor="gray.300"
             color="gray.800"
+            _dark={{
+              borderBottomColor: 'whiteAlpha.300',
+              color: 'whiteAlpha.900',
+            }}
           >
             Please, in a few words, write about what you would like to be
             reported in the text box below.
@@ -65,9 +69,10 @@ const FlaggingSystemModal = ({
               fontWeight={400}
               fontSize="14px"
               minH="200px"
-              color="blackAlpha.500"
+              color="gray.800"
+              borderColor="gray.300"
               placeholder="Write your text here...."
-              focusBorderColor="brand.500"
+              _dark={{ color: 'whiteAlpha.500', borderColor: 'whiteAlpha.200' }}
             />
           </form>
         </ModalBody>
