@@ -47,7 +47,8 @@ const FlaggingSystemModal = ({
     toast({
       title: 'Your report has been successfully submitted!',
       status: 'success',
-      duration: 3000,
+      duration: 5000,
+      isClosable: true,
     })
   }
 
