@@ -21,28 +21,35 @@ import {
   useGetEditorsCountQuery,
   adminApiClient,
   useGetPageViewCountQuery,
-  useCheckIsAdminQuery,
+  checkIsAdmin,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
+import { store } from '@/store/store'
+import { useRouter } from 'next/router'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
+  const router = useRouter()
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
   })
-  const [isTokenHeaderSet, setIsTokenHeaderSet] = useState(false)
-  useEffect(() => {
-    if (userAddress && token) {
-      adminApiClient.setHeader('authorization', token)
-      setAccount(userAddress)
-      setIsTokenHeaderSet(true)
-    }
-  }, [userAddress, setAccount, token])
 
-  const { data: checkIsAdmin } = useCheckIsAdminQuery(undefined)
-  console.log(checkIsAdmin)
+  useEffect(() => {
+    async function fetchAuth() {
+      if (userAddress && token) {
+        adminApiClient.setHeader('authorization', token)
+        const { data } = await store.dispatch(checkIsAdmin?.initiate(undefined))
+        if (!data) {
+          router.push('/404')
+        } else setIsAdmin(true)
+        setAccount(userAddress)
+      }
+    }
+    fetchAuth()
+  }, [userAddress, setAccount, token])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 
@@ -218,7 +225,7 @@ your wallet to continue"
       />
     )
 
-  if (!isTokenHeaderSet) {
+  if (!isAdmin) {
     return null
   }
   return (
