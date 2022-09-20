@@ -29,6 +29,7 @@ const CurrencyBox = ({
             src={`https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/${token}.png`}
             imgH="18px"
             imgW="18px"
+            alt={token}
             bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             borderRadius="100px"
           />
