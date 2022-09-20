@@ -6,7 +6,7 @@ type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
 export const LinkWrapper = ({
   href,
-  prefetch,
+  prefetch = false,
   children,
 }: ChakraLinkAndNextProps) => {
   // PREFETCH TEST -- REMOVE
