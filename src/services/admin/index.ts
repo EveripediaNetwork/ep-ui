@@ -16,6 +16,7 @@ import {
   HIDDEN_EDITORS_TABLE,
   UNHIDE_WIKI,
   GET_PAGE_COUNT,
+  CHECK_ADMIN,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -144,6 +145,12 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: HiddenEditorsRes) => response.usersHidden,
     }),
+    checkIsAdmin: builder.query<boolean, undefined>({
+      query: () => ({
+        document: CHECK_ADMIN,
+      }),
+      transformResponse: (response: { isAdmin: boolean }) => response.isAdmin,
+    }),
     getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
         document: CREATED_WIKIS_TABLE,
@@ -253,10 +260,12 @@ export const {
   useGetAllPromotedWikiCountQuery,
   useGetHiddenEditorsQuery,
   useGetPageViewCountQuery,
+  useCheckIsAdminQuery,
   util: { getRunningOperationPromises },
 } = adminApi
 
 export const {
+  checkIsAdmin,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,
