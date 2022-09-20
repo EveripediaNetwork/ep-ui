@@ -9,14 +9,27 @@ export const LinkWrapper = ({
   prefetch,
   children,
 }: ChakraLinkAndNextProps) => {
-  const linkProps = {
+  // PREFETCH TEST -- REMOVE
+  console.table({
+    href: href as string,
     prefetch:
-      String(href).includes('create-wiki') || String(href).includes('about')
+      String(href).includes('/create-wiki') ||
+      String(href).includes('/static/about')
         ? false
         : prefetch,
-  }
+  })
+  // END PREFETCH TEST -- REMOVE
   return (
-    <NextLink href={href} passHref {...{ linkProps }}>
+    <NextLink
+      href={href}
+      prefetch={
+        String(href).includes('/create-wiki') ||
+        String(href).includes('/static/about')
+          ? false
+          : prefetch
+      }
+      passHref
+    >
       {children}
     </NextLink>
   )
