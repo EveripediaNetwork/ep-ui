@@ -1,7 +1,7 @@
 import { Image } from '@/components/Elements/Image/Image'
 import React from 'react'
 
-export const customImageRenderer = ({
+export const customImageRender = ({
   ...props
 }: React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,

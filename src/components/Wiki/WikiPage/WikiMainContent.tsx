@@ -4,11 +4,11 @@ import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
-import { addToTOC } from '@/utils/customHeadingRender'
-import { customLinkRenderer } from '@/utils/customLinkRender'
-import { customTableRenderer } from '@/utils/customTableRender'
+import { addToTOC } from '@/components/Wiki/WikiPage/CustomRenderers/customHeadingRender'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { customImageRenderer } from '@/utils/customImageRenderer'
+import { customLinkRenderer } from './CustomRenderers/customLinkRender'
+import { customImageRender } from './CustomRenderers/customImageRender'
+import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
 
 interface WikiMainContentProps {
@@ -44,7 +44,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
             ...props,
             referencesString,
           }),
-        img: customImageRenderer,
+        img: customImageRender,
         table: customTableRenderer,
       }}
     >
