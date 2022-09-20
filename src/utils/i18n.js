@@ -7,7 +7,7 @@ export const resources = {
     translation: {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
-      //--Copies for Everipedia--
+      //--Copies for IQ.Wiki--
 
       //Home page
       everipedia: 'IQ.wiki',
@@ -45,7 +45,7 @@ export const resources = {
       guideLines: 'Guidelines',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of service',
-      copyRight: '© 2022 Everipedia. All rights reserved',
+      copyRight: '© 2022 IQ.Wiki. All rights reserved',
 
       //Desktop Nav
       Explore: 'Explore',
@@ -72,7 +72,7 @@ export const resources = {
       //About page
       aboutHeroHeading: 'Bringing knowledge to the blockchain.',
       aboutHeroPhrase:
-        "Everipedia's mission is to bring the world's knowledge on-chain through the IQ token.",
+        "IQ.Wiki's mission is to bring the world's knowledge on-chain through the IQ token.",
       aboutSignUpBttn: 'Sign Up',
       aboutgoTo: 'Go to IQ Site',
       aboutFeatHeading: 'Taking the Online Encyclopedia into the Modern Age',
@@ -83,10 +83,10 @@ export const resources = {
         'IQ.wiki’s design and features have been built for the modern age.',
       abtFeatTwoHeading: 'More Articles and Content',
       abtFeatTwoContent:
-        'Everipedia allows you to create an article about anything as long as you have a citation. This allows for a much broader scope of content in the knowledge base.',
+        'IQ.Wiki allows you to create an article about anything as long as you have a citation. This allows for a much broader scope of content in the knowledge base.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
-        'Anyone with IQ Tokens is a stakeholder in the Everipedia Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',
+        'Anyone with IQ Tokens is a stakeholder in the IQ.Wiki Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',
       aboutTestimonialHeading:
         ' An open community bringing blockchain knowledge to the world',
       aboutTestimonialContent:
@@ -135,7 +135,7 @@ export const resources = {
       careerHeading: 'Careers',
       noOpeningsHeading: 'There are currently no open positions at this time',
       careerSubscribeText:
-        'Suscribe to our mailing list to get the latest from everipedia',
+        'Subscribe to our mailing list to get the latest from IQ.wiki',
 
       //FAQ
       faqHeader: 'Frequently Asked Questions',
@@ -172,13 +172,13 @@ export const resources = {
       usingEveripediaFourBody: '',
       usingEveripediaFiveHead: 'Advanced Editor Guide',
       usingEveripediaFiveBody: '',
-      usingEveripediaSixHead: 'Everipedia Guidelines',
+      usingEveripediaSixHead: 'IQ.Wiki Guidelines',
       usingEveripediaSixBody:
-        'Everipedia takes pride in being an inclusive platform with a simple onboarding process. That said, there are a few editorial-related policies / do’s and don’t’s we believe everyone should follow. DO: Write on anything crypto-related: Everipedia is to bring blockchain knowledge to the world and knowledge onto the blockchain, so editors should only write on crypto-related topics. Write in a third-person, objective tone: because Everipedia is a knowledge base, one of the precedents we have set is to think from the perspective of an academic scholar. When editing an Everipedia article, ask yourself, “Would this be considered an objective resource if someone else read this?” Cite your sources where needed: It is important for Everipedia’s platform to present accurate information. To make it easier for contributors and readers alike to see where editors get their information from (and the validity of those resources), it is important to cite their sources. This allows the community to check editors’ work and work with editors in an environment that is inherently collaborative. Do NOT: Use inappropriate topics: editors are supposed to create crypto-related content only. Plagiarise: publish content that is not your own and represent it as your work; this typically includes copying/pasting content without citing its original source and giving proper credit to the creator. It also includes violating copyright. Vandalize: deliberately attempt to add, change, or remove content to tarnish the page. Spam: reference content that attempts to promote irrelevant or inappropriate products to a page; these edit proposals tend to be in the form of advertisements and violate Everipedia’s policy of writing in an objective tone. ',
+        'IQ.Wiki takes pride in being an inclusive platform with a simple onboarding process. That said, there are a few editorial-related policies / do’s and don’t’s we believe everyone should follow. DO: Write on anything crypto-related: Everipedia is to bring blockchain knowledge to the world and knowledge onto the blockchain, so editors should only write on crypto-related topics. Write in a third-person, objective tone: because Everipedia is a knowledge base, one of the precedents we have set is to think from the perspective of an academic scholar. When editing an Everipedia article, ask yourself, “Would this be considered an objective resource if someone else read this?” Cite your sources where needed: It is important for Everipedia’s platform to present accurate information. To make it easier for contributors and readers alike to see where editors get their information from (and the validity of those resources), it is important to cite their sources. This allows the community to check editors’ work and work with editors in an environment that is inherently collaborative. Do NOT: Use inappropriate topics: editors are supposed to create crypto-related content only. Plagiarise: publish content that is not your own and represent it as your work; this typically includes copying/pasting content without citing its original source and giving proper credit to the creator. It also includes violating copyright. Vandalize: deliberately attempt to add, change, or remove content to tarnish the page. Spam: reference content that attempts to promote irrelevant or inappropriate products to a page; these edit proposals tend to be in the form of advertisements and violate Everipedia’s policy of writing in an objective tone. ',
 
       //Global text
       seenItAll: 'Yay! You have seen it all 🥳 ',
-      //---End of Copies for Everipedia--
+      //---End of Copies for IQ.Wiki--
 
       // ---------------------------------------------------------------
 

@@ -186,7 +186,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
               textAlign="center"
             >
               Join thousands of others in receiving the most interesting wikis
-              on Everipedia every week
+              on IQ.Wiki every week
             </Text>
             <Button
               as="a"

@@ -101,7 +101,7 @@ const AboutOurTeam = () => {
                   )}
                   {teamMember.socials.everipedia && (
                     <IconButtonSocial
-                      name="everipedia"
+                      name="IQ.Wiki"
                       onClick={() => window.open(teamMember.socials.everipedia)}
                     />
                   )}
