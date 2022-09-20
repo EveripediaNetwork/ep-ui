@@ -1,8 +1,9 @@
-import { AspectRatio, Image, SimpleGrid, VStack } from '@chakra-ui/react'
+import { AspectRatio, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
 import { Media } from '@/types/Wiki'
 import { constructMediaUrl } from '@/utils/mediaUtils'
+import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
 
 const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
@@ -31,8 +32,8 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                   }
                   h="100%"
                   w="100%"
-                  objectFit="cover"
-                  bgColor="gray.500"
+                  bgColor="dimColor"
+                  alt="related media"
                 />
               </MediaPreview>
             </AspectRatio>

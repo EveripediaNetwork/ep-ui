@@ -131,6 +131,7 @@ const MediaPreview = ({
           as={RiPlayLine}
           fontSize="30px"
           position="absolute"
+          zIndex={999}
           top="50%"
           left="50%"
           transform="translate(-50%, -50%)"
