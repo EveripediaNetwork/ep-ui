@@ -8,7 +8,6 @@ import WikiAccordion from '../../WikiAccordion'
 
 const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   if (!media || media.length === 0) return null
-  console.log(media)
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">
@@ -34,6 +33,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                   h="100%"
                   w="100%"
                   bgColor="dimColor"
+                  alt="related media"
                 />
               </MediaPreview>
             </AspectRatio>
