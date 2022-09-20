@@ -8,6 +8,7 @@ import { addToTOC } from '@/utils/customHeadingRender'
 import { customLinkRenderer } from '@/utils/customLinkRender'
 import { customTableRenderer } from '@/utils/customTableRender'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
+import { customImageRenderer } from '@/utils/customImageRenderer'
 import styles from '../../../styles/markdown.module.css'
 
 interface WikiMainContentProps {
@@ -43,6 +44,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
             ...props,
             referencesString,
           }),
+        img: customImageRenderer,
         table: customTableRenderer,
       }}
     >
