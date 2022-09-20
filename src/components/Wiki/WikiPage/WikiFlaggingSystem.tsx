@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 import {
   Box,
   Flex,
@@ -36,7 +36,7 @@ const FlaggingSystemModal = ({
   const toast = useToast()
   const [flagContent, setFlagContent] = useState('')
 
-  const postFlagHandler = async e => {
+  const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     console.log({
@@ -49,6 +49,7 @@ const FlaggingSystemModal = ({
       status: 'success',
       duration: 5000,
       isClosable: true,
+      position: 'bottom-right',
     })
   }
 
