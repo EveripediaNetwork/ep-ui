@@ -4,7 +4,7 @@ import {
   getRunningOperationPromises,
   getWiki,
   getWikiCreatorAndEditor,
-  getWikisByCategory,
+  getWikiPreviewsByCategory,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -18,9 +18,10 @@ import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
   wiki: WikiType | null
+  relatedWikis: WikiType[] | null
 }
 
-const Wiki = ({ wiki }: WikiProps) => {
+const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
   const router = useRouter()
 
   const { slug } = router.query
@@ -65,7 +66,7 @@ const Wiki = ({ wiki }: WikiProps) => {
         />
       )}
       <Box as="main" mt={-2}>
-        <WikiMarkup wiki={wikiData} />
+        <WikiMarkup wiki={wikiData} relatedWikis={relatedWikis} />
       </Box>
     </>
   )
@@ -74,11 +75,8 @@ const Wiki = ({ wiki }: WikiProps) => {
 export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
-  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
 
-  wiki?.categories.map(category =>
-    getWikisByCategory.initiate({ category: category.id }),
-  )
+  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
 
   if (wiki?.hidden) {
     return {
@@ -88,9 +86,21 @@ export const getStaticProps: GetStaticProps = async context => {
       },
     }
   }
+
+  let relatedWikis = null
+  if (wiki?.categories) {
+    const { data } = await store.dispatch(
+      getWikiPreviewsByCategory.initiate({
+        category: wiki.categories[0].id || '',
+        limit: 4,
+      }),
+    )
+    relatedWikis = data
+  }
   await Promise.all(getRunningOperationPromises())
+
   return {
-    props: { wiki: wiki || null },
+    props: { wiki: wiki || null, relatedWikis },
   }
 }
 
