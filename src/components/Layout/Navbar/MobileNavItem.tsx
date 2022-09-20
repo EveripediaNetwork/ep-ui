@@ -3,7 +3,7 @@ import { Icon, useDisclosure, Text, LinkBox } from '@chakra-ui/react'
 import { RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import { StaticContent } from '@/components/StaticElement'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 interface MobileNavItemProps {
   navItem: NavItem

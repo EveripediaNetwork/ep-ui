@@ -14,15 +14,15 @@ const Terms = () => (
     <Flex gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
       <Flex gap={5} flex="3" flexDirection="column">
         <Text>
-          Welcome to everipedia.com, the website and online service of
-          Everipedia Inc. (&quot;Everipedia,&quot; &quot;we,&quot;
-          &quot;us&quot; or &quot;our&quot;). This page explains the terms by
-          which you may use our online and/or mobile services, web site, and
-          software provided on or in connection with the Everipedia service
-          (collectively the &quot;Service&quot;). By accessing or using the
-          Service, you (&quot;you&quot; or &quot;your&quot;), signify that you
-          have read, understand and agree to be bound by the terms of service
-          and conditions set forth below (as amended from time to time,
+          Welcome to IQ.Wiki, the website and online service of Everipedia Inc.
+          (&quot;Everipedia,&quot; &quot;we,&quot; &quot;us&quot; or
+          &quot;our&quot;). This page explains the terms by which you may use
+          our online and/or mobile services, web site, and software provided on
+          or in connection with the IQ.Wiki service (collectively the
+          &quot;Service&quot;). By accessing or using the Service, you
+          (&quot;you&quot; or &quot;your&quot;), signify that you have read,
+          understand and agree to be bound by the terms of service and
+          conditions set forth below (as amended from time to time,
           &quot;Terms&quot;) and to the collection, use, and disclosure of your
           information as set forth in our Privacy Policy, as modified from time
           to time and which is incorporated by reference herein. These Terms

@@ -66,6 +66,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
             w={{ base: 32, lg: 40 }}
             variant="outline"
             bgColor="btnBgColor"
+            prefetch={false}
           >
             {`${t('learnMoreHeroBttn')}`}
           </LinkButton>

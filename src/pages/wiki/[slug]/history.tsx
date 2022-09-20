@@ -6,11 +6,11 @@ import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Activity } from '@/types/ActivityDataType'
 import { EditSpecificMetaIds, Wiki } from '@/types/Wiki'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
-import { useAccount } from 'wagmi'
 
 interface HistoryPageProps {
   wikiHistory: Activity[]
@@ -18,7 +18,7 @@ interface HistoryPageProps {
 }
 
 const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
-  const { isConnected } = useAccount()
+  const isConnected = typeof getUserAddressFromCache() === 'string'
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (

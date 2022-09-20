@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useGetActivityByIdQuery } from '@/services/activities'
-import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
-import { CiteReference, CommonMetaIds, Wiki } from '@/types/Wiki'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
+import { CiteReference } from '@/types/Wiki'
 import {
   HStack,
   Link,
@@ -15,15 +12,18 @@ import {
   Tag,
   Text,
 } from '@chakra-ui/react'
-import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
+const CiteMarksRender = ({
+  text,
+  href,
+  referencesString,
+}: {
+  text: string
+  href?: string
+  referencesString?: string
+}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
-  const { slug } = router.query
-  let wiki: Wiki | undefined
   const id = href?.split('#cite-id-')[1]
   const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -47,36 +47,6 @@ const CiteMarksRender = ({ text, href }: { text: string; href?: string }) => {
     setCount(storedCount)
   }, [id])
 
-  if (slug) {
-    const { data: wikiData } = useGetWikiQuery(
-      typeof slug === 'string' ? slug : skipToken,
-      {
-        skip: router.isFallback,
-      },
-    )
-    wiki = wikiData
-  } else if (router.asPath.includes('/revision/')) {
-    const revisionId = router.asPath.replace('/revision/', '')
-    const { data: revisionData } = useGetActivityByIdQuery(
-      typeof revisionId === 'string' ? revisionId : skipToken,
-      {
-        skip: router.isFallback,
-      },
-    )
-    wiki = revisionData?.content[0]
-  }
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(function mountApp() {
-    setMounted(true)
-  }, [])
-
-  if (!wiki || !mounted) return null
-
-  const referencesString = getWikiMetadataById(
-    wiki,
-    CommonMetaIds.REFERENCES,
-  )?.value
   const references = referencesString ? JSON.parse(referencesString) : []
   const ref = references.find((r: CiteReference) => r.id === id)
 

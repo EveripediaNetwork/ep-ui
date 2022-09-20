@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, LinkBox, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { Blog } from '@/types/Blog'
-import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 type BlogPostType = {
   maxW?: string

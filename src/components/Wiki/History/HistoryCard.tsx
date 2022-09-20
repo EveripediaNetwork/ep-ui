@@ -21,7 +21,7 @@ import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '@/components/Elements'
 import { RiHistoryLine } from 'react-icons/ri'
 
