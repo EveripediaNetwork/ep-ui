@@ -34,8 +34,8 @@ export const UserProfileHeader = ({
       />
       <NextSeo
         openGraph={{
-          title: `${username} · Everipedia`,
-          description: bio || 'check out this user on Everipedia',
+          title: `${username} · IQ.Wiki`,
+          description: bio || 'check out this user on IQ.Wiki',
           url: `${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`,
           type: 'profile',
           profile: {

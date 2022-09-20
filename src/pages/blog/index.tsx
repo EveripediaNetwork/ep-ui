@@ -25,7 +25,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
     <chakra.div bgColor="pageBg" my={-8} py={4}>
       <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
         <Heading my={12} as="h1" size="2xl" letterSpacing="wide">
-          Everipedia Blog
+          IQ.Wiki Blog
         </Heading>
         <SimpleGrid
           mt={{ base: '15', md: '16' }}
