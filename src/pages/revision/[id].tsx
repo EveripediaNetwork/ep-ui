@@ -154,7 +154,7 @@ export const getStaticProps: GetStaticProps = async context => {
     }
   }
 
-  const { data: activityData, error } = await store.dispatch(
+  const { data: activityData, error: activityError } = await store.dispatch(
     getActivityById.initiate(id),
   )
 
@@ -171,13 +171,17 @@ export const getStaticProps: GetStaticProps = async context => {
 
   await Promise.all(getRunningOperationPromises())
 
-  if (activityData && !error)
+  if (activityData && !activityError)
     return {
       props: {
         wiki: activityData,
         relatedWikis,
       },
     }
+
+  if (activityError) {
+    throw new Error(`Error fetching activity: ${activityError}`)
+  }
 
   return {
     notFound: true,

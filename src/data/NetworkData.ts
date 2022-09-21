@@ -1,5 +1,3 @@
-import { utils } from 'ethers'
-
 export type Network = {
   id: number
   image: string
@@ -14,20 +12,20 @@ export const Networks: Network[] = [
     image: '/images/polygon.svg',
     name: 'Polygon',
     isActive: true,
-    chainId: utils.hexValue(80001),
+    chainId: '0x13881',
   },
   {
     id: 2,
     image: '/images/ethereum2.svg',
     name: 'Ethereum',
     isActive: false,
-    chainId: utils.hexValue(1),
+    chainId: '0x1',
   },
   {
     id: 3,
     image: '/images/bsc.svg',
     name: 'Bsc',
     isActive: false,
-    chainId: utils.hexValue(56),
+    chainId: '0x38',
   },
 ]
