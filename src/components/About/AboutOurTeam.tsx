@@ -51,7 +51,7 @@ const AboutOurTeam = () => {
       <Text align="center" maxW="3xl">
         {t('meetTeamContent')}
       </Text>
-      <Box w="100%">
+      <Box className="about__ourTeamSliderWrapper" w="100%">
         <AboutOurTeamSlider>
           {TeamData.map(teamMember => (
             <VStack
