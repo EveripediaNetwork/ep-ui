@@ -231,6 +231,12 @@ export const HIDE_WIKI = gql`
   }
 `
 
+export const CHECK_ADMIN = gql`
+  query isAdmin {
+    isAdmin
+  }
+`
+
 export const UNHIDE_WIKI = gql`
   mutation UnHideWiki($id: String!) {
     unhideWiki(id: $id) {

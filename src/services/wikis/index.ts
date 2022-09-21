@@ -16,6 +16,7 @@ import {
   GET_WIKI_SLUG_VALID,
   POST_WIKI_VIEW_COUNT,
   GET_WIKI_CREATOR_AND_EDITOR,
+  GET_WIKI_PREVIEWS_BY_CATEGORY,
 } from '@/services/wikis/queries'
 import { User, Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
@@ -193,6 +194,22 @@ export const wikiApi = createApi({
       transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
     }),
+    getWikiPreviewsByCategory: builder.query<Wiki[], WikisByCategoryArg>({
+      query: ({
+        category,
+        limit,
+        offset,
+      }: {
+        category: string
+        limit?: number
+        offset?: number
+      }) => ({
+        document: GET_WIKI_PREVIEWS_BY_CATEGORY,
+        variables: { category, limit, offset },
+      }),
+      transformResponse: (response: GetWikisByCategoryResponse) =>
+        response.wikisByCategory,
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
         document: POST_WIKI,
@@ -229,6 +246,7 @@ export const {
   useGetWikiPreviewQuery,
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
+  useGetWikiPreviewsByCategoryQuery,
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
@@ -245,6 +263,7 @@ export const {
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreview,
+  getWikiPreviewsByCategory,
   getUserWikis,
   getWikisByCategory,
   getTagWikis,

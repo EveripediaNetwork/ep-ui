@@ -12,7 +12,7 @@ import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import {
@@ -21,23 +21,34 @@ import {
   useGetEditorsCountQuery,
   adminApiClient,
   useGetPageViewCountQuery,
+  checkIsAdmin,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
+import { store } from '@/store/store'
+import { useRouter } from 'next/router'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
+  const router = useRouter()
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
   })
-  const [isTokenHeaderSet, setIsTokenHeaderSet] = useState(false)
+
   useEffect(() => {
-    if (userAddress && token) {
-      adminApiClient.setHeader('authorization', token)
-      setAccount(userAddress)
-      setIsTokenHeaderSet(true)
+    async function fetchAuth() {
+      if (userAddress && token) {
+        adminApiClient.setHeader('authorization', token)
+        const { data } = await store.dispatch(checkIsAdmin?.initiate(undefined))
+        if (!data) {
+          router.push('/404')
+        } else setIsAdmin(true)
+        setAccount(userAddress)
+      }
     }
+    fetchAuth()
   }, [userAddress, setAccount, token])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
@@ -207,14 +218,14 @@ const Admin = () => {
   if (!token)
     return (
       <SignTokenMessage
-        message="To make changes to your the admin panel, authenticate
+        message="To make changes to the admin panel, authenticate
 your wallet to continue"
         reopenSigningDialog={reSignToken}
         error={error}
       />
     )
 
-  if (!isTokenHeaderSet) {
+  if (!isAdmin) {
     return null
   }
   return (

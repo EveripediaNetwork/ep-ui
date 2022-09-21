@@ -9,9 +9,11 @@ import { isValidUrl } from './create-wiki'
 
 export const customLinkRenderer = ({
   children,
+  referencesString,
   ...props
 }: React.PropsWithChildren<
-  ComponentPropsWithoutRef<'a'> & ReactMarkdownProps
+  ComponentPropsWithoutRef<'a'> &
+    ReactMarkdownProps & { referencesString?: string }
 >) => {
   const linkHref = props.href
   const linkText = typeof children[0] === 'string' ? children[0] : ''
@@ -32,6 +34,7 @@ export const customLinkRenderer = ({
   const isCiteIdPresent = linkHref && linkHref.match(/#cite-id-(.*)/)
   if (isCiteIdPresent) {
     return React.createElement(CiteMarksRender, {
+      referencesString,
       text: linkText as string,
       href: linkHref,
     })

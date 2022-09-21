@@ -16,7 +16,7 @@ import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
 import { Author, BaseCategory, WikiPreview } from '@/types/Wiki'
-import Link from '@/components/Elements/Link/Link'
+import Link from '@/components/Elements/LinkElements/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
@@ -58,7 +58,7 @@ export const WikiDetails = ({
         {title}
       </Heading>
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage bgColor="dimColor" imageURL={imgSrc} alt={title} />
+        <WikiImage bgColor="dimColor" priority imageURL={imgSrc} alt={title} />
       </AspectRatio>
       <Table size="sm" variant="simple">
         <Tbody>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { VStack, Heading, Divider, List, ListItem } from '@chakra-ui/react'
-import Link from '../Link/Link'
+import Link from '../LinkElements/Link'
 
 interface RelatedTopicsProp {
   topics: Array<{ name: string; url: string; isSectionLink?: boolean }>
