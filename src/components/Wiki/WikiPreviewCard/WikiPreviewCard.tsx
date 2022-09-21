@@ -18,7 +18,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/shortenText'
 import { getUsername } from '@/utils/getUsername'
 import { Link } from '@/components/Elements'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 
 const WikiPreviewCard = ({

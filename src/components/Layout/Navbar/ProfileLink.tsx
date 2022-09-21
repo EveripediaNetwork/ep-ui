@@ -1,11 +1,11 @@
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { Box, MenuItem, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
-import { useAccount } from 'wagmi'
 
 export const ProfileLink = () => {
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const router = useRouter()
   const [link, setLink] = useState(
     userAddress ? `/account/${userAddress}` : '/login',

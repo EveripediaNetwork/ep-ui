@@ -23,11 +23,13 @@ export const loadAppDetails = createAsyncThunk(
 export interface IAppSlice {
   loading: boolean
   marketPrice: number
+  isDrawerOpen: boolean
 }
 
 const initialState: IAppSlice = {
   loading: true,
   marketPrice: 0,
+  isDrawerOpen: false,
 }
 
 const appSlice = createSlice({
@@ -36,6 +38,9 @@ const appSlice = createSlice({
   reducers: {
     fetchAppSuccess(state, action) {
       setAll(state, action.payload)
+    },
+    setDrawerOpen(state, action) {
+      state.isDrawerOpen = action.payload
     },
   },
   extraReducers: builder => {
@@ -57,4 +62,4 @@ const appSlice = createSlice({
 
 export default appSlice.reducer
 
-export const { fetchAppSuccess } = appSlice.actions
+export const { fetchAppSuccess, setDrawerOpen } = appSlice.actions
