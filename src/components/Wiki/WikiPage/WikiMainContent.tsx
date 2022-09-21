@@ -65,7 +65,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     }
   })
 
-  wiki.content = content
+  const modifiedContentWiki = { ...wiki, content }
 
   return (
     <Box
@@ -83,8 +83,8 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
-        <MarkdownRender wiki={wiki} />
-        <WikiFlaggingSystem id={wiki?.id} />
+        <MarkdownRender wiki={modifiedContentWiki} />
+        <WikiFlaggingSystem id={wiki.id} />
       </Box>
     </Box>
   )

@@ -17,13 +17,15 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
+import { usePostFlagWikiMutation } from '@/services/wikis'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 interface WikiFlaggingSystemProps {
-  id?: string
+  id: string
 }
 
 interface WikiFlaggingModalProps {
-  id?: string
+  id: string
   isOpen: boolean
   onClose: () => void
 }
@@ -35,18 +37,33 @@ const FlaggingSystemModal = ({
 }: WikiFlaggingModalProps) => {
   const toast = useToast()
   const [flagContent, setFlagContent] = useState('')
+  const [postFlagWiki] = usePostFlagWikiMutation()
 
   const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    onClose()
-    toast({
-      title: 'Your report has been successfully submitted!',
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-      position: 'bottom-right',
+    const postFlagWikiData = await postFlagWiki({
+      report: flagContent,
+      wikiId: id,
+      userId: getUserAddressFromCache(),
     })
+
+    if (!Object.keys(postFlagWikiData).includes('error')) {
+      toast({
+        title: 'Your report has been successfully submitted!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+      onClose()
+    } else {
+      toast({
+        title: 'There was an error submitting your report.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
