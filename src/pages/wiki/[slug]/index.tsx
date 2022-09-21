@@ -76,7 +76,12 @@ export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
-  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
+  const { data: wiki, error: wikiError } = await store.dispatch(
+    getWiki.initiate(slug),
+  )
+
+  if (wikiError)
+    throw new Error(`There was an error fetching the wiki: ${wikiError}`)
 
   if (wiki?.hidden) {
     return {
@@ -88,16 +93,23 @@ export const getStaticProps: GetStaticProps = async context => {
   }
 
   let relatedWikis = null
+  let relatedWikisError = null
   if (wiki?.categories) {
-    const { data } = await store.dispatch(
+    const { data, error } = await store.dispatch(
       getWikiPreviewsByCategory.initiate({
         category: wiki.categories[0].id || '',
         limit: 4,
       }),
     )
     relatedWikis = data
+    relatedWikisError = error
   }
   await Promise.all(getRunningOperationPromises())
+
+  if (relatedWikisError)
+    throw new Error(
+      `There was an error fetching the related wikis: ${wikiError}`,
+    )
 
   return {
     props: { wiki: wiki || null, relatedWikis },
