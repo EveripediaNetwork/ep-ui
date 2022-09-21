@@ -51,7 +51,10 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   content.match(new RegExp(matchRegex, 'g'))?.forEach(match => {
     const widgetContent = match.match(matchRegex)?.[1]
     if (widgetContent) {
+      console.log(widgetContent)
+      console.log(content)
       content = content.replaceAll(match, widgetContent)
+      console.log(content)
     }
   })
 
