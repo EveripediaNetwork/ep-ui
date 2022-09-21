@@ -39,10 +39,6 @@ const FlaggingSystemModal = ({
   const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log({
-      id,
-      flagContent,
-    })
     onClose()
     toast({
       title: 'Your report has been successfully submitted!',
