@@ -10,7 +10,6 @@ import { customTableRenderer } from '@/utils/customTableRender'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 interface WikiMainContentProps {
   wiki: Wiki
