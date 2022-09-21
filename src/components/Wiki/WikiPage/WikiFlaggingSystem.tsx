@@ -135,10 +135,12 @@ const FlaggingSystemModal = ({
 
 export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const userAddress = getUserAddressFromCache()
+  const toast = useToast()
 
   return (
     <>
-      {isOpen && (
+      {isOpen && userAddress && (
         <FlaggingSystemModal onClose={onClose} isOpen={isOpen} id={id} />
       )}
       <Box
@@ -155,7 +157,18 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
             color="brand.500"
             cursor="pointer"
             display="flex"
-            onClick={onOpen}
+            onClick={() => {
+              if (userAddress) {
+                onOpen()
+              } else {
+                toast({
+                  title: 'Please login to continue.',
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                })
+              }
+            }}
             _dark={{ color: 'brand.800' }}
           >
             <Text as="span">Report to us.</Text>
