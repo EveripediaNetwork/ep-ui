@@ -110,13 +110,18 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const activities = await store.dispatch(
+  const { data: activities, error: activitiesError } = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
   await Promise.all(getRunningOperationPromises())
+
+  if (activitiesError) {
+    throw new Error(`Error fetching activities: ${activitiesError}`)
+  }
+
   return {
     props: {
-      activities: activities.status !== 'fulfilled' ? [] : activities.data,
+      activities: activities || [],
     },
   }
 }
