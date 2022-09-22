@@ -85,6 +85,7 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
+import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -220,6 +221,14 @@ const CreateWikiContent = () => {
       return false
     }
 
+    if (!wiki.media?.every(m => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))) {
+      toast({
+        title: 'Some of media are still uploading, please wait',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
     return true
   }
 

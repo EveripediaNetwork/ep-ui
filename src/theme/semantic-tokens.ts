@@ -125,5 +125,21 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
+    wikiFlagTextColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    wikiFlagTextBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
+    wikiFlagTextAreaColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.800',
+    },
+    wikiFlagTextAreaBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.200',
+    },
   },
 }
