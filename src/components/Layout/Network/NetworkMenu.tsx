@@ -42,7 +42,7 @@ const NetworkMenu = () => {
         <Text fontSize="sm"> {currentNetwork.name} </Text>
       </MenuButton>
       <MenuList>
-        <MenuGroup color="gray.500" title="Select Network">
+        <MenuGroup color="fadedText2" title="Select Network">
           {Networks.map((network, index) => (
             <Fragment key={index}>
               <MenuItem

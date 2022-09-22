@@ -95,7 +95,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   return (
     <>
       {!isUserConnected && (
-        <Text mb="4" mt={2} color="gray.500" fontWeight="bold" fontSize="sm">
+        <Text mb="4" mt={2} color="fadedText2" fontWeight="bold" fontSize="sm">
           Connect with one of our available&nbsp;
           <Tooltip
             hasArrow
@@ -134,7 +134,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               w="full"
             >
               <Flex direction="column" align="center" py={4}>
-                <Text fontWeight="bold" color="gray.500" fontSize="small">
+                <Text fontWeight="bold" color="fadedText2" fontSize="small">
                   Total balance
                 </Text>
                 {totalBalanceIsLoading ? (

@@ -85,6 +85,7 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
+import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -220,6 +221,14 @@ const CreateWikiContent = () => {
       return false
     }
 
+    if (!wiki.media?.every(m => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))) {
+      toast({
+        title: 'Some of media are still uploading, please wait',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
     return true
   }
 
@@ -259,7 +268,9 @@ const CreateWikiContent = () => {
       const finalWiki = {
         ...wiki,
         user: { id: userAddress },
-        content: String(wiki.content).replace(/\n/gm, '  \n'),
+        content: String(wiki.content)
+          .replace(/\n/gm, '  \n')
+          .replace(EditorContentOverride, ''),
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
