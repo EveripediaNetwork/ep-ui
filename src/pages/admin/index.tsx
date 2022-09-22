@@ -1,5 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Heading, Text, Stack, Box } from '@chakra-ui/react'
+import {
+  Heading,
+  Text,
+  Stack,
+  Box,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Button,
+} from '@chakra-ui/react'
 
 import {
   RiNewspaperFill,
@@ -200,14 +210,6 @@ const Admin = () => {
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
       color: 'pink.400',
     },
-    {
-      icon: RiUserSearchFill,
-      value: allTimePageView && allTimePageView.amount,
-      detailHeader: 'Total no of Visitors',
-      weeklyValue: WeekPageView && WeekPageView.amount,
-      percent: 40,
-      color: 'pink.400',
-    },
   ]
   const piedata = [
     { name: 'Editors', value: 400 },
@@ -261,6 +263,22 @@ your wallet to continue"
             />
           )
         })}
+        <Box
+          w={{ lg: '90%', base: '100%' }}
+          px="5"
+          py="4"
+          cursor="pointer"
+          borderWidth="1px"
+          rounded="xl"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <FormControl isRequired>
+            <FormLabel htmlFor="username">Enter URL</FormLabel>
+            <Input mb={5} onChange={e => {}} />
+            <Button>Invalidate Url</Button>
+          </FormControl>
+        </Box>
       </Stack>
       <WikiDataGraph
         piedata={piedata}
