@@ -83,14 +83,10 @@ const FlaggingSystemModal = ({
               fontWeight={500}
               mt="3"
               pb="3"
-              fontSize={{ base: '12px', md: '14px' }}
+              fontSize={{ base: 'xsm', md: 'md' }}
               borderBottomWidth="1px"
-              borderBottomColor="gray.300"
-              color="gray.800"
-              _dark={{
-                borderBottomColor: 'whiteAlpha.300',
-                color: 'whiteAlpha.900',
-              }}
+              borderBottomColor="wikiFlagTextBorderColor"
+              color="wikiFlagTextColor"
             >
               Please, in a few words, write about what you would like to be
               reported in the text box below.
@@ -100,25 +96,23 @@ const FlaggingSystemModal = ({
           <ModalBody>
             <Textarea
               fontWeight={400}
-              fontSize="14px"
+              fontSize="sm"
               minH="200px"
-              color="gray.800"
-              borderColor="gray.300"
+              color="wikiFlagTextAreaColor"
+              borderColor="wikiFlagTextAreaBorderColor"
               placeholder="Write your text here...."
               name="report-content"
               onChange={e => {
                 setFlagContent(e.target.value)
               }}
-              _dark={{ color: 'whiteAlpha.800', borderColor: 'whiteAlpha.200' }}
             />
           </ModalBody>
           <ModalFooter justifyContent="center">
             <Button
               type="submit"
-              background="brand.500"
-              fontSize="12px"
+              background="brandLinkColor"
+              fontSize="sm"
               fontWeight="400"
-              _dark={{ background: 'brand.800' }}
               w={{
                 base: 'full',
                 md: 'initial',
@@ -152,8 +146,8 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
           <Text as="span">See something wrong? </Text>
           <Text
             as="span"
-            ml="4px"
-            color="brand.500"
+            ml="1"
+            color="brandLinkColor"
             cursor="pointer"
             display="flex"
             onClick={() => {
@@ -172,7 +166,7 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
           >
             <Text as="span">Report to us.</Text>
             <Flex as="span" ml="5px" alignItems="center">
-              <Icon fontSize={{ base: '16px', sm: '20px' }} as={RiFlagFill} />
+              <Icon fontSize={{ base: 'md', sm: 'lg' }} as={RiFlagFill} />
             </Flex>
           </Text>
         </Flex>
