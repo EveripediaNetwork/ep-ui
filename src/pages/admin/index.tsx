@@ -25,6 +25,7 @@ import {
   useGetEditorsCountQuery,
   adminApiClient,
   checkIsAdmin,
+  useRevalidateURLMutation,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
@@ -168,6 +169,7 @@ const Admin = () => {
     })
   }
 
+  const [revalidateURL] = useRevalidateURLMutation()
   const wikiMetaData = [
     {
       icon: RiNewspaperFill,
@@ -266,7 +268,13 @@ your wallet to continue"
           <FormControl isRequired>
             <FormLabel htmlFor="username">Enter URL</FormLabel>
             <Input mb={5} />
-            <Button>Invalidate Url</Button>
+            <Button
+              onClick={() => {
+                revalidateURL('/activity')
+              }}
+            >
+              Revalidate Url
+            </Button>
           </FormControl>
         </Box>
       </Stack>

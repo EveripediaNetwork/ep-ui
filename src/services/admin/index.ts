@@ -17,6 +17,7 @@ import {
   UNHIDE_WIKI,
   GET_PAGE_COUNT,
   CHECK_ADMIN,
+  REVALIDATE_URL,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -193,6 +194,12 @@ export const adminApi = createApi({
       transformResponse: (response: PostHideWikiResponse) =>
         response.hideWiki.Wiki,
     }),
+    revalidateURL: builder.mutation<boolean, string>({
+      query: (route: string) => ({
+        document: REVALIDATE_URL,
+        variables: { route },
+      }),
+    }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
         document: UNHIDE_WIKI,
@@ -261,11 +268,13 @@ export const {
   useGetHiddenEditorsQuery,
   useGetPageViewCountQuery,
   useCheckIsAdminQuery,
+  useRevalidateURLMutation,
   util: { getRunningOperationPromises },
 } = adminApi
 
 export const {
   checkIsAdmin,
+  revalidateURL,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,
