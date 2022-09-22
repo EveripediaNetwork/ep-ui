@@ -139,7 +139,7 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
             <IconButton
               bgColor="gray.100"
               borderWidth="1px"
-              color="gray.500"
+              color="fadedText2"
               aria-label="convert"
               cursor="pointer"
               _dark={{ bgColor: 'gray.800' }}

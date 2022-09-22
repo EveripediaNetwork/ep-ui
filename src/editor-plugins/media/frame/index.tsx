@@ -99,7 +99,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                         h="100%"
                         w="100%"
                         objectFit="contain"
-                        bgColor="gray.500"
+                        bgColor="fadedText2"
                         borderRadius="3px"
                         cursor="pointer"
                       />
