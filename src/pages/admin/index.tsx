@@ -5,18 +5,12 @@ import {
   Stack,
   Box,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Input,
   Button,
 } from '@chakra-ui/react'
 
-import {
-  RiNewspaperFill,
-  RiEditFill,
-  RiUser3Fill,
-  RiUserSearchFill,
-} from 'react-icons/ri'
+import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
@@ -30,7 +24,6 @@ import {
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
   adminApiClient,
-  useGetPageViewCountQuery,
   checkIsAdmin,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
@@ -87,9 +80,6 @@ const Admin = () => {
     interval: 'week',
   })
 
-  const { data: WeekPageView } = useGetPageViewCountQuery({})
-
-  const { data: allTimePageView } = useGetPageViewCountQuery({ startDate: 0 })
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
     endDate,
@@ -275,7 +265,7 @@ your wallet to continue"
         >
           <FormControl isRequired>
             <FormLabel htmlFor="username">Enter URL</FormLabel>
-            <Input mb={5} onChange={e => {}} />
+            <Input mb={5} />
             <Button>Invalidate Url</Button>
           </FormControl>
         </Box>
