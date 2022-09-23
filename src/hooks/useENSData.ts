@@ -11,7 +11,9 @@ export const useENSData = (address?: string | null, skip?: boolean) => {
     if (!address || skip) return
     const fetchEnsData = async () => {
       setLoading(true)
-      const { data } = await store.dispatch(getEns.initiate(address))
+      const { data } = await store.dispatch(
+        getEns.initiate(address.toLowerCase()),
+      )
       if (data) {
         setAvatar(data.avatar)
         setDisplayName(data.displayName)
