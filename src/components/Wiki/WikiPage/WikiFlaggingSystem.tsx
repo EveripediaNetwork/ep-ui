@@ -37,20 +37,7 @@ const FlaggingSystemModal = ({
 }: WikiFlaggingModalProps) => {
   const toast = useToast()
   const [flagContent, setFlagContent] = useState('')
-  const [buttonIsDisabaled, setButtonIsDisabled] = useState(true)
   const [postFlagWiki] = usePostFlagWikiMutation()
-
-  const getFlaggingContentHandler = (e: FormEvent<HTMLTextAreaElement>) => {
-    if (e.currentTarget.value.trim() === '') {
-      setButtonIsDisabled(true)
-      return
-    }
-
-    setFlagContent(e.currentTarget.value)
-    setButtonIsDisabled(() => {
-      return false
-    })
-  }
 
   const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -115,7 +102,7 @@ const FlaggingSystemModal = ({
               borderColor="wikiFlagTextAreaBorderColor"
               placeholder="Write your text here...."
               name="report-content"
-              onChange={getFlaggingContentHandler}
+              onChange={e => setFlagContent(e.currentTarget.value)}
             />
           </ModalBody>
           <ModalFooter justifyContent="center">
@@ -128,7 +115,7 @@ const FlaggingSystemModal = ({
                 base: 'full',
                 md: 'initial',
               }}
-              disabled={buttonIsDisabaled}
+              disabled={flagContent.trim().length === 0}
             >
               Confirm
             </Button>
