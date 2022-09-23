@@ -3,6 +3,7 @@ import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 import { store } from '@/store/store'
 import { addToTOC } from '@/components/Wiki/WikiPage/CustomRenderers/customHeadingRender'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
@@ -33,6 +34,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
       components={{
         h1: addToTOC,
         h2: addToTOC,

@@ -81,6 +81,7 @@
     "react-sticky-box": "^1.0.2",
     "react-twitter-embed": "^4.0.4",
     "recharts": "2.1.12",
+    "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.1",
     "remark-stringify": "^10.0.2",
