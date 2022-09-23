@@ -34,7 +34,7 @@ const AboutHero = () => {
           lineHeight="shorter"
         >{`${t('aboutHeroHeading')}`}</Heading>
         <Text
-          textAlign={{ base: 'center', md: 'left', lg: 'left' }}
+          textAlign={{ base: 'center', lg: 'left' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
