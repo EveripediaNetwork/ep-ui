@@ -54,17 +54,37 @@ const TwitterTimeline = ({ url }: { url: string }) => {
           overflowY="scroll"
         >
           {snapOpen && (
-            <TwitterTimelineEmbed
-              options={{ height: 400 }}
-              theme={colorMode}
-              sourceType="url"
-              noScrollbar
-              tweetLimit={4}
-              borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-              url={url}
-            />
+            <Box
+              zIndex={2}
+              pos="absolute"
+              left={0}
+              top={0}
+              right={0}
+              bottom={0}
+            >
+              <TwitterTimelineEmbed
+                options={{ height: 400 }}
+                theme={colorMode}
+                sourceType="url"
+                noScrollbar
+                tweetLimit={4}
+                borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
+                url={url}
+              />
+            </Box>
           )}
-          <VStack opacity="0.5" align="center" justify="center" h="full">
+          <VStack
+            pos="absolute"
+            left={0}
+            top={0}
+            right={0}
+            bottom={0}
+            zIndex={1}
+            opacity="0.5"
+            align="center"
+            justify="center"
+            h="full"
+          >
             <Spinner />
             <Text fontSize="sm">Loading</Text>
           </VStack>
