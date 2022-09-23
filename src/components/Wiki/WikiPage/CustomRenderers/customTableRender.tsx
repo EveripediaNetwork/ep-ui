@@ -7,6 +7,9 @@ export const customTableRenderer = ({
 }: React.PropsWithChildren<
   ComponentPropsWithoutRef<'table'> & ReactMarkdownProps
 >) => {
-  const table = React.createElement(props.node.tagName, props, children)
-  return React.createElement('div', { className: 'table-container' }, table)
+  return (
+    <div className="table-container">
+      <table {...props}>{children}</table>
+    </div>
+  )
 }

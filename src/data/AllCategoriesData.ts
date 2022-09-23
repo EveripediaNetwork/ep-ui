@@ -1,17 +1,17 @@
 import {
-  BsCurrencyBitcoin,
-  BsCurrencyExchange,
-  BsFillFileImageFill,
-  BsFillPeopleFill,
-  BsFillPersonFill,
-  BsRecycle,
-} from 'react-icons/bs'
+  RiBitCoinFill,
+  RiExchangeBoxFill,
+  RiImage2Fill,
+  RiMoneyCnyCircleFill,
+  RiTeamFill,
+  RiUser3Fill,
+} from 'react-icons/ri'
 
 export const AllCategoriesData = [
   {
     id: 'nfts',
     title: 'NFTs',
-    icon: BsFillFileImageFill,
+    icon: RiImage2Fill,
     description:
       'The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.',
     cardImage: '/images/categories/nfts-card.png',
@@ -20,7 +20,7 @@ export const AllCategoriesData = [
   {
     id: 'defi',
     title: 'Decentralized Finance',
-    icon: BsRecycle,
+    icon: RiMoneyCnyCircleFill,
     description:
       'The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.',
     cardImage: '/images/categories/defi-card.png',
@@ -29,7 +29,7 @@ export const AllCategoriesData = [
   {
     id: 'exchanges',
     title: 'Exchanges',
-    icon: BsCurrencyExchange,
+    icon: RiExchangeBoxFill,
     description:
       'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
     cardImage: '/images/categories/exchanges-card.png',
@@ -38,7 +38,7 @@ export const AllCategoriesData = [
   {
     id: 'cryptocurrencies',
     title: 'Cryptocurrencies',
-    icon: BsCurrencyBitcoin,
+    icon: RiBitCoinFill,
     description:
       'This cryptocurrencies category covers all cryptocurrencies from Bitcoin to IQ. ',
     cardImage: '/images/categories/cryptocurrencies-card.png',
@@ -47,7 +47,7 @@ export const AllCategoriesData = [
   {
     id: 'daos',
     title: 'DAOs',
-    icon: BsFillPeopleFill,
+    icon: RiTeamFill,
     description:
       'The DAOs category covers decentralized autonomous organizations of all kinds from DeFi DAOs like Olympus DAO to knowledge focused DAOs like BrainDAO.',
     cardImage: '/images/categories/daos-card.png',
@@ -56,7 +56,7 @@ export const AllCategoriesData = [
   {
     id: 'people',
     title: 'People in crypto',
-    icon: BsFillPersonFill,
+    icon: RiUser3Fill,
     description:
       'The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.',
     cardImage: '/images/categories/people-card.png',

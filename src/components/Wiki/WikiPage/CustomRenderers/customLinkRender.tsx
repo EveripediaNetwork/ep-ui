@@ -1,11 +1,11 @@
 import React, { ComponentPropsWithoutRef } from 'react'
 import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
-import WikiLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WikiLinkRender'
-import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/CiteMarksRender'
+import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/LinkRenderers/CiteMarksRender'
 import config from '@/config'
 import { whiteListedLinkNames } from '@/types/Wiki'
-import WidgetLinkRender from '@/components/Wiki/WikiPage/CustomRenderers/WidgetLinkRender'
-import { isValidUrl } from './create-wiki'
+import { isValidUrl } from '@/utils/create-wiki'
+import WikiLinkRender from './LinkRenderers/WikiLinkRender'
+import WidgetLinkRender from './LinkRenderers/WidgetLinkRender'
 
 export const customLinkRenderer = ({
   children,
@@ -24,20 +24,18 @@ export const customLinkRenderer = ({
 
   const isWikiLink = linkText.length > 0 && wikiSlug
   if (isWikiLink) {
-    return React.createElement(WikiLinkRender, {
-      text: linkText,
-      href: linkHref,
-      slug: wikiSlug,
-    })
+    return <WikiLinkRender href={linkHref} text={linkText} slug={wikiSlug} />
   }
 
   const isCiteIdPresent = linkHref && linkHref.match(/#cite-id-(.*)/)
   if (isCiteIdPresent) {
-    return React.createElement(CiteMarksRender, {
-      referencesString,
-      text: linkText as string,
-      href: linkHref,
-    })
+    return (
+      <CiteMarksRender
+        referencesString={referencesString}
+        href={linkHref}
+        text={linkText as string}
+      />
+    )
   }
 
   const isWidgetLink =
@@ -46,10 +44,7 @@ export const customLinkRenderer = ({
     whiteListedLinkNames.includes(linkText) &&
     !isValidUrl(linkHref)
   if (isWidgetLink) {
-    return React.createElement(WidgetLinkRender, {
-      text: linkText as string,
-      href: linkHref,
-    })
+    return <WidgetLinkRender text={linkText as string} href={linkHref} />
   }
 
   return React.createElement(props.node.tagName, props, children)
