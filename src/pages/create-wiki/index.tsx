@@ -271,8 +271,9 @@ const CreateWikiContent = () => {
         content: String(wiki.content)
           .replace(/\n/gm, '  \n')
           .replace(EditorContentOverride, '')
-          .replace(/<\/?em>/g, '*')
-          .replace(/<\/?strong>/g, '**'),
+          .replace(/<\/?em>/gm, '*')
+          .replace(/<\/?strong>/gm, '**')
+          .replace(/<\/?del>/gm, '~~'),
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
