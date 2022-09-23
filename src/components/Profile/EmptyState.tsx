@@ -10,7 +10,7 @@ export const EmptyState = () => {
       <Text fontWeight="bold" fontSize="3xl" mt="8">
         Create your first Wiki
       </Text>
-      <Text color="gray.500">
+      <Text color="fadedText2">
         Start creating your own wiki . When you do, they will appear here!
       </Text>
 

@@ -8,21 +8,21 @@ interface SEOHeaderProps {
 
 const SEOHeader = ({ router }: SEOHeaderProps) => (
   <DefaultSeo
-    title="IQ.Wiki"
-    titleTemplate="%s · IQ.Wiki"
-    description="World's largest crypto knowledge base"
+    title="IQ.Wiki | Largest Blockchain & Crypto Encyclopedia"
+    titleTemplate="%s | IQ.Wiki"
+    description="World's largest Blockchain & Crypto Encyclopedia"
     canonical={`https://iq.wiki${router.asPath || ''}`}
     openGraph={{
-      title: 'IQ.Wiki',
+      title: 'IQ.Wiki | Crypto Encyclopedia',
       description: "World's largest crypto knowledge base",
       type: 'website',
       site_name: 'IQ.Wiki',
       images: [
         {
-          url: `https://i.imgur.com/u42cq1C.png`,
-          width: 1024,
+          url: 'https://iq.wiki/android-chrome-512x512.png',
+          width: 512,
           height: 512,
-          alt: 'IQ.Wiki',
+          alt: 'IQ.Wiki | Crypto Encyclopedia',
         },
       ],
     }}

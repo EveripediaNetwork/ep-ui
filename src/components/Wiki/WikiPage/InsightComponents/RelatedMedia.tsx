@@ -32,8 +32,9 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                   }
                   h="100%"
                   w="100%"
-                  bgColor="dimColor"
                   alt="related media"
+                  objectFit="cover"
+                  bgColor="fadedText2"
                 />
               </MediaPreview>
             </AspectRatio>

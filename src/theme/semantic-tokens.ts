@@ -26,7 +26,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'grey.200',
     },
     homeDescriptionColor: {
-      default: 'gray.500',
+      default: 'gray.600',
       _dark: 'whiteAlpha.900',
     },
     linkHoverColor: {
@@ -117,6 +117,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
     },
+    fadedText2: {
+      default: 'gray.600',
+      _dark: 'gray.500',
+    },
     divider: {
       default: 'gray.200',
       _dark: 'whiteAlpha.400',
@@ -124,6 +128,22 @@ export const semanticTokens: SemanticTokens = {
     btnBgColor: {
       default: 'white',
       _dark: 'gray.800',
+    },
+    wikiFlagTextColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    wikiFlagTextBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
+    wikiFlagTextAreaColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.800',
+    },
+    wikiFlagTextAreaBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.200',
     },
   },
 }

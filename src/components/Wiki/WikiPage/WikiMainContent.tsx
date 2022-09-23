@@ -10,6 +10,7 @@ import { customLinkRenderer } from './CustomRenderers/customLinkRender'
 import { customImageRender } from './CustomRenderers/customImageRender'
 import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
+import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 
 interface WikiMainContentProps {
   wiki: Wiki
@@ -66,6 +67,8 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     }
   })
 
+  const modifiedContentWiki = { ...wiki, content }
+
   return (
     <Box
       py={4}
@@ -82,7 +85,8 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
-        <MarkdownRender wiki={wiki} />
+        <MarkdownRender wiki={modifiedContentWiki} />
+        <WikiFlaggingSystem id={wiki.id} />
       </Box>
     </Box>
   )
