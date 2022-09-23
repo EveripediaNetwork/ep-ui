@@ -40,13 +40,13 @@ const FlaggingSystemModal = ({
   const [buttonIsDisabaled, setButtonIsDisabled] = useState(true)
   const [postFlagWiki] = usePostFlagWikiMutation()
 
-  const getFlaggingContentHandler = e => {
-    if (e.target.value.trim() === '') {
+  const getFlaggingContentHandler = (e: FormEvent<HTMLTextAreaElement>) => {
+    if (e.currentTarget.value.trim() === '') {
       setButtonIsDisabled(true)
       return
     }
 
-    setFlagContent(e.target.value)
+    setFlagContent(e.currentTarget.value)
     setButtonIsDisabled(() => {
       return false
     })
