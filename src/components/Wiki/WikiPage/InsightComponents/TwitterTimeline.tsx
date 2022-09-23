@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box, useColorMode, VStack } from '@chakra-ui/react'
+import { Box, Spinner, Text, useColorMode, VStack } from '@chakra-ui/react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import WikiAccordion from '../../WikiAccordion'
 
@@ -17,7 +17,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.5,
+        threshold: 0.1,
       },
     )
     observer.observe(twitterTimelineRef.current as Element)
@@ -64,6 +64,10 @@ const TwitterTimeline = ({ url }: { url: string }) => {
               url={url}
             />
           )}
+          <VStack opacity="0.5" align="center" justify="center" h="full">
+            <Spinner />
+            <Text fontSize="sm">Loading</Text>
+          </VStack>
         </Box>
       </WikiAccordion>
     </VStack>
