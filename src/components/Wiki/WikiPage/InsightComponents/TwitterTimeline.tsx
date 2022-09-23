@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box, useColorMode, VStack } from '@chakra-ui/react'
+import { Box, Spinner, Text, useColorMode, VStack } from '@chakra-ui/react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import WikiAccordion from '../../WikiAccordion'
 
@@ -17,7 +17,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.5,
+        threshold: 0.1,
       },
     )
     observer.observe(twitterTimelineRef.current as Element)
@@ -54,16 +54,40 @@ const TwitterTimeline = ({ url }: { url: string }) => {
           overflowY="scroll"
         >
           {snapOpen && (
-            <TwitterTimelineEmbed
-              options={{ height: 400 }}
-              theme={colorMode}
-              sourceType="url"
-              noScrollbar
-              tweetLimit={4}
-              borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-              url={url}
-            />
+            <Box
+              zIndex={2}
+              pos="absolute"
+              left={0}
+              top={0}
+              right={0}
+              bottom={0}
+            >
+              <TwitterTimelineEmbed
+                options={{ height: 400 }}
+                theme={colorMode}
+                sourceType="url"
+                noScrollbar
+                tweetLimit={4}
+                borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
+                url={url}
+              />
+            </Box>
           )}
+          <VStack
+            pos="absolute"
+            left={0}
+            top={0}
+            right={0}
+            bottom={0}
+            zIndex={1}
+            opacity="0.5"
+            align="center"
+            justify="center"
+            h="full"
+          >
+            <Spinner />
+            <Text fontSize="sm">Loading</Text>
+          </VStack>
         </Box>
       </WikiAccordion>
     </VStack>
