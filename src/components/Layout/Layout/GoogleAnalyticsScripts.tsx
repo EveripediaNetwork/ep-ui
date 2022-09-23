@@ -7,11 +7,11 @@ const GoogleAnalyticsScripts = () => {
     <>
       <Script
         id="google-analytics"
-        strategy="lazyOnload"
+        strategy="worker"
         defer
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
       />
-      <Script id="google-analytics-config" strategy="lazyOnload" defer>
+      <Script id="google-analytics-config" strategy="worker" defer>
         {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
