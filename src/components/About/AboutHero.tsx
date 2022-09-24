@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Heading, HStack, Text, useColorModeValue } from '@chakra-ui/react'
-import { Image } from '../Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
+import { Image } from '../Elements/Image/Image'
 
 const AboutHero = () => {
   const { t } = useTranslation()
