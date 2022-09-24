@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  Box,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Box, Heading, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Image } from '../Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 
 const AboutHero = () => {
@@ -19,7 +13,7 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
-      spacing={{ lg: '5%', base: 0, md: '10%', '2xl': '20%' }}
+      spacing="2"
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mx="auto" mb={{ base: 10, lg: 0 }}>
@@ -32,18 +26,25 @@ const AboutHero = () => {
           mb={{ base: 5, lg: 10 }}
           fontWeight="black"
           lineHeight="shorter"
-        >{`${t('aboutHeroHeading')}`}</Heading>
+        >
+          {`${t('aboutHeroHeading')}`}
+        </Heading>
         <Text
           textAlign={{ base: 'center', lg: 'left' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
-      <Image
-        src={`/images/${aboutHeroSrc}`}
-        w={{ base: '100%', sm: '80%', md: '60%', lg: '38%' }}
-        m="40"
-      />
+      <Box>
+        <Image
+          imgH="500px"
+          imgW="500px"
+          className="teamMember__image"
+          src={`/images/${aboutHeroSrc}`}
+          alt="Bringing knowledge to the blockchain."
+          priority
+        />
+      </Box>
     </HStack>
   )
 }
