@@ -32,8 +32,8 @@ const MobileMeta = (wiki: {
     <chakra.div
       p={4}
       mx={{ base: 'auto', md: 0 }}
-      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
-      display={{ base: 'block', lg: 'none' }}
+      w={{ base: '100%', xl: '40%', '2xl': '50%' }}
+      display={{ base: 'block', xl: 'none' }}
     >
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis relatedWikis={relatedWikis} />
@@ -61,7 +61,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
               justify="space-between"
               direction={{
                 base: 'column-reverse',
-                md: 'row',
+                xl: 'row',
               }}
             >
               <WikiMainContent wiki={wiki} />
@@ -76,9 +76,9 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
                 mt={8}
                 mb={-4}
                 display={{
-                  md: 'none',
+                  xl: 'none',
                 }}
-                textAlign="center"
+                textAlign={{ base: 'center', md: 'left' }}
                 px={4}
               >
                 {wiki?.title}
@@ -87,7 +87,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
             <chakra.div
               display={{
                 base: 'block',
-                md: 'none',
+                xl: 'none',
               }}
             >
               <MobileMeta

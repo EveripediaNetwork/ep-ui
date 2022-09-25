@@ -72,12 +72,12 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   return (
     <Box
       py={4}
-      px={{ base: 4, lg: 12 }}
-      maxW="900px"
+      px={{ base: 4, xl: 12 }}
+      maxW={{ base: '100%', xl: '900px' }}
       mx="auto"
-      minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
+      minH={{ base: 'unset', xl: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
-      mb={{ md: '3rem' }}
+      mb={{ xl: '3rem' }}
     >
       <Heading my={8}>{wiki?.title}</Heading>
       <Box

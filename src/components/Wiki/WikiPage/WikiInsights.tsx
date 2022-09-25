@@ -52,14 +52,15 @@ const WikiInsights = ({
 
   return (
     <VStack
-      borderLeftWidth={{ base: 0, md: '1px' }}
-      p={{ base: 0, md: 4 }}
-      pt={{ md: '24', base: '10' }}
+      borderLeftWidth={{ base: 0, xl: '1px' }}
+      p={{ base: 0, xl: 4 }}
+      pt={{ xl: '24', base: '10' }}
     >
       <Box as="aside" ref={stickyRef} w="100%">
         <VStack
-          w={{ base: '90%', md: 'clamp(300px, 25vw, 430px)' }}
-          mx={{ base: 'auto', md: 0 }}
+          w={{ base: '90%', md: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
+          mx={{ base: 'auto', xl: 0 }}
+          px={{ base: '0', md: '4', xl: '0' }}
           spacing={4}
         >
           <WikiDetails
@@ -91,7 +92,7 @@ const WikiInsights = ({
 
           <Flex
             w="100%"
-            display={{ base: 'none', lg: 'block', md: 'block' }}
+            display={{ base: 'none', xl: 'block', md: 'none' }}
             gap={6}
           >
             {!!twitterLink && <TwitterTimeline url={twitterLink} />}
