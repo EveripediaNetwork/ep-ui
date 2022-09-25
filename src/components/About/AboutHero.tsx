@@ -37,8 +37,8 @@ const AboutHero = () => {
       </Box>
       <Box>
         <Image
-          imgH="500px"
-          imgW="500px"
+          imgH={{ base: '400px', lg: '500px' }}
+          imgW={{ base: '400px', lg: '500px' }}
           className="teamMember__image"
           src={`/images/${aboutHeroSrc}`}
           alt="Bringing knowledge to the blockchain."

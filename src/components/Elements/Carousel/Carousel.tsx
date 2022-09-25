@@ -19,7 +19,7 @@ interface ArrowProps {
 
 const ArrowBtn = ({ ArrowIcon, onClick, isNext }: ArrowProps) => (
   <Box
-    top="50%"
+    top="25%"
     position="absolute"
     transform="translate(0, -50%)"
     display="grid"
