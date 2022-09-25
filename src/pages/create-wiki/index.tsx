@@ -270,7 +270,10 @@ const CreateWikiContent = () => {
         user: { id: userAddress },
         content: String(wiki.content)
           .replace(/\n/gm, '  \n')
-          .replace(EditorContentOverride, ''),
+          .replace(EditorContentOverride, '')
+          .replace(/<\/?em>/gm, '*')
+          .replace(/<\/?strong>/gm, '**')
+          .replace(/<\/?del>/gm, '~~'),
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
