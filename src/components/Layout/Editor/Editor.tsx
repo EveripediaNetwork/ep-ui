@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useEffect, useRef } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 import wikiLink from '@/editor-plugins/wikiLink'
