@@ -43,13 +43,13 @@ export const WikiDetails = ({
   const { title, tags } = wikiTitle
   const [, username] = useENSData(createdBy?.id || '')
   return (
-    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={2}>
+    <VStack w="100%" p={4} spacing={4} borderWidth="1px" borderRadius={8}>
       <Heading
         bgColor="wikiTitleBg"
         as="h3"
         fontSize="18px"
         p={3}
-        borderRadius={4}
+        borderRadius={6}
         fontWeight="600"
         w="100%"
         textAlign="center"

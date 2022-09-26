@@ -61,7 +61,7 @@ const WikiInsights = ({
           w={{ base: '90%', md: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
           mx={{ base: 'auto', xl: 0 }}
           px={{ base: '0', md: '4', xl: '0' }}
-          spacing={4}
+          spacing={6}
         >
           <WikiDetails
             wikiTitle={wiki}

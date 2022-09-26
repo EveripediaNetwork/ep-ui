@@ -1,6 +1,6 @@
 import { CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, HStack, chakra, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
@@ -29,16 +29,17 @@ const MobileMeta = (wiki: {
   )?.value
 
   return (
-    <chakra.div
-      p={4}
+    <VStack
+      p={{ base: 4, md: 6 }}
       mx={{ base: 'auto', md: 0 }}
       w={{ base: '100%', xl: '40%', '2xl': '50%' }}
       display={{ base: 'block', xl: 'none' }}
+      spacing={6}
     >
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis relatedWikis={relatedWikis} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
-    </chakra.div>
+    </VStack>
   )
 }
 
