@@ -79,7 +79,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
                   xl: 'none',
                 }}
                 textAlign={{ base: 'center', md: 'left' }}
-                px={4}
+                px={{ base: 4, md: 6 }}
               >
                 {wiki?.title}
               </Text>

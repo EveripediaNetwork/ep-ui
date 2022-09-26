@@ -53,8 +53,8 @@ const WikiInsights = ({
   return (
     <VStack
       borderLeftWidth={{ base: 0, xl: '1px' }}
-      p={{ base: 0, xl: 4 }}
-      pt={{ xl: '24', base: '10' }}
+      p={{ base: 0, md: 2, xl: 4 }}
+      pt={{ xl: '24', md: '8', base: '10' }}
     >
       <Box as="aside" ref={stickyRef} w="100%">
         <VStack
