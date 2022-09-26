@@ -4,6 +4,13 @@ import NextLink, { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
+const prefetchDisabledRoutes = [
+  '/create-wiki',
+  '/static/about',
+  '/account/settings',
+  '/admin',
+]
+
 export const LinkWrapper = ({
   href,
   prefetch,
@@ -13,10 +20,7 @@ export const LinkWrapper = ({
     <NextLink
       href={href}
       prefetch={
-        String(href).includes('/create-wiki') ||
-        String(href).includes('/static/about')
-          ? false
-          : prefetch
+        prefetchDisabledRoutes.includes(href as string) ? false : prefetch
       }
       passHref
     >
