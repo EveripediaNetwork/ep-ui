@@ -15,11 +15,12 @@ interface ArrowProps {
   ArrowIcon?: IconType
   isNext?: boolean
   onClick?: () => void
+  top?: string
 }
 
-const ArrowBtn = ({ ArrowIcon, onClick, isNext }: ArrowProps) => (
+const ArrowBtn = ({ ArrowIcon, onClick, top, isNext }: ArrowProps) => (
   <Box
-    top="25%"
+    top={top}
     position="absolute"
     transform="translate(0, -50%)"
     display="grid"
@@ -43,13 +44,14 @@ const ArrowBtn = ({ ArrowIcon, onClick, isNext }: ArrowProps) => (
 interface CarouselProps {
   settings: Settings
   children: React.ReactNode
+  topArrow: string
 }
 
-const Carousel = ({ settings, children }: CarouselProps) => (
+const Carousel = ({ settings, children, topArrow }: CarouselProps) => (
   <Slider
     {...settings}
-    nextArrow={<ArrowBtn ArrowIcon={FaChevronRight} isNext />}
-    prevArrow={<ArrowBtn ArrowIcon={FaChevronLeft} />}
+    nextArrow={<ArrowBtn top={topArrow} ArrowIcon={FaChevronRight} isNext />}
+    prevArrow={<ArrowBtn top={topArrow} ArrowIcon={FaChevronLeft} />}
   >
     {children}
   </Slider>
