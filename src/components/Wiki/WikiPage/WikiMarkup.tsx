@@ -31,6 +31,7 @@ const MobileMeta = (wiki: {
   return (
     <VStack
       p={{ base: 4, md: 6 }}
+      pr={{ md: 15, xl: 0 }}
       mx={{ base: 'auto', md: 0 }}
       w={{ base: '100%', xl: '40%', '2xl': '50%' }}
       display={{ base: 'block', xl: 'none' }}
