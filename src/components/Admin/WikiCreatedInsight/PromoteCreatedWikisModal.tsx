@@ -130,7 +130,7 @@ export const PromoteCreatedWikisModal = ({
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-               imageURL={`${config.pinataBaseUrl}${
+              imageURL={`${config.pinataBaseUrl}${
                 Data?.images ? Data?.images[0]?.id : ''
               }  `}
               borderRadius="lg"
