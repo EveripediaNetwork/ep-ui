@@ -86,6 +86,7 @@ export const NAV_ITEMS: NavItem[] = [
         icon: RiBook2Fill,
         href: 'https://learn.everipedia.org',
         hasImage: true,
+        target: '_blank',
       },
       {
         id: 302,

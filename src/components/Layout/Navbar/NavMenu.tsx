@@ -77,6 +77,7 @@ const NavMenu = ({
               }}
               color="linkColor"
               key={key}
+              target={item.target}
             >
               {item.label === 'Settings' && <Divider />}
               <MenuItem minH="48px" bg="subMenuBg">
