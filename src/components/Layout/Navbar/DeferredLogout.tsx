@@ -6,7 +6,7 @@ import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useDisconnect, useAccount } from 'wagmi'
 
-export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
+const DeferredLogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
   const { disconnect } = useDisconnect()
@@ -51,3 +51,5 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
     </>
   )
 }
+
+export default DeferredLogOutBtn

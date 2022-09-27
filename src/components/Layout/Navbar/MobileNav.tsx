@@ -23,8 +23,12 @@ import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
+import dynamic from 'next/dynamic'
 import { ColorModeToggle } from './ColorModeToggle'
-import { LogOutBtn } from './Logout'
+
+const DeferredLogOutBtn = dynamic(() => import('./DeferredLogout'), {
+  ssr: false,
+})
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -113,7 +117,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               <Menu>
                 <Flex gap="4" direction="column">
                   <ColorModeToggle isInMobileMenu />
-                  {isWagmiWrapped && <LogOutBtn isInMobileMenu />}
+                  {isWagmiWrapped && <DeferredLogOutBtn isInMobileMenu />}
                 </Flex>
               </Menu>
             </Box>

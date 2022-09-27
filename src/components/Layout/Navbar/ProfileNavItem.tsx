@@ -3,10 +3,14 @@ import { NAV_ICON } from '@/data/NavItemData'
 import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import dynamic from 'next/dynamic'
 import { ColorModeToggle } from './ColorModeToggle'
 import NavMenu from './NavMenu'
 import { ProfileLink } from './ProfileLink'
-import { LogOutBtn } from './Logout'
+
+const DeferredLogOutBtn = dynamic(() => import('./DeferredLogout'), {
+  ssr: false,
+})
 
 interface ProfileNavMenuProps {
   setVisibleMenu: Dispatch<SetStateAction<number | null>>
@@ -36,7 +40,7 @@ const ProfileNavMenu = ({
         <Divider />
         <ProfileLink />
         <ColorModeToggle isInMobileMenu={false} />
-        {userAddress && <LogOutBtn isInMobileMenu={false} />}
+        {userAddress && <DeferredLogOutBtn isInMobileMenu={false} />}
       </NavMenu>
     </Box>
   )
