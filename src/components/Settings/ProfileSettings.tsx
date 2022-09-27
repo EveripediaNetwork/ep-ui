@@ -16,11 +16,11 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { FaCopy, FaInstagram, FaSitemap, FaTwitter } from 'react-icons/fa'
-import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
 import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileSettingsData } from '@/types/ProfileType'
 import { isUserNameTaken } from '@/services/profile/utils'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import ImageUpload from './ImageUpload'
 
 interface ProfileSettingsProps {
@@ -47,7 +47,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [isAvatarLoading, setIsAvatarLoading] = React.useState<boolean>(false)
   const [isBannerLoading, setIsBannerLoading] = React.useState<boolean>(false)
 
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const [, userENSAddr] = useENSData(userAddress)
   const clipboard = useClipboard(userAddress || '')
   const toast = useToast()
