@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Container, Heading } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useAccount } from 'wagmi'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import dynamic from 'next/dynamic'
 import { wagmiNeededRoute } from '@/components/WrapperRoutes/WagmiNeededRoute'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 const DeferredConnectors = dynamic(
   () => import('@/components/Layout/WalletDrawer/DeferredConnectors'),
@@ -15,13 +14,7 @@ const DeferredConnectors = dynamic(
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false)
-  const { setIsWagmiWrapped } = useContext(WagmiStatusContext)
-
-  useEffect(() => {
-    setIsWagmiWrapped(true)
-  }, [setIsWagmiWrapped])
-
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const router = useRouter()
 
   useEffect(() => {
