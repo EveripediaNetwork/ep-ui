@@ -123,7 +123,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   return (
     <HStack
       bgColor="wikiCardItemBg"
-      borderRadius={4}
+      borderRadius={8}
       justify="space-between"
       align="center"
       p={4}

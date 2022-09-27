@@ -37,7 +37,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
       <Heading my={4} p={2} fontWeight="medium">
         REFERENCES
       </Heading>
-      <SimpleGrid mb={8} columns={[1, 2, 3]} spacing={4}>
+      <SimpleGrid mb={8} columns={[1, 2, 2, 3]} spacing={4}>
         {references.map((ref, index) => (
           <LinkBox
             display="flex"

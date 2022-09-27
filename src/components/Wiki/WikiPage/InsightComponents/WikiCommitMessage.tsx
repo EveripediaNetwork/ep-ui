@@ -21,7 +21,7 @@ const WikiCommitMessage = ({
       })
     : '-'
   return (
-    <VStack w="100%" spacing={4} borderRadius={2}>
+    <VStack w="100%" spacing={4} borderRadius={8}>
       <WikiAccordion
         display="flex"
         withNoDarkBg
@@ -35,7 +35,7 @@ const WikiCommitMessage = ({
         {commitMessage && (
           <VStack
             bgColor="wikiCardItemBg"
-            borderRadius={4}
+            borderRadius={8}
             align="left"
             p={4}
             spacing={2}

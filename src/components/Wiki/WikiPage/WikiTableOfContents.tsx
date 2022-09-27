@@ -92,7 +92,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   if (isOpen === isDefaultOpen) {
     return (
       <VStack
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: 'none', xl: 'block' }}
         borderLeftWidth="1px"
         w="20vw"
         px={6}
