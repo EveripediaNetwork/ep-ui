@@ -1,6 +1,6 @@
 import { CommonMetaIds, Media, Wiki } from '@/types/Wiki'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { Box, Flex, HStack, chakra, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
@@ -29,16 +29,18 @@ const MobileMeta = (wiki: {
   )?.value
 
   return (
-    <chakra.div
-      p={4}
+    <VStack
+      p={{ base: 4, md: 6 }}
+      pr={{ md: 15, xl: 0 }}
       mx={{ base: 'auto', md: 0 }}
-      w={{ base: '100%', md: '50%', lg: '40%', '2xl': '50%' }}
-      display={{ base: 'block', lg: 'none' }}
+      w={{ base: '100%', xl: '40%', '2xl': '50%' }}
+      display={{ base: 'block', xl: 'none' }}
+      spacing={6}
     >
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis relatedWikis={relatedWikis} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
-    </chakra.div>
+    </VStack>
   )
 }
 
@@ -61,7 +63,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
               justify="space-between"
               direction={{
                 base: 'column-reverse',
-                md: 'row',
+                xl: 'row',
               }}
             >
               <WikiMainContent wiki={wiki} />
@@ -76,10 +78,10 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
                 mt={8}
                 mb={-4}
                 display={{
-                  md: 'none',
+                  xl: 'none',
                 }}
-                textAlign="center"
-                px={4}
+                textAlign={{ base: 'center', md: 'left' }}
+                px={{ base: 4, md: 6 }}
               >
                 {wiki?.title}
               </Text>
@@ -87,7 +89,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
             <chakra.div
               display={{
                 base: 'block',
-                md: 'none',
+                xl: 'none',
               }}
             >
               <MobileMeta

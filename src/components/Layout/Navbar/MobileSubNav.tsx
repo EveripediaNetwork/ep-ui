@@ -38,7 +38,12 @@ const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
         />
       )}
 
-      <LinkOverlay href={item.href} fontWeight={600} color="linkColor">
+      <LinkOverlay
+        href={item.href}
+        fontWeight={600}
+        target={item.target}
+        color="linkColor"
+      >
         {item.label}
       </LinkOverlay>
     </HStack>
