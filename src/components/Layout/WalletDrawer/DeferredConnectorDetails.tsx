@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Image, Spinner, Text } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
 import { logEvent } from '@/utils/googleAnalytics'
-import WalletDetailsWrapper from './WalletDetailsWrapper'
+import dynamic from 'next/dynamic'
+
+const DeferredWalletDetailsWrapper = dynamic(
+  () => import('./DeferredWalletDetailsWrapper'),
+  { ssr: false },
+)
 
 const DeferredConnectorDetails = ({
   imageLink,
@@ -29,7 +34,11 @@ const DeferredConnectorDetails = ({
   }, [loading])
 
   return (
-    <WalletDetailsWrapper hasHover w={connector} connect={handleConnect}>
+    <DeferredWalletDetailsWrapper
+      hasHover
+      w={connector}
+      connect={handleConnect}
+    >
       <>
         <Image boxSize="24px" src={imageLink} />
         <Text flex="1" as="strong" ml="15">
@@ -42,7 +51,7 @@ const DeferredConnectorDetails = ({
         )}
         {isClicked && loading && <Spinner size="sm" opacity={0.5} />}
       </>
-    </WalletDetailsWrapper>
+    </DeferredWalletDetailsWrapper>
   )
 }
 

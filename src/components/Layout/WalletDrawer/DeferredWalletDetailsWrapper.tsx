@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
 
-const WalletDetailsWrapper = ({
+const DeferredWalletDetailsWrapper = ({
   children,
   w,
   connect,
@@ -41,4 +41,4 @@ const WalletDetailsWrapper = ({
   )
 }
 
-export default WalletDetailsWrapper
+export default DeferredWalletDetailsWrapper

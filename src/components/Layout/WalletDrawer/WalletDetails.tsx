@@ -4,8 +4,13 @@ import shortenBalance from '@/utils/shortenBallance'
 import { TokenDetailsType } from '@/types/WalletBalanceType'
 import { getTokenValue } from '@/utils/getTokenValue'
 import { tokenDetails } from '@/data/WalletData'
-import WalletDetailsWrapper from './WalletDetailsWrapper'
+import dynamic from 'next/dynamic'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
+
+const DeferredWalletDetailsWrapper = dynamic(
+  () => import('./DeferredWalletDetailsWrapper'),
+  { ssr: false },
+)
 
 const WalletDetails = ({
   symbol,
@@ -16,7 +21,7 @@ const WalletDetails = ({
   balance: string | null
   tokensArray: TokenDetailsType[]
 }) => (
-  <WalletDetailsWrapper hasHover={false}>
+  <DeferredWalletDetailsWrapper hasHover={false}>
     <>
       <HStack flex="1">
         <Image
@@ -39,7 +44,7 @@ const WalletDetails = ({
         <TokenDetailsMenu token={symbol} />
       </HStack>
     </>
-  </WalletDetailsWrapper>
+  </DeferredWalletDetailsWrapper>
 )
 
 export default WalletDetails
