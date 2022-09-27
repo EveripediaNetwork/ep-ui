@@ -8,7 +8,9 @@ import React, {
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
-const WagmiProvider = dynamic(() => import('@/components/Wagmi/WagmiProvider'))
+const DeferredWagmiProvider = dynamic(
+  () => import('@/components/Wagmi/DeferredWagmiProvider'),
+)
 
 const defaultUpdate: Dispatch<SetStateAction<boolean>> = () => true
 export const WagmiStatusContext = createContext({
@@ -32,7 +34,7 @@ export const DynamicWagmiProvider = ({
     }),
     [isWagmiWrapped],
   )
-  const Wrapper = isWagmiWrapped ? WagmiProvider : React.Fragment
+  const Wrapper = isWagmiWrapped ? DeferredWagmiProvider : React.Fragment
   return (
     <>
       <WagmiStatusContext.Provider value={value}>

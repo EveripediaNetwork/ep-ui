@@ -8,8 +8,8 @@ const client = createClient({
   provider,
 })
 
-const WagmiProvider = ({ children }: { children: ReactNode }) => {
+const DeferredWagmiProvider = ({ children }: { children: ReactNode }) => {
   return <WagmiConfig client={client}>{children}</WagmiConfig>
 }
 
-export default WagmiProvider
+export default DeferredWagmiProvider
