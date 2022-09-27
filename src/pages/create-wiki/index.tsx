@@ -44,7 +44,6 @@ import {
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
-import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
@@ -86,6 +85,7 @@ import {
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -99,7 +99,7 @@ const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
 
@@ -242,7 +242,7 @@ const CreateWikiContent = () => {
 
     let wikiCommitMessage = commitMessage || ''
 
-    if (isUserConnected && userAddress) {
+    if (userAddress && userAddress) {
       if (
         isNewCreateWiki &&
         !override &&
