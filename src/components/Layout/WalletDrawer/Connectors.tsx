@@ -9,7 +9,6 @@ import {
   Spinner,
   Tooltip,
 } from '@chakra-ui/react'
-import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
 import shortenBalance from '@/utils/shortenBallance'
 import {
@@ -28,6 +27,14 @@ import { RootState } from '@/store/store'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+const DeferredConnectorDetails = dynamic(
+  () => import('@/components/Layout/WalletDrawer/DeferredConnectorDetails'),
+  {
+    ssr: false,
+  },
+)
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -196,7 +203,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
           >
             {connectors.map((connector, index) => (
               <Box key={connector.name} w="full">
-                <ConnectorDetails
+                <DeferredConnectorDetails
                   connect={connect}
                   connector={connector}
                   imageLink={`/images/${walletsLogos[index]}`}

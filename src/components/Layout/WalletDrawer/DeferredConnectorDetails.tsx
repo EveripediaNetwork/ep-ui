@@ -4,7 +4,7 @@ import { Connector } from 'wagmi'
 import { logEvent } from '@/utils/googleAnalytics'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 
-const ConnectorDetails = ({
+const DeferredConnectorDetails = ({
   imageLink,
   connector,
   connect,
@@ -46,4 +46,4 @@ const ConnectorDetails = ({
   )
 }
 
-export default ConnectorDetails
+export default DeferredConnectorDetails
