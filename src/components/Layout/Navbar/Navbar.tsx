@@ -36,7 +36,9 @@ const NavSearch = dynamic(
   },
 )
 const MobileNav = dynamic(() => import('./MobileNav'))
-const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
+const DeferredWalletDrawer = dynamic(
+  () => import('../WalletDrawer/DeferredWalletDrawer'),
+)
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -141,7 +143,7 @@ const Navbar = () => {
         </Flex>
         {drawerOperations.isOpen && (
           <WagmiNeededComponent>
-            <WalletDrawer
+            <DeferredWalletDrawer
               finalFocusRef={loginButtonRef}
               setHamburger={setHamburger}
               toggleOperations={drawerOperations}

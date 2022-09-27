@@ -52,7 +52,7 @@ type WalletDrawerType = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WalletDrawer = ({
+const DeferredWalletDrawer = ({
   toggleOperations,
   finalFocusRef,
   setHamburger,
@@ -171,4 +171,4 @@ const WalletDrawer = ({
   ) : null
 }
 
-export default memo(WalletDrawer)
+export default memo(DeferredWalletDrawer)
