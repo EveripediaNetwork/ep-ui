@@ -15,7 +15,7 @@ export default async function handler(
     return res.status(400).json({ message: 'Invalid path' })
   }
   try {
-    await res.unstable_revalidate(path)
+    await res.revalidate(path)
     return res.json({ revalidated: true, path })
   } catch (err) {
     return res.status(500).send('Error revalidating')
