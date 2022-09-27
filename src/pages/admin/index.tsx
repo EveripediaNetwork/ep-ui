@@ -37,6 +37,8 @@ const Admin = () => {
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
   const [isAdmin, setIsAdmin] = React.useState(false)
+  const [revalidateActive, setRevalidateActive] = React.useState<boolean>(true)
+  const [revalidateURLText, setRevalidateURLText] = React.useState<string>('')
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
   })
@@ -267,10 +269,21 @@ your wallet to continue"
         >
           <FormControl isRequired>
             <FormLabel htmlFor="username">Enter URL</FormLabel>
-            <Input mb={5} />
+            <Input
+              mb={5}
+              onChange={e => {
+                if (e.target.value.length > 3) {
+                  setRevalidateActive(false)
+                  setRevalidateURLText(e.target.value)
+                } else {
+                  setRevalidateActive(true)
+                }
+              }}
+            />
             <Button
+              disabled={revalidateActive}
               onClick={() => {
-                revalidateURL('/activity')
+                revalidateURL(revalidateURLText)
               }}
             >
               Revalidate Url
