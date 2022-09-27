@@ -40,7 +40,7 @@ interface ConnectorsProps {
   openWalletDrawer?: () => void
 }
 
-const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
+const DeferredConnectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const router = useRouter()
   const {
     address: userAddress,
@@ -219,4 +219,4 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   )
 }
 
-export default Connectors
+export default DeferredConnectors

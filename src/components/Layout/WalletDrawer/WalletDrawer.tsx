@@ -24,7 +24,6 @@ import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import shortenAccount from '@/utils/shortenAccount'
-import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useDispatch } from 'react-redux'
@@ -34,6 +33,14 @@ import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
+import dynamic from 'next/dynamic'
+
+const DeferredConnectors = dynamic(
+  () => import('@/components/Layout/WalletDrawer/DeferredConnectors'),
+  {
+    ssr: false,
+  },
+)
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -157,7 +164,7 @@ const WalletDrawer = ({
         </DrawerHeader>
         <Divider />
         <DrawerBody shadow="sm">
-          <Connectors openWalletDrawer={toggleOperations.onOpen} />
+          <DeferredConnectors openWalletDrawer={toggleOperations.onOpen} />
         </DrawerBody>
       </DrawerContent>
     </Drawer>
