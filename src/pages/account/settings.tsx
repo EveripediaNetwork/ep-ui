@@ -6,9 +6,9 @@ import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRout
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { useUserProfileData } from '@/services/profile/utils'
-import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import dynamic from 'next/dynamic'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
 
 const NotificationSettings = dynamic(
@@ -25,7 +25,7 @@ const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
