@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux'
 import networkMap from '@/utils/networkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
 
-const NetworkErrorNotification = () => {
+const DeferredNetworkErrorNotification = () => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
   const [openSwitch, setOpenSwitch] = useState<boolean>(false)
@@ -164,4 +164,4 @@ const NetworkErrorNotification = () => {
   )
 }
 
-export default NetworkErrorNotification
+export default DeferredNetworkErrorNotification

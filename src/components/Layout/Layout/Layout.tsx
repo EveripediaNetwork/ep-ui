@@ -7,8 +7,8 @@ import Navbar from '../Navbar/Navbar'
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
 })
-const NetworkErrorNotification = dynamic(
-  () => import('@/components/Layout/Network/NetworkErrorNotification'),
+const DeferredNetworkErrorNotification = dynamic(
+  () => import('@/components/Layout/Network/DeferredNetworkErrorNotification'),
 )
 const GoogleAnalyticsScripts = dynamic(
   () => import('@/components/Layout/Layout/GoogleAnalyticsScripts'),
@@ -35,7 +35,7 @@ const Layout = ({
         <Suspense>{!noFooter && <Footer />}</Suspense>
       </Stack>
 
-      {isWagmiWrapped && <NetworkErrorNotification />}
+      {isWagmiWrapped && <DeferredNetworkErrorNotification />}
     </>
   )
 }
