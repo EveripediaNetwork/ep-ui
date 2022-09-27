@@ -97,8 +97,8 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
   )
 
   return (
-    <VStack w="100%" spacing={4} borderWidth={1} borderRadius={2}>
-      <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
+    <VStack w="100%" spacing={4} borderWidth={1} borderRadius={8}>
+      <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={8}>
         <Text
           style={{
             userSelect: 'none',
