@@ -14,7 +14,6 @@ import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsi
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
-import { useAccount } from 'wagmi'
 import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
@@ -26,12 +25,13 @@ import {
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
   const router = useRouter()
   const { token, reSignToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const [isAdmin, setIsAdmin] = React.useState(false)
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
