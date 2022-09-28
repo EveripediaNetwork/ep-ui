@@ -1,7 +1,7 @@
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
-import { WagmiStatusContext } from '../Wagmi/DynamicWagmiProvider'
+import { WagmiStatusContext } from '../Wagmi/WagmiStatusContext'
 
 const WagmiLoadedAuthenticatedRoute = ({
   WrappedComponent,

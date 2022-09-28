@@ -1,7 +1,7 @@
 import React, { Suspense, useContext } from 'react'
 import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
+import { WagmiStatusContext } from '@/components/Wagmi/WagmiStatusContext'
 import Navbar from '../Navbar/Navbar'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {

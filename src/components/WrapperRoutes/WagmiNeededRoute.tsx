@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { WagmiStatusContext } from '../Wagmi/DynamicWagmiProvider'
+import { WagmiStatusContext } from '../Wagmi/WagmiStatusContext'
 
 export const wagmiNeededRoute = <P extends object>(
   WrappedComponent: () => JSX.Element | null,

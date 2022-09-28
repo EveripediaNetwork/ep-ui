@@ -1,12 +1,7 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useMemo,
-  useState,
-} from 'react'
+import React, { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { WagmiStatusContext } from './WagmiStatusContext'
 
 const DeferredWagmiProvider = dynamic(
   () => import('@/components/Wagmi/DeferredWagmiProvider'),
@@ -14,13 +9,6 @@ const DeferredWagmiProvider = dynamic(
     ssr: false,
   },
 )
-
-const defaultUpdate: Dispatch<SetStateAction<boolean>> = () => true
-
-export const WagmiStatusContext = createContext({
-  isWagmiWrapped: false,
-  setIsWagmiWrapped: defaultUpdate,
-})
 
 export const DynamicWagmiProvider = ({
   children,
