@@ -10,9 +10,13 @@ import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 const DeferredWagmiProvider = dynamic(
   () => import('@/components/Wagmi/DeferredWagmiProvider'),
+  {
+    ssr: false,
+  },
 )
 
 const defaultUpdate: Dispatch<SetStateAction<boolean>> = () => true
+
 export const WagmiStatusContext = createContext({
   isWagmiWrapped: false,
   setIsWagmiWrapped: defaultUpdate,
