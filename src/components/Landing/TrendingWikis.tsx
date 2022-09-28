@@ -156,6 +156,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
       >{`${t('trendingWikisDescription')}`}</Text>
       <Box maxW="1160px" mx="auto">
         <Carousel
+          topArrow="25%"
           settings={{
             dots: true,
             infinite: false,

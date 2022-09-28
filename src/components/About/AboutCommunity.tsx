@@ -23,7 +23,10 @@ const AboutCommunity = () => {
         {`${t('aboutTestimonialContent')}`}
       </Text>
       <Box mt={8} w="100%" maxW="4xl">
-        <Carousel settings={{ infinite: true, arrows: true, autoplay: true }}>
+        <Carousel
+          settings={{ infinite: true, arrows: true, autoplay: true }}
+          topArrow="50%"
+        >
           <AboutTestimonial
             testimonial={`${t('aboutTestimonialOneContent')}`}
             author={`${t('aboutTestimonialOneAuthor')}`}
