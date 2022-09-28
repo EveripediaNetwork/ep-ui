@@ -4,10 +4,11 @@ import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
-import { addToTOC } from '@/utils/customHeadingRender'
-import { customLinkRenderer } from '@/utils/customLinkRender'
-import { customTableRenderer } from '@/utils/customTableRender'
+import { addToTOC } from '@/components/Wiki/WikiPage/CustomRenderers/customHeadingRender'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
+import { customLinkRenderer } from './CustomRenderers/customLinkRender'
+import { customImageRender } from './CustomRenderers/customImageRender'
+import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 
@@ -44,6 +45,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
             ...props,
             referencesString,
           }),
+        img: customImageRender,
         table: customTableRenderer,
       }}
     >
@@ -70,12 +72,13 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   return (
     <Box
       py={4}
-      px={{ base: 4, lg: 12 }}
-      maxW="900px"
+      px={{ base: 4, md: 6, xl: 12 }}
+      pr={{ md: 15, xl: 0 }}
+      maxW={{ base: '100%', xl: '900px' }}
       mx="auto"
-      minH={{ base: 'unset', md: 'calc(100vh - 70px)' }}
+      minH={{ base: 'unset', xl: 'calc(100vh - 70px)' }}
       borderColor="borderColor"
-      mb={{ md: '3rem' }}
+      mb={{ xl: '3rem' }}
     >
       <Heading my={8}>{wiki?.title}</Heading>
       <Box

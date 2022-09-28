@@ -73,7 +73,7 @@ export const LoadingProfile = (props: LoadingProfileProps) => {
 
       {!isSticky && (
         <Flex mt="2" gap="3" direction="column" px="6" w="full" align="center">
-          <Flex align="center" gap="2" color="gray.500">
+          <Flex align="center" gap="2" color="fadedText2">
             <Skeleton>
               <chakra.span fontWeight="medium">userName</chakra.span>
             </Skeleton>

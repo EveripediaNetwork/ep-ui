@@ -1,21 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { Box, useColorMode, VStack } from '@chakra-ui/react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Box, Spinner, Text, useColorMode, VStack } from '@chakra-ui/react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import WikiAccordion from '../../WikiAccordion'
 
 const TwitterTimeline = ({ url }: { url: string }) => {
   const { colorMode } = useColorMode()
-  const [snapOpen, setSnapOpen] = useState(true)
+  const twitterTimelineRef = useRef<HTMLDivElement>(null)
+  const [snapOpen, setSnapOpen] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+
   useEffect(() => {
-    setSnapOpen(false)
-    const timeout = setTimeout(() => {
-      setSnapOpen(true)
-    }, 100)
-    return () => clearTimeout(timeout)
-  }, [colorMode])
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isLoaded) setIsLoaded(true)
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      },
+    )
+    observer.observe(twitterTimelineRef.current as Element)
+  }, [isLoaded])
+
+  useEffect(() => {
+    if (isLoaded) {
+      setSnapOpen(false)
+      const timeout = setTimeout(() => {
+        setSnapOpen(true)
+      }, 100)
+      return () => clearTimeout(timeout)
+    }
+    return () => {}
+  }, [colorMode, isLoaded])
 
   return (
-    <VStack w="100%" spacing={4} borderRadius={2} mb="5">
+    <VStack
+      ref={twitterTimelineRef}
+      w="100%"
+      spacing={4}
+      borderRadius={2}
+      mb="5"
+    >
       <WikiAccordion title="Twitter Timeline">
         <Box
           h="400px"
@@ -28,16 +54,40 @@ const TwitterTimeline = ({ url }: { url: string }) => {
           overflowY="scroll"
         >
           {snapOpen && (
-            <TwitterTimelineEmbed
-              options={{ height: 400 }}
-              theme={colorMode}
-              sourceType="url"
-              noScrollbar
-              tweetLimit={4}
-              borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-              url={url}
-            />
+            <Box
+              zIndex={2}
+              pos="absolute"
+              left={0}
+              top={0}
+              right={0}
+              bottom={0}
+            >
+              <TwitterTimelineEmbed
+                options={{ height: 400 }}
+                theme={colorMode}
+                sourceType="url"
+                noScrollbar
+                tweetLimit={4}
+                borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
+                url={url}
+              />
+            </Box>
           )}
+          <VStack
+            pos="absolute"
+            left={0}
+            top={0}
+            right={0}
+            bottom={0}
+            zIndex={1}
+            opacity="0.5"
+            align="center"
+            justify="center"
+            h="full"
+          >
+            <Spinner />
+            <Text fontSize="sm">Loading</Text>
+          </VStack>
         </Box>
       </WikiAccordion>
     </VStack>

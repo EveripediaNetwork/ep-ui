@@ -143,7 +143,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
           h="80px"
           borderTopWidth="thin"
           borderTopColor="borderColor"
-          color="gray.500"
+          color="homeDescriptionColor"
         >
           <Flex gap={8}>
             <RiInstagramFill size={iconSize} />

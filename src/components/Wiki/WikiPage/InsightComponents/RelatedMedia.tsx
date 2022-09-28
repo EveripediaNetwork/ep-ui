@@ -1,8 +1,9 @@
-import { AspectRatio, Image, SimpleGrid, VStack } from '@chakra-ui/react'
+import { AspectRatio, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
 import { Media } from '@/types/Wiki'
 import { constructMediaUrl } from '@/utils/mediaUtils'
+import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
 
 const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
@@ -10,7 +11,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">
-        <SimpleGrid columns={3} spacing={5}>
+        <SimpleGrid columns={{ base: 3, md: 4, xl: 3 }} spacing={5}>
           {media.map((m, i) => (
             <AspectRatio ratio={1} key={i}>
               <MediaPreview
@@ -31,8 +32,9 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                   }
                   h="100%"
                   w="100%"
+                  alt="related media"
                   objectFit="cover"
-                  bgColor="gray.500"
+                  bgColor="fadedText2"
                 />
               </MediaPreview>
             </AspectRatio>

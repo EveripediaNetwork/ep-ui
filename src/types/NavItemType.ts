@@ -7,4 +7,5 @@ export interface NavItem {
   hasImage?: boolean
   icon?: IconType
   subItem?: NavItem[]
+  target?: string
 }
