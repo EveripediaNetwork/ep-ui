@@ -58,6 +58,10 @@ type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
 }
 
+type RevalidateURL = {
+  revalidatePage: boolean
+}
+
 type WikisEditorsCountResponse = {
   editorCount: { amount: number }
 }
@@ -199,6 +203,9 @@ export const adminApi = createApi({
         document: REVALIDATE_URL,
         variables: { route },
       }),
+      transformResponse: (response: RevalidateURL) => {
+        return response.revalidatePage
+      },
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({

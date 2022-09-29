@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Button,
+  useToast,
 } from '@chakra-ui/react'
 
 import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
@@ -172,6 +173,25 @@ const Admin = () => {
   }
 
   const [revalidateURL] = useRevalidateURLMutation()
+  const toast = useToast()
+  const revalidateURLFunc = async () => {
+    const data = await revalidateURL(revalidateURLText)
+    if (Object.keys(data)[0] === 'error') {
+      toast({
+        title: 'Failed Revalidation',
+        description: 'Check URL and try again',
+        status: 'error',
+        duration: 2000,
+      })
+    } else {
+      toast({
+        title: 'Revalidation Successful',
+        description: `You have Successfully revalidated: ${revalidateURLText}`,
+        status: 'success',
+        duration: 4000,
+      })
+    }
+  }
   const wikiMetaData = [
     {
       icon: RiNewspaperFill,
@@ -272,7 +292,7 @@ your wallet to continue"
             <Input
               mb={5}
               onChange={e => {
-                if (e.target.value.length > 3) {
+                if (e.target.value.length >= 1) {
                   setRevalidateActive(false)
                   setRevalidateURLText(e.target.value)
                 } else {
@@ -283,7 +303,7 @@ your wallet to continue"
             <Button
               disabled={revalidateActive}
               onClick={() => {
-                revalidateURL(revalidateURLText)
+                revalidateURLFunc()
               }}
             >
               Revalidate Url
