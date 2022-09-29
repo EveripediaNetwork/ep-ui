@@ -30,6 +30,9 @@ export interface ToggleUser {
   active: boolean
 }
 
+export interface RevalidateURL {
+  route: string
+}
 export type ProfileData = {
   username: string
   avatar: string

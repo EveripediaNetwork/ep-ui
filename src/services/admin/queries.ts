@@ -231,6 +231,11 @@ export const HIDE_WIKI = gql`
   }
 `
 
+export const REVALIDATE_URL = gql`
+  mutation RevalidateURL($route: String!) {
+    revalidatePage(route: $route)
+  }
+`
 export const CHECK_ADMIN = gql`
   query isAdmin {
     isAdmin
