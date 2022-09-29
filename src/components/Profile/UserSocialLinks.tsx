@@ -8,24 +8,30 @@ interface ProfileLinksProps {
   links?: ProfileLinks
   address: string
 }
+
+type Social = keyof typeof dt
+
 const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
-  const socials = Object.keys(links || {}) as Array<keyof ProfileLinks>
+  const socialsWithURl = Object.entries(links || {}).filter(e =>
+    Boolean(e[1]),
+  ) as Array<[Social, string?]>
+
   return (
     <HStack justify="center" align="center" spacing={4}>
       {links &&
-        socials.map(key => {
+        socialsWithURl.map(social => {
           return (
             <Link
               position="relative"
               rel="nofollow"
               target="_blank"
-              href={dt[key].urlPrefix(links[key] || '')}
+              href={dt[social[0]].urlPrefix(social[1] || '')}
             >
-              <Tooltip hasArrow label={dt[key].label}>
+              <Tooltip hasArrow label={dt[social[0]].label}>
                 <span>
                   <Icon
-                    aria-label={dt[key].label}
-                    as={dt[key].icon}
+                    aria-label={dt[social[0]].label}
+                    as={dt[social[0]].icon}
                     boxSize="25px"
                     _hover={{
                       opacity: 0.7,
