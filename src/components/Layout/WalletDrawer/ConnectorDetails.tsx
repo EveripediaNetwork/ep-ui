@@ -36,7 +36,7 @@ const ConnectorDetails = ({
           {connector.name === 'Magic' ? 'Email / Social Media' : connector.name}
         </Text>
         {connector.name === 'MetaMask' && !isClicked && (
-          <Text fontSize="sm" fontWeight="medium" color="gray.500">
+          <Text fontSize="sm" fontWeight="medium" color="fadedText2">
             popular
           </Text>
         )}

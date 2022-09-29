@@ -30,9 +30,11 @@ const AboutOurTeamSlider = ({ children }: AboutOurTeamSliderProps) => {
   }
   return (
     <>
-      <Carousel settings={settings}>{children}</Carousel>
+      <Carousel topArrow="30%" settings={settings}>
+        {children}
+      </Carousel>
       <style jsx global>{`
-        .slick-slider {
+        .about__ourTeamSliderWrapper .slick-slider {
           height: 550px;
         }
         .slick-center .teamMember__about {

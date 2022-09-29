@@ -38,7 +38,7 @@ const WikiAccordion = ({
         bgColor: withNoDarkBg ? 'gray.800' : 'gray.700',
       }}
       p={3}
-      borderRadius={4}
+      borderRadius={8}
     >
       <HStack cursor="pointer" onClick={onToggle} justify="start">
         <IconButton

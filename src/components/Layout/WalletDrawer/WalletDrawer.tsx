@@ -146,7 +146,7 @@ const WalletDrawer = ({
                   )}
                 </Menu>
                 {isUserConnected && (
-                  <Text color="gray.500" pl={1} fontSize="sm">
+                  <Text color="fadedText2" pl={1} fontSize="sm">
                     {username || (userAddress && shortenAccount(userAddress))}
                   </Text>
                 )}

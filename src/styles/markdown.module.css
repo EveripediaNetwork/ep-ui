@@ -86,7 +86,6 @@ html[data-theme='dark'] .markdownBody a {
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #ffffff;
 }
 
 .markdownBody code,
@@ -580,6 +579,6 @@ html[data-theme='dark'] .markdownBody a {
 }
 
 .markdownBodyDark blockquote {
-  color: #a9b6c5;
-  border-left: 0.25em solid #4c5566;
+  color: #ffffffa3;
+  border-left: 0.25em solid #ffffffa3;
 }

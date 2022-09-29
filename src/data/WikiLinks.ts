@@ -1,5 +1,4 @@
 import { AiFillLinkedin, AiFillYoutube } from 'react-icons/ai'
-import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
 import TwitterIcon from '@/components/Icons/twitterIcon'
@@ -12,6 +11,7 @@ import { CommonMetaIds } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
+import { RiGlobalFill } from 'react-icons/ri'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -108,7 +108,7 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.WEBSITE,
     type: LinkType.WEBSITE,
     label: 'Website',
-    icon: BsGlobe,
+    icon: RiGlobalFill,
     tests: [/https:\/\/(www.)?\w+.\w+/],
   },
   {

@@ -4,8 +4,8 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<BoxProps, 'as'> &
   ImageProps & {
-    imgW?: number | string
-    imgH?: number | string
+    imgW?: number | string | any
+    imgH?: number | string | any
   }
 
 export const Image = ({
@@ -16,12 +16,13 @@ export const Image = ({
   priority,
   placeholder,
   blurDataURL,
+  objectFit = 'cover',
   ...rest
 }: NextChakraImageProps) => (
   <Box h={imgH} w={imgW} {...rest} overflow="hidden" position="relative">
     <NextImage
       quality={95}
-      objectFit="cover"
+      objectFit={objectFit}
       objectPosition="center"
       layout={imgW && imgH ? 'fixed' : 'fill'}
       src={src}
