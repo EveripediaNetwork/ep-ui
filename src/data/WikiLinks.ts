@@ -7,6 +7,7 @@ import InstagramIcon from '@/components/Icons/instagramIcon'
 import FacebookIcon from '@/components/Icons/facebookIcon'
 import GithubIcon from '@/components/Icons/githubIcon'
 import TelegramIcon from '@/components/Icons/telegramIcon'
+import OpenseaIcon from '@/components/Icons/openseaicon'
 import { CommonMetaIds } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
@@ -103,6 +104,13 @@ export const LINK_OPTIONS = [
     label: 'Coin Market Cap',
     icon: CoinMarketCap,
     tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
+  },
+  {
+    id: CommonMetaIds.OPENSEA_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Opensea',
+    icon: OpenseaIcon,
+    tests: [/https:\/\/opensea\.io\/\w+/],
   },
   {
     id: CommonMetaIds.WEBSITE,
