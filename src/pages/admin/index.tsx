@@ -69,8 +69,7 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-    startDate: 0,
-    interval: 'week',
+    interval: 'year',
   })
 
   const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
