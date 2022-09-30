@@ -20,7 +20,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import { useENSData } from '@/hooks/useENSData'
 import { Carousel, Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
+import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 
 const TRENDING_WIKI_IMG_WIDTH = 300
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {

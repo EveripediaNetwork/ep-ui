@@ -14,7 +14,7 @@ import {
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { useENSData } from '@/hooks/useENSData'
 import shortenAccount from '@/utils/shortenAccount'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { format } from 'date-fns'
 import { shortenText } from '@/utils/shortenText'
 import { MdFormatQuote } from 'react-icons/md'

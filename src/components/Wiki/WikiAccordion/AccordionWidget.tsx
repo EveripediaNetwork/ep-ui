@@ -21,7 +21,7 @@ import {
   RiShareBoxLine,
 } from 'react-icons/ri'
 import shortenAccount from '@/utils/shortenAccount'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { getUsername } from '@/utils/getUsername'
 
