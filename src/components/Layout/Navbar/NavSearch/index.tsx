@@ -36,6 +36,7 @@ import { Link, LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -205,9 +206,7 @@ const NavSearch = (props: NavSearchProps) => {
   const accountsSearchList = (
     <>
       {results.accounts?.slice(0, ACCOUNTS_LIMIT).map(account => {
-        const accountAvatar = `${config.pinataBaseUrl}${account.avatar}`
         const value = fillType(account, SEARCH_TYPES.ACCOUNT)
-
         return (
           <AutoCompleteItem
             key={account.id}
@@ -217,7 +216,11 @@ const NavSearch = (props: NavSearchProps) => {
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
-            <Avatar src={accountAvatar} name={account.username} size="xs" />
+            <DisplayAvatar
+              alt={account.username}
+              address={account.id}
+              avatarIPFS={account.avatar}
+            />
             <Flex direction="column">
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {account.username}
