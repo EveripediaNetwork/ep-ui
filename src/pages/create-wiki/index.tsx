@@ -47,7 +47,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import { MdTitle } from 'react-icons/md'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
-import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
+import Highlights from '@/components/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { getDeadline } from '@/utils/getDeadline'
@@ -83,7 +83,7 @@ import {
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
-import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
+import WikiScoreIndicator from '@/components/Editor/WikiScoreIndicator'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
@@ -91,7 +91,7 @@ type PageWithoutFooter = NextPage & {
   noFooter?: boolean
 }
 
-const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
+const Editor = dynamic(() => import('@/components/Editor/Editor'), {
   ssr: false,
 })
 

@@ -27,7 +27,7 @@ import { useGetCategoriesLinksQuery } from '@/services/categories'
 
 import { MData } from '@/types/Wiki'
 import { slugifyText } from '@/utils/slugify'
-import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
+import Tags from '@/components/Editor/Highlights/HighlightsModal/Tags'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 
 const HighlightsModal = ({

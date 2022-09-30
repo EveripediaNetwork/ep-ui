@@ -4,7 +4,7 @@ import * as tagsInput from '@zag-js/tags-input'
 import { mergeProps, useMachine, useSetup } from '@zag-js/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
+import { tagsInputStyle } from '@/components/Editor/Highlights/HighlightsModal/styles'
 import { useTagSearch } from '@/services/search/utils'
 import { TagsSuggestions } from '@/data/TagsSuggestions'
 
