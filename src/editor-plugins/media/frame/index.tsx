@@ -52,7 +52,11 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           <Heading fontSize="20px" mb="2px">
             Insert Media
           </Heading>
-          <Text mb="10px" color="#758093">
+          <Text
+            mb="10px"
+            color="#2D3748 !important"
+            _dark={{ color: '#ffffffa3 !important' }}
+          >
             All media files will be displayed here. Click on them to insert to
             wiki.
           </Text>
@@ -126,7 +130,13 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             <Heading fontSize="20px" mb="2px">
               No Media Found
             </Heading>
-            <Text textAlign="center" maxW="300px" mb="10px" color="#758093">
+            <Text
+              textAlign="center"
+              maxW="300px"
+              mb="10px"
+              color="#2D3748 !important"
+              _dark={{ color: '#ffffffa3 !important' }}
+            >
               To add media files, click on the &quot;Add new image and
               video&quot; button at the right of editor
             </Text>

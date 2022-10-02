@@ -11,7 +11,7 @@ const SummaryInput = () => {
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">
-        <Text opacity={0.5}>{`${t('wikiSummaryLabel')}`}</Text>
+        <Text color="wikiSummaryLabel">{`${t('wikiSummaryLabel')}`}</Text>
         <Tag
           variant="solid"
           colorScheme={

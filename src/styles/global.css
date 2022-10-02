@@ -62,6 +62,14 @@ html {
 }
 
 /* =========================== */
+/* EDITOR PLUGIN CONTENT STYLES */
+/* =========================== */
+
+.toastui-editor-defaultUI * {
+  font-family: Montserrat, sans-serif !important;
+}
+
+/* =========================== */
 /* EDITOR SHELL STYLES */
 /* =========================== */
 .ProseMirror,
