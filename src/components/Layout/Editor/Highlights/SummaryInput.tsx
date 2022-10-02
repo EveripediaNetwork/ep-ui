@@ -28,6 +28,7 @@ const SummaryInput = () => {
       </HStack>
       <Textarea
         bgColor={showRed ? '#d406082a' : 'transparent'}
+        color="wikiSummaryInputText"
         _focus={{
           borderColor: showRed ? '#ff787c' : '#63b3ed',
           boxShadow: showRed ? '0 0 0 1px #ff787c' : '0 0 0 1px #63b3ed',

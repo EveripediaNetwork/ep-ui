@@ -178,6 +178,7 @@ const ImageInput = ({
             w="90%"
             textAlign="center"
             value=""
+            color="wikiDropzoneText"
             onChange={handleOnImageInputChanges}
             placeholder={
               modalUpload
