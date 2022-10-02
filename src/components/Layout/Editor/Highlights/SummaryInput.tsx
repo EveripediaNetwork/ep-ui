@@ -46,6 +46,7 @@ const SummaryInput = () => {
           }
         }}
         placeholder={`${t('wikiSummaryPlaceholder')}`}
+        _placeholder={{ color: 'wikiSummaryInputText' }}
       />
     </Box>
   )

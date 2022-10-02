@@ -185,6 +185,7 @@ const ImageInput = ({
                 ? `${t('pasteModalMainImgLabel')}`
                 : `${t('pasteMainImgLabel')}`
             }
+            _placeholder={{ color: 'wikiDropzoneText' }}
           />
         )}
       </Flex>

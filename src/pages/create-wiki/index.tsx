@@ -507,6 +507,7 @@ const CreateWikiContent = () => {
             }}
             value={wiki.title}
             placeholder={`${t('wikiTitlePlaceholder')}`}
+            _placeholder={{ color: 'wikiTitleInputText' }}
           />
         </InputGroup>
 

@@ -166,10 +166,18 @@ const Dropzone = ({
                 <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
                   {dropzonePlaceHolderTitle ? (
                     <>
-                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      <Text
+                        textAlign="center"
+                        color="wikiDropzoneText"
+                        fontWeight="bold"
+                      >
                         {dropzonePlaceHolderTitle}
                       </Text>
-                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      <Text
+                        textAlign="center"
+                        color="wikiDropzoneText"
+                        fontWeight="bold"
+                      >
                         {dropzonePlaceHolderSize}
                       </Text>
                     </>

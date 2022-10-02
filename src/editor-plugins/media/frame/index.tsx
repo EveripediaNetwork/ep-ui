@@ -17,21 +17,32 @@ import {
 } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
-import { RiImage2Line, RiVideoLine } from 'react-icons/ri'
+import { RiImage2Line, RiVideoLine, RiCloseLine } from 'react-icons/ri'
 
 const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   const [media, setMedia] = React.useState<Media[]>()
+  const { eventEmitter } = editorContext
+
   function handleImageClick(m: Media): void {
-    editorContext.eventEmitter.emit('command', 'insertImage', {
+    eventEmitter.emit('command', 'insertImage', {
       src: `${config.pinataBaseUrl}${m.id}`,
       alt: m.name,
     })
   }
 
   function handleVideoClick(m: Media): void {
-    editorContext.eventEmitter.emit('command', 'insertVideo', {
+    eventEmitter.emit('command', 'insertVideo', {
       src: `${m.id}`,
       alt: m.name,
+    })
+  }
+
+  const deleteMedia = (mediaId: string) => {
+    store.dispatch({
+      type: 'wiki/removeMedia',
+      payload: {
+        id: mediaId,
+      },
     })
   }
 
@@ -86,6 +97,25 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                       color="#ffffff"
                       bgColor="#0000004f"
                     />
+                    <Center
+                      pos="absolute"
+                      top="-10"
+                      right="-10"
+                      color="white"
+                      bgColor="#1A202C"
+                      w="24px"
+                      h="24"
+                      zIndex={3}
+                      borderRadius="50%"
+                      _dark={{ color: '#1A202C', bgColor: 'white' }}
+                    >
+                      <RiCloseLine
+                        cursor="pointer"
+                        onClick={() => deleteMedia(m.id)}
+                        color="inherit"
+                        size="14"
+                      />
+                    </Center>
                   </Box>
                 )
               }
