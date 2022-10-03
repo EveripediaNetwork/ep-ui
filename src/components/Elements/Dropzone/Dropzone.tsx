@@ -166,19 +166,31 @@ const Dropzone = ({
                 <Box px="8" mb={!showFetchedImage ? '10' : '1'}>
                   {dropzonePlaceHolderTitle ? (
                     <>
-                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      <Text
+                        textAlign="center"
+                        color="wikiDropzoneText"
+                        fontWeight="bold"
+                      >
                         {dropzonePlaceHolderTitle}
                       </Text>
-                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      <Text
+                        textAlign="center"
+                        color="wikiDropzoneText"
+                        fontWeight="bold"
+                      >
                         {dropzonePlaceHolderSize}
                       </Text>
                     </>
                   ) : (
                     <>
-                      <Text textAlign="center" opacity="0.5">
+                      <Text textAlign="center" color="wikiDropzoneText">
                         Drag and drop a <b>{textType}</b>, or click to select.
                       </Text>
-                      <Text textAlign="center" opacity="0.5" fontWeight="bold">
+                      <Text
+                        textAlign="center"
+                        color="wikiDropzoneText"
+                        fontWeight="bold"
+                      >
                         (10mb max)
                       </Text>
                     </>

@@ -9,6 +9,7 @@ import {
   Spinner,
   Tooltip,
 } from '@chakra-ui/react'
+import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
 import shortenBalance from '@/utils/shortenBallance'
@@ -157,9 +158,22 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 mt={2}
                 cursor="pointer"
               >
-                <Text fontWeight="bold" fontSize="medium">
-                  Add Funds
-                </Text>
+                <Link
+                  target="_blank"
+                  h="100%"
+                  w="full"
+                  textDecoration="none"
+                  _hover={{ textDecoration: 'none' }}
+                  _focus={{ boxShadow: 'none' }}
+                  href="https://dashboard.iq.wiki/dashboard"
+                  variant="unstyled"
+                >
+                  <Center height="16">
+                    <Text fontWeight="bold" fontSize="medium">
+                      IQ Dashboard
+                    </Text>
+                  </Center>
+                </Link>
               </Center>
             </Flex>
             {balanceBreakdown && walletDetails && walletDetails.length > 0 && (
