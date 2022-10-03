@@ -6,8 +6,8 @@ const OpenseaIcon = (props: IconProps) => {
     <Icon
       fill="currentcolor"
       {...props}
-      width="25px"
-      height="24px"
+      width="21px !important"
+      height="21px !important"
       viewBox="0 0 25 24"
     >
       <g clipPath="url(#clip0_9057_69105)">
