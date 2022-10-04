@@ -25,7 +25,7 @@ import {
   usePostPromotedWikiMutation,
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import shortenAccount from '@/utils/shortenAccount'
