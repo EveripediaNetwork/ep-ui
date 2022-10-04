@@ -31,7 +31,7 @@ const img = (
   props: JSX.IntrinsicAttributes &
     ClassAttributes<HTMLImageElement> &
     ImgHTMLAttributes<HTMLImageElement>,
-) => <img style={{ margin: 'auto' }} {...props} alt='Blog entry asset' />
+) => <img style={{ margin: 'auto' }} {...props} alt="Blog entry asset" />
 
 const a = ({
   href,

@@ -19,24 +19,24 @@ export const formatEntry = async (
   timestamp,
   cover_image: blog.body
     ? (blog.body
-        .split('\n\n')[0]
-        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+      .split('\n\n')[0]
+      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
     : null,
   image_sizes: 50,
 })
 
-export const formatBlog = (blog: any) => ({
+export const formatBlog = (blog: Blog) => ({
   title: blog.title,
   slug: slugify(blog.title || ''),
   body: blog.body,
   digest: blog.digest,
-  contributor: blog.publisher.project.address,
+  contributor: blog?.publisher?.project?.address || '',
   timestamp: blog.timestamp,
   cover_image: blog.body
     ? (blog.body
-        .split('\n\n')[0]
-        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
-    : null,
+      .split('\n\n')[0]
+      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+    : '',
   image_sizes: 50,
 })
 

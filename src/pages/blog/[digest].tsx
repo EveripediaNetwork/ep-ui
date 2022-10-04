@@ -163,7 +163,7 @@ export const BlogPostPage = ({
 export const getServerSideProps: GetServerSideProps = async context => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
-  const blog = formatBlog(result.data?.entry)
+  const blog = formatBlog(result.data?.entry as Blog)
 
   blog.body = String(
     await unified()

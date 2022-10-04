@@ -8,6 +8,11 @@ export type Blog = {
   title: string
   timestamp?: number
   transaction?: string
+  publisher?: {
+    project: {
+      address: string
+    }
+  }
 }
 
 type EntryPathPicked = Pick<Blog, 'slug' | 'timestamp'>
