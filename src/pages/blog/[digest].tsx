@@ -120,7 +120,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
   }, [digest])
 
   return (
-    <chakra.div bgColor="pageBg" my={-8} py={4}>
+    <chakra.div bgColor="blogPageBg" my={-8} py={4}>
       <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
         {blog ? (
           <>
@@ -176,8 +176,8 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
             spacing={{ base: 2, md: 4, lg: 8 }}
             px={{ base: 4, md: 14, lg: '24' }}
             py="8"
-            bg="gray.300"
-            _dark={{ bg: 'whiteAlpha.200' }}
+            bg="gray.100"
+            _dark={{ bg: 'gray.700' }}
             rounded="lg"
           >
             <Text

@@ -45,6 +45,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'gray.800',
     },
+    blogPageBg: {
+      default: 'white',
+      _dark: 'gray.800',
+    },
     hoverBg: {
       default: 'gray.100',
       _dark: 'gray.600',
