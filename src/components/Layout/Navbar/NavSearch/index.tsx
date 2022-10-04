@@ -167,7 +167,13 @@ const NavSearch = (props: NavSearchProps) => {
                 {getWikiSummary(article, WikiSummarySize.Big)}
               </Text>
             </Flex>
-            <Wrap w="full" justify="end" gap="1" ml="auto">
+            <Wrap
+              w="full"
+              justify="end"
+              gap="1"
+              ml="auto"
+              display={article.tags.length > 0 ? 'flex' : 'none'}
+            >
               {article.tags?.map(tag => (
                 <chakra.div
                   key={`${article.id}-${tag.id}`}
