@@ -252,12 +252,14 @@ export const InsightTableWikiCreated = (
                     <HStack spacing={5}>
                       {!item.promoted ? (
                         <Text
-                          color="#E2E8F0"
-                          _dark={{ color: '#495a68' }}
-                          cursor={item.hidden ? 'pointer' : 'not-allowed'}
+                          color={item.hidden ? '#E2E8F0' : '#FF5CAA'}
+                          _dark={{
+                            color: item.hidden ? '#51565F' : '#FF1A88',
+                          }}
+                          cursor={item.hidden ? 'not-allowed' : 'pointer'}
                           fontWeight="semibold"
                           onClick={() => {
-                            if (item.hidden) {
+                            if (!item.hidden) {
                               shouldPromote(item.title, item.id)
                             }
                           }}
@@ -268,15 +270,17 @@ export const InsightTableWikiCreated = (
                         <HStack
                           spacing={2}
                           onClick={() => {
-                            if (item.hidden) {
+                            if (!item.hidden) {
                               findSection(item.promoted)
                             }
                           }}
                         >
                           <Text
                             color="#E2E8F0"
-                            _dark={{ color: '#495a68' }}
-                            cursor={item.hidden ? 'pointer' : 'not-allowed'}
+                            _dark={{
+                              color: item.hidden ? '#51565F' : '#495a68',
+                            }}
+                            cursor={item.hidden ? 'not-allowed' : 'pointer'}
                           >
                             Promote
                           </Text>
@@ -291,10 +295,12 @@ export const InsightTableWikiCreated = (
 
                       {!item.hidden ? (
                         <Text
-                          cursor="pointer"
+                          cursor={item.hidden ? 'not-allowed' : 'pointer'}
                           fontWeight="medium"
                           onClick={() => {
-                            shouldArchive(item.hidden, item.id)
+                            if (!item.hidden) {
+                              shouldArchive(item.hidden, item.id)
+                            }
                           }}
                         >
                           Archive
@@ -305,11 +311,11 @@ export const InsightTableWikiCreated = (
                           onClick={() => shouldArchive(item.hidden, item.id)}
                         >
                           <Text
-                            color="#E2E8F0"
-                            _dark={{ color: '#495a68' }}
+                            color="#F11a82"
+                            _dark={{ color: '#FF1A88' }}
                             cursor="pointer"
                           >
-                            Archive
+                            Unarchive
                           </Text>
                           <Icon
                             fontSize="20px"
