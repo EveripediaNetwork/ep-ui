@@ -7,7 +7,7 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getUsername } from '@/utils/getUsername'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '../WikiImage'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
+import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
