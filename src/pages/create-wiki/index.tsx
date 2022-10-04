@@ -103,7 +103,7 @@ const CreateWikiContent = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
-  const {userCanEdit} = useWhiteListValidator(userAddress)
+  const { userCanEdit } = useWhiteListValidator(userAddress)
 
   const commitMessageLimitAlertStyle = {
     sx: {
@@ -334,7 +334,8 @@ const CreateWikiContent = () => {
     submittingWiki ||
     !userAddress ||
     signing ||
-    isLoadingWiki || !userCanEdit
+    isLoadingWiki ||
+    !userCanEdit
 
   const handleOnEditorChanges = (
     val: string | undefined,
