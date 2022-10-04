@@ -34,6 +34,7 @@ import {
   PopoverFooter,
   Tag,
   Text,
+  Tooltip,
 } from '@chakra-ui/react'
 import {
   getIsWikiSlugValid,
@@ -520,21 +521,34 @@ const CreateWikiContent = () => {
             // Publish button with commit message for wiki edit
             <Popover onClose={() => setIsWritingCommitMsg(false)}>
               <PopoverTrigger>
-                <Button
-                  isLoading={submittingWiki}
-                  _disabled={{
-                    opacity: disableSaveButton() ? 0.5 : undefined,
-                    _hover: {
-                      bgColor: 'grey !important',
-                      cursor: 'not-allowed',
-                    },
-                  }}
-                  loadingText="Loading"
-                  disabled={disableSaveButton()}
-                  onClick={() => setIsWritingCommitMsg(true)}
+                <Tooltip
+                  display={!userCanEdit ? 'block' : 'none'}
+                  p={2}
+                  rounded="md"
+                  placement="bottom-start"
+                  color="#fff"
+                  shouldWrapChildren
+                  bg="brandLinkColor"
+                  hasArrow
+                  label="Your address is not yet whitelisted"
+                  mt="3"
                 >
-                  Publish
-                </Button>
+                  <Button
+                    isLoading={submittingWiki}
+                    _disabled={{
+                      opacity: disableSaveButton() ? 0.5 : undefined,
+                      _hover: {
+                        bgColor: 'grey !important',
+                        cursor: 'not-allowed',
+                      },
+                    }}
+                    loadingText="Loading"
+                    disabled={disableSaveButton()}
+                    onClick={() => setIsWritingCommitMsg(true)}
+                  >
+                    Publish
+                  </Button>
+                </Tooltip>
               </PopoverTrigger>
               <PopoverContent m={4}>
                 <PopoverArrow />
@@ -603,14 +617,27 @@ const CreateWikiContent = () => {
             </Popover>
           ) : (
             // Publish button without commit message at new create wiki
-            <Button
-              onClick={() => {
-                saveOnIpfs()
-              }}
-              disabled={!userCanEdit}
+            <Tooltip
+              display={!userCanEdit ? 'block' : 'none'}
+              p={2}
+              rounded="md"
+              placement="bottom-start"
+              color="#fff"
+              shouldWrapChildren
+              bg="brandLinkColor"
+              hasArrow
+              label="Your address is not yet whitelisted"
+              mt="3"
             >
-              Publish
-            </Button>
+              <Button
+                onClick={() => {
+                  saveOnIpfs()
+                }}
+                disabled={!userCanEdit}
+              >
+                Publish
+              </Button>
+            </Tooltip>
           )}
         </HStack>
       </HStack>
