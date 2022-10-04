@@ -159,7 +159,7 @@ const NavSearch = (props: NavSearchProps) => {
             {...generalItemStyles}
           >
             <Avatar src={articleImage} name={article.title} size="xs" />
-            <Flex direction="column">
+            <Flex direction="column" w={{ lg: '100%' }}>
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {article.title}
               </chakra.span>
