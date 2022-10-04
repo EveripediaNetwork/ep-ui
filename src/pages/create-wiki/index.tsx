@@ -52,7 +52,7 @@ import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { getDeadline } from '@/utils/getDeadline'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import {
@@ -85,6 +85,7 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
+import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -220,6 +221,14 @@ const CreateWikiContent = () => {
       return false
     }
 
+    if (!wiki.media?.every(m => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))) {
+      toast({
+        title: 'Some of media are still uploading, please wait',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
     return true
   }
 
@@ -259,7 +268,12 @@ const CreateWikiContent = () => {
       const finalWiki = {
         ...wiki,
         user: { id: userAddress },
-        content: String(wiki.content).replace(/\n/gm, '  \n'),
+        content: String(wiki.content)
+          .replace(/\n/gm, '  \n')
+          .replace(EditorContentOverride, '')
+          .replace(/<\/?em>/gm, '*')
+          .replace(/<\/?strong>/gm, '**')
+          .replace(/<\/?del>/gm, '~~'),
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
@@ -480,7 +494,7 @@ const CreateWikiContent = () => {
           </InputLeftElement>
           <Input
             fontWeight="500"
-            color="linkColor"
+            color="wikiTitleInputText"
             borderColor="transparent"
             fontSize="18px"
             variant="flushed"
@@ -493,6 +507,7 @@ const CreateWikiContent = () => {
             }}
             value={wiki.title}
             placeholder={`${t('wikiTitlePlaceholder')}`}
+            _placeholder={{ color: 'wikiTitleInputText' }}
           />
         </InputGroup>
 

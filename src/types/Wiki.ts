@@ -46,6 +46,7 @@ export enum CommonMetaIds {
   GITHUB_URL = 'github_profile',
   COIN_MARKET_CAP = 'coinmarketcap_url',
   COINGECKO_PROFILE = 'coingecko_profile',
+  OPENSEA_PROFILE = 'opensea_profile',
 
   // Explorers
   ETHERSCAN_PROFILE = 'etherscan_profile',
@@ -73,6 +74,7 @@ export const WikiPossibleSocialsList = [
   CommonMetaIds.GITHUB_URL,
   CommonMetaIds.COIN_MARKET_CAP,
   CommonMetaIds.COINGECKO_PROFILE,
+  CommonMetaIds.OPENSEA_PROFILE,
 
   // Explorers
   CommonMetaIds.ETHERSCAN_PROFILE,
@@ -154,7 +156,7 @@ export interface Wiki {
   id: string
   transactionHash?: string
   ipfs?: string
-  summary?: string
+  summary: string
   title: string
   content: string
   categories: BaseCategory[]
@@ -168,14 +170,15 @@ export interface Wiki {
   updated?: string
   created?: string
   author: Author
+  hidden: boolean
 }
 
 export type WikiPreview = Pick<
   Wiki,
   | 'id'
+  | 'hidden'
   | 'title'
   | 'summary'
-  | 'content'
   | 'tags'
   | 'images'
   | 'categories'
@@ -192,3 +195,5 @@ export const whiteListedDomains = [
   'iq.wiki/wiki',
   'ipfs.everipedia.org/ipfs',
 ]
+
+export const whiteListedLinkNames = ['YOUTUBE@VID']

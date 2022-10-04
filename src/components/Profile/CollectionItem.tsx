@@ -16,7 +16,7 @@ import { shortenText } from '@/utils/shortenText'
 import { Wiki } from '@/types/Wiki'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 export type CollectionItemProps = {
   item: Wiki
@@ -46,11 +46,11 @@ export const CollectionItem = (props: CollectionItemProps) => {
         <Flex direction="column" px="3" fontSize="xs" py="2" mb="3">
           <Flex align="center">
             <LinkOverlay href={`/wiki/${id}`}>
-              <chakra.span color="gray.500"> {title}</chakra.span>
+              <chakra.span color="fadedText2"> {title}</chakra.span>
             </LinkOverlay>
             {updated && (
               <>
-                <chakra.span ml="auto" color="gray.500">
+                <chakra.span ml="auto" color="fadedText2">
                   Last Updated:
                 </chakra.span>
                 <chakra.span>{getReadableDate(updated)}</chakra.span>

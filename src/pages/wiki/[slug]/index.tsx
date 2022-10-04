@@ -4,24 +4,24 @@ import {
   getRunningOperationPromises,
   getWiki,
   getWikiCreatorAndEditor,
-  getWikisByCategory,
+  getWikiPreviewsByCategory,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@/types/Wiki'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
-  wiki?: WikiType | null
+  wiki: WikiType | null
+  relatedWikis: WikiType[] | null
 }
 
-const Wiki = ({ wiki }: WikiProps) => {
+const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
   const router = useRouter()
 
   const { slug } = router.query
@@ -29,7 +29,6 @@ const Wiki = ({ wiki }: WikiProps) => {
   const toc = useAppSelector(state => state.toc)
 
   const [wikiData, setWikiData] = useState(wiki)
-  const [isLoading, setIsLoading] = useState(true)
 
   // get the link id if available to scroll to the correct position
   useEffect(() => {
@@ -46,8 +45,7 @@ const Wiki = ({ wiki }: WikiProps) => {
         const { data } = await store.dispatch(
           getWikiCreatorAndEditor.initiate(slug),
         )
-        setWikiData(wiki ? { ...wiki, ...data } : undefined)
-        setIsLoading(true)
+        setWikiData(wiki ? { ...wiki, ...data } : null)
         incrementWikiViewCount(slug)
       }
     }
@@ -63,12 +61,12 @@ const Wiki = ({ wiki }: WikiProps) => {
           dateModified={wikiData.updated}
           datePublished={wikiData.created}
           title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
-          description={getWikiSummary(wikiData)}
+          description={wikiData.summary}
           mainImage={getWikiImageUrl(wikiData)}
         />
       )}
       <Box as="main" mt={-2}>
-        <WikiMarkup wiki={wikiData} isLoading={isLoading} />
+        <WikiMarkup wiki={wikiData} relatedWikis={relatedWikis} />
       </Box>
     </>
   )
@@ -77,20 +75,49 @@ const Wiki = ({ wiki }: WikiProps) => {
 export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
-  const { data: wiki } = await store.dispatch(getWiki.initiate(slug))
 
-  wiki?.categories.map(category =>
-    getWikisByCategory.initiate({ category: category.id }),
+  const { data: wiki, error: wikiError } = await store.dispatch(
+    getWiki.initiate(slug),
   )
 
+  if (wikiError)
+    throw new Error(`There was an error fetching the wiki: ${wikiError}`)
+
+  if (wiki?.hidden) {
+    return {
+      redirect: {
+        destination: `/404/?wiki=${wiki.title}`,
+        permanent: false,
+      },
+    }
+  }
+
+  let relatedWikis = null
+  let relatedWikisError = null
+  if (wiki?.categories) {
+    const { data, error } = await store.dispatch(
+      getWikiPreviewsByCategory.initiate({
+        category: wiki.categories[0].id || '',
+        limit: 4,
+      }),
+    )
+    relatedWikis = data
+    relatedWikisError = error
+  }
   await Promise.all(getRunningOperationPromises())
+
+  if (relatedWikisError)
+    throw new Error(
+      `There was an error fetching the related wikis: ${wikiError}`,
+    )
+
   return {
-    props: { wiki: wiki || null },
+    props: { wiki: wiki || null, relatedWikis },
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: true }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export default Wiki

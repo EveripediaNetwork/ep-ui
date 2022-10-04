@@ -1057,6 +1057,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@builder.io/partytown@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.0.tgz#2794cbab3fead03605b368c42f9826cdb01aba14"
+  integrity sha512-Mw2KeiPglCZujE99ntbJfZq52dJktzhfifWav4UJYgDx81L/hWMQXg/bNqsYlz9cnopDBqYewy+6qbv3b1DcyQ==
+
 "@chakra-ui/accordion@2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@chakra-ui/accordion/-/accordion-2.0.2.tgz#7a1e4313a49d57c2af3063379cccb1a72c3362a5"
@@ -2946,7 +2951,12 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@toast-ui/editor@^3.1.3", "@toast-ui/editor@^3.1.7":
+"@toast-ui/editor-plugin-table-merged-cell@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@toast-ui/editor-plugin-table-merged-cell/-/editor-plugin-table-merged-cell-3.1.0.tgz#86422e2bc0dc2becf956aa7fa6cc5b45031e9611"
+  integrity sha512-9ch9h1heTs0Kkmhwpb1ef9psQSM77wvUO3J75BsHv3RO5nAug42W3HC4Y+qbX5n1z1VhOGGjuOb4GPIr8s5dRA==
+
+"@toast-ui/editor@^3.1.3":
   version "3.1.7"
   resolved "https://registry.yarnpkg.com/@toast-ui/editor/-/editor-3.1.7.tgz#6c889c8d068d7dd1c996a4a384ebb3dddd9e6b1d"
   integrity sha512-SEfahMrrphveuGhOQyYX3UwjJWjCRnnL6pVPc67uVDBS/JsOESJDG2kcfW9MHJhHnOv6m6WV1jRQW9kPatgumw==
@@ -2960,12 +2970,26 @@
     prosemirror-state "^1.3.4"
     prosemirror-view "^1.18.7"
 
-"@toast-ui/react-editor@^3.1.3":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@toast-ui/react-editor/-/react-editor-3.1.7.tgz#ebeccbc8c8918d95b00cc234a3e9f29204f703bf"
-  integrity sha512-JpmYQjZHTG3EF63R0993/v+K3SBp8orhrpYilfSkh85oilv5mG9hF5Sf/cdxRapYQzry6BUT/ue4cxfA9JM8Kg==
+"@toast-ui/editor@^3.1.9":
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/@toast-ui/editor/-/editor-3.1.9.tgz#6ed6f62785488cde5571db4e21237eb26cef4833"
+  integrity sha512-Jsu3zz55Yk52fxGYq+4yWnXcnw/bSBAvB/ATRyFWKK+TQtKDF+9virDKs4b+PcXGLhCOWRWo/oHp3p0aCNJdcg==
   dependencies:
-    "@toast-ui/editor" "^3.1.7"
+    dompurify "^2.3.3"
+    prosemirror-commands "^1.1.9"
+    prosemirror-history "^1.1.3"
+    prosemirror-inputrules "^1.1.3"
+    prosemirror-keymap "^1.1.4"
+    prosemirror-model "^1.14.1"
+    prosemirror-state "^1.3.4"
+    prosemirror-view "^1.18.7"
+
+"@toast-ui/react-editor@^3.1.3":
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/@toast-ui/react-editor/-/react-editor-3.1.9.tgz#97f56c9a26a8e241cc5d398a9acf655d0de055f5"
+  integrity sha512-OIqt5D/FE7F1W8tji9OWmGnelrYZowlLRauZCE5Pd6/NT22Tc+AhGjbftJOxBPRndE3Gf9UZXdpeuvOtdtkykw==
+  dependencies:
+    "@toast-ui/editor" "^3.1.9"
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -8198,9 +8222,9 @@ react-i18next@^11.16.9:
     html-parse-stringify "^3.0.1"
 
 react-icons@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.3.1.tgz#2fa92aebbbc71f43d2db2ed1aed07361124e91ca"
-  integrity sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
+  integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
 
 react-image-crop@^10.0.4:
   version "10.0.4"
@@ -8591,11 +8615,6 @@ remove-accents@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
   integrity sha1-CkPTqq4egNuRngeuJUsoXZ4ce7U=
-
-remove-markdown@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/remove-markdown/-/remove-markdown-0.5.0.tgz#a596264bbd60b9ceab2e2ae86e5789eee91aee32"
-  integrity sha512-x917M80K97K5IN1L8lUvFehsfhR8cYjGQ/yAMRI9E7JIKivtl5Emo5iD13DhMr+VojzMCiYk8V2byNPwT/oapg==
 
 require-directory@^2.1.1:
   version "2.1.1"

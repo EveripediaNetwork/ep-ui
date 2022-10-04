@@ -16,6 +16,8 @@ import {
   GET_WIKI_SLUG_VALID,
   POST_WIKI_VIEW_COUNT,
   GET_WIKI_CREATOR_AND_EDITOR,
+  GET_WIKI_PREVIEWS_BY_CATEGORY,
+  POST_FLAG_WIKI,
 } from '@/services/wikis/queries'
 import { User, Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
@@ -85,6 +87,15 @@ type WikiCreatorAndEditor = {
 }
 type WikiCreatorAndEditorResponse = {
   wiki: WikiCreatorAndEditor
+}
+type FlagWikiArgs = {
+  report: string
+  wikiId: string
+  userId: string
+}
+
+type PostFlagWikiResponse = {
+  flagWiki: boolean
 }
 
 export const wikiApi = createApi({
@@ -193,6 +204,22 @@ export const wikiApi = createApi({
       transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
     }),
+    getWikiPreviewsByCategory: builder.query<Wiki[], WikisByCategoryArg>({
+      query: ({
+        category,
+        limit,
+        offset,
+      }: {
+        category: string
+        limit?: number
+        offset?: number
+      }) => ({
+        document: GET_WIKI_PREVIEWS_BY_CATEGORY,
+        variables: { category, limit, offset },
+      }),
+      transformResponse: (response: GetWikisByCategoryResponse) =>
+        response.wikisByCategory,
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
         document: POST_WIKI,
@@ -213,6 +240,19 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiViewCountResponse) =>
         response.wikiViewCount,
     }),
+    postFlagWiki: builder.mutation<boolean, FlagWikiArgs>({
+      query: (flagWikiArgs: FlagWikiArgs) => {
+        return {
+          document: POST_FLAG_WIKI,
+          variables: {
+            report: flagWikiArgs.report,
+            wikiId: flagWikiArgs.wikiId,
+            userId: flagWikiArgs.userId,
+          },
+        }
+      },
+      transformResponse: (response: PostFlagWikiResponse) => response.flagWiki,
+    }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
@@ -229,11 +269,13 @@ export const {
   useGetWikiPreviewQuery,
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
+  useGetWikiPreviewsByCategoryQuery,
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
   useGetIsWikiSlugValidQuery,
   usePostWikiMutation,
+  usePostFlagWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
   util: { getRunningOperationPromises },
@@ -245,11 +287,13 @@ export const {
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreview,
+  getWikiPreviewsByCategory,
   getUserWikis,
   getWikisByCategory,
   getTagWikis,
   postWiki,
   postWikiViewCount,
+  postFlagWiki,
   postImage,
   getUserCreatedWikis,
   getUserEditedWikis,

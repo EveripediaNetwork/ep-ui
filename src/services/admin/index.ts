@@ -16,6 +16,8 @@ import {
   HIDDEN_EDITORS_TABLE,
   UNHIDE_WIKI,
   GET_PAGE_COUNT,
+  CHECK_ADMIN,
+  REVALIDATE_URL,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -54,6 +56,10 @@ type PromoteWikiArgs = {
 
 type WikisEditedCountResponse = {
   wikisEdited: WikisModifiedCount[]
+}
+
+type RevalidateURL = {
+  revalidatePage: boolean
 }
 
 type WikisEditorsCountResponse = {
@@ -144,6 +150,12 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: HiddenEditorsRes) => response.usersHidden,
     }),
+    checkIsAdmin: builder.query<boolean, undefined>({
+      query: () => ({
+        document: CHECK_ADMIN,
+      }),
+      transformResponse: (response: { isAdmin: boolean }) => response.isAdmin,
+    }),
     getAllCreatedWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
         document: CREATED_WIKIS_TABLE,
@@ -185,6 +197,15 @@ export const adminApi = createApi({
       }),
       transformResponse: (response: PostHideWikiResponse) =>
         response.hideWiki.Wiki,
+    }),
+    revalidateURL: builder.mutation<boolean, string>({
+      query: (route: string) => ({
+        document: REVALIDATE_URL,
+        variables: { route },
+      }),
+      transformResponse: (response: RevalidateURL) => {
+        return response.revalidatePage
+      },
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
@@ -253,10 +274,14 @@ export const {
   useGetAllPromotedWikiCountQuery,
   useGetHiddenEditorsQuery,
   useGetPageViewCountQuery,
+  useCheckIsAdminQuery,
+  useRevalidateURLMutation,
   util: { getRunningOperationPromises },
 } = adminApi
 
 export const {
+  checkIsAdmin,
+  revalidateURL,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,

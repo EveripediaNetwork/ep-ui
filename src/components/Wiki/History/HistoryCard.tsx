@@ -21,7 +21,7 @@ import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
 import { User } from '@/types/Wiki'
 import { getUsername } from '@/utils/getUsername'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '@/components/Elements'
 import { RiHistoryLine } from 'react-icons/ri'
 
@@ -139,6 +139,7 @@ export const HistoryCard = ({
         {/* Username and Avatar of the last editor */}
         <HStack>
           <DisplayAvatar
+            alt={lastEditor.profile?.username}
             address={lastEditor.id}
             avatarIPFS={lastEditor.profile?.avatar}
           />
@@ -150,7 +151,7 @@ export const HistoryCard = ({
         {/* Date of the last edit */}
         <LinkOverlay href={`/revision/${activityId}`}>
           {lastEditedTime && (
-            <Text fontSize={{ base: 'xs', md: 'sm' }} color="gray.500">
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color="fadedText2">
               {format(new Date(lastEditedTime), 'MMMM d, yyyy')}{' '}
               {format(new Date(lastEditedTime), 'h:mm a')}
             </Text>

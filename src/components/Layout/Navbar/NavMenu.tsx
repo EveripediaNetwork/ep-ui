@@ -10,7 +10,7 @@ import {
   Text,
   HStack,
 } from '@chakra-ui/react'
-import Link from '@/components/Elements/Link/Link'
+import Link from '@/components/Elements/LinkElements/Link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
@@ -53,7 +53,7 @@ const NavMenu = ({
         }
       >
         <HStack spacing={1}>
-          <Text>{label}</Text>{' '}
+          <Text as="div">{label}</Text>{' '}
           {navItem.subItem && (label as string)?.length && (
             <Icon as={RiArrowDownSLine} />
           )}
@@ -77,6 +77,7 @@ const NavMenu = ({
               }}
               color="linkColor"
               key={key}
+              target={item.target}
             >
               {item.label === 'Settings' && <Divider />}
               <MenuItem minH="48px" bg="subMenuBg">

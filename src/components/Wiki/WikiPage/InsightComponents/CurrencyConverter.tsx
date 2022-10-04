@@ -29,6 +29,7 @@ const CurrencyBox = ({
             src={`https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/${token}.png`}
             imgH="18px"
             imgW="18px"
+            alt={token}
             bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             borderRadius="100px"
           />
@@ -96,8 +97,8 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
   )
 
   return (
-    <VStack w="100%" spacing={4} borderWidth={1} borderRadius={2}>
-      <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={4}>
+    <VStack w="100%" spacing={4} borderWidth={1} borderRadius={8}>
+      <Box w="100%" bgColor="wikiCardBg" p={3} borderRadius={8}>
         <Text
           style={{
             userSelect: 'none',
@@ -139,7 +140,7 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
             <IconButton
               bgColor="gray.100"
               borderWidth="1px"
-              color="gray.500"
+              color="fadedText2"
               aria-label="convert"
               cursor="pointer"
               _dark={{ bgColor: 'gray.800' }}

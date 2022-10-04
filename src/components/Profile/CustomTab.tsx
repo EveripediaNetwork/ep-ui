@@ -16,7 +16,7 @@ export const CustomTab = React.forwardRef<
       _focus={{ boxShadow: 'none' }}
       p="5"
       cursor="pointer"
-      color="gray.500"
+      color="fadedText2"
       pos="relative"
       {...(isSelected && {
         color: 'black',

@@ -9,7 +9,7 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '../WikiImage'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 import { Link } from '../Elements'
-import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 const CARD_DETAILS_LENGTH = 100
 const HERO_WIKI_IMG_WIDTH = 290
@@ -65,6 +65,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
                 size="20"
                 address={wiki?.user.id}
                 avatarIPFS={wiki?.user.profile?.avatar}
+                alt={getUsername(wiki?.user, username)}
               />
             </Link>
             <Text fontSize="14px" color="linkColor">

@@ -27,7 +27,7 @@ import {
 } from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { WikiImage } from '@/components/WikiImage'
-import config from '@/config'
+import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import shortenAccount from '@/utils/shortenAccount'
 import { getReadableDate } from '@/utils/getFormattedDate'
 
@@ -130,9 +130,7 @@ export const PromoteCreatedWikisModal = ({
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={`${config.pinataBaseUrl}${
-                Data.images ? Data.images[0].id : ''
-              }  `}
+              imageURL={getWikiImageUrl(Data)}
               borderRadius="lg"
               overflow="hidden"
             />
@@ -202,6 +200,7 @@ export const PromoteCreatedWikisModal = ({
                     address={Data.author?.id}
                     avatarIPFS={Data.author.profile?.avatar}
                     size="20"
+                    alt="unknown"
                   />
                   <Text fontSize="14px" color="linkColor">
                     <Link

@@ -1,5 +1,4 @@
 import { AiFillLinkedin, AiFillYoutube } from 'react-icons/ai'
-import { BsGlobe } from 'react-icons/bs'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
 import TwitterIcon from '@/components/Icons/twitterIcon'
@@ -8,10 +7,12 @@ import InstagramIcon from '@/components/Icons/instagramIcon'
 import FacebookIcon from '@/components/Icons/facebookIcon'
 import GithubIcon from '@/components/Icons/githubIcon'
 import TelegramIcon from '@/components/Icons/telegramIcon'
+import OpenseaIcon from '@/components/Icons/openseaicon'
 import { CommonMetaIds } from '@/types/Wiki'
 import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
+import { RiGlobalFill } from 'react-icons/ri'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -105,10 +106,17 @@ export const LINK_OPTIONS = [
     tests: [/https:\/\/coinmarketcap\.com\/currencies\//i],
   },
   {
+    id: CommonMetaIds.OPENSEA_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Opensea',
+    icon: OpenseaIcon,
+    tests: [/https:\/\/opensea\.io\/\w+/],
+  },
+  {
     id: CommonMetaIds.WEBSITE,
     type: LinkType.WEBSITE,
     label: 'Website',
-    icon: BsGlobe,
+    icon: RiGlobalFill,
     tests: [/https:\/\/(www.)?\w+.\w+/],
   },
   {

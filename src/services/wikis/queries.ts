@@ -5,7 +5,6 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
     wiki(id: $id) {
       id
       title
-      content
       summary
       tags {
         id
@@ -20,6 +19,7 @@ export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {
       id
+      hidden
       ipfs
       transactionHash
       created
@@ -128,12 +128,10 @@ export const GET_PROMOTED_WIKIS = gql`
     promotedWikis {
       id
       ipfs
-      content
       created
       updated
       title
       summary
-      content
       categories {
         id
         title
@@ -313,7 +311,23 @@ export const GET_WIKIS_BY_CATEGORY = gql`
     }
   }
 `
-
+export const GET_WIKI_PREVIEWS_BY_CATEGORY = gql`
+  query GetWikiPreviewsByCategory(
+    $category: String!
+    $offset: Int
+    $limit: Int
+  ) {
+    wikisByCategory(category: $category, offset: $offset, limit: $limit) {
+      id
+      title
+      summary
+      images {
+        id
+        type
+      }
+    }
+  }
+`
 export const GET_TAG_WIKIS_BY_ID = gql`
   query GetTagWikis($id: String!, $limit: Int, $offset: Int) {
     tagById(id: $id) {
@@ -372,12 +386,15 @@ export const POST_WIKI = gql`
     }
   }
 `
-
 export const POST_WIKI_VIEW_COUNT = gql`
   mutation wikiViewCount($id: String!) {
     wikiViewCount(id: $id)
   }
 `
-
+export const POST_FLAG_WIKI = gql`
+  mutation flagWiki($report: String!, $wikiId: String!, $userId: String!) {
+    flagWiki(report: $report, wikiId: $wikiId, userId: $userId)
+  }
+`
 export const POST_IMG =
   '{"query": "mutation pinImage($file: Upload!) { pinImage(fileUpload: $file){IpfsHash}} ", "variables": {"file": null}}'

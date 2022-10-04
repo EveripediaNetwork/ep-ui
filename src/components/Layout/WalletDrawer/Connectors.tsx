@@ -9,6 +9,7 @@ import {
   Spinner,
   Tooltip,
 } from '@chakra-ui/react'
+import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
 import shortenBalance from '@/utils/shortenBallance'
@@ -95,7 +96,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   return (
     <>
       {!isUserConnected && (
-        <Text mb="4" mt={2} color="gray.500" fontWeight="bold" fontSize="sm">
+        <Text mb="4" mt={2} color="fadedText2" fontWeight="bold" fontSize="sm">
           Connect with one of our available&nbsp;
           <Tooltip
             hasArrow
@@ -134,7 +135,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               w="full"
             >
               <Flex direction="column" align="center" py={4}>
-                <Text fontWeight="bold" color="gray.500" fontSize="small">
+                <Text fontWeight="bold" color="fadedText2" fontSize="small">
                   Total balance
                 </Text>
                 {totalBalanceIsLoading ? (
@@ -157,9 +158,22 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 mt={2}
                 cursor="pointer"
               >
-                <Text fontWeight="bold" fontSize="medium">
-                  Add Funds
-                </Text>
+                <Link
+                  target="_blank"
+                  h="100%"
+                  w="full"
+                  textDecoration="none"
+                  _hover={{ textDecoration: 'none' }}
+                  _focus={{ boxShadow: 'none' }}
+                  href="https://dashboard.iq.wiki/dashboard"
+                  variant="unstyled"
+                >
+                  <Center height="16">
+                    <Text fontWeight="bold" fontSize="medium">
+                      IQ Dashboard
+                    </Text>
+                  </Center>
+                </Link>
               </Center>
             </Flex>
             {balanceBreakdown && walletDetails && walletDetails.length > 0 && (

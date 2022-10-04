@@ -49,11 +49,12 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  const { data: promotedWikis } = await store.dispatch(
-    getPromotedWikis.initiate(),
+  const { data: promotedWikis, error: promotedWikisError } =
+    await store.dispatch(getPromotedWikis.initiate())
+  const { data: categories, error: categoriesError } = await store.dispatch(
+    getCategories.initiate(),
   )
-  const { data: categories } = await store.dispatch(getCategories.initiate())
-  const { data: tagsData } = await store.dispatch(
+  const { data: tagsData, error: tagsDataError } = await store.dispatch(
     getTags.initiate({
       startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
       endDate: Math.floor(Date.now() / 1000),
@@ -62,6 +63,16 @@ export async function getStaticProps() {
   await Promise.all(getWikisRunningOperationPromises())
   await Promise.all(getCategoriesRunningOperationPromises())
   await Promise.all(getTagsRunningOperationPromises())
+
+  if (promotedWikisError || categoriesError || tagsDataError) {
+    throw new Error(
+      `Error fetching data. the error is: ${{
+        promotedWikisError,
+        categoriesError,
+        tagsDataError,
+      }}`,
+    )
+  }
 
   return {
     props: {

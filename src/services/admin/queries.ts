@@ -231,6 +231,17 @@ export const HIDE_WIKI = gql`
   }
 `
 
+export const REVALIDATE_URL = gql`
+  mutation RevalidateURL($route: String!) {
+    revalidatePage(route: $route)
+  }
+`
+export const CHECK_ADMIN = gql`
+  query isAdmin {
+    isAdmin
+  }
+`
+
 export const UNHIDE_WIKI = gql`
   mutation UnHideWiki($id: String!) {
     unhideWiki(id: $id) {

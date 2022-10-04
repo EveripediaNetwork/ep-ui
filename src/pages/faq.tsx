@@ -53,12 +53,12 @@ export const Faq = () => {
                 <Text>How to Swap IQ from EOS to Ethereum</Text>
               </Stack>
               <Stack className="content-wrapper" spacing="3">
-                <Text className="content-title">What is Everipedia?</Text>
+                <Text className="content-title">What is IQ.Wiki?</Text>
                 <Divider borderColor="divider" />
-                <Text>What is Everipedia and how is it different?</Text>
+                <Text>What is IQ.Wiki and how is it different?</Text>
                 <Text>What is IQ?</Text>
                 <Text>How do I Earn IQ?</Text>
-                <Text>Everipedia Glossary</Text>
+                <Text>IQ.Wiki Glossary</Text>
               </Stack>
             </Stack>
             <Stack className="content-wrapper" spacing="3">
@@ -74,7 +74,7 @@ export const Faq = () => {
               <Text>Depositing IQ into your EPID account</Text>
             </Stack>
             <Stack className="content-wrapper" spacing="3">
-              <Text className="content-title">How to browse Everipedia</Text>
+              <Text className="content-title">How to browse IQ.Wiki</Text>
               <Divider borderColor="divider" />
               <Text>Homepage</Text>
               <Text>How to view an article&apos;s edit history</Text>
@@ -85,13 +85,13 @@ export const Faq = () => {
         </div>
         <div>
           <div data-faq-title>
-            <Download /> Using Everipedia
+            <Download /> Using IQ.Wiki
           </div>
           <SimpleGrid data-faq-content spacing="6" columns={{ md: 2, lg: 3 }}>
             <Stack className="content-wrapper" spacing="3">
               <Text className="content-title">How to use chat</Text>
               <Divider borderColor="divider" />
-              <Text>Using Everipedia Chat</Text>
+              <Text>Using IQ.Wiki Chat</Text>
             </Stack>
             <Stack className="content-wrapper" spacing="3">
               <Text className="content-title">
@@ -102,7 +102,7 @@ export const Faq = () => {
               <Text>Editing an Article</Text>
               <Text>How to view an article&apos;s edit history</Text>
               <Text>Advanced Editor Guide</Text>
-              <Text>Everipedia Guidelines</Text>
+              <Text>IQ.Wiki Guidelines</Text>
             </Stack>
             <Stack className="content-wrapper" spacing="3">
               <Text className="content-title">How to vote on an article</Text>
@@ -121,14 +121,14 @@ export const Faq = () => {
               <Divider borderColor="divider" />
               <Text>Having Trouble Logging In?</Text>
               <Text>Getting in Touch</Text>
-              <Text>Everipedia Glossary</Text>
+              <Text>IQ.Wiki Glossary</Text>
             </Stack>
             <Stack className="content-wrapper" spacing="3">
               <Text className="content-title">Terms & Policies</Text>
               <Divider borderColor="divider" />
               <Text>Terms of Service</Text>
               <Text>Privacy Policy</Text>
-              <Text>Everipedia Guidelines</Text>
+              <Text>IQ.Wiki Guidelines</Text>
               <Text>Your California Privacy Rights</Text>
             </Stack>
             <Stack className="content-wrapper" spacing="3">

@@ -24,7 +24,7 @@ interface ActivityCardProps {
   brief: string
   editor: User
   lastModTimeStamp?: string
-  wiki: Omit<Wiki, 'metadata' | 'version' | 'language' | 'author'>
+  wiki: Omit<Wiki, 'metadata' | 'version' | 'language' | 'author' | 'content'>
   activityId?: string
   wikiId?: string
   type?: string
@@ -67,17 +67,26 @@ const ActivityCard = ({
       align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }}>
+        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }} h="100%">
           <WikiImage
             cursor="pointer"
             flexShrink={0}
             imageURL={getWikiImageUrl(wiki)}
             borderRadius="lg"
             overflow="hidden"
+            alt={wiki.title}
           />
         </AspectRatio>
       </Link>
-      <Flex w="90%" flexDir="column" justify="space-between" mx="auto" px={4}>
+      <Flex
+        w="90%"
+        flex-grow="1"
+        flexDir="column"
+        justify="space-between"
+        mx="auto"
+        px={4}
+        overflowX="hidden"
+      >
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
           <HStack w={{ base: '83%', md: '70%' }}>
             <Heading
@@ -94,7 +103,6 @@ const ActivityCard = ({
             >
               {title}
             </Heading>
-
             {type && (
               <Text
                 fontSize="sm"
@@ -144,6 +152,7 @@ const ActivityCard = ({
                 address={editor.id}
                 avatarIPFS={editor.profile?.avatar}
                 size="20"
+                alt={editor.profile?.username}
               />
               <Text fontSize="14px" color="linkColor">
                 <Link

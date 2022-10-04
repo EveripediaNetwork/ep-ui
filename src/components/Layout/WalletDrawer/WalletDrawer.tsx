@@ -108,7 +108,7 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={userAddress} />
+              <DisplayAvatar address={userAddress} alt={userAddress} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
@@ -146,7 +146,7 @@ const WalletDrawer = ({
                   )}
                 </Menu>
                 {isUserConnected && (
-                  <Text color="gray.500" pl={1} fontSize="sm">
+                  <Text color="fadedText2" pl={1} fontSize="sm">
                     {username || (userAddress && shortenAccount(userAddress))}
                   </Text>
                 )}

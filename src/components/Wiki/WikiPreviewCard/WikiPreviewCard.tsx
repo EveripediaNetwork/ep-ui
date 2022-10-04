@@ -12,14 +12,13 @@ import {
 import { Wiki } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/shortenText'
 import { getUsername } from '@/utils/getUsername'
 import { Link } from '@/components/Elements'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 
 const WikiPreviewCard = ({
@@ -78,7 +77,7 @@ const WikiPreviewCard = ({
               overflow="hidden"
               orientation="vertical"
             >
-              {getWikiSummary(wiki, WikiSummarySize.Small)}
+              {wiki.summary}
             </Text>
           </Box>
           <Spacer />
@@ -89,6 +88,7 @@ const WikiPreviewCard = ({
                   <DisplayAvatar
                     address={wiki.user?.id}
                     avatarIPFS={wiki.user.profile?.avatar}
+                    alt={wiki.user.profile?.username}
                   />
                   <Link href={`/account/${wiki.user?.id}`}>
                     {getUsername(wiki.user, userENSDomain)}

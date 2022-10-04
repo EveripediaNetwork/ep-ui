@@ -1,18 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Heading, Text, Stack, Box } from '@chakra-ui/react'
-
 import {
-  RiNewspaperFill,
-  RiEditFill,
-  RiUser3Fill,
-  RiUserSearchFill,
-} from 'react-icons/ri'
+  Heading,
+  Text,
+  Stack,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  useToast,
+} from '@chakra-ui/react'
+
+import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { WikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { authenticatedRoute } from '@/components/AuthenticatedRoute'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import {
@@ -20,24 +25,37 @@ import {
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
   adminApiClient,
-  useGetPageViewCountQuery,
+  checkIsAdmin,
+  useRevalidateURLMutation,
 } from '@/services/admin'
 import dynamic from 'next/dynamic'
+import { store } from '@/store/store'
+import { useRouter } from 'next/router'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
+  const router = useRouter()
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
+  const [isAdmin, setIsAdmin] = React.useState(false)
+  const [revalidateActive, setRevalidateActive] = React.useState<boolean>(true)
+  const [revalidateURLText, setRevalidateURLText] = React.useState<string>('')
   const { setAccount } = useUserProfileData('', {
     withAllSettings: true,
   })
-  const [isTokenHeaderSet, setIsTokenHeaderSet] = useState(false)
+
   useEffect(() => {
-    if (userAddress && token) {
-      adminApiClient.setHeader('authorization', token)
-      setAccount(userAddress)
-      setIsTokenHeaderSet(true)
+    async function fetchAuth() {
+      if (userAddress && token) {
+        adminApiClient.setHeader('authorization', token)
+        const { data } = await store.dispatch(checkIsAdmin?.initiate(undefined))
+        if (!data) {
+          router.push('/404')
+        } else setIsAdmin(true)
+        setAccount(userAddress)
+      }
     }
+    fetchAuth()
   }, [userAddress, setAccount, token])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
@@ -51,8 +69,7 @@ const Admin = () => {
   })
 
   const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-    startDate: 0,
-    interval: 'week',
+    interval: 'year',
   })
 
   const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
@@ -66,9 +83,6 @@ const Admin = () => {
     interval: 'week',
   })
 
-  const { data: WeekPageView } = useGetPageViewCountQuery({})
-
-  const { data: allTimePageView } = useGetPageViewCountQuery({ startDate: 0 })
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
     endDate,
@@ -157,6 +171,26 @@ const Admin = () => {
     })
   }
 
+  const [revalidateURL] = useRevalidateURLMutation()
+  const toast = useToast()
+  const revalidateURLFunc = async () => {
+    const data = await revalidateURL(revalidateURLText)
+    if (Object.keys(data)[0] === 'error') {
+      toast({
+        title: 'Failed Revalidation',
+        description: 'Check URL and try again',
+        status: 'error',
+        duration: 2000,
+      })
+    } else {
+      toast({
+        title: 'Revalidation Successful',
+        description: `You have Successfully revalidated: ${revalidateURLText}`,
+        status: 'success',
+        duration: 4000,
+      })
+    }
+  }
   const wikiMetaData = [
     {
       icon: RiNewspaperFill,
@@ -189,14 +223,6 @@ const Admin = () => {
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
       color: 'pink.400',
     },
-    {
-      icon: RiUserSearchFill,
-      value: allTimePageView && allTimePageView.amount,
-      detailHeader: 'Total no of Visitors',
-      weeklyValue: WeekPageView && WeekPageView.amount,
-      percent: 40,
-      color: 'pink.400',
-    },
   ]
   const piedata = [
     { name: 'Editors', value: 400 },
@@ -207,14 +233,14 @@ const Admin = () => {
   if (!token)
     return (
       <SignTokenMessage
-        message="To make changes to your the admin panel, authenticate
+        message="To make changes to the admin panel, authenticate
 your wallet to continue"
         reopenSigningDialog={reSignToken}
         error={error}
       />
     )
 
-  if (!isTokenHeaderSet) {
+  if (!isAdmin) {
     return null
   }
   return (
@@ -250,6 +276,39 @@ your wallet to continue"
             />
           )
         })}
+        <Box
+          w={{ lg: '90%', base: '100%' }}
+          px="5"
+          py="4"
+          cursor="pointer"
+          borderWidth="1px"
+          rounded="xl"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <FormControl isRequired>
+            <FormLabel htmlFor="username">Enter URL</FormLabel>
+            <Input
+              mb={5}
+              onChange={e => {
+                if (e.target.value.length >= 1) {
+                  setRevalidateActive(false)
+                  setRevalidateURLText(e.target.value)
+                } else {
+                  setRevalidateActive(true)
+                }
+              }}
+            />
+            <Button
+              disabled={revalidateActive}
+              onClick={() => {
+                revalidateURLFunc()
+              }}
+            >
+              Revalidate Url
+            </Button>
+          </FormControl>
+        </Box>
       </Stack>
       <WikiDataGraph
         piedata={piedata}

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import LinkOverlay from '@/components/Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
   <LinkBox
@@ -38,7 +38,12 @@ const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
         />
       )}
 
-      <LinkOverlay href={item.href} fontWeight={600} color="linkColor">
+      <LinkOverlay
+        href={item.href}
+        fontWeight={600}
+        target={item.target}
+        color="linkColor"
+      >
         {item.label}
       </LinkOverlay>
     </HStack>

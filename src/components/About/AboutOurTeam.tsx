@@ -8,9 +8,9 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { TeamData } from '@/data/MeetOurTeamData'
-import { BsLinkedin, BsTwitter } from 'react-icons/bs'
 import { IconType } from 'react-icons/lib'
 import { useTranslation } from 'react-i18next'
+import { RiLinkedinFill, RiTwitterFill } from 'react-icons/ri'
 import EveripediaLogo from './logos/everipedia.svg'
 import { Image } from '../Elements/Image/Image'
 import AboutOurTeamSlider from './AboutOurTeamSlider'
@@ -51,7 +51,7 @@ const AboutOurTeam = () => {
       <Text align="center" maxW="3xl">
         {t('meetTeamContent')}
       </Text>
-      <Box w="100%">
+      <Box className="about__ourTeamSliderWrapper" w="100%">
         <AboutOurTeamSlider>
           {TeamData.map(teamMember => (
             <VStack
@@ -88,20 +88,20 @@ const AboutOurTeam = () => {
                   {teamMember.socials.linkedin && (
                     <IconButtonSocial
                       name="linked in"
-                      icon={BsLinkedin}
+                      icon={RiLinkedinFill}
                       onClick={() => window.open(teamMember.socials.linkedin)}
                     />
                   )}
                   {teamMember.socials.twitter && (
                     <IconButtonSocial
                       name="twitter"
-                      icon={BsTwitter}
+                      icon={RiTwitterFill}
                       onClick={() => window.open(teamMember.socials.twitter)}
                     />
                   )}
                   {teamMember.socials.everipedia && (
                     <IconButtonSocial
-                      name="everipedia"
+                      name="IQ.Wiki"
                       onClick={() => window.open(teamMember.socials.everipedia)}
                     />
                   )}

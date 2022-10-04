@@ -51,8 +51,8 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
           Encyclopedia
         </Heading>
         <Text
-          w={{ base: '70%', md: '80%' }}
-          fontSize={{ base: 'md', lg: 'xl' }}
+          w={{ base: '70%', md: '75%', xl: '80%' }}
+          fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
           pb={10}
         >
           {description}
@@ -66,6 +66,7 @@ const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
             w={{ base: 32, lg: 40 }}
             variant="outline"
             bgColor="btnBgColor"
+            prefetch={false}
           >
             {`${t('learnMoreHeroBttn')}`}
           </LinkButton>

@@ -65,6 +65,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
       return (
         <HStack>
           <DisplayAvatar
+            alt={content.profile?.username}
             size="16"
             address={content.id}
             avatarIPFS={content.profile?.avatar}
@@ -122,7 +123,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   return (
     <HStack
       bgColor="wikiCardItemBg"
-      borderRadius={4}
+      borderRadius={8}
       justify="space-between"
       align="center"
       p={4}

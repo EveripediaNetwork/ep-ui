@@ -18,18 +18,18 @@ import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
-import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import shortenAccount from '@/utils/shortenAccount'
 import { useUserProfileData } from '@/services/profile/utils'
 import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import UserSocialLinks from './UserSocialLinks'
 
 export type UserDetailsProps = { hide?: boolean }
 
 export const UserDetails = ({ hide }: UserDetailsProps) => {
   const router = useRouter()
-  const { address: userAddress } = useAccount()
+  const userAddress = getUserAddressFromCache()
   const address = router.query.profile as string
   const { profileData } = useUserProfileData(address)
 
@@ -76,6 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         >
           <Box mt={`${isSticky ? 0 : '-11'}`} zIndex="docked">
             <DisplayAvatar
+              alt={profileData?.username}
               size={isSticky ? '35' : '130'}
               overflow="hidden"
               borderWidth={2}

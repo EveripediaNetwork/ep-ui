@@ -19,7 +19,7 @@ import { getUsername } from '@/utils/getUsername'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useENSData } from '@/hooks/useENSData'
 import { Carousel, Link } from '../Elements'
-import LinkOverlay from '../Elements/LinkOverlay/LinkOverlay'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import DisplayAvatar from '../Elements/Avatar/Avatar'
 
 const TRENDING_WIKI_IMG_WIDTH = 300
@@ -88,6 +88,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               <Flex gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
+                    alt={getUsername(wiki?.user, ensName)}
                     size="20"
                     address={wiki?.user.id}
                     avatarIPFS={wiki?.user.profile?.avatar}
@@ -155,6 +156,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
       >{`${t('trendingWikisDescription')}`}</Text>
       <Box maxW="1160px" mx="auto">
         <Carousel
+          topArrow="25%"
           settings={{
             dots: true,
             infinite: false,
