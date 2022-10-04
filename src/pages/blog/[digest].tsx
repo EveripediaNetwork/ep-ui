@@ -5,10 +5,12 @@ import {
   Box,
   Button,
   chakra,
+  Flex,
   Heading,
   SimpleGrid,
   Stack,
   Text,
+  Link,
 } from '@chakra-ui/react'
 import { store } from '@/store/store'
 import { formatBlog, getBlogsFromAllAccounts } from '@/utils/blog.utils'
@@ -22,6 +24,8 @@ import { Blog } from '@/types/Blog'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { getEntry } from '@/services/blog/mirror'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useENSData } from '@/hooks/useENSData'
 
 export const BlogPostPage = ({
   blog,
@@ -31,6 +35,7 @@ export const BlogPostPage = ({
   blogEntries: Blog[]
 }) => {
   const router = useRouter()
+  const [, displayName] = useENSData(blog.contributor)
 
   return (
     <chakra.div bgColor="pageBg" my={-8} py={4}>
@@ -63,6 +68,19 @@ export const BlogPostPage = ({
             >
               {blog.title}
             </Heading>
+            <Link
+              target="_blank"
+              href={`https://mirror.xyz/${blog.contributor}`}
+            >
+              <Flex mb={4} justifyContent="flex-start">
+                <DisplayAvatar
+                  address={blog.contributor}
+                  size={20}
+                  alt="unknown"
+                />
+                <Text marginLeft={5}>{displayName}</Text>
+              </Flex>
+            </Link>
             <Text color="gray.600" mb={3} _dark={{ color: 'gray.400' }}>
               {new Date((blog.timestamp || 0) * 1000).toDateString()}
             </Text>
@@ -144,9 +162,8 @@ export const BlogPostPage = ({
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const digest: string = context.params?.digest as string
-  const blog = formatBlog(
-    (await store.dispatch(getEntry.initiate(digest))).data.entry,
-  )
+  const result = await store.dispatch(getEntry.initiate(digest))
+  const blog = formatBlog(result.data?.entry)
 
   blog.body = String(
     await unified()

@@ -1,7 +1,16 @@
+import { Blog } from '@/types/Blog'
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import { HYDRATE } from 'next-redux-wrapper'
 import { FETCH_BLOG, FETCH_BLOGS } from './queries'
+
+type BlogsResponse = {
+  entries: Blog[]
+}
+
+type BlogResponse = {
+  entry: Blog
+}
 
 export const MirrorApi = createApi({
   reducerPath: 'mirror',
@@ -20,23 +29,19 @@ export const MirrorApi = createApi({
     },
   }),
   endpoints: builder => ({
-    getBlogs: builder.query<any, string>({
+    getBlogs: builder.query<Blog[], string>({
       query: (address: string) => ({
         document: FETCH_BLOGS,
         variables: { projectAddress: address },
       }),
-      transformResponse: (response: any): any => {
-        return response
-      },
+      transformResponse: (response: BlogsResponse) => response.entries,
     }),
-    getEntry: builder.query<any, string>({
+    getEntry: builder.query<BlogResponse, string>({
       query: (digest: string) => ({
         document: FETCH_BLOG,
         variables: { digest },
       }),
-      transformResponse: (response: any): any => {
-        return response
-      },
+      transformResponse: (response: BlogResponse) => response,
     }),
   }),
 })

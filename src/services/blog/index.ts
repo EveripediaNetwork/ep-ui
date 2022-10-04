@@ -24,7 +24,6 @@ export const ArweaveApi = createApi({
         variables: { addresses },
       }),
       transformResponse: (response: RawTransactions): RawTransactions => {
-        // console.log(response.transactions.edges[1])
         return response
       },
     }),

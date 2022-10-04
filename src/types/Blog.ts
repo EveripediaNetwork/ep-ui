@@ -7,7 +7,7 @@ export type Blog = {
   image_sizes: number
   title: string
   timestamp?: number
-  transaction: string
+  transaction?: string
 }
 
 type EntryPathPicked = Pick<Blog, 'slug' | 'timestamp'>

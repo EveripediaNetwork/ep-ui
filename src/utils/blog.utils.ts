@@ -19,8 +19,8 @@ export const formatEntry = async (
   timestamp,
   cover_image: blog.body
     ? (blog.body
-      .split('\n\n')[0]
-      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+        .split('\n\n')[0]
+        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
     : null,
   image_sizes: 50,
 })
@@ -34,8 +34,8 @@ export const formatBlog = (blog: any) => ({
   timestamp: blog.timestamp,
   cover_image: blog.body
     ? (blog.body
-      .split('\n\n')[0]
-      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+        .split('\n\n')[0]
+        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
     : null,
   image_sizes: 50,
 })
@@ -47,9 +47,10 @@ export const getBlogsFromAllAccounts = async () => {
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < accounts.length; i++) {
     // eslint-disable-next-line no-await-in-loop
-    const result = await store.dispatch(getBlogs.initiate(accounts[i]))
-
-    blogs = [...blogs, ...result.data.entries.map((b: Blog) => formatBlog(b))]
+    const { data: entries } = await store.dispatch(
+      getBlogs.initiate(accounts[i]),
+    )
+    if (entries) blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b))]
   }
 
   return blogs
