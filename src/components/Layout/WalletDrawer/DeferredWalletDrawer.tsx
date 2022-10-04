@@ -25,7 +25,7 @@ import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import shortenAccount from '@/utils/shortenAccount'
 import { walletsLogos } from '@/data/WalletData'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useDispatch } from 'react-redux'
 
 import { updateWalletDetails } from '@/store/slices/user-slice'

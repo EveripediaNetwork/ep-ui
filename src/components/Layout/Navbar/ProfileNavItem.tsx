@@ -1,4 +1,4 @@
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { NAV_ICON } from '@/data/NavItemData'
 import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
