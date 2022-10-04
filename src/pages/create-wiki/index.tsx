@@ -86,6 +86,7 @@ import {
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -102,6 +103,7 @@ const CreateWikiContent = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
+  const {userCanEdit} = useWhiteListValidator(userAddress)
 
   const commitMessageLimitAlertStyle = {
     sx: {
@@ -332,7 +334,7 @@ const CreateWikiContent = () => {
     submittingWiki ||
     !userAddress ||
     signing ||
-    isLoadingWiki
+    isLoadingWiki || !userCanEdit
 
   const handleOnEditorChanges = (
     val: string | undefined,
@@ -604,6 +606,7 @@ const CreateWikiContent = () => {
               onClick={() => {
                 saveOnIpfs()
               }}
+              disabled={!userCanEdit}
             >
               Publish
             </Button>
