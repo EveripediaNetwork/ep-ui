@@ -494,7 +494,7 @@ const CreateWikiContent = () => {
           </InputLeftElement>
           <Input
             fontWeight="500"
-            color="linkColor"
+            color="wikiTitleInputText"
             borderColor="transparent"
             fontSize="18px"
             variant="flushed"
@@ -507,6 +507,7 @@ const CreateWikiContent = () => {
             }}
             value={wiki.title}
             placeholder={`${t('wikiTitlePlaceholder')}`}
+            _placeholder={{ color: 'wikiTitleInputText' }}
           />
         </InputGroup>
 

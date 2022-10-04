@@ -11,7 +11,7 @@ const SummaryInput = () => {
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">
-        <Text opacity={0.5}>{`${t('wikiSummaryLabel')}`}</Text>
+        <Text color="wikiSummaryLabel">{`${t('wikiSummaryLabel')}`}</Text>
         <Tag
           variant="solid"
           colorScheme={
@@ -28,6 +28,7 @@ const SummaryInput = () => {
       </HStack>
       <Textarea
         bgColor={showRed ? '#d406082a' : 'transparent'}
+        color="wikiSummaryInputText"
         _focus={{
           borderColor: showRed ? '#ff787c' : '#63b3ed',
           boxShadow: showRed ? '0 0 0 1px #ff787c' : '0 0 0 1px #63b3ed',
@@ -45,6 +46,7 @@ const SummaryInput = () => {
           }
         }}
         placeholder={`${t('wikiSummaryPlaceholder')}`}
+        _placeholder={{ color: 'wikiSummaryInputText' }}
       />
     </Box>
   )
