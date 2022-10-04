@@ -23,8 +23,10 @@ export const ArweaveApi = createApi({
         document: FETCH_TRANSACTIONS,
         variables: { addresses },
       }),
-      transformResponse: (response: RawTransactions): RawTransactions =>
-        response,
+      transformResponse: (response: RawTransactions): RawTransactions => {
+        // console.log(response.transactions.edges[1])
+        return response
+      },
     }),
     getSingleBlogEntry: builder.query<RawTransactions, string>({
       query: (digest: string) => ({

@@ -1,7 +1,7 @@
 export type Blog = {
   slug: string
   digest: string
-  cover_image: string
+  cover_image?: string
   contributor: string
   body: string
   image_sizes: number
