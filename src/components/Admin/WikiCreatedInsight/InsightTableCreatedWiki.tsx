@@ -252,14 +252,12 @@ export const InsightTableWikiCreated = (
                     <HStack spacing={5}>
                       {!item.promoted ? (
                         <Text
-                          color="#E2E8F0"
-                          _dark={{ color: '#495a68' }}
-                          cursor={item.hidden ? 'pointer' : 'not-allowed'}
+                          color="#FF5CAA"
+                          _dark={{ color: '#F11a82' }}
+                          cursor="pointer"
                           fontWeight="semibold"
                           onClick={() => {
-                            if (item.hidden) {
-                              shouldPromote(item.title, item.id)
-                            }
+                            shouldPromote(item.title, item.id)
                           }}
                         >
                           Promote
@@ -267,16 +265,12 @@ export const InsightTableWikiCreated = (
                       ) : (
                         <HStack
                           spacing={2}
-                          onClick={() => {
-                            if (item.hidden) {
-                              findSection(item.promoted)
-                            }
-                          }}
+                          onClick={() => findSection(item.promoted)}
                         >
                           <Text
                             color="#E2E8F0"
                             _dark={{ color: '#495a68' }}
-                            cursor={item.hidden ? 'pointer' : 'not-allowed'}
+                            cursor="pointer"
                           >
                             Promote
                           </Text>
