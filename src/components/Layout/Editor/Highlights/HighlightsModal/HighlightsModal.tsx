@@ -29,6 +29,7 @@ import { MData } from '@/types/Wiki'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
+import { WIKI_METADATA_VALUE_LIMIT } from '@/data/Constants'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -70,9 +71,15 @@ const HighlightsModal = ({
     }
   }
 
-  const upsertLinks = () => {
+  const insertLinks = () => {
     if (currentLinkValue) {
       const link = LINK_OPTIONS.find(l => l.id === currentLink)
+
+      if (currentLinkValue.length > WIKI_METADATA_VALUE_LIMIT) {
+        setError(`Link exceeds limit of ${WIKI_METADATA_VALUE_LIMIT}.`)
+        return
+      }
+
       const linkIsValid = link?.tests?.some(t => t.test(currentLinkValue))
       if (linkIsValid) {
         updateLink(currentLink, currentLinkValue)
@@ -226,7 +233,7 @@ const HighlightsModal = ({
                   }}
                   type="url"
                 />
-                <Button colorScheme="blue" mx="auto" onClick={upsertLinks}>
+                <Button colorScheme="blue" mx="auto" onClick={insertLinks}>
                   {atttributeExists(currentLink) ? 'Update' : 'Add'}
                 </Button>
               </Flex>
