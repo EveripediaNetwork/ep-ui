@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, LinkBox, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { Blog } from '@/types/Blog'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { Avatar } from '@/components/Elements'
 import { useENSData } from '@/hooks/useENSData'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
@@ -31,7 +31,7 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
       ) : null}
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
         <Flex justifyContent="flex-start">
-          <DisplayAvatar address={post.contributor} size={20} alt="unknown" />
+          <Avatar address={post.contributor} size={20} alt="unknown" />
           <Text marginLeft={5}>{displayName}</Text>
         </Flex>
         <Flex flex="auto" align="center">
