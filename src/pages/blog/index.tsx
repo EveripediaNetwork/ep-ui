@@ -33,11 +33,11 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   return (
     <chakra.div bgColor="pageBg" my={-8} py={4}>
       <chakra.div w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
-        <Flex justifyContent="space-between" my={4} minWidth={100}>
+        <Flex wrap="wrap" justifyContent={["center", "space-between"]} my={4} minWidth={100}>
           <Heading as="h1" size="2xl" letterSpacing="wide">
             IQ.Wiki Blog
           </Heading>
-          <Flex alignItems="center">
+          <Flex alignItems="center" mt={[5, 0]}>
             <Text mr={5}>More from us</Text>
             <Link
               href="https://mirror.xyz/0xD92e7079F29481cd8e6b7382E8A47Cd3C36956Ee"
