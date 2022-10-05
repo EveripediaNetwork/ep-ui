@@ -8,10 +8,10 @@ import {
   chakra,
   Button,
   HTMLChakraProps,
-  Avatar,
   Text,
   useEventListener,
   Wrap,
+  Avatar,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
@@ -30,11 +30,13 @@ import {
   SEARCH_TYPES,
   useNavSearch,
 } from '@/services/search/utils'
-
 import { useRouter } from 'next/router'
 import config from '@/config'
 import { Link, LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { WikiImage } from '@/components/WikiImage'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -147,7 +149,7 @@ const NavSearch = (props: NavSearchProps) => {
           article.images && article.images[0].id
         }`
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
-        // This negates the bug that is casued by two wikis with the same title.
+        // This negates the bug that is caused by two wikis with the same title.
         // value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
@@ -158,7 +160,15 @@ const NavSearch = (props: NavSearchProps) => {
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
-            <Avatar src={articleImage} name={article.title} size="xs" />
+            <WikiImage
+              src={articleImage}
+              alt={article.title}
+              imgH="40px"
+              imgW={`${WIKI_IMAGE_ASPECT_RATIO * 40}px`}
+              flexShrink={0}
+              borderRadius={5}
+              overflow="hidden"
+            />
             <Flex direction="column" w={{ lg: '100%' }}>
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {article.title}
@@ -202,9 +212,7 @@ const NavSearch = (props: NavSearchProps) => {
   const accountsSearchList = (
     <>
       {results.accounts?.slice(0, ACCOUNTS_LIMIT).map(account => {
-        const accountAvatar = `${config.pinataBaseUrl}${account.avatar}`
         const value = fillType(account, SEARCH_TYPES.ACCOUNT)
-
         return (
           <AutoCompleteItem
             key={account.id}
@@ -214,7 +222,11 @@ const NavSearch = (props: NavSearchProps) => {
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
-            <Avatar src={accountAvatar} name={account.username} size="xs" />
+            <DisplayAvatar
+              alt={account.username}
+              address={account.id}
+              avatarIPFS={account.avatar}
+            />
             <Flex direction="column">
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {account.username}
@@ -321,12 +333,11 @@ const NavSearch = (props: NavSearchProps) => {
         <AutoCompleteList
           mx={{ base: '15px', xl: 'unset' }}
           p="0"
-          shadow="lg"
           maxH="auto"
+          shadow="lg"
           {...listProps}
         >
           {isLoading ? loadingView : searchList}
-
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
               <LinkButton

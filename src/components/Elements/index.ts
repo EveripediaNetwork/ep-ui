@@ -1,4 +1,4 @@
-export { default as Avatar } from './Avatar/Avatar'
+export { default as Avatar } from './Avatar/DisplayAvatar'
 export { default as LinkButton } from './LinkElements/LinkButton'
 export { default as Carousel } from './Carousel/Carousel'
 export { default as Dropzone } from './Dropzone/Dropzone'
