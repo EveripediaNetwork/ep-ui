@@ -163,7 +163,7 @@ const NavSearch = (props: NavSearchProps) => {
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {article.title}
               </chakra.span>
-              <Text noOfLines={1} maxW="full" fontSize="xs">
+              <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
                 {getWikiSummary(article, WikiSummarySize.Big)}
               </Text>
             </Flex>
@@ -172,6 +172,7 @@ const NavSearch = (props: NavSearchProps) => {
               justify="end"
               gap="1"
               ml="auto"
+              maxWidth="fit-content"
               display={article.tags.length > 0 ? 'flex' : 'none'}
             >
               {article.tags?.map(tag => (
