@@ -3,6 +3,7 @@ import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import Navbar from '../Navbar/Navbar'
+import GoogleAnalyticsScripts from '../GoogleAnalyticsScripts'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
@@ -10,10 +11,6 @@ const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
-const GoogleAnalyticsScripts = dynamic(
-  () => import('@/components/Layout/Layout/GoogleAnalyticsScripts'),
-)
-
 const Layout = ({
   children,
   noFooter,

@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
 import { useTranslation } from 'react-i18next'
