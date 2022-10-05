@@ -24,8 +24,8 @@ import { Blog } from '@/types/Blog'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { getEntry } from '@/services/blog/mirror'
-import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
 import { useENSData } from '@/hooks/useENSData'
+import { Avatar } from '@/components/Elements'
 
 export const BlogPostPage = ({
   blog,
@@ -73,11 +73,7 @@ export const BlogPostPage = ({
               href={`https://mirror.xyz/${blog.contributor}`}
             >
               <Flex mb={4} justifyContent="flex-start">
-                <DisplayAvatar
-                  address={blog.contributor}
-                  size={20}
-                  alt="unknown"
-                />
+                <Avatar address={blog.contributor} size={20} alt="unknown" />
                 <Text marginLeft={5}>{displayName}</Text>
               </Flex>
             </Link>
