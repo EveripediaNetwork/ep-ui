@@ -1,3 +1,4 @@
+import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Box, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
 import React, { ChangeEvent } from 'react'
@@ -18,12 +19,12 @@ const SummaryInput = () => {
             // eslint-disable-next-line no-nested-ternary
             showRed
               ? 'red'
-              : (wiki?.summary?.length || '') > 50
+              : (wiki?.summary?.length || '') > (WIKI_SUMMARY_LIMIT * 2) / 3
               ? 'green'
               : 'yellow'
           }
         >
-          {wiki?.summary?.length || 0}/128
+          {wiki?.summary?.length || 0}/WIKI_SUMMARY_LIMIT
         </Tag>
       </HStack>
       <Textarea
@@ -35,7 +36,7 @@ const SummaryInput = () => {
         }}
         value={wiki.summary}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          if (event.target.value.length <= 128)
+          if (event.target.value.length <= WIKI_SUMMARY_LIMIT)
             dispatch({
               type: 'wiki/setCurrentWiki',
               payload: { summary: event.target.value },
