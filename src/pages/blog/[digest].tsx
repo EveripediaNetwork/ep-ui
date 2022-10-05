@@ -73,11 +73,7 @@ export const BlogPostPage = ({
               href={`https://mirror.xyz/${blog.contributor}`}
             >
               <Flex mb={4} justifyContent="flex-start">
-                <Avatar
-                  address={blog.contributor}
-                  size={20}
-                  alt="unknown"
-                />
+                <Avatar address={blog.contributor} size={20} alt="unknown" />
                 <Text marginLeft={5}>{displayName}</Text>
               </Flex>
             </Link>
