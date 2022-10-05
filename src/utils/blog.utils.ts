@@ -1,6 +1,9 @@
 import slugify from 'slugify'
 import arweave from '@/config/arweave'
 import { Blog, BlogTag, EntryPath, RawTransactions } from '@/types/Blog'
+import config from '@/config'
+import { store } from '@/store/store'
+import { getBlogs } from '@/services/blog/mirror'
 
 export const formatEntry = async (
   blog: Partial<Blog>,
@@ -21,6 +24,37 @@ export const formatEntry = async (
     : null,
   image_sizes: 50,
 })
+
+export const formatBlog = (blog: Blog) => ({
+  title: blog.title,
+  slug: slugify(blog.title || ''),
+  body: blog.body,
+  digest: blog.digest,
+  contributor: blog?.publisher?.project?.address || '',
+  timestamp: blog.timestamp,
+  cover_image: blog.body
+    ? (blog.body
+        .split('\n\n')[0]
+        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+    : '',
+  image_sizes: 50,
+})
+
+export const getBlogsFromAllAccounts = async () => {
+  let blogs: Blog[] = []
+  const accounts = [config.blogAccount2, config.blogAccount3]
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < accounts.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const { data: entries } = await store.dispatch(
+      getBlogs.initiate(accounts[i]),
+    )
+    if (entries) blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b))]
+  }
+
+  return blogs
+}
 
 export const getEntryPaths = ({
   transactions,
@@ -72,6 +106,8 @@ const mapEntry = async (entry: EntryPath) => {
         entry.timestamp || 0,
       )
 
+      if (!formattedEntry.cover_image) formattedEntry.cover_image = null
+
       return formattedEntry
     }
 
@@ -83,7 +119,7 @@ const mapEntry = async (entry: EntryPath) => {
   return undefined
 }
 
-export const getBlogentriesFormatted = async (
+export const getBlogEntriesFormatted = async (
   entryPaths: EntryPath[],
 ): Promise<Blog[]> => {
   return (

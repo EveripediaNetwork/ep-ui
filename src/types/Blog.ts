@@ -1,13 +1,18 @@
 export type Blog = {
   slug: string
   digest: string
-  cover_image: string
+  cover_image?: string
   contributor: string
   body: string
   image_sizes: number
   title: string
   timestamp?: number
-  transaction: string
+  transaction?: string
+  publisher?: {
+    project: {
+      address: string
+    }
+  }
 }
 
 type EntryPathPicked = Pick<Blog, 'slug' | 'timestamp'>

@@ -1,25 +1,19 @@
 import { GetServerSideProps } from 'next'
-import React, { useEffect, useState } from 'react'
-import arweave from '@/config/arweave'
+import React from 'react'
 import { MdKeyboardBackspace as LeftArrow } from 'react-icons/md'
 import {
   Box,
   Button,
   chakra,
+  Flex,
   Heading,
   SimpleGrid,
   Stack,
   Text,
+  Link,
 } from '@chakra-ui/react'
-import { useAppSelector, useAppDispatch } from '@/store/hook'
-import { setBlogs } from '@/store/slices/blog-slice'
 import { store } from '@/store/store'
-import { getBlogEntries, getSingleBlogEntry } from '@/services/blog'
-import {
-  formatEntry,
-  getBlogentriesFormatted,
-  getEntryPaths,
-} from '@/utils/blog.utils'
+import { formatBlog, getBlogsFromAllAccounts } from '@/utils/blog.utils'
 import ReactMarkdown from 'react-markdown'
 import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
 import remarkParse from 'remark-parse'
@@ -27,97 +21,21 @@ import remarkStringify from 'remark-stringify'
 import { unified } from 'unified'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { Blog } from '@/types/Blog'
-import config from '@/config'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import { getEntry } from '@/services/blog/mirror'
+import DisplayAvatar from '@/components/Elements/Avatar/Avatar'
+import { useENSData } from '@/hooks/useENSData'
 
-export const BlogPostPage = ({ digest }: { digest: string }) => {
-  const dispatch = useAppDispatch()
+export const BlogPostPage = ({
+  blog,
+  blogEntries,
+}: {
+  blog: Blog
+  blogEntries: Blog[]
+}) => {
   const router = useRouter()
-
-  const blogPosts: Blog[] = useAppSelector(state => state.blog as Blog[])
-
-  const blogResult = useAppSelector(state =>
-    state.blog && digest
-      ? Object.values(state.blog).find(b => b.digest === digest)
-      : null,
-  )
-  const [blog, setBlog] = useState<Blog | undefined | null>(blogResult)
-
-  useEffect(() => {
-    if (!blogPosts || blogPosts.length === 0) {
-      const populateBlogs = async () => {
-        const entries = await store.dispatch(
-          getBlogEntries.initiate([
-            // config.blogAccount,
-            config.blogAccount2,
-            config.blogAccount3,
-          ]),
-        )
-
-        if (!entries.data) return
-
-        const entryPaths = getEntryPaths(entries.data)
-
-        const blogEntries = await getBlogentriesFormatted(entryPaths)
-        dispatch(setBlogs(blogEntries))
-      }
-
-      populateBlogs()
-    }
-  }, [blogPosts, dispatch])
-
-  useEffect(() => {
-    const getBlogEntry = async () => {
-      const singleEntry = await store.dispatch(
-        getSingleBlogEntry.initiate(digest),
-      )
-
-      if (!singleEntry.data) return
-
-      const {
-        transactions: {
-          edges: {
-            0: {
-              node: {
-                id: transactionId,
-                block: { timestamp },
-              },
-            },
-          },
-        },
-      } = singleEntry.data
-
-      const result = await arweave.transactions.getData(transactionId, {
-        decode: true,
-        string: true,
-      })
-
-      const parsedResult = JSON.parse(result as string)
-      const {
-        content: { title, body },
-        digest: dg,
-        authorship: { contributor },
-      } = parsedResult
-
-      const formatted = await formatEntry(
-        { title, body, digest: dg, contributor, transaction: transactionId },
-        transactionId,
-        timestamp,
-      )
-
-      formatted.body = String(
-        await unified()
-          .use(remarkParse) // Parse markdown
-          .use(remarkStringify) // Serialize markdown
-          .process(formatted.body as string),
-      )
-
-      setBlog(formatted as Blog)
-    }
-
-    getBlogEntry()
-  }, [digest])
+  const [, displayName] = useENSData(blog.contributor)
 
   return (
     <chakra.div bgColor="blogPageBg" my={-8} py={4}>
@@ -128,7 +46,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
               title={blog.title}
               openGraph={{
                 title: blog.title,
-                images: [{ url: blog.cover_image }],
+                images: [{ url: String(blog.cover_image) }],
               }}
             />
             <Box
@@ -150,6 +68,19 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
             >
               {blog.title}
             </Heading>
+            <Link
+              target="_blank"
+              href={`https://mirror.xyz/${blog.contributor}`}
+            >
+              <Flex mb={4} justifyContent="flex-start">
+                <DisplayAvatar
+                  address={blog.contributor}
+                  size={20}
+                  alt="unknown"
+                />
+                <Text marginLeft={5}>{displayName}</Text>
+              </Flex>
+            </Link>
             <Text color="gray.600" mb={3} _dark={{ color: 'gray.400' }}>
               {new Date((blog.timestamp || 0) * 1000).toDateString()}
             </Text>
@@ -201,7 +132,7 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
             </Button>
           </Stack>
 
-          {blogPosts.length > 1 ? (
+          {blogEntries.length > 1 ? (
             <Stack spacing="8">
               <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
                 You might like
@@ -214,8 +145,8 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
                 spacingX="5"
                 spacingY="14"
               >
-                {blogPosts
-                  .filter((bp: Blog) => bp.digest !== digest)
+                {blogEntries
+                  .filter((bp: Blog) => bp.digest !== blog?.digest)
                   .slice(0, 3)
                   .map((b: Blog, i: number) => (
                     <BlogPost maxW="420px" post={b} key={i} />
@@ -231,9 +162,22 @@ export const BlogPostPage = ({ digest }: { digest: string }) => {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const digest: string = context.params?.digest as string
+  const result = await store.dispatch(getEntry.initiate(digest))
+  const blog = formatBlog(result.data?.entry as Blog)
+
+  blog.body = String(
+    await unified()
+      .use(remarkParse) // Parse markdown
+      .use(remarkStringify) // Serialize markdown
+      .process(blog.body as string),
+  )
+
+  const blogEntries = await getBlogsFromAllAccounts()
+
   return {
     props: {
-      digest,
+      blog,
+      blogEntries,
     },
   }
 }
