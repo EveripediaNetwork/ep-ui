@@ -5,7 +5,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor as ToastUIEditor } from '@toast-ui/react-editor'
 import wikiLink from '@/editor-plugins/wikiLink'
 import cite from '@/editor-plugins/cite'
-import { EditorContentOverride } from '@/types/Wiki'
+import { CreateNewWikiSlug, EditorContentOverride } from '@/types/Wiki'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -13,6 +13,7 @@ import { store } from '@/store/store'
 import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/PasteListener'
 import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 
 export const wikiEditorRef = {
   current: null as ToastUIEditor | null,
@@ -31,7 +32,10 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   const { colorMode } = useColorMode()
   const editorRef = useRef<ToastUIEditor>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { data: wikiData } = useGetWikiQuery(store.getState().wiki.id)
+  const { id } = store.getState().wiki
+  const { data: wikiData } = useGetWikiQuery(
+    id !== CreateNewWikiSlug ? id : skipToken,
+  )
 
   if (editorRef.current) {
     wikiEditorRef.current = editorRef.current
