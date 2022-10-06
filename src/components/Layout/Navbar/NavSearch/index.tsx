@@ -37,6 +37,7 @@ import SearchSEO from '@/components/SEO/Search'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
+import { logEvent } from '@/utils/googleAnalytics'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -302,6 +303,10 @@ const NavSearch = (props: NavSearchProps) => {
         onSelectOption={option => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
+          logEvent({
+            action: 'CLICK_BY_SEARCH',
+            params: { data: ItemPaths[type as SearchItem] + id },
+          })
         }}
       >
         <InputGroup
