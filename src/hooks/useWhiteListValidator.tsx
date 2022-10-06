@@ -11,7 +11,7 @@ const readContract = {
 export const useWhiteListValidator = (address: string | undefined | null) => {
   const { data: isEditorWhiteListed } = useContractRead({
     ...readContract,
-    functionName: 'isEditorWhiteListed()',
+    functionName: 'isEditorWhiteListed',
     args: [address],
   })
   return {
