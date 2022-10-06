@@ -5,7 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const moduleExports = {
   experimental: {
     runtime: 'experimental-edge',
-    nextScriptWorkers: true,
   },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
