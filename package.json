@@ -19,7 +19,6 @@
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
-    "@builder.io/partytown": "^0.7.1",
     "@chakra-ui/color-mode": "^2.0.0",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.0.0",
