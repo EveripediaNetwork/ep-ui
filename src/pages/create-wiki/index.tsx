@@ -86,8 +86,8 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
-import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -231,6 +231,14 @@ const CreateWikiContent = () => {
         duration: 3000,
       })
       return false
+    }
+
+    if (wiki.summary && wiki.summary.length > WIKI_SUMMARY_LIMIT) {
+      toast({
+        title: `Summary exceeds maximum limit of ${WIKI_SUMMARY_LIMIT}`,
+        status: 'error',
+        duration: 3000,
+      })
     }
     return true
   }
