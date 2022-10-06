@@ -1,7 +1,7 @@
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 import { ContractInterface } from 'ethers'
-import { useContractRead, useProvider } from 'wagmi'
+import { useContractRead } from 'wagmi'
 
 const readContract = {
   addressOrName: config.editorAddress,
@@ -11,10 +11,10 @@ const readContract = {
 export const useWhiteListValidator = (address: string | undefined | null) => {
   const { data: isEditorWhiteListed } = useContractRead({
     ...readContract,
-    functionName: 'isEditorWhitelisted', 
+    functionName: 'isEditorWhitelisted',
     args: address,
   })
-  
+
   return {
     userCanEdit: config.isProduction === 'true' ? isEditorWhiteListed : true,
   }
