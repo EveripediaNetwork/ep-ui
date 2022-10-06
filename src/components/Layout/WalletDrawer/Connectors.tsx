@@ -61,7 +61,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       })
       dispatch(updateUserAddress(data.account))
       const w = window as any
-      if (w.dataLayer) w.dataLayer[1][2].user_id = data.account
+      w.gtag('set', 'userId', data.account)
       router.push(router.asPath).then(openWalletDrawer)
     },
   })
