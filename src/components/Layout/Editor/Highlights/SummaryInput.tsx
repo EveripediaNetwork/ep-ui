@@ -24,7 +24,7 @@ const SummaryInput = () => {
               : 'yellow'
           }
         >
-          {wiki?.summary?.length || 0}/WIKI_SUMMARY_LIMIT
+          {wiki?.summary?.length || 0}/{WIKI_SUMMARY_LIMIT}
         </Tag>
       </HStack>
       <Textarea
