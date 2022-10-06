@@ -27,9 +27,11 @@ export const DynamicWagmiProvider = ({
   )
 
   useEffect(() => {
-    if (typeof getUserAddressFromCache() === 'string') {
-      const w = window as any
-      w.gtag('set', 'user_id', getUserAddressFromCache())
+    if (
+      typeof window !== 'undefined' &&
+      typeof getUserAddressFromCache() === 'string'
+    ) {
+      if (window.gtag) window.gtag('set', 'user_id', getUserAddressFromCache())
     }
   }, [])
 
