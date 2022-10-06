@@ -47,14 +47,17 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
             <Link
               href="https://mirror.xyz/0xD92e7079F29481cd8e6b7382E8A47Cd3C36956Ee"
               target="_blank"
+              height="36px"
             >
-              <Icon as={Korea} id="flag-icons-kr" boxSize={8} />
+              <Icon as={Korea} id="flag-icons-kr" boxSize={9} />
             </Link>
             <Link
               href="https://mirror.xyz/0xcd5Cc4F54C20C80aED2db81CBaf82153Fb95C1b1"
               target="_blank"
+              ml={5}
+              height="36px"
             >
-              <Icon as={China} ml={5} id="flag-icons-cn" boxSize={8} />
+              <Icon as={China} id="flag-icons-cn" boxSize={9} />
             </Link>
           </Flex>
         </Flex>

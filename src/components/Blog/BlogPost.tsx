@@ -36,7 +36,7 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
         </Flex>
         <Flex flex="auto" align="center">
           <LinkOverlay href={`/blog/${post.digest}`}>
-            <Text fontSize="2xl" fontWeight="bold" noOfLines={3}>
+            <Text fontSize="lg" fontWeight="bold" noOfLines={3}>
               {post.title}
             </Text>
           </LinkOverlay>
