@@ -15,7 +15,7 @@ const config = {
     process.env.NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL ||
     'https://ipfs.everipedia.org/ipfs/',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-  environment: process.env.NEXT_PUBLIC_PROD || false,
+  isProduction: Boolean(process.env.NEXT_PUBLIC_IS_PRODUCTION) || false,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
   alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'maticmum',
   graphqlUrl:
