@@ -169,15 +169,22 @@ const NavSearch = (props: NavSearchProps) => {
               borderRadius={5}
               overflow="hidden"
             />
-            <Flex direction="column">
+            <Flex direction="column" w={{ lg: '100%' }}>
               <chakra.span fontWeight="semibold" fontSize="sm">
                 {article.title}
               </chakra.span>
-              <Text noOfLines={1} maxW="full" fontSize="xs">
-                {getWikiSummary(article, WikiSummarySize.Small)}
+              <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
+                {getWikiSummary(article, WikiSummarySize.Big)}
               </Text>
             </Flex>
-            <Wrap w="full" justify="end" gap="1" ml="auto">
+            <Wrap
+              w="full"
+              justify="end"
+              gap="1"
+              ml="auto"
+              maxWidth="fit-content"
+              display={article.tags.length > 0 ? 'flex' : 'none'}
+            >
               {article.tags?.map(tag => (
                 <chakra.div
                   key={`${article.id}-${tag.id}`}
