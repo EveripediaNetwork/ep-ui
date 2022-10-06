@@ -15,7 +15,7 @@ export const useWhiteListValidator = (address: string | undefined | null) => {
     args: [address],
   })
   return {
-    userCanEdit: isEditorWhiteListed,
+    userCanEdit: config.environment === 'false' ? true : isEditorWhiteListed,
   }
 }
 

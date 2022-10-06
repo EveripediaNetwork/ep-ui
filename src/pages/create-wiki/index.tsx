@@ -105,7 +105,7 @@ const CreateWikiContent = () => {
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
   const { userCanEdit } = useWhiteListValidator(userAddress)
-
+  
   const commitMessageLimitAlertStyle = {
     sx: {
       bgColor: '#d406082a',
