@@ -34,6 +34,7 @@ import {
   PopoverFooter,
   Tag,
   Text,
+  Tooltip,
 } from '@chakra-ui/react'
 import {
   getIsWikiSlugValid,
@@ -85,7 +86,8 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
-import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -102,6 +104,7 @@ const CreateWikiContent = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
+  const { userCanEdit } = useWhiteListValidator(userAddress)
 
   const commitMessageLimitAlertStyle = {
     sx: {
@@ -229,6 +232,14 @@ const CreateWikiContent = () => {
       })
       return false
     }
+
+    if (wiki.summary && wiki.summary.length > WIKI_SUMMARY_LIMIT) {
+      toast({
+        title: `Summary exceeds maximum limit of ${WIKI_SUMMARY_LIMIT}`,
+        status: 'error',
+        duration: 3000,
+      })
+    }
     return true
   }
 
@@ -332,7 +343,8 @@ const CreateWikiContent = () => {
     submittingWiki ||
     !userAddress ||
     signing ||
-    isLoadingWiki
+    isLoadingWiki ||
+    !userCanEdit
 
   const handleOnEditorChanges = (
     val: string | undefined,
@@ -517,21 +529,34 @@ const CreateWikiContent = () => {
             // Publish button with commit message for wiki edit
             <Popover onClose={() => setIsWritingCommitMsg(false)}>
               <PopoverTrigger>
-                <Button
-                  isLoading={submittingWiki}
-                  _disabled={{
-                    opacity: disableSaveButton() ? 0.5 : undefined,
-                    _hover: {
-                      bgColor: 'grey !important',
-                      cursor: 'not-allowed',
-                    },
-                  }}
-                  loadingText="Loading"
-                  disabled={disableSaveButton()}
-                  onClick={() => setIsWritingCommitMsg(true)}
+                <Tooltip
+                  display={!userCanEdit ? 'block' : 'none'}
+                  p={2}
+                  rounded="md"
+                  placement="bottom-start"
+                  shouldWrapChildren
+                  color="white"
+                  bg="toolTipBg"
+                  hasArrow
+                  label="Your address is not yet whitelisted"
+                  mt="3"
                 >
-                  Publish
-                </Button>
+                  <Button
+                    isLoading={submittingWiki}
+                    _disabled={{
+                      opacity: disableSaveButton() ? 0.5 : undefined,
+                      _hover: {
+                        bgColor: 'grey !important',
+                        cursor: 'not-allowed',
+                      },
+                    }}
+                    loadingText="Loading"
+                    disabled={disableSaveButton()}
+                    onClick={() => setIsWritingCommitMsg(true)}
+                  >
+                    Publish
+                  </Button>
+                </Tooltip>
               </PopoverTrigger>
               <PopoverContent m={4}>
                 <PopoverArrow />
@@ -600,13 +625,34 @@ const CreateWikiContent = () => {
             </Popover>
           ) : (
             // Publish button without commit message at new create wiki
-            <Button
-              onClick={() => {
-                saveOnIpfs()
-              }}
+            <Tooltip
+              display={!userCanEdit ? 'block' : 'none'}
+              p={2}
+              rounded="md"
+              placement="bottom-start"
+              shouldWrapChildren
+              color="white"
+              bg="toolTipBg"
+              hasArrow
+              label="Your address is not yet whitelisted"
+              mt="3"
             >
-              Publish
-            </Button>
+              <Button
+                onClick={() => {
+                  saveOnIpfs()
+                }}
+                disabled={!userCanEdit}
+                _disabled={{
+                  opacity: disableSaveButton() ? 0.5 : undefined,
+                  _hover: {
+                    bgColor: 'grey !important',
+                    cursor: 'not-allowed',
+                  },
+                }}
+              >
+                Publish
+              </Button>
+            </Tooltip>
           )}
         </HStack>
       </HStack>

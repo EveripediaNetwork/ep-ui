@@ -16,7 +16,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
 import NextLink from 'next/link'
-import DisplayAvatar from '../Elements/Avatar/Avatar'
+import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 
 interface ActivityCardProps {

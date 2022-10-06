@@ -14,6 +14,7 @@ import {
   RiNewspaperFill,
   RiBook2Fill,
   RiTeamFill,
+  RiUserSearchFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -93,6 +94,13 @@ export const NAV_ITEMS: NavItem[] = [
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
+        hasImage: true,
+      },
+      {
+        id: 303,
+        label: 'About Us',
+        icon: RiUserSearchFill,
+        href: '/static/about',
         hasImage: true,
       },
     ],
