@@ -97,6 +97,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
         w="20vw"
         px={6}
         py="30px"
+        ml="0 !important"
       >
         <VStack
           spacing={4}
