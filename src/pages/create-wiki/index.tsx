@@ -534,9 +534,9 @@ const CreateWikiContent = () => {
                   p={2}
                   rounded="md"
                   placement="bottom-start"
-                  color="#fff"
                   shouldWrapChildren
-                  bg="brandLinkColor"
+                  color="white"
+                  bg="toolTipBg"
                   hasArrow
                   label="Your address is not yet whitelisted"
                   mt="3"
@@ -630,9 +630,9 @@ const CreateWikiContent = () => {
               p={2}
               rounded="md"
               placement="bottom-start"
-              color="#fff"
               shouldWrapChildren
-              bg="brandLinkColor"
+              color="white"
+              bg="toolTipBg"
               hasArrow
               label="Your address is not yet whitelisted"
               mt="3"
