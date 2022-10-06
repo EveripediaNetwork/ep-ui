@@ -40,9 +40,20 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
         <Flex mt={3} justifyContent="space-between">
           <Flex justifyContent="flex-start">
             <Avatar address={post.contributor} size={20} alt="unknown" />
-            <Text color="brand.500" fontWeight="bold" fontSize="sm" marginLeft={2}>{displayName}</Text>
+            <Text
+              color="brand.500"
+              fontWeight="bold"
+              fontSize="sm"
+              marginLeft={2}
+            >
+              {displayName}
+            </Text>
           </Flex>
-          <Text fontSize="sm" color="gray.400" _dark={{ color: 'whiteAlpha.400' }}>
+          <Text
+            fontSize="sm"
+            color="gray.400"
+            _dark={{ color: 'whiteAlpha.400' }}
+          >
             {new Date((post.timestamp || 0) * 1000).toDateString()}
           </Text>
         </Flex>

@@ -6,7 +6,7 @@ import {
   SimpleGrid,
   Link,
   Text,
-  Image
+  Image,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
@@ -46,14 +46,14 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
               href="https://mirror.xyz/0xD92e7079F29481cd8e6b7382E8A47Cd3C36956Ee"
               target="_blank"
             >
-              <Image src='/images/kr.svg' width={10} />
+              <Image src="/images/kr.svg" width={10} />
             </Link>
             <Link
               href="https://mirror.xyz/0xcd5Cc4F54C20C80aED2db81CBaf82153Fb95C1b1"
               target="_blank"
               ml={5}
             >
-              <Image src='/images/cn.svg' width={10} />
+              <Image src="/images/cn.svg" width={10} />
             </Link>
           </Flex>
         </Flex>
