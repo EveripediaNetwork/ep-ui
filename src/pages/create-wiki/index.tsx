@@ -528,8 +528,7 @@ const CreateWikiContent = () => {
           {!isNewCreateWiki ? (
             // Publish button with commit message for wiki edit
             <Popover onClose={() => setIsWritingCommitMsg(false)}>
-              <PopoverTrigger>
-                <Tooltip
+              <Tooltip
                   display={!userCanEdit ? 'block' : 'none'}
                   p={2}
                   rounded="md"
@@ -541,6 +540,10 @@ const CreateWikiContent = () => {
                   label="Your address is not yet whitelisted"
                   mt="3"
                 >
+              <Box display="inline-block">
+
+              <PopoverTrigger>
+                
                   <Button
                     isLoading={submittingWiki}
                     _disabled={{
@@ -556,8 +559,10 @@ const CreateWikiContent = () => {
                   >
                     Publish
                   </Button>
-                </Tooltip>
+                
               </PopoverTrigger>
+              </Box>
+              </Tooltip>
               <PopoverContent m={4}>
                 <PopoverArrow />
                 <PopoverCloseButton />
