@@ -529,39 +529,36 @@ const CreateWikiContent = () => {
             // Publish button with commit message for wiki edit
             <Popover onClose={() => setIsWritingCommitMsg(false)}>
               <Tooltip
-                  display={!userCanEdit ? 'block' : 'none'}
-                  p={2}
-                  rounded="md"
-                  placement="bottom-start"
-                  shouldWrapChildren
-                  color="white"
-                  bg="toolTipBg"
-                  hasArrow
-                  label="Your address is not yet whitelisted"
-                  mt="3"
-                >
-              <Box display="inline-block">
-
-              <PopoverTrigger>
-                
-                  <Button
-                    isLoading={submittingWiki}
-                    _disabled={{
-                      opacity: disableSaveButton() ? 0.5 : undefined,
-                      _hover: {
-                        bgColor: 'grey !important',
-                        cursor: 'not-allowed',
-                      },
-                    }}
-                    loadingText="Loading"
-                    disabled={disableSaveButton()}
-                    onClick={() => setIsWritingCommitMsg(true)}
-                  >
-                    Publish
-                  </Button>
-                
-              </PopoverTrigger>
-              </Box>
+                display={!userCanEdit ? 'block' : 'none'}
+                p={2}
+                rounded="md"
+                placement="bottom-start"
+                shouldWrapChildren
+                color="white"
+                bg="toolTipBg"
+                hasArrow
+                label="Your address is not yet whitelisted"
+                mt="3"
+              >
+                <Box display="inline-block">
+                  <PopoverTrigger>
+                    <Button
+                      isLoading={submittingWiki}
+                      _disabled={{
+                        opacity: disableSaveButton() ? 0.5 : undefined,
+                        _hover: {
+                          bgColor: 'grey !important',
+                          cursor: 'not-allowed',
+                        },
+                      }}
+                      loadingText="Loading"
+                      disabled={disableSaveButton()}
+                      onClick={() => setIsWritingCommitMsg(true)}
+                    >
+                      Publish
+                    </Button>
+                  </PopoverTrigger>
+                </Box>
               </Tooltip>
               <PopoverContent m={4}>
                 <PopoverArrow />
