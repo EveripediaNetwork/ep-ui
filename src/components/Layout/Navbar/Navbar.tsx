@@ -17,9 +17,9 @@ import { WagmiNeededComponent } from '@/components/WrapperRoutes/WagmiNeededComp
 import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
+import Link from 'next/link'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
-import Link from 'next/link'
 
 const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
   loading: () => (
