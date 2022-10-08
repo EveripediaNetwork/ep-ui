@@ -12,6 +12,7 @@ import {
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
+import Link from 'next/link'
 
 interface CategoriesListProps {
   categories: Category[]
@@ -46,36 +47,35 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         px={6}
       >
         {categories.map(category => (
-          <LinkBox
-            key={category.id}
-            _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
-            cursor="pointer"
-            bgColor="cardBg"
-            borderRadius="lg"
-            overflow="hidden"
-            shadow="base"
-          >
-            <Image
-              bgColor="DimColor"
-              src={new URL(category.cardImage).pathname}
-              h="200px"
-              w="100%"
-              alt={category.title}
-            />
-
-            <Text
-              py="4"
-              w="100%"
-              textAlign="center"
-              fontWeight="bold"
-              fontSize="lg"
-              size="md"
+          <Link href={`/categories/${category.id}`} key={category.id}>
+            <LinkBox
+              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+              cursor="pointer"
+              bgColor="cardBg"
+              borderRadius="lg"
+              overflow="hidden"
+              shadow="base"
             >
-              <LinkOverlay href={`/categories/${category.id}`}>
+              <Image
+                bgColor="DimColor"
+                src={new URL(category.cardImage).pathname}
+                h="200px"
+                w="100%"
+                alt={category.title}
+              />
+
+              <Text
+                py="4"
+                w="100%"
+                textAlign="center"
+                fontWeight="bold"
+                fontSize="lg"
+                size="md"
+              >
                 {category.title}
-              </LinkOverlay>
-            </Text>
-          </LinkBox>
+              </Text>
+            </LinkBox>
+          </Link>
         ))}
       </SimpleGrid>
       {categories.length < 1 && (
