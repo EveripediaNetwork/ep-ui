@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   LinkBox,
-  LinkOverlay,
   Text,
   SimpleGrid,
   Spinner,
