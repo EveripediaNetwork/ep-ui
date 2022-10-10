@@ -19,6 +19,7 @@ import {
 } from '@/services/tags'
 import { Category } from '@/types/CategoryDataTypes'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
+import LeaderBoard from '@/components/Landing/Leaderboard'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -43,6 +44,7 @@ export const Index = ({
         <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
         <CategoriesList categories={categories} />
       </Box>
+      <LeaderBoard/>
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )

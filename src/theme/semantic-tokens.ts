@@ -169,5 +169,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'blackAlpha.500',
       _dark: 'whiteAlpha.700',
     },
+    trophyColor: {
+      default: '#DD6B20',
+      _dark: '#D69E2E'
+    }
   },
 }
