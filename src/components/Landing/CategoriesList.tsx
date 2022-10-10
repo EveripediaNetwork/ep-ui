@@ -11,7 +11,6 @@ import {
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
-import Link from 'next/link'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 interface CategoriesListProps {
