@@ -1,7 +1,8 @@
 import React, { Suspense, useContext } from 'react'
 import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import { WagmiStatusContext } from '@/components/Wagmi/WagmiStatusContext'
+import { WagmiStatusContext } from '../Wagmi/WagmiStatusContext'
+import GoogleAnalyticsScripts from './GoogleAnalyticsScripts'
 import Navbar from './Navbar/Navbar'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
@@ -10,10 +11,6 @@ const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
 const DeferredNetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/DeferredNetworkErrorNotification'),
 )
-const GoogleAnalyticsScripts = dynamic(
-  () => import('@/components/Layout/GoogleAnalyticsScripts'),
-)
-
 const Layout = ({
   children,
   noFooter,

@@ -12,6 +12,7 @@ import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
 import Fuse from 'fuse.js'
+import { logEvent } from '@/utils/googleAnalytics'
 
 export type Account = {
   id: string
@@ -89,6 +90,12 @@ export const useNavSearch = () => {
     if (query && query.length >= 3) {
       setIsLoading(true)
       debouncedFetchResults(query, res => {
+        if (!res.accounts && !res.articles && !res.categories) {
+          logEvent({
+            action: 'SEARCH_NO_RESULTS',
+            params: { data: query },
+          })
+        }
         setResults(res)
         setIsLoading(false)
       })

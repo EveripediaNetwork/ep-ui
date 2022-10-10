@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { WagmiStatusContext } from './WagmiStatusContext'
@@ -18,6 +18,15 @@ export const DynamicWagmiProvider = ({
   const [isWagmiWrapped, setIsWagmiWrapped] = useState(
     typeof getUserAddressFromCache() === 'string',
   )
+
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      typeof getUserAddressFromCache() === 'string'
+    ) {
+      if (window.gtag) window.gtag('set', 'user_id', getUserAddressFromCache())
+    }
+  }, [])
 
   const value = useMemo(
     () => ({

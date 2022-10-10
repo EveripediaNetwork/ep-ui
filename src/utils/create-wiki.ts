@@ -10,6 +10,7 @@ import {
   whiteListedDomains,
   EditSpecificMetaIds,
   whiteListedLinkNames,
+  CreateNewWikiSlug,
 } from '@/types/Wiki'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
@@ -457,6 +458,7 @@ export const isWikiExists = async (
   slug: string,
   setExistingWikiData: (data: Wiki) => void,
 ) => {
+  if (slug === CreateNewWikiSlug) return false
   const { data, isError } = await store.dispatch(getWiki.initiate(slug))
   if (isError) return false
   if (data) setExistingWikiData(data)
