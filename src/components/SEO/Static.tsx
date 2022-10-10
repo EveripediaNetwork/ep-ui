@@ -5,7 +5,6 @@ export const AboutHeader = () => (
   <NextSeo
     title="About"
     description="World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token."
-    titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/about"
     openGraph={{
       title: 'About',

@@ -5,7 +5,6 @@ const BlogHeader = () => (
   <NextSeo
     title="Blog"
     description="Stay up to date with latest stories and gist brought to you by IQ.Wiki"
-    titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/blog"
     openGraph={{
       title: 'Blog',

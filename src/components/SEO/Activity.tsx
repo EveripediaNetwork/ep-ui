@@ -5,7 +5,6 @@ const ActivityHeader = () => (
   <NextSeo
     title="Activities"
     description="Check out recent wiki activities"
-    titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/activity"
     openGraph={{
       title: 'Activities',

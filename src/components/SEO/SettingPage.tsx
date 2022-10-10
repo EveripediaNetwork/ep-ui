@@ -5,7 +5,6 @@ const SettingsPageHeader = () => (
   <NextSeo
     title="Settings"
     description="Update your profile and notification settings"
-    titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/account/settings"
     openGraph={{
       title: 'Settings',
