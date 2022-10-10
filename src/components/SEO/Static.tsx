@@ -117,13 +117,12 @@ export const CareersHeader = () => (
 
 export const TermsHeader = () => (
   <NextSeo
-    title="IQ.Wiki Terms of Service | Largest Blockchain & Crypto Encyclopedia "
+    title="Terms of Service  "
     description="Get Started, Explore and make the most of IQ.Wiki"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/terms"
     openGraph={{
-      title:
-        'IQ.Wiki Terms of Service | Largest Blockchain & Crypto Encyclopedia',
+      title: 'Terms of Service',
       description: 'Get Started, Explore and make the most of IQ.Wiki',
       type: 'website',
       site_name: 'IQ.Wiki',
