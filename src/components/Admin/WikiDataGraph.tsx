@@ -109,6 +109,7 @@ export const WikiDataGraph = ({
                   borderRadius: '20px',
                   background: toolTipBg,
                   border: '0px',
+                  boxShadow: '0px 25px 50px -12px rgba(0, 0, 0, 0.25',
                 }}
               />
             </AreaChart>

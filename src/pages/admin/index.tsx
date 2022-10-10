@@ -149,7 +149,7 @@ const Admin = () => {
 
       const getXaxis = () => {
         if (graphFilter === 'week') {
-          return `Week ${index + 1}`
+          return `Wk ${index + 1}`
         }
         if (graphFilter === 'year') {
           return createCountStart?.split('-')[0]
