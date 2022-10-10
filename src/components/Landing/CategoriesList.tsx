@@ -46,35 +46,37 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         px={6}
       >
         {categories.map(category => (
-          <LinkBox
-            _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
-            cursor="pointer"
-            bgColor="cardBg"
-            borderRadius="lg"
-            overflow="hidden"
-            shadow="base"
-          >
-            <LinkOverlay href={`/categories/${category.id}`} key={category.id}>
-              <Image
-                bgColor="DimColor"
-                src={new URL(category.cardImage).pathname}
-                h="200px"
-                w="100%"
-                alt={category.title}
-              />
+          <div key={category.id}>
+            <LinkBox
+              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+              cursor="pointer"
+              bgColor="cardBg"
+              borderRadius="lg"
+              overflow="hidden"
+              shadow="base"
+            >
+              <LinkOverlay href={`/categories/${category.id}`}>
+                <Image
+                  bgColor="DimColor"
+                  src={new URL(category.cardImage).pathname}
+                  h="200px"
+                  w="100%"
+                  alt={category.title}
+                />
 
-              <Text
-                py="4"
-                w="100%"
-                textAlign="center"
-                fontWeight="bold"
-                fontSize="lg"
-                size="md"
-              >
-                {category.title}
-              </Text>
-            </LinkOverlay>
-          </LinkBox>
+                <Text
+                  py="4"
+                  w="100%"
+                  textAlign="center"
+                  fontWeight="bold"
+                  fontSize="lg"
+                  size="md"
+                >
+                  {category.title}
+                </Text>
+              </LinkOverlay>
+            </LinkBox>
+          </div>
         ))}
       </SimpleGrid>
       {categories.length < 1 && (
