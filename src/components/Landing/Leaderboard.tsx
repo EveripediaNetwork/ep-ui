@@ -9,18 +9,22 @@ import {
   TabList,
   VStack,
   Center,
-  useBreakpointValue
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import React from 'react'
+import { LEADERBOARD_DATA } from '@/data/LeaderBoardData'
+import { RiTrophyFill } from 'react-icons/ri'
 import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
-import { LEADERBOARD_DATA } from '@/data/LeaderBoardData'
-import { RiTrophyFill } from 'react-icons/ri'
 
 const SECTIONS = ['Day', 'Week', 'Month', 'All time']
 
-const LeaderBoardCard = ({ editor }: { editor: typeof LEADERBOARD_DATA[0] }) => {
+const LeaderBoardCard = ({
+  editor,
+}: {
+  editor: typeof LEADERBOARD_DATA[0]
+}) => {
   return (
     <LinkBox flex="none">
       <chakra.div p={2} mx="auto">
@@ -33,41 +37,35 @@ const LeaderBoardCard = ({ editor }: { editor: typeof LEADERBOARD_DATA[0] }) => 
           mx="auto"
         >
           <DisplayAvatar
-              alt="new life"
-              overflow="hidden"
-              borderWidth={2}
-              borderColor="white"
-              rounded="full"
-              justifySelf="center"
-              address="0xf60488e823b3d1765774e6f0F4eE40a31E69180c"
-              // avatarIPFS={"profileData?.avatar"}
-              wrapperProps={{
-                zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
-              }}
-              svgProps={{
-                boxSize: '32',
-                overflow: 'hidden',
-                borderWidth: 2,
-                borderColor: 'white',
-                rounded: 'full',
-                justifySelf: 'center',
-              }}
-            />
-            <VStack my="6">
-              <Text
-                fontSize="md"
-                textAlign="center"
-                color="brandLinkColor"
-              >
-                {editor.name}
-              </Text>
-              <Text textAlign="center">
-                {editor.earning}
-              </Text>
-            </VStack>
-            <Center color="trophyColor">
-              <RiTrophyFill  fontSize="30"/>
-            </Center>
+            alt="new life"
+            overflow="hidden"
+            borderWidth={2}
+            borderColor="white"
+            rounded="full"
+            justifySelf="center"
+            address="0xf60488e823b3d1765774e6f0F4eE40a31E69180c"
+            // avatarIPFS={"profileData?.avatar"}
+            wrapperProps={{
+              zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
+            }}
+            svgProps={{
+              boxSize: '32',
+              overflow: 'hidden',
+              borderWidth: 2,
+              borderColor: 'white',
+              rounded: 'full',
+              justifySelf: 'center',
+            }}
+          />
+          <VStack my="6">
+            <Text fontSize="md" textAlign="center" color="brandLinkColor">
+              {editor.name}
+            </Text>
+            <Text textAlign="center">{editor.earning}</Text>
+          </VStack>
+          <Center color="trophyColor">
+            <RiTrophyFill fontSize="30" />
+          </Center>
         </Flex>
       </chakra.div>
     </LinkBox>
@@ -75,13 +73,9 @@ const LeaderBoardCard = ({ editor }: { editor: typeof LEADERBOARD_DATA[0] }) => 
 }
 
 const LeaderBoard = () => {
-  const tabPadding = useBreakpointValue({base: "3", md: "5"})
+  const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
-    <Box
-      px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 20 }}
-      textAlign="center"
-    >
+    <Box px={{ base: 3, md: 8 }} py={{ base: 5, md: 20 }} textAlign="center">
       <Heading
         textAlign="center"
         mb={4}
@@ -102,7 +96,7 @@ const LeaderBoard = () => {
       </Text>
 
       <Box maxW="1160px" mx="auto">
-        <Tabs alignSelf="self-start" w="full" my="6" >
+        <Tabs alignSelf="self-start" w="full" my="6">
           <TabList pl={5} border="none">
             {SECTIONS.map((section, sid) => (
               <CustomTab

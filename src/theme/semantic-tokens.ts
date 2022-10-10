@@ -171,7 +171,7 @@ export const semanticTokens: SemanticTokens = {
     },
     trophyColor: {
       default: '#DD6B20',
-      _dark: '#D69E2E'
-    }
+      _dark: '#D69E2E',
+    },
   },
 }

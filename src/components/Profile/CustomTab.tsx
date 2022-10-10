@@ -3,9 +3,9 @@ import React from 'react'
 
 export const CustomTab = React.forwardRef<
   HTMLDivElement,
-  TabProps & { noTab?: boolean, p? :string}
+  TabProps & { noTab?: boolean; p?: string }
 >((props, ref) => {
-  const { noTab,p, ...rest } = props
+  const { noTab, p, ...rest } = props
   const tabProps = useTab({ ...rest, ref })
   const isSelected = !!tabProps['aria-selected']
 
@@ -14,7 +14,7 @@ export const CustomTab = React.forwardRef<
       display="flex"
       alignItems="center"
       _focus={{ boxShadow: 'none' }}
-      p={ p ? p : "5"}
+      p={p || '5'}
       cursor="pointer"
       color="fadedText2"
       pos="relative"
