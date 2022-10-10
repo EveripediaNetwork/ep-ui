@@ -19,7 +19,12 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
-const SECTIONS = [{ period: 'Day', disabled: true}, {period: 'Month', disabled: true}, {period: 'Year', disabled: true}, {period: 'All time', disabled: false}]
+const SECTIONS = [
+  { period: 'Day', disabled: true },
+  { period: 'Month', disabled: true },
+  { period: 'Year', disabled: true },
+  { period: 'All time', disabled: false },
+]
 
 const LeaderBoardCard = ({
   editor,
