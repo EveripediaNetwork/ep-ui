@@ -38,14 +38,6 @@ const FAQ = () => {
           header: t('getterStartedSixHead'),
           body: t('getterStartedSixBody'),
         },
-        {
-          header: t('getterStartedSevenHead'),
-          body: t('getterStartedSevenBody'),
-        },
-        {
-          header: t('getterStartedEightHead'),
-          body: t('getterStartedEightBody'),
-        },
       ],
     },
     {
@@ -72,10 +64,6 @@ const FAQ = () => {
           header: t('usingEveripediaFiveHead'),
           body: t('usingEveripediaFiveBody'),
         },
-        {
-          header: t('usingEveripediaSixHead'),
-          body: t('usingEveripediaSixBody'),
-        },
       ],
     },
     {
@@ -83,16 +71,44 @@ const FAQ = () => {
       icon: RiSettings2Fill,
       data: [
         {
-          header: t('usingEveripediaFiveHead'),
-          body: t('usingEveripediaFiveHead'),
+          header: t('advancedFAQOneHead'),
+          body: t('advancedFAQOneBody'),
         },
         {
-          header: t('usingEveripediaFiveHead'),
-          body: t('usingEveripediaFiveHead'),
+          header: t('advancedFAQTwoHead'),
+          body: t('advancedFAQTwoBody'),
         },
         {
-          header: t('usingEveripediaFiveHead'),
-          body: t('usingEveripediaFiveHead'),
+          header: t('advancedFAQThreeHead'),
+          body: t('advancedFAQThreeBody'),
+        },
+        {
+          header: t('advancedFAQFourHead'),
+          body: t('advancedFAQFourBody'),
+        },
+        {
+          header: t('advancedFAQFiveHead'),
+          body: t('advancedFAQFiveBody'),
+        },
+        {
+          header: t('advancedFAQSixHead'),
+          body: t('advancedFAQSixBody'),
+        },
+        {
+          header: t('advancedFAQSevenHead'),
+          body: t('advancedFAQSevenBody'),
+        },
+        {
+          header: t('advancedFAQEightHead'),
+          body: t('advancedFAQEightBody'),
+        },
+        {
+          header: t('advancedFAQNineHead'),
+          body: t('advancedFAQNineBody'),
+        },
+        {
+          header: t('advancedFAQTenHead'),
+          body: t('advancedFAQTenBody'),
         },
       ],
     },
