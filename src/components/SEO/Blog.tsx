@@ -3,12 +3,12 @@ import React from 'react'
 
 const BlogHeader = () => (
   <NextSeo
-    title="Blog | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia "
+    title="Blog"
     description="Stay up to date with latest stories and gist brought to you by IQ.Wiki"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/blog"
     openGraph={{
-      title: 'Blog | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia',
+      title: 'Blog',
       description:
         'Stay up to date with latest stories and gist brought to you by IQ.Wiki',
       type: 'website',

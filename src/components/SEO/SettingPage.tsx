@@ -3,12 +3,12 @@ import React from 'react'
 
 const SettingsPageHeader = () => (
   <NextSeo
-    title="Settings | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia "
+    title="Settings"
     description="Update your profile and notification settings"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/account/settings"
     openGraph={{
-      title: 'Settings | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia',
+      title: 'Settings',
       description: 'Update your profile and notification settings',
       type: 'website',
       site_name: 'IQ.Wiki',

@@ -3,12 +3,12 @@ import { NextSeo } from 'next-seo'
 
 const ActivityHeader = () => (
   <NextSeo
-    title="Activities | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia "
+    title="Activities"
     description="Check out recent wiki activities"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/activity"
     openGraph={{
-      title: 'Activities | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia',
+      title: 'Activities',
       description: 'Check out recent wiki activities',
       type: 'website',
       site_name: 'IQ.Wiki',

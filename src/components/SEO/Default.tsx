@@ -9,7 +9,7 @@ interface SEOHeaderProps {
 const SEOHeader = ({ router }: SEOHeaderProps) => (
   <DefaultSeo
     title="IQ.Wiki | Largest Blockchain & Crypto Encyclopedia"
-    titleTemplate="%s | IQ.Wiki"
+    titleTemplate="%s | IQ.Wiki | Largest Blockchain & Crypto Encyclopedia"
     description="World's largest Blockchain & Crypto Encyclopedia"
     canonical={`https://iq.wiki${router.asPath || ''}`}
     openGraph={{
