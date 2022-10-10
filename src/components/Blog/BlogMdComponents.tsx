@@ -31,6 +31,7 @@ const img = (
   props: JSX.IntrinsicAttributes &
     ClassAttributes<HTMLImageElement> &
     ImgHTMLAttributes<HTMLImageElement>,
+  // eslint-disable-next-line @next/next/no-img-element
 ) => <img style={{ margin: 'auto' }} {...props} alt="Blog entry asset" />
 
 const a = ({
