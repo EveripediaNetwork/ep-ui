@@ -113,7 +113,7 @@ const NetworkErrorNotification = () => {
       size="lg"
     >
       <AlertDialogOverlay />
-      <AlertDialogContent>
+      <AlertDialogContent width={{ base: '90%', lg: '100%' }}>
         <Box p={8}>
           <Flex>
             <Icon
