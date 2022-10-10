@@ -15,7 +15,13 @@ import { RiSettings3Fill } from 'react-icons/ri'
 
 const SingleLink = ({ href, title }: { href: string; title: string }) => {
   return (
-    <Link href={href} target="_blank" textDecoration="underline" color="blue">
+    <Link
+      href={href}
+      target="_blank"
+      textDecoration="underline"
+      color="#FF5CAA
+"
+    >
       {title}
     </Link>
   )
@@ -88,7 +94,7 @@ const CreateWikisFAQ = () => {
                     <br /> Click the Create Wiki button in the header
                     navigation. Add your desired article title. Make sure that
                     it is short and comprehensive - the system will generate the
-                    unique URL from the title.
+                    unique URL from the title.{' '}
                     <SingleLink
                       href="https://www.youtube.com/watch?v=Y4gWJUFchrc"
                       title="https://www.youtube.com/watch?v=Y4gWJUFchrc"
@@ -144,7 +150,7 @@ const CreateWikisFAQ = () => {
                     image. You can easily add a photo by dragging and dropping
                     it or clicking to select an image from your PC. You can also
                     clicking Image URL and paste in a link to the image and the
-                    system will fetch it automatically.
+                    system will fetch it automatically.{' '}
                     <SingleLink
                       href="https://www.youtube.com/watch?v=3DFzzleCCNo"
                       title="https://www.youtube.com/watch?v=3DFzzleCCNo"
@@ -316,20 +322,23 @@ const CreateWikisFAQ = () => {
                     required to select a category, tags and add social media
                     links in the Edit Wiki Details section. When all these steps
                     are done, you can hit the Publish button to save your page.
-                    You will have the option to add a comment while publishing.
+                    You will have the option to add a comment while publishing.{' '}
+                    <br />
+                    <br />
                     Comments give editors the opportunity to provide additional
                     context or rationale for their edits. This creates more
-                    transparency within the community. After pushing the Publish
-                    button, the system will initiate a gasless transaction,
-                    which you should sign with your wallet. Press Sign in the
-                    wallet pop-up window. In several moments your page should be
-                    recorded on the blockchain. Once your changes have been
-                    authorized by your wallet, you can see your wiki in the
-                    Reading Mode. After submission, you will also be able to
-                    view the transaction on block explorer and IPFS. If the
-                    changes are not visible make sure to hard refresh the page.
-                    Most edits go through in under a minute but it could take a
-                    few minutes if the Polygon network is congested. <br />
+                    transparency within the community. <br />
+                    <br /> After pushing the Publish button, the system will
+                    initiate a gasless transaction, which you should sign with
+                    your wallet. Press Sign in the wallet pop-up window. In
+                    several moments your page should be recorded on the
+                    blockchain. Once your changes have been authorized by your
+                    wallet, you can see your wiki in the Reading Mode. After
+                    submission, you will also be able to view the transaction on
+                    block explorer and IPFS. If the changes are not visible make
+                    sure to hard refresh the page. Most edits go through in
+                    under a minute but it could take a few minutes if the
+                    Polygon network is congested. <br />
                     <br />
                     <SingleLink
                       href="https://www.youtube.com/watch?v=8ml3S6KUX3U"
