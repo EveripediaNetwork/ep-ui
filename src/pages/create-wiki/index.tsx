@@ -186,6 +186,15 @@ const CreateWikiContent = () => {
       return false
     }
 
+    if (wiki.title.length > 60) {
+      toast({
+        title: `Title should be less than 60 characters`,
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
     const words = getWordCount(wiki.content || '')
 
     if (words < MINIMUM_WORDS) {
