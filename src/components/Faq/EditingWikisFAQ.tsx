@@ -129,7 +129,7 @@ const EditingWikisFAQ = () => {
                     lineHeight={2}
                   >
                     To open the Editing Mode and start editing an IQ.wiki
-                    article click the {'Edit'} button. To learn the basics of
+                    article click the Edit button. To learn the basics of
                     editing on IQ.wiki, how to add a featured image,
                     information, and citations as well as how to submit your
                     page, first make sure to read the Creating an Article of

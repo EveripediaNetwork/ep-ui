@@ -1,7 +1,6 @@
 import FaqHeader from '@/components/Faq/FaqHeader'
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import GettingStartedAccordion from '@/components/Faq/GettingStartedAccordion'
 import CreateWikisFAQ from '@/components/Faq/CreateWikisFAQ'
 import EditingWikisFAQ from '@/components/Faq/EditingWikisFAQ'

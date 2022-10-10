@@ -143,8 +143,8 @@ const CreateWikisFAQ = () => {
                     To add or update a featured image, click on the placeholder
                     image. You can easily add a photo by dragging and dropping
                     it or clicking to select an image from your PC. You can also
-                    clicking {'Image URL'} and paste in a link to the image and
-                    the system will fetch it automatically.
+                    clicking Image URL and paste in a link to the image and the
+                    system will fetch it automatically.
                     <SingleLink
                       href="https://www.youtube.com/watch?v=3DFzzleCCNo"
                       title="https://www.youtube.com/watch?v=3DFzzleCCNo"
