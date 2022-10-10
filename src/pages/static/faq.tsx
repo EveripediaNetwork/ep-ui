@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { RiFlagFill, RiSettings2Fill } from 'react-icons/ri'
 import { FaMousePointer } from 'react-icons/fa'
 import { FaqDataItem } from '@/types/FaqDataItem'
+import { FaqSEO } from '@/components/SEO/Static'
 
 const FAQ = () => {
   const { t } = useTranslation()
@@ -98,29 +99,32 @@ const FAQ = () => {
     },
   ]
   return (
-    <Flex bgColor="pageBg">
-      <Flex
-        w="min(90%, 1100px)"
-        mx="auto"
-        direction="column"
-        py={{ lg: 20 }}
-        mb={{ base: 17, lg: 0 }}
-      >
-        <FaqHeader />
-        <Flex direction="column">
-          {faqData.map((item: any, index: any) => {
-            return (
-              <FaqAccordion
-                faqData={item.data}
-                key={index}
-                heading={item.keyWord}
-                icon={item.icon}
-              />
-            )
-          })}
+    <>
+      <FaqSEO />
+      <Flex bgColor="pageBg">
+        <Flex
+          w="min(90%, 1100px)"
+          mx="auto"
+          direction="column"
+          py={{ lg: 20 }}
+          mb={{ base: 17, lg: 0 }}
+        >
+          <FaqHeader />
+          <Flex direction="column">
+            {faqData.map((item: any, index: any) => {
+              return (
+                <FaqAccordion
+                  faqData={item.data}
+                  key={index}
+                  heading={item.keyWord}
+                  icon={item.icon}
+                />
+              )
+            })}
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </>
   )
 }
 
