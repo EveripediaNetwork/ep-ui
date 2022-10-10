@@ -44,7 +44,7 @@ const UserCreatedWikis = () => {
     <Box py="10" px={{ base: 6, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
         <Center>
-          <EmptyState />
+          <EmptyState title="Create your first Wiki" body="Start creating your own wiki . When you do, they will appear here!"/>
         </Center>
       )}
       <Collected wikis={wikis} />

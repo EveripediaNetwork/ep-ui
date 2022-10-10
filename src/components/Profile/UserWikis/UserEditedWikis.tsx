@@ -45,7 +45,7 @@ const UserEditedWikis = () => {
     <Box py="10" px={{ base: 6, lg: 0 }}>
       {wikis.length < 1 && !hasMore && (
         <Center>
-          <EmptyState />
+          <EmptyState title="Edit your first Wiki" body="You are yet to make any edits, once you edit a wiki, they will appear here."/>
         </Center>
       )}
       <Collected wikis={wikis} />

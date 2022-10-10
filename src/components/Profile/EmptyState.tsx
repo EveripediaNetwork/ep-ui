@@ -3,15 +3,15 @@ import { Button, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from '../Elements'
 
-export const EmptyState = () => {
+export const EmptyState = ({title, body}: {title: string, body: string}) => {
   return (
     <Flex flexDir="column" textAlign="center" align="center">
       <ProfileEmptyState maxBlockSize="40vw" />
       <Text fontWeight="bold" fontSize="3xl" mt="8">
-        Create your first Wiki
+        {title}
       </Text>
       <Text color="fadedText2">
-        Start creating your own wiki . When you do, they will appear here!
+        {body}
       </Text>
 
       <Link href="/create-wiki" passHref>
