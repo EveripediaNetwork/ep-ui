@@ -19,7 +19,7 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
-const SECTIONS = ['Day', 'Week', 'Month', 'All time']
+const SECTIONS = [{ period: 'Day', disabled: true}, {period: 'Month', disabled: true}, {period: 'Year', disabled: true}, {period: 'All time', disabled: false}]
 
 const LeaderBoardCard = ({
   editor,
@@ -99,7 +99,7 @@ const LeaderBoard = () => {
       </Text>
 
       <Box maxW="1160px" mx="auto">
-        <Tabs alignSelf="self-start" w="full" my="6">
+        <Tabs defaultIndex={3} alignSelf="self-start" w="full" my="6">
           <TabList pl={5} border="none">
             {SECTIONS.map((section, sid) => (
               <CustomTab
@@ -112,8 +112,9 @@ const LeaderBoard = () => {
                 key={sid}
                 fontWeight="semibold"
                 p={tabPadding}
+                isDisabled={section.disabled}
               >
-                {section}{' '}
+                {section.period}{' '}
               </CustomTab>
             ))}
           </TabList>
