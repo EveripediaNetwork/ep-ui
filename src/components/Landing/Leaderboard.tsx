@@ -17,6 +17,7 @@ import { RiTrophyFill } from 'react-icons/ri'
 import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 const SECTIONS = ['Day', 'Week', 'Month', 'All time']
 
@@ -36,36 +37,38 @@ const LeaderBoardCard = ({
           cursor="pointer"
           mx="auto"
         >
-          <DisplayAvatar
-            alt="new life"
-            overflow="hidden"
-            borderWidth={2}
-            borderColor="white"
-            rounded="full"
-            justifySelf="center"
-            address="0xf60488e823b3d1765774e6f0F4eE40a31E69180c"
-            // avatarIPFS={"profileData?.avatar"}
-            wrapperProps={{
-              zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
-            }}
-            svgProps={{
-              boxSize: '32',
-              overflow: 'hidden',
-              borderWidth: 2,
-              borderColor: 'white',
-              rounded: 'full',
-              justifySelf: 'center',
-            }}
-          />
-          <VStack my="6">
-            <Text fontSize="md" textAlign="center" color="brandLinkColor">
-              {editor.name}
-            </Text>
-            <Text textAlign="center">{editor.earning}</Text>
-          </VStack>
-          <Center color="trophyColor">
-            <RiTrophyFill fontSize="30" />
-          </Center>
+          <LinkOverlay href={`/account/${editor.address}`}>
+            <DisplayAvatar
+              alt="new life"
+              overflow="hidden"
+              borderWidth={2}
+              borderColor="white"
+              rounded="full"
+              justifySelf="center"
+              address="0xf60488e823b3d1765774e6f0F4eE40a31E69180c"
+              // avatarIPFS={"profileData?.avatar"}
+              wrapperProps={{
+                zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
+              }}
+              svgProps={{
+                boxSize: '32',
+                overflow: 'hidden',
+                borderWidth: 2,
+                borderColor: 'white',
+                rounded: 'full',
+                justifySelf: 'center',
+              }}
+            />
+            <VStack my="6">
+              <Text fontSize="md" textAlign="center" color="brandLinkColor">
+                {editor.name}
+              </Text>
+              <Text textAlign="center">{editor.earning}</Text>
+            </VStack>
+            <Center color="trophyColor">
+              <RiTrophyFill fontSize="30" />
+            </Center>
+          </LinkOverlay>
         </Flex>
       </chakra.div>
     </LinkBox>
