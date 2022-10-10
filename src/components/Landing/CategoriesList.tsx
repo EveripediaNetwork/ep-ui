@@ -12,6 +12,7 @@ import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
 import Link from 'next/link'
+import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 interface CategoriesListProps {
   categories: Category[]
@@ -46,15 +47,15 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         px={6}
       >
         {categories.map(category => (
-          <Link href={`/categories/${category.id}`} key={category.id}>
-            <LinkBox
-              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
-              cursor="pointer"
-              bgColor="cardBg"
-              borderRadius="lg"
-              overflow="hidden"
-              shadow="base"
-            >
+          <LinkBox
+            _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+            cursor="pointer"
+            bgColor="cardBg"
+            borderRadius="lg"
+            overflow="hidden"
+            shadow="base"
+          >
+            <LinkOverlay href={`/categories/${category.id}`} key={category.id}>
               <Image
                 bgColor="DimColor"
                 src={new URL(category.cardImage).pathname}
@@ -73,8 +74,8 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
               >
                 {category.title}
               </Text>
-            </LinkBox>
-          </Link>
+            </LinkOverlay>
+          </LinkBox>
         ))}
       </SimpleGrid>
       {categories.length < 1 && (
