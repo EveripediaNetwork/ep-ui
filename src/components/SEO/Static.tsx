@@ -31,12 +31,12 @@ export const AboutHeader = () => (
 
 export const FaqSEO = () => (
   <NextSeo
-    title="FAQ  "
+    title="FAQ"
     description="Frequently Asked Questions about IQ.Wiki"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/faq"
     openGraph={{
-      title: 'FAQ  ',
+      title: 'FAQ',
       description: 'Frequently Asked Questions about IQ.Wiki',
       type: 'website',
       site_name: 'IQ.Wiki',
@@ -88,12 +88,12 @@ export const PrivacyPolicySEO = () => (
 
 export const CareersHeader = () => (
   <NextSeo
-    title="Jobs | Opportunities at"
+    title="Jobs"
     description="Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/static/careers"
     openGraph={{
-      title: 'Jobs | Opportunities at',
+      title: 'Jobs',
       description:
         'Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network',
       type: 'website',
