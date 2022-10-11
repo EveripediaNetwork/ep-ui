@@ -51,8 +51,9 @@ const NotificationInfo = ({
               onClick={() => setOpenSwitch(false)}
             />
           </Flex>
-          <Text textAlign="center" my="10"  lineHeight="2">
-            Notification settings is under development and will be available to you soon.
+          <Text textAlign="center" my="10" lineHeight="2">
+            Notification settings is under development and will be available to
+            you soon.
           </Text>
         </Box>
       </AlertDialogContent>
