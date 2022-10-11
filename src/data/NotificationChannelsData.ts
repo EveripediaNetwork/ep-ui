@@ -10,24 +10,24 @@ export const NotificationChannelsData: {
     id: 'EVERIPEDIA_NOTIFICATIONS',
     title: 'IQ.Wiki Notifications',
     description: 'Occasional updates from the IQ.Wiki team',
-    isChecked: true,
+    isChecked: false,
   },
   {
     id: 'WIKI_OF_THE_DAY',
     title: 'Wiki of the Day',
     description: 'Get a wiki page recommendation everyday for you to read',
-    isChecked: true,
+    isChecked: false,
   },
   {
     id: 'WIKI_OF_THE_MONTH',
     title: 'Wiki of the Month',
     description: 'Get a wiki page recommendation every month for you to read',
-    isChecked: true,
+    isChecked: false,
   },
   {
     id: 'EDIT_NOTIFICATIONS',
     title: 'Edit Notifications',
     description: 'Get notified when someone edit your wiki',
-    isChecked: true,
+    isChecked: false,
   },
 ]
