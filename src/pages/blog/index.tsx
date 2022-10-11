@@ -50,7 +50,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
             <Flex alignItems="center" mt={[5, 0]}>
               <Text mr={5}>More from us</Text>
               <Link
-                href="https://mirror.xyz/0xD92e7079F29481cd8e6b7382E8A47Cd3C36956Ee"
+                href="https://mirror.xyz/0x3c1ccc207b3796D907B0024eD79fa2A11Af8D912"
                 target="_blank"
               >
                 <Image src="/images/kr.svg" width={10} />
