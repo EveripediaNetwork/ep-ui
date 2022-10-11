@@ -7,7 +7,7 @@ const AboutHero = () => {
   const { t } = useTranslation()
   const aboutHeroSrc = useColorModeValue(
     'AboutHeroLight.png',
-    'AboutSecHeroDark.png',
+    'AboutHeroLight.png',
   )
   return (
     <HStack
@@ -19,7 +19,8 @@ const AboutHero = () => {
       <Box mx="auto" mb={{ base: 10, lg: 0 }}>
         <Heading
           textAlign={{ base: 'center', lg: 'left' }}
-          w={{ base: '80%', md: '85%' }}
+          w={{ base: '80%', md: '100%' }}
+          pr={{ base: '0', md: '8' }}
           mx={{ base: 'auto', lg: 0 }}
           fontSize={{ base: '32', md: '42' }}
           mt={10}
@@ -38,6 +39,7 @@ const AboutHero = () => {
       </Box>
       <Box>
         <Image
+          objectFit="contain"
           imgH={{ base: '400px', lg: '500px' }}
           imgW={{ base: '400px', lg: '500px' }}
           className="teamMember__image"
