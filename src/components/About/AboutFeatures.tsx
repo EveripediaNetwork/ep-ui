@@ -1,15 +1,16 @@
 import React from 'react'
 import { Heading, VStack, Text, SimpleGrid } from '@chakra-ui/react'
-import { MdArticle, MdDesignServices, MdOutlinePeopleAlt } from 'react-icons/md'
+import { MdOutlinePeopleAlt, MdOutlinePublic } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import AboutFeaturesCard from './AboutFeaturesCard'
+import IQgreyLogo from './logos/iq.svg'
 
 const AboutFeatures = () => {
   const { t } = useTranslation()
   return (
     <VStack
       spacing={8}
-      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
       mx="auto"
       mt="24"
     >
@@ -28,16 +29,16 @@ const AboutFeatures = () => {
       >
         {`${t('aboutFeatContent')}`}
       </Text>
-      <SimpleGrid columns={[1, 1, 2, 3]} spacing={4} mt={4}>
+      <SimpleGrid columns={[1, 1, 2, 2, 3]} spacing={4} mt={4}>
         <AboutFeaturesCard
           title={`${t('abtFeatOneHeading')}`}
           content={`${t('abtFeatOneContent')}`}
-          icon={MdDesignServices}
+          icon={MdOutlinePublic}
         />
         <AboutFeaturesCard
           title={`${t('abtFeatTwoHeading')}`}
           content={`${t('abtFeatTwoContent')}`}
-          icon={MdArticle}
+          icon={IQgreyLogo}
         />
         <AboutFeaturesCard
           title={`${t('abtFeatThreeHeading')}`}
