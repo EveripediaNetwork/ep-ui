@@ -1,4 +1,5 @@
 import NoOpenings from '@/components/Careers/NoOpeningsCard'
+import { CareersHeader } from '@/components/SEO/Static'
 import { Flex, Heading } from '@chakra-ui/react'
 import { Dict } from '@chakra-ui/utils'
 import React from 'react'
@@ -10,6 +11,7 @@ const Careers = () => {
 
   return (
     <main>
+      <CareersHeader />
       <Flex
         mb={{ lg: 24, md: 20, base: 10 }}
         direction="column"

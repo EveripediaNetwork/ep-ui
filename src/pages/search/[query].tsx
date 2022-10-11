@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { GetServerSideProps } from 'next'
 import {
   Avatar,
   Box,
@@ -8,7 +9,6 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
@@ -17,10 +17,11 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import { WikiPreview } from '@/types/Wiki'
 import { Link } from '@/components/Elements'
 
-const SearchQuery = () => {
-  const { query: queryParam } = useRouter()
-  const query = queryParam.query as string
+interface SearchQueryProps {
+  query: string
+}
 
+const SearchQuery = ({ query }: SearchQueryProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<{
     articles: WikiPreview[]
@@ -101,7 +102,7 @@ const SearchQuery = () => {
           Results for {query}
         </Heading>
 
-        {!isLoading && (
+        {!isLoading && articles.length !== 0 && (
           <Stack spacing="4">
             <Text>Showing {totalResults} results </Text>
 
@@ -123,6 +124,15 @@ const SearchQuery = () => {
       </Box>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const queryParam = context.params?.query
+  const query = queryParam as string
+
+  return {
+    props: { query },
+  }
 }
 
 export default SearchQuery
