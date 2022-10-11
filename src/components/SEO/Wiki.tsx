@@ -9,6 +9,7 @@ interface WikiHeaderProps {
   datePublished?: string
   dateModified?: string
   author: string
+  noindex?: boolean
 }
 
 export const WikiHeader = ({
@@ -19,6 +20,7 @@ export const WikiHeader = ({
   datePublished,
   dateModified,
   author,
+  noindex = false,
 }: WikiHeaderProps) => (
   <>
     <ArticleJsonLd
@@ -34,6 +36,7 @@ export const WikiHeader = ({
     />
     <NextSeo
       title={title}
+      noindex={noindex}
       openGraph={{
         title,
         description,
