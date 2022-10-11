@@ -2,8 +2,7 @@ import { TeamDataType } from '@/types/TeamDataType'
 
 export const TeamData: TeamDataType = [
   {
-    image:
-      'https://everipedia.org/_next/static/images/ted-optimized-c5dc5697e34eb4c6c3c7fc317f356835.jpeg',
+    image: '/images/team/theodor.png',
     name: 'Theodor Forselius',
     title: 'Co-founder',
     about:
@@ -14,12 +13,11 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/travis-optimized-33038b903b2ae06562555975237ed3a3.jpeg',
+    image: '/images/team/travis.png',
     name: 'Travis Moore',
     title: 'Co-founder',
     about:
-      ' Travis Moore is an Italian-American computer programmer, angel investor, and entrepreneur from Thousand Oaks, a suburb of Los Angeles. He co-founded IQ.wiki formerly Everipedia after graduating from UCLA with degrees in Molecular Biology, Biochemistry, and Neuroscience in 2011.',
+      'Travis Moore is an Italian-American computer programmer, angel investor, and entrepreneur from Thousand Oaks, a suburb of Los Angeles. He co-founded IQ.wiki formerly Everipedia after graduating from UCLA with degrees in Molecular Biology, Biochemistry, and Neuroscience in 2011.',
     socials: {
       iqWiki: 'https://iq.wiki/wiki/travis-moore',
       twitter: 'https://twitter.com/travismo123',
@@ -27,8 +25,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/sam-optimized-fee70eab04751c4ee3341a8f07cd383e.jpeg',
+    image: '/images/team/sam.png',
     name: 'Sam Kazemian',
     title: 'Co-founder',
     about:
@@ -39,8 +36,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/violetta-optimized-d7a6d90bac7acdda3e17fc28bd959433.jpg',
+    image: '/images/team/violetta.png',
     name: 'Violetta Ziborova',
     title: 'Content Manager',
     about:
@@ -50,8 +46,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/kevin-optimized-5c11efc244c98a3642289d02e4f5ff52.jpg',
+    image: '/images/team/kevin.png',
     name: 'Kevin Wang',
     title: 'Director Business of Development in China',
     about:
@@ -61,8 +56,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/andy-optimized-c26fd3e6a2827b188fbe76f9eb64467a.jpg',
+    image: '/images/team/andy.png',
     name: 'Andy Cho',
     title: 'Director of Business Development',
     about:
@@ -72,8 +66,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/roberto-optimized-cb1ad49e87a0d155d26c2ac111ee839f.jpg',
+    image: '/images/team/robertto.png',
     name: 'Roberto Dobrescu',
     title: 'Business Developer',
     about:
@@ -83,8 +76,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/navin-optimized-ec125f8261f3f015d22d7cb0c3ebfa82.jpg',
+    image: '/images/team/navin.png',
     name: 'Navin Vethanayagam',
     title: 'Chief Brain',
     about:
@@ -95,8 +87,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/richard-gee-optimized-d8f66cdb9bebb4197fe13592633142f4.jpg',
+    image: '/images/team/richard.png',
     name: 'Richard Gee',
     title: 'Full Stack Software Engineer',
     about:
@@ -106,8 +97,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/justin-castillo-optimized-c013f477be8bbd5b8047406d16cba680.jpg',
+    image: '/images/team/justin.png',
     name: 'Justin Castillo',
     title: 'Fullstack Blockchain Developer',
     about:
@@ -119,8 +109,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/justin-optimized-083ac06a96c3ad98cc999ac9dd953caf.jpg',
+    image: '/images/team/justin-moore.png',
     name: 'Justin Moore',
     title: 'Senior Software Engineer',
     about:
@@ -131,8 +120,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/cesar-optimized-88917735761ed23fb18a8391cb80c3b0.jpg',
+    image: '/images/team/kesar.png',
     name: 'César Rodríguez',
     title: 'Chief Technology Officer',
     about:
@@ -144,8 +132,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image:
-      'https://everipedia.org/_next/static/images/suchet-optimized-399bcde4bc2cd8ccbd875d18efb67861.jpeg',
+    image: '/images/team/suchet.png',
     name: 'Suchet Dhindsa',
     title: 'Chief Operating and Financial Officer',
     about:
