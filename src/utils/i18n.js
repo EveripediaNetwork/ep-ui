@@ -89,24 +89,6 @@ export const resources = {
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
         'Anyone with IQ Tokens is a stakeholder in the IQ.Wiki Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',
-      aboutTestimonialHeading:
-        ' An open community bringing blockchain knowledge to the world',
-      aboutTestimonialContent:
-        "Everipedia's vibrant community is open and welcoming to everyone. We're already the world's largest blockchain encyclopedia, but we're far from complete. Join us today.",
-      aboutTestimonialOneContent:
-        'Thanks to new technology, it is now possible for Everipedia to move beyond Wikipedia just like how we moved beyond Britannica almost two decades ago.',
-      aboutTestimonialOneAuthor: 'Larry Sanger',
-      aboutTestimonialOneDesig: 'Co-Founder Wikipedia',
-      aboutTestimonialOneLocation: 'Columbus, Ohio',
-      aboutTestimonialTwoContent:
-        'As an editor, the killer feature of Everipedia is that as long as you use sources and a neutral wording, you can write an article about anything you want. A dapp you like, yourself — anything.',
-      aboutTestimonialTwoAuthor: 'Wilfra',
-      aboutTestimonialTwoDesig: 'Marketcap.one',
-      aboutTestimonialThreeContent:
-        'I love Everipedia because everyone benefits, particularly the contributors. As an IQ token holder, I have an incentive to participate in the network.',
-      aboutTestimonialThreeAuthor: 'Samuel Joseph',
-      aboutTestimonialThreeDesig: 'Editor',
-      aboutTestimonialThreeLocation: 'Lagos, Nigeria',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',

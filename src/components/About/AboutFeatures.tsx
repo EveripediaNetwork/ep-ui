@@ -1,8 +1,9 @@
 import React from 'react'
 import { Heading, VStack, Text, SimpleGrid } from '@chakra-ui/react'
-import { MdArticle, MdOutlinePeopleAlt, MdOutlinePublic } from 'react-icons/md'
+import { MdOutlinePeopleAlt, MdOutlinePublic } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import AboutFeaturesCard from './AboutFeaturesCard'
+import IQgreyLogo from './logos/iq.svg'
 
 const AboutFeatures = () => {
   const { t } = useTranslation()
@@ -37,7 +38,7 @@ const AboutFeatures = () => {
         <AboutFeaturesCard
           title={`${t('abtFeatTwoHeading')}`}
           content={`${t('abtFeatTwoContent')}`}
-          icon={MdArticle}
+          icon={IQgreyLogo}
         />
         <AboutFeaturesCard
           title={`${t('abtFeatThreeHeading')}`}
