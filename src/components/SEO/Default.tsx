@@ -19,9 +19,9 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
       site_name: 'IQ.Wiki',
       images: [
         {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
+          url: 'https://iq.wiki/images/og-image-default.png',
+          width: 1200,
+          height: 630,
           alt: 'IQ.Wiki | Crypto Encyclopedia',
         },
       ],
