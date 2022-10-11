@@ -22,10 +22,10 @@ export const resources = {
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
-      updatesFooterHeading: 'Get updated with IQ.wiki',
+      updatesFooterHeading: 'Join the IQ Brainlist',
       updatesFooterText:
-        'Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating IQ.wiki.',
-      subScribeFooterBttn: 'Subscribe now',
+        'Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki beta site!',
+      subScribeFooterBttn: 'Join Now',
       communityFooterHeading: 'Community Hub',
       visionFooterText:
         "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain.",
