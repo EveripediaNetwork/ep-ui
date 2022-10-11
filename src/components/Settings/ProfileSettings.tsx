@@ -59,15 +59,16 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   // set initial values
   React.useEffect(() => {
     if (settingsData) {
+      console.log(settingsData)
       setInputUsername({
         value: settingsData.username || userENSAddr || '',
         error: '',
       })
       setInputBio({ value: settingsData.bio || '', error: '' })
       setInputEmail({ value: settingsData.email || '', error: '' })
-      setWebsite(settingsData.links[0].website || '')
-      setInstagram(settingsData.links[0].instagram || '')
-      setTwitter(settingsData.links[0].twitter || '')
+      setWebsite(settingsData.links[0]?.website || '')
+      setInstagram(settingsData.links[0]?.instagram || '')
+      setTwitter(settingsData.links[0]?.twitter || '')
       setAvatarIPFSHash(settingsData.avatar || '')
       setBannerIPFSHash(settingsData.banner || '')
     }
