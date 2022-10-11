@@ -102,13 +102,13 @@ const NotificationSettings = ({
 
     let data = {}
     checkboxes.forEach(checkbox => {
-      if(checkbox.checked){
+      if (checkbox.checked) {
         data = { ...data, [checkbox.title]: checkbox.checked }
       }
     })
     logEvent({
       action: 'NOTIFICATION_SETTINGS',
-      params: {data: JSON.stringify(data)},
+      params: { data: JSON.stringify(data) },
     })
     return
     // send the data to the server
@@ -127,25 +127,28 @@ const NotificationSettings = ({
   }
   return (
     <>
-    <form onSubmit={handleNotificationSettingsSave}>
-      <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
-        {notificationPrefs.map((n, i) => (
-          <NotificationSettingBox
-            key={n.id}
-            id={n.id}
-            title={n.title}
-            description={n.description}
-            isLast={NotificationChannelsData.length - 1 === i}
-            setNotificationPrefs={setNotificationPrefs}
-            isChecked={n.isChecked}
-          />
-        ))}
-      </VStack>
-      <Button type="submit" mt={8} size="lg">
-        Save
-      </Button>
-    </form>
-    <NotificationInfo openSwitch={openSwitch} setOpenSwitch={ (state) =>  setOpenSwitch(state)}/>
+      <form onSubmit={handleNotificationSettingsSave}>
+        <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
+          {notificationPrefs.map((n, i) => (
+            <NotificationSettingBox
+              key={n.id}
+              id={n.id}
+              title={n.title}
+              description={n.description}
+              isLast={NotificationChannelsData.length - 1 === i}
+              setNotificationPrefs={setNotificationPrefs}
+              isChecked={n.isChecked}
+            />
+          ))}
+        </VStack>
+        <Button type="submit" mt={8} size="lg">
+          Save
+        </Button>
+      </form>
+      <NotificationInfo
+        openSwitch={openSwitch}
+        setOpenSwitch={state => setOpenSwitch(state)}
+      />
     </>
   )
 }

@@ -11,7 +11,13 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 
-const NotificationInfo = ({openSwitch, setOpenSwitch}: {openSwitch: boolean, setOpenSwitch: (status: boolean) => void }) => {
+const NotificationInfo = ({
+  openSwitch,
+  setOpenSwitch,
+}: {
+  openSwitch: boolean
+  setOpenSwitch: (status: boolean) => void
+}) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
   return (
