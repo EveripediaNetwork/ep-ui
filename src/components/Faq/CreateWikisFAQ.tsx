@@ -9,7 +9,6 @@ import {
   AccordionPanel,
   Flex,
   Icon,
-  Link,
 } from '@chakra-ui/react'
 import { RiSettings3Fill } from 'react-icons/ri'
 
