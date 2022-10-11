@@ -28,6 +28,7 @@ import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Footer = () => {
   const { t, i18n } = useTranslation()
@@ -38,6 +39,10 @@ const Footer = () => {
     if (isString(userLang)) {
       setLang(userLang)
       i18n.changeLanguage(userLang)
+      logEvent({
+        action: 'CHANGE_PLATFORM_LANGUAGE',
+        params: { data: userLang },
+      })
     }
   }
 
