@@ -76,9 +76,10 @@ export const resources = {
         "IQ.Wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
       aboutSignUpBttn: 'Sign Up',
       aboutgoTo: 'Go to IQ Site',
-      aboutFeatHeading: 'Taking the Online Encyclopedia into the Modern Age',
+      aboutFeatHeading:
+        'Our mission is to educate the world on blockchain technology',
       aboutFeatContent:
-        'IQ.wiki uses blockchain technology to help us fulfill our vision for a world where all knowledge is available to all people - a world in which everyone, everywhere can participate in sharing what they know and providing value to others.',
+        'We are the primary source of objective, high quality knowledge on the Internet today for everything related to blockchain technology and cryptocurrencies. Our vision is to make blockchain more discoverable and accessible around the world and empower users with information they can trust.',
       abtFeatOneHeading: 'Modern Design and Features',
       abtFeatOneContent:
         'IQ.wiki’s design and features have been built for the modern age.',

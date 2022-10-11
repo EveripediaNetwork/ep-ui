@@ -12,29 +12,30 @@ const AboutHero = () => {
   return (
     <HStack
       mx="auto"
-      maxW={{ base: '100%', lg: '90%' }}
+      maxW={{ base: '100%', xl: '90%' }}
       spacing="2"
-      flexDirection={{ base: 'column', lg: 'row' }}
+      flexDirection={{ base: 'column', xl: 'row' }}
     >
-      <Box mx="auto" mb={{ base: 10, lg: 0 }}>
+      <Box mx="auto" mb={{ base: 10, xl: 0 }}>
         <Heading
-          textAlign={{ base: 'center', lg: 'left' }}
+          textAlign={{ base: 'center', xl: 'left' }}
           w={{ base: '80%', md: '100%' }}
-          pr={{ base: '0', md: '8' }}
-          mx={{ base: 'auto', lg: 0 }}
+          pr={{ base: '0', xl: '8' }}
+          mx={{ base: 'auto', xl: 0 }}
           fontSize={{ base: '32', md: '42' }}
           mt={10}
-          mb={{ base: 5, lg: 10 }}
+          mb={{ base: 5, xl: 10 }}
           fontWeight="black"
           lineHeight="shorter"
         >
           {`${t('aboutHeroHeading')}`}
         </Heading>
         <Text
-          textAlign={{ base: 'center', lg: 'left' }}
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          textAlign={{ base: 'center', xl: 'left' }}
+          fontSize={{ base: 'sm', md: 'md', xl: 'lg' }}
           mb={4}
-          w={{ base: '80%', md: '80%' }}
+          mx={{ lg: 'auto', xl: '0' }}
+          w={{ base: '100%', lg: '90%', xl: '80%' }}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
       <Box>
