@@ -86,17 +86,19 @@ export const WikiPossibleSocialsList = [
 
 export enum ValidatorCodes {
   VALID_WIKI = 'VALID_WIKI',
+  ID = 'ID_ERROR',
   LANGUAGE = 'LANGUAGE_ERROR',
   USER = 'USER_ERROR',
   WORDS = 'WORD_COUNT_ERROR',
   CATEGORY = 'CATEGORY_ERROR',
+  SUMMARY = 'SUMMARY_ERROR',
   IMAGE = 'IMAGE_ERROR',
   TAG = 'TAG_ERROR',
   URL = 'EXTERNAL_URL_ERROR',
   METADATA = 'METADATA_ERROR',
-  SUMMARY = 'SUMMARY_ERROR',
-  ID_ERROR = 'ID_ERROR',
+  MEDIA = 'MEDIA_ERROR',
   GLOBAL_RATE_LIMIT = 'GLOBAL_RATE_LIMIT',
+  ID_ERROR = 'ID_ERROR',
 }
 
 export enum EditSpecificMetaIds {

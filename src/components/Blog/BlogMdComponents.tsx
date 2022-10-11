@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ClassAttributes, ImgHTMLAttributes, ReactNode } from 'react'
 import { Heading } from '@chakra-ui/react'
 
 const BlockQuote = ({ children }: { children: ReactNode[] }) => (
@@ -26,6 +26,13 @@ const h3 = ({ children }: { children: ReactNode[] }) => (
     {children}
   </Heading>
 )
+
+const img = (
+  props: JSX.IntrinsicAttributes &
+    ClassAttributes<HTMLImageElement> &
+    ImgHTMLAttributes<HTMLImageElement>,
+  // eslint-disable-next-line @next/next/no-img-element
+) => <img style={{ margin: 'auto' }} {...props} alt="Blog entry asset" />
 
 const a = ({
   href,
@@ -94,4 +101,5 @@ export const components = {
   a,
   blockquote: BlockQuote,
   p,
+  img,
 }

@@ -8,7 +8,7 @@ import {
   HStack,
   Heading,
   SkeletonCircle,
-  Link,
+  Tag,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
@@ -17,6 +17,7 @@ import { WagmiNeededComponent } from '@/components/WrapperRoutes/WagmiNeededComp
 import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
+import Link from 'next/link'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
 
@@ -79,19 +80,24 @@ const Navbar = () => {
           justifyContent="space-between"
           px={{ base: 4, md: 8 }}
         >
-          <Link
-            href="/"
+          <Box
+            cursor="pointer"
             mr={{ base: 0, xl: '9vw' }}
             _hover={{ textDecoration: 'none' }}
-            _focus={{ boxShadow: 'none' }}
           >
-            <HStack width="150px">
-              <Logo />
-              <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
-                IQ.wiki
-              </Heading>
-            </HStack>
-          </Link>
+            <Link href="/">
+              <HStack width="150px">
+                <Logo />
+                <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
+                  IQ.wiki
+                </Heading>
+                <Tag colorScheme="pink" size="sm" flexShrink={0}>
+                  Beta
+                </Tag>
+              </HStack>
+            </Link>
+          </Box>
+
           <Suspense>
             <NavSearch setHamburger={setHamburger} />
           </Suspense>
