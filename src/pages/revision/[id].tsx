@@ -95,9 +95,10 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
           }
           dateModified={wikiData.content[0].updated}
           datePublished={wikiData.content[0].created}
-          title={wikiData.content[0].title}
+          title={`${wikiData.content[0].title} - ${wikiData.content[0].categories[0]?.title}`}
           description={wikiData.content[0].summary}
           mainImage={getWikiImageUrl(wikiData.content[0])}
+          noindex
         />
       )}
 
