@@ -33,15 +33,15 @@ const Privacy = () => (
       <Flex gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
         <Flex gap={5} flex="3" flexDirection="column">
           <Text>
-            Everipedia (&quot;Everipedia,&quot; &quot;we&quot; or
-            &quot;us&quot;) is committed to protecting your privacy. This
-            Privacy Policy explains how information about you or associated with
-            you (&quot;personal information&quot;) is collected, used and
-            disclosed by Everipedia Inc. and its affiliates (including PredIQt),
-            which own and operate Everipedia services (&quot;Everipedia,&quot;
-            &quot;we&quot; or &quot;us&quot;). This Policy applies to the online
-            services offered by Everipedia at everipedia.org (the
-            &quot;Website&quot; or &quot;Our Service&quot;).
+            IQ.wiki (&#x22;IQ.wiki,&#x22; &#x22;we&#x22; or &#x22;us&#x22;) is
+            committed to protecting your privacy. This Privacy Policy explains
+            how information about you or associated with you (&#x22;personal
+            information&#x22;) is collected, used and disclosed by IQ.wiki Inc.
+            and its affiliates (including PredIQt), which own and operate
+            IQ.wiki services (&#x22;IQ.wiki,&#x22; &#x22;we&#x22; or
+            &#x22;us&#x22;). This Policy applies to the online services offered
+            by IQ.wiki at IQ.wiki (the &#x22;Website&#x22; or &#x22;Our
+            Service&#x22;).
           </Text>
           <Heading as="h2" size="md">
             INFORMATION WE COLLECT
@@ -65,7 +65,7 @@ const Privacy = () => (
               </ListItem>
               <ListItem>
                 <b>Profile Information and User Content.</b> After you set up
-                your account, Everipedia members may also chose to provide
+                your account, IQ.wiki members may also chose to provide
                 additional information which may be shared through public
                 profiles, such as your user name, a picture to represent
                 yourself (which may or may not be a photo of you), and a
@@ -185,11 +185,11 @@ const Privacy = () => (
           <Text>
             <UnorderedList>
               <ListItem>
-                Other companies owned by or under common ownership as
-                Everipedia, Inc., which also includes our subsidiaries (i.e.,
-                any organization we own or control) or our ultimate holding
-                company (i.e., any organization that owns or controls us) and
-                any subsidiaries it owns. These companies will use your personal
+                Other companies owned by or under common ownership as IQ.wiki ,
+                Inc., which also includes our subsidiaries (i.e., any
+                organization we own or control) or our ultimate holding company
+                (i.e., any organization that owns or controls us) and any
+                subsidiaries it owns. These companies will use your personal
                 information in the same way as we can under this Policy;
               </ListItem>
               <ListItem>
@@ -235,7 +235,7 @@ const Privacy = () => (
                 including the investigation of potential violations thereof,
                 (iii) investigate and defend ourselves against any third party
                 claims or allegations, (iv) protect against harm to the rights,
-                property or safety of Everipedia, its users or the public as
+                property or safety of IQ.wiki , its users or the public as
                 required or permitted by law and (v) detect, prevent or
                 otherwise address criminal (including fraud or stalking),
                 security or technical issues. We may also share information with
@@ -257,19 +257,19 @@ const Privacy = () => (
             the Service, or technical and security notices.
           </Text>
           <Text>
-            As of August 2015, Everipedia does not share your personal
-            information with third parties for advertising purposes, however we
-            reserve the right to share your personal information, such as email
-            address and user name, with third parties for their marketing
-            purposes in the future if we determine that there may be additional
-            products or services which may be of interest to you. If you wish to
-            have your user name and email address excluded from any such future
-            sharing with partners, please email webmaster@everipedia.com with
-            the subject &quot;Direct Marketing Opt-Out.&quot; We will not send
-            you an individualized notification that this policy is being updated
-            if we elect to share information with a partner in this manner, so
-            you must opt-out now. If you have any questions about this opt-out
-            or our marketing practices, please email us at
+            As of August 2015, IQ.wiki does not share your personal information
+            with third parties for advertising purposes, however we reserve the
+            right to share your personal information, such as email address and
+            user name, with third parties for their marketing purposes in the
+            future if we determine that there may be additional products or
+            services which may be of interest to you. If you wish to have your
+            user name and email address excluded from any such future sharing
+            with partners, please email webmaster@everipedia.com with the
+            subject &quot;Direct Marketing Opt-Out.&quot; We will not send you
+            an individualized notification that this policy is being updated if
+            we elect to share information with a partner in this manner, so you
+            must opt-out now. If you have any questions about this opt-out or
+            our marketing practices, please email us at
             webmaster@everipedia.com.
           </Text>
           <Text>
@@ -317,7 +317,7 @@ const Privacy = () => (
             SECURITY AND STORAGE OF INFORMATION
           </Heading>
           <Text>
-            Everipedia cares about the security of your information and uses
+            IQ.wiki cares about the security of your information and uses
             commercially reasonable physical, administrative, and technological
             safeguards to preserve the integrity and security of all information
             we collect and that we share with our service providers. Because of
