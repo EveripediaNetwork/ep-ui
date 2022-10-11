@@ -195,7 +195,7 @@ const Privacy = () => (
           <RelatedTopics
             topics={[
               { name: 'Terms of Service', url: '/static/terms' },
-              { name: 'Privacy Policy', url: '/static/policy' },
+              { name: 'Privacy Policy', url: '/static/privacy' },
             ]}
           />
         </Box>
