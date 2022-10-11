@@ -14,6 +14,7 @@ import { Activity as ActivityType } from '@/types/ActivityDataType'
 import { useTranslation } from 'react-i18next'
 import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
+import ActivityHeader from '@/components/SEO/Activity'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -76,36 +77,39 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   if (!mounted) return null
 
   return (
-    <Box bgColor="pageBg" my={-8} py={4}>
-      <Box w="min(90%, 1100px)" mx="auto">
-        <Heading
-          my={{ base: 8, md: 12 }}
-          as="h1"
-          size={{ base: 'lg', md: '2xl' }}
-          letterSpacing="wide"
-        >
-          Recent Activities
-        </Heading>
-        <Box>
+    <>
+      <ActivityHeader />
+      <Box bgColor="pageBg" my={-8} py={4}>
+        <Box w="min(90%, 1100px)" mx="auto">
+          <Heading
+            my={{ base: 8, md: 12 }}
+            as="h1"
+            size={{ base: 'lg', md: '2xl' }}
+            letterSpacing="wide"
+          >
+            Recent Activities
+          </Heading>
           <Box>
-            <VStack overflow="hidden" spacing={4}>
-              {LatestActivityData?.map(activity =>
-                renderActivityCard(activity),
-              )}
-            </VStack>
+            <Box>
+              <VStack overflow="hidden" spacing={4}>
+                {LatestActivityData?.map(activity =>
+                  renderActivityCard(activity),
+                )}
+              </VStack>
+            </Box>
+            {loading || hasMore ? (
+              <Center ref={sentryRef} my="10" w="full" h="16">
+                <Spinner size="xl" />
+              </Center>
+            ) : (
+              <Center my="10">
+                <Text fontWeight="semibold">{t('seenItAll')}</Text>
+              </Center>
+            )}
           </Box>
-          {loading || hasMore ? (
-            <Center ref={sentryRef} my="10" w="full" h="16">
-              <Spinner size="xl" />
-            </Center>
-          ) : (
-            <Center my="10">
-              <Text fontWeight="semibold">{t('seenItAll')}</Text>
-            </Center>
-          )}
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 

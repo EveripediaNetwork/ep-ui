@@ -27,7 +27,7 @@ const MenuFooter = () => {
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
               <Heading size="sm">{`${t('iq')}`}</Heading>
-              <Link target="_blank" href="https://learn.everipedia.org/iq/">
+              <Link target="_blank" href="https://iq.wiki/wiki/iq">
                 {`${t('whatIQ')}`}
               </Link>
               <Stack direction="row" align="center" spacing={2}>
@@ -61,7 +61,6 @@ const MenuFooter = () => {
               <Link prefetch={false} href="/static/careers">{`${t(
                 'careers',
               )}`}</Link>
-              <Link href="/">{`${t('brainies')}`}</Link>
             </Stack>
           </GridItem>
           <GridItem colSpan={1}>

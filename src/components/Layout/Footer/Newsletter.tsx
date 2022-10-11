@@ -14,7 +14,7 @@ const Newsletter = () => {
       </Text>
       <Button
         as="a"
-        href="https://www.getdrip.com/forms/505929689/submissions/new"
+        href="https://forms.gle/bmMce4r3JJckpSNJ7"
         target="_blank"
         size="lg"
         variant="solid"
