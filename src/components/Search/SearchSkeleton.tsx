@@ -21,7 +21,7 @@ const SingleSkeleton = () => {
       py={{ base: 3, lg: 5 }}
       w="100%"
     >
-      <HStack maxW="70%">
+      <HStack maxW="70%" display={{ base: 'none', lg: 'flex' }}>
         <Skeleton
           h={{ base: 65, lg: 100 }}
           w={{ base: 65, lg: 100 }}
@@ -39,11 +39,36 @@ const SingleSkeleton = () => {
           </HStack>
         </VStack>
       </HStack>
-      <Flex ml="0 !important" direction="column" gap="16">
+      <Flex
+        display={{ base: 'none', lg: 'flex' }}
+        ml="0 !important"
+        direction="column"
+        gap="16"
+      >
         <Skeleton h="4" w="12" rounded="sm" ml="auto" />
 
         <Skeleton h="4" w="16" rounded="sm" mt="auto" ml="auto" />
       </Flex>
+      <HStack
+        display={{ base: 'flex', lg: 'none' }}
+        flexBasis="full"
+        flexGrow="1"
+      >
+        <Skeleton w="17" h="14" borderRadius="4" />
+        <VStack flexGrow="1" alignItems="initial">
+          <HStack justifyContent="space-between" alignItems="center" w="full">
+            <Skeleton w="30" h="3.5" borderRadius="full" />
+            <Skeleton w="4" h="1.5" borderRadius="full" />
+          </HStack>
+          <HStack mt="4">
+            <SkeletonCircle size="4" mr="0.5" />
+            <Skeleton w="14" h="2" borderRadius="full" />
+          </HStack>
+          <HStack mt="1">
+            <Skeleton w="19" h="2" borderRadius="full" />
+          </HStack>
+        </VStack>
+      </HStack>
     </HStack>
   )
 }
