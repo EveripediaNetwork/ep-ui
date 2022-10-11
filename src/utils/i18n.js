@@ -109,7 +109,7 @@ export const resources = {
       aboutTestimonialThreeLocation: 'Lagos, Nigeria',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
-        'Our mission to build the world’s greatest encyclopedia requires a skilled executive team that embraces grand challenges. At Everipedia, we are fortunate to have people with deep experience and knowledge in both the education and blockchain industry.',
+        'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',
       latestFromBlogHeading: 'Latest from our blog',
 
       //Profile page
