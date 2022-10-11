@@ -25,13 +25,13 @@ const Privacy = () => (
       <Flex gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
         <Flex gap={5} flex="3" flexDirection="column">
           <Text>
-            Everipedia takes pride in being an inclusive platform with a simple
-            onboarding process. That said, there are a few editorial-related
-            policies / do&apos;s and don&apos;t&apos;s we believe everyone
-            should follow.
+            IQ.wiki takes pride in being an inclusive platform for the
+            cryptocurrency community. That said, there are a few
+            editorial-related policies / do&apos;s and don&apos;t&apos;s we
+            believe everyone should follow.
           </Text>
           <Heading as="h2" size="md">
-            Guidelines on Everipedia
+            Guidelines on IQ.wiki
           </Heading>
           <Text>
             <b>Do:</b>
@@ -39,20 +39,27 @@ const Privacy = () => (
           <Text ml="6">
             <UnorderedList>
               <ListItem>
-                <b>Write in a third-person, objective tone:</b> Because
-                Everipedia is a knowledge base, one of the precedents we have
-                set is to think from the perspective of an academic scholar.
-                When editing an Everipedia article, ask yourself, &quot;Would
-                this be considered an objective resource if someone else read
-                this?&quot;
+                <b>Write about cryptocurrency-related topics:</b> IQ.wiki is a
+                cryptocurrency encyclopedia so feel free to create quality wikis
+                about any topic that&apos;s related to crypto. To maintain the
+                quality of the encyclopedia all pages must be cited and at least
+                300 words. Each page should have some significance and relevance
+                to the crypto community.
+              </ListItem>
+              <ListItem>
+                <b>Write in a third-person, objective tone:</b> Because IQ.wiki
+                is a knowledge base, one of the precedents we have set is to
+                think from the perspective of an academic scholar. When editing
+                an IQ.wiki article, ask yourself, &quot;Would this be considered
+                an objective resource if someone else read this?&quot;
               </ListItem>
               <ListItem>
                 <b>Cite your sources where needed:</b> It is important for
-                Everipedia&apos;s platform to present accurate information. To
-                make it easier for contributors and readers alike to see where
+                IQ.wiki&apos;s platform to present accurate information. To make
+                it easier for contributors and readers alike to see where
                 editors get their information from (and the validity of those
                 resources), it is important to cite their sources. This allows
-                the community to checks editors&apos; work and work with editors
+                the community to checks editor&apos;s work and work with editors
                 in an environment that is inherently collaborative.
               </ListItem>
             </UnorderedList>
@@ -63,7 +70,14 @@ const Privacy = () => (
           <Text ml="6">
             <UnorderedList>
               <ListItem>
-                <b>Plagiarise:</b> Publish content that is not your own and
+                <b>Write on topics unrelated to cryptocurrency:</b> IQ.wiki is
+                first and foremost a cryptocurrency wiki. All articles on the
+                site should have relevance and significance to the crypto
+                community. Articles that are not related to cryptocurrency or
+                are only tangentially related should be removed.
+              </ListItem>
+              <ListItem>
+                <b>Plagiarize:</b>Publish content that is not your own and
                 representing them as your work; this typically includes
                 copying/pasting content without citing its original source and
                 giving proper credit of the creator. It also includes violating
@@ -77,7 +91,7 @@ const Privacy = () => (
                 <b>Spam:</b> Reference content that attempts to promote
                 irrelevant or inappropriate products to a page; these edit
                 proposals tend to be in the form of advertisements and violate
-                Everipedia&apos;s policy of writing in an objective tone.
+                IQ.wiki &apos;s policy of writing in an objective tone.
               </ListItem>
               <ListItem>
                 <b>Dox:</b> Broadcast private and/or sensitive information
@@ -93,7 +107,7 @@ const Privacy = () => (
             Social Channels:
           </Heading>
           <Text>
-            Participation in Everipedia&apos;s social channels (particularly on
+            Participation in IQ.wiki &apos;s social channels (particularly on
             Telegram, Discord) requires adherence to the below tenets. Failure
             to adhere to the guidelines may lead to expulsion.
           </Text>
@@ -113,9 +127,9 @@ const Privacy = () => (
                 suspension/ban.
               </ListItem>
               <ListItem>
-                <b>No Spam/Scams:</b> Give more than you take to this group.
+                <b>No Spamming:</b> Give more than you take to this group.
                 Self-promotion is permitted, as long as the link is relevant to
-                the EOS/Everipedia community.
+                the EOS/IQ.wiki community.
               </ListItem>
             </UnorderedList>
           </Text>
@@ -157,23 +171,22 @@ const Privacy = () => (
           <Text ml="6">
             <UnorderedList>
               <ListItem>
-                Questions about Everipedia: e.g. tokenomics, backstory, etc.
+                Questions about IQ.wiki : e.g. tokenomics, backstory, etc.
               </ListItem>
               <ListItem>
                 Updates (for transparency purposes): new tech developments,
                 projects that our community is working on, etc.
               </ListItem>
               <ListItem>
-                Customer service: how Everipedia works, guidance for editing,
-                how to find more information about other dapps, etc.
+                Customer service: how IQ.wiki works, guidance for editing, how
+                to find more information about other dapps, etc.
               </ListItem>
               <ListItem>
                 A place where people can give us feedback on our progress, how
                 to improve, etc.
               </ListItem>
               <ListItem>
-                Sharing Everipedia pages for insights, conversation, and
-                support.
+                Sharing IQ.wiki pages for insights, conversation, and support.
               </ListItem>
             </UnorderedList>
           </Text>
