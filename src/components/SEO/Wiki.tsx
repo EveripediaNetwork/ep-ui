@@ -42,7 +42,7 @@ export const WikiHeader = ({
         description,
         images: [
           {
-            url: mainImage,
+            url: `${process.env.NEXT_PUBLIC_DOMAIN}/_next/image?url=${mainImage}&w=1200&q=95`,
           },
         ],
       }}
