@@ -13,20 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { RiEdit2Fill } from 'react-icons/ri'
 
-const SingleLink = ({ href, title }: { href: string; title: string }) => {
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      textDecoration="underline"
-      color="#FF5CAA
-"
-    >
-      {title}{' '}
-    </Link>
-  )
-}
-
 const EditingWikisFAQ = () => {
   return (
     <Flex direction="column" mt={10}>
@@ -196,9 +182,9 @@ const EditingWikisFAQ = () => {
                     original section. Use “paragraph” for the plain text.
                     <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=qshwjtDtNss"
-                      title="https://www.youtube.com/watch?v=qshwjtDtNss"
+                    <iframe
+                      title="Headers and Sections"
+                      src="https://www.youtube.com/embed/qshwjtDtNss"
                     />
                   </Text>
                 </AccordionPanel>
@@ -252,9 +238,9 @@ const EditingWikisFAQ = () => {
                     quote select the quoted information and click the blockquote
                     button. <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=P1yHumUmO6k"
-                      title="https://www.youtube.com/watch?v=P1yHumUmO6k"
+                    <iframe
+                      title="Quotes on editing wikis"
+                      src="https://www.youtube.com/embed/P1yHumUmO6k"
                     />
                   </Text>
                 </AccordionPanel>
@@ -367,9 +353,9 @@ const EditingWikisFAQ = () => {
                     one you want to add.
                     <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=_54xE_e5BiQ"
-                      title=" https://www.youtube.com/watch?v=_54xE_e5BiQ"
+                    <iframe
+                      title="Quotes on editing wikis"
+                      src="https://www.youtube.com/embed/_54xE_e5BiQ"
                     />
                   </Text>
                 </AccordionPanel>
@@ -433,9 +419,9 @@ const EditingWikisFAQ = () => {
                     Details panel that can be found under the main image.
                     <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=XWFeUeEVW0c"
-                      title="https://www.youtube.com/watch?v=XWFeUeEVW0c"
+                    <iframe
+                      title="Quotes on editing wikis"
+                      src="https://www.youtube.com/embed/XWFeUeEVW0c"
                     />
                   </Text>
                 </AccordionPanel>
@@ -496,9 +482,9 @@ const EditingWikisFAQ = () => {
                     feature, you can have BAYC appear as the visible text
                     instead of Bored Ape Yacht Club. <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=WyLVpULmyP4"
-                      title="https://www.youtube.com/watch?v=WyLVpULmyP4"
+                    <iframe
+                      title="Quotes on editing wikis"
+                      src="https://www.youtube.com/embed/WyLVpULmyP4"
                     />
                   </Text>
                 </AccordionPanel>
@@ -555,9 +541,9 @@ const EditingWikisFAQ = () => {
                     page also links to the Polygon transaction and IPFS hash for
                     each edit. <br />
                     <br />{' '}
-                    <SingleLink
-                      title="https://www.youtube.com/watch?v=gjYErj7O-PQ"
-                      href="https://www.youtube.com/watch?v=gjYErj7O-PQ"
+                    <iframe
+                      title="Quotes on editing wikis"
+                      src="https://www.youtube.com/embed/gjYErj7O-PQ"
                     />
                   </Text>
                 </AccordionPanel>
