@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import {
   Box,
   VStack,
@@ -11,6 +11,8 @@ import {
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
 import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileNotifications } from '@/types/ProfileType'
+import NotificationInfo from '@/components/Settings/NotificationInfo'
+import { logEvent } from '@/utils/googleAnalytics'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -72,9 +74,11 @@ const NotificationSettings = ({
   const toast = useToast()
   const [postUserProfile] = usePostUserProfileMutation()
 
-  const [notificationPrefs, setNotificationPrefs] = React.useState<
+  const [notificationPrefs, setNotificationPrefs] = useState<
     typeof NotificationChannelsData
   >(NotificationChannelsData)
+
+  const [openSwitch, setOpenSwitch] = useState(false)
 
   useEffect(() => {
     const notificationChannels = NotificationChannelsData.map(channel => ({
@@ -88,21 +92,25 @@ const NotificationSettings = ({
 
   const handleNotificationSettingsSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setOpenSwitch(true)
     if (!address) return
-
-    // get all checkboxes from form
     const checkboxes = Array.from(
       e.currentTarget.querySelectorAll(
         'input[type="checkbox"]',
       ) as unknown as Array<HTMLInputElement>,
     )
 
-    // get all the checked and unchecked checkboxes with their names
     let data = {}
     checkboxes.forEach(checkbox => {
-      data = { ...data, [checkbox.name]: checkbox.checked }
+      if(checkbox.checked){
+        data = { ...data, [checkbox.title]: checkbox.checked }
+      }
     })
-
+    logEvent({
+      action: 'NOTIFICATION_SETTINGS',
+      params: {data: JSON.stringify(data)},
+    })
+    return
     // send the data to the server
     postUserProfile({
       profileInfo: {
@@ -118,6 +126,7 @@ const NotificationSettings = ({
     })
   }
   return (
+    <>
     <form onSubmit={handleNotificationSettingsSave}>
       <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
         {notificationPrefs.map((n, i) => (
@@ -136,6 +145,8 @@ const NotificationSettings = ({
         Save
       </Button>
     </form>
+    <NotificationInfo openSwitch={openSwitch} setOpenSwitch={ (state) =>  setOpenSwitch(state)}/>
+    </>
   )
 }
 
