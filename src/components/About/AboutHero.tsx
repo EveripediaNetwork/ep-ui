@@ -6,7 +6,7 @@ import { Image } from '../Elements/Image/Image'
 const AboutHero = () => {
   const { t } = useTranslation()
   const aboutHeroSrc = useColorModeValue(
-    'AboutSecHeroLight.png',
+    'AboutHeroLight.png',
     'AboutSecHeroDark.png',
   )
   return (
@@ -36,7 +36,7 @@ const AboutHero = () => {
           w={{ base: '80%', md: '80%' }}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
-      <Box flexGrow="1">
+      <Box>
         <Image
           imgH={{ base: '400px', lg: '500px' }}
           imgW={{ base: '400px', lg: '500px' }}
