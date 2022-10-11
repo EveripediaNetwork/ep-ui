@@ -11,7 +11,7 @@ import { TeamData } from '@/data/MeetOurTeamData'
 import { IconType } from 'react-icons/lib'
 import { useTranslation } from 'react-i18next'
 import { RiLinkedinFill, RiTwitterFill } from 'react-icons/ri'
-import EveripediaLogo from './logos/everipedia.svg'
+import IQLogo from './logos/iq.svg'
 import { Image } from '../Elements/Image/Image'
 import AboutOurTeamSlider from './AboutOurTeamSlider'
 
@@ -34,7 +34,7 @@ const IconButtonSocial = ({
     aria-label={name}
     size="xs"
     as={icon}
-    {...(!icon && { icon: <EveripediaLogo fill="gray" /> })}
+    {...(!icon && { icon: <IQLogo fill="gray" /> })}
     onClick={onClick}
   />
 )
@@ -99,10 +99,10 @@ const AboutOurTeam = () => {
                       onClick={() => window.open(teamMember.socials.twitter)}
                     />
                   )}
-                  {teamMember.socials.everipedia && (
+                  {teamMember.socials.iqWiki && (
                     <IconButtonSocial
                       name="IQ.Wiki"
-                      onClick={() => window.open(teamMember.socials.everipedia)}
+                      onClick={() => window.open(teamMember.socials.iqWiki)}
                     />
                   )}
                 </HStack>
