@@ -34,8 +34,8 @@ const AboutHero = () => {
           textAlign={{ base: 'center', xl: 'left' }}
           fontSize={{ base: 'sm', md: 'md', xl: 'lg' }}
           mb={4}
-          mx={{ lg: 'auto', xl: '0' }}
-          w={{ base: '100%', lg: '90%', xl: '80%' }}
+          mx={{ md: 'auto', xl: '0' }}
+          w={{ base: '100%', md: '80%', xl: '80%' }}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
       <Box>
