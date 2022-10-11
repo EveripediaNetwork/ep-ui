@@ -80,12 +80,12 @@ export const resources = {
         'Our mission is to educate the world on blockchain technology',
       aboutFeatContent:
         'We are the primary source of objective, high quality knowledge on the Internet today for everything related to blockchain technology and cryptocurrencies. Our vision is to make blockchain more discoverable and accessible around the world and empower users with information they can trust.',
-      abtFeatOneHeading: 'Modern Design and Features',
+      abtFeatOneHeading: 'Bringing blockchain to the world',
       abtFeatOneContent:
-        'IQ.wiki’s design and features have been built for the modern age.',
-      abtFeatTwoHeading: 'More Articles and Content',
+        'The most comprehensive blockchain and crypto knowledge base in the world provides users with thousands of wikis on everything from Bitcoin, NFTs, DAO’s and so much more.',
+      abtFeatTwoHeading: 'Powered by the IQ token',
       abtFeatTwoContent:
-        'IQ.Wiki allows you to create an article about anything as long as you have a citation. This allows for a much broader scope of content in the knowledge base.',
+        'IQ.wiki is a central part of the IQ ecosystem. The IQ token powers the encyclopedia and allows anyone to be a stakeholder in the ecosystem.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
         'Anyone with IQ Tokens is a stakeholder in the IQ.Wiki Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',

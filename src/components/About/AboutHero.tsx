@@ -6,13 +6,13 @@ import { Image } from '../Elements/Image/Image'
 const AboutHero = () => {
   const { t } = useTranslation()
   const aboutHeroSrc = useColorModeValue(
-    'AboutHeroLight.png',
-    'AboutHeroLight.png',
+    'about-hero-light.svg',
+    'about-hero-dark.svg',
   )
   return (
     <HStack
       mx="auto"
-      maxW={{ base: '100%', xl: '90%' }}
+      maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
       spacing="2"
       flexDirection={{ base: 'column', xl: 'row' }}
     >
@@ -22,7 +22,7 @@ const AboutHero = () => {
           w={{ base: '80%', md: '100%' }}
           pr={{ base: '0', xl: '8' }}
           mx={{ base: 'auto', xl: 0 }}
-          fontSize={{ base: '32', md: '42' }}
+          fontSize={{ base: '32', md: '36', '2xl': '42' }}
           mt={10}
           mb={{ base: 5, xl: 10 }}
           fontWeight="black"
