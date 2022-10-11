@@ -1,14 +1,14 @@
 import React from 'react'
-import { Box, Heading, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Heading, HStack, Text /*, useColorModeValue */ } from '@chakra-ui/react'
+import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-import { Image } from '../Elements/Image/Image'
 
 const AboutHero = () => {
   const { t } = useTranslation()
-  const aboutHeroSrc = useColorModeValue(
-    'AboutSecHeroLight.png',
-    'AboutSecHeroDark.png',
-  )
+  // const aboutHeroSrc = useColorModeValue(
+  //   'AboutSecHeroLight.png',
+  //   'AboutSecHeroDark.png',
+  // )
   return (
     <HStack
       mx="auto"
@@ -35,16 +35,13 @@ const AboutHero = () => {
           mb={4}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
-      <Box>
-        <Image
-          imgH={{ base: '400px', lg: '500px' }}
-          imgW={{ base: '400px', lg: '500px' }}
-          className="teamMember__image"
-          src={`/images/${aboutHeroSrc}`}
-          alt="Bringing knowledge to the blockchain."
-          priority
-        />
-      </Box>
+      <Image
+        width={400}
+        height={400}
+        src={`/images/about-hero.png`}
+        alt="Bringing knowledge to the blockchain."
+        priority
+      />
     </HStack>
   )
 }
