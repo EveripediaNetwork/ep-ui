@@ -3,10 +3,10 @@ import {
   Flex,
   GridItem,
   Heading,
-  Icon,
   SimpleGrid,
   Link,
   Text,
+  Image,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
@@ -16,8 +16,6 @@ import { GetServerSideProps } from 'next'
 import { getRunningOperationPromises } from '@/services/blog'
 import { getBlogsFromAllAccounts } from '@/utils/blog.utils'
 import { Blog as BlogType } from '@/types/Blog'
-import China from 'public/images/cn.svg'
-import Korea from 'public/images/kr.svg'
 import BlogHeader from '@/components/SEO/Blog'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
@@ -55,13 +53,14 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
                 href="https://mirror.xyz/0xD92e7079F29481cd8e6b7382E8A47Cd3C36956Ee"
                 target="_blank"
               >
-                <Icon as={Korea} id="flag-icons-kr" boxSize={8} />
+                <Image src="/images/kr.svg" width={10} />
               </Link>
               <Link
                 href="https://mirror.xyz/0xcd5Cc4F54C20C80aED2db81CBaf82153Fb95C1b1"
                 target="_blank"
+                ml={5}
               >
-                <Icon as={China} ml={5} id="flag-icons-cn" boxSize={8} />
+                <Image src="/images/cn.svg" width={10} />
               </Link>
             </Flex>
           </Flex>
