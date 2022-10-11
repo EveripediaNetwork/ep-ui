@@ -25,8 +25,8 @@ const IconButtonSocial = ({
   onClick: () => void
 }) => (
   <IconButton
-    alignItems="center"
-    justifyContent="center"
+    display="grid"
+    placeItems="center"
     bgColor="transparent"
     _hover={{ bgColor: 'transparent' }}
     _focus={{ bgColor: 'transparent' }}
@@ -35,8 +35,7 @@ const IconButtonSocial = ({
     color="gray"
     aria-label={name}
     size="xs"
-    as={icon}
-    {...(!icon && { icon: <IQLogo fill="none" /> })}
+    as={icon || IQLogo}
     onClick={onClick}
   />
 )
