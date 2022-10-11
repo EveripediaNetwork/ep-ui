@@ -5,7 +5,7 @@ type TeamObjDataType = {
   about: string
   title: string
   socials: {
-    everipedia?: string
+    iqWiki?: string
     facebook?: string
     github?: string
     instagram?: string
