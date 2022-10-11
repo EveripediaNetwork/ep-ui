@@ -12,16 +12,16 @@ const AboutHero = () => {
   return (
     <HStack
       mx="auto"
-      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      maxW={{ base: '100%', lg: '90%' }}
       spacing="2"
       flexDirection={{ base: 'column', lg: 'row' }}
     >
       <Box mx="auto" mb={{ base: 10, lg: 0 }}>
         <Heading
           textAlign={{ base: 'center', lg: 'left' }}
-          w={{ base: '80%', md: '90%' }}
+          w={{ base: '80%', md: '85%' }}
           mx={{ base: 'auto', lg: 0 }}
-          fontSize={{ base: '32', md: '54' }}
+          fontSize={{ base: '32', md: '42' }}
           mt={10}
           mb={{ base: 5, lg: 10 }}
           fontWeight="black"
@@ -33,9 +33,10 @@ const AboutHero = () => {
           textAlign={{ base: 'center', lg: 'left' }}
           fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
           mb={4}
+          w={{ base: '80%', md: '80%' }}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
-      <Box>
+      <Box flexGrow="1">
         <Image
           imgH={{ base: '400px', lg: '500px' }}
           imgW={{ base: '400px', lg: '500px' }}
