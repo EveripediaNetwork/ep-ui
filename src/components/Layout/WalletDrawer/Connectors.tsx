@@ -167,7 +167,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                   textDecoration="none"
                   _hover={{ textDecoration: 'none' }}
                   _focus={{ boxShadow: 'none' }}
-                  href="https://dashboard.iq.wiki/dashboard"
+                  href="http://everipedia.org/iq"
                   variant="unstyled"
                 >
                   <Center height="16">
