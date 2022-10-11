@@ -9,23 +9,8 @@ import {
   AccordionPanel,
   Flex,
   Icon,
-  Link,
 } from '@chakra-ui/react'
 import { RiSettings3Fill } from 'react-icons/ri'
-
-const SingleLink = ({ href, title }: { href: string; title: string }) => {
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      textDecoration="underline"
-      color="#FF5CAA
-"
-    >
-      {title}
-    </Link>
-  )
-}
 
 const CreateWikisFAQ = () => {
   return (
@@ -95,9 +80,9 @@ const CreateWikisFAQ = () => {
                     navigation. Add your desired article title. Make sure that
                     it is short and comprehensive - the system will generate the
                     unique URL from the title.{' '}
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=Y4gWJUFchrc"
-                      title="https://www.youtube.com/watch?v=Y4gWJUFchrc"
+                    <iframe
+                      title="Getting Started with creating wikis on IQ.WIKI"
+                      src="https://www.youtube.com/embed/Y4gWJUFchrc"
                     />
                   </Text>
                 </AccordionPanel>
@@ -151,9 +136,9 @@ const CreateWikisFAQ = () => {
                     it or clicking to select an image from your PC. You can also
                     clicking Image URL and paste in a link to the image and the
                     system will fetch it automatically.{' '}
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=3DFzzleCCNo"
-                      title="https://www.youtube.com/watch?v=3DFzzleCCNo"
+                    <iframe
+                      title="Adding a featured image"
+                      src="https://www.youtube.com/embed/3DFzzleCCNo"
                     />
                   </Text>
                 </AccordionPanel>
@@ -265,9 +250,9 @@ const CreateWikisFAQ = () => {
                     description). To actually insert the reference, click the
                     pink “Cite” button. <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=NrAUvtOpY0E"
-                      title="https://www.youtube.com/watch?v=NrAUvtOpY0E"
+                    <iframe
+                      title="Adding a citation"
+                      src="https://www.youtube.com/embed/NrAUvtOpY0E"
                     />
                   </Text>
                 </AccordionPanel>
@@ -340,9 +325,9 @@ const CreateWikisFAQ = () => {
                     under a minute but it could take a few minutes if the
                     Polygon network is congested. <br />
                     <br />
-                    <SingleLink
-                      href="https://www.youtube.com/watch?v=8ml3S6KUX3U"
-                      title="https://www.youtube.com/watch?v=8ml3S6KUX3U"
+                    <iframe
+                      title="Submitting a wiki"
+                      src="https://www.youtube.com/embed/8ml3S6KUX3U"
                     />
                     <br />
                     <br /> If you&apos;re looking for ways to improve your
