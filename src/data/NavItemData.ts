@@ -172,12 +172,6 @@ export const MOBILE_NAV_ITEMS = ({
             hasImage: false,
           },
           {
-            id: 7005,
-            label: 'Support Settings',
-            href: '/account/settings?tab=support',
-            hasImage: false,
-          },
-          {
             id: 7006,
             label: 'Advanced Settings',
             href: '/account/settings?tab=advanced',
