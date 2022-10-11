@@ -41,7 +41,7 @@ const NotificationInfo = ({
               mr={5}
             />
             <Text flex="1" fontSize="xl" fontWeight="black">
-              Notification Information
+              Notifications
             </Text>
             <Icon
               cursor="pointer"
@@ -51,22 +51,9 @@ const NotificationInfo = ({
               onClick={() => setOpenSwitch(false)}
             />
           </Flex>
-          <Text mt="6" w="90%" lineHeight="2">
-            feature is under development
+          <Text textAlign="center" my="10"  lineHeight="2">
+            Notification settings is under development and will be available to you soon.
           </Text>
-          <Flex mt="6">
-            <Text
-              onClick={() => setOpenSwitch(false)}
-              color="primary"
-              cursor="pointer"
-              pt={2}
-              flex="1"
-              fontSize="sm"
-              fontWeight="bold"
-            >
-              Dismiss
-            </Text>
-          </Flex>
         </Box>
       </AlertDialogContent>
     </AlertDialog>
