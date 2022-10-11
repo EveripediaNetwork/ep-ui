@@ -1,5 +1,10 @@
 import React from 'react'
-import { Box, Heading, HStack, Text /*, useColorModeValue */ } from '@chakra-ui/react'
+import {
+  Box,
+  Heading,
+  HStack,
+  Text /* , useColorModeValue */,
+} from '@chakra-ui/react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
@@ -38,7 +43,7 @@ const AboutHero = () => {
       <Image
         width={400}
         height={400}
-        src={`/images/about-hero.png`}
+        src="/images/about-hero.png"
         alt="Bringing knowledge to the blockchain."
         priority
       />
