@@ -6,37 +6,41 @@ import { Image } from '../Elements/Image/Image'
 const AboutHero = () => {
   const { t } = useTranslation()
   const aboutHeroSrc = useColorModeValue(
-    'AboutSecHeroLight.png',
-    'AboutSecHeroDark.png',
+    'about-hero-light.svg',
+    'about-hero-dark.svg',
   )
   return (
     <HStack
       mx="auto"
-      maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
+      maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
       spacing="2"
-      flexDirection={{ base: 'column', lg: 'row' }}
+      flexDirection={{ base: 'column', xl: 'row' }}
     >
-      <Box mx="auto" mb={{ base: 10, lg: 0 }}>
+      <Box mx="auto" mb={{ base: 10, xl: 0 }}>
         <Heading
-          textAlign={{ base: 'center', lg: 'left' }}
-          w={{ base: '80%', md: '90%' }}
-          mx={{ base: 'auto', lg: 0 }}
-          fontSize={{ base: '32', md: '54' }}
+          textAlign={{ base: 'center', xl: 'left' }}
+          w={{ base: '80%', md: '100%' }}
+          pr={{ base: '0', xl: '8' }}
+          mx={{ base: 'auto', xl: 0 }}
+          fontSize={{ base: '32', md: '36', '2xl': '42' }}
           mt={10}
-          mb={{ base: 5, lg: 10 }}
+          mb={{ base: 5, xl: 10 }}
           fontWeight="black"
           lineHeight="shorter"
         >
           {`${t('aboutHeroHeading')}`}
         </Heading>
         <Text
-          textAlign={{ base: 'center', lg: 'left' }}
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
+          textAlign={{ base: 'center', xl: 'left' }}
+          fontSize={{ base: 'sm', md: 'md', xl: 'lg' }}
           mb={4}
+          mx={{ md: 'auto', xl: '0' }}
+          w={{ base: '100%', md: '80%', xl: '80%' }}
         >{`${t('aboutHeroPhrase')}`}</Text>
       </Box>
       <Box>
         <Image
+          objectFit="contain"
           imgH={{ base: '400px', lg: '500px' }}
           imgW={{ base: '400px', lg: '500px' }}
           className="teamMember__image"
