@@ -19,6 +19,8 @@ import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import * as Humanize from 'humanize-plus'
+
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -66,7 +68,7 @@ const LeaderBoardCard = ({ editor }: { editor: LeaderBoardType }) => {
               <Text fontSize="md" textAlign="center" color="brandLinkColor">
                 {ensUserName}
               </Text>
-              <Text textAlign="center">{editor.TotalRewards} IQ Earned</Text>
+              <Text fontSize="sm" textAlign="center">{Humanize.intComma(parseFloat(editor.TotalRewards))} IQ Earned</Text>
             </VStack>
             <Center color="trophyColor">
               <RiTrophyFill fontSize="30" />

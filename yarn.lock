@@ -3062,6 +3062,11 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
 
+"@types/humanize-plus@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@types/humanize-plus/-/humanize-plus-1.8.0.tgz#ab6bfdb143ca719604dc031449a497fc11f54eb4"
+  integrity sha512-c7QNInYzgvbrNZvbwI/iYvHDTik/GqONxAvRUqwYF0AjgycoiyELrRR3RrILGXdZcaLt6Y+ds0+gSRQFzc71IQ==
+
 "@types/is-ci@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/is-ci/-/is-ci-3.0.0.tgz#7e8910af6857601315592436f030aaa3ed9783c3"
@@ -6153,6 +6158,11 @@ human-id@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/human-id/-/human-id-1.0.2.tgz#e654d4b2b0d8b07e45da9f6020d8af17ec0a5df3"
   integrity sha512-UNopramDEhHJD+VR+ehk8rOslwSfByxPIZyJRfV739NDhN5LF1fa1MqnzKm2lGTQRjNrjK19Q5fhkgIfjlVUKw==
+
+humanize-plus@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/humanize-plus/-/humanize-plus-1.8.2.tgz#a65b34459ad6367adbb3707a82a3c9f916167030"
+  integrity sha512-jaLeQyyzjjINGv7O9JJegjsaUcWjSj/1dcXvLEgU3pGdqCdP1PiC/uwr+saJXhTNBHZtmKnmpXyazgh+eceRxA==
 
 husky@^8.0.0:
   version "8.0.1"
