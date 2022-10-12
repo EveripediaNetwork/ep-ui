@@ -35,6 +35,7 @@ const moduleExports = {
       'iq.wiki',
       'images.mirror-media.xyz',
       'cdn.buttercms.com',
+      'icons.iq.wiki',
     ],
   },
 }
