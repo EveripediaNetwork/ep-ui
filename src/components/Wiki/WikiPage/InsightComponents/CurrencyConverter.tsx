@@ -26,7 +26,7 @@ const CurrencyBox = ({
       <HStack align="center">
         {token ? (
           <Image
-            src={`https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/${token}.png`}
+            src={`https://icons.iq.wiki/128/${token}.png`}
             imgH="18px"
             imgW="18px"
             alt={token}
