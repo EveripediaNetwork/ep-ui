@@ -19,6 +19,7 @@ import { ArweaveApi } from '@/services/blog'
 import { tagsApi } from '@/services/tags'
 import { ensApi } from '@/services/ens'
 import { MirrorApi } from '@/services/blog/mirror'
+import { editorApi } from '@/services/editor'
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
     [ensApi.reducerPath]: ensApi.reducer,
+    [editorApi.reducerPath]: editorApi.reducer
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -53,7 +55,8 @@ export const store = configureStore({
       .concat(adminApi.middleware)
       .concat(profileApi.middleware)
       .concat(tagsApi.middleware)
-      .concat(ensApi.middleware),
+      .concat(ensApi.middleware)
+      .concat(editorApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

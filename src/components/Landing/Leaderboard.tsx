@@ -18,6 +18,8 @@ import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import { LeaderBoardType, useGetLeaderboardQuery } from '@/services/editor'
+import { useENSData } from '@/hooks/useENSData'
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -29,8 +31,9 @@ const SECTIONS = [
 const LeaderBoardCard = ({
   editor,
 }: {
-  editor: typeof LEADERBOARD_DATA[0]
+  editor: LeaderBoardType
 }) => {
+  const [, ensUserName] = useENSData(editor.Address)
   return (
     <LinkBox flex="none">
       <chakra.div p={2} mx="auto">
@@ -42,7 +45,7 @@ const LeaderBoardCard = ({
           cursor="pointer"
           mx="auto"
         >
-          <LinkOverlay href={`/account/${editor.address}`}>
+          <LinkOverlay href={`/account/${editor.Address}`}>
             <DisplayAvatar
               alt="new life"
               overflow="hidden"
@@ -50,8 +53,8 @@ const LeaderBoardCard = ({
               borderColor="white"
               rounded="full"
               justifySelf="center"
-              address="0xf60488e823b3d1765774e6f0F4eE40a31E69180c"
-              // avatarIPFS={"profileData?.avatar"}
+              size="130"
+              address={editor.Address}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
@@ -66,9 +69,9 @@ const LeaderBoardCard = ({
             />
             <VStack my="6">
               <Text fontSize="md" textAlign="center" color="brandLinkColor">
-                {editor.name}
+                {ensUserName} 
               </Text>
-              <Text textAlign="center">{editor.earning}</Text>
+              <Text textAlign="center">{editor.TotalRewards} IQ Earned</Text>
             </VStack>
             <Center color="trophyColor">
               <RiTrophyFill fontSize="30" />
@@ -80,7 +83,7 @@ const LeaderBoardCard = ({
   )
 }
 
-const LeaderBoard = () => {
+const LeaderBoard = ({leaderboards}: {leaderboards: LeaderBoardType[]}) => {
   const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
     <Box px={{ base: 3, md: 8 }} py={{ base: 5, md: 20 }} textAlign="center">
@@ -152,7 +155,7 @@ const LeaderBoard = () => {
             ],
           }}
         >
-          {LEADERBOARD_DATA.map((editor, index) => (
+          {leaderboards.map((editor, index) => (
             <LeaderBoardCard key={`editor-${index}`} editor={editor} />
           ))}
         </Carousel>
