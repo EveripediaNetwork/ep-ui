@@ -41,7 +41,7 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
     [ensApi.reducerPath]: ensApi.reducer,
-    [editorApi.reducerPath]: editorApi.reducer
+    [editorApi.reducerPath]: editorApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -56,7 +56,7 @@ export const store = configureStore({
       .concat(profileApi.middleware)
       .concat(tagsApi.middleware)
       .concat(ensApi.middleware)
-      .concat(editorApi.middleware)
+      .concat(editorApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

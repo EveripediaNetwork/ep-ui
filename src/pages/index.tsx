@@ -20,13 +20,17 @@ import {
 import { Category } from '@/types/CategoryDataTypes'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
-import { getLeaderboard, getRunningOperationPromises as getLeaderboardRunningOperationPromises, LeaderBoardType } from '@/services/editor'
+import {
+  getLeaderboard,
+  getRunningOperationPromises as getLeaderboardRunningOperationPromises,
+  LeaderBoardType,
+} from '@/services/editor'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
   categories: Category[]
   popularTags: { id: string }[]
-  leaderboards: LeaderBoardType[],
+  leaderboards: LeaderBoardType[]
 }
 
 export const Index = ({
@@ -47,7 +51,7 @@ export const Index = ({
         <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
         <CategoriesList categories={categories} />
       </Box>
-      <LeaderBoard leaderboards={leaderboards}/>
+      <LeaderBoard leaderboards={leaderboards} />
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )
@@ -72,9 +76,13 @@ export async function getStaticProps() {
   await Promise.all(getCategoriesRunningOperationPromises())
   await Promise.all(getLeaderboardRunningOperationPromises())
   await Promise.all(getTagsRunningOperationPromises())
-  
 
-  if (promotedWikisError || categoriesError || tagsDataError || leaderboardError) {
+  if (
+    promotedWikisError ||
+    categoriesError ||
+    tagsDataError ||
+    leaderboardError
+  ) {
     throw new Error(
       `Error fetching data. the error is: ${{
         promotedWikisError,

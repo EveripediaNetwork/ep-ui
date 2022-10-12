@@ -12,14 +12,13 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react'
 import React from 'react'
-import { LEADERBOARD_DATA } from '@/data/LeaderBoardData'
 import { RiTrophyFill } from 'react-icons/ri'
+import { LeaderBoardType } from '@/services/editor'
+import { useENSData } from '@/hooks/useENSData'
 import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
-import { LeaderBoardType, useGetLeaderboardQuery } from '@/services/editor'
-import { useENSData } from '@/hooks/useENSData'
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -28,11 +27,7 @@ const SECTIONS = [
   { period: 'All time', disabled: false },
 ]
 
-const LeaderBoardCard = ({
-  editor,
-}: {
-  editor: LeaderBoardType
-}) => {
+const LeaderBoardCard = ({ editor }: { editor: LeaderBoardType }) => {
   const [, ensUserName] = useENSData(editor.Address)
   return (
     <LinkBox flex="none">
@@ -69,7 +64,7 @@ const LeaderBoardCard = ({
             />
             <VStack my="6">
               <Text fontSize="md" textAlign="center" color="brandLinkColor">
-                {ensUserName} 
+                {ensUserName}
               </Text>
               <Text textAlign="center">{editor.TotalRewards} IQ Earned</Text>
             </VStack>
@@ -83,7 +78,7 @@ const LeaderBoardCard = ({
   )
 }
 
-const LeaderBoard = ({leaderboards}: {leaderboards: LeaderBoardType[]}) => {
+const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
   const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
     <Box px={{ base: 3, md: 8 }} py={{ base: 5, md: 20 }} textAlign="center">

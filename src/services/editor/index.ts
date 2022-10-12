@@ -1,14 +1,14 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import {
-  GET_LEADER_BOARD
-} from '@/services/editor/queries'
+import { GET_LEADER_BOARD } from '@/services/editor/queries'
 import config from '@/config'
 import { HYDRATE } from 'next-redux-wrapper'
 
-
-export type LeaderBoardType = {id: string, Address: string, TotalRewards: string}
-
+export type LeaderBoardType = {
+  id: string
+  Address: string
+  TotalRewards: string
+}
 
 export const editorApi = createApi({
   reducerPath: 'editorApi',
@@ -30,10 +30,8 @@ export const editorApi = createApi({
 })
 
 export const {
-  useGetLeaderboardQuery, 
+  useGetLeaderboardQuery,
   util: { getRunningOperationPromises },
 } = editorApi
 
-export const {
-  getLeaderboard
-} = editorApi.endpoints
+export const { getLeaderboard } = editorApi.endpoints
