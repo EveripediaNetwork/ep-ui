@@ -15,7 +15,6 @@ const CurrencyBox = ({
   value: number
   setValue: (value: string) => void
 }) => {
-  console.log(token)
   return (
     <HStack
       zIndex={2}
@@ -27,7 +26,7 @@ const CurrencyBox = ({
       <HStack align="center">
         {token ? (
           <Image
-            src={`https://raw.githubusercontent.com/EveripediaNetwork/cryptocurrency-icons/master/128/${token}.png`}
+            src={`https://icons.iq.wiki/128/${token}.png`}
             imgH="18px"
             imgW="18px"
             alt={token}
