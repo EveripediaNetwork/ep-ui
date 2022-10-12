@@ -48,42 +48,31 @@ export const PromoteCreatedWikisModal = ({
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
-  const [homepageLevel, sethomepageLevel] = useState(0)
-  const [promotionArray, setPromotionArray] = useState<Array<[] | any>>()
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
-  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
+  const { data: promotedWikis, refetch: promoteWikiRefetch } =
+    useGetAllPromotedWikiCountQuery(0)
 
   const getWikiIdUsingLevel = (level: number) => {
-    const data: any = promotedWikis && promotedWikis
-    let value: any
-    /* eslint-disable no-plusplus */
+    const wiki = promotedWikis?.filter(item => {
+      return item.promoted === level
+    })[0]
 
-    for (let index = 0; index < data.length; index++) {
-      if (data[index].promoted === level) {
-        value = data[index].id
-        return value
-      }
-    }
-    return value
+    return wiki?.id
   }
 
   const arrs = () => {
     const arr: any[] = []
     const data: any = promotedWikis && promotedWikis
-    const firtLevel = data[0].promoted
-    sethomepageLevel(firtLevel)
-    for (let index = 1; index < data.length; index++) {
+    for (let index = 1; index < data.length; index += 1) {
       arr.push(data[index].promoted)
     }
-
-    setPromotionArray(arr)
   }
 
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('2')
 
   const toast = useToast()
   const ModalData = wiki?.filter(
@@ -110,7 +99,19 @@ export const PromoteCreatedWikisModal = ({
     reset()
     onClose()
   }
-
+  const handlePromoteWiki = async ({
+    id,
+    level,
+  }: {
+    id: string
+    level: number
+  }) => {
+    await promoteWiki({
+      id,
+      level,
+    })
+    promoteWikiRefetch()
+  }
   const getWiki = (
     <>
       {Data && (
@@ -250,12 +251,16 @@ export const PromoteCreatedWikisModal = ({
           id: wikiChosenId,
           level: Number(value),
         })
-        await promoteWiki({
-          id: getWikiIdUsingLevel(Number(value)),
-          level: 0,
-        })
+        handlePromoteWiki({ id: wikiChosenId, level: Number(value) })
+        promoteWikiRefetch()
 
+        const id = getWikiIdUsingLevel(+value)
+        if (id) {
+          handlePromoteWiki({ id, level: 0 })
+          promoteWikiRefetch()
+        }
         hideFunc()
+        promoteWikiRefetch()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
         let toastMessage =
@@ -275,17 +280,14 @@ export const PromoteCreatedWikisModal = ({
           isClosable: true,
         })
       } else {
-        await promoteWiki({
-          id: wikiChosenId,
-          level: homepageLevel,
-        })
-
-        await promoteWiki({
-          id: getWikiIdUsingLevel(homepageLevel),
-          level: 0,
-        })
-
+        handlePromoteWiki({ id: wikiChosenId, level: 1 })
+        promoteWikiRefetch()
+        const id = getWikiIdUsingLevel(1)
+        if (id) {
+          handlePromoteWiki({ id, level: 0 })
+        }
         hideFunc()
+        promoteWikiRefetch()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Homepage'
         let toastMessage =
@@ -341,14 +343,23 @@ export const PromoteCreatedWikisModal = ({
                 </Text>
                 <Select
                   cursor="pointer"
-                  w="20%"
                   onChange={e => setValue(e.target.value)}
+                  defaultValue={promotedWikis?.length}
                 >
-                  {promotionArray?.map((item, i) => (
-                    <option key={i} value={item}>
-                      SLOT {i + 1}
+                  {promotedWikis &&
+                    [...promotedWikis]
+                      ?.sort((a, b) => a.promoted - b.promoted)
+                      ?.slice(1)
+                      ?.map(item => (
+                        <option value={item.promoted}>
+                          SLOT {item.promoted - 1} - {item.title}
+                        </option>
+                      ))}
+                  {promotedWikis && (
+                    <option value={promotedWikis && +promotedWikis.length + 1}>
+                      New Slot
                     </option>
-                  ))}
+                  )}
                 </Select>
               </Box>
             )}
@@ -440,6 +451,10 @@ export const PromoteCreatedWikisModal = ({
                     fontSize="xs"
                     borderWidth="1px"
                     onClick={TrendingwikiSelected}
+                    disabled={
+                      !promotedWikis?.length &&
+                      buttonTwo === 'Promote to Trending wikis'
+                    }
                   >
                     {buttonTwo}
                   </Button>
