@@ -27,7 +27,7 @@ import {
   PopoverFooter,
 } from '@chakra-ui/react'
 
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
@@ -35,6 +35,7 @@ import { RiArrowUpDownLine } from 'react-icons/ri'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
+  const insightTableRef = useRef<null | HTMLDivElement>(null)
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [initGetHiddenWikis, setInitGetHiddenWikis] = useState<boolean>(true)
   const [initGetPromotedWikis, setInitGetPromotedWikis] =
@@ -205,6 +206,12 @@ export const WikiInsightTable = () => {
     }
   }
 
+  const scrolltoTableTop = () => {
+    insightTableRef?.current?.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
+
   const increasePagination = () => {
     return (
       wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
@@ -246,6 +253,7 @@ export const WikiInsightTable = () => {
       borderWidth="1px"
       borderRadius="sm"
       rounded="lg"
+      ref={insightTableRef}
     >
       <Flex
         borderBottomWidth="1px"
@@ -405,6 +413,7 @@ export const WikiInsightTable = () => {
           variant="outline"
           disabled={!activatePrevious}
           onClick={() => {
+            scrolltoTableTop()
             decreasePagination()
             if (paginateOffset === 0) {
               setActivatePrevious(false)
@@ -417,6 +426,7 @@ export const WikiInsightTable = () => {
           rightIcon={<ArrowForwardIcon />}
           variant="outline"
           onClick={() => {
+            scrolltoTableTop()
             increasePagination()
             if (wikis && wikis?.length >= 10) {
               setActivatePrevious(true)
