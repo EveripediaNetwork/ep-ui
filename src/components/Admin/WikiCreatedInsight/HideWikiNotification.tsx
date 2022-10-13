@@ -16,6 +16,7 @@ import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import {
   usePostHideWikiMutation,
   usePostUnHideWikiMutation,
+  useRevalidateURLMutation,
 } from '@/services/admin'
 
 export const HideWikiNotification = ({
@@ -37,6 +38,7 @@ export const HideWikiNotification = ({
   const [postHideWiki, { error: postHideWikiError }] = usePostHideWikiMutation()
   const [postUnHideWiki, { error: postUnHideWikiError }] =
     usePostUnHideWikiMutation()
+  const [revalidateURL] = useRevalidateURLMutation()
 
   const hideWiki = () => {
     postHideWiki(wikiId)
@@ -51,6 +53,9 @@ export const HideWikiNotification = ({
       toastMessage =
         "We couldn't save your wiki changes. Refresh the page and try again."
       toastType = 'error'
+    } else {
+      revalidateURL(`/wiki/${wikiChosenId}/`)
+      console.log(wikiChosenId)
     }
     toast({
       title: toastTitle,
@@ -74,6 +79,8 @@ export const HideWikiNotification = ({
       toastMessage =
         "We couldn't save your wiki changes. Refresh the page and try again."
       toastType = 'error'
+    } else {
+      revalidateURL(`/wiki/${wikiChosenId}/`)
     }
     toast({
       title: toastTitle,
