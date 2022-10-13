@@ -76,7 +76,6 @@ export async function getStaticProps() {
   await Promise.all(getCategoriesRunningOperationPromises())
   await Promise.all(getLeaderboardRunningOperationPromises())
   await Promise.all(getTagsRunningOperationPromises())
-
   if (
     promotedWikisError ||
     categoriesError ||
@@ -92,12 +91,19 @@ export async function getStaticProps() {
     )
   }
 
+  const arrayForSort = [...leaderboard.editors]
+  const sortedleaderboards = arrayForSort.sort(
+    (firstEditor: LeaderBoardType, nextEditor: LeaderBoardType) => {
+      return nextEditor.TotalRewards - firstEditor.TotalRewards
+    },
+  )
+
   return {
     props: {
       promotedWikis: promotedWikis || [],
       categories: categories || [],
       popularTags: tagsData || [],
-      leaderboards: leaderboard?.editors || [],
+      leaderboards: sortedleaderboards || [],
     },
   }
 }

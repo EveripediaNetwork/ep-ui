@@ -10,9 +10,10 @@ import {
   VStack,
   Center,
   useBreakpointValue,
+  Skeleton,
 } from '@chakra-ui/react'
 import React from 'react'
-import { RiTrophyFill } from 'react-icons/ri'
+import { RiStarFill, RiTrophyFill } from 'react-icons/ri'
 import { LeaderBoardType } from '@/services/editor'
 import { useENSData } from '@/hooks/useENSData'
 import * as Humanize from 'humanize-plus'
@@ -28,7 +29,41 @@ const SECTIONS = [
   { period: 'All time', disabled: false },
 ]
 
-const LeaderBoardCard = ({ editor }: { editor: LeaderBoardType }) => {
+const rankIcon = (rank: number) => {
+  switch (rank) {
+    case 0:
+      return (
+        <Center color="#DD6B20">
+          <RiTrophyFill fontSize="30" />
+        </Center>
+      )
+    case 1:
+      return (
+        <Center color="#D69E2E">
+          <RiTrophyFill fontSize="30" />
+        </Center>
+      )
+    case 2:
+      return (
+        <Center color="thirdRankColor">
+          <RiTrophyFill fontSize="30" />
+        </Center>
+      )
+    default:
+      return (
+        <Center color="brandLinkColor">
+          <RiStarFill fontSize="30" />
+        </Center>
+      )
+  }
+}
+const LeaderBoardCard = ({
+  editor,
+  index,
+}: {
+  editor: LeaderBoardType
+  index: number
+}) => {
   const [, ensUserName] = useENSData(editor.Address)
   return (
     <LinkBox flex="none">
@@ -64,16 +99,20 @@ const LeaderBoardCard = ({ editor }: { editor: LeaderBoardType }) => {
               }}
             />
             <VStack my="6">
-              <Text fontSize="md" textAlign="center" color="brandLinkColor">
-                {ensUserName}
-              </Text>
+              {ensUserName ? (
+                <Text fontSize="md" textAlign="center" color="brandLinkColor">
+                  {ensUserName}
+                </Text>
+              ) : (
+                <Center>
+                  <Skeleton height="14px" rounded="lg" w="130px" />
+                </Center>
+              )}
               <Text fontSize="sm" textAlign="center">
-                {Humanize.intComma(parseFloat(editor.TotalRewards))} IQ Earned
+                {Humanize.intComma(editor.TotalRewards)} IQ Earned
               </Text>
             </VStack>
-            <Center color="trophyColor">
-              <RiTrophyFill fontSize="30" />
-            </Center>
+            {rankIcon(index)}
           </LinkOverlay>
         </Flex>
       </chakra.div>
@@ -154,7 +193,11 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
           }}
         >
           {leaderboards.map((editor, index) => (
-            <LeaderBoardCard key={`editor-${index}`} editor={editor} />
+            <LeaderBoardCard
+              index={index}
+              key={`editor-${index}`}
+              editor={editor}
+            />
           ))}
         </Carousel>
       </Box>
