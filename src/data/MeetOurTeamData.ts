@@ -2,7 +2,18 @@ import { TeamDataType } from '@/types/TeamDataType'
 
 export const TeamData: TeamDataType = [
   {
-    image: '/images/team/theodor.png',
+    image: '/images/team/navin.png',
+    name: 'Navin Vethanayagam',
+    title: 'Chief Brain',
+    about:
+      'Navin first joined IQ.wiki formerly Everipedia as a founding team member at the age of 19, gaining experience over the years in community management, marketing, press, and international business. Navin has an HBA from Ivey Business School.',
+    socials: {
+      iqWiki: 'https://iq.wiki/wiki/navin-vethanayagam',
+      twitter: 'https://twitter.com/NavV96',
+    },
+  },
+  {
+    image: '/images/team/ted.png',
     name: 'Theodor Forselius',
     title: 'Co-founder',
     about:
@@ -68,22 +79,11 @@ export const TeamData: TeamDataType = [
   {
     image: '/images/team/robertto.png',
     name: 'Roberto Dobrescu',
-    title: 'Business Developer',
+    title: 'Director of Operations',
     about:
       'Roberto Dobrescu, Business Developer, is an experienced Swedish entrepreneur. He was previously the Chief Technology Officer at IM production, a company specializing in LED screens.',
     socials: {
       iqWiki: 'https://iq.wiki/wiki/roberto-dobrescu',
-    },
-  },
-  {
-    image: '/images/team/navin.png',
-    name: 'Navin Vethanayagam',
-    title: 'Chief Brain',
-    about:
-      'Navin first joined IQ.wiki formerly Everipedia as a founding team member at the age of 19, gaining experience over the years in community management, marketing, press, and international business. Navin has an HBA from Ivey Business School.',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/navin-vethanayagam',
-      twitter: 'https://twitter.com/NavV96',
     },
   },
   {
@@ -120,6 +120,16 @@ export const TeamData: TeamDataType = [
     },
   },
   {
+    image: '/images/team/suchet.png',
+    name: 'Suchet Dhindsa',
+    title: 'Chief Operating and Financial Officer',
+    about:
+      'Suchet Dhindsa is a Norwegian economist, entrepreneur, and investor. Suchet has 10 years of experience in global expansion strategy, venture capital and emerging technologies.',
+    socials: {
+      iqWiki: 'https://iq.wiki/wiki/justin-moore',
+    },
+  },
+  {
     image: '/images/team/kesar.png',
     name: 'César Rodríguez',
     title: 'Chief Technology Officer',
@@ -129,16 +139,6 @@ export const TeamData: TeamDataType = [
       iqWiki: 'https://iq.wiki/wiki/cesar-rodriguez',
       twitter: 'https://twitter.com/kesarito',
       linkedin: 'https://www.linkedin.com/in/cesarrodriguez2',
-    },
-  },
-  {
-    image: '/images/team/suchet.png',
-    name: 'Suchet Dhindsa',
-    title: 'Chief Operating and Financial Officer',
-    about:
-      'Suchet Dhindsa is a Norwegian economist, entrepreneur, and investor. Suchet has 10 years of experience in global expansion strategy, venture capital and emerging technologies.',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/justin-moore',
     },
   },
 ]
