@@ -18,6 +18,6 @@ export default async function handler(
     await res.unstable_revalidate(path)
     return res.json({ revalidated: true, path })
   } catch (err) {
-    return res.status(500).send('Error revalidating')
+    return res.status(500).json({ error: JSON.stringify(err) })
   }
 }
