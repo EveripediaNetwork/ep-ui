@@ -2,12 +2,12 @@ import { LeaderBoardType } from '@/services/editor'
 import { createSlice } from '@reduxjs/toolkit'
 
 type LeaderboardSliceType = {
-    addressRank: number | null,
-    leaderboard: LeaderBoardType[]
+  addressRank: number | null
+  leaderboard: LeaderBoardType[]
 }
 const initialState: LeaderboardSliceType = {
-    addressRank: null,
-    leaderboard: []
+  addressRank: null,
+  leaderboard: [],
 }
 
 const leaderboardSlice = createSlice({
@@ -17,9 +17,9 @@ const leaderboardSlice = createSlice({
     setLeaderboards(state, action) {
       state.leaderboard = action.payload
     },
-    setAddressRank(state, action){
-        state.addressRank = action.payload
-    }
+    setAddressRank(state, action) {
+      state.addressRank = action.payload
+    },
   },
 })
 

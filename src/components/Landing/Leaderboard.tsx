@@ -84,7 +84,7 @@ const LeaderBoardCard = ({
                 {Humanize.intComma(editor.totalRewards)} IQ Earned
               </Text>
             </VStack>
-            <RankIcon size="30" rank={index}/>
+            <RankIcon size="30" rank={index} />
           </LinkOverlay>
         </Flex>
       </chakra.div>

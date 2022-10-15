@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   Flex,
   chakra,
@@ -12,7 +12,7 @@ import {
   VStack,
   useClipboard,
   useToast,
-  HStack
+  HStack,
 } from '@chakra-ui/react'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
@@ -24,12 +24,12 @@ import shortenAccount from '@/utils/shortenAccount'
 import { useUserProfileData } from '@/services/profile/utils'
 import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
-import UserSocialLinks from './UserSocialLinks'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
 import { store } from '@/store/store'
 import { getLeaderboard } from '@/services/editor'
 import { setAddressRank, setLeaderboards } from '@/store/slices/leaderboard'
 import { getEditorRank, sortLeaderboards } from '@/utils/leaderboard.utils'
+import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 
 export type UserDetailsProps = { hide?: boolean }
@@ -47,9 +47,11 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   }`
   const clipboard = useClipboard(customLink || '')
   const toast = useToast()
-  const {addressRank, leaderboard} = useAppSelector(state => state.leaderboard)
+  const { addressRank, leaderboard } = useAppSelector(
+    state => state.leaderboard,
+  )
   const dispatch = useAppDispatch()
-
+  const isFetched = useRef(false)
   const tooltipProps: Partial<TooltipProps> = {
     placement: 'top',
     hasArrow: true,
@@ -61,25 +63,24 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   }
   const { t } = useTranslation()
   // TODO: change
-  useEffect(()=> {
-      if(leaderboard.length < 1){
-        const fetchLeaderboard = async () => {
-          const result = await store.dispatch(getLeaderboard.initiate());
-          if (result.data) {
-            const sortedleaderboards = sortLeaderboards(result.data.editors)
-            dispatch(setLeaderboards(sortedleaderboards));
-          }
-        }
-        fetchLeaderboard()   
-      }
-      else{
-        if(!addressRank){
-          dispatch(setAddressRank(getEditorRank(address, leaderboard)))
+  useEffect(() => {
+    if (leaderboard.length < 1 && !isFetched.current) {
+      const fetchLeaderboard = async () => {
+        const result = await store.dispatch(getLeaderboard.initiate())
+        if (result.data) {
+          const sortedleaderboards = sortLeaderboards(result.data.editors)
+          dispatch(setLeaderboards(sortedleaderboards))
+          isFetched.current = true
         }
       }
+      fetchLeaderboard()
+    } else if (!addressRank) {
+      dispatch(setAddressRank(getEditorRank(address, leaderboard)))
+    }
   }, [leaderboard])
 
   if (loading) return <LoadingProfile hide={hide} />
+
   return (
     <>
       <Flex
@@ -127,19 +128,20 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
           <Skeleton isLoaded={!loading}>
             <VStack>
               <HStack>
-              <chakra.span
-                fontSize={isSticky ? 'lg' : '3xl'}
-                fontWeight="semibold"
-                letterSpacing="tighter"
-              >
-                {profileData?.username ||
-                  ensUserName ||
-                  shortenAccount(address)}
-                  
-              </chakra.span>
-              {
-                (addressRank !== null) && <chakra.span mb="18px !important"><RankIcon size="22" rank={addressRank}/></chakra.span> 
-              }
+                <chakra.span
+                  fontSize={isSticky ? 'lg' : '3xl'}
+                  fontWeight="semibold"
+                  letterSpacing="tighter"
+                >
+                  {profileData?.username ||
+                    ensUserName ||
+                    shortenAccount(address)}
+                </chakra.span>
+                {addressRank !== null && (
+                  <chakra.span mb="18px !important">
+                    <RankIcon size="22" rank={addressRank} />
+                  </chakra.span>
+                )}
               </HStack>
               {!isSticky && (
                 <VStack spacing={4}>
@@ -152,7 +154,6 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     links={profileData?.links[0]}
                     address={address || ''}
                   />
-
                 </VStack>
               )}
             </VStack>
