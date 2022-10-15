@@ -31,8 +31,8 @@ import {
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
-import SignTokenMessage from '../account/SignTokenMessage'
 import { isValidUrl } from '@/utils/create-wiki'
+import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
   const router = useRouter()
@@ -231,7 +231,7 @@ const Admin = () => {
   ]
   const COLORS = ['#FF5DAA', '#FFB3D7']
   const handleManualValidation = (url: string) => {
-    let rex = new RegExp(`${window.location.origin}`)
+    const rex = new RegExp(`${window.location.origin}`)
     const path = new URL(url).pathname
     const pathOrigin = new URL(url).origin
     if (url.length >= 1 && isValidUrl(url) && rex.test(`${pathOrigin}/%22`)) {
