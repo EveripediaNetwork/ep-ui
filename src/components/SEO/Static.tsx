@@ -10,16 +10,6 @@ export const AboutHeader = () => (
       title: 'About',
       description:
         "World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token.",
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
@@ -38,16 +28,6 @@ export const FaqSEO = () => (
     openGraph={{
       title: 'FAQ',
       description: 'Frequently Asked Questions about IQ.Wiki',
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
@@ -67,16 +47,6 @@ export const PrivacyPolicySEO = () => (
       title: 'Our Policy',
       description:
         'IQ.Wiki Security center: Your Personal Information is our primary responsibility at IQ.Wiki',
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
@@ -96,16 +66,6 @@ export const CareersHeader = () => (
       title: 'Jobs',
       description:
         'Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network',
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
@@ -124,16 +84,6 @@ export const TermsHeader = () => (
     openGraph={{
       title: 'Terms of Service',
       description: 'Get Started, Explore and make the most of IQ.Wiki',
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
@@ -152,16 +102,6 @@ export const GuidelinesHeader = () => (
     openGraph={{
       title: 'Our Guidelines',
       description: 'IQ.Wiki guidelines for the community and network',
-      type: 'website',
-      site_name: 'IQ.Wiki',
-      images: [
-        {
-          url: 'https://iq.wiki/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
-          alt: 'IQ.Wiki | Crypto Encyclopedia',
-        },
-      ],
     }}
     twitter={{
       cardType: 'summary_large_image',

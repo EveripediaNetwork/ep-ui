@@ -24,7 +24,7 @@ import {
   PopoverTrigger,
   VStack,
 } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 
 import { RiArrowUpDownLine } from 'react-icons/ri'
@@ -34,6 +34,7 @@ import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 
 export const WikiEditorsInsightTable = () => {
+  const editorTableRef = useRef<null | HTMLDivElement>(null)
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
@@ -252,6 +253,12 @@ export const WikiEditorsInsightTable = () => {
     setHiddenEditorsData(hiddenEditorsArr)
   }, [hiddeneditors])
 
+  const scrolltoTableTop = () => {
+    editorTableRef?.current?.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
+
   const increasePagination = () => {
     return (
       editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
@@ -300,6 +307,7 @@ export const WikiEditorsInsightTable = () => {
       borderWidth="1px"
       borderRadius="sm"
       rounded="lg"
+      ref={editorTableRef}
     >
       <Flex borderBottomWidth="1px" w="100%" p={5} gap={2} align="center">
         <Text fontSize="lg">Editors</Text>
@@ -442,6 +450,7 @@ export const WikiEditorsInsightTable = () => {
           variant="outline"
           disabled={!activatePrevious}
           onClick={() => {
+            scrolltoTableTop()
             decreasePagination()
             if (editorsData && editorsData?.length >= 10) {
               setActivatePrevious(false)
@@ -456,6 +465,7 @@ export const WikiEditorsInsightTable = () => {
           variant="outline"
           onClick={() => {
             if (allowNext) {
+              scrolltoTableTop()
               increasePagination()
             }
             setAllowNext(false)
