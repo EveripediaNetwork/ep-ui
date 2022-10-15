@@ -25,6 +25,7 @@ import {
   getRunningOperationPromises as getLeaderboardRunningOperationPromises,
   LeaderBoardType,
 } from '@/services/editor'
+import { sortLeaderboards } from '@/utils/leaderboard.utils'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -90,14 +91,7 @@ export async function getStaticProps() {
       }}`,
     )
   }
-
-  const arrayForSort = [...leaderboard.editors]
-  const sortedleaderboards = arrayForSort.sort(
-    (firstEditor: LeaderBoardType, nextEditor: LeaderBoardType) => {
-      return nextEditor.TotalRewards - firstEditor.TotalRewards
-    },
-  )
-
+  const sortedleaderboards = sortLeaderboards(leaderboard.editors)
   return {
     props: {
       promotedWikis: promotedWikis || [],

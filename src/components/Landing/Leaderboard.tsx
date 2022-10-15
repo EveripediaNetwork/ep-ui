@@ -13,7 +13,6 @@ import {
   Skeleton,
 } from '@chakra-ui/react'
 import React from 'react'
-import { RiStarFill, RiTrophyFill } from 'react-icons/ri'
 import { LeaderBoardType } from '@/services/editor'
 import { useENSData } from '@/hooks/useENSData'
 import * as Humanize from 'humanize-plus'
@@ -21,6 +20,7 @@ import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import RankIcon from '../Elements/EditorRank/EditorRank'
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -29,34 +29,6 @@ const SECTIONS = [
   { period: 'All time', disabled: false },
 ]
 
-const rankIcon = (rank: number) => {
-  switch (rank) {
-    case 0:
-      return (
-        <Center color="#DD6B20">
-          <RiTrophyFill fontSize="30" />
-        </Center>
-      )
-    case 1:
-      return (
-        <Center color="#D69E2E">
-          <RiTrophyFill fontSize="30" />
-        </Center>
-      )
-    case 2:
-      return (
-        <Center color="thirdRankColor">
-          <RiTrophyFill fontSize="30" />
-        </Center>
-      )
-    default:
-      return (
-        <Center color="brandLinkColor">
-          <RiStarFill fontSize="30" />
-        </Center>
-      )
-  }
-}
 const LeaderBoardCard = ({
   editor,
   index,
@@ -64,7 +36,7 @@ const LeaderBoardCard = ({
   editor: LeaderBoardType
   index: number
 }) => {
-  const [, ensUserName] = useENSData(editor.Address)
+  const [, ensUserName] = useENSData(editor.id)
   return (
     <LinkBox flex="none">
       <chakra.div p={2} mx="auto">
@@ -76,7 +48,7 @@ const LeaderBoardCard = ({
           cursor="pointer"
           mx="auto"
         >
-          <LinkOverlay href={`/account/${editor.Address}`}>
+          <LinkOverlay href={`/account/${editor.id}`}>
             <DisplayAvatar
               alt="new life"
               overflow="hidden"
@@ -85,7 +57,7 @@ const LeaderBoardCard = ({
               rounded="full"
               justifySelf="center"
               size="130"
-              address={editor.Address}
+              address={editor.id}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',
               }}
@@ -109,10 +81,10 @@ const LeaderBoardCard = ({
                 </Center>
               )}
               <Text fontSize="sm" textAlign="center">
-                {Humanize.intComma(editor.TotalRewards)} IQ Earned
+                {Humanize.intComma(editor.totalRewards)} IQ Earned
               </Text>
             </VStack>
-            {rankIcon(index)}
+            <RankIcon size="30" rank={index}/>
           </LinkOverlay>
         </Flex>
       </chakra.div>

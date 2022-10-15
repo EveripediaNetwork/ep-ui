@@ -6,8 +6,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 
 export type LeaderBoardType = {
   id: string
-  Address: string
-  TotalRewards: number
+  totalRewards: number
 }
 
 export const editorApi = createApi({
