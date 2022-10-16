@@ -257,7 +257,9 @@ const CreateWikiContent = () => {
 
     logEvent({
       action: 'SUBMIT_WIKI',
-      params: { address: userAddress, slug: await getWikiSlug() },
+      label: await getWikiSlug(),
+      category: 'wiki_title',
+      value: 1,
     })
 
     let wikiCommitMessage = commitMessage || ''
@@ -312,7 +314,7 @@ const CreateWikiContent = () => {
       )
 
       if (wikiResult && 'data' in wikiResult) {
-        saveHashInTheBlockchain(String(wikiResult.data), await getWikiSlug())
+        saveHashInTheBlockchain(String(wikiResult.data))
       } else {
         setIsLoading('error')
         let logReason = 'NO_IPFS'
@@ -335,11 +337,9 @@ const CreateWikiContent = () => {
         }
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
-          params: {
-            reason: logReason,
-            address: userAddress,
-            slug: await getWikiSlug(),
-          },
+          label: await getWikiSlug(),
+          category: 'wiki_error',
+          value: 1,
         })
       }
 
@@ -474,7 +474,7 @@ const CreateWikiContent = () => {
 
   useEffect(() => {
     async function verifyTransactionHash() {
-      if (txHash) verifyTrxHash(await getWikiSlug())
+      if (txHash) verifyTrxHash()
     }
     verifyTransactionHash()
     // eslint-disable-next-line react-hooks/exhaustive-deps

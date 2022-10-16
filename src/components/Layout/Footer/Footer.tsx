@@ -41,7 +41,9 @@ const Footer = () => {
       i18n.changeLanguage(userLang)
       logEvent({
         action: 'CHANGE_PLATFORM_LANGUAGE',
-        params: { data: userLang },
+        category: 'language',
+        label: userLang,
+        value: 1,
       })
     }
   }

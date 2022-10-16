@@ -93,7 +93,9 @@ export const useNavSearch = () => {
         if (!res.accounts && !res.articles && !res.categories) {
           logEvent({
             action: 'SEARCH_NO_RESULTS',
-            params: { data: query },
+            label: query,
+            category: 'search_tag',
+            value: 1,
           })
         }
         setResults(res)
