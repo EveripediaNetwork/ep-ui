@@ -108,7 +108,9 @@ const NotificationSettings = ({
     })
     logEvent({
       action: 'NOTIFICATION_SETTINGS',
-      params: { data: JSON.stringify(data) },
+      label: JSON.stringify(data),
+      value: 1,
+      category: 'notification_options',
     })
     return
     // send the data to the server

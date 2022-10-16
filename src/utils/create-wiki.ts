@@ -192,7 +192,7 @@ export const useGetSignedHash = (deadline: number) => {
     [feeData],
   )
 
-  const saveHashInTheBlockchain = async (ipfs: string, wikiSlug: string) => {
+  const saveHashInTheBlockchain = async (ipfs: string) => {
     setWikiHash(ipfs)
     signTypedDataAsync({
       domain,
@@ -216,17 +216,15 @@ export const useGetSignedHash = (deadline: number) => {
         setMsg(err.message || defaultErrorMessage)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
-          params: {
-            reason: err.message,
-            address: userAddress,
-            slug: wikiSlug,
-          },
+          label: err.message,
+          category: 'wiki_error',
+          value: 1,
         })
       })
   }
 
   const verifyTrxHash = useCallback(
-    async (wikiSlug: string) => {
+    async () => {
       let timePassed = 0
       const timer = setInterval(() => {
         if (timePassed >= 60 * 1000 && gasPrice > 250) {
@@ -241,11 +239,9 @@ export const useGetSignedHash = (deadline: number) => {
               setMsg(defaultErrorMessage)
               logEvent({
                 action: 'SUBMIT_WIKI_ERROR',
-                params: {
-                  reason: 'TRANSACTION_VERIFICATION_ERROR',
-                  address: userAddress,
-                  slug: wikiSlug,
-                },
+                label: 'TRANSACTION_VERIFICATION_ERROR',
+                category: 'wiki_error',
+                value: 1,
               })
               clearInterval(timer)
             }
@@ -280,11 +276,9 @@ export const useGetSignedHash = (deadline: number) => {
           setMsg(defaultErrorMessage)
           logEvent({
             action: 'SUBMIT_WIKI_ERROR',
-            params: {
-              reason: errorObject.message,
-              address: userAddress,
-              slug: wikiSlug,
-            },
+            label: errorObject.message,
+            category: 'wiki_error',
+            value: 1,
           })
           clearInterval(timer)
         }
@@ -320,12 +314,9 @@ export const useGetSignedHash = (deadline: number) => {
           setMsg(errorObject.response.errors[0].extensions.exception.reason)
           logEvent({
             action: 'SUBMIT_WIKI_ERROR',
-            params: {
-              reason:
-                errorObject.response.errors[0].extensions.exception.reason,
-              address: userAddress,
-              data: signData,
-            },
+            label: errorObject.response.errors[0].extensions.exception.reason,
+            category: 'wiki_error',
+            value: 1,
           })
         }
       }

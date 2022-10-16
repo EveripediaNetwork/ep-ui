@@ -1,14 +1,9 @@
 export {}
 
 export type GTagParams = {
-  page_title?: string
-  page_path?: URL
-  send_to?: string
-  address?: string
-  slug?: string
-  reason?: string
-  provider?: string
-  data?: string | undefined
+  event_category: string
+  event_label: string
+  value: number
 }
 
 declare global {
