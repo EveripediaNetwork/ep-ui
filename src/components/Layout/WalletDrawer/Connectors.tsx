@@ -51,13 +51,17 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     onError(error) {
       logEvent({
         action: 'LOGIN_ERROR',
-        params: { reason: error.message },
+        label: error.message,
+        value: 0,
+        category: 'login_status',
       })
     },
     onSuccess(data) {
       logEvent({
         action: 'LOGIN_SUCCESS',
-        params: { address: data.account },
+        label: data.account,
+        value: 1,
+        category: 'login_status',
       })
       dispatch(updateUserAddress(data.account))
       const w = window as any
