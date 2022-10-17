@@ -46,7 +46,7 @@ const Settings = () => {
       <SettingsPageHeader />
       <HStack alignItems="stretch" pb={8} my={-8}>
         <Box
-          display={{ base: 'none', lg: 'block' }}
+          display={{ base: 'none', xl: 'block' }}
           p={12}
           borderRightWidth="1px"
           pr={8}
