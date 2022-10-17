@@ -1,6 +1,6 @@
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { chain, configureChains } from 'wagmi'
+import { chain, configureChains, Connector } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
@@ -46,5 +46,5 @@ export const connectors = [
         },
       },
     },
-  }),
+  }) as unknown as Connector,
 ]
