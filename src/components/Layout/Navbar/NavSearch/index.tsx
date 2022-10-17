@@ -305,7 +305,9 @@ const NavSearch = (props: NavSearchProps) => {
           router.push(ItemPaths[type as SearchItem] + id)
           logEvent({
             action: 'CLICK_BY_SEARCH',
-            params: { data: ItemPaths[type as SearchItem] + id },
+            label: ItemPaths[type as SearchItem] + id,
+            value: 1,
+            category: 'search_tags',
           })
         }}
       >
