@@ -1,6 +1,5 @@
 import React, { FormEvent, useCallback } from 'react'
 import {
-  Text,
   Flex,
   Input,
   Textarea,
@@ -208,10 +207,15 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           <FormControl isRequired isInvalid={inputUsername.error !== ''}>
             <Flex>
               <FormLabel htmlFor="username">Username</FormLabel>
-              {userENSAddr && (
-                <Text
-                  fontSize="xs"
+              {userENSAddr && userENSAddr !== inputUsername.value && (
+                <Button
+                  variant="unstyled"
                   mb="2"
+                  h="max-content"
+                  display="flex"
+                  alignItems="center"
+                  fontSize="xs"
+                  fontWeight="medium"
                   onClick={() => {
                     setInputUsername({
                       value: userENSAddr,
@@ -220,7 +224,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
                   }}
                 >
                   (Click to use your ENS {userENSAddr})
-                </Text>
+                </Button>
               )}
             </Flex>
             <Input
