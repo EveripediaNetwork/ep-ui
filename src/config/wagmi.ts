@@ -1,4 +1,3 @@
-import { MagicConnector } from '@everipedia/wagmi-magic-connector'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { chain, configureChains } from 'wagmi'
@@ -6,6 +5,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { AlchemyProvider, Network } from '@ethersproject/providers'
+import { MagicAuthConnector } from '@everipedia/wagmi-magic-connector'
 import config from './index'
 
 const chainArray =
@@ -30,7 +30,7 @@ export const connectors = [
       qrcode: true,
     },
   }),
-  new MagicConnector({
+  new MagicAuthConnector({
     chains,
     options: {
       apiKey: config.magicLinkApiKey,
@@ -39,7 +39,7 @@ export const connectors = [
       },
       customLogo: '/images/braindao-logo.svg',
       accentColor: '#ea3b87',
-      additionalMagicOptions: {
+      magicSdkConfiguration: {
         network: {
           rpcUrl: AlchemyProvider.getUrl(network, config.alchemyApiKey).url,
           chainId: Number(config.chainId),
