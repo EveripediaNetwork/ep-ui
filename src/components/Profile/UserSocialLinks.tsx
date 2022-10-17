@@ -23,7 +23,7 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
           return (
             <Link
               position="relative"
-              rel="nofollow"
+              isExternal
               target="_blank"
               href={dt[social[0]].urlPrefix(social[1] || '')}
             >
@@ -46,7 +46,7 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
       {address && (
         <Link
           position="relative"
-          rel="nofollow"
+          isExternal
           target="_blank"
           href={`https://etherscan.io/address/${address}`}
         >

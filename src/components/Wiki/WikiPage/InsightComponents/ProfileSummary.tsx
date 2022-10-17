@@ -82,7 +82,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         {contractURL && (
           <ProfileListItem title="Contract">
             <Link
-              rel="nofollow"
+              isExternal
               target="_blank"
               href={parseLink(contractURL)}
               color="brandLinkColor"
@@ -97,7 +97,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         {websiteLink && (
           <ProfileListItem title="Official Website">
             <Link
-              rel="nofollow"
+              isExternal
               target="_blank"
               href={parseLink(websiteLink)}
               color="brandLinkColor"
@@ -125,7 +125,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                       target="_blank"
                       href={parseLink(social.value)}
                       key={i}
-                      rel="nofollow"
+                      isExternal
                       display="flex"
                     >
                       <IconButton
