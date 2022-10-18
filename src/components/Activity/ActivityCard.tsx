@@ -138,6 +138,7 @@ const ActivityCard = ({
           mt="-2%"
           maxW={{ base: '70%', lg: '80%' }}
           overflow="hidden"
+          display={{ base: 'none', md: 'flex' }}
         >
           <Text
             mt="1"
@@ -150,6 +151,7 @@ const ActivityCard = ({
           </Text>
         </Box>
         <Stack
+          mt={{ base: '2', md: '0' }}
           direction={{ base: 'column', md: 'row' }}
           justifyContent="space-between"
           w="full"
