@@ -10,7 +10,7 @@ export const PatchedLinkOverlay = forwardRef<LinkOverlayProps, 'a'>(
       <chakra.a
         ref={ref}
         className={cx('chakra-linkbox__overlay', className)}
-        rel={isExternal ? 'noopener noreferrer nofollow' : rel}
+        rel={isExternal ? 'noopener nofollow' : rel}
         target={isExternal ? '_blank' : target}
         __css={{
           position: 'static',
