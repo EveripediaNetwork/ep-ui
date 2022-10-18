@@ -1,4 +1,5 @@
-const siteUrl = process.env.NEXT_PUBLIC_DOMAIN
+
 module.exports = {
-    siteUrl
+    siteUrl: process.env.NEXT_PUBLIC_DOMAIN,
+    generateRobotsTxt: true
 }
