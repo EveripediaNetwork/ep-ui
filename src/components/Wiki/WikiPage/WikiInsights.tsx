@@ -13,6 +13,7 @@ import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
+import NFTWidget from './InsightComponents/NFTWidget'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -85,6 +86,7 @@ const WikiInsights = ({
               )}
             </>
           )}
+          <NFTWidget />
           <WikiCommitMessage
             commitMessage={commitMessage}
             user={wiki.user}
