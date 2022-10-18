@@ -74,7 +74,6 @@ export const WikiDetails = ({
                     {categories?.map((category, i) => (
                       <Link
                         key={i}
-                        rel="noopener nofollow"
                         isExternal
                         href={`/categories/${category.id}`}
                         color="brandLinkColor"
