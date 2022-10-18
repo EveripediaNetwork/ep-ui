@@ -138,10 +138,20 @@ const ActivityCard = ({
           mt="-2%"
           maxW={{ base: '70%', lg: '80%' }}
           overflow="hidden"
+          display={{ base: 'none', md: 'flex' }}
         >
-          <Text display={{ base: 'none', md: 'flex' }}>{brief}</Text>
+          <Text
+            mt="1"
+            display={{ base: 'none', md: '-webkit-box' }}
+            noOfLines={2}
+            textOverflow="ellipsis"
+            overflow="hidden"
+          >
+            {brief}
+          </Text>
         </Box>
         <Stack
+          mt={{ base: '2', md: '0' }}
           direction={{ base: 'column', md: 'row' }}
           justifyContent="space-between"
           w="full"
