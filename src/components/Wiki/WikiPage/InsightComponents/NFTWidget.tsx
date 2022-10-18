@@ -9,9 +9,18 @@ import {
   Text,
 } from '@chakra-ui/react'
 
-const NFTWidget = () => {
+const NFTWidget = ({
+  category,
+}: {
+  category: { id: string; title: string }[]
+}) => {
+  let isNFTWiki = category.find((item: { id: string; title: string }) => {
+    return item.id === 'nfts'
+  })
+
   return (
     <Flex
+      display={isNFTWiki ? 'flex' : 'none'}
       flexDirection="column"
       p="14px 10px"
       bg="#f5f5f5"
