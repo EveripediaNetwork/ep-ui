@@ -2,5 +2,11 @@
 module.exports = {
     siteUrl: process.env.NEXT_PUBLIC_DOMAIN,
     generateRobotsTxt: true,
-    exclude: ["/admin/*"]
+    robotsTxtOptions: {
+        policies: [
+            {userAgent: '*', disallow: '/admin'},
+            {userAgent: '*', allow: '/'}
+        ]
+    },
+    exclude: ['/admin']
 }
