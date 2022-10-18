@@ -75,6 +75,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                     isExternal
                     p="0 !important"
                     href={ref.url}
+                    rel="nofollow"
                   >
                     {new URL(ref.url).hostname}
                   </LinkOverlay>
