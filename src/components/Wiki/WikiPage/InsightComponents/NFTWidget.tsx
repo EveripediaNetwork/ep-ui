@@ -33,7 +33,7 @@ const NFTWidget = ({
         Search NFT Collection
       </Text>
       <Image src="https://f8n-production-collection-assets.imgix.net/0x270e613AE361395c766d55A6bE3dDCf4d82b4E0A/1/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680" />
-      <Flex justifyContent="center" color="#1A202C">
+      <Flex justifyContent="center">
         <Heading>#1</Heading>
       </Flex>
       <Flex
