@@ -14,7 +14,7 @@ const NFTWidget = ({
 }: {
   category: { id: string; title: string }[]
 }) => {
-  let isNFTWiki = category.find((item: { id: string; title: string }) => {
+  const isNFTWiki = category.find((item: { id: string; title: string }) => {
     return item.id === 'nfts'
   })
 
