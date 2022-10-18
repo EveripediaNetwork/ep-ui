@@ -19,7 +19,9 @@ const ConnectorDetails = ({
   const handleConnect = (selectedConnector: Connector) => {
     logEvent({
       action: 'LOGIN_ATTEMPT',
-      params: { provider: selectedConnector.name },
+      label: selectedConnector.name,
+      value: 1,
+      category: 'connectors',
     })
     setIsClicked(true)
     connect({ connector: selectedConnector })

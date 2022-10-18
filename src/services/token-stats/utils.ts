@@ -5,6 +5,8 @@ const remappingTokenIds = (token: string) => {
   switch (token) {
     case 'polygon':
       return 'matic-network'
+    case 'bnb':
+      return 'binancecoin'
     default:
       return token
   }

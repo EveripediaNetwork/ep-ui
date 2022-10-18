@@ -18,7 +18,9 @@ const WalletNavMenu = ({
   const handleWalletIconAction = () => {
     logEvent({
       action: 'OPEN_DRAWER',
-      params: { address: store.getState().user.address ?? undefined },
+      value: 1,
+      label: store.getState().user.address || '',
+      category: 'open_drawer',
     })
     setHamburger(false)
     drawerOperations.onToggle()
