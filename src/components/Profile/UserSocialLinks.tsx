@@ -24,7 +24,7 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
             <Link
               position="relative"
               isExternal
-              target="_blank"
+              rel="noopener nofollow"
               href={dt[social[0]].urlPrefix(social[1] || '')}
             >
               <Tooltip hasArrow label={dt[social[0]].label}>
@@ -47,7 +47,7 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
         <Link
           position="relative"
           isExternal
-          target="_blank"
+          rel="noopener nofollow"
           href={`https://etherscan.io/address/${address}`}
         >
           <Tooltip hasArrow label="etherscan">

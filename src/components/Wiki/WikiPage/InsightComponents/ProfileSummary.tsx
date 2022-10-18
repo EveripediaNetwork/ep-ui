@@ -83,7 +83,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           <ProfileListItem title="Contract">
             <Link
               isExternal
-              target="_blank"
+              rel="noopener nofollow"
               href={parseLink(contractURL)}
               color="brandLinkColor"
             >
@@ -98,7 +98,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           <ProfileListItem title="Official Website">
             <Link
               isExternal
-              target="_blank"
+              rel="noopener nofollow"
               href={parseLink(websiteLink)}
               color="brandLinkColor"
             >
@@ -125,6 +125,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                       target="_blank"
                       href={parseLink(social.value)}
                       key={i}
+                      rel="noopener nofollow"
                       isExternal
                       display="flex"
                     >
@@ -157,6 +158,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                   fontSize="14px"
                   key={item.id}
                   href={parseLink(item.value)}
+                  rel="noopener nofollow"
                   isExternal
                   _hover={{
                     color: 'linkColorHover',
