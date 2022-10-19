@@ -27,7 +27,8 @@ export const editorApi = createApi({
   endpoints: builder => ({
     getLeaderboard: builder.query<LeaderBoardType[], void>({
       query: () => ({ document: GET_LEADER_BOARD }),
-      transformResponse: (response: LeaderboardResponseType) => response.editors,
+      transformResponse: (response: LeaderboardResponseType) =>
+        response.editors,
     }),
   }),
 })
