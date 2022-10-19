@@ -72,10 +72,10 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
                 <Tag colorScheme="brand" as="h3" size="sm">
                   <LinkOverlay
                     fontWeight="500"
-                    rel="nofollow"
                     isExternal
                     p="0 !important"
                     href={ref.url}
+                    rel="nofollow"
                   >
                     {new URL(ref.url).hostname}
                   </LinkOverlay>

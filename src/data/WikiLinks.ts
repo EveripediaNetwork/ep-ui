@@ -136,7 +136,7 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.BSCSCAN_PROFILE,
     type: LinkType.EXPLORER,
-    label: 'BSScan',
+    label: 'BscScan',
     icon: FaFileContract,
     tests: [/https:\/\/(www.)?bscscan.com\/\w+/],
   },
