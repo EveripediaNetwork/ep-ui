@@ -9,6 +9,10 @@ export type LeaderBoardType = {
   totalRewards: number
 }
 
+type LeaderboardResponseType = {
+  editors: LeaderBoardType[]
+}
+
 export const editorApi = createApi({
   reducerPath: 'editorApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -21,9 +25,9 @@ export const editorApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getLeaderboard: builder.query<any, void>({
+    getLeaderboard: builder.query<LeaderboardResponseType, void>({
       query: () => ({ document: GET_LEADER_BOARD }),
-      transformResponse: (response: any) => response,
+      transformResponse: (response: LeaderboardResponseType) => response,
     }),
   }),
 })

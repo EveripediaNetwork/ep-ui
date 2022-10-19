@@ -91,7 +91,7 @@ export async function getStaticProps() {
       }}`,
     )
   }
-  const sortedleaderboards = sortLeaderboards(leaderboard.editors)
+  const sortedleaderboards = sortLeaderboards(leaderboard?.editors)
   return {
     props: {
       promotedWikis: promotedWikis || [],
