@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Flex,
@@ -8,19 +8,49 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react'
+import { Network, Alchemy } from 'alchemy-sdk'
 
 const NFTWidget = ({
   category,
+  metaData,
 }: {
   category: { id: string; title: string }[]
+  metaData: { id: string; value: string }[]
 }) => {
   const isNFTWiki = category.find((item: { id: string; title: string }) => {
     return item.id === 'nfts'
   })
+  const [currentNFTImage, setCurrentNTFImage] = useState<string>('')
+  const [currentNFTHash, setCurrentNFTHash] = useState<number>(1)
+  const [currentNFTHashDisplay, setCurrentNFTHashDisplay] = useState<number>(1)
+
+  const contractData = metaData.find(item => item.id === 'contract_url')?.value
+
+  const contractID = contractData?.split('/').pop()
+
+  // getting associated nft image
+  const fetchNFTImage = () => {
+    if (contractID) {
+      const settings = {
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+        network: Network.ETH_MAINNET,
+      }
+      const alchemy = new Alchemy(settings)
+      alchemy.nft.getNftMetadata(contractID, currentNFTHash).then(item => {
+        setCurrentNTFImage(item.media[0].gateway)
+        if (item.media[0].gateway) {
+          setCurrentNFTHashDisplay(currentNFTHash)
+        }
+      })
+    }
+  }
+  useEffect(() => {
+    fetchNFTImage()
+  }, [])
 
   return (
     <Flex
-      display={isNFTWiki ? 'flex' : 'none'}
+      display={isNFTWiki && contractData ? 'flex' : 'none'}
       flexDirection="column"
       p="14px 10px"
       bg="#f5f5f5"
@@ -32,9 +62,9 @@ const NFTWidget = ({
       <Text textAlign="left" fontSize="12px" color="#9d9d9d">
         Search NFT Collection
       </Text>
-      <Image src="https://f8n-production-collection-assets.imgix.net/0x270e613AE361395c766d55A6bE3dDCf4d82b4E0A/1/nft.jpg?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680" />
+      <Image src={currentNFTImage} />
       <Flex justifyContent="center">
-        <Heading>#1</Heading>
+        <Heading>#{currentNFTHashDisplay}</Heading>
       </Flex>
       <Flex
         borderRadius="8px"
@@ -51,8 +81,14 @@ const NFTWidget = ({
             _focus={{ border: '1px solid #FF5CAA' }}
             p="1"
             border="none"
-            type="text"
+            type="number"
             placeholder="Input NFT ID"
+            onChange={e => {
+              const value = Number(e.target.value)
+              if (!Number.isNaN(value)) {
+                setCurrentNFTHash(value)
+              }
+            }}
           />
         </FormControl>
         <Button
@@ -61,6 +97,9 @@ const NFTWidget = ({
           target="_blank"
           size="md"
           variant="solid"
+          onClick={() => {
+            fetchNFTImage()
+          }}
         >
           Search
         </Button>
