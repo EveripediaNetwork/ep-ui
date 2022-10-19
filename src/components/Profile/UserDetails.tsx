@@ -68,7 +68,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
       const fetchLeaderboard = async () => {
         const result = await store.dispatch(getLeaderboard.initiate())
         if (result.data) {
-          const sortedleaderboards = sortLeaderboards(result.data.editors)
+          const sortedleaderboards = sortLeaderboards(result.data)
           dispatch(setLeaderboards(sortedleaderboards))
           isFetched.current = true
         }
