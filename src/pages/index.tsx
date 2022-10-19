@@ -52,7 +52,9 @@ export const Index = ({
         <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
         <CategoriesList categories={categories} />
       </Box>
-      <LeaderBoard leaderboards={leaderboards} />
+      {
+        leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />
+      }
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )
