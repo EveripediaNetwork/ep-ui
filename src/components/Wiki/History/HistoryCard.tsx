@@ -250,6 +250,7 @@ export const HistoryCard = ({
               color="brandLinkColor"
               ml={2}
               isExternal
+              rel="noopener nofollow"
               fontSize="sm"
             >
               {shortenAccount(IPFS)}
