@@ -25,9 +25,9 @@ export const editorApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getLeaderboard: builder.query<LeaderboardResponseType, void>({
+    getLeaderboard: builder.query<LeaderBoardType[], void>({
       query: () => ({ document: GET_LEADER_BOARD }),
-      transformResponse: (response: LeaderboardResponseType) => response,
+      transformResponse: (response: LeaderboardResponseType) => response.editors,
     }),
   }),
 })
