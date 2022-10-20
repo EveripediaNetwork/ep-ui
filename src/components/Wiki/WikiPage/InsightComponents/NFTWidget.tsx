@@ -8,7 +8,8 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react'
-import { Network, Alchemy } from 'alchemy-sdk'
+import { nftListing } from '@/services/nftlisting/index'
+import { store } from '@/store/store'
 
 const NFTWidget = ({
   category,
@@ -28,24 +29,26 @@ const NFTWidget = ({
 
   const contractID = contractData?.split('/').pop()
 
-  // getting associated nft image
-  const fetchNFTImage = () => {
-    if (contractID) {
-      const settings = {
-        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-        network: Network.ETH_MAINNET,
-      }
-      const alchemy = new Alchemy(settings)
-      alchemy.nft.getNftMetadata(contractID, currentNFTHash).then(item => {
-        setCurrentNTFImage(item.media[0].gateway)
-        if (item.media[0].gateway) {
-          setCurrentNFTHashDisplay(currentNFTHash)
-        }
-      })
+  const fetchNFT = async () => {
+    if (contractID && isNFTWiki && currentNFTHash) {
+      const { data } = await store.dispatch(
+        nftListing.initiate({
+          nftContractID: contractID || '',
+          nftHash: currentNFTHash,
+        }),
+      )
+      const nftImgURL = data?.media[0].gateway
+      console.log(data)
+      setCurrentNTFImage(nftImgURL || '')
+      setCurrentNFTHashDisplay(currentNFTHash)
     }
   }
+
+  // getting associated nft image
   useEffect(() => {
-    fetchNFTImage()
+    if (contractID && isNFTWiki) {
+      fetchNFT()
+    }
   }, [])
 
   return (
@@ -97,8 +100,9 @@ const NFTWidget = ({
           target="_blank"
           size="md"
           variant="solid"
+          disabled={!currentNFTHash ? true : false}
           onClick={() => {
-            fetchNFTImage()
+            fetchNFT()
           }}
         >
           Search
