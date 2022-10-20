@@ -2,13 +2,12 @@ import { getTokenStats } from '@/services/token-stats'
 import { store } from '@/store/store'
 
 const remappingTokenIds = (token: string) => {
+  console.log(token)
   switch (token) {
     case 'polygon':
       return { tokenName: 'matic-network', cmcTokenName: 'polygon' }
     case 'bnb':
       return { tokenName: 'binancecoin', cmcTokenName: 'bnb' }
-    case 'frax-price-index':
-      return { tokenName: 'frax', cmcTokenName: 'frax' }
     default:
       return { tokenName: token }
   }
