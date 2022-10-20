@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
 export const GET_TOKEN_STATS = gql`
-  query tokenStats($tokenName: String!) {
-    tokenStats(tokenName: $tokenName) {
+  query tokenStats($tokenName: String!, $cmcTokenName: String) {
+    tokenStats(tokenName: $tokenName, cmcTokenName: $cmcTokenName) {
       id
       symbol
       name

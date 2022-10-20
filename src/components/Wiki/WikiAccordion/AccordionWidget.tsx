@@ -118,6 +118,17 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
         </Stat>
       )
     }
+
+    if (type === 'market-statistics') {
+      return (
+        <Stat>
+          <StatNumber float="right" fontSize={14}>
+            {content.value}
+          </StatNumber>
+        </Stat>
+      )
+    }
+
     return <Text fontSize="xs">{content.toString()}</Text>
   }
   return (

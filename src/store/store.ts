@@ -7,6 +7,7 @@ import {
   citeMarksReducer,
   tocReducer,
   blogReducer,
+  leaderboardReducer,
 } from '@/store/slices'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
@@ -20,6 +21,8 @@ import { tagsApi } from '@/services/tags'
 import { ensApi } from '@/services/ens'
 import { MirrorApi } from '@/services/blog/mirror'
 import { nftLisitngAPI } from '@/services/nftlisting/index'
+import { nftStatsApi } from '@/services/nft-stats'
+import { editorApi } from '@/services/editor'
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +33,7 @@ export const store = configureStore({
     citeMarks: citeMarksReducer,
     toc: tocReducer,
     blog: blogReducer,
+    leaderboard: leaderboardReducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
     [MirrorApi.reducerPath]: MirrorApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
@@ -42,6 +46,8 @@ export const store = configureStore({
     [tagsApi.reducerPath]: tagsApi.reducer,
     [ensApi.reducerPath]: ensApi.reducer,
     [nftLisitngAPI.reducerPath]: nftLisitngAPI.reducer,
+    [nftStatsApi.reducerPath]: nftStatsApi.reducer,
+    [editorApi.reducerPath]: editorApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -56,7 +62,9 @@ export const store = configureStore({
       .concat(profileApi.middleware)
       .concat(tagsApi.middleware)
       .concat(ensApi.middleware)
-      .concat(nftLisitngAPI.middleware),
+      .concat(nftLisitngAPI.middleware)
+      .concat(nftStatsApi.middleware)
+      .concat(editorApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

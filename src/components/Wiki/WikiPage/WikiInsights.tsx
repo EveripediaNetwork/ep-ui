@@ -3,7 +3,9 @@ import { Box, Flex, VStack } from '@chakra-ui/react'
 import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
+import { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
+import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
@@ -14,6 +16,7 @@ import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
+import NFTStatistics from './InsightComponents/NFTStatistics'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -41,15 +44,31 @@ const WikiInsights = ({
     meta => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
+  const wikiIsNFT = /https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/.test(
+    coingeckoLink || '',
+  )
+
   const [tokenStats, setTokenStats] = useState<TokenStats>()
+  const [nftStats, setNftStats] = useState<NFTStats>()
   useEffect(() => {
     const fetchTokenData = async () => {
       await fetchTokenStats(coingeckoLink).then(res => {
         setTokenStats(res)
       })
     }
+
+    if (wikiIsNFT) {
+      const fetchNFTData = async () => {
+        await fetchNFTStats(coingeckoLink).then(res => {
+          setNftStats(res)
+        })
+      }
+
+      fetchNFTData()
+    }
+
     fetchTokenData()
-  }, [coingeckoLink])
+  }, [coingeckoLink, wikiIsNFT])
 
   return (
     <VStack
@@ -78,6 +97,7 @@ const WikiInsights = ({
           {!!coingeckoLink && (
             <>
               <ProfileStatistics tokenStats={tokenStats} />
+              {wikiIsNFT && <NFTStatistics nftStats={nftStats} />}
               {tokenStats && (
                 <CurrencyConverter
                   token={getTokenFromURI(coingeckoLink)}

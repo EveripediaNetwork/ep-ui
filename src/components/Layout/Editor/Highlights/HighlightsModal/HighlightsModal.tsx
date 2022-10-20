@@ -81,6 +81,7 @@ const HighlightsModal = ({
       }
 
       const linkIsValid = link?.tests?.some(t => t.test(currentLinkValue))
+
       if (linkIsValid) {
         updateLink(currentLink, currentLinkValue)
         setError('')
