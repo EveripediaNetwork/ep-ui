@@ -1,4 +1,4 @@
-# Everipedia UI
+# IQ.wiki UI
 
 A wikipedia platform connected with web3. Main features are:
 
