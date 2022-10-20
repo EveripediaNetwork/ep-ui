@@ -19,7 +19,7 @@ import { ArweaveApi } from '@/services/blog'
 import { tagsApi } from '@/services/tags'
 import { ensApi } from '@/services/ens'
 import { MirrorApi } from '@/services/blog/mirror'
-import { nftLisitngAPI } from "@/services/nftlisting/index"
+import { nftLisitngAPI } from '@/services/nftlisting/index'
 
 export const store = configureStore({
   reducer: {
@@ -56,7 +56,7 @@ export const store = configureStore({
       .concat(profileApi.middleware)
       .concat(tagsApi.middleware)
       .concat(ensApi.middleware)
-      .concat(nftLisitngAPI.middleware)
+      .concat(nftLisitngAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

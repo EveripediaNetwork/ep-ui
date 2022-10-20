@@ -100,7 +100,7 @@ const NFTWidget = ({
           target="_blank"
           size="md"
           variant="solid"
-          disabled={!currentNFTHash ? true : false}
+          disabled={!currentNFTHash}
           onClick={() => {
             fetchNFT()
           }}
