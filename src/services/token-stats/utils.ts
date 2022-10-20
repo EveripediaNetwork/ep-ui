@@ -2,7 +2,6 @@ import { getTokenStats } from '@/services/token-stats'
 import { store } from '@/store/store'
 
 const remappingTokenIds = (token: string) => {
-  console.log(token)
   switch (token) {
     case 'polygon':
       return { tokenName: 'matic-network', cmcTokenName: 'polygon' }
