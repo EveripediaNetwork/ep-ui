@@ -35,7 +35,7 @@ export const tokenStatsApi = createApi({
   endpoints: builder => ({
     getTokenStats: builder.query<
       TokenStats,
-      { tokenName: string, cmcTokenName?: string }
+      { tokenName: string; cmcTokenName?: string }
     >({
       query: ({
         tokenName,

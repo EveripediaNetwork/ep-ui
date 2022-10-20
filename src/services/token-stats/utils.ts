@@ -23,7 +23,7 @@ export const fetchTokenStats = async (coingeckoUrl?: string) => {
   const token = getTokenFromURI(coingeckoUrl)
   if (!token) return undefined
   const { data } = await store.dispatch(
-    getTokenStats.initiate({tokenName: remappingTokenIds(token)}),
+    getTokenStats.initiate({ tokenName: remappingTokenIds(token) }),
   )
 
   return data
