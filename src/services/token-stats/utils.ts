@@ -7,6 +7,8 @@ const remappingTokenIds = (token: string) => {
       return { tokenName: 'matic-network', cmcTokenName: 'polygon' }
     case 'bnb':
       return { tokenName: 'binancecoin', cmcTokenName: 'bnb' }
+    case 'frax-price-index': 
+      return { tokenName: 'frax', cmcTokenName: 'frax' }
     default:
       return { tokenName: token }
   }
