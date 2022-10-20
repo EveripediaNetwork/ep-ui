@@ -106,7 +106,7 @@ const WikiInsights = ({
               )}
             </>
           )}
-          <NFTWidget category={wiki.categories} metaData={wiki.metadata} />
+          <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
           <WikiCommitMessage
             commitMessage={commitMessage}
             user={wiki.user}
