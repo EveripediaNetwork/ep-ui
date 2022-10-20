@@ -43,6 +43,10 @@ const WikiInsights = ({
     meta => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
+  const wikiIsNFT = /https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/.test(
+    coingeckoLink || '',
+  )
+
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   const [nftStats, setNftStats] = useState<NFTStats>()
   useEffect(() => {
@@ -52,19 +56,18 @@ const WikiInsights = ({
       })
     }
 
-    const fetchNFTData = async () => {
-      await fetchNFTStats(coingeckoLink).then(res => {
-        setNftStats(res)
-      })
+    if (wikiIsNFT) {
+      const fetchNFTData = async () => {
+        await fetchNFTStats(coingeckoLink).then(res => {
+          setNftStats(res)
+        })
+      }
+
+      fetchNFTData()
     }
 
-    fetchNFTData()
     fetchTokenData()
-  }, [coingeckoLink])
-
-  const wikiIsNFT = /https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/.test(
-    coingeckoLink || '',
-  )
+  }, [coingeckoLink, wikiIsNFT])
 
   return (
     <VStack
