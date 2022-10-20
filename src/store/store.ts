@@ -64,7 +64,7 @@ export const store = configureStore({
       .concat(ensApi.middleware)
       .concat(nftLisitngAPI.middleware)
       .concat(nftStatsApi.middleware)
-      .concat(editorApi.middleware)
+      .concat(editorApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
