@@ -33,8 +33,17 @@ export const tokenStatsApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getTokenStats: builder.query<TokenStats, {tokenName:string, cmcTokenName?:string}>({
-      query: ({tokenName, cmcTokenName}:{tokenName: string, cmcTokenName?:string}) => ({
+    getTokenStats: builder.query<
+      TokenStats,
+      { tokenName: string, cmcTokenName?: string }
+    >({
+      query: ({
+        tokenName,
+        cmcTokenName,
+      }: {
+        tokenName: string
+        cmcTokenName?: string
+      }) => ({
         document: GET_TOKEN_STATS,
         variables: { tokenName, cmcTokenName },
       }),
