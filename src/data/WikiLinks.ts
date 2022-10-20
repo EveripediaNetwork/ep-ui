@@ -96,9 +96,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Coingecko',
     icon: CoinGeckoIcon,
-    tests: [
-      /https:\/\/(www.)?coingecko.com\/en\/coins\/|https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/,
-    ],
+    tests: [/https:\/\/(www.)?coingecko.com\/en\/(nft|coin)\/(.+)/],
   },
   {
     id: CommonMetaIds.COIN_MARKET_CAP,
