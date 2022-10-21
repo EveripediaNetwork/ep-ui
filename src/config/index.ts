@@ -20,6 +20,9 @@ const config = {
   alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'maticmum',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
+  editorGraphqlUrl:
+    process.env.NEXT_PUBLIC_EDITOR_API ||
+    'https://api.thegraph.com/subgraphs/name/oleanjikingcode/payout',
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '80001',
   chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Mumbai',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
