@@ -207,7 +207,7 @@ export const InsightTableWikiCreated = (
                         <TagLabel fontSize="13px" fontWeight="medium">
                           {item.promoted === 1
                             ? '🎖 Hero Promoted'
-                            : `Slot ${item.promoted} Promoted`}{' '}
+                            : `Slot ${item.promoted - 1} Promoted`}{' '}
                         </TagLabel>
                       </Tag>
                     )}
