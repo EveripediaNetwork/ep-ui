@@ -15,6 +15,7 @@ import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
+import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
 
 interface WikiInsightsProps {
@@ -105,6 +106,7 @@ const WikiInsights = ({
               )}
             </>
           )}
+          <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
           <WikiCommitMessage
             commitMessage={commitMessage}
             user={wiki.user}
