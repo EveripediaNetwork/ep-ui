@@ -20,6 +20,8 @@ import { ArweaveApi } from '@/services/blog'
 import { tagsApi } from '@/services/tags'
 import { ensApi } from '@/services/ens'
 import { MirrorApi } from '@/services/blog/mirror'
+import { nftLisitngAPI } from '@/services/nftlisting/index'
+import { nftStatsApi } from '@/services/nft-stats'
 import { editorApi } from '@/services/editor'
 
 export const store = configureStore({
@@ -43,6 +45,8 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
     [ensApi.reducerPath]: ensApi.reducer,
+    [nftLisitngAPI.reducerPath]: nftLisitngAPI.reducer,
+    [nftStatsApi.reducerPath]: nftStatsApi.reducer,
     [editorApi.reducerPath]: editorApi.reducer,
   },
   middleware: gDM =>
@@ -58,6 +62,8 @@ export const store = configureStore({
       .concat(profileApi.middleware)
       .concat(tagsApi.middleware)
       .concat(ensApi.middleware)
+      .concat(nftLisitngAPI.middleware)
+      .concat(nftStatsApi.middleware)
       .concat(editorApi.middleware),
 })
 
