@@ -126,6 +126,9 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
                     background: 'brandLinkColor !important',
                   },
                 }}
+                _disabled={{
+                  color: 'thirdRankColor',
+                }}
                 key={sid}
                 fontWeight="semibold"
                 p={tabPadding}
