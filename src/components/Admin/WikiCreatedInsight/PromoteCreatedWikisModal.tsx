@@ -50,8 +50,7 @@ export const PromoteCreatedWikisModal = ({
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
-  const { data: promotedWikis, refetch: promoteWikiRefetch } =
-    useGetAllPromotedWikiCountQuery(0)
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
 
   const getWikiIdUsingLevel = (level: number) => {
     const wiki = promotedWikis?.filter(item => {
@@ -110,7 +109,6 @@ export const PromoteCreatedWikisModal = ({
       id,
       level,
     })
-    promoteWikiRefetch()
   }
   const getWiki = (
     <>
@@ -252,15 +250,12 @@ export const PromoteCreatedWikisModal = ({
           level: Number(value),
         })
         handlePromoteWiki({ id: wikiChosenId, level: Number(value) })
-        promoteWikiRefetch()
 
         const id = getWikiIdUsingLevel(+value)
         if (id) {
           handlePromoteWiki({ id, level: 0 })
-          promoteWikiRefetch()
         }
         hideFunc()
-        promoteWikiRefetch()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
         let toastMessage =
@@ -281,13 +276,11 @@ export const PromoteCreatedWikisModal = ({
         })
       } else {
         handlePromoteWiki({ id: wikiChosenId, level: 1 })
-        promoteWikiRefetch()
         const id = getWikiIdUsingLevel(1)
         if (id) {
           handlePromoteWiki({ id, level: 0 })
         }
         hideFunc()
-        promoteWikiRefetch()
         Close()
         let toastTitle = 'Wiki Successfully Promoted to Homepage'
         let toastMessage =

@@ -55,7 +55,6 @@ export const HideWikiNotification = ({
       toastType = 'error'
     } else {
       revalidateURL(`/wiki/${wikiChosenId}/`)
-      console.log(wikiChosenId)
     }
     toast({
       title: toastTitle,
