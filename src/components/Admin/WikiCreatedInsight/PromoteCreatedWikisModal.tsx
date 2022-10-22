@@ -109,6 +109,22 @@ export const PromoteCreatedWikisModal = ({
       id,
       level,
     })
+    let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
+    let toastMessage =
+      'The selected wiki has been promoted to the trending wikis.'
+    let toastType: 'success' | 'error' = 'success'
+    if (posTPromoteWikiError) {
+      toastTitle = 'Wiki Archive Failed'
+      toastMessage = "We couldn't save your wiki changes."
+      toastType = 'error'
+    }
+    toast({
+      title: toastTitle,
+      description: toastMessage,
+      status: toastType,
+      duration: 5000,
+      isClosable: true,
+    })
   }
   const getWiki = (
     <>
@@ -237,11 +253,11 @@ export const PromoteCreatedWikisModal = ({
       arrs()
       nextStep()
       setInitGetSearchedWikis(false)
-      setbuttonOne('cancel')
+      setbuttonOne('Cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
       nextStep()
-      setbuttonOne('cancel')
+      setbuttonOne('Cancel')
       setbuttonTwo('Promote')
     } else if (activeStep === 2) {
       if (step2Titles === 'Promote to Trending wiki') {
@@ -257,23 +273,6 @@ export const PromoteCreatedWikisModal = ({
         }
         hideFunc()
         Close()
-        let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
-        let toastMessage =
-          'The selected wiki has been promoted to the trending wikis. Refresh the page to see the changes.'
-        let toastType: 'success' | 'error' = 'success'
-        if (posTPromoteWikiError) {
-          toastTitle = 'Wiki Archive Failed'
-          toastMessage =
-            "We couldn't save your wiki changes. Refresh the page and try again."
-          toastType = 'error'
-        }
-        toast({
-          title: toastTitle,
-          description: toastMessage,
-          status: toastType,
-          duration: 5000,
-          isClosable: true,
-        })
       } else {
         handlePromoteWiki({ id: wikiChosenId, level: 1 })
         const id = getWikiIdUsingLevel(1)
@@ -282,23 +281,6 @@ export const PromoteCreatedWikisModal = ({
         }
         hideFunc()
         Close()
-        let toastTitle = 'Wiki Successfully Promoted to Homepage'
-        let toastMessage =
-          'The selected wiki has been promoted to the homepage. Refresh the page to see the changes.'
-        let toastType: 'success' | 'error' = 'success'
-        if (posTPromoteWikiError) {
-          toastTitle = 'Wiki Archive Failed'
-          toastMessage =
-            "We couldn't save your wiki changes. Refresh the page and try again."
-          toastType = 'error'
-        }
-        toast({
-          title: toastTitle,
-          description: toastMessage,
-          status: toastType,
-          duration: 5000,
-          isClosable: true,
-        })
       }
     }
   }
@@ -309,7 +291,7 @@ export const PromoteCreatedWikisModal = ({
       arrs()
       nextStep()
       setInitGetSearchedWikis(false)
-      setbuttonOne('cancel')
+      setbuttonOne('Cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
       Close()
