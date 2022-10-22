@@ -512,7 +512,6 @@ export const WikiEditorsInsightTable = () => {
           setHiddenEditorsData(p =>
             p?.map(user => {
               if (user.editorAddress === editorToBeToggled.id) {
-                console.log(user)
                 return { ...user, active: ban }
               }
               return user

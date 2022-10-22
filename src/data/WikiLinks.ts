@@ -96,7 +96,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Coingecko',
     icon: CoinGeckoIcon,
-    tests: [/https:\/\/(www.)?coingecko.com\/en\/coins\//],
+    tests: [/https:\/\/(www.)?coingecko.com\/en\/(nft|coin)\/(.+)/],
   },
   {
     id: CommonMetaIds.COIN_MARKET_CAP,
@@ -136,7 +136,7 @@ export const LINK_OPTIONS = [
   {
     id: CommonMetaIds.BSCSCAN_PROFILE,
     type: LinkType.EXPLORER,
-    label: 'BSScan',
+    label: 'BscScan',
     icon: FaFileContract,
     tests: [/https:\/\/(www.)?bscscan.com\/\w+/],
   },

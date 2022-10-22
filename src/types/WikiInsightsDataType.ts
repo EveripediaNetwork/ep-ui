@@ -38,6 +38,14 @@ export type WikiInsights =
         url: string
       }>
     }
+  | {
+      type: 'market-statistics'
+      title: string
+      titleTag?: string
+      content: {
+        value: string
+      }
+    }
 
 export type RelatedMedia =
   | {

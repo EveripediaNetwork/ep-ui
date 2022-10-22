@@ -169,5 +169,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'blackAlpha.500',
       _dark: 'whiteAlpha.700',
     },
+    thirdRankColor: {
+      default: 'gray.400',
+      _dark: 'whiteAlpha.500',
+    },
   },
 }
