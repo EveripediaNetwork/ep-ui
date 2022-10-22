@@ -14,8 +14,8 @@ import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
 import '../utils/i18n'
 import { DynamicWagmiProvider } from '@/components/Wagmi/DynamicWagmiProvider'
-import chakraTheme from '../theme'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -31,7 +31,12 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     const handleRouteChange = (url: URL) => {
       pageView(url)
       const w = window as any
-      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {user_id: typeof getUserAddressFromCache() === 'string' ? JSON.stringify(getUserAddressFromCache()) : 'anonymous'})
+      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+        user_id:
+          typeof getUserAddressFromCache() === 'string'
+            ? JSON.stringify(getUserAddressFromCache())
+            : 'anonymous',
+      })
     }
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
