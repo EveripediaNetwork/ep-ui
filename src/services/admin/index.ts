@@ -237,10 +237,12 @@ export const adminApi = createApi({
         response.wikisByTitle,
     }),
     postPromotedWiki: builder.mutation<Wiki, PromoteWikiArgs>({
-      query: ({ id, level }) => ({
-        document: POST_PROMOTED_WIKI,
-        variables: { id, level },
-      }),
+      query: ({ id, level }) => {
+        return {
+          document: POST_PROMOTED_WIKI,
+          variables: { id, level },
+        }
+      },
       transformResponse: (response: PostPromoteWikiResponse) =>
         response.promoteWiki.Wiki,
     }),

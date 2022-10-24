@@ -31,6 +31,7 @@ import {
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
+import { isValidUrl } from '@/utils/create-wiki'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
@@ -229,6 +230,17 @@ const Admin = () => {
     { name: 'Visitors', value: 300 },
   ]
   const COLORS = ['#FF5DAA', '#FFB3D7']
+  const handleManualValidation = (url: string) => {
+    const rex = new RegExp(`${window.location.origin}`)
+    const path = new URL(url).pathname
+    const pathOrigin = new URL(url).origin
+    if (url.length >= 1 && isValidUrl(url) && rex.test(`${pathOrigin}/%22`)) {
+      setRevalidateActive(false)
+      setRevalidateURLText(path)
+    } else {
+      setRevalidateActive(true)
+    }
+  }
 
   if (!token)
     return (
@@ -291,12 +303,7 @@ your wallet to continue"
             <Input
               mb={5}
               onChange={e => {
-                if (e.target.value.length >= 1) {
-                  setRevalidateActive(false)
-                  setRevalidateURLText(e.target.value)
-                } else {
-                  setRevalidateActive(true)
-                }
+                handleManualValidation(e.target.value)
               }}
             />
             <Button
