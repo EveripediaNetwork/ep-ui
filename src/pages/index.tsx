@@ -91,10 +91,15 @@ export async function getStaticProps() {
       }}`,
     )
   }
+  let sortedPromotedWikis: Wiki[] = []
+  if (promotedWikis?.length) {
+    sortedPromotedWikis = [...promotedWikis]
+    sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)
+  }
   const sortedleaderboards = sortLeaderboards(leaderboard)
   return {
     props: {
-      promotedWikis: promotedWikis || [],
+      promotedWikis: sortedPromotedWikis || [],
       categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],

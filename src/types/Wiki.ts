@@ -159,6 +159,7 @@ export interface Wiki {
   transactionHash?: string
   ipfs?: string
   summary: string
+  promoted: number
   title: string
   content: string
   categories: BaseCategory[]
