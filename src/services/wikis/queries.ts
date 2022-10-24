@@ -132,6 +132,7 @@ export const GET_PROMOTED_WIKIS = gql`
       updated
       title
       summary
+      promoted
       categories {
         id
         title

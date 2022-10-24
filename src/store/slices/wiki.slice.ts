@@ -59,6 +59,7 @@ const initialState: Wiki = {
   content: '',
   summary: '',
   categories: [],
+  promoted: 0,
   tags: [],
   metadata: [
     ...Object.values({ ...CommonMetaIds, ...EditSpecificMetaIds }).map(mID => ({

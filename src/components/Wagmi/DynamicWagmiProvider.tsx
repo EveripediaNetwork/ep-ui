@@ -2,7 +2,6 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
-  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -25,15 +24,6 @@ export const DynamicWagmiProvider = ({
   const [isWagmiWrapped, setIsWagmiWrapped] = useState(
     typeof getUserAddressFromCache() === 'string',
   )
-
-  useEffect(() => {
-    if (
-      typeof window !== 'undefined' &&
-      typeof getUserAddressFromCache() === 'string'
-    ) {
-      if (window.gtag) window.gtag('set', 'user_id', getUserAddressFromCache())
-    }
-  }, [])
 
   const value = useMemo(
     () => ({

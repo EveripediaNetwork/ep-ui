@@ -1,3 +1,4 @@
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import Script from 'next/script'
 import React from 'react'
 
@@ -18,6 +19,12 @@ const GoogleAnalyticsScripts = () => {
               page_path: window.location.pathname,
               send_page_view: false
             });
+            ${
+              typeof getUserAddressFromCache() === 'string' &&
+              `gtag('set', 'user_id', ${JSON.stringify(
+                getUserAddressFromCache(),
+              )})`
+            }
           `}
       </Script>
     </>
