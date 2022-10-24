@@ -10,6 +10,7 @@ export const NFTImgFallback = () => {
       alignItems="center"
       justifyContent="center"
       bg="#2D3748"
+      _light={{ bg: '#F7FAFC' }}
       h="305px"
       gap="2"
     >
