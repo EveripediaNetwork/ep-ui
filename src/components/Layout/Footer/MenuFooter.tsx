@@ -40,13 +40,13 @@ const MenuFooter = () => {
               </Stack>
               <Link
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/hiiq-staking-via-tokenpocket"
+                href="https://learn.everipedia.org/iq/iq/locking-hiiq"
               >
                 {`${t('staking')}`}
               </Link>
               <Link
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-polygon"
+                href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-ethereum"
               >
                 {`${t('bonds')}`}
               </Link>
