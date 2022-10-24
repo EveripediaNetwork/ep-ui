@@ -44,6 +44,7 @@ const Profile = ({ profileData }: ProfileProps) => {
               backgroundImage: '/images/homepage-bg-dark.png',
             }}
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
+            alt={`${profileData?.username || address}-image`}
           />
           <UserInfo />
           <Collections />

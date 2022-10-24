@@ -83,6 +83,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           priority
           src={`/images/categories/${categoryData.id}.jpg`}
           height="250px"
+          alt={categoryData?.title}
         />
         <Heading
           fontSize={{ base: 25, lg: 36 }}
