@@ -19,11 +19,10 @@ const GoogleAnalyticsScripts = () => {
               page_path: window.location.pathname,
               send_page_view: false
             });
-            gtag('set', 'user_id', ${
-              typeof getUserAddressFromCache() === 'string'
-                ? JSON.stringify(getUserAddressFromCache())
-                : 'anonymous'
-            })
+            ${
+              typeof getUserAddressFromCache() === 'string' && 
+              `gtag('set', 'user_id', ${JSON.stringify(getUserAddressFromCache())})`
+            }
           `}
       </Script>
     </>

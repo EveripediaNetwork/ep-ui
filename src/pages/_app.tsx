@@ -28,16 +28,7 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      pageView(url)
-      const w = window as any
-      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-        user_id:
-          typeof getUserAddressFromCache() === 'string'
-            ? JSON.stringify(getUserAddressFromCache())
-            : 'anonymous',
-      })
-    }
+    const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
