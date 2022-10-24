@@ -14,7 +14,6 @@ import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
 import '../utils/i18n'
 import { DynamicWagmiProvider } from '@/components/Wagmi/DynamicWagmiProvider'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()

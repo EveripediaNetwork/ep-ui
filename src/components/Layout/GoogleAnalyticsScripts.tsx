@@ -20,8 +20,10 @@ const GoogleAnalyticsScripts = () => {
               send_page_view: false
             });
             ${
-              typeof getUserAddressFromCache() === 'string' && 
-              `gtag('set', 'user_id', ${JSON.stringify(getUserAddressFromCache())})`
+              typeof getUserAddressFromCache() === 'string' &&
+              `gtag('set', 'user_id', ${JSON.stringify(
+                getUserAddressFromCache(),
+              )})`
             }
           `}
       </Script>
