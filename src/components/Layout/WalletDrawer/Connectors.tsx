@@ -65,7 +65,9 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       })
       dispatch(updateUserAddress(data.account))
       const w = window as any
-      w.gtag('config', 'user_id', data.account)
+      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+        user_id: data.account,
+      })
       router.push(router.asPath).then(openWalletDrawer)
     },
   })
