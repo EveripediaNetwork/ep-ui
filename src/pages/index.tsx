@@ -64,7 +64,7 @@ export async function getStaticProps() {
   const { data: categories, error: categoriesError } = await store.dispatch(
     getCategories.initiate(),
   )
-  const { data: leaderboard, error: leaderboardError } = await store.dispatch(
+  const { data: leaderboard } = await store.dispatch(
     getLeaderboard.initiate(),
   )
   const { data: tagsData, error: tagsDataError } = await store.dispatch(
