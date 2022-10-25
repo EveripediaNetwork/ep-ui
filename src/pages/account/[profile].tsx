@@ -30,6 +30,7 @@ const Profile = ({ profileData }: ProfileProps) => {
         username={profileData?.username || address}
         avatarIPFS={profileData?.avatar}
         links={profileData?.links[0]}
+        bio={profileData?.bio}
       />
       <ProfileProvider value={profileContext}>
         <Flex mt={-2} direction="column" align="center" pos="relative">
