@@ -67,6 +67,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
       {categoryData && (
         <NextSeo
           title={categoryData.title}
+          description={categoryData.description}
           openGraph={{
             title: categoryData.title,
             description: categoryData.description,

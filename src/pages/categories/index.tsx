@@ -15,6 +15,7 @@ const Categories: NextPage = () => {
     <>
       <NextSeo
         title="Wiki Category"
+        description={CATEGORY_HEADER}
         openGraph={{
           title: 'Wiki Category',
           description: CATEGORY_HEADER,

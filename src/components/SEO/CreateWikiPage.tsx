@@ -3,7 +3,7 @@ import React from 'react'
 
 const CreateWikiPageHeader = () => (
   <NextSeo
-    title={`Create wiki page `}
+    title="Create wiki"
     description="Create a new wiki"
     canonical="https://iq.wiki/create-wiki"
     openGraph={{
