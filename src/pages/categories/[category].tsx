@@ -91,7 +91,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           mx="auto"
           textAlign="center"
           mt={8}
-          as='h1'
+          as="h1"
         >
           {categoryData?.title}
         </Heading>
