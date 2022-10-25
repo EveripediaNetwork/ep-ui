@@ -75,12 +75,16 @@ export async function getStaticProps() {
     getWikisRunningOperationPromises(),
     getCategoriesRunningOperationPromises(),
     getLeaderboardRunningOperationPromises(),
-    getTagsRunningOperationPromises()]
-  )
+    getTagsRunningOperationPromises(),
+  ])
 
   if (promotedWikisError || categoriesError || tagsDataError) {
     throw new Error(
-      `Error fetching data. the error is: ${ JSON.stringify(tagsDataError?.message), JSON.stringify(categoriesError?.message),  JSON.stringify(promotedWikisError?.message)}`
+      `Error fetching data. the error is: ${
+        (JSON.stringify(tagsDataError?.message),
+        JSON.stringify(categoriesError?.message),
+        JSON.stringify(promotedWikisError?.message))
+      }`,
     )
   }
   let sortedPromotedWikis: Wiki[] = []
