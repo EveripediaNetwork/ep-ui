@@ -7,15 +7,15 @@ import React from 'react'
 interface UserProfileHeaderProps {
   username: string
   avatarIPFS?: string | null
-  links?: ProfileLinks,
-  bio?: string|null
+  links?: ProfileLinks
+  bio?: string | null
 }
 
 export const UserProfileHeader = ({
   username,
   avatarIPFS,
   links,
-  bio
+  bio,
 }: UserProfileHeaderProps) => {
   let socials = [] as Array<keyof ProfileLinks>
 
