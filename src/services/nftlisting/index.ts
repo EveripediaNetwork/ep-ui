@@ -9,6 +9,7 @@ export type NFTStats = {
     raw: string
     thumbnail: string
   }[]
+  error: string
 }
 
 export const nftLisitngAPI = createApi({
