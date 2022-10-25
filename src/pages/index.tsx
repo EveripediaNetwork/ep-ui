@@ -80,8 +80,7 @@ export async function getStaticProps() {
   if (
     promotedWikisError ||
     categoriesError ||
-    tagsDataError ||
-    leaderboardError
+    tagsDataError
   ) {
     throw new Error(
       `Error fetching data. the error is: ${{
