@@ -64,9 +64,7 @@ export async function getStaticProps() {
   const { data: categories, error: categoriesError } = await store.dispatch(
     getCategories.initiate(),
   )
-  const { data: leaderboard } = await store.dispatch(
-    getLeaderboard.initiate(),
-  )
+  const { data: leaderboard } = await store.dispatch(getLeaderboard.initiate())
   const { data: tagsData, error: tagsDataError } = await store.dispatch(
     getTags.initiate({
       startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
@@ -77,11 +75,7 @@ export async function getStaticProps() {
   await Promise.all(getCategoriesRunningOperationPromises())
   await Promise.all(getLeaderboardRunningOperationPromises())
   await Promise.all(getTagsRunningOperationPromises())
-  if (
-    promotedWikisError ||
-    categoriesError ||
-    tagsDataError
-  ) {
+  if (promotedWikisError || categoriesError || tagsDataError) {
     throw new Error(
       `Error fetching data. the error is: ${{
         promotedWikisError,
