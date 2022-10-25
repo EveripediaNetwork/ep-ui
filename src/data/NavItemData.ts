@@ -85,7 +85,7 @@ export const NAV_ITEMS: NavItem[] = [
         id: 301,
         label: 'IQ Learn',
         icon: RiBook2Fill,
-        href: 'https://learn.everipedia.org',
+        href: 'https://learn.everipedia.org/iq/',
         hasImage: true,
         target: '_blank',
       },
