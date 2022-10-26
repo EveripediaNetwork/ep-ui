@@ -4,8 +4,8 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<BoxProps, 'as'> &
   ImageProps & {
-    imgW?: number | string
-    imgH?: number | string
+    imgW?: number | string | undefined
+    imgH?: number | string | undefined
   }
 
 export const Image = ({
