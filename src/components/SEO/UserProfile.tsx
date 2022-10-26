@@ -6,16 +6,16 @@ import React from 'react'
 
 interface UserProfileHeaderProps {
   username: string
-  bio?: string | null
   avatarIPFS?: string | null
   links?: ProfileLinks
+  bio?: string | null
 }
 
 export const UserProfileHeader = ({
   username,
-  bio,
   avatarIPFS,
   links,
+  bio,
 }: UserProfileHeaderProps) => {
   let socials = [] as Array<keyof ProfileLinks>
 
@@ -33,6 +33,8 @@ export const UserProfileHeader = ({
         }
       />
       <NextSeo
+        title={`${username} · IQ.Wiki`}
+        description={`Blockchain wikis created by ${username}`}
         openGraph={{
           title: `${username} · IQ.Wiki`,
           description: bio || 'check out this user on IQ.Wiki',

@@ -43,7 +43,7 @@ const Settings = () => {
 
   return (
     <>
-      <SettingsPageHeader />
+      <SettingsPageHeader username={userAddress} />
       <HStack alignItems="stretch" pb={8} my={-8}>
         <Box
           display={{ base: 'none', xl: 'block' }}

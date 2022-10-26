@@ -67,6 +67,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
       {categoryData && (
         <NextSeo
           title={categoryData.title}
+          description={categoryData.description}
           openGraph={{
             title: categoryData.title,
             description: categoryData.description,
@@ -83,6 +84,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           priority
           src={`/images/categories/${categoryData.id}.jpg`}
           height="250px"
+          alt={categoryData?.title}
         />
         <Heading
           fontSize={{ base: 25, lg: 36 }}
@@ -90,6 +92,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           mx="auto"
           textAlign="center"
           mt={8}
+          as="h1"
         >
           {categoryData?.title}
         </Heading>

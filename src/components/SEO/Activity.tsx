@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 
 const ActivityHeader = () => (
   <NextSeo
-    title="Activities"
+    title="Recent Activities"
     description="Check out recent wiki activities"
     canonical="https://iq.wiki/static/activity"
     openGraph={{
