@@ -65,6 +65,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     <>
       <NextSeo
         title={`result for ${tagId}`}
+        description={`Wikis with ${tagId} tag`}
         openGraph={{
           title: `result for ${tagId}`,
           description: `Wikis with ${tagId} tag`,
