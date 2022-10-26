@@ -77,7 +77,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     } else {
       dispatch(setAddressRank(getEditorRank(address, leaderboard)))
     }
-  }, [leaderboard, address])
+  }, [leaderboard, address, dispatch])
 
   if (loading) return <LoadingProfile hide={hide} />
 

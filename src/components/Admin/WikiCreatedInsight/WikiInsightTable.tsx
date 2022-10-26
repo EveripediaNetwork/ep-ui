@@ -71,7 +71,7 @@ export const WikiInsightTable = () => {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <RiArrowUpDownLine fontSize="1.3rem" />
-  }, [wiki, sortTableBy])
+  }, [sortTableBy])
 
   enum FilterTypes {
     promoted = 'promoted',
@@ -151,6 +151,9 @@ export const WikiInsightTable = () => {
     initGetHiddenWikis,
     promotedWikis,
     hidden,
+    FilterTypes.archived,
+    FilterTypes.promoted,
+    FilterTypes.normal,
   ])
 
   const WikisSortByHighest = newWikis?.slice()
@@ -195,7 +198,14 @@ export const WikiInsightTable = () => {
       return WikisSortByAlpaDown
     }
     return newWikis
-  }, [newWikis, sortTableBy])
+  }, [
+    newWikis,
+    sortTableBy,
+    WikisSortByAlpaDown,
+    WikisSortByAlpaUp,
+    WikisSortByHighest,
+    WikisSortByLowest,
+  ])
 
   const whichWiki = () => {
     if (searchKeyWord.length < 2) {
@@ -232,6 +242,11 @@ export const WikiInsightTable = () => {
     searchRefresh()
   }, [
     wiki,
+    hiddenRefresh,
+    promotedRefresh,
+    refetch,
+    searchRefresh,
+    whichWiki,
     filterItems,
     sortTableBy,
     searchKeyWord,

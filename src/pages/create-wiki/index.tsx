@@ -86,7 +86,7 @@ import {
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
-import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 

@@ -53,7 +53,7 @@ const NFTWidget = ({
     if (contractID && isNFTWiki) {
       fetchNFT()
     }
-  }, [])
+  }, [contractID, fetchNFT, isNFTWiki])
 
   if (isNFTWiki && contractData) {
     return (

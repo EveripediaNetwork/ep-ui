@@ -95,7 +95,7 @@ export const WikiEditorsInsightTable = () => {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <RiArrowUpDownLine fontSize="1.3rem" />
-  }, [editors, sortTableBy])
+  }, [sortTableBy])
 
   const editorsFilteredArr = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -108,7 +108,7 @@ export const WikiEditorsInsightTable = () => {
       return editorsSortByLowest
     }
     return editors
-  }, [editors, sortTableBy])
+  }, [sortTableBy, editors, editorsSortByHighest, editorsSortByLowest])
 
   const handleSortChange = () => {
     if (sortTableBy === 'default') {
@@ -123,37 +123,25 @@ export const WikiEditorsInsightTable = () => {
   interface EditorInterface {
     editorName: string
     createdWikis: {
-      content: {
-        title: string
-        images: {
-          id: string
-        }[]
-      }[]
-      datetime: string
       id: string
-      ipfs: string
       wikiId: string
+      datetime: string
+      ipfs: string
+      content: { title: string; images: { id: string } }
     }[]
     editiedWikis: {
       content: {
         title: string
         images: {
           id: string
-        }[]
-      }[]
+        }
+      }
       datetime: string
       id: string
       ipfs: string
       wikiId: string
     }[]
-    lastCreatedWiki: {
-      content: {
-        title: string
-        images: {
-          id: string
-        }[]
-      }[]
-    }
+    lastCreatedWiki: any
     editorAvatar: string
     latestActivity: string
     editorAddress: string
@@ -170,9 +158,9 @@ export const WikiEditorsInsightTable = () => {
     useState<Array<EditorInterface>>()
   const [hiddenEditorsData, setHiddenEditorsData] =
     useState<Array<EditorInterface>>()
-  const newObj: any = []
+  const newObj: EditorInterface[] = []
   const newSearchObj: any = []
-  const hiddenEditorsArr: any = []
+  const hiddenEditorsArr: EditorInterface[] = []
   searchedEditors
     ?.filter(item => {
       return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
@@ -208,9 +196,7 @@ export const WikiEditorsInsightTable = () => {
         editorAddress: item?.id,
         createdWikis: item?.wikisCreated,
         editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
+        lastCreatedWiki: item?.wikisCreated[0],
         latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
         active: item?.active,
       })
@@ -242,7 +228,7 @@ export const WikiEditorsInsightTable = () => {
   useEffect(() => {
     setEditorsData(newObj)
     setAllowNext(true)
-  }, [editors, sortTableBy])
+  }, [editors, sortTableBy, newObj])
 
   useEffect(() => {
     setSearchedEditorsData(newSearchObj)
@@ -251,7 +237,7 @@ export const WikiEditorsInsightTable = () => {
 
   useEffect(() => {
     setHiddenEditorsData(hiddenEditorsArr)
-  }, [hiddeneditors])
+  }, [hiddeneditors, hiddenEditorsArr])
 
   const scrolltoTableTop = () => {
     editorTableRef?.current?.scrollIntoView({
@@ -296,7 +282,14 @@ export const WikiEditorsInsightTable = () => {
       return hiddenEditorsData
     }
     return editorsData
-  }, [searchedEditorsData, editorsData, hiddenEditorsArr])
+  }, [
+    searchedEditorsData,
+    editorsData,
+    hiddenEditorsArr,
+    filterEditors,
+    hiddenEditorsData,
+    searchKeyWord.length,
+  ])
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Flex
