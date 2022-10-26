@@ -88,6 +88,7 @@ import useConfetti from '@/hooks/useConfetti'
 import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
+import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -496,47 +497,148 @@ const CreateWikiContent = () => {
   if (!mounted) return null
 
   return (
-    <Box scrollBehavior="auto" maxW="1900px" mx="auto">
-      <ReactCanvasConfetti {...confettiProps} />
-      <HStack
-        boxShadow="sm"
-        borderRadius={4}
-        borderWidth="1px"
-        p={3}
-        justifyContent="space-between"
-        mx="auto"
-        mb={3}
-        mt={2}
-        w="96%"
-      >
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <Icon as={MdTitle} color="gray.400" fontSize="25px" />
-          </InputLeftElement>
-          <Input
-            fontWeight="500"
-            color="wikiTitleInputText"
-            borderColor="transparent"
-            fontSize="18px"
-            variant="flushed"
-            maxW="max(50%, 300px)"
-            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              dispatch({
-                type: 'wiki/setCurrentWiki',
-                payload: { title: event.target.value },
-              })
-            }}
-            value={wiki.title}
-            placeholder={`${t('wikiTitlePlaceholder')}`}
-            _placeholder={{ color: 'wikiTitleInputText' }}
-          />
-        </InputGroup>
+    <>
+      <CreateWikiPageHeader />
+      <Box scrollBehavior="auto" maxW="1900px" mx="auto">
+        <ReactCanvasConfetti {...confettiProps} />
+        <HStack
+          boxShadow="sm"
+          borderRadius={4}
+          borderWidth="1px"
+          p={3}
+          justifyContent="space-between"
+          mx="auto"
+          mb={3}
+          mt={2}
+          w="96%"
+        >
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Icon as={MdTitle} color="gray.400" fontSize="25px" />
+            </InputLeftElement>
+            <Input
+              fontWeight="500"
+              color="wikiTitleInputText"
+              borderColor="transparent"
+              fontSize="18px"
+              variant="flushed"
+              maxW="max(50%, 300px)"
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                dispatch({
+                  type: 'wiki/setCurrentWiki',
+                  payload: { title: event.target.value },
+                })
+              }}
+              value={wiki.title}
+              placeholder={`${t('wikiTitlePlaceholder')}`}
+              _placeholder={{ color: 'wikiTitleInputText' }}
+            />
+          </InputGroup>
 
-        <HStack gap={5}>
-          <WikiScoreIndicator wiki={wiki} />
-          {!isNewCreateWiki ? (
-            // Publish button with commit message for wiki edit
-            <Popover onClose={() => setIsWritingCommitMsg(false)}>
+          <HStack gap={5}>
+            <WikiScoreIndicator wiki={wiki} />
+            {!isNewCreateWiki ? (
+              // Publish button with commit message for wiki edit
+              <Popover onClose={() => setIsWritingCommitMsg(false)}>
+                <Tooltip
+                  display={!userCanEdit ? 'block' : 'none'}
+                  p={2}
+                  rounded="md"
+                  placement="bottom-start"
+                  shouldWrapChildren
+                  color="white"
+                  bg="toolTipBg"
+                  hasArrow
+                  label="Your address is not yet whitelisted"
+                  mt="3"
+                >
+                  <Box display="inline-block">
+                    <PopoverTrigger>
+                      <Button
+                        isLoading={submittingWiki}
+                        _disabled={{
+                          opacity: disableSaveButton() ? 0.5 : undefined,
+                          _hover: {
+                            bgColor: 'grey !important',
+                            cursor: 'not-allowed',
+                          },
+                        }}
+                        loadingText="Loading"
+                        disabled={disableSaveButton()}
+                        onClick={() => setIsWritingCommitMsg(true)}
+                      >
+                        Publish
+                      </Button>
+                    </PopoverTrigger>
+                  </Box>
+                </Tooltip>
+                <PopoverContent m={4}>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverHeader>
+                    Commit Message <small>(Optional)</small>{' '}
+                  </PopoverHeader>
+                  <PopoverBody>
+                    <Tag
+                      mb={{ base: 2, lg: 2 }}
+                      variant="solid"
+                      colorScheme={
+                        // eslint-disable-next-line no-nested-ternary
+                        commitMessageLimitAlert
+                          ? 'red'
+                          : (commitMessage?.length || '') > 50
+                          ? 'green'
+                          : 'yellow'
+                      }
+                    >
+                      {commitMessage?.length || 0}/128
+                    </Tag>
+                    <Textarea
+                      value={commitMessage}
+                      placeholder="Enter what changed..."
+                      {...(commitMessageLimitAlert
+                        ? commitMessageLimitAlertStyle
+                        : baseStyle)}
+                      onChange={(e: { target: { value: string } }) => {
+                        if (e.target.value.length <= 128) {
+                          setCommitMessage(e.target.value)
+                        } else {
+                          setCommitMessageLimitAlert(true)
+                          setTimeout(
+                            () => setCommitMessageLimitAlert(false),
+                            2000,
+                          )
+                        }
+                      }}
+                    />
+                  </PopoverBody>
+                  <PopoverFooter>
+                    <HStack spacing={2} justify="right">
+                      <Button
+                        onClick={() => {
+                          setCommitMessage('')
+                          setIsWritingCommitMsg(false)
+                          saveOnIpfs()
+                        }}
+                        float="right"
+                        variant="outline"
+                      >
+                        Skip
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setIsWritingCommitMsg(false)
+                          saveOnIpfs()
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </HStack>
+                  </PopoverFooter>
+                </PopoverContent>
+              </Popover>
+            ) : (
+              // Publish button without commit message at new create wiki
               <Tooltip
                 display={!userCanEdit ? 'block' : 'none'}
                 p={2}
@@ -549,190 +651,95 @@ const CreateWikiContent = () => {
                 label="Your address is not yet whitelisted"
                 mt="3"
               >
-                <Box display="inline-block">
-                  <PopoverTrigger>
-                    <Button
-                      isLoading={submittingWiki}
-                      _disabled={{
-                        opacity: disableSaveButton() ? 0.5 : undefined,
-                        _hover: {
-                          bgColor: 'grey !important',
-                          cursor: 'not-allowed',
-                        },
-                      }}
-                      loadingText="Loading"
-                      disabled={disableSaveButton()}
-                      onClick={() => setIsWritingCommitMsg(true)}
-                    >
-                      Publish
-                    </Button>
-                  </PopoverTrigger>
-                </Box>
+                <Button
+                  onClick={() => {
+                    saveOnIpfs()
+                  }}
+                  disabled={!userCanEdit}
+                  _disabled={{
+                    opacity: disableSaveButton() ? 0.5 : undefined,
+                    _hover: {
+                      bgColor: 'grey !important',
+                      cursor: 'not-allowed',
+                    },
+                  }}
+                >
+                  Publish
+                </Button>
               </Tooltip>
-              <PopoverContent m={4}>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>
-                  Commit Message <small>(Optional)</small>{' '}
-                </PopoverHeader>
-                <PopoverBody>
-                  <Tag
-                    mb={{ base: 2, lg: 2 }}
-                    variant="solid"
-                    colorScheme={
-                      // eslint-disable-next-line no-nested-ternary
-                      commitMessageLimitAlert
-                        ? 'red'
-                        : (commitMessage?.length || '') > 50
-                        ? 'green'
-                        : 'yellow'
-                    }
-                  >
-                    {commitMessage?.length || 0}/128
-                  </Tag>
-                  <Textarea
-                    value={commitMessage}
-                    placeholder="Enter what changed..."
-                    {...(commitMessageLimitAlert
-                      ? commitMessageLimitAlertStyle
-                      : baseStyle)}
-                    onChange={(e: { target: { value: string } }) => {
-                      if (e.target.value.length <= 128) {
-                        setCommitMessage(e.target.value)
-                      } else {
-                        setCommitMessageLimitAlert(true)
-                        setTimeout(
-                          () => setCommitMessageLimitAlert(false),
-                          2000,
-                        )
-                      }
-                    }}
-                  />
-                </PopoverBody>
-                <PopoverFooter>
-                  <HStack spacing={2} justify="right">
-                    <Button
-                      onClick={() => {
-                        setCommitMessage('')
-                        setIsWritingCommitMsg(false)
-                        saveOnIpfs()
-                      }}
-                      float="right"
-                      variant="outline"
-                    >
-                      Skip
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setIsWritingCommitMsg(false)
-                        saveOnIpfs()
-                      }}
-                    >
-                      Submit
-                    </Button>
-                  </HStack>
-                </PopoverFooter>
-              </PopoverContent>
-            </Popover>
-          ) : (
-            // Publish button without commit message at new create wiki
-            <Tooltip
-              display={!userCanEdit ? 'block' : 'none'}
-              p={2}
-              rounded="md"
-              placement="bottom-start"
-              shouldWrapChildren
-              color="white"
-              bg="toolTipBg"
-              hasArrow
-              label="Your address is not yet whitelisted"
-              mt="3"
-            >
-              <Button
-                onClick={() => {
-                  saveOnIpfs()
-                }}
-                disabled={!userCanEdit}
-                _disabled={{
-                  opacity: disableSaveButton() ? 0.5 : undefined,
-                  _hover: {
-                    bgColor: 'grey !important',
-                    cursor: 'not-allowed',
-                  },
-                }}
-              >
-                Publish
-              </Button>
-            </Tooltip>
-          )}
+            )}
+          </HStack>
         </HStack>
-      </HStack>
-      <Flex
-        flexDirection={{ base: 'column', xl: 'row' }}
-        justify="center"
-        align="stretch"
-        gap={4}
-        px={{ base: 4, xl: 8 }}
-      >
-        <Box h="full" w="full" position={{ xl: 'sticky' }} top="90px">
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="75vh">
-            <Editor markdown={wiki.content} onChange={handleOnEditorChanges} />
-          </Skeleton>
-        </Box>
-        <Box>
-          <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-            <Center>
-              <Highlights
-                initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
-                isToResetImage={isNewCreateWiki}
+        <Flex
+          flexDirection={{ base: 'column', xl: 'row' }}
+          justify="center"
+          align="stretch"
+          gap={4}
+          px={{ base: 4, xl: 8 }}
+        >
+          <Box h="full" w="full" position={{ xl: 'sticky' }} top="90px">
+            <Skeleton isLoaded={!isLoadingWiki} w="full" h="75vh">
+              <Editor
+                markdown={wiki.content}
+                onChange={handleOnEditorChanges}
               />
-            </Center>
-          </Skeleton>
-        </Box>
-        <OverrideExistingWikiDialog
-          isOpen={openOverrideExistingWikiDialog}
-          publish={() => {
-            setOpenOverrideExistingWikiDialog(false)
-            saveOnIpfs(true)
-          }}
-          onClose={() => setOpenOverrideExistingWikiDialog(false)}
-          getSlug={getWikiSlug}
-          existingWikiData={existingWikiData}
-        />
-        <WikiProcessModal
-          wikiId={wikiId}
-          msg={msg}
-          txHash={txHash}
-          wikiHash={wikiHash}
-          activeStep={activeStep}
-          state={loadingState}
-          isOpen={openTxDetailsDialog}
-          onClose={() => handlePopupClose()}
-        />
-      </Flex>
-      <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-        <Flex direction="column" justifyContent="center" alignItems="center">
-          {txError.opened && (
-            <Alert status="error" maxW="md" mb="3">
-              <AlertIcon />
-              <AlertTitle>{txError.title}</AlertTitle>
-              <AlertDescription>{txError.description}</AlertDescription>
-              <CloseButton
-                onClick={() =>
-                  setTxError({
-                    title: '',
-                    description: '',
-                    opened: false,
-                  })
-                }
-                position="absolute"
-                right="5px"
-              />
-            </Alert>
-          )}
+            </Skeleton>
+          </Box>
+          <Box>
+            <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+              <Center>
+                <Highlights
+                  initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
+                  isToResetImage={isNewCreateWiki}
+                />
+              </Center>
+            </Skeleton>
+          </Box>
+          <OverrideExistingWikiDialog
+            isOpen={openOverrideExistingWikiDialog}
+            publish={() => {
+              setOpenOverrideExistingWikiDialog(false)
+              saveOnIpfs(true)
+            }}
+            onClose={() => setOpenOverrideExistingWikiDialog(false)}
+            getSlug={getWikiSlug}
+            existingWikiData={existingWikiData}
+          />
+          <WikiProcessModal
+            wikiId={wikiId}
+            msg={msg}
+            txHash={txHash}
+            wikiHash={wikiHash}
+            activeStep={activeStep}
+            state={loadingState}
+            isOpen={openTxDetailsDialog}
+            onClose={() => handlePopupClose()}
+          />
         </Flex>
-      </Skeleton>
-    </Box>
+        <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
+          <Flex direction="column" justifyContent="center" alignItems="center">
+            {txError.opened && (
+              <Alert status="error" maxW="md" mb="3">
+                <AlertIcon />
+                <AlertTitle>{txError.title}</AlertTitle>
+                <AlertDescription>{txError.description}</AlertDescription>
+                <CloseButton
+                  onClick={() =>
+                    setTxError({
+                      title: '',
+                      description: '',
+                      opened: false,
+                    })
+                  }
+                  position="absolute"
+                  right="5px"
+                />
+              </Alert>
+            )}
+          </Flex>
+        </Skeleton>
+      </Box>
+    </>
   )
 }
 

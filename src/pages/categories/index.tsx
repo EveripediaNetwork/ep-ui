@@ -15,6 +15,7 @@ const Categories: NextPage = () => {
     <>
       <NextSeo
         title="Wiki Category"
+        description={CATEGORY_HEADER}
         openGraph={{
           title: 'Wiki Category',
           description: CATEGORY_HEADER,
@@ -38,6 +39,7 @@ const Categories: NextPage = () => {
             mx="auto"
             textAlign="center"
             p={10}
+            as="h1"
           >
             {`${t('wikiCategory')}`}
           </Heading>

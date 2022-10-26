@@ -28,9 +28,9 @@ const Profile = ({ profileData }: ProfileProps) => {
     <Box key={address}>
       <UserProfileHeader
         username={profileData?.username || address}
-        bio={profileData?.bio}
         avatarIPFS={profileData?.avatar}
         links={profileData?.links[0]}
+        bio={profileData?.bio}
       />
       <ProfileProvider value={profileContext}>
         <Flex mt={-2} direction="column" align="center" pos="relative">
@@ -44,6 +44,7 @@ const Profile = ({ profileData }: ProfileProps) => {
               backgroundImage: '/images/homepage-bg-dark.png',
             }}
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
+            alt={`${profileData?.username || address}-background-image`}
           />
           <UserInfo />
           <Collections />

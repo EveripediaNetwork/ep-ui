@@ -36,6 +36,7 @@ export const WikiHeader = ({
     />
     <NextSeo
       title={title}
+      description={description}
       noindex={noindex}
       openGraph={{
         title,
