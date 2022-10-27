@@ -19,7 +19,7 @@ interface CategoriesListProps {
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
   console.log(new URL(categories[0].cardImage).pathname)
-  let RandcategoryItem: string =
+  const RandcategoryItem: string =
     categories[Math.floor(Math.random() * categories.length - 1)].id
 
   return (
