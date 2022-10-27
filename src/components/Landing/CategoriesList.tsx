@@ -49,7 +49,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
       >
         {categories
           .filter(item => {
-            return item.id !== RandcategoryItem
+            return item.id !== randCategoryItem
           })
           .map(category => (
             <div key={category.id}>
