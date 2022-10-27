@@ -57,7 +57,7 @@ export const ReferenceCard = ({
     newContent = newContent.replace(
       new RegExp(
         // eslint-disable-next-line no-useless-escape
-        ` *\[\\\\[[0-9]{0,5}\\]\]\\(#cite-id-${reference.id}\\) *`,
+        `\[\\\\[[0-9]+\\]\]\\(#cite-id-${reference.id}\\)`,
         'g',
       ),
       '',
