@@ -18,10 +18,8 @@ interface CategoriesListProps {
 }
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
-  const filteredCategories = categories.splice(
-    Math.floor(Math.random() * categories.length),
-    1,
-  )
+  const randCategoryItem: string =
+    categories[Math.floor(Math.random() * categories.length - 1)].id
 
   return (
     <VStack mt={10} mb={20} spacing={2}>
@@ -49,39 +47,43 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         spacingY={12}
         px={6}
       >
-        {filteredCategories.map(category => (
-          <div key={category.id}>
-            <LinkBox
-              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
-              cursor="pointer"
-              bgColor="cardBg"
-              borderRadius="lg"
-              overflow="hidden"
-              shadow="base"
-            >
-              <LinkOverlay href={`/categories/${category.id}`}>
-                <Image
-                  bgColor="DimColor"
-                  src={new URL(category.cardImage).pathname}
-                  h="200px"
-                  w="100%"
-                  alt={category.title}
-                />
+        {categories
+          .filter(item => {
+            return item.id !== RandcategoryItem
+          })
+          .map(category => (
+            <div key={category.id}>
+              <LinkBox
+                _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+                cursor="pointer"
+                bgColor="cardBg"
+                borderRadius="lg"
+                overflow="hidden"
+                shadow="base"
+              >
+                <LinkOverlay href={`/categories/${category.id}`}>
+                  <Image
+                    bgColor="DimColor"
+                    src={new URL(category.cardImage).pathname}
+                    h="200px"
+                    w="100%"
+                    alt={category.title}
+                  />
 
-                <Text
-                  py="4"
-                  w="100%"
-                  textAlign="center"
-                  fontWeight="bold"
-                  fontSize="lg"
-                  size="md"
-                >
-                  {category.title}
-                </Text>
-              </LinkOverlay>
-            </LinkBox>
-          </div>
-        ))}
+                  <Text
+                    py="4"
+                    w="100%"
+                    textAlign="center"
+                    fontWeight="bold"
+                    fontSize="lg"
+                    size="md"
+                  >
+                    {category.title}
+                  </Text>
+                </LinkOverlay>
+              </LinkBox>
+            </div>
+          ))}
       </SimpleGrid>
       {categories.length < 1 && (
         <Center w="full" h="16">
