@@ -18,7 +18,7 @@ interface CategoriesListProps {
 }
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
-  const randCategoryItem: string =
+  const RandcategoryItem: string =
     categories[Math.floor(Math.random() * categories.length - 1)].id
 
   return (
@@ -49,7 +49,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
       >
         {categories
           .filter(item => {
-            return item.id !== randCategoryItem
+            return item.id !== RandcategoryItem
           })
           .map(category => (
             <div key={category.id}>
