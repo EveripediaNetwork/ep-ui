@@ -98,10 +98,10 @@ export const getStaticProps: GetStaticProps = async context => {
     const { data, error } = await store.dispatch(
       getWikiPreviewsByCategory.initiate({
         category: wiki.categories[0].id || '',
-        limit: 4,
+        limit: 6,
       }),
     )
-    relatedWikis = data
+    relatedWikis = data?.filter(w => w.id !== wiki.id)?.slice(0, 4)
     relatedWikisError = error
   }
   await Promise.all(getRunningOperationPromises())

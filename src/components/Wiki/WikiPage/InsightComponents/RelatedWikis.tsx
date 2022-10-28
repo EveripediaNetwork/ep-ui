@@ -51,7 +51,7 @@ export const RelatedWikis = ({
     <VStack w="100%" spacing={4} borderRadius={2} mb="5">
       <WikiAccordion mt="-3px" title="Related Articles">
         <VStack align="start" w="100%">
-          {relatedWikis.slice(0, 4).map(wiki => (
+          {relatedWikis.map(wiki => (
             <RelatedWikiCard key={wiki.id} wiki={wiki} />
           ))}
         </VStack>
