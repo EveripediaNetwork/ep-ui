@@ -4,8 +4,10 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<BoxProps, 'as'> &
   ImageProps & {
-    imgW?: number | string
-    imgH?: number | string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    imgW?: number | string | any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    imgH?: number | string | any
   }
 
 export const Image = ({
