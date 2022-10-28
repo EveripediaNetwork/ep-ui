@@ -30,6 +30,8 @@ const Tags = () => {
       delimiter: '',
       allowEditTag: false,
       validate(opts) {
+        console.log(TagsSuggestions)
+        console.log(opts.inputValue)
         if (!TagsSuggestions.includes(opts.inputValue)) {
           return false
         }
@@ -67,6 +69,7 @@ const Tags = () => {
     (e: { key: string | number; preventDefault: () => void }) => {
       const keyMap: Record<string, () => void> = {
         ArrowDown() {
+          console.log('jdjdjdjdjdjd')
           if (suggestionSelectionId < results.length - 1)
             setSuggestionSelectionId(p => p + 1)
         },
@@ -75,7 +78,6 @@ const Tags = () => {
         },
         Enter() {
           setQuery('')
-          setSuggestionSelectionId(-1)
           inputRef.current?.focus()
           if (suggestionSelectionId === -1) return
           if (editTagIndex === -1)
@@ -89,6 +91,7 @@ const Tags = () => {
               ),
             )
           }
+          setSuggestionSelectionId(-1)
         },
       }
       const exec = keyMap[e.key]
