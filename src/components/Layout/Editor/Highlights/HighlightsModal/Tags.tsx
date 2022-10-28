@@ -128,19 +128,22 @@ const Tags = () => {
     },
   })
 
-  const handleSuggestionClick = (e: React.SyntheticEvent, tag: typeof results[0]) => {
+  const handleSuggestionClick = (
+    e: React.SyntheticEvent,
+    tag: typeof results[0],
+  ) => {
     e.stopPropagation()
-    
-      if (editTagIndex === -1) api.addValue(tag.id)
-      else
-        api.setValue(
-          api.value.map((_, index) =>
-            index === editTagIndex ? tag.id : api.value[index],
-          ),
-        )
-      setQuery('')
-      setSuggestionSelectionId(-1)
-      inputRef.current?.focus()
+
+    if (editTagIndex === -1) api.addValue(tag.id)
+    else
+      api.setValue(
+        api.value.map((_, index) =>
+          index === editTagIndex ? tag.id : api.value[index],
+        ),
+      )
+    setQuery('')
+    setSuggestionSelectionId(-1)
+    inputRef.current?.focus()
   }
 
   return (
@@ -203,7 +206,7 @@ const Tags = () => {
               <Box
                 zIndex={3}
                 key={tag.id}
-                onClick={(e) => handleSuggestionClick(e,tag)}
+                onClick={e => handleSuggestionClick(e, tag)}
                 bgColor={
                   suggestionSelectionId === i ? 'hoverBg' : 'transparent'
                 }
