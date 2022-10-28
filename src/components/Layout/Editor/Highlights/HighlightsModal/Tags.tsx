@@ -30,8 +30,6 @@ const Tags = () => {
       delimiter: '',
       allowEditTag: false,
       validate(opts) {
-        console.log(TagsSuggestions)
-        console.log(opts.inputValue)
         if (!TagsSuggestions.includes(opts.inputValue)) {
           return false
         }
@@ -69,7 +67,6 @@ const Tags = () => {
     (e: { key: string | number; preventDefault: () => void }) => {
       const keyMap: Record<string, () => void> = {
         ArrowDown() {
-          console.log('jdjdjdjdjdjd')
           if (suggestionSelectionId < results.length - 1)
             setSuggestionSelectionId(p => p + 1)
         },
@@ -131,6 +128,21 @@ const Tags = () => {
     },
   })
 
+  const handleSuggestionClick = (e: React.SyntheticEvent, tag: typeof results[0]) => {
+    e.stopPropagation()
+    
+      if (editTagIndex === -1) api.addValue(tag.id)
+      else
+        api.setValue(
+          api.value.map((_, index) =>
+            index === editTagIndex ? tag.id : api.value[index],
+          ),
+        )
+      setQuery('')
+      setSuggestionSelectionId(-1)
+      inputRef.current?.focus()
+  }
+
   return (
     <Stack spacing="4">
       <Text fontWeight="semibold">
@@ -167,11 +179,13 @@ const Tags = () => {
             <input placeholder="Add tag..." {...InputProps} ref={inputRef} />
           )}
         </chakra.div>
+
         {tagState.invalid ? (
           <Text fontSize="xs" color="red.300">
             {tagState.msg}
           </Text>
         ) : null}
+
         {isOpenSuggestions && (
           <Box
             pos="absolute"
@@ -187,19 +201,9 @@ const Tags = () => {
           >
             {results.map((tag, i) => (
               <Box
+                zIndex={3}
                 key={tag.id}
-                onClick={() => {
-                  if (editTagIndex === -1) api.addValue(tag.id)
-                  else
-                    api.setValue(
-                      api.value.map((_, index) =>
-                        index === editTagIndex ? tag.id : api.value[index],
-                      ),
-                    )
-                  setQuery('')
-                  setSuggestionSelectionId(-1)
-                  inputRef.current?.focus()
-                }}
+                onClick={(e) => handleSuggestionClick(e,tag)}
                 bgColor={
                   suggestionSelectionId === i ? 'hoverBg' : 'transparent'
                 }
