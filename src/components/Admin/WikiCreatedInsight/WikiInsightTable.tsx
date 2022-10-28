@@ -27,7 +27,7 @@ import {
   PopoverFooter,
 } from '@chakra-ui/react'
 
-import React, { useEffect, useState, useMemo, useRef } from 'react'
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
@@ -49,7 +49,7 @@ export const WikiInsightTable = () => {
   const [wikis, setWikis] = useState<Array<CreatedWikisCount>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [filterItems, setFilterItems] = useState<Array<[] | any>>()
+  const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
   const { data: hidden, refetch: hiddenRefresh } =
@@ -94,6 +94,7 @@ export const WikiInsightTable = () => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ApplyFilterItems = (e: any) => {
     e.preventDefault()
     // get all checkboxes from form
@@ -206,14 +207,14 @@ export const WikiInsightTable = () => {
     WikisSortByLowest,
   ])
 
-  const whichWiki = () => {
+  const whichWiki = useCallback(() => {
     if (searchKeyWord.length < 2) {
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
       setWikis(SearchedWikis)
     }
-  }
+  }, [SearchedWikis, searchKeyWord.length, wikiSorted])
 
   const scrolltoTableTop = () => {
     insightTableRef?.current?.scrollIntoView({

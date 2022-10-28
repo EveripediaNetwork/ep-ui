@@ -141,6 +141,7 @@ export const WikiEditorsInsightTable = () => {
       ipfs: string
       wikiId: string
     }[]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastCreatedWiki: any
     editorAvatar: string
     latestActivity: string
@@ -158,9 +159,9 @@ export const WikiEditorsInsightTable = () => {
     useState<Array<EditorInterface>>()
   const [hiddenEditorsData, setHiddenEditorsData] =
     useState<Array<EditorInterface>>()
-  const newObj: EditorInterface[] = []
-  const newSearchObj: EditorInterface[] = []
-  const hiddenEditorsArr: EditorInterface[] = []
+  const newObj: EditorInterface[] = useMemo(() => [], [])
+  const newSearchObj: EditorInterface[] = useMemo(() => [], [])
+  const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
   searchedEditors
     ?.filter(item => {
       return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
