@@ -32,6 +32,7 @@ import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
+import { CreatedWikisCount } from '@/types/admin'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
@@ -45,7 +46,7 @@ export const WikiInsightTable = () => {
   const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const [wikis, setWikis] = useState<Array<[] | any>>()
+  const [wikis, setWikis] = useState<Array<CreatedWikisCount>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | any>>()
@@ -147,8 +148,6 @@ export const WikiInsightTable = () => {
   }, [
     wiki,
     filterItems,
-    initGetPromotedWikis,
-    initGetHiddenWikis,
     promotedWikis,
     hidden,
     FilterTypes.archived,

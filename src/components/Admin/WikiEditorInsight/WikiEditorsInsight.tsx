@@ -159,7 +159,7 @@ export const WikiEditorsInsightTable = () => {
   const [hiddenEditorsData, setHiddenEditorsData] =
     useState<Array<EditorInterface>>()
   const newObj: EditorInterface[] = []
-  const newSearchObj: any = []
+  const newSearchObj: EditorInterface[] = []
   const hiddenEditorsArr: EditorInterface[] = []
   searchedEditors
     ?.filter(item => {
@@ -233,7 +233,7 @@ export const WikiEditorsInsightTable = () => {
   useEffect(() => {
     setSearchedEditorsData(newSearchObj)
     setAllowNext(true)
-  }, [searchedEditors])
+  }, [searchedEditors, newSearchObj])
 
   useEffect(() => {
     setHiddenEditorsData(hiddenEditorsArr)
@@ -256,7 +256,7 @@ export const WikiEditorsInsightTable = () => {
       editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
     )
   }
-  const ApplyFilterItems = (e: any) => {
+  const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
     const checkboxes = Array.from(
@@ -285,7 +285,6 @@ export const WikiEditorsInsightTable = () => {
   }, [
     searchedEditorsData,
     editorsData,
-    hiddenEditorsArr,
     filterEditors,
     hiddenEditorsData,
     searchKeyWord.length,
