@@ -15,6 +15,7 @@ import {
   RiBook2Fill,
   RiTeamFill,
   RiUserSearchFill,
+  RiAppStoreFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -65,6 +66,13 @@ export const NAV_ITEMS: NavItem[] = [
         label: 'People in crypto',
         icon: RiUser3Fill,
         href: '/categories/people',
+        hasImage: true,
+      },
+      {
+        id: 107,
+        label: 'Dapps',
+        icon: RiAppStoreFill,
+        href: '/categories/dapps',
         hasImage: true,
       },
     ],
