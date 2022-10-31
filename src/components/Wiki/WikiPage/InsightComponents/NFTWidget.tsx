@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   Button,
   Flex,
@@ -31,7 +31,7 @@ const NFTWidget = ({
 
   const contractID = contractData?.split('/').pop()
 
-  const fetchNFT = async () => {
+  const fetchNFT = useCallback(async () => {
     if (contractID && isNFTWiki && currentNFTHash) {
       const { data } = await store.dispatch(
         nftListing.initiate({
@@ -46,14 +46,14 @@ const NFTWidget = ({
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
     }
-  }
+  }, [contractID, currentNFTHash, isNFTWiki])
 
   // getting associated nft image
   useEffect(() => {
     if (contractID && isNFTWiki) {
       fetchNFT()
     }
-  }, [])
+  }, [contractID, fetchNFT, isNFTWiki])
 
   if (isNFTWiki && contractData) {
     return (

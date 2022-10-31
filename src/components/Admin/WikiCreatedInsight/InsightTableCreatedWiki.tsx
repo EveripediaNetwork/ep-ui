@@ -85,7 +85,7 @@ export const InsightTableWikiCreated = (
   }
   useEffect(() => {
     hideWikisFunc()
-  }, [hideNotify])
+  }, [hideNotify, hideWikisFunc])
 
   return (
     <TableContainer w="100%">

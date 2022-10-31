@@ -64,6 +64,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
         category: 'login_status',
       })
       dispatch(updateUserAddress(data.account))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const w = window as any
       w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
         user_id: data.account,
