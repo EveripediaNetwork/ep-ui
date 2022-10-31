@@ -5,7 +5,7 @@ import {
   useDisclosure,
   Button,
   Box,
-  HStack,
+  HStack,useToast
 } from '@chakra-ui/react'
 import { RiFilmLine } from 'react-icons/ri'
 
@@ -29,6 +29,7 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     onOpen: mediaOpen,
     onClose: mediaClose,
   } = useDisclosure()
+  const toast = useToast()
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
   const [wikiImageUploading, setWikiImageUploading] = useState(false)
@@ -37,11 +38,18 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     setWikiImageUploading(true)
     const IPFSHash = await saveImage({ type: value, id: '' })
     setWikiImageUploading(false)
-
-    dispatch({
-      type: 'wiki/addWikiImageIPFS',
-      payload: IPFSHash,
-    })
+    if(IPFSHash){
+      dispatch({
+        type: 'wiki/addWikiImageIPFS',
+        payload: IPFSHash,
+      })
+    }
+    else{
+      toast({
+        title: 'Error uploading image',
+        status: 'error',
+      })
+    }
   }
 
   const handleDeleteImage = () =>
