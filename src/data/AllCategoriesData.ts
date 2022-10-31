@@ -5,6 +5,7 @@ import {
   RiMoneyCnyCircleFill,
   RiTeamFill,
   RiUser3Fill,
+  RiAppStoreFill,
 } from 'react-icons/ri'
 
 export const AllCategoriesData = [
@@ -61,5 +62,14 @@ export const AllCategoriesData = [
       'The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.',
     cardImage: '/images/categories/people-card.png',
     heroImage: '/images/categories/people.png',
+  },
+  {
+    id: 'dapps',
+    title: 'Decentralized Applications',
+    icon: RiAppStoreFill,
+    description:
+      'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
+    cardImage: '/images/categories/dapps-card.jpg',
+    heroImage: '/images/categories/dapps.jpg',
   },
 ]
