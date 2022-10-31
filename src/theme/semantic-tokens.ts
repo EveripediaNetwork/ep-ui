@@ -173,5 +173,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',
     },
+    searchBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
   },
 }

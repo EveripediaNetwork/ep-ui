@@ -5,20 +5,18 @@ import {
   Checkbox,
   Heading,
   Text,
-  Button,
   useToast,
 } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
 import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileNotifications } from '@/types/ProfileType'
-import NotificationInfo from '@/components/Settings/NotificationInfo'
 import { logEvent } from '@/utils/googleAnalytics'
+import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
 
 interface NotificationSettingBoxProps {
   id: string
   title: string
   description: string
-  isLast?: boolean
   isChecked?: boolean
   setNotificationPrefs: React.Dispatch<
     React.SetStateAction<typeof NotificationChannelsData>
@@ -29,12 +27,11 @@ const NotificationSettingBox = ({
   id,
   title,
   description,
-  isLast,
   isChecked,
   setNotificationPrefs,
 }: NotificationSettingBoxProps) => {
   return (
-    <Box p={4} borderBottomWidth={isLast ? 0 : '1px'}>
+    <Box>
       <Checkbox
         name={id}
         isChecked={isChecked}
@@ -130,27 +127,20 @@ const NotificationSettings = ({
   return (
     <>
       <form onSubmit={handleNotificationSettingsSave}>
-        <VStack maxW="3xl" align="left" borderWidth="1px" borderRadius="md">
-          {notificationPrefs.map((n, i) => (
+        <VStack maxW="3xl" align="left">
+          {notificationPrefs.map(n => (
             <NotificationSettingBox
               key={n.id}
               id={n.id}
               title={n.title}
               description={n.description}
-              isLast={NotificationChannelsData.length - 1 === i}
               setNotificationPrefs={setNotificationPrefs}
               isChecked={n.isChecked}
             />
           ))}
         </VStack>
-        <Button type="submit" mt={8} size="lg">
-          Save
-        </Button>
       </form>
-      <NotificationInfo
-        openSwitch={openSwitch}
-        setOpenSwitch={state => setOpenSwitch(state)}
-      />
+      <SearchWikiNotifications />
     </>
   )
 }
