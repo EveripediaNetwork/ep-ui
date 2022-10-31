@@ -4,25 +4,20 @@ import {
   Center,
   Flex,
   InputGroup,
-  InputLeftElement,
   Spinner,
   chakra,
   Button,
-  HTMLChakraProps,
   Text,
   useEventListener,
   Wrap,
-  Avatar,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
   AutoComplete,
   AutoCompleteGroup,
-  AutoCompleteGroupTitle,
   AutoCompleteInput,
   AutoCompleteItem,
   AutoCompleteList,
-  AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
   fillType,
