@@ -9,10 +9,11 @@ import {
   CircularProgress,
   CircularProgressLabel,
 } from '@chakra-ui/react'
+import { IconType } from 'react-icons'
 
 interface WikidetailsProps {
   detailHeader: string
-  icon: any
+  icon: IconType
   currentValue: number
   weeklyValue: string
   color: string

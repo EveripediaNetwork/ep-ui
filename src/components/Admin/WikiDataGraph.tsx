@@ -36,7 +36,7 @@ export const WikiDataGraph = ({
     'Wikis Edited': number | undefined
   }>
   colors: Array<string>
-  handleGraphFilterChange: any
+  handleGraphFilterChange: (arg0: string) => void
 }) => {
   const currentYear = new Date().getFullYear()
   const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
@@ -132,7 +132,7 @@ export const WikiDataGraph = ({
               fill="#8884d8"
               dataKey="value"
             >
-              {data.map((entry: any, index: any) => (
+              {data.map((ent, index: number) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={colors[index % colors.length]}

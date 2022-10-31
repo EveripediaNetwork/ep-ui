@@ -61,12 +61,14 @@ export const PromoteCreatedWikisModal = ({
   }
 
   const arrs = () => {
-    const arr: any[] = []
-    const data: any = promotedWikis && promotedWikis
-    for (let index = 1; index < data.length; index += 1) {
+    const arr = []
+    const data = promotedWikis || []
+    for (let index = 1; index < data?.length; index += 1) {
       arr.push(data[index].promoted)
     }
   }
+
+  // console.log(promotedWikis)
 
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,

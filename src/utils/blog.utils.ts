@@ -113,10 +113,8 @@ const mapEntry = async (entry: EntryPath) => {
 
     return undefined
   } catch (error) {
-    console.error(error)
+    return null
   }
-
-  return undefined
 }
 
 export const getBlogEntriesFormatted = async (
