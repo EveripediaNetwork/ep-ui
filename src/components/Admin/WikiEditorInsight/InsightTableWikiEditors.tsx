@@ -28,36 +28,30 @@ import { WikiImage } from '../../WikiImage'
 interface WikiEditorInsightDataInterface {
   editorName: string
   createdWikis: {
-    content: {
-      title: string
-      images: {
-        id: string
-      }[]
-    }[]
-    datetime: string
     id: string
-    ipfs: string
     wikiId: string
+    datetime: string
+    ipfs: string
+    content: { title: string; images: { id: string } }
   }[]
   editiedWikis: {
     content: {
       title: string
       images: {
         id: string
-      }[]
-    }[]
+      }
+    }
     datetime: string
     id: string
     ipfs: string
     wikiId: string
   }[]
   lastCreatedWiki: {
-    content: {
-      title: string
-      images: {
-        id: string
-      }[]
-    }[]
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: { title: string; images: { id: string }[] }[]
   }
   editorAvatar: string
   latestActivity: string
