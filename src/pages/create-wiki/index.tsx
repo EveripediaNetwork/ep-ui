@@ -271,7 +271,6 @@ const CreateWikiContent = () => {
         !override &&
         (await isWikiExists(await getWikiSlug(), setExistingWikiData))
       ) {
-
         setOpenOverrideExistingWikiDialog(true)
         return
       }

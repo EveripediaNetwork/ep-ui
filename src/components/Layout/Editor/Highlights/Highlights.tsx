@@ -5,7 +5,8 @@ import {
   useDisclosure,
   Button,
   Box,
-  HStack,useToast
+  HStack,
+  useToast,
 } from '@chakra-ui/react'
 import { RiFilmLine } from 'react-icons/ri'
 
@@ -38,13 +39,12 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
     setWikiImageUploading(true)
     const IPFSHash = await saveImage({ type: value, id: '' })
     setWikiImageUploading(false)
-    if(IPFSHash){
+    if (IPFSHash) {
       dispatch({
         type: 'wiki/addWikiImageIPFS',
         payload: IPFSHash,
       })
-    }
-    else{
+    } else {
       toast({
         title: 'Error uploading image',
         status: 'error',

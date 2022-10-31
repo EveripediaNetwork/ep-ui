@@ -106,7 +106,6 @@ export const saveImage = async (image: Image) => {
 
     return IpfsHash
   } catch (err) {
-    
     return null
   }
 }
@@ -452,9 +451,9 @@ export const isWikiExists = async (
   if (slug === CreateNewWikiSlug) return false
   const { data, isError } = await store.dispatch(getWiki.initiate(slug))
   if (isError) return false
-  if (data){
+  if (data) {
     setExistingWikiData(data)
     return true
   }
-  else return false
+  return false
 }
