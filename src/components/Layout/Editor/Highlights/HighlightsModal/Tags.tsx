@@ -1,24 +1,22 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { Stack, Text, chakra, Box, useDisclosure } from '@chakra-ui/react'
-import * as tagsInput from '@zag-js/tags-input'
-import { mergeProps, useMachine, useSetup } from '@zag-js/react'
+import React, { memo, useState } from 'react'
+import { Stack, Text, chakra } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { tagsInputStyle } from '@/components/Layout/Editor/Highlights/HighlightsModal/styles'
-import { useTagSearch } from '@/services/search/utils'
-import { TagsSuggestions, TagsSuggestionsValues } from '@/data/TagsSuggestions'
-import { Select, components, MultiValue } from 'chakra-react-select'
+import { TagsSuggestionsValues } from '@/data/TagsSuggestions'
+import { Select, MultiValue } from 'chakra-react-select'
 
 type TagValue = MultiValue<{
-  label: string;
-  value: string;
+  label: string
+  value: string
 }>
 
 const Tags = () => {
   const dispatch = useAppDispatch()
   const currentWiki = useAppSelector(state => state.wiki)
-  const [value, setValue] = useState<TagValue>(currentWiki.tags.map(ta => ({label: ta.id, value: ta.id})))
-console.log(currentWiki.tags)
+  const [value, setValue] = useState<TagValue>(
+    currentWiki.tags.map(ta => ({ label: ta.id, value: ta.id })),
+  )
+  console.log(currentWiki.tags)
   const handleOnchange = (item: TagValue) => {
     setValue(item)
     dispatch({
@@ -45,8 +43,11 @@ console.log(currentWiki.tags)
           isMulti
           size="md"
           options={TagsSuggestionsValues}
-          onChange={(item)=>handleOnchange(item)}
-          defaultValue={currentWiki.tags.map(ta => ({label: ta.id, value: ta.id}))}
+          onChange={item => handleOnchange(item)}
+          defaultValue={currentWiki.tags.map(ta => ({
+            label: ta.id,
+            value: ta.id,
+          }))}
         />
       </chakra.div>
     </Stack>

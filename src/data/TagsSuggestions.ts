@@ -24,83 +24,83 @@ export const TagsSuggestions = [
 
 export const TagsSuggestionsValues = [
   {
-    label: "Artists",
-    value: "Artists"
+    label: 'Artists',
+    value: 'Artists',
   },
   {
-    label: "Games",
-    value: "Games"
+    label: 'Games',
+    value: 'Games',
   },
   {
-    label: "Collections",
-    value: "Collections"
+    label: 'Collections',
+    value: 'Collections',
   },
   {
-    label: "Marketplaces",
-    value: "Marketplaces"
+    label: 'Marketplaces',
+    value: 'Marketplaces',
   },
   {
-    label: "Collectors",
-    value: "Collectors"
+    label: 'Collectors',
+    value: 'Collectors',
   },
   {
-    label: "Ethereum",
-    value: "Ethereum"
+    label: 'Ethereum',
+    value: 'Ethereum',
   },
   {
-    label: "Polygon",
-    value: "Polygon"
+    label: 'Polygon',
+    value: 'Polygon',
   },
   {
-    label: "BinanceSmartChain",
-    value: "BinanceSmartChain"
+    label: 'BinanceSmartChain',
+    value: 'BinanceSmartChain',
   },
   {
-    label: "Solana",
-    value: "Solana"
+    label: 'Solana',
+    value: 'Solana',
   },
   {
-    label: "Entertainment",
-    value: "Entertainment"
+    label: 'Entertainment',
+    value: 'Entertainment',
   },
   {
-    label: "Collector",
-    value: "Collector"
+    label: 'Collector',
+    value: 'Collector',
   },
   {
-    label: "Venture",
-    value: "Venture"
+    label: 'Venture',
+    value: 'Venture',
   },
   {
-    label: "Polkadot",
-    value: "Polkadot"
+    label: 'Polkadot',
+    value: 'Polkadot',
   },
   {
-    label: "PeopleInDeFi",
-    value: "PeopleInDeFi"
+    label: 'PeopleInDeFi',
+    value: 'PeopleInDeFi',
   },
   {
-    label: "Protocols",
-    value: "Protocols"
+    label: 'Protocols',
+    value: 'Protocols',
   },
   {
-    label: "Developers",
-    value: "Developers"
+    label: 'Developers',
+    value: 'Developers',
   },
   {
-    label: "Stablecoins",
-    value: "Stablecoins"
+    label: 'Stablecoins',
+    value: 'Stablecoins',
   },
   {
-    label: "DeFiTerms",
-    value: "DeFiTerms"
+    label: 'DeFiTerms',
+    value: 'DeFiTerms',
   },
   {
-    label: "DEXes",
-    value: "DEXes"
+    label: 'DEXes',
+    value: 'DEXes',
   },
   {
-    label: "CEXes",
-    value: "CEXes"
+    label: 'CEXes',
+    value: 'CEXes',
   },
 ]
