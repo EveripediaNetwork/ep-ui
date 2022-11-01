@@ -5,6 +5,7 @@ import { components } from './components'
 import { foundations } from './foundations'
 import { semanticTokens } from './semantic-tokens'
 
+
 export const storageKey = 'chakra-ui-color-mode'
 let colorModeInLocalStorage
 if (typeof window !== 'undefined') {
