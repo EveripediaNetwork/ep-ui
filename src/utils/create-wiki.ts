@@ -95,7 +95,6 @@ export const saveImage = async (image: Image) => {
   formData.append('operations', POST_IMG)
   formData.append('map', `{"0": ["variables.file"]}`)
   formData.append('0', blob)
-
   try {
     const {
       data: {
@@ -452,6 +451,9 @@ export const isWikiExists = async (
   if (slug === CreateNewWikiSlug) return false
   const { data, isError } = await store.dispatch(getWiki.initiate(slug))
   if (isError) return false
-  if (data) setExistingWikiData(data)
-  return true
+  if (data) {
+    setExistingWikiData(data)
+    return true
+  }
+  return false
 }
