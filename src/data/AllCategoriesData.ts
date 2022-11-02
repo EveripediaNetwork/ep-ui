@@ -69,7 +69,7 @@ export const AllCategoriesData = [
     icon: RiAppStoreFill,
     description:
       'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
-    cardImage: '/images/categories/dapps-card.jpg',
-    heroImage: '/images/categories/dapps.png',
+    cardImage: '/images/categories/dapps-card.png',
+    heroImage: '/images/categories/dapps.jpg',
   },
 ]
