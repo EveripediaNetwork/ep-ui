@@ -18,6 +18,10 @@ interface CategoriesListProps {
 }
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
+  const rand = Math.floor(Math.random() * categories.length)
+  const newCategoryList = categories.filter(
+    user => categories.indexOf(user) !== rand,
+  )
 
   return (
     <VStack mt={10} mb={20} spacing={2}>
@@ -45,7 +49,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         spacingY={12}
         px={6}
       >
-        {categories.map(category => (
+        {newCategoryList.map(category => (
           <div key={category.id}>
             <LinkBox
               _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
