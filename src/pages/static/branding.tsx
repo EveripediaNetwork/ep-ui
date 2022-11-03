@@ -33,46 +33,56 @@ const BrandingPage = () => {
     '/branding/brainDark.png',
   ]
   const alternateLogoAssets = [
-    '/branding/braindaoBlackNegative.png',
-    '/branding/braindaowhiteNegative.png',
     '/branding/originalBraindao.png',
+    '/branding/braindaowhiteNegative.png',
+    '/branding/braindaoBlackNegative.png',
   ]
   return (
     <Box bg="#E2E8F0" _dark={{ backgroundColor: '#1A202C' }} pb={20}>
-      <Box maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex alignItems="center">
-          <Box w="60%">
-            <Heading color="brand.500" fontSize="6xl">
+      <Box maxW={{ base: '90%', xl: '90%', '2xl': '1280px' }} mx="auto" mt={12}>
+        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
+          <Box w={{ base: '100%', lg: '60%' }}>
+            <Heading
+              textAlign={{ base: 'center', lg: 'initial' }}
+              color="brand.500"
+              fontSize={{ lg: '6xl', base: '3xl' }}
+            >
               IQ.WIKI Branding kit
             </Heading>
-            <Text w="60%" fontSize="2xl">
+            <Text
+              textAlign={{ base: 'center', lg: 'initial' }}
+              w={{ lg: '85%', base: '100%', md: '60%' }}
+              fontSize={{ lg: '2xl', base: 'md' }}
+              mx={{ md: 'auto', lg: '0' }}
+            >
               Get easy acess to our brand toolkits and assests for easy usage
               across your site and other marketing purposes.
             </Text>
           </Box>
           <Image
             objectFit="contain"
-            imgH={{ base: '400px', lg: '500px' }}
+            imgH={{ base: '320px', lg: '500px' }}
             imgW={{ base: '400px', lg: '500px' }}
             src="/brandingBrain.png"
             alt="Bringing knowledge to the blockchain."
             priority
+            mt={10}
           />
         </Flex>
 
-        <Flex mt="25" mx="auto" justifyContent="center">
+        <Flex mt={{ base: '16', lg: '10' }} mx="auto" justifyContent="center">
           <Text
             position="relative"
-            w="60%"
+            w={{ base: '100%', lg: '60%' }}
             fontSize="2xl"
             textAlign="center"
             lineHeight="1.5"
           >
             <Text
               position="absolute"
-              top="-20%"
-              left="-5%"
-              fontSize="100px"
+              top={{ base: '-5%', lg: '-20%' }}
+              left={{ base: '0%', lg: '-5%', md: '-3%' }}
+              fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
             >
               “
@@ -83,9 +93,9 @@ const BrandingPage = () => {
             content and would love to hear from you for any kind of partnership.
             <Text
               position="absolute"
-              bottom="-20%"
-              right="-5%"
-              fontSize="100px"
+              bottom={{ base: '-10%', lg: '-20%', md: '-30%' }}
+              right={{ base: '5%', lg: '-5%' }}
+              fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
             >
               ”
@@ -95,8 +105,16 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading fontSize="5xl">IQ.WIKI LOGO</Heading>
-            <Text fontSize="2xl">
+            <Heading
+              textAlign={{ base: 'center', lg: 'initial' }}
+              fontSize={{ lg: '5xl', base: '3xl' }}
+            >
+              IQ.WIKI LOGO
+            </Heading>
+            <Text
+              fontSize={{ lg: '2xl', base: 'sm' }}
+              textAlign={{ base: 'center', lg: 'initial' }}
+            >
               The IQ.Wiki logo was inspired from BrainDAO, a web 3.0 DAO powered
               by the IQ token dedicated to bridging the real-world and the
               metaverse by funding all forms of knowledge on the blockchain.
@@ -113,7 +131,9 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading fontSize="5xl">ALTERNATE LOGO</Heading>
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              ALTERNATE LOGO
+            </Heading>
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateLogoAssets.map((item, index) => {
@@ -124,7 +144,9 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading fontSize="5xl">ALTERNATE TEXT</Heading>
+            <Heading fontSize={{ lg: '5xl', base: '3xl' }}>
+              ALTERNATE TEXT
+            </Heading>
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateTextAssets.map((item, index) => {

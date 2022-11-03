@@ -4,7 +4,12 @@ import { BiCloudDownload } from 'react-icons/bi'
 
 export const BrandingAssets = ({ url }: { url: string }) => {
   return (
-    <Flex w="30%" flexDirection="column" gap={2} alignItems="self-end">
+    <Flex
+      w={{ lg: '30%', base: '45%', md: '30%' }}
+      flexDirection="column"
+      gap={2}
+      alignItems="self-end"
+    >
       <Image src={url} />
       <Link
         _hover={{ textDecoration: 'none' }}
