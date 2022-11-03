@@ -142,7 +142,7 @@ const SearchWikiNotifications = () => {
                   {getWikiSummary(article, WikiSummarySize.Big)}
                 </Text>
               </Flex>
-              <Flex>
+              <Flex ml="2">
                 <Button
                   variant="outline"
                   fontSize="sm"
@@ -169,7 +169,7 @@ const SearchWikiNotifications = () => {
 
   const searchQueryHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    window.location.href = `/account/settings?tab=notifications&query=${inputRef.current?.value}`
+    window.location.href = `/account/settings?tab=notifications&query=${query}`
   }
 
   return (
@@ -236,7 +236,10 @@ const SearchWikiNotifications = () => {
                       py="5"
                       justify="center"
                     >
-                      <LinkButton href={`/search/${query}`} variant="outline">
+                      <LinkButton
+                        href={`/account/settings?tab=notifications&query=${query}`}
+                        variant="outline"
+                      >
                         +View {totalUnrenderedWikis} more Results
                       </LinkButton>
                     </Flex>
