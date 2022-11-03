@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box, Text, Flex } from '@chakra-ui/react'
+import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
@@ -9,17 +9,18 @@ interface GlossaryItemProps {
 
 const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
   return (
-    <Stack w="full" mt="5">
+    <Stack w="full" my="7">
       {glossaryAlphabets.map(item => (
-        <>
+        <chakra.div>
           <Box
             w="full"
             py="1"
             bg="gray.50"
             _dark={{ bg: 'whiteAlpha.50' }}
-            mb="2"
+            my="4"
+            px="10"
           >
-            <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold" px="5">
+            <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
               {item}
             </Text>
           </Box>
@@ -27,19 +28,19 @@ const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
             <GlossaryWikiCard
               title="Lorem"
               brief="Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed 
-            do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi 
-            ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-            in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-            non proident, sunt in culpa qui officia deserunt mollit 
-            anim id est laborum."
+              consectetur adipiscing elit, sed 
+              do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi 
+              ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+              in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+              non proident, sunt in culpa qui officia deserunt mollit 
+              anim id est laborum."
               wikiId="ipsum"
             />
           </Flex>
-        </>
+        </chakra.div>
       ))}
     </Stack>
   )

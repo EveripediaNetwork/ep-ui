@@ -23,12 +23,17 @@ const GlossaryWikiCard = ({ title, brief, wikiId }: GlossaryWikiCardProps) => {
       borderColor="borderColorHover"
       overflow="hidden"
       borderRadius="12px"
-      w={{ base: '20%', lg: '60%' }}
+      w="60%"
+      p="3"
     >
       <Box cursor="pointer" w="full">
         <VStack pb="2" w="full" px="3">
           <LinkOverlay href={`/wikis/${wikiId}`} w="full">
-            <Heading size="lg" my="10px" color="brand.500">
+            <Heading
+              size={{ base: 'sm', lg: 'lg' }}
+              my="10px"
+              color="brand.500"
+            >
               {title}
             </Heading>
           </LinkOverlay>
