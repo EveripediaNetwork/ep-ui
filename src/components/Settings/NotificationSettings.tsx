@@ -75,8 +75,6 @@ const NotificationSettings = ({
     typeof NotificationChannelsData
   >(NotificationChannelsData)
 
-  const [openSwitch, setOpenSwitch] = useState(false)
-
   useEffect(() => {
     const notificationChannels = NotificationChannelsData.map(channel => ({
       ...channel,
@@ -89,7 +87,6 @@ const NotificationSettings = ({
 
   const handleNotificationSettingsSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setOpenSwitch(true)
     if (!address) return
     const checkboxes = Array.from(
       e.currentTarget.querySelectorAll(
@@ -141,6 +138,7 @@ const NotificationSettings = ({
         </VStack>
       </form>
       <SearchWikiNotifications />
+      {/* <EmptyNotifications/> */}
     </>
   )
 }

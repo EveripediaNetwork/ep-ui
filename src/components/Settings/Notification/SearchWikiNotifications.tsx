@@ -4,12 +4,13 @@ import {
   Center,
   Flex,
   InputGroup,
+  Link,
   Spinner,
   chakra,
   Button,
+  HTMLChakraProps,
   Text,
   useEventListener,
-  Wrap,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -37,21 +38,16 @@ const ItemPaths = {
   [SEARCH_TYPES.ACCOUNT]: '/account/',
 }
 
-const ARTICLES_LIMIT = 5
-const CATEGORIES_LIMIT = 2
-const ACCOUNTS_LIMIT = 4
+const ARTICLES_LIMIT = 6
 
 const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
-  const allWikis = [
-    ...results.accounts,
-    ...results.articles,
-    ...results.categories,
-  ]
-
-  console.log(allWikis)
+  const noResults =
+    results.articles.length === 0 &&
+    results.categories.length === 0 &&
+    results.accounts.length === 0
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -77,6 +73,36 @@ const SearchWikiNotifications = () => {
     </Center>
   )
 
+  const emptyState = (
+    <Flex direction="column" gap="6" align="center" justify="center" py="16">
+      <chakra.span fontWeight="semibold">No search Results</chakra.span>
+      <Link href="/create-wiki">
+        <Button
+          as="a"
+          variant="outline"
+          px="10"
+          w="fit-content"
+          fontWeight="semibold"
+          fontSize="xs"
+        >
+          Create New Wiki
+        </Button>
+      </Link>
+    </Flex>
+  )
+
+  const generalItemStyles: HTMLChakraProps<'div'> = {
+    m: 0,
+    rounded: 'none',
+    px: 4,
+    py: 2,
+    gap: '2.5',
+    borderBottomWidth: 1,
+    _last: {
+      borderBottomWidth: 0,
+    },
+  }
+
   const articlesSearchList = (
     <>
       {results.articles.slice(0, ARTICLES_LIMIT).map(article => {
@@ -91,6 +117,7 @@ const SearchWikiNotifications = () => {
             value={value}
             getValue={art => art.title}
             label={article.title}
+            {...generalItemStyles}
           >
             <WikiImage
               src={articleImage}
@@ -101,41 +128,28 @@ const SearchWikiNotifications = () => {
               borderRadius={5}
               overflow="hidden"
             />
-            <Flex direction="column" w={{ lg: '100%' }}>
-              <chakra.span fontWeight="semibold" fontSize="sm">
-                {article.title}
-              </chakra.span>
-              <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
-                {getWikiSummary(article, WikiSummarySize.Big)}
-              </Text>
-            </Flex>
-            <Wrap
-              w="full"
-              justify="end"
-              gap="1"
-              ml="auto"
-              maxWidth="fit-content"
-              display={article.tags.length > 0 ? 'flex' : 'none'}
-            >
-              {article.tags?.map(tag => (
-                <chakra.div
-                  key={`${article.id}-${tag.id}`}
-                  fontWeight="medium"
-                  fontSize="xs"
-                  alignSelf="center"
-                  px="2"
-                  borderBottomWidth={1}
-                  bg="gray.100"
-                  rounded="md"
-                  _dark={{
-                    bg: 'gray.800',
+            <Flex w={{ lg: '100%' }} justifyContent="space-between">
+              <Flex direction="column">
+                <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
+                  {article.title}
+                </Text>
+                <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
+                  {getWikiSummary(article, WikiSummarySize.Big)}
+                </Text>
+              </Flex>
+              <Flex>
+                <Button
+                  variant="outline"
+                  fontSize="sm"
+                  fontWeight={500}
+                  onClick={e => {
+                    e.stopPropagation()
                   }}
-                  ml="auto"
                 >
-                  {tag.id}
-                </chakra.div>
-              ))}
-            </Wrap>
+                  Add
+                </Button>
+              </Flex>
+            </Flex>
           </AutoCompleteItem>
         )
       })}
@@ -148,6 +162,11 @@ const SearchWikiNotifications = () => {
     </>
   )
 
+  const searchQueryHandler = e => {
+    e.preventDefault()
+    window.location.href = `/account/settings?tab=notifications&query=${inputRef.current?.value}`
+  }
+
   return (
     <>
       <Flex maxW="3xl" pos="relative">
@@ -155,7 +174,7 @@ const SearchWikiNotifications = () => {
           closeOnSelect={false}
           disableFilter
           suggestWhenEmpty
-          emptyState={isLoading}
+          emptyState={!isLoading && noResults && emptyState}
           openOnFocus={query.length >= 3}
           shouldRenderSuggestions={q => q.length >= 3}
           onSelectOption={option => {
@@ -169,54 +188,58 @@ const SearchWikiNotifications = () => {
             })
           }}
         >
-          <InputGroup>
-            <Flex
-              borderWidth="1px"
-              borderLeftRadius="8"
-              borderColor="searchBorder"
-              w="full"
-              borderRight="none"
-              pos="relative"
-            >
-              <Flex alignItems="center" justifyContent="center" pl="4">
-                <Search2Icon color="gray.300" />
-              </Flex>
-              <AutoCompleteInput
-                pl="2.5"
-                placeholder="Search to add wikis to your list"
-                variant="unstyled"
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-                _placeholderShown={{
-                  textOverflow: 'ellipsis',
-                }}
-                ref={inputRef}
-                fontSize={{ base: '13', xl: '16' }}
-              />
-              <AutoCompleteList
-                p="0"
-                maxH="auto"
+          <form action="" onSubmit={searchQueryHandler}>
+            <InputGroup>
+              <Flex
                 borderWidth="1px"
+                borderLeftRadius="8"
                 borderColor="searchBorder"
-                shadow="lg"
-                borderStyle="solid"
                 w="full"
-                left="0"
-                top="12"
+                borderRight="none"
+                pos="relative"
               >
-                {isLoading ? loadingView : searchList}
-              </AutoCompleteList>
-            </Flex>
-            <Button
-              fontSize={{ base: '13', xl: '16' }}
-              colorScheme="brandLinkColor"
-              size="lg"
-              borderLeftRadius="0"
-              borderRightRadius="8"
-            >
-              Search
-            </Button>
-          </InputGroup>
+                <Flex alignItems="center" justifyContent="center" pl="4">
+                  <Search2Icon color="gray.300" />
+                </Flex>
+                <AutoCompleteInput
+                  pl="2.5"
+                  placeholder="Search to add wikis to your list"
+                  variant="unstyled"
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  _placeholderShown={{
+                    textOverflow: 'ellipsis',
+                  }}
+                  ref={inputRef}
+                  fontSize={{ base: '12', md: '16' }}
+                />
+                <AutoCompleteList
+                  p="0"
+                  maxH="auto"
+                  borderWidth="1px"
+                  borderColor="searchBorder"
+                  shadow="lg"
+                  borderStyle="solid"
+                  w="full"
+                  left="0"
+                  top="12"
+                >
+                  {isLoading ? loadingView : searchList}
+                </AutoCompleteList>
+              </Flex>
+              <Button
+                type="submit"
+                fontSize={{ base: '12', md: '14' }}
+                fontWeight={600}
+                colorScheme="brandLinkColor"
+                size="lg"
+                borderLeftRadius="0"
+                borderRightRadius="8"
+              >
+                Search
+              </Button>
+            </InputGroup>
+          </form>
         </AutoComplete>
       </Flex>
     </>
