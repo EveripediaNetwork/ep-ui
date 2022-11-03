@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import {
   Center,
@@ -26,6 +26,7 @@ import {
   SEARCH_TYPES,
   useNavSearch,
 } from '@/services/search/utils'
+import { LinkButton } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
@@ -48,6 +49,10 @@ const SearchWikiNotifications = () => {
     results.articles.length === 0 &&
     results.categories.length === 0 &&
     results.accounts.length === 0
+
+  const unrenderedWikis = results.articles.length - ARTICLES_LIMIT
+
+  const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -162,7 +167,7 @@ const SearchWikiNotifications = () => {
     </>
   )
 
-  const searchQueryHandler = e => {
+  const searchQueryHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     window.location.href = `/account/settings?tab=notifications&query=${inputRef.current?.value}`
   }
@@ -225,6 +230,17 @@ const SearchWikiNotifications = () => {
                   top="12"
                 >
                   {isLoading ? loadingView : searchList}
+                  {totalUnrenderedWikis > 0 && !isLoading && (
+                    <Flex
+                      _dark={{ color: 'whiteAlpha.600' }}
+                      py="5"
+                      justify="center"
+                    >
+                      <LinkButton href={`/search/${query}`} variant="outline">
+                        +View {totalUnrenderedWikis} more Results
+                      </LinkButton>
+                    </Flex>
+                  )}
                 </AutoCompleteList>
               </Flex>
               <Button
