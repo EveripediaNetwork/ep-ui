@@ -57,12 +57,13 @@ const Glossary: NextPage = () => {
         borderTop="1px"
         mx="auto"
         borderTopColor="GrayText"
+        px={{ base: '9', lg: '30' }}
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Flex
             py="7"
             w="full"
-            justifyContent="center"
+            justifyContent="start"
             alignItems="center"
             wrap="wrap"
           >
@@ -76,7 +77,7 @@ const Glossary: NextPage = () => {
               </Text>
             ))}
           </Flex>
-          <Box w="full" px={{ base: '9', lg: '24' }} py="3">
+          <Box w="full" px="2" py="3">
             <InputGroup size="lg" w="full">
               <InputLeftElement
                 ml={{ base: '15px', xl: 'unset' }}
@@ -89,15 +90,16 @@ const Glossary: NextPage = () => {
                   ml={{ base: '-8', md: '0' }}
                 />
               </InputLeftElement>
-              <Input type="tel" placeholder="search for words" />
+              <Input type="tel" placeholder="Search for words" />
             </InputGroup>
           </Box>
           <Flex
             py="3"
+            px="2"
             w="full"
             wrap="wrap"
             alignItems="center"
-            justifyContent="center"
+            justifyContent="start"
             gap="3"
           >
             {commonSearchedWikis.map((item, i) => (
@@ -106,11 +108,11 @@ const Glossary: NextPage = () => {
                 px="3"
                 py="1"
                 cursor="pointer"
-                rounded="lg"
+                rounded="2xl"
                 border="1px"
                 borderColor="GrayText"
-                fontWeight="semibold"
-                fontSize={{ base: 'md', lg: 'md' }}
+                fontWeight="normal"
+                fontSize={{ base: 'sm', lg: 'md' }}
               >
                 {item}
               </Box>
