@@ -20,7 +20,7 @@ const EmptyNotification = () => {
       />
       <Flex direction="column" mt="8">
         <Heading
-          fontSize="3xl"
+          fontSize="2xl"
           color="emptyNotificationHeading"
           textAlign="center"
         >
@@ -30,8 +30,8 @@ const EmptyNotification = () => {
           maxW="75%"
           mx="auto"
           fontWeight={500}
-          fontSize="lg"
-          mt="6"
+          fontSize="md"
+          mt="3"
           color="emptyNotificationText"
           textAlign="center"
         >
