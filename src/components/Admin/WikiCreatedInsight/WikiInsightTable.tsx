@@ -27,11 +27,12 @@ import {
   PopoverFooter,
 } from '@chakra-ui/react'
 
-import React, { useEffect, useState, useMemo, useRef } from 'react'
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
+import { CreatedWikisCount } from '@/types/admin'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
 
 export const WikiInsightTable = () => {
@@ -45,10 +46,10 @@ export const WikiInsightTable = () => {
   const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const [wikis, setWikis] = useState<Array<[] | any>>()
+  const [wikis, setWikis] = useState<Array<CreatedWikisCount>>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [filterItems, setFilterItems] = useState<Array<[] | any>>()
+  const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
   const { data: hidden, refetch: hiddenRefresh } =
@@ -71,7 +72,7 @@ export const WikiInsightTable = () => {
       return <BiSortDown fontSize="1.3rem" />
     }
     return <RiArrowUpDownLine fontSize="1.3rem" />
-  }, [wiki, sortTableBy])
+  }, [sortTableBy])
 
   enum FilterTypes {
     promoted = 'promoted',
@@ -93,6 +94,7 @@ export const WikiInsightTable = () => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ApplyFilterItems = (e: any) => {
     e.preventDefault()
     // get all checkboxes from form
@@ -147,10 +149,11 @@ export const WikiInsightTable = () => {
   }, [
     wiki,
     filterItems,
-    initGetPromotedWikis,
-    initGetHiddenWikis,
     promotedWikis,
     hidden,
+    FilterTypes.archived,
+    FilterTypes.promoted,
+    FilterTypes.normal,
   ])
 
   const WikisSortByHighest = newWikis?.slice()
@@ -195,16 +198,23 @@ export const WikiInsightTable = () => {
       return WikisSortByAlpaDown
     }
     return newWikis
-  }, [newWikis, sortTableBy])
+  }, [
+    newWikis,
+    sortTableBy,
+    WikisSortByAlpaDown,
+    WikisSortByAlpaUp,
+    WikisSortByHighest,
+    WikisSortByLowest,
+  ])
 
-  const whichWiki = () => {
+  const whichWiki = useCallback(() => {
     if (searchKeyWord.length < 2) {
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
       setWikis(SearchedWikis)
     }
-  }
+  }, [SearchedWikis, searchKeyWord.length, wikiSorted])
 
   const scrolltoTableTop = () => {
     insightTableRef?.current?.scrollIntoView({
@@ -232,6 +242,11 @@ export const WikiInsightTable = () => {
     searchRefresh()
   }, [
     wiki,
+    hiddenRefresh,
+    promotedRefresh,
+    refetch,
+    searchRefresh,
+    whichWiki,
     filterItems,
     sortTableBy,
     searchKeyWord,

@@ -57,7 +57,7 @@ const Admin = () => {
       }
     }
     fetchAuth()
-  }, [userAddress, setAccount, token])
+  }, [userAddress, setAccount, token, router])
 
   const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
 

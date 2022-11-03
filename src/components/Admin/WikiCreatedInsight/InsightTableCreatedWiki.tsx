@@ -85,6 +85,7 @@ export const InsightTableWikiCreated = (
   }
   useEffect(() => {
     hideWikisFunc()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hideNotify])
 
   return (

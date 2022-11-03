@@ -1,8 +1,8 @@
 import React from 'react'
 import { chakra, forwardRef, LinkOverlayProps } from '@chakra-ui/react'
 
-const cx = (...classNames: any[]) => classNames.filter(Boolean).join(' ')
-
+const cx = (...classNames: (string | undefined)[]) =>
+  classNames.filter(Boolean).join(' ')
 export const PatchedLinkOverlay = forwardRef<LinkOverlayProps, 'a'>(
   function LinkOverlay(props, ref) {
     const { isExternal, target, rel, className, ...rest } = props
