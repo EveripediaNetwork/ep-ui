@@ -177,5 +177,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
     },
+    emptyNotificationHeading: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    emptyNotificationText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
   },
 }

@@ -12,6 +12,7 @@ import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileNotifications } from '@/types/ProfileType'
 import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
+import EmptyNotification from '@/components/Settings/Notification/EmptyNotification'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -138,7 +139,7 @@ const NotificationSettings = ({
         </VStack>
       </form>
       <SearchWikiNotifications />
-      {/* <EmptyNotifications/> */}
+      <EmptyNotification />
     </>
   )
 }
