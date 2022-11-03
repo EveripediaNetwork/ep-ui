@@ -54,8 +54,8 @@ const Glossary: NextPage = () => {
             pb={10}
           >
             Crypto terminology can be difficult to figure out, especially if
-            you're new to the blockchain. Here's a guide to help you navigate
-            the exciting frontier of Web3.
+            you&lsquo;re new to the blockchain. Here&lsquo;s a guide to help you
+            navigate the exciting frontier of Web3.
           </Text>
         </VStack>
         <BrainDaoLogo

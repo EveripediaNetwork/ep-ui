@@ -1,6 +1,5 @@
 import React from 'react'
 import { Stack, Box, Text, Flex } from '@chakra-ui/react'
-import { Wikis } from '@/types/admin'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
