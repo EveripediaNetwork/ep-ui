@@ -7,12 +7,10 @@ import {
   Flex,
   chakra,
   VStack,
-  HStack,
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import dynamic from 'next/dynamic'
 import React from 'react'
 import {
   glossaryAlphabetsData,
