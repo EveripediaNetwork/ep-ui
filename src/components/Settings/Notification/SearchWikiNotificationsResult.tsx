@@ -1,21 +1,19 @@
-import React from 'react'
-import { GetServerSideProps } from 'next'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 
-interface SearchQueryProps {
-  query: string
-}
+const SearchWikiNotificationsResult = () => {
+  //   console.log(query)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const route = useRouter()
 
-const SearchWikiNotificationsResult = ({ query }: SearchQueryProps) => {
-  console.log(query)
-}
+  // console.log(route.query?.q)
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  const queryParam = context.params?.query
-  const query = queryParam as string
+  useEffect(() => {
+    setIsLoading(true)
+  }, [route])
 
-  return {
-    props: { query },
-  }
+  return <>{isLoading && <SearchSkeleton />}</>
 }
 
 export default SearchWikiNotificationsResult

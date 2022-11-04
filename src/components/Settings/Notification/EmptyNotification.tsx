@@ -18,7 +18,7 @@ const EmptyNotification = () => {
         bgImage="/images/empty-notification-light-bg.svg"
         _dark={{ bgImage: '/images/empty-notification-dark-bg.svg' }}
       />
-      <Flex direction="column" mt="8">
+      <Flex direction="column">
         <Heading
           fontSize="2xl"
           color="emptyNotificationHeading"

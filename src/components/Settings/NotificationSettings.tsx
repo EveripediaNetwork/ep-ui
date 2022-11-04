@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   VStack,
@@ -13,6 +14,7 @@ import { ProfileNotifications } from '@/types/ProfileType'
 import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
 import EmptyNotification from '@/components/Settings/Notification/EmptyNotification'
+import SearchWikiNotificationsResult from '@/components/Settings/Notification/SearchWikiNotificationsResult'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -71,6 +73,7 @@ const NotificationSettings = ({
 }: NotificationSettingsProps) => {
   const toast = useToast()
   const [postUserProfile] = usePostUserProfileMutation()
+  const route = useRouter()
 
   const [notificationPrefs, setNotificationPrefs] = useState<
     typeof NotificationChannelsData
@@ -139,7 +142,8 @@ const NotificationSettings = ({
         </VStack>
       </form>
       <SearchWikiNotifications />
-      <EmptyNotification />
+      {route.query?.q && <SearchWikiNotificationsResult />}
+      {!route.query?.q && <EmptyNotification />}
     </>
   )
 }

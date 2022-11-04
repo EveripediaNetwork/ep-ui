@@ -169,7 +169,7 @@ const SearchWikiNotifications = () => {
 
   const searchQueryHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    window.location.href = `/account/settings?tab=notifications&query=${query}`
+    window.location.href = `/account/settings?tab=notifications&q=${query}`
   }
 
   return (
@@ -237,7 +237,7 @@ const SearchWikiNotifications = () => {
                       justify="center"
                     >
                       <LinkButton
-                        href={`/account/settings?tab=notifications&query=${query}`}
+                        href={`/account/settings?tab=notifications&q=${query}`}
                         variant="outline"
                       >
                         +View {totalUnrenderedWikis} more Results
