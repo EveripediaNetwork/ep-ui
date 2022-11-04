@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 import { Stack, Text, chakra } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { TagsSuggestionsValues } from '@/data/TagsSuggestions'
+import { TagsSuggestions } from '@/data/TagsSuggestions'
 import { Select, MultiValue } from 'chakra-react-select'
 
 type TagValue = MultiValue<{
@@ -41,7 +41,7 @@ const Tags = () => {
           variant="unstyled"
           isMulti
           size="md"
-          options={TagsSuggestionsValues}
+          options={TagsSuggestions}
           onChange={item => handleOnchange(item)}
           defaultValue={currentWiki.tags.map(ta => ({
             label: ta.id,

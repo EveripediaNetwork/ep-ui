@@ -1,28 +1,4 @@
 export const TagsSuggestions = [
-  'Artists',
-  'Games',
-  'Collections',
-  'Marketplaces',
-  'Collectors',
-  'Ethereum',
-  'Polygon',
-  'BinanceSmartChain',
-  'Solana',
-  'Polkadot',
-  'Venture',
-  'Collector',
-  'Entertainment',
-  'PeopleInDeFi',
-  'Founders',
-  'Developers',
-  'Protocols',
-  'Stablecoins',
-  'DeFiTerms',
-  'DEXes',
-  'CEXes',
-]
-
-export const TagsSuggestionsValues = [
   {
     label: 'Artists',
     value: 'Artists',
