@@ -28,7 +28,7 @@ const GlossaryWikiCard = ({ title, brief, wikiId }: GlossaryWikiCardProps) => {
     >
       <Box cursor="pointer" w="full">
         <VStack pb="2" w="full" px="3">
-          <LinkOverlay href={`/wikis/${wikiId}`} w="full">
+          <LinkOverlay href={`/wiki/${wikiId}`} w="full">
             <Heading
               size={{ base: 'sm', lg: 'lg' }}
               my="10px"

@@ -12,12 +12,14 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
+import ScrollIntoView from 'react-scroll-into-view'
 import {
   glossaryAlphabetsData,
   commonSearchedWikis,
 } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
+import Link from '@/components/Elements/LinkElements/Link'
 
 const Glossary: NextPage = () => {
   return (
@@ -63,18 +65,22 @@ const Glossary: NextPage = () => {
           <Flex
             py="7"
             w="full"
-            justifyContent="start"
+            justifyContent={{ lg: 'start', '2xl': 'center' }}
             alignItems="center"
             wrap="wrap"
           >
-            {glossaryAlphabetsData.map(item => (
-              <Text
-                px="3"
-                fontWeight="semibold"
-                fontSize={{ base: 'md', lg: 'md' }}
-              >
-                {item}
-              </Text>
+            {glossaryAlphabetsData.map((item, i) => (
+              <Box key={i} cursor="pointer">
+                <ScrollIntoView selector={`#${item}`}>
+                  <Text
+                    px={{ base: '3', lg: '3', '2xl': '10' }}
+                    fontWeight="semibold"
+                    fontSize={{ base: 'md', xl: 'lg' }}
+                  >
+                    {item}
+                  </Text>
+                </ScrollIntoView>
+              </Box>
             ))}
           </Flex>
           <Box w="full" px="2" py="3">
@@ -95,27 +101,35 @@ const Glossary: NextPage = () => {
           </Box>
           <Flex
             py="3"
-            px="2"
+            px={{ lg: '3', '2xl': '10' }}
             w="full"
             wrap="wrap"
             alignItems="center"
-            justifyContent="start"
-            gap="3"
+            justifyContent={{ lg: 'start', '2xl': 'center' }}
+            gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
             {commonSearchedWikis.map((item, i) => (
-              <Box
+              <Link
+                href={`/wiki/${item}`}
                 key={i}
-                px="3"
-                py="1"
-                cursor="pointer"
-                rounded="2xl"
-                border="1px"
-                borderColor="GrayText"
-                fontWeight="normal"
-                fontSize={{ base: 'sm', lg: 'md' }}
+                passHref
+                _hover={{
+                  textDecoration: 'none',
+                }}
               >
-                {item}
-              </Box>
+                <Box
+                  px="3"
+                  py="1"
+                  cursor="pointer"
+                  rounded="2xl"
+                  border="1px"
+                  borderColor="GrayText"
+                  fontWeight="normal"
+                  fontSize={{ base: 'sm', lg: 'md' }}
+                >
+                  {item}
+                </Box>
+              </Link>
             ))}
           </Flex>
         </Box>

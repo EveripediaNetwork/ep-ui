@@ -10,8 +10,8 @@ interface GlossaryItemProps {
 const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
   return (
     <Stack w="full" my="7">
-      {glossaryAlphabets.map(item => (
-        <chakra.div>
+      {glossaryAlphabets.map((item, i) => (
+        <chakra.div key={i} id={item} pt="50px">
           <Box
             w="full"
             py="1"
@@ -24,7 +24,7 @@ const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
               {item}
             </Text>
           </Box>
-          <Flex justifyContent="center">
+          <Flex justifyContent="center" mb="-50px">
             <GlossaryWikiCard
               title="Lorem"
               brief="Lorem ipsum dolor sit amet,
