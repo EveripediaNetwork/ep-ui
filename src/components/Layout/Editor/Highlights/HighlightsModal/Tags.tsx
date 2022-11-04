@@ -16,7 +16,6 @@ const Tags = () => {
   const [value, setValue] = useState<TagValue>(
     currentWiki.tags.map(ta => ({ label: ta.id, value: ta.id })),
   )
-  console.log(currentWiki.tags)
   const handleOnchange = (item: TagValue) => {
     setValue(item)
     dispatch({
