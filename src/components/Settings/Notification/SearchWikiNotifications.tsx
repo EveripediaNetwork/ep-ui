@@ -45,10 +45,7 @@ const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
-  const noResults =
-    results.articles.length === 0 &&
-    results.categories.length === 0 &&
-    results.accounts.length === 0
+  const noResults = results.articles.length === 0
 
   const unrenderedWikis = results.articles.length - ARTICLES_LIMIT
 
