@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import { GET_GLOSSARY_TAG_WIKIS } from './queries'
 import config from '@/config'
 import { HYDRATE } from 'next-redux-wrapper'
 import { GraphQLClient } from 'graphql-request'
+import { GET_GLOSSARY_TAG_WIKIS } from './queries'
 
 export type GlossaryWiki = {
   id: string
