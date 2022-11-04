@@ -14,32 +14,86 @@ import { Image } from '../../components/Elements/Image/Image'
 
 const BrandingPage = () => {
   const IQLogoAsset = [
-    '/branding/iqoriginal.png',
-    '/branding/iqwhite.png',
-    '/branding/iqblue.png',
-    '/branding/iqpurple.png',
-    '/branding/iqdeepblack.png',
-    '/branding/iqnegativepink.png',
-    '/branding/iqpink.png',
-    '/branding/iqnegativewhite.png',
-    '/branding/iqblack.png',
-    '/branding/iqred.png',
-    '/branding/iqgreen.png',
-    '/branding/iqorange.png',
+    {
+      bg: '/branding/iqoriginal.png',
+      download: '/branding/downloadassets/logoiqoriginal',
+    },
+    {
+      bg: '/branding/iqwhite.png',
+      download: '/branding/downloadassets/logoiqwhite',
+    },
+    {
+      bg: '/branding/iqblue.png',
+      download: '/branding/downloadassets/logoiqblue',
+    },
+    {
+      bg: '/branding/iqpurple.png',
+      download: '/branding/downloadassets/logoiqpurple',
+    },
+    {
+      bg: '/branding/iqdeepblack.png',
+      download: '/branding/downloadassets/logoiqdeepblack',
+    },
+    {
+      bg: '/branding/iqnegativepink.png',
+      download: '/branding/downloadassets/logoiqnegativepink',
+    },
+    {
+      bg: '/branding/iqpink.png',
+      download: '/branding/downloadassets/logoiqpink',
+    },
+    {
+      bg: '/branding/iqnegativewhite.png',
+      download: '/branding/downloadassets/logoiqnegativewhite',
+    },
+    {
+      bg: '/branding/iqblack.png',
+      download: '/branding/downloadassets/logoiqblack',
+    },
+    {
+      bg: '/branding/iqred.png',
+      download: '/branding/downloadassets/logoiqred',
+    },
+    {
+      bg: '/branding/iqgreen.png',
+      download: '/branding/downloadassets/logoiqgreen',
+    },
+    {
+      bg: '/branding/iqorange.png',
+      download: '/branding/downloadassets/logoiqorange',
+    },
   ]
   const alternateTextAssets = [
-    '/branding/brainpink.png',
-    '/branding/brainwhite.png',
-    '/branding/brainDark.png',
+    {
+      bg: '/branding/brainpink.png',
+      download: '/branding/downloadassets/logobrainpink',
+    },
+    {
+      bg: '/branding/brainwhite.png',
+      download: '/branding/downloadassets/logobrainwhite',
+    },
+    {
+      bg: '/branding/brainDark.png',
+      download: '/branding/downloadassets/logobraindark',
+    },
   ]
   const alternateLogoAssets = [
-    '/branding/originalBraindao.png',
-    '/branding/braindaowhiteNegative.png',
-    '/branding/braindaoBlackNegative.png',
+    {
+      bg: '/branding/originalBraindao.png',
+      download: '/branding/downloadassets/logooriginalbrain',
+    },
+    {
+      bg: '/branding/braindaowhiteNegative.png',
+      download: '/branding/downloadassets/logobrainwhitenegative',
+    },
+    {
+      bg: '/branding/braindaoBlackNegative.png',
+      download: '/branding/downloadassets/logobrainblacknegative',
+    },
   ]
   return (
     <Box bg="#E2E8F0" _dark={{ backgroundColor: '#1A202C' }} pb={20}>
-      <Box maxW={{ base: '90%', xl: '90%', '2xl': '1280px' }} mx="auto" mt={12}>
+      <Box maxW={{ base: '90%', xl: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
@@ -124,7 +178,7 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {IQLogoAsset.map((item, index) => {
-              return <BrandingAssets key={index} url={item} />
+              return <BrandingAssets key={index} bg={item} />
             })}
           </Flex>
         </Box>
@@ -137,7 +191,7 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateLogoAssets.map((item, index) => {
-              return <BrandingAssets key={index} url={item} />
+              return <BrandingAssets key={index} bg={item} />
             })}
           </Flex>
         </Box>
@@ -150,7 +204,7 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateTextAssets.map((item, index) => {
-              return <BrandingAssets key={index} url={item} />
+              return <BrandingAssets key={index} bg={item} />
             })}
           </Flex>
         </Box>
