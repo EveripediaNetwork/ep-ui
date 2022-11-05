@@ -1,14 +1,25 @@
 import { Button, Flex, Image } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiCloudDownload } from 'react-icons/bi'
 import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
 
 export const BrandingAssets = ({
   bg,
+  updateSelectedAsset,
+  currentlyViewed,
 }: {
   bg: { bg: string; download: string }
+  updateSelectedAsset: () => void
+  currentlyViewed: string
 }) => {
   const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
+  useEffect(() => {
+    if (currentlyViewed === bg.bg) {
+      setShowDownloadOptions(true)
+    } else {
+      setShowDownloadOptions(false)
+    }
+  }, [currentlyViewed, bg.bg])
   return (
     <Flex
       w={{ lg: '30%', base: '45%', md: '30%' }}
@@ -44,6 +55,7 @@ export const BrandingAssets = ({
         <Image src={bg.bg} />
         <Button
           onClick={() => {
+            updateSelectedAsset()
             setShowDownloadOptions(true)
           }}
           justifyContent="end"

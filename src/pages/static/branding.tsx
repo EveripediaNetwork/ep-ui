@@ -8,11 +8,12 @@ import {
   ListIcon,
   ListItem,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Image } from '../../components/Elements/Image/Image'
 
 const BrandingPage = () => {
+  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('kdkd')
   const IQLogoAsset = [
     {
       bg: '/branding/iqoriginal.png',
@@ -47,7 +48,7 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logoiqnegativewhite',
     },
     {
-      bg: '/branding/iqblack.png',
+      bg: '/branding/iqBlack.png',
       download: '/branding/downloadassets/logoiqblack',
     },
     {
@@ -100,6 +101,7 @@ const BrandingPage = () => {
               textAlign={{ base: 'center', lg: 'initial' }}
               color="brand.500"
               fontSize={{ lg: '6xl', base: '3xl' }}
+              pt={{ lg: 0, base: 8 }}
             >
               IQ.WIKI Branding kit
             </Heading>
@@ -178,7 +180,16 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {IQLogoAsset.map((item, index) => {
-              return <BrandingAssets key={index} bg={item} />
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                />
+              )
             })}
           </Flex>
         </Box>
@@ -191,7 +202,16 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateLogoAssets.map((item, index) => {
-              return <BrandingAssets key={index} bg={item} />
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                />
+              )
             })}
           </Flex>
         </Box>
@@ -204,7 +224,16 @@ const BrandingPage = () => {
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateTextAssets.map((item, index) => {
-              return <BrandingAssets key={index} bg={item} />
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                />
+              )
             })}
           </Flex>
         </Box>
