@@ -23,7 +23,7 @@ import Link from '@/components/Elements/LinkElements/Link'
 
 const Glossary: NextPage = () => {
   return (
-    <Stack direction="column" w="full" pt="3">
+    <Stack direction="column" w="full" pt="3" pb="24">
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
