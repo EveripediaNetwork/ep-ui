@@ -1,19 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
+import { fetchWikisList } from '@/services/search/utils'
+import { WikiPreview } from '@/types/Wiki'
+import ActivityCard from '@/components/Activity/ActivityCard'
+import { Flex, Box } from '@chakra-ui/react'
 
 const SearchWikiNotificationsResult = () => {
-  //   console.log(query)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [results, setResults] = useState<{
+    articles: WikiPreview[]
+  }>({
+    articles: [],
+  })
   const route = useRouter()
-
-  // console.log(route.query?.q)
+  const q = route.query?.q as string
 
   useEffect(() => {
     setIsLoading(true)
-  }, [route])
+    console.log(q)
+    Promise.all([fetchWikisList(q.replaceAll(' ', '-'))]).then(res => {
+      const [articles = []] = res
+      if (articles.length) {
+        setResults({ articles })
+        setIsLoading(false)
+      }
+    })
+  }, [q])
 
-  return <>{isLoading && <SearchSkeleton />}</>
+  const { articles } = results
+
+  const articleList = articles.map(article => {
+    return (
+      <ActivityCard
+        key={article.id}
+        title={article.title}
+        brief={article.summary}
+        editor={article.user}
+        wiki={article}
+        wikiId={article.id}
+        lastModTimeStamp={article.updated}
+      />
+    )
+  })
+
+  return (
+    <>
+      {!isLoading && articles.length !== 0 && (
+        <Box>
+          <Flex direction="column" gap="4">
+            {articleList}
+          </Flex>
+        </Box>
+      )}
+      {isLoading && <SearchSkeleton />}
+    </>
+  )
 }
 
 export default SearchWikiNotificationsResult
