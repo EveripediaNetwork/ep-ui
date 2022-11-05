@@ -3,42 +3,47 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { HYDRATE } from 'next-redux-wrapper'
 import { GraphQLClient } from 'graphql-request'
-import { GET_GLOSSARY_TAG_WIKIS } from './queries'
+import { GET_TAGS_BY_ID } from './queries'
 
-export type GlossaryWiki = {
+export type GlossaryTagWiki = {
   id: string
   wikis: { id: string; title: string; summary: string }
 }
 
-type GlossaryWikisResponseType = {
-  glossaryWikis: GlossaryWiki[]
+type GetTagByIdResponse = {
+  tagsById: GlossaryTagWiki[]
 }
 
-export const glossaryApiClient = new GraphQLClient(config.graphqlUrl)
+type TagsQueryParams = {
+  id: string
+}
 
 export const glossaryApi = createApi({
   reducerPath: 'glossaryApi',
+  refetchOnMountOrArgChange: 30,
+  refetchOnFocus: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]
     }
     return null
   },
-  baseQuery: graphqlRequestBaseQuery({ client: glossaryApiClient }),
+
+  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
-    getGlossaryWiki: builder.query<GlossaryWiki[], undefined>({
-      query: () => ({
-        document: GET_GLOSSARY_TAG_WIKIS,
+    getTagsById: builder.query<GlossaryTagWiki[], TagsQueryParams>({
+      query: ({ id }: { id: string }) => ({
+        document: GET_TAGS_BY_ID,
+        variables: { id },
       }),
-      transformResponse: (response: GlossaryWikisResponseType) =>
-        response.glossaryWikis,
+      transformResponse: (response: GetTagByIdResponse) => response.tagsById,
     }),
   }),
 })
 
 export const {
-  useGetGlossaryWikiQuery,
+  useGetTagsByIdQuery,
   util: { getRunningOperationPromises },
 } = glossaryApi
 
-export const { getGlossaryWiki } = glossaryApi.endpoints
+export const { getTagsById } = glossaryApi.endpoints

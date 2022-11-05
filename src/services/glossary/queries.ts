@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
-export const GET_GLOSSARY_TAG_WIKIS = gql`
-  query tagsById {
-    tagsById(id: "glossary") {
+export const GET_TAGS_BY_ID = gql`
+  query TagsById($id: String!) {
+    tagsById(id: $id) {
       id
       wikis {
         id

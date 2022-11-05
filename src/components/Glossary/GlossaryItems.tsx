@@ -1,13 +1,14 @@
 import React from 'react'
 import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
 import GlossaryWikiCard from './GlossaryWikiCard'
+import { GlossaryTagWiki } from '@/services/glossary'
 
 interface GlossaryItemProps {
-  //   wikis: Wikis[]
+  wikis: GlossaryTagWiki[] | undefined
   glossaryAlphabets: string[]
 }
 
-const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
+const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
