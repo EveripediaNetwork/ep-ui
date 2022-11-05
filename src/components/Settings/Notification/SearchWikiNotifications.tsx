@@ -166,7 +166,10 @@ const SearchWikiNotifications = () => {
 
   const searchQueryHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    window.location.href = `/account/settings?tab=notifications&q=${query}`
+    router.push({
+      pathname: '/account/settings',
+      query: { tab: 'notifications', q: query },
+    })
   }
 
   return (
@@ -208,7 +211,17 @@ const SearchWikiNotifications = () => {
                   placeholder="Search to add wikis to your list"
                   variant="unstyled"
                   value={query}
-                  onChange={e => setQuery(e.target.value)}
+                  onChange={e => {
+                    setQuery(e.target.value)
+                    router.push(
+                      {
+                        pathname: '/account/settings',
+                        query: { tab: 'notifications', q: query },
+                      },
+                      undefined,
+                      { shallow: true },
+                    )
+                  }}
                   _placeholderShown={{
                     textOverflow: 'ellipsis',
                   }}

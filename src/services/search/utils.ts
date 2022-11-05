@@ -89,7 +89,7 @@ export const useNavSearch = () => {
   useEffect(() => {
     if (query && query.length >= 3) {
       setIsLoading(true)
-      debouncedFetchResults(query.replaceAll(' ', '-'), res => {
+      debouncedFetchResults(query, res => {
         if (!res.accounts && !res.articles && !res.categories) {
           logEvent({
             action: 'SEARCH_NO_RESULTS',
