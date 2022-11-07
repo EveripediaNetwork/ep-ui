@@ -27,7 +27,7 @@ const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
           <Flex justifyContent="center" mb="-40px" mt="30px">
             <GlossaryWikiCard
               title="Lorem"
-              brief="Lorem ipsum dolor sit amet,
+              summary="Lorem ipsum dolor sit amet,
               consectetur adipiscing elit, sed 
               do eiusmod tempor incididunt ut labore et
               dolore magna aliqua. Ut enim ad minim veniam,

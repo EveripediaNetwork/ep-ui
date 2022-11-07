@@ -12,10 +12,14 @@ import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 interface GlossaryWikiCardProps {
   wikiId: string
   title: string
-  brief: string
+  summary: string
 }
 
-const GlossaryWikiCard = ({ title, brief, wikiId }: GlossaryWikiCardProps) => {
+const GlossaryWikiCard = ({
+  title,
+  summary,
+  wikiId,
+}: GlossaryWikiCardProps) => {
   return (
     <LinkBox
       as="article"
@@ -38,9 +42,9 @@ const GlossaryWikiCard = ({ title, brief, wikiId }: GlossaryWikiCardProps) => {
             </Heading>
           </LinkOverlay>
           <Text fontSize="md" opacity="0.6" w="full">
-            {brief.length > WIKI_SUMMARY_LIMIT
-              ? brief.slice(0, WIKI_SUMMARY_LIMIT).concat('...')
-              : brief}
+            {summary.length > WIKI_SUMMARY_LIMIT
+              ? summary.slice(0, WIKI_SUMMARY_LIMIT).concat('...')
+              : summary}
           </Text>
         </VStack>
       </Box>
