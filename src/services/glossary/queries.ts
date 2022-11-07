@@ -1,4 +1,5 @@
 import { gql } from 'graphql-request'
+
 export const GET_TAGS_BY_ID = gql`
   query TagsById($id: String!) {
     tagsById(id: $id) {
