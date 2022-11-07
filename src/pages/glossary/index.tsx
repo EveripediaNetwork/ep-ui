@@ -20,9 +20,14 @@ import {
 } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
+import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
 
 const Glossary: NextPage = () => {
-  // const { data: GlossaryWikis } = useGetTagsByIdQuery({ id: 'glossary' })
+  const { data: GlossaryWikis } = useGetGlossaryTagWikisQuery({
+    id: 'Glossary',
+    offset: 0,
+    limit: 30,
+  })
   const [isActive, setIsActive] = useState<number>()
   return (
     <Stack direction="column" w="full" pt="3" pb="56">
@@ -150,8 +155,12 @@ const Glossary: NextPage = () => {
           </Flex>
         </Box>
       </VStack>
-      <GlossaryItem glossaryAlphabets={glossaryAlphabetsData} />
+      <GlossaryItem
+        wikis={GlossaryWikis ?? []}
+        glossaryAlphabets={glossaryAlphabetsData}
+      />
     </Stack>
   )
 }
+
 export default Glossary

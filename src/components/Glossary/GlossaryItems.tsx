@@ -1,13 +1,19 @@
 import React from 'react'
 import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
+import { Wiki } from '@/types/Wiki'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
-  // wikis: GlossaryTagWiki[] | undefined
+  wikis: Wiki[]
   glossaryAlphabets: string[]
 }
 
-const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
+const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
+  const SortedWikis: Wiki[] = wikis?.slice()
+  SortedWikis?.sort((a, b) => {
+    const Data = a.title.trim().localeCompare(b.title.trim())
+    return Data
+  })
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
@@ -24,21 +30,25 @@ const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
               {item}
             </Text>
           </Box>
-          <Flex justifyContent="center" mb="-40px" mt="30px">
-            <GlossaryWikiCard
-              title="Lorem"
-              summary="Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed 
-              do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi 
-              ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-              in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-              non proident, sunt in culpa qui officia deserunt mollit 
-              anim id est laborum."
-              wikiId="ipsum"
-            />
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            mb="-40px"
+            mt="30px"
+            direction="column"
+            gap="14"
+          >
+            {SortedWikis.map((ob) => (
+              <>
+                {ob.id[0] === item.toLocaleLowerCase() && (
+                  <GlossaryWikiCard
+                    title={ob.title}
+                    summary={ob.summary}
+                    wikiId={ob.id}
+                  />
+                )}
+              </>
+            ))}
           </Flex>
         </chakra.div>
       ))}
