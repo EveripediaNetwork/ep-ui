@@ -9,6 +9,20 @@ interface GlossaryItemProps {
 }
 
 const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
+  const lettersIdentifier = /^[a-zA-Z]+$/
+
+  const each = (letter: string, alphabet: string) => {
+    if (
+      lettersIdentifier.test(letter[0]) &&
+      letter[0] === alphabet.toLocaleLowerCase()
+    ) {
+      return 1
+    }
+    if (!lettersIdentifier.test(letter[0]) && alphabet === '#') {
+      return 2
+    }
+    return 0
+  }
   const SortedWikis: Wiki[] = wikis?.slice()
   SortedWikis?.sort((a, b) => {
     const Data = a.title.trim().localeCompare(b.title.trim())
@@ -40,7 +54,14 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
           >
             {SortedWikis.map(ob => (
               <>
-                {ob.id[0] === item.toLocaleLowerCase() && (
+                {each(ob.id, item) === 1 && (
+                  <GlossaryWikiCard
+                    title={ob.title}
+                    summary={ob.summary}
+                    wikiId={ob.id}
+                  />
+                )}
+                {each(ob.id, item) === 2 && (
                   <GlossaryWikiCard
                     title={ob.title}
                     summary={ob.summary}
