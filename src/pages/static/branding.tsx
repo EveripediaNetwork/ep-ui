@@ -93,8 +93,8 @@ const BrandingPage = () => {
     },
   ]
   return (
-    <Box bg="#E2E8F0" _dark={{ backgroundColor: '#1A202C' }} pb={20}>
-      <Box maxW={{ base: '90%', xl: '90%', '2xl': '1280px' }} mx="auto">
+    <Box bg="#E2E8F0" _dark={{ backgroundColor: 'tetiaryDark' }} pb={20}>
+      <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
@@ -245,22 +245,22 @@ const BrandingPage = () => {
           <Flex mt={10}>
             <List spacing={3} display="flex" flexDir="column" gap="16">
               <ListItem>
-                <ListIcon as={AiOutlineClose} color="#E53E3E" />
+                <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not use the IQ.Wiki logo in any way that suggests that we are
                 sponsoring, endorsing or affliated to your project in any way.
               </ListItem>
               <ListItem>
-                <ListIcon as={AiOutlineClose} color="#E53E3E" />
+                <ListIcon as={AiOutlineClose} color="primaryPink" />
                 The IQ wiki brain logo shouldn’t be reperesented with any other
                 kind of brain except as stated above.
               </ListItem>
               <ListItem>
-                <ListIcon as={AiOutlineClose} color="#E53E3E" />
+                <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not in any way stretch or manipulate the logo.
               </ListItem>
               {/* You can also use custom icons from react-icons */}
               <ListItem>
-                <ListIcon as={AiOutlineClose} color="#E53E3E" />
+                <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not in any way stretch or manipulate the logo.
               </ListItem>
             </List>

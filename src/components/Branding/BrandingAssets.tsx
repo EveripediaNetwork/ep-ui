@@ -21,11 +21,7 @@ export const BrandingAssets = ({
     }
   }, [currentlyViewed, bg.bg])
   return (
-    <Flex
-      w={{ lg: '30%', base: '45%', md: '30%' }}
-      flexDirection="column"
-      gap={2}
-    >
+    <Flex w={{ base: '45%', md: '30%' }} flexDirection="column" gap={2}>
       <Flex
         flexDir="column"
         gap={4}
@@ -52,7 +48,7 @@ export const BrandingAssets = ({
         display={!showDownloadOptions ? 'flex' : 'none'}
         flexDir="column"
       >
-        <Image src={bg.bg} />
+        <Image src={bg.bg} alt={`IQ ${bg.bg} Logo`} />
         <Button
           onClick={() => {
             updateSelectedAsset()
