@@ -31,7 +31,6 @@ interface ActivityCardProps {
   activityId?: string
   wikiId?: string
   type?: string
-  // isNotification?: boolean
 }
 
 const CreatedTime = ({ date }: { date: string }) => {
@@ -51,8 +50,7 @@ const ActivityCard = ({
   activityId,
   wikiId,
   type,
-}: // isNotification,
-ActivityCardProps) => {
+}: ActivityCardProps) => {
   const activityCardLinkRoute = activityId
     ? `/revision/${activityId}`
     : `/wiki/${wikiId}`

@@ -174,7 +174,7 @@ const SearchWikiNotifications = () => {
 
   return (
     <>
-      <Flex maxW="3xl" pos="relative">
+      <Flex maxW="4xl" pos="relative">
         <AutoComplete
           closeOnSelect={false}
           disableFilter

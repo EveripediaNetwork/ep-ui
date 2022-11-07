@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { fetchWikisList } from '@/services/search/utils'
 import { WikiPreview } from '@/types/Wiki'
-import ActivityCard from '@/components/Activity/ActivityCard'
 import { Flex, Box } from '@chakra-ui/react'
+import NotificationCard from '@/components/Notification/NotificationCard'
 
 const SearchWikiNotificationsResult = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -18,7 +18,7 @@ const SearchWikiNotificationsResult = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    console.log(q)
+
     Promise.all([fetchWikisList(q.replaceAll(' ', '-'))]).then(res => {
       const [articles = []] = res
       if (articles.length) {
@@ -32,7 +32,7 @@ const SearchWikiNotificationsResult = () => {
 
   const articleList = articles.map(article => {
     return (
-      <ActivityCard
+      <NotificationCard
         key={article.id}
         title={article.title}
         brief={article.summary}
