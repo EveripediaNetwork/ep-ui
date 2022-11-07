@@ -38,7 +38,7 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
             direction="column"
             gap="14"
           >
-            {SortedWikis.map((ob) => (
+            {SortedWikis.map(ob => (
               <>
                 {ob.id[0] === item.toLocaleLowerCase() && (
                   <GlossaryWikiCard
