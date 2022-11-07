@@ -1,4 +1,3 @@
-import { TagsSuggestions } from '@/data/TagsSuggestions'
 import {
   getCategoriesByTitle,
   getWikisByTitle,
@@ -7,11 +6,10 @@ import {
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
-import { Tag, WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@/types/Wiki'
 import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
-import Fuse from 'fuse.js'
 import { logEvent } from '@/utils/googleAnalytics'
 
 export type Account = {
@@ -105,33 +103,4 @@ export const useNavSearch = () => {
   }, [query])
 
   return { query, setQuery, isLoading, results }
-}
-
-export const useTagSearch = () => {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Tag[]>([])
-
-  // get all tags from TagsSuggestions
-  const tags = Object.values(TagsSuggestions).flat()
-
-  const decorateAndLimit = (res: Fuse.FuseResult<string>[]) => {
-    return res
-      .map(tag => {
-        return { id: tag.item }
-      })
-      .slice(0, 6)
-  }
-  useEffect(() => {
-    const fuse = new Fuse(tags, {
-      threshold: 0.3,
-    })
-    if (query && query.length >= 1) {
-      const res = decorateAndLimit(fuse.search(query))
-      setResults(res)
-    } else {
-      setResults([])
-    }
-  }, [query, tags])
-
-  return { query, setQuery, results }
 }
