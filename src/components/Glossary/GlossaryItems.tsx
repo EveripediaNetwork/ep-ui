@@ -24,7 +24,7 @@ const GlossaryItem = ({ glossaryAlphabets }: GlossaryItemProps) => {
               {item}
             </Text>
           </Box>
-          <Flex justifyContent="center" mb="-50px">
+          <Flex justifyContent="center" mb="-40px" mt="30px">
             <GlossaryWikiCard
               title="Lorem"
               brief="Lorem ipsum dolor sit amet,

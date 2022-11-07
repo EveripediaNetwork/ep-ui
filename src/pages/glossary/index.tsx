@@ -9,9 +9,10 @@ import {
   VStack,
   InputGroup,
   InputLeftElement,
+  Button,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import ScrollIntoView from 'react-scroll-into-view'
 import {
   glossaryAlphabetsData,
@@ -19,11 +20,11 @@ import {
 } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
-import Link from '@/components/Elements/LinkElements/Link'
 
 const Glossary: NextPage = () => {
+  const [isActive, setIsActive] = useState<number>()
   return (
-    <Stack direction="column" w="full" pt="3" pb="24">
+    <Stack direction="column" w="full" pt="3" pb="56">
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
@@ -109,27 +110,41 @@ const Glossary: NextPage = () => {
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
             {commonSearchedWikis.map((item, i) => (
-              <Link
-                href={`/wiki/${item}`}
+              <Button
                 key={i}
-                passHref
+                px="3"
+                py="1"
+                bg="transparent"
+                cursor="pointer"
+                rounded="2xl"
+                border="1px"
+                borderColor="gray.300"
+                fontWeight="normal"
+                fontSize={{ base: 'sm', lg: 'md' }}
+                onClick={() => setIsActive(i)}
+                isActive={i === isActive}
+                _active={{
+                  bgColor: '#F9F5FF',
+                  _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
+                  color: '#FE6FB5',
+                  border: 'none',
+                }}
+                _focus={{
+                  boxShadow: 'none',
+                }}
                 _hover={{
-                  textDecoration: 'none',
+                  bgColor: 'gray.100',
+                  _dark: {
+                    bgColor: 'whiteAlpha.100',
+                  },
+                }}
+                _dark={{
+                  color: 'whiteAlpha.900',
+                  borderColor: 'whiteAlpha.700',
                 }}
               >
-                <Box
-                  px="3"
-                  py="1"
-                  cursor="pointer"
-                  rounded="2xl"
-                  border="1px"
-                  borderColor="GrayText"
-                  fontWeight="normal"
-                  fontSize={{ base: 'sm', lg: 'md' }}
-                >
-                  {item}
-                </Box>
-              </Link>
+                {item}
+              </Button>
             ))}
           </Flex>
         </Box>
