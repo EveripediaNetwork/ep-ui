@@ -93,7 +93,7 @@ const BrandingPage = () => {
     },
   ]
   return (
-    <Box bg="#E2E8F0" _dark={{ backgroundColor: 'tetiaryDark' }} pb={20}>
+    <Box bg="tetiaryGray" _dark={{ backgroundColor: 'tetiaryDark' }} pb={20}>
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
