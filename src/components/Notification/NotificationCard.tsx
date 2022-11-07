@@ -36,7 +36,7 @@ interface NotificationCardProps {
 
 const CreatedTime = ({ date }: { date: string }) => {
   return (
-    <Text mt="1" fontSize="sm" opacity={0.6} whiteSpace="nowrap">
+    <Text mt="1" fontSize="xs" opacity={0.6} whiteSpace="nowrap">
       {getReadableDate(date)}
     </Text>
   )

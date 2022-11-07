@@ -212,7 +212,9 @@ const SearchWikiNotifications = () => {
                   variant="unstyled"
                   value={query}
                   onChange={e => {
-                    setQuery(e.target.value)
+                    setQuery(() => {
+                      return e.target.value
+                    })
                     router.push(
                       {
                         pathname: '/account/settings',
