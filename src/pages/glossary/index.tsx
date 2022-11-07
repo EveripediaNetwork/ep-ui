@@ -22,6 +22,7 @@ import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 
 const Glossary: NextPage = () => {
+  // const { data: GlossaryWikis } = useGetTagsByIdQuery({ id: 'glossary' })
   const [isActive, setIsActive] = useState<number>()
   return (
     <Stack direction="column" w="full" pt="3" pb="56">

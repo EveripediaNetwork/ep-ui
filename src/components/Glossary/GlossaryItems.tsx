@@ -3,7 +3,7 @@ import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
-  //   wikis: Wikis[]
+  // wikis: GlossaryTagWiki[] | undefined
   glossaryAlphabets: string[]
 }
 
