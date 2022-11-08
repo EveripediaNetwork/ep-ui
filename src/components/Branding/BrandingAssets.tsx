@@ -1,4 +1,4 @@
-import { Button, Flex, Image } from '@chakra-ui/react'
+import { Button, Flex, Image, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { BiCloudDownload } from 'react-icons/bi'
 import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
@@ -7,10 +7,12 @@ export const BrandingAssets = ({
   bg,
   updateSelectedAsset,
   currentlyViewed,
+  dark,
 }: {
   bg: { bg: string; download: string }
   updateSelectedAsset: () => void
   currentlyViewed: string
+  dark?: string
 }) => {
   const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
   useEffect(() => {
@@ -20,6 +22,8 @@ export const BrandingAssets = ({
       setShowDownloadOptions(false)
     }
   }, [currentlyViewed, bg.bg])
+
+  const cardBG = useColorModeValue(bg.bg, dark || bg.bg)
   return (
     <Flex w={{ base: '45%', md: '30%' }} flexDirection="column" gap={2}>
       <Flex
@@ -48,7 +52,7 @@ export const BrandingAssets = ({
         display={!showDownloadOptions ? 'flex' : 'none'}
         flexDir="column"
       >
-        <Image src={bg.bg} alt={`IQ ${bg.bg} Logo`} />
+        <Image src={cardBG} alt={`IQ ${bg.bg} Logo`} />
         <Button
           onClick={() => {
             updateSelectedAsset()

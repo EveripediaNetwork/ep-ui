@@ -64,20 +64,6 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logoiqorange',
     },
   ]
-  const alternateTextAssets = [
-    {
-      bg: '/branding/brainpink.png',
-      download: '/branding/downloadassets/logobrainpink',
-    },
-    {
-      bg: '/branding/brainwhite.png',
-      download: '/branding/downloadassets/logobrainwhite',
-    },
-    {
-      bg: '/branding/brainDark.png',
-      download: '/branding/downloadassets/logobraindark',
-    },
-  ]
   const alternateLogoAssets = [
     {
       bg: '/branding/originalBraindao.png',
@@ -90,6 +76,37 @@ const BrandingPage = () => {
     {
       bg: '/branding/braindaoBlackNegative.png',
       download: '/branding/downloadassets/logobrainblacknegative',
+    },
+  ]
+  const braindaoLogoAssets = [
+    {
+      bg: '/branding/braindoawhiteW.png',
+      download: '/branding/downloadassets/logobraindoawhiteW',
+      dark: '/branding/braindoawhiteB.png',
+    },
+    {
+      bg: '/branding/braindaoblack.png',
+      download: '/branding/downloadassets/logobraindaoblack',
+    },
+    {
+      bg: '/branding/braindaodeepblack.png',
+      download: '/branding/downloadassets/logobraindaodeepblack',
+    },
+  ]
+
+  const braindaoAltLogoAssets = [
+    {
+      bg: '/branding/brainaltwhite.png',
+      download: '/branding/downloadassets/logobrainaltwhite',
+      dark: '/branding/brainaltwhiteB.png',
+    },
+    {
+      bg: '/branding/brainaltblack.png',
+      download: '/branding/downloadassets/logobraindaoaltblack',
+    },
+    {
+      bg: '/branding/braindaoaltdeepblack.png',
+      download: '/branding/downloadassets/logobraindoadeepblack',
     },
   ]
   return (
@@ -218,17 +235,41 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading fontSize={{ lg: '5xl', base: '3xl' }}>
-              ALTERNATE TEXT
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              BRAINDAO
             </Heading>
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
-            {alternateTextAssets.map((item, index) => {
+            {braindaoLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
                   key={index}
                   bg={item}
                   currentlyViewed={currentViewedAsset}
+                  dark={item.dark}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                />
+              )
+            })}
+          </Flex>
+        </Box>
+
+        <Box mt={20}>
+          <Flex flexDir="column" gap={5}>
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              BRAINDAO- ALTERNATE LOGO
+            </Heading>
+          </Flex>
+          <Flex mt={10} flexWrap="wrap" gap="2rem">
+            {braindaoAltLogoAssets.map((item, index) => {
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  dark={item.dark}
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
