@@ -7,7 +7,7 @@ import { Flex, Box } from '@chakra-ui/react'
 import NotificationCard from '@/components/Notification/NotificationCard'
 
 const SearchWikiNotificationsResult = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [results, setResults] = useState<{
     articles: WikiPreview[]
   }>({
@@ -17,15 +17,16 @@ const SearchWikiNotificationsResult = () => {
   const q = route.query?.q as string
 
   useEffect(() => {
-    setIsLoading(true)
-
-    Promise.all([fetchWikisList(q)]).then(res => {
-      const [articles = []] = res
-      if (articles.length) {
-        setResults({ articles })
-        setIsLoading(false)
-      }
-    })
+    if (q.length >= 3) {
+      setIsLoading(true)
+      Promise.all([fetchWikisList(q)]).then(res => {
+        const [articles = []] = res
+        if (articles.length) {
+          setResults({ articles })
+          setIsLoading(false)
+        }
+      })
+    }
   }, [q])
 
   const { articles } = results
