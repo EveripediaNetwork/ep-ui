@@ -10,9 +10,9 @@ const EmptyNotification = () => {
       justifyContent="center"
     >
       <Box
-        w="50%"
-        mt="12"
-        h="280px"
+        w={{ base: 'full', md: '50%' }}
+        mt={{ base: '0', md: '4', lg: '12' }}
+        h={{ base: '218px', lg: '280px' }}
         bgSize="contain"
         bgRepeat="no-repeat"
         bgImage="/images/empty-notification-light-bg.svg"
@@ -27,7 +27,7 @@ const EmptyNotification = () => {
           Get started with your Notification list
         </Heading>
         <Text
-          maxW="75%"
+          maxW={{ base: 'full', md: '75%' }}
           mx="auto"
           fontWeight={500}
           fontSize="md"

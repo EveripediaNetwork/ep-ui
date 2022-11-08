@@ -19,7 +19,7 @@ const SearchWikiNotificationsResult = () => {
   useEffect(() => {
     setIsLoading(true)
 
-    Promise.all([fetchWikisList(q.replaceAll(' ', '-'))]).then(res => {
+    Promise.all([fetchWikisList(q)]).then(res => {
       const [articles = []] = res
       if (articles.length) {
         setResults({ articles })

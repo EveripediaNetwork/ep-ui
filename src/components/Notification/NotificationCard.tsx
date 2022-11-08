@@ -58,7 +58,7 @@ const NotificationCard = ({
   const router = useRouter()
 
   return (
-    <HStack justifyContent="space-between">
+    <HStack justifyContent="space-between" gap="4">
       <HStack
         maxW="4xl"
         bgColor="cardBg"
@@ -150,7 +150,7 @@ const NotificationCard = ({
               mt="3"
               fontSize={{ base: '6px', md: '8px', lg: '13px' }}
               lineHeight={4}
-              display={{ base: 'none', md: '-webkit-box' }}
+              display={{ base: '-webkit-box' }}
               noOfLines={2}
               textOverflow="ellipsis"
               overflow="hidden"
@@ -200,7 +200,9 @@ const NotificationCard = ({
           </Stack>
         </Flex>
       </HStack>
-      <Button>Add</Button>
+      <Box>
+        <Button>Add</Button>
+      </Box>
     </HStack>
   )
 }
