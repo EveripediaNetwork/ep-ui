@@ -12,13 +12,14 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
   const each = (letter: string, alphabet: string) => {
+    let trimmedLetter = letter.trim()
     if (
-      lettersIdentifier.test(letter[0]) &&
-      letter[0] === alphabet.toLocaleLowerCase()
+      lettersIdentifier.test(trimmedLetter[0]) &&
+      trimmedLetter[0].toLocaleLowerCase() === alphabet.toLocaleLowerCase()
     ) {
       return 1
     }
-    if (!lettersIdentifier.test(letter[0]) && alphabet === '#') {
+    if (!lettersIdentifier.test(trimmedLetter[0]) && alphabet === '#') {
       return 2
     }
     return 0
@@ -31,7 +32,7 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
-        <chakra.div key={i} id={item} pt="50px">
+        <chakra.div key={i} id={item} pt="50px" mt="-20px">
           <Box
             w="full"
             py="1"
@@ -54,14 +55,14 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
           >
             {SortedWikis.map(ob => (
               <>
-                {each(ob.id, item) === 1 && (
+                {each(ob.title, item) === 1 && (
                   <GlossaryWikiCard
                     title={ob.title}
                     summary={ob.summary}
                     wikiId={ob.id}
                   />
                 )}
-                {each(ob.id, item) === 2 && (
+                {each(ob.title, item) === 2 && (
                   <GlossaryWikiCard
                     title={ob.title}
                     summary={ob.summary}

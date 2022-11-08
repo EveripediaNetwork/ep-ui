@@ -65,10 +65,16 @@ const Glossary: NextPage = () => {
         alignItems="center"
         borderTop="1px"
         mx="auto"
-        borderTopColor="GrayText"
+        borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
       >
-        <Box mx="auto" w="full" justifyContent="center" alignItems="center">
+        <Box
+          mx="auto"
+          w="full"
+          justifyContent="center"
+          alignItems="center"
+          // position={window.scrollY === 200 ? 'fixed' : 'relative'}
+        >
           <Flex
             py="7"
             w="full"
@@ -83,6 +89,7 @@ const Glossary: NextPage = () => {
                     px={{ base: '3', lg: '3', '2xl': '10' }}
                     fontWeight="semibold"
                     fontSize={{ base: 'md', xl: 'lg' }}
+                    _hover={{ color: 'brandLinkColor' }}
                   >
                     {item}
                   </Text>
@@ -115,16 +122,16 @@ const Glossary: NextPage = () => {
             justifyContent={{ lg: 'start', '2xl': 'center' }}
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
-            {commonSearchedWikis.map((item, i) => (
+            {commonSearchedWikis.map((word, i) => (
               <Button
                 key={i}
                 px="3"
                 py="1"
                 bg="transparent"
+                color="gray.500"
                 cursor="pointer"
-                rounded="2xl"
+                rounded="full"
                 border="1px"
-                borderColor="gray.300"
                 fontWeight="normal"
                 fontSize={{ base: 'sm', lg: 'md' }}
                 onClick={() => setIsActive(i)}
@@ -133,7 +140,6 @@ const Glossary: NextPage = () => {
                   bgColor: '#F9F5FF',
                   _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
                   color: '#FE6FB5',
-                  border: 'none',
                 }}
                 _focus={{
                   boxShadow: 'none',
@@ -149,7 +155,7 @@ const Glossary: NextPage = () => {
                   borderColor: 'whiteAlpha.700',
                 }}
               >
-                {item}
+                {word}
               </Button>
             ))}
           </Flex>
