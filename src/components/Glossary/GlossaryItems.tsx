@@ -12,7 +12,7 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
   const each = (letter: string, alphabet: string) => {
-    let trimmedLetter = letter.trim()
+    const trimmedLetter = letter.trim()
     if (
       lettersIdentifier.test(trimmedLetter[0]) &&
       trimmedLetter[0].toLocaleLowerCase() === alphabet.toLocaleLowerCase()
