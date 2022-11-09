@@ -13,7 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
-import ScrollIntoView from 'react-scroll-into-view'
+import { Link } from 'react-scroll'
+import * as Scroll from 'react-scroll'
 import {
   glossaryAlphabetsData,
   commonSearchedWikis,
@@ -28,6 +29,20 @@ const Glossary: NextPage = () => {
     offset: 0,
     limit: 30,
   })
+  const [searchText, setSearchText] = useState<string>('')
+  const searchPage = (input: string) => {
+    const letter =
+      input.length > 1
+        ? input[0].toLocaleUpperCase()
+        : input.toLocaleUpperCase()
+    setSearchText(letter)
+    Scroll.scroller.scrollTo(letter, {
+      duration: 70,
+      smooth: true,
+      offset: -64,
+    })
+  }
+
   const [isActive, setIsActive] = useState<number>()
   return (
     <Stack direction="column" w="full" pt="3" pb="56">
@@ -84,7 +99,14 @@ const Glossary: NextPage = () => {
           >
             {glossaryAlphabetsData.map((item, i) => (
               <Box key={i} cursor="pointer">
-                <ScrollIntoView selector={`#${item}`}>
+                <Link
+                  // activeClass="active"
+                  to={item}
+                  spy
+                  smooth
+                  offset={-70}
+                  duration={70}
+                >
                   <Text
                     px={{ base: '3', lg: '3', '2xl': '10' }}
                     fontWeight="semibold"
@@ -93,7 +115,7 @@ const Glossary: NextPage = () => {
                   >
                     {item}
                   </Text>
-                </ScrollIntoView>
+                </Link>
               </Box>
             ))}
           </Flex>
@@ -110,7 +132,11 @@ const Glossary: NextPage = () => {
                   ml={{ base: '-8', md: '0' }}
                 />
               </InputLeftElement>
-              <Input type="tel" placeholder="Search for words" />
+              <Input
+                type="tel"
+                placeholder="Search for words"
+                onChange={e => searchPage(e.target.value)}
+              />
             </InputGroup>
           </Box>
           <Flex
@@ -123,45 +149,55 @@ const Glossary: NextPage = () => {
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
             {commonSearchedWikis.map((word, i) => (
-              <Button
+              <Link
+                // activeClass="active"
+                to={word}
+                spy
+                smooth
+                offset={-100}
+                duration={500}
                 key={i}
-                px="3"
-                py="1"
-                bg="transparent"
-                color="gray.500"
-                cursor="pointer"
-                rounded="full"
-                border="1px"
-                fontWeight="normal"
-                fontSize={{ base: 'sm', lg: 'md' }}
-                onClick={() => setIsActive(i)}
-                isActive={i === isActive}
-                _active={{
-                  bgColor: '#F9F5FF',
-                  _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
-                  color: '#FE6FB5',
-                }}
-                _focus={{
-                  boxShadow: 'none',
-                }}
-                _hover={{
-                  bgColor: 'gray.100',
-                  _dark: {
-                    bgColor: 'whiteAlpha.100',
-                  },
-                }}
-                _dark={{
-                  color: 'whiteAlpha.900',
-                  borderColor: 'whiteAlpha.700',
-                }}
               >
-                {word}
-              </Button>
+                <Button
+                  px="3"
+                  py="1"
+                  bg="transparent"
+                  color="gray.500"
+                  cursor="pointer"
+                  rounded="full"
+                  border="1px"
+                  fontWeight="normal"
+                  fontSize={{ base: 'sm', lg: 'md' }}
+                  onClick={() => setIsActive(i)}
+                  isActive={i === isActive}
+                  _active={{
+                    bgColor: '#F9F5FF',
+                    _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
+                    color: '#FE6FB5',
+                  }}
+                  _focus={{
+                    boxShadow: 'none',
+                  }}
+                  _hover={{
+                    bgColor: 'gray.100',
+                    _dark: {
+                      bgColor: 'whiteAlpha.100',
+                    },
+                  }}
+                  _dark={{
+                    color: 'whiteAlpha.900',
+                    borderColor: 'whiteAlpha.700',
+                  }}
+                >
+                  {word}
+                </Button>
+              </Link>
             ))}
           </Flex>
         </Box>
       </VStack>
       <GlossaryItem
+        highlightText={searchText}
         wikis={GlossaryWikis ?? []}
         glossaryAlphabets={glossaryAlphabetsData}
       />

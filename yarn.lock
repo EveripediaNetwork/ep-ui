@@ -3281,6 +3281,13 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
+"@types/react-scroll@^1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.4.tgz#2b6258fb34104d3fcc7a22e8eceaadc669ba3ad1"
+  integrity sha512-DpHA9PYw42/rBrfKbGE/kAEvHRfyDL/ACfKB/ORWUYuCLi/yGrntxSzYXmg/7TLgQsJ5ma13GCDOzFSOz+8XOA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-slick@^0.23.8":
   version "0.23.8"
   resolved "https://registry.yarnpkg.com/@types/react-slick/-/react-slick-0.23.8.tgz#91654e657158da57f082c7b213e20756d3a37502"
@@ -6962,6 +6969,11 @@ lodash.startcase@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.startcase/-/lodash.startcase-4.4.0.tgz#9436e34ed26093ed7ffae1936144350915d9add8"
   integrity sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
+
 lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -8507,6 +8519,14 @@ react-scroll-into-view@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/react-scroll-into-view/-/react-scroll-into-view-1.12.0.tgz#645635cfe5692138dc9a903f96532b1708c6398a"
   integrity sha512-n2yLN1MyiKL65AmFoYLnd/XOKhrFLB3w5m8Q1sHHcJTmXbpxoqEbCm+JooZvrNfGCaWuYVAJmXhN+uxi4jwYVg==
+
+react-scroll@^1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/react-scroll/-/react-scroll-1.8.8.tgz#445c6137174d6f2ed02352af408a48d160959e22"
+  integrity sha512-RnU0wLaLozKIhLNAfoz6yxMus+PMypk7eBRfOitalYd2+qCiHrZdJ0MSDBs1Y23IFSfqSCdCEmENMJeSh0KoHA==
+  dependencies:
+    lodash.throttle "^4.1.1"
+    prop-types "^15.7.2"
 
 react-select@^5.5.7:
   version "5.5.9"

@@ -36,4 +36,5 @@ export const commonSearchedWikis = [
   'Hodl',
   'Collectibles',
   'BitCoin',
+  'por que',
 ]

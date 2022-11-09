@@ -1,17 +1,23 @@
 import React from 'react'
 import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
 import { Wiki } from '@/types/Wiki'
+import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
+  // highlightText: string
   wikis: Wiki[]
   glossaryAlphabets: string[]
 }
 
-const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
+const GlossaryItem = ({
+  // highlightText,
+  wikis,
+  glossaryAlphabets,
+}: GlossaryItemProps) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
-  const each = (letter: string, alphabet: string) => {
+  const cardOrder = (letter: string, alphabet: string) => {
     const trimmedLetter = letter.trim()
     if (
       lettersIdentifier.test(trimmedLetter[0]) &&
@@ -33,18 +39,21 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
         <chakra.div key={i} id={item} pt="50px" mt="-20px">
-          <Box
-            w="full"
-            py="1"
-            bg="gray.50"
-            _dark={{ bg: 'whiteAlpha.50' }}
-            my="4"
-            px="10"
-          >
-            <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
-              {item}
-            </Text>
-          </Box>
+          <Element name={item}>
+            <Box
+              w="full"
+              py="1"
+              bg="gray.50"
+              _dark={{ bg: 'whiteAlpha.50' }}
+              my="4"
+              px="10"
+            >
+              <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
+                {item}
+              </Text>
+            </Box>
+          </Element>
+
           <Flex
             justifyContent="center"
             alignItems="center"
@@ -55,14 +64,14 @@ const GlossaryItem = ({ wikis, glossaryAlphabets }: GlossaryItemProps) => {
           >
             {SortedWikis.map(ob => (
               <>
-                {each(ob.title, item) === 1 && (
+                {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard
                     title={ob.title}
                     summary={ob.summary}
                     wikiId={ob.id}
                   />
                 )}
-                {each(ob.title, item) === 2 && (
+                {cardOrder(ob.title, item) === 2 && (
                   <GlossaryWikiCard
                     title={ob.title}
                     summary={ob.summary}
