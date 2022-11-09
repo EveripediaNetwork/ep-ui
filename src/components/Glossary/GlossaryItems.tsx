@@ -63,7 +63,7 @@ const GlossaryItem = ({
             gap="14"
           >
             {SortedWikis.map(ob => (
-              <>  
+              <>
                 {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard
                     highlightText={highlightText}
