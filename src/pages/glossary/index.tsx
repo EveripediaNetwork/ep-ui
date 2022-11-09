@@ -29,13 +29,13 @@ const Glossary: NextPage = () => {
     offset: 0,
     limit: 30,
   })
-  const [searchText, setSearchText] = useState<string>('')
+  // const [searchText, setSearchText] = useState<string>('')
   const searchPage = (input: string) => {
     const letter =
       input.length > 1
         ? input[0].toLocaleUpperCase()
         : input.toLocaleUpperCase()
-    setSearchText(letter)
+    // setSearchText(letter)
     Scroll.scroller.scrollTo(letter, {
       duration: 70,
       smooth: true,
@@ -197,7 +197,7 @@ const Glossary: NextPage = () => {
         </Box>
       </VStack>
       <GlossaryItem
-        highlightText={searchText}
+        // highlightText={searchText}
         wikis={GlossaryWikis ?? []}
         glossaryAlphabets={glossaryAlphabetsData}
       />
