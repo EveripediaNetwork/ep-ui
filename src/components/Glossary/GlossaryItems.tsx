@@ -5,13 +5,13 @@ import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
-  // highlightText: string
+  highlightText: string
   wikis: Wiki[]
   glossaryAlphabets: string[]
 }
 
 const GlossaryItem = ({
-  // highlightText,
+  highlightText,
   wikis,
   glossaryAlphabets,
 }: GlossaryItemProps) => {
@@ -63,9 +63,10 @@ const GlossaryItem = ({
             gap="14"
           >
             {SortedWikis.map(ob => (
-              <>
+              <>  
                 {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard
+                    highlightText={highlightText}
                     title={ob.title}
                     summary={ob.summary}
                     wikiId={ob.id}
@@ -73,6 +74,7 @@ const GlossaryItem = ({
                 )}
                 {cardOrder(ob.title, item) === 2 && (
                   <GlossaryWikiCard
+                    highlightText={highlightText}
                     title={ob.title}
                     summary={ob.summary}
                     wikiId={ob.id}

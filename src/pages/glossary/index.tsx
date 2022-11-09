@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
 import {
@@ -29,13 +29,13 @@ const Glossary: NextPage = () => {
     offset: 0,
     limit: 30,
   })
-  // const [searchText, setSearchText] = useState<string>('')
+  const [searchText, setSearchText] = useState<string>('')
   const searchPage = (input: string) => {
     const letter =
       input.length > 1
         ? input[0].toLocaleUpperCase()
         : input.toLocaleUpperCase()
-    // setSearchText(letter)
+    setSearchText(input)
     Scroll.scroller.scrollTo(letter, {
       duration: 70,
       smooth: true,
@@ -83,13 +83,7 @@ const Glossary: NextPage = () => {
         borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
       >
-        <Box
-          mx="auto"
-          w="full"
-          justifyContent="center"
-          alignItems="center"
-          // position={window.scrollY === 200 ? 'fixed' : 'relative'}
-        >
+        <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Flex
             py="7"
             w="full"
@@ -155,7 +149,7 @@ const Glossary: NextPage = () => {
                 spy
                 smooth
                 offset={-100}
-                duration={500}
+                duration={100}
                 key={i}
               >
                 <Button
@@ -197,7 +191,7 @@ const Glossary: NextPage = () => {
         </Box>
       </VStack>
       <GlossaryItem
-        // highlightText={searchText}
+        highlightText={searchText}
         wikis={GlossaryWikis ?? []}
         glossaryAlphabets={glossaryAlphabetsData}
       />

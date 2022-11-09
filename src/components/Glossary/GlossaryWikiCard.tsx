@@ -6,16 +6,19 @@ import {
   Box,
   LinkBox,
   LinkOverlay,
+  Highlight,
 } from '@chakra-ui/react'
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 
 interface GlossaryWikiCardProps {
+  highlightText: string
   wikiId: string
   title: string
   summary: string
 }
 
 const GlossaryWikiCard = ({
+  highlightText,
   title,
   summary,
   wikiId,
@@ -39,13 +42,33 @@ const GlossaryWikiCard = ({
               my="10px"
               color="brand.500"
             >
-              {title}
+              <Highlight
+                query={highlightText}
+                styles={{
+                  px: '1',
+                  py: '1',
+                  bg: 'carouselArrowBorderColor',
+                }}
+              >
+                {title}
+              </Highlight>
             </Heading>
           </LinkOverlay>
-          <Text fontSize="md" opacity="0.6" w="full">
-            {summary.length > WIKI_SUMMARY_LIMIT
-              ? summary.slice(0, WIKI_SUMMARY_LIMIT).concat('...')
-              : summary}
+          <Text fontSize="md" w="full">
+            <Highlight
+              query={highlightText}
+              styles={{
+                px: '1',
+                py: '1',
+                bg: 'brand.700',
+                color: 'black',
+                _dark: { bg: 'brand.300', color: 'white' },
+              }}
+            >
+              {summary.length > WIKI_SUMMARY_LIMIT
+                ? summary.slice(0, WIKI_SUMMARY_LIMIT).concat('...')
+                : summary}
+            </Highlight>
           </Text>
         </VStack>
       </Box>
