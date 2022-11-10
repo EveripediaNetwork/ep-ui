@@ -110,7 +110,13 @@ const BrandingPage = () => {
     },
   ]
   return (
-    <Box bg="tetiaryGray" _dark={{ backgroundColor: 'tetiaryDark' }} pb={20}>
+    <Box
+      m="0"
+      bg="tetiaryGray"
+      _dark={{ backgroundColor: 'tetiaryDark' }}
+      pb={20}
+      my={-8}
+    >
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
@@ -146,14 +152,15 @@ const BrandingPage = () => {
         <Flex mt={{ base: '16', lg: '10' }} mx="auto" justifyContent="center">
           <Text
             position="relative"
-            w={{ base: '100%', lg: '60%' }}
-            fontSize="2xl"
+            w={{ base: '100%', lg: '80%' }}
+            fontSize={{ lg: '4xl', base: '2xl', md: '4xl' }}
             textAlign="center"
             lineHeight="1.5"
+            my={{ base: '2', lg: '24' }}
           >
             <Text
               position="absolute"
-              top={{ base: '-5%', lg: '-20%' }}
+              top={{ base: '-10%', lg: '-20%' }}
               left={{ base: '0%', lg: '-5%', md: '-3%' }}
               fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
@@ -304,7 +311,7 @@ const BrandingPage = () => {
               {/* You can also use custom icons from react-icons */}
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not in any way stretch or manipulate the logo.
+                Do not change the logo color asides the ones stated above.
               </ListItem>
             </List>
           </Flex>

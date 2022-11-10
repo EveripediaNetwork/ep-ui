@@ -24,10 +24,20 @@ export const BrandingAssets = ({
       setShowDownloadOptions(false)
     }
   }, [currentlyViewed, bg.bg])
-
   const cardBG = useColorModeValue(bg.bg, dark || bg.bg)
+  const downloadIconColor = useColorModeValue('#FF5CAA', '#FF1A88')
+
   return (
-    <Flex w={{ base: '45%', md: '30%' }} flexDirection="column" gap={2}>
+    <Flex
+      w={{ base: '45%', md: '30%' }}
+      flexDirection="column"
+      gap={2}
+      onClick={() => {
+        updateSelectedAsset()
+        setShowDownloadOptions(true)
+      }}
+      cursor="pointer"
+    >
       <Flex
         flexDir="column"
         gap={4}
@@ -85,8 +95,9 @@ export const BrandingAssets = ({
             alignItems="center"
             justifyItems="center"
             justifyContent="center"
-            rightIcon={<BiCloudDownload fontSize="20px" />}
-            // size={{ base: 'sm' }}
+            rightIcon={
+              <BiCloudDownload fontSize="20px" color={downloadIconColor} />
+            }
             iconSpacing="0"
             transform={{ base: 'scale(0.5)', lg: 'scale(1)', md: 'scale(1)' }}
           />
