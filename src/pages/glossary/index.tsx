@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
 import {
@@ -22,13 +22,19 @@ import {
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
+import { useInView } from 'react-intersection-observer'
 
 const Glossary: NextPage = () => {
+  const { ref, entry } = useInView({
+    threshold: 0,
+    rootMargin: '0px 0px 4000px 0px',
+  })
   const { data: GlossaryWikis } = useGetGlossaryTagWikisQuery({
     id: 'Glossary',
     offset: 0,
     limit: 30,
   })
+
   const [searchText, setSearchText] = useState<string>('')
   const searchPage = (input: string) => {
     const letter =
@@ -39,13 +45,13 @@ const Glossary: NextPage = () => {
     Scroll.scroller.scrollTo(letter, {
       duration: 70,
       smooth: true,
-      offset: -64,
+      offset: -304,
     })
   }
 
   const [isActive, setIsActive] = useState<number>()
   return (
-    <Stack direction="column" w="full" pt="3" pb="56">
+    <Stack direction="column" w="full" pb="56">
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
@@ -57,7 +63,7 @@ const Glossary: NextPage = () => {
           w="full"
           alignItems="center"
           textAlign="center"
-          spacing={4}
+          spacing={2}
           mb={10}
           mt={5}
         >
@@ -65,13 +71,20 @@ const Glossary: NextPage = () => {
             <chakra.span color="brandLinkColor"> IQ.WIKI</chakra.span> Glossary
           </Heading>
           <Text
-            w={{ base: '70%', md: '60%', xl: '50%' }}
+            w={{ base: '80%', md: '70%', xl: '90%' }}
             fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
-            pb={4}
           >
             Crypto terminology can be difficult to figure out, especially if
-            you&lsquo;re new to the blockchain. Here&lsquo;s a guide to help you
-            navigate the exciting frontier of Web3.
+            you&lsquo;re new to the blockchain.{' '}
+          </Text>
+          <Text
+            ref={ref}
+            w={{ base: 'full', md: '80%', xl: '90%' }}
+            fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+            pb={2}
+          >
+            Here&lsquo;s a guide to help you navigate the exciting frontier of
+            Web3.
           </Text>
         </VStack>
       </Flex>
@@ -82,6 +95,18 @@ const Glossary: NextPage = () => {
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
+        zIndex="999"
+        top={
+          entry?.intersectionRatio !== undefined && !entry?.isIntersecting
+            ? '14'
+            : '0'
+        }
+        bg="blogPageBg"
+        position={
+          entry?.intersectionRatio !== undefined && !entry?.isIntersecting
+            ? 'fixed'
+            : 'relative'
+        }
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Flex
@@ -94,12 +119,13 @@ const Glossary: NextPage = () => {
             {glossaryAlphabetsData.map((item, i) => (
               <Box key={i} cursor="pointer">
                 <Link
-                  // activeClass="active"
+                  activeClass="active"
                   to={item}
                   spy
                   smooth
-                  offset={-70}
+                  offset={-300}
                   duration={70}
+                  // style={{active}}
                 >
                   <Text
                     px={{ base: '3', lg: '3', '2xl': '10' }}
@@ -135,7 +161,7 @@ const Glossary: NextPage = () => {
           </Box>
           <Flex
             py="3"
-            px={{ lg: '3', '2xl': '10' }}
+            px={{ lg: '2', '2xl': '10' }}
             w="full"
             wrap="wrap"
             alignItems="center"
@@ -148,7 +174,7 @@ const Glossary: NextPage = () => {
                 to={word}
                 spy
                 smooth
-                offset={-100}
+                offset={-300}
                 duration={100}
                 key={i}
               >
@@ -158,14 +184,16 @@ const Glossary: NextPage = () => {
                   bg="transparent"
                   color="gray.500"
                   cursor="pointer"
-                  rounded="full"
-                  border="1px"
+                  borderRadius="full"
+                  borderWidth="thin"
                   fontWeight="normal"
                   fontSize={{ base: 'sm', lg: 'md' }}
-                  onClick={() => setIsActive(i)}
+                  onClick={() => {
+                    setIsActive(i)
+                  }}
                   isActive={i === isActive}
                   _active={{
-                    bgColor: '#F9F5FF',
+                    bgColor: 'brand.50',
                     _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
                     color: '#FE6FB5',
                   }}

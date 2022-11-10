@@ -33,6 +33,12 @@ const GlossaryWikiCard = ({
       borderRadius="12px"
       w="60%"
       p="3"
+      _hover={{
+        bgColor: 'gray.100',
+        _dark: {
+          bgColor: 'whiteAlpha.100',
+        },
+      }}
     >
       <Box cursor="pointer" w="full">
         <VStack pb="2" w="full" px="3">
