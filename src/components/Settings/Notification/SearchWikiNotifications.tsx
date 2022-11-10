@@ -180,7 +180,10 @@ const SearchWikiNotifications = () => {
 
   return (
     <>
-      <Flex maxW="4xl" pos="relative">
+      <Flex
+        maxW={{ base: 'full', md: '4xl', '2xl': 'calc(100% - 160px)' }}
+        pos="relative"
+      >
         <AutoComplete
           closeOnSelect={false}
           disableFilter
