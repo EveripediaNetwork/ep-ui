@@ -28,7 +28,7 @@ const NotificationCard = ({
   type,
 }: NotificationCardProps) => {
   return (
-    <HStack gap={{ base: 2, lg: 10 }} justifyContent="space-between">
+    <HStack gap={{ base: 2, lg: 10 }} w="full" justifyContent="space-between">
       <ActivityCard
         isNotifSubCard
         title={title}
@@ -40,7 +40,9 @@ const NotificationCard = ({
         activityId={activityId}
         wikiId={wikiId}
       />
-      <Button>Add</Button>
+      <Button px={{ base: 0, md: 10 }} fontSize={{ base: 'xs', md: 'md' }}>
+        Add
+      </Button>
     </HStack>
   )
 }
