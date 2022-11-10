@@ -142,8 +142,8 @@ const NotificationSettings = ({
         </VStack>
       </form>
       <SearchWikiNotifications />
-      {route.query?.q?.length >= 3 && <SearchWikiNotificationsResult />}
-      {!(route.query?.q?.length >= 3) && <EmptyNotification />}
+      {(route.query?.q?.length ?? 0) >= 3 && <SearchWikiNotificationsResult />}
+      {(route.query?.q?.length ?? 0 <= 3) && <EmptyNotification />}
     </>
   )
 }
