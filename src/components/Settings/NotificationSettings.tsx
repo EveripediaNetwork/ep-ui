@@ -15,6 +15,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
 import EmptyNotification from '@/components/Settings/Notification/EmptyNotification'
 import SearchWikiNotificationsResult from '@/components/Settings/Notification/SearchWikiNotificationsResult'
+import { WikiNotificationsRecommendations } from './Notification/NotificationWikiRecomendations'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -73,6 +74,7 @@ const NotificationSettings = ({
 }: NotificationSettingsProps) => {
   const toast = useToast()
   const [postUserProfile] = usePostUserProfileMutation()
+
   const route = useRouter()
 
   const [notificationPrefs, setNotificationPrefs] = useState<
@@ -143,7 +145,12 @@ const NotificationSettings = ({
       </form>
       <SearchWikiNotifications />
       {route.query?.q && <SearchWikiNotificationsResult />}
-      {!route.query?.q && <EmptyNotification />}
+      {!route.query?.q && (
+        <>
+          <EmptyNotification />
+          <WikiNotificationsRecommendations address={address} />
+        </>
+      )}
     </>
   )
 }

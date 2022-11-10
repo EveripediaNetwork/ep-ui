@@ -28,7 +28,7 @@ const NotificationCard = ({
   type,
 }: NotificationCardProps) => {
   return (
-    <HStack gap={{ base: 2, lg: 10 }} justifyContent="space-between">
+    <HStack gap={{ base: 2, lg: 10 }} w="full" justifyContent="space-between">
       <ActivityCard
         isNotifSubCard
         title={title}
