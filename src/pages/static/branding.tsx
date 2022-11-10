@@ -227,6 +227,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
+                  isBraindoa
                 />
               )
             })}
@@ -273,6 +274,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
+                  isBraindoa
                 />
               )
             })}
@@ -284,7 +286,7 @@ const BrandingPage = () => {
             <Heading fontSize="3xl">Please beware of these things.</Heading>
           </Flex>
           <Flex mt={10}>
-            <List spacing={3} display="flex" flexDir="column" gap="16">
+            <List display="flex" flexDir="column" gap="8">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not use the IQ.Wiki logo in any way that suggests that we are
