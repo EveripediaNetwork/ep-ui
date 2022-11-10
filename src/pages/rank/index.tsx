@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
-import { RankHero } from './RankHero'
+import RankHero from './RankHero'
 
 const Rank = () => {
   return (
