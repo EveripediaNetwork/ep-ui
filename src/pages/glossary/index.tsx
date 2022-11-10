@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
 import {
