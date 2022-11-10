@@ -135,7 +135,14 @@ const SearchWikiNotifications = () => {
                 <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
                   {article.title}
                 </Text>
-                <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
+                <Text
+                  display="-webkit-box"
+                  noOfLines={1}
+                  textOverflow="ellipsis"
+                  overflow="hidden"
+                  maxW="full"
+                  fontSize="xs"
+                >
                   {getWikiSummary(article, WikiSummarySize.Big)}
                 </Text>
               </Flex>
@@ -237,7 +244,7 @@ const SearchWikiNotifications = () => {
                   borderColor="searchBorder"
                   shadow="lg"
                   borderStyle="solid"
-                  w="full"
+                  w={{ base: 'calc(100% + 110px)', md: 'full' }}
                   left="0"
                   top="12"
                 >
