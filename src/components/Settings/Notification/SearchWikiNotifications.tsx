@@ -52,7 +52,6 @@ const SearchWikiNotifications = () => {
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
   const inputRef = useRef<HTMLInputElement | null>(null)
-
   useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
