@@ -49,7 +49,7 @@ export const useWikiSubRecommendations = (userId?: string) => {
           shuffleArray([
             ...(createdWikis.data || []),
             ...(editedWikis.data || []),
-          ]).slice(0, 5),
+          ]).slice(0, 3),
         )
         setLoading(false)
       })
