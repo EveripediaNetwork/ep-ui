@@ -40,7 +40,9 @@ const NotificationCard = ({
         activityId={activityId}
         wikiId={wikiId}
       />
-      <Button>Add</Button>
+      <Button px={{ base: 0, md: 10 }} fontSize={{ base: 'xs', md: 'md' }}>
+        Add
+      </Button>
     </HStack>
   )
 }

@@ -68,7 +68,7 @@ const ActivityCard = ({
         <AspectRatio
           ratio={WIKI_IMAGE_ASPECT_RATIO}
           w={{
-            base: isNotifSubCard ? '70px' : '100px',
+            base: isNotifSubCard ? '80px' : '100px',
             md: '140px',
             lg: '156px',
           }}
@@ -89,7 +89,7 @@ const ActivityCard = ({
         flexDir="column"
         justify="space-between"
         mx="auto"
-        px={isNotifSubCard ? 2 : 4}
+        px={{ base: isNotifSubCard ? 0 : 4, sm: 4 }}
         overflowX="hidden"
       >
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
@@ -99,7 +99,7 @@ const ActivityCard = ({
               as="h2"
               fontSize={{
                 base: isNotifSubCard ? '14px' : '16px',
-                md: isNotifSubCard ? '16px' : '18px',
+                md: '18px',
               }}
               letterSpacing="wide"
               overflow="hidden"
@@ -163,7 +163,7 @@ const ActivityCard = ({
           </Text>
         </Box>
         <Stack
-          mt={{ base: '2', md: '0' }}
+          mt={{ base: isNotifSubCard ? 0 : '2', md: '0' }}
           direction={{ base: 'column', md: 'row' }}
           justifyContent="space-between"
           w="full"
@@ -202,25 +202,19 @@ const ActivityCard = ({
               </HStack>
             </HStack>
           </Box>
-          <Box>
-            {lastModTimeStamp && (
-              <Text
-                display={{
-                  base: isNotifSubCard ? 'none' : 'block',
-                  md: 'block',
-                }}
-                mt="1"
-                fontSize={{
-                  base: isNotifSubCard ? '12px' : '12px',
-                  md: isNotifSubCard ? '12px' : '14px',
-                }}
-                opacity={0.6}
-                whiteSpace="nowrap"
-              >
-                {getReadableDate(lastModTimeStamp)}
-              </Text>
-            )}
-          </Box>
+          {lastModTimeStamp && (
+            <Text
+              mt="3px !important"
+              fontSize={{
+                base: isNotifSubCard ? '12px' : '12px',
+                md: isNotifSubCard ? '12px' : '14px',
+              }}
+              opacity={0.6}
+              whiteSpace="nowrap"
+            >
+              {getReadableDate(lastModTimeStamp)}
+            </Text>
+          )}
         </Stack>
       </Flex>
     </HStack>
