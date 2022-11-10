@@ -111,7 +111,6 @@ const SearchWikiNotifications = () => {
         const articleImage = `${config.pinataBaseUrl}${
           article.images && article.images[0].id
         }`
-
         const value = fillType(article, SEARCH_TYPES.ARTICLE)
         return (
           <AutoCompleteItem
@@ -200,7 +199,11 @@ const SearchWikiNotifications = () => {
             })
           }}
         >
-          <form action="" onSubmit={searchQueryHandler}>
+          <form
+            key={JSON.stringify(router.query.q) || ''}
+            action=""
+            onSubmit={searchQueryHandler}
+          >
             <InputGroup>
               <Flex
                 borderWidth="1px"
@@ -217,19 +220,17 @@ const SearchWikiNotifications = () => {
                   pl="2.5"
                   placeholder="Search to add wikis to your list"
                   variant="unstyled"
-                  value={query}
+                  value={query || router.query.q}
                   onChange={e => {
                     setQuery(() => {
                       return e.target.value
                     })
-                    router.push(
-                      {
+                    if (!e.target.value) {
+                      router.push({
                         pathname: '/account/settings',
-                        query: { tab: 'notifications', q: query },
-                      },
-                      undefined,
-                      { shallow: true },
-                    )
+                        query: { tab: 'notifications' },
+                      })
+                    }
                   }}
                   _placeholderShown={{
                     textOverflow: 'ellipsis',

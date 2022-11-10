@@ -16,6 +16,7 @@ import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
 import NextLink from 'next/link'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 
@@ -23,6 +24,7 @@ interface ActivityCardProps {
   title: string
   brief: string
   editor: User
+  isNotifSubCard?: boolean
   lastModTimeStamp?: string
   wiki: Omit<
     Wiki,
@@ -33,15 +35,8 @@ interface ActivityCardProps {
   type?: string
 }
 
-const CreatedTime = ({ date }: { date: string }) => {
-  return (
-    <Text mt="1" fontSize="sm" opacity={0.6} whiteSpace="nowrap">
-      {getReadableDate(date)}
-    </Text>
-  )
-}
-
 const ActivityCard = ({
+  isNotifSubCard,
   title,
   brief,
   editor,
@@ -64,13 +59,20 @@ const ActivityCard = ({
       borderColor="cardBorder"
       borderRadius="lg"
       boxShadow="0px 4px 8px rgba(0, 0, 0, 0.10)"
-      px={{ base: 3, lg: 5 }}
-      py={{ base: 3, lg: 3 }}
+      px={{ base: isNotifSubCard ? 2 : 3, lg: 5 }}
+      py={{ base: isNotifSubCard ? 2 : 3, lg: 3 }}
       w="full"
       align="normal"
     >
       <Link href={activityCardLinkRoute} passHref>
-        <AspectRatio w={{ base: '100px', md: '140px', lg: '156px' }} h="100%">
+        <AspectRatio
+          ratio={WIKI_IMAGE_ASPECT_RATIO}
+          w={{
+            base: isNotifSubCard ? '70px' : '100px',
+            md: '140px',
+            lg: '156px',
+          }}
+        >
           <WikiImage
             cursor="pointer"
             flexShrink={0}
@@ -87,7 +89,7 @@ const ActivityCard = ({
         flexDir="column"
         justify="space-between"
         mx="auto"
-        px={4}
+        px={isNotifSubCard ? 2 : 4}
         overflowX="hidden"
       >
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
@@ -95,7 +97,10 @@ const ActivityCard = ({
             <Heading
               cursor="pointer"
               as="h2"
-              fontSize={{ base: '16px', md: '20px' }}
+              fontSize={{
+                base: isNotifSubCard ? '14px' : '16px',
+                md: isNotifSubCard ? '16px' : '18px',
+              }}
               letterSpacing="wide"
               overflow="hidden"
               whiteSpace="nowrap"
@@ -149,6 +154,10 @@ const ActivityCard = ({
             noOfLines={2}
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={{
+              base: isNotifSubCard ? '10px' : '14px',
+              md: isNotifSubCard ? '14px' : '16px',
+            }}
           >
             {brief}
           </Text>
@@ -164,10 +173,16 @@ const ActivityCard = ({
               <DisplayAvatar
                 address={editor.id}
                 avatarIPFS={editor.profile?.avatar}
-                size="20"
+                size={isNotifSubCard ? '15' : '20'}
                 alt={editor.profile?.username}
               />
-              <Text fontSize="14px" color="linkColor">
+              <Text
+                fontSize={{
+                  base: isNotifSubCard ? '12px' : '12px',
+                  md: isNotifSubCard ? '12px' : '14px',
+                }}
+                color="linkColor"
+              >
                 <Link
                   href={`/account/${editor.id}`}
                   color="brandLinkColor"
@@ -188,7 +203,23 @@ const ActivityCard = ({
             </HStack>
           </Box>
           <Box>
-            {lastModTimeStamp && <CreatedTime date={lastModTimeStamp} />}
+            {lastModTimeStamp && (
+              <Text
+                display={{
+                  base: isNotifSubCard ? 'none' : 'block',
+                  md: 'block',
+                }}
+                mt="1"
+                fontSize={{
+                  base: isNotifSubCard ? '12px' : '12px',
+                  md: isNotifSubCard ? '12px' : '14px',
+                }}
+                opacity={0.6}
+                whiteSpace="nowrap"
+              >
+                {getReadableDate(lastModTimeStamp)}
+              </Text>
+            )}
           </Box>
         </Stack>
       </Flex>

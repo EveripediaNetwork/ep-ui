@@ -83,6 +83,7 @@ const Settings = () => {
         </Box>
 
         <VStack
+          ml="0 !important"
           p={{ base: 4, lg: 12 }}
           pt={{ base: 14, lg: 24 }}
           w="100%"
