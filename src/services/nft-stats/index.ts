@@ -34,9 +34,6 @@ export const nftStatsApi = createApi({
   }),
 })
 
-export const {
-  useGetNFTStatsQuery,
-  util: { getRunningOperationPromises },
-} = nftStatsApi
+export const { useGetNFTStatsQuery } = nftStatsApi
 
 export const { getNFTStats } = nftStatsApi.endpoints

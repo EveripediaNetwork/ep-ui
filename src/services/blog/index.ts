@@ -37,10 +37,6 @@ export const ArweaveApi = createApi({
   }),
 })
 
-export const {
-  useGetBlogEntriesQuery,
-  useGetSingleBlogEntryQuery,
-  util: { getRunningOperationPromises },
-} = ArweaveApi
+export const { useGetBlogEntriesQuery, useGetSingleBlogEntryQuery } = ArweaveApi
 
 export const { getBlogEntries, getSingleBlogEntry } = ArweaveApi.endpoints

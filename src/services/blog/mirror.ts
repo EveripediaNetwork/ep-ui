@@ -46,10 +46,6 @@ export const MirrorApi = createApi({
   }),
 })
 
-export const {
-  useGetBlogsQuery,
-  useLazyGetBlogsQuery,
-  util: { getRunningOperationPromises },
-} = MirrorApi
+export const { useGetBlogsQuery, useLazyGetBlogsQuery } = MirrorApi
 
 export const { getBlogs, getEntry } = MirrorApi.endpoints

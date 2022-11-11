@@ -1,30 +1,17 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
-import {
-  getPromotedWikis,
-  getRunningOperationPromises as getWikisRunningOperationPromises,
-} from '@/services/wikis'
+import { getPromotedWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@/types/Wiki'
 import Hero from '@/components/Landing/Hero'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
-import {
-  getCategories,
-  getRunningOperationPromises as getCategoriesRunningOperationPromises,
-} from '@/services/categories'
-import {
-  getTags,
-  getRunningOperationPromises as getTagsRunningOperationPromises,
-} from '@/services/tags'
+import { categoriesApi, getCategories } from '@/services/categories'
+import { getTags, tagsApi } from '@/services/tags'
 import { Category } from '@/types/CategoryDataTypes'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
-import {
-  getLeaderboard,
-  getRunningOperationPromises as getLeaderboardRunningOperationPromises,
-  LeaderBoardType,
-} from '@/services/editor'
+import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/leaderboard.utils'
 
 interface HomePageProps {
@@ -72,10 +59,10 @@ export async function getStaticProps() {
     }),
   )
   await Promise.all([
-    getWikisRunningOperationPromises(),
-    getCategoriesRunningOperationPromises(),
-    getLeaderboardRunningOperationPromises(),
-    getTagsRunningOperationPromises(),
+    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
+    store.dispatch(categoriesApi.util.getRunningQueriesThunk()),
+    store.dispatch(tagsApi.util.getRunningQueriesThunk()),
+    store.dispatch(editorApi.util.getRunningQueriesThunk()),
   ])
 
   if (promotedWikisError || categoriesError || tagsDataError) {
