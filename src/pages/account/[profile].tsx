@@ -43,6 +43,7 @@ const Profile = ({ profileData }: ProfileProps) => {
             _dark={{
               backgroundImage: '/images/homepage-bg-dark.png',
             }}
+            hideOnError
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
             alt={`${profileData?.username || address}-background-image`}
           />
