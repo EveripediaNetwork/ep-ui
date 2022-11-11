@@ -33,9 +33,6 @@ export const editorApi = createApi({
   }),
 })
 
-export const {
-  useGetLeaderboardQuery,
-  util: { getRunningOperationPromises },
-} = editorApi
+export const { useGetLeaderboardQuery } = editorApi
 
 export const { getLeaderboard } = editorApi.endpoints

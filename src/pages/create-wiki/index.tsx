@@ -38,9 +38,9 @@ import {
 } from '@chakra-ui/react'
 import {
   getIsWikiSlugValid,
-  getRunningOperationPromises,
   getWiki,
   postWiki,
+  wikiApi,
 } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
@@ -757,8 +757,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
     store.dispatch(getWiki.initiate(slug))
+    await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
   }
-  await Promise.all(getRunningOperationPromises())
   return {
     props: {},
   }

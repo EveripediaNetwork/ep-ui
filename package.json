@@ -36,7 +36,7 @@
     "@ethersproject/units": "^5.6.1",
     "@everipedia/wagmi-magic-connector": "^0.7.0",
     "@metamask/detect-provider": "^1.2.0",
-    "@reduxjs/toolkit": "^1.8.0",
+    "@reduxjs/toolkit": "^1.9.0",
     "@rtk-query/graphql-request-base-query": "^1.0.3",
     "@svgr/webpack": "^6.2.1",
     "@toast-ui/editor": "^3.1.3",

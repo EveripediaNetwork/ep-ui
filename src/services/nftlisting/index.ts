@@ -36,9 +36,6 @@ export const nftLisitngAPI = createApi({
   }),
 })
 
-export const {
-  useNftListingQuery,
-  util: { getRunningOperationPromises },
-} = nftLisitngAPI
+export const { useNftListingQuery } = nftLisitngAPI
 
 export const { nftListing } = nftLisitngAPI.endpoints
