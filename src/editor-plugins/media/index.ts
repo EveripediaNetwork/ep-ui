@@ -68,7 +68,7 @@ export default function media(context: PluginContext): PluginInfo {
         const img = state.schema.nodes.image.createAndFill({
           imageUrl: payload.src,
           altText: payload.alt,
-        }) as Node
+        })
         dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
       },
