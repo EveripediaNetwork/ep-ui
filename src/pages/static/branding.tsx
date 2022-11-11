@@ -7,6 +7,7 @@ import {
   List,
   ListIcon,
   ListItem,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
@@ -111,6 +112,7 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logobraindoadeepblack',
     },
   ]
+  const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
   return (
     <Box
       m="0"
@@ -144,7 +146,7 @@ const BrandingPage = () => {
             objectFit="contain"
             imgH={{ base: '320px', lg: '500px' }}
             imgW={{ base: '400px', lg: '500px' }}
-            src="/brandingBrain.png"
+            src={heroImg}
             alt="Bringing knowledge to the blockchain."
             priority
             mt={10}
