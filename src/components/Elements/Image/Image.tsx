@@ -8,6 +8,7 @@ export type NextChakraImageProps = Omit<BoxProps, 'as'> &
     imgW?: number | string | any
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     imgH?: number | string | any
+    hideOnError?: boolean
   }
 
 export const Image = ({
@@ -18,6 +19,7 @@ export const Image = ({
   priority,
   placeholder,
   blurDataURL,
+  hideOnError,
   objectFit = 'cover',
   ...rest
 }: NextChakraImageProps) => (
@@ -29,6 +31,11 @@ export const Image = ({
       layout={imgW && imgH ? 'fixed' : 'fill'}
       src={src}
       alt={alt}
+      onError={e => {
+        if (hideOnError) {
+          e.currentTarget.style.visibility = 'hidden'
+        }
+      }}
       priority={priority}
       placeholder={placeholder}
       blurDataURL={blurDataURL}
