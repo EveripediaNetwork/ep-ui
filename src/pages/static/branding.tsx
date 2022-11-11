@@ -13,11 +13,12 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { Image } from '../../components/Elements/Image/Image'
 
 const BrandingPage = () => {
-  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('kdkd')
+  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
   const IQLogoAsset = [
     {
       bg: '/branding/iqoriginal.png',
       download: '/branding/downloadassets/logoiqoriginal',
+      dark: '/branding/iqoriginalB.png',
     },
     {
       bg: '/branding/iqwhite.png',
@@ -68,6 +69,7 @@ const BrandingPage = () => {
     {
       bg: '/branding/originalBraindao.png',
       download: '/branding/downloadassets/logooriginalbrain',
+      dark: '/branding/logooriginalbrainB.png',
     },
     {
       bg: '/branding/braindaowhiteNegative.png',
@@ -212,6 +214,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
+                  dark={item.dark}
                 />
               )
             })}
@@ -234,6 +237,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
+                  dark={item.dark}
                   isBraindoa
                 />
               )
@@ -293,7 +297,7 @@ const BrandingPage = () => {
             <Heading fontSize="3xl">Please beware of these things.</Heading>
           </Flex>
           <Flex mt={10}>
-            <List display="flex" flexDir="column" gap="8">
+            <List display="flex" flexDir="column" gap="16">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not use the IQ.Wiki logo in any way that suggests that we are
