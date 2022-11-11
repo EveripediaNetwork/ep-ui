@@ -278,7 +278,6 @@ export const {
   useGetPageViewCountQuery,
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
-  util: { getRunningOperationPromises },
 } = adminApi
 
 export const {

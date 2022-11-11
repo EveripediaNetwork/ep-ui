@@ -7,7 +7,6 @@ import { Flex, Text, Button, Box } from '@chakra-ui/react'
 import {
   getActivityById,
   useGetLatestIPFSByWikiQuery,
-  getRunningOperationPromises,
   getWikiCreatorAndEditorByActivityId,
 } from '@/services/activities'
 import Link from 'next/link'
@@ -169,8 +168,6 @@ export const getStaticProps: GetStaticProps = async context => {
     )
     relatedWikis = data
   }
-
-  await Promise.all(getRunningOperationPromises())
 
   if (activityData && !activityError)
     return {

@@ -19,9 +19,6 @@ export const ensApi = createApi({
   }),
 })
 
-export const {
-  useGetEnsQuery,
-  util: { getRunningOperationPromises },
-} = ensApi
+export const { useGetEnsQuery } = ensApi
 
 export const { getEns } = ensApi.endpoints

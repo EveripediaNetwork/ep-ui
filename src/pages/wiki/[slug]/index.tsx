@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
-  getRunningOperationPromises,
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreviewsByCategory,
+  wikiApi,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -104,7 +104,7 @@ export const getStaticProps: GetStaticProps = async context => {
     relatedWikis = data?.filter(w => w.id !== wiki.id)?.slice(0, 4)
     relatedWikisError = error
   }
-  await Promise.all(getRunningOperationPromises())
+  await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
 
   if (relatedWikisError)
     throw new Error(

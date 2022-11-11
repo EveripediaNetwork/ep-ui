@@ -34,9 +34,6 @@ export const tagsApi = createApi({
   }),
 })
 
-export const {
-  useGetTagsQuery,
-  util: { getRunningOperationPromises },
-} = tagsApi
+export const { useGetTagsQuery } = tagsApi
 
 export const { getTags } = tagsApi.endpoints
