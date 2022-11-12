@@ -89,7 +89,7 @@ export const BrandingAssets = ({
             border="none"
             display="flex"
             borderRadius="200px"
-            m={{ base: '0', lg: '2', md: '2' }}
+            m={{ base: '0', md: '2' }}
             p="2"
             w="fit-content"
             alignItems="center"
@@ -99,7 +99,7 @@ export const BrandingAssets = ({
               <BiCloudDownload fontSize="20px" color={downloadIconColor} />
             }
             iconSpacing="0"
-            transform={{ base: 'scale(0.5)', lg: 'scale(1)', md: 'scale(1)' }}
+            transform={{ base: 'scale(0.5)', md: 'scale(1)' }}
           />
         </Flex>
       </Flex>

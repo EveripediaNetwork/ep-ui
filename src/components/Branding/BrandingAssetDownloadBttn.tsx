@@ -25,11 +25,7 @@ const BrandingAssetDownloadBttn = ({
         width="fit-content"
         onClick={closeDownloadOptions}
       >
-        <Text
-          textAlign="center"
-          color="brand.500"
-          _dark={{ color: 'brand.800' }}
-        >
+        <Text textAlign="center" color="brandAssetDownloadBttnColor">
           {text}
         </Text>
       </Link>

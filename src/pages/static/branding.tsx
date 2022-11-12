@@ -114,13 +114,7 @@ const BrandingPage = () => {
   ]
   const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
   return (
-    <Box
-      m="0"
-      bg="tetiaryGray"
-      _dark={{ backgroundColor: 'tetiaryDark' }}
-      pb={20}
-      my={-8}
-    >
+    <Box m="0" bg="brandHero" pb={20} my={-8}>
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
@@ -157,7 +151,7 @@ const BrandingPage = () => {
           <Text
             position="relative"
             w={{ base: '100%', lg: '80%' }}
-            fontSize={{ lg: '4xl', base: '2xl', md: '4xl' }}
+            fontSize={{ base: '2xl', md: '4xl' }}
             textAlign="center"
             lineHeight="1.5"
             my={{ base: '2', lg: '24' }}
