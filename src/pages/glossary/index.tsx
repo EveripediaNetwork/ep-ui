@@ -27,7 +27,9 @@ import { useInView } from 'react-intersection-observer'
 const Glossary: NextPage = () => {
   const { ref, entry } = useInView({
     threshold: 0,
-    rootMargin: '0px 0px 4000px 0px',
+  })
+  const { ref: newRef, entry: newEntry } = useInView({
+    threshold: 0,
   })
   const { data: GlossaryWikis } = useGetGlossaryTagWikisQuery({
     id: 'Glossary',
@@ -36,6 +38,12 @@ const Glossary: NextPage = () => {
   })
 
   const [searchText, setSearchText] = useState<string>('')
+
+  const shouldBeFixed =
+    entry?.intersectionRatio !== undefined && !entry?.isIntersecting
+
+  const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
+  const [isActive, setIsActive] = useState<number>()
   const searchPage = (input: string) => {
     const letter =
       input.length > 1
@@ -45,11 +53,11 @@ const Glossary: NextPage = () => {
     Scroll.scroller.scrollTo(letter, {
       duration: 70,
       smooth: true,
-      offset: -304,
+      offset: shouldBeFixed
+        ? -(heightOfElement || 284)
+        : -(heightOfElement ? heightOfElement + 228 : 512),
     })
   }
-
-  const [isActive, setIsActive] = useState<number>()
   return (
     <Stack direction="column" w="full" pb="56">
       <Flex
@@ -90,23 +98,16 @@ const Glossary: NextPage = () => {
       </Flex>
       <VStack
         w="full"
+        ref={newRef}
         alignItems="center"
         borderTop="1px"
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
         zIndex="999"
-        top={
-          entry?.intersectionRatio !== undefined && !entry?.isIntersecting
-            ? '14'
-            : '0'
-        }
+        top={shouldBeFixed ? '14' : '0'}
         bg="blogPageBg"
-        position={
-          entry?.intersectionRatio !== undefined && !entry?.isIntersecting
-            ? 'fixed'
-            : 'relative'
-        }
+        position={shouldBeFixed ? 'fixed' : 'relative'}
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Flex
@@ -123,9 +124,12 @@ const Glossary: NextPage = () => {
                   to={item}
                   spy
                   smooth
-                  offset={-300}
+                  offset={
+                    shouldBeFixed
+                      ? -(heightOfElement || 284)
+                      : -(heightOfElement ? heightOfElement + 228 : 512)
+                  }
                   duration={70}
-                  // style={{active}}
                 >
                   <Text
                     px={{ base: '3', lg: '3', '2xl': '10' }}
@@ -155,6 +159,7 @@ const Glossary: NextPage = () => {
               <Input
                 type="tel"
                 placeholder="Search for words"
+                value={searchText}
                 onChange={e => searchPage(e.target.value)}
               />
             </InputGroup>
@@ -169,51 +174,44 @@ const Glossary: NextPage = () => {
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
             {commonSearchedWikis.map((word, i) => (
-              <Link
-                // activeClass="active"
-                to={word}
-                spy
-                smooth
-                offset={-300}
-                duration={100}
+              <Button
                 key={i}
+                px="3"
+                py="1"
+                bg="transparent"
+                color="gray.500"
+                cursor="pointer"
+                borderRadius="full"
+                borderWidth="thin"
+                fontWeight="normal"
+                fontSize={{ base: 'sm', lg: 'md' }}
+                onClick={() => {
+                  setIsActive(i)
+                  setSearchText(word)
+                  searchPage(word)
+                }}
+                isActive={i === isActive}
+                _active={{
+                  bgColor: 'brand.50',
+                  _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
+                  color: '#FE6FB5',
+                }}
+                _focus={{
+                  boxShadow: 'none',
+                }}
+                _hover={{
+                  bgColor: 'gray.100',
+                  _dark: {
+                    bgColor: 'whiteAlpha.100',
+                  },
+                }}
+                _dark={{
+                  color: 'whiteAlpha.900',
+                  borderColor: 'whiteAlpha.700',
+                }}
               >
-                <Button
-                  px="3"
-                  py="1"
-                  bg="transparent"
-                  color="gray.500"
-                  cursor="pointer"
-                  borderRadius="full"
-                  borderWidth="thin"
-                  fontWeight="normal"
-                  fontSize={{ base: 'sm', lg: 'md' }}
-                  onClick={() => {
-                    setIsActive(i)
-                  }}
-                  isActive={i === isActive}
-                  _active={{
-                    bgColor: 'brand.50',
-                    _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
-                    color: '#FE6FB5',
-                  }}
-                  _focus={{
-                    boxShadow: 'none',
-                  }}
-                  _hover={{
-                    bgColor: 'gray.100',
-                    _dark: {
-                      bgColor: 'whiteAlpha.100',
-                    },
-                  }}
-                  _dark={{
-                    color: 'whiteAlpha.900',
-                    borderColor: 'whiteAlpha.700',
-                  }}
-                >
-                  {word}
-                </Button>
-              </Link>
+                {word}
+              </Button>
             ))}
           </Flex>
         </Box>

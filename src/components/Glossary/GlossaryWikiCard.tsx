@@ -25,7 +25,6 @@ const GlossaryWikiCard = ({
 }: GlossaryWikiCardProps) => {
   return (
     <LinkBox
-      id={title}
       as="article"
       borderWidth="1px"
       borderColor="borderColorHover"
