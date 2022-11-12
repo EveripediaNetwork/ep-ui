@@ -61,6 +61,9 @@ const MenuFooter = () => {
               <Link prefetch={false} href="/static/careers">{`${t(
                 'careers',
               )}`}</Link>
+              <Link prefetch={false} href="/static/branding">{`${t(
+                'Branding',
+              )}`}</Link>
             </Stack>
           </GridItem>
           <GridItem colSpan={1}>
