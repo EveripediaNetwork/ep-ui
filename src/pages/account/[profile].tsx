@@ -28,7 +28,7 @@ const Profile = ({ profileData }: ProfileProps) => {
   const profileContext = useProfile()
 
   let userAvatar = ''
-  if (profileData.avatar) {
+  if (profileData?.avatar) {
     userAvatar = `${config.pinataBaseUrl}${profileData?.avatar}`
   } else if (avatar) {
     userAvatar = avatar
