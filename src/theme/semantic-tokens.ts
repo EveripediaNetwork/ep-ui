@@ -10,6 +10,14 @@ export const semanticTokens: SemanticTokens = {
       default: 'primary',
       _dark: 'brand.900',
     },
+    brandHero: {
+      default: 'tetiaryGray',
+      _dark: 'tetiaryDark',
+    },
+    brandAssetDownloadBttnColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
     dimColor: {
       default: '#0000002a',
     },
