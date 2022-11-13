@@ -84,7 +84,6 @@ export const {
   usePostUserProfileMutation,
   useGetUserAvatarQuery,
   useGetUserAddressFromUsernameQuery,
-  util: { getRunningOperationPromises },
 } = profileApi
 
 export const {

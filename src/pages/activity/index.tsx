@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import {
-  getLatestActivities,
-  getRunningOperationPromises,
-} from '@/services/activities'
+import { activitiesApi, getLatestActivities } from '@/services/activities'
 import { GetStaticProps } from 'next'
 import { store } from '@/store/store'
 import { getWikiSummary } from '@/utils/getWikiSummary'
@@ -111,7 +108,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data: activities, error: activitiesError } = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
-  await Promise.all(getRunningOperationPromises())
+
+  await Promise.all(store.dispatch(activitiesApi.util.getRunningQueriesThunk()))
 
   if (activitiesError) {
     throw new Error(`Error fetching activities: ${activitiesError}`)

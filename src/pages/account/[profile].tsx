@@ -5,6 +5,8 @@ import UserInfo from '@/components/Profile/UserInfo'
 import { ProfileProvider } from '@/components/Profile/utils'
 import { UserProfileHeader } from '@/components/SEO/UserProfile'
 import config from '@/config'
+import { AvatarColorArray } from '@/data/AvatarData'
+import { useENSData } from '@/hooks/useENSData'
 import { getUserAddressFromUsername, getUserProfile } from '@/services/profile'
 import { store } from '@/store/store'
 import { ProfileData } from '@/types/ProfileType'
@@ -21,14 +23,24 @@ interface ProfileProps {
 const Profile = ({ profileData }: ProfileProps) => {
   const router = useRouter()
   const address = router.query.profile as string
+  const [avatar] = useENSData(address)
 
   const profileContext = useProfile()
+
+  let userAvatar = ''
+  if (profileData?.avatar) {
+    userAvatar = `${config.pinataBaseUrl}${profileData?.avatar}`
+  } else if (avatar) {
+    userAvatar = avatar
+  } else {
+    userAvatar = `https://source.boringavatars.com/pixel/${address}?square=true?colors=${AvatarColorArray}`
+  }
 
   return (
     <Box key={address}>
       <UserProfileHeader
         username={profileData?.username || address}
-        avatarIPFS={profileData?.avatar}
+        avatarURL={userAvatar}
         links={profileData?.links[0]}
         bio={profileData?.bio}
       />
@@ -43,6 +55,7 @@ const Profile = ({ profileData }: ProfileProps) => {
             _dark={{
               backgroundImage: '/images/homepage-bg-dark.png',
             }}
+            hideOnError
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
             alt={`${profileData?.username || address}-background-image`}
           />

@@ -82,7 +82,6 @@ export const {
   useGetWikisByTitleQuery,
   useGetCategoriesByTitleQuery,
   useGetAccountsByTitleQuery,
-  util: { getRunningOperationPromises },
 } = navSearchApi
 
 export const { getWikisByTitle, getCategoriesByTitle, getAccountsByTitle } =

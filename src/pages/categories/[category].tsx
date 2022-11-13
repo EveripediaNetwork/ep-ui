@@ -14,14 +14,11 @@ import {
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { Image } from '@/components/Elements/Image/Image'
-import {
-  getCategoriesById,
-  getRunningOperationPromises,
-} from '@/services/categories'
+import { getCategoriesById } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { getWikisByCategory } from '@/services/wikis'
+import { getWikisByCategory, wikiApi } from '@/services/wikis'
 import { Wiki } from '@/types/Wiki'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
@@ -169,7 +166,10 @@ export const getServerSideProps: GetServerSideProps = async context => {
       offset: 0,
     }),
   )
-  await Promise.all(getRunningOperationPromises())
+  await Promise.all([
+    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
+    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
+  ])
   return {
     props: {
       categoryData: result.data || [],

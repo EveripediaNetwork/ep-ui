@@ -59,7 +59,6 @@ export const {
   useGetCategoriesByIdQuery,
   useGetCategoriesQuery,
   useGetCategoriesLinksQuery,
-  util: { getRunningOperationPromises },
 } = categoriesApi
 
 export const { getCategories, getCategoriesById, getCategoriesLinks } =
