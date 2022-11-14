@@ -52,13 +52,16 @@ export const WikiInsightTable = () => {
   const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
-  const { data: hidden, refetch: hiddenRefresh } =
+  const { data: hidden} =
     useGetAllHiddenWikiCountQuery(paginateOffset, {
       skip: initGetHiddenWikis,
+      refetchOnMountOrArgChange: true,
     })
-  const { data: SearchedWikis, refetch: searchRefresh } =
+
+  const { data: SearchedWikis } =
     useGetSearchedWikisByTitleQuery(searchKeyWord, {
       skip: initGetSearchedWikis,
+      refetchOnMountOrArgChange: true,
     })
 
   const sortIcon = useMemo(() => {
@@ -112,9 +115,10 @@ export const WikiInsightTable = () => {
     onClose()
   }
 
-  const { data: promotedWikis, refetch: promotedRefresh } =
+  const { data: promotedWikis } =
     useGetAllPromotedWikiCountQuery(paginateOffset, {
       skip: initGetPromotedWikis,
+      refetchOnMountOrArgChange: true,
     })
 
   const SortArray = [
@@ -237,15 +241,12 @@ export const WikiInsightTable = () => {
   useEffect(() => {
     whichWiki()
     refetch()
-    hiddenRefresh()
-    promotedRefresh()
-    searchRefresh()
+    // hiddenRefresh()
+    // promotedRefresh()
+    // searchRefresh()
   }, [
     wiki,
-    hiddenRefresh,
-    promotedRefresh,
     refetch,
-    searchRefresh,
     whichWiki,
     filterItems,
     sortTableBy,
