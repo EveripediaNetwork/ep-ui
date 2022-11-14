@@ -2,13 +2,30 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
-import { ADD_WIKI_SUBSCRIPTION } from './queries'
+import {
+  ADD_WIKI_SUBSCRIPTION,
+  REMOVE_WIKI_SUBSCRIPTION,
+  WIKI_SUBSCRIPTIONS,
+} from './queries'
 
-type AddWikiSubscriptionArgs = {
+type SubscriptionArgs = {
   userId: string
   notificationType: string
   email: string
   auxiliaryId: string
+}
+
+type WikiSubs = {
+  auxiliaryId: string
+  notificationType: string
+}
+
+interface AddWikiSubscriptionArgs extends SubscriptionArgs {
+  addwikiSubscription: SubscriptionArgs
+}
+
+interface RemoveWikiSubscriptionArgs extends SubscriptionArgs {
+  removeWikiSubscription: SubscriptionArgs
 }
 
 export const notificationSubscriptionApi = createApi({
@@ -36,8 +53,35 @@ export const notificationSubscriptionApi = createApi({
         }
       },
     }),
+    removeSubscription: builder.mutation<boolean, RemoveWikiSubscriptionArgs>({
+      query: (removeWikiSubscriptionArgs: RemoveWikiSubscriptionArgs) => {
+        return {
+          document: REMOVE_WIKI_SUBSCRIPTION,
+          variables: {
+            userId: removeWikiSubscriptionArgs.userId,
+            auxiliaryId: removeWikiSubscriptionArgs.auxiliaryId,
+            notificationType: removeWikiSubscriptionArgs.notificationType,
+            email: removeWikiSubscriptionArgs.email,
+          },
+        }
+      },
+    }),
+    getAllWikiSubscription: builder.query<WikiSubs[], string>({
+      query: (userId: string) => {
+        return {
+          document: WIKI_SUBSCRIPTIONS,
+          variables: { userId },
+        }
+      },
+    }),
   }),
 })
 
-// export const { useGetNo } = notificationSubscriptionApi
-// export const { getNo } = notificationSubscriptionApi.endpoints
+export const {
+  useAddSubscriptionMutation,
+  useRemoveSubscriptionMutation,
+  useGetAllWikiSubscriptionQuery,
+} = notificationSubscriptionApi
+
+export const { addSubscription, removeSubscription, getAllWikiSubscription } =
+  notificationSubscriptionApi.endpoints

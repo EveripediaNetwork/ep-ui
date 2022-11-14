@@ -17,7 +17,8 @@ export const REMOVE_WIKI_SUBSCRIPTION = gql`
 export const WIKI_SUBSCRIPTIONS = gql`
   query GetWikiSubscriptions($userId: String!) {
     wikiSubscriptions(userId: $userId) {
-      id
+      auxiliaryId
+      notificationType
     }
   }
 `
