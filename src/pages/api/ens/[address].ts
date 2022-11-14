@@ -89,7 +89,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  const inputAddress = firstParam(req.query.address)
+  const inputAddress = firstParam(req.query.address as string)
   const lowercaseAddress = inputAddress.toLowerCase()
 
   if (inputAddress !== lowercaseAddress) {
