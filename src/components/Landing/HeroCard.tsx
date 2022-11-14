@@ -43,7 +43,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             imgH={HERO_WIKI_IMG_WIDTH}
             imgW={WIKI_IMAGE_ASPECT_RATIO * HERO_WIKI_IMG_WIDTH}
             priority
-            alt={wiki?.title}
+            alt={wiki?.title || 'wiki'}
           />
         </AspectRatio>
         <Flex

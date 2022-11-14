@@ -25,7 +25,7 @@ const BlogCard = ({
         overflow="hidden"
       >
         <Box h="210px" mt={-6} mx={-6} mb={6} pos="relative">
-          <Image src={image} layout="fill" />
+          <Image src={image} alt={title} layout="fill" />
         </Box>
         <Stack>
           <Text color="gray.400" fontSize="sm">

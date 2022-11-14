@@ -145,6 +145,7 @@ const MediaModal = ({
                         {!checkMediaDefaultId(media.id) ? (
                           <WikiImage
                             cursor="pointer"
+                            alt="media"
                             flexShrink={0}
                             imageURL={
                               media.source !== 'YOUTUBE'

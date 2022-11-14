@@ -80,6 +80,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                       <WikiImage
                         w="100%"
                         h="100%"
+                        alt={m.name || 'Image'}
                         borderRadius="3px"
                         overflow="hidden"
                         key={m.id}

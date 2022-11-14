@@ -150,6 +150,7 @@ export const PromoteCreatedWikisModal = ({
               imageURL={getWikiImageUrl(Data)}
               borderRadius="lg"
               overflow="hidden"
+              alt="wiki"
             />
           </AspectRatio>
           <Flex

@@ -3,7 +3,7 @@ import { Box, BoxProps } from '@chakra-ui/react'
 import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<BoxProps, 'as'> &
-  ImageProps & {
+  Omit<Omit<ImageProps, 'width'>, 'height'> & {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     imgW?: number | string | any
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
