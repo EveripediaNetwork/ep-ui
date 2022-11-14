@@ -1,4 +1,3 @@
-import config from '@/config'
 import { UserSocialLinksData as dt } from '@/data/UserSocialLinksData'
 import { ProfileLinks } from '@/types/ProfileType'
 import { NextSeo, SocialProfileJsonLd } from 'next-seo'
@@ -6,14 +5,14 @@ import React from 'react'
 
 interface UserProfileHeaderProps {
   username: string
-  avatarIPFS?: string | null
+  avatarURL: string
   links?: ProfileLinks
   bio?: string | null
 }
 
 export const UserProfileHeader = ({
   username,
-  avatarIPFS,
+  avatarURL,
   links,
   bio,
 }: UserProfileHeaderProps) => {
@@ -45,7 +44,7 @@ export const UserProfileHeader = ({
           },
           images: [
             {
-              url: `${config.pinataBaseUrl}${avatarIPFS}`,
+              url: avatarURL,
               width: 650,
               height: 650,
               alt: 'Profile Photo',

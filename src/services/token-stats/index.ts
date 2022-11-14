@@ -53,9 +53,6 @@ export const tokenStatsApi = createApi({
   }),
 })
 
-export const {
-  useGetTokenStatsQuery,
-  util: { getRunningOperationPromises },
-} = tokenStatsApi
+export const { useGetTokenStatsQuery } = tokenStatsApi
 
 export const { getTokenStats } = tokenStatsApi.endpoints

@@ -22,4 +22,6 @@ export const colors = {
   darkGrey: '#b3b7bd',
   secondaryDark: '#4A5568',
   tetiaryGray: '#E2E8F0',
+  primaryPink: '#E53E3E',
+  tetiaryDark: '#1A202C',
 }

@@ -278,7 +278,6 @@ export const {
   usePostFlagWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
-  util: { getRunningOperationPromises },
 } = wikiApi
 
 export const {
