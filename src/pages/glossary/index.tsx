@@ -10,6 +10,8 @@ import {
   InputGroup,
   InputLeftElement,
   Button,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
@@ -110,15 +112,13 @@ const Glossary: NextPage = () => {
         position={shouldBeFixed ? 'fixed' : 'relative'}
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
-          <Flex
+          <Grid
+            templateColumns={{ base: 'repeat(14,1fr)', lg: 'repeat(27,1fr)' }}
+            gap={1}
             py="7"
-            w="full"
-            justifyContent={{ lg: 'start', '2xl': 'center' }}
-            alignItems="center"
-            wrap="wrap"
           >
             {glossaryAlphabetsData.map((item, i) => (
-              <Box key={i} cursor="pointer">
+              <GridItem w="100%" key={i} cursor="pointer" textAlign="center">
                 <Link
                   activeClass="active"
                   to={item}
@@ -132,7 +132,6 @@ const Glossary: NextPage = () => {
                   duration={70}
                 >
                   <Text
-                    px={{ base: '3', lg: '3', '2xl': '10' }}
                     fontWeight="semibold"
                     fontSize={{ base: 'md', xl: 'lg' }}
                     _hover={{ color: 'brandLinkColor' }}
@@ -140,9 +139,9 @@ const Glossary: NextPage = () => {
                     {item}
                   </Text>
                 </Link>
-              </Box>
+              </GridItem>
             ))}
-          </Flex>
+          </Grid>
           <Box w="full" px="2" py="3">
             <InputGroup size="lg" w="full">
               <InputLeftElement

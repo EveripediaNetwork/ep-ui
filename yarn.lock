@@ -1828,7 +1828,7 @@
     "@chakra-ui/anatomy" "2.0.7"
     "@chakra-ui/theme-tools" "2.0.12"
 
-"@chakra-ui/toast@4.0.1", "@chakra-ui/toast@^4.0.1":
+"@chakra-ui/toast@4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@chakra-ui/toast/-/toast-4.0.1.tgz#e06e868636b221aa6da9564e30716d76c5508fc5"
   integrity sha512-F2Xrn+LwksgdgvkUDcMNJuGfZabBNwx9PgMq6SE0Oz5XYitgrGfEx55q6Hzl6nOyHq7IkEjmZGxv3N/nYq+P3w==
