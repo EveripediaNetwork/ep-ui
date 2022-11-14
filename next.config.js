@@ -5,7 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const moduleExports = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
-  webpack5: true,
   webpack(config) {
     config.mode =
       process.env.VERCEL_ENV !== 'production' ? 'production' : 'production'
@@ -18,7 +17,6 @@ const moduleExports = {
     })
     return config
   },
-  styledComponents: true,
   images: {
     minimumCacheTTL: 7200,
     domains: [
