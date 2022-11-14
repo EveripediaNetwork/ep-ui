@@ -6,7 +6,7 @@ import {
   ADD_WIKI_SUBSCRIPTION,
   REMOVE_WIKI_SUBSCRIPTION,
   WIKI_SUBSCRIPTIONS,
-} from './queries'
+} from '@/services/notification/queries'
 
 type SubscriptionArgs = {
   userId: string
