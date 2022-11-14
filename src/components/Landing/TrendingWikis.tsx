@@ -89,7 +89,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
                     alt={getUsername(wiki?.user, ensName)}
-                    size="20"
+                    size={20}
                     address={wiki?.user.id}
                     avatarIPFS={wiki?.user.profile?.avatar}
                   />

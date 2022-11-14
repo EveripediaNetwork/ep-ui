@@ -20,7 +20,7 @@ type DisplayAvatarProps = ChakraProps & {
   svgProps?: CSSObject
   avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
-  size?: number | string
+  size?: number
   alt: string | undefined
 }
 const DisplayAvatar = ({
@@ -51,8 +51,8 @@ const DisplayAvatar = ({
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
-        imgH={`${size}px`}
-        imgW={`${size}px`}
+        imgH={size}
+        imgW={size}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
         {...(rest as Omit<NextChakraImageProps, 'src'>)}

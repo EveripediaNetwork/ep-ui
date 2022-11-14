@@ -62,7 +62,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           <Flex gap={3}>
             <Link href={`/account/${wiki?.user?.id}`}>
               <DisplayAvatar
-                size="20"
+                size={20}
                 address={wiki?.user.id}
                 avatarIPFS={wiki?.user.profile?.avatar}
                 alt={getUsername(wiki?.user, username)}

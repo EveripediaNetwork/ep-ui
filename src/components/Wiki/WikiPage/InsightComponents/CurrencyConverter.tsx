@@ -27,8 +27,8 @@ const CurrencyBox = ({
         {token ? (
           <Image
             src={`https://icons.iq.wiki/128/${token}.png`}
-            imgH="18px"
-            imgW="18px"
+            imgH={18}
+            imgW={18}
             alt={token}
             bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             borderRadius="100px"
@@ -36,8 +36,8 @@ const CurrencyBox = ({
         ) : (
           <Image
             src="/images/usd-logo.svg"
-            imgH="18px"
-            imgW="18px"
+            imgH={18}
+            imgW={18}
             alt={tokenSymbol}
           />
         )}

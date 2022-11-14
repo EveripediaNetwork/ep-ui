@@ -164,7 +164,7 @@ const ActivityCard = ({
               <DisplayAvatar
                 address={editor.id}
                 avatarIPFS={editor.profile?.avatar}
-                size="20"
+                size={20}
                 alt={editor.profile?.username}
               />
               <Text fontSize="14px" color="linkColor">
