@@ -171,6 +171,7 @@ export const adminApi = createApi({
       transformResponse: (response: CreatedWikiCountResponse) =>
         response.promotedWikis,
     }),
+
     getAllHiddenWikiCount: builder.query<CreatedWikisCount[], number>({
       query: (offset: number) => ({
         document: HIDDEN_WIKIS_TABLE,
@@ -179,6 +180,7 @@ export const adminApi = createApi({
       transformResponse: (response: CreatedWikiCountResponse) =>
         response.wikisHidden,
     }),
+
     getWikisEditedCount: builder.query<
       WikisModifiedCount[],
       WikisModifiedCountArgs

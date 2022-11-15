@@ -52,14 +52,18 @@ export const WikiInsightTable = () => {
   const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()
   const [checked, setChecked] = useState(0)
   const { isOpen, onToggle, onClose } = useDisclosure()
-  const { data: hidden, refetch: hiddenRefresh } =
-    useGetAllHiddenWikiCountQuery(paginateOffset, {
-      skip: initGetHiddenWikis,
-    })
-  const { data: SearchedWikis, refetch: searchRefresh } =
-    useGetSearchedWikisByTitleQuery(searchKeyWord, {
+  const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
+    skip: initGetHiddenWikis,
+    refetchOnMountOrArgChange: true,
+  })
+
+  const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(
+    searchKeyWord,
+    {
       skip: initGetSearchedWikis,
-    })
+      refetchOnMountOrArgChange: true,
+    },
+  )
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -112,10 +116,13 @@ export const WikiInsightTable = () => {
     onClose()
   }
 
-  const { data: promotedWikis, refetch: promotedRefresh } =
-    useGetAllPromotedWikiCountQuery(paginateOffset, {
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
+    paginateOffset,
+    {
       skip: initGetPromotedWikis,
-    })
+      refetchOnMountOrArgChange: true,
+    },
+  )
 
   const SortArray = [
     { id: 1, value: 'Newest' },
@@ -237,15 +244,12 @@ export const WikiInsightTable = () => {
   useEffect(() => {
     whichWiki()
     refetch()
-    hiddenRefresh()
-    promotedRefresh()
-    searchRefresh()
+    // hiddenRefresh()
+    // promotedRefresh()
+    // searchRefresh()
   }, [
     wiki,
-    hiddenRefresh,
-    promotedRefresh,
     refetch,
-    searchRefresh,
     whichWiki,
     filterItems,
     sortTableBy,
