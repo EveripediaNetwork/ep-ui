@@ -168,6 +168,7 @@ export const InsightTableWikiEditors = (
                           <WikiImage
                             cursor="pointer"
                             flexShrink={0}
+                            alt="wiki"
                             imageURL={`${config.pinataBaseUrl}${
                               item.lastCreatedWiki?.content
                                 ? item.lastCreatedWiki.content[0].images[0].id

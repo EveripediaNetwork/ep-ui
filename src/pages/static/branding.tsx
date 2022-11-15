@@ -138,8 +138,9 @@ const BrandingPage = () => {
           </Box>
           <Image
             objectFit="contain"
-            imgH={{ base: '320px', lg: '500px' }}
-            imgW={{ base: '400px', lg: '500px' }}
+            imgH={400}
+            imgW={400}
+            maxW="80vw"
             src={heroImg}
             alt="Bringing knowledge to the blockchain."
             priority

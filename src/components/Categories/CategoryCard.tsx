@@ -41,7 +41,7 @@ const CategoryCard = ({
         <Box w="100%" position="relative">
           <Image
             src={imageCard}
-            width="100%"
+            width="full"
             height="150px"
             alt={title}
             loading="lazy"

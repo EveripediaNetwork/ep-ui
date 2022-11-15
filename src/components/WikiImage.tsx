@@ -24,6 +24,7 @@ const toBase64 = (str: string) =>
 
 export type WikiImageProps = Partial<NextChakraImageProps> & {
   imageURL?: string
+  alt: string
 }
 
 export const WikiImage = ({ imageURL, ...rest }: WikiImageProps) => {
