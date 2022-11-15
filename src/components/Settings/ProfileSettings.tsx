@@ -360,6 +360,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
               w="140px"
               h="140px"
               rounded="full"
+              alt="new profile"
               setImgIPFSHash={setAvatarIPFSHash}
               imgIPFSHash={avatarIPFSHash}
               isLoading={isAvatarLoading}
@@ -373,6 +374,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
               w="300px"
               h="120px"
               borderRadius="lg"
+              alt="new banner"
               setImgIPFSHash={setBannerIPFSHash}
               imgIPFSHash={bannerIPFSHash}
               isLoading={isBannerLoading}

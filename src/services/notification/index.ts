@@ -9,10 +9,10 @@ import {
 } from '@/services/notification/queries'
 
 export type SubscriptionArgs = {
-  userId: string
-  notificationType: string
+  userId?: string
+  notificationType?: string
   email: string
-  auxiliaryId: string
+  auxiliaryId?: string
 }
 
 export type WikiSubs = {

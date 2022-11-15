@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { HStack, Button } from '@chakra-ui/react'
 import { User, Wiki } from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
+import { useUserProfileData } from '@/services/profile/utils'
+import { useAddSubscriptionMutation } from '@/services/notification'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 interface NotificationCardProps {
   title: string
@@ -27,9 +30,34 @@ const NotificationCard = ({
   wikiId,
   type,
 }: NotificationCardProps) => {
-  const SubscribeWikiHandler = () => {
-    console.log(`wiki ${title} with ${wikiId} was added ${type}`)
+  const userAddress = getUserAddressFromCache()
+  const { setAccount, profileData } = useUserProfileData('', {
+    withAllSettings: true,
+  })
+  const [addSubscription] = useAddSubscriptionMutation()
+
+  const SubscribeWikiHandler = async () => {
+    console.log({
+      userId: profileData?.id,
+      auxiliaryId: wikiId,
+      notificationType: type,
+      email: profileData?.email,
+    })
+    const data = await addSubscription({
+      userId: profileData?.id,
+      notificationType: type,
+      auxiliaryId: wikiId,
+      email: profileData?.email,
+    })
+
+    console.log(data)
   }
+
+  useEffect(() => {
+    if (userAddress) {
+      setAccount(userAddress)
+    }
+  }, [userAddress, setAccount])
 
   return (
     <HStack gap={{ base: 2, lg: 10 }} w="full" justifyContent="space-between">

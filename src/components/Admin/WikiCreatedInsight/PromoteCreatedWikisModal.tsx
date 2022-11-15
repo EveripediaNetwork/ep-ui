@@ -150,6 +150,7 @@ export const PromoteCreatedWikisModal = ({
               imageURL={getWikiImageUrl(Data)}
               borderRadius="lg"
               overflow="hidden"
+              alt="wiki"
             />
           </AspectRatio>
           <Flex
@@ -216,7 +217,7 @@ export const PromoteCreatedWikisModal = ({
                   <DisplayAvatar
                     address={Data.author?.id}
                     avatarIPFS={Data.author.profile?.avatar}
-                    size="20"
+                    size={20}
                     alt="unknown"
                   />
                   <Text fontSize="14px" color="linkColor">

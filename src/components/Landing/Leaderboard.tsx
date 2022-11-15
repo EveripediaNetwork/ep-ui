@@ -56,7 +56,7 @@ const LeaderBoardCard = ({
               borderColor="white"
               rounded="full"
               justifySelf="center"
-              size="130"
+              size={130}
               address={editor.id}
               wrapperProps={{
                 zIndex: 'calc(var(--chakra-zIndices-sticky) - 1)',

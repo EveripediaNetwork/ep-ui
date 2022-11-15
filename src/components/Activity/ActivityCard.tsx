@@ -178,7 +178,7 @@ const ActivityCard = ({
               <DisplayAvatar
                 address={editor.id}
                 avatarIPFS={editor.profile?.avatar}
-                size={isNotifSubCard ? '15' : '20'}
+                size={isNotifSubCard ? 15 : 20}
                 alt={editor.profile?.username}
               />
               <Text

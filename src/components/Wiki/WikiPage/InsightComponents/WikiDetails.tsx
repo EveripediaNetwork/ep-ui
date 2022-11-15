@@ -162,7 +162,7 @@ export const WikiDetails = ({
                       alt={createdBy.profile?.username}
                       address={createdBy.id}
                       avatarIPFS={createdBy.profile?.avatar}
-                      size="24"
+                      size={24}
                     />
                     <Link
                       href={`/account/${createdBy.id}`}
