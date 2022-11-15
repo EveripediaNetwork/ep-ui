@@ -41,8 +41,9 @@ const AboutHero = () => {
       <Box>
         <Image
           objectFit="contain"
-          imgH={{ base: '400px', lg: '500px' }}
-          imgW={{ base: '400px', lg: '500px' }}
+          imgH={450}
+          imgW={450}
+          maxW="90vw"
           className="teamMember__image"
           src={`/images/${aboutHeroSrc}`}
           alt="Bringing knowledge to the blockchain."

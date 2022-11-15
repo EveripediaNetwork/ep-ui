@@ -28,7 +28,7 @@ const ProfileNavMenu = ({
           <DisplayAvatar
             key={userAddress}
             address={userAddress}
-            size="25"
+            size={25}
             alt={userAddress}
           />
         }
