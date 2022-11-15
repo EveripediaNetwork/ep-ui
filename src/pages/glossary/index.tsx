@@ -17,10 +17,7 @@ import { NextPage } from 'next'
 import React, { useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
-import {
-  glossaryAlphabetsData,
-  commonSearchedWikis,
-} from '@/data/GlossaryAlphabetsData'
+import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import {
@@ -46,7 +43,7 @@ const Glossary: NextPage = () => {
     startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
     endDate: Math.floor(Date.now() / 1000),
   })
-  let glossaryTgas = popularTags?.filter(item => item.id === 'Glossary')
+  const glossaryTgas = popularTags?.filter(item => item.id === 'Glossary')
   const [searchText, setSearchText] = useState<string>('')
 
   const shouldBeFixed =
