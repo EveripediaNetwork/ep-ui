@@ -178,7 +178,7 @@ const Glossary: NextPage = () => {
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
             {glossaryTgas &&
-              glossaryTgas[0].wikis.map((word, i) => {
+              glossaryTgas[0]?.wikis?.map((word, i) => {
                 return (
                   <>
                     {i < 5 && (
