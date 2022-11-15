@@ -4,10 +4,16 @@ import config from '@/config'
 import { HYDRATE } from 'next-redux-wrapper'
 import { Wiki } from '@/types/Wiki'
 import { GET_TAG_WIKIS_BY_ID } from '../wikis/queries'
+import { GET_GLOSSARY_TAGS } from '../tags/queries'
 
 export type GlossaryTagWiki = {
   id: string
   wikis: { id: string; title: string; summary: string }
+}
+
+export type Tags = {
+  id: string
+  wikis: { id: string; title: string }[]
 }
 
 type GetGlossaryWikisByTagResponse = {
@@ -18,6 +24,10 @@ type WikiArg = {
   id: string
   limit?: number
   offset?: number
+}
+
+type GetTagsResponse = {
+  tagsPopular: Tags[]
 }
 
 export const glossaryApi = createApi({
@@ -41,12 +51,23 @@ export const glossaryApi = createApi({
       transformResponse: (response: GetGlossaryWikisByTagResponse) =>
         response.tagById.wikis,
     }),
+    getTags: builder.query<Tags[], { startDate: number; endDate: number }>({
+      query: ({ startDate, endDate }) => ({
+        document: GET_GLOSSARY_TAGS,
+        variables: {
+          startDate,
+          endDate,
+        },
+      }),
+      transformResponse: (response: GetTagsResponse) => response.tagsPopular,
+    }),
   }),
 })
 
 export const {
   useGetGlossaryTagWikisQuery,
+  useGetTagsQuery,
   util: { getRunningOperationPromises },
 } = glossaryApi
 
-export const { getGlossaryTagWikis } = glossaryApi.endpoints
+export const { getGlossaryTagWikis, getTags } = glossaryApi.endpoints

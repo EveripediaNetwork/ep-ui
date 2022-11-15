@@ -23,7 +23,10 @@ import {
 } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
-import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
+import {
+  useGetGlossaryTagWikisQuery,
+  useGetTagsQuery,
+} from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 
 const Glossary: NextPage = () => {
@@ -36,9 +39,14 @@ const Glossary: NextPage = () => {
   const { data: GlossaryWikis } = useGetGlossaryTagWikisQuery({
     id: 'Glossary',
     offset: 0,
-    limit: 30,
+    limit: 50,
   })
 
+  const { data: popularTags } = useGetTagsQuery({
+    startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
+    endDate: Math.floor(Date.now() / 1000),
+  })
+  let glossaryTgas = popularTags?.filter(item => item.id === 'Glossary')
   const [searchText, setSearchText] = useState<string>('')
 
   const shouldBeFixed =
@@ -172,46 +180,53 @@ const Glossary: NextPage = () => {
             justifyContent={{ lg: 'start', '2xl': 'center' }}
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
-            {commonSearchedWikis.map((word, i) => (
-              <Button
-                key={i}
-                px="3"
-                py="1"
-                bg="transparent"
-                color="gray.500"
-                cursor="pointer"
-                borderRadius="full"
-                borderWidth="thin"
-                fontWeight="normal"
-                fontSize={{ base: 'sm', lg: 'md' }}
-                onClick={() => {
-                  setIsActive(i)
-                  setSearchText(word)
-                  searchPage(word)
-                }}
-                isActive={i === isActive}
-                _active={{
-                  bgColor: 'brand.50',
-                  _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
-                  color: '#FE6FB5',
-                }}
-                _focus={{
-                  boxShadow: 'none',
-                }}
-                _hover={{
-                  bgColor: 'gray.100',
-                  _dark: {
-                    bgColor: 'whiteAlpha.100',
-                  },
-                }}
-                _dark={{
-                  color: 'whiteAlpha.900',
-                  borderColor: 'whiteAlpha.700',
-                }}
-              >
-                {word}
-              </Button>
-            ))}
+            {glossaryTgas &&
+              glossaryTgas[0].wikis.map((word, i) => {
+                return (
+                  <>
+                    {i < 5 && (
+                      <Button
+                        key={i}
+                        px="3"
+                        py="1"
+                        bg="transparent"
+                        color="gray.500"
+                        cursor="pointer"
+                        borderRadius="full"
+                        borderWidth="thin"
+                        fontWeight="normal"
+                        fontSize={{ base: 'sm', lg: 'md' }}
+                        onClick={() => {
+                          setIsActive(i)
+                          setSearchText(word.title)
+                          searchPage(word.title)
+                        }}
+                        isActive={i === isActive}
+                        _active={{
+                          bgColor: 'brand.50',
+                          _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
+                          color: '#FE6FB5',
+                        }}
+                        _focus={{
+                          boxShadow: 'none',
+                        }}
+                        _hover={{
+                          bgColor: 'gray.100',
+                          _dark: {
+                            bgColor: 'whiteAlpha.100',
+                          },
+                        }}
+                        _dark={{
+                          color: 'whiteAlpha.900',
+                          borderColor: 'whiteAlpha.700',
+                        }}
+                      >
+                        {word.title}
+                      </Button>
+                    )}
+                  </>
+                )
+              })}
           </Flex>
         </Box>
       </VStack>
