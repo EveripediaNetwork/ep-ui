@@ -27,6 +27,10 @@ const NotificationCard = ({
   wikiId,
   type,
 }: NotificationCardProps) => {
+  const SubscribeWikiHandler = () => {
+    console.log(`wiki ${title} with ${wikiId} was added`)
+  }
+
   return (
     <HStack gap={{ base: 2, lg: 10 }} w="full" justifyContent="space-between">
       <ActivityCard
@@ -40,7 +44,13 @@ const NotificationCard = ({
         activityId={activityId}
         wikiId={wikiId}
       />
-      <Button px={{ base: 0, md: 10 }} fontSize={{ base: 'xs', md: 'md' }}>
+      <Button
+        px={{ base: 0, md: 10 }}
+        fontSize={{ base: 'xs', md: 'md' }}
+        onClick={() => {
+          SubscribeWikiHandler()
+        }}
+      >
         Add
       </Button>
     </HStack>

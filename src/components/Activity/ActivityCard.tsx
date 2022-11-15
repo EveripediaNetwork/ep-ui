@@ -93,13 +93,18 @@ const ActivityCard = ({
         overflowX="hidden"
       >
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
-          <HStack w={{ base: '83%', md: '70%' }}>
+          <HStack
+            w={{
+              base: isNotifSubCard ? '40%' : '83%',
+              md: isNotifSubCard ? '30%' : '70%',
+            }}
+          >
             <Heading
               cursor="pointer"
               as="h2"
               fontSize={{
                 base: isNotifSubCard ? '14px' : '16px',
-                md: '18px',
+                md: isNotifSubCard ? '16px' : '18px',
               }}
               letterSpacing="wide"
               overflow="hidden"
