@@ -1,7 +1,7 @@
 import React from 'react'
 import { HStack, Button } from '@chakra-ui/react'
 import { User, Wiki } from '@/types/Wiki'
-import ActivityCard from '../Activity/ActivityCard'
+import ActivityCard from '@/components/Activity/ActivityCard'
 
 interface NotificationCardProps {
   title: string
@@ -28,7 +28,7 @@ const NotificationCard = ({
   type,
 }: NotificationCardProps) => {
   const SubscribeWikiHandler = () => {
-    console.log(`wiki ${title} with ${wikiId} was added`)
+    console.log(`wiki ${title} with ${wikiId} was added ${type}`)
   }
 
   return (
