@@ -8,23 +8,23 @@ import {
   WIKI_SUBSCRIPTIONS,
 } from '@/services/notification/queries'
 
-type SubscriptionArgs = {
+export type SubscriptionArgs = {
   userId: string
   notificationType: string
   email: string
   auxiliaryId: string
 }
 
-type WikiSubs = {
+export type WikiSubs = {
   auxiliaryId: string
   notificationType: string
 }
 
-interface AddWikiSubscriptionArgs extends SubscriptionArgs {
+export interface AddWikiSubscriptionArgs extends SubscriptionArgs {
   addwikiSubscription: SubscriptionArgs
 }
 
-interface RemoveWikiSubscriptionArgs extends SubscriptionArgs {
+export interface RemoveWikiSubscriptionArgs extends SubscriptionArgs {
   removeWikiSubscription: SubscriptionArgs
 }
 

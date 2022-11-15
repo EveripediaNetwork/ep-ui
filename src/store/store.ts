@@ -23,6 +23,7 @@ import { MirrorApi } from '@/services/blog/mirror'
 import { nftLisitngAPI } from '@/services/nftlisting/index'
 import { nftStatsApi } from '@/services/nft-stats'
 import { editorApi } from '@/services/editor'
+import { notificationSubscriptionApi } from '@/services/notification'
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +49,8 @@ export const store = configureStore({
     [nftLisitngAPI.reducerPath]: nftLisitngAPI.reducer,
     [nftStatsApi.reducerPath]: nftStatsApi.reducer,
     [editorApi.reducerPath]: editorApi.reducer,
+    [notificationSubscriptionApi.reducerPath]:
+      notificationSubscriptionApi.reducer,
   },
   middleware: gDM =>
     gDM({ serializableCheck: true })
@@ -64,7 +67,8 @@ export const store = configureStore({
       .concat(ensApi.middleware)
       .concat(nftLisitngAPI.middleware)
       .concat(nftStatsApi.middleware)
-      .concat(editorApi.middleware),
+      .concat(editorApi.middleware)
+      .concat(notificationSubscriptionApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
