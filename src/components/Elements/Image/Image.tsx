@@ -2,13 +2,14 @@ import React from 'react'
 import { Box, BoxProps } from '@chakra-ui/react'
 import NextImage, { ImageProps } from 'next/image'
 
-export type NextChakraImageProps = Omit<BoxProps, 'as'> &
-  ImageProps & {
+export type NextChakraImageProps = Omit<Omit<BoxProps, 'as'>, 'objectFit'> &
+  Omit<Omit<ImageProps, 'width'>, 'height'> & {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    imgW?: number | string | any
+    imgW?: number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    imgH?: number | string | any
+    imgH?: number
     hideOnError?: boolean
+    objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
   }
 
 export const Image = ({
@@ -23,12 +24,22 @@ export const Image = ({
   objectFit = 'cover',
   ...rest
 }: NextChakraImageProps) => (
-  <Box h={imgH} w={imgW} {...rest} overflow="hidden" position="relative">
+  <Box
+    h={`${imgH}px`}
+    w={`${imgW}px`}
+    {...rest}
+    overflow="hidden"
+    position="relative"
+  >
     <NextImage
       quality={95}
-      objectFit={objectFit}
-      objectPosition="center"
-      layout={imgW && imgH ? 'fixed' : 'fill'}
+      style={{
+        objectFit,
+        objectPosition: 'center',
+        width: '100%',
+        height: '100%',
+      }}
+      fill={!(imgW && imgH)}
       src={src}
       alt={alt}
       onError={e => {
