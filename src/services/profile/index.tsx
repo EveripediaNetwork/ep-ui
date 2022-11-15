@@ -54,7 +54,7 @@ export const profileApi = createApi({
         variables: { id },
       }),
       transformResponse: (response: UserProfileData) =>
-        response.getProfile.avatar || '',
+        response.getProfile?.avatar || '',
     }),
     getUserAddressFromUsername: builder.query<string, string>({
       query: (username: string) => ({
