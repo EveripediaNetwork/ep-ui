@@ -36,7 +36,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            imageURL={getWikiImageUrl(wiki)}
+            imageURL={getWikiImageUrl(wiki?.images)}
             borderRadius="none"
             roundedTop="lg"
             overflow="hidden"

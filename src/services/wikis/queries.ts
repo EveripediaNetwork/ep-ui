@@ -15,6 +15,36 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
     }
   }
 `
+
+export const GET_ACTIVITY_CARD_DETAILS = gql`
+  query GetActivityCardDetails($id: String!) {
+    wiki(id: $id) {
+      id
+      title
+      summary
+      updated
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      categories {
+        id
+        title
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
+
 export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {

@@ -43,9 +43,11 @@ export const WikiNotificationsRecommendations = ({
                       title={article.title}
                       brief={article.summary}
                       editor={article.user}
-                      wiki={article}
                       wikiId={article.id}
                       lastModTimeStamp={article.updated}
+                      categories={article.categories}
+                      tags={article.tags}
+                      WikiImgObj={article.images}
                     />
                   )
                 })}

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { User, Wiki } from '@/types/Wiki'
+import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
@@ -26,13 +26,12 @@ interface ActivityCardProps {
   editor: User
   isNotifSubCard?: boolean
   lastModTimeStamp?: string
-  wiki: Omit<
-    Wiki,
-    'metadata' | 'version' | 'language' | 'author' | 'content' | 'promoted'
-  >
   activityId?: string
   wikiId?: string
   type?: string
+  categories?: BaseCategory[]
+  tags?: BaseTag[]
+  WikiImgObj?: Image[]
 }
 
 const ActivityCard = ({
@@ -40,9 +39,11 @@ const ActivityCard = ({
   title,
   brief,
   editor,
+  categories,
+  tags,
   lastModTimeStamp,
-  wiki,
   activityId,
+  WikiImgObj,
   wikiId,
   type,
 }: ActivityCardProps) => {
@@ -77,10 +78,10 @@ const ActivityCard = ({
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            imageURL={getWikiImageUrl(wiki)}
+            imageURL={getWikiImageUrl(WikiImgObj)}
             borderRadius="lg"
             overflow="hidden"
-            alt={wiki.title}
+            alt={title}
           />
         </AspectRatio>
       </Link>
@@ -128,9 +129,9 @@ const ActivityCard = ({
               </Text>
             )}
           </HStack>
-          {wiki.categories.length && (
+          {categories?.length && (
             <HStack>
-              {wiki.categories?.map((category, i) => (
+              {categories?.map((category, i) => (
                 <Link key={i} href={`/categories/${category.id}`} passHref>
                   <Text
                     as="a"
@@ -198,7 +199,7 @@ const ActivityCard = ({
                 </Link>
               </Text>
               <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
-                {wiki.tags.map((tag, index) => (
+                {tags?.map((tag, index) => (
                   <NextLink href={`/tags/${tag.id}`} key={index} passHref>
                     <Tag as="a" whiteSpace="nowrap" key={index}>
                       <Text px={4}>{tag.id}</Text>
