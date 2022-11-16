@@ -27,10 +27,6 @@ export default class Document extends NextDocument {
             content="black-translucent"
           />
           <link rel="manifest" href="/manifest.json" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
-          />
         </Head>
 
         <body>
