@@ -17,7 +17,10 @@ import { NextPage } from 'next'
 import React, { useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
-import { COMMONLY_SEARCHED_WIKIS, glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
+import {
+  COMMONLY_SEARCHED_WIKIS,
+  glossaryAlphabetsData,
+} from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import {
@@ -40,7 +43,7 @@ const Glossary: NextPage = () => {
     offset: 0,
     limit: 50,
   })
-  
+
   // To be Switched to API when its ready
 
   // const { data: popularTags } = useGetTagsQuery({
@@ -179,51 +182,50 @@ const Glossary: NextPage = () => {
             justifyContent={{ lg: 'start', '2xl': 'center' }}
             gap={{ base: '5', lg: '3', '2xl': '10' }}
           >
-            {
-              COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
-                return (
-                  <>
-                    <Button
-                      style={{
-                        whiteSpace: 'normal',
-                        wordWrap: 'break-word',
-                      }}
-                      key={i}
-                      px="3"
-                      py="1"
-                      bg="transparent"
-                      color="tagColor"
-                      cursor="pointer"
-                      borderRadius="full"
-                      borderWidth="thin"
-                      fontWeight="normal"
-                      fontSize={{ base: 'sm', lg: 'md' }}
-                      onClick={() => {
-                        setActiveIndex(i)
-                        setSearchText(word)
-                        searchPage(word)
-                      }}
-                      isActive={i === activeIndex}
-                      _focus={{
-                        boxShadow: 'none',
-                      }}
-                      _hover={{
-                        bgColor: 'tagHoverColor',
-                      }}
-                      _dark={{
-                        borderColor: 'whiteAlpha.700',
-                      }}
-                      _active={{
-                        bgColor: 'tagActiveBgColor',
-                        color: 'tagActiveColor',
-                        borderStyle: 'none',
-                      }}
-                    >
-                      {word}
-                    </Button>
-                  </>
-                )
-              })}
+            {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
+              return (
+                <>
+                  <Button
+                    style={{
+                      whiteSpace: 'normal',
+                      wordWrap: 'break-word',
+                    }}
+                    key={i}
+                    px="3"
+                    py="1"
+                    bg="transparent"
+                    color="tagColor"
+                    cursor="pointer"
+                    borderRadius="full"
+                    borderWidth="thin"
+                    fontWeight="normal"
+                    fontSize={{ base: 'sm', lg: 'md' }}
+                    onClick={() => {
+                      setActiveIndex(i)
+                      setSearchText(word)
+                      searchPage(word)
+                    }}
+                    isActive={i === activeIndex}
+                    _focus={{
+                      boxShadow: 'none',
+                    }}
+                    _hover={{
+                      bgColor: 'tagHoverColor',
+                    }}
+                    _dark={{
+                      borderColor: 'whiteAlpha.700',
+                    }}
+                    _active={{
+                      bgColor: 'tagActiveBgColor',
+                      color: 'tagActiveColor',
+                      borderStyle: 'none',
+                    }}
+                  >
+                    {word}
+                  </Button>
+                </>
+              )
+            })}
           </Flex>
         </Box>
       </VStack>
