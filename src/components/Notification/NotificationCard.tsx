@@ -37,15 +37,9 @@ const NotificationCard = ({
   const [addSubscription] = useAddSubscriptionMutation()
 
   const SubscribeWikiHandler = async () => {
-    console.log({
-      userId: profileData?.id,
-      auxiliaryId: wikiId,
-      notificationType: type,
-      email: profileData?.email,
-    })
     const data = await addSubscription({
-      userId: profileData?.id,
-      notificationType: type,
+      userId: userAddress,
+      notificationType: 'wiki',
       auxiliaryId: wikiId,
       email: profileData?.email,
     })

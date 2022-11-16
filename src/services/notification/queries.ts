@@ -1,16 +1,40 @@
 import { gql } from 'graphql-request'
 
 export const ADD_WIKI_SUBSCRIPTION = gql`
-  mutation addWikiSubscription($userId: String!, $notificationType: String!, $auxiliaryId: String!, $email: String!) {
-        addWikiSubscription(userId: $userId, notificationType: $notificationType, auxiliaryId: $auxiliaryId, email: $email)
+  mutation addWikiSubscription(
+    $userId: String!
+    $notificationType: String!
+    $auxiliaryId: String!
+    $email: String!
+  ) {
+    addWikiSubscription(
+      userId: $userId
+      notificationType: $notificationType
+      auxiliaryId: $auxiliaryId
+      email: $email
+    ) {
+      id
+      auxiliaryId
+      email
+      notificationType
+      userId
     }
   }
 `
 
 export const REMOVE_WIKI_SUBSCRIPTION = gql`
-  mutation removeWikiSubscription($userId: String!, $notificationType: String!, $auxiliaryId: String!, $email: String!) {
-        removeWikiSubscription(userId: $userId, notificationType: $notificationType, auxiliaryId: $auxiliaryId, email: $email)
-    }
+  mutation removeWikiSubscription(
+    $userId: String!
+    $notificationType: String!
+    $auxiliaryId: String!
+    $email: String!
+  ) {
+    removeWikiSubscription(
+      userId: $userId
+      notificationType: $notificationType
+      auxiliaryId: $auxiliaryId
+      email: $email
+    )
   }
 `
 
