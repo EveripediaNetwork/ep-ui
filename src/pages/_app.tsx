@@ -8,12 +8,12 @@ import { Provider as ReduxProviderClass } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
-import Fonts from '@/theme/Fonts'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
 import '../utils/i18n'
 import { DynamicWagmiProvider } from '@/components/Wagmi/DynamicWagmiProvider'
+import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
@@ -25,6 +25,10 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
 
+export const montserrat = Montserrat({
+  subsets: ['latin'],
+})
+
 const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
@@ -34,11 +38,15 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
 
   return (
     <StrictMode>
+      <style jsx global>{`
+        :root {
+          --montserrat-font: ${montserrat.style.fontFamily};
+        }
+      `}</style>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
-          <Fonts />
           <DynamicWagmiProvider>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
