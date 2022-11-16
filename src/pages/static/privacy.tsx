@@ -37,11 +37,10 @@ const Privacy = () => (
             committed to protecting your privacy. This Privacy Policy explains
             how information about you or associated with you (&#x22;personal
             information&#x22;) is collected, used and disclosed by IQ.wiki Inc.
-            and its affiliates (including PredIQt), which own and operate
-            IQ.wiki services (&#x22;IQ.wiki,&#x22; &#x22;we&#x22; or
-            &#x22;us&#x22;). This Policy applies to the online services offered
-            by IQ.wiki at IQ.wiki (the &#x22;Website&#x22; or &#x22;Our
-            Service&#x22;).
+            and its affiliates, which own and operate IQ.wiki services
+            (&#x22;IQ.wiki,&#x22; &#x22;we&#x22; or &#x22;us&#x22;). This Policy
+            applies to the online services offered by IQ.wiki at IQ.wiki (the
+            &#x22;Website&#x22; or &#x22;Our Service&#x22;).
           </Text>
           <Heading as="h2" size="md">
             INFORMATION WE COLLECT
