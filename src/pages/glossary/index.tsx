@@ -57,7 +57,7 @@ const Glossary: NextPage = () => {
   const [activeIndex, setActiveIndex] = useState<number>()
 
   const searchPage = (input: string) => {
-    const letter = 
+    const letter =
       input.length > 1
         ? input[0].toLocaleUpperCase()
         : input.toLocaleUpperCase()
@@ -94,7 +94,7 @@ const Glossary: NextPage = () => {
             ref={ref}
           >
             Crypto terminology can be difficult to figure out, especially if
-            you&lsquo;re new to the blockchain.{' '} <br/>
+            you&lsquo;re new to the blockchain. <br />
             Here&lsquo;s a guide to help you navigate the exciting frontier of
             Web3.
           </Text>
@@ -108,7 +108,6 @@ const Glossary: NextPage = () => {
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
-        
         top={shouldBeFixed ? '14' : '0'}
         bg="blogPageBg"
         position={shouldBeFixed ? 'fixed' : 'relative'}
