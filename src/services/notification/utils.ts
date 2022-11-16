@@ -35,7 +35,6 @@ export const useWikiSubscriptions = (userId: string) => {
       setWikiSubscriptions(wikiSubsDetailsData)
     }
     fetchData()
-    console.log({ wikiSubs })
   }, [wikiSubs])
 
   return { wikiSubscriptions, error, isLoading }

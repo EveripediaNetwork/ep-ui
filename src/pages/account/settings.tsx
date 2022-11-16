@@ -10,6 +10,7 @@ import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
 
 const NotificationSettings = dynamic(
@@ -98,7 +99,7 @@ const Settings = () => {
           )}
           {tab === 'notifications' && (
             <NotificationSettings
-              address={userAddress}
+              address={userAddress || (getUserAddressFromCache() as string)}
               savedNotificationPrefs={
                 profileData?.notifications && profileData?.notifications[0]
               }

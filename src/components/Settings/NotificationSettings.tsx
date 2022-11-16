@@ -78,8 +78,6 @@ const NotificationSettings = ({
   const [postUserProfile] = usePostUserProfileMutation()
   const { wikiSubscriptions } = useWikiSubscriptions(address)
 
-  console.log('wikiSubscriptions', wikiSubscriptions)
-
   const route = useRouter()
 
   const [notificationPrefs, setNotificationPrefs] = useState<
