@@ -107,15 +107,16 @@ const Glossary: NextPage = () => {
         borderTop="1px"
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
-        px={{ base: '9', lg: '30' }}
+        px={{ base: '8', lg: '28' }}
         top={shouldBeFixed ? '14' : '0'}
         bg="blogPageBg"
         position={shouldBeFixed ? 'fixed' : 'relative'}
+        zIndex="tooltip"
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Grid
             templateColumns={{ base: 'repeat(14,1fr)', lg: 'repeat(27,1fr)' }}
-            gap={1}
+            gap={3}
             py="7"
           >
             {glossaryAlphabetsData.map((item, i) => (
@@ -143,7 +144,7 @@ const Glossary: NextPage = () => {
               </GridItem>
             ))}
           </Grid>
-          <Box w="full" px="2" py="3">
+          <Box w="full">
             <InputGroup size="lg" w="full">
               <InputLeftElement
                 ml={{ base: '15px', xl: 'unset' }}
@@ -165,13 +166,12 @@ const Glossary: NextPage = () => {
             </InputGroup>
           </Box>
           <Flex
-            py="3"
-            px={{ lg: '2', '2xl': '10' }}
+            my="8"
             w="full"
             wrap="wrap"
             alignItems="center"
             justifyContent={{ lg: 'start', '2xl': 'center' }}
-            gap={{ base: '3', lg: '3', '2xl': '10' }}
+            gap={{ base: '5', lg: '3', '2xl': '10' }}
           >
             {glossaryTags &&
               glossaryTags[0]?.wikis?.map((word, i) => {
