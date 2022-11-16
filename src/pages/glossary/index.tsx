@@ -178,7 +178,7 @@ const Glossary: NextPage = () => {
             gap={{ base: '5', lg: '3', '2xl': '10' }}
           >
             {glossaryTags &&
-              glossaryTags[0]?.wikis?.slice(0,5)?.map((word, i) => {
+              glossaryTags[0]?.wikis?.slice(0, 5)?.map((word, i) => {
                 return (
                   <>
                     <Button
