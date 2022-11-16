@@ -26,6 +26,8 @@ import {
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 
+const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
+
 const Glossary: NextPage = () => {
   const { ref, entry } = useInView({
     threshold: 0,
@@ -40,19 +42,22 @@ const Glossary: NextPage = () => {
   })
 
   const { data: popularTags } = useGetTagsQuery({
-    startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
-    endDate: Math.floor(Date.now() / 1000),
+    startDate: CONVERTED_CURRENT_DATE - 60 * 60 * 24 * 30,
+    endDate: CONVERTED_CURRENT_DATE,
   })
-  const glossaryTgas = popularTags?.filter(item => item.id === 'Glossary')
+
+  const glossaryTags = popularTags?.filter(item => item.id === 'Glossary')
+
   const [searchText, setSearchText] = useState<string>('')
 
   const shouldBeFixed =
     entry?.intersectionRatio !== undefined && !entry?.isIntersecting
 
   const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
-  const [isActive, setIsActive] = useState<number>()
+  const [activeIndex, setActiveIndex] = useState<number>()
+
   const searchPage = (input: string) => {
-    const letter =
+    const letter = 
       input.length > 1
         ? input[0].toLocaleUpperCase()
         : input.toLocaleUpperCase()
@@ -65,39 +70,31 @@ const Glossary: NextPage = () => {
         : -(heightOfElement ? heightOfElement + 228 : 512),
     })
   }
+
   return (
     <Stack direction="column" w="full" pb="56">
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
-        w="full"
         px={{ base: 3, lg: 10 }}
-        mt={{ base: 4, lg: 0 }}
       >
         <VStack
           w="full"
           alignItems="center"
           textAlign="center"
-          spacing={2}
-          mb={10}
-          mt={5}
+          spacing={3}
+          my={14}
         >
-          <Heading w="full" fontSize={{ base: '35', sm: '42', lg: '54' }}>
+          <Heading w="full" fontSize={{ base: '32', md: '42', lg: '4xl' }}>
             <chakra.span color="brandLinkColor"> IQ.WIKI</chakra.span> Glossary
           </Heading>
           <Text
-            w={{ base: '80%', md: '70%', xl: '90%' }}
-            fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+            w={{ base: '90%', md: '80%', xl: '90%' }}
+            fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }}
+            ref={ref}
           >
             Crypto terminology can be difficult to figure out, especially if
-            you&lsquo;re new to the blockchain.{' '}
-          </Text>
-          <Text
-            ref={ref}
-            w={{ base: 'full', md: '80%', xl: '90%' }}
-            fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
-            pb={2}
-          >
+            you&lsquo;re new to the blockchain.{' '} <br/>
             Here&lsquo;s a guide to help you navigate the exciting frontier of
             Web3.
           </Text>
@@ -111,7 +108,7 @@ const Glossary: NextPage = () => {
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
         px={{ base: '9', lg: '30' }}
-        zIndex="999"
+        
         top={shouldBeFixed ? '14' : '0'}
         bg="blogPageBg"
         position={shouldBeFixed ? 'fixed' : 'relative'}
@@ -177,8 +174,8 @@ const Glossary: NextPage = () => {
             justifyContent={{ lg: 'start', '2xl': 'center' }}
             gap={{ base: '3', lg: '3', '2xl': '10' }}
           >
-            {glossaryTgas &&
-              glossaryTgas[0]?.wikis?.map((word, i) => {
+            {glossaryTags &&
+              glossaryTags[0]?.wikis?.map((word, i) => {
                 return (
                   <>
                     {i < 5 && (
@@ -194,11 +191,11 @@ const Glossary: NextPage = () => {
                         fontWeight="normal"
                         fontSize={{ base: 'sm', lg: 'md' }}
                         onClick={() => {
-                          setIsActive(i)
+                          setActiveIndex(i)
                           setSearchText(word.title)
                           searchPage(word.title)
                         }}
-                        isActive={i === isActive}
+                        isActive={i === activeIndex}
                         _active={{
                           bgColor: 'brand.50',
                           _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
