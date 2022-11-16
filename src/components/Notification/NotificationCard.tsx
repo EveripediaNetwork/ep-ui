@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { HStack, Button } from '@chakra-ui/react'
+import { HStack, Button, useToast } from '@chakra-ui/react'
 import { User, Wiki } from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
@@ -30,21 +30,31 @@ const NotificationCard = ({
   wikiId,
   type,
 }: NotificationCardProps) => {
-  const userAddress = getUserAddressFromCache()
+  const userAddress = getUserAddressFromCache() as string
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
   const [addSubscription] = useAddSubscriptionMutation()
+  const toast = useToast()
 
   const SubscribeWikiHandler = async () => {
-    const data = await addSubscription({
+    if (!profileData?.email) {
+      toast({
+        title: 'Subscription Failed',
+        description: 'Please add email to your profile settings.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+      return
+    }
+
+    await addSubscription({
       userId: userAddress,
       notificationType: 'wiki',
       auxiliaryId: wikiId,
       email: profileData?.email,
     })
-
-    console.log(data)
   }
 
   useEffect(() => {

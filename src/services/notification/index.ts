@@ -1,31 +1,23 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
-import config from '@/config'
 import {
   ADD_WIKI_SUBSCRIPTION,
   REMOVE_WIKI_SUBSCRIPTION,
   WIKI_SUBSCRIPTIONS,
 } from '@/services/notification/queries'
+import { profileApiClient } from '../profile'
 
-export type SubscriptionArgs = {
+export interface SubscriptionArgs {
   userId?: string
   notificationType?: string
-  email: string
+  email?: string
   auxiliaryId?: string
 }
 
 export type WikiSubs = {
   auxiliaryId: string
   notificationType: string
-}
-
-export interface AddWikiSubscriptionArgs extends SubscriptionArgs {
-  addwikiSubscription: SubscriptionArgs
-}
-
-export interface RemoveWikiSubscriptionArgs extends SubscriptionArgs {
-  removeWikiSubscription: SubscriptionArgs
 }
 
 export const notificationSubscriptionApi = createApi({
@@ -38,10 +30,10 @@ export const notificationSubscriptionApi = createApi({
   },
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
+  baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
   endpoints: builder => ({
-    addSubscription: builder.mutation<string, AddWikiSubscriptionArgs>({
-      query: (addWikiSubscriptionArgs: AddWikiSubscriptionArgs) => {
+    addSubscription: builder.mutation<string, SubscriptionArgs>({
+      query: (addWikiSubscriptionArgs: SubscriptionArgs) => {
         return {
           document: ADD_WIKI_SUBSCRIPTION,
           variables: {
@@ -53,8 +45,8 @@ export const notificationSubscriptionApi = createApi({
         }
       },
     }),
-    removeSubscription: builder.mutation<boolean, RemoveWikiSubscriptionArgs>({
-      query: (removeWikiSubscriptionArgs: RemoveWikiSubscriptionArgs) => {
+    removeSubscription: builder.mutation<boolean, SubscriptionArgs>({
+      query: (removeWikiSubscriptionArgs: SubscriptionArgs) => {
         return {
           document: REMOVE_WIKI_SUBSCRIPTION,
           variables: {
