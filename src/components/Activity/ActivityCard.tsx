@@ -57,6 +57,7 @@ const ActivityCard = ({
       justifyContent="flex-start"
       borderWidth="1px"
       borderColor="cardBorder"
+      minW="0"
       borderRadius="lg"
       boxShadow="0px 4px 8px rgba(0, 0, 0, 0.10)"
       px={{ base: isNotifSubCard ? 2 : 3, lg: 5 }}
@@ -95,8 +96,8 @@ const ActivityCard = ({
         <Flex justifyContent="space-between" mb={{ base: 0, md: 2 }}>
           <HStack
             w={{
-              base: isNotifSubCard ? '40%' : '83%',
-              md: isNotifSubCard ? '30%' : '70%',
+              base: '83%',
+              md: '70%',
             }}
           >
             <Heading
@@ -104,7 +105,7 @@ const ActivityCard = ({
               as="h2"
               fontSize={{
                 base: isNotifSubCard ? '14px' : '16px',
-                md: isNotifSubCard ? '16px' : '18px',
+                md: '18px',
               }}
               letterSpacing="wide"
               overflow="hidden"
