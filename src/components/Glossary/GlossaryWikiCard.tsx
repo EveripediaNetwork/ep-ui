@@ -30,7 +30,7 @@ const GlossaryWikiCard = ({
       borderColor="borderColorHover"
       overflow="hidden"
       borderRadius="12px"
-      w="60%"
+      w={{base: '85%', md: "90%", lg: "70%"}}
       p="3"
       _hover={{
         bgColor: 'gray.100',

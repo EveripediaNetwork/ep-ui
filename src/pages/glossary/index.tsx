@@ -107,15 +107,15 @@ const Glossary: NextPage = () => {
         borderTop="1px"
         mx="auto"
         borderTopColor="carouselArrowBorderColor"
-        px={{ base: '8', lg: '28' }}
+        px={{ base: '9', lg: '32' }}
         top={shouldBeFixed ? '14' : '0'}
         bg="blogPageBg"
         position={shouldBeFixed ? 'fixed' : 'relative'}
-        zIndex="tooltip"
+        zIndex="sticky"
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Grid
-            templateColumns={{ base: 'repeat(14,1fr)', lg: 'repeat(27,1fr)' }}
+            templateColumns={{ base: 'repeat(14,1fr)', md: 'repeat(20,1fr)', lg: 'repeat(27,1fr)' }}
             gap={3}
             py="7"
           >
@@ -179,11 +179,15 @@ const Glossary: NextPage = () => {
                   <>
                     {i < 5 && (
                       <Button
+                        style={{
+                          whiteSpace: 'normal',
+                          wordWrap: 'break-word',
+                        }}
                         key={i}
                         px="3"
                         py="1"
                         bg="transparent"
-                        color="gray.500"
+                        color="tagColor"
                         cursor="pointer"
                         borderRadius="full"
                         borderWidth="thin"
@@ -195,23 +199,19 @@ const Glossary: NextPage = () => {
                           searchPage(word.title)
                         }}
                         isActive={i === activeIndex}
-                        _active={{
-                          bgColor: 'brand.50',
-                          _dark: { bgColor: '#FFB3D7', color: '#FF409B' },
-                          color: '#FE6FB5',
-                        }}
                         _focus={{
                           boxShadow: 'none',
                         }}
                         _hover={{
-                          bgColor: 'gray.100',
-                          _dark: {
-                            bgColor: 'whiteAlpha.100',
-                          },
+                          bgColor: 'tagHoverColor',
                         }}
                         _dark={{
-                          color: 'whiteAlpha.900',
                           borderColor: 'whiteAlpha.700',
+                        }}
+                        _active={{
+                          bgColor: 'tagActiveBgColor',
+                          color: 'tagActiveColor',
+                          borderStyle: 'none',
                         }}
                       >
                         {word.title}
