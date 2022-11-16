@@ -43,8 +43,7 @@ const GlossaryItem = ({
             <Box
               w="full"
               py="1"
-              bg="gray.50"
-              _dark={{ bg: 'whiteAlpha.50' }}
+              bg="glossaryItemBg"
               my="4"
               px={{ base: 8, md: 10, lg: '32' }}
             >

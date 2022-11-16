@@ -197,5 +197,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.500',
       _dark: 'brand.800',
     },
+    glossaryItemBg: {
+      default: 'gray.50',
+      _dark: 'whiteAlpha.50',
+    },
   },
 }

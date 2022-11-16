@@ -33,10 +33,7 @@ const GlossaryWikiCard = ({
       w={{ base: '85%', md: '90%', lg: '70%' }}
       p="3"
       _hover={{
-        bgColor: 'gray.100',
-        _dark: {
-          bgColor: 'whiteAlpha.100',
-        },
+        bgColor: 'tagHoverColor',
       }}
     >
       <Box cursor="pointer" w="full">

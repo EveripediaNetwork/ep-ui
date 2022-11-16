@@ -178,49 +178,47 @@ const Glossary: NextPage = () => {
             gap={{ base: '5', lg: '3', '2xl': '10' }}
           >
             {glossaryTags &&
-              glossaryTags[0]?.wikis?.map((word, i) => {
+              glossaryTags[0]?.wikis?.slice(0,5)?.map((word, i) => {
                 return (
                   <>
-                    {i < 5 && (
-                      <Button
-                        style={{
-                          whiteSpace: 'normal',
-                          wordWrap: 'break-word',
-                        }}
-                        key={i}
-                        px="3"
-                        py="1"
-                        bg="transparent"
-                        color="tagColor"
-                        cursor="pointer"
-                        borderRadius="full"
-                        borderWidth="thin"
-                        fontWeight="normal"
-                        fontSize={{ base: 'sm', lg: 'md' }}
-                        onClick={() => {
-                          setActiveIndex(i)
-                          setSearchText(word.title)
-                          searchPage(word.title)
-                        }}
-                        isActive={i === activeIndex}
-                        _focus={{
-                          boxShadow: 'none',
-                        }}
-                        _hover={{
-                          bgColor: 'tagHoverColor',
-                        }}
-                        _dark={{
-                          borderColor: 'whiteAlpha.700',
-                        }}
-                        _active={{
-                          bgColor: 'tagActiveBgColor',
-                          color: 'tagActiveColor',
-                          borderStyle: 'none',
-                        }}
-                      >
-                        {word.title}
-                      </Button>
-                    )}
+                    <Button
+                      style={{
+                        whiteSpace: 'normal',
+                        wordWrap: 'break-word',
+                      }}
+                      key={i}
+                      px="3"
+                      py="1"
+                      bg="transparent"
+                      color="tagColor"
+                      cursor="pointer"
+                      borderRadius="full"
+                      borderWidth="thin"
+                      fontWeight="normal"
+                      fontSize={{ base: 'sm', lg: 'md' }}
+                      onClick={() => {
+                        setActiveIndex(i)
+                        setSearchText(word.title)
+                        searchPage(word.title)
+                      }}
+                      isActive={i === activeIndex}
+                      _focus={{
+                        boxShadow: 'none',
+                      }}
+                      _hover={{
+                        bgColor: 'tagHoverColor',
+                      }}
+                      _dark={{
+                        borderColor: 'whiteAlpha.700',
+                      }}
+                      _active={{
+                        bgColor: 'tagActiveBgColor',
+                        color: 'tagActiveColor',
+                        borderStyle: 'none',
+                      }}
+                    >
+                      {word.title}
+                    </Button>
                   </>
                 )
               })}
