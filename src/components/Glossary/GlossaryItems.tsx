@@ -46,7 +46,7 @@ const GlossaryItem = ({
               bg="gray.50"
               _dark={{ bg: 'whiteAlpha.50' }}
               my="4"
-              px={{base: 8, md: 10, lg: "32"}}
+              px={{ base: 8, md: 10, lg: '32' }}
             >
               <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
                 {item}

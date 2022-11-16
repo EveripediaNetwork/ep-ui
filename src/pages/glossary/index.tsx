@@ -115,7 +115,11 @@ const Glossary: NextPage = () => {
       >
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Grid
-            templateColumns={{ base: 'repeat(14,1fr)', md: 'repeat(20,1fr)', lg: 'repeat(27,1fr)' }}
+            templateColumns={{
+              base: 'repeat(14,1fr)',
+              md: 'repeat(20,1fr)',
+              lg: 'repeat(27,1fr)',
+            }}
             gap={3}
             py="7"
           >
