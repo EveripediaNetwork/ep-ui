@@ -30,11 +30,7 @@ const GlossaryItem = ({
     }
     return 0
   }
-  const SortedWikis: Wiki[] = wikis?.slice()
-  SortedWikis?.sort((a, b) => {
-    const Data = a.title.trim().localeCompare(b.title.trim())
-    return Data
-  })
+
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
@@ -61,7 +57,7 @@ const GlossaryItem = ({
             direction="column"
             gap="14"
           >
-            {SortedWikis.map(ob => (
+            {wikis?.map(ob => (
               <>
                 {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard
