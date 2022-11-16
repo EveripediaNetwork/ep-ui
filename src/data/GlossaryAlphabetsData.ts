@@ -28,7 +28,7 @@ export const glossaryAlphabetsData = [
   'Z',
 ]
 
-export const commonSearchedWikis = [
+export const COMMONLY_SEARCHED_WIKIS = [
   'AltCoin',
   'Defi',
   'Coinbase',

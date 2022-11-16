@@ -17,16 +17,16 @@ import { NextPage } from 'next'
 import React, { useState } from 'react'
 import { Link } from 'react-scroll'
 import * as Scroll from 'react-scroll'
-import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
+import { COMMONLY_SEARCHED_WIKIS, glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import {
   useGetGlossaryTagWikisQuery,
-  useGetTagsQuery,
+  // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 
-const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
+// const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 
 const Glossary: NextPage = () => {
   const { ref, entry } = useInView({
@@ -40,13 +40,15 @@ const Glossary: NextPage = () => {
     offset: 0,
     limit: 50,
   })
+  
+  // To be Switched to API when its ready
 
-  const { data: popularTags } = useGetTagsQuery({
-    startDate: CONVERTED_CURRENT_DATE - 60 * 60 * 24 * 30,
-    endDate: CONVERTED_CURRENT_DATE,
-  })
+  // const { data: popularTags } = useGetTagsQuery({
+  //   startDate: CONVERTED_CURRENT_DATE - 60 * 60 * 24 * 30,
+  //   endDate: CONVERTED_CURRENT_DATE,
+  // })
 
-  const glossaryTags = popularTags?.filter(item => item.id === 'Glossary')
+  // const glossaryTags = popularTags?.filter(item => item.id === 'Glossary')
 
   const [searchText, setSearchText] = useState<string>('')
 
@@ -177,8 +179,8 @@ const Glossary: NextPage = () => {
             justifyContent={{ lg: 'start', '2xl': 'center' }}
             gap={{ base: '5', lg: '3', '2xl': '10' }}
           >
-            {glossaryTags &&
-              glossaryTags[0]?.wikis?.slice(0, 5)?.map((word, i) => {
+            {
+              COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
                 return (
                   <>
                     <Button
@@ -198,8 +200,8 @@ const Glossary: NextPage = () => {
                       fontSize={{ base: 'sm', lg: 'md' }}
                       onClick={() => {
                         setActiveIndex(i)
-                        setSearchText(word.title)
-                        searchPage(word.title)
+                        setSearchText(word)
+                        searchPage(word)
                       }}
                       isActive={i === activeIndex}
                       _focus={{
@@ -217,7 +219,7 @@ const Glossary: NextPage = () => {
                         borderStyle: 'none',
                       }}
                     >
-                      {word.title}
+                      {word}
                     </Button>
                   </>
                 )
