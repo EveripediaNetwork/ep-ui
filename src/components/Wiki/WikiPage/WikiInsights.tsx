@@ -91,7 +91,7 @@ const WikiInsights = ({
             ipfsHash={ipfs || wiki.ipfs}
             txHash={wiki.transactionHash}
             createdBy={wiki.author}
-            imgSrc={getWikiImageUrl(wiki)}
+            imgSrc={getWikiImageUrl(wiki.images)}
           />
           <ProfileSummary wiki={wiki} />
           {!!coingeckoLink && (

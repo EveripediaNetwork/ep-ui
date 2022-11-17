@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { HStack, Button, useToast } from '@chakra-ui/react'
-import { User, Wiki } from '@/types/Wiki'
+import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
 import { useAddSubscriptionMutation } from '@/services/notification'
@@ -11,22 +11,23 @@ interface NotificationCardProps {
   brief: string
   editor: User
   lastModTimeStamp?: string
-  wiki: Omit<
-    Wiki,
-    'metadata' | 'version' | 'language' | 'author' | 'content' | 'promoted'
-  >
   activityId?: string
   wikiId?: string
   type?: string
+  categories?: BaseCategory[]
+  tags?: BaseTag[]
+  WikiImgObj?: Image[]
 }
 
 const NotificationCard = ({
   title,
   brief,
   editor,
+  categories,
+  tags,
   lastModTimeStamp,
-  wiki,
   activityId,
+  WikiImgObj,
   wikiId,
   type,
 }: NotificationCardProps) => {
@@ -49,12 +50,13 @@ const NotificationCard = ({
       return
     }
 
-    await addSubscription({
-      userId: userAddress,
-      notificationType: 'wiki',
-      auxiliaryId: wikiId,
-      email: profileData?.email,
-    })
+    if (wikiId)
+      await addSubscription({
+        userId: userAddress,
+        notificationType: 'wiki',
+        auxiliaryId: wikiId,
+        email: profileData?.email,
+      })
   }
 
   useEffect(() => {
@@ -71,10 +73,12 @@ const NotificationCard = ({
         brief={brief}
         editor={editor}
         lastModTimeStamp={lastModTimeStamp}
-        wiki={wiki}
         type={type}
         activityId={activityId}
         wikiId={wikiId}
+        categories={categories}
+        tags={tags}
+        WikiImgObj={WikiImgObj}
       />
       <Button
         px={{ base: 0, md: 10 }}

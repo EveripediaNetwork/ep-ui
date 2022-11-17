@@ -5,7 +5,7 @@ export interface BaseCategory {
   title: string
 }
 
-export interface Tag {
+export interface BaseTag {
   id: string
 }
 
@@ -163,7 +163,7 @@ export interface Wiki {
   title: string
   content: string
   categories: BaseCategory[]
-  tags: Tag[]
+  tags: BaseTag[]
   images?: Image[]
   media?: Media[]
   user: User
@@ -175,6 +175,18 @@ export interface Wiki {
   author: Author
   hidden: boolean
 }
+
+export type ActivityCardDetails = Pick<
+  Wiki,
+  | 'id'
+  | 'title'
+  | 'summary'
+  | 'images'
+  | 'categories'
+  | 'tags'
+  | 'user'
+  | 'updated'
+>
 
 export type WikiPreview = Pick<
   Wiki,

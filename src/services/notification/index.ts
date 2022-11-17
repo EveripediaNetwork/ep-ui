@@ -9,10 +9,10 @@ import {
 import { profileApiClient } from '../profile'
 
 export interface SubscriptionArgs {
-  userId?: string
-  notificationType?: string
-  email?: string
-  auxiliaryId?: string
+  userId: string
+  notificationType: string
+  email: string
+  auxiliaryId: string
 }
 
 export type WikiSubs = {
@@ -42,6 +42,30 @@ export const notificationSubscriptionApi = createApi({
             notificationType: addWikiSubscriptionArgs.notificationType,
             email: addWikiSubscriptionArgs.email,
           },
+        }
+      },
+      async onQueryStarted(
+        { userId, auxiliaryId, notificationType },
+        { dispatch, queryFulfilled },
+      ) {
+        if (!userId) return
+        const patchResult = dispatch(
+          notificationSubscriptionApi.util.updateQueryData(
+            'getAllWikiSubscription',
+            userId,
+            list => [...list, { auxiliaryId, notificationType }],
+          ),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+
+          /**
+           * Alternatively, on failure you can invalidate the corresponding cache tags
+           * to trigger a re-fetch:
+           * dispatch(api.util.invalidateTags(['Post']))
+           */
         }
       },
     }),

@@ -68,8 +68,6 @@ export const PromoteCreatedWikisModal = ({
     }
   }
 
-  // console.log(promotedWikis)
-
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
@@ -147,7 +145,7 @@ export const PromoteCreatedWikisModal = ({
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={getWikiImageUrl(Data)}
+              imageURL={getWikiImageUrl(Data.images)}
               borderRadius="lg"
               overflow="hidden"
               alt="wiki"

@@ -13,9 +13,11 @@ import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileNotifications } from '@/types/ProfileType'
 import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
-import EmptyNotification from '@/components/Settings/Notification/EmptyNotification'
 import SearchWikiNotificationsResult from '@/components/Settings/Notification/SearchWikiNotificationsResult'
+import { useWikiSubscriptions } from '@/services/notification/utils'
 import { WikiNotificationsRecommendations } from './Notification/NotificationWikiRecomendations'
+import NotificationCard from '../Notification/NotificationCard'
+import EmptyNotification from './Notification/EmptyNotification'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -64,7 +66,7 @@ const NotificationSettingBox = ({
 }
 
 interface NotificationSettingsProps {
-  address?: string
+  address: string
   savedNotificationPrefs?: ProfileNotifications
 }
 
@@ -74,6 +76,7 @@ const NotificationSettings = ({
 }: NotificationSettingsProps) => {
   const toast = useToast()
   const [postUserProfile] = usePostUserProfileMutation()
+  const { wikiSubscriptions } = useWikiSubscriptions(address)
 
   const route = useRouter()
 
@@ -147,7 +150,19 @@ const NotificationSettings = ({
       {route.query?.q && <SearchWikiNotificationsResult />}
       {!route.query?.q && (
         <>
-          <EmptyNotification />
+          {wikiSubscriptions && wikiSubscriptions.length ? (
+            wikiSubscriptions.map(wiki => (
+              <NotificationCard
+                brief={wiki?.summary}
+                editor={wiki?.user}
+                title={wiki?.title}
+                WikiImgObj={wiki?.images}
+                wikiId={wiki?.id}
+              />
+            ))
+          ) : (
+            <EmptyNotification />
+          )}
           <WikiNotificationsRecommendations address={address} />
         </>
       )}

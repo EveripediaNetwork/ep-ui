@@ -37,8 +37,11 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
             brief={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
-            wiki={wiki}
             wikiId={wiki.id}
+            tags={wiki.tags}
+            categories={wiki.categories}
+            activityId={wiki.id}
+            WikiImgObj={wiki.images}
           />
         )}
         <Flex
