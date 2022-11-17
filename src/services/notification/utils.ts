@@ -19,18 +19,24 @@ export const useWikiSubscriptions = (userId: string) => {
     const fetchData = async () => {
       if (!wikiSubs) return
 
+      console.log(wikiSubs)
+
       // TODO: Check this is not working
       const wikiSubsDetails = await Promise.all(
-        wikiSubs.map(async wikiSub => {
+        wikiSubs.wikiSubscriptions.map(async wikiSub => {
           return store.dispatch(
             getWikiActivityCardDetails.initiate(wikiSub.auxiliaryId),
           )
         }),
       )
 
+      console.log(wikiSubsDetails)
+
       const wikiSubsDetailsData = wikiSubsDetails
         .map(wikiSub => wikiSub.data)
         .filter(Boolean) as ActivityCardDetails[]
+
+      console.log(wikiSubsDetailsData)
 
       setWikiSubscriptions(wikiSubsDetailsData)
     }

@@ -241,6 +241,7 @@ const SearchWikiNotifications = () => {
                   fontSize={{ base: '12', md: '16' }}
                 />
                 <AutoCompleteList
+                  display={{ base: 'none', md: 'block' }}
                   p="0"
                   maxH="auto"
                   borderWidth="1px"

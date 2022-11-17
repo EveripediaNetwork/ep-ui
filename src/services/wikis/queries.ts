@@ -17,7 +17,7 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
 `
 
 export const GET_ACTIVITY_CARD_DETAILS = gql`
-  query GetActivityCardDetails($id: String!) {
+  query wikisByTitle($id: String!) {
     wiki(id: $id) {
       id
       title
