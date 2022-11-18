@@ -2,6 +2,7 @@ import { store } from '@/store/store'
 import { Activity } from '@/types/ActivityDataType'
 import { useEffect, useState } from 'react'
 import { getUserCreatedWikis, getUserEditedWikis, postWikiViewCount } from '.'
+import { useGetAllWikiSubscriptionQuery } from '../notification'
 
 export const incrementWikiViewCount = async (slug: string) => {
   if (!slug) return
@@ -35,6 +36,7 @@ function shuffleArray(a: Activity[]) {
 
 export const useWikiSubRecommendations = (userId?: string) => {
   const [recommendations, setRecommendations] = useState<Activity[]>([])
+  const { data: wikiSubs } = useGetAllWikiSubscriptionQuery(userId || '')
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     const getRecommendations = async () => {
@@ -49,13 +51,15 @@ export const useWikiSubRecommendations = (userId?: string) => {
           shuffleArray([
             ...(createdWikis.data || []),
             ...(editedWikis.data || []),
-          ]).slice(0, 3),
+          ])
+            .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.wikiId))
+            .slice(0, 3),
         )
         setLoading(false)
       })
     }
     getRecommendations()
-  }, [userId])
+  }, [userId, wikiSubs])
 
   return { recommendations, loading }
 }
