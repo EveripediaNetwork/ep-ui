@@ -153,6 +153,7 @@ const NotificationSettings = ({
           {wikiSubscriptions && wikiSubscriptions.length ? (
             wikiSubscriptions.map(wiki => (
               <NotificationCard
+                defaultSubscribed
                 brief={wiki?.summary}
                 editor={wiki?.user}
                 title={wiki?.title}

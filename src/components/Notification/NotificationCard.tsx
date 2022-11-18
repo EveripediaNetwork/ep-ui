@@ -17,6 +17,7 @@ interface NotificationCardProps {
   categories?: BaseCategory[]
   tags?: BaseTag[]
   WikiImgObj?: Image[]
+  defaultSubscribed?: boolean
 }
 
 const NotificationCard = ({
@@ -30,6 +31,7 @@ const NotificationCard = ({
   WikiImgObj,
   wikiId,
   type,
+  defaultSubscribed,
 }: NotificationCardProps) => {
   const userAddress = getUserAddressFromCache() as string
   const { setAccount, profileData } = useUserProfileData('', {
@@ -80,15 +82,25 @@ const NotificationCard = ({
         tags={tags}
         WikiImgObj={WikiImgObj}
       />
-      <Button
-        px={{ base: 0, md: 10 }}
-        fontSize={{ base: 'xs', md: 'md' }}
-        onClick={() => {
-          SubscribeWikiHandler()
-        }}
-      >
-        Add
-      </Button>
+      {!defaultSubscribed ? (
+        <Button
+          px={{ base: 0, md: 10 }}
+          fontSize={{ base: 'xs', md: 'md' }}
+          onClick={() => {
+            SubscribeWikiHandler()
+          }}
+        >
+          Add
+        </Button>
+      ) : (
+        <Button
+          variant="outline"
+          px={{ base: 0, md: 10 }}
+          fontSize={{ base: 'xs', md: 'md' }}
+        >
+          Remove
+        </Button>
+      )}
     </HStack>
   )
 }
