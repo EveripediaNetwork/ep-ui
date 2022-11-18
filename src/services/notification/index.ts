@@ -20,6 +20,10 @@ export type WikiSubs = {
   notificationType: string
 }
 
+export type WikiSubsResponse = {
+  wikiSubscriptions: WikiSubs[]
+}
+
 export const notificationSubscriptionApi = createApi({
   reducerPath: 'notificationSubscriptionApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -89,6 +93,9 @@ export const notificationSubscriptionApi = createApi({
           variables: { userId },
         }
       },
+
+      transformResponse: (response: WikiSubsResponse) =>
+        response.wikiSubscriptions,
     }),
   }),
 })
