@@ -52,7 +52,9 @@ export const useWikiSubRecommendations = (userId?: string) => {
             ...(createdWikis.data || []),
             ...(editedWikis.data || []),
           ])
-            .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.wikiId))
+            .filter(
+              w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id),
+            )
             .slice(0, 3),
         )
         setLoading(false)
