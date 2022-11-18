@@ -3,7 +3,10 @@ import { HStack, Button, useToast } from '@chakra-ui/react'
 import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
-import { useAddSubscriptionMutation } from '@/services/notification'
+import {
+  useAddSubscriptionMutation,
+  useRemoveSubscriptionMutation,
+} from '@/services/notification'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 
 interface NotificationCardProps {
@@ -38,6 +41,7 @@ const NotificationCard = ({
     withAllSettings: true,
   })
   const [addSubscription] = useAddSubscriptionMutation()
+  const [removeSubscription] = useRemoveSubscriptionMutation()
   const toast = useToast()
 
   const SubscribeWikiHandler = async () => {
@@ -54,6 +58,26 @@ const NotificationCard = ({
 
     if (wikiId)
       await addSubscription({
+        userId: userAddress,
+        notificationType: 'wiki',
+        auxiliaryId: wikiId,
+        email: profileData?.email,
+      })
+  }
+  const RemoveWikiSubscriptionHandler = async () => {
+    if (!profileData?.email) {
+      toast({
+        title: 'Remove Subscription Failed',
+        description: 'Please add email to your profile settings.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+      return
+    }
+
+    if (wikiId)
+      await removeSubscription({
         userId: userAddress,
         notificationType: 'wiki',
         auxiliaryId: wikiId,
@@ -86,9 +110,7 @@ const NotificationCard = ({
         <Button
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
-          onClick={() => {
-            SubscribeWikiHandler()
-          }}
+          onClick={SubscribeWikiHandler}
         >
           Add
         </Button>
@@ -97,6 +119,7 @@ const NotificationCard = ({
           variant="outline"
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
+          onClick={RemoveWikiSubscriptionHandler}
         >
           Remove
         </Button>

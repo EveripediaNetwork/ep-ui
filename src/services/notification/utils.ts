@@ -18,14 +18,21 @@ export const useWikiSubscriptions = (userId: string) => {
   useEffect(() => {
     const fetchData = async () => {
       if (!wikiSubs) return
-      wikiSubs.forEach(async wikiSub => {
-        const { data: wiki } = await store.dispatch(
-          getWikiActivityCardDetails.initiate(wikiSub.auxiliaryId),
-        )
-        if (wiki) setWikiSubscriptions(prev => [...prev, wiki])
-      })
-    }
 
+      const wikiSubsDetails = await Promise.all(
+        wikiSubs.map(async wikiSub => {
+          return store.dispatch(
+            getWikiActivityCardDetails.initiate(wikiSub.auxiliaryId),
+          )
+        }),
+      )
+
+      const wikiSubsDetailsData = wikiSubsDetails
+        .map(wikiSub => wikiSub.data)
+        .filter(Boolean) as ActivityCardDetails[]
+
+      setWikiSubscriptions(wikiSubsDetailsData)
+    }
     fetchData()
   }, [wikiSubs])
 

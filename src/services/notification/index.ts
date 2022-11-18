@@ -64,12 +64,6 @@ export const notificationSubscriptionApi = createApi({
           await queryFulfilled
         } catch {
           patchResult.undo()
-
-          /**
-           * Alternatively, on failure you can invalidate the corresponding cache tags
-           * to trigger a re-fetch:
-           * dispatch(api.util.invalidateTags(['Post']))
-           */
         }
       },
     }),
@@ -83,6 +77,24 @@ export const notificationSubscriptionApi = createApi({
             notificationType: removeWikiSubscriptionArgs.notificationType,
             email: removeWikiSubscriptionArgs.email,
           },
+        }
+      },
+      async onQueryStarted(
+        { userId, auxiliaryId },
+        { dispatch, queryFulfilled },
+      ) {
+        if (!userId) return
+        const patchResult = dispatch(
+          notificationSubscriptionApi.util.updateQueryData(
+            'getAllWikiSubscription',
+            userId,
+            list => list.filter(sub => sub.auxiliaryId !== auxiliaryId),
+          ),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
         }
       },
     }),
