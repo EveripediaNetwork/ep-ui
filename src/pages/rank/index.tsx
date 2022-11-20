@@ -9,20 +9,23 @@ const Rank = () => {
   return (
     <Box>
       <Box
-        bg="url(/rankingbg.png)"
-        _dark={{ backgroundColor: 'tetiaryDark' }}
-        pb={20}
+        bg="url(/rankingbg.png) center"
+        _dark={{
+          bg: 'url(/rankingDarkBG.png)  center',
+          bgSize: 'cover',
+        }}
         my={-2}
-        bgPos="center"
-        backgroundSize="contain"
+        bgSize="cover"
       >
         <RankHero />
       </Box>
       <Flex
         justifyContent="space-between"
-        maxW={{ base: '90%', '2xl': '1280px' }}
+        maxW={{ base: '90%', '2xl': '1280px', md: '90%' }}
         mx="auto"
         py={16}
+        flexWrap="wrap"
+        gap={{ base: 10, md: 4 }}
       >
         <RankCard title="NFTs" icon={BiImage} />
         <RankCard title="Cryptocyrrencies" icon={RiCoinsFill} />

@@ -12,7 +12,7 @@ export const semanticTokens: SemanticTokens = {
     },
     rankCardBorder: {
       default: '#CBD5E0',
-      _dark: '#FFFFFF',
+      _dark: '#3F444E',
     },
     inactiveText: {
       default: '#718096',
@@ -20,7 +20,7 @@ export const semanticTokens: SemanticTokens = {
     },
     primaryPinkIcon: {
       default: '#FF5CAA',
-      _dark: '#FF5CAA',
+      _dark: '#FF1A88',
     },
     dimColor: {
       default: '#0000002a',

@@ -14,26 +14,31 @@ const RankCard = ({ title, icon }: RankCardProps) => {
 
   return (
     <Flex
-      w={{ lg: '32%' }}
+      w={{ lg: '32%', md: 'auto', base: '100%' }}
       border="1px solid"
       borderColor="rankCardBorder"
       p={4}
       borderRadius="lg"
       flexDirection="column"
     >
-      <Flex gap="1" mb="4">
-        <Icon as={icon} w="24px" h="24px" color="primaryPinkIcon" />
-        <Text>{title}</Text>
+      <Flex gap="1" mb="4" alignItems="center">
+        <Icon
+          as={icon}
+          w={{ lg: '24px', md: '18px' }}
+          h={{ lg: '24px', md: '18px' }}
+          color="primaryPinkIcon"
+        />
+        <Text fontSize={{ lg: 'xl', md: 'sm' }}>{title}</Text>
       </Flex>
       <Flex gap={12} flexDir="column">
         {MarketCap.map((item, index) => {
           return (
             <Flex gap={4} alignItems="center">
               <Text fontSize="lg">{index + 1}</Text>
-              <Flex gap={2} w="100%">
+              <Flex gap={2} w="100%" alignItems="center">
                 <Box
-                  w="60px"
-                  h="auto"
+                  w={{ lg: '60px', md: '40px', base: '40px' }}
+                  h={{ lg: '35px', md: '30px', base: '30px' }}
                   bg="url(https://cryptopotato.com/wp-content/uploads/2022/01/img1_bayc.jpg)"
                   bgPos="center"
                   bgSize="cover"
@@ -41,8 +46,16 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                 />
                 <Flex w="100%">
                   <Flex flexDir="column" w="70%">
-                    <Text color="primaryPinkIcon">{item.name}</Text>
-                    <Text color="inactiveText" fontSize="md">
+                    <Text
+                      color="primaryPinkIcon"
+                      fontSize={{ md: 'sm', lg: 'md', base: 'sm' }}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      color="inactiveText"
+                      fontSize={{ md: 'sm', lg: 'md', base: 'sm' }}
+                    >
                       {item.alias}
                     </Text>
                   </Flex>
@@ -52,14 +65,19 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                     w="30%"
                     alignItems="flex-start"
                   >
-                    <Text fontSize="sm">${item.capital}</Text>
+                    <Text fontSize={{ lg: 'sm', md: 'xs', base: 'sm' }}>
+                      ${item.capital}
+                    </Text>
                     <Flex alignItems="center" gap={2}>
                       {Math.floor(Math.random() * 10) % 2 === 1 ? (
                         <AiFillCaretDown color={downIndicationIconColor} />
                       ) : (
                         <AiFillCaretUp color={upIndicationIconColor} />
                       )}
-                      <Text color="inactiveText" fontSize="sm">
+                      <Text
+                        color="inactiveText"
+                        fontSize={{ lg: 'sm', base: 'xs' }}
+                      >
                         0.89%
                       </Text>
                     </Flex>
