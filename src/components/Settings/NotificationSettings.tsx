@@ -18,6 +18,7 @@ import { useWikiSubscriptions } from '@/services/notification/utils'
 import { WikiNotificationsRecommendations } from './Notification/NotificationWikiRecomendations'
 import NotificationCard from '../Notification/NotificationCard'
 import EmptyNotification from './Notification/EmptyNotification'
+import { LoadingSkeleton } from '../Activity/LoadingSkeleton'
 
 interface NotificationSettingBoxProps {
   id: string
@@ -76,7 +77,7 @@ const NotificationSettings = ({
 }: NotificationSettingsProps) => {
   const toast = useToast()
   const [postUserProfile] = usePostUserProfileMutation()
-  const { wikiSubscriptions } = useWikiSubscriptions(address)
+  const { wikiSubscriptions, isLoading } = useWikiSubscriptions(address)
 
   const route = useRouter()
 
@@ -150,7 +151,8 @@ const NotificationSettings = ({
       {route.query?.q && <SearchWikiNotificationsResult />}
       {!route.query?.q && (
         <>
-          {wikiSubscriptions && wikiSubscriptions.length ? (
+          {isLoading && <LoadingSkeleton />}
+          {!isLoading && wikiSubscriptions && wikiSubscriptions.length ? (
             wikiSubscriptions.map(wiki => (
               <NotificationCard
                 defaultSubscribed
