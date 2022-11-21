@@ -100,9 +100,6 @@ const Settings = () => {
           {tab === 'notifications' && (
             <NotificationSettings
               address={userAddress || (getUserAddressFromCache() as string)}
-              savedNotificationPrefs={
-                profileData?.notifications && profileData?.notifications[0]
-              }
             />
           )}
           {tab === 'advanced' && <AdvancedSettings />}
