@@ -74,6 +74,9 @@ const MenuFooter = () => {
               </Link>
               <Link prefetch={false} href="/blog">{`${t('blog')}`}</Link>
               <Link prefetch={false} href="/static/faq">{`${t('faq')}`}</Link>
+              <Link prefetch={false} href="/glossary">{`${t(
+                'glossary',
+              )}`}</Link>
             </Stack>
           </GridItem>
           <GridItem colSpan={1}>
