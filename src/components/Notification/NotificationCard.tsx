@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
-import { HStack, Button, useToast } from '@chakra-ui/react'
+import { HStack, Button, useToast, UseToastOptions } from '@chakra-ui/react'
 import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
-import {
-  useAddSubscriptionMutation,
-  useRemoveSubscriptionMutation,
-} from '@/services/notification'
+import { addSubscription, removeSubscription } from '@/services/notification'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { store } from '@/store/store'
 
 interface NotificationCardProps {
   title: string
@@ -23,6 +21,61 @@ interface NotificationCardProps {
   defaultSubscribed?: boolean
 }
 
+export const SubscribeWikiHandler = async (
+  email: string | null | undefined,
+  wikiId: string | undefined,
+  userAddress: string,
+  toast: (arg0: UseToastOptions) => void,
+) => {
+  if (!email) {
+    toast({
+      title: 'Subscription Failed',
+      description: 'Please add email to your profile settings.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    })
+    return
+  }
+
+  if (wikiId) {
+    await store.dispatch(
+      addSubscription.initiate({
+        userId: userAddress,
+        notificationType: 'wiki',
+        auxiliaryId: wikiId,
+        email,
+      }),
+    )
+  }
+}
+export const RemoveWikiSubscriptionHandler = async (
+  email: string | null | undefined,
+  wikiId: string | undefined,
+  userAddress: string,
+  toast: (arg0: UseToastOptions) => void,
+) => {
+  if (!email) {
+    toast({
+      title: 'Remove Subscription Failed',
+      description: 'Please add email to your profile settings.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    })
+    return
+  }
+  if (wikiId) {
+    await store.dispatch(
+      removeSubscription.initiate({
+        userId: userAddress,
+        notificationType: 'wiki',
+        auxiliaryId: wikiId,
+        email,
+      }),
+    )
+  }
+}
 const NotificationCard = ({
   title,
   brief,
@@ -40,50 +93,8 @@ const NotificationCard = ({
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
-  const [addSubscription] = useAddSubscriptionMutation()
-  const [removeSubscription] = useRemoveSubscriptionMutation()
+
   const toast = useToast()
-
-  const SubscribeWikiHandler = async () => {
-    if (!profileData?.email) {
-      toast({
-        title: 'Subscription Failed',
-        description: 'Please add email to your profile settings.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-      return
-    }
-
-    if (wikiId)
-      await addSubscription({
-        userId: userAddress,
-        notificationType: 'wiki',
-        auxiliaryId: wikiId,
-        email: profileData?.email,
-      })
-  }
-  const RemoveWikiSubscriptionHandler = async () => {
-    if (!profileData?.email) {
-      toast({
-        title: 'Remove Subscription Failed',
-        description: 'Please add email to your profile settings.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-      return
-    }
-
-    if (wikiId)
-      await removeSubscription({
-        userId: userAddress,
-        notificationType: 'wiki',
-        auxiliaryId: wikiId,
-        email: profileData?.email,
-      })
-  }
 
   useEffect(() => {
     if (userAddress) {
@@ -110,7 +121,9 @@ const NotificationCard = ({
         <Button
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
-          onClick={SubscribeWikiHandler}
+          onClick={() =>
+            SubscribeWikiHandler(profileData?.email, wikiId, userAddress, toast)
+          }
         >
           Add
         </Button>
@@ -119,7 +132,14 @@ const NotificationCard = ({
           variant="outline"
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
-          onClick={RemoveWikiSubscriptionHandler}
+          onClick={() =>
+            RemoveWikiSubscriptionHandler(
+              profileData?.email,
+              wikiId,
+              userAddress,
+              toast,
+            )
+          }
         >
           Remove
         </Button>

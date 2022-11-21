@@ -43,15 +43,14 @@ const ARTICLES_LIMIT = 6
 
 const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const router = useRouter()
 
   const noResults = results.articles.length === 0
-
   const unrenderedWikis = results.articles.length - ARTICLES_LIMIT
-
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
-  const inputRef = useRef<HTMLInputElement | null>(null)
   useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
