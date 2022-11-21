@@ -154,7 +154,7 @@ const Glossary: NextPage = () => {
             ))}
           </Grid>
           <Box w="full">
-            <InputGroup size="lg" w="full">
+            <InputGroup size="md" w="full">
               <InputLeftElement
                 ml={{ base: '15px', xl: 'unset' }}
                 pointerEvents="none"
