@@ -13,10 +13,11 @@ import { BlogPost } from '@/components/Blog/BlogPost'
 import { useAppDispatch } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
 import { GetServerSideProps } from 'next'
-import { getRunningOperationPromises } from '@/services/blog'
 import { getBlogsFromAllAccounts } from '@/utils/blog.utils'
 import { Blog as BlogType } from '@/types/Blog'
 import BlogHeader from '@/components/SEO/Blog'
+import { store } from '@/store/store'
+import { ArweaveApi } from '@/services/blog'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   const [mounted, setMounted] = useState(false)
@@ -89,9 +90,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const blogEntries = await getBlogsFromAllAccounts()
-
-  await Promise.all(getRunningOperationPromises())
-
+  await Promise.all(store.dispatch(ArweaveApi.util.getRunningQueriesThunk()))
   return {
     props: {
       blogEntries,

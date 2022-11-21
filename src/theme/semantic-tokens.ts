@@ -21,6 +21,13 @@ export const semanticTokens: SemanticTokens = {
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
+    brandHero: {
+      default: 'tetiaryGray',
+      _dark: 'tetiaryDark',
+    },
+    brandAssetDownloadBttnColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
     },
     dimColor: {
       default: '#0000002a',
@@ -184,6 +191,26 @@ export const semanticTokens: SemanticTokens = {
     thirdRankColor: {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',
+    },
+    tagColor: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.900',
+    },
+    tagHoverColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.100',
+    },
+    tagActiveBgColor: {
+      default: 'brand.50',
+      _dark: '#FFB3D7',
+    },
+    tagActiveColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
+    glossaryItemBg: {
+      default: 'gray.50',
+      _dark: 'whiteAlpha.50',
     },
   },
 }

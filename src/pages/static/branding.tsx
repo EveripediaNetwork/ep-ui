@@ -7,17 +7,19 @@ import {
   List,
   ListIcon,
   ListItem,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Image } from '../../components/Elements/Image/Image'
 
 const BrandingPage = () => {
-  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('kdkd')
+  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
   const IQLogoAsset = [
     {
       bg: '/branding/iqoriginal.png',
       download: '/branding/downloadassets/logoiqoriginal',
+      dark: '/branding/iqoriginalB.png',
     },
     {
       bg: '/branding/iqwhite.png',
@@ -64,24 +66,11 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logoiqorange',
     },
   ]
-  const alternateTextAssets = [
-    {
-      bg: '/branding/brainpink.png',
-      download: '/branding/downloadassets/logobrainpink',
-    },
-    {
-      bg: '/branding/brainwhite.png',
-      download: '/branding/downloadassets/logobrainwhite',
-    },
-    {
-      bg: '/branding/brainDark.png',
-      download: '/branding/downloadassets/logobraindark',
-    },
-  ]
   const alternateLogoAssets = [
     {
       bg: '/branding/originalBraindao.png',
       download: '/branding/downloadassets/logooriginalbrain',
+      dark: '/branding/logooriginalbrainB.png',
     },
     {
       bg: '/branding/braindaowhiteNegative.png',
@@ -92,8 +81,40 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logobrainblacknegative',
     },
   ]
+  const braindaoLogoAssets = [
+    {
+      bg: '/branding/braindoawhiteW.png',
+      download: '/branding/downloadassets/logobraindoawhiteW',
+      dark: '/branding/braindoawhiteB.png',
+    },
+    {
+      bg: '/branding/braindaoblack.png',
+      download: '/branding/downloadassets/logobraindaoblack',
+    },
+    {
+      bg: '/branding/braindaodeepblack.png',
+      download: '/branding/downloadassets/logobraindaodeepblack',
+    },
+  ]
+
+  const braindaoAltLogoAssets = [
+    {
+      bg: '/branding/brainaltwhite.png',
+      download: '/branding/downloadassets/logobrainaltwhite',
+      dark: '/branding/brainaltwhiteB.png',
+    },
+    {
+      bg: '/branding/brainaltblack.png',
+      download: '/branding/downloadassets/logobraindaoaltblack',
+    },
+    {
+      bg: '/branding/braindaoaltdeepblack.png',
+      download: '/branding/downloadassets/logobraindoadeepblack',
+    },
+  ]
+  const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
   return (
-    <Box bg="tetiaryGray" _dark={{ backgroundColor: 'tetiaryDark' }} pb={20}>
+    <Box m="0" bg="brandHero" pb={20} my={-8}>
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
         <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
@@ -117,9 +138,10 @@ const BrandingPage = () => {
           </Box>
           <Image
             objectFit="contain"
-            imgH={{ base: '320px', lg: '500px' }}
-            imgW={{ base: '400px', lg: '500px' }}
-            src="/brandingBrain.png"
+            imgH={400}
+            imgW={400}
+            maxW="80vw"
+            src={heroImg}
             alt="Bringing knowledge to the blockchain."
             priority
             mt={10}
@@ -129,14 +151,15 @@ const BrandingPage = () => {
         <Flex mt={{ base: '16', lg: '10' }} mx="auto" justifyContent="center">
           <Text
             position="relative"
-            w={{ base: '100%', lg: '60%' }}
-            fontSize="2xl"
+            w={{ base: '100%', lg: '80%' }}
+            fontSize={{ base: '2xl', md: '4xl' }}
             textAlign="center"
             lineHeight="1.5"
+            my={{ base: '2', lg: '24' }}
           >
             <Text
               position="absolute"
-              top={{ base: '-5%', lg: '-20%' }}
+              top={{ base: '-10%', lg: '-20%' }}
               left={{ base: '0%', lg: '-5%', md: '-3%' }}
               fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
@@ -161,11 +184,8 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading
-              textAlign={{ base: 'center', lg: 'initial' }}
-              fontSize={{ lg: '5xl', base: '3xl' }}
-            >
-              IQ.WIKI LOGO
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              IQ LOGO
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -179,28 +199,6 @@ const BrandingPage = () => {
             </Text>
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
-            {IQLogoAsset.map((item, index) => {
-              return (
-                <BrandingAssets
-                  key={index}
-                  bg={item}
-                  currentlyViewed={currentViewedAsset}
-                  updateSelectedAsset={() => {
-                    setCurrentViewedAsset(item.bg)
-                  }}
-                />
-              )
-            })}
-          </Flex>
-        </Box>
-
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              ALTERNATE LOGO
-            </Heading>
-          </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
             {alternateLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
@@ -210,6 +208,8 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
+                  dark={item.dark}
+                  isBraindoa
                 />
               )
             })}
@@ -218,17 +218,68 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading fontSize={{ lg: '5xl', base: '3xl' }}>
-              ALTERNATE TEXT
+            <Heading
+              textAlign={{ base: 'center', lg: 'initial' }}
+              fontSize={{ lg: '5xl', base: '3xl' }}
+            >
+              IQ.WIKI LOGO
             </Heading>
           </Flex>
           <Flex mt={10} flexWrap="wrap" gap="2rem">
-            {alternateTextAssets.map((item, index) => {
+            {IQLogoAsset.map((item, index) => {
               return (
                 <BrandingAssets
                   key={index}
                   bg={item}
                   currentlyViewed={currentViewedAsset}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                  dark={item.dark}
+                />
+              )
+            })}
+          </Flex>
+        </Box>
+
+        <Box mt={20}>
+          <Flex flexDir="column" gap={5}>
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              BRAINDAO
+            </Heading>
+          </Flex>
+          <Flex mt={10} flexWrap="wrap" gap="2rem">
+            {braindaoAltLogoAssets.map((item, index) => {
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  dark={item.dark}
+                  updateSelectedAsset={() => {
+                    setCurrentViewedAsset(item.bg)
+                  }}
+                  isBraindoa
+                />
+              )
+            })}
+          </Flex>
+        </Box>
+
+        <Box mt={20}>
+          <Flex flexDir="column" gap={5}>
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
+              BRAINDAO- ALTERNATE LOGO
+            </Heading>
+          </Flex>
+          <Flex mt={10} flexWrap="wrap" gap="2rem">
+            {braindaoLogoAssets.map((item, index) => {
+              return (
+                <BrandingAssets
+                  key={index}
+                  bg={item}
+                  currentlyViewed={currentViewedAsset}
+                  dark={item.dark}
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
@@ -243,7 +294,7 @@ const BrandingPage = () => {
             <Heading fontSize="3xl">Please beware of these things.</Heading>
           </Flex>
           <Flex mt={10}>
-            <List spacing={3} display="flex" flexDir="column" gap="16">
+            <List display="flex" flexDir="column" gap="16">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not use the IQ.Wiki logo in any way that suggests that we are
@@ -261,7 +312,7 @@ const BrandingPage = () => {
               {/* You can also use custom icons from react-icons */}
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not in any way stretch or manipulate the logo.
+                Do not change the logo color asides the ones stated above.
               </ListItem>
             </List>
           </Flex>

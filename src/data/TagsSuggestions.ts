@@ -79,4 +79,8 @@ export const TagsSuggestions = [
     label: 'CEXes',
     value: 'CEXes',
   },
+  {
+    label: 'Glossary',
+    value: 'Glossary',
+  },
 ]

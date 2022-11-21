@@ -38,6 +38,7 @@ export const resources = {
       careers: 'Careers',
       brainies: 'brainies',
       resources: 'Resources',
+      glossary: 'Glossary',
       help: 'Help',
       blog: 'Blog',
       faq: 'FAQ',

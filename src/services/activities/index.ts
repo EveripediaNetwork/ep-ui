@@ -116,7 +116,6 @@ export const {
   useGetActivityByIdQuery,
   useGetLatestIPFSByWikiQuery,
   useGetWikiByActivityIdQuery,
-  util: { getRunningOperationPromises },
 } = activitiesApi
 
 export const {

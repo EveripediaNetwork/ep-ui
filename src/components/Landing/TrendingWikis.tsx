@@ -80,7 +80,13 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 {wiki?.title}
               </Heading>
             </LinkOverlay>
-            <Text fontSize="sm" maxW="90%" color="homeDescriptionColor" my={2}>
+            <Text
+              fontSize="sm"
+              maxW="90%"
+              minH={12}
+              color="homeDescriptionColor"
+              my={2}
+            >
               {wiki && getWikiSummary(wiki, 60)}
             </Text>
 
@@ -89,7 +95,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
                     alt={getUsername(wiki?.user, ensName)}
-                    size="20"
+                    size={20}
                     address={wiki?.user.id}
                     avatarIPFS={wiki?.user.profile?.avatar}
                   />
