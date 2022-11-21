@@ -43,7 +43,7 @@ export const SubscribeWikiHandler = async (
     await store.dispatch(
       addSubscription.initiate({
         userId: userAddress,
-        notificationType: 'wiki',
+        subscriptionType: 'wiki',
         auxiliaryId: wikiId,
         email,
       }),
@@ -71,7 +71,7 @@ export const RemoveWikiSubscriptionHandler = async (
     await store.dispatch(
       removeSubscription.initiate({
         userId: userAddress,
-        notificationType: 'wiki',
+        subscriptionType: 'wiki',
         auxiliaryId: wikiId,
         email,
       }),

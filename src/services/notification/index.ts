@@ -10,14 +10,14 @@ import { profileApiClient } from '../profile'
 
 export interface SubscriptionArgs {
   userId: string
-  notificationType: string
+  subscriptionType: string
   email: string
   auxiliaryId: string
 }
 
 export type WikiSubs = {
   auxiliaryId: string
-  notificationType: string
+  subscriptionType: string
 }
 
 export type WikiSubsResponse = {
@@ -43,13 +43,13 @@ export const notificationSubscriptionApi = createApi({
           variables: {
             userId: addWikiSubscriptionArgs.userId,
             auxiliaryId: addWikiSubscriptionArgs.auxiliaryId,
-            notificationType: addWikiSubscriptionArgs.notificationType,
+            subscriptionType: addWikiSubscriptionArgs.subscriptionType,
             email: addWikiSubscriptionArgs.email,
           },
         }
       },
       async onQueryStarted(
-        { userId, auxiliaryId, notificationType },
+        { userId, auxiliaryId, subscriptionType },
         { dispatch, queryFulfilled },
       ) {
         if (!userId) return
@@ -57,7 +57,7 @@ export const notificationSubscriptionApi = createApi({
           notificationSubscriptionApi.util.updateQueryData(
             'getAllWikiSubscription',
             userId,
-            list => [...list, { auxiliaryId, notificationType }],
+            list => [...list, { auxiliaryId, subscriptionType }],
           ),
         )
         try {
@@ -74,7 +74,7 @@ export const notificationSubscriptionApi = createApi({
           variables: {
             userId: removeWikiSubscriptionArgs.userId,
             auxiliaryId: removeWikiSubscriptionArgs.auxiliaryId,
-            notificationType: removeWikiSubscriptionArgs.notificationType,
+            subscriptionType: removeWikiSubscriptionArgs.subscriptionType,
             email: removeWikiSubscriptionArgs.email,
           },
         }
