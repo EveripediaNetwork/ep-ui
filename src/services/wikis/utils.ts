@@ -47,16 +47,19 @@ export const useWikiSubRecommendations = (userId?: string) => {
         store.dispatch(getUserEditedWikis.initiate({ id: userId, limit: 10 })),
       ]).then(res => {
         const [createdWikis, editedWikis] = res
-        setRecommendations(
-          shuffleArray([
-            ...(createdWikis.data || []),
-            ...(editedWikis.data || []),
-          ])
-            .filter(
-              w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id),
-            )
-            .slice(0, 3),
-        )
+        const newRecomendations = shuffleArray([
+          ...(createdWikis.data || []),
+          ...(editedWikis.data || []),
+        ])
+          // filter out wikis that are both created and edited by the user
+          .filter(
+            (w, i, self) =>
+              i === self.findIndex(t => t.content[0].id === w.content[0].id),
+          )
+          // filter out wikis that are already subscribed to
+          .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id))
+          .slice(0, 3)
+        setRecommendations(newRecomendations)
         setLoading(false)
       })
     }
