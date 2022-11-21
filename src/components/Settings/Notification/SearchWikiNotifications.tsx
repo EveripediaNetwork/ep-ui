@@ -1,4 +1,4 @@
-import React, { useRef, FormEvent } from 'react'
+import React, { useRef } from 'react'
 import { useRouter } from 'next/router'
 import {
   Center,
@@ -8,7 +8,6 @@ import {
   Spinner,
   chakra,
   Button,
-  HTMLChakraProps,
   Text,
   useEventListener,
 } from '@chakra-ui/react'
@@ -67,12 +66,6 @@ const SearchWikiNotifications = () => {
     }
   })
 
-  const loadingView = (
-    <Center py="9">
-      <Spinner color="#63B3ED" />
-    </Center>
-  )
-
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
       <chakra.span fontWeight="semibold">No search Results</chakra.span>
@@ -91,18 +84,6 @@ const SearchWikiNotifications = () => {
     </Flex>
   )
 
-  const generalItemStyles: HTMLChakraProps<'div'> = {
-    m: 0,
-    rounded: 'none',
-    px: 4,
-    py: 2,
-    gap: '2.5',
-    borderBottomWidth: 1,
-    _last: {
-      borderBottomWidth: 0,
-    },
-  }
-
   const articlesSearchList = (
     <>
       {results.articles.slice(0, ARTICLES_LIMIT).map(article => {
@@ -116,7 +97,15 @@ const SearchWikiNotifications = () => {
             value={value}
             getValue={art => art.title}
             label={article.title}
-            {...generalItemStyles}
+            m={0}
+            rounded="none"
+            px={4}
+            py={2}
+            gap="2.5"
+            borderBottomWidth={1}
+            _last={{
+              borderBottomWidth: 0,
+            }}
           >
             <WikiImage
               src={articleImage}
@@ -162,128 +151,124 @@ const SearchWikiNotifications = () => {
     </>
   )
 
-  const searchList = (
-    <>
-      <AutoCompleteGroup>{articlesSearchList}</AutoCompleteGroup>
-    </>
-  )
-
-  const searchQueryHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    router.push({
-      pathname: '/account/settings',
-      query: { tab: 'notifications', q: query },
-    })
-  }
-
   return (
-    <>
-      <Flex
-        maxW={{ base: 'full', md: '4xl', '2xl': 'calc(100% - 160px)' }}
-        pos="relative"
+    <Flex
+      maxW={{ base: 'full', md: '4xl', '2xl': 'calc(100% - 160px)' }}
+      pos="relative"
+    >
+      <AutoComplete
+        closeOnSelect={false}
+        disableFilter
+        suggestWhenEmpty
+        emptyState={!isLoading && noResults && emptyState}
+        openOnFocus={query.length >= 3}
+        shouldRenderSuggestions={q => q.length >= 3}
+        onSelectOption={option => {
+          const { id, type } = option.item.originalValue
+          router.push(ItemPaths[type as SearchItem] + id)
+          logEvent({
+            action: 'CLICK_BY_SEARCH',
+            label: ItemPaths[type as SearchItem] + id,
+            value: 1,
+            category: 'search_tags',
+          })
+        }}
       >
-        <AutoComplete
-          closeOnSelect={false}
-          disableFilter
-          suggestWhenEmpty
-          emptyState={!isLoading && noResults && emptyState}
-          openOnFocus={query.length >= 3}
-          shouldRenderSuggestions={q => q.length >= 3}
-          onSelectOption={option => {
-            const { id, type } = option.item.originalValue
-            router.push(ItemPaths[type as SearchItem] + id)
-            logEvent({
-              action: 'CLICK_BY_SEARCH',
-              label: ItemPaths[type as SearchItem] + id,
-              value: 1,
-              category: 'search_tags',
+        <form
+          key={JSON.stringify(router.query.q) || ''}
+          action=""
+          onSubmit={e => {
+            e.preventDefault()
+            router.push({
+              pathname: '/account/settings',
+              query: { tab: 'notifications', q: query },
             })
           }}
         >
-          <form
-            key={JSON.stringify(router.query.q) || ''}
-            action=""
-            onSubmit={searchQueryHandler}
-          >
-            <InputGroup>
-              <Flex
-                borderWidth="1px"
-                borderLeftRadius="8"
-                borderColor="searchBorder"
-                w="full"
-                borderRight="none"
-                pos="relative"
-              >
-                <Flex alignItems="center" justifyContent="center" pl="4">
-                  <Search2Icon color="gray.300" />
-                </Flex>
-                <AutoCompleteInput
-                  pl="2.5"
-                  placeholder="Search to add wikis to your list"
-                  variant="unstyled"
-                  value={query || router.query.q}
-                  onChange={e => {
-                    setQuery(() => {
-                      return e.target.value
-                    })
-                    if (!e.target.value) {
-                      router.push({
-                        pathname: '/account/settings',
-                        query: { tab: 'notifications' },
-                      })
-                    }
-                  }}
-                  _placeholderShown={{
-                    textOverflow: 'ellipsis',
-                  }}
-                  ref={inputRef}
-                  fontSize={{ base: '12', md: '16' }}
-                />
-                <AutoCompleteList
-                  display={{ base: 'none', md: 'block' }}
-                  p="0"
-                  maxH="auto"
-                  borderWidth="1px"
-                  borderColor="searchBorder"
-                  shadow="lg"
-                  borderStyle="solid"
-                  w={{ base: 'calc(100% + 110px)', md: 'full' }}
-                  left="0"
-                  top="12"
-                >
-                  {isLoading ? loadingView : searchList}
-                  {totalUnrenderedWikis > 0 && !isLoading && (
-                    <Flex
-                      _dark={{ color: 'whiteAlpha.600' }}
-                      py="5"
-                      justify="center"
-                    >
-                      <LinkButton
-                        href={`/account/settings?tab=notifications&q=${query}`}
-                        variant="outline"
-                      >
-                        +View {totalUnrenderedWikis} more Results
-                      </LinkButton>
-                    </Flex>
-                  )}
-                </AutoCompleteList>
+          <InputGroup>
+            <Flex
+              borderWidth="1px"
+              borderLeftRadius="8"
+              borderColor="searchBorder"
+              w="full"
+              borderRight="none"
+              pos="relative"
+            >
+              <Flex alignItems="center" justifyContent="center" pl="4">
+                <Search2Icon color="gray.300" />
               </Flex>
-              <Button
-                type="submit"
-                fontSize={{ base: '12', md: '14' }}
-                fontWeight={600}
-                colorScheme="brandLinkColor"
-                size="lg"
-                borderLeftRadius="0"
-                borderRightRadius="8"
+              <AutoCompleteInput
+                pl="2.5"
+                placeholder="Search to add wikis to your list"
+                variant="unstyled"
+                value={query || router.query.q}
+                onChange={e => {
+                  setQuery(() => {
+                    return e.target.value
+                  })
+                  if (!e.target.value) {
+                    router.push({
+                      pathname: '/account/settings',
+                      query: { tab: 'notifications' },
+                    })
+                  }
+                }}
+                _placeholderShown={{
+                  textOverflow: 'ellipsis',
+                }}
+                ref={inputRef}
+                fontSize={{ base: '12', md: '16' }}
+              />
+              <AutoCompleteList
+                display={{ base: 'none', md: 'block' }}
+                p="0"
+                maxH="auto"
+                borderWidth="1px"
+                borderColor="searchBorder"
+                shadow="lg"
+                borderStyle="solid"
+                w={{ base: 'calc(100% + 110px)', md: 'full' }}
+                left="0"
+                top="12"
               >
-                Search
-              </Button>
-            </InputGroup>
-          </form>
-        </AutoComplete>
-      </Flex>
-    </>
+                {isLoading ? (
+                  <Center py="9">
+                    <Spinner color="#63B3ED" />
+                  </Center>
+                ) : (
+                  <AutoCompleteGroup>{articlesSearchList}</AutoCompleteGroup>
+                )}
+                {totalUnrenderedWikis > 0 && !isLoading && (
+                  <Flex
+                    _dark={{ color: 'whiteAlpha.600' }}
+                    py="5"
+                    justify="center"
+                  >
+                    <LinkButton
+                      href={`/account/settings?tab=notifications&q=${query}`}
+                      variant="outline"
+                    >
+                      +View {totalUnrenderedWikis} more Results
+                    </LinkButton>
+                  </Flex>
+                )}
+              </AutoCompleteList>
+            </Flex>
+            <Button
+              type="submit"
+              fontSize={{ base: '12', md: '14' }}
+              fontWeight={600}
+              colorScheme="brandLinkColor"
+              size="lg"
+              borderLeftRadius="0"
+              borderRightRadius="8"
+            >
+              Search
+            </Button>
+          </InputGroup>
+        </form>
+      </AutoComplete>
+    </Flex>
   )
 }
 
