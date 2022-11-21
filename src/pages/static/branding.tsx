@@ -116,19 +116,25 @@ const BrandingPage = () => {
   return (
     <Box m="0" bg="brandHero" pb={20} my={-8}>
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
+        <Flex
+          alignItems="center"
+          flexDir={{ base: 'column', lg: 'row' }}
+          mt={{ lg: 16 }}
+        >
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
               textAlign={{ base: 'center', lg: 'initial' }}
               color="brand.500"
               fontSize={{ lg: '6xl', base: '3xl' }}
               pt={{ lg: 0, base: 8 }}
+              mb={{ base: 6, lg: 10 }}
+              mt={{ base: 18 }}
             >
               IQ.WIKI Branding kit
             </Heading>
             <Text
               textAlign={{ base: 'center', lg: 'initial' }}
-              w={{ lg: '85%', base: '100%', md: '60%' }}
+              w={{ lg: '100%', base: '100%', md: '60%' }}
               fontSize={{ lg: '2xl', base: 'md' }}
               mx={{ md: 'auto', lg: '0' }}
             >
@@ -172,8 +178,8 @@ const BrandingPage = () => {
             content and would love to hear from you for any kind of partnership.
             <Text
               position="absolute"
-              bottom={{ base: '-10%', lg: '-20%', md: '-30%' }}
-              right={{ base: '5%', lg: '-5%' }}
+              bottom={{ base: '-10%', lg: '-20%', md: '-5%' }}
+              right={{ base: '5%', md: '-2%', '2xl': '-4%' }}
               fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
             >
