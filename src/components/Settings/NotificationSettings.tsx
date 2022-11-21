@@ -132,7 +132,7 @@ const NotificationSettings = ({
       {route.query?.q && <SearchWikiNotificationsResult />}
       {!route.query?.q && (
         <>
-          {isLoading && <LoadingSkeleton />}
+          {isLoading && <LoadingSkeleton count={3} />}
           {!isLoading &&
             wikiSubscriptions &&
             wikiSubscriptions.length !== 0 &&

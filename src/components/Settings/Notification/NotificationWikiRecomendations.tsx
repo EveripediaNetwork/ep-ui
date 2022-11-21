@@ -2,7 +2,6 @@ import React from 'react'
 import NotificationCard from '@/components/Notification/NotificationCard'
 import { useWikiSubRecommendations } from '@/services/wikis/utils'
 import { Divider, Heading, Text, VStack } from '@chakra-ui/react'
-import { LoadingSkeleton } from '@/components/Activity/LoadingSkeleton'
 
 export const WikiNotificationsRecommendations = ({
   address,
@@ -11,10 +10,17 @@ export const WikiNotificationsRecommendations = ({
 }) => {
   const { recommendations, loading: recommendationsLoading } =
     useWikiSubRecommendations(address)
+
   return (
     <>
       {recommendationsLoading ? (
-        <LoadingSkeleton />
+        <>
+          <Divider />
+          <Text color="gray.400" align="center">
+            Brewing some Recommendations...
+          </Text>
+          <Divider />
+        </>
       ) : (
         recommendations.length > 0 && (
           <>

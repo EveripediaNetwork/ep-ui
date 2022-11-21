@@ -41,10 +41,10 @@ const SingleSkeleton = () => {
   )
 }
 
-export const LoadingSkeleton = () => {
+export const LoadingSkeleton = ({ count = 4 }: { count?: number }) => {
   return (
     <VStack spacing={4}>
-      {Array.from({ length: 4 }).map((_, i) => (
+      {Array.from({ length: count }).map((_, i) => (
         <SingleSkeleton key={i} />
       ))}
     </VStack>
