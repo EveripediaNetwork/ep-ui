@@ -47,12 +47,12 @@ export type NavSearchProps = {
 }
 
 const ItemPaths = {
-  [SEARCH_TYPES.ARTICLE]: '/wiki/',
+  [SEARCH_TYPES.WIKI]: '/wiki/',
   [SEARCH_TYPES.CATEGORY]: '/categories/',
   [SEARCH_TYPES.ACCOUNT]: '/account/',
 }
 
-const ARTICLES_LIMIT = 5
+const WIKIS_LIMIT = 5
 const CATEGORIES_LIMIT = 2
 const ACCOUNTS_LIMIT = 4
 
@@ -61,22 +61,21 @@ const NavSearch = (props: NavSearchProps) => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
-  const unrenderedArticles = results.articles.length - ARTICLES_LIMIT
+  const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
   const unrenderedAccounts = results.accounts.length - ACCOUNTS_LIMIT
   const noResults =
-    results.articles.length === 0 &&
+    results.wikis.length === 0 &&
     results.categories.length === 0 &&
     results.accounts.length === 0
 
-  const resolvedUnrenderedArticles =
-    unrenderedArticles > 0 ? unrenderedArticles : 0
+  const resolvedUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
   const resolvedUnrenderedCategories =
     unrenderedCategories > 0 ? unrenderedCategories : 0
   const resolvedUnrenderedAccounts =
     unrenderedAccounts > 0 ? unrenderedAccounts : 0
   const totalUnrendered =
-    resolvedUnrenderedArticles +
+    resolvedUnrenderedWikis +
     resolvedUnrenderedCategories +
     resolvedUnrenderedAccounts
 
@@ -143,27 +142,27 @@ const NavSearch = (props: NavSearchProps) => {
     },
   }
 
-  const articlesSearchList = (
+  const wikisSearchList = (
     <>
-      {results.articles?.slice(0, ARTICLES_LIMIT).map(article => {
-        const articleImage = `${config.pinataBaseUrl}${
-          article.images && article.images[0].id
+      {results.wikis?.slice(0, WIKIS_LIMIT).map(wiki => {
+        const wikiImage = `${config.pinataBaseUrl}${
+          wiki.images && wiki.images[0].id
         }`
-        const value = fillType(article, SEARCH_TYPES.ARTICLE)
+        const value = fillType(wiki, SEARCH_TYPES.WIKI)
         // This negates the bug that is caused by two wikis with the same title.
         // value.title = `${article.title}${article.id}`
         return (
           <AutoCompleteItem
-            key={article.id}
+            key={wiki.id}
             value={value}
             getValue={art => art.title}
-            label={article.title}
+            label={wiki.title}
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
           >
             <WikiImage
-              src={articleImage}
-              alt={article.title}
+              src={wikiImage}
+              alt={wiki.title}
               imgH={40}
               imgW={WIKI_IMAGE_ASPECT_RATIO * 40}
               flexShrink={0}
@@ -172,10 +171,10 @@ const NavSearch = (props: NavSearchProps) => {
             />
             <Flex direction="column" w={{ lg: '100%' }}>
               <chakra.span fontWeight="semibold" fontSize="sm">
-                {article.title}
+                {wiki.title}
               </chakra.span>
               <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
-                {getWikiSummary(article, WikiSummarySize.Big)}
+                {getWikiSummary(wiki, WikiSummarySize.Big)}
               </Text>
             </Flex>
             <Wrap
@@ -184,11 +183,11 @@ const NavSearch = (props: NavSearchProps) => {
               gap="1"
               ml="auto"
               maxWidth="fit-content"
-              display={article.tags.length > 0 ? 'flex' : 'none'}
+              display={wiki.tags.length > 0 ? 'flex' : 'none'}
             >
-              {article.tags?.map(tag => (
+              {wiki.tags?.map(tag => (
                 <chakra.div
-                  key={`${article.id}-${tag.id}`}
+                  key={`${wiki.id}-${tag.id}`}
                   fontWeight="medium"
                   fontSize="xs"
                   alignSelf="center"
@@ -270,10 +269,8 @@ const NavSearch = (props: NavSearchProps) => {
   const searchList = (
     <>
       <AutoCompleteGroup>
-        <AutoCompleteGroupTitle {...titleStyles}>
-          Articles
-        </AutoCompleteGroupTitle>
-        {articlesSearchList}
+        <AutoCompleteGroupTitle {...titleStyles}>Wikis</AutoCompleteGroupTitle>
+        {wikisSearchList}
       </AutoCompleteGroup>
       <AutoCompleteGroup>
         <AutoCompleteGroupTitle {...titleStyles}>
