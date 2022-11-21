@@ -6,6 +6,7 @@ import { useUserProfileData } from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { store } from '@/store/store'
+import { useIsWikiSubscribed } from '@/services/notification/utils'
 
 interface NotificationCardProps {
   title: string
@@ -49,6 +50,7 @@ export const SubscribeWikiHandler = async (
     )
   }
 }
+
 export const RemoveWikiSubscriptionHandler = async (
   email: string | null | undefined,
   wikiId: string | undefined,
@@ -76,6 +78,7 @@ export const RemoveWikiSubscriptionHandler = async (
     )
   }
 }
+
 const NotificationCard = ({
   title,
   brief,
@@ -93,6 +96,9 @@ const NotificationCard = ({
   const { setAccount, profileData } = useUserProfileData('', {
     withAllSettings: true,
   })
+  const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
+
+  if (wikiId === 'frax-finance') console.log({ isWikiSubscribed, wikiId })
 
   const toast = useToast()
 
@@ -117,21 +123,11 @@ const NotificationCard = ({
         tags={tags}
         WikiImgObj={WikiImgObj}
       />
-      {!defaultSubscribed ? (
-        <Button
-          px={{ base: 0, md: 10 }}
-          fontSize={{ base: 'xs', md: 'md' }}
-          onClick={() =>
-            SubscribeWikiHandler(profileData?.email, wikiId, userAddress, toast)
-          }
-        >
-          Add
-        </Button>
-      ) : (
+      {defaultSubscribed || isWikiSubscribed ? (
         <Button
           variant="outline"
-          px={{ base: 0, md: 10 }}
-          fontSize={{ base: 'xs', md: 'md' }}
+          px={{ base: 0, md: 7 }}
+          fontSize={{ base: 'xs', md: 'sm' }}
           onClick={() =>
             RemoveWikiSubscriptionHandler(
               profileData?.email,
@@ -142,6 +138,16 @@ const NotificationCard = ({
           }
         >
           Remove
+        </Button>
+      ) : (
+        <Button
+          px={{ base: 0, md: 10 }}
+          fontSize={{ base: 'xs', md: 'md' }}
+          onClick={() =>
+            SubscribeWikiHandler(profileData?.email, wikiId, userAddress, toast)
+          }
+        >
+          Add
         </Button>
       )}
     </HStack>
