@@ -33,7 +33,7 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 
 const ItemPaths = {
-  [SEARCH_TYPES.ARTICLE]: '/wiki/',
+  [SEARCH_TYPES.WIKI]: '/wiki/',
   [SEARCH_TYPES.CATEGORY]: '/categories/',
   [SEARCH_TYPES.ACCOUNT]: '/account/',
 }
@@ -46,8 +46,8 @@ const SearchWikiNotifications = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const router = useRouter()
 
-  const noResults = results.articles.length === 0
-  const unrenderedWikis = results.articles.length - ARTICLES_LIMIT
+  const noResults = results.wikis.length === 0
+  const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
   useEventListener('keydown', event => {
@@ -86,17 +86,17 @@ const SearchWikiNotifications = () => {
 
   const articlesSearchList = (
     <>
-      {results.articles.slice(0, ARTICLES_LIMIT).map(article => {
+      {results.wikis.slice(0, ARTICLES_LIMIT).map(wiki => {
         const articleImage = `${config.pinataBaseUrl}${
-          article.images && article.images[0].id
+          wiki.images && wiki.images[0].id
         }`
-        const value = fillType(article, SEARCH_TYPES.ARTICLE)
+        const value = fillType(wiki, SEARCH_TYPES.WIKI)
         return (
           <AutoCompleteItem
-            key={article.id}
+            key={wiki.id}
             value={value}
             getValue={art => art.title}
-            label={article.title}
+            label={wiki.title}
             m={0}
             rounded="none"
             px={4}
@@ -109,7 +109,7 @@ const SearchWikiNotifications = () => {
           >
             <WikiImage
               src={articleImage}
-              alt={article.title}
+              alt={wiki.title}
               imgH={40}
               imgW={40 * WIKI_IMAGE_ASPECT_RATIO}
               flexShrink={0}
@@ -119,7 +119,7 @@ const SearchWikiNotifications = () => {
             <Flex w={{ lg: '100%' }} justifyContent="space-between">
               <Flex direction="column">
                 <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
-                  {article.title}
+                  {wiki.title}
                 </Text>
                 <Text
                   display="-webkit-box"
@@ -129,7 +129,7 @@ const SearchWikiNotifications = () => {
                   maxW="full"
                   fontSize="xs"
                 >
-                  {getWikiSummary(article, WikiSummarySize.Big)}
+                  {getWikiSummary(wiki, WikiSummarySize.Big)}
                 </Text>
               </Flex>
               <Flex ml="2">
