@@ -21,6 +21,7 @@ export const semanticTokens: SemanticTokens = {
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
+    },
     brandHero: {
       default: 'tetiaryGray',
       _dark: 'tetiaryDark',
