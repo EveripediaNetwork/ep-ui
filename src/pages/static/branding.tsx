@@ -180,7 +180,7 @@ const BrandingPage = () => {
             <Text
               position="absolute"
               bottom={{ base: '-10%', lg: '-20%', md: '-5%' }}
-              right={{ base: '5%', md: '-2%', '2xl': '-4%' }}
+              right={{ base: '5%', md: '-4%', '2xl': '-5%' }}
               fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
             >
