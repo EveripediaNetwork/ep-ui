@@ -10,6 +10,7 @@ import {
   Button,
   Text,
   useEventListener,
+  useToast,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -31,6 +32,13 @@ import config from '@/config'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
+import {
+  RemoveWikiSubscriptionHandler,
+  SubscribeWikiHandler,
+} from '@/components/Notification/NotificationCard'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { useIsWikiSubscribed } from '@/services/notification/utils'
+import { useUserProfileData } from '@/services/profile/utils'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -40,10 +48,52 @@ const ItemPaths = {
 
 const ARTICLES_LIMIT = 6
 
+const WikiSubscriptionButton = ({
+  wikiId,
+  email,
+}: {
+  wikiId: string
+  email?: string | null
+}) => {
+  const toast = useToast()
+  const userAddress = getUserAddressFromCache()
+  const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
+  if (!isWikiSubscribed)
+    return (
+      <Button
+        variant="outline"
+        fontSize="sm"
+        fontWeight={500}
+        onClick={e => {
+          e.stopPropagation()
+          SubscribeWikiHandler(email, wikiId, userAddress, toast)
+        }}
+      >
+        Add
+      </Button>
+    )
+  return (
+    <Button
+      variant="outline"
+      fontSize="sm"
+      fontWeight={500}
+      onClick={e => {
+        e.stopPropagation()
+        RemoveWikiSubscriptionHandler(email, wikiId, userAddress, toast)
+      }}
+    >
+      Remove
+    </Button>
+  )
+}
+
 const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const { profileData } = useUserProfileData(getUserAddressFromCache(), {
+    withAllSettings: true,
+  })
   const router = useRouter()
 
   const noResults = results.wikis.length === 0
@@ -84,72 +134,64 @@ const SearchWikiNotifications = () => {
     </Flex>
   )
 
-  const articlesSearchList = (
-    <>
-      {results.wikis.slice(0, ARTICLES_LIMIT).map(wiki => {
-        const articleImage = `${config.pinataBaseUrl}${
-          wiki.images && wiki.images[0].id
-        }`
-        const value = fillType(wiki, SEARCH_TYPES.WIKI)
-        return (
-          <AutoCompleteItem
-            key={wiki.id}
-            value={value}
-            getValue={art => art.title}
-            label={wiki.title}
-            m={0}
-            rounded="none"
-            px={4}
-            py={2}
-            gap="2.5"
-            borderBottomWidth={1}
-            _last={{
-              borderBottomWidth: 0,
-            }}
-          >
-            <WikiImage
-              src={articleImage}
-              alt={wiki.title}
-              imgH={40}
-              imgW={40 * WIKI_IMAGE_ASPECT_RATIO}
-              flexShrink={0}
-              borderRadius={5}
-              overflow="hidden"
-            />
-            <Flex w={{ lg: '100%' }} justifyContent="space-between">
-              <Flex direction="column">
-                <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
-                  {wiki.title}
-                </Text>
-                <Text
-                  display="-webkit-box"
-                  noOfLines={1}
-                  textOverflow="ellipsis"
-                  overflow="hidden"
-                  maxW="full"
-                  fontSize="xs"
-                >
-                  {getWikiSummary(wiki, WikiSummarySize.Big)}
-                </Text>
-              </Flex>
-              <Flex ml="2">
-                <Button
-                  variant="outline"
-                  fontSize="sm"
-                  fontWeight={500}
-                  onClick={e => {
-                    e.stopPropagation()
-                  }}
-                >
-                  Add
-                </Button>
-              </Flex>
+  const articlesSearchList = results.wikis
+    .slice(0, ARTICLES_LIMIT)
+    .map(wiki => {
+      const articleImage = `${config.pinataBaseUrl}${
+        wiki.images && wiki.images[0].id
+      }`
+      const value = fillType(wiki, SEARCH_TYPES.WIKI)
+      return (
+        <AutoCompleteItem
+          key={wiki.id}
+          value={value}
+          getValue={art => art.title}
+          label={wiki.title}
+          m={0}
+          rounded="none"
+          px={4}
+          py={2}
+          gap="2.5"
+          borderBottomWidth={1}
+          _last={{
+            borderBottomWidth: 0,
+          }}
+        >
+          <WikiImage
+            src={articleImage}
+            alt={wiki.title}
+            imgH={40}
+            imgW={40 * WIKI_IMAGE_ASPECT_RATIO}
+            flexShrink={0}
+            borderRadius={5}
+            overflow="hidden"
+          />
+          <Flex w={{ lg: '100%' }} justifyContent="space-between">
+            <Flex direction="column">
+              <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
+                {wiki.title}
+              </Text>
+              <Text
+                display="-webkit-box"
+                noOfLines={1}
+                textOverflow="ellipsis"
+                overflow="hidden"
+                maxW="full"
+                fontSize="xs"
+              >
+                {getWikiSummary(wiki, WikiSummarySize.Big)}
+              </Text>
             </Flex>
-          </AutoCompleteItem>
-        )
-      })}
-    </>
-  )
+            <Flex ml="2">
+              <WikiSubscriptionButton
+                wikiId={wiki.id}
+                email={profileData?.email}
+              />
+            </Flex>
+          </Flex>
+        </AutoCompleteItem>
+      )
+    })
 
   return (
     <Flex
