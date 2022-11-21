@@ -98,8 +98,6 @@ const NotificationCard = ({
   })
   const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
 
-  if (wikiId === 'frax-finance') console.log({ isWikiSubscribed, wikiId })
-
   const toast = useToast()
 
   useEffect(() => {
