@@ -171,6 +171,7 @@ const Glossary: NextPage = () => {
                 placeholder="Search for words"
                 value={searchText}
                 onChange={e => searchPage(e.target.value)}
+                _placeholder={{color: "placeholderColor"}}
               />
             </InputGroup>
           </Box>
