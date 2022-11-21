@@ -181,5 +181,25 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',
     },
+    tagColor: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.900',
+    },
+    tagHoverColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.100',
+    },
+    tagActiveBgColor: {
+      default: 'brand.50',
+      _dark: '#FFB3D7',
+    },
+    tagActiveColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
+    glossaryItemBg: {
+      default: 'gray.50',
+      _dark: 'whiteAlpha.50',
+    },
   },
 }
