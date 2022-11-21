@@ -2,7 +2,7 @@
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--montserrat-font), sans-serif;
   font-size: 16px;
   line-height: 1.625;
   word-wrap: break-word;
