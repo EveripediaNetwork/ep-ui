@@ -75,7 +75,7 @@ const NotificationSettings = ({
   >(NotificationChannelsData)
 
   const wikiSubscriptions = useMemo(
-    () => wikiSubscriptionsData?.map(item => item.wiki),
+    () => wikiSubscriptionsData?.map(item => item.wiki) ?? [],
     [wikiSubscriptionsData],
   )
 
@@ -111,6 +111,7 @@ const NotificationSettings = ({
       category: 'notification_options',
     })
   }
+
   return (
     <>
       <form onSubmit={handleNotificationSettingsSave}>
@@ -148,7 +149,9 @@ const NotificationSettings = ({
                 lastModTimeStamp={wiki?.updated}
               />
             ))}
-          {!isLoading && !wikiSubscriptions && <EmptyNotification />}
+          {!isLoading && wikiSubscriptions?.length === 0 && (
+            <EmptyNotification />
+          )}
           <WikiNotificationsRecommendations address={address} />
         </>
       )}
