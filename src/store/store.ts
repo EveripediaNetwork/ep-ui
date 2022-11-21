@@ -11,6 +11,7 @@ import {
 } from '@/store/slices'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
+import { glossaryApi } from '@/services/glossary'
 import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
 import { tokenStatsApi } from '@/services/token-stats'
@@ -39,6 +40,7 @@ export const store = configureStore({
     [MirrorApi.reducerPath]: MirrorApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [glossaryApi.reducerPath]: glossaryApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [navSearchApi.reducerPath]: navSearchApi.reducer,
     [tokenStatsApi.reducerPath]: tokenStatsApi.reducer,
@@ -58,6 +60,7 @@ export const store = configureStore({
       .concat(ArweaveApi.middleware)
       .concat(wikiApi.middleware)
       .concat(categoriesApi.middleware)
+      .concat(glossaryApi.middleware)
       .concat(activitiesApi.middleware)
       .concat(navSearchApi.middleware)
       .concat(tokenStatsApi.middleware)

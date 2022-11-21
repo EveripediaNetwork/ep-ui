@@ -24,40 +24,40 @@ interface SearchQueryProps {
 const SearchQuery = ({ query }: SearchQueryProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<{
-    articles: WikiPreview[]
+    wikis: WikiPreview[]
     categories: Category[]
   }>({
-    articles: [],
+    wikis: [],
     categories: [],
   })
   useEffect(() => {
     setIsLoading(true)
     Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
       res => {
-        const [articles = [], categories = []] = res
-        if (articles.length || categories.length) {
-          setResults({ articles, categories })
+        const [wikis = [], categories = []] = res
+        if (wikis.length || categories.length) {
+          setResults({ wikis, categories })
           setIsLoading(false)
         }
       },
     )
   }, [query])
-  const { articles, categories } = results
-  const totalResults = articles.length + categories.length
+  const { wikis, categories } = results
+  const totalResults = wikis.length + categories.length
 
-  const articleList = articles.map(article => {
+  const wikiList = wikis.map(wiki => {
     return (
       <ActivityCard
-        key={article.id}
-        title={article.title}
-        brief={article.summary}
-        editor={article.user}
-        wikiId={article.id}
-        lastModTimeStamp={article.updated}
-        WikiImgObj={article.images}
-        activityId={article.id}
-        categories={article.categories}
-        tags={article.tags}
+        key={wiki.id}
+        title={wiki.title}
+        brief={wiki.summary}
+        editor={wiki.user}
+        wikiId={wiki.id}
+        lastModTimeStamp={wiki.updated}
+        WikiImgObj={wiki.images}
+        activityId={wiki.id}
+        categories={wiki.categories}
+        tags={wiki.tags}
       />
     )
   })
@@ -105,13 +105,13 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
           Results for {query}
         </Heading>
 
-        {!isLoading && articles.length !== 0 && (
+        {!isLoading && wikis.length !== 0 && (
           <Stack spacing="4">
             <Text>Showing {totalResults} results </Text>
 
-            <Heading fontSize="2xl">Articles</Heading>
+            <Heading fontSize="2xl">Wikis</Heading>
             <Flex direction="column" gap="4">
-              {articleList}
+              {wikiList}
             </Flex>
             {categories.length !== 0 && (
               <>
