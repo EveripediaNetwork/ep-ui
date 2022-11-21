@@ -6,6 +6,7 @@ import {
   REMOVE_WIKI_SUBSCRIPTION,
   WIKI_SUBSCRIPTIONS,
 } from '@/services/notification/queries'
+import { ActivityCardDetails } from '@/types/Wiki'
 import { profileApiClient } from '../profile'
 
 export interface SubscriptionArgs {
@@ -13,11 +14,13 @@ export interface SubscriptionArgs {
   subscriptionType: string
   email: string
   auxiliaryId: string
+  wiki: ActivityCardDetails
 }
 
 export type WikiSubs = {
   auxiliaryId: string
   subscriptionType: string
+  wiki: ActivityCardDetails
 }
 
 export type WikiSubsResponse = {
@@ -49,7 +52,7 @@ export const notificationSubscriptionApi = createApi({
         }
       },
       async onQueryStarted(
-        { userId, auxiliaryId, subscriptionType },
+        { userId, auxiliaryId, subscriptionType, wiki },
         { dispatch, queryFulfilled },
       ) {
         if (!userId) return
@@ -57,7 +60,7 @@ export const notificationSubscriptionApi = createApi({
           notificationSubscriptionApi.util.updateQueryData(
             'getAllWikiSubscription',
             userId,
-            list => [...list, { auxiliaryId, subscriptionType }],
+            list => [...list, { auxiliaryId, subscriptionType, wiki }],
           ),
         )
         try {
@@ -67,7 +70,10 @@ export const notificationSubscriptionApi = createApi({
         }
       },
     }),
-    removeSubscription: builder.mutation<boolean, SubscriptionArgs>({
+    removeSubscription: builder.mutation<
+      boolean,
+      Omit<SubscriptionArgs, 'wiki'>
+    >({
       query: (removeWikiSubscriptionArgs: SubscriptionArgs) => {
         return {
           document: REMOVE_WIKI_SUBSCRIPTION,

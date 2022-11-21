@@ -43,6 +43,30 @@ export const WIKI_SUBSCRIPTIONS = gql`
     wikiSubscriptions(userId: $userId) {
       auxiliaryId
       subscriptionType
+      wiki {
+        id
+        title
+        summary
+        updated
+        user {
+          id
+          profile {
+            username
+            avatar
+          }
+        }
+        categories {
+          id
+          title
+        }
+        tags {
+          id
+        }
+        images {
+          id
+          type
+        }
+      }
     }
   }
 `

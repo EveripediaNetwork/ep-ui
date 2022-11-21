@@ -39,6 +39,7 @@ import {
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { useUserProfileData } from '@/services/profile/utils'
+import { ActivityCardDetails } from '@/types/Wiki'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -49,15 +50,15 @@ const ItemPaths = {
 const ARTICLES_LIMIT = 6
 
 const WikiSubscriptionButton = ({
-  wikiId,
+  wiki,
   email,
 }: {
-  wikiId: string
+  wiki: ActivityCardDetails
   email?: string | null
 }) => {
   const toast = useToast()
   const userAddress = getUserAddressFromCache()
-  const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
+  const isWikiSubscribed = useIsWikiSubscribed(wiki.id, userAddress)
   if (!isWikiSubscribed)
     return (
       <Button
@@ -66,7 +67,7 @@ const WikiSubscriptionButton = ({
         fontWeight={500}
         onClick={e => {
           e.stopPropagation()
-          SubscribeWikiHandler(email, wikiId, userAddress, toast)
+          SubscribeWikiHandler(email, wiki, userAddress, toast)
         }}
       >
         Add
@@ -79,7 +80,7 @@ const WikiSubscriptionButton = ({
       fontWeight={500}
       onClick={e => {
         e.stopPropagation()
-        RemoveWikiSubscriptionHandler(email, wikiId, userAddress, toast)
+        RemoveWikiSubscriptionHandler(email, wiki.id, userAddress, toast)
       }}
     >
       Remove
@@ -183,10 +184,7 @@ const SearchWikiNotifications = () => {
               </Text>
             </Flex>
             <Flex ml="2">
-              <WikiSubscriptionButton
-                wikiId={wiki.id}
-                email={profileData?.email}
-              />
+              <WikiSubscriptionButton wiki={wiki} email={profileData?.email} />
             </Flex>
           </Flex>
         </AutoCompleteItem>

@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Box, VStack, Checkbox, Heading, Text } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
@@ -6,7 +6,7 @@ import { ProfileNotifications } from '@/types/ProfileType'
 import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
 import SearchWikiNotificationsResult from '@/components/Settings/Notification/SearchWikiNotificationsResult'
-import { useWikiSubscriptions } from '@/services/notification/utils'
+import { useGetAllWikiSubscriptionQuery } from '@/services/notification'
 import { WikiNotificationsRecommendations } from './Notification/NotificationWikiRecomendations'
 import NotificationCard from '../Notification/NotificationCard'
 import EmptyNotification from './Notification/EmptyNotification'
@@ -67,13 +67,17 @@ const NotificationSettings = ({
   address,
   savedNotificationPrefs,
 }: NotificationSettingsProps) => {
-  const { wikiSubscriptions, isLoading } = useWikiSubscriptions(address)
-
+  const { data: wikiSubscriptionsData, isLoading } =
+    useGetAllWikiSubscriptionQuery(address)
   const route = useRouter()
-
   const [notificationPrefs, setNotificationPrefs] = useState<
     typeof NotificationChannelsData
   >(NotificationChannelsData)
+
+  const wikiSubscriptions = useMemo(
+    () => wikiSubscriptionsData?.map(item => item.wiki),
+    [wikiSubscriptionsData],
+  )
 
   useEffect(() => {
     const notificationChannels = NotificationChannelsData.map(channel => ({
@@ -139,6 +143,9 @@ const NotificationSettings = ({
                 title={wiki?.title}
                 WikiImgObj={wiki?.images}
                 wikiId={wiki?.id}
+                tags={wiki?.tags}
+                categories={wiki?.categories}
+                lastModTimeStamp={wiki?.updated}
               />
             ))}
           {!isLoading && !wikiSubscriptions && <EmptyNotification />}

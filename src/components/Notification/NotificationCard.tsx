@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 import { HStack, Button, useToast, UseToastOptions } from '@chakra-ui/react'
-import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
+import {
+  ActivityCardDetails,
+  BaseCategory,
+  BaseTag,
+  Image,
+  User,
+} from '@/types/Wiki'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'
@@ -13,18 +19,17 @@ interface NotificationCardProps {
   brief: string
   editor: User
   lastModTimeStamp?: string
-  activityId?: string
-  wikiId?: string
+  wikiId: string
   type?: string
-  categories?: BaseCategory[]
-  tags?: BaseTag[]
+  categories: BaseCategory[]
+  tags: BaseTag[]
   WikiImgObj?: Image[]
   defaultSubscribed?: boolean
 }
 
 export const SubscribeWikiHandler = async (
   email: string | null | undefined,
-  wikiId: string | undefined,
+  wiki: ActivityCardDetails | undefined,
   userAddress: string,
   toast: (arg0: UseToastOptions) => void,
 ) => {
@@ -39,12 +44,13 @@ export const SubscribeWikiHandler = async (
     return
   }
 
-  if (wikiId) {
+  if (wiki) {
     await store.dispatch(
       addSubscription.initiate({
         userId: userAddress,
         subscriptionType: 'wiki',
-        auxiliaryId: wikiId,
+        auxiliaryId: wiki.id,
+        wiki,
         email,
       }),
     )
@@ -86,7 +92,6 @@ const NotificationCard = ({
   categories,
   tags,
   lastModTimeStamp,
-  activityId,
   WikiImgObj,
   wikiId,
   type,
@@ -115,7 +120,6 @@ const NotificationCard = ({
         editor={editor}
         lastModTimeStamp={lastModTimeStamp}
         type={type}
-        activityId={activityId}
         wikiId={wikiId}
         categories={categories}
         tags={tags}
@@ -142,7 +146,21 @@ const NotificationCard = ({
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
           onClick={() =>
-            SubscribeWikiHandler(profileData?.email, wikiId, userAddress, toast)
+            SubscribeWikiHandler(
+              profileData?.email,
+              {
+                title,
+                summary: brief,
+                user: editor,
+                categories,
+                tags,
+                updated: lastModTimeStamp,
+                images: WikiImgObj,
+                id: wikiId,
+              },
+              userAddress,
+              toast,
+            )
           }
         >
           Add
