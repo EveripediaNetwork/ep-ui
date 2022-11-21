@@ -23,7 +23,7 @@ type AccountArgs = {
   username: string
 }
 type Results = {
-  articles: WikiPreview[]
+  wikis: WikiPreview[]
   categories: Category[]
   accounts: Account[]
 }
@@ -31,7 +31,7 @@ type Results = {
 export type SearchItem = keyof typeof SEARCH_TYPES
 
 export const SEARCH_TYPES = {
-  ARTICLE: 'ARTICLE',
+  WIKI: 'WIKI',
   CATEGORY: 'CATEGORY',
   ACCOUNT: 'ACCOUNT',
 } as const
@@ -67,8 +67,8 @@ const debouncedFetchResults = debounce(
       fetchCategoriesList(query),
       fetchAccountsList({ id: query, username: query }),
     ]).then(res => {
-      const [articles = [], categories = [], accounts = []] = res
-      cb({ articles, categories, accounts })
+      const [wikis = [], categories = [], accounts = []] = res
+      cb({ wikis, categories, accounts })
     })
   },
   500,
@@ -79,7 +79,7 @@ export const useNavSearch = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [results, setResults] = useState<Results>({
-    articles: [],
+    wikis: [],
     categories: [],
     accounts: [],
   })
@@ -88,7 +88,7 @@ export const useNavSearch = () => {
     if (query && query.length >= 3) {
       setIsLoading(true)
       debouncedFetchResults(query, res => {
-        if (!res.accounts && !res.articles && !res.categories) {
+        if (!res.accounts && !res.wikis && !res.categories) {
           logEvent({
             action: 'SEARCH_NO_RESULTS',
             label: query,
