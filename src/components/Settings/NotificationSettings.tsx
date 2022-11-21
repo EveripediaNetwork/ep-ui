@@ -1,15 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  Box,
-  VStack,
-  Checkbox,
-  Heading,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
+import { Box, VStack, Checkbox, Heading, Text } from '@chakra-ui/react'
 import { NotificationChannelsData } from '@/data/NotificationChannelsData'
-import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileNotifications } from '@/types/ProfileType'
 import { logEvent } from '@/utils/googleAnalytics'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
@@ -75,8 +67,6 @@ const NotificationSettings = ({
   address,
   savedNotificationPrefs,
 }: NotificationSettingsProps) => {
-  const toast = useToast()
-  const [postUserProfile] = usePostUserProfileMutation()
   const { wikiSubscriptions, isLoading } = useWikiSubscriptions(address)
 
   const route = useRouter()
@@ -116,20 +106,6 @@ const NotificationSettings = ({
       value: 1,
       category: 'notification_options',
     })
-    return
-    // send the data to the server
-    postUserProfile({
-      profileInfo: {
-        id: address,
-        notifications: [data as ProfileNotifications],
-      },
-    })
-
-    toast({
-      title: 'Notification settings saved!',
-      status: 'success',
-      duration: 1000,
-    })
   }
   return (
     <>
@@ -152,7 +128,9 @@ const NotificationSettings = ({
       {!route.query?.q && (
         <>
           {isLoading && <LoadingSkeleton />}
-          {!isLoading && wikiSubscriptions && wikiSubscriptions.length ? (
+          {!isLoading &&
+            wikiSubscriptions &&
+            wikiSubscriptions.length !== 0 &&
             wikiSubscriptions.map(wiki => (
               <NotificationCard
                 defaultSubscribed
@@ -162,10 +140,8 @@ const NotificationSettings = ({
                 WikiImgObj={wiki?.images}
                 wikiId={wiki?.id}
               />
-            ))
-          ) : (
-            <EmptyNotification />
-          )}
+            ))}
+          {!isLoading && !wikiSubscriptions && <EmptyNotification />}
           <WikiNotificationsRecommendations address={address} />
         </>
       )}
