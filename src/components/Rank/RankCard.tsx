@@ -65,18 +65,28 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                     w="30%"
                     alignItems="flex-start"
                   >
-                    <Text fontSize={{ lg: 'sm', md: 'xs', base: 'sm' }}>
+                    <Text
+                      color="inactiveText"
+                      fontSize={{ md: 'xs', base: 'sm' }}
+                      width="100%"
+                      textAlign="right"
+                    >
                       ${item.capital}
                     </Text>
-                    <Flex alignItems="center" gap={2}>
+                    <Flex
+                      alignItems="center"
+                      gap={0.5}
+                      width="100%"
+                      justifyContent="end"
+                    >
                       {Math.floor(Math.random() * 10) % 2 === 1 ? (
                         <AiFillCaretDown color={downIndicationIconColor} />
                       ) : (
                         <AiFillCaretUp color={upIndicationIconColor} />
                       )}
                       <Text
-                        color="inactiveText"
-                        fontSize={{ lg: 'sm', base: 'xs' }}
+                        fontWeight="bold"
+                        fontSize={{ md: 'xs', base: 'xs' }}
                       >
                         0.89%
                       </Text>

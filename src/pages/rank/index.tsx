@@ -16,6 +16,7 @@ const Rank = () => {
         }}
         my={-2}
         bgSize="cover"
+        bgColor="#F7FAFC"
       >
         <RankHero />
       </Box>
