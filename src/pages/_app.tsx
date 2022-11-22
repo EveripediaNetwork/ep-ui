@@ -27,6 +27,8 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
 
 export const montserrat = Montserrat({
   subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  display: 'swap',
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
