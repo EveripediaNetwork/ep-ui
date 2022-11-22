@@ -29,7 +29,6 @@ import {
   // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
-import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 
 // const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 
@@ -156,7 +155,7 @@ const Glossary: NextPage = () => {
               </GridItem>
             ))}
           </Grid>
-          <Box w="full" mb={ shouldBeFixed ? 5 : 0}>
+          <Box w="full" mb={shouldBeFixed ? 5 : 0}>
             <InputGroup size="md" w="full">
               <InputLeftElement
                 ml={{ base: '15px', xl: 'unset' }}
