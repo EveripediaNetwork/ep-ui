@@ -13,6 +13,7 @@ import {
   GridItem,
   Tag,
   TagLabel,
+  IconButton,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
@@ -29,6 +30,7 @@ import {
   // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 // const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 
@@ -61,6 +63,7 @@ const Glossary: NextPage = () => {
 
   const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
   const [activeIndex, setActiveIndex] = useState<number>()
+  const [isVisible, setIsVisible] = useState(false)
 
   const searchPage = (input: string) => {
     const letter =
@@ -155,63 +158,163 @@ const Glossary: NextPage = () => {
               </GridItem>
             ))}
           </Grid>
-          <Box w="full" mb={shouldBeFixed ? 5 : 0}>
-            <InputGroup size="md" w="full">
-              <InputLeftElement
-                ml={{ base: '15px', xl: 'unset' }}
-                pointerEvents="none"
-                h="full"
-              >
-                <Search2Icon
-                  color="gray.300"
-                  fontSize={{ base: 'sm', lg: 'auto' }}
-                  ml={{ base: '-8', md: '0' }}
-                />
-              </InputLeftElement>
-              <Input
-                type="tel"
-                placeholder="Search for words"
-                value={searchText}
-                onChange={e => searchPage(e.target.value)}
-                _placeholder={{ color: 'placeholderColor' }}
-              />
-            </InputGroup>
-          </Box>
-          {!shouldBeFixed && (
-            <Flex
-              my="4"
-              w="full"
-              wrap="wrap"
-              alignItems="center"
-              justifyContent={{ lg: 'start', '2xl': 'center' }}
-              gap={{ base: '3', '2xl': '10' }}
-            >
-              {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
-                return (
-                  <Tag
-                    size="lg"
-                    key={word}
-                    bg={i === activeIndex ? 'tagActiveBgColor' : 'transparent'}
-                    color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
-                    cursor="pointer"
-                    borderRadius="full"
-                    borderWidth="thin"
-                    fontWeight="normal"
-                    fontSize={{ base: 'sm', lg: 'md' }}
-                    _hover={{
-                      bgColor: 'tagHoverColor',
-                    }}
-                    onClick={() => {
-                      setActiveIndex(i)
-                      setSearchText(word)
-                      searchPage(word)
-                    }}
+
+          {!shouldBeFixed ? (
+            <>
+              <Box w="full" mb={shouldBeFixed ? 5 : 0}>
+                <InputGroup size="md" w="full">
+                  <InputLeftElement
+                    ml={{ base: '15px', xl: 'unset' }}
+                    pointerEvents="none"
+                    h="full"
                   >
-                    <TagLabel>{word}</TagLabel>
-                  </Tag>
-                )
-              })}
-            </Flex>
+                    <Search2Icon
+                      color="gray.300"
+                      fontSize={{ base: 'sm', lg: 'auto' }}
+                      ml={{ base: '-8', md: '0' }}
+                    />
+                  </InputLeftElement>
+                  <Input
+                    type="tel"
+                    placeholder="Search for words"
+                    value={searchText}
+                    onChange={e => searchPage(e.target.value)}
+                    _placeholder={{ color: 'placeholderColor' }}
+                  />
+                </InputGroup>
+              </Box>
+              <Flex
+                my="4"
+                w="full"
+                wrap="wrap"
+                alignItems="center"
+                justifyContent={{ lg: 'start', '2xl': 'center' }}
+                gap={{ base: '3', '2xl': '10' }}
+              >
+                {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
+                  return (
+                    <Tag
+                      size="lg"
+                      key={word}
+                      bg={
+                        i === activeIndex ? 'tagActiveBgColor' : 'transparent'
+                      }
+                      color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
+                      cursor="pointer"
+                      borderRadius="full"
+                      borderWidth="thin"
+                      fontWeight="normal"
+                      fontSize={{ base: 'sm', lg: 'md' }}
+                      _hover={{
+                        bgColor: 'tagHoverColor',
+                      }}
+                      onClick={() => {
+                        setActiveIndex(i)
+                        setSearchText(word)
+                        searchPage(word)
+                      }}
+                    >
+                      <TagLabel>{word}</TagLabel>
+                    </Tag>
+                  )
+                })}
+              </Flex>
+            </>
+          ) : (
+            <>
+              {isVisible && (
+                <>
+                  <Box w="full" mb={shouldBeFixed ? 5 : 0}>
+                    <InputGroup size="md" w="full">
+                      <InputLeftElement
+                        ml={{ base: '15px', xl: 'unset' }}
+                        pointerEvents="none"
+                        h="full"
+                      >
+                        <Search2Icon
+                          color="gray.300"
+                          fontSize={{ base: 'sm', lg: 'auto' }}
+                          ml={{ base: '-8', md: '0' }}
+                        />
+                      </InputLeftElement>
+                      <Input
+                        type="tel"
+                        placeholder="Search for words"
+                        value={searchText}
+                        onChange={e => searchPage(e.target.value)}
+                        _placeholder={{ color: 'placeholderColor' }}
+                      />
+                    </InputGroup>
+                  </Box>
+                  <Flex
+                    my="4"
+                    w="full"
+                    wrap="wrap"
+                    alignItems="center"
+                    justifyContent={{ lg: 'start', '2xl': 'center' }}
+                    gap={{ base: '3', '2xl': '10' }}
+                  >
+                    {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
+                      return (
+                        <Tag
+                          size="lg"
+                          key={word}
+                          bg={
+                            i === activeIndex
+                              ? 'tagActiveBgColor'
+                              : 'transparent'
+                          }
+                          color={
+                            i === activeIndex ? 'tagActiveColor' : 'tagColor'
+                          }
+                          cursor="pointer"
+                          borderRadius="full"
+                          borderWidth="thin"
+                          fontWeight="normal"
+                          fontSize={{ base: 'sm', lg: 'md' }}
+                          _hover={{
+                            bgColor: 'tagHoverColor',
+                          }}
+                          onClick={() => {
+                            setActiveIndex(i)
+                            setSearchText(word)
+                            searchPage(word)
+                          }}
+                        >
+                          <TagLabel>{word}</TagLabel>
+                        </Tag>
+                      )
+                    })}
+                  </Flex>
+                </>
+              )}
+              <IconButton
+                width="full"
+                icon={
+                  isVisible ? (
+                    <ChevronUpIcon
+                      fontSize="28px"
+                      color="linkColor"
+                      opacity="0.5"
+                    />
+                  ) : (
+                    <ChevronDownIcon
+                      fontSize="28px"
+                      color="linkColor"
+                      opacity="0.5"
+                    />
+                  )
+                }
+                aria-label="Toggle Text"
+                onClick={() => setIsVisible(!isVisible)}
+                size="xs"
+                isRound
+                backgroundColor="transparent"
+                _hover={{ backgroundColor: '#00000010' }}
+                _focus={{ backgroundColor: '#00000010' }}
+                _active={{ backgroundColor: '#00000010' }}
+              />
+            </>
           )}
         </Box>
       </VStack>
