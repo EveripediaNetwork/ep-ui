@@ -116,19 +116,26 @@ const BrandingPage = () => {
   return (
     <Box m="0" bg="brandHero" pb={20} my={-8}>
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
+        <Flex
+          alignItems="center"
+          flexDir={{ base: 'column', lg: 'row' }}
+          mt={{ lg: 16 }}
+        >
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
               textAlign={{ base: 'center', lg: 'initial' }}
               color="brand.500"
+              _dark={{ color: '#FF1A88' }}
               fontSize={{ lg: '6xl', base: '3xl' }}
               pt={{ lg: 0, base: 8 }}
+              mb={{ base: 6, lg: 10 }}
+              mt={{ base: 18 }}
             >
               IQ.WIKI Branding kit
             </Heading>
             <Text
               textAlign={{ base: 'center', lg: 'initial' }}
-              w={{ lg: '85%', base: '100%', md: '60%' }}
+              w={{ lg: '90%', base: '100%', md: '60%' }}
               fontSize={{ lg: '2xl', base: 'md' }}
               mx={{ md: 'auto', lg: '0' }}
             >
@@ -138,8 +145,8 @@ const BrandingPage = () => {
           </Box>
           <Image
             objectFit="contain"
-            imgH={400}
-            imgW={400}
+            imgH={500}
+            imgW={500}
             maxW="80vw"
             src={heroImg}
             alt="Bringing knowledge to the blockchain."
@@ -172,8 +179,8 @@ const BrandingPage = () => {
             content and would love to hear from you for any kind of partnership.
             <Text
               position="absolute"
-              bottom={{ base: '-10%', lg: '-20%', md: '-30%' }}
-              right={{ base: '5%', lg: '-5%' }}
+              bottom={{ base: '-10%', lg: '-20%', md: '-5%' }}
+              right={{ base: '5%', md: '-4%', '2xl': '-5%' }}
               fontSize={{ lg: '100px', base: '50px' }}
               color="brand.600"
             >
@@ -294,7 +301,7 @@ const BrandingPage = () => {
             <Heading fontSize="3xl">Please beware of these things.</Heading>
           </Flex>
           <Flex mt={10}>
-            <List display="flex" flexDir="column" gap="16">
+            <List display="flex" flexDir="column" gap="10">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not use the IQ.Wiki logo in any way that suggests that we are
@@ -309,7 +316,6 @@ const BrandingPage = () => {
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not in any way stretch or manipulate the logo.
               </ListItem>
-              {/* You can also use custom icons from react-icons */}
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
                 Do not change the logo color asides the ones stated above.
