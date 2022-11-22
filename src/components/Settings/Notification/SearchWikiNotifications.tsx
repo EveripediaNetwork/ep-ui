@@ -167,8 +167,8 @@ const SearchWikiNotifications = () => {
             borderRadius={5}
             overflow="hidden"
           />
-          <Flex w={{ lg: '100%' }} justifyContent="space-between">
-            <Flex direction="column">
+          <Flex flexGrow="1" w={{ lg: '100%' }} justifyContent="space-between">
+            <Flex direction="column" flexGrow="1">
               <Text noOfLines={1} fontWeight="semibold" fontSize="sm">
                 {wiki.title}
               </Text>
