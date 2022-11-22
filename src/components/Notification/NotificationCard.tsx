@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { HStack, Button, useToast, UseToastOptions } from '@chakra-ui/react'
+import {
+  HStack,
+  Button,
+  useToast,
+  UseToastOptions,
+  Text,
+  Icon,
+} from '@chakra-ui/react'
 import {
   ActivityCardDetails,
   BaseCategory,
@@ -13,6 +20,7 @@ import { addSubscription, removeSubscription } from '@/services/notification'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
+import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
 
 interface NotificationCardProps {
   title: string
@@ -127,6 +135,11 @@ const NotificationCard = ({
       />
       {defaultSubscribed || isWikiSubscribed ? (
         <Button
+          w={{ base: 8, md: 'initial' }}
+          h={{ base: 10 }}
+          display={{ base: 'flex', md: 'inline-flex' }}
+          alignItems={{ base: 'center' }}
+          justifyContent={{ base: 'center' }}
           variant="outline"
           px={{ base: 0, md: 7 }}
           fontSize={{ base: 'xs', md: 'sm' }}
@@ -139,10 +152,22 @@ const NotificationCard = ({
             )
           }
         >
-          Remove
+          <Text display={{ base: 'none', md: 'block' }}>Remove</Text>
+          <Icon
+            as={RiSubtractLine}
+            w={6}
+            h={6}
+            display={{ base: 'block', md: 'none' }}
+            fill="NotificationRemoveIcon"
+          />
         </Button>
       ) : (
         <Button
+          w={{ base: 8, md: 'initial' }}
+          h={{ base: 10 }}
+          display={{ base: 'flex', md: 'inline-flex' }}
+          alignItems={{ base: 'center' }}
+          justifyContent={{ base: 'center' }}
           px={{ base: 0, md: 10 }}
           fontSize={{ base: 'xs', md: 'md' }}
           onClick={() =>
@@ -163,7 +188,14 @@ const NotificationCard = ({
             )
           }
         >
-          Add
+          <Text display={{ base: 'none', md: 'block' }}>Add</Text>
+          <Icon
+            as={RiAddLine}
+            w={6}
+            h={6}
+            display={{ base: 'block', md: 'none' }}
+            fill="NotificationAddIcon"
+          />
         </Button>
       )}
     </HStack>

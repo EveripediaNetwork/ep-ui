@@ -213,5 +213,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.50',
       _dark: 'whiteAlpha.50',
     },
+    NotificationRemoveIcon: {
+      default: 'gray.800',
+      _dark: 'white',
+    },
+    NotificationAddIcon: {
+      default: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.900',
+    },
   },
 }
