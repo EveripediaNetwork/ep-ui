@@ -39,13 +39,13 @@ const GlossaryFilterSection = ({
   shouldBeFixed,
   setSearchText,
   activeIndex,
-  setActiveIndex
+  setActiveIndex,
 }: {
   searchText: string
   searchPage: (value: string) => void
   shouldBeFixed: boolean
   setSearchText: (value: string) => void
-  activeIndex: number|undefined
+  activeIndex: number | undefined
   setActiveIndex: (value: number) => void
 }) => {
   return (
@@ -140,7 +140,6 @@ const Glossary: NextPage = () => {
   const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>()
-
 
   const searchPage = (input: string) => {
     const letter =
