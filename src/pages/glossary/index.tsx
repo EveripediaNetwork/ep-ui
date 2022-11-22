@@ -29,6 +29,7 @@ import {
   // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
+import ToggleText from '@/components/Elements/ToggleText/ToggleText'
 
 // const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 
@@ -106,6 +107,7 @@ const Glossary: NextPage = () => {
           </Text>
         </VStack>
       </Flex>
+
       <VStack
         w="full"
         ref={newRef}
@@ -154,7 +156,7 @@ const Glossary: NextPage = () => {
               </GridItem>
             ))}
           </Grid>
-          <Box w="full">
+          <Box w="full" mb={ shouldBeFixed ? 5 : 0}>
             <InputGroup size="md" w="full">
               <InputLeftElement
                 ml={{ base: '15px', xl: 'unset' }}
@@ -176,42 +178,45 @@ const Glossary: NextPage = () => {
               />
             </InputGroup>
           </Box>
-          <Flex
-            my="4"
-            w="full"
-            wrap="wrap"
-            alignItems="center"
-            justifyContent={{ lg: 'start', '2xl': 'center' }}
-            gap={{ base: '3', '2xl': '10' }}
-          >
-            {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
-              return (
-                <Tag
-                  size="lg"
-                  key={word}
-                  bg={i === activeIndex ? 'tagActiveBgColor' : 'transparent'}
-                  color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
-                  cursor="pointer"
-                  borderRadius="full"
-                  borderWidth="thin"
-                  fontWeight="normal"
-                  fontSize={{ base: 'sm', lg: 'md' }}
-                  _hover={{
-                    bgColor: 'tagHoverColor',
-                  }}
-                  onClick={() => {
-                    setActiveIndex(i)
-                    setSearchText(word)
-                    searchPage(word)
-                  }}
-                >
-                  <TagLabel>{word}</TagLabel>
-                </Tag>
-              )
-            })}
-          </Flex>
+          {!shouldBeFixed && (
+            <Flex
+              my="4"
+              w="full"
+              wrap="wrap"
+              alignItems="center"
+              justifyContent={{ lg: 'start', '2xl': 'center' }}
+              gap={{ base: '3', '2xl': '10' }}
+            >
+              {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
+                return (
+                  <Tag
+                    size="lg"
+                    key={word}
+                    bg={i === activeIndex ? 'tagActiveBgColor' : 'transparent'}
+                    color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
+                    cursor="pointer"
+                    borderRadius="full"
+                    borderWidth="thin"
+                    fontWeight="normal"
+                    fontSize={{ base: 'sm', lg: 'md' }}
+                    _hover={{
+                      bgColor: 'tagHoverColor',
+                    }}
+                    onClick={() => {
+                      setActiveIndex(i)
+                      setSearchText(word)
+                      searchPage(word)
+                    }}
+                  >
+                    <TagLabel>{word}</TagLabel>
+                  </Tag>
+                )
+              })}
+            </Flex>
+          )}
         </Box>
       </VStack>
+
       <GlossaryItem
         highlightText={searchText}
         wikis={GlossaryWikis ?? []}
