@@ -201,9 +201,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.50',
       _dark: 'whiteAlpha.50',
     },
-    placeholderColor:{
-      default: "#ccd5e0",
-      _dark: "#3f444e"
-    }
+    placeholderColor: {
+      default: '#ccd5e0',
+      _dark: '#3f444e',
+    },
   },
 }

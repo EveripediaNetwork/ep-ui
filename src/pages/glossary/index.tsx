@@ -12,6 +12,8 @@ import {
   Button,
   Grid,
   GridItem,
+  Tag,
+  TagLabel,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
@@ -126,7 +128,7 @@ const Glossary: NextPage = () => {
               lg: 'repeat(27,1fr)',
             }}
             gap={3}
-            py="7"
+            py="4"
           >
             {glossaryAlphabetsData.map((item, i) => (
               <GridItem w="100%" key={i} cursor="pointer" textAlign="center">
@@ -171,60 +173,41 @@ const Glossary: NextPage = () => {
                 placeholder="Search for words"
                 value={searchText}
                 onChange={e => searchPage(e.target.value)}
-                _placeholder={{color: "placeholderColor"}}
+                _placeholder={{ color: 'placeholderColor' }}
               />
             </InputGroup>
           </Box>
           <Flex
-            my="8"
+            my="4"
             w="full"
             wrap="wrap"
             alignItems="center"
             justifyContent={{ lg: 'start', '2xl': 'center' }}
-            gap={{ base: '5', lg: '3', '2xl': '10' }}
+            gap={{ base: '3', '2xl': '10' }}
           >
             {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
               return (
-                <>
-                  <Button
-                    style={{
-                      whiteSpace: 'normal',
-                      wordWrap: 'break-word',
-                    }}
-                    key={i}
-                    px="3"
-                    py="1"
-                    bg="transparent"
-                    color="tagColor"
-                    cursor="pointer"
-                    borderRadius="full"
-                    borderWidth="thin"
-                    fontWeight="normal"
-                    fontSize={{ base: 'sm', lg: 'md' }}
-                    onClick={() => {
-                      setActiveIndex(i)
-                      setSearchText(word)
-                      searchPage(word)
-                    }}
-                    isActive={i === activeIndex}
-                    _focus={{
-                      boxShadow: 'none',
-                    }}
-                    _hover={{
-                      bgColor: 'tagHoverColor',
-                    }}
-                    _dark={{
-                      borderColor: 'whiteAlpha.700',
-                    }}
-                    _active={{
-                      bgColor: 'tagActiveBgColor',
-                      color: 'tagActiveColor',
-                      borderStyle: 'none',
-                    }}
-                  >
-                    {word}
-                  </Button>
-                </>
+                <Tag
+                  size="lg"
+                  key={word}
+                  bg={i === activeIndex ? 'tagActiveBgColor' : 'transparent'}
+                  color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
+                  cursor="pointer"
+                  borderRadius="full"
+                  borderWidth="thin"
+                  fontWeight="normal"
+                  fontSize={{ base: 'sm', lg: 'md' }}
+                  _hover={{
+                    bgColor: 'tagHoverColor',
+                  }}
+                  onClick={() => {
+                    setActiveIndex(i)
+                    setSearchText(word)
+                    searchPage(word)
+                  }}
+                >
+                  <TagLabel>{word}</TagLabel>
+                </Tag>
               )
             })}
           </Flex>
