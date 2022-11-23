@@ -182,8 +182,6 @@ const Glossary: NextPage = () => {
     filterGlossaryBySearchQuery(input)
   }
 
-
-
   return (
     <Stack direction="column" w="full" pb="56">
       <Flex
