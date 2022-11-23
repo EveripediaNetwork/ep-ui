@@ -60,9 +60,11 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       brief={getWikiSummary(activity?.content[0])}
       editor={activity.content[0].user}
       lastModTimeStamp={activity.datetime}
-      wiki={activity.content[0]}
       activityId={activity.id}
       type={activity.type}
+      WikiImgObj={activity.content[0].images}
+      categories={activity.content[0].categories}
+      tags={activity.content[0].tags}
     />
   )
   const { t } = useTranslation()

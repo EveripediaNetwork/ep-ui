@@ -52,9 +52,12 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
         title={wiki.title}
         brief={wiki.summary}
         editor={wiki.user}
-        wiki={wiki}
         wikiId={wiki.id}
         lastModTimeStamp={wiki.updated}
+        WikiImgObj={wiki.images}
+        activityId={wiki.id}
+        categories={wiki.categories}
+        tags={wiki.tags}
       />
     )
   })
