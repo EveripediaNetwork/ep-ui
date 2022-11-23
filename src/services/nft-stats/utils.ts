@@ -4,7 +4,7 @@ import { getTokenFromURI } from '../token-stats/utils'
 
 export const fetchNFTStats = async (coingeckoUrl?: string) => {
   if (!coingeckoUrl) return undefined
-  const nftID = getTokenFromURI(coingeckoUrl)
+  const nftID = getTokenFromURI(coingeckoUrl) as string
   if (!nftID) return undefined
 
   const { data } = await store.dispatch(getNFTStats.initiate(nftID))

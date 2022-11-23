@@ -55,7 +55,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={getWikiImageUrl(wiki)}
+              imageURL={getWikiImageUrl(wiki.images)}
               borderRadius="none"
               roundedTop="lg"
               alt={wiki.title}

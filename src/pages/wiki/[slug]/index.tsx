@@ -62,7 +62,7 @@ const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
           datePublished={wikiData.created}
           title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
           description={wikiData.summary}
-          mainImage={getWikiImageUrl(wikiData)}
+          mainImage={getWikiImageUrl(wikiData.images)}
         />
       )}
       <Box as="main" mt={-2}>

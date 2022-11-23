@@ -12,6 +12,22 @@ html {
 :root[data-theme='dark'] .slick-dots {
   filter: invert(1);
 }
+.about__ourTeamSliderWrapper .slick-slider {
+  height: 550px;
+}
+.slick-center .teamMember__about {
+  display: block;
+}
+.slick-center .teamMember__image {
+  width: 200px;
+  height: 200px;
+  margin-top: 0;
+}
+@media only screen and (max-width: 820px) {
+  .teamMember__about {
+    display: block !important;
+  }
+}
 
 /* =========================== */
 /* CUSTOM WIKI WIDGETS STYLES */

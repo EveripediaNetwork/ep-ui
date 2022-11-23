@@ -33,24 +33,6 @@ const AboutOurTeamSlider = ({ children }: AboutOurTeamSliderProps) => {
       <Carousel topArrow="30%" settings={settings}>
         {children}
       </Carousel>
-      <style jsx global>{`
-        .about__ourTeamSliderWrapper .slick-slider {
-          height: 550px;
-        }
-        .slick-center .teamMember__about {
-          display: block;
-        }
-        .slick-center .teamMember__image {
-          width: 200px;
-          height: 200px;
-          margin-top: 0;
-        }
-        @media only screen and (max-width: 820px) {
-          .teamMember__about {
-            display: block !important;
-          }
-        }
-      `}</style>
     </>
   )
 }
