@@ -40,7 +40,7 @@ const GlossaryWikiCard = ({
         <VStack pb="2" w="full" px="3">
           <LinkOverlay href={`/wiki/${wikiId}`} w="full">
             <Heading
-              size={{ base: 'sm', lg: 'lg' }}
+              size={{ base: 'sm', lg: 'md' }}
               my="10px"
               color="brand.500"
             >
