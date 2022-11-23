@@ -60,7 +60,7 @@ const GlossaryFilterSection = ({
             <Search2Icon
               color="gray.300"
               fontSize={{ base: 'sm', lg: 'auto' }}
-              ml={{ base: '-8', md: '0' }}
+              ml={{ base: '-8', lg: 0 }}
             />
           </InputLeftElement>
           <Input
