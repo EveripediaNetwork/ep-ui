@@ -228,7 +228,7 @@ const Glossary: NextPage = () => {
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Grid
             templateColumns={{
-              base: 'repeat(14,1fr)',
+              base: 'repeat(9,1fr)',
               md: 'repeat(20,1fr)',
               lg: 'repeat(27,1fr)',
             }}
