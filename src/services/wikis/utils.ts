@@ -38,32 +38,74 @@ export const useWikiSubRecommendations = (userId?: string) => {
   const [recommendations, setRecommendations] = useState<Activity[]>([])
   const { data: wikiSubs } = useGetAllWikiSubscriptionQuery(userId || '')
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const getRecommendations = async () => {
       if (!userId) return
       setLoading(true)
+
+      // GET ALL USER MODIFIED WIKIS
+      let userModifiedWikis: Activity[] = []
+      let newRecommendations: Activity[] = []
       await Promise.all([
         store.dispatch(getUserCreatedWikis.initiate({ id: userId, limit: 10 })),
         store.dispatch(getUserEditedWikis.initiate({ id: userId, limit: 10 })),
       ]).then(res => {
         const [createdWikis, editedWikis] = res
-        const newRecomendations = shuffleArray([
+        userModifiedWikis = shuffleArray([
           ...(createdWikis.data || []),
           ...(editedWikis.data || []),
         ])
-          // filter out wikis that are both created and edited by the user
+      })
+
+      // GENERATE RECOMMENDATIONS
+      if (!recommendations.length) {
+        newRecommendations = userModifiedWikis
           .filter(
             (w, i, self) =>
               i === self.findIndex(t => t.content[0].id === w.content[0].id),
           )
-          // filter out wikis that are already subscribed to
           .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id))
           .slice(0, 3)
-        setRecommendations(newRecomendations)
-        setLoading(false)
-      })
+      } else {
+        const getNewRecommendation: () => Activity = () => {
+          const randomWiki =
+            userModifiedWikis[
+              Math.floor(Math.random() * userModifiedWikis.length)
+            ]
+          const isWikiAlreadyRecommended = recommendations.find(
+            r => r.content[0].id === randomWiki.content[0].id,
+          )
+          const isWikiAlreadySubscribed = wikiSubs?.find(
+            s => s.auxiliaryId === randomWiki.content[0].id,
+          )
+          if (isWikiAlreadyRecommended || isWikiAlreadySubscribed) {
+            return getNewRecommendation()
+          }
+          return randomWiki
+        }
+
+        // GET NEW RECOMMENDATION
+        const newWiki = getNewRecommendation()
+
+        // REPLACE OLD SUBSCRIBED RECOMMENDATION
+        newRecommendations = recommendations.map(r => {
+          const isWikiAlreadySubscribed = wikiSubs?.find(
+            s => s.auxiliaryId === r.content[0].id,
+          )
+          if (isWikiAlreadySubscribed) {
+            return newWiki
+          }
+          return r
+        })
+      }
+
+      // SET RECOMMENDATIONS STATE
+      setRecommendations(newRecommendations)
+      setLoading(false)
     }
     getRecommendations()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, wikiSubs])
 
   return { recommendations, loading }
