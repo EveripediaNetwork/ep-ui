@@ -317,7 +317,7 @@ const Glossary: NextPage = () => {
 
       <GlossaryItem
         highlightText={searchText}
-        wikis={glossary ?? []}
+        glossary={glossary ?? []}
         glossaryAlphabets={alphabet}
       />
     </Stack>
