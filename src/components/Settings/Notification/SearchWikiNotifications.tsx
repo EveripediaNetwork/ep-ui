@@ -64,6 +64,11 @@ const WikiSubscriptionButton = ({
       <Button
         variant="outline"
         fontSize="sm"
+        w={{ base: 8, md: 'initial' }}
+        h={{ base: 10 }}
+        display={{ base: 'flex', md: 'inline-flex' }}
+        alignItems={{ base: 'center' }}
+        justifyContent={{ base: 'center' }}
         fontWeight={500}
         onClick={e => {
           e.stopPropagation()
@@ -77,6 +82,11 @@ const WikiSubscriptionButton = ({
     <Button
       variant="outline"
       fontSize="sm"
+      w={{ base: 8, md: 'initial' }}
+      h={{ base: 10 }}
+      display={{ base: 'flex', md: 'inline-flex' }}
+      alignItems={{ base: 'center' }}
+      justifyContent={{ base: 'center' }}
       fontWeight={500}
       onClick={e => {
         e.stopPropagation()
