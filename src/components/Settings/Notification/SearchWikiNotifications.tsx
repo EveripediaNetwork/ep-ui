@@ -11,6 +11,7 @@ import {
   Text,
   useEventListener,
   useToast,
+  Icon,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -40,6 +41,7 @@ import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { useUserProfileData } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@/types/Wiki'
+import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -75,7 +77,14 @@ const WikiSubscriptionButton = ({
           SubscribeWikiHandler(email, wiki, userAddress, toast)
         }}
       >
-        Add
+        <Text display={{ base: 'none', md: 'block' }}>Add</Text>
+        <Icon
+          as={RiAddLine}
+          w={6}
+          h={6}
+          display={{ base: 'block', md: 'none' }}
+          fill="NotificationRemoveIcon"
+        />
       </Button>
     )
   return (
@@ -93,7 +102,14 @@ const WikiSubscriptionButton = ({
         RemoveWikiSubscriptionHandler(email, wiki.id, userAddress, toast)
       }}
     >
-      Remove
+      <Text display={{ base: 'none', md: 'block' }}>Remove</Text>
+      <Icon
+        as={RiSubtractLine}
+        w={6}
+        h={6}
+        display={{ base: 'block', md: 'none' }}
+        fill="NotificationRemoveIcon"
+      />
     </Button>
   )
 }
