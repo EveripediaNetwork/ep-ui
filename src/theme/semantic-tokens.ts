@@ -220,7 +220,7 @@ export const semanticTokens: SemanticTokens = {
     NotificationAddIcon: {
       default: 'whiteAlpha.900',
       _dark: 'whiteAlpha.900',
-    }
+    },
     placeholderColor: {
       default: '#ccd5e0',
       _dark: '#3f444e',
