@@ -17,7 +17,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       w={{ lg: '32%', md: 'auto', base: '100%' }}
       border="1px solid"
       borderColor="rankCardBorder"
-      p={4}
+      p={{ '2xl': 4, md: 2, base: 2 }}
       borderRadius="lg"
       flexDirection="column"
     >
@@ -34,7 +34,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
         {MarketCap.map((item, index) => {
           return (
             <Flex gap={4} alignItems="center">
-              <Text fontSize="lg">{index + 1}</Text>
+              <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
               <Flex gap={2} w="100%" alignItems="center">
                 <Box
                   w={{ lg: '60px', md: '40px', base: '40px' }}
@@ -45,31 +45,33 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                   borderRadius="md"
                 />
                 <Flex w="100%">
-                  <Flex flexDir="column" w="70%">
+                  <Flex flexDir="column" w="65%">
                     <Text
                       color="primaryPinkIcon"
-                      fontSize={{ md: 'sm', lg: 'md', base: 'sm' }}
+                      fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+                      whiteSpace="nowrap"
                     >
                       {item.name}
                     </Text>
                     <Text
                       color="inactiveText"
-                      fontSize={{ md: 'sm', lg: 'md', base: 'sm' }}
+                      fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
                     >
                       {item.alias}
                     </Text>
                   </Flex>
                   <Flex
                     flexDir="column"
-                    gap={2}
-                    w="30%"
+                    w="35%"
                     alignItems="flex-start"
+                    justifyContent="space-around"
                   >
                     <Text
                       color="inactiveText"
                       fontSize={{ md: 'xs', base: 'sm' }}
                       width="100%"
                       textAlign="right"
+                      whiteSpace="nowrap"
                     >
                       ${item.capital}
                     </Text>

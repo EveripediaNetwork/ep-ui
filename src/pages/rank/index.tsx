@@ -22,7 +22,7 @@ const Rank = () => {
       </Box>
       <Flex
         justifyContent="space-between"
-        maxW={{ base: '90%', '2xl': '1280px', md: '90%' }}
+        maxW={{ base: '90%', '2xl': '1280px', md: '99%' }}
         mx="auto"
         py={16}
         flexWrap="wrap"
