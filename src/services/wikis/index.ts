@@ -18,8 +18,9 @@ import {
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
   POST_FLAG_WIKI,
+  GET_ACTIVITY_CARD_DETAILS,
 } from '@/services/wikis/queries'
-import { User, Wiki, WikiPreview } from '@/types/Wiki'
+import { ActivityCardDetails, User, Wiki, WikiPreview } from '@/types/Wiki'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 
@@ -122,6 +123,13 @@ export const wikiApi = createApi({
     getWikiPreview: builder.query<WikiPreview, string>({
       query: (id: string) => ({
         document: GET_PREVIEW_WIKI_BY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
+    }),
+    getWikiActivityCardDetails: builder.query<ActivityCardDetails, string>({
+      query: (id: string) => ({
+        document: GET_ACTIVITY_CARD_DETAILS,
         variables: { id },
       }),
       transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
@@ -270,6 +278,7 @@ export const {
   useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
+  useGetWikiActivityCardDetailsQuery,
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
@@ -286,6 +295,7 @@ export const {
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreview,
+  getWikiActivityCardDetails,
   getWikiPreviewsByCategory,
   getUserWikis,
   getWikisByCategory,

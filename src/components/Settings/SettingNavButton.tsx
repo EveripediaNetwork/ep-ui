@@ -26,7 +26,7 @@ const SettingNavButton = ({
     color={isActive ? 'white' : 'linkColor'}
     p={4}
     _hover={!isActive ? { color: 'linkHoverColor' } : {}}
-    width="300px"
+    width="250px"
     borderRadius="lg"
   >
     <Icon size="20px" />

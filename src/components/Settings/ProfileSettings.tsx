@@ -137,6 +137,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       ...inputUsername,
       error: validateUsername(inputUsername.value),
     })
+
     setInputBio({ ...inputBio, error: validateBio(inputBio.value) })
     setInputEmail({ ...inputEmail, error: validateEmail(inputEmail.value) })
 

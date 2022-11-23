@@ -38,7 +38,7 @@ export const CollectionItem = (props: CollectionItemProps) => {
       >
         <AspectRatio maxW="full" ratio={1}>
           <WikiImage
-            imageURL={getWikiImageUrl(item)}
+            imageURL={getWikiImageUrl(item.images)}
             w="full"
             alt={item.title}
           />

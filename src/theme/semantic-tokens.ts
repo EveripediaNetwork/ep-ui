@@ -193,6 +193,18 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',
     },
+    searchBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
+    emptyNotificationHeading: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    emptyNotificationText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
     tagColor: {
       default: 'gray.500',
       _dark: 'whiteAlpha.900',
@@ -212,6 +224,18 @@ export const semanticTokens: SemanticTokens = {
     glossaryItemBg: {
       default: 'gray.50',
       _dark: 'whiteAlpha.50',
+    },
+    NotificationRemoveIcon: {
+      default: 'gray.800',
+      _dark: 'white',
+    },
+    NotificationAddIcon: {
+      default: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.900',
+    },
+    placeholderColor: {
+      default: '#ccd5e0',
+      _dark: '#3f444e',
     },
   },
 }

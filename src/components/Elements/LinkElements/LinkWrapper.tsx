@@ -18,7 +18,7 @@ export const LinkWrapper = ({
           ? false
           : prefetch
       }
-      // passHref
+      passHref
     >
       {children}
     </NextLink>

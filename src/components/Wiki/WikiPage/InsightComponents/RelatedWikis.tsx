@@ -19,7 +19,7 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
         align="start"
       >
         <WikiImage
-          imageURL={getWikiImageUrl(wiki)}
+          imageURL={getWikiImageUrl(wiki.images)}
           h="80px"
           w="80px"
           flexShrink={0}
