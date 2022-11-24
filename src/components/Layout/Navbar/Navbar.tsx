@@ -91,9 +91,6 @@ const Navbar = () => {
                 <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
                   IQ.wiki
                 </Heading>
-                <Tag colorScheme="pink" size="sm" flexShrink={0}>
-                  Beta
-                </Tag>
               </HStack>
             </Link>
           </Box>
