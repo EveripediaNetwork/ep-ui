@@ -14,7 +14,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
 
   return (
     <Flex
-      w={{ lg: '32%', md: 'auto', base: '100%' }}
+      w={{ lg: '32%', md: '49%', base: '100%' }}
       border="1px solid"
       borderColor="rankCardBorder"
       p={{ '2xl': 4, md: 2, base: 2 }}

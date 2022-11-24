@@ -22,11 +22,11 @@ const Rank = () => {
       </Box>
       <Flex
         justifyContent="space-between"
-        maxW={{ base: '90%', '2xl': '1280px', md: '99%' }}
+        maxW={{ base: '90%', '2xl': '1280px', md: '95%', lg: '98%' }}
         mx="auto"
         py={16}
         flexWrap="wrap"
-        gap={{ base: 10, md: 4 }}
+        gap={{ base: 10, md: 0 }}
       >
         <RankCard title="NFTs" icon={BiImage} />
         <RankCard title="Cryptocyrrencies" icon={RiCoinsFill} />
