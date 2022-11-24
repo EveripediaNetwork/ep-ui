@@ -151,10 +151,10 @@ const Glossary: NextPage = () => {
 
   const filterGlossaryAlphabetBySearchResult = (
     searchResult: Wiki[] | undefined,
+    searchKeyword: string 
   ) => {
+    if (!searchKeyword) return glossaryAlphabetsData
     if (!searchResult) return []
-    if (searchResult.length === GlossaryWikis?.length)
-      return glossaryAlphabetsData
     const filteredAlphabet = glossaryAlphabetsData.filter(currentAlphabet =>
       searchResult.some(result =>
         currentAlphabet === '#'
@@ -172,7 +172,7 @@ const Glossary: NextPage = () => {
         wiki.summary.toLowerCase().includes(text.toLowerCase()) ||
         wiki.title.toLowerCase().includes(text.toLowerCase()),
     )
-    const filteredAlphabet = filterGlossaryAlphabetBySearchResult(searchResult)
+    const filteredAlphabet = filterGlossaryAlphabetBySearchResult(searchResult, text)
     setAlphabet(filteredAlphabet)
     setGlossary(searchResult)
   }
