@@ -8,7 +8,6 @@ import {
   HStack,
   Heading,
   SkeletonCircle,
-  Tag,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
