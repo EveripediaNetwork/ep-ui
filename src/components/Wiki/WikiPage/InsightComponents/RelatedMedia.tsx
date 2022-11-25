@@ -33,6 +33,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                   h="100%"
                   w="100%"
                   alt="related media"
+                  hideOnError
                   objectFit="cover"
                   bgColor="fadedText2"
                 />
