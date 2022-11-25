@@ -114,13 +114,9 @@ const BrandingPage = () => {
   ]
   const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
   return (
-    <Box m="0" bg="brandHero" pb={20} my={-8}>
+    <Box bg="brandHero" pb="28" mt="-3">
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex
-          alignItems="center"
-          flexDir={{ base: 'column', lg: 'row' }}
-          mt={{ lg: 16 }}
-        >
+        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
               textAlign={{ base: 'center', lg: 'initial' }}
@@ -205,7 +201,12 @@ const BrandingPage = () => {
               housepower of all knowledge.
             </Text>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {alternateLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
@@ -232,7 +233,12 @@ const BrandingPage = () => {
               IQ.WIKI LOGO
             </Heading>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {IQLogoAsset.map((item, index) => {
               return (
                 <BrandingAssets
@@ -255,7 +261,12 @@ const BrandingPage = () => {
               BRAINDAO
             </Heading>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {braindaoAltLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
@@ -279,7 +290,12 @@ const BrandingPage = () => {
               BRAINDAO- ALTERNATE LOGO
             </Heading>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {braindaoLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
