@@ -11,11 +11,9 @@ export const ADD_WIKI_SUBSCRIPTION = gql`
       userId: $userId
       subscriptionType: $subscriptionType
       auxiliaryId: $auxiliaryId
-      email: $email
     ) {
       id
       auxiliaryId
-      email
       subscriptionType
       userId
     }
@@ -27,13 +25,11 @@ export const REMOVE_WIKI_SUBSCRIPTION = gql`
     $userId: String!
     $subscriptionType: String!
     $auxiliaryId: String!
-    $email: String!
   ) {
     removeWikiSubscription(
       userId: $userId
       subscriptionType: $subscriptionType
       auxiliaryId: $auxiliaryId
-      email: $email
     )
   }
 `
