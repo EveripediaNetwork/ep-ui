@@ -5,7 +5,6 @@ export const ADD_WIKI_SUBSCRIPTION = gql`
     $userId: String!
     $subscriptionType: String!
     $auxiliaryId: String!
-    $email: String!
   ) {
     addWikiSubscription(
       userId: $userId
