@@ -20,6 +20,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       p={{ '2xl': 4, md: 2, base: 2 }}
       borderRadius="lg"
       flexDirection="column"
+      mb={4}
     >
       <Flex gap="1" mb="4" alignItems="center">
         <Icon
