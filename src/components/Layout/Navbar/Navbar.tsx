@@ -8,7 +8,6 @@ import {
   HStack,
   Heading,
   SkeletonCircle,
-  Tag,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
@@ -91,9 +90,6 @@ const Navbar = () => {
                 <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
                   IQ.wiki
                 </Heading>
-                <Tag colorScheme="pink" size="sm" flexShrink={0}>
-                  Beta
-                </Tag>
               </HStack>
             </Link>
           </Box>

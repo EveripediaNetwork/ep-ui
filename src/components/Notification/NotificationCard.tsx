@@ -59,7 +59,6 @@ export const SubscribeWikiHandler = async (
         subscriptionType: 'wiki',
         auxiliaryId: wiki.id,
         wiki,
-        email,
       }),
     )
   }
@@ -87,7 +86,6 @@ export const RemoveWikiSubscriptionHandler = async (
         userId: userAddress,
         subscriptionType: 'wiki',
         auxiliaryId: wikiId,
-        email,
       }),
     )
   }

@@ -16,9 +16,8 @@ import {
   IconButton,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
-import * as Scroll from 'react-scroll'
 import {
   COMMONLY_SEARCHED_WIKIS,
   glossaryAlphabetsData,
@@ -30,6 +29,7 @@ import {
   // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
+import { Wiki } from '@/types/Wiki'
 
 // const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 
@@ -60,7 +60,7 @@ const GlossaryFilterSection = ({
             <Search2Icon
               color="gray.300"
               fontSize={{ base: 'sm', lg: 'auto' }}
-              ml={{ base: '-8', md: '0' }}
+              ml={{ base: '-8', lg: 0 }}
             />
           </InputLeftElement>
           <Input
@@ -140,20 +140,49 @@ const Glossary: NextPage = () => {
   const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>()
+  const [glossary, setGlossary] = useState<Wiki[]>()
+  const [alphabet, setAlphabet] = useState(glossaryAlphabetsData)
+
+  useEffect(() => {
+    if (!glossary && GlossaryWikis) {
+      setGlossary(GlossaryWikis)
+    }
+  }, [GlossaryWikis])
+
+  const filterGlossaryAlphabetBySearchResult = (
+    searchResult: Wiki[] | undefined,
+    searchKeyword: string,
+  ) => {
+    if (!searchKeyword) return glossaryAlphabetsData
+    if (!searchResult) return []
+    const filteredAlphabet = glossaryAlphabetsData.filter(currentAlphabet =>
+      searchResult.some(result =>
+        currentAlphabet === '#'
+          ? /^\d/.test(result.title)
+          : result.title.charAt(0).toLowerCase() ===
+            currentAlphabet.toLowerCase(),
+      ),
+    )
+    return filteredAlphabet
+  }
+
+  const filterGlossaryBySearchQuery = (text: string) => {
+    const searchResult = GlossaryWikis?.filter(
+      wiki =>
+        wiki.summary.toLowerCase().includes(text.toLowerCase()) ||
+        wiki.title.toLowerCase().includes(text.toLowerCase()),
+    )
+    const filteredAlphabet = filterGlossaryAlphabetBySearchResult(
+      searchResult,
+      text,
+    )
+    setAlphabet(filteredAlphabet)
+    setGlossary(searchResult)
+  }
 
   const searchPage = (input: string) => {
-    const letter =
-      input.length > 1
-        ? input[0].toLocaleUpperCase()
-        : input.toLocaleUpperCase()
     setSearchText(input)
-    Scroll.scroller.scrollTo(letter, {
-      duration: 70,
-      smooth: true,
-      offset: shouldBeFixed
-        ? -(heightOfElement || 284)
-        : -(heightOfElement ? heightOfElement + 228 : 512),
-    })
+    filterGlossaryBySearchQuery(input)
   }
 
   return (
@@ -202,7 +231,7 @@ const Glossary: NextPage = () => {
         <Box mx="auto" w="full" justifyContent="center" alignItems="center">
           <Grid
             templateColumns={{
-              base: 'repeat(14,1fr)',
+              base: 'repeat(9,1fr)',
               md: 'repeat(20,1fr)',
               lg: 'repeat(27,1fr)',
             }}
@@ -291,8 +320,8 @@ const Glossary: NextPage = () => {
 
       <GlossaryItem
         highlightText={searchText}
-        wikis={GlossaryWikis ?? []}
-        glossaryAlphabets={glossaryAlphabetsData}
+        glossary={glossary ?? []}
+        glossaryAlphabets={alphabet}
       />
     </Stack>
   )

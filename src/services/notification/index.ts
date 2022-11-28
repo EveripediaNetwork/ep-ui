@@ -12,7 +12,6 @@ import { profileApiClient } from '../profile'
 export interface SubscriptionArgs {
   userId: string
   subscriptionType: string
-  email: string
   auxiliaryId: string
   wiki: ActivityCardDetails
 }
@@ -47,7 +46,6 @@ export const notificationSubscriptionApi = createApi({
             userId: addWikiSubscriptionArgs.userId,
             auxiliaryId: addWikiSubscriptionArgs.auxiliaryId,
             subscriptionType: addWikiSubscriptionArgs.subscriptionType,
-            email: addWikiSubscriptionArgs.email,
           },
         }
       },
@@ -81,7 +79,6 @@ export const notificationSubscriptionApi = createApi({
             userId: removeWikiSubscriptionArgs.userId,
             auxiliaryId: removeWikiSubscriptionArgs.auxiliaryId,
             subscriptionType: removeWikiSubscriptionArgs.subscriptionType,
-            email: removeWikiSubscriptionArgs.email,
           },
         }
       },
