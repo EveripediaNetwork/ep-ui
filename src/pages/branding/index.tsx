@@ -239,8 +239,8 @@ const BrandingPage = () => {
               fontSize={{ lg: '2xl', base: 'sm' }}
               textAlign={{ base: 'center', lg: 'initial' }}
             >
-              {`The IQ.wiki logo was inspired from BrainDAO to represent The
-              World's Largest Blockchain & Crypto Encyclopedia.`}
+              The IQ.wiki logo was inspired from BrainDAO to represent The
+              World&#x27;s Largest Blockchain & Crypto Encyclopedia.
             </Text>
           </Flex>
           <Flex
@@ -274,9 +274,10 @@ const BrandingPage = () => {
               fontSize={{ lg: '2xl', base: 'sm' }}
               textAlign={{ base: 'center', lg: 'initial' }}
             >
-              {`BrainDAO's mission is to build a more intelligent future through
-              the IQ token. The logo represents a DAO that is collectively made
-              up of all IQ token stakers and governs the token.`}
+              BrainDAO&#x27;s mission is to build a more intelligent future
+              through the IQ token. The logo represents a DAO that is
+              collectively made up of all IQ token stakers and governs the
+              token.
             </Text>
           </Flex>
           <Flex
