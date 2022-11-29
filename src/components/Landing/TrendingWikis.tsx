@@ -91,7 +91,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             </Text>
 
             <HStack justify="space-between">
-              <Flex gap={3} width="50%">
+              <Flex alignItems="center" gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
                     alt={getUsername(wiki?.user, ensName)}
