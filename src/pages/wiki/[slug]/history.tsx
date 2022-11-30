@@ -40,7 +40,6 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
             wikiId={wiki.id}
             tags={wiki.tags}
             categories={wiki.categories}
-            activityId={wiki.id}
             WikiImgObj={wiki.images}
           />
         )}

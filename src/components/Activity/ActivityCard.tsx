@@ -8,6 +8,7 @@ import {
   Flex,
   Stack,
   AspectRatio,
+  Wrap,
 } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
@@ -198,7 +199,7 @@ const ActivityCard = ({
                   {getUsername(editor)}
                 </Link>
               </Text>
-              <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
+              <Wrap spacing={1} display={{ base: 'none', lg: 'flex' }}>
                 {tags?.map((tag, index) => (
                   <NextLink href={`/tags/${tag.id}`} key={index} passHref>
                     <Tag as="a" whiteSpace="nowrap" key={index}>
@@ -206,7 +207,7 @@ const ActivityCard = ({
                     </Tag>
                   </NextLink>
                 ))}
-              </HStack>
+              </Wrap>
             </HStack>
           </Box>
           {lastModTimeStamp && (
