@@ -79,12 +79,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         <Box mt={7}>
           <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
             You are seeing the wikis that are tagged with
-            <Link
-              mx={1}
-              href={`/tags/${tagId}`}
-              color="brandLinkColor"
-              passHref
-            >
+            <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
               {tagId}
             </Link>
             . If you are interested in seeing other topics in common, you can
