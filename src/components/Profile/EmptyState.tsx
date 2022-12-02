@@ -1,7 +1,7 @@
 import { ProfileEmptyState } from '@/components/Elements/icons/ProfileEmptyState'
-import { Button, Flex, Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Link } from '../Elements'
+import { LinkButton } from '../Elements'
 
 export const EmptyState = ({
   title,
@@ -18,11 +18,9 @@ export const EmptyState = ({
       </Text>
       <Text color="fadedText2">{body}</Text>
 
-      <Link href="/create-wiki" passHref>
-        <Button px="16" w="fit-content" mt="16" as="a">
-          Create Wiki
-        </Button>
-      </Link>
+      <LinkButton href="/create-wiki" px="16" w="fit-content" mt="16">
+        Create Wiki
+      </LinkButton>
     </Flex>
   )
 }

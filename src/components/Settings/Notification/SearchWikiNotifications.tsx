@@ -4,7 +4,6 @@ import {
   Center,
   Flex,
   InputGroup,
-  Link,
   Spinner,
   chakra,
   Button,
@@ -146,18 +145,16 @@ const SearchWikiNotifications = () => {
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
       <chakra.span fontWeight="semibold">No search Results</chakra.span>
-      <Link href="/create-wiki">
-        <Button
-          as="a"
-          variant="outline"
-          px="10"
-          w="fit-content"
-          fontWeight="semibold"
-          fontSize="xs"
-        >
-          Create New Wiki
-        </Button>
-      </Link>
+      <LinkButton
+        variant="outline"
+        px="10"
+        w="fit-content"
+        fontWeight="semibold"
+        fontSize="xs"
+        href="/create-wiki"
+      >
+        Create New Wiki
+      </LinkButton>
     </Flex>
   )
 
