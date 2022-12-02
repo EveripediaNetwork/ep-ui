@@ -68,20 +68,21 @@ export const useWikiSubRecommendations = (userId?: string) => {
           .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id))
           .slice(0, 3)
       } else {
-        const getNewRecommendation: () => Activity = () => {
-          const randomWiki =
-            userModifiedWikis[
-              Math.floor(Math.random() * userModifiedWikis.length)
-            ]
-          const isWikiAlreadyRecommended = recommendations.find(
-            r => r.content[0].id === randomWiki.content[0].id,
-          )
-          const isWikiAlreadySubscribed = wikiSubs?.find(
-            s => s.auxiliaryId === randomWiki.content[0].id,
-          )
-          if (isWikiAlreadyRecommended || isWikiAlreadySubscribed) {
-            return getNewRecommendation()
-          }
+        const getNewRecommendation: () => Activity | null = () => {
+          let randomWiki: Activity | null = null
+          userModifiedWikis.every(w => {
+            const isWikiAlreadyRecommended = recommendations.find(
+              r => r.content[0].id === w.content[0].id,
+            )
+            const isWikiAlreadySubscribed = wikiSubs?.find(
+              s => s.auxiliaryId === w.content[0].id,
+            )
+            if (!isWikiAlreadyRecommended && !isWikiAlreadySubscribed) {
+              randomWiki = w
+              return false
+            }
+            return true
+          })
           return randomWiki
         }
 
@@ -89,15 +90,28 @@ export const useWikiSubRecommendations = (userId?: string) => {
         const newWiki = getNewRecommendation()
 
         // REPLACE OLD SUBSCRIBED RECOMMENDATION
-        newRecommendations = recommendations.map(r => {
-          const isWikiAlreadySubscribed = wikiSubs?.find(
-            s => s.auxiliaryId === r.content[0].id,
-          )
-          if (isWikiAlreadySubscribed) {
-            return newWiki
+        newRecommendations = recommendations
+          .map(r => {
+            const isWikiAlreadySubscribed = wikiSubs?.find(
+              s => s.auxiliaryId === r.content[0].id,
+            )
+            if (isWikiAlreadySubscribed) {
+              return newWiki || null
+            }
+            return r
+          })
+          .filter(Boolean) as Activity[]
+
+        while (
+          userModifiedWikis.length - (wikiSubs?.length || 0) >
+            newRecommendations.length &&
+          newRecommendations.length < 3
+        ) {
+          const otherNewWiki = getNewRecommendation()
+          if (otherNewWiki) {
+            newRecommendations.push(otherNewWiki)
           }
-          return r
-        })
+        }
       }
 
       // SET RECOMMENDATIONS STATE
