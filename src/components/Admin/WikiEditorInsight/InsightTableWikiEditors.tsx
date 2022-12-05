@@ -65,6 +65,14 @@ type InsightTableWikiEditorsProps = {
   filterBy: string
 }
 
+const TableHead = ({ text }: { text: string }) => {
+  return (
+    <Th color="#718096" textTransform="capitalize" fontWeight="normal">
+      <Text fontWeight="bold">{text}</Text>
+    </Th>
+  )
+}
+
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
@@ -87,34 +95,14 @@ export const InsightTableWikiEditors = (
       <Table>
         <Thead bg="wikiTitleBg">
           <Tr>
-            <Th
-              color="#718096"
-              textTransform="capitalize"
-              fontWeight="semibold"
-            >
-              <Text fontWeight="bold">Names</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="normal">
-              <Text fontWeight="bold">No. of created wikis</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              <Text fontWeight="bold">No. of edited wikis</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              <Text fontWeight="bold">Total No. of wikis</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              <Text fontWeight="bold">Last created wiki</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              <Text fontWeight="bold">Lastest activity</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              <Text fontWeight="bold">Status</Text>
-            </Th>
-            <Th color="#718096" textTransform="capitalize" fontWeight="medium">
-              Action
-            </Th>
+            <TableHead text="Names" />
+            <TableHead text="No. of created wikis" />
+            <TableHead text="No. of edited wikis" />
+            <TableHead text="Total No. of wikis" />
+            <TableHead text="Last created wiki" />
+            <TableHead text="Lastest activity" />
+            <TableHead text="Status" />
+            <TableHead text="Action" />
           </Tr>
         </Thead>
         <Tbody>
