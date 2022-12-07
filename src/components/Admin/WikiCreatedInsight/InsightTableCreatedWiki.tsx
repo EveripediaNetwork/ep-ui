@@ -38,7 +38,7 @@ type InsightTableWikiCreatedProps = {
 
 const TableHead = ({ text }: { text: string }) => {
   return (
-    <Th color="#718096" textTransform="none" fontWeight="medium">
+    <Th color="primaryGray" textTransform="none" fontWeight="medium">
       <Text fontWeight="bold">{text}</Text>
     </Th>
   )
