@@ -11,7 +11,11 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react'
-import { CommonMetaIds, Wiki, WikiPossibleSocialsList } from '@/types/Wiki'
+import {
+  CommonMetaIds,
+  Wiki,
+  WikiPossibleSocialsList,
+} from '@everipedia/iq-utils'
 import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/shortenText'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'

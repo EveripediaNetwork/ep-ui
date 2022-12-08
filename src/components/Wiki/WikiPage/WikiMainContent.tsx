@@ -1,4 +1,4 @@
-import { CommonMetaIds, Wiki } from '@/types/Wiki'
+import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import { Box, Heading, useColorMode } from '@chakra-ui/react'
 import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'

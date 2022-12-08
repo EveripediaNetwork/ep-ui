@@ -20,7 +20,12 @@ import {
   POST_FLAG_WIKI,
   GET_ACTIVITY_CARD_DETAILS,
 } from '@/services/wikis/queries'
-import { ActivityCardDetails, User, Wiki, WikiPreview } from '@/types/Wiki'
+import {
+  ActivityCardDetails,
+  User,
+  Wiki,
+  WikiPreview,
+} from '@everipedia/iq-utils'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 

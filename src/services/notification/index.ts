@@ -6,7 +6,7 @@ import {
   REMOVE_WIKI_SUBSCRIPTION,
   WIKI_SUBSCRIPTIONS,
 } from '@/services/notification/queries'
-import { ActivityCardDetails } from '@/types/Wiki'
+import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { profileApiClient } from '../profile'
 
 export interface SubscriptionArgs {

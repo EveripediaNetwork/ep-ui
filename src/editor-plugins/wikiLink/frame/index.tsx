@@ -1,7 +1,7 @@
 import config from '@/config'
 import { getWikisByTitle } from '@/services/search'
 import { store } from '@/store/store'
-import { WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@everipedia/iq-utils'
 import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { shortenText } from '@/utils/shortenText'
 import { Center } from '@chakra-ui/react'
