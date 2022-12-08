@@ -52,7 +52,6 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { getDeadline } from '@/utils/getDeadline'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
@@ -97,8 +96,6 @@ type PageWithoutFooter = NextPage & {
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
-
-const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -165,8 +162,7 @@ const CreateWikiContent = () => {
     isPublished: false,
   })
 
-  const { saveHashInTheBlockchain, signing, verifyTrxHash } =
-    useGetSignedHash(deadline)
+  const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
 
   const getWikiSlug = async () => {
     const slug = slugifyText(String(wiki.title))
