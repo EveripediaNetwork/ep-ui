@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -33,6 +33,7 @@ import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { logEvent } from './googleAnalytics'
+import { getDeadline } from './getDeadline'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -160,7 +161,7 @@ export const useCreateWikiEffects = (
   }, [dispatch, slug])
 }
 
-export const useGetSignedHash = (deadline: number) => {
+export const useGetSignedHash = () => {
   const {
     setWikiHash,
     wikiHash,
@@ -174,6 +175,7 @@ export const useGetSignedHash = (deadline: number) => {
   } = useCreateWikiContext()
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const deadline = useRef(0)
 
   const {
     data: signData,
@@ -192,6 +194,7 @@ export const useGetSignedHash = (deadline: number) => {
   )
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
+    deadline.current = getDeadline()
     setWikiHash(ipfs)
     signTypedDataAsync({
       domain,
@@ -199,7 +202,7 @@ export const useGetSignedHash = (deadline: number) => {
       value: {
         ipfs,
         user: userAddress,
-        deadline,
+        deadline: deadline.current,
       },
     })
       .then(response => {
@@ -301,7 +304,7 @@ export const useGetSignedHash = (deadline: number) => {
             signData,
             wikiHash,
             userAddress,
-            deadline,
+            deadline.current,
           )
           if (hash) {
             setTxHash(hash)
