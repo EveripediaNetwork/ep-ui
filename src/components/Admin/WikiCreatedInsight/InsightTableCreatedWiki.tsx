@@ -30,6 +30,7 @@ import { Wikis } from '@/types/admin'
 import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
+import { TableHead } from '../GraphHeads'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -93,15 +94,9 @@ export const InsightTableWikiCreated = (
       <Table>
         <Thead bg="wikiTitleBg">
           <Tr>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Wiki Title</Text>
-            </Th>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Date/Time</Text>
-            </Th>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Tags</Text>
-            </Th>
+            <TableHead text="Wiki Title" />
+            <TableHead text="Date/Time" />
+            <TableHead text="Tags" />
             <Th color="#718096" textTransform="none" fontWeight="medium">
               <HStack spacing={1}>
                 <Text fontWeight="bold">Status</Text>

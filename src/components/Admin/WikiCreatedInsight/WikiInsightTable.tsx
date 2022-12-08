@@ -244,9 +244,6 @@ export const WikiInsightTable = () => {
   useEffect(() => {
     whichWiki()
     refetch()
-    // hiddenRefresh()
-    // promotedRefresh()
-    // searchRefresh()
   }, [
     wiki,
     refetch,
