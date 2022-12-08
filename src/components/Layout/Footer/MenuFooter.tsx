@@ -64,10 +64,7 @@ const MenuFooter = () => {
               <Link prefetch={false} href="/static/branding">{`${t(
                 'Branding',
               )}`}</Link>
-              <Link
-                target="_blank"
-                href="https://iq.braindao.org"
-              >
+              <Link target="_blank" href="https://iq.braindao.org">
                 IQ Dashboard
               </Link>
             </Stack>
