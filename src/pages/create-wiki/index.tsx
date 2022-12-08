@@ -61,7 +61,7 @@ import {
   EditSpecificMetaIds,
   EditorContentOverride,
   CreateNewWikiSlug,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
   initialMsg,

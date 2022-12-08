@@ -5,7 +5,7 @@ import {
   EditSpecificMetaIds,
   MData,
   Wiki,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 
 export const getWikiMetadataById = (
   wiki: Wiki,

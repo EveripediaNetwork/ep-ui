@@ -29,7 +29,7 @@ import {
   // useGetTagsQuery,
 } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 
 // const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
 

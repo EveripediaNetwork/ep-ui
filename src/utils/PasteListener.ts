@@ -1,4 +1,4 @@
-import { whiteListedDomains } from '@/types/Wiki'
+import { whiteListedDomains } from '@everipedia/iq-utils'
 
 function pasteContents(text: string, type: 'plain' | 'html' = 'plain') {
   if (type === 'html') {

@@ -13,7 +13,7 @@ import { RiHeartLine } from 'react-icons/ri'
 
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { shortenText } from '@/utils/shortenText'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
