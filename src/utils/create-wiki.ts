@@ -11,7 +11,7 @@ import {
   EditSpecificMetaIds,
   whiteListedLinkNames,
   CreateNewWikiSlug,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
 import { submitVerifiableSignature } from '@/utils/postSignature'

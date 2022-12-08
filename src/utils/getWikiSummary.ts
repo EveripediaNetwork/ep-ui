@@ -1,4 +1,4 @@
-import { Wiki, WikiPreview } from '@/types/Wiki'
+import { Wiki, WikiPreview } from '@everipedia/iq-utils'
 import { shortenText } from './shortenText'
 
 export enum WikiSummarySize {

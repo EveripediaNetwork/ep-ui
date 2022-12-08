@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { store } from '@/store/store'
-import { CiteReference } from '@/types/Wiki'
+import { CiteReference } from '@everipedia/iq-utils'
 import {
   HStack,
   Link,

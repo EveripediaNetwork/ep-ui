@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
+import { BaseCategory, BaseTag, Image, User } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'

@@ -1,5 +1,5 @@
 import { store } from '@/store/store'
-import { CiteReference, CommonMetaIds } from '@/types/Wiki'
+import { CiteReference, CommonMetaIds } from '@everipedia/iq-utils'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
   chakra,

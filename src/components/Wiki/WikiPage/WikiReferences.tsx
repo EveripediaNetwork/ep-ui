@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CiteReference } from '@/types/Wiki'
+import { CiteReference } from '@everipedia/iq-utils'
 import {
   Box,
   Heading,

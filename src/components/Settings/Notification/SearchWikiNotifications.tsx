@@ -39,7 +39,7 @@ import {
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { useUserProfileData } from '@/services/profile/utils'
-import { ActivityCardDetails } from '@/types/Wiki'
+import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
 
 const ItemPaths = {

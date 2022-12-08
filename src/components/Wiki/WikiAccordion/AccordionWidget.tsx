@@ -1,5 +1,4 @@
 import React from 'react'
-import { WikiInsights } from '@/types/WikiInsightsDataType'
 import {
   Box,
   HStack,
@@ -24,6 +23,7 @@ import shortenAccount from '@/utils/shortenAccount'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { getUsername } from '@/utils/getUsername'
+import { WikiInsights } from '@/types/WikiInsightsDataType'
 
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)

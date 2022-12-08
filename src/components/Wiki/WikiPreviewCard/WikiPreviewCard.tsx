@@ -9,7 +9,7 @@ import {
   Box,
   AspectRatio,
 } from '@chakra-ui/react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'

@@ -2,7 +2,7 @@ import React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { Text, VStack } from '@chakra-ui/react'
-import { User } from '@/types/Wiki'
+import { User } from '@everipedia/iq-utils'
 
 const WikiCommitMessage = ({
   user,

@@ -1,4 +1,4 @@
-import { Author, User } from '@/types/Wiki'
+import { Author, User } from '@everipedia/iq-utils'
 import shortenAccount from './shortenAccount'
 
 export const getUsername = (user?: User | Author, ensDomain?: string) => {
