@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import SearchWikiNotifications from '@/components/Settings/Notification/SearchWikiNotifications'
 import SearchWikiNotificationsResult from '@/components/Settings/Notification/SearchWikiNotificationsResult'
 import { useGetAllWikiSubscriptionQuery } from '@/services/notification'
+import { Spacer } from '@chakra-ui/react'
 import { WikiNotificationsRecommendations } from './Notification/NotificationWikiRecomendations'
 import NotificationCard from '../Notification/NotificationCard'
 import EmptyNotification from './Notification/EmptyNotification'
@@ -34,6 +35,7 @@ const NotificationSettings = ({ address }: NotificationSettingsProps) => {
             wikiSubscriptions.length !== 0 &&
             wikiSubscriptions.map(wiki => (
               <NotificationCard
+                key={wiki.id}
                 defaultSubscribed
                 brief={wiki?.summary}
                 editor={wiki?.user}
@@ -48,6 +50,7 @@ const NotificationSettings = ({ address }: NotificationSettingsProps) => {
           {!isLoading && wikiSubscriptions?.length === 0 && (
             <EmptyNotification />
           )}
+          <Spacer />
           <WikiNotificationsRecommendations address={address} />
         </>
       )}

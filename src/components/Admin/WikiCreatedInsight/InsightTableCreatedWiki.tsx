@@ -36,6 +36,14 @@ type InsightTableWikiCreatedProps = {
   hideWikisFunc: () => void
 }
 
+const TableHead = ({ text }: { text: string }) => {
+  return (
+    <Th color="#718096" textTransform="none" fontWeight="medium">
+      <Text fontWeight="bold">{text}</Text>
+    </Th>
+  )
+}
+
 export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
 ) => {
@@ -93,15 +101,9 @@ export const InsightTableWikiCreated = (
       <Table>
         <Thead bg="wikiTitleBg">
           <Tr>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Wiki Title</Text>
-            </Th>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Date/Time</Text>
-            </Th>
-            <Th color="#718096" textTransform="none" fontWeight="medium">
-              <Text fontWeight="bold">Tags</Text>
-            </Th>
+            <TableHead text="Wiki Title" />
+            <TableHead text="Date/Time" />
+            <TableHead text="Tags" />
             <Th color="#718096" textTransform="none" fontWeight="medium">
               <HStack spacing={1}>
                 <Text fontWeight="bold">Status</Text>

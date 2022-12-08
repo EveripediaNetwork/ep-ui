@@ -8,6 +8,7 @@ import {
   Flex,
   Stack,
   AspectRatio,
+  Wrap,
 } from '@chakra-ui/react'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
@@ -15,10 +16,10 @@ import { BaseCategory, BaseTag, Image, User } from '@/types/Wiki'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
-import NextLink from 'next/link'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
+import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 
 interface ActivityCardProps {
   title: string
@@ -66,7 +67,7 @@ const ActivityCard = ({
       w="full"
       align="normal"
     >
-      <Link href={activityCardLinkRoute} passHref>
+      <Link href={activityCardLinkRoute}>
         <AspectRatio
           ratio={WIKI_IMAGE_ASPECT_RATIO}
           w={{
@@ -132,17 +133,16 @@ const ActivityCard = ({
           {categories?.length && (
             <HStack>
               {categories?.map((category, i) => (
-                <Link key={i} href={`/categories/${category.id}`} passHref>
-                  <Text
-                    as="a"
-                    display={{ base: 'none', md: 'block' }}
-                    color="brandLinkColor"
-                    fontWeight="bold"
-                    cursor="pointer"
-                    fontSize={{ base: '12px', lg: '14px' }}
-                  >
-                    {category.title ? category.title : category.id}
-                  </Text>
+                <Link
+                  key={i}
+                  href={`/categories/${category.id}`}
+                  display={{ base: 'none', md: 'block' }}
+                  color="brandLinkColor"
+                  fontWeight="bold"
+                  cursor="pointer"
+                  fontSize={{ base: '12px', lg: '14px' }}
+                >
+                  {category.title ? category.title : category.id}
                 </Link>
               ))}
             </HStack>
@@ -198,15 +198,15 @@ const ActivityCard = ({
                   {getUsername(editor)}
                 </Link>
               </Text>
-              <HStack spacing={2} display={{ base: 'none', lg: 'block' }}>
+              <Wrap spacing={1} display={{ base: 'none', lg: 'flex' }}>
                 {tags?.map((tag, index) => (
-                  <NextLink href={`/tags/${tag.id}`} key={index} passHref>
+                  <LinkWrapper href={`/tags/${tag.id}`} key={index}>
                     <Tag as="a" whiteSpace="nowrap" key={index}>
                       <Text px={4}>{tag.id}</Text>
                     </Tag>
-                  </NextLink>
+                  </LinkWrapper>
                 ))}
-              </HStack>
+              </Wrap>
             </HStack>
           </Box>
           {lastModTimeStamp && (
