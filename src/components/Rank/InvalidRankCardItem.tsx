@@ -6,7 +6,13 @@ import { AiFillCaretUp } from 'react-icons/ai'
 export const InvalidRankCardItem = ({ index }: { index: number }) => {
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
   return (
-    <Flex gap={4} alignItems="center">
+    <Flex
+      gap={4}
+      alignItems="center"
+      bg="#ff1b884a "
+      _dark={{ bg: '#ffffff12' }}
+      p={{ '2xl': 4, md: 2, base: 2 }}
+    >
       <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
       <Flex gap={2} w="100%" alignItems="center">
         <Box

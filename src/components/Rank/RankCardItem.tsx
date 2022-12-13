@@ -13,7 +13,7 @@ export const RankCardItem = ({
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
   return (
-    <Flex gap={4} alignItems="center">
+    <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
       <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
       <Flex gap={2} w="100%" alignItems="center">
         <Box

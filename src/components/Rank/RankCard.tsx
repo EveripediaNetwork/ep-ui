@@ -2,7 +2,7 @@ import {
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
 } from '@/services/ranking'
-import { Flex, Button, Icon, Text, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Button, Icon, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 import { IconType } from 'react-icons/lib'
@@ -51,13 +51,18 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       w={{ lg: '32%', md: '49%', base: '100%' }}
       border="1px solid"
       borderColor="rankCardBorder"
-      p={{ '2xl': 4, md: 2, base: 2 }}
       borderRadius="lg"
       flexDirection="column"
       mb={4}
       height="fit-content"
+      py={{ '2xl': 4, md: 2, base: 2 }}
     >
-      <Flex gap="1" mb="4" alignItems="center">
+      <Flex
+        gap="1"
+        mb="4"
+        alignItems="center"
+        px={{ '2xl': 4, md: 2, base: 2 }}
+      >
         <Icon
           as={icon}
           w={{ lg: '24px', md: '18px' }}
