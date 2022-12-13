@@ -16,7 +16,7 @@ import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
 import { getWikiPreviewsByCategory } from '@/services/wikis'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { LinkButton } from '@/components/Elements'
 
 interface RevisionPageProps {

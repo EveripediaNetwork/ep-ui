@@ -16,6 +16,8 @@ import {
   RiTeamFill,
   RiUserSearchFill,
   RiAppStoreFill,
+  RiNumbersFill,
+  RiGroup2Fill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -98,6 +100,14 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
+        id: 304,
+        label: 'IQ Dashboard',
+        icon: RiNumbersFill,
+        href: 'https://iq.braindao.org',
+        hasImage: true,
+        target: '_blank',
+      },
+      {
         id: 302,
         label: 'Blog',
         icon: RiNewspaperFill,
@@ -110,6 +120,14 @@ export const NAV_ITEMS: NavItem[] = [
         icon: RiUserSearchFill,
         href: '/static/about',
         hasImage: true,
+      },
+      {
+        id: 305,
+        label: 'BrainDAO',
+        icon: RiGroup2Fill,
+        href: 'https://braindao.org',
+        hasImage: true,
+        target: '_blank',
       },
     ],
   },

@@ -13,7 +13,7 @@ import {
   BaseTag,
   Image,
   User,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'

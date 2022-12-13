@@ -1,4 +1,4 @@
-import { CommonMetaIds, Media, Wiki } from '@/types/Wiki'
+import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'

@@ -8,7 +8,6 @@ import {
   Tbody,
   Td,
   Text,
-  Th,
   Thead,
   Tr,
   AspectRatio,
@@ -24,6 +23,7 @@ import shortenAccount from '@/utils/shortenAccount'
 import { shortenText } from '@/utils/shortenText'
 import { RiQuestionLine } from 'react-icons/ri'
 import { WikiImage } from '../../WikiImage'
+import { TableHead } from '../GraphHeads'
 
 interface WikiEditorInsightDataInterface {
   editorName: string
@@ -63,14 +63,6 @@ type InsightTableWikiEditorsProps = {
   wikiInsightData: WikiEditorInsightDataInterface[] | undefined
   toggleUserFunc: (active: boolean, id: string) => void
   filterBy: string
-}
-
-const TableHead = ({ text }: { text: string }) => {
-  return (
-    <Th color="#718096" textTransform="capitalize" fontWeight="normal">
-      <Text fontWeight="bold">{text}</Text>
-    </Th>
-  )
 }
 
 export const InsightTableWikiEditors = (

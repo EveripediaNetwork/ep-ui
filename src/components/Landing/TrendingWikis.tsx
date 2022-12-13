@@ -9,7 +9,7 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'

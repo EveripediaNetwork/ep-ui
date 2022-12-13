@@ -1,6 +1,5 @@
 import { Link } from '@/components/Elements'
-import { Wiki } from '@/types/Wiki'
-import { calculateWikiScore } from '@/utils/calculateWikiScore'
+import { Wiki, calculateWikiScore } from '@everipedia/iq-utils'
 import {
   CircularProgress,
   CircularProgressLabel,

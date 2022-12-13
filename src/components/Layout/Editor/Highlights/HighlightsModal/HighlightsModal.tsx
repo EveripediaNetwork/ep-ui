@@ -25,7 +25,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 
-import { MData } from '@/types/Wiki'
+import { MData } from '@everipedia/iq-utils'
 import { slugifyText } from '@/utils/slugify'
 import Tags from '@/components/Layout/Editor/Highlights/HighlightsModal/Tags'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'

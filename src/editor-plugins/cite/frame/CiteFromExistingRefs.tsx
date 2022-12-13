@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { CiteReference } from '@/types/Wiki'
+import { CiteReference } from '@everipedia/iq-utils'
 import { Box, Button, Input, Text, VStack } from '@chakra-ui/react'
 import Fuse from 'fuse.js'
 import React, { useEffect, useMemo } from 'react'

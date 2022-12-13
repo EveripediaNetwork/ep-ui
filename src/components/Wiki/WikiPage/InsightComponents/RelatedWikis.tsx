@@ -1,5 +1,5 @@
 import React from 'react'
-import { Wiki, WikiPreview } from '@/types/Wiki'
+import { Wiki, WikiPreview } from '@everipedia/iq-utils'
 import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { WikiImage } from '@/components/WikiImage'
