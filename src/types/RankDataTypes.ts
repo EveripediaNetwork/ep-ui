@@ -9,7 +9,7 @@ export interface RankCardType {
 }
 
 export interface Medum {
-  thumbnail: any
+  thumbnail: string
 }
 
 export interface Image {
