@@ -1,7 +1,6 @@
 import React from 'react'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Flex, Box, Text } from '@chakra-ui/react'
-import { AiFillCaretUp } from 'react-icons/ai'
 
 export const InvalidRankCardItem = ({ index }: { index: number }) => {
   const rankPlaceholderImg = useColorModeValue(
