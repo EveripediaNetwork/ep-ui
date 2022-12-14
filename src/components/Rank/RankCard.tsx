@@ -92,6 +92,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
             }}
             disabled={queryLimit <= 0}
             color="brand.500"
+            _dark={{ color: 'brand.800' }}
           >
             Prev
           </Button>
@@ -106,6 +107,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
             }}
             disabled={!queryResult}
             color="brand.500"
+            _dark={{ color: 'brand.800' }}
           >
             Next
           </Button>
