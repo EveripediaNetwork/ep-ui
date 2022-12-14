@@ -1,6 +1,6 @@
 import React from 'react'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Flex, Box, Text, background } from '@chakra-ui/react'
+import { Flex, Box, Text } from '@chakra-ui/react'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import Link from '@/components/Elements/LinkElements/Link'
 
