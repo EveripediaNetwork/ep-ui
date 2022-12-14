@@ -2,10 +2,9 @@ import React from 'react'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Flex, Box, Text, SkeletonText, Skeleton } from '@chakra-ui/react'
 
-export const LoadingRankCardSkeleton = () => {
+const SingularSkeleton = () => {
   const loadingStartColors = useColorModeValue('#DCDCDC', '#A7A8AD')
   const loadingEndColors = useColorModeValue('#F4F4F4', '#EFEFEF')
-
   return (
     <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
       <Flex gap={2} w="100%" alignItems="start">
@@ -79,7 +78,8 @@ export const LoadingRankCardSkeleton = () => {
     </Flex>
   )
 }
-const SingularSkeleton = () => {
+
+export const LoadingRankCardSkeleton = () => {
   return (
     <Box>
       {Array.from({ length: 10 }).map((_, index) => (

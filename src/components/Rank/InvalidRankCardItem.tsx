@@ -15,6 +15,12 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
           w={{ lg: '60px', md: '40px', base: '40px' }}
           h={{ lg: '35px', md: '30px', base: '30px' }}
           bg={`url(/images/${rankPlaceholderImg})`}
+          _dark={{
+            bg: `url(/images/rankImgPlaceholderDark.png)`,
+            bgPos: 'center',
+            bgSize: '90%',
+            bgRepeat: 'no-repeat',
+          }}
           bgPos="center"
           bgSize="90%"
           borderRadius="md"
