@@ -91,7 +91,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
               setQueryLimit(queryLimit - 1)
             }}
             disabled={queryLimit <= 0}
-            color="brand.800"
+            color="brand.500"
           >
             Prev
           </Button>
@@ -105,7 +105,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
               offsetIncrease()
             }}
             disabled={!queryResult}
-            color="brand.800"
+            color="brand.500"
           >
             Next
           </Button>
