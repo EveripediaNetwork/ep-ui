@@ -1,27 +1,20 @@
 import React from 'react'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Flex, Box, Text } from '@chakra-ui/react'
-import { AiFillCaretUp } from 'react-icons/ai'
+import { Flex, Box, Text, SkeletonText, Skeleton } from '@chakra-ui/react'
 
 export const LoadingRankCardSkeleton = () => {
-  const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
+  const loadingStartColors = useColorModeValue('#DCDCDC', '#A7A8AD')
+  const loadingEndColors = useColorModeValue('#F4F4F4', '#EFEFEF')
+
   return (
-    <Flex
-      gap={4}
-      alignItems="center"
-      bg="#ff1b884a "
-      _dark={{ bg: '#ffffff12' }}
-      p={{ '2xl': 4, md: 2, base: 2 }}
-    >
-      <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{1}</Text>
-      <Flex gap={2} w="100%" alignItems="center">
-        <Box
-          w={{ lg: '60px', md: '40px', base: '40px' }}
-          h={{ lg: '35px', md: '30px', base: '30px' }}
-          bg="brand.800"
-          bgPos="center"
-          bgSize="cover"
-          borderRadius="md"
+    <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
+      <Flex gap={2} w="100%" alignItems="start">
+        <Skeleton
+          w="60px"
+          h="50px"
+          borderRadius="12px"
+          startColor={loadingStartColors}
+          endColor={loadingEndColors}
         />
         <Flex w="100%">
           <Flex flexDir="column" w="65%">
@@ -30,44 +23,68 @@ export const LoadingRankCardSkeleton = () => {
               fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
               whiteSpace="nowrap"
             >
-              Loading...
+              <SkeletonText
+                startColor={loadingStartColors}
+                endColor={loadingEndColors}
+                noOfLines={1}
+                spacing="4"
+                skeletonHeight="5"
+              />
             </Text>
             <Text
               color="inactiveText"
               fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
             >
-              ***
+              <SkeletonText
+                width="16"
+                noOfLines={1}
+                mt={2}
+                skeletonHeight="3"
+                startColor={loadingStartColors}
+                endColor={loadingEndColors}
+              />
             </Text>
           </Flex>
           <Flex
             flexDir="column"
             w="35%"
-            alignItems="flex-start"
-            justifyContent="space-around"
+            alignItems="end"
+            justifyContent="start"
           >
-            <Text
-              color="inactiveText"
-              fontSize={{ md: 'xs', base: 'sm' }}
-              width="100%"
-              textAlign="right"
-              whiteSpace="nowrap"
-            >
-              $00.00.00
-            </Text>
+            <SkeletonText
+              width="16"
+              noOfLines={1}
+              skeletonHeight="3"
+              startColor={loadingStartColors}
+              endColor={loadingEndColors}
+            />
             <Flex
               alignItems="center"
               gap={0.5}
               width="100%"
               justifyContent="end"
             >
-              <AiFillCaretUp color={upIndicationIconColor} />
-              <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
-                0%
-              </Text>
+              <SkeletonText
+                width="10"
+                mt={4}
+                noOfLines={1}
+                skeletonHeight="3"
+                startColor={loadingStartColors}
+                endColor={loadingEndColors}
+              />
             </Flex>
           </Flex>
         </Flex>
       </Flex>
     </Flex>
+  )
+}
+const SingularSkeleton = () => {
+  return (
+    <Box>
+      {Array.from({ length: 10 }).map((_, index) => (
+        <SingularSkeleton key={index} />
+      ))}
+    </Box>
   )
 }
