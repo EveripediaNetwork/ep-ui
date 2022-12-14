@@ -3,12 +3,13 @@ import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Flex, Box, Text } from '@chakra-ui/react'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import Link from '@/components/Elements/LinkElements/Link'
+import { RankCardType } from '@/types/RankDataTypes'
 
 export const RankCardItem = ({
   cardData,
   index,
 }: {
-  cardData: any
+  cardData: RankCardType
   index: number
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
@@ -74,7 +75,7 @@ export const RankCardItem = ({
                 $
                 {cardData?.nftMarketData
                   ? cardData?.nftMarketData?.market_cap_usd.toLocaleString()
-                  : cardData?.tokenMarketData?.market_cap.toLocaleString()}
+                  : cardData?.tokenMarketData?.market_cap?.toLocaleString()}
               </Text>
               <Flex
                 alignItems="center"

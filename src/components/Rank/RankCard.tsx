@@ -2,6 +2,7 @@ import {
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
 } from '@/services/ranking'
+import { RankCardType } from '@/types/RankDataTypes'
 import { Flex, Button, Icon, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
@@ -46,7 +47,6 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       setQueryLimit(queryLimit + 1)
     }
   }
-
   return (
     <Flex
       w={{ lg: '46%', md: '49%', base: '100%' }}
@@ -73,7 +73,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
         <Text fontSize={{ lg: 'xl', md: 'sm' }}>{title}</Text>
       </Flex>
       <Flex flexDir="column" gap={{ '2xl': 6, lg: 4 }}>
-        {queryResult?.map((item: any, index: number) => {
+        {queryResult?.map((item: RankCardType, index: number) => {
           if (item?.nftMarketData || item?.tokenMarketData) {
             return <RankCardItem cardData={item} key={index} index={index} />
           }

@@ -5,13 +5,18 @@ import {
   GET_TOKEN_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
+import { RankCardType } from '@/types/RankDataTypes'
+
+type RankListResponse = {
+  rankList: RankCardType[]
+}
 
 export const rankingAPI = createApi({
   reducerPath: 'rankingAPI',
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: builder => ({
     getNFTRanking: builder.query<
-      any,
+      RankCardType[],
       {
         kind: string
         limit: number
@@ -30,10 +35,10 @@ export const rankingAPI = createApi({
         document: GET_NFT_RANKINGS,
         variables: { kind, limit, offset },
       }),
-      transformResponse: (response: any) => response.rankList,
+      transformResponse: (response: RankListResponse) => response.rankList,
     }),
     getTokenRanking: builder.query<
-      any,
+      RankCardType[],
       {
         kind: string
         limit: number
@@ -52,7 +57,7 @@ export const rankingAPI = createApi({
         document: GET_TOKEN_RANKINGS,
         variables: { kind, limit, offset },
       }),
-      transformResponse: (response: any) => response.rankList,
+      transformResponse: (response: RankListResponse) => response.rankList,
     }),
   }),
 })
