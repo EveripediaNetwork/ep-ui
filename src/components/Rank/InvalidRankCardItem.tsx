@@ -4,24 +4,22 @@ import { Flex, Box, Text } from '@chakra-ui/react'
 import { AiFillCaretUp } from 'react-icons/ai'
 
 export const InvalidRankCardItem = ({ index }: { index: number }) => {
-  const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
+  const rankPlaceholderImg = useColorModeValue(
+    'rankImgPlaceholderLight.png',
+    'rankImgPlaceholderDark.png',
+  )
   return (
-    <Flex
-      gap={4}
-      alignItems="center"
-      bg="#ff1b884a "
-      _dark={{ bg: '#ffffff12' }}
-      p={{ '2xl': 4, md: 2, base: 2 }}
-    >
+    <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
       <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
       <Flex gap={2} w="100%" alignItems="center">
         <Box
           w={{ lg: '60px', md: '40px', base: '40px' }}
           h={{ lg: '35px', md: '30px', base: '30px' }}
-          bg="brand.800"
+          bg={`url(/images/${rankPlaceholderImg})`}
           bgPos="center"
-          bgSize="cover"
+          bgSize="90%"
           borderRadius="md"
+          bgRepeat="no-repeat"
         />
         <Flex w="100%">
           <Flex flexDir="column" w="65%">
@@ -30,13 +28,13 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
               fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
               whiteSpace="nowrap"
             >
-              Unknown
+              Unavailable
             </Text>
             <Text
               color="inactiveText"
               fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
             >
-              ***
+              ...
             </Text>
           </Flex>
           <Flex
@@ -52,7 +50,7 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
               textAlign="right"
               whiteSpace="nowrap"
             >
-              $00.00.00
+              $0.00
             </Text>
             <Flex
               alignItems="center"
@@ -60,7 +58,7 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
               width="100%"
               justifyContent="end"
             >
-              <AiFillCaretUp color={upIndicationIconColor} />
+              {/* <AiFillCaretUp color={upIndicationIconColor} /> */}
               <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
                 0%
               </Text>
