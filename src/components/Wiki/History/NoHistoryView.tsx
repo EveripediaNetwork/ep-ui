@@ -1,7 +1,7 @@
 import { LinkButton } from '@/components/Elements'
 import { Flex, Box, Image, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 
 export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
   return (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { fetchWikisList } from '@/services/search/utils'
-import { WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@everipedia/iq-utils'
 import { Flex, Box } from '@chakra-ui/react'
 import NotificationCard from '@/components/Notification/NotificationCard'
 

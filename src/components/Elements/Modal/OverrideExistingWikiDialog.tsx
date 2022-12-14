@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import {
   AlertDialog,
   AlertDialogContent,

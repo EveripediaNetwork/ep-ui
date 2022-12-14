@@ -1,4 +1,4 @@
-import { Wiki } from './Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 
 export type Activity = {
   id: string

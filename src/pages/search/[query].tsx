@@ -14,7 +14,7 @@ import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { Category } from '@/services/search'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import { WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@everipedia/iq-utils'
 import { Link } from '@/components/Elements'
 
 interface SearchQueryProps {

@@ -26,7 +26,7 @@ import {
   Editors,
   ToggleUser,
 } from '@/types/admin'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
 import { GraphQLClient } from 'graphql-request'
 

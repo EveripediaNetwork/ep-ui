@@ -1,6 +1,6 @@
 import config from '@/config'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
-import { Media } from '@/types/Wiki'
+import { Media } from '@everipedia/iq-utils'
 
 const VIMEO_DEFAULT_URL = 'https://vimeo.com/'
 

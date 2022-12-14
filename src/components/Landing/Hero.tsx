@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { LinkButton } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { HeroCard } from './HeroCard'
 
 const Hero = ({ wiki }: { wiki: Wiki | undefined }) => {
