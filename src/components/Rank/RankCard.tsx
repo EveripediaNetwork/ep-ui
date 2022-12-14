@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 import { IconType } from 'react-icons/lib'
 import { InvalidRankCardItem } from './InvalidRankCardItem'
+import { LoadingRankCardSkeleton } from './LoadingRankCardSkeleton'
 import { RankCardItem } from './RankCardItem'
 
 interface RankCardProps {
@@ -48,7 +49,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
 
   return (
     <Flex
-      w={{ lg: '32%', md: '49%', base: '100%' }}
+      w={{ lg: '46%', md: '49%', base: '100%' }}
       border="1px solid"
       borderColor="rankCardBorder"
       borderRadius="lg"
@@ -71,14 +72,15 @@ const RankCard = ({ title, icon }: RankCardProps) => {
         />
         <Text fontSize={{ lg: 'xl', md: 'sm' }}>{title}</Text>
       </Flex>
-      <Flex gap={12} flexDir="column">
+      <Flex flexDir="column" gap={{ '2xl': 6, lg: 4 }}>
         {queryResult?.map((item: any, index: number) => {
           if (item?.nftMarketData || item?.tokenMarketData) {
             return <RankCardItem cardData={item} key={index} index={index} />
           }
           return <InvalidRankCardItem index={index} />
         })}
-        <Flex justifyContent="space-between">
+        {!queryResult && <LoadingRankCardSkeleton />}
+        <Flex justifyContent="space-between" px={{ '2xl': 4, md: 2, base: 2 }}>
           <Button
             leftIcon={<AiOutlineDoubleLeft />}
             _hover={{ bg: 'transparent' }}

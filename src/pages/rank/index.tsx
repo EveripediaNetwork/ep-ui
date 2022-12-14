@@ -25,7 +25,8 @@ const Rank = () => {
         mx="auto"
         py={16}
         flexWrap="wrap"
-        gap={{ base: 10, md: 0, lg: 12 }}
+        gap={{ base: 10, md: 0, lg: 4 }}
+        justifyContent="center"
       >
         <RankCard title="NFTs" icon={BiImage} />
         <RankCard title="Cryptocurrencies" icon={RiCoinsFill} />

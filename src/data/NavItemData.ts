@@ -18,6 +18,7 @@ import {
   RiAppStoreFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
+import { BsGraphUp } from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -82,6 +83,12 @@ export const NAV_ITEMS: NavItem[] = [
     label: 'Activity',
     href: '/activity',
     icon: RiBarChartFill,
+  },
+  {
+    id: 301,
+    label: 'Rank',
+    icon: BsGraphUp,
+    href: '/rank/',
   },
   {
     id: 3,
