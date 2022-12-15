@@ -79,10 +79,10 @@ const SingularSkeleton = () => {
   )
 }
 
-export const LoadingRankCardSkeleton = () => {
+export const LoadingRankCardSkeleton = ({ length }: { length: number }) => {
   return (
     <Box>
-      {Array.from({ length: 10 }).map((_, index) => (
+      {Array.from({ length: length }).map((_, index) => (
         <SingularSkeleton key={index} />
       ))}
     </Box>

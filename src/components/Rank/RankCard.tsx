@@ -53,6 +53,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       setQueryLimit(queryLimit + 1)
     }
   }
+  const [loadingAssets, setLoadingAssets] = useState<boolean>(true)
   return (
     <Flex
       w={{ lg: '46%', md: '49%', base: '100%' }}
@@ -80,7 +81,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       </Flex>
       <Flex flexDir="column" gap={{ '2xl': 6, lg: 4 }}>
         {queryResult?.map((item: RankCardType, index: number) => {
-          if (item?.nftMarketData || item?.tokenMarketData) {
+          if ((item?.nftMarketData || item?.tokenMarketData) && loadingAssets) {
             return (
               <RankCardItem
                 cardData={item}
@@ -88,10 +89,12 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                 index={rankCount + index + 1}
               />
             )
+          } else if (!loadingAssets) {
+            return <LoadingRankCardSkeleton length={1} />
           }
           return <InvalidRankCardItem index={rankCount + index + 1} />
         })}
-        {!queryResult && <LoadingRankCardSkeleton />}
+        {!queryResult && <LoadingRankCardSkeleton length={10} />}
         <Flex justifyContent="space-between" px={{ '2xl': 4, md: 2, base: 2 }}>
           <Button
             leftIcon={<AiOutlineDoubleLeft />}
@@ -101,6 +104,10 @@ const RankCard = ({ title, icon }: RankCardProps) => {
             _active={{ bg: 'transparent' }}
             onClick={() => {
               setQueryLimit(queryLimit - 1)
+              setLoadingAssets(false)
+              setTimeout(() => {
+                setLoadingAssets(true)
+              }, 800)
             }}
             disabled={queryLimit <= 1}
             color="brand.500"
@@ -116,6 +123,10 @@ const RankCard = ({ title, icon }: RankCardProps) => {
             _active={{ bg: 'transparent' }}
             onClick={() => {
               offsetIncrease()
+              setLoadingAssets(false)
+              setTimeout(() => {
+                setLoadingAssets(true)
+              }, 800)
             }}
             disabled={!queryResult}
             color="brand.500"
