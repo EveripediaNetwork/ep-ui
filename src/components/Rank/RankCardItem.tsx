@@ -14,6 +14,25 @@ export const RankCardItem = ({
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
+  const getAlias = (text: string) => {
+    if (text === null) {
+      return 'Unknown'
+    }
+    if (text) {
+      return text
+    }
+    return ''
+  }
+  const getTokenAlias = (text: string) => {
+    if (text === null) {
+      return 'Unknown'
+    }
+    if (text) {
+      return text
+    }
+    return ''
+  }
+
   return (
     <Link
       href={`https://iq.wiki/wiki/${cardData.id}`}
@@ -55,8 +74,8 @@ export const RankCardItem = ({
                 fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
               >
                 {cardData?.nftMarketData
-                  ? cardData?.nftMarketData?.alias
-                  : cardData?.tokenMarketData?.alias}
+                  ? getAlias(cardData?.nftMarketData?.alias)
+                  : getTokenAlias(cardData?.tokenMarketData?.alias)}
               </Text>
             </Flex>
             <Flex
