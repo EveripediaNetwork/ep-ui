@@ -82,7 +82,7 @@ const SingularSkeleton = () => {
 export const LoadingRankCardSkeleton = ({ length }: { length: number }) => {
   return (
     <Box>
-      {Array.from({ length: length }).map((_, index) => (
+      {Array.from({ length }).map((_, index) => (
         <SingularSkeleton key={index} />
       ))}
     </Box>

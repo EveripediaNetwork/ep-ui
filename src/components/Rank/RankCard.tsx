@@ -89,7 +89,8 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                 index={rankCount + index + 1}
               />
             )
-          } else if (!loadingAssets) {
+          }
+          if (!loadingAssets) {
             return <LoadingRankCardSkeleton length={1} />
           }
           return <InvalidRankCardItem index={rankCount + index + 1} />
