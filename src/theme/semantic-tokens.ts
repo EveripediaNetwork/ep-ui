@@ -10,6 +10,18 @@ export const semanticTokens: SemanticTokens = {
       default: 'primary',
       _dark: 'brand.900',
     },
+    rankCardBorder: {
+      default: '#CBD5E0',
+      _dark: '#3F444E',
+    },
+    inactiveText: {
+      default: '#718096',
+      _dark: '#FFFFFF',
+    },
+    primaryPinkIcon: {
+      default: '#FF5CAA',
+      _dark: '#FF1A88',
+    },
     brandHero: {
       default: 'tetiaryGray',
       _dark: 'tetiaryDark',

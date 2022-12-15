@@ -14,6 +14,7 @@ import { categoriesApi } from '@/services/categories'
 import { glossaryApi } from '@/services/glossary'
 import { activitiesApi } from '@/services/activities'
 import { navSearchApi } from '@/services/search'
+import { rankingAPI } from '@/services/ranking'
 import { tokenStatsApi } from '@/services/token-stats'
 import { profileApi } from '@/services/profile'
 import { adminApi } from '@/services/admin'
@@ -37,6 +38,7 @@ export const store = configureStore({
     blog: blogReducer,
     leaderboard: leaderboardReducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
+    [rankingAPI.reducerPath]: rankingAPI.reducer,
     [MirrorApi.reducerPath]: MirrorApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
@@ -71,7 +73,8 @@ export const store = configureStore({
       .concat(nftLisitngAPI.middleware)
       .concat(nftStatsApi.middleware)
       .concat(editorApi.middleware)
-      .concat(notificationSubscriptionApi.middleware),
+      .concat(notificationSubscriptionApi.middleware)
+      .concat(rankingAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
