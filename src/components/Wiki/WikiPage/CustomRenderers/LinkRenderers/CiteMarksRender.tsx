@@ -12,7 +12,7 @@ import {
   Tag,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 const CiteMarksRender = ({
   text,
@@ -50,37 +50,54 @@ const CiteMarksRender = ({
   const references = referencesString ? JSON.parse(referencesString) : []
   const ref = references.find((r: CiteReference) => r.id === id)
 
+  const citeOpenTimeout = useRef<NodeJS.Timeout | null>(null)
+
+  const openCitePopup = useCallback(() => {
+    citeOpenTimeout.current = setTimeout(() => setIsOpen(true), 100)
+  }, [])
+
+  const closeCitePopup = useCallback(() => {
+    if (citeOpenTimeout.current) {
+      clearTimeout(citeOpenTimeout.current)
+    }
+    setIsOpen(false)
+  }, [])
+
+  const citeLink = (
+    <Link
+      onMouseLeave={closeCitePopup}
+      onMouseEnter={openCitePopup}
+      onFocus={() => {}}
+      onBlur={() => {}}
+      href={href}
+      borderRadius="100px"
+      color="brandLinkColor"
+      _focus={{ outline: 'none', textDecoration: 'underline' }}
+    >
+      <Text
+        as="sup"
+        id={`cite-mark-${id}-${count}`}
+        scrollMarginTop="50vh"
+        bgColor={isActive ? '#e160a12a' : 'transparent'}
+        boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
+        borderRadius={2}
+        zIndex={-1}
+      >
+        {text}
+      </Text>
+    </Link>
+  )
+
+  if (!isOpen) return citeLink
+
   return (
     <Popover
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
+      isOpen
       returnFocusOnClose={false}
+      autoFocus={false}
       aria-label="Wiki preview"
     >
-      <PopoverTrigger>
-        <Link
-          onMouseOver={() => setIsOpen(true)}
-          onMouseOut={() => setIsOpen(false)}
-          onFocus={() => {}}
-          onBlur={() => {}}
-          href={href}
-          borderRadius="100px"
-          color="brandLinkColor"
-          _focus={{ outline: 'none', textDecoration: 'underline' }}
-        >
-          <Text
-            as="sup"
-            id={`cite-mark-${id}-${count}`}
-            scrollMarginTop="50vh"
-            bgColor={isActive ? '#e160a12a' : 'transparent'}
-            boxShadow={isActive ? '0 0 0 3px #e160a12a' : 'none'}
-            borderRadius={2}
-            zIndex={-1}
-          >
-            {text}
-          </Text>
-        </Link>
-      </PopoverTrigger>
+      <PopoverTrigger>{citeLink}</PopoverTrigger>
       {ref && (
         <PopoverContent
           boxShadow="rgb(4 17 29 / 25%) 0px 0px 8px 0px"

@@ -15,9 +15,9 @@ interface RankCardProps {
   title: string
   icon: IconType
 }
-
 const RankCard = ({ title, icon }: RankCardProps) => {
   const [queryLimit, setQueryLimit] = useState<number>(1)
+
   const [rankCount, setRankCount] = useState<number>(0)
 
   let queryKind = ''
@@ -25,6 +25,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
   useEffect(() => {
     setRankCount(queryLimit * 10 - 10)
   }, [queryLimit])
+
   if (title === 'NFTs') {
     queryKind = 'NFT'
   } else if (title === 'Cryptocurrencies') {
