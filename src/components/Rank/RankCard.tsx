@@ -4,7 +4,7 @@ import {
 } from '@/services/ranking'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Flex, Button, Icon, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 import { IconType } from 'react-icons/lib'
 import { InvalidRankCardItem } from './InvalidRankCardItem'
@@ -15,11 +15,16 @@ interface RankCardProps {
   title: string
   icon: IconType
 }
+
 const RankCard = ({ title, icon }: RankCardProps) => {
-  const [queryLimit, setQueryLimit] = useState<number>(0)
+  const [queryLimit, setQueryLimit] = useState<number>(1)
+  const [rankCount, setRankCount] = useState<number>(0)
 
   let queryKind = ''
 
+  useEffect(() => {
+    setRankCount(queryLimit * 10 - 10)
+  }, [queryLimit])
   if (title === 'NFTs') {
     queryKind = 'NFT'
   } else if (title === 'Cryptocurrencies') {
@@ -40,7 +45,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           offset: queryLimit,
         })
 
-  const queryResult = nftsQuery
+  let queryResult = nftsQuery
 
   const offsetIncrease = () => {
     if (queryResult) {
@@ -75,9 +80,15 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       <Flex flexDir="column" gap={{ '2xl': 6, lg: 4 }}>
         {queryResult?.map((item: RankCardType, index: number) => {
           if (item?.nftMarketData || item?.tokenMarketData) {
-            return <RankCardItem cardData={item} key={index} index={index} />
+            return (
+              <RankCardItem
+                cardData={item}
+                key={index}
+                index={rankCount + index + 1}
+              />
+            )
           }
-          return <InvalidRankCardItem index={index} />
+          return <InvalidRankCardItem index={rankCount + index + 1} />
         })}
         {!queryResult && <LoadingRankCardSkeleton />}
         <Flex justifyContent="space-between" px={{ '2xl': 4, md: 2, base: 2 }}>
@@ -90,7 +101,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
             onClick={() => {
               setQueryLimit(queryLimit - 1)
             }}
-            disabled={queryLimit <= 0}
+            disabled={queryLimit <= 1}
             color="brand.500"
             _dark={{ color: 'brand.800' }}
           >

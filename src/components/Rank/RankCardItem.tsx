@@ -36,13 +36,14 @@ export const RankCardItem = ({
   return (
     <Link
       href={`https://iq.wiki/wiki/${cardData.id}`}
-      _hover={{
-        textDecoration: 'underline',
-        textDecorationColor: 'brand.500',
-      }}
+      className="group"
       _dark={{
-        _hover: { textDecorationColor: 'brand.500' },
+        _hover: { textDecoration: 'none' },
       }}
+      _light={{
+        _hover: { textDecoration: 'none' },
+      }}
+      _groupHover={{ textDecoration: 'none' }}
     >
       <Flex
         gap={4}
@@ -50,7 +51,7 @@ export const RankCardItem = ({
         p={{ '2xl': 4, md: 2, base: 2 }}
         w="100%"
       >
-        <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
+        <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index}</Text>
         <Flex gap={2} w="100%" alignItems="center">
           <Box
             w={{ lg: '60px', md: '40px', base: '40px' }}
@@ -66,6 +67,13 @@ export const RankCardItem = ({
                 color="primaryPinkIcon"
                 fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
                 whiteSpace="nowrap"
+                _groupHover={{
+                  textDecoration: 'underline',
+                  textDecorationColor: 'brand.500',
+                }}
+                _dark={{
+                  _groupHover: { textDecorationColor: 'brand.500' },
+                }}
               >
                 {cardData?.title}
               </Text>

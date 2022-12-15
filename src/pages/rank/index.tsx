@@ -4,10 +4,12 @@ import RankCard from '@/components/Rank/RankCard'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
 import RankHero from './RankHero'
+import RankHeader from '@/components/SEO/Rank'
 
 const Rank = () => {
   return (
     <Box>
+      <RankHeader />
       <Box
         bg="url(/rankingbg.png) center"
         _dark={{
