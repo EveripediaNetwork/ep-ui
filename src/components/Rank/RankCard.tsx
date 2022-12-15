@@ -45,7 +45,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           offset: queryLimit,
         })
 
-  let queryResult = nftsQuery
+  const queryResult = nftsQuery
 
   const offsetIncrease = () => {
     if (queryResult) {
