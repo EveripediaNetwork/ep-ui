@@ -34,7 +34,7 @@ export const RankCardItem = ({
     }
     return ''
   }
-  
+
   return (
     <Link
       href={`https://iq.wiki/wiki/${cardData.id}`}
