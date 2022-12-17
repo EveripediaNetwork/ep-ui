@@ -22,6 +22,7 @@ export interface NftMarketData {
   market_cap_usd: number
   floor_price_in_usd_24h_percentage_change: number
   alias: string
+  image: string
 }
 export interface TokenMarketData {
   floor_price_eth: number
@@ -31,4 +32,6 @@ export interface TokenMarketData {
   floor_price_in_usd_24h_percentage_change: number
   price_change_24h: number
   alias: string
+  current_price: number
+  image: string
 }

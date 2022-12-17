@@ -8,9 +8,11 @@ import { RankCardType } from '@/types/RankDataTypes'
 export const RankCardItem = ({
   cardData,
   index,
+  cardType,
 }: {
   cardData: RankCardType
   index: number
+  cardType: string
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
@@ -32,7 +34,7 @@ export const RankCardItem = ({
     }
     return ''
   }
-
+  
   return (
     <Link
       href={`https://iq.wiki/wiki/${cardData.id}`}
@@ -55,10 +57,15 @@ export const RankCardItem = ({
         <Flex gap={2} w="100%" alignItems="center">
           <Box
             w={{ lg: '60px', md: '40px', base: '40px' }}
-            h={{ lg: '35px', md: '30px', base: '30px' }}
-            bg={`url(https://ipfs.everipedia.org/ipfs/${cardData?.images?.[0]?.id})`}
+            h={{ lg: '50px', md: '30px', base: '30px' }}
+            bg={
+              cardType === 'NFT'
+                ? `url(${cardData?.nftMarketData.image})`
+                : `url(${cardData?.tokenMarketData.image})`
+            }
             bgPos="center"
-            bgSize="cover"
+            bgSize="contain"
+            bgRepeat="no-repeat"
             borderRadius="md"
           />
           <Flex w="100%">

@@ -84,6 +84,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           if ((item?.nftMarketData || item?.tokenMarketData) && loadingAssets) {
             return (
               <RankCardItem
+                cardType={queryKind}
                 cardData={item}
                 key={index}
                 index={rankCount + index + 1}
