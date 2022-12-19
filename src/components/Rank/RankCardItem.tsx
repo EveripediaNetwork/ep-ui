@@ -16,15 +16,8 @@ export const RankCardItem = ({
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
-  const getAlias = (text: string) => {
-    if (text === null) {
-      return 'Unknown'
-    }
-    if (text) {
-      return text
-    }
-    return ''
-  }
+  const getAlias = (text: string) => (text ?? 'Unknow') || text
+
   const getTokenAlias = (text: string) => {
     if (text === null) {
       return 'Unknown'

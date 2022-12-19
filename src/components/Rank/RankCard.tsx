@@ -31,25 +31,35 @@ const RankCard = ({ title, icon }: RankCardProps) => {
   } else if (title === 'Cryptocurrencies') {
     queryKind = 'TOKEN'
   }
-  // eslint-disable-next-line
-  const { data: nftsQuery } =
-    queryKind === 'NFT'
-      ? // eslint-disable-next-line
-        useGetNFTRankingQuery({
-          kind: queryKind,
-          limit: 10,
-          offset: queryLimit,
-        }) // eslint-disable-next-line
-      : useGetTokenRankingQuery({
-          kind: queryKind,
-          limit: 10,
-          offset: queryLimit,
-        })
 
-  const queryResult = nftsQuery
+  let queryDataset: RankCardType[] | undefined = []
+
+  const QueryTokens = () => {
+    const { data: queryObject } = useGetTokenRankingQuery({
+      kind: queryKind,
+      limit: 10,
+      offset: queryLimit,
+    })
+    queryDataset = queryObject
+  }
+
+  const QueryNFTs = () => {
+    const { data: queryObject } = useGetNFTRankingQuery({
+      kind: queryKind,
+      limit: 10,
+      offset: queryLimit,
+    })
+    queryDataset = queryObject
+  }
+
+  if (queryKind === 'NFT') {
+    QueryNFTs()
+  } else {
+    QueryTokens()
+  }
 
   const offsetIncrease = () => {
-    if (queryResult) {
+    if (queryDataset) {
       setQueryLimit(queryLimit + 1)
     }
   }
@@ -80,7 +90,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
         <Text fontSize={{ lg: 'xl', md: 'sm' }}>{title}</Text>
       </Flex>
       <Flex flexDir="column" gap={{ '2xl': 6, lg: 4 }}>
-        {queryResult?.map((item: RankCardType, index: number) => {
+        {queryDataset?.map((item: RankCardType, index: number) => {
           if ((item?.nftMarketData || item?.tokenMarketData) && loadingAssets) {
             return (
               <RankCardItem
@@ -96,7 +106,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           }
           return <InvalidRankCardItem index={rankCount + index + 1} />
         })}
-        {!queryResult && <LoadingRankCardSkeleton length={10} />}
+        {!queryDataset && <LoadingRankCardSkeleton length={10} />}
         <Flex justifyContent="space-between" px={{ '2xl': 4, md: 2, base: 2 }}>
           <Button
             leftIcon={<AiOutlineDoubleLeft />}
@@ -130,7 +140,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
                 setLoadingAssets(true)
               }, 800)
             }}
-            disabled={!queryResult}
+            disabled={!queryDataset}
             color="brand.500"
             _dark={{ color: 'brand.800' }}
           >
