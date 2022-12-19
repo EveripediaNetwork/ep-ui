@@ -16,6 +16,7 @@ import {
   Progress,
   Stack,
   useToast,
+  Select,
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -126,7 +127,7 @@ const MediaModal = ({
             {wiki.media !== undefined && wiki.media?.length > 0 && (
               <SimpleGrid
                 mt={4}
-                maxH="162px"
+                maxH="240px"
                 borderWidth="1px"
                 p={3}
                 borderRadius={8}
@@ -185,12 +186,18 @@ const MediaModal = ({
                           isIndeterminate
                         />
                       )}
-                      <Flex w="full" fontSize="xs" gap={16}>
-                        <Text flex="1">{media.size}mb</Text>
-                        <Text flex="1">
-                          {checkMediaDefaultId(media.id)
-                            ? 'uploading'
-                            : 'uploaded'}
+                      <Flex
+                        w="full"
+                        fontSize="xs"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Select size="xs" maxW="28" variant="outline">
+                          <option value="image">Image</option>
+                          <option value="video">Token Icon</option>
+                        </Select>
+                        <Text textAlign="right" flex="1">
+                          {media.size}mb
                         </Text>
                       </Flex>
                     </VStack>
@@ -198,7 +205,6 @@ const MediaModal = ({
                 ))}
               </SimpleGrid>
             )}
-
             <Flex direction="column" gap={5} w="full" borderRadius="7px" py={3}>
               <Dropzone
                 dropZoneActions={dropZoneActions}
