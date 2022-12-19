@@ -1,5 +1,4 @@
 import React from 'react'
-import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Flex, Text, Icon } from '@chakra-ui/react'
 import { RiCoinsFill } from 'react-icons/ri'
 import { BiImage } from 'react-icons/bi'
