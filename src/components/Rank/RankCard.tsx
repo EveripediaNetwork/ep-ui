@@ -94,7 +94,6 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           if ((item?.nftMarketData || item?.tokenMarketData) && loadingAssets) {
             return (
               <RankCardItem
-                cardType={queryKind}
                 cardData={item}
                 key={index}
                 index={rankCount + index + 1}
@@ -104,7 +103,12 @@ const RankCard = ({ title, icon }: RankCardProps) => {
           if (!loadingAssets) {
             return <LoadingRankCardSkeleton length={1} />
           }
-          return <InvalidRankCardItem index={rankCount + index + 1} />
+          return (
+            <InvalidRankCardItem
+              index={rankCount + index + 1}
+              cardType={queryKind}
+            />
+          )
         })}
         {!queryDataset && <LoadingRankCardSkeleton length={10} />}
         <Flex justifyContent="space-between" px={{ '2xl': 4, md: 2, base: 2 }}>

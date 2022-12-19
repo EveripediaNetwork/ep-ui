@@ -8,11 +8,9 @@ import { RankCardType } from '@/types/RankDataTypes'
 export const RankCardItem = ({
   cardData,
   index,
-  cardType,
 }: {
   cardData: RankCardType
   index: number
-  cardType: string
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
@@ -52,7 +50,7 @@ export const RankCardItem = ({
             w={{ lg: '60px', md: '40px', base: '40px' }}
             h={{ lg: '50px', md: '30px', base: '30px' }}
             bg={
-              cardType === 'NFT'
+              cardData?.nftMarketData
                 ? `url(${cardData?.nftMarketData.image})`
                 : `url(${cardData?.tokenMarketData.image})`
             }
@@ -61,8 +59,13 @@ export const RankCardItem = ({
             bgRepeat="no-repeat"
             borderRadius="md"
           />
+
           <Flex w="100%">
-            <Flex flexDir="column" w="65%">
+            <Flex
+              flexDir={cardData?.tokenMarketData ? 'column' : 'row'}
+              alignItems={cardData?.nftMarketData && 'center'}
+              w="65%"
+            >
               <Text
                 color="primaryPinkIcon"
                 fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
@@ -77,14 +80,16 @@ export const RankCardItem = ({
               >
                 {cardData?.title}
               </Text>
-              <Text
-                color="inactiveText"
-                fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
-              >
-                {cardData?.nftMarketData
-                  ? getAlias(cardData?.nftMarketData?.alias)
-                  : getTokenAlias(cardData?.tokenMarketData?.alias)}
-              </Text>
+              {cardData?.tokenMarketData && (
+                <Text
+                  color="inactiveText"
+                  fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+                >
+                  {cardData?.nftMarketData
+                    ? getAlias(cardData?.nftMarketData?.alias)
+                    : getTokenAlias(cardData?.tokenMarketData?.alias)}
+                </Text>
+              )}
             </Flex>
             <Flex
               flexDir="column"
