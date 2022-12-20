@@ -24,7 +24,7 @@ import { shortenText } from '@/utils/shortenText'
 import shortenBalance from '@/utils/shortenBallance'
 import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
-import { Image } from '@everipedia/iq-utils'
+import { Image, MediaType } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
@@ -88,10 +88,22 @@ const MediaModal = ({
         name,
         size: shortenBalance(fileSize),
         id,
+        type: MediaType.DEFAULT,
         source: 'IPFS_IMG',
       },
     })
     uploadImageToIPFS({ id, type: value })
+  }
+
+  const handleSetType = (mediaId: string, type: MediaType) => {
+    dispatch({
+      type: 'wiki/updateMediaDetails',
+      payload: {
+        id: mediaId,
+        hash: mediaId,
+        type,
+      },
+    })
   }
 
   const dropZoneActions = {
@@ -192,9 +204,26 @@ const MediaModal = ({
                         justifyContent="space-between"
                         alignItems="center"
                       >
-                        <Select size="xs" maxW="28" variant="outline">
-                          <option value="image">Image</option>
-                          <option value="video">Token Icon</option>
+                        <Select
+                          size="xs"
+                          maxW="28"
+                          variant="outline"
+                          value={media.type}
+                          onChange={e =>
+                            handleSetType(media.id, e.target.value as MediaType)
+                          }
+                        >
+                          <option value={MediaType.DEFAULT}>Default</option>
+                          <option
+                            disabled={
+                              wiki.media?.find(
+                                m => m.type === MediaType.ICON,
+                              ) !== undefined
+                            }
+                            value={MediaType.ICON}
+                          >
+                            Token Icon
+                          </option>
                         </Select>
                         <Text textAlign="right" flex="1">
                           {media.size}mb
