@@ -17,7 +17,7 @@ export const InvalidRankCardItem = ({
         <Icon
           as={cardType === 'NFT' ? BiImage : RiCoinsFill}
           w={{ lg: '60px', md: '40px', base: '40px' }}
-          h={{ lg: '35px', md: '30px', base: '30px' }}
+          h={{ lg: '50px', md: '30px', base: '30px' }}
           color="primaryPinkIcon"
         />
 
