@@ -75,6 +75,24 @@ export const CareersHeader = () => (
   />
 )
 
+export const CaPrivacyRightsHeader = () => (
+  <NextSeo
+    title="CA Privacy Rights"
+    description="Get Started, Explore and make the most of IQ.Wiki"
+    titleTemplate="%s | IQ.Wiki"
+    canonical="https://iq.wiki/static/CaPrivacyRights"
+    openGraph={{
+      title: 'CA Privacy Rights',
+      description: 'Get Started, Explore and make the most of IQ.Wiki',
+    }}
+    twitter={{
+      cardType: 'summary_large_image',
+      handle: '@Everipedia',
+      site: 'Everipedia',
+    }}
+  />
+)
+
 export const TermsHeader = () => (
   <NextSeo
     title="Terms of Service  "
