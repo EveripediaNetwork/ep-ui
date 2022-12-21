@@ -150,7 +150,7 @@ const Terms = () => (
             infringes someone else&rsquo;s intellectual property rights, such as
             copyrights or trademarks, your IP address may be banned and your
             page removed under IQ.wiki&apos;s repeat infringer policy. If you
-            believe your IP address was banned by mistake, please contact us
+            believe your IP address was banned by mistake, please contact us.
           </Text>
           <Heading as="h2" size="md">
             Designated Agent
