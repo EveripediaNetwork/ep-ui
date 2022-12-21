@@ -94,6 +94,9 @@ const MenuFooter = () => {
               <Link prefetch={false} href="/static/terms">{`${t(
                 'termsOfService',
               )}`}</Link>
+              <Link prefetch={false} href="/static/CaPrivacyRights">{`${t(
+                'privacyRights',
+              )}`}</Link>
             </Stack>
           </GridItem>
         </SimpleGrid>
