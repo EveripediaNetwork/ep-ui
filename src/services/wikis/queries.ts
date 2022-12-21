@@ -72,6 +72,7 @@ export const GET_WIKI_BY_ID = gql`
         name
         id
         size
+        type
         source
       }
       metadata {
