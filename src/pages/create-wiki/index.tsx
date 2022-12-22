@@ -53,7 +53,7 @@ import WikiDetailsSidebar from '@/components/Editor/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
-import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
+import WikiProcessModal from '@/components/Editor/EditorModals/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import {
   Wiki,
@@ -78,7 +78,7 @@ import {
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
-import OverrideExistingWikiDialog from '@/components/Elements/Modal/OverrideExistingWikiDialog'
+import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'
 import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,

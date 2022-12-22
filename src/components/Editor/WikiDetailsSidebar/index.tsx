@@ -14,7 +14,7 @@ import { ImageInput, Dropzone } from '@/components/Elements'
 import { useDispatch } from 'react-redux'
 import { saveImage } from '@/utils/create-wiki'
 import HighlightsModal from '../EditorModals/EditWikiDetailsModal'
-import MediaModal from '../EditorModals/MediaModal/MediaModal'
+import MediaModal from '../EditorModals/MediaModal'
 import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
