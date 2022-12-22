@@ -13,8 +13,8 @@ import { RiFilmLine } from 'react-icons/ri'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useDispatch } from 'react-redux'
 import { saveImage } from '@/utils/create-wiki'
-import HighlightsModal from './HighlightsModal/HighlightsModal'
-import MediaModal from './MediaModal/MediaModal'
+import HighlightsModal from '../EditorModals/EditWikiDetailsModal'
+import MediaModal from '../EditorModals/MediaModal/MediaModal'
 import SummaryInput from './SummaryInput'
 
 type HightLightsType = {
@@ -22,7 +22,10 @@ type HightLightsType = {
   isToResetImage: boolean
 }
 
-const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
+const WikiDetailsSidebar = ({
+  initialImage,
+  isToResetImage,
+}: HightLightsType) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
   const {
@@ -122,4 +125,4 @@ const Highlights = ({ initialImage, isToResetImage }: HightLightsType) => {
   )
 }
 
-export default memo(Highlights)
+export default memo(WikiDetailsSidebar)
