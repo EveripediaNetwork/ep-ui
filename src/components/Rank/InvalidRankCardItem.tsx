@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Icon } from '@chakra-ui/react'
+import { Flex, Text, Icon, Box } from '@chakra-ui/react'
 import { RiCoinsFill } from 'react-icons/ri'
 import { BiImage } from 'react-icons/bi'
 
