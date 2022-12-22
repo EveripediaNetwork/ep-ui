@@ -103,6 +103,8 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           direction={{ base: 'column', sm: 'row' }}
         >
           <Select
+            size="sm"
+            rounded="md"
             minW="25"
             value={currentLink}
             onChange={event => {
@@ -142,6 +144,8 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
             </optgroup>
           </Select>
           <Input
+            size="sm"
+            rounded="md"
             placeholder="Enter link"
             value={currentLinkValue}
             onChange={event => {
@@ -149,7 +153,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
             }}
             type="url"
           />
-          <Button colorScheme="blue" mx="auto" onClick={insertLinks}>
+          <Button size="sm" rounded="md" mx="auto" onClick={insertLinks}>
             {atttributeExists(currentLink) ? 'Update' : 'Add'}
           </Button>
         </Flex>

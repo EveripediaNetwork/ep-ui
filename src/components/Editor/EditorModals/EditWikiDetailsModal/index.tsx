@@ -16,7 +16,7 @@ import { useAppSelector } from '@/store/hook'
 
 import TagsInput from '@/components/Editor/EditorModals/EditWikiDetailsModal/TagsInput'
 import LinksInput from './LinksInput'
-import CategoriesInput from './CategoriesInput'
+import CategoryInput from './CategoryInput'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -52,7 +52,7 @@ const HighlightsModal = ({
             maxH="60vh"
             overflowY="auto"
           >
-            <CategoriesInput wiki={currentWiki} />
+            <CategoryInput wiki={currentWiki} />
             <TagsInput wiki={currentWiki} />
             <LinksInput wiki={currentWiki} />
           </Stack>

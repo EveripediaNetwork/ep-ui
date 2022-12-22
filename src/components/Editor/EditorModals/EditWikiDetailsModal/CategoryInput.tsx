@@ -5,7 +5,7 @@ import { Flex, Text, Select } from '@chakra-ui/react'
 import { slugifyText } from '@/utils/slugify'
 import { Wiki } from '@everipedia/iq-utils'
 
-const CategoriesInput = ({ wiki }: { wiki: Wiki }) => {
+const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
@@ -13,6 +13,8 @@ const CategoriesInput = ({ wiki }: { wiki: Wiki }) => {
     <Flex gap="2.5" align="start">
       <Text fontWeight="semibold">Category</Text>
       <Select
+        size="sm"
+        rounded="md"
         maxW="52"
         ml="auto"
         onChange={event => {
@@ -43,4 +45,4 @@ const CategoriesInput = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export default CategoriesInput
+export default CategoryInput
