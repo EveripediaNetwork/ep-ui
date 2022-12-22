@@ -14,7 +14,7 @@ export const InvalidRankCardItem = ({
     <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
       <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index}</Text>
       <Flex gap={2} w="100%" alignItems="center">
-       <Box
+        <Box
           w={{ lg: '60px', md: '40px', base: '40px' }}
           h={{ lg: '50px', md: '30px', base: '30px' }}
         >
