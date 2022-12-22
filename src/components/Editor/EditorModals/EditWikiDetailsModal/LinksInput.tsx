@@ -104,7 +104,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
         <Select
           size="sm"
           rounded="md"
-          flex="5"
+          flex="5.5"
           value={currentLink}
           onChange={event => {
             const attr = event.target.value
@@ -143,6 +143,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           </optgroup>
         </Select>
         <Input
+          disabled={!currentLink}
           size="sm"
           flex="8"
           rounded="md"
@@ -151,7 +152,14 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           onChange={event => setCurrentLinkValue(event.target.value)}
           type="url"
         />
-        <Button flex="1" size="sm" rounded="md" mx="auto" onClick={insertLinks}>
+        <Button
+          disabled={!currentLink}
+          flex="1"
+          size="sm"
+          rounded="md"
+          mx="auto"
+          onClick={insertLinks}
+        >
           {atttributeExists(currentLink) ? 'Update' : 'Add'}
         </Button>
       </Flex>

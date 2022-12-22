@@ -225,6 +225,8 @@ const wikiSlice = createSlice({
         },
       }
       saveDraftInLocalStorage(newState)
+
+      console.log(`NEW STATE IN REDUX ACTION: `, newState.linkedWikis)
       return newState
     },
     reset() {

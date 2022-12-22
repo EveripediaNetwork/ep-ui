@@ -29,6 +29,8 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const [selectedWiki, setSelectedWiki] = React.useState<string | null>(null)
   const [linkType, setLinkType] = React.useState<LinkedWikiKey>()
 
+  console.log(`STATE IN COMPONENT: `, wiki.linkedWikis)
+
   const autoCompleteRef = React.useRef(null)
 
   const fetchWikisList = async (
@@ -103,7 +105,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               size="sm"
               flex="8"
               rounded="md"
-              disabled={linkType && !(linkType in LinkedWikiKey)}
+              disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
               onChange={e => setSearch(e.target.value)}
@@ -129,6 +131,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Box>
         <Button
           isLoading={loading}
+          disabled={!linkType}
           flex="1"
           size="sm"
           rounded="md"
