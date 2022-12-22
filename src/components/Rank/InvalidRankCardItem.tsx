@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Icon } from '@chakra-ui/react'
+import { Flex, Text, Icon, Box } from '@chakra-ui/react'
 import { RiCoinsFill } from 'react-icons/ri'
 import { BiImage } from 'react-icons/bi'
 
@@ -14,12 +14,17 @@ export const InvalidRankCardItem = ({
     <Flex gap={4} alignItems="center" p={{ '2xl': 4, md: 2, base: 2 }}>
       <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index}</Text>
       <Flex gap={2} w="100%" alignItems="center">
-        <Icon
-          as={cardType === 'NFT' ? BiImage : RiCoinsFill}
+        <Box
           w={{ lg: '60px', md: '40px', base: '40px' }}
           h={{ lg: '50px', md: '30px', base: '30px' }}
-          color="primaryPinkIcon"
-        />
+        >
+          <Icon
+            as={cardType === 'NFT' ? BiImage : RiCoinsFill}
+            w="full"
+            h="full"
+            color="primaryPinkIcon"
+          />
+        </Box>
 
         <Flex w="100%">
           <Flex w="65%" alignItems="center">
