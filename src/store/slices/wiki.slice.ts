@@ -216,17 +216,34 @@ const wikiSlice = createSlice({
       }
       const newState = {
         ...state,
-        linkedWiki: {
+        linkedWikis: {
           ...state.linkedWikis,
-          [linkType]: [
-            ...(state.linkedWikis ? state.linkedWikis[linkType] : []),
-            wikiId,
-          ],
+          [linkType]: state.linkedWikis
+            ? [...(state.linkedWikis[linkType] || []), wikiId]
+            : [wikiId],
+        },
+      }
+
+      saveDraftInLocalStorage(newState)
+      return newState
+    },
+    removeLinkedWiki(state, action) {
+      const { linkType, wikiId } = action.payload as {
+        linkType: LinkedWikiKey
+        wikiId: string
+      }
+      const newState = {
+        ...state,
+        linkedWikis: {
+          ...state.linkedWikis,
+          [linkType]: state.linkedWikis
+            ? (state.linkedWikis[linkType] || []).filter(
+                (id: string) => id !== wikiId,
+              )
+            : [],
         },
       }
       saveDraftInLocalStorage(newState)
-
-      console.log(`NEW STATE IN REDUX ACTION: `, newState.linkedWikis)
       return newState
     },
     reset() {

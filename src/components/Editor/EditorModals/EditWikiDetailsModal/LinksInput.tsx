@@ -7,7 +7,6 @@ import {
   Flex,
   HStack,
   Icon,
-  IconButton,
   Input,
   Select,
   Stack,
@@ -167,8 +166,10 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
       {linksWithValue.length > 0 && (
         <Wrap gap="1">
           {linksWithValue.map(network => (
-            <IconButton
+            <Button
               key={network.id}
+              display="flex"
+              gap={2}
               onClick={() => setCurrentLink(network.id)}
               aria-label={network.label}
               bg="gray.100"
@@ -182,30 +183,28 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
               }}
               rounded="md"
               size="xs"
-              icon={
-                <HStack px={2}>
-                  <HStack>
-                    <Icon as={network.icon} />{' '}
-                    <Text fontWeight="normal" fontSize="xs">
-                      {network.label}
-                    </Text>
-                  </HStack>
-                  <Center
-                    boxSize={4}
-                    fontSize="xs"
-                    fontWeight="bold"
-                    lineHeight="none"
-                    color="red.100"
-                    bg="red.400"
-                    _hover={{ bg: 'red.500' }}
-                    rounded="full"
-                    onClick={() => removeLink(network.id)}
-                  >
-                    <Icon as={RiCloseLine} />
-                  </Center>
-                </HStack>
-              }
-            />
+              px={2}
+            >
+              <HStack>
+                <Icon as={network.icon} />{' '}
+                <Text fontWeight="normal" fontSize="xs">
+                  {network.label}
+                </Text>
+              </HStack>
+              <Center
+                boxSize={4}
+                fontSize="xs"
+                fontWeight="bold"
+                lineHeight="none"
+                color="red.100"
+                bg="red.400"
+                _hover={{ bg: 'red.500' }}
+                rounded="full"
+                onClick={() => removeLink(network.id)}
+              >
+                <Icon as={RiCloseLine} />
+              </Center>
+            </Button>
           ))}
         </Wrap>
       )}
