@@ -1,7 +1,7 @@
 import { useENSData } from '@/hooks/useENSData'
 import React from 'react'
 import { Flex, Text, chakra, LinkBox, AspectRatio } from '@chakra-ui/react'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getUsername } from '@/utils/getUsername'
@@ -56,7 +56,8 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             <chakra.span>{wiki?.title}</chakra.span>
           </LinkOverlay>
           <Text fontSize="xs" color="homeDescriptionColor" my={2}>
-            {wiki && getWikiSummary(wiki, CARD_DETAILS_LENGTH)}
+            {wiki &&
+              getWikiSummary(wiki, CARD_DETAILS_LENGTH as WikiSummarySize)}
           </Text>
 
           <Flex gap={3}>
