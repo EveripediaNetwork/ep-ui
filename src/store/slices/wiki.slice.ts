@@ -6,6 +6,7 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   CreateNewWikiSlug,
+  LinkedWikiKey,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
@@ -204,6 +205,24 @@ const wikiSlice = createSlice({
         metadata: state.metadata.map((m: MData) =>
           m.id === ob.id ? { id: ob.id, value: ob.value } : m,
         ),
+      }
+      saveDraftInLocalStorage(newState)
+      return newState
+    },
+    addLinkedWiki(state, action) {
+      const { linkType, wikiId } = action.payload as {
+        linkType: LinkedWikiKey
+        wikiId: string
+      }
+      const newState = {
+        ...state,
+        linkedWiki: {
+          ...state.linkedWikis,
+          [linkType]: [
+            ...(state.linkedWikis ? state.linkedWikis[linkType] : []),
+            wikiId,
+          ],
+        },
       }
       saveDraftInLocalStorage(newState)
       return newState

@@ -29,7 +29,13 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
       <Text fontWeight="semibold">
         Tags <chakra.span opacity={0.4}>(Add up to 5)</chakra.span>
       </Text>
-      <chakra.div rounded="md" borderWidth={1} p={2} pos="relative">
+      <chakra.div
+        zIndex="999"
+        rounded="md"
+        borderWidth={1}
+        p={2}
+        pos="relative"
+      >
         <Select
           isOptionDisabled={() => value.length >= 5}
           placeholder="Add tags..."

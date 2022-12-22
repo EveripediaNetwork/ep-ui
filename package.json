@@ -35,7 +35,7 @@
     "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",
     "@ethersproject/units": "^5.6.1",
-    "@everipedia/iq-utils": "^0.0.1",
+    "@everipedia/iq-utils": "^0.0.5",
     "@everipedia/wagmi-magic-connector": "^0.7.0",
     "@metamask/detect-provider": "^1.2.0",
     "@next/font": "^13.0.3",

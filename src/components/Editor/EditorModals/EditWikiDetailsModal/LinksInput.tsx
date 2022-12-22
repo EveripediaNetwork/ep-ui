@@ -2,22 +2,22 @@ import { WIKI_METADATA_VALUE_LIMIT } from '@/data/Constants'
 import { LINK_OPTIONS, LinkType } from '@/data/WikiLinks'
 import { useAppDispatch } from '@/store/hook'
 import {
-  Box,
   Button,
-  ButtonGroup,
   Center,
   Flex,
+  HStack,
   Icon,
   IconButton,
   Input,
   Select,
   Stack,
   Text,
-  Tooltip,
+  Wrap,
   chakra,
 } from '@chakra-ui/react'
 import { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
+import { RiCloseLine } from 'react-icons/ri'
 
 const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const [currentLink, setCurrentLink] = useState<string>()
@@ -93,117 +93,114 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   }, [currentLink])
 
   return (
-    <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="3">
+    <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Links</Text>
-      <Box borderWidth={1} rounded="md" p="2.5">
-        <Flex
-          borderColor="gray.200"
-          _dark={{ borderColor: 'whiteAlpha.200' }}
-          gap="5"
-          direction={{ base: 'column', sm: 'row' }}
+      <Flex
+        borderColor="gray.200"
+        _dark={{ borderColor: 'whiteAlpha.200' }}
+        gap="2"
+        direction={{ base: 'column', sm: 'row' }}
+      >
+        <Select
+          size="sm"
+          rounded="md"
+          flex="5"
+          value={currentLink}
+          onChange={event => {
+            const attr = event.target.value
+            setCurrentLink(attr)
+          }}
+          placeholder="Select option"
         >
-          <Select
-            size="sm"
-            rounded="md"
-            minW="25"
-            value={currentLink}
-            onChange={event => {
-              const attr = event.target.value
-              setCurrentLink(attr)
-            }}
-            placeholder="Select option"
-          >
-            <optgroup label="Socials">
-              {LINK_OPTIONS.filter(
-                option => option.type === LinkType.SOCIAL,
-              ).map(med => (
+          <optgroup label="Socials">
+            {LINK_OPTIONS.filter(option => option.type === LinkType.SOCIAL).map(
+              med => (
                 <chakra.option key={med.id} value={med.id}>
                   {med.label}
                 </chakra.option>
-              ))}
-            </optgroup>
-            <optgroup label="Explorers">
-              {LINK_OPTIONS.filter(
-                option => option.type === LinkType.EXPLORER,
-              ).map(med => (
-                <chakra.option key={med.id} value={med.id}>
-                  {med.label}
-                </chakra.option>
-              ))}
-            </optgroup>
-            <optgroup label="Other">
-              {LINK_OPTIONS.filter(
-                option =>
-                  option.type !== LinkType.SOCIAL &&
-                  option.type !== LinkType.EXPLORER,
-              ).map(med => (
-                <chakra.option key={med.id} value={med.id}>
-                  {med.label}
-                </chakra.option>
-              ))}
-            </optgroup>
-          </Select>
-          <Input
-            size="sm"
-            rounded="md"
-            placeholder="Enter link"
-            value={currentLinkValue}
-            onChange={event => {
-              setCurrentLinkValue(event.target.value)
-            }}
-            type="url"
-          />
-          <Button size="sm" rounded="md" mx="auto" onClick={insertLinks}>
-            {atttributeExists(currentLink) ? 'Update' : 'Add'}
-          </Button>
-        </Flex>
-        <chakra.span color="red.300">{error}</chakra.span>
-        {linksWithValue.length > 0 && (
-          <ButtonGroup gap="2" flexWrap="wrap" pt="4">
-            {linksWithValue.map(network => (
-              <Tooltip label={network.label}>
-                <IconButton
-                  key={network.id}
-                  onClick={() => setCurrentLink(network.id)}
-                  aria-label={network.label}
-                  bg="gray.100"
-                  color="black"
-                  _hover={{
-                    bg: 'gray.100',
-                  }}
-                  _dark={{
-                    color: 'white',
-                    bg: 'whiteAlpha.100',
-                  }}
-                  rounded="full"
-                  icon={
-                    <>
-                      <Icon as={network.icon} />
-                      <Center
-                        pos="absolute"
-                        top="5px"
-                        right="5px"
-                        boxSize={4}
-                        fontSize="xs"
-                        fontWeight="bold"
-                        lineHeight="none"
-                        color="red.100"
-                        transform="translate(50%,-50%)"
-                        bg="red.400"
-                        _hover={{ bg: 'red.500' }}
-                        rounded="full"
-                        onClick={() => removeLink(network.id)}
-                      >
-                        x
-                      </Center>
-                    </>
-                  }
-                />
-              </Tooltip>
+              ),
+            )}
+          </optgroup>
+          <optgroup label="Explorers">
+            {LINK_OPTIONS.filter(
+              option => option.type === LinkType.EXPLORER,
+            ).map(med => (
+              <chakra.option key={med.id} value={med.id}>
+                {med.label}
+              </chakra.option>
             ))}
-          </ButtonGroup>
-        )}
-      </Box>
+          </optgroup>
+          <optgroup label="Other">
+            {LINK_OPTIONS.filter(
+              option =>
+                option.type !== LinkType.SOCIAL &&
+                option.type !== LinkType.EXPLORER,
+            ).map(med => (
+              <chakra.option key={med.id} value={med.id}>
+                {med.label}
+              </chakra.option>
+            ))}
+          </optgroup>
+        </Select>
+        <Input
+          size="sm"
+          flex="8"
+          rounded="md"
+          placeholder="Enter link"
+          value={currentLinkValue}
+          onChange={event => setCurrentLinkValue(event.target.value)}
+          type="url"
+        />
+        <Button flex="1" size="sm" rounded="md" mx="auto" onClick={insertLinks}>
+          {atttributeExists(currentLink) ? 'Update' : 'Add'}
+        </Button>
+      </Flex>
+      <chakra.span color="red.300">{error}</chakra.span>
+      {linksWithValue.length > 0 && (
+        <Wrap gap="1">
+          {linksWithValue.map(network => (
+            <IconButton
+              key={network.id}
+              onClick={() => setCurrentLink(network.id)}
+              aria-label={network.label}
+              bg="gray.100"
+              color="black"
+              _hover={{
+                bg: 'gray.100',
+              }}
+              _dark={{
+                color: 'white',
+                bg: 'whiteAlpha.100',
+              }}
+              rounded="md"
+              size="xs"
+              icon={
+                <HStack px={2}>
+                  <HStack>
+                    <Icon as={network.icon} />{' '}
+                    <Text fontWeight="normal" fontSize="xs">
+                      {network.label}
+                    </Text>
+                  </HStack>
+                  <Center
+                    boxSize={4}
+                    fontSize="xs"
+                    fontWeight="bold"
+                    lineHeight="none"
+                    color="red.100"
+                    bg="red.400"
+                    _hover={{ bg: 'red.500' }}
+                    rounded="full"
+                    onClick={() => removeLink(network.id)}
+                  >
+                    <Icon as={RiCloseLine} />
+                  </Center>
+                </HStack>
+              }
+            />
+          ))}
+        </Wrap>
+      )}
     </Stack>
   )
 }
