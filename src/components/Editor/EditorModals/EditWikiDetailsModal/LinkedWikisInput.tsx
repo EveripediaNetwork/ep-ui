@@ -130,11 +130,20 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               type="url"
             />
             {results.length !== 0 && (
-              <AutoCompleteList maxH={32} overflowY="auto" p={2} px={0}>
+              <AutoCompleteList
+                maxH={32}
+                mt={0}
+                overflowY="auto"
+                borderTopRadius={0}
+                p={2}
+                px={0}
+              >
                 {results.map(result => (
                   <AutoCompleteItem
                     px={2}
                     py={1}
+                    rounded="none"
+                    m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
                     value={result}
