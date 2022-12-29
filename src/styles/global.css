@@ -151,7 +151,7 @@ html {
 /* EDITOR TOOLBAR STYLES */
 /* =========================== */
 .toastui-editor-defaultUI-toolbar {
-  padding-left: 10px !important;
+  padding-left: 7px !important;
 }
 .toastui-editor-custom-toolbar-icon {
   background-repeat: no-repeat;
