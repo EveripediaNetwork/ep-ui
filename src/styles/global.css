@@ -124,6 +124,9 @@ html {
 .toastui-editor-dark .toastui-editor-context-menu {
   background-color: #1c212c !important;
 }
+.toastui-editor-dark .toastui-editor-popup-body {
+  overflow-y: scroll;
+}
 .toastui-editor-dark .toastui-editor-toolbar-icons {
   border-color: transparent !important;
 }

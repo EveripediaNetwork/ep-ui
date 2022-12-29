@@ -1,6 +1,7 @@
 import { Box, Heading, Text, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { PluginContext } from '@toast-ui/editor'
+import { embeds } from '@/data/EmbedsData'
 import { EmbedCard } from './EmbedCard'
 
 export const EmbedFrame = ({
@@ -11,14 +12,6 @@ export const EmbedFrame = ({
   const { eventEmitter } = editorContext
   const [activeAccordion, setActiveAccordion] = useState('')
 
-  const embeds = [
-    {
-      name: 'Dune',
-      desc: 'Embeds widgets from dune.com',
-      regex: /https:\/\/dune.com\/embeds\/\d+\/\d+\/(\w+|-)+/,
-      type: 'DUNE',
-    },
-  ]
   const initializeEmbed = (type: string, path: string) => {
     eventEmitter.emit('command', 'insertEmbed', { path, type })
   }
@@ -49,7 +42,7 @@ export const EmbedFrame = ({
           embed URL from.
         </Text>
       </Box>
-      <VStack w="100%" overflowY="scroll" spacing={8}>
+      <VStack w="100%" overflowY="scroll" spacing={8} pb="10">
         {activeAccordion !== ''
           ? embeds
               .filter(e => e.name === activeAccordion)

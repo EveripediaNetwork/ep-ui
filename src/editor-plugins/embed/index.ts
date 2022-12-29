@@ -35,8 +35,8 @@ export default function embed(context: PluginContext): PluginInfo {
         groupIndex: 3,
         itemIndex: 0,
         item: {
-          name: 'media',
-          tooltip: 'Media',
+          name: 'embed',
+          tooltip: 'Embed',
           className: 'toastui-editor-custom-toolbar-icon embed__popupBtn',
           popup: {
             body: container,
