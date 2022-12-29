@@ -1,0 +1,10 @@
+.embed__popupBtn {
+  background-image: url(./assets/embed-icon.png) !important;
+}
+.toastui-editor-dark .embed__popupBtn {
+  background-image: url(./assets/embed-icon-dark.png) !important;
+}
+
+.toastui-editor p {
+  line-height: 1.625 !important;
+}

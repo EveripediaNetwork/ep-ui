@@ -14,6 +14,8 @@ import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/PasteListener'
 import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
+// eslint-disable-next-line import/no-cycle
+import embed from '@/editor-plugins/embed'
 import { widgetRules } from './widgetRules'
 
 export const wikiEditorRef = {
@@ -143,7 +145,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
       <ToastUIEditorJSX
-        plugins={[wikiLink, cite, media, tableMergedCellPlugin]}
+        plugins={[wikiLink, cite, media, embed, tableMergedCellPlugin]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}
