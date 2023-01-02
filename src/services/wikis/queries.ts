@@ -74,6 +74,10 @@ export const GET_WIKI_BY_ID = gql`
         size
         source
       }
+      linkedWikis {
+        founder
+        blockchain
+      }
       metadata {
         id
         value

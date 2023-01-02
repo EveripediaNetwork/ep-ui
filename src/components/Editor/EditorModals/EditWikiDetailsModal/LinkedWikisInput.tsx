@@ -34,8 +34,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const [selectedWiki, setSelectedWiki] = React.useState('')
   const [linkType, setLinkType] = React.useState<LinkedWikiKey>()
 
-  console.log(wiki)
-
   const fetchWikisList = async (
     query: string,
     cb: (data: WikiPreview[]) => void,
