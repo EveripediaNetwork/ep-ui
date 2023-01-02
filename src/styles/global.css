@@ -48,6 +48,10 @@ html {
   z-index: 1;
 }
 
+.embed-widget-iframe-dune-bg {
+  background: #fff;
+}
+
 .embed-widget-iframe:not(.embed-widget-iframe__loaded) {
   background-color: #00000010;
 }

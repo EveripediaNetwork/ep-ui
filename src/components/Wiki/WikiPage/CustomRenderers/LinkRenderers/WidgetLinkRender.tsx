@@ -7,7 +7,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
     setIframeLoading(false)
   }
 
-  const renderWidget = (src: string, title: string) => {
+  const renderWidget = (src: string, title: string, type: string) => {
     return (
       <div
         className={
@@ -16,7 +16,12 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
             : 'embed-widget-iframe embed-widget-iframe__loaded'
         }
       >
-        <iframe onLoad={iframeLoadHandler} title={title} src={src} />
+        <iframe
+          className={type === 'dune' ? 'embed-widget-iframe-dune-bg' : ''}
+          onLoad={iframeLoadHandler}
+          title={title}
+          src={src}
+        />
       </div>
     )
   }
@@ -26,10 +31,15 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
       return renderWidget(
         `https://www.youtube.com/embed/${href}`,
         'youtube video',
+        'youtube',
       )
 
     case 'DUNE@EMBED':
-      return renderWidget(`https://dune.com/embeds/${href}`, 'Dune Embed')
+      return renderWidget(
+        `https://dune.com/embeds/${href}`,
+        'Dune Embed',
+        'dune',
+      )
 
     default:
       return null
