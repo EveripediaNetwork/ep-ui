@@ -23,6 +23,13 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   const [mounted, setMounted] = useState(false)
   const dispatch = useAppDispatch()
 
+  blogEntries?.sort((a, b) => {
+    const Data =
+      new Date(b.timestamp ? b.timestamp : '').valueOf() -
+      new Date(a.timestamp ? a.timestamp : '').valueOf()
+    return Data
+  })
+
   useEffect(() => {
     if (mounted === false) {
       dispatch(setBlogs(blogEntries))
