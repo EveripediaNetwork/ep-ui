@@ -64,7 +64,6 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     const widgetContent = match.match(matchRegex)?.[1]
     if (widgetContent) {
       content = content.replaceAll(match, widgetContent)
-      console.log(content)
     }
   })
 
