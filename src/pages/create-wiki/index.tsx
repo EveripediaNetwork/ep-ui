@@ -302,6 +302,8 @@ const CreateWikiContent = () => {
         ].filter(m => m.value),
       }
 
+      console.log(finalWiki)
+
       if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = await getWikiSlug()
       setWikiId(finalWiki.id)
 
