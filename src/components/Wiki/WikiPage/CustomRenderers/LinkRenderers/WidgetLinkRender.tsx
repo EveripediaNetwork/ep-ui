@@ -1,24 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
+  const [iframeLoading, setIframeLoading] = useState(true)
+
+  const iframeLoadHandler = () => {
+    setIframeLoading(false)
+  }
+
+  const getIframe = (src: string, title: string) => (
+    <iframe onLoad={iframeLoadHandler} title={title} src={src} />
+  )
+
+  const getCustomWidget = (iframe: JSX.Element, className: string) => (
+    <div className={className}>{iframe}</div>
+  )
+
   if (text === 'YOUTUBE@VID') {
-    return (
-      <div className="embed-widget-iframe">
-        <iframe
-          title="youtube video"
-          src={`https://www.youtube.com/embed/${href}`}
-        />
-      </div>
-    )
+    const src = `https://www.youtube.com/embed/${href}`
+    const iframe = getIframe(src, 'youtube video')
+    const className = iframeLoading
+      ? 'embed-widget-iframe'
+      : 'embed-widget-iframe embed-widget-iframe__loaded'
+    return getCustomWidget(iframe, className)
   }
 
   if (text === 'DUNE@EMBED') {
-    return (
-      <div className="embed-widget-iframe">
-        <iframe title="Dune Embed" src={`https://dune.com/embeds/${href}`} />
-      </div>
-    )
+    const src = `https://dune.com/embeds/${href}`
+    const iframe = getIframe(src, 'Dune Embed')
+    const className = iframeLoading
+      ? 'embed-widget-iframe'
+      : 'embed-widget-iframe embed-widget-iframe__loaded'
+    return getCustomWidget(iframe, className)
   }
+
   return null
 }
 
