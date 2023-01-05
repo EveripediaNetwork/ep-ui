@@ -63,6 +63,8 @@ export const ValidationErrorMessage = (type: string) => {
       return 'Summary must be no more than 128 characters.'
     case ValidatorCodes.ID_ERROR:
       return 'ID is incorrect. Please check the wiki.'
+    case ValidatorCodes.MEDIA:
+      return 'Invalid media data. Please check the media attached to wiki.'
     case ValidatorCodes.GLOBAL_RATE_LIMIT:
       return 'You have reached the rate limit. Please try again later'
     default:
