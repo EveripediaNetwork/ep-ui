@@ -11,4 +11,3 @@ export default async function handler(
   res.setHeader('Cache-Control', 's-maxage=60')
   return res.status(200).send(response)
 }
-
