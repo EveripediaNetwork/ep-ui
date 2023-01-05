@@ -20,8 +20,6 @@ const config = {
   alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'maticmum',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
-  apiUrl:
-    process.env.NEXT_PUBLIC_EP_API_DOMAIN || 'https://api.dev.braindao.org',
   editorGraphqlUrl:
     process.env.NEXT_PUBLIC_EDITOR_API ||
     'https://api.thegraph.com/subgraphs/name/oleanjikingcode/payout',
