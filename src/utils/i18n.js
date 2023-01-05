@@ -47,7 +47,7 @@ export const resources = {
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of service',
       privacyRights: 'Your CA Privacy Rights',
-      copyRight: ' IQ.Wiki Powered By ',
+      copyRight: 'IQ.Wiki Powered By ',
 
       //Desktop Nav
       Explore: 'Explore',
