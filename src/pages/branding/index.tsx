@@ -9,6 +9,7 @@ import {
   ListItem,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { NextSeo } from 'next-seo'
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Image } from '../../components/Elements/Image/Image'
@@ -114,13 +115,17 @@ const BrandingPage = () => {
   ]
   const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
   return (
-    <Box m="0" bg="brandHero" pb={20} my={-8}>
+    <Box bg="brandHero" pb="28" mt="-3">
+      <NextSeo
+        title="IQ.Wiki Branding kit & official logos"
+        description="IQ.Wiki Branding kit & official logos"
+        openGraph={{
+          title: `IQ.Wiki Branding kit & official logos`,
+          description: `IQ.Wiki Branding kit & official logos`,
+        }}
+      />
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex
-          alignItems="center"
-          flexDir={{ base: 'column', lg: 'row' }}
-          mt={{ lg: 16 }}
-        >
+        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
           <Box w={{ base: '100%', lg: '60%' }}>
             <Heading
               textAlign={{ base: 'center', lg: 'initial' }}
@@ -198,14 +203,16 @@ const BrandingPage = () => {
               fontSize={{ lg: '2xl', base: 'sm' }}
               textAlign={{ base: 'center', lg: 'initial' }}
             >
-              The IQ.Wiki logo was inspired from BrainDAO, a web 3.0 DAO powered
-              by the IQ token dedicated to bridging the real-world and the
-              metaverse by funding all forms of knowledge on the blockchain.
-              Representing IQ and BrainDAO is a logo presented like a brain the
-              housepower of all knowledge.
+              The logo for the IQ token is based on the brain, the original
+              source of knowledge.
             </Text>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {alternateLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
@@ -225,14 +232,23 @@ const BrandingPage = () => {
 
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
-            <Heading
-              textAlign={{ base: 'center', lg: 'initial' }}
-              fontSize={{ lg: '5xl', base: '3xl' }}
-            >
+            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
               IQ.WIKI LOGO
             </Heading>
+            <Text
+              fontSize={{ lg: '2xl', base: 'sm' }}
+              textAlign={{ base: 'center', lg: 'initial' }}
+            >
+              The IQ.wiki logo was inspired from BrainDAO to represent The
+              World&#x27;s Largest Blockchain & Crypto Encyclopedia.
+            </Text>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {IQLogoAsset.map((item, index) => {
               return (
                 <BrandingAssets
@@ -254,8 +270,22 @@ const BrandingPage = () => {
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
               BRAINDAO
             </Heading>
+            <Text
+              fontSize={{ lg: '2xl', base: 'sm' }}
+              textAlign={{ base: 'center', lg: 'initial' }}
+            >
+              BrainDAO&#x27;s mission is to build a more intelligent future
+              through the IQ token. The logo represents a DAO that is
+              collectively made up of all IQ token stakers and governs the
+              token.
+            </Text>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {braindaoAltLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets
@@ -279,7 +309,12 @@ const BrandingPage = () => {
               BRAINDAO- ALTERNATE LOGO
             </Heading>
           </Flex>
-          <Flex mt={10} flexWrap="wrap" gap="2rem">
+          <Flex
+            mt={10}
+            flexWrap="wrap"
+            gap="2rem"
+            justifyContent="space-between"
+          >
             {braindaoLogoAssets.map((item, index) => {
               return (
                 <BrandingAssets

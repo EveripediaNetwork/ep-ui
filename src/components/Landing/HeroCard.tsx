@@ -2,7 +2,7 @@ import { useENSData } from '@/hooks/useENSData'
 import React from 'react'
 import { Flex, Text, chakra, LinkBox, AspectRatio } from '@chakra-ui/react'
 import { getWikiSummary } from '@/utils/getWikiSummary'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { getUsername } from '@/utils/getUsername'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
@@ -36,7 +36,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
           <WikiImage
             cursor="pointer"
             flexShrink={0}
-            imageURL={getWikiImageUrl(wiki)}
+            imageURL={getWikiImageUrl(wiki?.images)}
             borderRadius="none"
             roundedTop="lg"
             overflow="hidden"

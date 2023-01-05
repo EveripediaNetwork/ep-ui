@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import LinkButton from '../LinkElements/LinkButton'
 
 interface OverrideExistingWikiDialogProps {
   isOpen: boolean
@@ -110,9 +111,9 @@ const OverrideExistingWikiDialog = ({
           )}
           <ButtonGroup display="flex" justifyContent="center">
             <Button onClick={publish}>Proceed anyways</Button>
-            <Button as="a" href={`/create-wiki?slug=${slug}`} variant="outline">
+            <LinkButton href={`/create-wiki?slug=${slug}`} variant="outline">
               Edit Wiki
-            </Button>
+            </LinkButton>
           </ButtonGroup>
         </Box>
       </AlertDialogContent>

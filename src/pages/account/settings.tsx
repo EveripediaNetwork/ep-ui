@@ -10,6 +10,7 @@ import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
+import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
 
 const NotificationSettings = dynamic(
@@ -83,6 +84,7 @@ const Settings = () => {
         </Box>
 
         <VStack
+          ml="0 !important"
           p={{ base: 4, lg: 12 }}
           pt={{ base: 14, lg: 24 }}
           w="100%"
@@ -97,10 +99,7 @@ const Settings = () => {
           )}
           {tab === 'notifications' && (
             <NotificationSettings
-              address={userAddress}
-              savedNotificationPrefs={
-                profileData?.notifications && profileData?.notifications[0]
-              }
+              address={userAddress || (getUserAddressFromCache() as string)}
             />
           )}
           {tab === 'advanced' && <AdvancedSettings />}

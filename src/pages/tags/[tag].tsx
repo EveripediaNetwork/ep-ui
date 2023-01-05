@@ -16,7 +16,7 @@ import { store } from '@/store/store'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getTagWikis, wikiApi } from '@/services/wikis'
 import Link from '@/components/Elements/LinkElements/Link'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
@@ -79,12 +79,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         <Box mt={7}>
           <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
             You are seeing the wikis that are tagged with
-            <Link
-              mx={1}
-              href={`/tags/${tagId}`}
-              color="brandLinkColor"
-              passHref
-            >
+            <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
               {tagId}
             </Link>
             . If you are interested in seeing other topics in common, you can

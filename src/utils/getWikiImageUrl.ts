@@ -1,9 +1,6 @@
 import config from '@/config'
-import { Wiki, WikiPreview } from '@/types/Wiki'
-import { CreatedWikisCount } from '@/types/admin'
+import { Image } from '@everipedia/iq-utils'
 
-export const getWikiImageUrl = (
-  wiki?: Partial<Wiki> | WikiPreview | CreatedWikisCount,
-) => {
-  return `${config.pinataBaseUrl}${wiki?.images ? wiki?.images[0]?.id : ''}`
+export const getWikiImageUrl = (imageObj?: Image[]) => {
+  return `${config.pinataBaseUrl}${imageObj ? imageObj[0]?.id : ''}`
 }

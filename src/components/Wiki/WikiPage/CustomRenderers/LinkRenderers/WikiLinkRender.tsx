@@ -75,7 +75,7 @@ const WikiLinkPreview = ({ wikiId }: { wikiId: string }) => {
                 flexShrink={0}
                 w="100px"
                 h="100px"
-                imageURL={getWikiImageUrl(wiki)}
+                imageURL={getWikiImageUrl(wiki?.images)}
                 alt={wiki?.title || 'wiki'}
               />
               <Text fontSize="14px">{wiki && getWikiSummary(wiki)}</Text>

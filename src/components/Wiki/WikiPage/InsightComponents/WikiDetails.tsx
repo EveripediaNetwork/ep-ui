@@ -11,12 +11,13 @@ import {
   TableContainer,
   VStack,
   AspectRatio,
+  Wrap,
 } from '@chakra-ui/react'
 import shortenAccount from '@/utils/shortenAccount'
 import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
-import { Author, BaseCategory, WikiPreview } from '@/types/Wiki'
+import { Author, BaseCategory, WikiPreview } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
@@ -89,13 +90,13 @@ export const WikiDetails = ({
               <Tr>
                 <Td py={1}>Tags</Td>
                 <Td py={1}>
-                  <HStack marginLeft={-2} flexWrap="wrap" justify="start">
+                  <Wrap marginLeft={-2} spacing={1}>
                     {tags?.map((tag, i) => (
                       <Link key={i} href={`/tags/${tag.id}`} py={1}>
                         <Tag whiteSpace="nowrap">{tag.id}</Tag>
                       </Link>
                     ))}
-                  </HStack>
+                  </Wrap>
                 </Td>
               </Tr>
             )}

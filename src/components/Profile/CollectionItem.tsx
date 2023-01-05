@@ -13,7 +13,7 @@ import { RiHeartLine } from 'react-icons/ri'
 
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { shortenText } from '@/utils/shortenText'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
@@ -38,7 +38,7 @@ export const CollectionItem = (props: CollectionItemProps) => {
       >
         <AspectRatio maxW="full" ratio={1}>
           <WikiImage
-            imageURL={getWikiImageUrl(item)}
+            imageURL={getWikiImageUrl(item.images)}
             w="full"
             alt={item.title}
           />

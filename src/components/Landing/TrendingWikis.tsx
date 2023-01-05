@@ -9,7 +9,7 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
@@ -55,7 +55,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={getWikiImageUrl(wiki)}
+              imageURL={getWikiImageUrl(wiki.images)}
               borderRadius="none"
               roundedTop="lg"
               alt={wiki.title}
@@ -91,7 +91,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             </Text>
 
             <HStack justify="space-between">
-              <Flex gap={3} width="50%">
+              <Flex alignItems="center" gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
                   <DisplayAvatar
                     alt={getUsername(wiki?.user, ensName)}

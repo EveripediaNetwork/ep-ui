@@ -112,11 +112,12 @@ const Admin = () => {
       interval: graphFilter,
     })
 
-  const dataObj: Array<{
+  const graphDataObj: Array<{
     name: string | undefined
     'Wikis Created': number | undefined
     'Wikis Edited': number
   }> = []
+
   if (graphFilter === 'day') {
     DayTunedgraphWikisEditedCountData?.map((item, index) => {
       const editedCount = DayTunedgraphWikisEditedCountData[index].amount
@@ -127,7 +128,7 @@ const Admin = () => {
         DayTunedgraphWikisCreatedCountData &&
         DayTunedgraphWikisCreatedCountData[index]?.startOn
 
-      dataObj.push({
+      graphDataObj.push({
         name:
           // eslint-disable-next-line
           graphFilter !== 'day'
@@ -163,7 +164,7 @@ const Admin = () => {
         }
         return ''
       }
-      dataObj.push({
+      graphDataObj.push({
         name: getXaxis(),
         'Wikis Created': createdCount,
         'Wikis Edited': editedCount,
@@ -215,11 +216,11 @@ const Admin = () => {
             ?.amount
         : 0,
       color: 'pink.400',
-      detailHeader: 'Total no of Created Wikis',
+      detailHeader: 'Total no. of Created Wikis',
     },
     {
       icon: RiUser3Fill,
-      detailHeader: 'Total no of Editors',
+      detailHeader: 'Total no. of Editors',
       value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
       color: 'pink.400',
@@ -320,7 +321,7 @@ your wallet to continue"
       <WikiDataGraph
         piedata={piedata}
         colors={COLORS}
-        data={dataObj}
+        data={graphDataObj}
         handleGraphFilterChange={(e: string) => {
           return setGraphFilter(e)
         }}

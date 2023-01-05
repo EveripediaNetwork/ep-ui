@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, VStack } from '@chakra-ui/react'
-import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@/types/Wiki'
+import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { NFTStats } from '@/services/nft-stats'
@@ -91,7 +91,7 @@ const WikiInsights = ({
             ipfsHash={ipfs || wiki.ipfs}
             txHash={wiki.transactionHash}
             createdBy={wiki.author}
-            imgSrc={getWikiImageUrl(wiki)}
+            imgSrc={getWikiImageUrl(wiki.images)}
           />
           <ProfileSummary wiki={wiki} />
           {!!coingeckoLink && (

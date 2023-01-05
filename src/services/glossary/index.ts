@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { HYDRATE } from 'next-redux-wrapper'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { GET_TAG_WIKIS_BY_ID } from '../wikis/queries'
 import { GET_GLOSSARY_TAGS } from '../tags/queries'
 

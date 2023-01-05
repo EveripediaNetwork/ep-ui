@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
   Image,
@@ -11,7 +11,7 @@ import {
   EditSpecificMetaIds,
   whiteListedLinkNames,
   CreateNewWikiSlug,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
 import { submitVerifiableSignature } from '@/utils/postSignature'
@@ -33,6 +33,7 @@ import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { logEvent } from './googleAnalytics'
+import { getDeadline } from './getDeadline'
 
 export const initialEditorValue = ` `
 export const initialMsg =
@@ -62,6 +63,8 @@ export const ValidationErrorMessage = (type: string) => {
       return 'Summary must be no more than 128 characters.'
     case ValidatorCodes.ID_ERROR:
       return 'ID is incorrect. Please check the wiki.'
+    case ValidatorCodes.MEDIA:
+      return 'Invalid media data. Please check the media attached to wiki.'
     case ValidatorCodes.GLOBAL_RATE_LIMIT:
       return 'You have reached the rate limit. Please try again later'
     default:
@@ -160,7 +163,7 @@ export const useCreateWikiEffects = (
   }, [dispatch, slug])
 }
 
-export const useGetSignedHash = (deadline: number) => {
+export const useGetSignedHash = () => {
   const {
     setWikiHash,
     wikiHash,
@@ -174,6 +177,7 @@ export const useGetSignedHash = (deadline: number) => {
   } = useCreateWikiContext()
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const deadline = useRef(0)
 
   const {
     data: signData,
@@ -192,6 +196,7 @@ export const useGetSignedHash = (deadline: number) => {
   )
 
   const saveHashInTheBlockchain = async (ipfs: string) => {
+    deadline.current = getDeadline()
     setWikiHash(ipfs)
     signTypedDataAsync({
       domain,
@@ -199,7 +204,7 @@ export const useGetSignedHash = (deadline: number) => {
       value: {
         ipfs,
         user: userAddress,
-        deadline,
+        deadline: deadline.current,
       },
     })
       .then(response => {
@@ -301,7 +306,7 @@ export const useGetSignedHash = (deadline: number) => {
             signData,
             wikiHash,
             userAddress,
-            deadline,
+            deadline.current,
           )
           if (hash) {
             setTxHash(hash)

@@ -5,7 +5,7 @@ import { getActivityByWiki } from '@/services/activities'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Activity } from '@/types/ActivityDataType'
-import { EditSpecificMetaIds, Wiki } from '@/types/Wiki'
+import { EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
 import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { getActivityMetadataById } from '@/utils/getWikiFields'
 import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
@@ -37,8 +37,10 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
             brief={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
-            wiki={wiki}
             wikiId={wiki.id}
+            tags={wiki.tags}
+            categories={wiki.categories}
+            WikiImgObj={wiki.images}
           />
         )}
         <Flex

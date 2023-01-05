@@ -6,7 +6,6 @@ import {
   InputLeftElement,
   Spinner,
   chakra,
-  Button,
   HTMLChakraProps,
   Text,
   useEventListener,
@@ -32,7 +31,7 @@ import {
 } from '@/services/search/utils'
 import { useRouter } from 'next/router'
 import config from '@/config'
-import { Link, LinkButton } from '@/components/Elements'
+import { LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
@@ -100,18 +99,16 @@ const NavSearch = (props: NavSearchProps) => {
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
       <chakra.span fontWeight="semibold">No search Results</chakra.span>
-      <Link passHref href="/create-wiki">
-        <Button
-          as="a"
-          variant="outline"
-          px="10"
-          w="fit-content"
-          fontWeight="semibold"
-          fontSize="xs"
-        >
-          Create New Wiki
-        </Button>
-      </Link>
+      <LinkButton
+        variant="outline"
+        px="10"
+        w="fit-content"
+        fontWeight="semibold"
+        fontSize="xs"
+        href="/create-wiki"
+      >
+        Create New Wiki
+      </LinkButton>
     </Flex>
   )
 

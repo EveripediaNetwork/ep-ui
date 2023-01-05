@@ -16,8 +16,11 @@ import {
   RiTeamFill,
   RiUserSearchFill,
   RiAppStoreFill,
+  RiNumbersFill,
+  RiGroup2Fill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
+import { BsGraphUp } from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -84,6 +87,12 @@ export const NAV_ITEMS: NavItem[] = [
     icon: RiBarChartFill,
   },
   {
+    id: 301,
+    label: 'Rank',
+    icon: BsGraphUp,
+    href: '/rank/',
+  },
+  {
     id: 3,
     label: 'Learn',
     href: '#',
@@ -94,6 +103,14 @@ export const NAV_ITEMS: NavItem[] = [
         label: 'IQ Learn',
         icon: RiBook2Fill,
         href: 'https://learn.everipedia.org/iq/',
+        hasImage: true,
+        target: '_blank',
+      },
+      {
+        id: 304,
+        label: 'IQ Dashboard',
+        icon: RiNumbersFill,
+        href: 'https://iq.braindao.org',
         hasImage: true,
         target: '_blank',
       },
@@ -110,6 +127,14 @@ export const NAV_ITEMS: NavItem[] = [
         icon: RiUserSearchFill,
         href: '/static/about',
         hasImage: true,
+      },
+      {
+        id: 305,
+        label: 'BrainDAO',
+        icon: RiGroup2Fill,
+        href: 'https://braindao.org',
+        hasImage: true,
+        target: '_blank',
       },
     ],
   },

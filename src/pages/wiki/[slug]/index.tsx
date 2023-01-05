@@ -13,7 +13,7 @@ import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
-import { Wiki as WikiType } from '@/types/Wiki'
+import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 
 interface WikiProps {
@@ -62,7 +62,7 @@ const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
           datePublished={wikiData.created}
           title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
           description={wikiData.summary}
-          mainImage={getWikiImageUrl(wikiData)}
+          mainImage={getWikiImageUrl(wikiData.images)}
         />
       )}
       <Box as="main" mt={-2}>

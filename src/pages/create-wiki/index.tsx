@@ -52,7 +52,6 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
-import { getDeadline } from '@/utils/getDeadline'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
@@ -62,7 +61,7 @@ import {
   EditSpecificMetaIds,
   EditorContentOverride,
   CreateNewWikiSlug,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import {
   initialMsg,
@@ -97,8 +96,6 @@ type PageWithoutFooter = NextPage & {
 const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
   ssr: false,
 })
-
-const deadline = getDeadline()
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -165,8 +162,7 @@ const CreateWikiContent = () => {
     isPublished: false,
   })
 
-  const { saveHashInTheBlockchain, signing, verifyTrxHash } =
-    useGetSignedHash(deadline)
+  const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
 
   const getWikiSlug = async () => {
     const slug = slugifyText(String(wiki.title))
@@ -296,7 +292,8 @@ const CreateWikiContent = () => {
           .replace(EditorContentOverride, '')
           .replace(/<\/?em>/gm, '*')
           .replace(/<\/?strong>/gm, '**')
-          .replace(/<\/?del>/gm, '~~'),
+          .replace(/<\/?del>/gm, '~~')
+          .replace(/^(#+\s)(\*\*)(.+)(\*\*)/gm, '$1$3'),
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,

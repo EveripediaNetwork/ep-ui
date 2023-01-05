@@ -3,13 +3,12 @@ import { useRouter } from 'next/router'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { Flex, Text, Button, Box } from '@chakra-ui/react'
+import { Flex, Text, Box } from '@chakra-ui/react'
 import {
   getActivityById,
   useGetLatestIPFSByWikiQuery,
   getWikiCreatorAndEditorByActivityId,
 } from '@/services/activities'
-import Link from 'next/link'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
@@ -17,7 +16,8 @@ import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
 import { getWikiPreviewsByCategory } from '@/services/wikis'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
+import { LinkButton } from '@/components/Elements'
 
 interface RevisionPageProps {
   wiki: Activity
@@ -96,7 +96,7 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
           datePublished={wikiData.content[0].created}
           title={`${wikiData.content[0].title} - ${wikiData.content[0].categories[0]?.title}`}
           description={wikiData.content[0].summary}
-          mainImage={getWikiImageUrl(wikiData.content[0])}
+          mainImage={getWikiImageUrl(wikiData.content[0].images)}
           noindex
         />
       )}
@@ -116,24 +116,22 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
             <Text textAlign="center">
               You are seeing an older version of this wiki.
             </Text>
-            <Link href={`/wiki/${wikiData?.content[0].id}`} passHref>
-              <Button
-                as="a"
-                maxW="120px"
-                variant="solid"
-                bgColor="dimColor"
-                sx={{
-                  '&:hover, &:focus, &:active': {
-                    bgColor: 'dimColor',
-                    textDecoration: 'underline',
-                  },
-                }}
-                px={4}
-                size="sm"
-              >
-                View Latest
-              </Button>
-            </Link>
+            <LinkButton
+              href={`/wiki/${wikiData?.content[0].id}`}
+              maxW="120px"
+              variant="solid"
+              bgColor="dimColor"
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: 'dimColor',
+                  textDecoration: 'underline',
+                },
+              }}
+              px={4}
+              size="sm"
+            >
+              View Latest
+            </LinkButton>
           </Flex>
         )}
         <WikiMarkup

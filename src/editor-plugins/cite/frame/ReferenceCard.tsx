@@ -1,5 +1,5 @@
 import { store } from '@/store/store'
-import { CiteReference, EditorContentOverride } from '@/types/Wiki'
+import { CiteReference, EditorContentOverride } from '@everipedia/iq-utils'
 import { lettersToNum } from '@/utils/lettersToNum'
 import {
   Box,

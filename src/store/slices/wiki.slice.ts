@@ -6,7 +6,7 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   CreateNewWikiSlug,
-} from '@/types/Wiki'
+} from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
   let slug = window.location.search.split('=')[1]

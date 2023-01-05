@@ -68,8 +68,6 @@ export const PromoteCreatedWikisModal = ({
     }
   }
 
-  // console.log(promotedWikis)
-
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
@@ -147,7 +145,7 @@ export const PromoteCreatedWikisModal = ({
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={getWikiImageUrl(Data)}
+              imageURL={getWikiImageUrl(Data.images)}
               borderRadius="lg"
               overflow="hidden"
               alt="wiki"
@@ -179,17 +177,16 @@ export const PromoteCreatedWikisModal = ({
               {Data.categories.length ? (
                 <HStack>
                   {Data.categories?.map((category, i) => (
-                    <Link key={i} href={`/categories/${category.id}`}>
-                      <Text
-                        as="a"
-                        display={{ base: 'none', md: 'block' }}
-                        color="brand.500"
-                        fontWeight="bold"
-                        cursor="pointer"
-                        fontSize={{ base: '10px', lg: '12px' }}
-                      >
-                        {category.title ? category.title : ''}
-                      </Text>
+                    <Link
+                      key={i}
+                      href={`/categories/${category.id}`}
+                      display={{ base: 'none', md: 'block' }}
+                      color="brand.500"
+                      fontWeight="bold"
+                      cursor="pointer"
+                      fontSize={{ base: '10px', lg: '12px' }}
+                    >
+                      {category.title ? category.title : ''}
                     </Link>
                   ))}
                 </HStack>

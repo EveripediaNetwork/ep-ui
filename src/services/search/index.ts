@@ -7,7 +7,7 @@ import {
   GET_USERNAME_BY_TITLE,
 } from '@/services/search/queries'
 import config from '@/config'
-import { WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@everipedia/iq-utils'
 
 export type Category = {
   id: string

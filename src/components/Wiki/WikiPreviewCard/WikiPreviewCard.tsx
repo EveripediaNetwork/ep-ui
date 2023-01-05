@@ -9,7 +9,7 @@ import {
   Box,
   AspectRatio,
 } from '@chakra-ui/react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
@@ -52,7 +52,7 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage imageURL={getWikiImageUrl(wiki)} alt={wiki.title} />
+        <WikiImage imageURL={getWikiImageUrl(wiki.images)} alt={wiki.title} />
       </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>

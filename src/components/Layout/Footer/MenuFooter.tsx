@@ -54,16 +54,19 @@ const MenuFooter = () => {
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
-              <Heading size="sm">{`${t('Everipedia')}`}</Heading>
+              <Heading size="sm">IQ.wiki</Heading>
               <Link prefetch={false} href="/static/about">{`${t(
                 'aboutUs',
               )}`}</Link>
               <Link prefetch={false} href="/static/careers">{`${t(
                 'careers',
               )}`}</Link>
-              <Link prefetch={false} href="/static/branding">{`${t(
+              <Link prefetch={false} href="/branding">{`${t(
                 'Branding',
               )}`}</Link>
+              <Link target="_blank" href="https://iq.braindao.org">
+                IQ Dashboard
+              </Link>
             </Stack>
           </GridItem>
           <GridItem colSpan={1}>
@@ -90,6 +93,9 @@ const MenuFooter = () => {
               )}`}</Link>
               <Link prefetch={false} href="/static/terms">{`${t(
                 'termsOfService',
+              )}`}</Link>
+              <Link prefetch={false} href="/static/CaPrivacyRights">{`${t(
+                'privacyRights',
               )}`}</Link>
             </Stack>
           </GridItem>

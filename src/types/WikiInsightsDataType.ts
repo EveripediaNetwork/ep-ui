@@ -1,4 +1,4 @@
-import { User } from './Wiki'
+import { User } from '@everipedia/iq-utils'
 
 export type WikiInsights =
   | {

@@ -18,7 +18,8 @@ export const LinkWrapper = ({
           ? false
           : prefetch
       }
-      // passHref
+      passHref
+      legacyBehavior
     >
       {children}
     </NextLink>

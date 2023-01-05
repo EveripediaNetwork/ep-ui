@@ -11,7 +11,7 @@ import {
 } from '@/services/activities/queries'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
-import { User, Wiki } from '@/types/Wiki'
+import { User, Wiki } from '@everipedia/iq-utils'
 
 type GetActivitiesResponse = {
   activities: Activity[]

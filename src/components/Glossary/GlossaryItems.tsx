@@ -1,18 +1,18 @@
 import React from 'react'
 import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
-import { Wiki } from '@/types/Wiki'
+import { Wiki } from '@everipedia/iq-utils'
 import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
 
 interface GlossaryItemProps {
   highlightText: string
-  wikis: Wiki[]
+  glossary: Wiki[]
   glossaryAlphabets: string[]
 }
 
 const GlossaryItem = ({
   highlightText,
-  wikis,
+  glossary,
   glossaryAlphabets,
 }: GlossaryItemProps) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
@@ -57,7 +57,7 @@ const GlossaryItem = ({
             direction="column"
             gap="14"
           >
-            {wikis?.map(ob => (
+            {glossary?.map(ob => (
               <>
                 {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard

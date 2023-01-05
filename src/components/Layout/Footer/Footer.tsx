@@ -15,6 +15,7 @@ import {
   Menu,
   HStack,
   MenuList,
+  Flex,
 } from '@chakra-ui/react'
 import { isString } from '@chakra-ui/utils'
 
@@ -29,6 +30,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
+import Link from 'next/link'
 
 const Footer = () => {
   const { t, i18n } = useTranslation()
@@ -73,11 +75,18 @@ const Footer = () => {
         <Divider orientation="horizontal" />
         <MenuFooter />
         <Divider orientation="horizontal" />
-        <SimpleGrid fontSize="xs" columns={{ base: 1, lg: 2 }}>
+        <SimpleGrid fontSize="sm" columns={{ base: 1, lg: 2 }}>
           <Stack align={{ base: 'center', lg: 'flex-start' }} flex="1">
-            <Text fontSize="sm" py={3}>
-              {`${t('copyRight')}`}
-            </Text>
+            <Flex alignItems="center">
+              <Text py={3} pr={2}>{`${t('copyRight')}`}</Text>
+              <Link target="_blank" href="https://braindao.org/">
+                <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
+              </Link>
+              <Text px="1">& </Text>
+              <Link target="_blank" href="https://iq.braindao.org/">
+                <Text _hover={{ textDecoration: 'underline' }}>IQ </Text>
+              </Link>
+            </Flex>
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
             <HStack py={3}>

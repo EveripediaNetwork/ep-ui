@@ -14,7 +14,7 @@ import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
 import { Category } from '@/services/search'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import { WikiPreview } from '@/types/Wiki'
+import { WikiPreview } from '@everipedia/iq-utils'
 import { Link } from '@/components/Elements'
 
 interface SearchQueryProps {
@@ -52,15 +52,18 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
         title={wiki.title}
         brief={wiki.summary}
         editor={wiki.user}
-        wiki={wiki}
         wikiId={wiki.id}
         lastModTimeStamp={wiki.updated}
+        WikiImgObj={wiki.images}
+        activityId={wiki.id}
+        categories={wiki.categories}
+        tags={wiki.tags}
       />
     )
   })
   const categoryList = categories.map(category => {
     return (
-      <Link href={`/categories/${category.id}`} passHref>
+      <Link href={`/categories/${category.id}`}>
         <Flex
           key={category.id}
           bgColor="cardBg"

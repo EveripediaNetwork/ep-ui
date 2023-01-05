@@ -19,7 +19,7 @@ type Social = {
 export const Socials: Social[] = [
   {
     id: 1,
-    href: 'https://twitter.com/everipedia',
+    href: 'https://twitter.com/IQWIKI',
     name: 'twitter',
     icon: RiTwitterFill,
   },

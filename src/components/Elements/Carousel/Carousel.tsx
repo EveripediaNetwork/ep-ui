@@ -22,7 +22,7 @@ const ArrowBtn = ({ ArrowIcon, onClick, top, isNext }: ArrowProps) => (
   <Box
     top={top}
     position="absolute"
-    transform="translate(0, -50%)"
+    transform="translate(0, 150%)"
     display="grid"
     placeItems="center"
     onClick={onClick}

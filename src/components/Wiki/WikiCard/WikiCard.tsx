@@ -8,7 +8,7 @@ import {
   Tag,
   Text,
 } from '@chakra-ui/react'
-import { Wiki, Tag as TagType } from '@/types/Wiki'
+import { Wiki, BaseTag as TagType } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
 
 import shortenAccount from '@/utils/shortenAccount'
