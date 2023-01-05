@@ -3,11 +3,13 @@ import { Box, Flex } from '@chakra-ui/react'
 import RankCard from '@/components/Rank/RankCard'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
+import RankHeader from '@/components/SEO/Rank'
 import RankHero from './RankHero'
 
 const Rank = () => {
   return (
     <Box>
+      <RankHeader />
       <Box
         bg="url(/rankingbg.png) center"
         _dark={{

@@ -14,15 +14,8 @@ export const RankCardItem = ({
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
-  const getAlias = (text: string) => {
-    if (text === null) {
-      return 'Unknown'
-    }
-    if (text) {
-      return text
-    }
-    return ''
-  }
+  const getAlias = (text: string) => (text ?? 'Unknow') || text
+
   const getTokenAlias = (text: string) => {
     if (text === null) {
       return 'Unknown'
@@ -36,13 +29,14 @@ export const RankCardItem = ({
   return (
     <Link
       href={`https://iq.wiki/wiki/${cardData.id}`}
-      _hover={{
-        textDecoration: 'underline',
-        textDecorationColor: 'brand.500',
-      }}
+      className="group"
       _dark={{
-        _hover: { textDecorationColor: 'brand.500' },
+        _hover: { textDecoration: 'none' },
       }}
+      _light={{
+        _hover: { textDecoration: 'none' },
+      }}
+      _groupHover={{ textDecoration: 'none' }}
     >
       <Flex
         gap={4}
@@ -50,33 +44,52 @@ export const RankCardItem = ({
         p={{ '2xl': 4, md: 2, base: 2 }}
         w="100%"
       >
-        <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index + 1}</Text>
+        <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index}</Text>
         <Flex gap={2} w="100%" alignItems="center">
           <Box
             w={{ lg: '60px', md: '40px', base: '40px' }}
-            h={{ lg: '35px', md: '30px', base: '30px' }}
-            bg={`url(https://ipfs.everipedia.org/ipfs/${cardData?.images?.[0]?.id})`}
+            h={{ lg: '50px', md: '30px', base: '30px' }}
+            bg={
+              cardData?.nftMarketData
+                ? `url(${cardData?.nftMarketData.image})`
+                : `url(${cardData?.tokenMarketData.image})`
+            }
             bgPos="center"
-            bgSize="cover"
+            bgSize="contain"
+            bgRepeat="no-repeat"
             borderRadius="md"
           />
+
           <Flex w="100%">
-            <Flex flexDir="column" w="65%">
+            <Flex
+              flexDir={cardData?.tokenMarketData ? 'column' : 'row'}
+              alignItems={cardData?.nftMarketData && 'center'}
+              w="65%"
+            >
               <Text
                 color="primaryPinkIcon"
                 fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
                 whiteSpace="nowrap"
+                _groupHover={{
+                  textDecoration: 'underline',
+                  textDecorationColor: 'brand.500',
+                }}
+                _dark={{
+                  _groupHover: { textDecorationColor: 'brand.500' },
+                }}
               >
                 {cardData?.title}
               </Text>
-              <Text
-                color="inactiveText"
-                fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
-              >
-                {cardData?.nftMarketData
-                  ? getAlias(cardData?.nftMarketData?.alias)
-                  : getTokenAlias(cardData?.tokenMarketData?.alias)}
-              </Text>
+              {cardData?.tokenMarketData && (
+                <Text
+                  color="inactiveText"
+                  fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+                >
+                  {cardData?.nftMarketData
+                    ? getAlias(cardData?.nftMarketData?.alias)
+                    : getTokenAlias(cardData?.tokenMarketData?.alias)}
+                </Text>
+              )}
             </Flex>
             <Flex
               flexDir="column"

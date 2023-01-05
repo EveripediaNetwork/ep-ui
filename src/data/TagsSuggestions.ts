@@ -68,6 +68,10 @@ export const TagsSuggestions = [
     value: 'Stablecoins',
   },
   {
+    label: 'Founders',
+    value: 'Founders',
+  },
+  {
     label: 'DeFiTerms',
     value: 'DeFiTerms',
   },

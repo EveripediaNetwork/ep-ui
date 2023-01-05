@@ -19,6 +19,7 @@ export const GET_NFT_RANKINGS = gql`
           market_cap_usd
           floor_price_in_usd_24h_percentage_change
           alias
+          image
         }
       }
     }
