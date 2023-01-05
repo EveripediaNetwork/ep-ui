@@ -36,6 +36,7 @@ const Footer = () => {
   const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
+  const thisYear = new Date().getFullYear()
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
@@ -80,7 +81,7 @@ const Footer = () => {
             <Flex alignItems="center">
               <Text py={3} pr={2}>
                 {' '}
-                © {new Date().getFullYear()} {`${t('copyRight')}`}
+                © {thisYear} {`${t('copyRight')}`}
               </Text>
               <Link target="_blank" href="https://braindao.org/">
                 <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
