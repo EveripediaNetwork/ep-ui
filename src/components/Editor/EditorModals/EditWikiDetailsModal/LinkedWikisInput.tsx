@@ -62,6 +62,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   }, [search])
 
   const handleAddWiki = () => {
+    if (selectedWiki === '') return
     dispatch({
       type: 'wiki/addLinkedWiki',
       payload: {
@@ -82,6 +83,11 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
       },
     })
   }
+
+  const onlyLastTypeHasWikis =
+    wiki.linkedWikis &&
+    Object.values(wiki.linkedWikis).filter(w => w.length > 0).length === 1 &&
+    Object.values(wiki.linkedWikis).reverse()[0].length > 0
 
   const containsLinkedWikis =
     wiki.linkedWikis &&
@@ -176,9 +182,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
             value.length ? (
               <HStack
                 key={key}
-                borderTopWidth={i !== 0 ? 1 : 0}
-                paddingTop={i !== 0 ? 2 : 0}
-                marginTop={i !== 0 ? 2 : 0}
+                borderTopWidth={i !== 0 && !onlyLastTypeHasWikis ? 1 : 0}
+                paddingTop={i !== 0 && !onlyLastTypeHasWikis ? 2 : 0}
+                marginTop={i !== 0 && !onlyLastTypeHasWikis ? 2 : 0}
                 borderStyle="dashed"
                 align="start"
               >

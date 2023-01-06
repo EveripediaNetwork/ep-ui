@@ -294,6 +294,7 @@ const CreateWikiContent = () => {
           .replace(/<\/?strong>/gm, '**')
           .replace(/<\/?del>/gm, '~~')
           .replace(/^(#+\s)(\*\*)(.+)(\*\*)/gm, '$1$3'),
+        category: 'daos',
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
