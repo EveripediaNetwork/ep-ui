@@ -36,6 +36,7 @@ const Footer = () => {
   const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
+  const thisYear = new Date().getFullYear()
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
@@ -78,7 +79,10 @@ const Footer = () => {
         <SimpleGrid fontSize="sm" columns={{ base: 1, lg: 2 }}>
           <Stack align={{ base: 'center', lg: 'flex-start' }} flex="1">
             <Flex alignItems="center">
-              <Text py={3} pr={2}>{`${t('copyRight')}`}</Text>
+              <Text py={3} pr={2}>
+                {' '}
+                © {thisYear} {`${t('copyRight')}`}
+              </Text>
               <Link target="_blank" href="https://braindao.org/">
                 <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
               </Link>
