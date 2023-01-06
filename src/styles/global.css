@@ -48,7 +48,7 @@ html {
   z-index: 1;
 }
 
-.embed-widget-iframe-dune-bg {
+:root[data-theme='dark'] .embed-widget-iframe-dune-bg {
   background: #fff;
 }
 
