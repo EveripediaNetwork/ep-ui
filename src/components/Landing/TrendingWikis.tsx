@@ -87,7 +87,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               color="homeDescriptionColor"
               my={2}
             >
-              {wiki && getWikiSummary(wiki, 60 as WikiSummarySize)}
+              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
 
             <HStack justify="space-between">

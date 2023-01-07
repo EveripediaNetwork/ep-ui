@@ -11,7 +11,6 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
-const CARD_DETAILS_LENGTH = 100
 const HERO_WIKI_IMG_WIDTH = 290
 
 export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
@@ -56,8 +55,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             <chakra.span>{wiki?.title}</chakra.span>
           </LinkOverlay>
           <Text fontSize="xs" color="homeDescriptionColor" my={2}>
-            {wiki &&
-              getWikiSummary(wiki, CARD_DETAILS_LENGTH as WikiSummarySize)}
+            {wiki && getWikiSummary(wiki, WikiSummarySize.BIG)}
           </Text>
 
           <Flex gap={3}>
