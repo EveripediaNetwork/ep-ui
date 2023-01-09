@@ -171,7 +171,7 @@ const NavSearch = (props: NavSearchProps) => {
                 {wiki.title}
               </chakra.span>
               <Text noOfLines={{ base: 2, lg: 1 }} maxW="full" fontSize="xs">
-                {getWikiSummary(wiki, WikiSummarySize.Big)}
+                {getWikiSummary(wiki, WikiSummarySize.Huge)}
               </Text>
             </Flex>
             <Wrap

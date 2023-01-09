@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
-import LinkButton from '../LinkElements/LinkButton'
+import LinkButton from '../../Elements/LinkElements/LinkButton'
 
 interface OverrideExistingWikiDialogProps {
   isOpen: boolean

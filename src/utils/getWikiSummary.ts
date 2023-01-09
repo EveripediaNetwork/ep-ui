@@ -4,12 +4,13 @@ import { shortenText } from './shortenText'
 export enum WikiSummarySize {
   Small = 65,
   Medium = 70,
-  Big = 160,
+  BIG = 110,
+  Huge = 160,
 }
 
 export const getWikiSummary = (
   wiki: Partial<Wiki> | WikiPreview,
-  size: WikiSummarySize = WikiSummarySize.Big,
+  size: WikiSummarySize = WikiSummarySize.Huge,
 ) => {
   if (wiki.summary) return shortenText(wiki.summary, size)
   return ''
