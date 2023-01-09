@@ -30,7 +30,7 @@ export const InvalidRankCardItem = ({
           <Flex w="65%" alignItems="center">
             <Text
               color="gray.500"
-              fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+              fontSize={{ base: 'sm', lg: 'md' }}
               whiteSpace="nowrap"
             >
               Coming Soon
