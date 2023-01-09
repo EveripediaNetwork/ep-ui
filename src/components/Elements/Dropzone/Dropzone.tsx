@@ -169,14 +169,14 @@ const Dropzone = ({
                       <Text
                         textAlign="center"
                         color="wikiDropzoneText"
-                        fontWeight="bold"
+                        fontSize="md"
                       >
                         {dropzonePlaceHolderTitle}
                       </Text>
                       <Text
                         textAlign="center"
+                        fontSize="sm"
                         color="wikiDropzoneText"
-                        fontWeight="bold"
                       >
                         {dropzonePlaceHolderSize}
                       </Text>
