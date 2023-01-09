@@ -15,6 +15,10 @@ interface RankCardProps {
   title: string
   icon: IconType
 }
+
+const NFT_LIMIT = 11
+const COIN_LIMIT = 10
+
 const RankCard = ({ title, icon }: RankCardProps) => {
   const [queryLimit, setQueryLimit] = useState<number>(1)
 
@@ -37,18 +41,20 @@ const RankCard = ({ title, icon }: RankCardProps) => {
   const QueryTokens = () => {
     const { data: queryObject } = useGetTokenRankingQuery({
       kind: queryKind,
-      limit: 10,
+      limit: COIN_LIMIT,
       offset: queryLimit,
     })
+
     queryDataset = queryObject
   }
 
   const QueryNFTs = () => {
     const { data: queryObject } = useGetNFTRankingQuery({
       kind: queryKind,
-      limit: 10,
+      limit: NFT_LIMIT,
       offset: queryLimit,
     })
+
     queryDataset = queryObject
   }
 

@@ -22,18 +22,18 @@ export const InvalidRankCardItem = ({
             as={cardType === 'NFT' ? BiImage : RiCoinsFill}
             w="full"
             h="full"
-            color="primaryPinkIcon"
+            color="gray.500"
           />
         </Box>
 
         <Flex w="100%">
           <Flex w="65%" alignItems="center">
             <Text
-              color="primaryPinkIcon"
+              color="gray.500"
               fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
               whiteSpace="nowrap"
             >
-              Unavailable
+              Coming Soon
             </Text>
           </Flex>
           <Flex
