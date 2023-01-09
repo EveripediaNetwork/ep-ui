@@ -3,7 +3,6 @@ import axios from 'axios'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
-  Image,
   Wiki,
   EditorContentOverride,
   ValidatorCodes,
@@ -89,7 +88,10 @@ export const types = {
 
 export const MINIMUM_WORDS = 100
 
-export const saveImage = async (image: Image) => {
+export const saveImage = async (image: {
+  id: string
+  type: ArrayBuffer | string | File | Blob
+}) => {
   const formData = new FormData()
   const blob = new Blob([image.type], {
     type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements

@@ -11,7 +11,7 @@ import {
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiSummary } from '@/utils/getWikiSummary'
+import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
@@ -87,7 +87,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               color="homeDescriptionColor"
               my={2}
             >
-              {wiki && getWikiSummary(wiki, 60)}
+              {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
 
             <HStack justify="space-between">

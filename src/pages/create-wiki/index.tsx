@@ -49,11 +49,11 @@ import { useAccount } from 'wagmi'
 import { MdTitle } from 'react-icons/md'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
-import Highlights from '@/components/Layout/Editor/Highlights/Highlights'
+import WikiDetailsSidebar from '@/components/Editor/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
-import WikiProcessModal from '@/components/Elements/Modal/WikiProcessModal'
+import WikiProcessModal from '@/components/Editor/EditorModals/WikiProcessModal'
 import { getWordCount } from '@/utils/getWordCount'
 import {
   Wiki,
@@ -78,13 +78,13 @@ import {
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
-import OverrideExistingWikiDialog from '@/components/Elements/Modal/OverrideExistingWikiDialog'
+import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'
 import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
-import WikiScoreIndicator from '@/components/Layout/Editor/WikiScoreIndicator'
+import WikiScoreIndicator from '@/components/Editor/WikiScoreIndicator'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
@@ -93,7 +93,7 @@ type PageWithoutFooter = NextPage & {
   noFooter?: boolean
 }
 
-const Editor = dynamic(() => import('@/components/Layout/Editor/Editor'), {
+const Editor = dynamic(() => import('@/components/Editor/Editor'), {
   ssr: false,
 })
 
@@ -294,6 +294,7 @@ const CreateWikiContent = () => {
           .replace(/<\/?strong>/gm, '**')
           .replace(/<\/?del>/gm, '~~')
           .replace(/^(#+\s)(\*\*)(.+)(\*\*)/gm, '$1$3'),
+        category: 'daos',
         metadata: [
           ...wiki.metadata.filter(
             m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
@@ -678,7 +679,7 @@ const CreateWikiContent = () => {
           <Box>
             <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
               <Center>
-                <Highlights
+                <WikiDetailsSidebar
                   initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
                   isToResetImage={isNewCreateWiki}
                 />
