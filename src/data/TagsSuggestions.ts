@@ -8,6 +8,10 @@ export const TagsSuggestions = [
     value: 'Games',
   },
   {
+    label: 'Blockchains',
+    value: 'Blockchains',
+  },
+  {
     label: 'Collections',
     value: 'Collections',
   },

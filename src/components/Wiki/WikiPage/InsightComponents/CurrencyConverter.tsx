@@ -3,18 +3,24 @@ import { Box, HStack, IconButton, Input, Text, VStack } from '@chakra-ui/react'
 import { RiArrowLeftRightLine } from 'react-icons/ri'
 import { TokenStats } from '@/services/token-stats'
 import { Image } from '@/components/Elements/Image/Image'
+import config from '@/config'
 
 const CurrencyBox = ({
   token,
+  tokenImage,
   tokenSymbol,
   value,
   setValue,
 }: {
   token?: string
   tokenSymbol: string
+  tokenImage?: string
   value: number
   setValue: (value: string) => void
 }) => {
+  const tokenImageSrc = tokenImage
+    ? `${config.pinataBaseUrl}${tokenImage}`
+    : `https://icons.iq.wiki/128/${token}.png`
   return (
     <HStack
       zIndex={2}
@@ -26,7 +32,7 @@ const CurrencyBox = ({
       <HStack align="center">
         {token ? (
           <Image
-            src={`https://icons.iq.wiki/128/${token}.png`}
+            src={tokenImageSrc}
             imgH={18}
             imgW={18}
             alt={token}
@@ -61,14 +67,19 @@ const CurrencyBox = ({
 interface CurrencyConverterProps {
   token: string
   tokenStats: TokenStats
+  tokenImage?: string
 }
 
-const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
+const CurrencyConverter = ({
+  token,
+  tokenStats,
+  tokenImage,
+}: CurrencyConverterProps) => {
   const conversionRate = tokenStats?.token_price_in_usd
   const tokenSymbol = tokenStats.symbol
   const [fromCurrency, setFromCurrency] = useState<number>(0)
   const [toCurrency, setToCurrency] = useState<number>(0)
-  const [isTokenLeft, setisTokenLeft] = useState(true)
+  const [isTokenLeft, setIsTokenLeft] = useState(true)
 
   // function for updating the from currency
   const updateValues = useCallback(
@@ -134,6 +145,7 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
             <CurrencyBox
               token={token}
               tokenSymbol={tokenSymbol}
+              tokenImage={tokenImage}
               value={fromCurrency}
               setValue={e => updateValues(e, true)}
             />
@@ -155,7 +167,7 @@ const CurrencyConverter = ({ token, tokenStats }: CurrencyConverterProps) => {
               p={2}
               zIndex={2}
               m="2px 7px !important"
-              onClick={() => setisTokenLeft(!isTokenLeft)}
+              onClick={() => setIsTokenLeft(!isTokenLeft)}
               transform="scale(0.8)"
             />
             <CurrencyBox

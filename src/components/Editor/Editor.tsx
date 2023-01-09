@@ -16,7 +16,7 @@ import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 // eslint-disable-next-line import/no-cycle
 import embed from '@/editor-plugins/embed'
-import { widgetRules } from './widgetRules'
+import { widgetRules } from '../Layout/Editor/widgetRules'
 
 export const wikiEditorRef = {
   current: null as ToastUIEditor | null,
