@@ -187,6 +187,7 @@ const wikiSlice = createSlice({
         const updatedMedia = [...state.media]
         updatedMedia[findMediaIndex] = {
           ...updatedMedia[findMediaIndex],
+          ...action.payload,
           ...{ id: action.payload.hash },
         }
         const newState = {
