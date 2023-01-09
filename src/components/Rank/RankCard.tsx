@@ -16,7 +16,7 @@ interface RankCardProps {
   icon: IconType
 }
 
-const NFT_LIMIT = 11
+const NFT_LIMIT = 10
 const COIN_LIMIT = 10
 
 const RankCard = ({ title, icon }: RankCardProps) => {

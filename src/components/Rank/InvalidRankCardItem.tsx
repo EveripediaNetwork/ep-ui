@@ -44,7 +44,7 @@ export const InvalidRankCardItem = ({
           >
             <Text
               color="inactiveText"
-              fontSize={{ md: 'xs', base: 'sm' }}
+              fontSize={{ base: 'xs' }}
               width="100%"
               textAlign="right"
               whiteSpace="nowrap"
@@ -57,8 +57,7 @@ export const InvalidRankCardItem = ({
               width="100%"
               justifyContent="end"
             >
-              {/* <AiFillCaretUp color={upIndicationIconColor} /> */}
-              <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
+              <Text fontWeight="bold" fontSize={{ base: 'xs' }}>
                 0%
               </Text>
             </Flex>
