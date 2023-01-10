@@ -7,6 +7,7 @@ import {
   useDisclosure,
   BoxProps,
   useBreakpointValue,
+  chakra,
 } from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
@@ -25,9 +26,7 @@ const WikiAccordion = ({
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue(
-    collapsed || { base: true, xl: false },
-  )
+  const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
 
   return (
     <Box
@@ -59,11 +58,16 @@ const WikiAccordion = ({
           {title}
         </Text>
       </HStack>
-      {isOpen === isDefaultOpen && (
+      <chakra.div
+        display={{
+          base: isOpen === true ? 'unset' : 'none',
+          xl: isOpen === false ? 'unset' : 'none',
+        }}
+      >
         <Box p={2} mt={1} {...rest}>
           {children}
         </Box>
-      )}
+      </chakra.div>
     </Box>
   )
 }
