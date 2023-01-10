@@ -6,7 +6,7 @@ import {
   IconButton,
   useDisclosure,
   BoxProps,
-  useBreakpointValue,
+  // useBreakpointValue,
   chakra,
 } from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
@@ -26,7 +26,7 @@ const WikiAccordion = ({
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
+  // const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
 
   return (
     <Box
