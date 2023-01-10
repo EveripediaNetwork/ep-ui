@@ -49,7 +49,6 @@ export default function wikiLink(context: PluginContext): PluginInfo {
           .insertText(payload.text, from, to)
           .addMark(from, from + payload.text.length, mark)
         dispatch(tr)
-
         return true
       },
     },
