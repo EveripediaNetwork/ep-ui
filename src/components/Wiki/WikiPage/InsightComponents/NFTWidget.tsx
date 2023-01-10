@@ -63,7 +63,6 @@ const NFTWidget = ({
         flexDir="column"
         gap={2}
         title="Search NFT Collection"
-        collapsed={{ base: true, xl: false }}
       >
         <Flex
           flexDirection="column"
