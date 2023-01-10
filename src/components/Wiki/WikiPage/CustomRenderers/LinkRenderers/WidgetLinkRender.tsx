@@ -1,17 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
-  if (text === 'YOUTUBE@VID') {
+  const [iframeLoading, setIframeLoading] = useState(true)
+
+  const iframeLoadHandler = () => {
+    setIframeLoading(false)
+  }
+
+  const renderWidget = (src: string, title: string, type: string) => {
     return (
-      <div className="wiki-widget-yt-iframe">
+      <div
+        className={
+          iframeLoading
+            ? 'embed-widget-iframe'
+            : 'embed-widget-iframe embed-widget-iframe__loaded'
+        }
+      >
         <iframe
-          title="youtube video"
-          src={`https://www.youtube.com/embed/${href}`}
+          className={type === 'dune' ? 'embed-widget-iframe-dune-bg' : ''}
+          onLoad={iframeLoadHandler}
+          title={title}
+          src={src}
         />
       </div>
     )
   }
-  return null
+
+  switch (text) {
+    case 'YOUTUBE@VID':
+      return renderWidget(
+        `https://www.youtube.com/embed/${href}`,
+        'youtube video',
+        'youtube',
+      )
+
+    case 'DUNE@EMBED':
+      return renderWidget(
+        `https://dune.com/embeds/${href}`,
+        'Dune Embed',
+        'dune',
+      )
+
+    default:
+      return null
+  }
 }
 
 export default WidgetLinkRender

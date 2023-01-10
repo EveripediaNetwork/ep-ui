@@ -31,6 +31,7 @@ import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
+import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { logEvent } from './googleAnalytics'
 import { getDeadline } from './getDeadline'
 
@@ -88,10 +89,7 @@ export const types = {
 
 export const MINIMUM_WORDS = 100
 
-export const saveImage = async (image: {
-  id: string
-  type: ArrayBuffer | string | File | Blob
-}) => {
+export const saveImage = async (image: WikiImageObjectProps) => {
   const formData = new FormData()
   const blob = new Blob([image.type], {
     type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
