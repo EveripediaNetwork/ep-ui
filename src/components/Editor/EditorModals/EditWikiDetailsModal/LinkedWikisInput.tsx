@@ -57,6 +57,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     if (search.length >= 3) {
       setLoading(true)
       debouncedFetchWikis(search, data => {
+        console.log({ results: data })
         setResults(data.slice(0, 6))
         setLoading(false)
       })
@@ -122,6 +123,20 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            emptyState={
+              <Center>
+                <Text
+                  m={5}
+                  size="xs"
+                  color="linkColor"
+                  textAlign="center"
+                  fontSize="sm"
+                >
+                  No results found. make sure the wiki you are searching for has{' '}
+                  &apos;{linkType}&apos; tag.
+                </Text>
+              </Center>
+            }
             onChange={val => {
               setSelectedWiki(val)
               setSearch('')
