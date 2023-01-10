@@ -37,14 +37,18 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const fetchWikisList = async (
     query: string,
     cb: (data: WikiPreview[]) => void,
+    tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-    cb(data || [])
+    const filteredData = data?.filter(w =>
+      w.tags.find(t => t.id.toLocaleLowerCase() === tag),
+    )
+    cb(filteredData || [])
   }
 
   const debouncedFetchWikis = debounce(
     (query: string, cb: (data: WikiPreview[]) => void) => {
-      fetchWikisList(query, cb)
+      fetchWikisList(query, cb, linkType)
     },
     500,
   )
