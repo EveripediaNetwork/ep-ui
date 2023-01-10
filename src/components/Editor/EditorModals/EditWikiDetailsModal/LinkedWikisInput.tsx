@@ -57,7 +57,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     if (search.length >= 3) {
       setLoading(true)
       debouncedFetchWikis(search, data => {
-        console.log({ results: data })
         setResults(data.slice(0, 6))
         setLoading(false)
       })
@@ -123,7 +122,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
-            defaultIsOpen
+            suggestWhenEmpty
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
@@ -147,7 +146,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               onChange={e => setSearch(e.target.value)}
               type="url"
             />
-            {results.length !== 0 && (
+            {!loading && (
               <AutoCompleteList
                 maxH={32}
                 mt={0}
@@ -158,7 +157,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               >
                 {results.map(result => (
                   <AutoCompleteItem
-                    px={2}
+                    px={4}
                     py={1}
                     rounded="none"
                     m={0}
