@@ -33,7 +33,7 @@ html {
 /* CUSTOM WIKI WIDGETS STYLES */
 /* =========================== */
 
-.wiki-widget-yt-iframe {
+.embed-widget-iframe {
   display: grid;
   place-items: center;
   width: 100%;
@@ -41,21 +41,27 @@ html {
   position: relative;
   box-sizing: border-box;
 }
-.wiki-widget-yt-iframe iframe {
+.embed-widget-iframe iframe {
   border-radius: 4px;
-  background-color: #00000010;
   width: 70%;
   aspect-ratio: 16 / 9;
   z-index: 1;
 }
 
+:root[data-theme='dark'] .embed-widget-iframe-dune-bg {
+  background: #fff;
+}
+
+.embed-widget-iframe:not(.embed-widget-iframe__loaded) {
+  background-color: #00000010;
+}
+
 @media screen and (max-width: 900px) {
-  .wiki-widget-yt-iframe iframe {
+  .embed-widget-iframe iframe {
     width: 100%;
   }
 }
-
-.wiki-widget-yt-iframe::before {
+.embed-widget-iframe:not(.embed-widget-iframe__loaded)::before {
   content: 'loading...';
   display: block;
   position: absolute;
@@ -122,6 +128,9 @@ html {
 .toastui-editor-dark .toastui-editor-context-menu {
   background-color: #1c212c !important;
 }
+.toastui-editor-dark .toastui-editor-popup-body {
+  overflow-y: scroll;
+}
 .toastui-editor-dark .toastui-editor-toolbar-icons {
   border-color: transparent !important;
 }
@@ -146,7 +155,7 @@ html {
 /* EDITOR TOOLBAR STYLES */
 /* =========================== */
 .toastui-editor-defaultUI-toolbar {
-  padding-left: 10px !important;
+  padding-left: 7px !important;
 }
 .toastui-editor-custom-toolbar-icon {
   background-repeat: no-repeat;

@@ -14,6 +14,9 @@ import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/PasteListener'
 import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
+// eslint-disable-next-line import/no-cycle
+import embed from '@/editor-plugins/embed'
+import { widgetRules } from '../Layout/Editor/widgetRules'
 
 export const wikiEditorRef = {
   current: null as ToastUIEditor | null,
@@ -138,12 +141,11 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
     editorWrapper?.addEventListener('paste', PasteListener, true)
     return () => editorWrapper?.removeEventListener('paste', PasteListener)
   }, [])
-  const reWidgetRule = /\[YOUTUBE@VID\]\((\S+)\)/
 
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
       <ToastUIEditorJSX
-        plugins={[wikiLink, cite, media, tableMergedCellPlugin]}
+        plugins={[wikiLink, cite, media, embed, tableMergedCellPlugin]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}
@@ -157,23 +159,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
           ['ul', 'ol', 'indent', 'outdent'],
           ['table', 'code'],
         ]}
-        widgetRules={[
-          {
-            rule: reWidgetRule,
-            toDOM(text: string) {
-              const rule = reWidgetRule
-              const matched = text.match(rule)
-              if (!matched) return null
-              const ytIframe = document.createElement('div')
-              ytIframe.classList.add('wiki-widget-yt-iframe')
-              ytIframe.innerHTML = `
-                <iframe src="https://www.youtube.com/embed/${matched[1]}">
-                </iframe>
-              `
-              return ytIframe
-            },
-          },
-        ]}
+        widgetRules={widgetRules}
       />
     </Box>
   )

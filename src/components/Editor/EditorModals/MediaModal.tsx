@@ -29,6 +29,7 @@ import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
 import { ImageInput, Dropzone } from '@/components/Elements'
+import { WikiImageObjectProps } from '@/types/CreateWikiType'
 
 const MAX_MEDIA = 12
 
@@ -41,10 +42,7 @@ const MediaModal = ({
   const dispatch = useAppDispatch()
   const toast = useToast()
 
-  const uploadImageToIPFS = async (image: {
-    id: string
-    type: ArrayBuffer | string | File | Blob
-  }) => {
+  const uploadImageToIPFS = async (image: WikiImageObjectProps) => {
     const ipfsHash = await saveImage(image)
     if (ipfsHash) {
       dispatch({
