@@ -117,7 +117,7 @@ export const RankCardItem = ({
                 ) : (
                   <AiFillCaretUp color={upIndicationIconColor} />
                 )}
-                <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
+                <Text fontWeight="bold" fontSize="xs">
                   {Math.abs(
                     cardData?.nftMarketData
                       ? cardData?.nftMarketData

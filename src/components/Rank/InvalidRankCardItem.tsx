@@ -25,9 +25,8 @@ export const InvalidRankCardItem = ({
             color="gray.500"
           />
         </Box>
-
-        <Flex w="100%">
-          <Flex w="65%" alignItems="center">
+        <Flex w="100%" justifyContent="space-between">
+          <Flex alignItems="center">
             <Text
               color="gray.500"
               fontSize={{ base: 'sm', lg: 'md' }}
@@ -38,13 +37,12 @@ export const InvalidRankCardItem = ({
           </Flex>
           <Flex
             flexDir="column"
-            w="35%"
             alignItems="flex-start"
             justifyContent="space-around"
           >
             <Text
               color="inactiveText"
-              fontSize={{ base: 'xs' }}
+              fontSize="xs"
               width="100%"
               textAlign="right"
               whiteSpace="nowrap"
@@ -57,7 +55,7 @@ export const InvalidRankCardItem = ({
               width="100%"
               justifyContent="end"
             >
-              <Text fontWeight="bold" fontSize={{ base: 'xs' }}>
+              <Text fontWeight="bold" fontSize="xs">
                 0%
               </Text>
             </Flex>
