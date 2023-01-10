@@ -30,6 +30,7 @@ import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import shortenAccount from '@/utils/shortenAccount'
 import { getReadableDate } from '@/utils/getFormattedDate'
+import { Image } from '@everipedia/iq-utils'
 
 export const PromoteCreatedWikisModal = ({
   onClose = () => {},
@@ -145,7 +146,7 @@ export const PromoteCreatedWikisModal = ({
             <WikiImage
               cursor="pointer"
               flexShrink={0}
-              imageURL={getWikiImageUrl(Data.images)}
+              imageURL={getWikiImageUrl(Data.images as Image[])}
               borderRadius="lg"
               overflow="hidden"
               alt="wiki"

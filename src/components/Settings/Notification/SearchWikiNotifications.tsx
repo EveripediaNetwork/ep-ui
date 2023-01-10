@@ -203,7 +203,7 @@ const SearchWikiNotifications = () => {
                 maxW="full"
                 fontSize="xs"
               >
-                {getWikiSummary(wiki, WikiSummarySize.Big)}
+                {getWikiSummary(wiki, WikiSummarySize.Huge)}
               </Text>
             </Flex>
             <Flex ml="2">
