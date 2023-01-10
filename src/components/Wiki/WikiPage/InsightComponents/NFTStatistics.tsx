@@ -112,7 +112,7 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
         ))}
       </WikiAccordion>
     </VStack>
-  )S
+  )
 }
 
 export default NFTStatistics
