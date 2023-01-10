@@ -123,15 +123,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            defaultIsOpen
             emptyState={
               <Center>
-                <Text
-                  m={5}
-                  size="xs"
-                  color="linkColor"
-                  textAlign="center"
-                  fontSize="sm"
-                >
+                <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
                   No results found. make sure the wiki you are searching for has{' '}
                   &apos;{linkType}&apos; tag.
                 </Text>
