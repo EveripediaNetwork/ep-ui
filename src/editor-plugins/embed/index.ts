@@ -1,4 +1,4 @@
-import { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
+import Editor, { HTMLConvertorMap, ToMdConvertorMap } from '@toast-ui/editor'
 import ReactDOM from 'react-dom/client'
 import {
   PluginCommandMap,
@@ -29,6 +29,17 @@ export default function embed(context: PluginContext): PluginInfo {
   const container = document.createElement('div')
   const root = ReactDOM.createRoot(container)
   root.render(React.createElement(EmbedFrame, { editorContext: context }))
+
+  const insertEmbed = (payload: any, editor: Editor | undefined) => {
+    const text = `[${payload.type}@EMBED](${payload.path}))`
+
+    if (editor) {
+      const [start, end] = editor.getSelection()
+      editor.replaceSelection(text, start, end)
+    }
+    return true
+  }
+
   return {
     toolbarItems: [
       {
@@ -46,26 +57,12 @@ export default function embed(context: PluginContext): PluginInfo {
       },
     ],
     markdownCommands: {
-      insertEmbed: payload => {
-        const text = `[${payload.type}@EMBED](${payload.path}))`
-        const editor = wikiEditorRef.current?.getInstance()
-        if (editor) {
-          const [start, end] = editor.getSelection()
-          editor.replaceSelection(text, start, end)
-        }
-        return true
-      },
+      insertEmbed: payload =>
+        insertEmbed(payload, wikiEditorRef.current?.getInstance()),
     },
     wysiwygCommands: {
-      insertEmbed: payload => {
-        const text = `[${payload.type}@EMBED](${payload.path})`
-        const editor = wikiEditorRef.current?.getInstance()
-        if (editor) {
-          const [start, end] = editor.getSelection()
-          editor.replaceSelection(text, start, end)
-        }
-        return true
-      },
+      insertEmbed: payload =>
+        insertEmbed(payload, wikiEditorRef.current?.getInstance()),
     },
   }
 }
