@@ -15,6 +15,10 @@ interface RankCardProps {
   title: string
   icon: IconType
 }
+
+const NFT_LIMIT = 10
+const COIN_LIMIT = 10
+
 const RankCard = ({ title, icon }: RankCardProps) => {
   const [queryLimit, setQueryLimit] = useState<number>(1)
 
@@ -37,18 +41,20 @@ const RankCard = ({ title, icon }: RankCardProps) => {
   const QueryTokens = () => {
     const { data: queryObject } = useGetTokenRankingQuery({
       kind: queryKind,
-      limit: 10,
+      limit: COIN_LIMIT,
       offset: queryLimit,
     })
+
     queryDataset = queryObject
   }
 
   const QueryNFTs = () => {
     const { data: queryObject } = useGetNFTRankingQuery({
       kind: queryKind,
-      limit: 10,
+      limit: NFT_LIMIT,
       offset: queryLimit,
     })
+
     queryDataset = queryObject
   }
 
@@ -64,6 +70,7 @@ const RankCard = ({ title, icon }: RankCardProps) => {
     }
   }
   const [loadingAssets, setLoadingAssets] = useState<boolean>(true)
+
   return (
     <Flex
       w={{ lg: '46%', md: '49%', base: '100%' }}
@@ -73,14 +80,9 @@ const RankCard = ({ title, icon }: RankCardProps) => {
       flexDirection="column"
       mb={4}
       height="fit-content"
-      py={{ '2xl': 4, md: 2, base: 2 }}
+      p={{ '2xl': 6, md: 4, base: 2 }}
     >
-      <Flex
-        gap="1"
-        mb="4"
-        alignItems="center"
-        px={{ '2xl': 4, md: 2, base: 2 }}
-      >
+      <Flex gap="1" mb="4" alignItems="center">
         <Icon
           as={icon}
           w={{ lg: '24px', md: '18px' }}
