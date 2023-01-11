@@ -14,7 +14,7 @@ export const RankCardItem = ({
 }) => {
   const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
   const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
-  const getAlias = (text: string) => (text ?? 'Unknow') || text
+  const getAlias = (text: string) => (text ?? 'Unknown') || text
 
   const getTokenAlias = (text: string) => {
     if (text === null) {
@@ -44,7 +44,9 @@ export const RankCardItem = ({
         p={{ '2xl': 4, md: 2, base: 2 }}
         w="100%"
       >
-        <Text fontSize={{ base: 'sm', '2xl': 'lg' }}>{index}</Text>
+        <Text fontSize={{ base: 'sm', '2xl': 'lg' }} fontWeight={600}>
+          {index}
+        </Text>
         <Flex gap={2} w="100%" alignItems="center">
           <Box
             w={{ lg: '60px', md: '40px', base: '40px' }}
@@ -59,16 +61,14 @@ export const RankCardItem = ({
             bgRepeat="no-repeat"
             borderRadius="md"
           />
-
-          <Flex w="100%">
+          <Flex w="100%" justifyContent="space-between">
             <Flex
               flexDir={cardData?.tokenMarketData ? 'column' : 'row'}
               alignItems={cardData?.nftMarketData && 'center'}
-              w="65%"
             >
               <Text
                 color="primaryPinkIcon"
-                fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+                fontSize={{ base: 'xs', lg: 'md' }}
                 whiteSpace="nowrap"
                 _groupHover={{
                   textDecoration: 'underline',
@@ -81,10 +81,7 @@ export const RankCardItem = ({
                 {cardData?.title}
               </Text>
               {cardData?.tokenMarketData && (
-                <Text
-                  color="inactiveText"
-                  fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
-                >
+                <Text color="inactiveText" fontSize={{ base: 'xs', lg: 'sm' }}>
                   {cardData?.nftMarketData
                     ? getAlias(cardData?.nftMarketData?.alias)
                     : getTokenAlias(cardData?.tokenMarketData?.alias)}
@@ -93,7 +90,6 @@ export const RankCardItem = ({
             </Flex>
             <Flex
               flexDir="column"
-              w="35%"
               alignItems="flex-start"
               justifyContent="space-around"
             >
@@ -121,7 +117,7 @@ export const RankCardItem = ({
                 ) : (
                   <AiFillCaretUp color={upIndicationIconColor} />
                 )}
-                <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
+                <Text fontWeight="bold" fontSize="xs">
                   {Math.abs(
                     cardData?.nftMarketData
                       ? cardData?.nftMarketData

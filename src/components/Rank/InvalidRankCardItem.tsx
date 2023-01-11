@@ -22,29 +22,27 @@ export const InvalidRankCardItem = ({
             as={cardType === 'NFT' ? BiImage : RiCoinsFill}
             w="full"
             h="full"
-            color="primaryPinkIcon"
+            color="gray.500"
           />
         </Box>
-
-        <Flex w="100%">
-          <Flex w="65%" alignItems="center">
+        <Flex w="100%" justifyContent="space-between">
+          <Flex alignItems="center">
             <Text
-              color="primaryPinkIcon"
-              fontSize={{ md: 'sm', lg: 'xs', base: 'sm', '2xl': 'md' }}
+              color="gray.500"
+              fontSize={{ base: 'sm', lg: 'md' }}
               whiteSpace="nowrap"
             >
-              Unavailable
+              Coming Soon
             </Text>
           </Flex>
           <Flex
             flexDir="column"
-            w="35%"
             alignItems="flex-start"
             justifyContent="space-around"
           >
             <Text
               color="inactiveText"
-              fontSize={{ md: 'xs', base: 'sm' }}
+              fontSize="xs"
               width="100%"
               textAlign="right"
               whiteSpace="nowrap"
@@ -57,8 +55,7 @@ export const InvalidRankCardItem = ({
               width="100%"
               justifyContent="end"
             >
-              {/* <AiFillCaretUp color={upIndicationIconColor} /> */}
-              <Text fontWeight="bold" fontSize={{ md: 'xs', base: 'xs' }}>
+              <Text fontWeight="bold" fontSize="xs">
                 0%
               </Text>
             </Flex>
