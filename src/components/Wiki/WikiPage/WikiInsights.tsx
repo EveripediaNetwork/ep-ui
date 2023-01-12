@@ -56,10 +56,14 @@ const WikiInsights = ({
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   const [nftStats, setNftStats] = useState<NFTStats>()
   useEffect(() => {
-    const fetchTokenData = async () => {
-      await fetchTokenStats(coingeckoLink).then(res => {
-        setTokenStats(res)
-      })
+    if (!wikiIsNFT) {
+      const fetchTokenData = async () => {
+        await fetchTokenStats(coingeckoLink).then(res => {
+          setTokenStats(res)
+        })
+      }
+
+      fetchTokenData()
     }
 
     if (wikiIsNFT) {
@@ -71,8 +75,6 @@ const WikiInsights = ({
 
       fetchNFTData()
     }
-
-    fetchTokenData()
   }, [coingeckoLink, wikiIsNFT])
 
   return (
