@@ -16,9 +16,9 @@ export const resources = {
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
-      trendingWikis: 'Trending Wikis',
+      trendingWikis: 'Latest from IQ.Wiki',
       trendingWikisDescription:
-        'The latest and trending wikis on IQ.wiki and in the blockchain space.',
+        'Top wikis, recent edits and popular wikis on IQ.wiki.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',

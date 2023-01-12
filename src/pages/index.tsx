@@ -36,7 +36,7 @@ export const Index = ({
         }}
         bgImage="/images/homepage-bg-white.png"
       >
-        <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
+        <TrendingWikis drops={promotedWikis && promotedWikis.slice(2)} />
         <CategoriesList categories={categories} />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
