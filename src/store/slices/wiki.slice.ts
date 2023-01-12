@@ -233,16 +233,22 @@ const wikiSlice = createSlice({
         linkType: LinkedWikiKey
         wikiId: string
       }
-      const newState = {
+      const newLinkedWikis = {
+        ...state.linkedWikis,
+        [linkType]: state.linkedWikis
+          ? (state.linkedWikis[linkType] || []).filter(
+              (id: string) => id !== wikiId,
+            )
+          : [],
+      }
+      if (!newLinkedWikis[linkType] || newLinkedWikis[linkType]?.length === 0)
+        delete newLinkedWikis[linkType]
+      const newState: Wiki = {
         ...state,
-        linkedWikis: {
-          ...state.linkedWikis,
-          [linkType]: state.linkedWikis
-            ? (state.linkedWikis[linkType] || []).filter(
-                (id: string) => id !== wikiId,
-              )
-            : [],
-        },
+        linkedWikis: newLinkedWikis,
+      }
+      if (Object.keys(newLinkedWikis).length === 0) {
+        delete newState.linkedWikis
       }
       saveDraftInLocalStorage(newState)
       return newState
