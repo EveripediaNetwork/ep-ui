@@ -6,6 +6,7 @@ import {
   Heading,
   Image,
   Input,
+  Skeleton,
 } from '@chakra-ui/react'
 import { nftListing } from '@/services/nftlisting/index'
 import { store } from '@/store/store'
@@ -26,12 +27,14 @@ const NFTWidget = ({
   const [currentNFTHash, setCurrentNFTHash] = useState<number>(1)
   const [currentNFTHashDisplay, setCurrentNFTHashDisplay] = useState<number>(1)
   const [showNFTFetchError, setShowNFTFetchError] = useState(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const contractData = metaData.find(item => item.id === 'contract_url')?.value
 
   const contractID = contractData?.split('/').pop()
 
   const fetchNFT = useCallback(async () => {
+    setIsLoading(true)
     if (contractID && isNFTWiki && currentNFTHash) {
       const { data } = await store.dispatch(
         nftListing.initiate({
@@ -39,10 +42,13 @@ const NFTWidget = ({
           nftHash: currentNFTHash,
         }),
       )
+
       const nftImgURL = data?.media[0].gateway
       if (data?.error) {
         setShowNFTFetchError(true)
+        setIsLoading(false)
       } else setShowNFTFetchError(false)
+      setIsLoading(false)
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
     }
@@ -65,61 +71,70 @@ const NFTWidget = ({
         title="Search NFT Collection"
         collapsed={{ base: true, xl: false }}
       >
-        <Flex
-          flexDirection="column"
-          bg="#f5f5f5"
-          _dark={{ bg: 'transparent' }}
-          w="100%"
-          gap="4"
-          borderRadius={8}
-        >
-          {!showNFTFetchError ? (
-            <Image src={currentNFTImage} />
-          ) : (
-            <NFTImgFallback />
-          )}
-          <Flex justifyContent="center">
-            <Heading>#{currentNFTHashDisplay}</Heading>
+        {isLoading ? (
+          <Flex flexDirection="column">
+            <Skeleton height="305px" />
+            <Flex justifyContent="center" my="4">
+              <Skeleton w="70px" height="20px" borderRadius="30px" />
+            </Flex>
           </Flex>
+        ) : (
           <Flex
-            borderRadius="8px"
-            flexDir="row"
-            alignItems="center"
-            bg="white"
-            _dark={{ bg: '#2d3748' }}
-            p="2"
-            gap="2"
+            flexDirection="column"
+            bg="#f5f5f5"
+            _dark={{ bg: 'transparent' }}
+            w="100%"
+            gap="4"
+            borderRadius={8}
           >
-            <FormControl>
-              <Input
-                boxSizing="border-box"
-                _focus={{ border: '1px solid #FF5CAA' }}
-                p="1"
-                border="none"
-                type="number"
-                placeholder="Input NFT ID"
-                onChange={e => {
-                  const value = Number(e.target.value)
-                  if (!Number.isNaN(value)) {
-                    setCurrentNFTHash(value)
-                  }
-                }}
-              />
-            </FormControl>
-            <Button
-              cursor="pointer"
-              as="a"
-              target="_blank"
-              size="md"
-              variant="solid"
-              disabled={!currentNFTHash}
-              onClick={() => {
-                fetchNFT()
-              }}
-            >
-              Search
-            </Button>
+            {!showNFTFetchError ? (
+              <Image src={currentNFTImage} />
+            ) : (
+              <NFTImgFallback />
+            )}
+            <Flex justifyContent="center">
+              <Heading>#{currentNFTHashDisplay}</Heading>
+            </Flex>
           </Flex>
+        )}
+        <Flex
+          borderRadius="8px"
+          flexDir="row"
+          alignItems="center"
+          bg="white"
+          _dark={{ bg: '#2d3748' }}
+          p="2"
+          gap="2"
+        >
+          <FormControl>
+            <Input
+              boxSizing="border-box"
+              _focus={{ border: '1px solid #FF5CAA' }}
+              p="1"
+              border="none"
+              type="number"
+              placeholder="Input NFT ID"
+              onChange={e => {
+                const value = Number(e.target.value)
+                if (!Number.isNaN(value)) {
+                  setCurrentNFTHash(value)
+                }
+              }}
+            />
+          </FormControl>
+          <Button
+            cursor="pointer"
+            as="a"
+            target="_blank"
+            size="md"
+            variant="solid"
+            disabled={!currentNFTHash}
+            onClick={() => {
+              fetchNFT()
+            }}
+          >
+            Search
+          </Button>
         </Flex>
       </WikiAccordion>
     )
