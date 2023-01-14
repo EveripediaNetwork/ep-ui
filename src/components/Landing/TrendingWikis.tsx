@@ -24,119 +24,7 @@ import {
 import router from 'next/router'
 import shortenAccount from '@/utils/shortenAccount'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
-import { Link } from '../Elements'
-
-// const TRENDING_WIKI_IMG_WIDTH = 300
-// const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
-//   const [, ensName] = useENSData(wiki.user.id)
-//   const getLatestEdited = () => {
-//     let lastEditedTime = null
-//     if (wiki.updated) {
-//       lastEditedTime = getReadableDate(wiki.updated)
-//     } else if (wiki.created) {
-//       lastEditedTime = getReadableDate(wiki.created)
-//     }
-//     return lastEditedTime
-//   }
-
-//   return (
-//     <LinkBox flex="none">
-//       <chakra.div p={2} mx="auto">
-//         <Flex
-//           alignSelf="center"
-//           direction="column"
-//           textAlign="left"
-//           bg="white"
-//           color="black"
-//           _dark={{ bgColor: 'gray.700', color: 'white' }}
-//           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '388' }}
-//           cursor="pointer"
-//           rounded="lg"
-//           shadow="md"
-//           mx="auto"
-//         >
-//           <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
-//             <WikiImage
-//               cursor="pointer"
-//               flexShrink={0}
-//               imageURL={getWikiImageUrl(wiki.images)}
-//               borderRadius="none"
-//               roundedTop="lg"
-//               alt={wiki.title}
-//               imgH={TRENDING_WIKI_IMG_WIDTH}
-//               imgW={WIKI_IMAGE_ASPECT_RATIO * TRENDING_WIKI_IMG_WIDTH}
-//             />
-//           </AspectRatio>
-//           <Flex
-//             direction="column"
-//             justify="space-between"
-//             fontWeight="semibold"
-//             p={4}
-//           >
-//             <LinkOverlay href={`/wiki/${wiki?.id}`}>
-//               <Heading
-//                 width="90%"
-//                 overflow="hidden"
-//                 textOverflow="ellipsis"
-//                 whiteSpace="nowrap"
-//                 fontSize={24}
-//               >
-//                 {wiki?.title}
-//               </Heading>
-//             </LinkOverlay>
-//             <Text
-//               fontSize="sm"
-//               maxW="90%"
-//               minH={12}
-//               color="homeDescriptionColor"
-//               my={2}
-//             >
-//               {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
-//             </Text>
-
-//             <HStack justify="space-between">
-//               <Flex alignItems="center" gap={3} width="50%">
-//                 <Link href={`/account/${wiki?.user?.id}`}>
-//                   <DisplayAvatar
-//                     alt={getUsername(wiki?.user, ensName)}
-//                     size={20}
-//                     address={wiki?.user.id}
-//                     avatarIPFS={wiki?.user.profile?.avatar}
-//                   />
-//                 </Link>
-//                 <Link
-//                   href={`/account/${wiki?.user?.id}`}
-//                   color="brand.500 !important"
-//                   fontSize="sm"
-//                   overflow="hidden"
-//                   textOverflow="ellipsis"
-//                   whiteSpace="nowrap"
-//                 >
-//                   {getUsername(wiki?.user, ensName)}
-//                 </Link>
-//               </Flex>
-//               <Text
-//                 width="50%"
-//                 whiteSpace="nowrap"
-//                 overflow="hidden"
-//                 textOverflow="ellipsis"
-//                 color="gray.400"
-//                 _dark={{
-//                   color: 'whiteAlpha.900',
-//                 }}
-//                 fontWeight="400"
-//                 fontSize="sm"
-//                 textAlign="right"
-//               >
-//                 Last Edited {getLatestEdited()}
-//               </Text>
-//             </HStack>
-//           </Flex>
-//         </Flex>
-//       </chakra.div>
-//     </LinkBox>
-//   )
-// }
+import { Carousel, Link } from '../Elements'
 
 const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
   const { t } = useTranslation()
@@ -167,13 +55,19 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
 
       <Flex
         alignItems="center"
-        maxW="1217px"
+        justifyContent="center"
+        maxW="1208px"
         mx="auto"
         bg="white"
-        wrap="wrap"
+        flexWrap="wrap"
         gap={2}
       >
-        <Flex w="400px" px="2" py="1" minH="400px">
+        <Flex
+          px="2"
+          py="1"
+          minH="400px"
+          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+        >
           <Box
             w="full"
             shadow="lg"
@@ -259,27 +153,32 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         {wiki.summary}
                       </Text>
 
-                      <Flex
+                      <HStack
                         w="97%"
                         justifyContent="space-between"
                         alignItems="center"
                       >
-                        <HStack>
+                        <Flex w="45%" gap="1">
                           <DisplayAvatar
                             address={wiki.user.id}
                             avatarIPFS={wiki.user.profile?.avatar}
                             size={20}
                             alt={wiki.user.profile?.username}
                           />
-                          <Link href={`/account/${wiki.user.id}`}>
-                            <Text color="brandLinkColor" fontSize="12px">
-                              {shortenAccount(wiki.user.id)}
-                            </Text>
+                          <Link
+                            href={`/account/${wiki?.user?.id}`}
+                            color="brand.500 !important"
+                            fontSize="12px"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                          >
+                            {shortenAccount(wiki.user.id)}
                           </Link>
-                        </HStack>
+                        </Flex>
 
                         {wiki.updated && (
-                          <HStack>
+                          <Flex w="55%">
                             <Icon
                               cursor="pointer"
                               fontSize="xl"
@@ -307,9 +206,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                                   )
                                 : '-'}
                             </Text>
-                          </HStack>
+                          </Flex>
                         )}
-                      </Flex>
+                      </HStack>
                     </Flex>
                   </HStack>
                 </HStack>
@@ -317,7 +216,12 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
             </VStack>
           </Box>
         </Flex>
-        <Flex w="400px" px="2" py="1" minH="400px">
+        <Flex
+          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+          px="2"
+          py="1"
+          minH="400px"
+        >
           <Box
             w="full"
             shadow="lg"
@@ -403,41 +307,45 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         {wiki.summary}
                       </Text>
 
-                      <Flex
+                      <HStack
                         w="97%"
                         justifyContent="space-between"
                         alignItems="center"
                       >
-                        <HStack>
+                        <Flex w="45%" gap="1">
                           <DisplayAvatar
                             address={wiki.user.id}
                             avatarIPFS={wiki.user.profile?.avatar}
                             size={20}
                             alt={wiki.user.profile?.username}
                           />
-                          <Link href={`/account/${wiki.user.id}`}>
-                            <Text color="brandLinkColor" fontSize="12px">
-                              {shortenAccount(wiki.user.id)}
-                            </Text>
+                          <Link
+                            href={`/account/${wiki?.user?.id}`}
+                            color="brand.500 !important"
+                            fontSize="12px"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                          >
+                            {shortenAccount(wiki.user.id)}
                           </Link>
-                        </HStack>
+                        </Flex>
 
                         {wiki.updated && (
-                          <HStack justifyContent="flex-end">
+                          <Flex w="55%">
                             <Icon
                               cursor="pointer"
                               fontSize="xl"
                               fontWeight={600}
                               as={RiCalendarLine}
-                              pl="1"
                             />
 
                             <Text
+                              mt="3px !important"
                               fontSize={{
                                 base: '10px',
                                 md: '12px',
                               }}
-                              p="0"
                               opacity={0.6}
                               whiteSpace="nowrap"
                             >
@@ -452,9 +360,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                                   )
                                 : '-'}
                             </Text>
-                          </HStack>
+                          </Flex>
                         )}
-                      </Flex>
+                      </HStack>
                     </Flex>
                   </HStack>
                 </HStack>
@@ -462,7 +370,10 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
             </VStack>
           </Box>
         </Flex>
-        <Flex w="400px" px="2" py="1" minH="400px">
+        <Box
+          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+          minH="400px"
+        >
           <Box
             w="full"
             shadow="lg"
@@ -487,166 +398,175 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                 New
               </Text>
             </chakra.div>
-            <VStack w="full" px="4" pt="3">
-              <Link href={`/wiki/${drops[0].id}`}>
-                <AspectRatio
-                  ratio={3 / 2}
-                  w={{
-                    base: '100px',
-                    md: '150px',
-                    lg: '180px',
-                  }}
-                >
-                  <WikiImage
-                    cursor="pointer"
-                    flexShrink={0}
-                    imageURL={getWikiImageUrl(drops[0].images)}
-                    borderRadius="lg"
-                    overflow="hidden"
-                    alt={drops[0].title}
-                  />
-                </AspectRatio>
-              </Link>
-              <Text
-                cursor="pointer"
-                color="brandLinkColor"
-                fontSize={{
-                  base: '14px',
-                  md: '18px',
-                }}
-                overflow="hidden"
-                onClick={() => router.push(`wiki/${drops[0].id}`)}
-              >
-                {drops[0].title}
-              </Text>
-              <Text
-                display={{ base: 'none', md: '-webkit-box' }}
-                noOfLines={2}
-                w="97%"
-                textOverflow="ellipsis"
-                overflow="hidden"
-                fontSize={{
-                  base: '10px',
-                  md: '12px',
-                }}
-                fontWeight="thin"
-              >
-                {drops[0].summary}
-              </Text>
-              <Flex
-                w="full"
-                py="3"
-                direction="column"
-                alignItems="center"
-                justifyContent="space-between"
-                gap="5"
-              >
+            <Carousel
+              topArrow="25%"
+              settings={{
+                dots: true,
+                infinite: false,
+                arrows: false,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+
+                responsive: [
+                  {
+                    breakpoint: 1000,
+                    settings: {
+                      slidesToShow: 2,
+                      slidesToScroll: 2,
+                      initialSlide: 2,
+                      infinite: true,
+                      dots: true,
+                    },
+                  },
+                  {
+                    breakpoint: 680,
+                    settings: {
+                      arrows: false,
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: true,
+                    },
+                  },
+                ],
+              }}
+            >
+              {drops.map(wiki => (
                 <Box
-                  w="full"
-                  rounded="lg"
-                  bg="gray.200"
-                  px="3"
-                  py="2"
-                  fontSize={{
-                    base: '10px',
-                    md: '12px',
-                  }}
+                  maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+                  px="4"
+                  pt="3"
                 >
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Text>Created: </Text>
-                    <HStack>
-                      <Icon
+                  <Link href={`/wiki/${wiki.id}`}>
+                    <AspectRatio
+                      ratio={3 / 2}
+                      w={{
+                        base: '100px',
+                        md: '150px',
+                        lg: '180px',
+                      }}
+                      justifyContent="center"
+                    >
+                      <WikiImage
                         cursor="pointer"
-                        fontSize="xl"
-                        fontWeight={600}
-                        as={RiCalendarLine}
+                        flexShrink={0}
+                        imageURL={getWikiImageUrl(wiki.images)}
+                        borderRadius="lg"
+                        overflow="hidden"
+                        alt={wiki.title}
                       />
-                      <Text>
-                        {drops[0].updated
-                          ? new Date(drops[0].updated).toLocaleDateString(
-                              'en-US',
-                              {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                              },
-                            )
-                          : '-'}
-                      </Text>
-                    </HStack>
-                  </Flex>
-                </Box>
-                <Box
-                  w="full"
-                  rounded="lg"
-                  bg="gray.200"
-                  px="3"
-                  py="2"
-                  fontSize={{
-                    base: '10px',
-                    md: '12px',
-                  }}
-                >
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Text>Created By: </Text>
+                    </AspectRatio>
+                  </Link>
+                  <Text
+                    cursor="pointer"
+                    color="brandLinkColor"
+                    fontSize={{
+                      base: '14px',
+                      md: '18px',
+                    }}
+                    overflow="hidden"
+                    onClick={() => router.push(`wiki/${wiki.id}`)}
+                  >
+                    {wiki.title}
+                  </Text>
+                  <Text
+                    display={{ base: 'none', md: '-webkit-box' }}
+                    noOfLines={2}
+                    w="100%"
+                    textOverflow="ellipsis"
+                    overflow="hidden"
+                    fontSize={{
+                      base: '10px',
+                      md: '12px',
+                    }}
+                    fontWeight="thin"
+                  >
+                    {wiki.summary}
+                  </Text>
+                  <Flex
+                    w="full"
+                    py="3"
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap="5"
+                  >
+                    <Box
+                      w="full"
+                      rounded="lg"
+                      bg="gray.200"
+                      px="3"
+                      py="2"
+                      fontSize={{
+                        base: '10px',
+                        md: '12px',
+                      }}
+                    >
+                      <Flex justifyContent="space-between" alignItems="center">
+                        <Text>Created: </Text>
+                        <HStack>
+                          <Icon
+                            cursor="pointer"
+                            fontSize="xl"
+                            fontWeight={600}
+                            as={RiCalendarLine}
+                          />
+                          <Text>
+                            {wiki.updated
+                              ? new Date(wiki.updated).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : '-'}
+                          </Text>
+                        </HStack>
+                      </Flex>
+                    </Box>
+                    <Box
+                      w="full"
+                      rounded="lg"
+                      bg="gray.200"
+                      px="3"
+                      py="2"
+                      fontSize={{
+                        base: '10px',
+                        md: '12px',
+                      }}
+                    >
+                      <Flex justifyContent="space-between" alignItems="center">
+                        <Text>Created By: </Text>
 
-                    <HStack>
-                      <DisplayAvatar
-                        address={drops[0].user.id}
-                        avatarIPFS={drops[0].user.profile?.avatar}
-                        size={20}
-                        alt={drops[0].user.profile?.username}
-                      />
-                      <Link href={`/account/${drops[0].user.id}`}>
-                        <Text color="brandLinkColor" fontSize="12px">
-                          {shortenAccount(drops[0].user.id)}
-                        </Text>
-                      </Link>
-                    </HStack>
+                        <HStack>
+                          <DisplayAvatar
+                            address={wiki.user.id}
+                            avatarIPFS={wiki.user.profile?.avatar}
+                            size={20}
+                            alt={wiki.user.profile?.username}
+                          />
+                          <Link
+                            href={`/account/${wiki.user?.id}`}
+                            color="brand.500 !important"
+                            fontSize="12px"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                          >
+                            {shortenAccount(wiki.user?.id)}
+                          </Link>
+                        </HStack>
+                      </Flex>
+                    </Box>
                   </Flex>
                 </Box>
-              </Flex>
-            </VStack>
+              ))}
+            </Carousel>
           </Box>
-        </Flex>
-
-        {/* <Carousel
-          topArrow="25%"
-          settings={{
-            dots: true,
-            infinite: false,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-
-            responsive: [
-              {
-                breakpoint: 1000,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  initialSlide: 2,
-                  infinite: true,
-                  dots: true,
-                },
-              },
-              {
-                breakpoint: 680,
-                settings: {
-                  arrows: false,
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  infinite: true,
-                  dots: true,
-                },
-              },
-            ],
-          }}
-        >
-          {drops.map(wiki => (
-            <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
-          ))}
-        </Carousel> */}
+        </Box>
       </Flex>
     </Box>
   )
