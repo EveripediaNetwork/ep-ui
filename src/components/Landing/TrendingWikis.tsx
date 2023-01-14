@@ -370,9 +370,11 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
             </VStack>
           </Box>
         </Flex>
-        <Box
-          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+        <Flex
+          px="2"
+          py="1"
           minH="400px"
+          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         >
           <Box
             w="full"
@@ -382,6 +384,8 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
             borderColor="gray.300"
             px={1}
             py={3}
+            textAlign="center"
+            justifyContent="center"
           >
             <chakra.div w="full" alignItems="center" display="flex" pl="1">
               <Icon
@@ -412,9 +416,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                   {
                     breakpoint: 1000,
                     settings: {
-                      slidesToShow: 2,
-                      slidesToScroll: 2,
-                      initialSlide: 2,
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                      initialSlide: 1,
                       infinite: true,
                       dots: true,
                     },
@@ -433,30 +437,27 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
               }}
             >
               {drops.map(wiki => (
-                <Box
-                  maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
-                  px="4"
-                  pt="3"
-                >
+                <VStack py="3" px="2" pt="3" w="full">
                   <Link href={`/wiki/${wiki.id}`}>
-                    <AspectRatio
-                      ratio={3 / 2}
-                      w={{
-                        base: '100px',
-                        md: '150px',
-                        lg: '180px',
-                      }}
-                      justifyContent="center"
-                    >
-                      <WikiImage
-                        cursor="pointer"
-                        flexShrink={0}
-                        imageURL={getWikiImageUrl(wiki.images)}
-                        borderRadius="lg"
-                        overflow="hidden"
-                        alt={wiki.title}
-                      />
-                    </AspectRatio>
+                    <Flex w="full" alignItems="center" justifyContent="center">
+                      <AspectRatio
+                        ratio={WIKI_IMAGE_ASPECT_RATIO}
+                        w={{
+                          base: '100px',
+                          md: '150px',
+                          lg: '160px',
+                        }}
+                      >
+                        <WikiImage
+                          cursor="pointer"
+                          flexShrink={0}
+                          imageURL={getWikiImageUrl(wiki.images)}
+                          borderRadius="lg"
+                          overflow="hidden"
+                          alt={wiki.title}
+                        />
+                      </AspectRatio>
+                    </Flex>
                   </Link>
                   <Text
                     cursor="pointer"
@@ -486,11 +487,10 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                   </Text>
                   <Flex
                     w="full"
-                    py="3"
                     direction="column"
                     alignItems="center"
                     justifyContent="space-between"
-                    gap="5"
+                    gap="3"
                   >
                     <Box
                       w="full"
@@ -562,11 +562,11 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       </Flex>
                     </Box>
                   </Flex>
-                </Box>
+                </VStack>
               ))}
             </Carousel>
           </Box>
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   )
