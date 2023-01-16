@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Box,
   HStack,
@@ -10,6 +10,7 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
+import Styles from '../../../styles/markdown.module.css'
 
 interface AccordionProps {
   title: string
@@ -26,8 +27,7 @@ const WikiAccordion = ({
   ...rest
 }: BoxProps & AccordionProps) => {
   const { isOpen, onToggle } = useDisclosure()
-  // const isDefaultOpen = useBreakpointValue({ base: true, xl: false })
-
+  const ChangeStyle = () => {}
   return (
     <Box
       w="100%"
@@ -59,6 +59,7 @@ const WikiAccordion = ({
         </Text>
       </HStack>
       <chakra.div
+        className={Styles.accordionDisplay}
         display={{
           base: isOpen === true ? 'unset' : 'none',
           xl: isOpen === false ? 'unset' : 'none',

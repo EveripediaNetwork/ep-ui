@@ -1,3 +1,23 @@
+.accordionDisplay {
+  display:  none
+}
+
+@media (min-width: 768px) {
+  .accordionDisplay {
+    display:  block
+ }
+}
+
+.accordionDisphlay {
+  display:  none
+}
+
+@media (min-width: 768px) {
+  .accordionDisphlay {
+    display:  block
+ }
+}
+
 .markdownBody {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
