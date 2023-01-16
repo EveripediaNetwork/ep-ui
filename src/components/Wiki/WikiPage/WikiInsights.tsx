@@ -99,6 +99,7 @@ const WikiInsights = ({
             txHash={wiki.transactionHash}
             createdBy={wiki.author}
             imgSrc={getWikiImageUrl(wiki.images)}
+            views={wiki.views}
           />
           <ProfileSummary wiki={wiki} />
           {!!coingeckoLink && (
