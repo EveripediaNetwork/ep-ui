@@ -57,22 +57,21 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         justifyContent="center"
         maxW="1208px"
         mx="auto"
-        bg="white"
         flexWrap="wrap"
         gap={2}
       >
         <Flex
           py="1"
-          minH="440px"
+          minH="420px"
           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         >
           <Box
             w="full"
-            shadow="lg"
-            border="1px"
             rounded="lg"
-            borderColor="gray.300"
+            shadow="lg"
             py={3}
+            bg="white"
+            _dark={{ bgColor: 'gray.700', color: 'white' }}
           >
             <chakra.div w="full" alignItems="center" display="flex" pl="2">
               <Icon
@@ -89,9 +88,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                 Trending Wikis
               </Text>
             </chakra.div>
-            <VStack w="full" pt="1" pb="3" px="2">
+            <VStack w="full" pt="2" px="2">
               {drops.map((wiki, i) => (
-                <HStack w="full" py="3">
+                <HStack w="full" pt="3" pb="2">
                   <chakra.span minW="2" alignSelf="flex-start">
                     {' '}
                     {i + 1}
@@ -163,7 +162,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                           />
                           <Link
                             href={`/account/${wiki?.user?.id}`}
-                            color="brand.500 !important"
+                            color="brandLinkColor"
                             fontSize="11px"
                             overflow="hidden"
                             textOverflow="ellipsis"
@@ -188,7 +187,6 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                                 md: '12px',
                               }}
                               ml="1px"
-                              opacity={0.6}
                               whiteSpace="nowrap"
                             >
                               {wiki.updated
@@ -215,15 +213,15 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         <Flex
           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
           py="1"
-          minH="440px"
+          minH="420px"
         >
           <Box
             w="full"
-            shadow="lg"
-            border="1px"
             rounded="lg"
-            borderColor="gray.300"
+            shadow="lg"
             py={3}
+            bg="white"
+            _dark={{ bgColor: 'gray.700', color: 'white' }}
           >
             <chakra.div w="full" alignItems="center" display="flex" pl="2">
               <Icon
@@ -240,9 +238,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                 Recent Edits
               </Text>
             </chakra.div>
-            <VStack w="full" pt="1" pb="3" px="2">
+            <VStack w="full" pt="2" px="2">
               {drops.map((wiki, i) => (
-                <HStack w="full" py="3">
+                <HStack w="full" pt="3" pb="2">
                   <chakra.span minW="2" alignSelf="flex-start">
                     {' '}
                     {i + 1}
@@ -314,7 +312,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                           />
                           <Link
                             href={`/account/${wiki?.user?.id}`}
-                            color="brand.500 !important"
+                            color="brandLinkColor"
                             fontSize="11px"
                             overflow="hidden"
                             textOverflow="ellipsis"
@@ -339,7 +337,6 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                                 md: '12px',
                               }}
                               ml="1px"
-                              opacity={0.6}
                               whiteSpace="nowrap"
                             >
                               {wiki.updated
@@ -365,16 +362,17 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         </Flex>
         <Flex
           py="1"
-          minH="440px"
+          minH="420px"
           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         >
           <Box
             w="full"
             shadow="lg"
-            border="1px"
             rounded="lg"
-            borderColor="gray.300"
             py={3}
+            bg="white"
+            _dark={{ bgColor: 'gray.700', color: 'white' }}
+            color="black"
             textAlign="center"
             justifyContent="center"
           >
@@ -463,6 +461,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       md: '12px',
                     }}
                     color="gray.700"
+                    _dark={{ bgColor: 'gray.700', color: 'white' }}
                     fontWeight="thin"
                   >
                     {wiki.summary}
@@ -472,15 +471,15 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     direction="column"
                     alignItems="center"
                     justifyContent="space-between"
+                    pb="2"
                     gap="4"
-                    py="2"
                   >
                     <Box
                       w="full"
                       rounded="lg"
                       bg="gray.200"
                       px="3"
-                      py="2"
+                      py="3"
                       fontSize={{
                         base: '10px',
                         md: '12px',
@@ -515,7 +514,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       rounded="lg"
                       bg="gray.200"
                       px="3"
-                      py="2"
+                      py="3"
                       fontSize={{
                         base: '10px',
                         md: '12px',
