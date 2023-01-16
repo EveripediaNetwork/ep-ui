@@ -75,7 +75,7 @@ const initialState: Wiki = {
     id: '',
   },
   media: [],
-  views: 0
+  views: 0,
 }
 
 const wikiSlice = createSlice({
