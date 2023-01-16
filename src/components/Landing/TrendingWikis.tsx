@@ -12,10 +12,8 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
-import { WikiImage } from '@/components/WikiImage'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import {
   RiBarChartFill,
   RiCalendarLine,
