@@ -3,7 +3,6 @@ import axios from 'axios'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { POST_IMG } from '@/services/wikis/queries'
 import {
-  Image,
   Wiki,
   EditorContentOverride,
   ValidatorCodes,
@@ -11,6 +10,8 @@ import {
   EditSpecificMetaIds,
   whiteListedLinkNames,
   CreateNewWikiSlug,
+  LinkedWikiKey,
+  LinkedWikis,
 } from '@everipedia/iq-utils'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
@@ -32,6 +33,7 @@ import { useToast } from '@chakra-ui/toast'
 import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
+import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { logEvent } from './googleAnalytics'
 import { getDeadline } from './getDeadline'
 
@@ -89,7 +91,7 @@ export const types = {
 
 export const MINIMUM_WORDS = 100
 
-export const saveImage = async (image: Image) => {
+export const saveImage = async (image: WikiImageObjectProps) => {
   const formData = new FormData()
   const blob = new Blob([image.type], {
     type: 'image/jpeg', // TODO: find proper type for now its forced to bypass API enforcements
@@ -348,7 +350,27 @@ export const useCreateWikiState = (router: NextRouter) => {
     )
 
   const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
-  const wikiData = revisionWikiData || latestWikiData
+
+  const wikiData = useMemo(() => {
+    const data = revisionWikiData || latestWikiData
+
+    if (data?.linkedWikis) {
+      // remove null values from linked wikis
+      const newLinkedWikis = {} as LinkedWikis
+      Object.entries(data.linkedWikis).forEach(([key, value]) => {
+        if (value !== null) {
+          newLinkedWikis[key as LinkedWikiKey] = value
+        }
+      })
+      return {
+        ...data,
+        linkedWikis: newLinkedWikis,
+      }
+    }
+
+    return data
+  }, [latestWikiData, revisionWikiData])
+
   const [commitMessage, setCommitMessage] = useState('')
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)

@@ -6,6 +6,7 @@ import {
   CommonMetaIds,
   EditSpecificMetaIds,
   CreateNewWikiSlug,
+  LinkedWikiKey,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
@@ -186,6 +187,7 @@ const wikiSlice = createSlice({
         const updatedMedia = [...state.media]
         updatedMedia[findMediaIndex] = {
           ...updatedMedia[findMediaIndex],
+          ...action.payload,
           ...{ id: action.payload.hash },
         }
         const newState = {
@@ -204,6 +206,49 @@ const wikiSlice = createSlice({
         metadata: state.metadata.map((m: MData) =>
           m.id === ob.id ? { id: ob.id, value: ob.value } : m,
         ),
+      }
+      saveDraftInLocalStorage(newState)
+      return newState
+    },
+    addLinkedWiki(state, action) {
+      const { linkType, wikiId } = action.payload as {
+        linkType: LinkedWikiKey
+        wikiId: string
+      }
+      const newState = {
+        ...state,
+        linkedWikis: {
+          ...state.linkedWikis,
+          [linkType]: state.linkedWikis
+            ? [...(state.linkedWikis[linkType] || []), wikiId]
+            : [wikiId],
+        },
+      }
+
+      saveDraftInLocalStorage(newState)
+      return newState
+    },
+    removeLinkedWiki(state, action) {
+      const { linkType, wikiId } = action.payload as {
+        linkType: LinkedWikiKey
+        wikiId: string
+      }
+      const newLinkedWikis = {
+        ...state.linkedWikis,
+        [linkType]: state.linkedWikis
+          ? (state.linkedWikis[linkType] || []).filter(
+              (id: string) => id !== wikiId,
+            )
+          : [],
+      }
+      if (!newLinkedWikis[linkType] || newLinkedWikis[linkType]?.length === 0)
+        delete newLinkedWikis[linkType]
+      const newState: Wiki = {
+        ...state,
+        linkedWikis: newLinkedWikis,
+      }
+      if (Object.keys(newLinkedWikis).length === 0) {
+        delete newState.linkedWikis
       }
       saveDraftInLocalStorage(newState)
       return newState

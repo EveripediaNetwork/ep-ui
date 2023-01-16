@@ -16,6 +16,7 @@ import {
   Progress,
   Stack,
   useToast,
+  Select,
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -23,11 +24,12 @@ import { shortenText } from '@/utils/shortenText'
 import shortenBalance from '@/utils/shortenBallance'
 import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
-import { Image } from '@everipedia/iq-utils'
+import { MediaType } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
 import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
 import { ImageInput, Dropzone } from '@/components/Elements'
+import { WikiImageObjectProps } from '@/types/CreateWikiType'
 
 const MAX_MEDIA = 12
 
@@ -40,7 +42,7 @@ const MediaModal = ({
   const dispatch = useAppDispatch()
   const toast = useToast()
 
-  const uploadImageToIPFS = async (image: Image) => {
+  const uploadImageToIPFS = async (image: WikiImageObjectProps) => {
     const ipfsHash = await saveImage(image)
     if (ipfsHash) {
       dispatch({
@@ -87,10 +89,22 @@ const MediaModal = ({
         name,
         size: shortenBalance(fileSize),
         id,
+        type: MediaType.DEFAULT,
         source: 'IPFS_IMG',
       },
     })
     uploadImageToIPFS({ id, type: value })
+  }
+
+  const handleSetType = (mediaId: string, type: MediaType) => {
+    dispatch({
+      type: 'wiki/updateMediaDetails',
+      payload: {
+        id: mediaId,
+        hash: mediaId,
+        type,
+      },
+    })
   }
 
   const dropZoneActions = {
@@ -124,98 +138,109 @@ const MediaModal = ({
           <Box mt="3">
             <Text fontWeight="bold">Uploads</Text>
             {wiki.media !== undefined && wiki.media?.length > 0 && (
-              <Box
-                my={4}
-                display="flex"
-                justifyContent={{ base: 'center', md: 'left' }}
-                maxH="162px"
+              <SimpleGrid
+                mt={4}
+                maxH="240px"
                 borderWidth="1px"
-                p={5}
+                p={3}
                 borderRadius={8}
-                overflow="auto"
+                overflowY="scroll"
+                columns={{ base: 1, md: 2 }}
+                spacing={4}
               >
-                <SimpleGrid
-                  columns={{ base: 1, md: 2 }}
-                  spacingY={6}
-                  spacingX={12}
-                >
-                  {wiki.media.map(media => (
-                    <Flex key={media.id} gap={4} color="linkColor">
-                      <Box mt={1}>
-                        {!checkMediaDefaultId(media.id) ? (
-                          <WikiImage
+                {wiki.media.map(media => (
+                  <Flex
+                    key={media.id}
+                    gap={4}
+                    w="100%"
+                    alignItems="center"
+                    color="linkColor"
+                  >
+                    {!checkMediaDefaultId(media.id) ? (
+                      <WikiImage
+                        cursor="pointer"
+                        alt="media"
+                        flexShrink={0}
+                        imageURL={
+                          media.source !== 'YOUTUBE'
+                            ? constructMediaUrl(media)
+                            : `https://i3.ytimg.com/vi/${media.name}/maxresdefault.jpg`
+                        }
+                        boxSize="42"
+                        borderRadius="lg"
+                        overflow="hidden"
+                        mt="1"
+                      />
+                    ) : (
+                      <RiImageLine size="42" />
+                    )}
+                    <VStack spacing={1} w="full">
+                      <Flex w="full">
+                        <Text fontSize="sm" flex="1">
+                          {media.name
+                            ? shortenText(media.name, 15)
+                            : 'untitled'}
+                        </Text>
+                        <Box mt={1}>
+                          <RiCloseLine
                             cursor="pointer"
-                            alt="media"
-                            flexShrink={0}
-                            imageURL={
-                              media.source !== 'YOUTUBE'
-                                ? constructMediaUrl(media)
-                                : `https://i3.ytimg.com/vi/${media.name}/maxresdefault.jpg`
-                            }
-                            h={{ base: '30px', lg: '40px' }}
-                            w={{ base: '30px', lg: '40px' }}
-                            borderRadius="lg"
-                            overflow="hidden"
-                            mt="1"
-                          />
-                        ) : (
-                          <RiImageLine size="40" />
-                        )}
-                      </Box>
-                      <VStack>
-                        <Flex w="full">
-                          {media.name && (
-                            <Box flex="1">
-                              <Text fontSize="sm">
-                                {shortenText(media.name, 15)}
-                              </Text>
-                            </Box>
-                          )}
-                          <Box mt={1}>
-                            <RiCloseLine
-                              cursor="pointer"
-                              onClick={() => deleteMedia(media.id)}
-                              color="red"
-                              size="14"
-                            />
-                          </Box>
-                        </Flex>
-                        <Box w="full">
-                          <Progress
-                            value={checkMediaDefaultId(media.id) ? 50 : 100}
-                            h="3px"
-                            colorScheme="green"
-                            size="sm"
+                            onClick={() => deleteMedia(media.id)}
+                            color="red"
+                            size="14"
                           />
                         </Box>
-                        <Flex w="full" fontSize="xs" gap={16}>
-                          <Text flex="1">{media.size}mb</Text>
-                          <Text flex="1">
-                            {checkMediaDefaultId(media.id)
-                              ? 'uploading'
-                              : 'uploaded'}
-                          </Text>
-                        </Flex>
-                      </VStack>
-                    </Flex>
-                  ))}
-                </SimpleGrid>
-              </Box>
+                      </Flex>
+                      {checkMediaDefaultId(media.id) && (
+                        <Progress
+                          w="full"
+                          h="3px"
+                          colorScheme="green"
+                          size="sm"
+                          isIndeterminate
+                        />
+                      )}
+                      <Flex
+                        w="full"
+                        fontSize="xs"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Select
+                          size="xs"
+                          maxW="28"
+                          variant="outline"
+                          value={media.type}
+                          onChange={e =>
+                            handleSetType(media.id, e.target.value as MediaType)
+                          }
+                        >
+                          <option value={MediaType.DEFAULT}>Default</option>
+                          <option
+                            disabled={
+                              wiki.media?.find(
+                                m => m.type === MediaType.ICON,
+                              ) !== undefined
+                            }
+                            value={MediaType.ICON}
+                          >
+                            Token Icon
+                          </option>
+                        </Select>
+                        <Text textAlign="right" flex="1">
+                          {media.size}mb
+                        </Text>
+                      </Flex>
+                    </VStack>
+                  </Flex>
+                ))}
+              </SimpleGrid>
             )}
-
-            <Flex
-              direction="column"
-              gap={5}
-              w="full"
-              borderRadius="7px"
-              py={5}
-              mb={3}
-            >
+            <Flex direction="column" gap={5} w="full" borderRadius="7px" py={3}>
               <Dropzone
                 dropZoneActions={dropZoneActions}
                 dropzonePlaceHolderTitle={`Drag and drop an ${dropZoneActions.textType} or click to select.`}
                 dropzonePlaceHolderSize="(10mb max)"
-                aspectRatio={8 / 3}
+                aspectRatio={11 / 3}
                 mediaModal
               />
               <ImageInput
@@ -225,7 +250,7 @@ const MediaModal = ({
               />
             </Flex>
             {wiki.media !== undefined && wiki.media?.length > 0 && (
-              <Box mb={8} justifyContent="center" display="flex">
+              <Box mb={4} justifyContent="center" display="flex">
                 <Stack spacing={4} direction="row" align="center">
                   <Button size="md" onClick={onClose}>
                     <Text fontSize="xs">Save</Text>
