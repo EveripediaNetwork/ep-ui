@@ -20,15 +20,16 @@ interface AccordionProps {
 const WikiAccordion = ({
   title,
   withNoDarkBg,
-  collapsed,
   children,
   ...rest
 }: BoxProps & AccordionProps) => {
   const [first, setfirst] = useState(Styles.accordionDisplay)
   const ChangeStyle = () => {
-    first === Styles.accordionDisplay
-      ? setfirst(Styles.accordionUnDisplay)
-      : setfirst(Styles.accordionDisplay)
+    if (first === Styles.accordionDisplay) {
+      setfirst(Styles.accordionUnDisplay)
+    } else {
+      setfirst(Styles.accordionDisplay)
+    }
   }
   return (
     <Box
