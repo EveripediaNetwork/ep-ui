@@ -42,7 +42,7 @@ export const WikiDetails = ({
   txHash?: string
   createdBy?: Author
   imgSrc?: string
-  views: number|undefined
+  views: number | undefined
 }) => {
   const { title, tags } = wikiTitle
   const [, username] = useENSData(createdBy?.id || '')
@@ -177,7 +177,7 @@ export const WikiDetails = ({
                 </Td>
               </Tr>
             )}
-            {(views && views > 250) && (
+            {views && views > 250 && (
               <Tr>
                 <Td whiteSpace="nowrap">
                   <Text py="2">Views</Text>
