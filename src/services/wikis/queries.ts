@@ -97,6 +97,7 @@ export const GET_WIKI_BY_ID = gql`
           avatar
         }
       }
+      views
     }
   }
 `
