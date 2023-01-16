@@ -214,7 +214,7 @@ const MediaModal = ({
                             handleSetType(media.id, e.target.value as MediaType)
                           }
                         >
-                          <option value={MediaType.DEFAULT}>Default</option>
+                          <option value={MediaType.GALLERY}>Default</option>
                           <option
                             disabled={
                               wiki.media?.find(
