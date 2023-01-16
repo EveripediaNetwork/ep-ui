@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   HStack,
   Text,
   IconButton,
-  useDisclosure,
   BoxProps,
-  // useBreakpointValue,
   chakra,
 } from '@chakra-ui/react'
 import { RiArrowDownSLine } from 'react-icons/ri'
@@ -26,8 +24,12 @@ const WikiAccordion = ({
   children,
   ...rest
 }: BoxProps & AccordionProps) => {
-  const { isOpen, onToggle } = useDisclosure()
-  const ChangeStyle = () => {}
+  const [first, setfirst] = useState(Styles.accordionDisplay)
+  const ChangeStyle = () => {
+    first === Styles.accordionDisplay
+      ? setfirst(Styles.accordionUnDisplay)
+      : setfirst(Styles.accordionDisplay)
+  }
   return (
     <Box
       w="100%"
@@ -39,7 +41,7 @@ const WikiAccordion = ({
       p={3}
       borderRadius={8}
     >
-      <HStack cursor="pointer" onClick={onToggle} justify="start">
+      <HStack cursor="pointer" onClick={ChangeStyle} justify="start">
         <IconButton
           color="linkColor"
           variant="link"
@@ -59,11 +61,11 @@ const WikiAccordion = ({
         </Text>
       </HStack>
       <chakra.div
-        className={Styles.accordionDisplay}
-        display={{
-          base: isOpen === true ? 'unset' : 'none',
-          xl: isOpen === false ? 'unset' : 'none',
-        }}
+        className={first}
+        // display={{
+        //   base: isOpen === true ? 'unset' : 'none',
+        //   xl: isOpen === false ? 'unset' : 'none',
+        // }}
       >
         <Box p={2} mt={1} {...rest}>
           {children}

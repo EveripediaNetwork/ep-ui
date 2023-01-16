@@ -8,13 +8,13 @@
  }
 }
 
-.accordionDisphlay {
-  display:  none
+.accordionUnDisplay {
+  display:  block
 }
 
 @media (min-width: 768px) {
-  .accordionDisphlay {
-    display:  block
+  .accordionUnDisplay {
+    display:  none
  }
 }
 
