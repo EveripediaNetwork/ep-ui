@@ -177,7 +177,7 @@ export const WikiDetails = ({
                 </Td>
               </Tr>
             )}
-            {views > 0 && (
+            {views > 250 && (
               <Tr>
                 <Td whiteSpace="nowrap">
                   <Text py="2">Views</Text>
