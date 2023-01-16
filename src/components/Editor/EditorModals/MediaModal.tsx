@@ -89,7 +89,7 @@ const MediaModal = ({
         name,
         size: shortenBalance(fileSize),
         id,
-        type: MediaType.DEFAULT,
+        type: MediaType.GALLERY,
         source: 'IPFS_IMG',
       },
     })
