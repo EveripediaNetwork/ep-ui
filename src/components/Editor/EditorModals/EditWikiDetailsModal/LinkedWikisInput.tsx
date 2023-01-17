@@ -37,14 +37,18 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const fetchWikisList = async (
     query: string,
     cb: (data: WikiPreview[]) => void,
+    tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-    cb(data || [])
+    const filteredData = data?.filter(w =>
+      w.tags.find(t => t.id.toLocaleLowerCase() === tag),
+    )
+    cb(filteredData || [])
   }
 
   const debouncedFetchWikis = debounce(
     (query: string, cb: (data: WikiPreview[]) => void) => {
-      fetchWikisList(query, cb)
+      fetchWikisList(query, cb, linkType)
     },
     500,
   )
@@ -118,6 +122,15 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            suggestWhenEmpty
+            emptyState={
+              <Center>
+                <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
+                  No results found. make sure the wiki you are searching for has{' '}
+                  &apos;{linkType}&apos; tag.
+                </Text>
+              </Center>
+            }
             onChange={val => {
               setSelectedWiki(val)
               setSearch('')
@@ -133,7 +146,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               onChange={e => setSearch(e.target.value)}
               type="url"
             />
-            {results.length !== 0 && (
+            {!loading && (
               <AutoCompleteList
                 maxH={32}
                 mt={0}
@@ -144,7 +157,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               >
                 {results.map(result => (
                   <AutoCompleteItem
-                    px={2}
+                    px={4}
                     py={1}
                     rounded="none"
                     m={0}

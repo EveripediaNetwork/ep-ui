@@ -81,7 +81,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         flexDir="column"
         gap={2}
         title="Profile Summary"
-        collapsed={{ base: true, xl: false }}
       >
         {contractURL && (
           <ProfileListItem title="Contract">

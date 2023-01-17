@@ -10,6 +10,8 @@ import {
   EditSpecificMetaIds,
   whiteListedLinkNames,
   CreateNewWikiSlug,
+  LinkedWikiKey,
+  LinkedWikis,
 } from '@everipedia/iq-utils'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
@@ -348,7 +350,27 @@ export const useCreateWikiState = (router: NextRouter) => {
     )
 
   const isLoadingWiki = isLoadingLatestWiki || isLoadingRevisionWiki
-  const wikiData = revisionWikiData || latestWikiData
+
+  const wikiData = useMemo(() => {
+    const data = revisionWikiData || latestWikiData
+
+    if (data?.linkedWikis) {
+      // remove null values from linked wikis
+      const newLinkedWikis = {} as LinkedWikis
+      Object.entries(data.linkedWikis).forEach(([key, value]) => {
+        if (value !== null) {
+          newLinkedWikis[key as LinkedWikiKey] = value
+        }
+      })
+      return {
+        ...data,
+        linkedWikis: newLinkedWikis,
+      }
+    }
+
+    return data
+  }, [latestWikiData, revisionWikiData])
+
   const [commitMessage, setCommitMessage] = useState('')
   const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
