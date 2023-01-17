@@ -198,8 +198,10 @@ export const wikiApi = createApi({
         document: GET_TAG_WIKIS_BY_ID,
         variables: { id, limit, offset },
       }),
-      transformResponse: (response: GetWikisByTagResponse) =>
-        response.tagById.wikis,
+      transformResponse: (response: GetWikisByTagResponse) => {
+        if (!response || !response.tagById) return []
+        return response.tagById.wikis
+      },
     }),
     getWikisByCategory: builder.query<Wiki[], WikisByCategoryArg>({
       query: ({

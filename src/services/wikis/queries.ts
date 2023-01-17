@@ -145,8 +145,13 @@ export const GET_WIKIS = gql`
         id
         type
       }
+      linkedWikis {
+        founders
+        blockchains
+      }
       metadata {
         id
+        value
       }
       user {
         id
@@ -180,8 +185,13 @@ export const GET_PROMOTED_WIKIS = gql`
         id
         type
       }
+      linkedWikis {
+        founders
+        blockchains
+      }
       metadata {
         id
+        value
       }
       user {
         id
@@ -215,6 +225,10 @@ export const GET_USER_WIKIS_BY_ID = gql`
         images {
           id
           type
+        }
+        linkedWikis {
+          founders
+          blockchains
         }
         metadata {
           id
@@ -255,6 +269,10 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           images {
             id
             type
+          }
+          linkedWikis {
+            founders
+            blockchains
           }
           metadata {
             id
@@ -297,6 +315,10 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
             id
             type
           }
+          linkedWikis {
+            founders
+            blockchains
+          }
           metadata {
             id
             value
@@ -335,8 +357,13 @@ export const GET_WIKIS_BY_CATEGORY = gql`
         id
         type
       }
+      linkedWikis {
+        founders
+        blockchains
+      }
       metadata {
         id
+        value
       }
       user {
         id
@@ -388,8 +415,13 @@ export const GET_TAG_WIKIS_BY_ID = gql`
           id
           type
         }
+        linkedWikis {
+          founders
+          blockchains
+        }
         metadata {
           id
+          value
         }
         user {
           id

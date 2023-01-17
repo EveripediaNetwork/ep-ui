@@ -48,8 +48,10 @@ export const fetchWikisList = async (query: string) => {
   const { data: tagsData } = await store.dispatch(
     getTagWikis.initiate({ id: query }),
   )
+
   return [...(data || []), ...(tagsData || [])]
 }
+
 export const fetchCategoriesList = async (query: string) => {
   const { data } = await store.dispatch(getCategoriesByTitle.initiate(query))
   return data
