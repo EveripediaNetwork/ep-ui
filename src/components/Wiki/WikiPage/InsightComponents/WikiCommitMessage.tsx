@@ -28,7 +28,6 @@ const WikiCommitMessage = ({
         flexDir="column"
         gap={2}
         title="Commit Info"
-        collapsed={{ base: true, xl: false }}
       >
         <AccordionWidget title="Edited by:" type="account" content={user} />
         <AccordionWidget title="Edited in:" type="text" content={lastEdited} />
