@@ -61,13 +61,7 @@ const WikiAccordion = ({
           {title}
         </Text>
       </HStack>
-      <chakra.div
-        className={first}
-        // display={{
-        //   base: isOpen === true ? 'unset' : 'none',
-        //   xl: isOpen === false ? 'unset' : 'none',
-        // }}
-      >
+      <chakra.div className={first}>
         <Box p={2} mt={1} {...rest}>
           {children}
         </Box>
