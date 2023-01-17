@@ -48,7 +48,7 @@ const NFTWidget = ({
         setShowNFTFetchError(true)
         setIsLoading(false)
       } else setShowNFTFetchError(false)
-      setIsLoading(false)
+
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
     }
@@ -88,7 +88,7 @@ const NFTWidget = ({
             borderRadius={8}
           >
             {!showNFTFetchError ? (
-              <Image src={currentNFTImage} />
+              <Image src={currentNFTImage} onLoad={() => setIsLoading(false)} />
             ) : (
               <NFTImgFallback />
             )}

@@ -15,6 +15,14 @@ export const GET_WIKIS_BY_TITLE = gql`
       images {
         id
       }
+      linkedWikis {
+        founders
+        blockchains
+      }
+      metadata {
+        id
+        value
+      }
       categories {
         id
         title
