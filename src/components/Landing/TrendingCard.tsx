@@ -15,9 +15,9 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { RiCalendarLine } from 'react-icons/ri'
 import router from 'next/router'
 import shortenAccount from '@/utils/shortenAccount'
+import { IconType } from 'react-icons/lib'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
-import { IconType } from 'react-icons/lib'
 
 const TrendingCard = ({
   wikis = [],
