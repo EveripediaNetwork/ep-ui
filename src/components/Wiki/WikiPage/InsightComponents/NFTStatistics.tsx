@@ -106,7 +106,6 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
         flexDir="column"
         gap={2}
         title="NFT Market Statistics"
-        collapsed={{ base: true, xl: false }}
       >
         {NFTStatisticsData.map((item, index) => (
           <AccordionWidget key={index} {...item} />
