@@ -48,9 +48,9 @@ const NFTWidget = ({
         setShowNFTFetchError(true)
         setIsLoading(false)
       } else setShowNFTFetchError(false)
-
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
+      setIsLoading(false)
     }
   }, [contractID, currentNFTHash, isNFTWiki])
 
