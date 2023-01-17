@@ -25,42 +25,59 @@ import { useENSData } from '@/hooks/useENSData'
 import { getUsername } from '@/utils/getUsername'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
 
+const AccordionURLTemplate = ({ contentURL }: { contentURL: string }) => (
+  <Link
+    target="_blank"
+    color="brandLinkColor"
+    fontSize="14px"
+    href={contentURL}
+  >
+    {new URL(contentURL).hostname}
+  </Link>
+)
+
+const AccordionAddressTemplate = ({
+  content,
+  onCopy,
+  hasCopied,
+}: {
+  content: string
+  onCopy: () => void
+  hasCopied: boolean
+}) => (
+  <HStack>
+    <Link target="_blank" href={`https://etherscan.io/address/${content}`}>
+      {shortenAccount(content)}
+    </Link>
+    <IconButton
+      onClick={onCopy}
+      aria-label="copy address"
+      minW={3}
+      icon={hasCopied ? <RiCheckboxCircleLine /> : <RiFileCopyLine />}
+      variant="link"
+    />
+  </HStack>
+)
+
 const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
   const { hasCopied, onCopy } = useClipboard(content as string)
   const [, userENSDomain] = useENSData(type === 'account' ? content.id : '')
   const contentTemplate = () => {
     if (type === 'url') {
       const contentURL = content as string
-      return (
-        <Link
-          target="_blank"
-          color="brandLinkColor"
-          fontSize="14px"
-          href={contentURL}
-        >
-          {new URL(contentURL).hostname}
-        </Link>
-      )
+      return <AccordionURLTemplate contentURL={contentURL} />
     }
+
     if (type === 'address') {
       return (
-        <HStack>
-          <Link
-            target="_blank"
-            href={`https://etherscan.io/address/${content}`}
-          >
-            {shortenAccount(content)}
-          </Link>
-          <IconButton
-            onClick={onCopy}
-            aria-label="copy address"
-            minW={3}
-            icon={hasCopied ? <RiCheckboxCircleLine /> : <RiFileCopyLine />}
-            variant="link"
-          />
-        </HStack>
+        <AccordionAddressTemplate
+          onCopy={onCopy}
+          hasCopied={hasCopied}
+          content={content}
+        />
       )
     }
+
     if (type === 'account') {
       return (
         <HStack>

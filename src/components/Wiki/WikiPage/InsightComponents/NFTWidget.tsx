@@ -48,7 +48,7 @@ const NFTWidget = ({
         setShowNFTFetchError(true)
         setIsLoading(false)
       } else setShowNFTFetchError(false)
-      setIsLoading(false)
+
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
     }
@@ -69,7 +69,6 @@ const NFTWidget = ({
         flexDir="column"
         gap={2}
         title="Search NFT Collection"
-        collapsed={{ base: true, xl: false }}
       >
         {isLoading ? (
           <Flex flexDirection="column">
@@ -88,7 +87,7 @@ const NFTWidget = ({
             borderRadius={8}
           >
             {!showNFTFetchError ? (
-              <Image src={currentNFTImage} />
+              <Image src={currentNFTImage} onLoad={() => setIsLoading(false)} />
             ) : (
               <NFTImgFallback />
             )}

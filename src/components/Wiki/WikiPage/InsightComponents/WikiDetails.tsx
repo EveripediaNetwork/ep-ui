@@ -33,6 +33,7 @@ export const WikiDetails = ({
   txHash,
   createdBy,
   imgSrc,
+  views,
 }: {
   wikiTitle: WikiPreview
   categories: BaseCategory[]
@@ -41,6 +42,7 @@ export const WikiDetails = ({
   txHash?: string
   createdBy?: Author
   imgSrc?: string
+  views: number | undefined
 }) => {
   const { title, tags } = wikiTitle
   const [, username] = useENSData(createdBy?.id || '')
@@ -172,6 +174,16 @@ export const WikiDetails = ({
                       {getUsername(createdBy, username)}
                     </Link>
                   </HStack>
+                </Td>
+              </Tr>
+            )}
+            {views && views > 250 && (
+              <Tr>
+                <Td whiteSpace="nowrap">
+                  <Text py="2">Views</Text>
+                </Td>
+                <Td>
+                  <Text py="2">{views}</Text>
                 </Td>
               </Tr>
             )}
