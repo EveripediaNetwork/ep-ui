@@ -100,8 +100,8 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       <AspectRatio
                         ratio={6 / 5}
                         w={{
-                          base: '90px',
-                          md: '80px',
+                          base: '100px',
+                          md: '100px',
                           lg: '114px',
                         }}
                       >
@@ -124,7 +124,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         color="brandLinkColor"
                         fontSize={{
                           base: '14px',
-                          md: '16px',
+                          md: '18px',
                         }}
                         overflow="hidden"
                         onClick={() => router.push(`wiki/${wiki.id}`)}
@@ -136,12 +136,12 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         display={{ base: 'none', md: '-webkit-box' }}
                         noOfLines={2}
                         w="97%"
-                        lineHeight="5"
+                        lineHeight="6"
                         textOverflow="ellipsis"
                         overflow="hidden"
                         fontSize={{
-                          base: '10px',
-                          md: '12px',
+                          base: '12px',
+                          md: '14px',
                         }}
                         fontWeight="thin"
                       >
@@ -184,9 +184,10 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                             <Text
                               fontSize={{
                                 base: '10px',
-                                md: '12px',
+                                md: '11px',
                               }}
                               ml="1px"
+                              mt="1px"
                               whiteSpace="nowrap"
                             >
                               {wiki.updated
@@ -250,8 +251,8 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       <AspectRatio
                         ratio={6 / 5}
                         w={{
-                          base: '90px',
-                          md: '80px',
+                          base: '100px',
+                          md: '100px',
                           lg: '114px',
                         }}
                       >
@@ -274,7 +275,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         color="brandLinkColor"
                         fontSize={{
                           base: '14px',
-                          md: '16px',
+                          md: '18px',
                         }}
                         overflow="hidden"
                         onClick={() => router.push(`wiki/${wiki.id}`)}
@@ -286,12 +287,12 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                         display={{ base: 'none', md: '-webkit-box' }}
                         noOfLines={2}
                         w="97%"
-                        lineHeight="5"
+                        lineHeight="6"
                         textOverflow="ellipsis"
                         overflow="hidden"
                         fontSize={{
-                          base: '10px',
-                          md: '12px',
+                          base: '12px',
+                          md: '14px',
                         }}
                         fontWeight="thin"
                       >
@@ -334,9 +335,10 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                             <Text
                               fontSize={{
                                 base: '10px',
-                                md: '12px',
+                                md: '11px',
                               }}
                               ml="1px"
+                              mt="1px"
                               whiteSpace="nowrap"
                             >
                               {wiki.updated
@@ -362,7 +364,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         </Flex>
         <Flex
           py="1"
-          minH="420px"
+          minH="450px"
           maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         >
           <Box
@@ -426,7 +428,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
               }}
             >
               {drops.map(wiki => (
-                <VStack py="3" px="3" pt="3" w="full">
+                <VStack py="3" px="3" w="full">
                   <Link href={`/wiki/${wiki.id}`}>
                     <Flex w="full" alignItems="center" justifyContent="center">
                       <AspectRatio ratio={7 / 3} w="90%">
@@ -443,7 +445,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     color="brandLinkColor"
                     fontSize={{
                       base: '16px',
-                      md: '20px',
+                      md: '22px',
                     }}
                     overflow="hidden"
                     onClick={() => router.push(`wiki/${wiki.id}`)}
@@ -458,11 +460,10 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     overflow="hidden"
                     fontSize={{
                       base: '12px',
-                      md: '12px',
+                      md: '14px',
                     }}
                     color="gray.700"
                     _dark={{ bgColor: 'gray.700', color: 'white' }}
-                    fontWeight="thin"
                   >
                     {wiki.summary}
                   </Text>
@@ -471,13 +472,14 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     direction="column"
                     alignItems="center"
                     justifyContent="space-between"
-                    pb="2"
                     gap="4"
+                    pt="2"
                   >
                     <Box
                       w="full"
                       rounded="lg"
                       bg="gray.200"
+                      _dark={{ bg: 'gray.600' }}
                       px="3"
                       py="3"
                       fontSize={{
@@ -513,6 +515,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                       w="full"
                       rounded="lg"
                       bg="gray.200"
+                      _dark={{ bg: 'gray.600' }}
                       px="3"
                       py="3"
                       fontSize={{
