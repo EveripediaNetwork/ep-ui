@@ -141,7 +141,7 @@ export const WikiEditorsInsightTable = () => {
       ipfs: string
       wikiId: string
     }[]
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastCreatedWiki: any
     editorAvatar: string
     latestActivity: string
