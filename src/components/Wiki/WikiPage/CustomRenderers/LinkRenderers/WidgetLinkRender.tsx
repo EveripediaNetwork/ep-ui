@@ -19,6 +19,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
         <iframe
           className={type === 'dune' ? 'embed-widget-iframe-dune-bg' : ''}
           onLoad={iframeLoadHandler}
+          loading="lazy"
           title={title}
           src={src}
         />
