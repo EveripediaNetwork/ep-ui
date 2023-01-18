@@ -80,6 +80,7 @@
     "react-image-crop": "^10.0.4",
     "react-infinite-scroll-hook": "^4.0.3",
     "react-intersection-observer": "^9.4.0",
+    "react-lite-youtube-embed": "^2.3.52",
     "react-markdown": "^8.0.1",
     "react-redux": "^7.2.7",
     "react-scroll": "^1.8.8",

@@ -11,7 +11,10 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion title="Media">
-        <SimpleGrid columns={{ base: 3, md: 4, xl: 3 }} spacing={5}>
+        <SimpleGrid
+          columns={{ base: 3, sm: 5, md: 6, lg: 8, xl: 3 }}
+          spacing={5}
+        >
           {media.map((m, i) => (
             <AspectRatio ratio={1} key={i}>
               <MediaPreview
@@ -30,8 +33,8 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                       ? constructMediaUrl(m)
                       : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
                   }
-                  h="100%"
-                  w="100%"
+                  imgH={130}
+                  imgW={130}
                   alt="related media"
                   hideOnError
                   objectFit="cover"
