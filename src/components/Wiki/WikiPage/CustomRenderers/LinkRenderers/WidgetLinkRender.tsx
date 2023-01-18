@@ -1,4 +1,7 @@
+import { Box } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import LiteYouTubeEmbed from 'react-lite-youtube-embed'
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
   const [iframeLoading, setIframeLoading] = useState(true)
@@ -8,6 +11,13 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
   }
 
   const renderWidget = (src: string, title: string, type: string) => {
+    if (type === 'youtube') {
+      return (
+        <Box my={2}>
+          <LiteYouTubeEmbed id={src} title="" />
+        </Box>
+      )
+    }
     return (
       <div
         className={
@@ -29,11 +39,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
 
   switch (text) {
     case 'YOUTUBE@VID':
-      return renderWidget(
-        `https://www.youtube.com/embed/${href}`,
-        'youtube video',
-        'youtube',
-      )
+      return renderWidget(href, 'youtube video', 'youtube')
 
     case 'DUNE@EMBED':
       return renderWidget(
