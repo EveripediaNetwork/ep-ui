@@ -33,8 +33,8 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                       ? constructMediaUrl(m)
                       : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
                   }
-                  imgH={100}
-                  imgW={100}
+                  imgH={130}
+                  imgW={130}
                   alt="related media"
                   hideOnError
                   objectFit="cover"
