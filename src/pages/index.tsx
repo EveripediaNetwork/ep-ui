@@ -13,6 +13,7 @@ import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/leaderboard.utils'
+import RankingList from '@/components/Landing/RankingList'
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -36,6 +37,7 @@ export const Index = ({
         }}
         bgImage="/images/homepage-bg-white.png"
       >
+        <RankingList />
         <TrendingWikis drops={promotedWikis && promotedWikis.slice(1)} />
         <CategoriesList categories={categories} />
       </Box>
