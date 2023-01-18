@@ -48,9 +48,9 @@ const TrendingCard = ({
             {title}
           </Text>
         </chakra.div>
-        <VStack w="full" pt="2" px="2">
+        <VStack w="full" pt="2" px="2" gap="2" overflow="hidden">
           {wikis.map((wiki, i) => (
-            <HStack w="full" pt="3" pb="2">
+            <HStack w="full">
               <chakra.span minW="2" alignSelf="flex-start">
                 {' '}
                 {i + 1}

@@ -56,7 +56,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
       <Flex
         alignItems="center"
         justifyContent="center"
-        maxW="1208px"
+        maxW={{ base: '403px', md: '778px', lg: '1200px' }}
         mx="auto"
         flexWrap="wrap"
         gap={2}
@@ -67,12 +67,9 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
           wikis={drops}
         />
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={drops} />
-        <Flex
-          py="1"
-          minH="450px"
-          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
-        >
+        <Flex py="1" minH="420px" w={{ base: '403px', md: '790px' }}>
           <Box
+            maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
             w="full"
             shadow="lg"
             rounded="lg"
@@ -133,14 +130,14 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
               }}
             >
               {drops.map(wiki => (
-                <VStack py="3" px="3" w="full">
+                <VStack py="3" px="3" w="full" spacing="1">
                   <Link href={`/wiki/${wiki.id}`}>
                     <Flex w="full" alignItems="center" justifyContent="center">
                       <AspectRatio ratio={7 / 3} w="90%">
                         <Image
                           src={getWikiImageUrl(wiki.images)}
                           alt={wiki.title}
-                          borderRadius="md"
+                          borderRadius="sm"
                         />
                       </AspectRatio>
                     </Flex>
@@ -158,16 +155,16 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     {wiki.title}
                   </Text>
                   <Text
-                    display={{ base: 'none', md: '-webkit-box' }}
+                    pt="-4"
                     noOfLines={2}
                     w="100%"
-                    textOverflow="ellipsis"
                     overflow="hidden"
                     fontSize={{
-                      base: '12px',
-                      md: '14px',
+                      base: '11px',
+                      md: '13px',
                     }}
                     color="gray.700"
+                    fontWeight="light"
                     _dark={{ bgColor: 'gray.700', color: 'white' }}
                   >
                     {wiki.summary}
@@ -177,13 +174,12 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     direction="column"
                     alignItems="center"
                     justifyContent="space-between"
-                    gap="4"
-                    pt="2"
+                    gap="3"
                   >
                     <Box
                       w="full"
                       rounded="lg"
-                      bg="gray.200"
+                      bg="gray.50"
                       _dark={{ bg: 'gray.600' }}
                       px="3"
                       py="3"
@@ -219,7 +215,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                     <Box
                       w="full"
                       rounded="lg"
-                      bg="gray.200"
+                      bg="gray.50"
                       _dark={{ bg: 'gray.600' }}
                       px="3"
                       py="3"
@@ -240,7 +236,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
                           />
                           <Link
                             href={`/account/${wiki.user?.id}`}
-                            color="brand.500 !important"
+                            color="brandLinkColor"
                             fontSize="12px"
                             overflow="hidden"
                             textOverflow="ellipsis"
