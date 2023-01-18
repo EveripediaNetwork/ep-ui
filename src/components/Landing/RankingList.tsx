@@ -85,8 +85,8 @@ const RankingList = () => {
         <Tabs mt={10} defaultIndex={0}>
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap="8">
-              <RankingListButton label="NFTs" icon={BiImage} />
               <RankingListButton label="Cryptocurrencies" icon={RiCoinsFill} />
+              <RankingListButton label="NFTs" icon={BiImage} />
             </TabList>
           </Flex>
           <TabPanels mt="10">
@@ -115,7 +115,7 @@ const RankingList = () => {
                 </Table>
               </TableContainer>
             </TabPanel>
-            <TabPanel>Cryptocurrencies</TabPanel>
+            <TabPanel>NFTs</TabPanel>
           </TabPanels>
         </Tabs>
         <Flex justifyContent="center" mt="10">
