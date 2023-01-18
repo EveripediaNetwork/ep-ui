@@ -7,11 +7,16 @@ export const GET_NFT_RANKINGS = gql`
         id
         title
         ipfs
+        created
         media {
           thumbnail
         }
         images {
           id
+        }
+        linkedWikis {
+          founders
+          blockchains
         }
         nftMarketData {
           floor_price_eth
@@ -33,11 +38,16 @@ export const GET_TOKEN_RANKINGS = gql`
         id
         title
         ipfs
+        created
         media {
           thumbnail
         }
         images {
           id
+        }
+        linkedWikis {
+          founders
+          blockchains
         }
         tokenMarketData {
           image

@@ -4,6 +4,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Image,
   Link,
   Tab,
   Table,
@@ -13,6 +14,7 @@ import {
   TabPanels,
   Tabs,
   Tbody,
+  Td,
   Text,
   Th,
   Thead,
@@ -23,10 +25,18 @@ import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
 import { IconType } from 'react-icons/lib'
 import { RankingListHead } from '@/data/RankingListData'
+import { RankCardType } from '@/types/RankDataTypes'
 
 export type RankingListButtonProps = {
   label: string
   icon: IconType
+}
+
+export type RankingListProps = {
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
 }
 
 const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
@@ -55,8 +65,10 @@ const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
   )
 }
 
-const RankingList = () => {
+const RankingList = ({ rankings }: RankingListProps) => {
   const { t } = useTranslation()
+
+  console.log(rankings)
 
   return (
     <Box
@@ -111,7 +123,106 @@ const RankingList = () => {
                       ))}
                     </Tr>
                   </Thead>
-                  <Tbody>&nbsp;</Tbody>
+                  <Tbody>
+                    <Tr>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Text color="gray.600">1</Text>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Flex gap="2.5" alignItems="center">
+                          <Box flexShrink="0" w="40px" h="40px">
+                            <Image
+                              src="/images/bitcoin.png"
+                              alt="Bitcoin"
+                              w="40px"
+                              h="40px"
+                            />
+                          </Box>
+                          <Box>
+                            <Link href="wiki/bitcoin" color="brandLinkColor">
+                              Bitcoin
+                            </Link>
+                            <Text color="gray.500">BTC</Text>
+                          </Box>
+                        </Flex>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Text color="gray.600">21000</Text>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Flex gap="1">
+                          <Text color="gray.600">1357</Text>
+                          <Text
+                            alignSelf="flex-start"
+                            fontSize="10px"
+                            lineHeight="15px"
+                          >
+                            0.07%
+                          </Text>
+                        </Flex>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Flex gap="1">
+                          <Text color="gray.600">$87,668,965</Text>
+                          <Text
+                            alignSelf="flex-start"
+                            fontSize="10px"
+                            lineHeight="15px"
+                          >
+                            0.07%
+                          </Text>
+                        </Flex>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        <Flex flexWrap="wrap" maxW="160px">
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                          ,
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                          ,
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                          ,
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                          ,
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                          ,
+                          <Link
+                            href="/wiki/pudgy-penguins"
+                            color="brandLinkColor"
+                          >
+                            Wylie A.
+                          </Link>
+                        </Flex>
+                      </Td>
+                      <Td fontWeight={500} fontSize="14px">
+                        April 30, 2021
+                      </Td>
+                    </Tr>
+                  </Tbody>
                 </Table>
               </TableContainer>
             </TabPanel>
