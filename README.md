@@ -4,7 +4,7 @@ A wikipedia platform connected with web3. Main features are:
 
 - data is stored using IPFS in a decentralized manner
 - ipfs hashes are signed and pushed to the blockchain, that way there is a proof of events onchain
-- an indexer listen to events on the blockchain, parses the ipfs hashes and store the data in a way that can be retrieved by frontend with a simple UI
+- an indexer listen to events on the blockchain, parses the ipfs hashes and stores the data in a way that can be retrieved by frontend with a simple UI
 
 ## Diagram
 
@@ -18,7 +18,7 @@ A wikipedia platform connected with web3. Main features are:
 
 ## For development
 
-Here a list of handy information to develop using this repo.
+Here is a list of handy information to develop using this repo.
 
 ### Develop
 
@@ -46,7 +46,7 @@ yarn build
 
 ## Contributing
 
-We use a Kanban-style board. That's were we prioritize the work. [Go to Project Board](https://github.com/EveripediaNetwork/issues/projects).
+We use a Kanban-style board. That's where we prioritize the work. [Go to Project Board](https://github.com/EveripediaNetwork/issues/projects).
 
 Please report bugs big and small by [opening an issue](https://github.com/EveripediaNetwork/issues)
 
@@ -56,5 +56,5 @@ Please report bugs big and small by [opening an issue](https://github.com/Everip
 - https://ipfs.io/#why <- data hosting
 
 - https://chakra-ui.com/ <- ui lib
-- https://redux-toolkit.js.org/ <- state managment
+- https://redux-toolkit.js.org/ <- state management
 - https://vercel.com/ <- hosting
