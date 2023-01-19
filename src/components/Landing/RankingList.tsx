@@ -66,10 +66,10 @@ const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
 }
 
 const getFounderName = (text: string) => {
-  return text
+  const names = text
     .split('-')
-    .map(slug => slug[0].toUpperCase())
-    .join(' ')
+    .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
+  return `${names[0]} ${names[1][0]}.`
 }
 
 const RankingList = ({ rankings }: RankingListProps) => {
@@ -167,13 +167,6 @@ const RankingList = ({ rankings }: RankingListProps) => {
                         <Td fontWeight={500} fontSize="14px">
                           <Flex gap="1">
                             <Text color="gray.600">NA</Text>
-                            {/* <Text
-                              alignSelf="flex-start"
-                              fontSize="10px"
-                              lineHeight="15px"
-                            >
-                              0.07%
-                            </Text> */}
                           </Flex>
                         </Td>
                         <Td fontWeight={500} fontSize="14px">
@@ -194,7 +187,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                             >
                               {Math.abs(
                                 token.tokenMarketData.price_change_24h,
-                              ).toFixed(3)}
+                              ).toFixed(2)}
                               %
                             </Text>
                           </Flex>
