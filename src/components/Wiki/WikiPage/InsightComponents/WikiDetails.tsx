@@ -96,7 +96,7 @@ export const WikiDetails = ({
                 {categories.length !== 0 && (
                   <Tr>
                     <Td
-                      w={{ base: 'unset', sm: '50%', xl: 'unset' }}
+                      w={{ base: 'unset', sm: '10%', xl: 'unset' }}
                       pt={1}
                       pb={3}
                     >
