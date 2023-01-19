@@ -82,6 +82,7 @@ export const WikiDetails = ({
             priority
             imageURL={imgSrc}
             alt={title}
+            sizes="(max-width: 400px) 100vw, 400px"
           />
         </AspectRatio>
         <VStack
