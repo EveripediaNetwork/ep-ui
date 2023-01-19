@@ -4,9 +4,7 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<Omit<BoxProps, 'as'>, 'objectFit'> &
   Omit<Omit<ImageProps, 'width'>, 'height'> & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     imgW?: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     imgH?: number
     hideOnError?: boolean
     objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
@@ -21,6 +19,7 @@ export const Image = ({
   placeholder,
   blurDataURL,
   hideOnError,
+  sizes,
   objectFit = 'cover',
   ...rest
 }: NextChakraImageProps) => (
@@ -35,7 +34,7 @@ export const Image = ({
       quality={95}
       style={{
         objectFit,
-        objectPosition: 'center center !important',
+        objectPosition: 'center',
         width: '100%',
         height: '100%',
       }}
@@ -48,6 +47,7 @@ export const Image = ({
         }
       }}
       priority={priority}
+      sizes={sizes}
       placeholder={placeholder}
       blurDataURL={blurDataURL}
       loading={priority ? 'eager' : 'lazy'}
