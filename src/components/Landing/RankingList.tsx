@@ -340,7 +340,6 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           </Tr>
                         )
                       }
-
                       return (
                         <Tr>
                           <Td fontWeight={500} fontSize="14px">
@@ -370,13 +369,6 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           <Td fontWeight={500} fontSize="14px">
                             <Flex gap="1">
                               <Text color="rankingListText">Coming Soon</Text>
-                              <Text
-                                alignSelf="flex-start"
-                                fontSize="10px"
-                                lineHeight="15px"
-                              >
-                                Coming Soon
-                              </Text>
                             </Flex>
                           </Td>
                           <Td fontWeight={500} fontSize="14px">
