@@ -114,8 +114,12 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 bg="#FFFFFF"
                 _dark={{ bg: '#2D3748' }}
               >
-                <Table variant="simple">
-                  <Thead h="45px" bg="rankingListTableHead">
+                <Table
+                  variant="simple"
+                  border="1px solid"
+                  borderColor="rankingListBorder"
+                >
+                  <Thead h="45px" bg="rankingListTableHead" overflow="hidden">
                     <Tr>
                       {RankingListHead.map(item => (
                         <Th
@@ -132,10 +136,18 @@ const RankingList = ({ rankings }: RankingListProps) => {
                   <Tbody>
                     {rankings.TokensListing.map((token, index) => (
                       <Tr>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           <Text color="rankingListText">{index + 1}</Text>
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           <Flex gap="2.5" alignItems="center">
                             <Box flexShrink="0" w="40px" h="40px">
                               <Image
@@ -158,17 +170,29 @@ const RankingList = ({ rankings }: RankingListProps) => {
                             </Box>
                           </Flex>
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           <Text color="rankingListText">
                             ${token.tokenMarketData.current_price}
                           </Text>
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           <Flex gap="1">
                             <Text color="rankingListText">NA</Text>
                           </Flex>
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           <Flex gap="1">
                             <Text color="rankingListText">
                               $
@@ -191,7 +215,11 @@ const RankingList = ({ rankings }: RankingListProps) => {
                             </Text>
                           </Flex>
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          borderColor="rankingListBorder"
+                          fontWeight={500}
+                          fontSize="14px"
+                        >
                           {token.linkedWikis && token.linkedWikis.founders ? (
                             <Flex flexWrap="wrap" maxW="160px">
                               {token.linkedWikis?.founders.map(founder => (
@@ -208,6 +236,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           )}
                         </Td>
                         <Td
+                          borderColor="rankingListBorder"
                           fontWeight={500}
                           color="rankingListText"
                           fontSize="14px"
@@ -227,7 +256,11 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 bg="#FFFFFF"
                 _dark={{ bg: '#2D3748' }}
               >
-                <Table variant="simple">
+                <Table
+                  variant="simple"
+                  border="1px solid"
+                  borderColor="rankingListBorder"
+                >
                   <Thead h="45px" bg="rankingListTableHead">
                     <Tr>
                       {RankingListHead.map(item => (
@@ -247,10 +280,18 @@ const RankingList = ({ rankings }: RankingListProps) => {
                       if (nft) {
                         return (
                           <Tr>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               <Text color="rankingListText">{index + 1}</Text>
                             </Td>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               <Flex gap="2.5" alignItems="center">
                                 <Box flexShrink="0" w="40px" h="40px">
                                   <Image
@@ -278,17 +319,29 @@ const RankingList = ({ rankings }: RankingListProps) => {
                                 </Box>
                               </Flex>
                             </Td>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               <Text color="rankingListText">
                                 ${nft.nftMarketData.floor_price_usd}
                               </Text>
                             </Td>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               <Flex gap="1">
                                 <Text color="rankingListText">NA</Text>
                               </Flex>
                             </Td>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               <Flex gap="1">
                                 <Text color="rankingListText">
                                   $
@@ -314,7 +367,11 @@ const RankingList = ({ rankings }: RankingListProps) => {
                                 </Text>
                               </Flex>
                             </Td>
-                            <Td fontWeight={500} fontSize="14px">
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
                               {nft.linkedWikis && nft.linkedWikis.founders ? (
                                 <Flex flexWrap="wrap" maxW="160px">
                                   {nft.linkedWikis?.founders.map(founder => (
@@ -331,6 +388,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                               )}
                             </Td>
                             <Td
+                              borderColor="rankingListBorder"
                               fontWeight={500}
                               color="rankingListText"
                               fontSize="14px"
@@ -342,10 +400,18 @@ const RankingList = ({ rankings }: RankingListProps) => {
                       }
                       return (
                         <Tr>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             <Text color="rankingListText">{index + 1}</Text>
                           </Td>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             <Flex gap="2.5" alignItems="center">
                               <Box flexShrink="0" w="40px" h="40px">
                                 <Icon
@@ -358,23 +424,40 @@ const RankingList = ({ rankings }: RankingListProps) => {
                               <Box>Coming Soon</Box>
                             </Flex>
                           </Td>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             <Text color="rankingListText">Coming Soon</Text>
                           </Td>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             <Flex gap="1">
                               <Text color="rankingListText">NA</Text>
                             </Flex>
                           </Td>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             <Flex gap="1">
                               <Text color="rankingListText">Coming Soon</Text>
                             </Flex>
                           </Td>
-                          <Td fontWeight={500} fontSize="14px">
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
                             NA
                           </Td>
                           <Td
+                            borderColor="rankingListBorder"
                             fontWeight={500}
                             color="rankingListText"
                             fontSize="14px"

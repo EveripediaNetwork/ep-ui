@@ -253,5 +253,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
     },
+    rankingListBorder: {
+      default: 'gray.200',
+      _dark: 'whiteAlpha.300',
+    },
   },
 }
