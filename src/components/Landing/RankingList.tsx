@@ -134,117 +134,189 @@ const RankingList = ({ rankings }: RankingListProps) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {rankings.TokensListing.map((token, index) => (
-                      <Tr>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          <Text color="rankingListText">{index + 1}</Text>
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          <Flex gap="2.5" alignItems="center">
-                            <Box flexShrink="0" w="40px" h="40px">
-                              <Image
-                                src={token.tokenMarketData.image}
-                                alt={token.title}
-                                w="40px"
-                                h="40px"
-                              />
-                            </Box>
-                            <Box>
-                              <Link
-                                href={`wiki/${token.id}`}
-                                color="brandLinkColor"
-                              >
-                                {token.title}
-                              </Link>
-                              <Text color="rankingListText">
-                                {token.tokenMarketData.alias}
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          <Text color="rankingListText">
-                            ${token.tokenMarketData.current_price}
-                          </Text>
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          <Flex gap="1">
-                            <Text color="rankingListText">NA</Text>
-                          </Flex>
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          <Flex gap="1">
-                            <Text color="rankingListText">
-                              $
-                              {token.tokenMarketData.market_cap.toLocaleString()}
-                            </Text>
-                            <Text
-                              alignSelf="flex-start"
-                              fontSize="10px"
-                              lineHeight="15px"
-                              color={
-                                token.tokenMarketData.price_change_24h < 0
-                                  ? 'red.500'
-                                  : 'green.500'
-                              }
+                    {rankings.TokensListing.map((token, index) => {
+                      if (!token) {
+                        return (
+                          <Tr>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
                             >
-                              {Math.abs(
-                                token.tokenMarketData.price_change_24h,
-                              ).toFixed(2)}
-                              %
-                            </Text>
-                          </Flex>
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          fontSize="14px"
-                        >
-                          {token.linkedWikis && token.linkedWikis.founders ? (
-                            <Flex flexWrap="wrap" maxW="160px">
-                              {token.linkedWikis?.founders.map(founder => (
+                              <Text color="rankingListText">{index + 1}</Text>
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
+                              <Flex gap="2.5" alignItems="center">
+                                <Box flexShrink="0" w="40px" h="40px">
+                                  <Icon
+                                    as={BiImage}
+                                    w="full"
+                                    h="full"
+                                    color="gray.500"
+                                  />
+                                </Box>
+                                <Box>Coming Soon</Box>
+                              </Flex>
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
+                              <Text color="rankingListText">Coming Soon</Text>
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
+                              <Flex gap="1">
+                                <Text color="rankingListText">NA</Text>
+                              </Flex>
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
+                              <Flex gap="1">
+                                <Text color="rankingListText">Coming Soon</Text>
+                              </Flex>
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              fontSize="14px"
+                            >
+                              NA
+                            </Td>
+                            <Td
+                              borderColor="rankingListBorder"
+                              fontWeight={500}
+                              color="rankingListText"
+                              fontSize="14px"
+                            >
+                              Coming soon
+                            </Td>
+                          </Tr>
+                        )
+                      }
+                      return (
+                        <Tr>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Text color="rankingListText">{index + 1}</Text>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="2.5" alignItems="center">
+                              <Box flexShrink="0" w="40px" h="40px">
+                                <Image
+                                  src={token.tokenMarketData.image}
+                                  alt={token.title}
+                                  w="40px"
+                                  h="40px"
+                                />
+                              </Box>
+                              <Box>
                                 <Link
-                                  href={`wiki/${founder}`}
+                                  href={`wiki/${token.id}`}
                                   color="brandLinkColor"
                                 >
-                                  {getFounderName(founder)}
+                                  {token.title}
                                 </Link>
-                              ))}
+                                <Text color="rankingListText">
+                                  {token.tokenMarketData.alias}
+                                </Text>
+                              </Box>
                             </Flex>
-                          ) : (
-                            'NA'
-                          )}
-                        </Td>
-                        <Td
-                          borderColor="rankingListBorder"
-                          fontWeight={500}
-                          color="rankingListText"
-                          fontSize="14px"
-                        >
-                          NA
-                        </Td>
-                      </Tr>
-                    ))}
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Text color="rankingListText">
+                              ${token.tokenMarketData.current_price}
+                            </Text>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="1">
+                              <Text color="rankingListText">NA</Text>
+                            </Flex>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="1">
+                              <Text color="rankingListText">
+                                $
+                                {token.tokenMarketData.market_cap.toLocaleString()}
+                              </Text>
+                              <Text
+                                alignSelf="flex-start"
+                                fontSize="10px"
+                                lineHeight="15px"
+                                color={
+                                  token.tokenMarketData.price_change_24h < 0
+                                    ? 'red.500'
+                                    : 'green.500'
+                                }
+                              >
+                                {Math.abs(
+                                  token.tokenMarketData.price_change_24h,
+                                ).toFixed(2)}
+                                %
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            {token.linkedWikis && token.linkedWikis.founders ? (
+                              <Flex flexWrap="wrap" maxW="160px">
+                                {token.linkedWikis?.founders.map(founder => (
+                                  <Link
+                                    href={`wiki/${founder}`}
+                                    color="brandLinkColor"
+                                  >
+                                    {getFounderName(founder)}
+                                  </Link>
+                                ))}
+                              </Flex>
+                            ) : (
+                              'NA'
+                            )}
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            color="rankingListText"
+                            fontSize="14px"
+                          >
+                            NA
+                          </Td>
+                        </Tr>
+                      )
+                    })}
                   </Tbody>
                 </Table>
               </TableContainer>
