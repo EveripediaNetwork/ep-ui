@@ -6,7 +6,7 @@ import { constructMediaUrl } from '@/utils/mediaUtils'
 import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
 
-const RELATED_MEDIA_IMAGE_BOX_SIZE = 90
+const RELATED_MEDIA_IMAGE_BOX_SIZE = 150
 
 const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   if (!media || media.length === 0) return null
