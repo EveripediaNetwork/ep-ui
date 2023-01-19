@@ -212,7 +212,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           color="rankingListText"
                           fontSize="14px"
                         >
-                          Coming soon
+                          NA
                         </Td>
                       </Tr>
                     ))}
@@ -335,7 +335,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                               color="rankingListText"
                               fontSize="14px"
                             >
-                              Coming soon
+                              NA
                             </Td>
                           </Tr>
                         )
