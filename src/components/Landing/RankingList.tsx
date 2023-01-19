@@ -26,6 +26,7 @@ import { RiCoinsFill } from 'react-icons/ri'
 import { IconType } from 'react-icons/lib'
 import { RankingListHead } from '@/data/RankingListData'
 import { RankCardType } from '@/types/RankDataTypes'
+import { RANKDATA } from '@/data/RankData'
 
 export type RankingListButtonProps = {
   label: string
@@ -312,7 +313,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                             color="rankingListText"
                             fontSize="14px"
                           >
-                            NA
+                            {RANKDATA[index].DateCreated}
                           </Td>
                         </Tr>
                       )
