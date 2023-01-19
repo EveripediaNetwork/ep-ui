@@ -75,8 +75,6 @@ const getFounderName = (text: string) => {
 const RankingList = ({ rankings }: RankingListProps) => {
   const { t } = useTranslation()
 
-  console.log(rankings)
-
   return (
     <Box
       mt={10}
@@ -124,6 +122,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           fontWeight={500}
                           fontSize="12px"
                           textTransform="capitalize"
+                          color="rankingListTableHeading"
                         >
                           {item.label}
                         </Th>
@@ -134,7 +133,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                     {rankings.TokensListing.map((token, index) => (
                       <Tr>
                         <Td fontWeight={500} fontSize="14px">
-                          <Text color="gray.600">{index + 1}</Text>
+                          <Text color="rankingListText">{index + 1}</Text>
                         </Td>
                         <Td fontWeight={500} fontSize="14px">
                           <Flex gap="2.5" alignItems="center">
@@ -153,25 +152,25 @@ const RankingList = ({ rankings }: RankingListProps) => {
                               >
                                 {token.title}
                               </Link>
-                              <Text color="gray.500">
+                              <Text color="rankingListText">
                                 {token.tokenMarketData.alias}
                               </Text>
                             </Box>
                           </Flex>
                         </Td>
                         <Td fontWeight={500} fontSize="14px">
-                          <Text color="gray.600">
+                          <Text color="rankingListText">
                             ${token.tokenMarketData.current_price}
                           </Text>
                         </Td>
                         <Td fontWeight={500} fontSize="14px">
                           <Flex gap="1">
-                            <Text color="gray.600">NA</Text>
+                            <Text color="rankingListText">NA</Text>
                           </Flex>
                         </Td>
                         <Td fontWeight={500} fontSize="14px">
                           <Flex gap="1">
-                            <Text color="gray.600">
+                            <Text color="rankingListText">
                               $
                               {token.tokenMarketData.market_cap.toLocaleString()}
                             </Text>
@@ -208,7 +207,11 @@ const RankingList = ({ rankings }: RankingListProps) => {
                             'NA'
                           )}
                         </Td>
-                        <Td fontWeight={500} fontSize="14px">
+                        <Td
+                          fontWeight={500}
+                          color="rankingListText"
+                          fontSize="14px"
+                        >
                           Coming soon
                         </Td>
                       </Tr>
@@ -217,7 +220,182 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 </Table>
               </TableContainer>
             </TabPanel>
-            <TabPanel>NFTs</TabPanel>
+            <TabPanel>
+              <TableContainer
+                boxShadow="md"
+                borderRadius="8px"
+                bg="#FFFFFF"
+                _dark={{ bg: '#2D3748' }}
+              >
+                <Table variant="simple">
+                  <Thead h="45px" bg="rankingListTableHead">
+                    <Tr>
+                      {RankingListHead.map(item => (
+                        <Th
+                          fontWeight={500}
+                          fontSize="12px"
+                          textTransform="capitalize"
+                          color="rankingListTableHeading"
+                        >
+                          {item.label}
+                        </Th>
+                      ))}
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {rankings.NFTsListing.map((nft, index) => {
+                      if (nft) {
+                        return (
+                          <Tr>
+                            <Td fontWeight={500} fontSize="14px">
+                              <Text color="rankingListText">{index + 1}</Text>
+                            </Td>
+                            <Td fontWeight={500} fontSize="14px">
+                              <Flex gap="2.5" alignItems="center">
+                                <Box flexShrink="0" w="40px" h="40px">
+                                  <Image
+                                    src={
+                                      nft.nftMarketData &&
+                                      nft.nftMarketData.image
+                                        ? nft.nftMarketData.image
+                                        : ''
+                                    }
+                                    alt={nft.title}
+                                    w="40px"
+                                    h="40px"
+                                  />
+                                </Box>
+                                <Box>
+                                  <Link
+                                    href={`wiki/${nft.id}`}
+                                    color="brandLinkColor"
+                                  >
+                                    {nft.title}
+                                  </Link>
+                                  <Text color="rankingListText">
+                                    {nft.nftMarketData.alias}
+                                  </Text>
+                                </Box>
+                              </Flex>
+                            </Td>
+                            <Td fontWeight={500} fontSize="14px">
+                              <Text color="rankingListText">
+                                ${nft.nftMarketData.floor_price_usd}
+                              </Text>
+                            </Td>
+                            <Td fontWeight={500} fontSize="14px">
+                              <Flex gap="1">
+                                <Text color="rankingListText">NA</Text>
+                              </Flex>
+                            </Td>
+                            <Td fontWeight={500} fontSize="14px">
+                              <Flex gap="1">
+                                <Text color="rankingListText">
+                                  $
+                                  {nft.nftMarketData.market_cap_usd.toLocaleString()}
+                                </Text>
+                                <Text
+                                  alignSelf="flex-start"
+                                  fontSize="10px"
+                                  lineHeight="15px"
+                                  color={
+                                    nft.nftMarketData
+                                      .floor_price_in_usd_24h_percentage_change <
+                                    0
+                                      ? 'red.500'
+                                      : 'green.500'
+                                  }
+                                >
+                                  {Math.abs(
+                                    nft.nftMarketData
+                                      .floor_price_in_usd_24h_percentage_change,
+                                  ).toFixed(2)}
+                                  %
+                                </Text>
+                              </Flex>
+                            </Td>
+                            <Td fontWeight={500} fontSize="14px">
+                              {nft.linkedWikis && nft.linkedWikis.founders ? (
+                                <Flex flexWrap="wrap" maxW="160px">
+                                  {nft.linkedWikis?.founders.map(founder => (
+                                    <Link
+                                      href={`wiki/${founder}`}
+                                      color="brandLinkColor"
+                                    >
+                                      {getFounderName(founder)}
+                                    </Link>
+                                  ))}
+                                </Flex>
+                              ) : (
+                                'NA'
+                              )}
+                            </Td>
+                            <Td
+                              fontWeight={500}
+                              color="rankingListText"
+                              fontSize="14px"
+                            >
+                              Coming soon
+                            </Td>
+                          </Tr>
+                        )
+                      }
+
+                      return (
+                        <Tr>
+                          <Td fontWeight={500} fontSize="14px">
+                            <Text color="rankingListText">{index + 1}</Text>
+                          </Td>
+                          <Td fontWeight={500} fontSize="14px">
+                            <Flex gap="2.5" alignItems="center">
+                              <Box flexShrink="0" w="40px" h="40px">
+                                <Icon
+                                  as={BiImage}
+                                  w="full"
+                                  h="full"
+                                  color="gray.500"
+                                />
+                              </Box>
+                              <Box>Coming Soon</Box>
+                            </Flex>
+                          </Td>
+                          <Td fontWeight={500} fontSize="14px">
+                            <Text color="rankingListText">Coming Soon</Text>
+                          </Td>
+                          <Td fontWeight={500} fontSize="14px">
+                            <Flex gap="1">
+                              <Text color="rankingListText">Coming Soon</Text>
+                            </Flex>
+                          </Td>
+                          <Td fontWeight={500} fontSize="14px">
+                            <Flex gap="1">
+                              <Text color="rankingListText">Coming Soon</Text>
+                              <Text
+                                alignSelf="flex-start"
+                                fontSize="10px"
+                                lineHeight="15px"
+                              >
+                                Coming Soon
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td fontWeight={500} fontSize="14px">
+                            NA
+                          </Td>
+                          <Td
+                            fontWeight={500}
+                            color="rankingListText"
+                            fontSize="14px"
+                          >
+                            Coming soon
+                          </Td>
+                        </Tr>
+                      )
+                    })}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </TabPanel>
           </TabPanels>
         </Tabs>
         <Flex justifyContent="center" mt="10">

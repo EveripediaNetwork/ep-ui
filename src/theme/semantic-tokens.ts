@@ -245,5 +245,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.50',
       _dark: 'whiteAlpha.100',
     },
+    rankingListTableHeading: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
+    rankingListText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.900',
+    },
   },
 }
