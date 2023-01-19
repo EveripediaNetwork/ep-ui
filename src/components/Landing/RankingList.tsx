@@ -65,6 +65,13 @@ const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
   )
 }
 
+const getFounderName = (text: string) => {
+  return text
+    .split('-')
+    .map(slug => slug[0].toUpperCase())
+    .join(' ')
+}
+
 const RankingList = ({ rankings }: RankingListProps) => {
   const { t } = useTranslation()
 
@@ -124,104 +131,95 @@ const RankingList = ({ rankings }: RankingListProps) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    <Tr>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Text color="gray.600">1</Text>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Flex gap="2.5" alignItems="center">
-                          <Box flexShrink="0" w="40px" h="40px">
-                            <Image
-                              src="/images/bitcoin.png"
-                              alt="Bitcoin"
-                              w="40px"
-                              h="40px"
-                            />
-                          </Box>
-                          <Box>
-                            <Link href="wiki/bitcoin" color="brandLinkColor">
-                              Bitcoin
-                            </Link>
-                            <Text color="gray.500">BTC</Text>
-                          </Box>
-                        </Flex>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Text color="gray.600">21000</Text>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Flex gap="1">
-                          <Text color="gray.600">1357</Text>
-                          <Text
-                            alignSelf="flex-start"
-                            fontSize="10px"
-                            lineHeight="15px"
-                          >
-                            0.07%
+                    {rankings.TokensListing.map((token, index) => (
+                      <Tr>
+                        <Td fontWeight={500} fontSize="14px">
+                          <Text color="gray.600">{index + 1}</Text>
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          <Flex gap="2.5" alignItems="center">
+                            <Box flexShrink="0" w="40px" h="40px">
+                              <Image
+                                src={token.tokenMarketData.image}
+                                alt={token.title}
+                                w="40px"
+                                h="40px"
+                              />
+                            </Box>
+                            <Box>
+                              <Link
+                                href={`wiki/${token.id}`}
+                                color="brandLinkColor"
+                              >
+                                {token.title}
+                              </Link>
+                              <Text color="gray.500">
+                                {token.tokenMarketData.alias}
+                              </Text>
+                            </Box>
+                          </Flex>
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          <Text color="gray.600">
+                            ${token.tokenMarketData.current_price}
                           </Text>
-                        </Flex>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Flex gap="1">
-                          <Text color="gray.600">$87,668,965</Text>
-                          <Text
-                            alignSelf="flex-start"
-                            fontSize="10px"
-                            lineHeight="15px"
-                          >
-                            0.07%
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        <Flex flexWrap="wrap" maxW="160px">
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                          ,
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                          ,
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                          ,
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                          ,
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                          ,
-                          <Link
-                            href="/wiki/pudgy-penguins"
-                            color="brandLinkColor"
-                          >
-                            Wylie A.
-                          </Link>
-                        </Flex>
-                      </Td>
-                      <Td fontWeight={500} fontSize="14px">
-                        April 30, 2021
-                      </Td>
-                    </Tr>
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          <Flex gap="1">
+                            <Text color="gray.600">NA</Text>
+                            {/* <Text
+                              alignSelf="flex-start"
+                              fontSize="10px"
+                              lineHeight="15px"
+                            >
+                              0.07%
+                            </Text> */}
+                          </Flex>
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          <Flex gap="1">
+                            <Text color="gray.600">
+                              $
+                              {token.tokenMarketData.market_cap.toLocaleString()}
+                            </Text>
+                            <Text
+                              alignSelf="flex-start"
+                              fontSize="10px"
+                              lineHeight="15px"
+                              color={
+                                token.tokenMarketData.price_change_24h < 0
+                                  ? 'red.500'
+                                  : 'green.500'
+                              }
+                            >
+                              {Math.abs(
+                                token.tokenMarketData.price_change_24h,
+                              ).toFixed(3)}
+                              %
+                            </Text>
+                          </Flex>
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          {token.linkedWikis && token.linkedWikis.founders ? (
+                            <Flex flexWrap="wrap" maxW="160px">
+                              {token.linkedWikis?.founders.map(founder => (
+                                <Link
+                                  href={`wiki/${founder}`}
+                                  color="brandLinkColor"
+                                >
+                                  {getFounderName(founder)}
+                                </Link>
+                              ))}
+                            </Flex>
+                          ) : (
+                            'NA'
+                          )}
+                        </Td>
+                        <Td fontWeight={500} fontSize="14px">
+                          Coming soon
+                        </Td>
+                      </Tr>
+                    ))}
                   </Tbody>
                 </Table>
               </TableContainer>

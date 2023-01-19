@@ -117,6 +117,8 @@ export async function getStaticProps() {
     TokensListing: TokensList,
   }
 
+  console.log(rankings)
+
   return {
     props: {
       promotedWikis: sortedPromotedWikis || [],
