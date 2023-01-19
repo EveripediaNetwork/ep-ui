@@ -363,7 +363,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                           </Td>
                           <Td fontWeight={500} fontSize="14px">
                             <Flex gap="1">
-                              <Text color="rankingListText">Coming Soon</Text>
+                              <Text color="rankingListText">NA</Text>
                             </Flex>
                           </Td>
                           <Td fontWeight={500} fontSize="14px">
