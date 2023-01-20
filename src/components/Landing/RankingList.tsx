@@ -325,128 +325,127 @@ const RankingList = ({ rankings }: RankingListProps) => {
                   </Thead>
                   <Tbody>
                     {rankings.NFTsListing.map((nft, index) => {
-                      if (nft) {
-                        return (
-                          <Tr>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              <Text color="rankingListText">{index + 1}</Text>
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              <Flex gap="2.5" alignItems="center">
-                                <Box flexShrink="0" w="40px" h="40px">
-                                  <Image
-                                    src={
-                                      nft.nftMarketData &&
-                                      nft.nftMarketData.image
-                                        ? nft.nftMarketData.image
-                                        : ''
-                                    }
-                                    alt={nft.title}
-                                    w="40px"
-                                    h="40px"
-                                  />
-                                </Box>
-                                <Box>
+                      if (!nft) {
+                        return <RankingItemNotAvailable index={index} />
+                      }
+                      return (
+                        <Tr>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Text color="rankingListText">{index + 1}</Text>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="2.5" alignItems="center">
+                              <Box flexShrink="0" w="40px" h="40px">
+                                <Image
+                                  src={
+                                    nft.nftMarketData && nft.nftMarketData.image
+                                      ? nft.nftMarketData.image
+                                      : ''
+                                  }
+                                  alt={nft.title}
+                                  w="40px"
+                                  h="40px"
+                                />
+                              </Box>
+                              <Box>
+                                <Link
+                                  href={`wiki/${nft.id}`}
+                                  color="brandLinkColor"
+                                >
+                                  {nft.title}
+                                </Link>
+                                <Text color="rankingListText">
+                                  {nft.nftMarketData.alias}
+                                </Text>
+                              </Box>
+                            </Flex>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Text color="rankingListText">
+                              ${nft.nftMarketData.floor_price_usd}
+                            </Text>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="1">
+                              <Text color="rankingListText">NA</Text>
+                            </Flex>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            <Flex gap="1">
+                              <Text color="rankingListText">
+                                $
+                                {nft.nftMarketData.market_cap_usd.toLocaleString()}
+                              </Text>
+                              <Text
+                                alignSelf="flex-start"
+                                fontSize="10px"
+                                lineHeight="15px"
+                                color={
+                                  nft.nftMarketData
+                                    .floor_price_in_usd_24h_percentage_change <
+                                  0
+                                    ? 'red.500'
+                                    : 'green.500'
+                                }
+                              >
+                                {Math.abs(
+                                  nft.nftMarketData
+                                    .floor_price_in_usd_24h_percentage_change,
+                                ).toFixed(2)}
+                                %
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            fontSize="14px"
+                          >
+                            {nft.linkedWikis && nft.linkedWikis.founders ? (
+                              <Flex flexWrap="wrap" maxW="160px">
+                                {nft.linkedWikis?.founders.map(founder => (
                                   <Link
-                                    href={`wiki/${nft.id}`}
+                                    href={`wiki/${founder}`}
                                     color="brandLinkColor"
                                   >
-                                    {nft.title}
+                                    {getFounderName(founder)}
                                   </Link>
-                                  <Text color="rankingListText">
-                                    {nft.nftMarketData.alias}
-                                  </Text>
-                                </Box>
+                                ))}
                               </Flex>
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              <Text color="rankingListText">
-                                ${nft.nftMarketData.floor_price_usd}
-                              </Text>
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              <Flex gap="1">
-                                <Text color="rankingListText">NA</Text>
-                              </Flex>
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              <Flex gap="1">
-                                <Text color="rankingListText">
-                                  $
-                                  {nft.nftMarketData.market_cap_usd.toLocaleString()}
-                                </Text>
-                                <Text
-                                  alignSelf="flex-start"
-                                  fontSize="10px"
-                                  lineHeight="15px"
-                                  color={
-                                    nft.nftMarketData
-                                      .floor_price_in_usd_24h_percentage_change <
-                                    0
-                                      ? 'red.500'
-                                      : 'green.500'
-                                  }
-                                >
-                                  {Math.abs(
-                                    nft.nftMarketData
-                                      .floor_price_in_usd_24h_percentage_change,
-                                  ).toFixed(2)}
-                                  %
-                                </Text>
-                              </Flex>
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              fontSize="14px"
-                            >
-                              {nft.linkedWikis && nft.linkedWikis.founders ? (
-                                <Flex flexWrap="wrap" maxW="160px">
-                                  {nft.linkedWikis?.founders.map(founder => (
-                                    <Link
-                                      href={`wiki/${founder}`}
-                                      color="brandLinkColor"
-                                    >
-                                      {getFounderName(founder)}
-                                    </Link>
-                                  ))}
-                                </Flex>
-                              ) : (
-                                'NA'
-                              )}
-                            </Td>
-                            <Td
-                              borderColor="rankingListBorder"
-                              fontWeight={500}
-                              color="rankingListText"
-                              fontSize="14px"
-                            >
-                              NA
-                            </Td>
-                          </Tr>
-                        )
-                      }
-                      return <RankingItemNotAvailable index={index} />
+                            ) : (
+                              'NA'
+                            )}
+                          </Td>
+                          <Td
+                            borderColor="rankingListBorder"
+                            fontWeight={500}
+                            color="rankingListText"
+                            fontSize="14px"
+                          >
+                            NA
+                          </Td>
+                        </Tr>
+                      )
                     })}
                   </Tbody>
                 </Table>
