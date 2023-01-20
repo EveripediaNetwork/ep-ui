@@ -50,8 +50,9 @@ const HighlightsModal = ({
             mt={-2}
             py={4}
             px={6}
-            maxH="min(64vh, 500px)"
+            maxH="max-content"
             overflowY="auto"
+            zIndex="4"
           >
             <CategoryInput wiki={currentWiki} />
             <TagsInput wiki={currentWiki} />
