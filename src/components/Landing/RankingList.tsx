@@ -73,6 +73,25 @@ const getFounderName = (text: string) => {
   return `${names[0]} ${names[1][0]}.`
 }
 
+const RankingTableHead = () => {
+  return (
+    <Thead h="45px" bg="rankingListTableHead">
+      <Tr>
+        {RankingListHead.map(item => (
+          <Th
+            fontWeight={500}
+            fontSize="12px"
+            textTransform="capitalize"
+            color="rankingListTableHeading"
+          >
+            {item.label}
+          </Th>
+        ))}
+      </Tr>
+    </Thead>
+  )
+}
+
 const RankingItemNotAvailable = ({ index }: { index: number }) => {
   return (
     <Tr>
@@ -162,20 +181,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                   border="1px solid"
                   borderColor="rankingListBorder"
                 >
-                  <Thead h="45px" bg="rankingListTableHead" overflow="hidden">
-                    <Tr>
-                      {RankingListHead.map(item => (
-                        <Th
-                          fontWeight={500}
-                          fontSize="12px"
-                          textTransform="capitalize"
-                          color="rankingListTableHeading"
-                        >
-                          {item.label}
-                        </Th>
-                      ))}
-                    </Tr>
-                  </Thead>
+                  <RankingTableHead />
                   <Tbody>
                     {rankings.TokensListing.map((token, index) => {
                       if (!token) {
@@ -309,20 +315,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
                   border="1px solid"
                   borderColor="rankingListBorder"
                 >
-                  <Thead h="45px" bg="rankingListTableHead">
-                    <Tr>
-                      {RankingListHead.map(item => (
-                        <Th
-                          fontWeight={500}
-                          fontSize="12px"
-                          textTransform="capitalize"
-                          color="rankingListTableHeading"
-                        >
-                          {item.label}
-                        </Th>
-                      ))}
-                    </Tr>
-                  </Thead>
+                  <RankingTableHead />
                   <Tbody>
                     {rankings.NFTsListing.map((nft, index) => {
                       if (!nft) {
