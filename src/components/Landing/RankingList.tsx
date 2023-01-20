@@ -177,6 +177,8 @@ const RankingItem = ({
               alt={item.title}
               w="40px"
               h="40px"
+              borderRadius="50%"
+              objectFit="cover"
             />
           </Box>
           <Box>
