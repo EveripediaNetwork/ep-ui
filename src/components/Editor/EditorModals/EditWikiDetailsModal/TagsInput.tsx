@@ -35,6 +35,7 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
         borderWidth={1}
         p={2}
         pos="relative"
+        maxH="max-content"
       >
         <Select
           isOptionDisabled={() => value.length >= 5}

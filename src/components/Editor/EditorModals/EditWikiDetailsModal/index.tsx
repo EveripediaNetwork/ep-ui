@@ -50,7 +50,7 @@ const HighlightsModal = ({
             mt={-2}
             py={4}
             px={6}
-            maxH="max-content"
+            maxH="min(64vh, 500px)"
             overflowY="auto"
             zIndex="4"
           >
