@@ -79,10 +79,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               </Heading>
             </LinkOverlay>
             <Text
-              fontSize={{
-                base: '10px',
-                md: '12px',
-              }}
+              fontSize="12px"
               maxW="90%"
               minH={12}
               color="homeDescriptionColor"
@@ -135,7 +132,13 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
+const TrendingWikis = ({
+  drops = [],
+  recent = [],
+}: {
+  drops?: Wiki[]
+  recent?: Wiki[]
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -175,7 +178,7 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
           icon={RiBarChartFill}
           wikis={drops}
         />
-        <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={drops} />
+        <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <Flex pt="1" minH="440px">
           <Box
             maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}

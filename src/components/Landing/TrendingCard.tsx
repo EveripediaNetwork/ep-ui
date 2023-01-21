@@ -25,6 +25,7 @@ const TrendingCard = ({
   title: string
   icon: IconType
 }) => {
+  console.log(wikis)
   return (
     <Flex
       py="1"
@@ -85,10 +86,7 @@ const TrendingCard = ({
                     cursor="pointer"
                     color="black"
                     _dark={{ color: 'white' }}
-                    fontSize={{
-                      base: '14px',
-                      md: '18px',
-                    }}
+                    fontSize="18px"
                     overflow="hidden"
                     onClick={() => router.push(`wiki/${wiki.id}`)}
                   >
@@ -101,10 +99,7 @@ const TrendingCard = ({
                     w="97%"
                     textOverflow="ellipsis"
                     overflow="hidden"
-                    fontSize={{
-                      base: '10px',
-                      md: '12px',
-                    }}
+                    fontSize="12px"
                     fontWeight="thin"
                   >
                     {wiki.summary}
