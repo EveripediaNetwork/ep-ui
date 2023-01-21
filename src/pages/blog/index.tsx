@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { useAppDispatch } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { getBlogsFromAllAccounts } from '@/utils/blog.utils'
 import { Blog as BlogType } from '@/types/Blog'
 import BlogHeader from '@/components/SEO/Blog'
@@ -95,7 +95,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const blogEntries = await getBlogsFromAllAccounts()
   await Promise.all(store.dispatch(ArweaveApi.util.getRunningQueriesThunk()))
   return {
