@@ -83,7 +83,7 @@ const WikiLinkPreview = ({ wikiId }: { wikiId: string }) => {
           </PopoverBody>
           {wiki?.tags?.length !== 0 && (
             <PopoverFooter>
-              <HStack spacing={2} align="center" flexWrap="wrap">
+              <HStack gap="1" align="center" flexWrap="wrap">
                 <Tag variant="outline">
                   <TagLeftIcon mr={1} boxSize="12px" as={RiPriceTagLine} />
                   <TagLabel ml={0} fontSize="12px">
