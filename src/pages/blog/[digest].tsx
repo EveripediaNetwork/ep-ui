@@ -25,7 +25,7 @@ import { useRouter } from 'next/router'
 import { getEntry } from '@/services/blog/mirror'
 import { useENSData } from '@/hooks/useENSData'
 import { Avatar } from '@/components/Elements'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 const BlogContentOverride =
   /!\[ \]\((https?:\/\/.*\.(?:png|jpg|svg|gif|jpeg))\?height=\d*\\&width=\d*\)/
@@ -192,6 +192,10 @@ export const getStaticProps: GetStaticProps = async context => {
       blogEntries,
     },
   }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: 'blocking' }
 }
 
 export default BlogPostPage
