@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next'
 import React from 'react'
 import { MdKeyboardBackspace as LeftArrow } from 'react-icons/md'
 import {
@@ -26,6 +25,7 @@ import { useRouter } from 'next/router'
 import { getEntry } from '@/services/blog/mirror'
 import { useENSData } from '@/hooks/useENSData'
 import { Avatar } from '@/components/Elements'
+import { GetStaticProps } from 'next'
 
 const BlogContentOverride =
   /!\[ \]\((https?:\/\/.*\.(?:png|jpg|svg|gif|jpeg))\?height=\d*\\&width=\d*\)/
@@ -172,7 +172,7 @@ export const BlogPostPage = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
   const blog = formatBlog(result.data?.entry as Blog)
