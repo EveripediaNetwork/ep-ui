@@ -40,7 +40,7 @@ export type RankingListProps = {
   }
 }
 
-const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
+export const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
   return (
     <Tab
       display="flex"
@@ -66,7 +66,7 @@ const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
   )
 }
 
-const getFounderName = (text: string) => {
+export const getFounderName = (text: string) => {
   const names = text
     .split('-')
     .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
@@ -134,14 +134,17 @@ const RankingItemNotAvailable = ({ index }: { index: number }) => {
   )
 }
 
-const RankingTableWrapper = ({ children }: { children: React.ReactNode }) => {
+export const RankingTableWrapper = ({
+  children,
+  hasPagination,
+}: {
+  children: React.ReactNode
+  hasPagination: boolean
+}) => {
+  console.log(hasPagination)
+
   return (
-    <TableContainer
-      boxShadow="md"
-      borderRadius="8px"
-      bg="#FFFFFF"
-      _dark={{ bg: '#2D3748' }}
-    >
+    <TableContainer boxShadow="md" borderRadius="8px" bg="rankingListTableBg">
       <Table
         variant="simple"
         border="1px solid"
@@ -307,7 +310,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
           </Flex>
           <TabPanels mt="10">
             <TabPanel>
-              <RankingTableWrapper>
+              <RankingTableWrapper hasPagination={false}>
                 <RankingTableHead />
                 <Tbody>
                   {rankings.TokensListing.map((token, index) => {
@@ -320,7 +323,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
               </RankingTableWrapper>
             </TabPanel>
             <TabPanel>
-              <RankingTableWrapper>
+              <RankingTableWrapper hasPagination={false}>
                 <RankingTableHead />
                 <Tbody>
                   {rankings.NFTsListing.map((nft, index) => {

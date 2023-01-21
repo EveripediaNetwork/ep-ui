@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
-import RankCard from '@/components/Rank/RankCard'
+import { Box, Flex, TabList, Tabs } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
+import { RankingListButton } from '@/components/Landing/RankingList'
 import RankHeader from '@/components/SEO/Rank'
 import RankHero from './RankHero'
 
@@ -11,13 +11,13 @@ const Rank = () => {
     <Box>
       <RankHeader />
       <Box
-        bg="url(/rankingbg.png) center"
+        bg="url(/rankingbg.png)"
         _dark={{
-          bg: 'url(/rankingDarkBG.png)  center',
-          bgSize: 'cover',
+          bg: 'url(/rankingDarkBG.png)',
         }}
+        bgPos="center"
         my={-2}
-        bgSize="cover"
+        bgSize="cover !important"
         bgColor="#F7FAFC"
       >
         <RankHero />
@@ -30,8 +30,16 @@ const Rank = () => {
         gap={{ base: 10, md: 0, lg: 4 }}
         justifyContent={{ lg: 'center', md: 'space-between' }}
       >
-        <RankCard title="NFTs" icon={BiImage} />
-        <RankCard title="Cryptocurrencies" icon={RiCoinsFill} />
+        <Tabs>
+          <Flex justifyContent="center">
+            <TabList border="none" display="flex" gap="8">
+              <RankingListButton label="Cryptocurrencies" icon={RiCoinsFill} />
+              <RankingListButton label="NFTs" icon={BiImage} />
+            </TabList>
+          </Flex>
+        </Tabs>
+        {/* <RankCard title="NFTs" icon={BiImage} />
+        <RankCard title="Cryptocurrencies" icon={RiCoinsFill} /> */}
       </Flex>
     </Box>
   )
