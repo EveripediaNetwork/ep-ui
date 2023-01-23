@@ -32,6 +32,7 @@ import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { isValidUrl } from '@/utils/create-wiki'
+import { WikisModifiedCount } from '@/types/admin'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
@@ -193,11 +194,19 @@ const Admin = () => {
       })
     }
   }
+  const addCountAMount = (data: WikisModifiedCount[]) => {
+    let total = 0
+    data.map((item: WikisModifiedCount) => {
+      total += item.amount
+      return total
+    })
+    return total
+  }
   const wikiMetaData = [
     {
       icon: RiNewspaperFill,
       value: totalWikisEditedCountData
-        ? totalWikisEditedCountData[0]?.amount
+        ? addCountAMount(totalWikisEditedCountData)
         : 0,
       weeklyValue: weeklyWikiEditedCountData
         ? weeklyWikiEditedCountData[weeklyWikiEditedCountData.length - 1]
@@ -209,7 +218,7 @@ const Admin = () => {
     {
       icon: RiEditFill,
       value: totalWikisCreatedCountData
-        ? totalWikisCreatedCountData[0]?.amount
+        ? addCountAMount(totalWikisCreatedCountData)
         : 0,
       weeklyValue: weeklyWikiCreatedCountData
         ? weeklyWikiCreatedCountData[weeklyWikiCreatedCountData.length - 1]
