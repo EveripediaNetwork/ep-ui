@@ -140,7 +140,7 @@ const TrendingWikis = ({
   recent?: Wiki[]
 }) => {
   const { t } = useTranslation()
-
+  const featuredWikis = [...drops, ...recent]
   return (
     <Box
       mt={10}
@@ -243,7 +243,7 @@ const TrendingWikis = ({
                 ],
               }}
             >
-              {drops.map(wiki => (
+              {featuredWikis.map(wiki => (
                 <Box p="3">
                   <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
                 </Box>

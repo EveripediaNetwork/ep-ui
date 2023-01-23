@@ -39,7 +39,7 @@ export const Index = ({
         bgImage="/images/homepage-bg-white.png"
       >
         <TrendingWikis
-          drops={promotedWikis && promotedWikis.slice(1)}
+          drops={promotedWikis && promotedWikis.slice(0, 4)}
           recent={recentWikis && recentWikis.slice(0, 4)}
         />
         <CategoriesList categories={categories} />

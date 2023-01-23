@@ -25,7 +25,6 @@ const TrendingCard = ({
   title: string
   icon: IconType
 }) => {
-  console.log(wikis)
   return (
     <Flex
       py="1"
