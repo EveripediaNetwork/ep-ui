@@ -41,6 +41,7 @@ export const Index = ({
         <TrendingWikis
           drops={promotedWikis && promotedWikis.slice(0, 4)}
           recent={recentWikis && recentWikis.slice(0, 4)}
+          featuredWikis={promotedWikis && promotedWikis}
         />
         <CategoriesList categories={categories} />
       </Box>

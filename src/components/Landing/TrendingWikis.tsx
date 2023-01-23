@@ -135,12 +135,13 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
 const TrendingWikis = ({
   drops = [],
   recent = [],
+  featuredWikis = [],
 }: {
   drops?: Wiki[]
   recent?: Wiki[]
+  featuredWikis?: Wiki[]
 }) => {
   const { t } = useTranslation()
-  const featuredWikis = [...drops, ...recent]
   return (
     <Box
       mt={10}
