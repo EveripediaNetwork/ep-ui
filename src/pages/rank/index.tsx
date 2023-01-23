@@ -67,7 +67,7 @@ const Rank = () => {
               >
                 Cryptocurrency wikis ranked by Market Cap Prices
               </Text>
-              <RankTable hasPagination />
+              <RankTable hasPagination>&nbsp;</RankTable>
             </TabPanel>
             <TabPanel>
               <Text
