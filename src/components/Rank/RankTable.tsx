@@ -8,7 +8,7 @@ export const RankTable = ({
   hasPagination,
 }: {
   children: React.ReactNode
-  hasPagination: boolean
+  hasPagination?: boolean
 }) => {
   return (
     <TableContainer
