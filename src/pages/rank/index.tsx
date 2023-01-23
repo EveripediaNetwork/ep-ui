@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Text,
   Box,
@@ -12,10 +12,15 @@ import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
-import { RankTable } from '@/components/Rank/RankTable'
+import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
 import RankHero from './RankHero'
 
+const LISTING_LIMITS = 20
+
 const Rank = () => {
+  const [nftOffset, setNftOffset] = useState<number>(1)
+  const [cryptoOffset, setCryptoOffset] = useState<number>(1)
+
   return (
     <Box>
       <RankHeader />
@@ -67,7 +72,14 @@ const Rank = () => {
               >
                 Cryptocurrency wikis ranked by Market Cap Prices
               </Text>
-              <RankTable hasPagination>&nbsp;</RankTable>
+              <RankTable
+                hasPagination
+                currentPage={1}
+                totalCount={100}
+                pageSize={20}
+              >
+                <RankTableHead />
+              </RankTable>
             </TabPanel>
             <TabPanel>
               <Text
@@ -81,7 +93,9 @@ const Rank = () => {
               >
                 NFT wikis ranked by Market Cap Prices
               </Text>
-              <RankTable hasPagination>&nbsp;</RankTable>
+              <RankTable hasPagination>
+                <RankTableHead />
+              </RankTable>
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -1,7 +1,7 @@
 import usePagination from '@/hooks/usePagination'
 import { Button, Flex } from '@chakra-ui/react'
 import React from 'react'
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 
 export type RankpaginationProps = {
   onPageChange: (currentPage: number) => void
@@ -42,9 +42,9 @@ const RankPagination = (props: RankpaginationProps) => {
   const lastPage = paginationRange[paginationRange.length - 1]
 
   return (
-    <Flex justifyContent="space-between">
+    <Flex justifyContent="space-between" px="6">
       <Button
-        leftIcon={<AiOutlineDoubleLeft />}
+        leftIcon={<AiOutlineArrowLeft />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
@@ -59,7 +59,7 @@ const RankPagination = (props: RankpaginationProps) => {
         Prev
       </Button>
       <Button
-        leftIcon={<AiOutlineDoubleRight />}
+        leftIcon={<AiOutlineArrowRight />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
