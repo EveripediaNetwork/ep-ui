@@ -40,8 +40,6 @@ export const generateSummary = async (
       )
     ).data
 
-    console.log(completion)
-
     summary = completion.data.choices[0].text
     totalTokensUsed += completion.data.usage?.total_tokens || 0
     tries += 1

@@ -1,5 +1,6 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { logEvent } from '@/utils/googleAnalytics'
 import { Box, Button, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { ChangeEvent } from 'react'
@@ -27,6 +28,13 @@ const SummaryInput = () => {
     } catch (e) {
       console.error(e)
     }
+
+    logEvent({
+      action: 'GENERATE_SUMMARY',
+      label: wiki.id,
+      category: 'summary-generate',
+      value: 1,
+    })
 
     setIsGenerating(false)
   }
