@@ -1,136 +1,125 @@
 import React from 'react'
-import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Flex, Box, Text } from '@chakra-ui/react'
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
-import Link from '@/components/Elements/LinkElements/Link'
 import { RankCardType } from '@/types/RankDataTypes'
+import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
+import { RANKDATA } from '@/data/RankData'
+import { getFounderName } from '@/utils/rankUtils'
 
-export const RankCardItem = ({
-  cardData,
+const RankingItem = ({
   index,
+  item,
 }: {
-  cardData: RankCardType
   index: number
+  item: RankCardType
 }) => {
-  const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
-  const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
-  const getAlias = (text: string) => (text ?? 'Unknown') || text
-
-  const getTokenAlias = (text: string) => {
-    if (text === null) {
-      return 'Unknown'
-    }
-    if (text) {
-      return text
-    }
-    return ''
-  }
-
   return (
-    <Link
-      href={`https://iq.wiki/wiki/${cardData.id}`}
-      className="group"
-      _dark={{
-        _hover: { textDecoration: 'none' },
-      }}
-      _light={{
-        _hover: { textDecoration: 'none' },
-      }}
-      _groupHover={{ textDecoration: 'none' }}
-    >
-      <Flex
-        gap={4}
-        alignItems="center"
-        p={{ '2xl': 4, md: 2, base: 2 }}
-        w="100%"
-      >
-        <Text fontSize={{ base: 'sm', '2xl': 'lg' }} fontWeight={600}>
-          {index}
-        </Text>
-        <Flex gap={2} w="100%" alignItems="center">
-          <Box
-            w={{ lg: '60px', md: '40px', base: '40px' }}
-            h={{ lg: '50px', md: '30px', base: '30px' }}
-            bg={
-              cardData?.nftMarketData
-                ? `url(${cardData?.nftMarketData.image})`
-                : `url(${cardData?.tokenMarketData.image})`
-            }
-            bgPos="center"
-            bgSize="contain"
-            bgRepeat="no-repeat"
-            borderRadius="md"
-          />
-          <Flex w="100%" justifyContent="space-between">
-            <Flex
-              flexDir={cardData?.tokenMarketData ? 'column' : 'row'}
-              alignItems={cardData?.nftMarketData && 'center'}
-            >
-              <Text
-                color="primaryPinkIcon"
-                fontSize={{ base: 'xs', lg: 'md' }}
-                whiteSpace="nowrap"
-                _groupHover={{
-                  textDecoration: 'underline',
-                  textDecorationColor: 'brand.500',
-                }}
-                _dark={{
-                  _groupHover: { textDecorationColor: 'brand.500' },
-                }}
-              >
-                {cardData?.title}
-              </Text>
-              {cardData?.tokenMarketData && (
-                <Text color="inactiveText" fontSize={{ base: 'xs', lg: 'sm' }}>
-                  {cardData?.nftMarketData
-                    ? getAlias(cardData?.nftMarketData?.alias)
-                    : getTokenAlias(cardData?.tokenMarketData?.alias)}
-                </Text>
-              )}
-            </Flex>
-            <Flex
-              flexDir="column"
-              alignItems="flex-start"
-              justifyContent="space-around"
-            >
-              <Text
-                color="inactiveText"
-                fontSize={{ md: 'xs', base: 'sm' }}
-                width="100%"
-                textAlign="right"
-                whiteSpace="nowrap"
-              >
-                $
-                {cardData?.nftMarketData
-                  ? cardData?.nftMarketData?.market_cap_usd.toLocaleString()
-                  : cardData?.tokenMarketData?.market_cap?.toLocaleString()}
-              </Text>
-              <Flex
-                alignItems="center"
-                gap={0.5}
-                width="100%"
-                justifyContent="end"
-              >
-                {cardData?.nftMarketData
-                  ?.floor_price_in_usd_24h_percentage_change < 0 ? (
-                  <AiFillCaretDown color={downIndicationIconColor} />
-                ) : (
-                  <AiFillCaretUp color={upIndicationIconColor} />
-                )}
-                <Text fontWeight="bold" fontSize="xs">
-                  {Math.abs(
-                    cardData?.nftMarketData
-                      ? cardData?.nftMarketData
-                          ?.floor_price_in_usd_24h_percentage_change
-                      : cardData?.tokenMarketData.price_change_24h,
-                  ).toFixed(3)}
-                  %
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
+    <Tr>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Text color="rankingListText">{index + 1}</Text>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Flex gap="2.5" alignItems="center">
+          <Box flexShrink="0" w="40px" h="40px">
+            <Image
+              src={
+                item.nftMarketData
+                  ? item.nftMarketData.image
+                  : item.tokenMarketData.image
+              }
+              alt={item.title}
+              w="40px"
+              h="40px"
+              borderRadius="50%"
+              objectFit="cover"
+            />
+          </Box>
+          <Box>
+            <Link href={`wiki/${item.id}`} color="brandLinkColor">
+              {item.title}
+            </Link>
+            <Text color="rankingListText">
+              {item.nftMarketData
+                ? item.nftMarketData.alias
+                : item.tokenMarketData.alias}
+            </Text>
+          </Box>
         </Flex>
-      </Flex>
-    </Link>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Text color="rankingListText">
+          $
+          {item.nftMarketData
+            ? item.nftMarketData.floor_price_usd.toLocaleString()
+            : item.tokenMarketData.current_price?.toLocaleString()}
+        </Text>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Flex gap="1">
+          <Text color="rankingListText">NA</Text>
+        </Flex>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Flex gap="1">
+          <Text color="rankingListText">
+            $
+            {item.nftMarketData
+              ? item.nftMarketData.market_cap_usd.toLocaleString()
+              : item.tokenMarketData.market_cap?.toLocaleString()}
+          </Text>
+          {item.nftMarketData ? (
+            <Text
+              alignSelf="flex-start"
+              fontSize="10px"
+              lineHeight="15px"
+              color={
+                item.nftMarketData.floor_price_in_usd_24h_percentage_change < 0
+                  ? 'red.500'
+                  : 'green.500'
+              }
+            >
+              {Math.abs(
+                item.nftMarketData.floor_price_in_usd_24h_percentage_change,
+              ).toFixed(2)}
+              %
+            </Text>
+          ) : (
+            <Text
+              alignSelf="flex-start"
+              fontSize="10px"
+              lineHeight="15px"
+              color={
+                item.tokenMarketData.price_change_24h < 0
+                  ? 'red.500'
+                  : 'green.500'
+              }
+            >
+              {Math.abs(item.tokenMarketData.price_change_24h).toFixed(2)}%
+            </Text>
+          )}
+        </Flex>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {item.linkedWikis && item.linkedWikis.founders ? (
+          <Flex flexWrap="wrap" maxW="160px">
+            {item.linkedWikis?.founders.map(founder => (
+              <Link href={`wiki/${founder}`} color="brandLinkColor">
+                {getFounderName(founder)}
+              </Link>
+            ))}
+          </Flex>
+        ) : (
+          'NA'
+        )}
+      </Td>
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        color="rankingListText"
+        fontSize="14px"
+      >
+        {RANKDATA[index].DateCreated}
+      </Td>
+    </Tr>
   )
 }
+
+export default RankingItem
