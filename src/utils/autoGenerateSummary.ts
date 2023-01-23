@@ -1,13 +1,9 @@
+/* eslint-disable no-await-in-loop */
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
-import { Configuration, OpenAIApi } from 'openai'
+import axios from 'axios'
 
 const COST_PER_1K_TOKENS = 0.02
 const MAX_TRIES = 3
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-const openai = new OpenAIApi(configuration)
 
 export const generateSummary = async (
   content: string,
@@ -18,19 +14,34 @@ export const generateSummary = async (
   let tries = 0
   let totalTokensUsed = 0
 
-  do {
-    // eslint-disable-next-line no-await-in-loop
-    const completion = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: `
+  const requestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: process.env.OPENAI_API_KEY as string,
+    },
+  }
+  const requestBody = {
+    model: 'text-davinci-003',
+    prompt: `
       Content about ${title}:
-      ${content} 
+      ${content}
       Generate a generalized summary on topic "${
         isAboutPerson ? 'who' : 'what'
-      } is ${title} ?". IT MUST BE UNDER 210 CHARACTERS.
-    `,
-      max_tokens: 255,
-    })
+      } is ${title} ?". IT MUST BE UNDER 210 CHARACTERS.`,
+    max_tokens: 255,
+  }
+
+  do {
+    const completion = (
+      await axios.post(
+        'https://api.openai.com/v1/completions',
+        requestBody,
+        requestConfig,
+      )
+    ).data
+
+    console.log(completion)
+
     summary = completion.data.choices[0].text
     totalTokensUsed += completion.data.usage?.total_tokens || 0
     tries += 1

@@ -14,15 +14,20 @@ const SummaryInput = () => {
 
   const handleAIGenerate = async () => {
     setIsGenerating(true)
-    const { data } = await axios.post('/api/summary-generate', {
-      title: wiki.title,
-      content: wiki.content,
-      isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
-    })
-    dispatch({
-      type: 'wiki/setCurrentWiki',
-      payload: { summary: data.trim() },
-    })
+    try {
+      const { data } = await axios.post('/api/summary-generate', {
+        title: wiki.title,
+        content: wiki.content,
+        isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
+      })
+      dispatch({
+        type: 'wiki/setCurrentWiki',
+        payload: { summary: data.trim() },
+      })
+    } catch (e) {
+      console.error(e)
+    }
+
     setIsGenerating(false)
   }
 

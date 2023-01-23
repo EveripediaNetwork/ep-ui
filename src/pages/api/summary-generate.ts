@@ -4,8 +4,8 @@ import { sanitizeContent } from '@/utils/sanitizeContent'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const limiter = rateLimit({
-  interval: 60 * 1000, // 60 seconds
-  uniqueTokenPerInterval: 500, // Max 500 users per second
+  interval: 30 * 60 * 1000, // 30 Mins
+  uniqueTokenPerInterval: 500, // Max 500 users per interval
 })
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
   const { content, title, isAboutPerson } = req.body
 
   try {
-    await limiter.check(res, 5, 'CACHE_TOKEN') // 5 requests per minute
+    await limiter.check(res, 5, 'CACHE_TOKEN') // 5 requests per interval per user
 
     const sanitizedContent = sanitizeContent(content)
 
