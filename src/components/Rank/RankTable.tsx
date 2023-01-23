@@ -3,13 +3,26 @@ import { Table, TableContainer, Th, Thead, Tr } from '@chakra-ui/react'
 import { RankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
 
+export interface RankTableProps {
+  children: React.ReactNode
+  hasPagination?: boolean
+  onPageChange?: (currentPage: number) => void
+  totalCount?: number
+  siblingCount?: number
+  currentPage?: number
+  pageSize?: number
+}
+
 export const RankTable = ({
   children,
   hasPagination,
-}: {
-  children: React.ReactNode
-  hasPagination?: boolean
-}) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onPageChange = (currentPage: number) => {},
+  totalCount = 0,
+  siblingCount = 0,
+  currentPage = 1,
+  pageSize = 10,
+}: RankTableProps) => {
   return (
     <TableContainer
       w="full"
@@ -20,7 +33,15 @@ export const RankTable = ({
       borderColor="rankingListBorder"
     >
       <Table variant="simple">{children}</Table>
-      {hasPagination && <RankPagination />}
+      {hasPagination && (
+        <RankPagination
+          onPageChange={onPageChange || undefined}
+          totalCount={totalCount}
+          siblingCount={siblingCount}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
+      )}
     </TableContainer>
   )
 }
