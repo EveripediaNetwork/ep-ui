@@ -3,12 +3,8 @@ import {
   Box,
   Flex,
   Heading,
-  Icon,
   Image,
   Link,
-  Tab,
-  Table,
-  TableContainer,
   TabList,
   TabPanel,
   TabPanels,
@@ -16,144 +12,23 @@ import {
   Tbody,
   Td,
   Text,
-  Th,
-  Thead,
   Tr,
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { IconType } from 'react-icons/lib'
-import { RankingListHead } from '@/data/RankingListData'
 import { RankCardType } from '@/types/RankDataTypes'
 import { RANKDATA } from '@/data/RankData'
-
-export type RankingListButtonProps = {
-  label: string
-  icon: IconType
-}
+import { getFounderName } from '@/utils/rankUtils'
+import RankingListButton from '../Rank/RankButton'
+import { RankTable, RankTableHead } from '../Rank/RankTable'
+import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 
 export type RankingListProps = {
   rankings: {
     NFTsListing: RankCardType[]
     TokensListing: RankCardType[]
   }
-}
-
-export const RankingListButton = ({ label, icon }: RankingListButtonProps) => {
-  return (
-    <Tab
-      display="flex"
-      alignItems="center"
-      color="homeDescriptionColor"
-      gap="3"
-      _selected={{
-        color: 'brandLinkColor',
-        borderBottom: '2px solid',
-        borderBottomColor: 'brandLinkColor',
-      }}
-    >
-      <Icon
-        as={icon}
-        w={{ lg: '32px', md: '24px' }}
-        h={{ lg: '32px', md: '24px' }}
-        color="primaryPinkIcon"
-      />
-      <Text color="inherit" fontWeight={600} fontSize={{ lg: 'md' }}>
-        {label}
-      </Text>
-    </Tab>
-  )
-}
-
-export const getFounderName = (text: string) => {
-  const names = text
-    .split('-')
-    .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
-  return `${names[0]} ${names[1][0]}.`
-}
-
-const RankingTableHead = () => {
-  return (
-    <Thead h="45px" bg="rankingListTableHead">
-      <Tr>
-        {RankingListHead.map(item => (
-          <Th
-            fontWeight={500}
-            fontSize="12px"
-            textTransform="capitalize"
-            color="rankingListTableHeading"
-          >
-            {item.label}
-          </Th>
-        ))}
-      </Tr>
-    </Thead>
-  )
-}
-
-const RankingItemNotAvailable = ({ index }: { index: number }) => {
-  return (
-    <Tr>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Text color="rankingListText">{index + 1}</Text>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="2.5" alignItems="center">
-          <Box flexShrink="0" w="40px" h="40px">
-            <Icon as={BiImage} w="full" h="full" color="gray.500" />
-          </Box>
-          <Box>Coming Soon</Box>
-        </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Text color="rankingListText">Coming Soon</Text>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
-          <Text color="rankingListText">NA</Text>
-        </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
-          <Text color="rankingListText">Coming Soon</Text>
-        </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        NA
-      </Td>
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        color="rankingListText"
-        fontSize="14px"
-      >
-        Coming soon
-      </Td>
-    </Tr>
-  )
-}
-
-export const RankingTableWrapper = ({
-  children,
-  hasPagination,
-}: {
-  children: React.ReactNode
-  hasPagination: boolean
-}) => {
-  console.log(hasPagination)
-
-  return (
-    <TableContainer boxShadow="md" borderRadius="8px" bg="rankingListTableBg">
-      <Table
-        variant="simple"
-        border="1px solid"
-        borderColor="rankingListBorder"
-      >
-        {children}
-      </Table>
-    </TableContainer>
-  )
 }
 
 const RankingItem = ({
@@ -304,36 +179,44 @@ const RankingList = ({ rankings }: RankingListProps) => {
         <Tabs mt={10} defaultIndex={0}>
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap="8">
-              <RankingListButton label="Cryptocurrencies" icon={RiCoinsFill} />
-              <RankingListButton label="NFTs" icon={BiImage} />
+              <RankingListButton
+                label="Cryptocurrencies"
+                icon={RiCoinsFill}
+                fontSize={{ lg: 'md' }}
+              />
+              <RankingListButton
+                label="NFTs"
+                icon={BiImage}
+                fontSize={{ lg: 'md' }}
+              />
             </TabList>
           </Flex>
           <TabPanels mt="10">
             <TabPanel>
-              <RankingTableWrapper hasPagination={false}>
-                <RankingTableHead />
+              <RankTable hasPagination={false}>
+                <RankTableHead />
                 <Tbody>
                   {rankings.TokensListing.map((token, index) => {
                     if (!token) {
-                      return <RankingItemNotAvailable index={index} />
+                      return <InvalidRankCardItem index={index} />
                     }
                     return <RankingItem index={index} item={token} />
                   })}
                 </Tbody>
-              </RankingTableWrapper>
+              </RankTable>
             </TabPanel>
             <TabPanel>
-              <RankingTableWrapper hasPagination={false}>
-                <RankingTableHead />
+              <RankTable hasPagination={false}>
+                <RankTableHead />
                 <Tbody>
                   {rankings.NFTsListing.map((nft, index) => {
                     if (!nft) {
-                      return <RankingItemNotAvailable index={index} />
+                      return <InvalidRankCardItem index={index} />
                     }
                     return <RankingItem index={index} item={nft} />
                   })}
                 </Tbody>
-              </RankingTableWrapper>
+              </RankTable>
             </TabPanel>
           </TabPanels>
         </Tabs>
