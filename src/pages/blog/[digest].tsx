@@ -191,6 +191,7 @@ export const getStaticProps: GetStaticProps = async context => {
       blog,
       blogEntries,
     },
+    revalidate: 300,
   }
 }
 
