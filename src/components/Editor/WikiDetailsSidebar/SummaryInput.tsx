@@ -1,6 +1,7 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { Box, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
+import axios from 'axios'
 import React, { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -9,25 +10,55 @@ const SummaryInput = () => {
   const [showRed, setShowRed] = React.useState(false)
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
+  const [isGenerating, setIsGenerating] = React.useState(false)
+
+  const handleAIGenerate = async () => {
+    setIsGenerating(true)
+    const { data } = await axios.post('/api/summary-generate', {
+      title: wiki.title,
+      content: wiki.content,
+      isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
+    })
+    dispatch({
+      type: 'wiki/setCurrentWiki',
+      payload: { summary: data.trim() },
+    })
+    setIsGenerating(false)
+  }
+
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">
         <Text color="wikiSummaryLabel">{`${t('wikiSummaryLabel')}`}</Text>
-        <Tag
-          variant="solid"
-          colorScheme={
-            // eslint-disable-next-line no-nested-ternary
-            showRed
-              ? 'red'
-              : (wiki?.summary?.length || '') > (WIKI_SUMMARY_LIMIT * 2) / 3
-              ? 'green'
-              : 'yellow'
-          }
-        >
-          {wiki?.summary?.length || 0}/{WIKI_SUMMARY_LIMIT}
-        </Tag>
+        <HStack>
+          <Tag
+            variant="solid"
+            colorScheme={
+              // eslint-disable-next-line no-nested-ternary
+              showRed
+                ? 'red'
+                : (wiki?.summary?.length || 0) > (WIKI_SUMMARY_LIMIT * 2) / 3
+                ? 'green'
+                : 'yellow'
+            }
+          >
+            {wiki?.summary?.length || 0}/{WIKI_SUMMARY_LIMIT}
+          </Tag>
+          <Button
+            size="xs"
+            px={2}
+            fontSize="xs"
+            disabled={isGenerating}
+            sx={{ _disabled: { backgroundColor: 'brand.500 !important' } }}
+            isLoading={isGenerating}
+            onClick={handleAIGenerate}
+          >
+            AI Generate
+          </Button>
+        </HStack>
       </HStack>
       <Textarea
+        disabled={isGenerating}
         bgColor={showRed ? '#d406082a' : 'transparent'}
         color="wikiSummaryInputText"
         _focus={{
