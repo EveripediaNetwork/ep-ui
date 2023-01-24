@@ -14,8 +14,8 @@ import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
-import { Link } from '../Elements'
 import { shortenText } from '@/utils/shortenText'
+import { Link } from '../Elements'
 
 const TrendingCard = ({
   wikis = [],
