@@ -23,6 +23,7 @@ import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
+import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -179,6 +180,7 @@ const TrendingWikis = ({
           icon={RiBarChartFill}
           wikis={drops}
         />
+
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
           <Box
@@ -209,47 +211,51 @@ const TrendingWikis = ({
                 Featured wikis
               </Text>
             </chakra.div>
-            <Carousel
-              topArrow="25%"
-              settings={{
-                dots: true,
-                autoplay: true,
-                infinite: true,
-                arrows: false,
-                speed: 500,
-                slidesToShow: 1,
-                slidesToScroll: 1,
+            {featuredWikis ? (
+              <Carousel
+                topArrow="25%"
+                settings={{
+                  dots: true,
+                  autoplay: true,
+                  infinite: true,
+                  arrows: false,
+                  speed: 500,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
 
-                responsive: [
-                  {
-                    breakpoint: 1000,
-                    settings: {
-                      slidesToShow: 1,
-                      slidesToScroll: 1,
-                      initialSlide: 1,
-                      infinite: true,
-                      dots: true,
+                  responsive: [
+                    {
+                      breakpoint: 1000,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        infinite: true,
+                        dots: true,
+                      },
                     },
-                  },
-                  {
-                    breakpoint: 680,
-                    settings: {
-                      arrows: false,
-                      slidesToShow: 1,
-                      slidesToScroll: 1,
-                      infinite: true,
-                      dots: true,
+                    {
+                      breakpoint: 680,
+                      settings: {
+                        arrows: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true,
+                      },
                     },
-                  },
-                ],
-              }}
-            >
-              {featuredWikis.map(wiki => (
-                <Box px="3" pt="3" pb={{ md: '0', xl: '3' }}>
-                  <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
-                </Box>
-              ))}
-            </Carousel>
+                  ],
+                }}
+              >
+                {featuredWikis.map(wiki => (
+                  <Box px="3" pt="3" pb={{ md: '0', xl: '3' }}>
+                    <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
+                  </Box>
+                ))}
+              </Carousel>
+            ) : (
+              <LoadingTrendingWikiCard />
+            )}
           </Box>
         </Flex>
         <Flex

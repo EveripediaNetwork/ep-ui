@@ -16,6 +16,7 @@ import router from 'next/router'
 import { IconType } from 'react-icons/lib'
 import { shortenText } from '@/utils/shortenText'
 import { Link } from '../Elements'
+import { TrendingSkeleton } from './LoadingTrendingWikis'
 
 const TrendingCard = ({
   wikis = [],
@@ -52,63 +53,67 @@ const TrendingCard = ({
             {title}
           </Text>
         </chakra.div>
-        <VStack w="full" pt="2" px="2" gap="5" overflow="hidden">
-          {wikis.map((wiki, i) => (
-            <HStack w="full">
-              <chakra.span minW="2" alignSelf="center">
-                {' '}
-                {i + 1}
-              </chakra.span>
-              <HStack>
-                <Link href={`/wiki/${wiki.id}`}>
-                  <AspectRatio
-                    ratio={4 / 3}
-                    w={{
-                      base: '50px',
-                      md: '60px',
-                      lg: '70px',
-                    }}
+        {wikis ? (
+          <VStack w="full" pt="2" px="2" gap="5" overflow="hidden">
+            {wikis.map((wiki, i) => (
+              <HStack w="full">
+                <chakra.span minW="2" alignSelf="center">
+                  {' '}
+                  {i + 1}
+                </chakra.span>
+                <HStack>
+                  <Link href={`/wiki/${wiki.id}`}>
+                    <AspectRatio
+                      ratio={4 / 3}
+                      w={{
+                        base: '50px',
+                        md: '60px',
+                        lg: '70px',
+                      }}
+                    >
+                      <Image
+                        src={getWikiImageUrl(wiki.images)}
+                        alt={wiki.title}
+                        borderRadius="md"
+                      />
+                    </AspectRatio>
+                  </Link>
+                  <Flex
+                    direction="column"
+                    justifyContent="flex-start"
+                    textAlign="start"
                   >
-                    <Image
-                      src={getWikiImageUrl(wiki.images)}
-                      alt={wiki.title}
-                      borderRadius="md"
-                    />
-                  </AspectRatio>
-                </Link>
-                <Flex
-                  direction="column"
-                  justifyContent="flex-start"
-                  textAlign="start"
-                >
-                  <Text
-                    fontWeight="thin"
-                    cursor="pointer"
-                    color="black"
-                    _dark={{ color: 'white' }}
-                    fontSize="18px"
-                    overflow="hidden"
-                    onClick={() => router.push(`wiki/${wiki.id}`)}
-                  >
-                    {shortenText(wiki.title, 24)}
-                  </Text>
+                    <Text
+                      fontWeight="thin"
+                      cursor="pointer"
+                      color="black"
+                      _dark={{ color: 'white' }}
+                      fontSize="18px"
+                      overflow="hidden"
+                      onClick={() => router.push(`wiki/${wiki.id}`)}
+                    >
+                      {shortenText(wiki.title, 24)}
+                    </Text>
 
-                  <Text
-                    display={{ base: 'none', md: '-webkit-box' }}
-                    noOfLines={2}
-                    w="97%"
-                    textOverflow="ellipsis"
-                    overflow="hidden"
-                    fontSize="12px"
-                    fontWeight="thin"
-                  >
-                    {wiki.summary}
-                  </Text>
-                </Flex>
+                    <Text
+                      display={{ base: 'none', md: '-webkit-box' }}
+                      noOfLines={2}
+                      w="97%"
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                      fontSize="12px"
+                      fontWeight="thin"
+                    >
+                      {wiki.summary}
+                    </Text>
+                  </Flex>
+                </HStack>
               </HStack>
-            </HStack>
-          ))}
-        </VStack>
+            ))}
+          </VStack>
+        ) : (
+          <TrendingSkeleton />
+        )}
       </Box>
     </Flex>
   )
