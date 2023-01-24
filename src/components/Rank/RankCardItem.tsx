@@ -1,7 +1,6 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
-import { RANKDATA } from '@/data/RankData'
 import { getFounderName } from '@/utils/rankUtils'
 
 const RankingItem = ({
@@ -116,7 +115,7 @@ const RankingItem = ({
         color="rankingListText"
         fontSize="14px"
       >
-        {RANKDATA[index].DateCreated}
+        NA
       </Td>
     </Tr>
   )

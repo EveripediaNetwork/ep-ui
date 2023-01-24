@@ -7,19 +7,29 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
+import { useGetTokenRankingQuery } from '@/services/ranking'
+import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
+import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 
 const LISTING_LIMITS = 20
 
 const Rank = () => {
   const [nftOffset, setNftOffset] = useState<number>(1)
-  const [cryptoOffset, setCryptoOffset] = useState<number>(1)
+  const [tokensOffset, setTokensOffset] = useState<number>(1)
+
+  const { data: tokensObject } = useGetTokenRankingQuery({
+    kind: 'TOKEN',
+    offset: tokensOffset,
+    limit: LISTING_LIMITS,
+  })
 
   return (
     <Box>
@@ -74,11 +84,20 @@ const Rank = () => {
               </Text>
               <RankTable
                 hasPagination
-                currentPage={1}
+                currentPage={tokensOffset}
                 totalCount={100}
-                pageSize={20}
+                pageSize={LISTING_LIMITS}
+                onPageChange={page => setTokensOffset(page)}
               >
                 <RankTableHead />
+                <Tbody>
+                  {tokensObject?.map((token, index) => {
+                    if (!token) {
+                      return <InvalidRankCardItem index={index} />
+                    }
+                    return <RankingItem index={index} item={token} />
+                  })}
+                </Tbody>
               </RankTable>
             </TabPanel>
             <TabPanel>
@@ -93,7 +112,12 @@ const Rank = () => {
               >
                 NFT wikis ranked by Market Cap Prices
               </Text>
-              <RankTable hasPagination>
+              <RankTable
+                hasPagination
+                currentPage={tokensOffset}
+                totalCount={100}
+                pageSize={LISTING_LIMITS}
+              >
                 <RankTableHead />
               </RankTable>
             </TabPanel>

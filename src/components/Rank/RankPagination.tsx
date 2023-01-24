@@ -20,6 +20,8 @@ const RankPagination = (props: RankpaginationProps) => {
     pageSize,
   } = props
 
+  console.log(currentPage)
+
   const paginationRange = usePagination({
     currentPage,
     totalCount,
@@ -42,15 +44,18 @@ const RankPagination = (props: RankpaginationProps) => {
   const lastPage = paginationRange[paginationRange.length - 1]
 
   return (
-    <Flex justifyContent="space-between" px="6">
+    <Flex justifyContent="space-between" px="6" py="4" alignItems="center">
       <Button
+        py="3 !important"
+        px="4 !important"
+        border="1px solid"
+        borderColor="#D0D5DD"
         leftIcon={<AiOutlineArrowLeft />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
         _active={{ bg: 'transparent' }}
-        color="brand.500"
-        _dark={{ color: 'brand.800' }}
+        color="gray.700"
         disabled={currentPage === 1}
         onClick={() => {
           onPrevious()
@@ -59,13 +64,16 @@ const RankPagination = (props: RankpaginationProps) => {
         Prev
       </Button>
       <Button
-        leftIcon={<AiOutlineArrowRight />}
+        py="3 !important"
+        px="4 !important"
+        border="1px solid"
+        borderColor="#D0D5DD"
+        rightIcon={<AiOutlineArrowRight />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
+        color="gray.700"
         _active={{ bg: 'transparent' }}
-        color="brand.500"
-        _dark={{ color: 'brand.800' }}
         disabled={currentPage === lastPage}
         onClick={() => {
           onNext()
