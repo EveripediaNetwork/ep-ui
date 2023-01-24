@@ -49,7 +49,6 @@ const ProfileListItem = ({ title, children }: ProfileListItemProps) => (
 )
 
 const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
-  console.log(wiki)
   const socialMetaData = wiki.metadata.filter(meta =>
     WikiPossibleSocialsList.includes(meta.id as CommonMetaIds),
   )
