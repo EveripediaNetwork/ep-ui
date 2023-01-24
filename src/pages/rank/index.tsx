@@ -14,7 +14,10 @@ import { RiCoinsFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
-import { useGetTokenRankingQuery } from '@/services/ranking'
+import {
+  useGetNFTRankingQuery,
+  useGetTokenRankingQuery,
+} from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
@@ -28,6 +31,12 @@ const Rank = () => {
   const { data: tokensObject } = useGetTokenRankingQuery({
     kind: 'TOKEN',
     offset: tokensOffset,
+    limit: LISTING_LIMITS,
+  })
+
+  const { data: nftsObject } = useGetNFTRankingQuery({
+    kind: 'NFT',
+    offset: nftOffset,
     limit: LISTING_LIMITS,
   })
 
@@ -114,11 +123,20 @@ const Rank = () => {
               </Text>
               <RankTable
                 hasPagination
-                currentPage={tokensOffset}
+                currentPage={nftOffset}
                 totalCount={100}
                 pageSize={LISTING_LIMITS}
+                onPageChange={page => setNftOffset(page)}
               >
                 <RankTableHead />
+                <Tbody>
+                  {nftsObject?.map((nft, index) => {
+                    if (!nft) {
+                      return <InvalidRankCardItem index={index} />
+                    }
+                    return <RankingItem index={index} item={nft} />
+                  })}
+                </Tbody>
               </RankTable>
             </TabPanel>
           </TabPanels>
