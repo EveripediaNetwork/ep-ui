@@ -20,8 +20,6 @@ const RankPagination = (props: RankpaginationProps) => {
     pageSize,
   } = props
 
-  console.log(currentPage)
-
   const paginationRange = usePagination({
     currentPage,
     totalCount,
