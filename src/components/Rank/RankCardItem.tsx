@@ -10,6 +10,18 @@ const RankingItem = ({
   index: number
   item: RankCardType
 }) => {
+  const marketCap = `$${
+    item.nftMarketData
+      ? item.nftMarketData.market_cap_usd.toLocaleString()
+      : item.tokenMarketData.market_cap?.toLocaleString()
+  }`
+
+  const price = `$${
+    item.nftMarketData
+      ? item.nftMarketData.floor_price_usd.toLocaleString()
+      : item.tokenMarketData.current_price?.toLocaleString()
+  }`
+
   return (
     <Tr>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
@@ -44,12 +56,7 @@ const RankingItem = ({
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Text color="rankingListText">
-          $
-          {item.nftMarketData
-            ? item.nftMarketData.floor_price_usd.toLocaleString()
-            : item.tokenMarketData.current_price?.toLocaleString()}
-        </Text>
+        <Text color="rankingListText">{price}</Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1">
@@ -58,12 +65,7 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1">
-          <Text color="rankingListText">
-            $
-            {item.nftMarketData
-              ? item.nftMarketData.market_cap_usd.toLocaleString()
-              : item.tokenMarketData.market_cap?.toLocaleString()}
-          </Text>
+          <Text color="rankingListText">{marketCap}</Text>
           {item.nftMarketData ? (
             <Text
               alignSelf="flex-start"

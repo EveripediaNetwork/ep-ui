@@ -100,12 +100,13 @@ const Rank = () => {
               >
                 <RankTableHead />
                 <Tbody>
-                  {tokensObject?.map((token, index) => {
-                    if (!token) {
-                      return <InvalidRankCardItem index={index} />
-                    }
-                    return <RankingItem index={index} item={token} />
-                  })}
+                  {tokensObject?.map((token, index) =>
+                    token ? (
+                      <RankingItem index={index} item={token} />
+                    ) : (
+                      <InvalidRankCardItem index={index} />
+                    ),
+                  )}
                 </Tbody>
               </RankTable>
             </TabPanel>
@@ -130,12 +131,13 @@ const Rank = () => {
               >
                 <RankTableHead />
                 <Tbody>
-                  {nftsObject?.map((nft, index) => {
-                    if (!nft) {
-                      return <InvalidRankCardItem index={index} />
-                    }
-                    return <RankingItem index={index} item={nft} />
-                  })}
+                  {nftsObject?.map((nft, index) =>
+                    nft ? (
+                      <RankingItem index={index} item={nft} />
+                    ) : (
+                      <InvalidRankCardItem index={index} />
+                    ),
+                  )}
                 </Tbody>
               </RankTable>
             </TabPanel>

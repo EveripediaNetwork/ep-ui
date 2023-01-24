@@ -47,17 +47,15 @@ const RankPagination = (props: RankpaginationProps) => {
         py="3 !important"
         px="4 !important"
         border="1px solid"
-        borderColor="#D0D5DD"
+        borderColor="rankPageButtonBorder"
         leftIcon={<AiOutlineArrowLeft />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
         _active={{ bg: 'transparent' }}
-        color="gray.700"
+        color="rankPageButtonText"
         disabled={currentPage === 1}
-        onClick={() => {
-          onPrevious()
-        }}
+        onClick={onPrevious}
       >
         Prev
       </Button>
@@ -65,17 +63,15 @@ const RankPagination = (props: RankpaginationProps) => {
         py="3 !important"
         px="4 !important"
         border="1px solid"
-        borderColor="#D0D5DD"
+        borderColor="rankPageButtonBorder"
         rightIcon={<AiOutlineArrowRight />}
         _hover={{ bg: 'transparent' }}
         p="0"
         bg="transparent"
-        color="gray.700"
+        color="rankPageButtonText"
         _active={{ bg: 'transparent' }}
         disabled={currentPage === lastPage}
-        onClick={() => {
-          onNext()
-        }}
+        onClick={onNext}
       >
         Next
       </Button>

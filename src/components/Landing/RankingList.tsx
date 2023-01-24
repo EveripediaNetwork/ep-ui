@@ -74,12 +74,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
               <RankTable hasPagination={false}>
                 <RankTableHead />
                 <Tbody>
-                  {rankings.TokensListing.map((token, index) => {
-                    if (!token) {
-                      return <InvalidRankCardItem index={index} />
-                    }
-                    return <RankingItem index={index} item={token} />
-                  })}
+                  {rankings.TokensListing.map((token, index) =>
+                    token ? (
+                      <RankingItem index={index} item={token} />
+                    ) : (
+                      <InvalidRankCardItem index={index} />
+                    ),
+                  )}
                 </Tbody>
               </RankTable>
             </TabPanel>
@@ -87,12 +88,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
               <RankTable hasPagination={false}>
                 <RankTableHead />
                 <Tbody>
-                  {rankings.NFTsListing.map((nft, index) => {
-                    if (!nft) {
-                      return <InvalidRankCardItem index={index} />
-                    }
-                    return <RankingItem index={index} item={nft} />
-                  })}
+                  {rankings.NFTsListing.map((nft, index) =>
+                    nft ? (
+                      <RankingItem index={index} item={nft} />
+                    ) : (
+                      <InvalidRankCardItem index={index} />
+                    ),
+                  )}
                 </Tbody>
               </RankTable>
             </TabPanel>

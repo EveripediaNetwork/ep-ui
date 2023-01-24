@@ -261,5 +261,13 @@ export const semanticTokens: SemanticTokens = {
       default: '#FFFFFF',
       _dark: '#2D3748',
     },
+    rankPageButtonText: {
+      default: 'gray.700',
+      _dark: 'whiteAlpha.900',
+    },
+    rankPageButtonBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.400',
+    },
   },
 }
