@@ -32,6 +32,11 @@ const Rank = () => {
   const [tokenCount, setTokenCount] = useState<number>(0)
   const [nftCount, setNftCount] = useState<number>(0)
 
+  useEffect(() => {
+    setTokenCount(tokensOffset * 10 - 10)
+    setNftCount(nftOffset * 10 - 10)
+  }, [nftOffset, tokensOffset])
+
   const { data: tokensObject } = useGetTokenRankingQuery({
     kind: 'TOKEN',
     offset: tokensOffset,
@@ -43,11 +48,6 @@ const Rank = () => {
     offset: nftOffset,
     limit: LISTING_LIMITS,
   })
-
-  useEffect(() => {
-    setTokenCount(tokensOffset * 10 - 10)
-    setNftCount(nftOffset * 10 - 10)
-  }, [nftOffset, tokensOffset])
 
   return (
     <Box>
@@ -142,9 +142,9 @@ const Rank = () => {
                 <Tbody>
                   {nftsObject?.map((nft, index) =>
                     nft ? (
-                      <RankingItem index={index + nftCount + 1} item={nft} />
+                      <RankingItem index={index + nftCount} item={nft} />
                     ) : (
-                      <InvalidRankCardItem index={index + nftCount + 1} />
+                      <InvalidRankCardItem index={index + nftCount} />
                     ),
                   )}
                 </Tbody>

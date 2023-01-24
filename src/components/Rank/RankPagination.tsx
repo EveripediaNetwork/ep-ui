@@ -43,7 +43,7 @@ const RankPagination = (props: RankpaginationProps) => {
 
   return (
     <Flex
-      w="1140px"
+      w={{ base: '1140px', md: 'full' }}
       justifyContent="space-between"
       px="6"
       py="4"
