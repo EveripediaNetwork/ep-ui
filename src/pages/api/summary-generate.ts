@@ -16,9 +16,13 @@ export default async function handler(
 
   try {
     await limiter.check(res, 5, 'CACHE_TOKEN') // 5 requests per interval per user
+  } catch {
+    return res.status(429).send('Rate limit exceeded')
+  }
 
-    const sanitizedContent = sanitizeContent(content)
+  const sanitizedContent = sanitizeContent(content)
 
+  try {
     const summary = await generateSummary(
       sanitizedContent,
       title,
@@ -26,8 +30,9 @@ export default async function handler(
     )
 
     if (!summary) return res.status(500).send('Summary generation failed')
+
     return res.status(200).send(summary)
-  } catch {
-    return res.status(429).send('Rate limit exceeded')
+  } catch (e) {
+    return res.status(500).send('OpenAI request failed')
   }
 }

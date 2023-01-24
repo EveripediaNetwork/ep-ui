@@ -63,7 +63,7 @@ export const resources = {
       //Create wiki page
       wikiTitlePlaceholder: 'Title goes here',
       wikiSummaryLabel: 'Wiki Summary',
-      wikiSummaryPlaceholder: 'Summary of wiki',
+      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-3 AI',
       dragMainImgLabel: 'Drag and drop a main image, or click to select',
       pasteMainImgLabel: '(or) paste image link here',
       pasteModalMainImgLabel: '(or) paste a youtube or image link here',

@@ -1,6 +1,7 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
+import { shortenText } from '@/utils/shortenText'
 import { Box, Button, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { ChangeEvent } from 'react'
@@ -15,19 +16,17 @@ const SummaryInput = () => {
 
   const handleAIGenerate = async () => {
     setIsGenerating(true)
-    try {
-      const { data } = await axios.post('/api/summary-generate', {
-        title: wiki.title,
-        content: wiki.content,
-        isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
-      })
-      dispatch({
-        type: 'wiki/setCurrentWiki',
-        payload: { summary: data.trim() },
-      })
-    } catch (e) {
-      console.error(e)
-    }
+
+    const { data } = await axios.post('/api/summary-generate', {
+      title: wiki.title,
+      content: wiki.content,
+      isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
+    })
+
+    dispatch({
+      type: 'wiki/setCurrentWiki',
+      payload: { summary: shortenText(data.trim(), WIKI_SUMMARY_LIMIT) },
+    })
 
     logEvent({
       action: 'GENERATE_SUMMARY',
@@ -72,6 +71,7 @@ const SummaryInput = () => {
       </HStack>
       <Textarea
         disabled={isGenerating}
+        fontSize="sm"
         bgColor={showRed ? '#d406082a' : 'transparent'}
         color="wikiSummaryInputText"
         _focus={{
@@ -91,7 +91,6 @@ const SummaryInput = () => {
           }
         }}
         placeholder={`${t('wikiSummaryPlaceholder')}`}
-        _placeholder={{ color: 'wikiSummaryInputText' }}
       />
     </Box>
   )

@@ -17,7 +17,7 @@ export const generateSummary = async (
   const requestConfig = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: process.env.OPENAI_API_KEY as string,
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
     },
   }
   const requestBody = {
@@ -40,10 +40,10 @@ export const generateSummary = async (
       )
     ).data
 
-    summary = completion.data.choices[0].text
-    totalTokensUsed += completion.data.usage?.total_tokens || 0
+    summary = completion.choices[0].text
+    totalTokensUsed += completion.usage?.total_tokens || 0
     tries += 1
-  } while (summary && summary?.length > WIKI_SUMMARY_LIMIT)
+  } while (summary && summary?.length > WIKI_SUMMARY_LIMIT && tries < MAX_TRIES)
 
   if (!summary) return undefined
 
