@@ -24,6 +24,8 @@ import RankHero from './RankHero'
 
 const LISTING_LIMITS = 20
 
+const TOTAL_COUNT = 400
+
 const Rank = () => {
   const [nftOffset, setNftOffset] = useState<number>(1)
   const [tokensOffset, setTokensOffset] = useState<number>(1)
@@ -101,7 +103,7 @@ const Rank = () => {
               <RankTable
                 hasPagination
                 currentPage={tokensOffset}
-                totalCount={100}
+                totalCount={TOTAL_COUNT}
                 pageSize={LISTING_LIMITS}
                 onPageChange={page => setTokensOffset(page)}
               >
@@ -132,7 +134,7 @@ const Rank = () => {
               <RankTable
                 hasPagination
                 currentPage={nftOffset}
-                totalCount={100}
+                totalCount={TOTAL_COUNT}
                 pageSize={LISTING_LIMITS}
                 onPageChange={page => setNftOffset(page)}
               >
