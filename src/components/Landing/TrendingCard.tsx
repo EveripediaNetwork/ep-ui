@@ -15,6 +15,7 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
 import { Link } from '../Elements'
+import { shortenText } from '@/utils/shortenText'
 
 const TrendingCard = ({
   wikis = [],
@@ -28,7 +29,7 @@ const TrendingCard = ({
   return (
     <Flex
       py="1"
-      minH="440px"
+      minH={{ md: '400px', xl: '440px' }}
       maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
     >
       <Box
@@ -89,7 +90,7 @@ const TrendingCard = ({
                     overflow="hidden"
                     onClick={() => router.push(`wiki/${wiki.id}`)}
                   >
-                    {wiki.title}
+                    {shortenText(wiki.title, 24)}
                   </Text>
 
                   <Text

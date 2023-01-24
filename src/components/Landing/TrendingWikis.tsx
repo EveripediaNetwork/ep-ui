@@ -180,7 +180,7 @@ const TrendingWikis = ({
           wikis={drops}
         />
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
-        <Flex pt="1" minH="440px">
+        <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
           <Box
             maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
             w="full"
@@ -245,7 +245,7 @@ const TrendingWikis = ({
               }}
             >
               {featuredWikis.map(wiki => (
-                <Box p="3">
+                <Box px="3" pt="3" pb={{ md: '0', xl: '3' }}>
                   <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
                 </Box>
               ))}
