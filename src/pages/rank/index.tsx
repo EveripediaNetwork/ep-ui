@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Text,
   Box,
@@ -27,6 +27,8 @@ const LISTING_LIMITS = 20
 const Rank = () => {
   const [nftOffset, setNftOffset] = useState<number>(1)
   const [tokensOffset, setTokensOffset] = useState<number>(1)
+  const [tokenCount, setTokenCount] = useState<number>(0)
+  const [nftCount, setNftCount] = useState<number>(0)
 
   const { data: tokensObject } = useGetTokenRankingQuery({
     kind: 'TOKEN',
@@ -39,6 +41,11 @@ const Rank = () => {
     offset: nftOffset,
     limit: LISTING_LIMITS,
   })
+
+  useEffect(() => {
+    setTokenCount(tokensOffset * 10 - 10)
+    setNftCount(nftOffset * 10 - 10)
+  }, [nftOffset, tokensOffset])
 
   return (
     <Box>
@@ -102,9 +109,9 @@ const Rank = () => {
                 <Tbody>
                   {tokensObject?.map((token, index) =>
                     token ? (
-                      <RankingItem index={index} item={token} />
+                      <RankingItem index={tokenCount + index} item={token} />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem index={tokenCount + index} />
                     ),
                   )}
                 </Tbody>
@@ -133,9 +140,9 @@ const Rank = () => {
                 <Tbody>
                   {nftsObject?.map((nft, index) =>
                     nft ? (
-                      <RankingItem index={index} item={nft} />
+                      <RankingItem index={index + nftCount + 1} item={nft} />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem index={index + nftCount + 1} />
                     ),
                   )}
                 </Tbody>
