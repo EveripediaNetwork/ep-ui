@@ -75,6 +75,7 @@ import {
   isVerifiedContentLinks,
   isWikiExists,
   ValidationErrorMessage,
+  sanitizeContentToPublish,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/slugify'
@@ -287,13 +288,7 @@ const CreateWikiContent = () => {
       const finalWiki = {
         ...wiki,
         user: { id: userAddress },
-        content: String(wiki.content)
-          .replace(/\n/gm, '  \n')
-          .replace(EditorContentOverride, '')
-          .replace(/<\/?em>/gm, '*')
-          .replace(/<\/?strong>/gm, '**')
-          .replace(/<\/?del>/gm, '~~')
-          .replace(/^(#+\s)(\*\*)(.+)(\*\*)/gm, '$1$3'),
+        content: sanitizeContentToPublish(String(wiki.content)),
         category: 'daos',
         metadata: [
           ...wiki.metadata.filter(
@@ -577,7 +572,7 @@ const CreateWikiContent = () => {
                         // eslint-disable-next-line no-nested-ternary
                         commitMessageLimitAlert
                           ? 'red'
-                          : (commitMessage?.length || '') > 50
+                          : (commitMessage?.length || 0) > 50
                           ? 'green'
                           : 'yellow'
                       }
