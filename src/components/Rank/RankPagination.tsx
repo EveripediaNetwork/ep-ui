@@ -42,7 +42,15 @@ const RankPagination = (props: RankpaginationProps) => {
   const lastPage = paginationRange[paginationRange.length - 1]
 
   return (
-    <Flex justifyContent="space-between" px="6" py="4" alignItems="center">
+    <Flex
+      w="1140px"
+      justifyContent="space-between"
+      px="6"
+      py="4"
+      alignItems="center"
+      whiteSpace="nowrap"
+      overflowX="auto"
+    >
       <Button
         py="3 !important"
         px="4 !important"

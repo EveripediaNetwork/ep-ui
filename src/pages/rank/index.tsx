@@ -65,7 +65,7 @@ const Rank = () => {
         <RankHero />
       </Box>
       <Flex
-        maxW={{ base: '90%', '2xl': '1280px', md: '95%' }}
+        maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
         mx="auto"
         py={16}
         flexWrap="wrap"
