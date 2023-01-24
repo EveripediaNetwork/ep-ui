@@ -1,4 +1,4 @@
-import usePagination from '@/hooks/usePagination'
+import usePagination, { DOTS } from '@/hooks/usePagination'
 import { Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
@@ -59,6 +59,47 @@ const RankPagination = (props: RankpaginationProps) => {
       >
         Prev
       </Button>
+      <Flex gap="3">
+        {paginationRange.map(pageNumber =>
+          pageNumber === DOTS ? (
+            <Button
+              w="40px"
+              h="40px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              variant="unstyled"
+              fontWeight={600}
+              color="paginationButtonDefault"
+            >
+              &#8230;
+            </Button>
+          ) : (
+            <Button
+              w="40px"
+              h="40px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              variant="unstyled"
+              fontWeight={600}
+              bg={
+                pageNumber === currentPage
+                  ? 'paginationButtonActiveBg'
+                  : 'transparent'
+              }
+              color={
+                pageNumber === currentPage
+                  ? 'paginationButtonActive'
+                  : 'paginationButtonDefault'
+              }
+              onClick={() => onPageChange(pageNumber as number)}
+            >
+              {pageNumber}
+            </Button>
+          ),
+        )}
+      </Flex>
       <Button
         py="3 !important"
         px="4 !important"

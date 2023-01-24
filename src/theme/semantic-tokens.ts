@@ -269,5 +269,17 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.300',
       _dark: 'whiteAlpha.400',
     },
+    paginationButtonDefault: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.700',
+    },
+    paginationButtonActive: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
+    paginationButtonActiveBg: {
+      default: 'brand.50',
+      _dark: 'brand.300',
+    },
   },
 }
