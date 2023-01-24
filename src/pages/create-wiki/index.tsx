@@ -577,7 +577,7 @@ const CreateWikiContent = () => {
                         // eslint-disable-next-line no-nested-ternary
                         commitMessageLimitAlert
                           ? 'red'
-                          : (commitMessage?.length || '') > 50
+                          : (commitMessage?.length || 0) > 50
                           ? 'green'
                           : 'yellow'
                       }
