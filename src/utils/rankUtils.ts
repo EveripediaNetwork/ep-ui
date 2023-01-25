@@ -3,5 +3,5 @@ export const getFounderName = (text: string) => {
     .split('-')
     .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
     .join(' ')
-  return `${names},`
+  return `${names}`
 }

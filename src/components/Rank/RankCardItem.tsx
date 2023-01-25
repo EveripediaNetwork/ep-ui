@@ -101,11 +101,15 @@ const RankingItem = ({
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item.linkedWikis && item.linkedWikis.founders ? (
           <Flex flexWrap="wrap" maxW="160px">
-            {item.linkedWikis?.founders.map(founder => (
-              <Link href={`wiki/${founder}`} color="brandLinkColor">
-                {getFounderName(founder)}
-              </Link>
-            ))}
+            {item.linkedWikis?.founders.map((founder, i) => {
+              const isLastItem = i === item.linkedWikis.founders.length - 1
+              return (
+                <Link href={`wiki/${founder}`} color="brandLinkColor">
+                  {getFounderName(founder)}
+                  {!isLastItem && ', '}
+                </Link>
+              )
+            })}
           </Flex>
         ) : (
           'NA'
