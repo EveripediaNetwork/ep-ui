@@ -22,6 +22,7 @@ import {
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
+import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 
@@ -44,7 +45,7 @@ const Rank = ({
     setNftCount(nftOffset * 10 - 10)
   }, [nftOffset, tokensOffset])
 
-  const { data: tokensObject } = useGetTokenRankingQuery({
+  const { data: tokensObject, isLoading } = useGetTokenRankingQuery({
     kind: 'TOKEN',
     offset: tokensOffset,
     limit: LISTING_LIMITS,
@@ -116,12 +117,16 @@ const Rank = ({
               >
                 <RankTableHead />
                 <Tbody>
-                  {tokensObject?.map((token, index) =>
-                    token ? (
-                      <RankingItem index={tokenCount + index} item={token} />
-                    ) : (
-                      <InvalidRankCardItem index={tokenCount + index} />
-                    ),
+                  {isLoading ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    tokensObject?.map((token, index) =>
+                      token ? (
+                        <RankingItem index={tokenCount + index} item={token} />
+                      ) : (
+                        <InvalidRankCardItem index={tokenCount + index} />
+                      ),
+                    )
                   )}
                 </Tbody>
               </RankTable>
