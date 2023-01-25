@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { getPromotedWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -21,15 +21,48 @@ interface HomePageProps {
   leaderboards: LeaderBoardType[]
 }
 
+const HeroAfterFirstVisit = () => {
+  return <Box>&nbsp;</Box>
+}
+
 export const Index = ({
   promotedWikis,
   categories,
   popularTags,
   leaderboards,
 }: HomePageProps) => {
+  const [userFirstVisit, setUserFirstVisit] = useState<
+    string | null | undefined
+  >(undefined)
+
+  const [showHero, setShowHero] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (typeof window !== undefined && window.localStorage) {
+      setUserFirstVisit(localStorage.getItem('FIRST_VISITED'))
+
+      if (!userFirstVisit) {
+        localStorage.setItem('FIRST_VISITED', new Date().toString())
+      } else {
+        const currentDate = new Date()
+        const firstTimeVisited = new Date(userFirstVisit)
+        const timeDifference =
+          (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
+
+        if (timeDifference < 60) {
+          setShowHero(false)
+        }
+      }
+    }
+  }, [])
+
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
-      <Hero wiki={promotedWikis && promotedWikis[0]} />
+      {showHero ? (
+        <Hero wiki={promotedWikis && promotedWikis[0]} />
+      ) : (
+        <HeroAfterFirstVisit />
+      )}
       <Box
         _dark={{
           bgImage: '/images/homepage-bg-dark.png',
