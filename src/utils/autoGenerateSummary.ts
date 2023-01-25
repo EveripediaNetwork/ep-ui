@@ -31,20 +31,28 @@ export const generateSummary = async (
     max_tokens: 255,
   }
 
-  do {
-    const completion = (
-      await axios.post(
-        'https://api.openai.com/v1/completions',
-        requestBody,
-        requestConfig,
-      )
-    ).data
+  try {
+    do {
+      const completion = (
+        await axios.post(
+          'https://api.openai.com/v1/completions',
+          requestBody,
+          requestConfig,
+        )
+      ).data
 
-    summary = completion.choices[0].text
-    totalTokensUsed += completion.usage?.total_tokens || 0
-    tries += 1
-  } while (summary && summary?.length > WIKI_SUMMARY_LIMIT && tries < MAX_TRIES)
-
+      summary = completion.choices[0].text
+      totalTokensUsed += completion.usage?.total_tokens || 0
+      tries += 1
+    } while (
+      summary &&
+      summary?.length > WIKI_SUMMARY_LIMIT &&
+      tries < MAX_TRIES
+    )
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e)
+  }
   if (!summary) return undefined
 
   // eslint-disable-next-line no-console
