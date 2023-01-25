@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 const COST_PER_1K_TOKENS = 0.02
 const MAX_TRIES = 3
@@ -49,13 +50,12 @@ export const generateSummary = async (
       summary?.length > WIKI_SUMMARY_LIMIT &&
       tries < MAX_TRIES
     )
-  } catch (e: any) {
-    // eslint-disable-next-line no-console
-    console.error(e.response.data.error)
+  } catch (e) {
+    const { response } = e as AxiosError
+    console.error(response?.data.error)
   }
   if (!summary) return undefined
 
-  // eslint-disable-next-line no-console
   console.log(`
 ------------------------------
 💨 Execution Summary:

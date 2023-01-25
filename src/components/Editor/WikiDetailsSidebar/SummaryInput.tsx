@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
 import { shortenText } from '@/utils/shortenText'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import AIGenerateButton from './AIGenerateButton'
@@ -44,8 +44,9 @@ const SummaryInput = () => {
         category: 'summary-generate',
         value: 1,
       })
-    } catch (e: any) {
-      if (e.response.status === 429) {
+    } catch (error) {
+      const { response } = error as AxiosError
+      if (response?.status === 429) {
         localStorage.setItem(
           'AI_SUMMARY_GENERATE_RATE_LIMITED',
           new Date().toISOString(),
@@ -70,22 +71,21 @@ const SummaryInput = () => {
     setIsGenerating(false)
   }, [dispatch, toast, wiki.categories, wiki.content, wiki.id, wiki.title])
 
+  const summaryLimitTagColor = () => {
+    if (showRed) {
+      return 'red'
+    }
+    if ((wiki?.summary?.length || 0) > (WIKI_SUMMARY_LIMIT * 2) / 3)
+      return 'green'
+    return 'yellow'
+  }
+
   return (
     <Box>
       <HStack mb={2} justify="space-between" align="center">
         <Text color="wikiSummaryLabel">{`${t('wikiSummaryLabel')}`}</Text>
         <HStack>
-          <Tag
-            variant="solid"
-            colorScheme={
-              // eslint-disable-next-line no-nested-ternary
-              showRed
-                ? 'red'
-                : (wiki?.summary?.length || 0) > (WIKI_SUMMARY_LIMIT * 2) / 3
-                ? 'green'
-                : 'yellow'
-            }
-          >
+          <Tag variant="solid" colorScheme={summaryLimitTagColor()}>
             {wiki?.summary?.length || 0}/{WIKI_SUMMARY_LIMIT}
           </Tag>
           <AIGenerateButton
