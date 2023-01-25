@@ -1,5 +1,8 @@
+import { WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL } from '@/data/Constants'
+import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { Button, Tooltip } from '@chakra-ui/react'
 import React from 'react'
+import { useAccount } from 'wagmi'
 
 const AIGenerateButton = ({
   isGenerating,
@@ -10,22 +13,27 @@ const AIGenerateButton = ({
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false)
   const [timeLeft, setTimeLeft] = React.useState(0)
+  const { address: userAddress } = useAccount()
+  const { userCanEdit } = useWhiteListValidator(userAddress)
 
   React.useEffect(() => {
     const timeCounter = setInterval(() => {
       const lastTime = localStorage.getItem('AI_SUMMARY_GENERATE_RATE_LIMITED')
-      console.log(lastTime)
+
       if (lastTime) {
         const [lastTimeDate, now] = [new Date(lastTime), new Date()]
 
-        if (now.getTime() - lastTimeDate.getTime() > 30 * 60 * 1000) {
+        if (
+          now.getTime() - lastTimeDate.getTime() >
+          WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL
+        ) {
           setIsDisabled(false)
           setTimeLeft(0)
         } else {
           setIsDisabled(true)
           setTimeLeft(
-            30 * 60 -
-              Math.floor((now.getTime() - lastTimeDate.getTime()) / 1000),
+            WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL / 1000 -
+              Math.floor(now.getTime() - lastTimeDate.getTime()) / 1000,
           )
         }
       }
@@ -47,7 +55,7 @@ const AIGenerateButton = ({
         size="xs"
         px={2}
         fontSize="xs"
-        disabled={isGenerating || isDisabled}
+        disabled={isGenerating || isDisabled || !userCanEdit}
         sx={{
           _disabled: {
             backgroundColor: isDisabled

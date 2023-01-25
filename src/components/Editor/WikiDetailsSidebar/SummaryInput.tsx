@@ -28,7 +28,6 @@ const SummaryInput = () => {
         isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
       })
 
-      console.log(headers['x-ratelimit-remaining'])
       if (headers['x-ratelimit-remaining'] === '1') {
         localStorage.setItem(
           'AI_SUMMARY_GENERATE_RATE_LIMITED',
