@@ -33,6 +33,8 @@ export const Index = ({
   popularTags,
   leaderboards,
 }: HomePageProps) => {
+  // const userTime = JSON.parse(localStorage.getItem('FIRST_VISITED'))
+
   const [userFirstVisit, setUserFirstVisit] = useState<
     string | null | undefined
   >(undefined)
