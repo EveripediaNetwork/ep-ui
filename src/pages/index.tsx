@@ -25,6 +25,8 @@ const HeroAfterFirstVisit = () => {
   return <Box>&nbsp;</Box>
 }
 
+const TIME_LIMIT = 60
+
 export const Index = ({
   promotedWikis,
   categories,
@@ -50,7 +52,7 @@ export const Index = ({
         const timeDifference =
           (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
 
-        if (timeDifference < 10) {
+        if (timeDifference < TIME_LIMIT) {
           setShowHero(false)
         }
       }
