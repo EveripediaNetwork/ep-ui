@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { getPromotedWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -37,7 +37,7 @@ export const Index = ({
 
   const [showHero, setShowHero] = useState<boolean>(true)
 
-  const currentDate = new Date()
+  const currentDate = useMemo(() => new Date(), [])
 
   useEffect(() => {
     if (typeof window !== undefined && window.localStorage) {
@@ -50,12 +50,12 @@ export const Index = ({
         const timeDifference =
           (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
 
-        if (timeDifference < 15) {
+        if (timeDifference < 10) {
           setShowHero(false)
         }
       }
     }
-  }, [])
+  }, [userFirstVisit, currentDate])
 
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
