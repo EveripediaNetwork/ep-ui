@@ -173,7 +173,7 @@ const TrendingWikis = ({
         maxW={{ base: '403px', md: 'fit-content' }}
         mx="auto"
         flexWrap="wrap"
-        gap={2}
+        gap={4}
       >
         <TrendingCard
           title="Trending Wikis"
