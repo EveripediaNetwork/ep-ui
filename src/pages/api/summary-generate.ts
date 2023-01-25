@@ -2,9 +2,9 @@ import {
   WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL,
   WIKI_SUMMARY_GEN_RATE_LIMIT_MAX_REQUESTS,
 } from '@/data/Constants'
-import { generateSummary } from '@/utils/autoGenerateSummary'
-import rateLimit from '@/utils/rate-limit'
-import { sanitizeContent } from '@/utils/sanitizeContent'
+import { generateSummary } from '@/utils/SummaryGeneration/autoGenerateSummary'
+import rateLimit from '@/utils/SummaryGeneration/rate-limit'
+import { sanitizeContent } from '@/utils/SummaryGeneration/sanitizeContent'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const limiter = rateLimit({
@@ -31,8 +31,11 @@ export default async function handler(
   const sanitizedContent = sanitizeContent(content)
 
   try {
-    const summary =
-      'ok' || (await generateSummary(sanitizedContent, title, isAboutPerson))
+    const summary = await generateSummary(
+      sanitizedContent,
+      title,
+      isAboutPerson,
+    )
 
     if (!summary) return res.status(500).send('Summary generation failed')
 
