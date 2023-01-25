@@ -7,6 +7,7 @@ import {
   Icon,
   IconButton,
   Link,
+  Tag,
   Text,
   VStack,
   Wrap,
@@ -72,6 +73,14 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
   const websiteLink = socialMetaData.find(
     item => item.id === CommonMetaIds.WEBSITE,
   )?.value
+
+  const getFounderName = (text: string) => {
+    const names = text
+      .split('-')
+      .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
+      .join(' ')
+    return `${names}`
+  }
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -171,6 +180,40 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                   {LINK_OPTIONS.find(option => option.id === item.id)?.label}
                 </Link>
                 <Icon color="brandLinkColor" as={RiExternalLinkLine} />
+              </HStack>
+            ))}
+          </ProfileListItem>
+        )}
+
+        {wiki.linkedWikis?.founders && (
+          <ProfileListItem title="Founders">
+            {wiki.linkedWikis?.founders.map((item, i) => (
+              <VStack alignItems="start">
+                <Link
+                  color="brandLinkColor"
+                  fontSize="14px"
+                  key={i}
+                  href={`/wiki/${item}`}
+                  rel="noopener nofollow"
+                  isExternal
+                  _hover={{
+                    color: 'linkColorHover',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  {getFounderName(item)}
+                </Link>
+              </VStack>
+            ))}
+          </ProfileListItem>
+        )}
+        {wiki.linkedWikis?.blockchains && (
+          <ProfileListItem title="Blockchains">
+            {wiki.linkedWikis?.blockchains.map((item, i) => (
+              <HStack spacing={2}>
+                <Link key={i} href={`/tags/${item}`} py={1}>
+                  <Tag whiteSpace="nowrap">{item}</Tag>
+                </Link>
               </HStack>
             ))}
           </ProfileListItem>

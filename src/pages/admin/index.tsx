@@ -87,8 +87,6 @@ const Admin = () => {
 
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
-    endDate,
-    interval: 'year',
   })
 
   const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
