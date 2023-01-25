@@ -63,3 +63,11 @@ export const GET_TOKEN_RANKINGS = gql`
     }
   }
 `
+
+export const GET_RANK_COUNT = gql`
+  query getRankingTotal($category: String!) {
+    categoryTotal(category: $category) {
+      amount
+    }
+  }
+`

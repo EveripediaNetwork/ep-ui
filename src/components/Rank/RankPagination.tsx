@@ -68,9 +68,10 @@ const RankPagination = (props: RankpaginationProps) => {
         Prev
       </Button>
       <Flex gap="3">
-        {paginationRange.map(pageNumber =>
+        {paginationRange.map((pageNumber, index) =>
           pageNumber === DOTS ? (
             <Button
+              key={DOTS + index}
               w="40px"
               h="40px"
               display="flex"
@@ -84,6 +85,7 @@ const RankPagination = (props: RankpaginationProps) => {
             </Button>
           ) : (
             <Button
+              key={pageNumber}
               w="40px"
               h="40px"
               display="flex"

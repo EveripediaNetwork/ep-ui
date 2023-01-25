@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { GetStaticProps } from 'next'
 import {
   Text,
   Box,
@@ -15,10 +16,12 @@ import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
 import {
+  getCategoryTotal,
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
+import { store } from '@/store/store'
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 
@@ -158,3 +161,23 @@ const Rank = () => {
 }
 
 export default Rank
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: tokensData } = await store.dispatch(
+    getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
+  )
+
+  const { data: nftsData } = await store.dispatch(
+    getCategoryTotal.initiate({ category: 'nfts' }),
+  )
+
+  const totalTokens = tokensData?.categoryTotal.amount
+  const totalNfts = nftsData?.categoryTotal.amount
+
+  return {
+    props: {
+      totalTokens,
+      totalNfts,
+    },
+  }
+}
