@@ -49,9 +49,9 @@ export const generateSummary = async (
       summary?.length > WIKI_SUMMARY_LIMIT &&
       tries < MAX_TRIES
     )
-  } catch (e) {
+  } catch (e: any) {
     // eslint-disable-next-line no-console
-    console.error(e)
+    console.error(e.response.data.error)
   }
   if (!summary) return undefined
 

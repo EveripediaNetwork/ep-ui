@@ -21,7 +21,7 @@ export default async function handler(
   try {
     await limiter.check(
       res,
-      WIKI_SUMMARY_GEN_RATE_LIMIT_MAX_REQUESTS,
+      WIKI_SUMMARY_GEN_RATE_LIMIT_MAX_REQUESTS + 1,
       'CACHE_TOKEN',
     ) // 5 requests per interval per user
   } catch {

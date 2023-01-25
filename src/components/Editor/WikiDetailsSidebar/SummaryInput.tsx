@@ -35,7 +35,7 @@ const SummaryInput = () => {
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { summary: shortenText(data.trim(), WIKI_SUMMARY_LIMIT) },
+        payload: { summary: shortenText(data.trim(), WIKI_SUMMARY_LIMIT - 3) },
       })
 
       logEvent({
@@ -44,22 +44,27 @@ const SummaryInput = () => {
         category: 'summary-generate',
         value: 1,
       })
-    } catch (error) {
-      setShowRed(true)
-      setTimeout(() => {
-        setShowRed(false)
-      }, 3000)
-      toast({
-        title: 'Error generating summary.',
-        description: 'Please try again later.',
-        status: 'error',
-      })
-      logEvent({
-        action: 'GENERATE_SUMMARY',
-        label: wiki.id,
-        category: 'summary-generate',
-        value: 0,
-      })
+    } catch (e: any) {
+      if (e.response.status === 429) {
+        localStorage.setItem(
+          'AI_SUMMARY_GENERATE_RATE_LIMITED',
+          new Date().toISOString(),
+        )
+      } else {
+        setShowRed(true)
+        setTimeout(() => setShowRed(false), 3000)
+        toast({
+          title: 'Error generating summary.',
+          description: 'Please try again later.',
+          status: 'error',
+        })
+        logEvent({
+          action: 'GENERATE_SUMMARY',
+          label: wiki.id,
+          category: 'summary-generate',
+          value: 0,
+        })
+      }
     }
 
     setIsGenerating(false)
