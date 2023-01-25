@@ -16,8 +16,6 @@ const SummaryInput = () => {
   const [isGenerating, setIsGenerating] = React.useState(false)
   const toast = useToast()
 
-  React.useEffect(() => {}, [])
-
   const handleAIGenerate = React.useCallback(async () => {
     setIsGenerating(true)
 

@@ -28,13 +28,16 @@ const AIGenerateButton = ({
           WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL
         ) {
           setIsDisabled(false)
+          localStorage.removeItem('AI_SUMMARY_GENERATE_RATE_LIMITED')
           setTimeLeft(0)
         } else {
-          setIsDisabled(true)
-          setTimeLeft(
-            WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL / 1000 -
-              Math.floor(now.getTime() - lastTimeDate.getTime()) / 1000,
+          const currentTimeLeft = Math.ceil(
+            (WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL -
+              (now.getTime() - lastTimeDate.getTime())) /
+              1000,
           )
+          setIsDisabled(true)
+          setTimeLeft(currentTimeLeft)
         }
       }
     }, 1000)
