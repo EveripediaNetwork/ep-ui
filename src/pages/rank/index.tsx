@@ -45,7 +45,7 @@ const Rank = ({
     setNftCount(nftOffset * 10 - 10)
   }, [nftOffset, tokensOffset])
 
-  const { data: tokensObject, isLoading } = useGetTokenRankingQuery({
+  const { data: tokensObject, isFetching } = useGetTokenRankingQuery({
     kind: 'TOKEN',
     offset: tokensOffset,
     limit: LISTING_LIMITS,
@@ -117,7 +117,7 @@ const Rank = ({
               >
                 <RankTableHead />
                 <Tbody>
-                  {isLoading ? (
+                  {!isFetching ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
                     tokensObject?.map((token, index) =>
