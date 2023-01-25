@@ -37,19 +37,20 @@ export const Index = ({
 
   const [showHero, setShowHero] = useState<boolean>(true)
 
+  const currentDate = new Date()
+
   useEffect(() => {
     if (typeof window !== undefined && window.localStorage) {
       setUserFirstVisit(localStorage.getItem('FIRST_VISITED'))
 
       if (!userFirstVisit) {
-        localStorage.setItem('FIRST_VISITED', new Date().toString())
+        localStorage.setItem('FIRST_VISITED', currentDate.toString())
       } else {
-        const currentDate = new Date()
         const firstTimeVisited = new Date(userFirstVisit)
         const timeDifference =
           (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
 
-        if (timeDifference < 60) {
+        if (timeDifference < 15) {
           setShowHero(false)
         }
       }
