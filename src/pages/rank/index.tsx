@@ -51,11 +51,13 @@ const Rank = ({
     limit: LISTING_LIMITS,
   })
 
-  const { data: nftsObject } = useGetNFTRankingQuery({
-    kind: 'NFT',
-    offset: nftOffset,
-    limit: LISTING_LIMITS,
-  })
+  const { data: nftsObject, isFetching: NFTisFetching } = useGetNFTRankingQuery(
+    {
+      kind: 'NFT',
+      offset: nftOffset,
+      limit: LISTING_LIMITS,
+    },
+  )
 
   return (
     <Box>
@@ -117,7 +119,7 @@ const Rank = ({
               >
                 <RankTableHead />
                 <Tbody>
-                  {!isFetching ? (
+                  {isFetching ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
                     tokensObject?.map((token, index) =>
@@ -152,12 +154,16 @@ const Rank = ({
               >
                 <RankTableHead />
                 <Tbody>
-                  {nftsObject?.map((nft, index) =>
-                    nft ? (
-                      <RankingItem index={index + nftCount} item={nft} />
-                    ) : (
-                      <InvalidRankCardItem index={index + nftCount} />
-                    ),
+                  {NFTisFetching ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    nftsObject?.map((nft, index) =>
+                      nft ? (
+                        <RankingItem index={index + nftCount} item={nft} />
+                      ) : (
+                        <InvalidRankCardItem index={index + nftCount} />
+                      ),
+                    )
                   )}
                 </Tbody>
               </RankTable>
