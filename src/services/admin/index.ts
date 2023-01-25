@@ -37,6 +37,9 @@ type WikisModifiedCountArgs = {
   endDate?: number
   interval?: string
 }
+type EditorsModifiedCountArgs = {
+  startDate?: number
+}
 
 type PageViewCountArgs = {
   startDate?: number
@@ -120,10 +123,13 @@ export const adminApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
   endpoints: builder => ({
-    getEditorsCount: builder.query<{ amount: number }, WikisModifiedCountArgs>({
-      query: ({ startDate, endDate }: WikisModifiedCountArgs) => ({
+    getEditorsCount: builder.query<
+      { amount: number },
+      EditorsModifiedCountArgs
+    >({
+      query: ({ startDate }: EditorsModifiedCountArgs) => ({
         document: EDITORS_COUNT,
-        variables: { startDate, endDate },
+        variables: { startDate },
       }),
       transformResponse: (response: WikisEditorsCountResponse) =>
         response.editorCount,
