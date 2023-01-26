@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { Box, Flex, Heading, chakra, Text } from '@chakra-ui/react'
 import { getPromotedWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -21,7 +21,6 @@ interface HomePageProps {
   categories: Category[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
-  userFirstVisit: string | null
 }
 
 const HeroAfterFirstVisit = () => {
@@ -44,36 +43,39 @@ const HeroAfterFirstVisit = () => {
   )
 }
 
+const userFirstVisit = () => {
+  const currentDate = new Date()
+  if (typeof localStorage === 'undefined') return true
+
+  const firstVisitedString = localStorage.getItem('FIRST_VISITED')
+
+  if (!firstVisitedString) {
+    localStorage.setItem('FIRST_VISITED', currentDate.toString())
+    return true
+  }
+
+  const firstVisited = new Date(firstVisitedString)
+
+  const timeDifference =
+    (currentDate.getTime() - firstVisited.getTime()) / (1000 * 60)
+
+  if (timeDifference > TIME_LIMIT) {
+    localStorage.removeItem('FIRST_VISITED')
+    return true
+  }
+
+  return false
+}
+
 export const Index = ({
   promotedWikis,
   categories,
   popularTags,
   leaderboards,
-  userFirstVisit,
 }: HomePageProps) => {
-  const [showHero, setShowHero] = useState<boolean>(true)
-
-  const currentDate = useMemo(() => new Date(), [])
-
-  useEffect(() => {
-    if (!userFirstVisit) {
-      if (!localStorage.getItem('FIRST_VISITED')) {
-        localStorage.setItem('FIRST_VISITED', currentDate.toString())
-      }
-    } else {
-      const firstTimeVisited = new Date(userFirstVisit)
-      const timeDifference =
-        (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
-
-      if (timeDifference < TIME_LIMIT) {
-        setShowHero(false)
-      }
-    }
-  }, [userFirstVisit, currentDate])
-
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
-      {showHero ? (
+      {userFirstVisit() ? (
         <Hero wiki={promotedWikis && promotedWikis[0]} />
       ) : (
         <HeroAfterFirstVisit />
@@ -94,12 +96,6 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  let userFirstVisit = null
-
-  if (typeof window !== 'undefined' && window.localStorage) {
-    userFirstVisit = localStorage.getItem('FIRST_VISITED')
-  }
-
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
   const { data: categories, error: categoriesError } = await store.dispatch(
@@ -140,7 +136,6 @@ export async function getStaticProps() {
       categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
-      userFirstVisit,
     },
   }
 }

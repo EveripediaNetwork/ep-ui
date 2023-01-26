@@ -6,6 +6,9 @@ export interface RankCardType {
   images: Image[]
   nftMarketData: NftMarketData
   tokenMarketData: TokenMarketData
+  linkedWikis: {
+    founders: string[]
+  }
 }
 
 export interface Medum {
