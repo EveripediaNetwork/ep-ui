@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Heading, chakra, Text } from '@chakra-ui/react'
 import { getPromotedWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
@@ -22,7 +22,23 @@ interface HomePageProps {
 }
 
 const HeroAfterFirstVisit = () => {
-  return <Box>&nbsp;</Box>
+  return (
+    <Box>
+      <Heading
+        w="full"
+        textAlign="center"
+        fontSize={{ base: '35', sm: '42', lg: '54' }}
+      >
+        The World&apos;s Largest
+        <chakra.span color="brandLinkColor"> Blockchain & Crypto </chakra.span>
+        Encyclopedia
+      </Heading>
+      <Text textAlign="center" mt="5" fontSize={{ base: 'md', lg: '2xl' }}>
+        Start your crypto journey with IQ Wiki! The compass for exploring your
+        web3 curiosities.
+      </Text>
+    </Box>
+  )
 }
 
 const TIME_LIMIT = 60
@@ -62,7 +78,7 @@ export const Index = ({
   }, [userFirstVisit, currentDate])
 
   return (
-    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
+    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
       {showHero ? (
         <Hero wiki={promotedWikis && promotedWikis[0]} />
       ) : (
