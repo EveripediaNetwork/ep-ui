@@ -181,10 +181,6 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.800',
       _dark: 'whiteAlpha.900',
     },
-    wikiSummaryInputText: {
-      default: 'gray.800',
-      _dark: 'whiteAlpha.700',
-    },
     wikiDropzoneText: {
       default: 'blackAlpha.500',
       _dark: 'whiteAlpha.700',
@@ -236,6 +232,50 @@ export const semanticTokens: SemanticTokens = {
     placeholderColor: {
       default: '#ccd5e0',
       _dark: '#3f444e',
+    },
+    ranklistBtnBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
+    rankingListTableHead: {
+      default: 'gray.50',
+      _dark: 'whiteAlpha.100',
+    },
+    rankingListTableHeading: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
+    rankingListText: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.900',
+    },
+    rankingListBorder: {
+      default: 'gray.200',
+      _dark: 'whiteAlpha.300',
+    },
+    rankingListTableBg: {
+      default: '#FFFFFF',
+      _dark: '#2D3748',
+    },
+    rankPageButtonText: {
+      default: 'gray.700',
+      _dark: 'whiteAlpha.900',
+    },
+    rankPageButtonBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.400',
+    },
+    paginationButtonDefault: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.700',
+    },
+    paginationButtonActive: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
+    paginationButtonActiveBg: {
+      default: 'brand.50',
+      _dark: 'brand.300',
     },
   },
 }

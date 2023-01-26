@@ -17,6 +17,9 @@ export const resources = {
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Latest from IQ.Wiki',
+      rankingListHeading: 'Wiki Rank By MarketCap',
+      rankingListDescription:
+        'A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.',
       trendingWikisDescription:
         'Top wikis, recent edits and popular wikis on IQ.wiki.',
       browseCategory: 'Wiki Categories',
@@ -63,7 +66,7 @@ export const resources = {
       //Create wiki page
       wikiTitlePlaceholder: 'Title goes here',
       wikiSummaryLabel: 'Wiki Summary',
-      wikiSummaryPlaceholder: 'Summary of wiki',
+      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-3 AI',
       dragMainImgLabel: 'Drag and drop a main image, or click to select',
       pasteMainImgLabel: '(or) paste image link here',
       pasteModalMainImgLabel: '(or) paste a youtube or image link here',
