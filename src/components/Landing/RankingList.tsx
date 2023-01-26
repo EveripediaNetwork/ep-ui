@@ -3,7 +3,6 @@ import {
   Box,
   Flex,
   Heading,
-  Link,
   TabList,
   TabPanel,
   TabPanels,
@@ -19,6 +18,7 @@ import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
+import { LinkButton } from '../Elements'
 
 export type RankingListProps = {
   rankings: {
@@ -101,17 +101,16 @@ const RankingList = ({ rankings }: RankingListProps) => {
           </TabPanels>
         </Tabs>
         <Flex justifyContent="center" mt="10">
-          <Link
-            variant="unstyled"
+          <LinkButton
             href="/rank"
-            py="4"
-            px="10"
-            borderRadius="6px"
-            border="1px solid"
-            borderColor="ranklistBtnBorder"
+            h="50px"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
+            prefetch={false}
           >
             View More
-          </Link>
+          </LinkButton>
         </Flex>
       </Box>
     </Box>

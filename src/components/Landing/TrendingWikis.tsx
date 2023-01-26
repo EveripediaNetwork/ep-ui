@@ -180,7 +180,6 @@ const TrendingWikis = ({
           icon={RiBarChartFill}
           wikis={drops}
         />
-
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
           <Box
