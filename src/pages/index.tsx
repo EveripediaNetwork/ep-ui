@@ -51,8 +51,6 @@ export const Index = ({
   leaderboards,
   userFirstVisit,
 }: HomePageProps) => {
-  // const userTime = JSON.parse(localStorage.getItem('FIRST_VISITED'))
-
   const [showHero, setShowHero] = useState<boolean>(true)
 
   const currentDate = useMemo(() => new Date(), [])
