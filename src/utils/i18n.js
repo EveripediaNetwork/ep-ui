@@ -16,9 +16,12 @@ export const resources = {
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
-      trendingWikis: 'Trending Wikis',
+      trendingWikis: 'Latest from IQ.Wiki',
+      rankingListHeading: 'Wiki Rank By MarketCap',
+      rankingListDescription:
+        'A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.',
       trendingWikisDescription:
-        'The latest and trending wikis on IQ.wiki and in the blockchain space.',
+        'Top wikis, recent edits and popular wikis on IQ.wiki.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
@@ -63,7 +66,7 @@ export const resources = {
       //Create wiki page
       wikiTitlePlaceholder: 'Title goes here',
       wikiSummaryLabel: 'Wiki Summary',
-      wikiSummaryPlaceholder: 'Summary of wiki',
+      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-3 AI',
       dragMainImgLabel: 'Drag and drop a main image, or click to select',
       pasteMainImgLabel: '(or) paste image link here',
       pasteModalMainImgLabel: '(or) paste a youtube or image link here',
