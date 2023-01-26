@@ -32,6 +32,7 @@ interface ActivityCardProps {
   type?: string
   categories?: BaseCategory[]
   tags?: BaseTag[]
+  pos?: number
   WikiImgObj?: Image[]
 }
 
@@ -46,11 +47,12 @@ const ActivityCard = ({
   activityId,
   WikiImgObj,
   wikiId,
+  pos,
   type,
 }: ActivityCardProps) => {
-  const activityCardLinkRoute = activityId
-    ? `/revision/${activityId}`
-    : `/wiki/${wikiId}`
+  const activityCardLinkRoute =
+    pos !== 1 ? `/revision/${activityId}` : `/wiki/${wikiId}`
+
   const router = useRouter()
 
   return (

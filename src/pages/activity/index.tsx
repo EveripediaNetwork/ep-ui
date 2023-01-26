@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
@@ -21,6 +21,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const router = useRouter()
+
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
     setTimeout(() => {
@@ -33,7 +34,20 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         )
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
-          const data = result.data || []
+          const data: ActivityType[] = []
+
+          result.data.map(item => {
+            data.push({
+              content: item.content,
+              datetime: item.datetime,
+              id: item.id,
+              ipfs: item.ipfs,
+              pos: 0,
+              type: item.type,
+              wikiId: item.wikiId,
+            })
+            return null
+          })
           const updatedActivities = [...LatestActivityData, ...data]
           setLatestActivityData(updatedActivities)
           setOffset(updatedOffset)
@@ -45,7 +59,17 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       fetchNewActivities()
     }, FETCH_DELAY_TIME)
   }
-
+  useEffect(() => {
+    const position: any = {}
+    LatestActivityData.map(item => {
+      if (!position[item.wikiId]) {
+        position[item.wikiId] = 1
+      } else {
+        position[item.wikiId] += 1
+      }
+      item.pos = position[item.wikiId]
+    })
+  }, [LatestActivityData])
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage: hasMore,
@@ -62,6 +86,8 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       lastModTimeStamp={activity.datetime}
       activityId={activity.id}
       type={activity.type}
+      pos={activity.pos}
+      wikiId={activity.wikiId}
       WikiImgObj={activity.content[0].images}
       categories={activity.content[0].categories}
       tags={activity.content[0].tags}
