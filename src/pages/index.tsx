@@ -14,6 +14,7 @@ import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/leaderboard.utils'
 
+const RANKING_LIST_LIMIT = 10
 const TIME_LIMIT = 60
 
 interface HomePageProps {
@@ -21,6 +22,10 @@ interface HomePageProps {
   categories: Category[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
 }
 
 const HeroAfterFirstVisit = () => {
@@ -72,6 +77,7 @@ export const Index = ({
   categories,
   popularTags,
   leaderboards,
+  rankings,
 }: HomePageProps) => {
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
@@ -136,6 +142,7 @@ export async function getStaticProps() {
       categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
+      rankings: rankings || [],
     },
   }
 }
