@@ -1,28 +1,30 @@
 import {
   Text,
-  LinkBox,
   chakra,
   Heading,
   Box,
   AspectRatio,
   Flex,
   HStack,
+  Icon,
+  Image,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
-import { WikiImage } from '@/components/WikiImage'
-import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { useTranslation } from 'react-i18next'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { getUsername } from '@/utils/getUsername'
-import { getReadableDate } from '@/utils/getFormattedDate'
+import { RiBarChartFill, RiTimeFill, RiStarFill } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
+import { getReadableDate } from '@/utils/getFormattedDate'
+import { getUsername } from '@/utils/getUsername'
+import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { Carousel, Link } from '../Elements'
-import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
+import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
 
-const TRENDING_WIKI_IMG_WIDTH = 300
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
   const getLatestEdited = () => {
@@ -37,7 +39,7 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <LinkBox flex="none">
-      <chakra.div p={2} mx="auto">
+      <chakra.div px={2} mx="auto">
         <Flex
           alignSelf="center"
           direction="column"
@@ -45,22 +47,16 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
           bg="white"
           color="black"
           _dark={{ bgColor: 'gray.700', color: 'white' }}
-          maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '388' }}
           cursor="pointer"
           rounded="lg"
           shadow="md"
           mx="auto"
         >
-          <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO}>
-            <WikiImage
-              cursor="pointer"
-              flexShrink={0}
-              imageURL={getWikiImageUrl(wiki.images)}
-              borderRadius="none"
-              roundedTop="lg"
+          <AspectRatio ratio={7 / 4}>
+            <Image
+              src={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
-              imgH={TRENDING_WIKI_IMG_WIDTH}
-              imgW={WIKI_IMAGE_ASPECT_RATIO * TRENDING_WIKI_IMG_WIDTH}
+              borderTopRadius="md"
             />
           </AspectRatio>
           <Flex
@@ -75,13 +71,16 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
-                fontSize={24}
+                fontSize={{
+                  base: '14px',
+                  md: '18px',
+                }}
               >
                 {wiki?.title}
               </Heading>
             </LinkOverlay>
             <Text
-              fontSize="sm"
+              fontSize="12px"
               maxW="90%"
               minH={12}
               color="homeDescriptionColor"
@@ -134,9 +133,16 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
+const TrendingWikis = ({
+  drops = [],
+  recent = [],
+  featuredWikis = [],
+}: {
+  drops?: Wiki[]
+  recent?: Wiki[]
+  featuredWikis?: Wiki[]
+}) => {
   const { t } = useTranslation()
-
   return (
     <Box
       mt={10}
@@ -160,45 +166,104 @@ const TrendingWikis = ({ drops = [] }: { drops?: Wiki[] }) => {
         px={4}
         maxW="750"
       >{`${t('trendingWikisDescription')}`}</Text>
-      <Box maxW="1160px" mx="auto">
-        <Carousel
-          topArrow="25%"
-          settings={{
-            dots: true,
-            infinite: false,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3,
 
-            responsive: [
-              {
-                breakpoint: 1000,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  initialSlide: 2,
-                  infinite: true,
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        maxW={{ base: '403px', md: 'fit-content' }}
+        mx="auto"
+        flexWrap="wrap"
+        gap={4}
+      >
+        <TrendingCard
+          title="Trending Wikis"
+          icon={RiBarChartFill}
+          wikis={drops}
+        />
+
+        <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
+        <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
+          <Box
+            maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+            w="full"
+            shadow="lg"
+            rounded="lg"
+            py={3}
+            bg="white"
+            _dark={{ bgColor: 'gray.700', color: 'white' }}
+            color="black"
+            textAlign="center"
+            justifyContent="center"
+          >
+            <chakra.div w="full" alignItems="center" display="flex" pl="2">
+              <Icon
+                cursor="pointer"
+                color="brandLinkColor"
+                fontSize="2xl"
+                fontWeight={600}
+                as={RiStarFill}
+              />
+              <Text
+                fontSize={{ base: 'md', lg: '18px' }}
+                pl={2}
+                fontWeight="600"
+              >
+                Featured wikis
+              </Text>
+            </chakra.div>
+            {featuredWikis ? (
+              <Carousel
+                topArrow="25%"
+                settings={{
                   dots: true,
-                },
-              },
-              {
-                breakpoint: 680,
-                settings: {
+                  autoplay: true,
+                  infinite: true,
                   arrows: false,
+                  speed: 500,
                   slidesToShow: 1,
                   slidesToScroll: 1,
-                  infinite: true,
-                  dots: true,
-                },
-              },
-            ],
-          }}
-        >
-          {drops.map(wiki => (
-            <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
-          ))}
-        </Carousel>
-      </Box>
+
+                  responsive: [
+                    {
+                      breakpoint: 1000,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        infinite: true,
+                        dots: true,
+                      },
+                    },
+                    {
+                      breakpoint: 680,
+                      settings: {
+                        arrows: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true,
+                      },
+                    },
+                  ],
+                }}
+              >
+                {featuredWikis.map(wiki => (
+                  <Box px="3" pt="3" pb={{ md: '0', xl: '3' }}>
+                    <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
+                  </Box>
+                ))}
+              </Carousel>
+            ) : (
+              <LoadingTrendingWikiCard />
+            )}
+          </Box>
+        </Flex>
+        <Flex
+          minH="1px"
+          w={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
+          display={{ base: 'block', xl: 'none' }}
+        />
+      </Flex>
     </Box>
   )
 }
