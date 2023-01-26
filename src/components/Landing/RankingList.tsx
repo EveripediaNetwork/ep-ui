@@ -34,7 +34,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
     <Box
       mt={10}
       px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 20 }}
+      pb={{ base: 5, md: 20 }}
       textAlign="center"
     >
       <Heading

@@ -98,12 +98,12 @@ export const Index = ({
         }}
         bgImage="/images/homepage-bg-white.png"
       >
-        <RankingList rankings={rankings} />
         <TrendingWikis
           drops={promotedWikis && promotedWikis.slice(0, 4)}
           recent={recentWikis && recentWikis.slice(0, 4)}
           featuredWikis={promotedWikis && promotedWikis}
         />
+        <RankingList rankings={rankings} />
         <CategoriesList categories={categories} />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
