@@ -19,6 +19,7 @@ interface HomePageProps {
   categories: Category[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
+  userFirstVisit: string | null
 }
 
 const HeroAfterFirstVisit = () => {
@@ -48,31 +49,26 @@ export const Index = ({
   categories,
   popularTags,
   leaderboards,
+  userFirstVisit,
 }: HomePageProps) => {
   // const userTime = JSON.parse(localStorage.getItem('FIRST_VISITED'))
-
-  const [userFirstVisit, setUserFirstVisit] = useState<
-    string | null | undefined
-  >(undefined)
 
   const [showHero, setShowHero] = useState<boolean>(true)
 
   const currentDate = useMemo(() => new Date(), [])
 
   useEffect(() => {
-    if (typeof window !== undefined && window.localStorage) {
-      setUserFirstVisit(localStorage.getItem('FIRST_VISITED'))
-
-      if (!userFirstVisit) {
+    if (!userFirstVisit) {
+      if (!localStorage.getItem('FIRST_VISITED')) {
         localStorage.setItem('FIRST_VISITED', currentDate.toString())
-      } else {
-        const firstTimeVisited = new Date(userFirstVisit)
-        const timeDifference =
-          (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
+      }
+    } else {
+      const firstTimeVisited = new Date(userFirstVisit)
+      const timeDifference =
+        (currentDate.getTime() - firstTimeVisited.getTime()) / (1000 * 60)
 
-        if (timeDifference < TIME_LIMIT) {
-          setShowHero(false)
-        }
+      if (timeDifference < TIME_LIMIT) {
+        setShowHero(false)
       }
     }
   }, [userFirstVisit, currentDate])
@@ -100,6 +96,12 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
+  let userFirstVisit = null
+
+  if (typeof window !== 'undefined' && window.localStorage) {
+    userFirstVisit = localStorage.getItem('FIRST_VISITED')
+  }
+
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
   const { data: categories, error: categoriesError } = await store.dispatch(
@@ -140,6 +142,7 @@ export async function getStaticProps() {
       categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
+      userFirstVisit,
     },
   }
 }
