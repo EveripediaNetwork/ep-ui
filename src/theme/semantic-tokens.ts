@@ -181,10 +181,6 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.800',
       _dark: 'whiteAlpha.900',
     },
-    wikiSummaryInputText: {
-      default: 'gray.800',
-      _dark: 'whiteAlpha.700',
-    },
     wikiDropzoneText: {
       default: 'blackAlpha.500',
       _dark: 'whiteAlpha.700',
