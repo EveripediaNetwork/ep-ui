@@ -14,6 +14,8 @@ import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/leaderboard.utils'
 
+const TIME_LIMIT = 60
+
 interface HomePageProps {
   promotedWikis: Wiki[]
   categories: Category[]
@@ -41,8 +43,6 @@ const HeroAfterFirstVisit = () => {
     </Box>
   )
 }
-
-const TIME_LIMIT = 60
 
 export const Index = ({
   promotedWikis,
