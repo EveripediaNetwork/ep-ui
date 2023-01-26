@@ -68,6 +68,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         position[item.wikiId] += 1
       }
       item.pos = position[item.wikiId]
+      return null
     })
   }, [LatestActivityData])
   const [sentryRef] = useInfiniteScroll({
