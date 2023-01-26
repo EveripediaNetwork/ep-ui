@@ -51,10 +51,10 @@ export const Index = ({
       >
         <RankingList rankings={rankings} />
         <TrendingWikis
-            drops={promotedWikis && promotedWikis.slice(0, 4)}
-            recent={recentWikis && recentWikis.slice(0, 4)}
-            featuredWikis={promotedWikis && promotedWikis}
-          />
+          drops={promotedWikis && promotedWikis.slice(0, 4)}
+          recent={recentWikis && recentWikis.slice(0, 4)}
+          featuredWikis={promotedWikis && promotedWikis}
+        />
         <CategoriesList categories={categories} />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
