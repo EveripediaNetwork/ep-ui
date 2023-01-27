@@ -70,7 +70,6 @@ const userFirstVisit = () => {
     (currentDate.getTime() - firstVisited.getTime()) / (1000 * 60)
 
   if (timeDifference > TIME_LIMIT) {
-    // localStorage.removeItem('FIRST_VISITED')
     return false
   }
 
