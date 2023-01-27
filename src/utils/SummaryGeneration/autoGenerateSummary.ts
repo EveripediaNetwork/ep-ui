@@ -28,7 +28,7 @@ export const generateSummary = async (
       ${content}
       Generate a wikipedia style summary on topic "${
         isAboutPerson ? 'who' : 'what'
-      } is ${title} ?". IT MUST BE UNDER 210 CHARACTERS.`,
+      } is ${title} ?". IT MUST BE UNDER 30 WORDS.`,
     max_tokens: 255,
     n: 3,
   }
