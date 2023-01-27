@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import AIGenerateButton from './AIGenerateButton'
 
@@ -21,20 +21,47 @@ const SummaryInput = () => {
   const [reserveSummaries, setReserveSummaries] = React.useState<string[]>([])
   const toast = useToast()
 
-  const handleAIGenerate = React.useCallback(async () => {
+  const failedToGenerateSummary = useCallback(() => {
+    setShowRed(true)
+    setTimeout(() => setShowRed(false), 3000)
+    toast({
+      title: 'Error generating summary.',
+      description: 'Please try again later.',
+      status: 'error',
+    })
+    logEvent({
+      action: 'GENERATE_SUMMARY',
+      label: wiki.id,
+      category: 'summary-generate',
+      value: 0,
+    })
+  }, [toast, wiki.id])
+
+  const rateLimitReached = () => {
+    localStorage.setItem(
+      'AI_SUMMARY_GENERATE_RATE_LIMITED',
+      new Date().toISOString(),
+    )
+  }
+
+  const fetchFromReserveSummary = useCallback(async () => {
+    const summary = reserveSummaries[0]
+    await sleep(3000) // Makes it look like it's generating :D
+    if (summary) {
+      dispatch({
+        type: 'wiki/setCurrentWiki',
+        payload: { summary },
+      })
+    }
+    setIsGenerating(false)
+    setReserveSummaries(r => r.slice(1))
+  }, [dispatch, reserveSummaries])
+
+  const handleAIGenerate = useCallback(async () => {
     setIsGenerating(true)
 
     if (reserveSummaries.length > 0) {
-      const summary = reserveSummaries[0]
-      await sleep(3000) // Makes it look like it's generating :D
-      if (summary) {
-        dispatch({
-          type: 'wiki/setCurrentWiki',
-          payload: { summary },
-        })
-      }
-      setIsGenerating(false)
-      setReserveSummaries(r => r.slice(1))
+      fetchFromReserveSummary()
       return
     }
 
@@ -45,17 +72,13 @@ const SummaryInput = () => {
         isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
       })
 
-      if (headers['x-ratelimit-remaining'] === '1') {
-        localStorage.setItem(
-          'AI_SUMMARY_GENERATE_RATE_LIMITED',
-          new Date().toISOString(),
-        )
-      }
+      if (headers['x-ratelimit-remaining'] === '1') rateLimitReached()
 
       dispatch({
         type: 'wiki/setCurrentWiki',
         payload: { summary: data[0] },
       })
+
       if (data.length > 1) setReserveSummaries(data.slice(1))
 
       logEvent({
@@ -66,33 +89,16 @@ const SummaryInput = () => {
       })
     } catch (error) {
       const { response } = error as AxiosError
-      if (response?.status === 429) {
-        localStorage.setItem(
-          'AI_SUMMARY_GENERATE_RATE_LIMITED',
-          new Date().toISOString(),
-        )
-      } else {
-        setShowRed(true)
-        setTimeout(() => setShowRed(false), 3000)
-        toast({
-          title: 'Error generating summary.',
-          description: 'Please try again later.',
-          status: 'error',
-        })
-        logEvent({
-          action: 'GENERATE_SUMMARY',
-          label: wiki.id,
-          category: 'summary-generate',
-          value: 0,
-        })
-      }
+      if (response?.status === 429) rateLimitReached()
+      else failedToGenerateSummary()
     }
 
     setIsGenerating(false)
   }, [
     dispatch,
-    reserveSummaries,
-    toast,
+    failedToGenerateSummary,
+    fetchFromReserveSummary,
+    reserveSummaries.length,
     wiki.categories,
     wiki.content,
     wiki.id,
