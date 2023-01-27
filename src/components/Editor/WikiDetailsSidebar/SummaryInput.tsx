@@ -35,9 +35,6 @@ const SummaryInput = () => {
       }
       setIsGenerating(false)
       setReserveSummaries(r => r.slice(1))
-
-      console.log('Using reserve summary')
-
       return
     }
 
@@ -59,10 +56,7 @@ const SummaryInput = () => {
         type: 'wiki/setCurrentWiki',
         payload: { summary: data[0] },
       })
-      if (data.length > 1) {
-        console.log('Reserve summaries', data.slice(1))
-        setReserveSummaries(data.slice(1))
-      }
+      if (data.length > 1) setReserveSummaries(data.slice(1))
 
       logEvent({
         action: 'GENERATE_SUMMARY',
