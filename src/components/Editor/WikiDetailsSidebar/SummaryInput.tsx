@@ -1,12 +1,16 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
-import { shortenText } from '@/utils/shortenText'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import AIGenerateButton from './AIGenerateButton'
+
+const sleep = (ms: number) =>
+  new Promise(r => {
+    setTimeout(r, ms)
+  })
 
 const SummaryInput = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -14,10 +18,28 @@ const SummaryInput = () => {
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const [isGenerating, setIsGenerating] = React.useState(false)
+  const [reserveSummaries, setReserveSummaries] = React.useState<string[]>([])
   const toast = useToast()
 
   const handleAIGenerate = React.useCallback(async () => {
     setIsGenerating(true)
+
+    if (reserveSummaries.length > 0) {
+      const summary = reserveSummaries[0]
+      await sleep(3000) // Makes it look like it's generating :D
+      if (summary) {
+        dispatch({
+          type: 'wiki/setCurrentWiki',
+          payload: { summary },
+        })
+      }
+      setIsGenerating(false)
+      setReserveSummaries(r => r.slice(1))
+
+      console.log('Using reserve summary')
+
+      return
+    }
 
     try {
       const { data, headers } = await axios.post('/api/summary-generate', {
@@ -35,8 +57,12 @@ const SummaryInput = () => {
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { summary: shortenText(data.trim(), WIKI_SUMMARY_LIMIT - 3) },
+        payload: { summary: data[0] },
       })
+      if (data.length > 1) {
+        console.log('Reserve summaries', data.slice(1))
+        setReserveSummaries(data.slice(1))
+      }
 
       logEvent({
         action: 'GENERATE_SUMMARY',
@@ -69,7 +95,15 @@ const SummaryInput = () => {
     }
 
     setIsGenerating(false)
-  }, [dispatch, toast, wiki.categories, wiki.content, wiki.id, wiki.title])
+  }, [
+    dispatch,
+    reserveSummaries,
+    toast,
+    wiki.categories,
+    wiki.content,
+    wiki.id,
+    wiki.title,
+  ])
 
   const summaryLimitTagColor = () => {
     if (showRed) {
