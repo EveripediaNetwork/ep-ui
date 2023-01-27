@@ -76,9 +76,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 <Tbody>
                   {rankings.TokensListing.map((token, index) =>
                     token ? (
-                      <RankingItem index={index} item={token} />
+                      <RankingItem
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem key={index} index={index} />
                     ),
                   )}
                 </Tbody>
@@ -90,9 +94,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 <Tbody>
                   {rankings.NFTsListing.map((nft, index) =>
                     nft ? (
-                      <RankingItem index={index} item={nft} />
+                      <RankingItem
+                        key={index + nft.id}
+                        index={index}
+                        item={nft}
+                      />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem key={index} index={index} />
                     ),
                   )}
                 </Tbody>
