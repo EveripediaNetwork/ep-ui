@@ -19,7 +19,7 @@ import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 
 const RANKING_LIST_LIMIT = 10
-const TIME_LIMIT = 60
+const TIME_LIMIT = 6
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -70,11 +70,11 @@ const userFirstVisit = () => {
     (currentDate.getTime() - firstVisited.getTime()) / (1000 * 60)
 
   if (timeDifference > TIME_LIMIT) {
-    localStorage.removeItem('FIRST_VISITED')
-    return true
+    // localStorage.removeItem('FIRST_VISITED')
+    return false
   }
 
-  return false
+  return true
 }
 
 export const Index = ({
