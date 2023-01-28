@@ -36,7 +36,6 @@ const CurrencyBox = ({
             imgH={18}
             imgW={18}
             alt={token}
-            bgColor={`hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`}
             borderRadius="100px"
           />
         ) : (
