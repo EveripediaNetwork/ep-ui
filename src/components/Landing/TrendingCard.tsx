@@ -7,7 +7,6 @@ import {
   HStack,
   VStack,
   Icon,
-  Image,
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
@@ -17,6 +16,7 @@ import { IconType } from 'react-icons/lib'
 import { shortenText } from '@/utils/shortenText'
 import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingTrendingWikis'
+import { WikiImage } from '../WikiImage'
 
 const TrendingCard = ({
   wikis = [],
@@ -71,10 +71,11 @@ const TrendingCard = ({
                         lg: '70px',
                       }}
                     >
-                      <Image
-                        src={getWikiImageUrl(wiki.images)}
+                      <WikiImage
+                        imageURL={getWikiImageUrl(wiki.images)}
                         alt={wiki.title}
                         borderRadius="md"
+                        overflow="hidden"
                       />
                     </AspectRatio>
                   </Link>

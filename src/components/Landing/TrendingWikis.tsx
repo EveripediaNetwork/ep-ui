@@ -7,7 +7,6 @@ import {
   Flex,
   HStack,
   Icon,
-  Image,
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
@@ -23,6 +22,7 @@ import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
+import { WikiImage } from '../WikiImage'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -52,10 +52,11 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
           mx="auto"
         >
           <AspectRatio ratio={7 / 4}>
-            <Image
-              src={getWikiImageUrl(wiki.images)}
+            <WikiImage
+              imageURL={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
               borderTopRadius="md"
+              overflow="hidden"
             />
           </AspectRatio>
           <Flex
@@ -87,7 +88,6 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             >
               {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
-
             <HStack justify="space-between">
               <Flex alignItems="center" gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
