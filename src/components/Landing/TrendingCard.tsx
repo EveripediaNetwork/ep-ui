@@ -56,7 +56,7 @@ const TrendingCard = ({
         {wikis ? (
           <VStack w="full" pt="2" px="2" gap="5" overflow="hidden">
             {wikis.map((wiki, i) => (
-              <HStack w="full">
+              <HStack w="full" key={i}>
                 <chakra.span minW="2" alignSelf="center">
                   {' '}
                   {i + 1}

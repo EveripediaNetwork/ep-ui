@@ -14,7 +14,6 @@ import {
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { useTranslation } from 'react-i18next'
 import { RiBarChartFill, RiTimeFill, RiStarFill } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import { getReadableDate } from '@/utils/getFormattedDate'
@@ -142,31 +141,14 @@ const TrendingWikis = ({
   recent?: Wiki[]
   featuredWikis?: Wiki[]
 }) => {
-  const { t } = useTranslation()
   return (
     <Box
       mt={10}
       px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 20 }}
+      pb={{ base: 5, md: 20 }}
+      pt={0}
       textAlign="center"
     >
-      <Heading
-        textAlign="center"
-        mb={4}
-        fontWeight="700"
-        fontSize={{ base: '3xl', lg: 46 }}
-      >
-        {`${t('trendingWikis')}`}
-      </Heading>
-      <Text
-        color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: 22 }}
-        mx="auto"
-        mb={9}
-        px={4}
-        maxW="750"
-      >{`${t('trendingWikisDescription')}`}</Text>
-
       <Flex
         alignItems="center"
         justifyContent="center"
@@ -180,7 +162,6 @@ const TrendingWikis = ({
           icon={RiBarChartFill}
           wikis={drops}
         />
-
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
           <Box

@@ -3,7 +3,6 @@ import {
   Box,
   Flex,
   Heading,
-  Link,
   TabList,
   TabPanel,
   TabPanels,
@@ -19,6 +18,7 @@ import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
+import { LinkButton } from '../Elements'
 
 export type RankingListProps = {
   rankings: {
@@ -34,7 +34,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
     <Box
       mt={10}
       px={{ base: 3, md: 8 }}
-      py={{ base: 5, md: 20 }}
+      pb={{ base: 5, md: 20 }}
       textAlign="center"
     >
       <Heading
@@ -76,9 +76,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 <Tbody>
                   {rankings.TokensListing.map((token, index) =>
                     token ? (
-                      <RankingItem index={index} item={token} />
+                      <RankingItem
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem key={index} index={index} />
                     ),
                   )}
                 </Tbody>
@@ -90,9 +94,13 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 <Tbody>
                   {rankings.NFTsListing.map((nft, index) =>
                     nft ? (
-                      <RankingItem index={index} item={nft} />
+                      <RankingItem
+                        key={index + nft.id}
+                        index={index}
+                        item={nft}
+                      />
                     ) : (
-                      <InvalidRankCardItem index={index} />
+                      <InvalidRankCardItem key={index} index={index} />
                     ),
                   )}
                 </Tbody>
@@ -101,17 +109,16 @@ const RankingList = ({ rankings }: RankingListProps) => {
           </TabPanels>
         </Tabs>
         <Flex justifyContent="center" mt="10">
-          <Link
-            variant="unstyled"
+          <LinkButton
             href="/rank"
-            py="4"
-            px="10"
-            borderRadius="6px"
-            border="1px solid"
-            borderColor="ranklistBtnBorder"
+            h="50px"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
+            prefetch={false}
           >
             View More
-          </Link>
+          </LinkButton>
         </Flex>
       </Box>
     </Box>
