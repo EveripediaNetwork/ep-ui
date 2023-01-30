@@ -41,8 +41,8 @@ const Rank = ({
   const [nftCount, setNftCount] = useState<number>(0)
 
   useEffect(() => {
-    setTokenCount(tokensOffset * 10 - 10)
-    setNftCount(nftOffset * 10 - 10)
+    setTokenCount(tokensOffset * 20 - 20)
+    setNftCount(nftOffset * 20 - 20)
   }, [nftOffset, tokensOffset])
 
   const { data: tokensObject, isFetching } = useGetTokenRankingQuery({
