@@ -7,7 +7,6 @@ import {
   Flex,
   HStack,
   Icon,
-  Image,
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
@@ -19,10 +18,12 @@ import { useENSData } from '@/hooks/useENSData'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { getUsername } from '@/utils/getUsername'
 import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
+import { WikiImage } from '../WikiImage'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -51,11 +52,16 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
           shadow="md"
           mx="auto"
         >
-          <AspectRatio ratio={7 / 4}>
-            <Image
-              src={getWikiImageUrl(wiki.images)}
+          <AspectRatio
+            ratio={WIKI_IMAGE_ASPECT_RATIO}
+            h={{ base: '205px', md: '200px' }}
+          >
+            <WikiImage
+              imageURL={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
               borderTopRadius="md"
+              overflow="hidden"
+              objectFit="cover"
             />
           </AspectRatio>
           <Flex
@@ -87,7 +93,6 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             >
               {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
-
             <HStack justify="space-between">
               <Flex alignItems="center" gap={3} width="50%">
                 <Link href={`/account/${wiki?.user?.id}`}>
