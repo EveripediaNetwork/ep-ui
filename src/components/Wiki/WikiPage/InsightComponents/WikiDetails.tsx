@@ -48,6 +48,7 @@ export const WikiDetails = ({
 }) => {
   const { title, tags } = wikiTitle
   const [, username] = useENSData(createdBy?.id || '')
+  const wikiViews = views !== undefined && views > 250 ? views : undefined
   return (
     <Box borderWidth="1px" p={4} borderRadius={8} w="full">
       <Stack
@@ -133,6 +134,7 @@ export const WikiDetails = ({
                     </Td>
                   </Tr>
                 )}
+
                 <Tr>
                   <Td>
                     <HStack spacing={3} py="2">
@@ -201,6 +203,7 @@ export const WikiDetails = ({
                         <Link
                           href={`/account/${createdBy.id}`}
                           color="brandLinkColor"
+                          prefetch={false}
                         >
                           {getUsername(createdBy, username)}
                         </Link>
@@ -208,7 +211,7 @@ export const WikiDetails = ({
                     </Td>
                   </Tr>
                 )}
-                {views && views > 250 && (
+                {wikiViews && (
                   <Tr>
                     <Td whiteSpace="nowrap">
                       <Text py="2">Views</Text>
