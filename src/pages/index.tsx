@@ -3,7 +3,6 @@ import { Box, Flex, Heading, chakra, Text } from '@chakra-ui/react'
 import { getPromotedWikis, getWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
-import Hero from '@/components/Landing/Hero'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import { categoriesApi, getCategories } from '@/services/categories'
@@ -19,7 +18,6 @@ import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 
 const RANKING_LIST_LIMIT = 10
-const TIME_LIMIT = 6
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -36,11 +34,7 @@ interface HomePageProps {
 const HeroAfterFirstVisit = () => {
   return (
     <Box>
-      <Heading
-        w="full"
-        textAlign="center"
-        fontSize={{ base: '35', sm: '42', lg: '54' }}
-      >
+      <Heading w="full" textAlign="center" fontSize={{ base: '35', md: '40' }}>
         The World&apos;s Largest
         <chakra.span color="brandLinkColor"> Blockchain & Crypto </chakra.span>
         Encyclopedia
@@ -53,29 +47,6 @@ const HeroAfterFirstVisit = () => {
   )
 }
 
-const userFirstVisit = () => {
-  const currentDate = new Date()
-  if (typeof localStorage === 'undefined') return true
-
-  const firstVisitedString = localStorage.getItem('FIRST_VISITED')
-
-  if (!firstVisitedString) {
-    localStorage.setItem('FIRST_VISITED', currentDate.toString())
-    return true
-  }
-
-  const firstVisited = new Date(firstVisitedString)
-
-  const timeDifference =
-    (currentDate.getTime() - firstVisited.getTime()) / (1000 * 60)
-
-  if (timeDifference > TIME_LIMIT) {
-    return false
-  }
-
-  return true
-}
-
 export const Index = ({
   promotedWikis,
   recentWikis,
@@ -86,11 +57,7 @@ export const Index = ({
 }: HomePageProps) => {
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
-      {userFirstVisit() ? (
-        <Hero wiki={promotedWikis && promotedWikis[0]} />
-      ) : (
-        <HeroAfterFirstVisit />
-      )}
+      <HeroAfterFirstVisit />
       <Box
         _dark={{
           bgImage: '/images/homepage-bg-dark.png',
