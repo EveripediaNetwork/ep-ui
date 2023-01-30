@@ -51,14 +51,13 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
           const data: ActivityType[] = result.data.map(item => ({
-              content: item.content,
-              datetime: item.datetime,
-              id: item.id,
-              ipfs: item.ipfs,
-              type: item.type,
-              wikiId: item.wikiId,
-            }))
-
+            content: item.content,
+            datetime: item.datetime,
+            id: item.id,
+            ipfs: item.ipfs,
+            type: item.type,
+            wikiId: item.wikiId,
+          }))
           const updatedActivities = getUpdatedActivities([
             ...LatestActivityData,
             ...data,
