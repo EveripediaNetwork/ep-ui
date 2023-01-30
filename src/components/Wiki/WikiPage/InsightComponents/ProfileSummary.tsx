@@ -211,7 +211,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           <ProfileListItem title="Blockchains">
             <HStack spacing={2} wrap="wrap">
               {wiki.linkedWikis?.blockchains.map((item, i) => (
-                <Link key={i} href={`/tags/${item}`} py={1}>
+                <Link key={i} href={`/wiki/${item}`} py={1}>
                   <Tag py="1">{item}</Tag>
                 </Link>
               ))}
