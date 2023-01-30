@@ -128,12 +128,10 @@ export const GET_WIKIS = gql`
     wikis {
       id
       ipfs
-      content
       created
       updated
       title
       summary
-      content
       categories {
         id
         title
@@ -214,7 +212,6 @@ export const GET_USER_WIKIS_BY_ID = gql`
         summary
         created
         updated
-        content
         categories {
           id
           title
@@ -258,7 +255,6 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           created
           updated
           summary
-          content
           categories {
             id
             title
@@ -303,7 +299,6 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
           created
           updated
           summary
-          content
           categories {
             id
             title
@@ -344,7 +339,6 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       created
       title
       summary
-      content
       updated
       categories {
         id
@@ -398,12 +392,10 @@ export const GET_TAG_WIKIS_BY_ID = gql`
       wikis(offset: $offset, limit: $limit) {
         id
         ipfs
-        content
         created
         updated
         title
         summary
-        content
         categories {
           id
           title

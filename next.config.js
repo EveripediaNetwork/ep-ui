@@ -18,7 +18,7 @@ const moduleExports = {
     return config
   },
   images: {
-    minimumCacheTTL: 7200,
+    minimumCacheTTL: 31536000,
     domains: [
       'everipedia.org',
       'ipfs.everipedia.org',

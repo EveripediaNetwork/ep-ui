@@ -1,12 +1,16 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
-import { shortenText } from '@/utils/shortenText'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import AIGenerateButton from './AIGenerateButton'
+
+const sleep = (ms: number) =>
+  new Promise(r => {
+    setTimeout(r, ms)
+  })
 
 const SummaryInput = () => {
   const wiki = useAppSelector(state => state.wiki)
@@ -14,10 +18,52 @@ const SummaryInput = () => {
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const [isGenerating, setIsGenerating] = React.useState(false)
+  const [reserveSummaries, setReserveSummaries] = React.useState<string[]>([])
   const toast = useToast()
 
-  const handleAIGenerate = React.useCallback(async () => {
+  const failedToGenerateSummary = useCallback(() => {
+    setShowRed(true)
+    setTimeout(() => setShowRed(false), 3000)
+    toast({
+      title: 'Error generating summary.',
+      description: 'Please try again later.',
+      status: 'error',
+    })
+    logEvent({
+      action: 'GENERATE_SUMMARY',
+      label: wiki.id,
+      category: 'summary-generate',
+      value: 0,
+    })
+  }, [toast, wiki.id])
+
+  const rateLimitReached = () => {
+    localStorage.setItem(
+      'AI_SUMMARY_GENERATE_RATE_LIMITED',
+      new Date().toISOString(),
+    )
+  }
+
+  const fetchFromReserveSummary = useCallback(async () => {
+    const summary = reserveSummaries[0]
+    await sleep(3000) // Makes it look like it's generating :D
+    if (summary) {
+      dispatch({
+        type: 'wiki/setCurrentWiki',
+        payload: { summary },
+      })
+    }
+    setIsGenerating(false)
+    setReserveSummaries(r => r.slice(1))
+  }, [dispatch, reserveSummaries])
+
+  const handleAIGenerate = useCallback(async () => {
     setIsGenerating(true)
+
+    if (reserveSummaries.length > 0) {
+      fetchFromReserveSummary()
+      return
+    }
 
     try {
       const { data, headers } = await axios.post('/api/summary-generate', {
@@ -26,17 +72,14 @@ const SummaryInput = () => {
         isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
       })
 
-      if (headers['x-ratelimit-remaining'] === '1') {
-        localStorage.setItem(
-          'AI_SUMMARY_GENERATE_RATE_LIMITED',
-          new Date().toISOString(),
-        )
-      }
+      if (headers['x-ratelimit-remaining'] === '1') rateLimitReached()
 
       dispatch({
         type: 'wiki/setCurrentWiki',
-        payload: { summary: shortenText(data.trim(), WIKI_SUMMARY_LIMIT - 3) },
+        payload: { summary: data[0] },
       })
+
+      if (data.length > 1) setReserveSummaries(data.slice(1))
 
       logEvent({
         action: 'GENERATE_SUMMARY',
@@ -46,30 +89,21 @@ const SummaryInput = () => {
       })
     } catch (error) {
       const { response } = error as AxiosError
-      if (response?.status === 429) {
-        localStorage.setItem(
-          'AI_SUMMARY_GENERATE_RATE_LIMITED',
-          new Date().toISOString(),
-        )
-      } else {
-        setShowRed(true)
-        setTimeout(() => setShowRed(false), 3000)
-        toast({
-          title: 'Error generating summary.',
-          description: 'Please try again later.',
-          status: 'error',
-        })
-        logEvent({
-          action: 'GENERATE_SUMMARY',
-          label: wiki.id,
-          category: 'summary-generate',
-          value: 0,
-        })
-      }
+      if (response?.status === 429) rateLimitReached()
+      else failedToGenerateSummary()
     }
 
     setIsGenerating(false)
-  }, [dispatch, toast, wiki.categories, wiki.content, wiki.id, wiki.title])
+  }, [
+    dispatch,
+    failedToGenerateSummary,
+    fetchFromReserveSummary,
+    reserveSummaries.length,
+    wiki.categories,
+    wiki.content,
+    wiki.id,
+    wiki.title,
+  ])
 
   const summaryLimitTagColor = () => {
     if (showRed) {

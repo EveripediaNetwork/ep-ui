@@ -1,9 +1,8 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Heading, chakra, Text } from '@chakra-ui/react'
 import { getPromotedWikis, getWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
-import Hero from '@/components/Landing/Hero'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
 import { categoriesApi, getCategories } from '@/services/categories'
@@ -13,10 +12,10 @@ import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/leaderboard.utils'
-import RankingList from '@/components/Landing/RankingList'
-import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
-import { nftLisitngAPI } from '@/services/nftlisting'
 import { RankCardType } from '@/types/RankDataTypes'
+import RankingList from '@/components/Landing/RankingList'
+import { nftLisitngAPI } from '@/services/nftlisting'
+import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 
 const RANKING_LIST_LIMIT = 10
 
@@ -32,6 +31,22 @@ interface HomePageProps {
   }
 }
 
+const Hero = () => {
+  return (
+    <Box>
+      <Heading w="full" textAlign="center" fontSize={{ base: '35', md: '40' }}>
+        The World&apos;s Largest
+        <chakra.span color="brandLinkColor"> Blockchain & Crypto </chakra.span>
+        Encyclopedia
+      </Heading>
+      <Text textAlign="center" mt="5" fontSize={{ base: 'md', lg: '2xl' }}>
+        Start your crypto journey with IQ Wiki! The compass for exploring your
+        web3 curiosities.
+      </Text>
+    </Box>
+  )
+}
+
 export const Index = ({
   promotedWikis,
   recentWikis,
@@ -41,20 +56,20 @@ export const Index = ({
   rankings,
 }: HomePageProps) => {
   return (
-    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 20 }}>
-      <Hero wiki={promotedWikis && promotedWikis[0]} />
+    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
+      <Hero />
       <Box
         _dark={{
           bgImage: '/images/homepage-bg-dark.png',
         }}
         bgImage="/images/homepage-bg-white.png"
       >
-        <RankingList rankings={rankings} />
         <TrendingWikis
           drops={promotedWikis && promotedWikis.slice(0, 4)}
           recent={recentWikis && recentWikis.slice(0, 4)}
           featuredWikis={promotedWikis && promotedWikis}
         />
+        <RankingList rankings={rankings} />
         <CategoriesList categories={categories} />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -69,6 +84,7 @@ export async function getStaticProps() {
   const { data: recent, error: recentError } = await store.dispatch(
     getWikis.initiate(),
   )
+
   const { data: categories, error: categoriesError } = await store.dispatch(
     getCategories.initiate(),
   )
@@ -121,6 +137,7 @@ export async function getStaticProps() {
     sortedPromotedWikis = [...promotedWikis]
     sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)
   }
+
   const sortedleaderboards = sortLeaderboards(leaderboard)
 
   const rankings = {

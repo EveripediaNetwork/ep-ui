@@ -39,7 +39,7 @@ export default async function handler(
 
     if (!summary) return res.status(500).send('Summary generation failed')
 
-    return res.status(200).send(summary)
+    return res.status(200).send(JSON.stringify(summary))
   } catch (e) {
     return res.status(500).send('OpenAI request failed')
   }
