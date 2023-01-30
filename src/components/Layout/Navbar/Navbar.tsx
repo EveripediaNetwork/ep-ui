@@ -84,7 +84,7 @@ const Navbar = () => {
             mr={{ base: 0, xl: '9vw' }}
             _hover={{ textDecoration: 'none' }}
           >
-            <Link href="/">
+            <Link prefetch={false} href="/">
               <HStack width="150px">
                 <Logo />
                 <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
