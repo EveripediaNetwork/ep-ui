@@ -14,6 +14,7 @@ import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
 import { shortenText } from '@/utils/shortenText'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingTrendingWikis'
 import { WikiImage } from '../WikiImage'
@@ -64,7 +65,7 @@ const TrendingCard = ({
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
                     <AspectRatio
-                      ratio={4 / 3}
+                      ratio={WIKI_IMAGE_ASPECT_RATIO}
                       w={{
                         base: '50px',
                         md: '60px',

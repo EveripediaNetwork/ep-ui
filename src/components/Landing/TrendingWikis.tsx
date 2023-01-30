@@ -18,6 +18,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { getUsername } from '@/utils/getUsername'
 import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
@@ -51,12 +52,13 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
           shadow="md"
           mx="auto"
         >
-          <AspectRatio ratio={4 / 3}>
+          <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} h={{ base: '200px' }}>
             <WikiImage
               imageURL={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
               borderTopRadius="md"
               overflow="hidden"
+              objectFit="cover"
             />
           </AspectRatio>
           <Flex
