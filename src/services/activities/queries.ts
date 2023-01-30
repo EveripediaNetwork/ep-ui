@@ -142,7 +142,6 @@ export const GET_WIKI_BY_ACTIVITY_ID = gql`
         updated
         title
         summary
-        content
         categories {
           id
           title

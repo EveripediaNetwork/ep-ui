@@ -201,6 +201,7 @@ export const WikiDetails = ({
                         <Link
                           href={`/account/${createdBy.id}`}
                           color="brandLinkColor"
+                          prefetch={false}
                         >
                           {getUsername(createdBy, username)}
                         </Link>
