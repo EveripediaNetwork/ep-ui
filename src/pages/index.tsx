@@ -31,7 +31,7 @@ interface HomePageProps {
   }
 }
 
-const HeroAfterFirstVisit = () => {
+const Hero = () => {
   return (
     <Box>
       <Heading w="full" textAlign="center" fontSize={{ base: '35', md: '40' }}>
@@ -57,7 +57,7 @@ export const Index = ({
 }: HomePageProps) => {
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
-      <HeroAfterFirstVisit />
+      <Hero />
       <Box
         _dark={{
           bgImage: '/images/homepage-bg-dark.png',
