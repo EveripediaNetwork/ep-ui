@@ -187,8 +187,8 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
 
         {wiki.linkedWikis?.founders && (
           <ProfileListItem title="Founders">
-            {wiki.linkedWikis?.founders.map((item, i) => (
-              <VStack alignItems="start">
+            <VStack alignItems="start">
+              {wiki.linkedWikis?.founders.map((item, i) => (
                 <Link
                   color="brandLinkColor"
                   fontSize="14px"
@@ -203,19 +203,19 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                 >
                   {getFounderName(item)}
                 </Link>
-              </VStack>
-            ))}
+              ))}
+            </VStack>
           </ProfileListItem>
         )}
         {wiki.linkedWikis?.blockchains && (
           <ProfileListItem title="Blockchains">
-            {wiki.linkedWikis?.blockchains.map((item, i) => (
-              <HStack spacing={2}>
+            <HStack spacing={2} wrap="wrap">
+              {wiki.linkedWikis?.blockchains.map((item, i) => (
                 <Link key={i} href={`/tags/${item}`} py={1}>
-                  <Tag whiteSpace="nowrap">{item}</Tag>
+                  <Tag py="1">{item}</Tag>
                 </Link>
-              </HStack>
-            ))}
+              ))}
+            </HStack>
           </ProfileListItem>
         )}
       </WikiAccordion>
