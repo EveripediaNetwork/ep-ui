@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
@@ -23,19 +23,20 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const router = useRouter()
 
   const getUpdatedActivities = (data: ActivityType[]) => {
-    const position: any = {}
+    const position: { [key: string]: number } = {}
     data.map(item => {
       if (!position[item.wikiId]) {
         position[item.wikiId] = 1
-        item.id = ''
-      } else {
-        position[item.wikiId] += 1
+        item.ipfs = undefined
       }
-
       return null
     })
     return data
   }
+
+  useEffect(() => {
+    getUpdatedActivities(LatestActivityData)
+  }, [])
 
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
@@ -49,7 +50,20 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         )
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
-          const { data } = result
+          const data: ActivityType[] = []
+
+          result.data.map(item => {
+            data.push({
+              content: item.content,
+              datetime: item.datetime,
+              id: item.id,
+              ipfs: item.ipfs,
+              type: item.type,
+              wikiId: item.wikiId,
+            })
+            return null
+          })
+
           const updatedActivities = getUpdatedActivities([
             ...LatestActivityData,
             ...data,
@@ -65,7 +79,6 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     }, FETCH_DELAY_TIME)
   }
 
-  // useEffect(() => {}, [LatestActivityData])
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage: hasMore,
@@ -83,6 +96,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       activityId={activity.id}
       type={activity.type}
       wikiId={activity.wikiId}
+      ipfs={activity.ipfs}
       WikiImgObj={activity.content[0].images}
       categories={activity.content[0].categories}
       tags={activity.content[0].tags}
