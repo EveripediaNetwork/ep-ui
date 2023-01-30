@@ -52,7 +52,10 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
           shadow="md"
           mx="auto"
         >
-          <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} h={{ base: '200px' }}>
+          <AspectRatio
+            ratio={WIKI_IMAGE_ASPECT_RATIO}
+            h={{ base: '205px', md: '200px' }}
+          >
             <WikiImage
               imageURL={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
