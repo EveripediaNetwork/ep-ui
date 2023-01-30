@@ -5,7 +5,6 @@ export const GET_WIKIS_BY_TITLE = gql`
     wikisByTitle(title: $title) {
       id
       title
-      content
       summary
       updated
       created
