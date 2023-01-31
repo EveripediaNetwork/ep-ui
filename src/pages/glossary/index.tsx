@@ -147,6 +147,7 @@ const Glossary: NextPage = () => {
     if (!glossary && GlossaryWikis) {
       setGlossary(GlossaryWikis)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [GlossaryWikis])
 
   const filterGlossaryAlphabetBySearchResult = (

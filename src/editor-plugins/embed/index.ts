@@ -12,6 +12,7 @@ import {
 import React from 'react'
 // eslint-disable-next-line import/no-cycle
 import { wikiEditorRef } from '@/components/Editor/Editor'
+import { DefaultPayload } from '@toast-ui/editor/types/spec'
 import { EmbedFrame } from './frame'
 
 interface PluginInfo {
@@ -30,7 +31,7 @@ export default function embed(context: PluginContext): PluginInfo {
   const root = ReactDOM.createRoot(container)
   root.render(React.createElement(EmbedFrame, { editorContext: context }))
 
-  const insertEmbed = (payload: any, editor: Editor | undefined) => {
+  const insertEmbed = (payload: DefaultPayload, editor: Editor | undefined) => {
     const text = `[${payload.type}@EMBED](${payload.path}))`
 
     if (editor) {

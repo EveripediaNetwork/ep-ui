@@ -36,6 +36,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   useEffect(() => {
     getUpdatedActivities(LatestActivityData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchMoreActivities = () => {
