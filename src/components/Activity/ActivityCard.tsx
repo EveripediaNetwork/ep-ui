@@ -21,6 +21,8 @@ import { Link } from '../Elements'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 import { Image as ActivityImage } from '../Elements/Image/Image'
 
+const ACTIVITY_IMAGE_BOX_SIZE = 156
+
 interface ActivityCardProps {
   title: string
   brief: string
@@ -77,12 +79,15 @@ const ActivityCard = ({
           }}
         >
           <ActivityImage
+            boxSize="100%"
             cursor="pointer"
             flexShrink={0}
             src={getWikiImageUrl(WikiImgObj)}
             borderRadius="lg"
             overflow="hidden"
             alt={title}
+            imgW={ACTIVITY_IMAGE_BOX_SIZE}
+            imgH={ACTIVITY_IMAGE_BOX_SIZE}
           />
         </AspectRatio>
       </Link>
