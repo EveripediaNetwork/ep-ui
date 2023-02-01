@@ -1,6 +1,7 @@
 import React from 'react'
-import Image from 'next/image'
+import { IMAGE_BOX_SIZE } from '@/data/Constants'
 import { Box, Center, Text, Stack } from '@chakra-ui/react'
+import { Image } from '../Elements/Image/Image'
 
 const BlogCard = ({
   image,
@@ -25,7 +26,13 @@ const BlogCard = ({
         overflow="hidden"
       >
         <Box h="210px" mt={-6} mx={-6} mb={6} pos="relative">
-          <Image src={image} alt={title} layout="fill" />
+          <Image
+            src={image}
+            alt={title}
+            layout="fill"
+            imgH={IMAGE_BOX_SIZE}
+            imgW={IMAGE_BOX_SIZE}
+          />
         </Box>
         <Stack>
           <Text color="gray.400" fontSize="sm">
