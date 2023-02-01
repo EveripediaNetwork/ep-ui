@@ -42,7 +42,8 @@ html {
   box-sizing: border-box;
 }
 .embed-widget-iframe iframe,
-.embed-widget-iframe article {
+.embed-widget-iframe article,
+.embed-widget-iframe span {
   border-radius: 4px;
   width: 70%;
   aspect-ratio: 16 / 9;

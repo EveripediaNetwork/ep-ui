@@ -1,27 +1,27 @@
 import React from 'react'
-import { LinkProps as ChakraLinkProps } from '@chakra-ui/react'
-import NextLink, { LinkProps } from 'next/link'
+import { LinkProps as ChakraLinkProps, Link } from '@chakra-ui/react'
+import { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
 export const LinkWrapper = ({
   href,
-  prefetch,
+  // prefetch,
   children,
 }: ChakraLinkAndNextProps) => {
   return (
-    <NextLink
+    <Link
       href={href}
-      prefetch={
-        String(href).includes('/create-wiki') ||
-        String(href).includes('/static/about')
-          ? false
-          : prefetch
-      }
-      passHref
-      legacyBehavior
+      // prefetch={
+      //   String(href).includes('/create-wiki') ||
+      //   String(href).includes('/static/about')
+      //     ? false
+      //     : prefetch
+      // }
+      // passHref
+      // legacyBehavior
     >
       {children}
-    </NextLink>
+    </Link>
   )
 }
