@@ -34,7 +34,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
           ref={widgetRef}
           className="embed-widget-iframe embed-widget-iframe__loaded"
         >
-          {isInView ? <LiteYouTubeEmbed id={src} title="" /> : <article />}
+          {isInView ? <LiteYouTubeEmbed id={src} title="" /> : <span />}
         </div>
       )
     }
@@ -56,7 +56,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
             src={src}
           />
         ) : (
-          <article />
+          <span />
         )}
       </div>
     )

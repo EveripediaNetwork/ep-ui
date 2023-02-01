@@ -105,7 +105,6 @@ const Navbar = () => {
             </StaticContent>
           </Link>
         </Box>
-
         <Suspense>
           <NavSearch setHamburger={setHamburger} />
         </Suspense>
