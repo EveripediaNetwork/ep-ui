@@ -4,18 +4,12 @@ import NextLink, { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
-const POLYGON_MUMBAI_ERROR_LINK = 'https://mumbai.polygonscan.com//tx/'
-
 export const LinkWrapper = ({
   href,
   prefetch,
   children,
 }: ChakraLinkAndNextProps) => {
-  const isValidLink = href.toString().includes(POLYGON_MUMBAI_ERROR_LINK)
-
-  return isValidLink ? (
-    <a href={href}>{children} </a>
-  ) : (
+  return (
     <NextLink
       href={href}
       prefetch={
