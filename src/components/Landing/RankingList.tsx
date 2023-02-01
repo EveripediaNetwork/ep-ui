@@ -51,7 +51,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
         mx="auto"
         mb={9}
         px={4}
-        maxW="750"
+        maxW="800"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1160px" mx="auto">
         <Tabs mt={10} defaultIndex={0}>
