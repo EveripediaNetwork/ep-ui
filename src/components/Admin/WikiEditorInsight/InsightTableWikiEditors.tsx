@@ -19,8 +19,8 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import React, { useMemo } from 'react'
-import shortenAccount from '@/utils/shortenAccount'
-import { shortenText } from '@/utils/shortenText'
+import shortenAccount from '@/utils/DataConversion/shortenAccount'
+import { shortenText } from '@/utils/DataConversion/shortenText'
 import { RiQuestionLine } from 'react-icons/ri'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'

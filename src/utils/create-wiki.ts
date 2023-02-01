@@ -35,7 +35,7 @@ import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { logEvent } from './googleAnalytics'
-import { getDeadline } from './getDeadline'
+import { getDeadline } from './DataFetching/getDeadline'
 
 export const initialEditorValue = ` `
 export const initialMsg =

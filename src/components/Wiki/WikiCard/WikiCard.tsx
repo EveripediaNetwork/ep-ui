@@ -11,7 +11,7 @@ import {
 import { Wiki, BaseTag as TagType } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
 
-import shortenAccount from '@/utils/shortenAccount'
+import shortenAccount from '@/utils/DataConversion/shortenAccount'
 
 interface WikiCardProps {
   wiki: Wiki

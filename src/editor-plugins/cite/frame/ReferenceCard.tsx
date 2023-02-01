@@ -1,6 +1,6 @@
 import { store } from '@/store/store'
 import { CiteReference, EditorContentOverride } from '@everipedia/iq-utils'
-import { lettersToNum } from '@/utils/lettersToNum'
+import { lettersToNum } from '@/utils/DataConversion/lettersToNum'
 import {
   Box,
   Button,

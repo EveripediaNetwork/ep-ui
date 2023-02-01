@@ -1,11 +1,14 @@
 import { useENSData } from '@/hooks/useENSData'
 import React from 'react'
 import { Flex, Text, chakra, LinkBox, AspectRatio } from '@chakra-ui/react'
-import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { Wiki } from '@everipedia/iq-utils'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { getUsername } from '@/utils/getUsername'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import {
+  WikiSummarySize,
+  getWikiSummary,
+} from '@/utils/DataFetching/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getUsername } from '@/utils/DataFetching/getUsername'
 import { WikiImage } from '../WikiImage'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'

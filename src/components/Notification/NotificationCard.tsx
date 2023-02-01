@@ -17,10 +17,10 @@ import {
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { useUserProfileData } from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
 
 interface NotificationCardProps {
   title: string

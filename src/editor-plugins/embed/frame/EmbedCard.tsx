@@ -1,4 +1,4 @@
-import { lettersToNum } from '@/utils/lettersToNum'
+import { lettersToNum } from '@/utils/DataConversion/lettersToNum'
 import {
   Box,
   Button,

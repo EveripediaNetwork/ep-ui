@@ -10,16 +10,16 @@ import {
   AspectRatio,
 } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/getFormattedDate'
+import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
-import { shortenText } from '@/utils/shortenText'
-import { getUsername } from '@/utils/getUsername'
+import { shortenText } from '@/utils/DataConversion/shortenText'
 import { Link } from '@/components/Elements'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { getUsername } from '@/utils/DataFetching/getUsername'
+import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
 
 const WikiPreviewCard = ({
   wiki,

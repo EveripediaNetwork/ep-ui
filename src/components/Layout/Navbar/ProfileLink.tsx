@@ -1,8 +1,8 @@
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { Box, MenuItem, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
 
 export const ProfileLink = () => {
   const userAddress = getUserAddressFromCache()

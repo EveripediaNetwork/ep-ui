@@ -27,10 +27,10 @@ import {
 } from '@/services/admin'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import shortenAccount from '@/utils/shortenAccount'
-import { getReadableDate } from '@/utils/getFormattedDate'
+import shortenAccount from '@/utils/DataConversion/shortenAccount'
+import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
 import { Image } from '@everipedia/iq-utils'
+import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
 
 export const PromoteCreatedWikisModal = ({
   onClose = () => {},

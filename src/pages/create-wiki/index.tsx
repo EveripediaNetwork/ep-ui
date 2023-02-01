@@ -51,10 +51,8 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 
 import WikiDetailsSidebar from '@/components/Editor/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import WikiProcessModal from '@/components/Editor/EditorModals/WikiProcessModal'
-import { getWordCount } from '@/utils/getWordCount'
 import {
   Wiki,
   CommonMetaIds,
@@ -78,7 +76,7 @@ import {
   sanitizeContentToPublish,
 } from '@/utils/create-wiki'
 import { useTranslation } from 'react-i18next'
-import { slugifyText } from '@/utils/slugify'
+import { slugifyText } from '@/utils/DataConversion/slugify'
 import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'
 import {
   getDraftFromLocalStorage,
@@ -89,6 +87,8 @@ import WikiScoreIndicator from '@/components/Editor/WikiScoreIndicator'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
+import { getWordCount } from '@/utils/DataFetching/getWordCount'
+import { getWikiMetadataById } from '@/utils/DataFetching/getWikiFields'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean

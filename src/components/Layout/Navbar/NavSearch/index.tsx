@@ -13,7 +13,6 @@ import {
   Avatar,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import {
   AutoComplete,
   AutoCompleteGroup,
@@ -37,6 +36,10 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { logEvent } from '@/utils/googleAnalytics'
+import {
+  getWikiSummary,
+  WikiSummarySize,
+} from '@/utils/DataFetching/getWikiSummary'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>

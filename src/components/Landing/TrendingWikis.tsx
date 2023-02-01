@@ -12,13 +12,16 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { RiBarChartFill, RiTimeFill, RiStarFill } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
-import { getReadableDate } from '@/utils/getFormattedDate'
-import { getUsername } from '@/utils/getUsername'
-import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
+import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { getUsername } from '@/utils/DataFetching/getUsername'
+import {
+  WikiSummarySize,
+  getWikiSummary,
+} from '@/utils/DataFetching/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'

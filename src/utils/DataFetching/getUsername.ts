@@ -1,5 +1,5 @@
 import { Author, User } from '@everipedia/iq-utils'
-import shortenAccount from './shortenAccount'
+import shortenAccount from '../DataConversion/shortenAccount'
 
 export const getUsername = (user?: User | Author, ensDomain?: string) => {
   if (!user) {

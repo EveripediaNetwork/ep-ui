@@ -1,9 +1,9 @@
 import React from 'react'
 import { HStack, Image, Text, VStack } from '@chakra-ui/react'
-import shortenBalance from '@/utils/shortenBallance'
 import { TokenDetailsType } from '@/types/WalletBalanceType'
-import { getTokenValue } from '@/utils/getTokenValue'
 import { tokenDetails } from '@/data/WalletData'
+import { getTokenValue } from '@/utils/DataFetching/getTokenValue'
+import shortenBalance from '@/utils/DataConversion/shortenBallance'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
 

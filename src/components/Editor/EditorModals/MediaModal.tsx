@@ -20,16 +20,19 @@ import {
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { shortenText } from '@/utils/shortenText'
-import shortenBalance from '@/utils/shortenBallance'
+import { shortenText } from '@/utils/DataConversion/shortenText'
 import { v4 as uuidv4 } from 'uuid'
 import { saveImage } from '@/utils/create-wiki'
 import { MediaType } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
-import { checkMediaDefaultId, constructMediaUrl } from '@/utils/mediaUtils'
+import {
+  checkMediaDefaultId,
+  constructMediaUrl,
+} from '@/utils/DataFetching/mediaUtils'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
+import shortenBalance from '@/utils/DataConversion/shortenBallance'
 
 const MAX_MEDIA = 12
 

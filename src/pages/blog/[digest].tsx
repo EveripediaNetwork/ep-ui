@@ -12,7 +12,10 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { store } from '@/store/store'
-import { formatBlog, getBlogsFromAllAccounts } from '@/utils/blog.utils'
+import {
+  formatBlog,
+  getBlogsFromAllAccounts,
+} from '@/utils/DataFetching/blog.utils'
 import ReactMarkdown from 'react-markdown'
 import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
 import remarkParse from 'remark-parse'

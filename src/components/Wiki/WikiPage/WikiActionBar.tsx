@@ -5,7 +5,7 @@ import { RiBookOpenFill, RiEdit2Line, RiHistoryLine } from 'react-icons/ri'
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 
 interface WikiActionBarProps {

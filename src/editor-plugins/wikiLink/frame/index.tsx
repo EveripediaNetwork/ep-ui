@@ -2,12 +2,15 @@ import config from '@/config'
 import { getWikisByTitle } from '@/services/search'
 import { store } from '@/store/store'
 import { WikiPreview } from '@everipedia/iq-utils'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
-import { shortenText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/DataConversion/shortenText'
 import { Center } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor/dist/toastui-editor-viewer'
 import { debounce } from 'debounce'
 import React, { useEffect } from 'react'
+import {
+  getWikiSummary,
+  WikiSummarySize,
+} from '@/utils/DataFetching/getWikiSummary'
 
 const fetchWikisList = async (
   query: string,

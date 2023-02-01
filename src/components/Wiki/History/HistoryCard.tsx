@@ -13,17 +13,17 @@ import {
 } from '@chakra-ui/react'
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { useENSData } from '@/hooks/useENSData'
-import shortenAccount from '@/utils/shortenAccount'
+import shortenAccount from '@/utils/DataConversion/shortenAccount'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { format } from 'date-fns'
-import { shortenText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/DataConversion/shortenText'
 import { MdFormatQuote } from 'react-icons/md'
 import config from '@/config'
 import { User } from '@everipedia/iq-utils'
-import { getUsername } from '@/utils/getUsername'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '@/components/Elements'
 import { RiHistoryLine } from 'react-icons/ri'
+import { getUsername } from '@/utils/DataFetching/getUsername'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean

@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
 import { usePostFlagWikiMutation } from '@/services/wikis'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
 
 interface WikiFlaggingSystemProps {
   id: string

@@ -11,10 +11,10 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
+import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
 
 interface WikiProps {
   wiki: WikiType | null

@@ -29,18 +29,21 @@ import {
 import { LinkButton } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import {
   RemoveWikiSubscriptionHandler,
   SubscribeWikiHandler,
 } from '@/components/Notification/NotificationCard'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { useUserProfileData } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import {
+  getWikiSummary,
+  WikiSummarySize,
+} from '@/utils/DataFetching/getWikiSummary'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
