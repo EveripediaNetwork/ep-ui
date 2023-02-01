@@ -36,8 +36,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   useEffect(() => {
     getUpdatedActivities(LatestActivityData)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [LatestActivityData])
 
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
