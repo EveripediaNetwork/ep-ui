@@ -4,6 +4,8 @@ import NextImage, { ImageProps } from 'next/image'
 
 export type NextChakraImageProps = Omit<Omit<BoxProps, 'as'>, 'objectFit'> &
   Omit<Omit<ImageProps, 'width'>, 'height'> & {
+    imgW?: number
+    imgH?: number
     imgBoxSize?: number
     hideOnError?: boolean
     objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
@@ -19,11 +21,13 @@ export const Image = ({
   sizes,
   objectFit = 'cover',
   imgBoxSize,
+  imgW,
+  imgH,
   ...rest
 }: NextChakraImageProps) => (
   <Box
-    h={`${imgBoxSize}px`}
-    w={`${imgBoxSize}px`}
+    h={`${imgBoxSize || imgH}px`}
+    w={`${imgBoxSize || imgW}px`}
     {...rest}
     overflow="hidden"
     position="relative"
@@ -36,7 +40,7 @@ export const Image = ({
         width: '100%',
         height: '100%',
       }}
-      fill={!imgBoxSize}
+      fill={!(imgW && imgH) || !imgBoxSize}
       src={src}
       alt={alt}
       onError={e => {
@@ -49,8 +53,8 @@ export const Image = ({
       placeholder={placeholder}
       blurDataURL={blurDataURL}
       loading={priority ? 'eager' : 'lazy'}
-      width={imgBoxSize}
-      height={imgBoxSize}
+      width={imgBoxSize || imgW}
+      height={imgBoxSize || imgH}
     />
   </Box>
 )
