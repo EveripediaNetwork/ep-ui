@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
@@ -21,6 +21,23 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const router = useRouter()
+
+  const getUpdatedActivities = (data: ActivityType[]) => {
+    const position: { [key: string]: number } = {}
+    data.map(item => {
+      if (!position[item.wikiId]) {
+        position[item.wikiId] = 1
+        item.ipfs = undefined
+      }
+      return null
+    })
+    return data
+  }
+
+  useEffect(() => {
+    getUpdatedActivities(LatestActivityData)
+  }, [])
+
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
     setTimeout(() => {
@@ -33,8 +50,18 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         )
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
-          const data = result.data || []
-          const updatedActivities = [...LatestActivityData, ...data]
+          const data: ActivityType[] = result.data.map(item => ({
+            content: item.content,
+            datetime: item.datetime,
+            id: item.id,
+            ipfs: item.ipfs,
+            type: item.type,
+            wikiId: item.wikiId,
+          }))
+          const updatedActivities = getUpdatedActivities([
+            ...LatestActivityData,
+            ...data,
+          ])
           setLatestActivityData(updatedActivities)
           setOffset(updatedOffset)
         } else {
@@ -62,6 +89,8 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       lastModTimeStamp={activity.datetime}
       activityId={activity.id}
       type={activity.type}
+      wikiId={activity.wikiId}
+      ipfs={activity.ipfs}
       WikiImgObj={activity.content[0].images}
       categories={activity.content[0].categories}
       tags={activity.content[0].tags}
