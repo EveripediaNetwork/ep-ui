@@ -29,15 +29,12 @@ const TrendingCard = ({
   icon: IconType
 }) => {
   return (
-    <Flex
-      py="1"
-      minH={{ md: '400px', xl: '440px' }}
-      maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
-    >
+    <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
       <Box
         w="full"
         rounded="lg"
         shadow="lg"
+        minH="500px"
         py={3}
         bg="white"
         _dark={{ bgColor: 'gray.700', color: 'white' }}
@@ -55,7 +52,7 @@ const TrendingCard = ({
           </Text>
         </chakra.div>
         {wikis ? (
-          <VStack w="full" pt="2" px="2" gap="5" overflow="hidden">
+          <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
             {wikis.map((wiki, i) => (
               <HStack w="full" key={i}>
                 <chakra.span minW="2" alignSelf="center">
@@ -98,7 +95,6 @@ const TrendingCard = ({
                     >
                       {shortenText(wiki.title, 24)}
                     </Text>
-
                     <Text
                       display={{ base: 'none', md: '-webkit-box' }}
                       noOfLines={2}
