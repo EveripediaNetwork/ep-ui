@@ -6,8 +6,8 @@ import {
   IconButton,
   useDisclosure,
   HStack,
-  Heading,
   SkeletonCircle,
+  Text,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
@@ -17,14 +17,18 @@ import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
+import { StaticContent } from '@/components/StaticElement'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
 
 const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
   loading: () => (
-    <Box pr={4}>
-      <SkeletonCircle size="25px" startColor="gray.500" endColor="gray.500" />
-    </Box>
+    <SkeletonCircle
+      pr={4}
+      size="25px"
+      startColor="gray.500"
+      endColor="gray.500"
+    />
   ),
 })
 
@@ -54,6 +58,7 @@ const Navbar = () => {
   const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
+
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
     router.events.on('routeChangeComplete', handleRouteChange)
@@ -61,107 +66,113 @@ const Navbar = () => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events, isOpen, onToggle])
+
   return (
-    <>
-      <Box
-        boxShadow="sm"
-        position="fixed"
-        zIndex="banner"
-        w="full"
-        h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
-        bg="subMenuBg"
-        borderBottomWidth={1}
+    <Box
+      boxShadow="sm"
+      position="fixed"
+      zIndex="banner"
+      w="full"
+      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
+      bg="subMenuBg"
+      borderBottomWidth={1}
+    >
+      <Flex
+        gap={{ base: 8, lg: 40, xl: 8 }}
+        h="70px"
+        alignItems="center"
+        justifyContent="space-between"
+        px={{ base: 4, md: 8 }}
       >
-        <Flex
-          gap={{ base: 8, lg: 40, xl: 8 }}
-          h="70px"
-          alignItems="center"
-          justifyContent="space-between"
-          px={{ base: 4, md: 8 }}
+        <Box
+          cursor="pointer"
+          mr={{ base: 0, xl: '9vw' }}
+          _hover={{ textDecoration: 'none' }}
         >
-          <Box
-            cursor="pointer"
-            mr={{ base: 0, xl: '9vw' }}
-            _hover={{ textDecoration: 'none' }}
-          >
-            <Link prefetch={false} href="/">
+          <Link prefetch={false} href="/">
+            <StaticContent>
               <HStack width="150px">
                 <Logo />
-                <Heading size="md" color="gray.900" _dark={{ color: 'white' }}>
+                <Text
+                  fontWeight="bold"
+                  fontSize="xl"
+                  color="gray.900"
+                  _dark={{ color: 'white' }}
+                >
                   IQ.wiki
-                </Heading>
+                </Text>
               </HStack>
-            </Link>
-          </Box>
+            </StaticContent>
+          </Link>
+        </Box>
 
-          <Suspense>
-            <NavSearch setHamburger={setHamburger} />
-          </Suspense>
-          <HStack
-            ml={4}
-            spacing={4}
-            display={{
-              base: 'none',
-              xl: 'flex',
-            }}
-          >
-            <DesktopNav />
-            <ProfileNavMenu
-              setVisibleMenu={setVisibleMenu}
-              visibleMenu={visibleMenu}
-            />
-            <WalletNavMenu
-              drawerOperations={drawerOperations}
-              setHamburger={setHamburger}
-              setVisibleMenu={setVisibleMenu}
-            />
-          </HStack>
-          <HStack
-            display={{
-              base: 'flex',
-              xl: 'none',
-            }}
-          >
-            <WalletNavMenu
-              drawerOperations={drawerOperations}
-              setHamburger={setHamburger}
-              setVisibleMenu={setVisibleMenu}
-            />
-            <IconButton
-              onClick={() => setHamburger(!isHamburgerOpen)}
-              icon={
-                isHamburgerOpen ? (
-                  <CloseIcon w={4} h={4} />
-                ) : (
-                  <HamburgerIcon boxSize={{ base: 6, lg: 7 }} />
-                )
-              }
-              variant="ghost"
-              aria-label="Toggle Navigation"
-            />
-          </HStack>
-        </Flex>
-        {drawerOperations.isOpen && (
-          <WagmiNeededComponent>
-            <WalletDrawer
-              finalFocusRef={loginButtonRef}
-              setHamburger={setHamburger}
-              toggleOperations={drawerOperations}
-            />
-          </WagmiNeededComponent>
-        )}
-        <Collapse
-          in={isHamburgerOpen}
-          animateOpacity
-          style={{ margin: '0 -15px' }}
+        <Suspense>
+          <NavSearch setHamburger={setHamburger} />
+        </Suspense>
+        <HStack
+          ml={4}
+          spacing={4}
+          display={{
+            base: 'none',
+            xl: 'flex',
+          }}
         >
-          <MobileNav
-            setHamburger={setHamburger}
-            drawerOperations={drawerOperations}
+          <DesktopNav />
+          <ProfileNavMenu
+            setVisibleMenu={setVisibleMenu}
+            visibleMenu={visibleMenu}
           />
-        </Collapse>
-      </Box>
-    </>
+          <WalletNavMenu
+            drawerOperations={drawerOperations}
+            setHamburger={setHamburger}
+            setVisibleMenu={setVisibleMenu}
+          />
+        </HStack>
+        <HStack
+          display={{
+            base: 'flex',
+            xl: 'none',
+          }}
+        >
+          <WalletNavMenu
+            drawerOperations={drawerOperations}
+            setHamburger={setHamburger}
+            setVisibleMenu={setVisibleMenu}
+          />
+          <IconButton
+            onClick={() => setHamburger(!isHamburgerOpen)}
+            icon={
+              isHamburgerOpen ? (
+                <CloseIcon w={4} h={4} />
+              ) : (
+                <HamburgerIcon boxSize={{ base: 6, lg: 7 }} />
+              )
+            }
+            variant="ghost"
+            aria-label="Toggle Navigation"
+          />
+        </HStack>
+      </Flex>
+      {drawerOperations.isOpen && (
+        <WagmiNeededComponent>
+          <WalletDrawer
+            finalFocusRef={loginButtonRef}
+            setHamburger={setHamburger}
+            toggleOperations={drawerOperations}
+          />
+        </WagmiNeededComponent>
+      )}
+      <Collapse
+        in={isHamburgerOpen}
+        animateOpacity
+        style={{ margin: '0 -15px' }}
+      >
+        <MobileNav
+          setHamburger={setHamburger}
+          drawerOperations={drawerOperations}
+        />
+      </Collapse>
+    </Box>
   )
 }
 
