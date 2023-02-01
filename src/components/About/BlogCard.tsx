@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMAGE_BOX_SIZE } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Box, Center, Text, Stack } from '@chakra-ui/react'
 import { Image } from '../Elements/Image/Image'
 
@@ -31,7 +31,8 @@ const BlogCard = ({
             src={image}
             alt={title}
             layout="fill"
-            imgBoxSize={IMAGE_BOX_SIZE}
+            imgH={IMAGE_BOX_SIZE}
+            imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
           />
         </Box>
         <Stack>

@@ -4,7 +4,7 @@ import { Image } from '@/components/Elements/Image/Image'
 import { Blog } from '@/types/Blog'
 import { Avatar } from '@/components/Elements'
 import { useENSData } from '@/hooks/useENSData'
-import { IMAGE_BOX_SIZE } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 type BlogPostType = {
@@ -34,7 +34,8 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
           loading="lazy"
           alt={post.title}
           width="full"
-          imgBoxSize={IMAGE_BOX_SIZE}
+          imgH={IMAGE_BOX_SIZE}
+          imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
         />
       ) : null}
       <Flex h="fit-content" p="4" flexDir="column" flex="auto">
