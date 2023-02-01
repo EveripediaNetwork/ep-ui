@@ -62,7 +62,8 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
               borderTopRadius="md"
               overflow="hidden"
               objectFit="cover"
-              imgBoxSize={IMAGE_BOX_SIZE}
+              imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+              imgH={IMAGE_BOX_SIZE}
             />
           </AspectRatio>
           <Flex

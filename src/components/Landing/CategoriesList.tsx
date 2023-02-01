@@ -11,6 +11,7 @@ import {
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
+import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 const CATEGORY_IMAGE_BOX_SIZE = 300
@@ -68,7 +69,8 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
                   h="200px"
                   w="100%"
                   alt={category.title}
-                  imgBoxSize={CATEGORY_IMAGE_BOX_SIZE}
+                  imgW={CATEGORY_IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+                  imgH={CATEGORY_IMAGE_BOX_SIZE}
                 />
                 <Text
                   py="4"
