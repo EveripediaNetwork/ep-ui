@@ -78,18 +78,23 @@ const Footer = () => {
         <Divider orientation="horizontal" />
         <SimpleGrid fontSize="sm" columns={{ base: 1, lg: 2 }}>
           <Stack align={{ base: 'center', lg: 'flex-start' }} flex="1">
-            <Flex alignItems="center">
+            <Flex
+              alignItems="center"
+              direction={{ base: 'column', md: 'initial' }}
+            >
               <Text py={3} pr={2}>
                 {' '}
                 © {thisYear} {`${t('copyRight')}`}
               </Text>
-              <Link target="_blank" href="https://braindao.org/">
-                <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
-              </Link>
-              <Text px="1">& </Text>
-              <Link target="_blank" href="https://iq.braindao.org/">
-                <Text _hover={{ textDecoration: 'underline' }}>IQ </Text>
-              </Link>
+              <Flex>
+                <Link target="_blank" href="https://braindao.org/">
+                  <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
+                </Link>
+                <Text px="1">& </Text>
+                <Link target="_blank" href="https://iq.braindao.org/">
+                  <Text _hover={{ textDecoration: 'underline' }}>IQ </Text>
+                </Link>
+              </Flex>
             </Flex>
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
