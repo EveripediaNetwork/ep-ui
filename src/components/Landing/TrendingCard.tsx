@@ -13,11 +13,11 @@ import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { shortenText } from '@/utils/shortenText'
 import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingTrendingWikis'
-import { WikiImage } from '../WikiImage'
+import { Image } from '../Elements/Image/Image'
 
 const TrendingCard = ({
   wikis = [],
@@ -72,11 +72,13 @@ const TrendingCard = ({
                         lg: '70px',
                       }}
                     >
-                      <WikiImage
-                        imageURL={getWikiImageUrl(wiki.images)}
+                      <Image
+                        src={getWikiImageUrl(wiki.images)}
                         alt={wiki.title}
                         borderRadius="md"
                         overflow="hidden"
+                        imgH={IMAGE_BOX_SIZE}
+                        imgW={IMAGE_BOX_SIZE}
                       />
                     </AspectRatio>
                   </Link>

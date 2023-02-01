@@ -18,12 +18,12 @@ import { useENSData } from '@/hooks/useENSData'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { getUsername } from '@/utils/getUsername'
 import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
-import { WikiImage } from '../WikiImage'
+import { Image } from '../Elements/Image/Image'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -56,12 +56,14 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
             ratio={WIKI_IMAGE_ASPECT_RATIO}
             h={{ base: '205px', md: '200px' }}
           >
-            <WikiImage
-              imageURL={getWikiImageUrl(wiki.images)}
+            <Image
+              src={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
               borderTopRadius="md"
               overflow="hidden"
               objectFit="cover"
+              imgH={IMAGE_BOX_SIZE}
+              imgW={IMAGE_BOX_SIZE}
             />
           </AspectRatio>
           <Flex

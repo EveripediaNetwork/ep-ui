@@ -15,13 +15,11 @@ import { BaseCategory, BaseTag, Image, User } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/getFormattedDate'
 import { useRouter } from 'next/router'
 import { getUsername } from '@/utils/getUsername'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 import { Image as ActivityImage } from '../Elements/Image/Image'
-
-const ACTIVITY_IMAGE_BOX_SIZE = 156
 
 interface ActivityCardProps {
   title: string
@@ -86,8 +84,8 @@ const ActivityCard = ({
             borderRadius="lg"
             overflow="hidden"
             alt={title}
-            imgW={ACTIVITY_IMAGE_BOX_SIZE}
-            imgH={ACTIVITY_IMAGE_BOX_SIZE}
+            imgW={IMAGE_BOX_SIZE}
+            imgH={IMAGE_BOX_SIZE}
           />
         </AspectRatio>
       </Link>
