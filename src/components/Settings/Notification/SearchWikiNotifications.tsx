@@ -184,8 +184,7 @@ const SearchWikiNotifications = () => {
           <WikiImage
             src={articleImage}
             alt={wiki.title}
-            imgH={40}
-            imgW={40 * WIKI_IMAGE_ASPECT_RATIO}
+            imgBoxSize={40 * WIKI_IMAGE_ASPECT_RATIO}
             flexShrink={0}
             borderRadius={5}
             overflow="hidden"

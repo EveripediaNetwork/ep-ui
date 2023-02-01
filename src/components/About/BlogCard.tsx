@@ -27,6 +27,7 @@ const BlogCard = ({
       >
         <Box h="210px" mt={-6} mx={-6} mb={6} pos="relative">
           <Image
+            w="full"
             src={image}
             alt={title}
             layout="fill"

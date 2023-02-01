@@ -33,6 +33,7 @@ export const BlogPost = ({ post, ...rest }: BlogPostType) => {
           src={post.cover_image}
           loading="lazy"
           alt={post.title}
+          width="full"
           imgBoxSize={IMAGE_BOX_SIZE}
         />
       ) : null}
