@@ -4,6 +4,7 @@ import {
   GET_USERNAME_TAKEN,
   GET_USER_ADDRESS_FROM_USERNAME,
   GET_USER_AVATAR,
+  GET_USER_EMAIL_AND_SUBSCRIPTIONS,
   GET_USER_PROFILE,
   GET_USER_SETTINGS,
   POST_USER_SETTINGS,
@@ -16,6 +17,15 @@ export const profileApiClient = new GraphQLClient(config.graphqlUrl)
 
 type UserProfileData = {
   getProfile: ProfileSettingsData
+}
+
+export type UserEmailAndSubscriptions = {
+  email: string
+  subscriptions: string[]
+}
+
+type UserEmailAndSubscriptionsResponse = {
+  getProfile: UserEmailAndSubscriptions
 }
 
 type IsUsernameTakenData = {
@@ -39,6 +49,17 @@ export const profileApi = createApi({
         variables: { id },
       }),
       transformResponse: (response: UserProfileData) => response.getProfile,
+    }),
+    getUserEmailAndSubscriptions: builder.query<
+      UserEmailAndSubscriptions,
+      string
+    >({
+      query: (id: string) => ({
+        document: GET_USER_EMAIL_AND_SUBSCRIPTIONS,
+        variables: { id },
+      }),
+      transformResponse: (response: UserEmailAndSubscriptionsResponse) =>
+        response.getProfile,
     }),
     getUsernameTaken: builder.query<boolean, string>({
       query: (username: string) => ({
@@ -84,6 +105,7 @@ export const {
   usePostUserProfileMutation,
   useGetUserAvatarQuery,
   useGetUserAddressFromUsernameQuery,
+  useGetUserEmailAndSubscriptionsQuery,
 } = profileApi
 
 export const {
@@ -92,5 +114,6 @@ export const {
   getUsernameTaken,
   getUserAvatar,
   getUserAddressFromUsername,
+  getUserEmailAndSubscriptions,
   postUserProfile,
 } = profileApi.endpoints
