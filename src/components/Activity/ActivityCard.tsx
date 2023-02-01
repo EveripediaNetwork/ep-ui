@@ -85,8 +85,7 @@ const ActivityCard = ({
             borderRadius="lg"
             overflow="hidden"
             alt={title}
-            imgW={IMAGE_BOX_SIZE}
-            imgH={IMAGE_BOX_SIZE}
+            imgBoxSize={IMAGE_BOX_SIZE}
           />
         </AspectRatio>
       </Link>

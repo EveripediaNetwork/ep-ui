@@ -48,8 +48,7 @@ const CategoryCard = ({
             height="150px"
             alt={title}
             loading="lazy"
-            imgH={IMAGE_BOX_SIZE}
-            imgW={IMAGE_BOX_SIZE}
+            imgBoxSize={IMAGE_BOX_SIZE}
           />
           <Box position="absolute" bottom="0" left="50%">
             <Icon

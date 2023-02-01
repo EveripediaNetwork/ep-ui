@@ -30,8 +30,7 @@ const BlogCard = ({
             src={image}
             alt={title}
             layout="fill"
-            imgH={IMAGE_BOX_SIZE}
-            imgW={IMAGE_BOX_SIZE}
+            imgBoxSize={IMAGE_BOX_SIZE}
           />
         </Box>
         <Stack>

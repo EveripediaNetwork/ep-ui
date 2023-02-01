@@ -56,8 +56,7 @@ const WikiPreviewCard = ({
           src={getWikiImageUrl(wiki.images)}
           alt={wiki.title}
           boxSize="100%"
-          imgH={IMAGE_BOX_SIZE}
-          imgW={IMAGE_BOX_SIZE}
+          imgBoxSize={IMAGE_BOX_SIZE}
         />
       </AspectRatio>
       <Stack spacing={3} p={4}>

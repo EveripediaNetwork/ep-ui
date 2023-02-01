@@ -68,8 +68,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
                   h="200px"
                   w="100%"
                   alt={category.title}
-                  imgH={CATEGORY_IMAGE_BOX_SIZE}
-                  imgW={CATEGORY_IMAGE_BOX_SIZE}
+                  imgBoxSize={CATEGORY_IMAGE_BOX_SIZE}
                 />
                 <Text
                   py="4"

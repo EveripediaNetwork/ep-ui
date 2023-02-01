@@ -77,8 +77,7 @@ const TrendingCard = ({
                         alt={wiki.title}
                         borderRadius="md"
                         overflow="hidden"
-                        imgH={IMAGE_BOX_SIZE}
-                        imgW={IMAGE_BOX_SIZE}
+                        imgBoxSize={IMAGE_BOX_SIZE}
                       />
                     </AspectRatio>
                   </Link>

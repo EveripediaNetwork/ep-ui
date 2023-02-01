@@ -79,8 +79,7 @@ const ImageUpload = ({
           overflow="hidden"
           bgColor="rgba(130, 130, 130, 0.49)"
           position="relative"
-          imgH={IMAGE_BOX_SIZE}
-          imgW={IMAGE_BOX_SIZE}
+          imgBoxSize={IMAGE_BOX_SIZE}
           _hover={
             isLoading
               ? { cursor: 'not-allowed' }
