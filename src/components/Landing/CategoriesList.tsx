@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
+const CATEGORY_IMAGE_BOX_SIZE = 300
+
 interface CategoriesListProps {
   categories: Category[]
 }
@@ -66,8 +68,9 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
                   h="200px"
                   w="100%"
                   alt={category.title}
+                  imgH={CATEGORY_IMAGE_BOX_SIZE}
+                  imgW={CATEGORY_IMAGE_BOX_SIZE}
                 />
-
                 <Text
                   py="4"
                   w="100%"
