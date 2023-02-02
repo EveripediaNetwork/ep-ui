@@ -41,8 +41,7 @@ const AboutHero = () => {
       <Box>
         <Image
           objectFit="contain"
-          imgH={450}
-          imgW={450}
+          imgBoxSize={450}
           maxW="90vw"
           className="teamMember__image"
           src={`/images/${aboutHeroSrc}`}

@@ -160,8 +160,7 @@ const NavSearch = (props: NavSearchProps) => {
             <WikiImage
               src={wikiImage}
               alt={wiki.title}
-              imgH={40}
-              imgW={WIKI_IMAGE_ASPECT_RATIO * 40}
+              imgBoxSize={WIKI_IMAGE_ASPECT_RATIO * 40}
               flexShrink={0}
               borderRadius={5}
               overflow="hidden"

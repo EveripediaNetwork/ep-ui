@@ -37,8 +37,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
                       : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
                   }
                   alt="related media"
-                  imgH={RELATED_MEDIA_IMAGE_BOX_SIZE}
-                  imgW={RELATED_MEDIA_IMAGE_BOX_SIZE}
+                  imgBoxSize={RELATED_MEDIA_IMAGE_BOX_SIZE}
                   hideOnError
                   objectFit="cover"
                   bgColor="fadedText2"
