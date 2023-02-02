@@ -41,7 +41,7 @@ const CurrencyBox = ({
           />
         ) : (
           <Image
-            src="/images/usd-logo.svg"
+            src="/images/logos/usd-logo.svg"
             imgBoxSize={CURRENCY_BOX_SIZE}
             alt={tokenSymbol}
           />
