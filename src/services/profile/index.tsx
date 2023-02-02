@@ -4,7 +4,7 @@ import {
   GET_USERNAME_TAKEN,
   GET_USER_ADDRESS_FROM_USERNAME,
   GET_USER_AVATAR,
-  GET_USER_EMAIL_AND_SUBSCRIPTIONS,
+  GET_USER_EMAIL,
   GET_USER_PROFILE,
   GET_USER_SETTINGS,
   POST_USER_SETTINGS,
@@ -19,13 +19,12 @@ type UserProfileData = {
   getProfile: ProfileSettingsData
 }
 
-export type UserEmailAndSubscriptions = {
+export type UserEmail = {
   email: string
-  wikiSubscriptions: { id: string }[]
 }
 
-type UserEmailAndSubscriptionsResponse = {
-  getProfile: UserEmailAndSubscriptions
+type UserEmailResponse = {
+  getProfile: UserEmail
 }
 
 type IsUsernameTakenData = {
@@ -50,16 +49,12 @@ export const profileApi = createApi({
       }),
       transformResponse: (response: UserProfileData) => response.getProfile,
     }),
-    getUserEmailAndSubscriptions: builder.query<
-      UserEmailAndSubscriptions,
-      string
-    >({
+    getUserEmail: builder.query<UserEmail, string>({
       query: (id: string) => ({
-        document: GET_USER_EMAIL_AND_SUBSCRIPTIONS,
+        document: GET_USER_EMAIL,
         variables: { id },
       }),
-      transformResponse: (response: UserEmailAndSubscriptionsResponse) =>
-        response.getProfile,
+      transformResponse: (response: UserEmailResponse) => response.getProfile,
     }),
     getUsernameTaken: builder.query<boolean, string>({
       query: (username: string) => ({
@@ -105,7 +100,7 @@ export const {
   usePostUserProfileMutation,
   useGetUserAvatarQuery,
   useGetUserAddressFromUsernameQuery,
-  useGetUserEmailAndSubscriptionsQuery,
+  useGetUserEmailQuery,
 } = profileApi
 
 export const {
@@ -114,6 +109,6 @@ export const {
   getUsernameTaken,
   getUserAvatar,
   getUserAddressFromUsername,
-  getUserEmailAndSubscriptions,
+  getUserEmail,
   postUserProfile,
 } = profileApi.endpoints

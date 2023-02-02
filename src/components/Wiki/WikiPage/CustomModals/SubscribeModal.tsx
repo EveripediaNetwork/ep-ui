@@ -34,7 +34,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { token } = useWeb3Token()
   const { address: userAddress } = useAccount()
   const { profileData, setAccount, loading } = useUserProfileData(
-    UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS,
+    UserProfileFetchOptions.ONLY_EMAIL,
   )
   const [isSubscribed, setIsSubscribed] = React.useState<null | boolean>(null)
 

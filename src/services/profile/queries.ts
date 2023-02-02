@@ -43,14 +43,10 @@ export const GET_USER_PROFILE = gql`
   }
 `
 
-export const GET_USER_EMAIL_AND_SUBSCRIPTIONS = gql`
+export const GET_USER_EMAIL = gql`
   query getUserEmail($id: String!) {
     getProfile(id: $id) {
-      id
       email
-      wikiSubscriptions {
-        id
-      }
     }
   }
 `

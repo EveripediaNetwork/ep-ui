@@ -3,16 +3,16 @@ import { ProfileSettingsData } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
 import {
   getUserAvatar,
-  getUserEmailAndSubscriptions,
+  getUserEmail,
   getUsernameTaken,
   getUserProfile,
   getUserSettings,
-  UserEmailAndSubscriptions,
+  UserEmail,
 } from '.'
 
 export enum UserProfileFetchOptions {
   WITH_ALL_SETTINGS,
-  ONLY_EMAIL_AND_SUBSCRIPTIONS,
+  ONLY_EMAIL,
   ONLY_AVATAR,
   USER_PROFILE,
 }
@@ -22,8 +22,8 @@ type ProfileDataType<T extends UserProfileFetchOptions> =
     ? ProfileSettingsData | undefined
     : T extends UserProfileFetchOptions.ONLY_AVATAR
     ? string | undefined
-    : T extends UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS
-    ? UserEmailAndSubscriptions | undefined
+    : T extends UserProfileFetchOptions.ONLY_EMAIL
+    ? UserEmail | undefined
     : ProfileSettingsData
 
 export const useUserProfileData = <T extends UserProfileFetchOptions>(
@@ -49,11 +49,9 @@ export const useUserProfileData = <T extends UserProfileFetchOptions>(
             getUserAvatar.initiate(account),
           )
           setAvatar(fetchedUserProfileAvatar)
-        } else if (
-          options === UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS
-        ) {
+        } else if (options === UserProfileFetchOptions.ONLY_EMAIL) {
           const { data: fetchedProfileData } = await store.dispatch(
-            getUserEmailAndSubscriptions.initiate(account),
+            getUserEmail.initiate(account),
           )
           setProfileData(fetchedProfileData as ProfileDataType<T>)
         } else if (options === UserProfileFetchOptions.USER_PROFILE) {
