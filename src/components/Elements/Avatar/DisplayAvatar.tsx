@@ -51,8 +51,7 @@ const DisplayAvatar = ({
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
-        imgH={size}
-        imgW={size}
+        imgBoxSize={size}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
         {...(rest as Omit<NextChakraImageProps, 'src'>)}
