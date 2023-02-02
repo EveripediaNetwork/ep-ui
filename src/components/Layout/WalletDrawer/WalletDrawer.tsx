@@ -120,7 +120,7 @@ const WalletDrawer = ({
                         <Image
                           boxSize="24px"
                           borderRadius="full"
-                          src={`/images/${walletsLogos[0]}`}
+                          src={`/images/logos/${walletsLogos[0]}`}
                           alt="MetaMask"
                           mr={3}
                         />

@@ -15,7 +15,7 @@ const NoOpenings = () => {
       <Image
         flex={1}
         marginInlineStart="0 !important"
-        src="/images/NoCarrersState.svg"
+        src="/images/svg-images/NoCarrersState.svg"
         w={{ base: '60%', sm: '50%', md: '55%', lg: '45%' }}
       />
       <Heading
