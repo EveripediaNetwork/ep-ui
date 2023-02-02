@@ -1,11 +1,9 @@
 import {
-  Heading,
   Stack,
   Input,
   Text,
   Box,
   Flex,
-  chakra,
   VStack,
   InputGroup,
   InputLeftElement,
@@ -24,14 +22,10 @@ import {
 } from '@/data/GlossaryAlphabetsData'
 import { Search2Icon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
-import {
-  useGetGlossaryTagWikisQuery,
-  // useGetTagsQuery,
-} from '@/services/glossary'
+import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 import { Wiki } from '@everipedia/iq-utils'
-
-// const CONVERTED_CURRENT_DATE = Math.floor(Date.now() / 1000)
+import GlossaryHero from '@/components/Glossary/GlossaryHero'
 
 const GlossaryFilterSection = ({
   searchText,
@@ -123,15 +117,6 @@ const Glossary: NextPage = () => {
     limit: 50,
   })
 
-  // To be Switched to API when its ready
-
-  // const { data: popularTags } = useGetTagsQuery({
-  //   startDate: CONVERTED_CURRENT_DATE - 60 * 60 * 24 * 30,
-  //   endDate: CONVERTED_CURRENT_DATE,
-  // })
-
-  // const glossaryTags = popularTags?.filter(item => item.id === 'Glossary')
-
   const [searchText, setSearchText] = useState<string>('')
 
   const shouldBeFixed =
@@ -187,34 +172,7 @@ const Glossary: NextPage = () => {
 
   return (
     <Stack direction="column" w="full" pb="56">
-      <Flex
-        direction={{ base: 'column', lg: 'row' }}
-        justify="space-between"
-        px={{ base: 3, lg: 10 }}
-      >
-        <VStack
-          w="full"
-          alignItems="center"
-          textAlign="center"
-          spacing={3}
-          my={14}
-        >
-          <Heading w="full" fontSize={{ base: '32', md: '42', lg: '4xl' }}>
-            <chakra.span color="brandLinkColor"> IQ.WIKI</chakra.span> Glossary
-          </Heading>
-          <Text
-            w={{ base: '90%', md: '80%', xl: '90%' }}
-            fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }}
-            ref={ref}
-          >
-            Crypto terminology can be difficult to figure out, especially if
-            you&lsquo;re new to the blockchain. <br />
-            Here&lsquo;s a guide to help you navigate the exciting frontier of
-            Web3.
-          </Text>
-        </VStack>
-      </Flex>
-
+      <GlossaryHero ref={ref} />
       <VStack
         w="full"
         ref={newRef}
@@ -263,7 +221,6 @@ const Glossary: NextPage = () => {
               </GridItem>
             ))}
           </Grid>
-
           {!shouldBeFixed ? (
             <>
               <GlossaryFilterSection
