@@ -1,21 +1,19 @@
 import {
   Stack,
   Input,
-  Text,
   Box,
   Flex,
   VStack,
   InputGroup,
   InputLeftElement,
   Grid,
-  GridItem,
   Tag,
   TagLabel,
   IconButton,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-scroll'
+
 import {
   COMMONLY_SEARCHED_WIKIS,
   glossaryAlphabetsData,
@@ -26,6 +24,7 @@ import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 import { Wiki } from '@everipedia/iq-utils'
 import GlossaryHero from '@/components/Glossary/GlossaryHero'
+import GlossaryAlphabets from '@/components/Glossary/GlossaryAlphabets'
 
 const GlossaryFilterSection = ({
   searchText,
@@ -197,28 +196,12 @@ const Glossary: NextPage = () => {
             py="4"
           >
             {glossaryAlphabetsData.map((item, i) => (
-              <GridItem w="100%" key={i} cursor="pointer" textAlign="center">
-                <Link
-                  activeClass="active"
-                  to={item}
-                  spy
-                  smooth
-                  offset={
-                    shouldBeFixed
-                      ? -(heightOfElement || 284)
-                      : -(heightOfElement ? heightOfElement + 228 : 512)
-                  }
-                  duration={70}
-                >
-                  <Text
-                    fontWeight="semibold"
-                    fontSize={{ base: 'md', xl: 'lg' }}
-                    _hover={{ color: 'brandLinkColor' }}
-                  >
-                    {item}
-                  </Text>
-                </Link>
-              </GridItem>
+              <GlossaryAlphabets
+                key={i}
+                item={item}
+                heightOfElement={heightOfElement}
+                shouldBeFixed={shouldBeFixed}
+              />
             ))}
           </Grid>
           {!shouldBeFixed ? (
