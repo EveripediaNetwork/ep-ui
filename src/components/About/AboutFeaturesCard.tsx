@@ -13,14 +13,7 @@ const AboutFeaturesCard = ({
   content,
   icon,
 }: AboutFeaturesCardProps) => (
-  <Box
-    bgColor="gray.100"
-    _dark={{
-      bgColor: 'gray.700',
-    }}
-    p={8}
-    rounded="md"
-  >
+  <Box bgColor="creamCardBg" p={8} rounded="md">
     <Icon as={icon} mb={4} w="40px" h="40px" />
     <Heading as="h3" size="md" mb={4}>
       {title}
