@@ -64,17 +64,17 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       },
     },
     {
+      label: 'Notify',
+      icon: RiBellLine,
+      isDisabled: typeof getUserAddressFromCache() !== 'string',
+      handleClick: onSubscribeBoxOpen,
+    },
+    {
       label: 'Share',
       icon: BiShareAlt,
       isDisabled: !wiki,
       isActive: router.asPath === ``,
       handleClick: onShareBoxOpen,
-    },
-    {
-      label: 'Notify',
-      icon: RiBellLine,
-      isDisabled: typeof getUserAddressFromCache() !== 'string',
-      handleClick: onSubscribeBoxOpen,
     },
   ]
 
