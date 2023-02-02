@@ -13,11 +13,11 @@ import { Wiki } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { shortenText } from '@/utils/shortenText'
 import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingTrendingWikis'
-import { WikiImage } from '../WikiImage'
+import { Image } from '../Elements/Image/Image'
 
 const TrendingCard = ({
   wikis = [],
@@ -29,15 +29,12 @@ const TrendingCard = ({
   icon: IconType
 }) => {
   return (
-    <Flex
-      py="1"
-      minH={{ md: '400px', xl: '440px' }}
-      maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
-    >
+    <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
       <Box
         w="full"
         rounded="lg"
         shadow="lg"
+        minH="500px"
         py={3}
         bg="white"
         _dark={{ bgColor: 'gray.700', color: 'white' }}
@@ -55,7 +52,7 @@ const TrendingCard = ({
           </Text>
         </chakra.div>
         {wikis ? (
-          <VStack w="full" pt="2" px="2" gap="5" overflow="hidden">
+          <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
             {wikis.map((wiki, i) => (
               <HStack w="full" key={i}>
                 <chakra.span minW="2" alignSelf="center">
@@ -72,11 +69,13 @@ const TrendingCard = ({
                         lg: '70px',
                       }}
                     >
-                      <WikiImage
-                        imageURL={getWikiImageUrl(wiki.images)}
+                      <Image
+                        src={getWikiImageUrl(wiki.images)}
                         alt={wiki.title}
                         borderRadius="md"
                         overflow="hidden"
+                        imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+                        imgH={IMAGE_BOX_SIZE}
                       />
                     </AspectRatio>
                   </Link>
@@ -96,7 +95,6 @@ const TrendingCard = ({
                     >
                       {shortenText(wiki.title, 24)}
                     </Text>
-
                     <Text
                       display={{ base: 'none', md: '-webkit-box' }}
                       noOfLines={2}
