@@ -18,7 +18,10 @@ import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/Wi
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
-import { useUserProfileData } from '@/services/profile/utils'
+import {
+  UserProfileFetchOptions,
+  useUserProfileData,
+} from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import {
   useGetWikisCreatedCountQuery,
@@ -42,9 +45,9 @@ const Admin = () => {
   const [isAdmin, setIsAdmin] = React.useState(false)
   const [revalidateActive, setRevalidateActive] = React.useState<boolean>(true)
   const [revalidateURLText, setRevalidateURLText] = React.useState<string>('')
-  const { setAccount } = useUserProfileData('', {
-    withAllSettings: true,
-  })
+  const { setAccount } = useUserProfileData(
+    UserProfileFetchOptions.WITH_ALL_SETTINGS,
+  )
 
   useEffect(() => {
     async function fetchAuth() {
