@@ -14,6 +14,7 @@ export enum UserProfileFetchOptions {
   WITH_ALL_SETTINGS,
   ONLY_EMAIL_AND_SUBSCRIPTIONS,
   ONLY_AVATAR,
+  USER_PROFILE,
 }
 
 type ProfileDataType<T extends UserProfileFetchOptions> =
@@ -26,8 +27,8 @@ type ProfileDataType<T extends UserProfileFetchOptions> =
     : ProfileSettingsData
 
 export const useUserProfileData = <T extends UserProfileFetchOptions>(
+  options: T,
   address?: string,
-  options?: T,
 ) => {
   const [profileData, setProfileData] = useState<ProfileDataType<T>>()
   const [avatar, setAvatar] = useState<string>()
@@ -55,7 +56,7 @@ export const useUserProfileData = <T extends UserProfileFetchOptions>(
             getUserEmailAndSubscriptions.initiate(account),
           )
           setProfileData(fetchedProfileData as ProfileDataType<T>)
-        } else {
+        } else if (options === UserProfileFetchOptions.USER_PROFILE) {
           const { data: fetchedProfileData } = await store.dispatch(
             getUserProfile.initiate(account),
           )

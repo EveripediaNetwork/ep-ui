@@ -24,11 +24,12 @@ interface SubscribeModalProps {
 const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { token } = useWeb3Token()
   const { address: userAddress } = useAccount()
-  const { profileData } = useUserProfileData(
-    userAddress,
+  const { profileData, setAccount } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS,
   )
   const toast = useToast()
+
+  console.log(profileData)
 
   const handleSubscriptionMutation = async () => {
     if (!userAddress) return
@@ -46,8 +47,9 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   useEffect(() => {
     if (userAddress && token) {
       profileApiClient.setHeader('authorization', token)
+      setAccount(userAddress)
     }
-  }, [token, userAddress, wiki, toast])
+  }, [token, userAddress, wiki, toast, setAccount])
 
   return (
     <Modal
