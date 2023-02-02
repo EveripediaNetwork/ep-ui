@@ -9,22 +9,21 @@ import {
   Grid,
   Tag,
   TagLabel,
-  IconButton,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
-
 import {
   COMMONLY_SEARCHED_WIKIS,
   glossaryAlphabetsData,
 } from '@/data/GlossaryAlphabetsData'
-import { Search2Icon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { Search2Icon } from '@chakra-ui/icons'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 import { Wiki } from '@everipedia/iq-utils'
 import GlossaryHero from '@/components/Glossary/GlossaryHero'
 import GlossaryAlphabets from '@/components/Glossary/GlossaryAlphabets'
+import GlossaryIconButton from '@/components/Glossary/GlossaryIconButton'
 
 const GlossaryFilterSection = ({
   searchText,
@@ -227,31 +226,9 @@ const Glossary: NextPage = () => {
                   setActiveIndex={(index: number) => setActiveIndex(index)}
                 />
               )}
-              <IconButton
-                width="full"
-                icon={
-                  isVisible ? (
-                    <ChevronUpIcon
-                      fontSize="28px"
-                      color="linkColor"
-                      opacity="0.5"
-                    />
-                  ) : (
-                    <ChevronDownIcon
-                      fontSize="28px"
-                      color="linkColor"
-                      opacity="0.5"
-                    />
-                  )
-                }
-                aria-label="Toggle Text"
-                onClick={() => setIsVisible(!isVisible)}
-                size="xs"
-                isRound
-                backgroundColor="transparent"
-                _hover={{ backgroundColor: '#00000010' }}
-                _focus={{ backgroundColor: '#00000010' }}
-                _active={{ backgroundColor: '#00000010' }}
+              <GlossaryIconButton
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
               />
             </>
           )}
