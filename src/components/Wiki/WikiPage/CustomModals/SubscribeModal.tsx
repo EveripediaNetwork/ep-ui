@@ -76,7 +76,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
     <Modal
       enableBottomCloseButton={false}
       isOpen={isOpen}
-      title={isSubscribed ? 'Already Subscribed !' : 'Subscribe to wiki'}
+      title={isSubscribed ? 'Subscribed !' : 'Subscribe to wiki'}
       onClose={onClose}
       isCentered
       SecondaryButton={
