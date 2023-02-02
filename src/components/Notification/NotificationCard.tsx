@@ -23,7 +23,7 @@ import { addSubscription, removeSubscription } from '@/services/notification'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
 
 interface NotificationCardProps {
   title: string

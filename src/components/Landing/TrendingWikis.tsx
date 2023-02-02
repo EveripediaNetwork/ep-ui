@@ -15,7 +15,6 @@ import { Wiki } from '@everipedia/iq-utils'
 import { RiBarChartFill, RiTimeFill, RiStarFill } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataFetching/getUsername'
 import {
   WikiSummarySize,

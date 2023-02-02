@@ -42,7 +42,7 @@ import {
 } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
 import {
   getWikiSummary,
   WikiSummarySize,

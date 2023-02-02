@@ -1,6 +1,6 @@
 import Script from 'next/script'
 import React from 'react'
-import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
 
 const GoogleAnalyticsScripts = () => {
   return (

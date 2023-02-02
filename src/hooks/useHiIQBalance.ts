@@ -4,8 +4,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { useDispatch } from 'react-redux'
 import { updateHiIQDetails } from '@/store/slices/user-slice'
-import { provider } from '@/utils/DataFetching/getProvider'
-import { getIqTokenValue } from '../utils/DataFetching/getTokenValue'
+import { provider } from '@/utils/DataFetching/blockchainRelated/getProvider'
+import { getIqTokenValue } from '../utils/DataFetching/blockchainRelated/getTokenValue'
 
 const abi = [
   'function balanceOf(address addr) view returns (uint256)',

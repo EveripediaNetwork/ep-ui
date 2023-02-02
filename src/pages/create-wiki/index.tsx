@@ -74,7 +74,7 @@ import {
   isWikiExists,
   ValidationErrorMessage,
   sanitizeContentToPublish,
-} from '@/utils/create-wiki'
+} from '@/utils/CreateWikiUtils/createWiki'
 import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/DataConversion/slugify'
 import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'

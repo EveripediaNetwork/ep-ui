@@ -34,7 +34,7 @@ import {
   getEditorRank,
   sortLeaderboards,
 } from '@/utils/DataFetching/leaderboard.utils'
-import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 

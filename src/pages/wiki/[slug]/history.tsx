@@ -10,7 +10,7 @@ import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 import { getActivityMetadataById } from '@/utils/DataFetching/getWikiFields'
-import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
 
 interface HistoryPageProps {
   wikiHistory: Activity[]

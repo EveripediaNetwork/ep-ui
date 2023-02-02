@@ -1,6 +1,6 @@
 import config from '@/config'
 import { IMAGE_BOX_SIZE } from '@/data/Constants'
-import { saveImage } from '@/utils/create-wiki'
+import { saveImage } from '@/utils/CreateWikiUtils/createWiki'
 import { Box, Spinner, useToast } from '@chakra-ui/react'
 import React, { memo, useRef } from 'react'
 import { Image, NextChakraImageProps } from '../Elements/Image/Image'

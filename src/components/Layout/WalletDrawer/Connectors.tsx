@@ -27,7 +27,7 @@ import { useRouter } from 'next/router'
 import {
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
-} from '@/utils/DataFetching/fetchWalletBalance'
+} from '@/utils/DataFetching/blockchainRelated/fetchWalletBalance'
 import shortenBalance from '@/utils/DataConversion/shortenBallance'
 
 interface ConnectorsProps {
