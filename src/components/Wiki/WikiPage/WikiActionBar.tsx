@@ -2,10 +2,10 @@ import React from 'react'
 import { VStack, Icon, Text, Flex, useDisclosure } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 import {
-  RiBellLine,
   RiBookOpenFill,
   RiEdit2Line,
   RiHistoryLine,
+  RiNotificationLine,
 } from 'react-icons/ri'
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@everipedia/iq-utils'
@@ -65,7 +65,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     },
     {
       label: 'Notify',
-      icon: RiBellLine,
+      icon: RiNotificationLine,
       isDisabled: typeof getUserAddressFromCache() !== 'string',
       handleClick: onSubscribeBoxOpen,
     },
