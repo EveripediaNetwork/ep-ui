@@ -83,7 +83,10 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
       isCentered
       SecondaryButton={
         token && (
-          <Button onClick={handleSubscriptionMutation}>
+          <Button
+            variant={isSubscribed ? 'outline' : 'solid'}
+            onClick={handleSubscriptionMutation}
+          >
             {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
           </Button>
         )
