@@ -5,7 +5,10 @@ import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { useUserProfileData } from '@/services/profile/utils'
+import {
+  UserProfileFetchOptions,
+  useUserProfileData,
+} from '@/services/profile/utils'
 import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
@@ -28,9 +31,9 @@ const Settings = () => {
   const { tab } = query
   const { token, reSignToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
-  const { setAccount, profileData } = useUserProfileData('', {
-    withAllSettings: true,
-  })
+  const { setAccount, profileData } = useUserProfileData(
+    UserProfileFetchOptions.WITH_ALL_SETTINGS,
+  )
 
   useEffect(() => {
     if (userAddress && token) {

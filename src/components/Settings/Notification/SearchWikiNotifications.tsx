@@ -36,7 +36,10 @@ import {
   SubscribeWikiHandler,
 } from '@/components/Notification/NotificationCard'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
-import { useUserProfileData } from '@/services/profile/utils'
+import {
+  UserProfileFetchOptions,
+  useUserProfileData,
+} from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
 import { getUserAddressFromCache } from '@/utils/DataFetching/getUserAddressFromCache'
@@ -120,9 +123,10 @@ const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const { profileData } = useUserProfileData(getUserAddressFromCache(), {
-    withAllSettings: true,
-  })
+  const { profileData } = useUserProfileData(
+    UserProfileFetchOptions.WITH_ALL_SETTINGS,
+    getUserAddressFromCache(),
+  )
   const router = useRouter()
 
   const noResults = results.wikis.length === 0

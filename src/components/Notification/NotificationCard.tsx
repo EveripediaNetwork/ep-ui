@@ -15,7 +15,10 @@ import {
   User,
 } from '@everipedia/iq-utils'
 import ActivityCard from '@/components/Activity/ActivityCard'
-import { useUserProfileData } from '@/services/profile/utils'
+import {
+  useUserProfileData,
+  UserProfileFetchOptions,
+} from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
@@ -104,9 +107,9 @@ const NotificationCard = ({
   defaultSubscribed,
 }: NotificationCardProps) => {
   const userAddress = getUserAddressFromCache() as string
-  const { setAccount, profileData } = useUserProfileData('', {
-    withAllSettings: true,
-  })
+  const { setAccount, profileData } = useUserProfileData(
+    UserProfileFetchOptions.WITH_ALL_SETTINGS,
+  )
   const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
 
   const toast = useToast()
