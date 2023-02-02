@@ -141,11 +141,11 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
           lg: '10',
         }}
       >
-        <Flex>
+        <Flex direction={{ base: 'column', md: 'row' }}>
           <Text as="span">See something wrong? </Text>
           <Text
             as="span"
-            ml="1"
+            ml={{ base: '0', md: '1' }}
             color="brandLinkColor"
             cursor="pointer"
             display="flex"

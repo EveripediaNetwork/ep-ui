@@ -5,6 +5,8 @@ import { TokenStats } from '@/services/token-stats'
 import { Image } from '@/components/Elements/Image/Image'
 import config from '@/config'
 
+const CURRENCY_BOX_SIZE = 18
+
 const CurrencyBox = ({
   token,
   tokenImage,
@@ -33,20 +35,17 @@ const CurrencyBox = ({
         {token ? (
           <Image
             src={tokenImageSrc}
-            imgH={18}
-            imgW={18}
+            imgBoxSize={CURRENCY_BOX_SIZE}
             alt={token}
             borderRadius="100px"
           />
         ) : (
           <Image
             src="/images/usd-logo.svg"
-            imgH={18}
-            imgW={18}
+            imgBoxSize={CURRENCY_BOX_SIZE}
             alt={tokenSymbol}
           />
         )}
-
         <Text fontSize="14px">{tokenSymbol}</Text>
       </HStack>
       <Input
