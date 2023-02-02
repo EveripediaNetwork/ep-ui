@@ -72,7 +72,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
     }
   }, [token, userAddress, wiki, toast, setAccount])
 
-  const isLoading = loading || isSubscribed === null
+  const isLoading = token && (loading || isSubscribed === null)
 
   return (
     <Modal
