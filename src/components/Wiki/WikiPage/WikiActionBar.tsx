@@ -1,5 +1,12 @@
 import React from 'react'
-import { VStack, Icon, Text, Flex, useDisclosure } from '@chakra-ui/react'
+import {
+  VStack,
+  Icon,
+  Text,
+  Flex,
+  useDisclosure,
+  Tooltip,
+} from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 import {
   RiBookOpenFill,
@@ -32,17 +39,21 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   } = useDisclosure()
   const router = useRouter()
 
-  const actionBarItems: {
+  type ActionBarItem = {
     label: string
     icon: IconType
     isDisabled?: boolean
     isActive?: boolean
+    disabledTooltip?: string
     handleClick: () => void
-  }[] = [
+  }
+
+  const actionBarItems: ActionBarItem[] = [
     {
       label: 'Read',
       icon: RiBookOpenFill,
       isDisabled: !wiki,
+      disabledTooltip: 'Wiki not found',
       isActive: router.asPath === `/wiki/${wiki?.id}`,
       handleClick: () => {},
     },
@@ -50,6 +61,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       label: 'Edit',
       icon: RiEdit2Line,
       isDisabled: typeof getUserAddressFromCache() !== 'string',
+      disabledTooltip: 'Please login to edit',
       isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
         router.push(`/create-wiki?slug=${wiki?.id}`)
@@ -66,6 +78,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: 'Notify',
       icon: RiNotificationLine,
+      disabledTooltip: 'Please login to subscribe',
       isDisabled: typeof getUserAddressFromCache() !== 'string',
       handleClick: onSubscribeBoxOpen,
     },
@@ -77,6 +90,13 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       handleClick: onShareBoxOpen,
     },
   ]
+
+  const actionIconColor = (item: ActionBarItem) => {
+    if (item.isActive) return 'brandLinkColor'
+    if (item.isDisabled) return 'wikiActionBtnDisabled'
+    if (wiki === undefined) return 'wikiActionBtnDisabled'
+    return 'unset'
+  }
 
   return (
     <>
@@ -107,33 +127,31 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
           top="calc(50vh - 150px + 70px + 2px)"
         >
           {actionBarItems.map((item, index) => (
-            <VStack
-              cursor={
-                item.isDisabled || wiki === undefined
-                  ? 'not-allowed'
-                  : 'pointer'
-              }
-              color={
-                // eslint-disable-next-line no-nested-ternary
-                item.isActive
-                  ? 'brandLinkColor'
-                  : // eslint-disable-next-line no-nested-ternary
-                  item.isDisabled
-                  ? 'wikiActionBtnDisabled'
-                  : wiki === undefined
-                  ? 'wikiActionBtnDisabled'
-                  : 'unset'
-              }
-              key={index}
-              onClick={
-                !item.isDisabled && wiki !== undefined
-                  ? item.handleClick
-                  : undefined
-              }
+            <Tooltip
+              isDisabled={!item.isDisabled}
+              placement="right"
+              label={item.disabledTooltip}
             >
-              <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
-              <Text fontSize={{ base: '12px', sm: '14px' }}>{item.label}</Text>
-            </VStack>
+              <VStack
+                cursor={
+                  item.isDisabled || wiki === undefined
+                    ? 'not-allowed'
+                    : 'pointer'
+                }
+                color={actionIconColor(item)}
+                key={index}
+                onClick={
+                  !item.isDisabled && wiki !== undefined
+                    ? item.handleClick
+                    : undefined
+                }
+              >
+                <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
+                <Text fontSize={{ base: '12px', sm: '14px' }}>
+                  {item.label}
+                </Text>
+              </VStack>
+            </Tooltip>
           ))}
         </Flex>
       </VStack>
