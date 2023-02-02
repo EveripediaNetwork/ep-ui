@@ -113,7 +113,10 @@ const BrandingPage = () => {
       download: '/branding/downloadassets/logobraindoadeepblack',
     },
   ]
-  const heroImg = useColorModeValue('/brandingBrain.png', '/brandingBrainB.png')
+  const heroImg = useColorModeValue(
+    'brandingBrainLight.png',
+    'brandingBrainDark.png',
+  )
   return (
     <Box bg="brandHero" pb="28" mt="-3">
       <NextSeo
@@ -152,7 +155,7 @@ const BrandingPage = () => {
             objectFit="contain"
             imgBoxSize={500}
             maxW="80vw"
-            src={heroImg}
+            src={`/images/backgrounds/${heroImg}`}
             alt="Bringing knowledge to the blockchain."
             priority
             mt={10}
