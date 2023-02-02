@@ -36,7 +36,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { profileData, setAccount, loading } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS,
   )
-  const [isSubscribed, setIsSubscribed] = React.useState(false)
+  const [isSubscribed, setIsSubscribed] = React.useState<null | boolean>(null)
 
   const toast = useToast()
 
@@ -72,6 +72,8 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
     }
   }, [token, userAddress, wiki, toast, setAccount])
 
+  const isLoading = loading || isSubscribed === null
+
   return (
     <Modal
       enableBottomCloseButton={false}
@@ -87,9 +89,11 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
         )
       }
     >
-      {loading && <Text>Loading...</Text>}
-      {!loading && !token && SIGN_TOKEN_MESSAGE}
-      {!loading &&
+      {isLoading && (
+        <Text color="gray.500">Checking Subscription Status...</Text>
+      )}
+      {!isLoading && !token && SIGN_TOKEN_MESSAGE}
+      {!isLoading &&
         token &&
         (isSubscribed ? UNSUBSCRIBE_MESSAGE : SUBSCRIBE_MESSAGE)}
     </Modal>
