@@ -14,7 +14,8 @@ import {
   useUserProfileData,
 } from '@/services/profile/utils'
 import { Button, Text } from '@chakra-ui/react'
-import { useIsWikiSubscribed } from '@/services/notification/utils'
+import { store } from '@/store/store'
+import { getAllWikiSubscription } from '@/services/notification'
 
 interface SubscribeModalProps {
   isOpen: boolean
@@ -35,8 +36,8 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { profileData, setAccount, loading } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS,
   )
-  const isWikiSubscribed = useIsWikiSubscribed(wiki?.id, userAddress || '')
-  const [isSubscribeClicked, setIsSubscribeClicked] = React.useState(false)
+  const [isSubscribed, setIsSubscribed] = React.useState(false)
+
   const toast = useToast()
 
   const handleSubscriptionMutation = async () => {
@@ -44,19 +45,30 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
 
     const email = profileData?.email
 
-    if (isWikiSubscribed) {
+    if (isSubscribed) {
       RemoveWikiSubscriptionHandler(email, wiki?.id, userAddress, toast)
-      setIsSubscribeClicked(false)
     } else if (wiki) {
       SubscribeWikiHandler(email, wiki, userAddress, toast)
-      setIsSubscribeClicked(true)
     }
+
+    setIsSubscribed(p => !p)
   }
 
   useEffect(() => {
     if (userAddress && token) {
       profileApiClient.setHeader('authorization', token)
       setAccount(userAddress)
+
+      const checkInitialSubscription = async () => {
+        const { data } = await store.dispatch(
+          getAllWikiSubscription.initiate(userAddress),
+        )
+        const isWikiSubscribed = data
+          ? data.some(w => w.auxiliaryId === wiki.id)
+          : false
+        setIsSubscribed(isWikiSubscribed)
+      }
+      checkInitialSubscription()
     }
   }, [token, userAddress, wiki, toast, setAccount])
 
@@ -64,13 +76,13 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
     <Modal
       enableBottomCloseButton={false}
       isOpen={isOpen}
-      title="Subscribe to wiki"
+      title={isSubscribed ? 'Already Subscribed !' : 'Subscribe to wiki'}
       onClose={onClose}
       isCentered
       SecondaryButton={
         token && (
           <Button onClick={handleSubscriptionMutation}>
-            {isWikiSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
           </Button>
         )
       }
@@ -79,9 +91,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
       {!loading && !token && SIGN_TOKEN_MESSAGE}
       {!loading &&
         token &&
-        (isWikiSubscribed || isSubscribeClicked
-          ? UNSUBSCRIBE_MESSAGE
-          : SUBSCRIBE_MESSAGE)}
+        (isSubscribed ? UNSUBSCRIBE_MESSAGE : SUBSCRIBE_MESSAGE)}
     </Modal>
   )
 }
