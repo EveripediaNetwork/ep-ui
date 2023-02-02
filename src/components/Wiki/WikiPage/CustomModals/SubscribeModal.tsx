@@ -27,7 +27,7 @@ const SIGN_TOKEN_MESSAGE =
 const SUBSCRIBE_MESSAGE =
   'Subscribe to this wiki to get notifications on changes to this wiki.'
 const UNSUBSCRIBE_MESSAGE =
-  'You subscribed to this wiki already !. Click on the button below to stop getting notifications on changes to this wiki.'
+  'You subscribed to this wiki already ! Click on the button below to stop getting notifications on changes to this wiki.'
 
 const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { token } = useWeb3Token()
