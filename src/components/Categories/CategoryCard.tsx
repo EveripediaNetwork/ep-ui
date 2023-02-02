@@ -8,7 +8,11 @@ import {
   LinkOverlay,
   Icon,
 } from '@chakra-ui/react'
-import { CATEGORY_DESCRIPTION_WORD_LIMIT } from '@/data/Constants'
+import {
+  CATEGORY_DESCRIPTION_WORD_LIMIT,
+  IMAGE_BOX_SIZE,
+  WIKI_IMAGE_ASPECT_RATIO,
+} from '@/data/Constants'
 import { IconType } from 'react-icons'
 import { Image } from '../Elements/Image/Image'
 
@@ -45,6 +49,8 @@ const CategoryCard = ({
             height="150px"
             alt={title}
             loading="lazy"
+            imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+            imgH={IMAGE_BOX_SIZE}
           />
           <Box position="absolute" bottom="0" left="50%">
             <Icon
@@ -62,7 +68,6 @@ const CategoryCard = ({
             />
           </Box>
         </Box>
-
         <Box p={5}>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Heading textAlign="center" size="sm" my="10px">

@@ -150,8 +150,7 @@ const BrandingPage = () => {
           </Box>
           <Image
             objectFit="contain"
-            imgH={500}
-            imgW={500}
+            imgBoxSize={500}
             maxW="80vw"
             src={heroImg}
             alt="Bringing knowledge to the blockchain."
@@ -159,7 +158,6 @@ const BrandingPage = () => {
             mt={10}
           />
         </Flex>
-
         <Flex mt={{ base: '16', lg: '10' }} mx="auto" justifyContent="center">
           <Text
             position="relative"

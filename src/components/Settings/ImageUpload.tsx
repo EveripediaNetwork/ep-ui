@@ -1,4 +1,5 @@
 import config from '@/config'
+import { IMAGE_BOX_SIZE } from '@/data/Constants'
 import { saveImage } from '@/utils/create-wiki'
 import { Box, Spinner, useToast } from '@chakra-ui/react'
 import React, { memo, useRef } from 'react'
@@ -78,6 +79,7 @@ const ImageUpload = ({
           overflow="hidden"
           bgColor="rgba(130, 130, 130, 0.49)"
           position="relative"
+          imgBoxSize={IMAGE_BOX_SIZE}
           _hover={
             isLoading
               ? { cursor: 'not-allowed' }
