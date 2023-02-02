@@ -10,7 +10,6 @@ import {
   AspectRatio,
   Wrap,
 } from '@chakra-ui/react'
-import { WikiImage } from '@/components/WikiImage'
 import { BaseCategory, BaseTag, Image, User } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
 import { useRouter } from 'next/router'

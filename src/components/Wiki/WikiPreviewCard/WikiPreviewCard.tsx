@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
 import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
-import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/DataConversion/shortenText'
