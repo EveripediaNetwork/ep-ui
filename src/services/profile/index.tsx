@@ -21,7 +21,7 @@ type UserProfileData = {
 
 export type UserEmailAndSubscriptions = {
   email: string
-  subscriptions: string[]
+  wikiSubscriptions: { id: string }[]
 }
 
 type UserEmailAndSubscriptionsResponse = {

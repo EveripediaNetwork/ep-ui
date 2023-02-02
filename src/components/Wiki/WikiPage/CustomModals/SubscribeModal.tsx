@@ -13,7 +13,8 @@ import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
-import { Button } from '@chakra-ui/react'
+import { Button, Text } from '@chakra-ui/react'
+import { useIsWikiSubscribed } from '@/services/notification/utils'
 
 interface SubscribeModalProps {
   isOpen: boolean
@@ -21,26 +22,34 @@ interface SubscribeModalProps {
   wiki: Wiki
 }
 
+const SIGN_TOKEN_MESSAGE =
+  'To get notifications on changes to this wiki, authenticate your wallet to continue.'
+const SUBSCRIBE_MESSAGE =
+  'Subscribe to this wiki to get notifications on changes to this wiki.'
+const UNSUBSCRIBE_MESSAGE =
+  'You subscribed to this wiki already !. Click on the button below to stop getting notifications on changes to this wiki.'
+
 const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const { token } = useWeb3Token()
   const { address: userAddress } = useAccount()
-  const { profileData, setAccount } = useUserProfileData(
+  const { profileData, setAccount, loading } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL_AND_SUBSCRIPTIONS,
   )
+  const isWikiSubscribed = useIsWikiSubscribed(wiki?.id, userAddress || '')
+  const [isSubscribeClicked, setIsSubscribeClicked] = React.useState(false)
   const toast = useToast()
-
-  console.log(profileData)
 
   const handleSubscriptionMutation = async () => {
     if (!userAddress) return
 
     const email = profileData?.email
-    const isWikiSubscribed = profileData?.subscriptions?.includes(wiki?.id)
 
     if (isWikiSubscribed) {
       RemoveWikiSubscriptionHandler(email, wiki?.id, userAddress, toast)
+      setIsSubscribeClicked(false)
     } else if (wiki) {
       SubscribeWikiHandler(email, wiki, userAddress, toast)
+      setIsSubscribeClicked(true)
     }
   }
 
@@ -53,15 +62,26 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
 
   return (
     <Modal
-      enableBottomCloseButton
+      enableBottomCloseButton={false}
       isOpen={isOpen}
       title="Subscribe to wiki"
       onClose={onClose}
+      isCentered
       SecondaryButton={
-        <Button onClick={handleSubscriptionMutation}>Subscribe</Button>
+        token && (
+          <Button onClick={handleSubscriptionMutation}>
+            {isWikiSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </Button>
+        )
       }
     >
-      <p>Subscribe to wiki</p>
+      {loading && <Text>Loading...</Text>}
+      {!loading && !token && SIGN_TOKEN_MESSAGE}
+      {!loading &&
+        token &&
+        (isWikiSubscribed || isSubscribeClicked
+          ? UNSUBSCRIBE_MESSAGE
+          : SUBSCRIBE_MESSAGE)}
     </Modal>
   )
 }
