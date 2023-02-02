@@ -317,7 +317,6 @@ const Glossary: NextPage = () => {
           )}
         </Box>
       </VStack>
-
       <GlossaryItem
         highlightText={searchText}
         glossary={glossary ?? []}
