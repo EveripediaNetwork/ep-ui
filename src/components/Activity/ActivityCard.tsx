@@ -17,9 +17,11 @@ import { useRouter } from 'next/router'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataFetching/getUsername'
 import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
+import { Image as ActivityImage } from '../Elements/Image/Image'
 
 interface ActivityCardProps {
   title: string
@@ -77,13 +79,15 @@ const ActivityCard = ({
             lg: '156px',
           }}
         >
-          <WikiImage
+          <ActivityImage
+            boxSize="100%"
             cursor="pointer"
             flexShrink={0}
-            imageURL={getWikiImageUrl(WikiImgObj)}
+            src={getWikiImageUrl(WikiImgObj)}
             borderRadius="lg"
             overflow="hidden"
             alt={title}
+            imgBoxSize={IMAGE_BOX_SIZE}
           />
         </AspectRatio>
       </Link>

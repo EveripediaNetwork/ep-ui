@@ -17,9 +17,10 @@ import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/DataConversion/shortenText'
 import { Link } from '@/components/Elements'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataFetching/getUsername'
 import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { Image } from '@/components/Elements/Image/Image'
 
 const WikiPreviewCard = ({
   wiki,
@@ -52,7 +53,12 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage imageURL={getWikiImageUrl(wiki.images)} alt={wiki.title} />
+        <Image
+          src={getWikiImageUrl(wiki.images)}
+          alt={wiki.title}
+          boxSize="100%"
+          imgBoxSize={IMAGE_BOX_SIZE}
+        />
       </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>

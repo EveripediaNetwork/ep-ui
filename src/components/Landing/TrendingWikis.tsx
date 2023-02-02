@@ -22,11 +22,12 @@ import {
   getWikiSummary,
 } from '@/utils/DataFetching/getWikiSummary'
 import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Carousel, Link } from '../Elements'
 import TrendingCard from './TrendingCard'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { LoadingTrendingWikiCard } from './LoadingTrendingWikis'
-import { WikiImage } from '../WikiImage'
+import { Image } from '../Elements/Image/Image'
 
 const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -57,14 +58,16 @@ const TrendingWikiCard = ({ wiki }: { wiki: Wiki }) => {
         >
           <AspectRatio
             ratio={WIKI_IMAGE_ASPECT_RATIO}
-            h={{ base: '205px', md: '200px' }}
+            h={{ base: '250px', md: '250px' }}
           >
-            <WikiImage
-              imageURL={getWikiImageUrl(wiki.images)}
+            <Image
+              src={getWikiImageUrl(wiki.images)}
               alt={wiki.title}
               borderTopRadius="md"
               overflow="hidden"
               objectFit="cover"
+              imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+              imgH={IMAGE_BOX_SIZE}
             />
           </AspectRatio>
           <Flex
@@ -164,6 +167,7 @@ const TrendingWikis = ({
         mx="auto"
         flexWrap="wrap"
         gap={4}
+        minH="500px"
       >
         <TrendingCard
           title="Trending Wikis"
@@ -171,7 +175,7 @@ const TrendingWikis = ({
           wikis={drops}
         />
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
-        <Flex pt="1" minH={{ base: '418px', lg: '425px', xl: '440px' }}>
+        <Flex pt="1" minH="500px">
           <Box
             maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
             w="full"
@@ -211,7 +215,6 @@ const TrendingWikis = ({
                   speed: 500,
                   slidesToShow: 1,
                   slidesToScroll: 1,
-
                   responsive: [
                     {
                       breakpoint: 1000,
@@ -237,7 +240,7 @@ const TrendingWikis = ({
                 }}
               >
                 {featuredWikis.map(wiki => (
-                  <Box px="3" pt="3" pb={{ md: '0', xl: '3' }}>
+                  <Box px="3" pt="3" pb="3">
                     <TrendingWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
                   </Box>
                 ))}

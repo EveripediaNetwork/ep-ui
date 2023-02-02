@@ -42,8 +42,7 @@ export const HeroCard = ({ wiki }: { wiki: Wiki | undefined }) => {
             borderRadius="none"
             roundedTop="lg"
             overflow="hidden"
-            imgH={HERO_WIKI_IMG_WIDTH}
-            imgW={WIKI_IMAGE_ASPECT_RATIO * HERO_WIKI_IMG_WIDTH}
+            imgBoxSize={HERO_WIKI_IMG_WIDTH}
             priority
             alt={wiki?.title || 'wiki'}
           />
