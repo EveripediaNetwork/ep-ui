@@ -61,14 +61,14 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
                 href="https://mirror.xyz/0x3c1ccc207b3796D907B0024eD79fa2A11Af8D912"
                 target="_blank"
               >
-                <Image src="/images/kr.svg" width={10} />
+                <Image src="/images/logos/kr.svg" width={10} />
               </Link>
               <Link
                 href="https://mirror.xyz/0xcd5Cc4F54C20C80aED2db81CBaf82153Fb95C1b1"
                 target="_blank"
                 ml={5}
               >
-                <Image src="/images/cn.svg" width={10} />
+                <Image src="/images/logos/cn.svg" width={10} />
               </Link>
             </Flex>
           </Flex>
