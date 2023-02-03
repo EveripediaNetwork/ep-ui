@@ -6,11 +6,11 @@ import TrendingCard from './TrendingCard'
 import { FeaturedWikis } from './FeturedWikis'
 
 const TrendingWikis = ({
-  drops = [],
+  trending = [],
   recent = [],
   featuredWikis = [],
 }: {
-  drops?: Wiki[]
+  trending?: Wiki[]
   recent?: Wiki[]
   featuredWikis?: Wiki[]
 }) => {
@@ -34,7 +34,7 @@ const TrendingWikis = ({
         <TrendingCard
           title="Trending Wikis"
           icon={RiBarChartFill}
-          wikis={drops}
+          wikis={trending}
         />
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <FeaturedWikis featuredWikis={featuredWikis} />
