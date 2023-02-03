@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Network, Networks } from '@/data/NetworkData'
-import networkMap from '@/utils/networkMap'
+import networkMap from '@/data/NetworkMap'
 import config from '@/config'
 
 const NetworkMenu = () => {

@@ -17,8 +17,7 @@ import {
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
-
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 import SubscribeModal from './CustomModals/SubscribeModal'
 

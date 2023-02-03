@@ -10,11 +10,11 @@ import {
   AspectRatio,
   Wrap,
 } from '@chakra-ui/react'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { BaseCategory, BaseTag, Image, User } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/getFormattedDate'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { useRouter } from 'next/router'
-import { getUsername } from '@/utils/getUsername'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Link } from '../Elements'

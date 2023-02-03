@@ -1,6 +1,5 @@
 import { store } from '@/store/store'
 import { CiteReference, CommonMetaIds } from '@everipedia/iq-utils'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import {
   chakra,
   HTMLChakraProps,
@@ -13,6 +12,7 @@ import {
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
 import { HTMLMotionProps, motion } from 'framer-motion'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { CiteFromNewURL } from './CiteFromNewURL'
 import { CiteFromExistingRefs } from './CiteFromExistingRefs'
 
