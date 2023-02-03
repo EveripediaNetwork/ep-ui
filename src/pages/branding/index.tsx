@@ -114,8 +114,8 @@ const BrandingPage = () => {
     },
   ]
   const heroImg = useColorModeValue(
-    'brandingBrainLight.png',
-    'brandingBrainDark.png',
+    'branding-brain-light.png',
+    'branding-brain-dark.png',
   )
   return (
     <Box bg="brandHero" pb="28" mt="-3">

@@ -94,7 +94,7 @@ const ImageUpload = ({
                     bg: 'rgba(0, 0, 0, 0.5)',
                   },
                   _before: {
-                    content: 'url(/images/icons/edit_icon.svg)',
+                    content: 'url(/images/icons/edit-icon.svg)',
                     position: 'absolute',
                     left: '50%',
                     top: '50%',

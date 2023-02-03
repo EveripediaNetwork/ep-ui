@@ -20,7 +20,7 @@ export const NoHistoryView = ({ wiki }: NoHistoryViewProps) => {
         <Image
           flex={1}
           marginInlineStart="0 !important"
-          src="/images/defaults/noWikiHistory.png"
+          src="/images/defaults/no-wiki-history.png"
           w={{ base: '100%', sm: '80%', md: '60%', lg: '15%' }}
         />
       </Flex>
