@@ -107,11 +107,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         transform={{ base: 'unset', md: 'translateY(-50px)' }}
         maxW={{ base: 'unset', md: '120px' }}
       >
-        <ShareWikiModal
-          isOpen={isShareBoxOpen}
-          onClose={onShareBoxClose}
-          {...wiki}
-        />
+        <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
         {isSubscribeBoxOpen && wiki && (
           <SubscribeModal
             isOpen={isSubscribeBoxOpen}
