@@ -19,11 +19,11 @@ import {
   RiFileCopyLine,
   RiShareBoxLine,
 } from 'react-icons/ri'
-import shortenAccount from '@/utils/shortenAccount'
+import { shortenAccount } from '@/utils/textUtils'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
-import { getUsername } from '@/utils/getUsername'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
+import { getUsername } from '@/utils/DataTransform/getUsername'
 
 const AccordionURLTemplate = ({ contentURL }: { contentURL: string }) => (
   <Link

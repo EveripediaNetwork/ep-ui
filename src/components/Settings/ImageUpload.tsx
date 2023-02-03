@@ -1,6 +1,6 @@
 import config from '@/config'
 import { IMAGE_BOX_SIZE } from '@/data/Constants'
-import { saveImage } from '@/utils/create-wiki'
+import { saveImage } from '@/utils/CreateWikiUtils/createWiki'
 import { Box, Spinner, useToast } from '@chakra-ui/react'
 import React, { memo, useRef } from 'react'
 import { Image, NextChakraImageProps } from '../Elements/Image/Image'
@@ -94,7 +94,7 @@ const ImageUpload = ({
                     bg: 'rgba(0, 0, 0, 0.5)',
                   },
                   _before: {
-                    content: 'url(/images/edit_icon.svg)',
+                    content: 'url(/images/icons/edit-icon.svg)',
                     position: 'absolute',
                     left: '50%',
                     top: '50%',

@@ -1,9 +1,9 @@
 import React from 'react'
 import { HStack, Image, Text, VStack } from '@chakra-ui/react'
-import shortenBalance from '@/utils/shortenBallance'
 import { TokenDetailsType } from '@/types/WalletBalanceType'
-import { getTokenValue } from '@/utils/getTokenValue'
 import { tokenDetails } from '@/data/WalletData'
+import { getTokenValue } from '@/utils/WalletUtils/getTokenValue'
+import { shortenBalance } from '@/utils/textUtils'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
 
@@ -23,7 +23,7 @@ const WalletDetails = ({
           objectFit="contain"
           boxSize="23px"
           mr={3}
-          src={`/images/${symbol && tokenDetails[symbol]?.logo}`}
+          src={`/images/logos/${symbol && tokenDetails[symbol]?.logo}`}
         />
         <Text as="strong" fontWeight="bold">
           {symbol}
