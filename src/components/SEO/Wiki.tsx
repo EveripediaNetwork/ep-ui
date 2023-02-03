@@ -31,7 +31,7 @@ export const WikiHeader = ({
       dateModified={dateModified || ''}
       authorName={author}
       publisherName="Everipedia"
-      publisherLogo={`${process.env.NEXT_PUBLIC_DOMAIN}/favicon.ico`}
+      publisherLogo={`${process.env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
       description={description}
     />
     <NextSeo

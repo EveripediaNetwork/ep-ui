@@ -45,9 +45,9 @@ export const Index = ({
       <Hero />
       <Box
         _dark={{
-          bgImage: '/images/homepage-bg-dark.png',
+          bgImage: '/images/backgrounds/homepage-bg-dark.png',
         }}
-        bgImage="/images/homepage-bg-white.png"
+        bgImage="/images/backgrounds/homepage-bg-white.png"
       >
         <TrendingWikis
           drops={promotedWikis && promotedWikis.slice(0, 5)}
