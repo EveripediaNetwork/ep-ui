@@ -111,7 +111,7 @@ type TrendingWikisArgs = {
   endDay: string
 }
 
-interface TrendingWikis {
+interface TrendingWikisResponse {
   wikisPerVisits: Wiki[]
 }
 
@@ -246,7 +246,7 @@ export const wikiApi = createApi({
       transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
     }),
-    getTrendingWikis: builder.query<TrendingWikis, TrendingWikisArgs>({
+    getTrendingWikis: builder.query<TrendingWikisResponse, TrendingWikisArgs>({
       query: ({ amount, startDay, endDay }: TrendingWikisArgs) => ({
         document: GET_TRENDING_WIKIS,
         variables: { amount, startDay, endDay },
