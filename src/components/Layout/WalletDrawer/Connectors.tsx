@@ -222,7 +222,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 <ConnectorDetails
                   connect={connect}
                   connector={connector}
-                  imageLink={`/images/${walletsLogos[index]}`}
+                  imageLink={`/images/logos/${walletsLogos[index]}`}
                   loading={isUserConnecting}
                 />
                 {index < walletsLogos.length - 1 && <Divider />}
