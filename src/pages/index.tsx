@@ -1,6 +1,11 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
-import { getPromotedWikis, getWikis, wikiApi } from '@/services/wikis'
+import {
+  getPromotedWikis,
+  getTrendingWikis,
+  getWikis,
+  wikiApi,
+} from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
@@ -17,8 +22,11 @@ import RankingList from '@/components/Landing/RankingList'
 import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
+import { getDateRange } from '@/utils/HomepageUtils/getDate'
 
 const RANKING_LIST_LIMIT = 10
+const TRENDING_WIKIS_AMOUNT = 5
+const TRENDING_WIKIS_DAY_RANGE = 1
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -30,6 +38,7 @@ interface HomePageProps {
     NFTsListing: RankCardType[]
     TokensListing: RankCardType[]
   }
+  trending: Wiki[]
 }
 
 export const Index = ({
@@ -39,6 +48,7 @@ export const Index = ({
   popularTags,
   leaderboards,
   rankings,
+  trending,
 }: HomePageProps) => {
   return (
     <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
@@ -50,7 +60,7 @@ export const Index = ({
         bgImage="/images/backgrounds/homepage-bg-white.png"
       >
         <TrendingWikis
-          drops={promotedWikis && promotedWikis.slice(0, 5)}
+          trending={trending && trending}
           recent={recentWikis && recentWikis.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
@@ -64,6 +74,8 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
+  const { startDay, endDay } = getDateRange(TRENDING_WIKIS_DAY_RANGE)
+
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
   const { data: recent, error: recentError } = await store.dispatch(
@@ -94,6 +106,14 @@ export async function getStaticProps() {
       kind: 'TOKEN',
       limit: RANKING_LIST_LIMIT,
       offset: 1,
+    }),
+  )
+
+  const { data: trendingWikisList } = await store.dispatch(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay,
+      endDay,
     }),
   )
 
@@ -130,6 +150,8 @@ export async function getStaticProps() {
     TokensListing: TokensList,
   }
 
+  const trending = trendingWikisList?.wikisPerVisits
+
   return {
     props: {
       promotedWikis: sortedPromotedWikis || [],
@@ -138,6 +160,7 @@ export async function getStaticProps() {
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
       rankings: rankings || [],
+      trending: trending || [],
     },
   }
 }

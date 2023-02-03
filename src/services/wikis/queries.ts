@@ -440,6 +440,19 @@ export const GET_WIKI_SLUG_VALID = gql`
   }
 `
 
+export const GET_TRENDING_WIKIS = gql`
+  query GetTrendingWikis($amount: Int!, $startDay: String!, $endDay: String!) {
+    wikisPerVisits(amount: $amount, startDay: $startDay, endDay: $endDay) {
+      id
+      title
+      summary
+      images {
+        id
+      }
+    }
+  }
+`
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {
