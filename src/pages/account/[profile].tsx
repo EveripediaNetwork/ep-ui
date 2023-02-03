@@ -50,7 +50,7 @@ const Profile = ({ profileData }: ProfileProps) => {
             width="full"
             height="56"
             objectFit="cover"
-            bgColor="profileBannerBg"
+            bgColor="creamCardBg"
             backgroundImage="/images/homepage-bg-white.png"
             _dark={{
               backgroundImage: '/images/homepage-bg-dark.png',
