@@ -20,7 +20,7 @@ const WikiNotFound = () => {
         <Image
           flex={1}
           marginInlineStart="0 !important"
-          src="/images/wiki-error-img.png"
+          src="/images/defaults/wiki-error-img.png"
           w={{ base: '100%', sm: '80%', md: '60%', lg: '15%' }}
         />
       </Flex>

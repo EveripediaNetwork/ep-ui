@@ -357,7 +357,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           <FormControl>
             <FormLabel htmlFor="profile-image">Profile Image</FormLabel>
             <ImageUpload
-              defaultImage="/images/default-user-avatar.png"
+              defaultImage="/images/defaults/default-user-avatar.png"
               w="140px"
               h="140px"
               rounded="full"
@@ -371,7 +371,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           <FormControl>
             <FormLabel htmlFor="profile-banner">Profile Banner</FormLabel>
             <ImageUpload
-              defaultImage="/images/default-user-avatar.png"
+              defaultImage="/images/defaults/default-user-avatar.png"
               w="300px"
               h="120px"
               borderRadius="lg"

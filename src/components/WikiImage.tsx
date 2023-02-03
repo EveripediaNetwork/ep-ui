@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Image, NextChakraImageProps } from '@/components/Elements/Image/Image'
 
-const PLACEHOLDER_IMAGE = `/broken-image.png`
+const PLACEHOLDER_IMAGE = `/images/defaults/broken-image.png`
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
