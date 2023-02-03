@@ -26,6 +26,7 @@ import { getDateRange } from '@/utils/HomepageUtils/getDate'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
+const TRENDING_WIKIS_DAY_RANGE = 1
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -73,7 +74,7 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  const { startDay, endDay } = getDateRange()
+  const { startDay, endDay } = getDateRange(TRENDING_WIKIS_DAY_RANGE)
 
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
