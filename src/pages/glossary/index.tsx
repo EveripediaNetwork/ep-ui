@@ -147,7 +147,7 @@ const Glossary: NextPage = () => {
     if (!glossary && GlossaryWikis) {
       setGlossary(GlossaryWikis)
     }
-  }, [GlossaryWikis])
+  }, [glossary, GlossaryWikis])
 
   const filterGlossaryAlphabetBySearchResult = (
     searchResult: Wiki[] | undefined,

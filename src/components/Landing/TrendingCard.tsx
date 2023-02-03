@@ -16,7 +16,7 @@ import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { shortenText } from '@/utils/DataConversion/shortenText'
 import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
 import { Link } from '../Elements'
-import { TrendingSkeleton } from './LoadingTrendingWikis'
+import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
 import { Image } from '../Elements/Image/Image'
 
 const TrendingCard = ({

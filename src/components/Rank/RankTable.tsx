@@ -16,8 +16,7 @@ export interface RankTableProps {
 export const RankTable = ({
   children,
   hasPagination,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onPageChange = (currentPage: number) => {},
+  onPageChange,
   totalCount = 0,
   siblingCount = 0,
   currentPage = 1,
@@ -33,9 +32,9 @@ export const RankTable = ({
       borderColor="rankingListBorder"
     >
       <Table variant="simple">{children}</Table>
-      {hasPagination && (
+      {hasPagination && onPageChange && (
         <RankPagination
-          onPageChange={onPageChange || undefined}
+          onPageChange={onPageChange}
           totalCount={totalCount}
           siblingCount={siblingCount}
           currentPage={currentPage}

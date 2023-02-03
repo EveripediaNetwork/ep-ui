@@ -36,7 +36,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   useEffect(() => {
     getUpdatedActivities(LatestActivityData)
-  }, [])
+  }, [LatestActivityData])
 
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
