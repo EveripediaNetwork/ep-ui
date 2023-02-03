@@ -20,10 +20,10 @@ import {
   UserProfileFetchOptions,
 } from '@/services/profile/utils'
 import { addSubscription, removeSubscription } from '@/services/notification'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 
 interface NotificationCardProps {
   title: string

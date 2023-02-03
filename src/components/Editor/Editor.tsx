@@ -11,7 +11,7 @@ import { useGetWikiQuery } from '@/services/wikis'
 import { store } from '@/store/store'
 // eslint-disable-next-line import/no-cycle
 import media from '@/editor-plugins/media'
-import { PasteListener } from '@/utils/PasteListener'
+import { PasteListener } from '@/utils/CreateWikiUtils/pasteListener'
 import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 // eslint-disable-next-line import/no-cycle

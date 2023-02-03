@@ -44,7 +44,7 @@ const AboutHero = () => {
           imgBoxSize={450}
           maxW="90vw"
           className="teamMember__image"
-          src={`/images/${aboutHeroSrc}`}
+          src={`/images/svg-images/${aboutHeroSrc}`}
           alt="Bringing knowledge to the blockchain."
           priority
         />

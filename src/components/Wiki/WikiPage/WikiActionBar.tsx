@@ -17,8 +17,7 @@ import {
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
-
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 import SubscribeModal from './CustomModals/SubscribeModal'
 
@@ -108,11 +107,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         transform={{ base: 'unset', md: 'translateY(-50px)' }}
         maxW={{ base: 'unset', md: '120px' }}
       >
-        <ShareWikiModal
-          isOpen={isShareBoxOpen}
-          onClose={onShareBoxClose}
-          {...wiki}
-        />
+        <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
         {isSubscribeBoxOpen && wiki && (
           <SubscribeModal
             isOpen={isSubscribeBoxOpen}
