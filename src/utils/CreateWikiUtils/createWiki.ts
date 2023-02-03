@@ -15,7 +15,7 @@ import {
 } from '@everipedia/iq-utils'
 import { useAppDispatch } from '@/store/hook'
 import { createContext } from '@chakra-ui/react-utils'
-import { submitVerifiableSignature } from '@/utils/postSignature'
+import { submitVerifiableSignature } from '@/utils/WalletUtils/postSignature'
 import {
   useAccount,
   useFeeData,
@@ -34,8 +34,8 @@ import { store } from '@/store/store'
 import { Dict } from '@chakra-ui/utils'
 import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
-import { logEvent } from './googleAnalytics'
-import { getDeadline } from './getDeadline'
+import { logEvent } from '../googleAnalytics'
+import { getDeadline } from '../DataTransform/getDeadline'
 
 export const initialEditorValue = ` `
 export const initialMsg =

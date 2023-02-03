@@ -18,7 +18,7 @@ import {
   WikiPossibleSocialsList,
 } from '@everipedia/iq-utils'
 import { FiExternalLink } from 'react-icons/fi'
-import { shortenText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
 

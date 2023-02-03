@@ -1,6 +1,6 @@
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import Script from 'next/script'
 import React from 'react'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 
 const GoogleAnalyticsScripts = () => {
   return (
