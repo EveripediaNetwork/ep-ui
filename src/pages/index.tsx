@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Heading, chakra, Text } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { getPromotedWikis, getWikis, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
@@ -11,11 +11,12 @@ import { Category } from '@/types/CategoryDataTypes'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
-import { sortLeaderboards } from '@/utils/leaderboard.utils'
+import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
 import RankingList from '@/components/Landing/RankingList'
 import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
+import { Hero } from '@/components/Landing/Hero'
 
 const RANKING_LIST_LIMIT = 10
 
@@ -29,22 +30,6 @@ interface HomePageProps {
     NFTsListing: RankCardType[]
     TokensListing: RankCardType[]
   }
-}
-
-const Hero = () => {
-  return (
-    <Box>
-      <Heading w="full" textAlign="center" fontSize={{ base: '35', md: '40' }}>
-        The World&apos;s Largest
-        <chakra.span color="brandLinkColor"> Blockchain & Crypto </chakra.span>
-        Encyclopedia
-      </Heading>
-      <Text textAlign="center" mt="5" fontSize={{ base: 'md', lg: '2xl' }}>
-        Start your crypto journey with IQ Wiki! The compass for exploring your
-        web3 curiosities.
-      </Text>
-    </Box>
-  )
 }
 
 export const Index = ({
