@@ -16,7 +16,7 @@ import { IconType } from 'react-icons/lib'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { shortenText } from '@/utils/shortenText'
 import { Link } from '../Elements'
-import { TrendingSkeleton } from './LoadingTrendingWikis'
+import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
 import { Image } from '../Elements/Image/Image'
 
 const TrendingCard = ({
