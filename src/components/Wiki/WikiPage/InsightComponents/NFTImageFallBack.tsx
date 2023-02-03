@@ -1,7 +1,7 @@
 import { Flex, Text, Image } from '@chakra-ui/react'
 import React from 'react'
 
-const PLACEHOLDER_IMAGE = `/broken-image.png`
+const PLACEHOLDER_IMAGE = `/images/defaults/broken-image.png`
 
 export const NFTImgFallback = () => {
   return (
