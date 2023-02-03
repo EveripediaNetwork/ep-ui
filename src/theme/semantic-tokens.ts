@@ -81,7 +81,7 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.700',
     },
-    profileBannerBg: {
+    creamCardBg: {
       default: 'gray.100',
       _dark: 'gray.700',
     },
