@@ -112,6 +112,8 @@ export async function getStaticProps() {
     }),
   )
 
+  // const {data: TrendingWikis} = aw
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(categoriesApi.util.getRunningQueriesThunk()),
