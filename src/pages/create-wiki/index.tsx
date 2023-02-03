@@ -520,7 +520,6 @@ const CreateWikiContent = () => {
               _placeholder={{ color: 'wikiTitleInputText' }}
             />
           </InputGroup>
-
           <HStack gap={5}>
             <WikiScoreIndicator wiki={wiki} />
             {!isNewCreateWiki ? (
