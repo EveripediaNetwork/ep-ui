@@ -14,7 +14,7 @@ import { WikiHeader } from '@/components/SEO/Wiki'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 interface WikiProps {
   wiki: WikiType | null

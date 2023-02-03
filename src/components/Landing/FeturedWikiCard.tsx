@@ -13,10 +13,13 @@ import {
 import { useENSData } from '@/hooks/useENSData'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
-import { getUsername } from '@/utils/DataFetching/getUsername'
-import { WikiSummarySize, getWikiSummary } from '@/utils/DataFetching/getWikiSummary'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import {
+  WikiSummarySize,
+  getWikiSummary,
+} from '@/utils/WikiUtils/getWikiSummary'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Image } from '../Elements/Image/Image'
 

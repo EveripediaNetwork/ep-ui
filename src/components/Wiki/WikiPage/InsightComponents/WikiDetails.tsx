@@ -15,7 +15,7 @@ import {
   Box,
   Stack,
 } from '@chakra-ui/react'
-import shortenAccount from '@/utils/DataConversion/shortenAccount'
+import { shortenAccount } from '@/utils/textUtils'
 import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
@@ -25,7 +25,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { getUsername } from '@/utils/DataFetching/getUsername'
+import { getUsername } from '@/utils/DataTransform/getUsername'
 
 export const WikiDetails = ({
   wikiTitle,

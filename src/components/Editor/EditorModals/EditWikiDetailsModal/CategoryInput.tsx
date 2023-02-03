@@ -2,7 +2,7 @@ import React from 'react'
 import { useAppDispatch } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { Flex, Text, Select } from '@chakra-ui/react'
-import { slugifyText } from '@/utils/DataConversion/slugify'
+import { slugifyText } from '@/utils/textUtils'
 import { Wiki } from '@everipedia/iq-utils'
 
 const CategoryInput = ({ wiki }: { wiki: Wiki }) => {

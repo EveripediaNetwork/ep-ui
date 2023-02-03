@@ -4,11 +4,11 @@ import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { WikiImage } from '@/components/WikiImage'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import {
   getWikiSummary,
   WikiSummarySize,
-} from '@/utils/DataFetching/getWikiSummary'
+} from '@/utils/WikiUtils/getWikiSummary'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki

@@ -1,5 +1,5 @@
 import { Wiki, WikiPreview } from '@everipedia/iq-utils'
-import { shortenText } from '../DataConversion/shortenText'
+import { shortenText } from '../textUtils'
 
 export enum WikiSummarySize {
   Small = 65,

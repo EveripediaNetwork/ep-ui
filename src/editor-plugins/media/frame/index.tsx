@@ -3,7 +3,7 @@ import config from '@/config'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { store } from '@/store/store'
 import { Media } from '@everipedia/iq-utils'
-import { constructMediaUrl } from '@/utils/DataFetching/mediaUtils'
+import { constructMediaUrl } from '@/utils/DataTransform/mediaUtils'
 import {
   Box,
   Center,

@@ -42,11 +42,11 @@ import {
 } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import {
   getWikiSummary,
   WikiSummarySize,
-} from '@/utils/DataFetching/getWikiSummary'
+} from '@/utils/WikiUtils/getWikiSummary'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',

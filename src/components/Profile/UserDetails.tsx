@@ -20,7 +20,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
 import { useTranslation } from 'react-i18next'
-import shortenAccount from '@/utils/DataConversion/shortenAccount'
+import { shortenAccount } from '@/utils/textUtils'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
@@ -33,8 +33,8 @@ import { setAddressRank, setLeaderboards } from '@/store/slices/leaderboard'
 import {
   getEditorRank,
   sortLeaderboards,
-} from '@/utils/DataFetching/leaderboard.utils'
-import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
+} from '@/utils/DataTransform/leaderboard.utils'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 

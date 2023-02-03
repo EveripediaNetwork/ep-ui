@@ -22,7 +22,7 @@ import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
-import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
 import ActivityHeader from '@/components/SEO/Activity'
-import { getWikiSummary } from '@/utils/DataFetching/getWikiSummary'
+import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<

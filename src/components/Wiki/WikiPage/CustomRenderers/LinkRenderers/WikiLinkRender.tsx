@@ -19,8 +19,8 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiLightbulbLine, RiPriceTagLine } from 'react-icons/ri'
-import { getWikiSummary } from '@/utils/DataFetching/getWikiSummary'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 const WikiLinkPreviewSkeleton = () => (
   <>

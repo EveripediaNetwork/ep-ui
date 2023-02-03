@@ -11,11 +11,11 @@ import React from 'react'
 import { FaEthereum } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 
-import { getReadableDate } from '@/utils/DataFetching/getFormattedDate'
-import { shortenText } from '@/utils/DataConversion/shortenText'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
+import { shortenText } from '@/utils/textUtils'
 import { Wiki } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
 export type CollectionItemProps = {

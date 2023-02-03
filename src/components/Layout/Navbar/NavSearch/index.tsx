@@ -39,7 +39,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import {
   getWikiSummary,
   WikiSummarySize,
-} from '@/utils/DataFetching/getWikiSummary'
+} from '@/utils/WikiUtils/getWikiSummary'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>

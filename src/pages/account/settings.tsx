@@ -13,7 +13,7 @@ import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
-import { getUserAddressFromCache } from '@/utils/DataFetching/blockchainRelated/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
 
 const NotificationSettings = dynamic(

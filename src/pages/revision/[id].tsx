@@ -17,7 +17,7 @@ import { Activity } from '@/types/ActivityDataType'
 import { getWikiPreviewsByCategory } from '@/services/wikis'
 import { Wiki } from '@everipedia/iq-utils'
 import { LinkButton } from '@/components/Elements'
-import { getWikiImageUrl } from '@/utils/DataFetching/getWikiImageUrl'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 interface RevisionPageProps {
   wiki: Activity
