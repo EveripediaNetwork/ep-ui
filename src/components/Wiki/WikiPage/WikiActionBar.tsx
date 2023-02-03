@@ -130,6 +130,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
               isDisabled={!item.isDisabled}
               placement="right"
               label={item.disabledTooltip}
+              key={index}
             >
               <VStack
                 cursor={
@@ -138,7 +139,6 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
                     : 'pointer'
                 }
                 color={actionIconColor(item)}
-                key={index}
                 onClick={
                   !item.isDisabled && wiki !== undefined
                     ? item.handleClick
