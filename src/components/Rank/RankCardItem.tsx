@@ -1,7 +1,7 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
-import { getFounderName } from '@/utils/rankUtils'
+import { getFounderName } from '@/utils/DataTransform/getFounderName'
 
 const RankingItem = ({
   index,

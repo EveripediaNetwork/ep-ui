@@ -10,14 +10,14 @@ import {
   AspectRatio,
 } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/getFormattedDate'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
-import { shortenText } from '@/utils/shortenText'
-import { getUsername } from '@/utils/getUsername'
+import { shortenText } from '@/utils/textUtils'
 import { Link } from '@/components/Elements'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
 

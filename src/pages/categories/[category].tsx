@@ -23,7 +23,7 @@ import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
-import { useInfiniteData } from '@/utils/useInfiniteData'
+import { useInfiniteData } from '@/hooks/useInfiniteData'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category

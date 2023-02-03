@@ -2,7 +2,7 @@ import { AspectRatio, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
 import { Media } from '@everipedia/iq-utils'
-import { constructMediaUrl } from '@/utils/mediaUtils'
+import { constructMediaUrl } from '@/utils/DataTransform/mediaUtils'
 import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
 

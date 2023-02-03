@@ -6,12 +6,12 @@ import {
   MediaType,
   Wiki,
 } from '@everipedia/iq-utils'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'

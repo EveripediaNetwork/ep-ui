@@ -20,18 +20,21 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
 import { useTranslation } from 'react-i18next'
-import shortenAccount from '@/utils/shortenAccount'
+import { shortenAccount } from '@/utils/textUtils'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
 import { RiSettings5Fill, RiShareFill } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
 import { useAppSelector, useAppDispatch } from '@/store/hook'
 import { store } from '@/store/store'
 import { getLeaderboard } from '@/services/editor'
 import { setAddressRank, setLeaderboards } from '@/store/slices/leaderboard'
-import { getEditorRank, sortLeaderboards } from '@/utils/leaderboard.utils'
+import {
+  getEditorRank,
+  sortLeaderboards,
+} from '@/utils/DataTransform/leaderboard.utils'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 

@@ -1,7 +1,7 @@
 import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
-import { getWikiMetadataById } from '@/utils/getWikiFields'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'

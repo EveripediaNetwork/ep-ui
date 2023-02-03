@@ -3,7 +3,7 @@ import { ReactMarkdownProps } from 'react-markdown/lib/ast-to-react'
 import CiteMarksRender from '@/components/Wiki/WikiPage/CustomRenderers/LinkRenderers/CiteMarksRender'
 import config from '@/config'
 import { whiteListedLinkNames } from '@everipedia/iq-utils'
-import { isValidUrl } from '@/utils/create-wiki'
+import { isValidUrl } from '@/utils/CreateWikiUtils/createWiki'
 import WikiLinkRender from './LinkRenderers/WikiLinkRender'
 import WidgetLinkRender from './LinkRenderers/WidgetLinkRender'
 

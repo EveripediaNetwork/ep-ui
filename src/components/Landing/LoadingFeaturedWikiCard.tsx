@@ -38,7 +38,7 @@ export const TrendingSkeleton = () => {
     </VStack>
   )
 }
-export const LoadingTrendingWikiCard = () => {
+export const LoadingFeaturedWikiCard = () => {
   return (
     <chakra.div px={2} mx="auto">
       <Flex

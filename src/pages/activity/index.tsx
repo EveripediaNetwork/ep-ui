@@ -5,13 +5,13 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import { activitiesApi, getLatestActivities } from '@/services/activities'
 import { GetStaticProps } from 'next'
 import { store } from '@/store/store'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { Activity as ActivityType } from '@/types/ActivityDataType'
 import { useTranslation } from 'react-i18next'
 import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
 import ActivityHeader from '@/components/SEO/Activity'
+import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -36,7 +36,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   useEffect(() => {
     getUpdatedActivities(LatestActivityData)
-  }, [])
+  }, [LatestActivityData])
 
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE

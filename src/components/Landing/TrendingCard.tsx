@@ -10,13 +10,13 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { shortenText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/textUtils'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Link } from '../Elements'
-import { TrendingSkeleton } from './LoadingTrendingWikis'
+import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
 import { Image } from '../Elements/Image/Image'
 
 const TrendingCard = ({
