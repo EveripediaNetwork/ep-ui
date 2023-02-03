@@ -11,12 +11,15 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { useENSData } from '@/hooks/useENSData'
-import { getReadableDate } from '@/utils/getFormattedDate'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { getUsername } from '@/utils/getUsername'
-import { WikiSummarySize, getWikiSummary } from '@/utils/getWikiSummary'
 import { Wiki } from '@everipedia/iq-utils'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import {
+  WikiSummarySize,
+  getWikiSummary,
+} from '@/utils/WikiUtils/getWikiSummary'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Image } from '../Elements/Image/Image'
 
