@@ -6,7 +6,6 @@ import {
   IconButton,
   useDisclosure,
   HStack,
-  SkeletonCircle,
   Text,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
@@ -21,16 +20,7 @@ import { StaticContent } from '@/components/StaticElement'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
 
-const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'), {
-  loading: () => (
-    <SkeletonCircle
-      pr={4}
-      size="25px"
-      startColor="gray.500"
-      endColor="gray.500"
-    />
-  ),
-})
+const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
 
 const Logo = dynamic(() => import('@/components/Elements/Logo/Logo'))
 const NavSearch = dynamic(
