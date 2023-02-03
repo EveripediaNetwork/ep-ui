@@ -1,7 +1,7 @@
 export const getDateRange = (dayRange = 1) => {
-  const startOfDay = new Date()
+  const startOfDay = new Date() - dayRange * 24 * 60 * 60 * 1000
   const endOfDay =
-    new Date() - dayRange * 24 * 60 * 60 * 1000
+    new Date()
 
   const startDay = new Date(startOfDay).toLocaleDateString('en-US', {
     year: 'numeric',
