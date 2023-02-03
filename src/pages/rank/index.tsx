@@ -63,9 +63,9 @@ const Rank = ({
     <Box>
       <RankHeader />
       <Box
-        bg="url(/rankingbg.png)"
+        bg="url(/images/backgrounds/rankingbg.png)"
         _dark={{
-          bg: 'url(/rankingDarkBG.png)',
+          bg: 'url(/images/backgrounds/rankingDarkBG.png)',
         }}
         bgPos="center"
         my={-2}
