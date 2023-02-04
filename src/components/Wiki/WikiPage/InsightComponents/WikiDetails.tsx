@@ -165,7 +165,7 @@ export const WikiDetails = ({
                     <GoLink />
                     <Link
                       target="_blank"
-                      href={`${config.blockExplorerUrl}/tx/${txHash}`}
+                      href={`${config.blockExplorerUrl}tx/${txHash}`}
                       color="brandLinkColor"
                     >
                       <Text>{shortenAccount(txHash || '')}</Text>
