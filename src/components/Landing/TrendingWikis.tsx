@@ -3,7 +3,7 @@ import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
 import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
 import TrendingCard from './TrendingCard'
-import { FeaturedWikis } from './FeturedWikis'
+import { FeaturedWikis } from './FeaturedWikis'
 
 const TrendingWikis = ({
   trending = [],

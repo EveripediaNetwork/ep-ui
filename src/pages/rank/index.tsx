@@ -124,9 +124,16 @@ const Rank = ({
                   ) : (
                     tokensObject?.map((token, index) =>
                       token ? (
-                        <RankingItem index={tokenCount + index} item={token} />
+                        <RankingItem
+                          key={token.id}
+                          index={tokenCount + index}
+                          item={token}
+                        />
                       ) : (
-                        <InvalidRankCardItem index={tokenCount + index} />
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={tokenCount + index}
+                        />
                       ),
                     )
                   )}
@@ -159,9 +166,16 @@ const Rank = ({
                   ) : (
                     nftsObject?.map((nft, index) =>
                       nft ? (
-                        <RankingItem index={index + nftCount} item={nft} />
+                        <RankingItem
+                          key={nft.id}
+                          index={index + nftCount}
+                          item={nft}
+                        />
                       ) : (
-                        <InvalidRankCardItem index={index + nftCount} />
+                        <InvalidRankCardItem
+                          key={`invalid-nft-${index}`}
+                          index={index + nftCount}
+                        />
                       ),
                     )
                   )}
