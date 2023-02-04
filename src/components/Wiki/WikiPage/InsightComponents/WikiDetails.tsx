@@ -24,6 +24,7 @@ import Link from '@/components/Elements/LinkElements/Link'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
+
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 
@@ -217,7 +218,7 @@ export const WikiDetails = ({
                       <Text py="2">Views</Text>
                     </Td>
                     <Td>
-                      <Text py="2">{views}</Text>
+                      <Text py="2">{views?.toLocaleString('en-US')}</Text>
                     </Td>
                   </Tr>
                 )}
