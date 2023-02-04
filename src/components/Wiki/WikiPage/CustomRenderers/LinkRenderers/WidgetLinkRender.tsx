@@ -30,16 +30,16 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
   const renderWidget = (src: string, title: string, type: string) => {
     if (type === 'youtube') {
       return (
-        <div
+        <span
           ref={widgetRef}
           className="embed-widget-iframe embed-widget-iframe__loaded"
         >
           {isInView ? <LiteYouTubeEmbed id={src} title="" /> : <span />}
-        </div>
+        </span>
       )
     }
     return (
-      <div
+      <span
         ref={widgetRef}
         className={
           iframeLoading
@@ -58,7 +58,7 @@ const WidgetLinkRender = ({ text, href }: { text: string; href: string }) => {
         ) : (
           <span />
         )}
-      </div>
+      </span>
     )
   }
 
