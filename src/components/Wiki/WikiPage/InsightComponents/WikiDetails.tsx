@@ -27,7 +27,6 @@ import config from '@/config'
 
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataTransform/getUsername'
-import { formatNumbers } from '@/utils/DataTransform/getFormattedNumber'
 
 export const WikiDetails = ({
   wikiTitle,
@@ -219,7 +218,7 @@ export const WikiDetails = ({
                       <Text py="2">Views</Text>
                     </Td>
                     <Td>
-                      <Text py="2">{formatNumbers(views)}</Text>
+                      <Text py="2">{views?.toLocaleString('en-US')}</Text>
                     </Td>
                   </Tr>
                 )}
