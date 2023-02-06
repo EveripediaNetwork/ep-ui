@@ -49,8 +49,9 @@ export const RankTableHead = () => {
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
-        {RankingListHead.map(item => (
+        {RankingListHead.map((item, i) => (
           <Th
+            key={i}
             fontWeight={500}
             fontSize="12px"
             textTransform="capitalize"

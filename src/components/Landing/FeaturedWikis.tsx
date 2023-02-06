@@ -3,7 +3,7 @@ import React from 'react'
 import { RiStarFill } from 'react-icons/ri'
 import { Wiki } from '@everipedia/iq-utils'
 import { Carousel } from '../Elements'
-import { FeaturedWikiCard } from './FeturedWikiCard'
+import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 
 const featuredWikisCarouselSettings = {
@@ -67,8 +67,8 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => (
       {featuredWikis ? (
         <Carousel topArrow="25%" settings={featuredWikisCarouselSettings}>
           {featuredWikis.map(wiki => (
-            <Box px="3" pt="3" pb="3">
-              <FeaturedWikiCard key={`wiki-${wiki.id}`} wiki={wiki} />
+            <Box px="3" pt="3" pb="3" key={`wiki-${wiki.id}`}>
+              <FeaturedWikiCard wiki={wiki} />
             </Box>
           ))}
         </Carousel>
