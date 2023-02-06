@@ -104,7 +104,11 @@ const RankingItem = ({
             {item.linkedWikis?.founders.map((founder, i) => {
               const isLastItem = i === item.linkedWikis.founders.length - 1
               return (
-                <Link href={`wiki/${founder}`} color="brandLinkColor">
+                <Link
+                  href={`wiki/${founder}`}
+                  key={`founder${i}`}
+                  color="brandLinkColor"
+                >
                   {getFounderName(founder)}
                   {!isLastItem && ', '}
                 </Link>

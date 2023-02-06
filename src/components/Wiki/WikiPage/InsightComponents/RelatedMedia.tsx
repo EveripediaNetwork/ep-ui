@@ -18,7 +18,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
           spacing={3}
         >
           {media.map((m, i) => (
-            <AspectRatio ratio={1}>
+            <AspectRatio ratio={1} key={i}>
               <MediaPreview
                 type={m.source}
                 src={constructMediaUrl(m)}

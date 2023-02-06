@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   ModalProps,
   Flex,
@@ -30,6 +30,7 @@ import LinkedinIconColor from '@/components/Icons/linkedinIconColor'
 import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const SHARING_OPTIONS = [
   {
@@ -64,12 +65,21 @@ const SHARING_OPTIONS = [
 
 const ShareWikiModal = ({
   onClose = () => {},
-  isOpen = false,
+  isOpen = true,
 }: Partial<ModalProps>) => {
   const router = useRouter()
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
-  if (!isOpen) return null
+
+  useEffect(() => {
+    logEvent({
+      action: 'OPEN_SHARE_WIKI_MODAL',
+      label: router.asPath.replace('/wiki/', ''),
+      category: 'open_share_wiki_modal',
+      value: 1,
+    })
+  }, [router.asPath])
+
   return (
     <Modal
       enableBottomCloseButton={false}
