@@ -107,7 +107,9 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         transform={{ base: 'unset', md: 'translateY(-50px)' }}
         maxW={{ base: 'unset', md: '120px' }}
       >
-        <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
+        {isShareBoxOpen && (
+          <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
+        )}
         {isSubscribeBoxOpen && wiki && (
           <SubscribeModal
             isOpen={isSubscribeBoxOpen}
@@ -126,6 +128,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
               isDisabled={!item.isDisabled}
               placement="right"
               label={item.disabledTooltip}
+              key={index}
             >
               <VStack
                 cursor={
@@ -134,7 +137,6 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
                     : 'pointer'
                 }
                 color={actionIconColor(item)}
-                key={index}
                 onClick={
                   !item.isDisabled && wiki !== undefined
                     ? item.handleClick
