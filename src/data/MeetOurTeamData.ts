@@ -87,28 +87,6 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/richard.png',
-    name: 'Richard Gee',
-    title: 'Full Stack Software Engineer',
-    about:
-      'Richard Gee has worked on several smart contract and NFT related projects for IQ.wiki. He was previously an algorithmic trader and prior to that, he was a Vice President at JP Morgan working in Fixed Income Attribution. ',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/richard-gee',
-    },
-  },
-  {
-    image: '/images/team/justin.png',
-    name: 'Justin Castillo',
-    title: 'Fullstack Blockchain Developer',
-    about:
-      'Justin Castillo is a Costa Rican software engineer with experience developing several dapps in the Ethereum ecosystem. In May 2021, he joined the IQ.wiki team as part of the company’s expansion.',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/justin-castillo',
-      twitter: 'https://twitter.com/_JustinCast',
-      linkedin: 'https://www.linkedin.com/in/jacv/',
-    },
-  },
-  {
     image: '/images/team/justin-moore.png',
     name: 'Justin Moore',
     title: 'Senior Software Engineer',
