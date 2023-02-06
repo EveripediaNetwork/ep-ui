@@ -18,7 +18,6 @@ import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
-import ReactCanvasConfetti from 'react-canvas-confetti'
 
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
@@ -40,7 +39,6 @@ import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
-import useConfetti from '@/hooks/useConfetti'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
