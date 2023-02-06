@@ -1,5 +1,5 @@
 import { Link } from '@/components/Elements'
-import { Wiki, calculateWikiScore } from '@everipedia/iq-utils'
+import { calculateWikiScore } from '@everipedia/iq-utils'
 import {
   CircularProgress,
   CircularProgressLabel,
@@ -13,10 +13,11 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useAppSelector } from '@/store/hook'
 
-const WikiScoreIndicator = ({ wiki }: { wiki: Wiki }) => {
+const WikiScoreIndicator = () => {
   const [isOpen, setIsOpen] = React.useState(false)
-
+  const wiki = useAppSelector(state => state.wiki)
   const score = calculateWikiScore(wiki)
   if (!score) return null
 
