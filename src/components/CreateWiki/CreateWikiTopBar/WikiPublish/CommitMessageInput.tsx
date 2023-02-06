@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/store/hook'
-import { Button, HStack, Tag, Textarea } from '@chakra-ui/react'
+import { Tag, Textarea } from '@chakra-ui/react'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -80,34 +80,5 @@ export const CommitMessageInput = () => {
         }}
       />
     </>
-  )
-}
-
-export const CommitMessagePopOverFooter = ({
-  handleSubmitWiki,
-}: {
-  handleSubmitWiki: () => void
-}) => {
-  const dispatch = useDispatch()
-  return (
-    <HStack spacing={2} justify="right">
-      <Button
-        onClick={() => {
-          dispatch({
-            type: 'wiki/updateMetadata',
-            payload: {
-              id: EditSpecificMetaIds.COMMIT_MESSAGE,
-              value: '',
-            },
-          })
-          handleSubmitWiki()
-        }}
-        float="right"
-        variant="outline"
-      >
-        Skip
-      </Button>
-      <Button onClick={handleSubmitWiki}>Submit</Button>
-    </HStack>
   )
 }
