@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  memo,
-  useState,
-  ChangeEvent,
-  useMemo,
-} from 'react'
+import React, { useEffect, useRef, memo, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import {
   Flex,
@@ -19,22 +12,7 @@ import {
   Skeleton,
   Box,
   HStack,
-  Input,
-  InputLeftElement,
-  InputGroup,
-  Icon,
-  Textarea,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  Tag,
   Text,
-  Tooltip,
 } from '@chakra-ui/react'
 import {
   getIsWikiSlugValid,
@@ -46,7 +24,6 @@ import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
 import { useAccount } from 'wagmi'
-import { MdTitle } from 'react-icons/md'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
 import WikiDetailsSidebar from '@/components/Editor/WikiDetailsSidebar'
@@ -73,7 +50,6 @@ import {
   ValidationErrorMessage,
   sanitizeContentToPublish,
 } from '@/utils/CreateWikiUtils/createWiki'
-import { useTranslation } from 'react-i18next'
 import { slugifyText } from '@/utils/textUtils'
 import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'
 import {
@@ -81,11 +57,11 @@ import {
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
-import WikiScoreIndicator from '@/components/Editor/WikiScoreIndicator'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
+import { CreateWikiTopBar } from '../../components/Editor/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -98,29 +74,8 @@ const Editor = dynamic(() => import('@/components/Editor/Editor'), {
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
-  const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
   const { fireConfetti, confettiProps } = useConfetti()
   const { userCanEdit } = useWhiteListValidator(userAddress)
-
-  const commitMessageLimitAlertStyle = {
-    sx: {
-      bgColor: '#d406082a',
-      '&:focus': {
-        borderColor: '#ff787c',
-        boxShadow: '0 0 0 1px #ff787c',
-      },
-    },
-  }
-
-  const baseStyle = {
-    sx: {
-      bgColor: 'transparent',
-      '&:focus': {
-        borderColor: '#63b3ed',
-        boxShadow: '0 0 0 1px #63b3ed',
-      },
-    },
-  }
 
   const {
     isLoadingWiki,
@@ -401,181 +356,13 @@ const CreateWikiContent = () => {
     setActiveStep(0)
     setOpenTxDetailsDialog(false)
   }
-  const { t } = useTranslation()
 
   return (
     <>
       <CreateWikiPageHeader />
       <Box scrollBehavior="auto" maxW="1900px" mx="auto">
         <ReactCanvasConfetti {...confettiProps} />
-        <HStack
-          boxShadow="sm"
-          borderRadius={4}
-          borderWidth="1px"
-          p={3}
-          justifyContent="space-between"
-          mx="auto"
-          mb={3}
-          mt={2}
-          w="96%"
-        >
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <Icon as={MdTitle} color="gray.400" fontSize="25px" />
-            </InputLeftElement>
-            <Input
-              fontWeight="500"
-              color="wikiTitleInputText"
-              borderColor="transparent"
-              fontSize="18px"
-              variant="flushed"
-              maxW="max(50%, 300px)"
-              onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                dispatch({
-                  type: 'wiki/setCurrentWiki',
-                  payload: { title: event.target.value },
-                })
-              }}
-              value={wiki.title}
-              placeholder={`${t('wikiTitlePlaceholder')}`}
-              _placeholder={{ color: 'wikiTitleInputText' }}
-            />
-          </InputGroup>
-          <HStack gap={5}>
-            <WikiScoreIndicator wiki={wiki} />
-            {!isNewCreateWiki ? (
-              // Publish button with commit message for wiki edit
-              <Popover onClose={() => setIsWritingCommitMsg(false)}>
-                <Tooltip
-                  display={!userCanEdit ? 'block' : 'none'}
-                  p={2}
-                  rounded="md"
-                  placement="bottom-start"
-                  shouldWrapChildren
-                  color="white"
-                  bg="toolTipBg"
-                  hasArrow
-                  label="Your address is not yet whitelisted"
-                  mt="3"
-                >
-                  <Box display="inline-block">
-                    <PopoverTrigger>
-                      <Button
-                        isLoading={submittingWiki}
-                        _disabled={{
-                          opacity: disableSaveButton() ? 0.5 : undefined,
-                          _hover: {
-                            bgColor: 'grey !important',
-                            cursor: 'not-allowed',
-                          },
-                        }}
-                        loadingText="Loading"
-                        disabled={disableSaveButton()}
-                        onClick={() => setIsWritingCommitMsg(true)}
-                      >
-                        Publish
-                      </Button>
-                    </PopoverTrigger>
-                  </Box>
-                </Tooltip>
-                <PopoverContent m={4}>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader>
-                    Commit Message <small>(Optional)</small>{' '}
-                  </PopoverHeader>
-                  <PopoverBody>
-                    <Tag
-                      mb={{ base: 2, lg: 2 }}
-                      variant="solid"
-                      colorScheme={
-                        // eslint-disable-next-line no-nested-ternary
-                        commitMessageLimitAlert
-                          ? 'red'
-                          : (commitMessage?.length || 0) > 50
-                          ? 'green'
-                          : 'yellow'
-                      }
-                    >
-                      {commitMessage?.length || 0}/128
-                    </Tag>
-                    <Textarea
-                      value={commitMessage}
-                      placeholder="Enter what changed..."
-                      {...(commitMessageLimitAlert
-                        ? commitMessageLimitAlertStyle
-                        : baseStyle)}
-                      onChange={(e: { target: { value: string } }) => {
-                        if (e.target.value.length <= 128) {
-                          setCommitMessage(e.target.value)
-                        } else {
-                          setCommitMessageLimitAlert(true)
-                          setTimeout(
-                            () => setCommitMessageLimitAlert(false),
-                            2000,
-                          )
-                        }
-                      }}
-                    />
-                  </PopoverBody>
-                  <PopoverFooter>
-                    <HStack spacing={2} justify="right">
-                      <Button
-                        onClick={() => {
-                          setCommitMessage('')
-                          setIsWritingCommitMsg(false)
-                          saveOnIpfs()
-                        }}
-                        float="right"
-                        variant="outline"
-                      >
-                        Skip
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setIsWritingCommitMsg(false)
-                          saveOnIpfs()
-                        }}
-                      >
-                        Submit
-                      </Button>
-                    </HStack>
-                  </PopoverFooter>
-                </PopoverContent>
-              </Popover>
-            ) : (
-              // Publish button without commit message at new create wiki
-              <Tooltip
-                display={!userCanEdit ? 'block' : 'none'}
-                p={2}
-                rounded="md"
-                placement="bottom-start"
-                shouldWrapChildren
-                color="white"
-                bg="toolTipBg"
-                hasArrow
-                label="Your address is not yet whitelisted"
-                mt="3"
-              >
-                <Button
-                  onClick={() => {
-                    saveOnIpfs()
-                  }}
-                  disabled={!userCanEdit}
-                  _disabled={{
-                    opacity: disableSaveButton() ? 0.5 : undefined,
-                    _hover: {
-                      bgColor: 'grey !important',
-                      cursor: 'not-allowed',
-                    },
-                  }}
-                >
-                  Publish
-                </Button>
-              </Tooltip>
-            )}
-          </HStack>
-        </HStack>
+        <CreateWikiTopBar />
         <Flex
           flexDirection={{ base: 'column', xl: 'row' }}
           justify="center"
