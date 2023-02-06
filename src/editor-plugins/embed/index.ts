@@ -11,7 +11,7 @@ import {
 } from '@toast-ui/editor/types/plugin'
 import React from 'react'
 // eslint-disable-next-line import/no-cycle
-import { wikiEditorRef } from '@/components/Editor/Editor'
+import { wikiEditorRef } from '@/components/CreateWiki/Editor'
 import { DefaultPayload } from '@toast-ui/editor/types/spec'
 import { EmbedFrame } from './frame'
 

@@ -14,7 +14,7 @@ import {
 
 import { useAppSelector } from '@/store/hook'
 
-import TagsInput from '@/components/Editor/EditorModals/EditWikiDetailsModal/TagsInput'
+import TagsInput from '@/components/CreateWiki/EditorModals/EditWikiDetailsModal/TagsInput'
 import LinksInput from './LinksInput'
 import CategoryInput from './CategoryInput'
 import LinkedWikisInput from './LinkedWikisInput'

@@ -26,10 +26,10 @@ import { GetServerSideProps, NextPage } from 'next'
 import { useAccount } from 'wagmi'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
-import WikiDetailsSidebar from '@/components/Editor/WikiDetailsSidebar'
+import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
-import WikiProcessModal from '@/components/Editor/EditorModals/WikiProcessModal'
+import WikiProcessModal from '@/components/CreateWiki/EditorModals/WikiProcessModal'
 import {
   Wiki,
   CommonMetaIds,
@@ -51,7 +51,7 @@ import {
   sanitizeContentToPublish,
 } from '@/utils/CreateWikiUtils/createWiki'
 import { slugifyText } from '@/utils/textUtils'
-import OverrideExistingWikiDialog from '@/components/Editor/EditorModals/OverrideExistingWikiDialog'
+import OverrideExistingWikiDialog from '@/components/CreateWiki/EditorModals/OverrideExistingWikiDialog'
 import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
@@ -61,13 +61,13 @@ import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
-import { CreateWikiTopBar } from '../../components/Editor/CreateWikiTopBar/index'
+import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
 }
 
-const Editor = dynamic(() => import('@/components/Editor/Editor'), {
+const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
   ssr: false,
 })
 
