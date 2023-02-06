@@ -8,18 +8,18 @@ const checkErrors = (
   toast: CreateToastFnReturn,
   conditionErrorPair: [string, () => boolean][],
 ) => {
-  let isError = false
+  let isErrorFree = true
   conditionErrorPair.forEach(([errorText, condition]) => {
-    if (!isError && condition()) {
+    if (isErrorFree && condition()) {
       toast({
         title: errorText,
         status: 'error',
         duration: 3000,
       })
-      isError = true
+      isErrorFree = false
     }
   })
-  return isError
+  return isErrorFree
 }
 
 const isMediaUploading = (wiki: Wiki) =>
