@@ -23,7 +23,6 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
-import WikiProcessModal from '@/components/CreateWiki/EditorModals/WikiProcessModal'
 import {
   Wiki,
   CommonMetaIds,
@@ -32,7 +31,6 @@ import {
   CreateNewWikiSlug,
 } from '@everipedia/iq-utils'
 import {
-  initialMsg,
   useCreateWikiState,
   CreateWikiProvider,
   useCreateWikiEffects,
@@ -57,7 +55,6 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { fireConfetti, confettiProps } = useConfetti()
 
   const {
     isLoadingWiki,
@@ -65,20 +62,8 @@ const CreateWikiContent = () => {
     setCommitMessage,
     dispatch,
     toast,
-    openTxDetailsDialog,
-    setOpenTxDetailsDialog,
-    txHash,
-    wikiHash,
     revision,
     isNewCreateWiki,
-
-    activeStep,
-    setActiveStep,
-    loadingState,
-    setIsLoading,
-    wikiId,
-    msg,
-    setMsg,
     txError,
     setTxError,
   } = useCreateWikiContext()
@@ -110,13 +95,6 @@ const CreateWikiContent = () => {
   }
 
   useCreateWikiEffects(wiki, prevEditedWiki)
-
-  useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-      fireConfetti()
-    }
-  }, [activeStep, fireConfetti])
 
   useEffect(() => {
     // get draft wiki if it exists
@@ -208,18 +186,10 @@ const CreateWikiContent = () => {
     }
   }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
-  const handlePopupClose = () => {
-    setMsg(initialMsg)
-    setIsLoading('loading')
-    setActiveStep(0)
-    setOpenTxDetailsDialog(false)
-  }
-
   return (
     <>
       <CreateWikiPageHeader />
       <Box scrollBehavior="auto" maxW="1900px" mx="auto">
-        <ReactCanvasConfetti {...confettiProps} />
         <CreateWikiTopBar />
         <Flex
           flexDirection={{ base: 'column', xl: 'row' }}
@@ -246,17 +216,6 @@ const CreateWikiContent = () => {
               </Center>
             </Skeleton>
           </Box>
-
-          <WikiProcessModal
-            wikiId={wikiId}
-            msg={msg}
-            txHash={txHash}
-            wikiHash={wikiHash}
-            activeStep={activeStep}
-            state={loadingState}
-            isOpen={openTxDetailsDialog}
-            onClose={() => handlePopupClose()}
-          />
         </Flex>
         <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
           <Flex direction="column" justifyContent="center" alignItems="center">
