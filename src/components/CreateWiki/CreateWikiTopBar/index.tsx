@@ -1,7 +1,7 @@
 import { HStack } from '@chakra-ui/react'
 import React from 'react'
 import { WikiTitleInput } from './WikiTitleInput'
-import WikiScoreIndicator from '../WikiScoreIndicator'
+import WikiScoreIndicator from './WikiScoreIndicator'
 import { WikiPublishButton } from './WikiPublish/WikiPublishButton'
 
 export const CreateWikiTopBar = () => {
