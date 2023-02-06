@@ -14,16 +14,10 @@ import {
   HStack,
   Text,
 } from '@chakra-ui/react'
-import {
-  getIsWikiSlugValid,
-  getWiki,
-  postWiki,
-  wikiApi,
-} from '@/services/wikis'
+import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
-import { useAccount } from 'wagmi'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
@@ -37,30 +31,20 @@ import {
   EditorContentOverride,
   CreateNewWikiSlug,
 } from '@everipedia/iq-utils'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   initialMsg,
   useCreateWikiState,
   CreateWikiProvider,
-  useGetSignedHash,
   useCreateWikiEffects,
   useCreateWikiContext,
-  defaultErrorMessage,
-  isWikiExists,
-  ValidationErrorMessage,
-  sanitizeContentToPublish,
 } from '@/utils/CreateWikiUtils/createWiki'
-import { slugifyText } from '@/utils/textUtils'
-import OverrideExistingWikiDialog from '@/components/CreateWiki/EditorModals/OverrideExistingWikiDialog'
 import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import useConfetti from '@/hooks/useConfetti'
-import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
@@ -73,7 +57,6 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { fireConfetti, confettiProps } = useConfetti()
 
   const {
@@ -104,8 +87,6 @@ const CreateWikiContent = () => {
     wiki: wikiData,
     isPublished: false,
   })
-
-  const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
 
   // const disableSaveButton = () =>
   //   submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
@@ -226,14 +207,6 @@ const CreateWikiContent = () => {
       })
     }
   }, [dispatch, revision, setCommitMessage, toast, wikiData])
-
-  useEffect(() => {
-    async function verifyTransactionHash() {
-      if (txHash) verifyTrxHash()
-    }
-    verifyTransactionHash()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txHash, verifyTrxHash])
 
   const handlePopupClose = () => {
     setMsg(initialMsg)
