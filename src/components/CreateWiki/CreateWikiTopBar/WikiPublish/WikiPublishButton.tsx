@@ -1,44 +1,190 @@
 import React from 'react'
-import { Button, Tooltip } from '@chakra-ui/react'
+import {
+  Button,
+  Tooltip,
+  useBoolean,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
+import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
+import { useAppSelector } from '@/store/hook'
+import { logEvent } from '@/utils/googleAnalytics'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import {
+  CreateNewWikiSlug,
+  EditSpecificMetaIds,
+  Wiki,
+} from '@everipedia/iq-utils'
+import { useAccount } from 'wagmi'
+import {
+  isWikiExists,
+  sanitizeContentToPublish,
+} from '@/utils/CreateWikiUtils/createWiki'
+import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
+import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
+import { store } from '@/store/store'
+import { postWiki } from '@/services/wikis'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 
 export const WikiPublishButton = () => {
-  const handleWikiPublish = () => {}
-  const isPublishDisabled = false
+  const toast = useToast()
+  const wiki = useAppSelector(state => state.wiki)
+  const [submittingWiki, setSubmittingWiki] = useBoolean()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { userCanEdit } = useWhiteListValidator(userAddress)
+  const {
+    isOpen: isOverrideModalOpen,
+    onOpen: onOverrideModalOpen,
+    onClose: onOverrideModalClose,
+  } = useDisclosure()
+  const [existingWikiData, setExistingWikiData] = React.useState<Wiki | null>(
+    null,
+  )
+
+  const isPublishDisabled = submittingWiki || !userCanEdit
   const isNewWiki = false
-  const userCanEdit = true
+
+  const handleWikiPublish = async (override?: boolean) => {
+    if (!isValidWiki(toast, wiki)) return
+
+    logEvent({
+      action: 'SUBMIT_WIKI',
+      label: await getWikiSlug(wiki),
+      category: 'wiki_title',
+      value: 1,
+    })
+
+    let wikiCommitMessage = getWikiMetadataById(
+      wiki,
+      EditSpecificMetaIds.COMMIT_MESSAGE,
+    )?.value
+
+    if (isUserConnected && userAddress) {
+      if (
+        isNewWiki &&
+        !override &&
+        (await isWikiExists(await getWikiSlug(wiki), setExistingWikiData))
+      ) {
+        onOverrideModalOpen()
+        return
+      }
+
+      if (isNewWiki) {
+        if (override) {
+          wikiCommitMessage = 'Wiki Overridden 🔄'
+        } else if (revision) {
+          wikiCommitMessage = `Reverted to revision ${revision} ⏪`
+        } else {
+          wikiCommitMessage = 'New Wiki Created 🎉'
+        }
+      }
+
+      setOpenTxDetailsDialog(true)
+      setSubmittingWiki.on()
+
+      const finalWiki = {
+        ...wiki,
+        user: { id: userAddress },
+        content: sanitizeContentToPublish(String(wiki.content)),
+        category: 'daos',
+        metadata: [
+          ...wiki.metadata.filter(
+            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
+          ),
+          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
+        ].filter(m => m.value),
+      }
+
+      if (finalWiki.id === CreateNewWikiSlug)
+        finalWiki.id = await getWikiSlug(wiki)
+
+      setWikiId(finalWiki.id)
+
+      prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
+
+      const wikiResult = await store.dispatch(
+        postWiki.initiate({ data: finalWiki }),
+      )
+
+      if (wikiResult && 'data' in wikiResult) {
+        saveHashInTheBlockchain(String(wikiResult.data))
+      } else {
+        setIsLoading('error')
+        let logReason = 'NO_IPFS'
+        // get error message from wikiResult
+        if (wikiResult && 'error' in wikiResult) {
+          const rawErrMsg = wikiResult.error.message
+          const prefix = 'Http Exception:'
+          if (rawErrMsg?.startsWith(prefix)) {
+            const errObjString = rawErrMsg.substring(prefix.length)
+            const errObj = JSON.parse(errObjString)
+            // eslint-disable-next-line no-console
+            console.error({ ...errObj })
+            const wikiError =
+              errObj.response.errors[0].extensions.exception.response
+            logReason = wikiError.error
+            setMsg(ValidationErrorMessage(logReason))
+          } else {
+            setMsg(defaultErrorMessage)
+          }
+        }
+        logEvent({
+          action: 'SUBMIT_WIKI_ERROR',
+          label: await getWikiSlug(wiki),
+          category: 'wiki_error',
+          value: 1,
+        })
+      }
+
+      setSubmittingWiki.off()
+    }
+  }
 
   return (
-    <Tooltip
-      isDisabled={userCanEdit}
-      p={2}
-      rounded="md"
-      placement="bottom-start"
-      shouldWrapChildren
-      color="white"
-      bg="toolTipBg"
-      hasArrow
-      label="Your address is not yet whitelisted"
-      mt="3"
-    >
-      {isNewWiki ? (
-        <PublishWithCommitMessage
-          handleWikiPublish={handleWikiPublish}
-          isPublishDisabled={isPublishDisabled}
-          submittingWiki={false}
-        />
-      ) : (
-        <Button
-          onClick={handleWikiPublish}
-          disabled={!userCanEdit}
-          _disabled={{
-            opacity: isPublishDisabled ? 0.5 : undefined,
-            _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
-          }}
-        >
-          Publish
-        </Button>
-      )}
-    </Tooltip>
+    <>
+      <Tooltip
+        isDisabled={userCanEdit}
+        p={2}
+        rounded="md"
+        placement="bottom-start"
+        shouldWrapChildren
+        color="white"
+        bg="toolTipBg"
+        hasArrow
+        label="Your address is not yet whitelisted"
+        mt="3"
+      >
+        {isNewWiki ? (
+          <PublishWithCommitMessage
+            handleWikiPublish={() => handleWikiPublish()}
+            isPublishDisabled={isPublishDisabled}
+            submittingWiki={false}
+          />
+        ) : (
+          <Button
+            onClick={() => handleWikiPublish()}
+            disabled={!userCanEdit}
+            _disabled={{
+              opacity: isPublishDisabled ? 0.5 : undefined,
+              _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
+            }}
+          >
+            Publish
+          </Button>
+        )}
+      </Tooltip>
+
+      <OverrideExistingWikiDialog
+        isOpen={isOverrideModalOpen}
+        publish={() => {
+          onOverrideModalClose()
+          handleWikiPublish(true)
+        }}
+        onClose={onOverrideModalClose}
+        getSlug={() => getWikiSlug(wiki)}
+        existingWikiData={existingWikiData}
+      />
+    </>
   )
 }

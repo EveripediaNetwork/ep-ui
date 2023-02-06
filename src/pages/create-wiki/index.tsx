@@ -75,35 +75,25 @@ const CreateWikiContent = () => {
   const wiki = useAppSelector(state => state.wiki)
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { fireConfetti, confettiProps } = useConfetti()
-  const { userCanEdit } = useWhiteListValidator(userAddress)
 
   const {
     isLoadingWiki,
     wikiData,
-    commitMessage,
     setCommitMessage,
     dispatch,
     toast,
     openTxDetailsDialog,
     setOpenTxDetailsDialog,
-    isWritingCommitMsg,
-    setIsWritingCommitMsg,
     txHash,
-    submittingWiki,
-    setSubmittingWiki,
     wikiHash,
     revision,
     isNewCreateWiki,
-    openOverrideExistingWikiDialog,
-    setOpenOverrideExistingWikiDialog,
-    existingWikiData,
-    setExistingWikiData,
+
     activeStep,
     setActiveStep,
     loadingState,
     setIsLoading,
     wikiId,
-    setWikiId,
     msg,
     setMsg,
     txError,
@@ -117,113 +107,8 @@ const CreateWikiContent = () => {
 
   const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
 
-  const getWikiSlug = async () => {
-    const slug = slugifyText(String(wiki.title))
-    const { data: result } = await store.dispatch(
-      getIsWikiSlugValid.initiate(slug),
-    )
-    if (result?.id) return result.id
-    return slug
-  }
-
-  const saveOnIpfs = async (override?: boolean) => {
-    if (!isValidWiki(toast, wiki)) return
-
-    logEvent({
-      action: 'SUBMIT_WIKI',
-      label: await getWikiSlug(),
-      category: 'wiki_title',
-      value: 1,
-    })
-
-    let wikiCommitMessage = commitMessage || ''
-
-    if (isUserConnected && userAddress) {
-      if (
-        isNewCreateWiki &&
-        !override &&
-        (await isWikiExists(await getWikiSlug(), setExistingWikiData))
-      ) {
-        setOpenOverrideExistingWikiDialog(true)
-        return
-      }
-
-      if (isNewCreateWiki) {
-        if (override) {
-          wikiCommitMessage = 'Wiki Overridden 🔄'
-        } else if (revision) {
-          wikiCommitMessage = `Reverted to revision ${revision} ⏪`
-        } else {
-          wikiCommitMessage = 'New Wiki Created 🎉'
-        }
-      }
-
-      setOpenTxDetailsDialog(true)
-      setSubmittingWiki(true)
-
-      const finalWiki = {
-        ...wiki,
-        user: { id: userAddress },
-        content: sanitizeContentToPublish(String(wiki.content)),
-        category: 'daos',
-        metadata: [
-          ...wiki.metadata.filter(
-            m => m.id !== EditSpecificMetaIds.COMMIT_MESSAGE,
-          ),
-          { id: EditSpecificMetaIds.COMMIT_MESSAGE, value: wikiCommitMessage },
-        ].filter(m => m.value),
-      }
-
-      if (finalWiki.id === CreateNewWikiSlug) finalWiki.id = await getWikiSlug()
-      setWikiId(finalWiki.id)
-
-      prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
-
-      const wikiResult = await store.dispatch(
-        postWiki.initiate({ data: finalWiki }),
-      )
-
-      if (wikiResult && 'data' in wikiResult) {
-        saveHashInTheBlockchain(String(wikiResult.data))
-      } else {
-        setIsLoading('error')
-        let logReason = 'NO_IPFS'
-        // get error message from wikiResult
-        if (wikiResult && 'error' in wikiResult) {
-          const rawErrMsg = wikiResult.error.message
-          const prefix = 'Http Exception:'
-          if (rawErrMsg?.startsWith(prefix)) {
-            const errObjString = rawErrMsg.substring(prefix.length)
-            const errObj = JSON.parse(errObjString)
-            // eslint-disable-next-line no-console
-            console.error({ ...errObj })
-            const wikiError =
-              errObj.response.errors[0].extensions.exception.response
-            logReason = wikiError.error
-            setMsg(ValidationErrorMessage(logReason))
-          } else {
-            setMsg(defaultErrorMessage)
-          }
-        }
-        logEvent({
-          action: 'SUBMIT_WIKI_ERROR',
-          label: await getWikiSlug(),
-          category: 'wiki_error',
-          value: 1,
-        })
-      }
-
-      setSubmittingWiki(false)
-    }
-  }
-
-  const disableSaveButton = () =>
-    isWritingCommitMsg ||
-    submittingWiki ||
-    !userAddress ||
-    signing ||
-    isLoadingWiki ||
-    !userCanEdit
+  // const disableSaveButton = () =>
+  //   submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
 
   const handleOnEditorChanges = (
     val: string | undefined,
@@ -388,16 +273,7 @@ const CreateWikiContent = () => {
               </Center>
             </Skeleton>
           </Box>
-          <OverrideExistingWikiDialog
-            isOpen={openOverrideExistingWikiDialog}
-            publish={() => {
-              setOpenOverrideExistingWikiDialog(false)
-              saveOnIpfs(true)
-            }}
-            onClose={() => setOpenOverrideExistingWikiDialog(false)}
-            getSlug={getWikiSlug}
-            existingWikiData={existingWikiData}
-          />
+
           <WikiProcessModal
             wikiId={wikiId}
             msg={msg}
