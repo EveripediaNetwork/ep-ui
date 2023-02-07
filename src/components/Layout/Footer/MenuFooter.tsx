@@ -1,7 +1,16 @@
 import React from 'react'
-import { GridItem, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import {
+  Box,
+  GridItem,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
+import { AllCareers } from '@/data/CareersData'
 
 const MenuFooter = () => {
   const { t } = useTranslation()
@@ -74,11 +83,25 @@ const MenuFooter = () => {
                 prefetch={false}
                 href="/static/about"
               >{`${t('aboutUs')}`}</Link>
-              <Link
-                textAlign={{ base: 'center', md: 'left' }}
-                prefetch={false}
-                href="/static/careers"
-              >{`${t('careers')}`}</Link>
+              <Box as="span">
+                <Link
+                  textAlign={{ base: 'center', md: 'left' }}
+                  prefetch={false}
+                  href="careers"
+                >
+                  <Box as="span">{`${t('careers')}`}</Box>
+                </Link>
+                {AllCareers.length !== 0 && (
+                  <Tag
+                    ml="2"
+                    size="sm"
+                    variant="solid"
+                    bgColor="brandLinkColor"
+                  >
+                    We&apos;re hiring
+                  </Tag>
+                )}
+              </Box>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}

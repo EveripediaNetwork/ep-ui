@@ -15,6 +15,7 @@ const CareerCard = ({
       border="1px solid"
       borderColor="careersCardBorder"
       p="6"
+      bgColor="careersCardBg"
     >
       <Heading
         color="brandLinkColor"
