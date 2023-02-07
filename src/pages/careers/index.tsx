@@ -16,10 +16,9 @@ const OurCareers = () => {
         mx="auto"
         px={{ base: '5', md: 0 }}
       >
-        {AllCareers.map(career => (
+        {AllCareers.map((career, i) => (
           <CareerCard
-            id={career.id}
-            key={career.id}
+            key={i}
             title={career.title}
             location={career.location}
             description={career.description}

@@ -16,7 +16,7 @@ export const EmbedFrame = ({
     eventEmitter.emit('command', 'insertEmbed', { path, type })
   }
 
-  const embedCardProps = (embed: typeof embeds[0]) => ({
+  const embedCardProps = (embed: (typeof embeds)[0]) => ({
     name: embed.name,
     desc: embed.desc,
     regex: embed.regex,

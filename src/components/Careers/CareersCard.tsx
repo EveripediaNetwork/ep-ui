@@ -36,6 +36,7 @@ const CareerCard = ({
         color="careersTextColor"
         fontWeight={500}
         fontSize={{ base: '16px', lg: '18px' }}
+        whiteSpace="pre-line"
       >
         {description}
       </Text>
