@@ -1,11 +1,11 @@
 module.exports = {
   extends: './configs/eslint-next.js',
-  ignorePatterns: ['src/stories/*'],
   parserOptions: {
     root: true,
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
   },
+  plugins: ['import'],
   rules: {
     'import/extensions': [
       'error',
@@ -17,5 +17,6 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'import/ignore': ['src/stories/*'],
   },
 }
