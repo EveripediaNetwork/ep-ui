@@ -331,7 +331,7 @@ export const useGetSignedHash = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signData, signError])
 
-  return { signing, saveHashInTheBlockchain, verifyTrxHash }
+  return { signing, saveHashInTheBlockchain, verifyTrxHash, txHash }
 }
 
 export const useCreateWikiState = (router: NextRouter) => {

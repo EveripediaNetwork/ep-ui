@@ -55,7 +55,8 @@ export const WikiPublishButton = () => {
 
   const isPublishDisabled = submittingWiki || !userCanEdit
   const isNewWiki = false
-  const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
+  const { saveHashInTheBlockchain, signing, verifyTrxHash, txHash } =
+    useGetSignedHash()
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -214,7 +215,6 @@ export const WikiPublishButton = () => {
           </Button>
         )}
       </Tooltip>
-
       <OverrideExistingWikiDialog
         isOpen={isOverrideModalOpen}
         publish={() => {
@@ -225,7 +225,6 @@ export const WikiPublishButton = () => {
         getSlug={() => getWikiSlug(wiki)}
         existingWikiData={existingWikiData}
       />
-
       <WikiProcessModal
         wikiId={wikiId}
         msg={msg}
