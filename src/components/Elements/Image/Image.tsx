@@ -26,7 +26,6 @@ export const Image = ({
   ...rest
 }: NextChakraImageProps) => (
   <Box
-    as="span"
     h={`${imgBoxSize || imgH}px`}
     w={`${imgBoxSize || imgW}px`}
     {...rest}

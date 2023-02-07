@@ -4,6 +4,10 @@ export const TagsSuggestions = [
     value: 'Artists',
   },
   {
+    label: 'AI',
+    value: 'AI',
+  },
+  {
     label: 'BinanceSmartChain',
     value: 'BinanceSmartChain',
   },
@@ -54,6 +58,10 @@ export const TagsSuggestions = [
   {
     label: 'Marketplaces',
     value: 'Marketplaces',
+  },
+  {
+    label: 'Organizations',
+    value: 'Organizations',
   },
   {
     label: 'PeopleInDeFi',
