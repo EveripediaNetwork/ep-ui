@@ -17,6 +17,5 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'import/ignore': ['src/stories/*'],
   },
 }
