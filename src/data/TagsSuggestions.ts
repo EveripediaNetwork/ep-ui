@@ -60,8 +60,8 @@ export const TagsSuggestions = [
     value: 'Marketplaces',
   },
   {
-    label: 'Organization',
-    value: 'Organization',
+    label: 'Organizations',
+    value: 'Organizations',
   },
   {
     label: 'PeopleInDeFi',
