@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Button,
   Tooltip,
@@ -19,6 +19,7 @@ import { useAccount } from 'wagmi'
 import {
   isWikiExists,
   sanitizeContentToPublish,
+  useGetSignedHash,
 } from '@/utils/CreateWikiUtils/createWiki'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
@@ -29,6 +30,7 @@ import { SerializedError } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 
 export const WikiPublishButton = () => {
   const toast = useToast()
@@ -42,13 +44,19 @@ export const WikiPublishButton = () => {
     onOpen: onOverrideModalOpen,
     onClose: onOverrideModalClose,
   } = useDisclosure()
+  const {
+    isOpen: isWikiProcessModalOpen,
+    onOpen: onWikiProcessModalOpen,
+    onClose: onWikiProcessModalClose,
+  } = useDisclosure()
   const [existingWikiData, setExistingWikiData] = React.useState<Wiki | null>(
     null,
   )
 
   const isPublishDisabled = submittingWiki || !userCanEdit
   const isNewWiki = false
-  const { saveHashInTheBlockchain, signing, verifyTrxHash } = useGetSignedHash()
+  const { saveHashInTheBlockchain, signing, verifyTrxHash, txHash } =
+    useGetSignedHash()
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -167,6 +175,13 @@ export const WikiPublishButton = () => {
     }
   }
 
+  const handlePopupClose = () => {
+    setMsg(initialMsg)
+    setIsLoading('loading')
+    setActiveStep(0)
+    onWikiProcessModalClose()
+  }
+
   return (
     <>
       <Tooltip
@@ -200,7 +215,6 @@ export const WikiPublishButton = () => {
           </Button>
         )}
       </Tooltip>
-
       <OverrideExistingWikiDialog
         isOpen={isOverrideModalOpen}
         publish={() => {
@@ -210,6 +224,16 @@ export const WikiPublishButton = () => {
         onClose={onOverrideModalClose}
         getSlug={() => getWikiSlug(wiki)}
         existingWikiData={existingWikiData}
+      />
+      <WikiProcessModal
+        wikiId={wikiId}
+        msg={msg}
+        txHash={txHash}
+        wikiHash={wikiHash}
+        activeStep={activeStep}
+        state={loadingState}
+        isOpen={openTxDetailsDialog}
+        onClose={handlePopupClose}
       />
     </>
   )
