@@ -97,6 +97,7 @@ const MenuFooter = () => {
                     size="sm"
                     variant="solid"
                     bgColor="brandLinkColor"
+                    fontSize="10px"
                   >
                     We&apos;re hiring
                   </Tag>
