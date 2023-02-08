@@ -61,7 +61,7 @@ export const CareersHeader = () => (
     title="Jobs"
     description="Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network"
     titleTemplate="%s | IQ.Wiki"
-    canonical="https://iq.wiki/static/careers"
+    canonical="https://iq.wiki/careers"
     openGraph={{
       title: 'Jobs',
       description:
