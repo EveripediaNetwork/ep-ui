@@ -15,7 +15,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
   ],
-  plugins: ['import', '@typescript-eslint', 'unused-imports', 'prettier'],
+  plugins: ['import', '@typescript-eslint', 'prettier'],
   settings: {
     next: {
       rootDir: [
@@ -40,6 +40,12 @@ module.exports = {
     },
   },
   rules: {
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
     '@next/next/no-html-link-for-pages': ['error', './src'],
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
@@ -69,16 +75,6 @@ module.exports = {
       },
     ],
     'no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'error',
-    'unused-imports/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
-      },
-    ],
   },
   overrides: [
     {
