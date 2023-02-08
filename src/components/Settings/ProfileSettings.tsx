@@ -1,4 +1,10 @@
-import React, { FormEvent, useCallback } from 'react'
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+} from 'react'
 import {
   Flex,
   Input,
@@ -26,38 +32,39 @@ import ImageUpload from './ImageUpload'
 interface ProfileSettingsProps {
   settingsData?: ProfileSettingsData
 }
+   
+interface StrEntry {
+  value: string
+  error: string
+}
+
 const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [postUserProfile, { error: postUserError }] =
     usePostUserProfileMutation()
-  interface StrEntry {
-    value: string
-    error: string
-  }
   const strInitState: StrEntry = { value: '', error: '' }
-  const [inputUsername, setInputUsername] =
-    React.useState<StrEntry>(strInitState)
-  const [inputBio, setInputBio] = React.useState<StrEntry>(strInitState)
-  const [inputEmail, setInputEmail] = React.useState<StrEntry>(strInitState)
-  const [website, setWebsite] = React.useState<string>('')
-  const [instagram, setInstagram] = React.useState<string>('')
-  const [twitter, setTwitter] = React.useState<string>('')
-  const [avatarIPFSHash, setAvatarIPFSHash] = React.useState<string>('')
-  const [bannerIPFSHash, setBannerIPFSHash] = React.useState<string>('')
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isAvatarLoading, setIsAvatarLoading] = React.useState<boolean>(false)
-  const [isBannerLoading, setIsBannerLoading] = React.useState<boolean>(false)
+  const [inputUsername, setInputUsername] = useState<StrEntry>(strInitState)
+  const [inputBio, setInputBio] = useState<StrEntry>(strInitState)
+  const [inputEmail, setInputEmail] = useState<StrEntry>(strInitState)
+  const [website, setWebsite] = useState<string>('')
+  const [instagram, setInstagram] = useState<string>('')
+  const [twitter, setTwitter] = useState<string>('')
+  const [avatarIPFSHash, setAvatarIPFSHash] = useState<string>('')
+  const [bannerIPFSHash, setBannerIPFSHash] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isAvatarLoading, setIsAvatarLoading] = useState<boolean>(false)
+  const [isBannerLoading, setIsBannerLoading] = useState<boolean>(false)
 
   const { address: userAddress } = useAccount()
   const [, userENSAddr] = useENSData(userAddress)
   const clipboard = useClipboard(userAddress || '')
   const toast = useToast()
 
-  const bioRef = React.useRef<HTMLTextAreaElement>(null)
-  const usernameRef = React.useRef<HTMLInputElement>(null)
-  const emailRef = React.useRef<HTMLInputElement>(null)
+  const bioRef = useRef<HTMLTextAreaElement>(null)
+  const usernameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
 
   // set initial values
-  React.useEffect(() => {
+  useEffect(() => {
     if (settingsData) {
       setInputUsername({
         value: settingsData.username || userENSAddr || '',
@@ -87,7 +94,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
   }, [inputUsername.value, settingsData?.username])
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkUsername()
   }, [checkUsername])
 
@@ -206,28 +213,27 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
         <VStack flex="2" align="left" spacing={4}>
           {/* PROFILE: USER NAME */}
           <FormControl isRequired isInvalid={inputUsername.error !== ''}>
-            <Flex>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              {userENSAddr && userENSAddr !== inputUsername.value && (
-                <Button
-                  variant="unstyled"
-                  mb="2"
-                  h="max-content"
-                  display="flex"
-                  alignItems="center"
-                  fontSize="xs"
-                  fontWeight="medium"
-                  onClick={() => {
-                    setInputUsername({
-                      value: userENSAddr,
-                      error: validateUsername(userENSAddr),
-                    })
-                  }}
-                >
-                  (Click to use your ENS {userENSAddr})
-                </Button>
-              )}
-            </Flex>
+            <FormLabel htmlFor="username" >Username</FormLabel>
+            {userENSAddr && userENSAddr !== inputUsername.value && (
+              <Button
+                variant="unstyled"
+                mb="2"
+                h="max-content"
+                display="flex"
+                alignItems="center"
+                fontSize="xs"
+                fontWeight="medium"
+                onClick={() => {
+                  setInputUsername({
+                    value: userENSAddr,
+                    error: validateUsername(userENSAddr),
+                  })
+                }}
+              >
+                (Click to use your ENS {userENSAddr})
+              </Button>
+            )}
+
             <Input
               ref={usernameRef}
               value={inputUsername.value}
