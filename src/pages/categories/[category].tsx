@@ -4,16 +4,13 @@ import { NextSeo } from 'next-seo'
 import {
   Divider,
   Box,
-  Heading,
   SimpleGrid,
-  Flex,
   Text,
   Button,
   Center,
   Spinner,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
-import { Image } from '@/components/Elements/Image/Image'
 import { getCategoriesById } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
@@ -24,6 +21,8 @@ import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
+import CategoryHero from '@/components/Categories/CategoryHero'
+import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -77,39 +76,14 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         />
       )}
       <Box mt="-3" bgColor="pageBg" pb={12}>
-        <Image
-          priority
-          src={`/images/categories/${categoryData.id}.jpg`}
-          height="250px"
-          alt={categoryData?.title}
+        <CategoryHero
+          id={categoryData?.id}
+          description={categoryData?.description}
+          title={categoryData?.title}
         />
-        <Heading
-          fontSize={{ base: 25, lg: 36 }}
-          maxW="80%"
-          mx="auto"
-          textAlign="center"
-          mt={8}
-          as="h1"
-        >
-          {categoryData?.title}
-        </Heading>
-        <Flex
-          textAlign="center"
-          justifyContent="center"
-          fontWeight="400"
-          maxW={{ base: '90%', md: '70%', lg: '60%' }}
-          mx="auto"
-          px={1}
-        >
-          <Text my={8} mx={{ base: '1', md: '8', lg: '14' }}>
-            {categoryData?.description || ''}
-          </Text>
-        </Flex>
-        <Divider />
+        <TrendingCategoriesWiki categoryType={categoryData?.title} />
+        <Divider bgColor="gray.300" _dark={{ bgColor: 'whiteAlpha.200' }} />
         <Box mt={10}>
-          <Heading fontSize={25} textAlign="center">
-            {t('wikiInCategory')}
-          </Heading>
           {wikisInCategory.length > 0 ? (
             <>
               <SimpleGrid
