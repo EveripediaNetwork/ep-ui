@@ -3,11 +3,6 @@ import dynamic from 'next/dynamic'
 import {
   Flex,
   Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  CloseButton,
   Center,
   Skeleton,
   Box,
@@ -40,6 +35,7 @@ import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { useCreateWikiState } from '@/hooks/useCreateWikiState'
 import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
+import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
@@ -210,26 +206,7 @@ const CreateWikiContent = () => {
           </Box>
         </Flex>
         <Skeleton isLoaded={!isLoadingWiki} w="full" h="full">
-          <Flex direction="column" justifyContent="center" alignItems="center">
-            {txError.opened && (
-              <Alert status="error" maxW="md" mb="3">
-                <AlertIcon />
-                <AlertTitle>{txError.title}</AlertTitle>
-                <AlertDescription>{txError.description}</AlertDescription>
-                <CloseButton
-                  onClick={() =>
-                    setTxError({
-                      title: '',
-                      description: '',
-                      opened: false,
-                    })
-                  }
-                  position="absolute"
-                  right="5px"
-                />
-              </Alert>
-            )}
-          </Flex>
+          <TxErrorAlert txError={txError} setTxError={setTxError} />
         </Skeleton>
       </Box>
     </>
