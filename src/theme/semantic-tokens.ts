@@ -277,5 +277,25 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.50',
       _dark: 'brand.300',
     },
+    careersBackground: {
+      default: 'gray.50',
+      _dark: 'whiteAlpha.50',
+    },
+    careersHeadingColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    careersTextColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
+    },
+    careersCardBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.200',
+    },
+    careersCardBg: {
+      default: 'white',
+      _dark: 'gray.700',
+    },
   },
 }
