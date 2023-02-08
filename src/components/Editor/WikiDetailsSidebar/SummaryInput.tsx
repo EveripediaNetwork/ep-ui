@@ -5,6 +5,7 @@ import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Image } from '@/components/Elements/Image/Image'
 import AIGenerateButton from './AIGenerateButton'
 
 const sleep = (ms: number) =>
@@ -128,29 +129,44 @@ const SummaryInput = () => {
           />
         </HStack>
       </HStack>
-      <Textarea
-        disabled={isGenerating}
-        fontSize="sm"
-        bgColor={showRed ? '#d406082a' : 'transparent'}
-        color="wikiSummaryInputText"
-        _focus={{
-          borderColor: showRed ? '#ff787c' : '#63b3ed',
-          boxShadow: showRed ? '0 0 0 1px #ff787c' : '0 0 0 1px #63b3ed',
-        }}
-        value={wiki.summary}
-        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          if (event.target.value.length <= WIKI_SUMMARY_LIMIT)
-            dispatch({
-              type: 'wiki/setCurrentWiki',
-              payload: { summary: event.target.value },
-            })
-          else {
-            setShowRed(true)
-            setTimeout(() => setShowRed(false), 2000)
-          }
-        }}
-        placeholder={`${t('wikiSummaryPlaceholder')}`}
-      />
+      <Box position="relative" h="85px">
+        <Textarea
+          disabled={isGenerating}
+          fontSize="sm"
+          bgColor={showRed ? '#d406082a' : 'transparent'}
+          color="wikiSummaryInputText"
+          _focus={{
+            borderColor: showRed ? '#ff787c' : '#63b3ed',
+            boxShadow: showRed ? '0 0 0 1px #ff787c' : '0 0 0 1px #63b3ed',
+          }}
+          h="100%"
+          value={wiki.summary}
+          onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+            if (event.target.value.length <= WIKI_SUMMARY_LIMIT)
+              dispatch({
+                type: 'wiki/setCurrentWiki',
+                payload: { summary: event.target.value },
+              })
+            else {
+              setShowRed(true)
+              setTimeout(() => setShowRed(false), 2000)
+            }
+          }}
+          placeholder={`${t('wikiSummaryPlaceholder')}`}
+        />
+        {isGenerating && (
+          <Image
+            alt="loading animation - robot flying"
+            src="/images/backgrounds/robot.gif"
+            position="absolute"
+            top="-100%"
+            left="50%"
+            transform="translateX(-50%)"
+            width="100px"
+            height="100px"
+          />
+        )}
+      </Box>
     </Box>
   )
 }
