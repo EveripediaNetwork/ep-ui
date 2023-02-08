@@ -32,7 +32,7 @@ import ImageUpload from './ImageUpload'
 interface ProfileSettingsProps {
   settingsData?: ProfileSettingsData
 }
-   
+
 interface StrEntry {
   value: string
   error: string
@@ -213,7 +213,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
         <VStack flex="2" align="left" spacing={4}>
           {/* PROFILE: USER NAME */}
           <FormControl isRequired isInvalid={inputUsername.error !== ''}>
-            <FormLabel htmlFor="username" >Username</FormLabel>
+            <FormLabel htmlFor="username">Username</FormLabel>
             {userENSAddr && userENSAddr !== inputUsername.value && (
               <Button
                 variant="unstyled"
