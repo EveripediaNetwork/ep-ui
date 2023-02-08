@@ -433,14 +433,6 @@ export const useCreateWikiState = (router: NextRouter) => {
   }
 }
 
-export const isValidUrl = (urlString: string) => {
-  try {
-    return Boolean(new URL(urlString))
-  } catch (e) {
-    return false
-  }
-}
-
 export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
