@@ -10,11 +10,7 @@ import {
   Wiki,
 } from '@everipedia/iq-utils'
 import { useAccount } from 'wagmi'
-import {
-  isWikiExists,
-  useCreateWikiContext,
-  useGetSignedHash,
-} from '@/utils/CreateWikiUtils/createWiki'
+import { useCreateWikiContext } from '@/utils/CreateWikiUtils/createWiki'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { store } from '@/store/store'
@@ -29,6 +25,8 @@ import {
 } from '@/utils/CreateWikiUtils/createWikiMessages'
 import ReactCanvasConfetti from 'react-canvas-confetti'
 import useConfetti from '@/hooks/useConfetti'
+import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
+import { useGetSignedHash } from '@/hooks/useGetSignedHash'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'

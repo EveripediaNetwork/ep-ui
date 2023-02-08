@@ -1,3 +1,4 @@
+import { whiteListedDomains, whiteListedLinkNames } from '@everipedia/iq-utils'
 import slugify from 'slugify'
 
 export const lettersToNum = (str: string): number => {
@@ -48,4 +49,34 @@ export const isValidUrl = (urlString: string) => {
   } catch (e) {
     return false
   }
+}
+
+export const isVerifiedContentLinks = (content: string) => {
+  const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
+  let isValid = true
+  markdownLinks?.every(link => {
+    const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
+    const text = linkMatch?.[1]
+    const url = linkMatch?.[2]
+
+    if (
+      text &&
+      url &&
+      whiteListedLinkNames.includes(text) &&
+      !isValidUrl(url)
+    ) {
+      isValid = true
+      return true
+    }
+
+    if (url && url.charAt(0) !== '#') {
+      const validURLRecognizer = new RegExp(
+        `^https?://(www\\.)?(${whiteListedDomains.join('|')})`,
+      )
+      isValid = validURLRecognizer.test(url)
+      return isValid
+    }
+    return true
+  })
+  return isValid
 }

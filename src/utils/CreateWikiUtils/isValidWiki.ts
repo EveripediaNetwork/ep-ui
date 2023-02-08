@@ -2,7 +2,8 @@ import { Wiki } from '@everipedia/iq-utils'
 import { CreateToastFnReturn } from '@chakra-ui/toast'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { getWordCount } from '../DataTransform/getWordCount'
-import { MINIMUM_WORDS, isVerifiedContentLinks } from './createWiki'
+import { MINIMUM_WORDS } from './createWiki'
+import { isVerifiedContentLinks } from '../textUtils'
 
 const checkErrors = (
   toast: CreateToastFnReturn,
