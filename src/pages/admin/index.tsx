@@ -34,8 +34,8 @@ import {
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
-import { isValidUrl } from '@/utils/CreateWikiUtils/createWiki'
 import { WikisModifiedCount } from '@/types/admin'
+import { isValidUrl } from '@/utils/textUtils'
 import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {

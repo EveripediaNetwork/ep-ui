@@ -36,6 +36,7 @@ import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { logEvent } from '../googleAnalytics'
 import { getDeadline } from '../DataTransform/getDeadline'
+import { isValidUrl } from '../textUtils'
 
 export const initialEditorValue = ` `
 export const initialMsg =
