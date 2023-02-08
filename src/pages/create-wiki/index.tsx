@@ -30,7 +30,6 @@ import {
 } from '@everipedia/iq-utils'
 import {
   CreateWikiProvider,
-  useCreateWikiEffects,
   useCreateWikiContext,
 } from '@/utils/CreateWikiUtils/createWiki'
 import {
@@ -40,6 +39,7 @@ import {
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { useCreateWikiState } from '@/hooks/useCreateWikiState'
+import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
