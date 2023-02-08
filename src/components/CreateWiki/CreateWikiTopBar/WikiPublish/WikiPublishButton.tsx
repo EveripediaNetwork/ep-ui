@@ -27,10 +27,14 @@ import { postWiki } from '@/services/wikis'
 import { ClientError } from 'graphql-request'
 import { SerializedError } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
+import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
+import {
+  ValidationErrorMessage,
+  defaultErrorMessage,
+} from '@/utils/CreateWikiUtils/createWikiMessages'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
-import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 
 export const WikiPublishButton = () => {
   const toast = useToast()
