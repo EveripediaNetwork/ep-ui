@@ -27,6 +27,8 @@ import {
   defaultErrorMessage,
   initialMsg,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
+import ReactCanvasConfetti from 'react-canvas-confetti'
+import useConfetti from '@/hooks/useConfetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
@@ -74,6 +76,15 @@ export const WikiPublishButton = () => {
   const isPublishDisabled = submittingWiki || !userCanEdit
 
   const { saveHashInTheBlockchain, verifyTrxHash, txHash } = useGetSignedHash()
+
+  const { fireConfetti, confettiProps } = useConfetti()
+
+  useEffect(() => {
+    if (activeStep === 3) {
+      prevEditedWiki.current.isPublished = true
+      fireConfetti()
+    }
+  }, [activeStep, fireConfetti])
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -252,6 +263,7 @@ export const WikiPublishButton = () => {
         isOpen={isWikiProcessModalOpen}
         onClose={handlePopupClose}
       />
+      <ReactCanvasConfetti {...confettiProps} />
     </>
   )
 }
