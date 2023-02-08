@@ -8,10 +8,10 @@ const CareersHero = () => {
       bgColor="careersBackground"
       minH="300px"
       py="20"
-      _dark={{
-        bgImage: '/images/backgrounds/homepage-bg-dark.png',
-      }}
       bgImage="/images/backgrounds/homepage-bg-white.png"
+      _dark={{
+        bgImage: '/images/backgrounds/careers-background-dark.png',
+      }}
       bgSize="cover !important"
     >
       <Flex justifyContent="center" direction="column" mx="auto" maxW="1120px">
