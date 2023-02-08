@@ -46,8 +46,12 @@ export const EmbedFrame = ({
         {activeAccordion !== ''
           ? embeds
               .filter(e => e.name === activeAccordion)
-              ?.map(embed => <EmbedCard {...embedCardProps(embed)} />)
-          : embeds.map(embed => <EmbedCard {...embedCardProps(embed)} />)}
+              ?.map((embed, i) => (
+                <EmbedCard key={i} {...embedCardProps(embed)} />
+              ))
+          : embeds.map((embed, i) => (
+              <EmbedCard key={i} {...embedCardProps(embed)} />
+            ))}
       </VStack>
     </Box>
   )
