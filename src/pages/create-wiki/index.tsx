@@ -18,7 +18,6 @@ import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
-
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
@@ -30,7 +29,6 @@ import {
   CreateNewWikiSlug,
 } from '@everipedia/iq-utils'
 import {
-  useCreateWikiState,
   CreateWikiProvider,
   useCreateWikiEffects,
   useCreateWikiContext,
@@ -41,6 +39,7 @@ import {
 } from '@/store/slices/wiki.slice'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { useCreateWikiState } from '@/hooks/useCreateWikiState'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
