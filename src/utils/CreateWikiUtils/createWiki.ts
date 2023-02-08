@@ -39,6 +39,7 @@ import { isValidUrl } from '../textUtils'
 import {
   defaultErrorMessage,
   initialEditorValue,
+  initialMsg,
   successMessage,
 } from './createWikiMessages'
 
@@ -86,21 +87,9 @@ export const saveImage = async (image: WikiImageObjectProps) => {
 export const [CreateWikiProvider, useCreateWikiContext] =
   createContext<ReturnType<typeof useCreateWikiState>>()
 
-export const useCreateWikiEffects = (
-  wiki: Wiki,
-  prevEditedWiki: React.MutableRefObject<{
-    wiki?: Wiki | undefined
-    isPublished: boolean
-  }>,
-) => {
-  const { slug, revision, activeStep, setIsNewCreateWiki, dispatch } =
+export const useCreateWikiEffects = () => {
+  const { slug, revision, setIsNewCreateWiki, dispatch } =
     useCreateWikiContext()
-
-  useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-    }
-  }, [activeStep, prevEditedWiki])
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
@@ -340,7 +329,6 @@ export const useCreateWikiState = (router: NextRouter) => {
   }, [latestWikiData, revisionWikiData])
 
   const [commitMessage, setCommitMessage] = useState('')
-  const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
@@ -372,8 +360,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     slug,
     revision,
     toast,
-    openTxDetailsDialog,
-    setOpenTxDetailsDialog,
     isWritingCommitMsg,
     setIsWritingCommitMsg,
     txHash,
