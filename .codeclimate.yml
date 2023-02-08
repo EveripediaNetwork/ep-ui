@@ -44,7 +44,7 @@ checks:
 
 plugins:
   eslint:
-    enabled: true
+    enabled: false
     channel: 'eslint-7'
 
 exclude_patterns:
