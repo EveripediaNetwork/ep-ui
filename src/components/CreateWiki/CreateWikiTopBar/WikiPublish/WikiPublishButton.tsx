@@ -18,7 +18,6 @@ import {
 import { useAccount } from 'wagmi'
 import {
   isWikiExists,
-  sanitizeContentToPublish,
   useGetSignedHash,
 } from '@/utils/CreateWikiUtils/createWiki'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
@@ -31,6 +30,7 @@ import { useDispatch } from 'react-redux'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
+import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 
 export const WikiPublishButton = () => {
   const toast = useToast()
