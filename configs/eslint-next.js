@@ -4,17 +4,17 @@ module.exports = {
     node: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: [
-    'next/core-web-vitals',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'airbnb',
-    'airbnb-typescript',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'prettier',
-  ],
+  // extends: [
+  //   'next/core-web-vitals',
+  //   'eslint:recommended',
+  //   'plugin:@typescript-eslint/recommended',
+  //   'airbnb',
+  //   'airbnb-typescript',
+  //   'plugin:import/errors',
+  //   'plugin:import/warnings',
+  //   'plugin:import/typescript',
+  //   'prettier',
+  // ],
   plugins: ['import', '@typescript-eslint', 'unused-imports', 'prettier'],
   settings: {
     next: {
