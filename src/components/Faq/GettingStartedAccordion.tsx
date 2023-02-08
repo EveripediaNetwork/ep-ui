@@ -37,8 +37,8 @@ const GettingStartedAccordion = () => {
         <Text
           fontWeight="bold"
           mt={5}
-          textAlign={{ base: 'center', md: 'left', lg: 'left' }}
-          fontSize={{ base: 'md', md: 'md', lg: 'xl' }}
+          textAlign={{ base: 'center', md: 'left' }}
+          fontSize={{ base: 'md', lg: 'xl' }}
           mb={4}
         >
           Getting Started
@@ -47,6 +47,7 @@ const GettingStartedAccordion = () => {
       <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
+          mb={{ base: 2 }}
           py={{ base: 5 }}
           border="none"
           _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
@@ -105,12 +106,10 @@ const GettingStartedAccordion = () => {
             )
           }}
         </AccordionItem>
-      </Accordion>
-
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
           py={{ base: 5 }}
+          mb={{ base: 2 }}
           border="none"
           _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
           _dark={{ bg: '#2D3748' }}
@@ -194,12 +193,10 @@ const GettingStartedAccordion = () => {
             )
           }}
         </AccordionItem>
-      </Accordion>
-
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
           py={{ base: 5 }}
+          mb={{ base: 2 }}
           border="none"
           _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
           _dark={{ bg: '#2D3748' }}
@@ -260,12 +257,10 @@ const GettingStartedAccordion = () => {
             )
           }}
         </AccordionItem>
-      </Accordion>
-
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
           py={{ base: 5 }}
+          mb={{ base: 2 }}
           border="none"
           _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
           _dark={{ bg: '#2D3748' }}
@@ -315,12 +310,10 @@ const GettingStartedAccordion = () => {
             )
           }}
         </AccordionItem>
-      </Accordion>
-
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
           borderRadius="5"
           py={{ base: 5 }}
+          mb={{ base: 2 }}
           border="none"
           _light={{ boxShadow: '0px 0px 20px 11px #80808012', bg: '#ffffff' }}
           _dark={{ bg: '#2D3748' }}
@@ -372,10 +365,8 @@ const GettingStartedAccordion = () => {
             )
           }}
         </AccordionItem>
-      </Accordion>
-
-      <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>
         <AccordionItem
+          mb={{ base: 2 }}
           borderRadius="5"
           py={{ base: 5 }}
           border="none"
@@ -460,7 +451,6 @@ const GettingStartedAccordion = () => {
                       </ListItem>
                     </UnorderedList>
                     <br />
-
                     <b>Do Not:</b>
                     <br />
                     <UnorderedList>
