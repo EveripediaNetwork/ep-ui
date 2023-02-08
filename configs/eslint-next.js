@@ -40,6 +40,12 @@ module.exports = {
     },
   },
   rules: {
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
     '@next/next/no-html-link-for-pages': ['error', './src'],
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',

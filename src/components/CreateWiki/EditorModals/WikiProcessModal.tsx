@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Box,
   AlertDialog,
@@ -16,8 +16,6 @@ import { RiCloseLine } from 'react-icons/ri'
 import { Step, Steps } from 'chakra-ui-steps'
 import config from '@/config'
 import { useRouter } from 'next/router'
-import ReactCanvasConfetti from 'react-canvas-confetti'
-import useConfetti from '@/hooks/useConfetti'
 
 const steps = [
   { label: 'Signed Wiki' },
@@ -47,21 +45,13 @@ const WikiProcessModal = ({
   wikiId,
 }: WikiProcessType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-  const { fireConfetti, confettiProps } = useConfetti()
-  const router = useRouter()
 
-  useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-      fireConfetti()
-    }
-  }, [activeStep, fireConfetti])
+  const router = useRouter()
 
   if (!isOpen) return null
 
   return (
     <>
-      <ReactCanvasConfetti {...confettiProps} />
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}

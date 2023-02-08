@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo, useMemo } from 'react'
+import React, { useEffect, memo, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import {
   Flex,
@@ -66,11 +66,6 @@ const CreateWikiContent = () => {
     setTxError,
   } = useCreateWikiContext()
 
-  const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
-    wiki: wikiData,
-    isPublished: false,
-  })
-
   // const disableSaveButton = () =>
   //   submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
 
@@ -92,7 +87,7 @@ const CreateWikiContent = () => {
       })
   }
 
-  useCreateWikiEffects(wiki, prevEditedWiki)
+  useCreateWikiEffects()
 
   useEffect(() => {
     // get draft wiki if it exists

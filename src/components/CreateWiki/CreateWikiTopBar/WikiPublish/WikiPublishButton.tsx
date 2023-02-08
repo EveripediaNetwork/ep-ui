@@ -1,11 +1,5 @@
-import React, { useEffect } from 'react'
-import {
-  Button,
-  Tooltip,
-  useBoolean,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react'
+import React, { useEffect, useRef } from 'react'
+import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
@@ -18,7 +12,7 @@ import {
 import { useAccount } from 'wagmi'
 import {
   isWikiExists,
-  sanitizeContentToPublish,
+  useCreateWikiContext,
   useGetSignedHash,
 } from '@/utils/CreateWikiUtils/createWiki'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
@@ -27,15 +21,20 @@ import { store } from '@/store/store'
 import { postWiki } from '@/services/wikis'
 import { ClientError } from 'graphql-request'
 import { SerializedError } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
+import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
+import {
+  ValidationErrorMessage,
+  defaultErrorMessage,
+  initialMsg,
+} from '@/utils/CreateWikiUtils/createWikiMessages'
+import ReactCanvasConfetti from 'react-canvas-confetti'
+import useConfetti from '@/hooks/useConfetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
-import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
+import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 
 export const WikiPublishButton = () => {
-  const toast = useToast()
   const wiki = useAppSelector(state => state.wiki)
-  const dispatch = useDispatch()
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { userCanEdit } = useWhiteListValidator(userAddress)
@@ -49,14 +48,43 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
-  const [existingWikiData, setExistingWikiData] = React.useState<Wiki | null>(
-    null,
-  )
+
+  const {
+    dispatch,
+    toast,
+    wikiHash,
+    revision,
+    isNewCreateWiki,
+    existingWikiData,
+    setExistingWikiData,
+    activeStep,
+    setActiveStep,
+    loadingState,
+    setIsLoading,
+    wikiId,
+    setWikiId,
+    msg,
+    setMsg,
+    wikiData,
+  } = useCreateWikiContext()
+
+  const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
+    wiki: wikiData,
+    isPublished: false,
+  })
 
   const isPublishDisabled = submittingWiki || !userCanEdit
-  const isNewWiki = false
-  const { saveHashInTheBlockchain, signing, verifyTrxHash, txHash } =
-    useGetSignedHash()
+
+  const { saveHashInTheBlockchain, verifyTrxHash, txHash } = useGetSignedHash()
+
+  const { fireConfetti, confettiProps } = useConfetti()
+
+  useEffect(() => {
+    if (activeStep === 3) {
+      prevEditedWiki.current.isPublished = true
+      fireConfetti()
+    }
+  }, [activeStep, fireConfetti])
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -66,7 +94,7 @@ export const WikiPublishButton = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
-  const processWikiPublishError = (wikiResult: {
+  const processWikiPublishError = async (wikiResult: {
     error: Pick<ClientError, 'name' | 'message' | 'stack'> | SerializedError
   }) => {
     setIsLoading('error')
@@ -101,7 +129,7 @@ export const WikiPublishButton = () => {
       EditSpecificMetaIds.COMMIT_MESSAGE,
     )?.value
 
-    if (isNewWiki) {
+    if (isNewCreateWiki) {
       if (override) {
         wikiCommitMessage = 'Wiki Overridden 🔄'
       } else if (revision) {
@@ -132,7 +160,7 @@ export const WikiPublishButton = () => {
 
     if (isUserConnected && userAddress) {
       const ifWikiExists =
-        isNewWiki &&
+        isNewCreateWiki &&
         !override &&
         (await isWikiExists(await getWikiSlug(wiki), setExistingWikiData))
 
@@ -143,7 +171,7 @@ export const WikiPublishButton = () => {
 
       updateCommitMessage(!!override)
 
-      setOpenTxDetailsDialog(true)
+      onWikiProcessModalOpen()
 
       setSubmittingWiki.on()
 
@@ -168,7 +196,7 @@ export const WikiPublishButton = () => {
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
       } else {
-        processWikiPublishError(wikiResult)
+        await processWikiPublishError(wikiResult)
       }
 
       setSubmittingWiki.off()
@@ -196,7 +224,7 @@ export const WikiPublishButton = () => {
         label="Your address is not yet whitelisted"
         mt="3"
       >
-        {isNewWiki ? (
+        {isNewCreateWiki ? (
           <PublishWithCommitMessage
             handleWikiPublish={() => handleWikiPublish()}
             isPublishDisabled={isPublishDisabled}
@@ -232,9 +260,10 @@ export const WikiPublishButton = () => {
         wikiHash={wikiHash}
         activeStep={activeStep}
         state={loadingState}
-        isOpen={openTxDetailsDialog}
+        isOpen={isWikiProcessModalOpen}
         onClose={handlePopupClose}
       />
+      <ReactCanvasConfetti {...confettiProps} />
     </>
   )
 }

@@ -5,7 +5,6 @@ import { POST_IMG } from '@/services/wikis/queries'
 import {
   Wiki,
   EditorContentOverride,
-  ValidatorCodes,
   whiteListedDomains,
   EditSpecificMetaIds,
   whiteListedLinkNames,
@@ -36,43 +35,13 @@ import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { logEvent } from '../googleAnalytics'
 import { getDeadline } from '../DataTransform/getDeadline'
-
-export const initialEditorValue = ` `
-export const initialMsg =
-  'Your Wiki is being processed. It will be available on the blockchain soon.'
-export const defaultErrorMessage =
-  'Oops, An Error Occurred. Wiki could not be created'
-export const successMessage = 'Wiki has been created successfully.'
-export const ValidationErrorMessage = (type: string) => {
-  switch (type) {
-    case ValidatorCodes.CATEGORY:
-      return 'Category must be a valid category name.'
-    case ValidatorCodes.LANGUAGE:
-      return 'Language linked to wiki must be a valid language name.'
-    case ValidatorCodes.USER:
-      return 'Transaction is not signed by the user.'
-    case ValidatorCodes.WORDS:
-      return 'Wiki must have at least 100 words.'
-    case ValidatorCodes.IMAGE:
-      return 'Images must be no more than 5 and no less than 1.'
-    case ValidatorCodes.TAG:
-      return 'Tags must be no more than 5'
-    case ValidatorCodes.URL:
-      return 'No External URL are allowed.'
-    case ValidatorCodes.METADATA:
-      return 'Wiki metadata is incorrect. Please check the wiki.'
-    case ValidatorCodes.SUMMARY:
-      return 'Summary must be no more than 128 characters.'
-    case ValidatorCodes.ID_ERROR:
-      return 'ID is incorrect. Please check the wiki.'
-    case ValidatorCodes.MEDIA:
-      return 'Invalid media data. Please check the media attached to wiki.'
-    case ValidatorCodes.GLOBAL_RATE_LIMIT:
-      return 'You have reached the rate limit. Please try again later'
-    default:
-      return 'An error occurred.'
-  }
-}
+import { isValidUrl } from '../textUtils'
+import {
+  defaultErrorMessage,
+  initialEditorValue,
+  initialMsg,
+  successMessage,
+} from './createWikiMessages'
 
 export const domain = {
   name: 'EP',
@@ -118,21 +87,9 @@ export const saveImage = async (image: WikiImageObjectProps) => {
 export const [CreateWikiProvider, useCreateWikiContext] =
   createContext<ReturnType<typeof useCreateWikiState>>()
 
-export const useCreateWikiEffects = (
-  wiki: Wiki,
-  prevEditedWiki: React.MutableRefObject<{
-    wiki?: Wiki | undefined
-    isPublished: boolean
-  }>,
-) => {
-  const { slug, revision, activeStep, setIsNewCreateWiki, dispatch } =
+export const useCreateWikiEffects = () => {
+  const { slug, revision, setIsNewCreateWiki, dispatch } =
     useCreateWikiContext()
-
-  useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-    }
-  }, [activeStep, prevEditedWiki])
 
   // Reset the State to new wiki if there is no slug
   useEffect(() => {
@@ -372,7 +329,6 @@ export const useCreateWikiState = (router: NextRouter) => {
   }, [latestWikiData, revisionWikiData])
 
   const [commitMessage, setCommitMessage] = useState('')
-  const [openTxDetailsDialog, setOpenTxDetailsDialog] = useState<boolean>(false)
   const [isWritingCommitMsg, setIsWritingCommitMsg] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
@@ -404,8 +360,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     slug,
     revision,
     toast,
-    openTxDetailsDialog,
-    setOpenTxDetailsDialog,
     isWritingCommitMsg,
     setIsWritingCommitMsg,
     txHash,
@@ -430,14 +384,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     setMsg,
     txError,
     setTxError,
-  }
-}
-
-export const isValidUrl = (urlString: string) => {
-  try {
-    return Boolean(new URL(urlString))
-  } catch (e) {
-    return false
   }
 }
 
@@ -483,17 +429,4 @@ export const isWikiExists = async (
     return true
   }
   return false
-}
-
-export const sanitizeContentToPublish = (content: string) => {
-  return content
-    .replace(/\n/gm, '  \n')
-    .replace(EditorContentOverride, '')
-    .replace(/<\/?em>/gm, '*')
-    .replace(/<\/?strong>/gm, '**')
-    .replace(/<\/?del>/gm, '~~')
-    .replace(/<li>/gm, '- ')
-    .replace(/<\/li>/gm, '')
-    .replace(/<\/?ul>/gm, '')
-    .replace(/^(#+\s)(\*\*)(.+)(\*\*)/gm, '$1$3')
 }

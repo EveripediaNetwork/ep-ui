@@ -25,7 +25,7 @@ interface OverrideExistingWikiDialogProps {
   onClose: () => void
   publish: () => void
   getSlug: () => Promise<string>
-  existingWikiData: Wiki | null
+  existingWikiData?: Wiki
 }
 const OverrideExistingWikiDialog = ({
   isOpen,
