@@ -13,8 +13,15 @@ const TrendingCategoryCard = ({
   title: string
 }) => {
   return (
-    <Box bgColor="cardBg" boxShadow="md" p="5" borderRadius="12px" minH="300px">
-      <Flex>
+    <Box
+      bgColor="cardBg"
+      boxShadow="md"
+      p="5"
+      pb="10"
+      borderRadius="12px"
+      overflowX="hidden"
+    >
+      <Flex mb="2">
         <Icon
           cursor="pointer"
           fontSize="2xl"
@@ -27,7 +34,13 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        <Box px="3" pt="3" pb="3">
+        <Box px="2" pt="3" pb="3">
+          <TrendingCategoryItem />
+        </Box>
+        <Box px="2" pt="3" pb="3">
+          <TrendingCategoryItem />
+        </Box>
+        <Box px="2" pt="3" pb="3">
           <TrendingCategoryItem />
         </Box>
       </Carousel>
