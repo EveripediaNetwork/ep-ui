@@ -16,7 +16,12 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 
 const TrendingCategoryItem = () => {
   return (
-    <LinkBox bgColor="cardBg" borderRadius="12px" shadow="md">
+    <LinkBox
+      bgColor="cardBg"
+      border="1px solid white"
+      borderRadius="12px"
+      shadow="md"
+    >
       <Flex gap="5">
         <Box>
           <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="226px" h="200px">
@@ -31,7 +36,7 @@ const TrendingCategoryItem = () => {
             />
           </AspectRatio>
         </Box>
-        <Box flexGrow="1" alignSelf="center">
+        <Box flexGrow="1" alignSelf="center" pr="2">
           <Heading
             overflow="hidden"
             textOverflow="ellipsis"
