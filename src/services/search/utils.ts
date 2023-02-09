@@ -89,11 +89,11 @@ export const useNavSearch = () => {
   useEffect(() => {
     if (query && query.length >= 3) {
       setIsLoading(true)
-      debouncedFetchResults(query, res => {
+      debouncedFetchResults(query.trim(), res => {
         if (!res.accounts && !res.wikis && !res.categories) {
           logEvent({
             action: 'SEARCH_NO_RESULTS',
-            label: query,
+            label: query.trim(),
             category: 'search_tag',
             value: 1,
           })

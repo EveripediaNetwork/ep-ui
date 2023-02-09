@@ -333,7 +333,6 @@ const NavSearch = (props: NavSearchProps) => {
             {...inputProps}
           />
         </InputGroup>
-
         <AutoCompleteList
           mx={{ base: '15px', xl: 'unset' }}
           p="0"
