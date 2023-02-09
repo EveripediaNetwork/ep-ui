@@ -104,11 +104,9 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
         <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
           Results for {query}
         </Heading>
-
         {!isLoading && wikis.length !== 0 && (
           <Stack spacing="4">
             <Text>Showing {totalResults} results </Text>
-
             <Heading fontSize="2xl">Wikis</Heading>
             <Flex direction="column" gap="4">
               {wikiList}
