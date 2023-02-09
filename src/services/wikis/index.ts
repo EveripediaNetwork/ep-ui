@@ -41,6 +41,7 @@ type GetPromotedWikisResponse = {
 type GetWikiPreviewResponse = {
   wiki: WikiPreview
 }
+
 type GetWikiResponse = {
   wiki: Wiki
 }
