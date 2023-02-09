@@ -62,7 +62,7 @@ const TrendingCategoryItem = () => {
             Bomb Crypto is a Play-to-Earn NFT game, where players manage a group
             of bomber heroes...
           </Text>
-          <Flex mt="2.5" gap="3">
+          <Flex mt="2.5" gap="3" alignItems="center">
             <DisplayAvatar address="" avatarIPFS="" size={20} alt="" />
             <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
               <Link
