@@ -21,7 +21,7 @@ const TrendingCategoryCard = ({
       borderRadius="12px"
       overflowX="hidden"
     >
-      <Flex mb="2">
+      <Flex mb={{ base: '1', md: '2' }} alignItems="center">
         <Icon
           cursor="pointer"
           fontSize="2xl"
@@ -29,7 +29,7 @@ const TrendingCategoryCard = ({
           color="brandLinkColor"
           as={icon}
         />
-        <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+        <Text fontSize={{ base: '14px', lg: '18px' }} pl={2} fontWeight="600">
           {title}
         </Text>
       </Flex>
