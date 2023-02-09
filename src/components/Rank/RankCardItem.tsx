@@ -1,7 +1,7 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
-import { getFounderName } from '@/utils/DataTransform/getFounderName'
+import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 
 const RankingItem = ({
   index,
@@ -100,20 +100,23 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item.linkedWikis && item.linkedWikis.founders ? (
-          <Flex flexWrap="wrap" maxW="160px">
-            {item.linkedWikis?.founders.map((founder, i) => {
-              const isLastItem = i === item.linkedWikis.founders.length - 1
-              return (
-                <Link
-                  href={`wiki/${founder}`}
-                  key={`founder${i}`}
-                  color="brandLinkColor"
-                >
-                  {getFounderName(founder)}
-                  {!isLastItem && ', '}
-                </Link>
-              )
-            })}
+          <Flex flexWrap="wrap">
+            {formatFoundersArray(item.linkedWikis.founders).map(
+              (founderName, i) => {
+                const founder = item.linkedWikis.founders[i]
+                const isLastItem = i === item.linkedWikis.founders.length - 1
+                return (
+                  <Link
+                    href={`wiki/${founder}`}
+                    key={`founder${i}`}
+                    color="brandLinkColor"
+                  >
+                    {founderName}
+                    {!isLastItem && ', '}
+                  </Link>
+                )
+              },
+            )}
           </Flex>
         ) : (
           'NA'
