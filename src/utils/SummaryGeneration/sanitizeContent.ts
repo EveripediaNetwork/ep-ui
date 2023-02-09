@@ -7,9 +7,10 @@ const MARKDOWN_IMAGE_REGEX = /^!\[.*\]\(.*\)$/
 const CITATION_REGEX = /\[\\\[\d+\\\]\]\(#cite-id-[a-z0-9]+\)/gm
 
 const MAX_PARA_COUNT = 3
+const MAX_CONTENT_LENGTH = 10000
 
 export const sanitizeContent = (content: string) => {
-  const contentParagraphs = content.split('\n  \n')
+  const contentParagraphs = content.split('\n\n')
 
   const filteredParagraphs = contentParagraphs.filter(paragraph => {
     const para = paragraph.trim()
@@ -41,5 +42,9 @@ export const sanitizeContent = (content: string) => {
     return true
   })
 
-  return sanitizedParagraphs.join('\n\n')
+  const trimmedContent = sanitizedParagraphs
+    .join('\n\n')
+    .slice(0, MAX_CONTENT_LENGTH)
+
+  return trimmedContent
 }
