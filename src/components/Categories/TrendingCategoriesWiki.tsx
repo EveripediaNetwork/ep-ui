@@ -8,7 +8,7 @@ const TrendingCategoriesWiki = ({ categoryType }: { categoryType: string }) => {
     <SimpleGrid
       width={{ base: '90%', lg: 'min(80%, 1300px)' }}
       mx="auto"
-      my="16"
+      my={{ base: '10', md: '16' }}
       gridTemplateColumns={{ base: 'repeat(1, 1fr)', xl: 'repeat(2, 1fr)' }}
       gap="5"
     >

@@ -16,10 +16,14 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 
 const TrendingCategoryItem = () => {
   return (
-    <LinkBox bgColor="cardBg" borderRadius="12px" shadow="md" pr="1">
-      <Flex gap="5">
-        <Box>
-          <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="226px" h="200px">
+    <LinkBox bgColor="cardBg" borderRadius="12px">
+      <Flex gap={{ base: 2, md: '5' }}>
+        <Box alignSelf={{ base: 'center', md: 'initial' }}>
+          <AspectRatio
+            ratio={WIKI_IMAGE_ASPECT_RATIO}
+            w={{ base: '149px', md: '226px' }}
+            h={{ base: '124', md: '200px' }}
+          >
             <Image
               src="/images/defaults/og-image-default.png"
               imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
@@ -44,14 +48,14 @@ const TrendingCategoryItem = () => {
             Bomb Crypto
           </Heading>
           <Text
-            noOfLines={3}
+            noOfLines={{ base: 2, md: 3 }}
             color="homeDescriptionColor"
             my={2}
             display="-webkit-box"
             textOverflow="ellipsis"
             overflow="hidden"
             fontSize={{
-              base: '14px',
+              base: '12px',
               md: '15px',
             }}
           >
@@ -60,7 +64,7 @@ const TrendingCategoryItem = () => {
           </Text>
           <Flex mt="2.5" gap="3">
             <DisplayAvatar address="" avatarIPFS="" size={20} alt="" />
-            <Text fontSize="14px" color="linkColor">
+            <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
               <Link
                 href="/account/lol"
                 color="brandLinkColor"
@@ -72,7 +76,7 @@ const TrendingCategoryItem = () => {
           </Flex>
           <Text
             mt="4px !important"
-            fontSize="14px"
+            fontSize={{ base: '10px', md: '14px' }}
             opacity={0.6}
             whiteSpace="nowrap"
           >

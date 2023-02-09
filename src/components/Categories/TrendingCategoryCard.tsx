@@ -16,8 +16,8 @@ const TrendingCategoryCard = ({
     <Box
       bgColor="cardBg"
       boxShadow="md"
-      p="5"
-      pb="10"
+      p={{ base: '2.5', md: '5' }}
+      pb={{ base: '8', md: '10' }}
       borderRadius="12px"
       overflowX="hidden"
     >
@@ -34,13 +34,13 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        <Box px="2" pt="3" pb="3">
+        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
           <TrendingCategoryItem />
         </Box>
-        <Box px="2" pt="3" pb="3">
+        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
           <TrendingCategoryItem />
         </Box>
-        <Box px="2" pt="3" pb="3">
+        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
           <TrendingCategoryItem />
         </Box>
       </Carousel>
