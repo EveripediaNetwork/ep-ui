@@ -1,6 +1,9 @@
 import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
+import { carouselSettings } from '@/utils/Settings/carouselSettings'
+import { Carousel } from '../Elements'
+import TrendingCategoryItem from './TrendingCategoryItem'
 
 const TrendingCategoryCard = ({
   title,
@@ -23,6 +26,11 @@ const TrendingCategoryCard = ({
           {title}
         </Text>
       </Flex>
+      <Carousel topArrow="25%" settings={carouselSettings}>
+        <Box px="3" pt="3" pb="3">
+          <TrendingCategoryItem />
+        </Box>
+      </Carousel>
     </Box>
   )
 }
