@@ -21,6 +21,7 @@ import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
+import { getFounderName } from '@/utils/DataTransform/getFounderName'
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -73,14 +74,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
   const websiteLink = socialMetaData.find(
     item => item.id === CommonMetaIds.WEBSITE,
   )?.value
-
-  const getFounderName = (text: string) => {
-    const names = text
-      .split('-')
-      .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
-      .join(' ')
-    return `${names}`
-  }
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -188,12 +181,12 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         {wiki.linkedWikis?.founders && (
           <ProfileListItem title="Founders">
             <VStack alignItems="start">
-              {wiki.linkedWikis?.founders.map((item, i) => (
+              {wiki.linkedWikis?.founders.map((founder, i) => (
                 <Link
                   color="brandLinkColor"
                   fontSize="14px"
                   key={i}
-                  href={`/wiki/${item}`}
+                  href={`/wiki/${founder}`}
                   rel="noopener nofollow"
                   isExternal
                   _hover={{
@@ -201,7 +194,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                     textDecoration: 'underline',
                   }}
                 >
-                  {getFounderName(item)}
+                  {getFounderName(founder)}
                 </Link>
               ))}
             </VStack>
