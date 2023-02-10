@@ -195,7 +195,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                   key={i}
                   href={`/wiki/${item}`}
                   rel="noopener nofollow"
-                  isExternal
                   _hover={{
                     color: 'linkColorHover',
                     textDecoration: 'underline',
