@@ -63,8 +63,6 @@ const NavSearch = (props: NavSearchProps) => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
-  console.log(query)
-
   const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
   const unrenderedAccounts = results.accounts.length - ACCOUNTS_LIMIT
@@ -346,7 +344,7 @@ const NavSearch = (props: NavSearchProps) => {
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
               <LinkButton
-                href={`/search/${query}`}
+                href={`/search/${encodeURIComponent(query)}`}
                 variant="outline"
                 onClick={() => setHamburger(false)}
               >
