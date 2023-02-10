@@ -63,6 +63,8 @@ const NavSearch = (props: NavSearchProps) => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
 
+  console.log(query)
+
   const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
   const unrenderedAccounts = results.accounts.length - ACCOUNTS_LIMIT
