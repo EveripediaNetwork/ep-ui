@@ -9,6 +9,7 @@ import {
   Link,
   Tag,
   Text,
+  Tooltip,
   VStack,
   Wrap,
 } from '@chakra-ui/react'
@@ -184,26 +185,42 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             ))}
           </ProfileListItem>
         )}
-
         {wiki.linkedWikis?.founders && (
           <ProfileListItem title="Founders">
-            <VStack alignItems="start">
-              {wiki.linkedWikis?.founders.map((item, i) => (
-                <Link
-                  color="brandLinkColor"
-                  fontSize="14px"
-                  key={i}
-                  href={`/wiki/${item}`}
-                  rel="noopener nofollow"
-                  _hover={{
-                    color: 'linkColorHover',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  {getFounderName(item)}
-                </Link>
-              ))}
-            </VStack>
+            {wiki.linkedWikis?.founders.length > 3 && (
+              <Tooltip
+                p="2"
+                bgColor="blogPageBg"
+                borderRadius={4}
+                label={
+                  <Flex gap="2" maxW="100%" flexWrap="wrap">
+                    {wiki.linkedWikis?.founders.slice(3).map((founder, i) => (
+                      <Link
+                        fontSize="14px"
+                        key={i}
+                        href={`/wiki/${founder}`}
+                        rel="noopener nofollow"
+                      >
+                        <Tag py="1">{getFounderName(founder)}</Tag>
+                      </Link>
+                    ))}
+                  </Flex>
+                }
+              >
+                <VStack alignItems="start">
+                  {wiki.linkedWikis?.founders.slice(0, 3).map((founder, i) => (
+                    <Link
+                      fontSize="14px"
+                      key={i}
+                      href={`/wiki/${founder}`}
+                      rel="noopener nofollow"
+                    >
+                      <Tag py="1">{getFounderName(founder)}</Tag>
+                    </Link>
+                  ))}
+                </VStack>
+              </Tooltip>
+            )}
           </ProfileListItem>
         )}
         {wiki.linkedWikis?.blockchains && (
