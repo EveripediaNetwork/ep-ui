@@ -23,6 +23,8 @@ import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
 
+const MAX_FOUNDERS_LIST = 3
+
 type ProfileSummaryProps = {
   wiki: Wiki
 }
@@ -187,14 +189,32 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         )}
         {wiki.linkedWikis?.founders && (
           <ProfileListItem title="Founders">
-            {wiki.linkedWikis?.founders.length > 3 && (
+            {wiki.linkedWikis?.founders.length > MAX_FOUNDERS_LIST && (
               <Tooltip
                 p="2"
                 bgColor="blogPageBg"
                 borderRadius={4}
                 label={
                   <Flex gap="2" maxW="100%" flexWrap="wrap">
-                    {wiki.linkedWikis?.founders.slice(3).map((founder, i) => (
+                    {wiki.linkedWikis?.founders
+                      .slice(MAX_FOUNDERS_LIST)
+                      .map((founder, i) => (
+                        <Link
+                          fontSize="14px"
+                          key={i}
+                          href={`/wiki/${founder}`}
+                          rel="noopener nofollow"
+                        >
+                          <Tag py="1">{getFounderName(founder)}</Tag>
+                        </Link>
+                      ))}
+                  </Flex>
+                }
+              >
+                <VStack alignItems="start">
+                  {wiki.linkedWikis?.founders
+                    .slice(0, MAX_FOUNDERS_LIST)
+                    .map((founder, i) => (
                       <Link
                         fontSize="14px"
                         key={i}
@@ -204,20 +224,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                         <Tag py="1">{getFounderName(founder)}</Tag>
                       </Link>
                     ))}
-                  </Flex>
-                }
-              >
-                <VStack alignItems="start">
-                  {wiki.linkedWikis?.founders.slice(0, 3).map((founder, i) => (
-                    <Link
-                      fontSize="14px"
-                      key={i}
-                      href={`/wiki/${founder}`}
-                      rel="noopener nofollow"
-                    >
-                      <Tag py="1">{getFounderName(founder)}</Tag>
-                    </Link>
-                  ))}
                 </VStack>
               </Tooltip>
             )}
