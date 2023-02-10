@@ -113,6 +113,13 @@ export const LINK_OPTIONS = [
     tests: [/https:\/\/opensea\.io\/\w+/],
   },
   {
+    id: CommonMetaIds.MEDIUM_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Medium',
+    icon: OpenseaIcon,
+    tests: [],
+  },
+  {
     id: CommonMetaIds.WEBSITE,
     type: LinkType.WEBSITE,
     label: 'Website',

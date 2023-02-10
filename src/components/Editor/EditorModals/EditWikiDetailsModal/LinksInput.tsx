@@ -46,6 +46,8 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
+  console.log(LINK_OPTIONS)
+
   const insertLinks = () => {
     if (currentLinkValue) {
       const link = LINK_OPTIONS.find(l => l.id === currentLink)
