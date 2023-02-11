@@ -9,7 +9,6 @@ import {
   Link,
   Tag,
   Text,
-  Tooltip,
   VStack,
   Wrap,
 } from '@chakra-ui/react'
@@ -189,44 +188,29 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         )}
         {wiki.linkedWikis?.founders && (
           <ProfileListItem title="Founders">
-            {wiki.linkedWikis?.founders.length > MAX_FOUNDERS_LIST && (
-              <Tooltip
-                p="2"
-                bgColor="blogPageBg"
-                borderRadius={4}
-                label={
-                  <Flex gap="2" maxW="100%" flexWrap="wrap">
-                    {wiki.linkedWikis?.founders
-                      .slice(MAX_FOUNDERS_LIST)
-                      .map((founder, i) => (
-                        <Link
-                          fontSize="14px"
-                          key={i}
-                          href={`/wiki/${founder}`}
-                          rel="noopener nofollow"
-                        >
-                          <Tag py="1">{getFounderName(founder)}</Tag>
-                        </Link>
-                      ))}
-                  </Flex>
-                }
-              >
-                <VStack alignItems="start">
-                  {wiki.linkedWikis?.founders
-                    .slice(0, MAX_FOUNDERS_LIST)
-                    .map((founder, i) => (
-                      <Link
-                        fontSize="14px"
-                        key={i}
-                        href={`/wiki/${founder}`}
-                        rel="noopener nofollow"
-                      >
-                        <Tag py="1">{getFounderName(founder)}</Tag>
-                      </Link>
-                    ))}
-                </VStack>
-              </Tooltip>
-            )}
+            <Flex
+              alignItems="start"
+              flexWrap="wrap"
+              gap="1"
+              flexDirection={
+                wiki.linkedWikis?.founders.length > MAX_FOUNDERS_LIST
+                  ? 'row'
+                  : 'column'
+              }
+            >
+              {wiki.linkedWikis?.founders.map((founder, i) => (
+                <Link
+                  w="max-content"
+                  key={i}
+                  href={`/wiki/${founder}`}
+                  rel="noopener nofollow"
+                >
+                  <Tag fontSize="12px" py="1">
+                    {getFounderName(founder)}
+                  </Tag>
+                </Link>
+              ))}
+            </Flex>
           </ProfileListItem>
         )}
         {wiki.linkedWikis?.blockchains && (

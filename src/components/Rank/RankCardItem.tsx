@@ -103,9 +103,8 @@ const RankingItem = ({
           <Flex flexWrap="wrap">
             {formatFoundersArray(item.linkedWikis.founders)
               .slice(0, 3)
-              .map((founderName, i) => {
+              .map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
-                const isLastItem = i === 2
                 return (
                   <Link
                     href={`wiki/${founder}`}
@@ -113,7 +112,7 @@ const RankingItem = ({
                     color="brandLinkColor"
                   >
                     {founderName}
-                    {!isLastItem && ', '}
+                    {i !== arr.length - 1 && arr.length > 1 && ', '}
                   </Link>
                 )
               })}
