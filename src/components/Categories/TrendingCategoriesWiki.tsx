@@ -11,7 +11,7 @@ const TrendingCategoriesWiki = ({
 }: {
   categoryType: string
   trending: Wiki[]
-  newWikis: { content: Wiki[] }
+  newWikis: Wiki[]
 }) => {
   return (
     <SimpleGrid

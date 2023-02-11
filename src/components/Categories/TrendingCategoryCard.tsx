@@ -14,11 +14,7 @@ const TrendingCategoryCard = ({
 }: {
   icon: IconType
   title: string
-  wikis:
-    | Wiki[]
-    | {
-        content: Wiki[]
-      }
+  wikis: Wiki[]
   type?: string
 }) => {
   return (
@@ -52,12 +48,12 @@ const TrendingCategoryCard = ({
                 pb="3"
               >
                 <TrendingCategoryItem
-                  title={wiki.content[0].title}
-                  WikiImgObj={wiki.content[0].images}
-                  brief={wiki.content[0].summary}
-                  editor={wiki.content[0].user}
-                  lastModTimeStamp={wiki.content[0].updated}
-                  wikiId={wiki.content[0].id}
+                  title={wiki.title}
+                  WikiImgObj={wiki.images}
+                  brief={wiki.summary}
+                  editor={wiki.user}
+                  lastModTimeStamp={wiki.updated}
+                  wikiId={wiki.id}
                 />
               </Box>
             ))

@@ -37,9 +37,7 @@ type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
   trending: Wiki[]
-  newWikis: {
-    content: Wiki[]
-  }
+  newWikis: Wiki[]
 }
 
 const CategoryPage = ({
@@ -182,13 +180,15 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }),
   )
 
+  console.log(activitiesByCategory)
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
   ])
 
   const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
-  const newCategoryWikis = activitiesByCategory?.activitiesByCategory
+  const newCategoryWikis = activitiesByCategory
 
   return {
     props: {

@@ -127,6 +127,12 @@ type ActivitiesByCategoryArgs = {
   category?: string
 }
 
+type ActivitiesByCategoryData = {
+  activitiesByCategory: {
+    content: Wiki[]
+  }[]
+}
+
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -281,18 +287,13 @@ export const wikiApi = createApi({
         variables: { amount, startDay, endDay, category },
       }),
     }),
-    getWikiActivityByCategory: builder.query<
-      {
-        activitiesByCategory: {
-          content: Wiki[]
-        }[]
-      },
-      ActivitiesByCategoryArgs
-    >({
+    getWikiActivityByCategory: builder.query<Wiki[], ActivitiesByCategoryArgs>({
       query: ({ limit, offset, type, category }: ActivitiesByCategoryArgs) => ({
         document: GET_WIKI_ACTIVITY_BY_CATEGORIES,
         variables: { limit, offset, type, category },
       }),
+      transformResponse: (response: ActivitiesByCategoryData) =>
+        response.activitiesByCategory.map(activity => activity.content[0]),
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
