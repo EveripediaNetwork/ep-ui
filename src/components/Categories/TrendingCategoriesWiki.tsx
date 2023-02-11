@@ -26,11 +26,11 @@ const TrendingCategoriesWiki = ({
         title={`Popular ${categoryType} Wikis`}
         wikis={trending}
       />
-      {/* <TrendingCategoryCard
+      <TrendingCategoryCard
         icon={RiStarFill}
         title={`New ${categoryType} Wikis`}
         wikis={newWikis}
-      /> */}
+      />
     </SimpleGrid>
   )
 }

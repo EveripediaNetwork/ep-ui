@@ -100,7 +100,7 @@ const CategoryPage = ({
         <TrendingCategoriesWiki
           categoryType={categoryData?.title}
           trending={trending}
-          // newWikis={newWikis[0]}
+          newWikis={newWikis}
         />
         <Divider bgColor="gray.300" _dark={{ bgColor: 'whiteAlpha.200' }} />
         <Box mt={10}>
