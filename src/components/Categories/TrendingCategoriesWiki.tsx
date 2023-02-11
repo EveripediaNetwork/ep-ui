@@ -11,7 +11,7 @@ const TrendingCategoriesWiki = ({
 }: {
   categoryType: string
   trending: Wiki[]
-  newWikis: Wiki[]
+  newWikis: { content: Wiki[] }
 }) => {
   return (
     <SimpleGrid
@@ -30,6 +30,7 @@ const TrendingCategoriesWiki = ({
         icon={RiStarFill}
         title={`New ${categoryType} Wikis`}
         wikis={newWikis}
+        type="new"
       />
     </SimpleGrid>
   )

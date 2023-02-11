@@ -10,10 +10,16 @@ const TrendingCategoryCard = ({
   title,
   icon,
   wikis,
+  type = 'popular',
 }: {
   icon: IconType
   title: string
-  wikis: Wiki[]
+  wikis:
+    | Wiki[]
+    | {
+        content: Wiki[]
+      }
+  type?: string
 }) => {
   return (
     <Box
@@ -37,23 +43,41 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        {wikis.map(wiki => (
-          <Box
-            key={`wiki-${wiki.id}`}
-            px={{ base: '1', md: '2' }}
-            pt="3"
-            pb="3"
-          >
-            <TrendingCategoryItem
-              title={wiki.title}
-              WikiImgObj={wiki.images}
-              brief={wiki.summary}
-              editor={wiki.user}
-              lastModTimeStamp={wiki.updated}
-              wikiId={wiki.id}
-            />
-          </Box>
-        ))}
+        {type === 'new'
+          ? wikis.map(wiki => (
+              <Box
+                key={`wiki-${wiki.id}`}
+                px={{ base: '1', md: '2' }}
+                pt="3"
+                pb="3"
+              >
+                <TrendingCategoryItem
+                  title={wiki.content[0].title}
+                  WikiImgObj={wiki.content[0].images}
+                  brief={wiki.content[0].summary}
+                  editor={wiki.content[0].user}
+                  lastModTimeStamp={wiki.content[0].updated}
+                  wikiId={wiki.content[0].id}
+                />
+              </Box>
+            ))
+          : wikis.map(wiki => (
+              <Box
+                key={`wiki-${wiki.id}`}
+                px={{ base: '1', md: '2' }}
+                pt="3"
+                pb="3"
+              >
+                <TrendingCategoryItem
+                  title={wiki.title}
+                  WikiImgObj={wiki.images}
+                  brief={wiki.summary}
+                  editor={wiki.user}
+                  lastModTimeStamp={wiki.updated}
+                  wikiId={wiki.id}
+                />
+              </Box>
+            ))}
       </Carousel>
     </Box>
   )

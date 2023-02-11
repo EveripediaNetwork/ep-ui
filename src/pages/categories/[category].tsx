@@ -37,7 +37,9 @@ type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
   trending: Wiki[]
-  newWikis: Wiki[]
+  newWikis: {
+    content: Wiki[]
+  }
 }
 
 const CategoryPage = ({
