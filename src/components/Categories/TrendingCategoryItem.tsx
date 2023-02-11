@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import {
   AspectRatio,
   Box,
@@ -9,12 +10,32 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-// import { getUsername } from '@/utils/DataTransform/getUsername'
-// import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
+import { Image as ImageType, User } from '@everipedia/iq-utils'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 
-const TrendingCategoryItem = () => {
+interface TrendingCategoryItemProps {
+  title: string
+  brief: string
+  editor: User
+  lastModTimeStamp?: string
+  wikiId?: string
+  WikiImgObj?: ImageType[]
+}
+
+const TrendingCategoryItem = ({
+  wikiId,
+  title,
+  WikiImgObj,
+  brief,
+  editor,
+  lastModTimeStamp,
+}: TrendingCategoryItemProps) => {
+  const router = useRouter()
+
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
@@ -25,7 +46,7 @@ const TrendingCategoryItem = () => {
             h={{ base: '124', md: '200px' }}
           >
             <Image
-              src="/images/defaults/og-image-default.png"
+              src={getWikiImageUrl(WikiImgObj)}
               imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
               imgH={IMAGE_BOX_SIZE}
               alt="trending wiki image"
@@ -40,12 +61,13 @@ const TrendingCategoryItem = () => {
             overflow="hidden"
             textOverflow="ellipsis"
             whiteSpace="nowrap"
+            onClick={() => router.push(`wiki/${wikiId}`)}
             fontSize={{
               base: '16px',
-              md: '24px',
+              md: '20px',
             }}
           >
-            Bomb Crypto
+            {title}
           </Heading>
           <Text
             noOfLines={{ base: 2, md: 3 }}
@@ -56,21 +78,24 @@ const TrendingCategoryItem = () => {
             overflow="hidden"
             fontSize={{
               base: '12px',
-              md: '15px',
+              md: '14px',
             }}
           >
-            Bomb Crypto is a Play-to-Earn NFT game, where players manage a group
-            of bomber heroes...
+            {brief}
           </Text>
           <Flex mt="2.5" gap="3" alignItems="center">
-            <DisplayAvatar address="" avatarIPFS="" size={20} alt="" />
+            <DisplayAvatar
+              address={editor.id}
+              avatarIPFS={editor.profile?.avatar}
+              alt={editor.profile?.username}
+            />
             <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
               <Link
-                href="/account/lol"
+                href={`/account/${editor.id}`}
                 color="brandLinkColor"
                 fontWeight="bold"
               >
-                0x1dfC...b1a9
+                {getUsername(editor)}
               </Link>
             </Text>
           </Flex>
@@ -80,7 +105,7 @@ const TrendingCategoryItem = () => {
             opacity={0.6}
             whiteSpace="nowrap"
           >
-            Last Edited 12 days ago
+            Last Edited {getReadableDate(lastModTimeStamp as string)} ago
           </Text>
         </Box>
       </Flex>

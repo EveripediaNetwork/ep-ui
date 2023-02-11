@@ -2,15 +2,18 @@ import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 import { carouselSettings } from '@/utils/Settings/carouselSettings'
+import { Wiki } from '@everipedia/iq-utils'
 import { Carousel } from '../Elements'
 import TrendingCategoryItem from './TrendingCategoryItem'
 
 const TrendingCategoryCard = ({
   title,
   icon,
+  wikis,
 }: {
   icon: IconType
   title: string
+  wikis: Wiki[]
 }) => {
   return (
     <Box
@@ -34,15 +37,23 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
-          <TrendingCategoryItem />
-        </Box>
-        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
-          <TrendingCategoryItem />
-        </Box>
-        <Box px={{ base: '1', md: '2' }} pt="3" pb="3">
-          <TrendingCategoryItem />
-        </Box>
+        {wikis.map(wiki => (
+          <Box
+            key={`wiki-${wiki.id}`}
+            px={{ base: '1', md: '2' }}
+            pt="3"
+            pb="3"
+          >
+            <TrendingCategoryItem
+              title={wiki.title}
+              WikiImgObj={wiki.images}
+              brief={wiki.summary}
+              editor={wiki.user}
+              lastModTimeStamp={wiki.updated}
+              wikiId={wiki.id}
+            />
+          </Box>
+        ))}
       </Carousel>
     </Box>
   )

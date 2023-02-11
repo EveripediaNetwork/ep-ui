@@ -35,9 +35,10 @@ const CATEGORY_AMOUNT = 5
 type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
+  trending: Wiki[]
 }
 
-const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
+const CategoryPage = ({ categoryData, wikis, trending }: CategoryPageProps) => {
   const router = useRouter()
   const category = router.query.category as string
   const {
@@ -89,7 +90,10 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
           description={categoryData?.description}
           title={categoryData?.title}
         />
-        <TrendingCategoriesWiki categoryType={categoryData?.title} />
+        <TrendingCategoriesWiki
+          categoryType={categoryData?.title}
+          trending={trending}
+        />
         <Divider bgColor="gray.300" _dark={{ bgColor: 'whiteAlpha.200' }} />
         <Box mt={10}>
           {wikisInCategory.length > 0 ? (

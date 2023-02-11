@@ -1,9 +1,16 @@
 import React from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
 import { RiStarFill } from 'react-icons/ri'
+import { Wiki } from '@everipedia/iq-utils'
 import TrendingCategoryCard from './TrendingCategoryCard'
 
-const TrendingCategoriesWiki = ({ categoryType }: { categoryType: string }) => {
+const TrendingCategoriesWiki = ({
+  categoryType,
+  trending,
+}: {
+  categoryType: string
+  trending: Wiki[]
+}) => {
   return (
     <SimpleGrid
       width={{ base: '90%', lg: 'min(80%, 1300px)' }}
@@ -15,11 +22,12 @@ const TrendingCategoriesWiki = ({ categoryType }: { categoryType: string }) => {
       <TrendingCategoryCard
         icon={RiStarFill}
         title={`Popular ${categoryType} Wikis`}
+        wikis={trending}
       />
-      <TrendingCategoryCard
+      {/* <TrendingCategoryCard
         icon={RiStarFill}
         title={`New ${categoryType} Wikis`}
-      />
+      /> */}
     </SimpleGrid>
   )
 }
