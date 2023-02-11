@@ -46,8 +46,6 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  console.log(LINK_OPTIONS)
-
   const insertLinks = () => {
     if (currentLinkValue) {
       const link = LINK_OPTIONS.find(l => l.id === currentLink)
@@ -109,6 +107,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           value={currentLink}
           onChange={event => {
             const attr = event.target.value
+            console.log(attr)
             setCurrentLink(attr)
           }}
           placeholder="Select option"

@@ -13,6 +13,7 @@ import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
 import { RiGlobalFill } from 'react-icons/ri'
+import MediumIcon from '@/components/Icons/mediumIcon'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -116,8 +117,10 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.MEDIUM_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Medium',
-    icon: OpenseaIcon,
-    tests: [],
+    icon: MediumIcon,
+    tests: [
+      /^https?:\/\/(([a-zA-Z0-9]+)\.(medium\.com)|medium\.com\/([a-zA-Z0-9-]+))\/?$/,
+    ],
   },
   {
     id: CommonMetaIds.WEBSITE,
