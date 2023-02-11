@@ -10,12 +10,10 @@ const TrendingCategoryCard = ({
   title,
   icon,
   wikis,
-  type = 'popular',
 }: {
   icon: IconType
   title: string
   wikis: Wiki[]
-  type?: string
 }) => {
   return (
     <Box
@@ -39,41 +37,23 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        {type === 'new'
-          ? wikis.map(wiki => (
-              <Box
-                key={`wiki-${wiki.id}`}
-                px={{ base: '1', md: '2' }}
-                pt="3"
-                pb="3"
-              >
-                <TrendingCategoryItem
-                  title={wiki.title}
-                  WikiImgObj={wiki.images}
-                  brief={wiki.summary}
-                  editor={wiki.user}
-                  lastModTimeStamp={wiki.updated}
-                  wikiId={wiki.id}
-                />
-              </Box>
-            ))
-          : wikis.map(wiki => (
-              <Box
-                key={`wiki-${wiki.id}`}
-                px={{ base: '1', md: '2' }}
-                pt="3"
-                pb="3"
-              >
-                <TrendingCategoryItem
-                  title={wiki.title}
-                  WikiImgObj={wiki.images}
-                  brief={wiki.summary}
-                  editor={wiki.user}
-                  lastModTimeStamp={wiki.updated}
-                  wikiId={wiki.id}
-                />
-              </Box>
-            ))}
+        {wikis.map(wiki => (
+          <Box
+            key={`wiki-${wiki.id}`}
+            px={{ base: '1', md: '2' }}
+            pt="3"
+            pb="3"
+          >
+            <TrendingCategoryItem
+              title={wiki.title}
+              WikiImgObj={wiki.images}
+              brief={wiki.summary}
+              editor={wiki.user}
+              lastModTimeStamp={wiki.updated}
+              wikiId={wiki.id}
+            />
+          </Box>
+        ))}
       </Carousel>
     </Box>
   )

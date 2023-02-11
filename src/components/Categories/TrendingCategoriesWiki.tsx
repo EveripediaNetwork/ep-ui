@@ -30,7 +30,6 @@ const TrendingCategoriesWiki = ({
         icon={RiStarFill}
         title={`New ${categoryType} Wikis`}
         wikis={newWikis}
-        type="new"
       />
     </SimpleGrid>
   )
