@@ -61,9 +61,6 @@ const CreateWikiContent = () => {
     setTxError,
   } = useCreateWikiContext()
 
-  // const disableSaveButton = () =>
-  //   submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
-
   const handleOnEditorChanges = (
     val: string | undefined,
     isInitSet?: boolean,

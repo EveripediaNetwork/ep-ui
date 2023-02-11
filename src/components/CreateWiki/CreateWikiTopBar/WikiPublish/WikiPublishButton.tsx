@@ -64,6 +64,7 @@ export const WikiPublishButton = () => {
     msg,
     setMsg,
     wikiData,
+    isLoadingWiki,
   } = useCreateWikiContext()
 
   const prevEditedWiki = useRef<{ wiki?: Wiki; isPublished: boolean }>({
@@ -71,9 +72,11 @@ export const WikiPublishButton = () => {
     isPublished: false,
   })
 
-  const isPublishDisabled = submittingWiki || !userCanEdit
+  const { saveHashInTheBlockchain, verifyTrxHash, signing, txHash } =
+    useGetSignedHash()
 
-  const { saveHashInTheBlockchain, verifyTrxHash, txHash } = useGetSignedHash()
+  const isPublishDisabled =
+    submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
 
   const { fireConfetti, confettiProps } = useConfetti()
 
