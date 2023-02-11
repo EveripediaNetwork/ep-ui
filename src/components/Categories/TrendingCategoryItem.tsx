@@ -53,6 +53,7 @@ const TrendingCategoryItem = ({
               w="full"
               h="full"
               borderRadius="6px"
+              objectFit="cover"
             />
           </AspectRatio>
         </Box>
@@ -61,7 +62,8 @@ const TrendingCategoryItem = ({
             overflow="hidden"
             textOverflow="ellipsis"
             whiteSpace="nowrap"
-            onClick={() => router.push(`wiki/${wikiId}`)}
+            cursor="pointer"
+            onClick={() => router.push(`/wiki/${wikiId}`)}
             fontSize={{
               base: '16px',
               md: '20px',
