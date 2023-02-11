@@ -34,19 +34,30 @@ const parseLink = (link: string) =>
 interface ProfileListItemProps {
   title: string
   children: React.ReactNode
+  founders?: string[]
 }
-const ProfileListItem = ({ title, children }: ProfileListItemProps) => (
+const ProfileListItem = ({
+  title,
+  children,
+  founders,
+}: ProfileListItemProps) => (
   <HStack
     bgColor="wikiCardItemBg"
     borderRadius={4}
     justify="space-between"
-    align="center"
+    gap="2"
+    align={
+      founders && founders?.length > MAX_FOUNDERS_LIST ? 'initial' : 'center'
+    }
     p={4}
+    flexDirection={
+      founders && founders?.length > MAX_FOUNDERS_LIST ? 'column' : 'row'
+    }
   >
     <Text fontSize="14px" fontWeight="bold" color="linkColor">
       {title}:
     </Text>
-    <Box>{children}</Box>
+    <Box m="0 !important">{children}</Box>
   </HStack>
 )
 
@@ -187,17 +198,11 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {wiki.linkedWikis?.founders && (
-          <ProfileListItem title="Founders">
-            <Flex
-              alignItems="start"
-              flexWrap="wrap"
-              gap="1"
-              flexDirection={
-                wiki.linkedWikis?.founders.length > MAX_FOUNDERS_LIST
-                  ? 'row'
-                  : 'column'
-              }
-            >
+          <ProfileListItem
+            title="Founders"
+            founders={wiki.linkedWikis?.founders}
+          >
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
               {wiki.linkedWikis?.founders.map((founder, i) => (
                 <Link
                   w="max-content"
@@ -205,7 +210,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                   href={`/wiki/${founder}`}
                   rel="noopener nofollow"
                 >
-                  <Tag fontSize="12px" py="1">
+                  <Tag fontSize="10px" py="1">
                     {getFounderName(founder)}
                   </Tag>
                 </Link>
