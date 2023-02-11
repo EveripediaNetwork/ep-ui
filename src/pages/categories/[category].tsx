@@ -180,8 +180,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }),
   )
 
-  console.log(activitiesByCategory)
-
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
