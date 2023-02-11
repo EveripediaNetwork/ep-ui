@@ -484,6 +484,39 @@ export const GET_TRENDING_CATEGORY_WIKIS = gql`
   }
 `
 
+export const GET_WIKI_ACTIVITY_BY_CATEGORIES = gql`
+  query GetWikiActivityByCategory(
+    $offset: Int!
+    $limit: Int!
+    $type: ActivityType
+    $category: String!
+  ) {
+    activitiesByCategory(
+      offset: $offset
+      limit: $limit
+      type: $type
+      category: $category
+    ) {
+      content {
+        id
+        title
+        summary
+        updated
+        images {
+          id
+        }
+        user {
+          id
+          profile {
+            username
+            avatar
+          }
+        }
+      }
+    }
+  }
+`
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {

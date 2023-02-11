@@ -17,6 +17,7 @@ import { Category } from '@/types/CategoryDataTypes'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import {
   getTrendingCategoryWikis,
+  getWikiActivityByCategory,
   getWikisByCategory,
   wikiApi,
 } from '@/services/wikis'
@@ -36,9 +37,15 @@ type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
   trending: Wiki[]
+  newWikis: Wiki[]
 }
 
-const CategoryPage = ({ categoryData, wikis, trending }: CategoryPageProps) => {
+const CategoryPage = ({
+  categoryData,
+  wikis,
+  trending,
+  newWikis,
+}: CategoryPageProps) => {
   const router = useRouter()
   const category = router.query.category as string
   const {
@@ -93,6 +100,7 @@ const CategoryPage = ({ categoryData, wikis, trending }: CategoryPageProps) => {
         <TrendingCategoriesWiki
           categoryType={categoryData?.title}
           trending={trending}
+          // newWikis={newWikis[0]}
         />
         <Divider bgColor="gray.300" _dark={{ bgColor: 'whiteAlpha.200' }} />
         <Box mt={10}>
@@ -163,18 +171,29 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }),
   )
 
+  const { data: activitiesByCategory } = await store.dispatch(
+    getWikiActivityByCategory.initiate({
+      limit: CATEGORY_AMOUNT,
+      category: categoryId,
+      type: 'CREATED',
+      offset: 0,
+    }),
+  )
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
   ])
 
   const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
+  const newCategoryWikis = activitiesByCategory?.activitiesByCategory
 
   return {
     props: {
       categoryData: result.data || [],
       wikis: wikisByCategory.data || [],
       trending: popularCategoryWikis || [],
+      newWikis: newCategoryWikis || [],
     },
   }
 }

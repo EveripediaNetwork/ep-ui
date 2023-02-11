@@ -7,9 +7,11 @@ import TrendingCategoryCard from './TrendingCategoryCard'
 const TrendingCategoriesWiki = ({
   categoryType,
   trending,
+  newWikis,
 }: {
   categoryType: string
   trending: Wiki[]
+  newWikis: Wiki[]
 }) => {
   return (
     <SimpleGrid
@@ -27,6 +29,7 @@ const TrendingCategoriesWiki = ({
       {/* <TrendingCategoryCard
         icon={RiStarFill}
         title={`New ${categoryType} Wikis`}
+        wikis={newWikis}
       /> */}
     </SimpleGrid>
   )
