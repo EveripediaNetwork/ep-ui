@@ -453,6 +453,37 @@ export const GET_TRENDING_WIKIS = gql`
   }
 `
 
+export const GET_TRENDING_CATEGORY_WIKIS = gql`
+  query GetTrendingWikis(
+    $amount: Int!
+    $startDay: String!
+    $endDay: String!
+    $category: String
+  ) {
+    wikisPerVisits(
+      amount: $amount
+      startDay: $startDay
+      endDay: $endDay
+      category: $category
+    ) {
+      id
+      title
+      summary
+      updated
+      images {
+        id
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {

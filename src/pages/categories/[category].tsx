@@ -15,7 +15,11 @@ import { getCategoriesById } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { getWikisByCategory, wikiApi } from '@/services/wikis'
+import {
+  getTrendingCategoryWikis,
+  getWikisByCategory,
+  wikiApi,
+} from '@/services/wikis'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
@@ -23,6 +27,10 @@ import { useTranslation } from 'react-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import CategoryHero from '@/components/Categories/CategoryHero'
 import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'
+import { getDateRange } from '@/utils/HomepageUtils/getDate'
+
+const CATEGORY_DATE_RANGE = 30
+const CATEGORY_AMOUNT = 5
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
@@ -133,6 +141,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
 export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
+  const { startDay, endDay } = getDateRange(CATEGORY_DATE_RANGE)
   const wikisByCategory = await store.dispatch(
     getWikisByCategory.initiate({
       category: categoryId,
@@ -141,14 +150,27 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }),
   )
 
+  const { data: trendingWikisInCategory } = await store.dispatch(
+    getTrendingCategoryWikis.initiate({
+      amount: CATEGORY_AMOUNT,
+      startDay,
+      endDay,
+      category: categoryId,
+    }),
+  )
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
   ])
+
+  const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
+
   return {
     props: {
       categoryData: result.data || [],
       wikis: wikisByCategory.data || [],
+      trending: popularCategoryWikis || [],
     },
   }
 }

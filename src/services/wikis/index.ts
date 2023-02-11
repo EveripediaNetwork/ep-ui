@@ -20,6 +20,7 @@ import {
   POST_FLAG_WIKI,
   GET_ACTIVITY_CARD_DETAILS,
   GET_TRENDING_WIKIS,
+  GET_TRENDING_CATEGORY_WIKIS,
 } from '@/services/wikis/queries'
 import {
   ActivityCardDetails,
@@ -109,6 +110,13 @@ type TrendingWikisArgs = {
   amount: number
   startDay: string
   endDay: string
+}
+
+type TrendingCategoryWikisArgs = {
+  amount: number
+  startDay: string
+  endDay: string
+  category?: string
 }
 
 export const wikiApi = createApi({
@@ -251,6 +259,20 @@ export const wikiApi = createApi({
         variables: { amount, startDay, endDay },
       }),
     }),
+    getTrendingCategoryWikis: builder.query<
+      { wikisPerVisits: Wiki[] },
+      TrendingCategoryWikisArgs
+    >({
+      query: ({
+        amount,
+        startDay,
+        endDay,
+        category,
+      }: TrendingCategoryWikisArgs) => ({
+        document: GET_TRENDING_CATEGORY_WIKIS,
+        variables: { amount, startDay, endDay, category },
+      }),
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
         document: POST_WIKI,
@@ -307,6 +329,7 @@ export const {
   useGetUserEditedWikisQuery,
   useGetIsWikiSlugValidQuery,
   useGetTrendingWikisQuery,
+  useGetTrendingCategoryWikisQuery,
   usePostWikiMutation,
   usePostFlagWikiMutation,
   usePostImageMutation,
@@ -332,4 +355,5 @@ export const {
   getUserEditedWikis,
   getIsWikiSlugValid,
   getTrendingWikis,
+  getTrendingCategoryWikis,
 } = wikiApi.endpoints
