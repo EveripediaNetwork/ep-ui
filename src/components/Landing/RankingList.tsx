@@ -56,7 +56,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
       <Box maxW="1160px" mx="auto">
         <Tabs mt={10} defaultIndex={0}>
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap="8">
+            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}

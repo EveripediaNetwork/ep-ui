@@ -84,7 +84,7 @@ const Rank = ({
       >
         <Tabs w="full">
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap="8">
+            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
