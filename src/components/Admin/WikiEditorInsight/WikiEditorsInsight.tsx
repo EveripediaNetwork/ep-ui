@@ -26,12 +26,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
-
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
+import { pushItems, EditorsTable, dataUpdate } from './WikiEditorFunctions'
 
 export const WikiEditorsInsightTable = () => {
   const editorTableRef = useRef<null | HTMLDivElement>(null)
@@ -40,6 +40,8 @@ export const WikiEditorsInsightTable = () => {
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [filterEditors, setFilterEditors] = useState<string>('')
   const [checked, setChecked] = useState(0)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [toggleUser] = useToggleUserMutation()
   const {
     isOpen: isOpenFilter,
     onToggle: onToggleFilter,
@@ -53,6 +55,7 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
+
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
@@ -81,8 +84,6 @@ export const WikiEditorsInsightTable = () => {
   editorsSortByLowest?.sort(
     (a, b) => a.wikisCreated.length - b.wikisCreated.length,
   )
-
-  const [toggleUser] = useToggleUserMutation()
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -120,111 +121,24 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
-  interface EditorInterface {
-    editorName: string
-    createdWikis: {
-      id: string
-      wikiId: string
-      datetime: string
-      ipfs: string
-      content: { title: string; images: { id: string } }
-    }[]
-    editiedWikis: {
-      content: {
-        title: string
-        images: {
-          id: string
-        }
-      }
-      datetime: string
-      id: string
-      ipfs: string
-      wikiId: string
-    }[]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lastCreatedWiki: any
-    editorAvatar: string
-    latestActivity: string
-    editorAddress: string
-    active: boolean
-  }
   const FilterArray = [
     { id: 'Banned', value: 'Banned Editors' },
     { id: 'Active', value: 'Active Editors' },
   ]
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [allowNext, setAllowNext] = useState<boolean>(true)
-  const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
+  const [editorsData, setEditorsData] = useState<Array<EditorsTable>>()
   const [searchedEditorsData, setSearchedEditorsData] =
-    useState<Array<EditorInterface>>()
+    useState<Array<EditorsTable>>()
   const [hiddenEditorsData, setHiddenEditorsData] =
-    useState<Array<EditorInterface>>()
-  const newObj: EditorInterface[] = useMemo(() => [], [])
-  const newSearchObj: EditorInterface[] = useMemo(() => [], [])
-  const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
-  searchedEditors
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      newSearchObj.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
+    useState<Array<EditorsTable>>()
+  const newObj: EditorsTable[] = useMemo(() => [], [])
+  const newSearchObj: EditorsTable[] = useMemo(() => [], [])
+  const hiddenEditorsArr: EditorsTable[] = useMemo(() => [], [])
 
-  editorsFilteredArr
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      newObj.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
-
-  hiddeneditors
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      hiddenEditorsArr.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
+  pushItems(editorsFilteredArr, newObj)
+  pushItems(searchedEditors, newSearchObj)
+  pushItems(hiddeneditors, hiddenEditorsArr)
 
   useEffect(() => {
     setEditorsData(newObj)
@@ -276,6 +190,7 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const completeEditorTable = useMemo(() => {
+    console.log('fuihjes')
     if (searchKeyWord.length > 2) {
       return searchedEditorsData
     }
@@ -290,7 +205,7 @@ export const WikiEditorsInsightTable = () => {
     hiddenEditorsData,
     searchKeyWord.length,
   ])
-  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <Flex
       flexDir="column"
@@ -453,7 +368,7 @@ export const WikiEditorsInsightTable = () => {
           Previous
         </Button>
         <Button
-          disabled={editorsData && editorsData?.length < 9}
+          disabled={editorsData && editorsData?.length < 2}
           rightIcon={<ArrowForwardIcon />}
           variant="outline"
           onClick={() => {
@@ -475,6 +390,7 @@ export const WikiEditorsInsightTable = () => {
           Next
         </Button>
       </Flex>
+
       <DeleteEditorModal
         id={editorToBeToggled.id}
         isActive={editorToBeToggled.active}
@@ -486,29 +402,12 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           // Possibly apply conditon to this Optimistic state update
-          setEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
+          setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
+          setSearchedEditorsData(
+            dataUpdate(editorsData, ban, editorToBeToggled.id),
           )
-          setSearchedEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
-          )
-          setHiddenEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
+          setHiddenEditorsData(
+            dataUpdate(editorsData, ban, editorToBeToggled.id),
           )
         }}
       />
