@@ -50,16 +50,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
     radix: 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
     'import/prefer-default-export': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-param-reassign': ['error', { props: false }],
