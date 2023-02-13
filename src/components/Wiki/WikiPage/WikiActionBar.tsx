@@ -104,7 +104,6 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         borderBottomWidth={{ base: '1px', md: '0' }}
         px={6}
         py={4}
-        transform={{ base: 'unset', md: 'translateY(-50px)' }}
         maxW={{ base: 'unset', md: '120px' }}
       >
         {isShareBoxOpen && (
@@ -122,6 +121,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
           gap={{ base: 6, sm: 8 }}
           position="sticky"
           top="calc(50vh - 150px + 70px + 2px)"
+          transform={{ base: 'unset', md: 'translateY(-50px)' }}
         >
           {actionBarItems.map((item, index) => (
             <Tooltip
