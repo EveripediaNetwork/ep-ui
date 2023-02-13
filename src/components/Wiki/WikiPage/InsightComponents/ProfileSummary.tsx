@@ -21,6 +21,7 @@ import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
+import { getFounderName } from '@/utils/DataTransform/getFounderName'
 
 const MAX_FOUNDERS_LIST = 3
 
@@ -86,14 +87,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
   const websiteLink = socialMetaData.find(
     item => item.id === CommonMetaIds.WEBSITE,
   )?.value
-
-  const getFounderName = (text: string) => {
-    const names = text
-      .split('-')
-      .map(slug => slug.charAt(0).toUpperCase() + slug.slice(1))
-      .join(' ')
-    return `${names}`
-  }
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
