@@ -107,7 +107,6 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           value={currentLink}
           onChange={event => {
             const attr = event.target.value
-            console.log(attr)
             setCurrentLink(attr)
           }}
           placeholder="Select option"
