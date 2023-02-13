@@ -9,10 +9,9 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { RiFilmLine } from 'react-icons/ri'
-
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { useDispatch } from 'react-redux'
-import { saveImage } from '@/utils/CreateWikiUtils/createWiki'
+import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
 import HighlightsModal from '../EditorModals/EditWikiDetailsModal'
 import MediaModal from '../EditorModals/MediaModal'
 import SummaryInput from './SummaryInput'

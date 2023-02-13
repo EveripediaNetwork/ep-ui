@@ -40,9 +40,16 @@ module.exports = {
     },
   },
   rules: {
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
     '@next/next/no-html-link-for-pages': ['error', './src'],
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
+    radix: 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -57,7 +64,7 @@ module.exports = {
     'react/jsx-no-useless-fragment': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-console': 'warn',
-    "prettier/prettier": ["error"],
+    'prettier/prettier': ['error'],
     'react/require-default-props': 0,
     'react/no-array-index-key': 0,
     'react/jsx-props-no-spreading': 0,

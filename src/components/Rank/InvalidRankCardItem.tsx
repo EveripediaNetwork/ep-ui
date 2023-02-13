@@ -1,6 +1,5 @@
 import React from 'react'
 import { Flex, Text, Icon, Box, Tr, Td } from '@chakra-ui/react'
-
 import { BiImage } from 'react-icons/bi'
 
 export const InvalidRankCardItem = ({ index }: { index: number }) => {
