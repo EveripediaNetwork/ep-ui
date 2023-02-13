@@ -20,6 +20,8 @@ import {
   POST_FLAG_WIKI,
   GET_ACTIVITY_CARD_DETAILS,
   GET_TRENDING_WIKIS,
+  GET_TRENDING_CATEGORY_WIKIS,
+  GET_WIKI_ACTIVITY_BY_CATEGORIES,
 } from '@/services/wikis/queries'
 import {
   ActivityCardDetails,
@@ -109,6 +111,26 @@ type TrendingWikisArgs = {
   amount: number
   startDay: string
   endDay: string
+}
+
+type TrendingCategoryWikisArgs = {
+  amount: number
+  startDay: string
+  endDay: string
+  category?: string
+}
+
+type ActivitiesByCategoryArgs = {
+  limit: number
+  offset: number
+  type: string
+  category?: string
+}
+
+type ActivitiesByCategoryData = {
+  activitiesByCategory: {
+    content: Wiki[]
+  }[]
 }
 
 export const wikiApi = createApi({
@@ -251,6 +273,28 @@ export const wikiApi = createApi({
         variables: { amount, startDay, endDay },
       }),
     }),
+    getTrendingCategoryWikis: builder.query<
+      { wikisPerVisits: Wiki[] },
+      TrendingCategoryWikisArgs
+    >({
+      query: ({
+        amount,
+        startDay,
+        endDay,
+        category,
+      }: TrendingCategoryWikisArgs) => ({
+        document: GET_TRENDING_CATEGORY_WIKIS,
+        variables: { amount, startDay, endDay, category },
+      }),
+    }),
+    getWikiActivityByCategory: builder.query<Wiki[], ActivitiesByCategoryArgs>({
+      query: ({ limit, offset, type, category }: ActivitiesByCategoryArgs) => ({
+        document: GET_WIKI_ACTIVITY_BY_CATEGORIES,
+        variables: { limit, offset, type, category },
+      }),
+      transformResponse: (response: ActivitiesByCategoryData) =>
+        response.activitiesByCategory.map(activity => activity.content[0]),
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
         document: POST_WIKI,
@@ -307,6 +351,8 @@ export const {
   useGetUserEditedWikisQuery,
   useGetIsWikiSlugValidQuery,
   useGetTrendingWikisQuery,
+  useGetTrendingCategoryWikisQuery,
+  useGetWikiActivityByCategoryQuery,
   usePostWikiMutation,
   usePostFlagWikiMutation,
   usePostImageMutation,
@@ -332,4 +378,6 @@ export const {
   getUserEditedWikis,
   getIsWikiSlugValid,
   getTrendingWikis,
+  getTrendingCategoryWikis,
+  getWikiActivityByCategory,
 } = wikiApi.endpoints
