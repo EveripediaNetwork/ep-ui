@@ -2,41 +2,10 @@ import { Box, Flex, Icon, Text, chakra } from '@chakra-ui/react'
 import React from 'react'
 import { RiStarFill } from 'react-icons/ri'
 import { Wiki } from '@everipedia/iq-utils'
+import { carouselSettings } from '@/utils/Settings/carouselSettings'
 import { Carousel } from '../Elements'
 import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
-
-const featuredWikisCarouselSettings = {
-  dots: true,
-  autoplay: true,
-  infinite: true,
-  arrows: false,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  responsive: [
-    {
-      breakpoint: 1000,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        initialSlide: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 680,
-      settings: {
-        arrows: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-  ],
-}
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => (
   <Flex pt="1" minH="500px">
@@ -65,7 +34,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => (
         </Text>
       </chakra.div>
       {featuredWikis ? (
-        <Carousel topArrow="25%" settings={featuredWikisCarouselSettings}>
+        <Carousel topArrow="25%" settings={carouselSettings}>
           {featuredWikis.map(wiki => (
             <Box px="3" pt="3" pb="3" key={`wiki-${wiki.id}`}>
               <FeaturedWikiCard wiki={wiki} />
