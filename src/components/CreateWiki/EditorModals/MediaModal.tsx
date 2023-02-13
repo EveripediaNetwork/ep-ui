@@ -22,7 +22,6 @@ import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { shortenText, shortenBalance } from '@/utils/textUtils'
 import { v4 as uuidv4 } from 'uuid'
-import { saveImage } from '@/utils/CreateWikiUtils/createWiki'
 import { MediaType } from '@everipedia/iq-utils'
 import { WikiImage } from '@/components/WikiImage'
 import { MEDIA_POST_DEFAULT_ID } from '@/data/Constants'
@@ -32,6 +31,7 @@ import {
 } from '@/utils/DataTransform/mediaUtils'
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
+import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
 
 const MAX_MEDIA = 12
 
