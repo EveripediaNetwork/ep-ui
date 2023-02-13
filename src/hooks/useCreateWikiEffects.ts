@@ -1,8 +1,8 @@
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
-import { useCreateWikiContext } from '@/utils/CreateWikiUtils/createWiki'
 import { initialEditorValue } from '@/utils/CreateWikiUtils/createWikiMessages'
 import { EditorContentOverride } from '@everipedia/iq-utils'
 import { useEffect } from 'react'
+import { useCreateWikiContext } from './useCreateWikiState'
 
 export const useCreateWikiEffects = () => {
   const { slug, revision, setIsNewCreateWiki, dispatch } =

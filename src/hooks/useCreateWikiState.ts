@@ -7,6 +7,10 @@ import { LinkedWikiKey, LinkedWikis, Wiki } from '@everipedia/iq-utils'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { NextRouter } from 'next/router'
 import { useMemo, useState } from 'react'
+import { createContext } from '@chakra-ui/react-utils'
+
+export const [CreateWikiProvider, useCreateWikiContext] =
+  createContext<ReturnType<typeof useCreateWikiState>>()
 
 export const useCreateWikiState = (router: NextRouter) => {
   const { slug, revision } = router.query

@@ -1,4 +1,3 @@
-import { useCreateWikiContext } from '@/utils/CreateWikiUtils/createWiki'
 import {
   useAccount,
   useFeeData,
@@ -17,6 +16,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
+import { useCreateWikiContext } from './useCreateWikiState'
 
 export const useGetSignedHash = () => {
   const {

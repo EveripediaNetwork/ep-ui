@@ -24,16 +24,16 @@ import {
   CreateNewWikiSlug,
 } from '@everipedia/iq-utils'
 import {
-  CreateWikiProvider,
-  useCreateWikiContext,
-} from '@/utils/CreateWikiUtils/createWiki'
-import {
   getDraftFromLocalStorage,
   removeDraftFromLocalStorage,
 } from '@/store/slices/wiki.slice'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { useCreateWikiState } from '@/hooks/useCreateWikiState'
+import {
+  CreateWikiProvider,
+  useCreateWikiContext,
+  useCreateWikiState,
+} from '@/hooks/useCreateWikiState'
 import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
