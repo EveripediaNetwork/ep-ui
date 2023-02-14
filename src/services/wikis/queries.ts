@@ -16,35 +16,6 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
   }
 `
 
-export const GET_ACTIVITY_CARD_DETAILS = gql`
-  query wikisByTitle($id: String!) {
-    wiki(id: $id) {
-      id
-      title
-      summary
-      updated
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-    }
-  }
-`
-
 export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {
@@ -143,10 +114,6 @@ export const GET_WIKIS = gql`
         id
         type
       }
-      linkedWikis {
-        founders
-        blockchains
-      }
       metadata {
         id
         value
@@ -183,60 +150,14 @@ export const GET_PROMOTED_WIKIS = gql`
         id
         type
       }
-      linkedWikis {
-        founders
-        blockchains
-      }
       metadata {
         id
-        value
       }
       user {
         id
         profile {
           username
           avatar
-        }
-      }
-    }
-  }
-`
-
-export const GET_USER_WIKIS_BY_ID = gql`
-  query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
-    userById(id: $id) {
-      wikis(offset: $offset, limit: $limit) {
-        id
-        ipfs
-        title
-        summary
-        created
-        updated
-        categories {
-          id
-          title
-        }
-        tags {
-          id
-        }
-        images {
-          id
-          type
-        }
-        linkedWikis {
-          founders
-          blockchains
-        }
-        metadata {
-          id
-          value
-        }
-        user {
-          id
-          profile {
-            username
-            avatar
-          }
         }
       }
     }
@@ -265,10 +186,6 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           images {
             id
             type
-          }
-          linkedWikis {
-            founders
-            blockchains
           }
           metadata {
             id
@@ -310,10 +227,6 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
             id
             type
           }
-          linkedWikis {
-            founders
-            blockchains
-          }
           metadata {
             id
             value
@@ -344,20 +257,9 @@ export const GET_WIKIS_BY_CATEGORY = gql`
         id
         title
       }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      linkedWikis {
-        founders
-        blockchains
-      }
-      metadata {
-        id
-        value
       }
       user {
         id

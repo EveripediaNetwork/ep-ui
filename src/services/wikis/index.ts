@@ -2,7 +2,6 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
-  GET_USER_WIKIS_BY_ID,
   GET_WIKI_BY_ID,
   GET_WIKIS,
   GET_WIKIS_BY_CATEGORY,
@@ -18,17 +17,11 @@ import {
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
   POST_FLAG_WIKI,
-  GET_ACTIVITY_CARD_DETAILS,
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
 } from '@/services/wikis/queries'
-import {
-  ActivityCardDetails,
-  User,
-  Wiki,
-  WikiPreview,
-} from '@everipedia/iq-utils'
+import { User, Wiki, WikiPreview } from '@everipedia/iq-utils'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 
@@ -162,13 +155,6 @@ export const wikiApi = createApi({
       }),
       transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
     }),
-    getWikiActivityCardDetails: builder.query<ActivityCardDetails, string>({
-      query: (id: string) => ({
-        document: GET_ACTIVITY_CARD_DETAILS,
-        variables: { id },
-      }),
-      transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
-    }),
     getWiki: builder.query<Wiki, string>({
       query: (id: string) => ({ document: GET_WIKI_BY_ID, variables: { id } }),
       transformResponse: (response: GetWikiResponse) => response.wiki,
@@ -180,16 +166,6 @@ export const wikiApi = createApi({
       }),
       transformResponse: (response: WikiCreatorAndEditorResponse) =>
         response.wiki,
-    }),
-    getUserWikis: builder.query<Wiki[], WikiArg>({
-      query: ({ id, limit, offset }: WikiArg) => {
-        return {
-          document: GET_USER_WIKIS_BY_ID,
-          variables: { id, limit, offset },
-        }
-      },
-      transformResponse: (response: GetUserWikiResponse) =>
-        response.userById.wikis,
     }),
     getUserCreatedWikis: builder.query<Activity[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => {
@@ -343,10 +319,9 @@ export const {
   useGetPromotedWikisQuery,
   useGetWikiQuery,
   useGetWikiPreviewQuery,
-  useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
-  useGetWikiActivityCardDetailsQuery,
+
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
@@ -366,9 +341,7 @@ export const {
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreview,
-  getWikiActivityCardDetails,
   getWikiPreviewsByCategory,
-  getUserWikis,
   getWikisByCategory,
   getTagWikis,
   postWiki,
