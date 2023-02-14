@@ -309,13 +309,8 @@ export const GET_TAG_WIKIS_BY_ID = gql`
           id
           type
         }
-        linkedWikis {
-          founders
-          blockchains
-        }
         metadata {
           id
-          value
         }
         user {
           id
