@@ -50,10 +50,10 @@ const Profile = ({ profileData }: ProfileProps) => {
             width="full"
             height="56"
             objectFit="cover"
-            bgColor="creamCardBg"
-            backgroundImage="/images/backgrounds/homepage-bg-white.png"
+            bgColor="careersBackground"
+            bgImage="/images/backgrounds/homepage-bg-white.png"
             _dark={{
-              backgroundImage: '/images/backgrounds/homepage-bg-dark.png',
+              bgImage: '/images/backgrounds/careers-background-dark.png',
             }}
             hideOnError
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
