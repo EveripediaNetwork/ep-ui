@@ -225,7 +225,7 @@ export const WikiPublishButton = () => {
         label="Your address is not yet whitelisted"
         mt="3"
       >
-        {isNewCreateWiki ? (
+        {!isNewCreateWiki ? (
           <PublishWithCommitMessage
             handleWikiPublish={() => handleWikiPublish()}
             isPublishDisabled={isPublishDisabled}
