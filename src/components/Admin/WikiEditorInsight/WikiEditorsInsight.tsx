@@ -82,7 +82,7 @@ export const WikiEditorsInsightTable = () => {
     active: boolean
   }>({ id: '', active: false })
   const { data: editors } = useGetEditorsQuery({
-    limit: 10,
+    limit: 20,
     offset: paginateOffset,
   })
   const { data: hiddeneditors } = useGetHiddenEditorsQuery(
