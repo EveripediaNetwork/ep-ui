@@ -82,7 +82,7 @@ export const WikiEditorsInsightTable = () => {
     active: boolean
   }>({ id: '', active: false })
   const { data: editors } = useGetEditorsQuery({
-    limit: 20,
+    limit: 10,
     offset: paginateOffset,
   })
   const { data: hiddeneditors } = useGetHiddenEditorsQuery(
@@ -239,14 +239,18 @@ export const WikiEditorsInsightTable = () => {
   useEffect(() => {
     newSearchObj.length = 0
 
-    setSearchedEditorsData(newSearchObj)
+    setSearchedEditorsData(() => {
+      return [...newSearchObj]
+    })
     setAllowNext(true)
   }, [searchedEditors, newSearchObj])
 
   useEffect(() => {
     hiddenEditorsArr.length = 0
 
-    setHiddenEditorsData(hiddenEditorsArr)
+    setHiddenEditorsData(() => {
+      return [...hiddenEditorsArr]
+    })
   }, [hiddeneditors, hiddenEditorsArr])
 
   const scrolltoTableTop = () => {
