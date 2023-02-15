@@ -54,9 +54,9 @@ const RankingList = ({ rankings }: RankingListProps) => {
         maxW="800"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1160px" mx="auto">
-        <Tabs mt={10} defaultIndex={0}>
+        <Tabs mt={10} defaultIndex={0} p="0">
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap="8">
+            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
@@ -69,8 +69,11 @@ const RankingList = ({ rankings }: RankingListProps) => {
               />
             </TabList>
           </Flex>
-          <TabPanels mt="10">
-            <TabPanel>
+          <TabPanels mt={{ base: 8, md: '10' }}>
+            <TabPanel
+              px={{ base: 2, md: 'initial' }}
+              py={{ base: 0, md: 'initial' }}
+            >
               <RankTable hasPagination={false}>
                 <RankTableHead />
                 <Tbody>
@@ -88,7 +91,10 @@ const RankingList = ({ rankings }: RankingListProps) => {
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel
+              px={{ base: 2, md: 'initial' }}
+              py={{ base: 0, md: 'initial' }}
+            >
               <RankTable hasPagination={false}>
                 <RankTableHead />
                 <Tbody>

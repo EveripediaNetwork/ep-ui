@@ -12,7 +12,7 @@ import { CommonMetaIds } from '@everipedia/iq-utils'
 import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
-import { RiGlobalFill } from 'react-icons/ri'
+import { RiGlobalFill, RiMediumFill } from 'react-icons/ri'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -111,6 +111,15 @@ export const LINK_OPTIONS = [
     label: 'Opensea',
     icon: OpenseaIcon,
     tests: [/https:\/\/opensea\.io\/\w+/],
+  },
+  {
+    id: CommonMetaIds.MEDIUM_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Medium',
+    icon: RiMediumFill,
+    tests: [
+      /^https?:\/\/(([a-zA-Z0-9]+)\.(medium\.com)|medium\.com\/([a-zA-Z0-9-]+)|medium\.com\/@([A-Za-z0-9]+))\/?$/,
+    ],
   },
   {
     id: CommonMetaIds.WEBSITE,
