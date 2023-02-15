@@ -76,9 +76,9 @@ export const resources = {
 
       //About page
       aboutHeroHeading:
-        'Bringing blockchain knowledge to the world and knowledge to the blockchain.',
+        'We use blockchain technology and artificial intelligence to scale crypto knowledge.',
       aboutHeroPhrase:
-        "IQ.Wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
+        "IQ.wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
       aboutSignUpBttn: 'Sign Up',
       aboutgoTo: 'Go to IQ Site',
       aboutFeatHeading:

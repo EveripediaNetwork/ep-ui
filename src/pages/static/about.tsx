@@ -5,6 +5,7 @@ import AboutFeatures from '@/components/About/AboutFeatures'
 import AboutAsSeenIn from '@/components/About/AboutAsSeenIn'
 import AboutOurTeam from '@/components/About/AboutOurTeam'
 import { AboutHeader } from '@/components/SEO/Static'
+import AboutAiIntegration from '@/components/About/AboutAIIntegration'
 
 const About = () => (
   <>
@@ -14,6 +15,7 @@ const About = () => (
       <AboutFeatures />
       <AboutAsSeenIn />
       <AboutOurTeam />
+      <AboutAiIntegration />
     </Box>
   </>
 )
