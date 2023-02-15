@@ -26,12 +26,40 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
-
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
+
+interface EditorInterface {
+  editorName: string
+  createdWikis: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: { title: string; images: { id: string } }
+  }[]
+  editiedWikis: {
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+    datetime: string
+    id: string
+    ipfs: string
+    wikiId: string
+  }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lastCreatedWiki: any
+  editorAvatar: string
+  latestActivity: string
+  editorAddress: string
+  active: boolean
+}
 
 export const WikiEditorsInsightTable = () => {
   const editorTableRef = useRef<null | HTMLDivElement>(null)
@@ -54,7 +82,7 @@ export const WikiEditorsInsightTable = () => {
     active: boolean
   }>({ id: '', active: false })
   const { data: editors } = useGetEditorsQuery({
-    limit: 10,
+    limit: 20,
     offset: paginateOffset,
   })
   const { data: hiddeneditors } = useGetHiddenEditorsQuery(
@@ -120,34 +148,6 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
-  interface EditorInterface {
-    editorName: string
-    createdWikis: {
-      id: string
-      wikiId: string
-      datetime: string
-      ipfs: string
-      content: { title: string; images: { id: string } }
-    }[]
-    editiedWikis: {
-      content: {
-        title: string
-        images: {
-          id: string
-        }
-      }
-      datetime: string
-      id: string
-      ipfs: string
-      wikiId: string
-    }[]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lastCreatedWiki: any
-    editorAvatar: string
-    latestActivity: string
-    editorAddress: string
-    active: boolean
-  }
   const FilterArray = [
     { id: 'Banned', value: 'Banned Editors' },
     { id: 'Active', value: 'Active Editors' },
@@ -162,6 +162,7 @@ export const WikiEditorsInsightTable = () => {
   const newObj: EditorInterface[] = useMemo(() => [], [])
   const newSearchObj: EditorInterface[] = useMemo(() => [], [])
   const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
+
   searchedEditors
     ?.filter(item => {
       return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
@@ -227,16 +228,24 @@ export const WikiEditorsInsightTable = () => {
     })
 
   useEffect(() => {
-    setEditorsData(newObj)
+    newObj.length = 0
+
+    setEditorsData(() => {
+      return [...newObj]
+    })
     setAllowNext(true)
-  }, [editors, sortTableBy, newObj])
+  }, [editors, newObj, editorsFilteredArr])
 
   useEffect(() => {
+    newSearchObj.length = 0
+
     setSearchedEditorsData(newSearchObj)
     setAllowNext(true)
   }, [searchedEditors, newSearchObj])
 
   useEffect(() => {
+    hiddenEditorsArr.length = 0
+
     setHiddenEditorsData(hiddenEditorsArr)
   }, [hiddeneditors, hiddenEditorsArr])
 
@@ -282,14 +291,16 @@ export const WikiEditorsInsightTable = () => {
     if (filterEditors === 'Banned') {
       return hiddenEditorsData
     }
+
     return editorsData
   }, [
     searchedEditorsData,
     editorsData,
     filterEditors,
     hiddenEditorsData,
-    searchKeyWord.length,
+    searchKeyWord,
   ])
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Flex
