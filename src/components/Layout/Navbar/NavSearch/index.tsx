@@ -333,7 +333,6 @@ const NavSearch = (props: NavSearchProps) => {
             {...inputProps}
           />
         </InputGroup>
-
         <AutoCompleteList
           mx={{ base: '15px', xl: 'unset' }}
           p="0"
@@ -345,7 +344,7 @@ const NavSearch = (props: NavSearchProps) => {
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
               <LinkButton
-                href={`/search/${query}`}
+                href={`/search/${encodeURIComponent(query)}`}
                 variant="outline"
                 onClick={() => setHamburger(false)}
               >
