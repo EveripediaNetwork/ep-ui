@@ -36,6 +36,16 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
+  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
+  const [allowNext, setAllowNext] = useState<boolean>(true)
+  const [editorsData, setEditorsData] = useState<Array<EditorsTable>>()
+  const [searchedEditorsData, setSearchedEditorsData] =
+    useState<Array<EditorsTable>>()
+  const [hiddenEditorsData, setHiddenEditorsData] =
+    useState<Array<EditorsTable>>()
+  const newObj: EditorsTable[] = useMemo(() => [], [])
+  const newSearchObj: EditorsTable[] = useMemo(() => [], [])
+  const hiddenEditorsArr: EditorsTable[] = useMemo(() => [], [])
 
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
@@ -48,6 +58,7 @@ export const WikiEditorsInsightTable = () => {
     },
     { skip: initiateFilterEditors },
   )
+
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
       id: searchKeyWord,
@@ -106,16 +117,6 @@ export const WikiEditorsInsightTable = () => {
     { id: 'Banned', value: 'Banned Editors' },
     { id: 'Active', value: 'Active Editors' },
   ]
-  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [allowNext, setAllowNext] = useState<boolean>(true)
-  const [editorsData, setEditorsData] = useState<Array<EditorsTable>>()
-  const [searchedEditorsData, setSearchedEditorsData] =
-    useState<Array<EditorsTable>>()
-  const [hiddenEditorsData, setHiddenEditorsData] =
-    useState<Array<EditorsTable>>()
-  const newObj: EditorsTable[] = useMemo(() => [], [])
-  const newSearchObj: EditorsTable[] = useMemo(() => [], [])
-  const hiddenEditorsArr: EditorsTable[] = useMemo(() => [], [])
 
   pushItems(editorsFilteredArr, newObj)
   pushItems(searchedEditors, newSearchObj)
