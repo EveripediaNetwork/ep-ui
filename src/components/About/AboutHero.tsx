@@ -19,7 +19,7 @@ const AboutHero = () => {
       <Box mx="auto" mb={{ base: 10, xl: 0 }}>
         <Heading
           textAlign={{ base: 'center', xl: 'left' }}
-          w={{ base: '80%', md: '100%' }}
+          w={{ base: '100%' }}
           pr={{ base: '0', xl: '8' }}
           mx={{ base: 'auto', xl: 0 }}
           fontSize={{ base: '32', md: '36', '2xl': '42' }}

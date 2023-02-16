@@ -31,7 +31,13 @@ const OurHistoryCard = ({ year, content }: OurHistoryType) => {
       <Box>
         <Heading color="brandLinkColor">{year}</Heading>
       </Box>
-      <Box p="3" bgColor="aboutFeaturesCardBg" borderRadius="16px">
+      <Box
+        p="3"
+        border="1px solid"
+        borderColor="aboutFeaturesCardBorder"
+        bgColor="aboutFeaturesCardBg"
+        borderRadius="16px"
+      >
         <Paragraph text={content} />
       </Box>
     </Flex>
