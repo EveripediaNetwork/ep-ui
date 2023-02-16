@@ -97,6 +97,9 @@ export const resources = {
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',
+      aboutAiHeading: 'Integration of Artificial Intelligence',
+      aboutAiParagraph:
+        'IQ.wiki integrates artificial intelligence to scale our knowledge base. AI allows us to simplify routine tasks including summarizing wikis.',
       latestFromBlogHeading: 'Latest from our blog',
 
       //Profile page
