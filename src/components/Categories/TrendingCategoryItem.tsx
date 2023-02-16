@@ -63,6 +63,7 @@ const TrendingCategoryItem = ({
             textOverflow="ellipsis"
             whiteSpace="nowrap"
             cursor="pointer"
+            maxW="90%"
             onClick={() => router.push(`/wiki/${wikiId}`)}
             fontSize={{
               base: '16px',
