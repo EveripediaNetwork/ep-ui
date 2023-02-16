@@ -27,7 +27,7 @@ const Paragraph = ({ text }: { text: string }) => {
 
 const OurHistoryCard = ({ year, content }: OurHistoryType) => {
   return (
-    <Flex gap="4" mb="10">
+    <Flex gap="4" mb="10" flexDirection={{ base: 'column', md: 'row' }}>
       <Box>
         <Heading color="brandLinkColor">{year}</Heading>
       </Box>
