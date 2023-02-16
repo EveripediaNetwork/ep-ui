@@ -13,9 +13,9 @@ const AboutAiIntegration = () => {
       bgColor="aboutFeaturesCardBg"
       border="1px solid"
       borderColor="aboutFeaturesCardBorder"
-      p={8}
+      p={{ base: 3, md: 8 }}
       borderRadius="20px"
-      mt="20 !important"
+      mt={{ base: '5', lg: '20 !important' }}
       mb={{ base: '10', md: '15', lg: 'initial' }}
       mx="auto"
     >
