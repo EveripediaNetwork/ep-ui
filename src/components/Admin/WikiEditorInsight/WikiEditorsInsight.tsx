@@ -36,8 +36,8 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
-  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [allowNext, setAllowNext] = useState<boolean>(true)
+  const [activatePrevious, setActivatePrevious] = useState(false)
+  const [allowNext, setAllowNext] = useState(true)
   const [editorsData, setEditorsData] = useState<Array<EditorsTable>>()
   const [searchedEditorsData, setSearchedEditorsData] =
     useState<Array<EditorsTable>>()
