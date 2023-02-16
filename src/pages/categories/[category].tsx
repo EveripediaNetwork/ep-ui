@@ -30,7 +30,7 @@ import CategoryHero from '@/components/Categories/CategoryHero'
 import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'
 import { getDateRange } from '@/utils/HomepageUtils/getDate'
 
-const CATEGORY_DATE_RANGE = 30
+const CATEGORY_DATE_RANGE = 3
 const CATEGORY_AMOUNT = 5
 
 type CategoryPageProps = NextPage & {
