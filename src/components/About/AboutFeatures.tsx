@@ -25,11 +25,13 @@ const AboutFeatures = () => {
         {OurMission.map((mission, i) => (
           <Text
             align={{ base: 'left', lg: 'center' }}
-            maxW="4xl"
+            maxW="90%"
+            mx="auto"
             textAlign="center"
-            fontSize={{ base: '14px', md: '16px', lg: '24px' }}
+            fontSize={{ base: '14px', md: '16px', lg: '20px' }}
+            lineHeight={{ base: '20px', md: '24px', lg: '32px' }}
             key={i}
-            mt={{ base: '5', md: 10 }}
+            mt={{ base: '8', md: 10 }}
           >
             {mission}
           </Text>
@@ -37,8 +39,8 @@ const AboutFeatures = () => {
       </Box>
       <SimpleGrid
         columns={[1, 1, 2, 2, 3]}
-        spacing={4}
-        mt={{ base: 20, md: '24 !important' }}
+        spacing={{ base: '8', md: 4 }}
+        mt={{ base: '45px !important ', md: '24 !important' }}
       >
         <AboutFeaturesCard
           title={`${t('abtFeatOneHeading')}`}

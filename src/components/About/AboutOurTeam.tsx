@@ -51,8 +51,9 @@ const AboutOurTeam = () => {
       <Heading size="lg">{t('meetTeamHead')}</Heading>
       <Text
         align="center"
-        maxW="3xl"
-        fontSize={{ base: '16px', md: '18px', xl: '24px' }}
+        maxW="90%"
+        mx="auto"
+        fontSize={{ base: '16px', md: '18px', xl: '20px' }}
       >
         {t('meetTeamContent')}
       </Text>

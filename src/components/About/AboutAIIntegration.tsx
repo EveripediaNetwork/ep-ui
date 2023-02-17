@@ -22,13 +22,13 @@ const AboutAiIntegration = () => {
       <SimpleGrid templateColumns="2fr 0.5fr">
         <Box alignSelf="center">
           <Heading
-            fontSize={{ base: '18px', md: '24px', lg: '36px' }}
+            fontSize={{ base: '16px', md: '24px', lg: '48px' }}
             maxW={{ base: 'full', md: '90%' }}
             color="brandLinkColor"
           >
             {t('aboutAiHeading')}
           </Heading>
-          <Text mt="4" fontSize={{ base: '12px', lg: '18px' }} maxW="3xl">
+          <Text mt="5" fontSize={{ base: '14px', lg: '20px' }} maxW="3xl">
             {t('aboutAiParagraph')}
           </Text>
         </Box>

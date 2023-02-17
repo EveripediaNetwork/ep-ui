@@ -7,8 +7,9 @@ const Paragraph = ({ text }: { text: string }) => {
 
   return (
     <Text
-      fontSize={{ base: '14px', md: '16px', lg: '24px' }}
+      fontSize={{ base: '14px', md: '16px', lg: '18px' }}
       whiteSpace="pre-line"
+      fontWeight={500}
     >
       {parts.map((part, index) =>
         part.startsWith('<Link') ? (
@@ -32,11 +33,11 @@ const OurHistoryCard = ({ year, content }: OurHistoryType) => {
   return (
     <Flex
       gap={{ base: '4', lg: '12' }}
-      mb={{ base: 5, md: '10' }}
+      mb={{ base: 8, md: '10' }}
       flexDirection={{ base: 'column', md: 'row' }}
     >
       <Box>
-        <Heading fontSize={{ base: '30px', lg: '60px' }} color="brandLinkColor">
+        <Heading fontSize={{ base: '30px', lg: '48px' }} color="brandLinkColor">
           {year}
         </Heading>
       </Box>
