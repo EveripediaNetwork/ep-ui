@@ -6,7 +6,10 @@ const Paragraph = ({ text }: { text: string }) => {
   const parts = text.split(/(<Link.*?\/Link>)/)
 
   return (
-    <Text whiteSpace="pre-line">
+    <Text
+      fontSize={{ base: '14px', md: '16px', lg: '24px' }}
+      whiteSpace="pre-line"
+    >
       {parts.map((part, index) =>
         part.startsWith('<Link') ? (
           <Link
@@ -27,12 +30,19 @@ const Paragraph = ({ text }: { text: string }) => {
 
 const OurHistoryCard = ({ year, content }: OurHistoryType) => {
   return (
-    <Flex gap="4" mb="10" flexDirection={{ base: 'column', md: 'row' }}>
+    <Flex
+      gap={{ base: '4', lg: '12' }}
+      mb="10"
+      flexDirection={{ base: 'column', md: 'row' }}
+    >
       <Box>
-        <Heading color="brandLinkColor">{year}</Heading>
+        <Heading fontSize={{ base: '30px', lg: '60px' }} color="brandLinkColor">
+          {year}
+        </Heading>
       </Box>
       <Box
-        p="3"
+        px="5"
+        py="10"
         border="1px solid"
         borderColor="aboutFeaturesCardBorder"
         bgColor="aboutFeaturesCardBg"

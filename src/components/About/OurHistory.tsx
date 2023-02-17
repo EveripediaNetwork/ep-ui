@@ -6,14 +6,18 @@ import OurHistoryCard from './OurHistoryCard'
 const OurHistory = () => {
   return (
     <Box
-      mt="24 !important"
+      mt={{ base: 20, md: '24 !important' }}
       maxW={{ base: '100%', lg: '80%', '2xl': '65%' }}
       mx="auto"
     >
       <Heading size="lg" textAlign="center">
         A little about our History
       </Heading>
-      <Text textAlign="center" mt="4" fontSize={{ base: '12px', lg: '18px' }}>
+      <Text
+        textAlign="center"
+        mt="4"
+        fontSize={{ base: '14px', md: '18px', lg: '24px' }}
+      >
         The world’s largest blockchain encyclopedia wasn’t born overnight.
         IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014
         and became the world’s first blockchain encyclopedia in 2018 after

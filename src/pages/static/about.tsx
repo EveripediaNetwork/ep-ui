@@ -11,7 +11,7 @@ import OurHistory from '@/components/About/OurHistory'
 const About = () => (
   <>
     <AboutHeader />
-    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 20 }}>
+    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
       <AboutHero />
       <AboutFeatures />
       <AboutAsSeenIn />

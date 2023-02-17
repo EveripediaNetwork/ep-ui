@@ -13,17 +13,17 @@ const AboutHero = () => {
     <HStack
       mx="auto"
       maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
-      spacing="2"
+      spacing={{ base: 0, md: '2' }}
       flexDirection={{ base: 'column', xl: 'row' }}
     >
-      <Box mx="auto" mb={{ base: 10, xl: 0 }}>
+      <Box mx="auto" mb={{ base: 0, xl: 0 }}>
         <Heading
           textAlign={{ base: 'center', xl: 'left' }}
           w={{ base: '100%' }}
           pr={{ base: '0', xl: '8' }}
           mx={{ base: 'auto', xl: 0 }}
           fontSize={{ base: '32', md: '36', '2xl': '42' }}
-          mt={10}
+          mt={{ base: 0, md: 10 }}
           mb={{ base: 5, xl: 10 }}
           fontWeight="black"
           lineHeight="shorter"
@@ -32,7 +32,7 @@ const AboutHero = () => {
         </Heading>
         <Text
           textAlign={{ base: 'center', xl: 'left' }}
-          fontSize={{ base: 'sm', md: 'md', xl: 'lg' }}
+          fontSize={{ base: '16px', md: '18px', xl: '24px' }}
           mb={4}
           mx={{ md: 'auto', xl: '0' }}
           w={{ base: '100%', md: '80%', xl: '80%' }}

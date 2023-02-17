@@ -13,7 +13,7 @@ const AboutFeatures = () => {
       spacing={8}
       maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
       mx="auto"
-      mt="24"
+      mt={{ base: 20, md: '24 !important' }}
     >
       <Heading
         fontWeight="bold"
@@ -27,7 +27,7 @@ const AboutFeatures = () => {
             align={{ base: 'left', lg: 'center' }}
             maxW="4xl"
             textAlign="center"
-            fontSize={{ base: 'sm', md: 'md', lg: 'md' }}
+            fontSize={{ base: '14px', md: '16px', lg: '24px' }}
             key={i}
             mt={10}
           >
@@ -35,7 +35,11 @@ const AboutFeatures = () => {
           </Text>
         ))}
       </Box>
-      <SimpleGrid columns={[1, 1, 2, 2, 3]} spacing={4} mt="24 !important">
+      <SimpleGrid
+        columns={[1, 1, 2, 2, 3]}
+        spacing={4}
+        mt={{ base: 20, md: '24 !important' }}
+      >
         <AboutFeaturesCard
           title={`${t('abtFeatOneHeading')}`}
           content={`${t('abtFeatOneContent')}`}
