@@ -28,7 +28,7 @@ const AboutAiIntegration = () => {
           >
             {t('aboutAiHeading')}
           </Heading>
-          <Text mt="5" fontSize={{ base: '14px', lg: '20px' }} maxW="3xl">
+          <Text mt="5" fontSize={{ base: '14px', lg: '19px' }}>
             {t('aboutAiParagraph')}
           </Text>
         </Box>
