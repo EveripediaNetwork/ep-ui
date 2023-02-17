@@ -140,3 +140,32 @@ export interface SearchedEditors {
     }
   }[]
 }
+
+export interface EditorsTable {
+  editorName: string
+  createdWikis: {
+    id: string
+    wikiId: string
+    datetime: string
+    ipfs: string
+    content: { title: string; images: { id: string } }
+  }[]
+  editiedWikis: {
+    content: {
+      title: string
+      images: {
+        id: string
+      }
+    }
+    datetime: string
+    id: string
+    ipfs: string
+    wikiId: string
+  }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lastCreatedWiki: any
+  editorAvatar: string
+  latestActivity: string
+  editorAddress: string
+  active: boolean
+}
