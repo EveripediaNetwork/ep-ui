@@ -1,5 +1,4 @@
 import {
-  useGetEditorsQuery,
   useGetSearchedEditorsQuery,
   useToggleUserMutation,
   useGetHiddenEditorsQuery,
@@ -103,6 +102,8 @@ export const WikiEditorsInsightTable = () => {
         offset: paginationOffset,
       }),
     )
+
+    console.log({ editorsTable, paginationOffset })
 
     if (editorsTable) {
       setEditors(editorsTable)
@@ -249,31 +250,31 @@ export const WikiEditorsInsightTable = () => {
       return null
     })
 
-  useEffect(() => {
-    // newObj.length = 0
+  // useEffect(() => {
+  //   // newObj.length = 0
 
-    setEditorsData(() => {
-      return newObj
-    })
-    setAllowNext(true)
-  }, [editors, newObj, editorsFilteredArr])
+  //   setEditorsData(() => {
+  //     return newObj
+  //   })
+  //   setAllowNext(true)
+  // }, [editors, newObj, editorsFilteredArr])
 
-  useEffect(() => {
-    // newSearchObj.length = 0
+  // useEffect(() => {
+  //   // newSearchObj.length = 0
 
-    setSearchedEditorsData(() => {
-      return newSearchObj
-    })
-    setAllowNext(true)
-  }, [searchedEditors, newSearchObj])
+  //   setSearchedEditorsData(() => {
+  //     return newSearchObj
+  //   })
+  //   setAllowNext(true)
+  // }, [searchedEditors, newSearchObj])
 
-  useEffect(() => {
-    // hiddenEditorsArr.length = 0
+  // useEffect(() => {
+  //   // hiddenEditorsArr.length = 0
 
-    setHiddenEditorsData(() => {
-      return hiddenEditorsArr
-    })
-  }, [hiddeneditors, hiddenEditorsArr])
+  //   setHiddenEditorsData(() => {
+  //     return hiddenEditorsArr
+  //   })
+  // }, [hiddeneditors, hiddenEditorsArr])
 
   const scrolltoTableTop = () => {
     editorTableRef?.current?.scrollIntoView({
