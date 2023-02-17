@@ -1,9 +1,11 @@
 import { OurHistoryData } from '@/data/OurHistory'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import OurHistoryCard from './OurHistoryCard'
 
 const OurHistory = () => {
+  const { t } = useTranslation()
   return (
     <Box
       mt={{ base: 18, md: '24 !important' }}
@@ -11,7 +13,7 @@ const OurHistory = () => {
       mx="auto"
     >
       <Heading size="lg" textAlign="center">
-        A little about our History
+        {t('historyHeading')}
       </Heading>
       <Text
         textAlign="center"
@@ -19,11 +21,7 @@ const OurHistory = () => {
         fontSize={{ base: '14px', md: '18px', lg: '24px' }}
         lineHeight={{ base: '20px', md: '24px', lg: '36px' }}
       >
-        The world’s largest blockchain encyclopedia wasn’t born overnight.
-        IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014
-        and became the world’s first blockchain encyclopedia in 2018 after
-        launching the IQ token. In 2022, Everipedia expanded to the Polygon
-        blockchain and rebranded as IQ.wiki.
+        {t('historyBrief')}
       </Text>
       <Box mt="15">
         {OurHistoryData.map((history, i) => (
