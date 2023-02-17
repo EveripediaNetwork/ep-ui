@@ -4,13 +4,15 @@ import {
   useToggleUserMutation,
   useGetHiddenEditorsQuery,
 } from '@/services/admin'
+import { EditorsTable } from '@/types/admin'
+import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
+import { pushItems } from '@/utils/AdminUtils/pushArrayData'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
-import { pushItems, EditorsTable, dataUpdate } from './WikiEditorFunctions'
 import WikiEditorInsightFooter from './WikiEditorInsightFooter'
 import WikiEditorsInsightActionBar from './WikiEditorsInsightActionBar'
 

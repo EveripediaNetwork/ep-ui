@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Flex } from '@chakra-ui/react'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { EditorsTable } from './WikiEditorFunctions'
+import { EditorsTable } from '@/types/admin'
 
 type WikiEditorInsightFooterProps = {
   searchKeyWord: string
