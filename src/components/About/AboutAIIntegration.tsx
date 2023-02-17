@@ -9,7 +9,7 @@ const AboutAiIntegration = () => {
 
   return (
     <Box
-      maxW={{ base: '100%', lg: '80%', '2xl': '95%' }}
+      maxW={{ base: '100%', lg: '80%', '2xl': '90%' }}
       bgColor="aboutFeaturesCardBg"
       border="1px solid"
       borderColor="aboutFeaturesCardBorder"
