@@ -101,6 +101,9 @@ export const resources = {
       aboutAiParagraph:
         'IQ.wiki integrates artificial intelligence to scale our knowledge base. AI allows us to simplify routine tasks including summarizing wikis.',
       latestFromBlogHeading: 'Latest from our blog',
+      historyHeading: 'A little about our History',
+      historyBrief:
+        'The world’s largest blockchain encyclopedia wasn’t born overnight. IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014 and became the world’s first blockchain encyclopedia in 2018 after launching the IQ token. In 2022, Everipedia expanded to the Polygon blockchain and rebranded as IQ.wiki.',
 
       //Profile page
       selectAllItems: 'All items',
