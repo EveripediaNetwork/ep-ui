@@ -6,7 +6,7 @@ import OurHistoryCard from './OurHistoryCard'
 const OurHistory = () => {
   return (
     <Box
-      mt={{ base: 20, md: '24 !important' }}
+      mt={{ base: 18, md: '24 !important' }}
       maxW={{ base: '100%', lg: '80%', '2xl': '65%' }}
       mx="auto"
     >
