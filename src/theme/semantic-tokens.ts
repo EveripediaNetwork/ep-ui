@@ -297,5 +297,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.700',
     },
+    aboutFeaturesCardBg: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
+    aboutFeaturesCardBorder: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
+    },
   },
 }
