@@ -87,7 +87,7 @@ const MenuFooter = () => {
                 <Link
                   textAlign={{ base: 'center', md: 'left' }}
                   prefetch={false}
-                  href="careers"
+                  href="/careers"
                 >
                   <Box as="span">{`${t('careers')}`}</Box>
                 </Link>
