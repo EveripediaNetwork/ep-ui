@@ -32,7 +32,7 @@ const OurHistoryCard = ({ year, content }: OurHistoryType) => {
   return (
     <Flex
       gap={{ base: '4', lg: '12' }}
-      mb="10"
+      mb={{ base: 5, md: '10' }}
       flexDirection={{ base: 'column', md: 'row' }}
     >
       <Box>
