@@ -3,6 +3,7 @@ import {
   useGetSearchedEditorsQuery,
   useToggleUserMutation,
   useGetHiddenEditorsQuery,
+  getEditors,
 } from '@/services/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import {
@@ -24,10 +25,12 @@ import {
   PopoverTrigger,
   VStack,
 } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState, useRef } from 'react'
+import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { FiSearch } from 'react-icons/fi'
+import { store } from '@/store/store'
+import { Editors } from '@/types/admin'
 import { MdFilterList } from 'react-icons/md'
 import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
@@ -81,10 +84,39 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
-  const { data: editors } = useGetEditorsQuery({
-    limit: 20,
-    offset: paginateOffset,
-  })
+  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
+  const [allowNext, setAllowNext] = useState<boolean>(true)
+  const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
+  const [editors, setEditors] = useState<Editors[]>()
+  const [searchedEditorsData, setSearchedEditorsData] =
+    useState<Array<EditorInterface>>()
+  const [hiddenEditorsData, setHiddenEditorsData] =
+    useState<Array<EditorInterface>>()
+  const newObj: EditorInterface[] = useMemo(() => [], [])
+  const newSearchObj: EditorInterface[] = useMemo(() => [], [])
+  const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
+
+  const getEditorsData = useCallback(async (paginationOffset = 0) => {
+    const { data: editorsTable } = await store.dispatch(
+      getEditors.initiate({
+        limit: 10,
+        offset: paginationOffset,
+      }),
+    )
+
+    if (editorsTable) {
+      setEditors(editorsTable)
+    }
+  }, [])
+
+  useEffect(() => {
+    getEditorsData()
+  }, [getEditorsData])
+
+  // const { data: editors } = useGetEditorsQuery({
+  //   limit: 10,
+  //   offset: paginateOffset,
+  // })
   const { data: hiddeneditors } = useGetHiddenEditorsQuery(
     {
       limit: 10,
@@ -152,16 +184,6 @@ export const WikiEditorsInsightTable = () => {
     { id: 'Banned', value: 'Banned Editors' },
     { id: 'Active', value: 'Active Editors' },
   ]
-  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [allowNext, setAllowNext] = useState<boolean>(true)
-  const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
-  const [searchedEditorsData, setSearchedEditorsData] =
-    useState<Array<EditorInterface>>()
-  const [hiddenEditorsData, setHiddenEditorsData] =
-    useState<Array<EditorInterface>>()
-  const newObj: EditorInterface[] = useMemo(() => [], [])
-  const newSearchObj: EditorInterface[] = useMemo(() => [], [])
-  const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
 
   searchedEditors
     ?.filter(item => {
@@ -228,28 +250,28 @@ export const WikiEditorsInsightTable = () => {
     })
 
   useEffect(() => {
-    newObj.length = 0
+    // newObj.length = 0
 
     setEditorsData(() => {
-      return [...newObj]
+      return newObj
     })
     setAllowNext(true)
   }, [editors, newObj, editorsFilteredArr])
 
   useEffect(() => {
-    newSearchObj.length = 0
+    // newSearchObj.length = 0
 
     setSearchedEditorsData(() => {
-      return [...newSearchObj]
+      return newSearchObj
     })
     setAllowNext(true)
   }, [searchedEditors, newSearchObj])
 
   useEffect(() => {
-    hiddenEditorsArr.length = 0
+    // hiddenEditorsArr.length = 0
 
     setHiddenEditorsData(() => {
-      return [...hiddenEditorsArr]
+      return hiddenEditorsArr
     })
   }, [hiddeneditors, hiddenEditorsArr])
 
@@ -260,15 +282,17 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const increasePagination = () => {
-    return (
-      editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
-    )
+    if (editors && editors?.length >= 10) {
+      getEditorsData(paginateOffset + 10)
+      setPaginateOffset(p => p + 10)
+    }
   }
 
   const decreasePagination = () => {
-    return (
-      editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
-    )
+    if (editors && editors?.length >= 10) {
+      getEditorsData(paginateOffset - 10)
+      setPaginateOffset(p => p - 10)
+    }
   }
   const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
