@@ -13,7 +13,7 @@ const AboutFeatures = () => {
       spacing={8}
       maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
       mx="auto"
-      mt={{ base: 20, md: '24 !important' }}
+      mt={{ base: 5, md: '24 !important' }}
     >
       <Heading
         fontWeight="bold"
@@ -29,7 +29,7 @@ const AboutFeatures = () => {
             textAlign="center"
             fontSize={{ base: '14px', md: '16px', lg: '24px' }}
             key={i}
-            mt={10}
+            mt={{ base: '5', md: 10 }}
           >
             {mission}
           </Text>
