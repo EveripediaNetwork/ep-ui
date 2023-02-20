@@ -96,5 +96,4 @@ module.exports = {
       extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
     },
   ],
-  ignorePatterns: ['**/*.js', '**/*.json', 'node_modules', '.next', 'public'],
 }

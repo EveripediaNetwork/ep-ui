@@ -2,3 +2,9 @@
 abi
 node_modules/
 package.json
+
+**/*.js 
+**/*.json
+
+public
+
