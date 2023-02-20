@@ -81,7 +81,7 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/about"
+                href="/about"
               >{`${t('aboutUs')}`}</Link>
               <Box as="span" display="flex" alignItems="center">
                 <Link
@@ -135,7 +135,7 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/faq"
+                href="/faq"
               >{`${t('faq')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
@@ -150,22 +150,22 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/guidelines"
+                href="/guidelines"
               >{`${t('guideLines')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/privacy"
+                href="/privacy"
               >{`${t('privacyPolicy')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/terms"
+                href="/terms"
               >{`${t('termsOfService')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
-                href="/static/CaPrivacyRights"
+                href="/CaPrivacyRights"
               >{`${t('privacyRights')}`}</Link>
             </Stack>
           </GridItem>

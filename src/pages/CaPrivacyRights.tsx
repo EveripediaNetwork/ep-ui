@@ -239,8 +239,8 @@ const CaPrivacyRights = () => (
         <Box>
           <RelatedTopics
             topics={[
-              { name: 'Privacy Policy', url: '/static/privacy' },
-              { name: 'Guidelines', url: '/static/guidelines' },
+              { name: 'Privacy Policy', url: '/privacy' },
+              { name: 'Guidelines', url: '/guidelines' },
             ]}
           />
         </Box>

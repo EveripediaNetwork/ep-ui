@@ -123,7 +123,7 @@ export const NAV_ITEMS: NavItem[] = [
         id: 404,
         label: 'About Us',
         icon: RiUserSearchFill,
-        href: '/static/about',
+        href: '/about',
         hasImage: true,
       },
       {
