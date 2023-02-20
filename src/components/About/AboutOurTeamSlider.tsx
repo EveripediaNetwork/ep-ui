@@ -21,6 +21,14 @@ const AboutOurTeamSlider = ({ children }: AboutOurTeamSliderProps) => {
       {
         breakpoint: 820,
         settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          centerMode: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: false,

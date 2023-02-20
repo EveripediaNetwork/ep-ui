@@ -4,34 +4,17 @@ import {
   useToggleUserMutation,
   useGetHiddenEditorsQuery,
 } from '@/services/admin'
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import {
-  Text,
-  Flex,
-  Tag,
-  TagLabel,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Button,
-  useDisclosure,
-  Checkbox,
-  HStack,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverFooter,
-  PopoverTrigger,
-  VStack,
-} from '@chakra-ui/react'
+import { EditorsTable } from '@/types/admin'
+import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
+import { pushItems } from '@/utils/AdminUtils/pushArrayData'
+import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
-
 import { RiArrowUpDownLine } from 'react-icons/ri'
-import { FiSearch } from 'react-icons/fi'
-import { MdFilterList } from 'react-icons/md'
 import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
+import WikiEditorInsightFooter from './WikiEditorInsightFooter'
+import WikiEditorsInsightActionBar from './WikiEditorsInsightActionBar'
 
 export const WikiEditorsInsightTable = () => {
   const editorTableRef = useRef<null | HTMLDivElement>(null)
@@ -40,6 +23,8 @@ export const WikiEditorsInsightTable = () => {
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [filterEditors, setFilterEditors] = useState<string>('')
   const [checked, setChecked] = useState(0)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [toggleUser] = useToggleUserMutation()
   const {
     isOpen: isOpenFilter,
     onToggle: onToggleFilter,
@@ -53,6 +38,17 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
+  const [activatePrevious, setActivatePrevious] = useState(false)
+  const [allowNext, setAllowNext] = useState(true)
+  const [editorsData, setEditorsData] = useState<Array<EditorsTable>>()
+  const [searchedEditorsData, setSearchedEditorsData] =
+    useState<Array<EditorsTable>>()
+  const [hiddenEditorsData, setHiddenEditorsData] =
+    useState<Array<EditorsTable>>()
+  const newObj: EditorsTable[] = useMemo(() => [], [])
+  const newSearchObj: EditorsTable[] = useMemo(() => [], [])
+  const hiddenEditorsArr: EditorsTable[] = useMemo(() => [], [])
+
   const { data: editors } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
@@ -64,6 +60,7 @@ export const WikiEditorsInsightTable = () => {
     },
     { skip: initiateFilterEditors },
   )
+
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
       id: searchKeyWord,
@@ -81,8 +78,6 @@ export const WikiEditorsInsightTable = () => {
   editorsSortByLowest?.sort(
     (a, b) => a.wikisCreated.length - b.wikisCreated.length,
   )
-
-  const [toggleUser] = useToggleUserMutation()
 
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
@@ -120,111 +115,14 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
-  interface EditorInterface {
-    editorName: string
-    createdWikis: {
-      id: string
-      wikiId: string
-      datetime: string
-      ipfs: string
-      content: { title: string; images: { id: string } }
-    }[]
-    editiedWikis: {
-      content: {
-        title: string
-        images: {
-          id: string
-        }
-      }
-      datetime: string
-      id: string
-      ipfs: string
-      wikiId: string
-    }[]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lastCreatedWiki: any
-    editorAvatar: string
-    latestActivity: string
-    editorAddress: string
-    active: boolean
-  }
   const FilterArray = [
     { id: 'Banned', value: 'Banned Editors' },
     { id: 'Active', value: 'Active Editors' },
   ]
-  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
-  const [allowNext, setAllowNext] = useState<boolean>(true)
-  const [editorsData, setEditorsData] = useState<Array<EditorInterface>>()
-  const [searchedEditorsData, setSearchedEditorsData] =
-    useState<Array<EditorInterface>>()
-  const [hiddenEditorsData, setHiddenEditorsData] =
-    useState<Array<EditorInterface>>()
-  const newObj: EditorInterface[] = useMemo(() => [], [])
-  const newSearchObj: EditorInterface[] = useMemo(() => [], [])
-  const hiddenEditorsArr: EditorInterface[] = useMemo(() => [], [])
-  searchedEditors
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      newSearchObj.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
 
-  editorsFilteredArr
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      newObj.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
-
-  hiddeneditors
-    ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
-    })
-    ?.forEach(item => {
-      hiddenEditorsArr.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
-        editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
-        editorAddress: item?.id,
-        createdWikis: item?.wikisCreated,
-        editiedWikis: item?.wikisEdited,
-        lastCreatedWiki: item?.wikisCreated[0]
-          ? item?.wikisCreated[0]
-          : item?.wikisEdited[0],
-        latestActivity: item?.wikisCreated[0]?.datetime.split('T')[0],
-        active: item?.active,
-      })
-      return null
-    })
+  pushItems(editorsFilteredArr, newObj)
+  pushItems(searchedEditors, newSearchObj)
+  pushItems(hiddeneditors, hiddenEditorsArr)
 
   useEffect(() => {
     setEditorsData(newObj)
@@ -290,7 +188,7 @@ export const WikiEditorsInsightTable = () => {
     hiddenEditorsData,
     searchKeyWord.length,
   ])
-  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <Flex
       flexDir="column"
@@ -314,110 +212,20 @@ export const WikiEditorsInsightTable = () => {
           <TagLabel>100 Users</TagLabel>
         </Tag>
       </Flex>
-      <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
-        <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
-          <InputGroup w="100%">
-            <InputLeftElement pointerEvents="none">
-              <FiSearch color="#667085" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              placeholder="Search"
-              onChange={e => {
-                setsearchKeyWord(e.target.value)
-                if (e.target.value.length > 2) {
-                  setInitiateFetchSearchEditors(false)
-                }
-              }}
-            />
-          </InputGroup>
-          <Button
-            onClick={() => {
-              handleSortChange()
-            }}
-            borderColor="#E2E8F0"
-            _dark={{ borderColor: '#2c323d' }}
-            py={2}
-            px={10}
-            rightIcon={sortIcon}
-            variant="outline"
-            fontWeight="medium"
-          >
-            Sort
-          </Button>
-          <Popover isLazy isOpen={isOpenFilter} onClose={onCloseFilter}>
-            <PopoverTrigger>
-              <Button
-                transition="all 0.2s"
-                borderRadius="md"
-                _expanded={{ bg: 'brand.500', color: 'white' }}
-                py={2}
-                px={10}
-                leftIcon={<MdFilterList fontSize="25px" />}
-                variant="outline"
-                onClick={onToggleFilter}
-                fontWeight="medium"
-              >
-                Filters
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent w="fit-content">
-              <form onSubmit={e => ApplyFilterItems(e)}>
-                <PopoverBody py={3}>
-                  <VStack
-                    spacing={1}
-                    w="fit-content"
-                    alignItems="flex-start"
-                    justifyContent="flex-start"
-                  >
-                    {FilterArray.map((item, i) => (
-                      <Checkbox
-                        onChange={() => setChecked(i + 1)}
-                        key={i}
-                        colorScheme="pink"
-                        isChecked={checked === i + 1}
-                        py={1}
-                        value={item.id}
-                      >
-                        {item.value}
-                      </Checkbox>
-                    ))}
-                  </VStack>
-                </PopoverBody>
-                <PopoverFooter>
-                  <HStack gap={4} w="fit-content" px={2}>
-                    <Button
-                      type="button"
-                      px={6}
-                      py={1}
-                      variant="ghost"
-                      borderWidth="1px"
-                      onClick={() => {
-                        setChecked(0)
-                        onCloseFilter()
-                        setFilterEditors('')
-                      }}
-                      rounded="lg"
-                      fontWeight="semibold"
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      type="submit"
-                      rounded="lg"
-                      px={6}
-                      py={1}
-                      fontWeight="semibold"
-                    >
-                      Apply
-                    </Button>
-                  </HStack>
-                </PopoverFooter>
-              </form>
-            </PopoverContent>
-          </Popover>
-        </Flex>
-      </Flex>
+      <WikiEditorsInsightActionBar
+        setsearchKeyWord={setsearchKeyWord}
+        setInitiateFetchSearchEditors={setInitiateFetchSearchEditors}
+        handleSortChange={handleSortChange}
+        isOpenFilter={isOpenFilter}
+        onCloseFilter={onCloseFilter}
+        ApplyFilterItems={ApplyFilterItems}
+        onToggleFilter={onToggleFilter}
+        FilterArray={FilterArray}
+        sortIcon={sortIcon}
+        setChecked={setChecked}
+        checked={checked}
+        setFilterEditors={setFilterEditors}
+      />
       <Flex pb={5}>
         <InsightTableWikiEditors
           wikiInsightData={completeEditorTable}
@@ -432,49 +240,17 @@ export const WikiEditorsInsightTable = () => {
           filterBy={filterEditors}
         />
       </Flex>
-      <Flex
-        justify="space-between"
-        w="95%"
-        m="0 auto"
-        display={searchKeyWord.length > 0 ? 'none' : 'flex'}
-      >
-        <Button
-          leftIcon={<ArrowBackIcon />}
-          variant="outline"
-          disabled={!activatePrevious}
-          onClick={() => {
-            scrolltoTableTop()
-            decreasePagination()
-            if (editorsData && editorsData?.length >= 10) {
-              setActivatePrevious(false)
-            }
-          }}
-        >
-          Previous
-        </Button>
-        <Button
-          disabled={editorsData && editorsData?.length < 9}
-          rightIcon={<ArrowForwardIcon />}
-          variant="outline"
-          onClick={() => {
-            if (allowNext) {
-              scrolltoTableTop()
-              increasePagination()
-            }
-            setAllowNext(false)
-            if (editorsData && editorsData?.length >= 7) {
-              setActivatePrevious(true)
-            }
-          }}
-          cursor={
-            !allowNext && editorsData && editorsData?.length >= 7
-              ? 'wait'
-              : 'pointer'
-          }
-        >
-          Next
-        </Button>
-      </Flex>
+      <WikiEditorInsightFooter
+        searchKeyWord={searchKeyWord}
+        allowNext={allowNext}
+        setAllowNext={setAllowNext}
+        decreasePagination={decreasePagination}
+        activatePrevious={activatePrevious}
+        editorsData={editorsData}
+        setActivatePrevious={setActivatePrevious}
+        scrolltoTableTop={scrolltoTableTop}
+        increasePagination={increasePagination}
+      />
       <DeleteEditorModal
         id={editorToBeToggled.id}
         isActive={editorToBeToggled.active}
@@ -486,29 +262,12 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           // Possibly apply conditon to this Optimistic state update
-          setEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
+          setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
+          setSearchedEditorsData(
+            dataUpdate(editorsData, ban, editorToBeToggled.id),
           )
-          setSearchedEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
-          )
-          setHiddenEditorsData(p =>
-            p?.map(user => {
-              if (user.editorAddress === editorToBeToggled.id) {
-                return { ...user, active: ban }
-              }
-              return user
-            }),
+          setHiddenEditorsData(
+            dataUpdate(editorsData, ban, editorToBeToggled.id),
           )
         }}
       />
