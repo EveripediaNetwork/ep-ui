@@ -187,7 +187,7 @@ export const WikiEditorsInsightTable = () => {
 
   editorsFilteredArr
     ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+      return item?.wikisCreated
     })
     ?.forEach(item => {
       newObj.push({
@@ -460,7 +460,7 @@ export const WikiEditorsInsightTable = () => {
           onClick={() => {
             scrolltoTableTop()
             decreasePagination()
-            if (editorsData && editorsData?.length >= 10) {
+            if (paginateOffset === 0) {
               setActivatePrevious(false)
             }
           }}
@@ -468,7 +468,7 @@ export const WikiEditorsInsightTable = () => {
           Previous
         </Button>
         <Button
-          disabled={editorsData && editorsData?.length < 9}
+          disabled={!editorsData || editorsData.length === 0}
           rightIcon={<ArrowForwardIcon />}
           variant="outline"
           onClick={() => {
@@ -477,7 +477,7 @@ export const WikiEditorsInsightTable = () => {
               increasePagination()
             }
             setAllowNext(false)
-            if (editorsData && editorsData?.length >= 7) {
+            if (editorsData && editorsData?.length >= 10) {
               setActivatePrevious(true)
             }
           }}
