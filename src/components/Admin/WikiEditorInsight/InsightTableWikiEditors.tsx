@@ -70,8 +70,6 @@ export const InsightTableWikiEditors = (
   const { wikiInsightData: wikiEditorInsightData } = props
   const { toggleUserFunc, filterBy } = props
 
-  console.log(wikiEditorInsightData)
-
   const filterBoolean = useMemo(() => {
     if (filterBy === 'Banned') {
       return false
