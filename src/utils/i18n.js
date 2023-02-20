@@ -76,9 +76,9 @@ export const resources = {
 
       //About page
       aboutHeroHeading:
-        'Bringing blockchain knowledge to the world and knowledge to the blockchain.',
+        'We use blockchain technology and artificial intelligence to scale crypto knowledge.',
       aboutHeroPhrase:
-        "IQ.Wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
+        "IQ.wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
       aboutSignUpBttn: 'Sign Up',
       aboutgoTo: 'Go to IQ Site',
       aboutFeatHeading:
@@ -93,11 +93,17 @@ export const resources = {
         'IQ.wiki is a central part of the IQ ecosystem. The IQ token powers the encyclopedia and allows anyone to be a stakeholder in the ecosystem.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
-        'Anyone with IQ Tokens is a stakeholder in the IQ.Wiki Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',
+        'Anyone with IQ tokens is a stakeholder in the IQ.wiki Network. IQ.wiki is fully Web3 with IQ token stakers earning rewards and governing the platform.',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',
+      aboutAiHeading: 'Integration of Artificial Intelligence',
+      aboutAiParagraph:
+        'IQ.wiki integrates artificial intelligence to scale our knowledge base. AI allows us to simplify routine tasks including summarizing wikis.',
       latestFromBlogHeading: 'Latest from our blog',
+      historyHeading: 'A little about our History',
+      historyBrief:
+        'The world’s largest blockchain encyclopedia wasn’t born overnight. IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014 and became the world’s first blockchain encyclopedia in 2018 after launching the IQ token. In 2022, Everipedia expanded to the Polygon blockchain and rebranded as IQ.wiki.',
 
       //Profile page
       selectAllItems: 'All items',

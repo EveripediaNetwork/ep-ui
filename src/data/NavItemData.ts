@@ -120,7 +120,7 @@ export const NAV_ITEMS: NavItem[] = [
         hasImage: true,
       },
       {
-        id: 403,
+        id: 404,
         label: 'About Us',
         icon: RiUserSearchFill,
         href: '/static/about',
