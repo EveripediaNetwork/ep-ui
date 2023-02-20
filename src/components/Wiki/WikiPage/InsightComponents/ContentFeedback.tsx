@@ -2,12 +2,25 @@ import React, { useState } from 'react'
 import { VStack, Text, Flex, Button, Box } from '@chakra-ui/react'
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi'
 import { VscSmiley } from 'react-icons/vsc'
+import { useContentFeedbackMutation } from '@/services/admin'
 import WikiAccordion from '../../WikiAccordion'
 
-const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
+const ContentFeedback = ({
+  feedback,
+  wikiId,
+  userId,
+}: {
+  feedback: boolean
+  wikiId: string
+  userId: string | undefined
+}) => {
   const [feedbackVal, setFeedbackVal] = useState<boolean>(feedback)
-  const sendFeedback = () => {
-    setFeedbackVal(false)
+  const [contentFeedback] = useContentFeedbackMutation()
+  const sendFeedback = async (choice: boolean) => {
+    if (userId) {
+      setFeedbackVal(false)
+      await contentFeedback({ wikiId, userId, choice })
+    }
   }
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -37,7 +50,7 @@ const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
                   size="md"
                   fontWeight="normal"
                   leftIcon={<FiThumbsUp fontSize="20px" />}
-                  onClick={() => sendFeedback()}
+                  onClick={() => sendFeedback(true)}
                 >
                   Yes
                 </Button>
@@ -48,7 +61,7 @@ const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
                   size="md"
                   fontWeight="normal"
                   leftIcon={<FiThumbsDown fontSize="20px" />}
-                  onClick={() => sendFeedback()}
+                  onClick={() => sendFeedback(false)}
                 >
                   No
                 </Button>

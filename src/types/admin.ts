@@ -8,6 +8,12 @@ export type EditorsType = {
   author: { id: string; profile: { username: string } }
 }
 
+export type ContentFeedbackArgs = {
+  wikiId: string
+  userId: string
+  choice: boolean
+}
+
 export type WikisModifiedCount = {
   amount: number
   startOn: string
