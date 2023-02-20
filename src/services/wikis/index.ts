@@ -21,21 +21,14 @@ import {
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
 } from '@/services/wikis/queries'
-import { User, Wiki, WikiPreview } from '@everipedia/iq-utils'
+import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
-import { RecordTypePicker } from '@everipedia/iq-utils'
+import { CommonUser } from '@/types/wiki'
 
-type WikisResponse = RecordTypePicker<
-  Wiki,
+type WikisResponse = WikiBuilder<
   {
-    user: {
-      id: string
-      profile: {
-        username: string
-        avatar: string
-      }
-    }
+    user: CommonUser
   },
   | 'title'
   | 'content'
@@ -45,10 +38,12 @@ type WikisResponse = RecordTypePicker<
   | 'categories'
   | 'ipfs'
   | 'media'
->[]
+  | 'author'
+  | 'id'
+>
 
 type GetWikisResponse = {
-  wikis: Wiki[]
+  wikis: WikisResponse[]
 }
 
 type GetPromotedWikisResponse = {
@@ -161,7 +156,7 @@ export const wikiApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getWikis: builder.query<Wiki[], void>({
+    getWikis: builder.query<WikisResponse[], void>({
       query: () => ({ document: GET_WIKIS }),
       transformResponse: (response: GetWikisResponse) => response.wikis,
     }),
