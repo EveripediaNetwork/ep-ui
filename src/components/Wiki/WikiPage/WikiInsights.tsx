@@ -22,6 +22,7 @@ import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
+import ContentFeedback from './InsightComponents/ContentFeedback'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -102,6 +103,7 @@ const WikiInsights = ({
             views={wiki.views}
           />
           <ProfileSummary wiki={wiki} />
+          <ContentFeedback feedback />
           {!!coingeckoLink && (
             <>
               <ProfileStatistics tokenStats={tokenStats} />
