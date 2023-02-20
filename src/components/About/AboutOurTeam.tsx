@@ -46,10 +46,15 @@ const AboutOurTeam = () => {
       spacing={8}
       maxW={{ base: '100%', lg: '80%', '2xl': '65%' }}
       mx="auto"
-      mt="24"
+      mt={{ base: 20, md: '24 !important' }}
     >
       <Heading size="lg">{t('meetTeamHead')}</Heading>
-      <Text align="center" maxW="3xl">
+      <Text
+        align="center"
+        maxW="90%"
+        mx="auto"
+        fontSize={{ base: '16px', md: '18px', xl: '20px' }}
+      >
         {t('meetTeamContent')}
       </Text>
       <Box className="about__ourTeamSliderWrapper" w="100%">
