@@ -278,6 +278,7 @@ export const WikiEditorsInsightTable = () => {
       </Flex>
       <WikiEditorInsightFooter
         searchKeyWord={searchKeyWord}
+        paginateOffset={paginateOffset}
         allowNext={allowNext}
         setAllowNext={setAllowNext}
         decreasePagination={decreasePagination}

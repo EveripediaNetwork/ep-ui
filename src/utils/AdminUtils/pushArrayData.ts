@@ -6,7 +6,7 @@ export const pushItems = (
 ) => {
   parentArray
     ?.filter(item => {
-      return item?.wikisCreated?.length > 0 || item?.wikisEdited.length > 0
+      return item?.wikisCreated
     })
     ?.forEach(item => {
       childArray.push({
