@@ -13,8 +13,7 @@ export const LinkWrapper = ({
     <NextLink
       href={href}
       prefetch={
-        String(href).includes('/create-wiki') ||
-        String(href).includes('/static/about')
+        String(href).includes('/create-wiki') || String(href).includes('/about')
           ? false
           : prefetch
       }
