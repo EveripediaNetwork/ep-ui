@@ -87,12 +87,17 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 3,
+    label: 'Rank',
+    href: '/rank',
+  },
+  {
+    id: 4,
     label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
       {
-        id: 301,
+        id: 401,
         label: 'IQ Learn',
         icon: RiBook2Fill,
         href: 'https://learn.everipedia.org/iq/',
@@ -100,7 +105,7 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 304,
+        id: 404,
         label: 'IQ Dashboard',
         icon: RiNumbersFill,
         href: 'https://iq.braindao.org',
@@ -108,21 +113,21 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 302,
+        id: 402,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
       {
-        id: 303,
+        id: 404,
         label: 'About Us',
         icon: RiUserSearchFill,
         href: '/static/about',
         hasImage: true,
       },
       {
-        id: 305,
+        id: 405,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
@@ -132,7 +137,7 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     label: 'Create Wiki',
     href: '/create-wiki',
     icon: RiAddBoxFill,
