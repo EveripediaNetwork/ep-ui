@@ -31,7 +31,7 @@ const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
                 fontSize="14px"
               >
                 <Button
-                  w="40%"
+                  w="48%"
                   rounded="lg"
                   fontSize="16px"
                   size="md"
@@ -42,7 +42,7 @@ const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
                   Yes
                 </Button>
                 <Button
-                  w="40%"
+                  w="48%"
                   rounded="lg"
                   fontSize="16px"
                   size="md"
