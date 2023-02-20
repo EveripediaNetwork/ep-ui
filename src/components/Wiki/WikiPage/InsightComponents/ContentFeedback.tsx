@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import WikiAccordion from '../../WikiAccordion'
 import { VStack, Text, Flex, Button, Box } from '@chakra-ui/react'
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi'
 import { VscSmiley } from 'react-icons/vsc'
+import WikiAccordion from '../../WikiAccordion'
 
 const ContentFeedback = ({ feedback }: { feedback: boolean }) => {
   const [feedbackVal, setFeedbackVal] = useState<boolean>(feedback)
