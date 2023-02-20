@@ -24,6 +24,28 @@ import {
 import { User, Wiki, WikiPreview } from '@everipedia/iq-utils'
 import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
+import { RecordTypePicker } from '@everipedia/iq-utils'
+
+type WikisResponse = RecordTypePicker<
+  Wiki,
+  {
+    user: {
+      id: string
+      profile: {
+        username: string
+        avatar: string
+      }
+    }
+  },
+  | 'title'
+  | 'content'
+  | 'summary'
+  | 'images'
+  | 'tags'
+  | 'categories'
+  | 'ipfs'
+  | 'media'
+>[]
 
 type GetWikisResponse = {
   wikis: Wiki[]
