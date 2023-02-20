@@ -2,14 +2,13 @@ import {
   useGetSearchedEditorsQuery,
   useToggleUserMutation,
   useGetHiddenEditorsQuery,
-  getEditors,
+  useGetEditorsQuery,
 } from '@/services/admin'
-import { store } from '@/store/store'
-import { Editors, EditorsTable } from '@/types/admin'
+import { EditorsTable } from '@/types/admin'
 import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
 import { pushItems } from '@/utils/AdminUtils/pushArrayData'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { DeleteEditorModal } from './DeleteEditorModal'
@@ -49,31 +48,12 @@ export const WikiEditorsInsightTable = () => {
   const newObj: EditorsTable[] = useMemo(() => [], [])
   const newSearchObj: EditorsTable[] = useMemo(() => [], [])
   const hiddenEditorsArr: EditorsTable[] = useMemo(() => [], [])
-  const [editors, setEditors] = useState<Editors[]>()
 
-  const getEditorsData = useCallback(async (paginationOffset = 0) => {
-    const { data: editorsTable } = await store.dispatch(
-      getEditors.initiate({
-        limit: 10,
-        offset: paginationOffset,
-      }),
-    )
+  const { data: editors } = useGetEditorsQuery({
+    limit: 10,
+    offset: paginateOffset,
+  })
 
-    console.log({ editorsTable, paginationOffset })
-
-    if (editorsTable) {
-      setEditors(editorsTable)
-    }
-  }, [])
-
-  useEffect(() => {
-    getEditorsData()
-  }, [getEditorsData])
-
-  // const { data: editors } = useGetEditorsQuery({
-  //   limit: 10,
-  //   offset: paginateOffset,
-  // })
   const { data: hiddeneditors } = useGetHiddenEditorsQuery(
     {
       limit: 10,
@@ -145,31 +125,33 @@ export const WikiEditorsInsightTable = () => {
   pushItems(searchedEditors, newSearchObj)
   pushItems(hiddeneditors, hiddenEditorsArr)
 
-  // useEffect(() => {
-  //   // newObj.length = 0
+  useEffect(() => {
+    setEditorsData(newObj)
+    newObj.length = 0
 
-  //   setEditorsData(() => {
-  //     return newObj
-  //   })
-  //   setAllowNext(true)
-  // }, [editors, newObj, editorsFilteredArr])
+    setEditorsData(() => {
+      return [...newObj]
+    })
+    setAllowNext(true)
+  }, [editors, newObj, editorsFilteredArr])
 
-  // useEffect(() => {
-  //   // newSearchObj.length = 0
+  useEffect(() => {
+    newSearchObj.length = 0
 
-  //   setSearchedEditorsData(() => {
-  //     return newSearchObj
-  //   })
-  //   setAllowNext(true)
-  // }, [searchedEditors, newSearchObj])
+    setSearchedEditorsData(() => {
+      return [...newSearchObj]
+    })
+    setAllowNext(true)
+  }, [searchedEditors, newSearchObj])
 
-  // useEffect(() => {
-  //   // hiddenEditorsArr.length = 0
+  useEffect(() => {
+    setHiddenEditorsData(hiddenEditorsArr)
+    hiddenEditorsArr.length = 0
 
-  //   setHiddenEditorsData(() => {
-  //     return hiddenEditorsArr
-  //   })
-  // }, [hiddeneditors, hiddenEditorsArr])
+    setHiddenEditorsData(() => {
+      return [...hiddenEditorsArr]
+    })
+  }, [hiddeneditors, hiddenEditorsArr])
 
   const scrolltoTableTop = () => {
     editorTableRef?.current?.scrollIntoView({
@@ -178,18 +160,16 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const increasePagination = () => {
-    if (editors && editors?.length >= 10) {
-      getEditorsData(paginateOffset + 10)
-      setPaginateOffset(p => p + 10)
-    }
+    return (
+      editors && editors?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    )
+  }
+  const decreasePagination = () => {
+    return (
+      editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
+    )
   }
 
-  const decreasePagination = () => {
-    if (editors && editors?.length >= 10) {
-      getEditorsData(paginateOffset - 10)
-      setPaginateOffset(p => p - 10)
-    }
-  }
   const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
