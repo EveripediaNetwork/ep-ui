@@ -54,9 +54,21 @@ type GetWikiResponse = {
   wiki: Wiki
 }
 
+type UserWikiBuilder = WikiBuilder<
+  {
+    user: CommonUser
+  },
+  'title' | 'summary' | 'images' | 'updated'
+>
+
+// type UserActivityBuilder = ActivityBuilder<
+//   { content: WikiBuilder<{ id: string }, 'title' | 'user'>[] },
+//   'id' | 'type'
+// >
+
 type GetUserWikiResponse = {
   userById: {
-    wikis: Wiki[]
+    wikis: UserWikiBuilder[]
     wikisCreated: Activity[]
     wikisEdited: Activity[]
   }
