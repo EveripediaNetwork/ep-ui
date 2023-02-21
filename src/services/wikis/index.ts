@@ -23,7 +23,7 @@ import {
 } from '@/services/wikis/queries'
 import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
-import { Activity, ActivityBuilder } from '@/types/ActivityDataType'
+import { ActivityBuilder } from '@/types/ActivityDataType'
 import { CommonUser } from '@/types/wiki'
 
 type RecentWikisBuilder = WikiBuilder<
@@ -61,20 +61,26 @@ type UserWikiBuilder = WikiBuilder<
   'title' | 'summary' | 'images' | 'updated'
 >
 
-type UserActivityOverride = {
-  content: WikiBuilder<
-    { user: User },
-    'title' | 'summary' | 'images' | 'updated' | 'id' | 'categories' | 'tags'
-  >[]
-}
-
-export type UserActivity = ActivityBuilder<UserActivityOverride, 'datetime'>
+export type UserActivity = ActivityBuilder<
+  {
+    content: {
+      user: User
+      tags: {
+        id: string
+      }[]
+      categories: {
+        id: string
+      }[]
+    }[]
+  },
+  'datetime' | 'id' | 'wikiId' | 'type'
+>
 
 type GetUserWikiResponse = {
   userById: {
     wikis: UserWikiBuilder[]
     wikisCreated: UserActivity[]
-    wikisEdited: Activity[]
+    wikisEdited: UserActivity[]
   }
 }
 
@@ -207,7 +213,7 @@ export const wikiApi = createApi({
         return response.userById.wikisCreated
       },
     }),
-    getUserEditedWikis: builder.query<Activity[], WikiArg>({
+    getUserEditedWikis: builder.query<UserActivity[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => {
         return {
           document: GET_USER_EDITED_WIKIS_BY_ID,
