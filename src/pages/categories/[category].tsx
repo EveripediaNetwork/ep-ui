@@ -103,9 +103,9 @@ const CategoryPage = ({
           newWikis={newWikis}
         />
         <Divider
-          opacity="1 !important"
-          bgColor="gray.500"
-          _dark={{ bgColor: 'whiteAlpha.200' }}
+          opacity="1"
+          borderColor="gray.300"
+          _dark={{ boderColor: 'whiteAlpha.200' }}
         />
         <Box mt={10}>
           {wikisInCategory.length > 0 ? (
