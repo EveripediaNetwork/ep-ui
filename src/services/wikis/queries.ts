@@ -119,25 +119,13 @@ export const GET_PROMOTED_WIKIS = gql`
   query GetPromotedWikis {
     promotedWikis {
       id
-      ipfs
-      created
       updated
       title
       summary
       promoted
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      metadata {
-        id
       }
       user {
         id
