@@ -70,6 +70,7 @@ export type UserActivity = ActivityBuilder<
       }[]
       categories: {
         id: string
+        title: string
       }[]
     }[]
   },
