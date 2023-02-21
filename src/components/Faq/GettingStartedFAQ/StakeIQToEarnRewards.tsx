@@ -24,4 +24,3 @@ const StakeIQToEarnRewards = () => {
 }
 
 export default StakeIQToEarnRewards
-
