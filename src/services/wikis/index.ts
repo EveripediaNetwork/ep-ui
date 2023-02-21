@@ -78,6 +78,7 @@ export type UserActivity = ActivityBuilder<
       images: {
         id: string
         title: string
+        type: string
       }[]
       updated: string
     }[]

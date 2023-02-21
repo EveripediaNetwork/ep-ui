@@ -41,7 +41,7 @@ function shuffleArray(a: (Activity | UserActivity)[]) {
 
 export const useWikiSubRecommendations = (userId?: string) => {
   const [recommendations, setRecommendations] = useState<
-    (Activity | UserActivity)[]
+    (UserActivity | Activity)[]
   >([])
   const { data: wikiSubs } = useGetAllWikiSubscriptionQuery(userId || '')
   const [loading, setLoading] = useState(true)
@@ -53,7 +53,7 @@ export const useWikiSubRecommendations = (userId?: string) => {
 
       // GET ALL USER MODIFIED WIKIS
       let userModifiedWikis: (Activity | UserActivity)[] = []
-      let newRecommendations: (Activity | UserActivity)[] = []
+      let newRecommendations: (UserActivity | Activity)[] = []
       await Promise.all([
         store.dispatch(getUserCreatedWikis.initiate({ id: userId, limit: 10 })),
         store.dispatch(getUserEditedWikis.initiate({ id: userId, limit: 10 })),
