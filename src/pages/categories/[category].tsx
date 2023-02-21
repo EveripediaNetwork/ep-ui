@@ -102,7 +102,11 @@ const CategoryPage = ({
           trending={trending}
           newWikis={newWikis}
         />
-        <Divider bgColor="gray.300" _dark={{ bgColor: 'whiteAlpha.200' }} />
+        <Divider
+          opacity="1"
+          borderColor="gray.300"
+          _dark={{ boderColor: 'whiteAlpha.200' }}
+        />
         <Box mt={10}>
           {wikisInCategory.length > 0 ? (
             <>
