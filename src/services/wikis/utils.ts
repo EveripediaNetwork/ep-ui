@@ -1,7 +1,12 @@
 import { store } from '@/store/store'
 import { Activity } from '@/types/ActivityDataType'
 import { useEffect, useState } from 'react'
-import { getUserCreatedWikis, getUserEditedWikis, postWikiViewCount } from '.'
+import {
+  getUserCreatedWikis,
+  getUserEditedWikis,
+  postWikiViewCount,
+  UserActivity,
+} from '.'
 import { useGetAllWikiSubscriptionQuery } from '../notification'
 
 export const incrementWikiViewCount = async (slug: string) => {
@@ -25,7 +30,7 @@ export const incrementWikiViewCount = async (slug: string) => {
   }
 }
 
-function shuffleArray(a: Activity[]) {
+function shuffleArray(a: (Activity | UserActivity)[]) {
   const array = [...a]
   for (let i = array.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -35,7 +40,9 @@ function shuffleArray(a: Activity[]) {
 }
 
 export const useWikiSubRecommendations = (userId?: string) => {
-  const [recommendations, setRecommendations] = useState<Activity[]>([])
+  const [recommendations, setRecommendations] = useState<
+    (Activity | UserActivity)[]
+  >([])
   const { data: wikiSubs } = useGetAllWikiSubscriptionQuery(userId || '')
   const [loading, setLoading] = useState(true)
 
@@ -45,8 +52,8 @@ export const useWikiSubRecommendations = (userId?: string) => {
       setLoading(true)
 
       // GET ALL USER MODIFIED WIKIS
-      let userModifiedWikis: Activity[] = []
-      let newRecommendations: Activity[] = []
+      let userModifiedWikis: (Activity | UserActivity)[] = []
+      let newRecommendations: (Activity | UserActivity)[] = []
       await Promise.all([
         store.dispatch(getUserCreatedWikis.initiate({ id: userId, limit: 10 })),
         store.dispatch(getUserEditedWikis.initiate({ id: userId, limit: 10 })),
@@ -68,8 +75,11 @@ export const useWikiSubRecommendations = (userId?: string) => {
           .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id))
           .slice(0, 3)
       } else {
-        const getNewRecommendation: () => Activity | null = () => {
-          let randomWiki: Activity | null = null
+        const getNewRecommendation: () =>
+          | Activity
+          | UserActivity
+          | null = () => {
+          let randomWiki: Activity | UserActivity | null = null
           userModifiedWikis.every(w => {
             const isWikiAlreadyRecommended = recommendations.find(
               r => r.content[0].id === w.content[0].id,

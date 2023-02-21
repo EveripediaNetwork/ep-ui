@@ -64,6 +64,9 @@ type UserWikiBuilder = WikiBuilder<
 export type UserActivity = ActivityBuilder<
   {
     content: {
+      title: string
+      id: string
+      summary: string
       user: User
       tags: {
         id: string
@@ -72,6 +75,11 @@ export type UserActivity = ActivityBuilder<
         id: string
         title: string
       }[]
+      images: {
+        id: string
+        title: string
+      }[]
+      updated: string
     }[]
   },
   'datetime' | 'id' | 'wikiId' | 'type'
