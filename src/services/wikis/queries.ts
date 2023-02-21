@@ -98,25 +98,11 @@ export const GET_WIKIS = gql`
   query GetWikis {
     wikis {
       id
-      ipfs
-      created
-      updated
       title
       summary
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      metadata {
-        id
-        value
       }
       user {
         id

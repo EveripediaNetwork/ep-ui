@@ -26,24 +26,15 @@ import config from '@/config'
 import { Activity } from '@/types/ActivityDataType'
 import { CommonUser } from '@/types/wiki'
 
-type WikisResponse = WikiBuilder<
+type RecentWikisResponse = WikiBuilder<
   {
     user: CommonUser
   },
-  | 'title'
-  | 'content'
-  | 'summary'
-  | 'images'
-  | 'tags'
-  | 'categories'
-  | 'ipfs'
-  | 'media'
-  | 'author'
-  | 'id'
+  'title' | 'summary' | 'images' | 'id'
 >
 
-type GetWikisResponse = {
-  wikis: WikisResponse[]
+type GetRecentWikisResponse = {
+  wikis: RecentWikisResponse[]
 }
 
 type GetPromotedWikisResponse = {
@@ -156,9 +147,9 @@ export const wikiApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getWikis: builder.query<WikisResponse[], void>({
+    getWikis: builder.query<RecentWikisResponse[], void>({
       query: () => ({ document: GET_WIKIS }),
-      transformResponse: (response: GetWikisResponse) => response.wikis,
+      transformResponse: (response: GetRecentWikisResponse) => response.wikis,
     }),
     getPromotedWikis: builder.query<Wiki[], void>({
       query: () => ({ document: GET_PROMOTED_WIKIS }),
@@ -338,7 +329,6 @@ export const {
   useGetWikiPreviewQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
-
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
