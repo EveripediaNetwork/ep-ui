@@ -17,7 +17,7 @@ import {
   RiUserSearchFill,
   RiNumbersFill,
   RiGroup2Fill,
-  RiCopperCoinLine,
+  RiCopperDiamondLine,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -73,7 +73,7 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 107,
         label: 'Dapps',
-        icon: RiCopperCoinLine,
+        icon: RiCopperDiamondLine,
         href: '/categories/dapps',
         hasImage: true,
       },
