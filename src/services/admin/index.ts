@@ -110,7 +110,7 @@ type SearchedEditorQueryParams = {
 }
 
 type SearchedEditorsRes = {
-  usersById: Editors[]
+  getProfileLikeUsername: Editors[]
 }
 
 type EditorQueryParams = {
@@ -244,7 +244,8 @@ export const adminApi = createApi({
         document: SEARCHED_EDITORS,
         variables: { id, username },
       }),
-      transformResponse: (response: SearchedEditorsRes) => response.usersById,
+      transformResponse: (response: SearchedEditorsRes) =>
+        response.getProfileLikeUsername,
     }),
     toggleUser: builder.mutation<ToggleUser, ToggleUserArgs>({
       query: ({ id, active }) => ({

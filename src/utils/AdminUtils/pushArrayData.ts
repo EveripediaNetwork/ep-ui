@@ -1,8 +1,17 @@
 import { Editors, EditorsTable } from '@/types/admin'
 
+export const userNameData = (item: Editors, type: string) => {
+  if (type === 'search') {
+    return item?.username ? item?.username : 'Unknown'
+  }
+
+  return item?.profile?.username ? item?.profile?.username : 'Unknown'
+}
+
 export const pushItems = (
   parentArray: Editors[] | undefined,
   childArray: EditorsTable[],
+  type?: string,
 ) => {
   parentArray
     ?.filter(item => {
@@ -10,9 +19,7 @@ export const pushItems = (
     })
     ?.forEach(item => {
       childArray.push({
-        editorName: item?.profile?.username
-          ? item?.profile?.username
-          : 'Unknown',
+        editorName: userNameData(item, type),
         editorAvatar: item?.profile?.avatar ? item?.profile?.avatar : '',
         editorAddress: item?.id,
         createdWikis: item?.wikisCreated,

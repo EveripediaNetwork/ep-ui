@@ -62,25 +62,13 @@ export const WikiEditorsInsightTable = () => {
     { skip: initiateFilterEditors },
   )
 
-  const myData = useGetSearchedEditorsQuery(
+  const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
       id: searchKeyWord,
       username: searchKeyWord,
     },
     { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
   )
-
-  console.log(myData)
-
-  const { data: searchedEditors } = useGetSearchedEditorsQuery(
-    {
-      id: searchKeyWord,
-      username: searchKeyWord,
-    },
-    { skip: initiateFetchSearchEditors },
-  )
-
-  console.log({ searchedEditors, searchKeyWord, initiateFetchSearchEditors })
 
   // sorting editors
   const editorsSortByHighest = editors?.slice()
@@ -135,7 +123,7 @@ export const WikiEditorsInsightTable = () => {
   ]
 
   pushItems(editorsFilteredArr, newObj)
-  pushItems(searchedEditors, newSearchObj)
+  pushItems(searchedEditors, newSearchObj, 'search')
   pushItems(hiddeneditors, hiddenEditorsArr)
 
   useEffect(() => {
