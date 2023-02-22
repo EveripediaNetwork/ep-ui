@@ -156,10 +156,10 @@ export const adminApi = createApi({
       transformResponse: (response: PageViewsCountResponse) =>
         response.pageViewsCount,
     }),
-    getHiddenEditors: builder.query<Editors[], EditorQueryParams>({
-      query: ({ limit, offset }: { limit: number; offset: number }) => ({
+    getHiddenEditors: builder.query<Editors[], number>({
+      query: (  offset: number ) => ({
         document: HIDDEN_EDITORS_TABLE,
-        variables: { limit, offset },
+        variables: { offset },
       }),
       transformResponse: (response: HiddenEditorsRes) => response.usersHidden,
     }),
