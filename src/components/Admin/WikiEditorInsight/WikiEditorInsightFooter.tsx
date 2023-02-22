@@ -58,7 +58,8 @@ const WikiEditorInsightFooter = ({
             scrolltoTableTop()
             increasePagination()
           }
-          setAllowNext(false)
+
+          setAllowNext(true)
           if (editorsData && editorsData?.length >= 7) {
             setActivatePrevious(true)
           }

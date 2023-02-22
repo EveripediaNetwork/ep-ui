@@ -96,9 +96,9 @@ export const InsightTableWikiEditors = (
             <TableHead text="Action" />
           </Tr>
         </Thead>
-        <Tbody>
+        {/* <Tbody>
           {wikiEditorInsightData
-            .filter(item =>
+            ?.filter(item =>
               filterBy.length > 0
                 ? item.active === filterBoolean
                 : item.createdWikis,
@@ -224,7 +224,7 @@ export const InsightTableWikiEditors = (
                 </Tr>
               )
             })}
-        </Tbody>
+        </Tbody> */}
       </Table>
     </TableContainer>
   ) : (
