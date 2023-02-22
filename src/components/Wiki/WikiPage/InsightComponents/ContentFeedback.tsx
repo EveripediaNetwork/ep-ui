@@ -17,10 +17,8 @@ const ContentFeedback = ({
   const [feedbackVal, setFeedbackVal] = useState<boolean>(feedback)
   const [contentFeedback] = useContentFeedbackMutation()
   const sendFeedback = async (choice: boolean) => {
-    if (userId) {
-      setFeedbackVal(false)
-      await contentFeedback({ wikiId, userId, choice })
-    }
+    setFeedbackVal(false)
+    await contentFeedback({ wikiId, userId, choice })
   }
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
