@@ -10,7 +10,7 @@ export type EditorsType = {
 
 export type ContentFeedbackArgs = {
   wikiId: string
-  userId: string
+  userId?: string
   choice: boolean
 }
 
