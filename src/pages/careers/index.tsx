@@ -15,6 +15,7 @@ const OurCareers = () => {
         py={{ base: 8, lg: 16 }}
         mx="auto"
         px={{ base: '5', md: 0 }}
+        gap={{ base: 10, md: '15' }}
       >
         {AllCareers.map((career, i) => (
           <CareerCard
