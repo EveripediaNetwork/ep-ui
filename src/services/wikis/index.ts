@@ -2,7 +2,6 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
-  GET_USER_WIKIS_BY_ID,
   GET_WIKI_BY_ID,
   GET_WIKIS,
   GET_WIKIS_BY_CATEGORY,
@@ -18,40 +17,80 @@ import {
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
   POST_FLAG_WIKI,
-  GET_ACTIVITY_CARD_DETAILS,
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
 } from '@/services/wikis/queries'
-import {
-  ActivityCardDetails,
-  User,
-  Wiki,
-  WikiPreview,
-} from '@everipedia/iq-utils'
+import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
-import { Activity } from '@/types/ActivityDataType'
+import { ActivityBuilder } from '@/types/ActivityDataType'
+import { CommonUser } from '@/types/wiki'
 
-type GetWikisResponse = {
-  wikis: Wiki[]
+type RecentWikisBuilder = WikiBuilder<
+  {
+    user: CommonUser
+  },
+  'title' | 'summary' | 'images' | 'id'
+>
+
+type GetRecentWikisResponse = {
+  wikis: RecentWikisBuilder[]
 }
 
+export type PromotedWikisBuilder = WikiBuilder<
+  { user: CommonUser },
+  'title' | 'summary' | 'images' | 'id' | 'updated' | 'promoted'
+>
+
 type GetPromotedWikisResponse = {
-  promotedWikis: Wiki[]
+  promotedWikis: PromotedWikisBuilder[]
 }
 
 type GetWikiPreviewResponse = {
   wiki: WikiPreview
 }
+
 type GetWikiResponse = {
   wiki: Wiki
 }
 
+type UserWikiBuilder = WikiBuilder<
+  {
+    user: CommonUser
+  },
+  'title' | 'summary' | 'images' | 'updated'
+>
+
+export type UserActivity = ActivityBuilder<
+  {
+    content: {
+      title: string
+      id: string
+      summary: string
+      user: User
+      tags: {
+        id: string
+      }[]
+      categories: {
+        id: string
+        title: string
+      }[]
+      images: {
+        id: string
+        title: string
+        type: string
+      }[]
+      updated: string
+    }[]
+  },
+  'datetime' | 'id' | 'wikiId' | 'type'
+>
+
 type GetUserWikiResponse = {
   userById: {
-    wikis: Wiki[]
-    wikisCreated: Activity[]
-    wikisEdited: Activity[]
+    wikis: UserWikiBuilder[]
+    wikisCreated: UserActivity[]
+    wikisEdited: UserActivity[]
   }
 }
 
@@ -145,11 +184,11 @@ export const wikiApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: builder => ({
-    getWikis: builder.query<Wiki[], void>({
+    getWikis: builder.query<RecentWikisBuilder[], void>({
       query: () => ({ document: GET_WIKIS }),
-      transformResponse: (response: GetWikisResponse) => response.wikis,
+      transformResponse: (response: GetRecentWikisResponse) => response.wikis,
     }),
-    getPromotedWikis: builder.query<Wiki[], void>({
+    getPromotedWikis: builder.query<PromotedWikisBuilder[], void>({
       query: () => ({ document: GET_PROMOTED_WIKIS }),
       transformResponse: (response: GetPromotedWikisResponse) =>
         response.promotedWikis,
@@ -157,13 +196,6 @@ export const wikiApi = createApi({
     getWikiPreview: builder.query<WikiPreview, string>({
       query: (id: string) => ({
         document: GET_PREVIEW_WIKI_BY_ID,
-        variables: { id },
-      }),
-      transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
-    }),
-    getWikiActivityCardDetails: builder.query<ActivityCardDetails, string>({
-      query: (id: string) => ({
-        document: GET_ACTIVITY_CARD_DETAILS,
         variables: { id },
       }),
       transformResponse: (response: GetWikiPreviewResponse) => response.wiki,
@@ -180,17 +212,7 @@ export const wikiApi = createApi({
       transformResponse: (response: WikiCreatorAndEditorResponse) =>
         response.wiki,
     }),
-    getUserWikis: builder.query<Wiki[], WikiArg>({
-      query: ({ id, limit, offset }: WikiArg) => {
-        return {
-          document: GET_USER_WIKIS_BY_ID,
-          variables: { id, limit, offset },
-        }
-      },
-      transformResponse: (response: GetUserWikiResponse) =>
-        response.userById.wikis,
-    }),
-    getUserCreatedWikis: builder.query<Activity[], WikiArg>({
+    getUserCreatedWikis: builder.query<UserActivity[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => {
         return {
           document: GET_USER_CREATED_WIKIS_BY_ID,
@@ -201,7 +223,7 @@ export const wikiApi = createApi({
         return response.userById.wikisCreated
       },
     }),
-    getUserEditedWikis: builder.query<Activity[], WikiArg>({
+    getUserEditedWikis: builder.query<UserActivity[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => {
         return {
           document: GET_USER_EDITED_WIKIS_BY_ID,
@@ -342,10 +364,8 @@ export const {
   useGetPromotedWikisQuery,
   useGetWikiQuery,
   useGetWikiPreviewQuery,
-  useGetUserWikisQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
-  useGetWikiActivityCardDetailsQuery,
   useGetTagWikisQuery,
   useGetUserCreatedWikisQuery,
   useGetUserEditedWikisQuery,
@@ -365,9 +385,7 @@ export const {
   getWiki,
   getWikiCreatorAndEditor,
   getWikiPreview,
-  getWikiActivityCardDetails,
   getWikiPreviewsByCategory,
-  getUserWikis,
   getWikisByCategory,
   getTagWikis,
   postWiki,
