@@ -105,7 +105,7 @@ const CategoryPage = ({
         <Divider
           opacity="1"
           borderColor="gray.300"
-          _dark={{ boderColor: 'whiteAlpha.200' }}
+          _dark={{ borderColor: 'whiteAlpha.200' }}
         />
         <Box mt={10}>
           {wikisInCategory.length > 0 ? (

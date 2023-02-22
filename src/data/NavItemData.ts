@@ -105,7 +105,7 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 404,
+        id: 402,
         label: 'IQ Dashboard',
         icon: RiNumbersFill,
         href: 'https://iq.braindao.org',
@@ -113,7 +113,7 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 402,
+        id: 403,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',

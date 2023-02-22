@@ -10,7 +10,7 @@ export type EditorsType = {
 
 export type ContentFeedbackArgs = {
   wikiId: string
-  userId: string
+  userId?: string
   choice: boolean
 }
 
@@ -90,6 +90,7 @@ export type CreatedWikisCount = Pick<
 export interface Editors {
   id: string
   active: boolean
+  username?: string
   profile: { username: string | null; avatar: string }
   wikisCreated: {
     id: string

@@ -5,6 +5,7 @@ import { EditorsTable } from '@/types/admin'
 
 type WikiEditorInsightFooterProps = {
   searchKeyWord: string
+  paginateOffset: number
   activatePrevious: boolean
   allowNext: boolean
   editorsData?: EditorsTable[]
@@ -17,6 +18,7 @@ type WikiEditorInsightFooterProps = {
 
 const WikiEditorInsightFooter = ({
   searchKeyWord,
+  paginateOffset,
   activatePrevious,
   editorsData,
   scrolltoTableTop,
@@ -40,7 +42,7 @@ const WikiEditorInsightFooter = ({
         onClick={() => {
           scrolltoTableTop()
           decreasePagination()
-          if (editorsData && editorsData?.length >= 10) {
+          if (paginateOffset === 0) {
             setActivatePrevious(false)
           }
         }}
@@ -48,7 +50,7 @@ const WikiEditorInsightFooter = ({
         Previous
       </Button>
       <Button
-        disabled={editorsData && editorsData?.length < 2}
+        disabled={!editorsData || editorsData.length === 0}
         rightIcon={<ArrowForwardIcon />}
         variant="outline"
         onClick={() => {

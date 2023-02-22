@@ -179,14 +179,13 @@ export const HIDDEN_EDITORS_TABLE = gql`
 `
 
 export const SEARCHED_EDITORS = gql`
-  query Editors($id: String!) {
-    usersById(id: $id) {
+  query Editors($id: String, $username: String) {
+    getProfileLikeUsername(id: $id, username: $username) {
       id
       active
-      profile {
-        username
-        avatar
-      }
+      username
+      avatar
+      bio
       wikisEdited {
         id
         wikiId
@@ -240,7 +239,7 @@ export const REVALIDATE_URL = gql`
 export const CONTENT_FEEDBACK = gql`
   mutation ContentFeedback(
     $wikiId: String!
-    $userId: String!
+    $userId: String
     $choice: Boolean!
   ) {
     contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)

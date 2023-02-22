@@ -13,13 +13,12 @@ import {
   PopoverTrigger,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
 
 type WikiEditorsInsightActionBarProps = {
-  setsearchKeyWord: (searchKeyword: string) => void
-  setInitiateFetchSearchEditors: (intitateSearchEditors: boolean) => void
+  handleSearchKeyword: (e: ChangeEvent<HTMLInputElement>) => void
   handleSortChange: () => void
   isOpenFilter: boolean
   onCloseFilter: () => void
@@ -36,8 +35,6 @@ type WikiEditorsInsightActionBarProps = {
 }
 
 const WikiEditorsInsightActionBar = ({
-  setsearchKeyWord,
-  setInitiateFetchSearchEditors,
   handleSortChange,
   onCloseFilter,
   isOpenFilter,
@@ -48,6 +45,7 @@ const WikiEditorsInsightActionBar = ({
   setChecked,
   checked,
   setFilterEditors,
+  handleSearchKeyword,
 }: WikiEditorsInsightActionBarProps) => {
   return (
     <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
@@ -60,10 +58,7 @@ const WikiEditorsInsightActionBar = ({
             type="text"
             placeholder="Search"
             onChange={e => {
-              setsearchKeyWord(e.target.value)
-              if (e.target.value.length > 2) {
-                setInitiateFetchSearchEditors(false)
-              }
+              handleSearchKeyword(e)
             }}
           />
         </InputGroup>
