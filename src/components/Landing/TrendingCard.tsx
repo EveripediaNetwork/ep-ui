@@ -7,11 +7,13 @@ import {
   HStack,
   VStack,
   Icon,
+  Select,
 } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
 import router from 'next/router'
 import { IconType } from 'react-icons/lib'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { shortenText } from '@/utils/textUtils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
@@ -23,10 +25,14 @@ const TrendingCard = ({
   wikis = [],
   title,
   icon,
+  isTrending,
+  selectedRange,
 }: {
   wikis?: Wiki[]
   title: string
   icon: IconType
+  isTrending?: boolean
+  selectedRange?: (range: string) => void
 }) => {
   return (
     <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
@@ -39,18 +45,43 @@ const TrendingCard = ({
         bg="white"
         _dark={{ bgColor: 'gray.700', color: 'white' }}
       >
-        <chakra.div w="full" alignItems="center" display="flex" pl="2">
-          <Icon
-            cursor="pointer"
-            fontSize="2xl"
-            fontWeight={600}
-            color="brandLinkColor"
-            as={icon}
-          />
-          <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
-            {title}
-          </Text>
-        </chakra.div>
+        <Flex
+          w="full"
+          alignItems="center"
+          pl="2"
+          justifyContent="space-between"
+        >
+          <Flex alignItems="center">
+            <Icon
+              cursor="pointer"
+              fontSize="2xl"
+              fontWeight={600}
+              color="brandLinkColor"
+              as={icon}
+            />
+            <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+              {title}
+            </Text>
+          </Flex>
+          {isTrending ? (
+            <Select
+              h="30px"
+              fontSize="12px"
+              w="100px"
+              icon={<ChevronDownIcon />}
+              mr="2"
+              onChange={e => {
+                if (selectedRange) {
+                  selectedRange(e.target.value)
+                }
+              }}
+            >
+              <option value="0">Today</option>
+              <option value="7">Last week</option>
+              <option value="30">Last Month</option>
+            </Select>
+          ) : null}
+        </Flex>
         {wikis ? (
           <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
             {wikis.map((wiki, i) => (
