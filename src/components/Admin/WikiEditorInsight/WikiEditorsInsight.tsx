@@ -127,7 +127,6 @@ export const WikiEditorsInsightTable = () => {
   pushItems(hiddeneditors, hiddenEditorsArr)
 
   useEffect(() => {
-    setEditorsData(newObj)
     newObj.length = 0
 
     setEditorsData(() => {
@@ -146,7 +145,6 @@ export const WikiEditorsInsightTable = () => {
   }, [searchedEditors, newSearchObj])
 
   useEffect(() => {
-    setHiddenEditorsData(hiddenEditorsArr)
     hiddenEditorsArr.length = 0
 
     setHiddenEditorsData(() => {
