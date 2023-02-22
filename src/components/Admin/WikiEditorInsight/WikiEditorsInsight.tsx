@@ -8,7 +8,7 @@ import { EditorsTable } from '@/types/admin'
 import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
 import { pushItems } from '@/utils/AdminUtils/pushArrayData'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState, useRef } from 'react'
+import React, { useEffect, useMemo, useState, useRef, ChangeEvent } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { DeleteEditorModal } from './DeleteEditorModal'
@@ -66,8 +66,10 @@ export const WikiEditorsInsightTable = () => {
     {
       id: searchKeyWord,
     },
-    { skip: initiateFetchSearchEditors },
+    { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
   )
+
+  console.log({ searchedEditors, searchKeyWord, initiateFetchSearchEditors })
 
   // sorting editors
   const editorsSortByHighest = editors?.slice()
@@ -205,6 +207,15 @@ export const WikiEditorsInsightTable = () => {
     searchKeyWord,
   ])
 
+  const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
+    setsearchKeyWord(() => {
+      return e.target.value
+    })
+    if (e.target.value.length > 2) {
+      setInitiateFetchSearchEditors(false)
+    }
+  }
+
   return (
     <Flex
       flexDir="column"
@@ -229,8 +240,7 @@ export const WikiEditorsInsightTable = () => {
         </Tag>
       </Flex>
       <WikiEditorsInsightActionBar
-        setsearchKeyWord={setsearchKeyWord}
-        setInitiateFetchSearchEditors={setInitiateFetchSearchEditors}
+        handleSearchKeyword={handleSearchKeyword}
         handleSortChange={handleSortChange}
         isOpenFilter={isOpenFilter}
         onCloseFilter={onCloseFilter}
