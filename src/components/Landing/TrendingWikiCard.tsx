@@ -22,7 +22,7 @@ const TrendingWikiCard = ({ trending }: { trending?: Wiki[] }) => {
   })
 
   useEffect(() => {
-    setTrendingWikis(trendingData?.wikisPerVisits)
+    setTrendingWikis(trendingData)
   }, [trendingData])
 
   return (
@@ -31,7 +31,7 @@ const TrendingWikiCard = ({ trending }: { trending?: Wiki[] }) => {
       icon={RiBarChartFill}
       wikis={trendingWikis}
       isTrending
-      selectedRange={selectedRange}
+      setSelectedRange={selectedRange}
     />
   )
 }

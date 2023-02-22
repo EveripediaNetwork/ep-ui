@@ -110,7 +110,7 @@ export async function getStaticProps() {
     }),
   )
 
-  const { data: trendingWikisList } = await store.dispatch(
+  const { data: trending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
       startDay,
@@ -150,8 +150,6 @@ export async function getStaticProps() {
     NFTsListing: NFTsList,
     TokensListing: TokensList,
   }
-
-  const trending = trendingWikisList?.wikisPerVisits
 
   return {
     props: {

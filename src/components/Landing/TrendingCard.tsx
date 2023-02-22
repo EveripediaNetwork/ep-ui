@@ -26,13 +26,13 @@ const TrendingCard = ({
   title,
   icon,
   isTrending,
-  selectedRange,
+  setSelectedRange,
 }: {
   wikis?: Wiki[]
   title: string
   icon: IconType
   isTrending?: boolean
-  selectedRange?: (range: string) => void
+  setSelectedRange?: (range: string) => void
 }) => {
   return (
     <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
@@ -63,7 +63,7 @@ const TrendingCard = ({
               {title}
             </Text>
           </Flex>
-          {isTrending ? (
+          {isTrending && (
             <Select
               h="30px"
               fontSize="12px"
@@ -71,8 +71,8 @@ const TrendingCard = ({
               icon={<ChevronDownIcon />}
               mr="2"
               onChange={e => {
-                if (selectedRange) {
-                  selectedRange(e.target.value)
+                if (setSelectedRange) {
+                  setSelectedRange(e.target.value)
                 }
               }}
             >
@@ -80,7 +80,7 @@ const TrendingCard = ({
               <option value="7">Last week</option>
               <option value="30">Last Month</option>
             </Select>
-          ) : null}
+          )}
         </Flex>
         {wikis ? (
           <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
