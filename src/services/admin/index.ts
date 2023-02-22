@@ -105,7 +105,8 @@ type HiddenEditorsRes = {
   usersHidden: Editors[]
 }
 type SearchedEditorQueryParams = {
-  id: string
+  id?: string
+  username?: string
 }
 
 type SearchedEditorsRes = {
@@ -239,9 +240,9 @@ export const adminApi = createApi({
         response.unhideWiki.Wiki,
     }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
-      query: ({ id }: { id: string }) => ({
+      query: ({ id, username }: { id: string; username: string }) => ({
         document: SEARCHED_EDITORS,
-        variables: { id },
+        variables: { id, username },
       }),
       transformResponse: (response: SearchedEditorsRes) => response.usersById,
     }),

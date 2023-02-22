@@ -62,11 +62,22 @@ export const WikiEditorsInsightTable = () => {
     { skip: initiateFilterEditors },
   )
 
+  const myData = useGetSearchedEditorsQuery(
+    {
+      id: searchKeyWord,
+      username: searchKeyWord,
+    },
+    { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
+  )
+
+  console.log(myData)
+
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
       id: searchKeyWord,
+      username: searchKeyWord,
     },
-    { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
+    { skip: initiateFetchSearchEditors },
   )
 
   console.log({ searchedEditors, searchKeyWord, initiateFetchSearchEditors })
