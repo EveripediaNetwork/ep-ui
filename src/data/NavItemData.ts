@@ -15,9 +15,9 @@ import {
   RiBook2Fill,
   RiTeamFill,
   RiUserSearchFill,
-  RiAppStoreFill,
   RiNumbersFill,
   RiGroup2Fill,
+  RiCopperDiamondLine,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -73,7 +73,7 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 107,
         label: 'Dapps',
-        icon: RiAppStoreFill,
+        icon: RiCopperDiamondLine,
         href: '/categories/dapps',
         hasImage: true,
       },
@@ -123,7 +123,7 @@ export const NAV_ITEMS: NavItem[] = [
         id: 404,
         label: 'About Us',
         icon: RiUserSearchFill,
-        href: '/static/about',
+        href: '/about',
         hasImage: true,
       },
       {

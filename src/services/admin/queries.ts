@@ -236,6 +236,16 @@ export const REVALIDATE_URL = gql`
     revalidatePage(route: $route)
   }
 `
+
+export const CONTENT_FEEDBACK = gql`
+  mutation ContentFeedback(
+    $wikiId: String!
+    $userId: String!
+    $choice: Boolean!
+  ) {
+    contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)
+  }
+`
 export const CHECK_ADMIN = gql`
   query isAdmin {
     isAdmin

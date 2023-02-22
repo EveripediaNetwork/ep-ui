@@ -18,6 +18,7 @@ import {
   GET_PAGE_COUNT,
   CHECK_ADMIN,
   REVALIDATE_URL,
+  CONTENT_FEEDBACK,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -25,6 +26,7 @@ import {
   CreatedWikisCount,
   Editors,
   ToggleUser,
+  ContentFeedbackArgs,
 } from '@/types/admin'
 import { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
@@ -63,6 +65,10 @@ type WikisEditedCountResponse = {
 
 type RevalidateURL = {
   revalidatePage: boolean
+}
+
+type ContentFeedback = {
+  contentFeedback: boolean
 }
 
 type WikisEditorsCountResponse = {
@@ -215,6 +221,15 @@ export const adminApi = createApi({
         return response.revalidatePage
       },
     }),
+    contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
+      query: ({ wikiId, userId, choice }: ContentFeedbackArgs) => ({
+        document: CONTENT_FEEDBACK,
+        variables: { wikiId, userId, choice },
+      }),
+      transformResponse: (response: ContentFeedback) => {
+        return response.contentFeedback
+      },
+    }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
         document: UNHIDE_WIKI,
@@ -286,11 +301,13 @@ export const {
   useGetPageViewCountQuery,
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
+  useContentFeedbackMutation,
 } = adminApi
 
 export const {
   checkIsAdmin,
   revalidateURL,
+  contentFeedback,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,
