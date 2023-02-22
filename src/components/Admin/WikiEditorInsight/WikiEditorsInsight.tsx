@@ -206,6 +206,8 @@ export const WikiEditorsInsightTable = () => {
     searchKeyWord,
   ])
 
+  console.log(completeEditorTable)
+
   const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     setsearchKeyWord(() => {
       return e.target.value
