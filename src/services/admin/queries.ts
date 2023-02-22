@@ -239,7 +239,7 @@ export const REVALIDATE_URL = gql`
 export const CONTENT_FEEDBACK = gql`
   mutation ContentFeedback(
     $wikiId: String!
-    $userId: String!
+    $userId: String 
     $choice: Boolean!
   ) {
     contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)
