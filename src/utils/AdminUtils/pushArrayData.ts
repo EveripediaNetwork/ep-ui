@@ -1,6 +1,6 @@
 import { Editors, EditorsTable } from '@/types/admin'
 
-export const userNameData = (item: Editors, type: string) => {
+export const userNameData = (item: Editors, type?: string) => {
   if (type === 'search') {
     return item?.username ? item?.username : 'Unknown'
   }
