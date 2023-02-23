@@ -23,11 +23,11 @@ import RankingList from '@/components/Landing/RankingList'
 import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
-import { getDateRange } from '@/utils/HomepageUtils/getDate'
+import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
+import { TrendingData } from '@/types/Home'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
-const TRENDING_WIKIS_DAY_RANGE = 1
 
 interface HomePageProps {
   promotedWikis: Wiki[]
@@ -39,7 +39,7 @@ interface HomePageProps {
     NFTsListing: RankCardType[]
     TokensListing: RankCardType[]
   }
-  trending: Wiki[]
+  trending: TrendingData
 }
 
 export const Index = ({
@@ -61,7 +61,7 @@ export const Index = ({
         bgImage="/images/backgrounds/homepage-bg-white.png"
       >
         <TrendingWikis
-          trending={trending && trending}
+          trending={trending}
           recent={recentWikis && recentWikis.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
@@ -75,8 +75,15 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  const { startDay, endDay } = getDateRange({
-    dayRange: TRENDING_WIKIS_DAY_RANGE,
+  const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
+    rangeType: DayRangeType.TODAY,
+  })
+  const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
+    rangeType: DayRangeType.LAST_WEEK,
+  })
+
+  const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
+    rangeType: DayRangeType.LAST_MONTH,
   })
 
   const { data: promotedWikis, error: promotedWikisError } =
@@ -112,11 +119,27 @@ export async function getStaticProps() {
     }),
   )
 
-  const { data: trending } = await store.dispatch(
+  const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
-      startDay,
-      endDay,
+      startDay: todayStartDay,
+      endDay: todayEndDay,
+    }),
+  )
+
+  const { data: weekTrending } = await store.dispatch(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay: weekStartDay,
+      endDay: weekEndDay,
+    }),
+  )
+
+  const { data: monthTrending } = await store.dispatch(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay: monthStartDay,
+      endDay: monthEndDay,
     }),
   )
 
@@ -161,7 +184,7 @@ export async function getStaticProps() {
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
       rankings: rankings || [],
-      trending: trending || [],
+      trending: { todayTrending, weekTrending, monthTrending },
     },
   }
 }
