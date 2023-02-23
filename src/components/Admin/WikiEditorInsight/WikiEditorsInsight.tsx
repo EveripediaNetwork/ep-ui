@@ -183,15 +183,9 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const decreasePagination = () => {
-    if (paginateOffset >= 10 && editors && editors.length > 0) {
-      const newOffset = paginateOffset - 10
-      if (newOffset < 0) {
-        setActivatePrevious(false)
-        setPaginateOffset(0)
-      } else {
-        setPaginateOffset(newOffset)
-      }
-    }
+    return (
+      editors && editors?.length >= 10 && setPaginateOffset(paginateOffset - 10)
+    )
   }
 
   useEffect(() => {
@@ -276,6 +270,7 @@ export const WikiEditorsInsightTable = () => {
         setActivatePrevious={setActivatePrevious}
         scrolltoTableTop={scrolltoTableTop}
         increasePagination={increasePagination}
+        paginateOffset={paginateOffset}
       />
       <DeleteEditorModal
         id={editorState.id}
