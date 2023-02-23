@@ -5,6 +5,7 @@ import {
   getTrendingWikis,
   getWikis,
   wikiApi,
+  PromotedWikisBuilder,
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
@@ -137,7 +138,7 @@ export async function getStaticProps() {
       }`,
     )
   }
-  let sortedPromotedWikis: Wiki[] = []
+  let sortedPromotedWikis: PromotedWikisBuilder[] = []
   if (promotedWikis?.length) {
     sortedPromotedWikis = [...promotedWikis]
     sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)

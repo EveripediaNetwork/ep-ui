@@ -1,4 +1,8 @@
-import { Wiki } from '@everipedia/iq-utils'
+import {
+  RecordTypeNonPrimitive,
+  RecordTypePicker,
+  Wiki,
+} from '@everipedia/iq-utils'
 
 export type Activity = {
   id: string
@@ -8,3 +12,8 @@ export type Activity = {
   datetime: string
   ipfs?: string
 }
+
+export type ActivityBuilder<
+  NonPrimitiveOverrides extends RecordTypeNonPrimitive<Activity>,
+  Keys extends keyof Activity,
+> = RecordTypePicker<Activity, NonPrimitiveOverrides, Keys>
