@@ -6,7 +6,6 @@ import {
 } from '@/services/admin'
 import { Editors } from '@/types/admin'
 import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
-import { pushItems } from '@/utils/AdminUtils/pushArrayData'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, {
   useEffect,
@@ -29,6 +28,7 @@ export const WikiEditorsInsightTable = () => {
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [initiateFetchSearchEditors, setInitiateFetchSearchEditors] =
     useState<boolean>(true)
+  const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<string[]>()
   const [initGetHiddenEditors, setInitGetHiddenEditors] =
     useState<boolean>(true)
@@ -261,6 +261,17 @@ export const WikiEditorsInsightTable = () => {
           }}
         />
       </Flex>
+
+      <WikiEditorInsightFooter
+        searchKeyWord={searchKeyWord}
+        paginateOffset={paginateOffset}
+        decreasePagination={decreasePagination}
+        activatePrevious={activatePrevious}
+        editorsData={editorsList}
+        setActivatePrevious={setActivatePrevious}
+        scrolltoTableTop={scrolltoTableTop}
+        increasePagination={increasePagination}
+      />
       <DeleteEditorModal
         id={editorState.id}
         isActive={editorState.active}
@@ -285,33 +296,4 @@ export const WikiEditorsInsightTable = () => {
       />
     </Flex>
   )
-
-  //   <Flex pb={5}>
-  //     <InsightTableWikiEditors
-  //       wikiInsightData={completeEditorTable}
-  //       toggleUserFunc={(active: boolean, id: string) => {
-  //         const editorData = {
-  //           id,
-  //           active,
-  //         }
-  //         setEditorToBeToggled(editorData)
-  //         onOpen()
-  //       }}
-  //       filterBy={filterEditors}
-  //     />
-  //   </Flex>
-  //   <WikiEditorInsightFooter
-  //     searchKeyWord={searchKeyWord}
-  //     paginateOffset={paginateOffset}
-  //     allowNext={allowNext}
-  //     setAllowNext={setAllowNext}
-  //     decreasePagination={decreasePagination}
-  //     activatePrevious={activatePrevious}
-  //     editorsData={editorsData}
-  //     setActivatePrevious={setActivatePrevious}
-  //     scrolltoTableTop={scrolltoTableTop}
-  //     increasePagination={increasePagination}
-  //   />
-
-  // </Flex>
 }
