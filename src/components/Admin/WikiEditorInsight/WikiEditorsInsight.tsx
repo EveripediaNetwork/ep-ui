@@ -277,7 +277,6 @@ export const WikiEditorsInsightTable = () => {
         isOpen={deleteModalIsOpen}
         onClose={deleteModalOnClose}
         toggleUserFunc={(ban: boolean) => {
-          console.log(ban)
           toggleUser({
             id: editorState.id,
             active: ban,

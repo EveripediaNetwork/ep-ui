@@ -64,24 +64,14 @@ type InsightTableWikiEditorsProps = {
   toggleUserFunc?: (active: boolean, id: string) => void
 }
 
-// const getLatestActivity = (item: Editors) => {
-//   return item?.wikisCreated[0] ? item?.wikisCreated[0] : item?.wikisEdited[0]
-// }
+export const userNameData = (item: Editors) => {
+  return item.username || item.profile?.username || 'Unknown'
+}
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
   const { wikiInsightData: wikiEditorInsightData, toggleUserFunc } = props
-
-  // const filterBoolean = useMemo(() => {
-  //   if (filterBy === 'Banned') {
-  //     return false
-  //   }
-  //   if (filterBy === 'Active') {
-  //     return true
-  //   }
-  //   return ''
-  // }, [filterBy])
 
   const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
@@ -108,18 +98,12 @@ export const InsightTableWikiEditors = (
                     <Flex align="center" gap={2}>
                       <Avatar
                         boxSize="40px"
-                        name={
-                          item?.profile?.username
-                            ? item?.profile?.username
-                            : 'Unknown'
-                        }
+                        name={userNameData(item)}
                         src={item?.profile?.avatar ? item?.profile?.avatar : ''}
                       />
                       <Flex flexDirection="column">
                         <Text opacity={item.active ? 1 : 0.3}>
-                          {item?.profile?.username
-                            ? item?.profile?.username
-                            : 'Unknown'}
+                          {userNameData(item)}
                         </Text>
                         <Text
                           color="#718096"
