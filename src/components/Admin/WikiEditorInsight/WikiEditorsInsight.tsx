@@ -36,7 +36,7 @@ export const WikiEditorsInsightTable = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const {
     isOpen: deleteModalIsOpen,
-    onToggle: deleteModalOnToggle,
+    onOpen: deleteModalOnOpen,
     onClose: deleteModalOnClose,
   } = useDisclosure()
   const [checked, setChecked] = useState(0)
@@ -45,6 +45,7 @@ export const WikiEditorsInsightTable = () => {
     id: string
     active: boolean
   }>({ id: '', active: false })
+  const [toggleUser] = useToggleUserMutation()
 
   const { data: editors, refetch } = useGetEditorsQuery({
     limit: 10,
@@ -210,8 +211,6 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
-  console.log(editorsList)
-
   return (
     <Flex
       flexDir="column"
@@ -249,7 +248,6 @@ export const WikiEditorsInsightTable = () => {
         setFilterEditors={setFilterItems}
         setPaginateOffset={setPaginateOffset}
       />
-
       <Flex pb={5}>
         <InsightTableWikiEditors
           wikiInsightData={editorsList}
@@ -259,6 +257,7 @@ export const WikiEditorsInsightTable = () => {
               active,
             }
             setEditorState(editorData)
+            deleteModalOnOpen()
           }}
         />
       </Flex>
@@ -268,11 +267,13 @@ export const WikiEditorsInsightTable = () => {
         isOpen={deleteModalIsOpen}
         onClose={deleteModalOnClose}
         toggleUserFunc={(ban: boolean) => {
-          // toggleUser({
-          //   id: editorState.id,
-          //   active: ban,
-          // })
+          console.log(ban)
+          toggleUser({
+            id: editorState.id,
+            active: ban,
+          })
           // Possibly apply conditon to this Optimistic state update
+          //TODO add conditions before setting the data
           // setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
           // setSearchedEditorsData(
           //   dataUpdate(editorsData, ban, editorToBeToggled.id),
