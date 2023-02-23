@@ -5,7 +5,6 @@ import { Editors } from '@/types/admin'
 
 type WikiEditorInsightFooterProps = {
   searchKeyWord: string
-  paginateOffset: number
   activatePrevious: ConstrainBoolean
   editorsData?: Editors[]
   scrolltoTableTop: () => void
@@ -16,7 +15,6 @@ type WikiEditorInsightFooterProps = {
 
 const WikiEditorInsightFooter = ({
   searchKeyWord,
-  paginateOffset,
   activatePrevious,
   editorsData,
   scrolltoTableTop,
@@ -38,9 +36,6 @@ const WikiEditorInsightFooter = ({
         onClick={() => {
           scrolltoTableTop()
           decreasePagination()
-          if (paginateOffset === 0) {
-            setActivatePrevious(false)
-          }
         }}
       >
         Previous

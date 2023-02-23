@@ -183,9 +183,15 @@ export const WikiEditorsInsightTable = () => {
   }
 
   const decreasePagination = () => {
-    return (
-      editors && editors?.length <= 10 && setPaginateOffset(paginateOffset - 10)
-    )
+    if (paginateOffset >= 10 && editors && editors.length > 0) {
+      const newOffset = paginateOffset - 10
+      if (newOffset < 0) {
+        setActivatePrevious(false)
+        setPaginateOffset(0)
+      } else {
+        setPaginateOffset(newOffset)
+      }
+    }
   }
 
   useEffect(() => {
@@ -264,7 +270,6 @@ export const WikiEditorsInsightTable = () => {
       </Flex>
       <WikiEditorInsightFooter
         searchKeyWord={searchKeyWord}
-        paginateOffset={paginateOffset}
         decreasePagination={decreasePagination}
         activatePrevious={activatePrevious}
         editorsData={editorsList}
@@ -283,7 +288,6 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           setEditorslist(dataUpdate(editorsList, ban, editorState.id))
-          // TODO add conditions before setting the data
         }}
       />
     </Flex>
