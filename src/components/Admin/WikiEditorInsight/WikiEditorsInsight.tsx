@@ -5,6 +5,7 @@ import {
   useGetEditorsQuery,
 } from '@/services/admin'
 import { Editors } from '@/types/admin'
+import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, {
   useEffect,
@@ -199,6 +200,7 @@ export const WikiEditorsInsightTable = () => {
     searchKeyWord,
     hiddeneditors,
     initGetHiddenEditors,
+    editorsList,
   ])
 
   const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -260,7 +262,6 @@ export const WikiEditorsInsightTable = () => {
           }}
         />
       </Flex>
-
       <WikiEditorInsightFooter
         searchKeyWord={searchKeyWord}
         paginateOffset={paginateOffset}
@@ -281,15 +282,8 @@ export const WikiEditorsInsightTable = () => {
             id: editorState.id,
             active: ban,
           })
-          // Possibly apply conditon to this Optimistic state update
+          setEditorslist(dataUpdate(editorsList, ban, editorState.id))
           // TODO add conditions before setting the data
-          // setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
-          // setSearchedEditorsData(
-          //   dataUpdate(editorsData, ban, editorToBeToggled.id),
-          // )
-          // setHiddenEditorsData(
-          //   dataUpdate(editorsData, ban, editorToBeToggled.id),
-          // )
         }}
       />
     </Flex>
