@@ -1,4 +1,4 @@
-import { Editors, EditorsTable } from '@/types/admin'
+import { Editors } from '@/types/admin'
 
 export const dataUpdate = (
   p: Editors[] | undefined,
