@@ -18,68 +18,70 @@ import {
   HStack,
   Icon,
 } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { shortenAccount, shortenText } from '@/utils/textUtils'
 import { RiQuestionLine } from 'react-icons/ri'
+import { Editors } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
-import { Editors } from '@/types/admin'
 
-interface WikiEditorInsightDataInterface {
-  editorName: string
-  createdWikis: {
-    id: string
-    wikiId: string
-    datetime: string
-    ipfs: string
-    content: { title: string; images: { id: string } }
-  }[]
-  editiedWikis: {
-    content: {
-      title: string
-      images: {
-        id: string
-      }
-    }
-    datetime: string
-    id: string
-    ipfs: string
-    wikiId: string
-  }[]
-  lastCreatedWiki: {
-    id: string
-    wikiId: string
-    datetime: string
-    ipfs: string
-    content: { title: string; images: { id: string }[] }[]
-  }
-  editorAvatar: string
-  latestActivity: string
-  editorAddress: string
-  active: boolean
-}
+// interface WikiEditorInsightDataInterface {
+//   editorName: string
+//   createdWikis: {
+//     id: string
+//     wikiId: string
+//     datetime: string
+//     ipfs: string
+//     content: { title: string; images: { id: string } }
+//   }[]
+//   editiedWikis: {
+//     content: {
+//       title: string
+//       images: {
+//         id: string
+//       }
+//     }
+//     datetime: string
+//     id: string
+//     ipfs: string
+//     wikiId: string
+//   }[]
+//   lastCreatedWiki: {
+//     id: string
+//     wikiId: string
+//     datetime: string
+//     ipfs: string
+//     content: { title: string; images: { id: string }[] }[]
+//   }
+//   editorAvatar: string
+//   latestActivity: string
+//   editorAddress: string
+//   active: boolean
+// }
 
 type InsightTableWikiEditorsProps = {
   wikiInsightData: Editors[] | undefined
   toggleUserFunc?: (active: boolean, id: string) => void
-  filterBy?: string
 }
+
+// const getLatestActivity = (item: Editors) => {
+//   return item?.wikisCreated[0] ? item?.wikisCreated[0] : item?.wikisEdited[0]
+// }
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
-  const { wikiInsightData: wikiEditorInsightData } = props
-  const { toggleUserFunc, filterBy } = props
+  const { wikiInsightData: wikiEditorInsightData, toggleUserFunc } = props
 
-  const filterBoolean = useMemo(() => {
-    if (filterBy === 'Banned') {
-      return false
-    }
-    if (filterBy === 'Active') {
-      return true
-    }
-    return ''
-  }, [filterBy])
+  // const filterBoolean = useMemo(() => {
+  //   if (filterBy === 'Banned') {
+  //     return false
+  //   }
+  //   if (filterBy === 'Active') {
+  //     return true
+  //   }
+  //   return ''
+  // }, [filterBy])
 
   const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
@@ -106,16 +108,18 @@ export const InsightTableWikiEditors = (
                     <Flex align="center" gap={2}>
                       <Avatar
                         boxSize="40px"
-                        name={item?.profile?.username
-                          ? item?.profile?.username
-                          : 'Unknown'}
+                        name={
+                          item?.profile?.username
+                            ? item?.profile?.username
+                            : 'Unknown'
+                        }
                         src={item?.profile?.avatar ? item?.profile?.avatar : ''}
                       />
                       <Flex flexDirection="column">
                         <Text opacity={item.active ? 1 : 0.3}>
                           {item?.profile?.username
-                          ? item?.profile?.username
-                          : 'Unknown'}
+                            ? item?.profile?.username
+                            : 'Unknown'}
                         </Text>
                         <Text
                           color="#718096"
@@ -147,26 +151,27 @@ export const InsightTableWikiEditors = (
                           cursor="pointer"
                           flexShrink={0}
                           alt="wiki"
-                          // imageURL={`${config.pinataBaseUrl}${
-                          //   item.lastCreatedWiki?.content
-                          //     ? item.lastCreatedWiki.content[0].images[0].id
-                          //     : ''
-                          // }`}
+                          imageURL={`${config.pinataBaseUrl}${
+                            item.wikisEdited[0]?.content
+                              ? item.wikisEdited[0]?.content[0].images[0].id
+                              : ''
+                          }`}
                         />
                       </AspectRatio>
                       <Text opacity={item.active ? 1 : 0.1}>
-                        {/* {item.lastCreatedWiki?.content[0]
+                        {item.wikisEdited[0]?.content[0]
                           ? shortenText(
-                              item.lastCreatedWiki?.content[0].title,
+                              item.wikisEdited[0]?.content[0].title,
                               18,
                             )
-                          : ''} */}
-                          title
+                          : ''}
                       </Text>
                     </Flex>
                   </Link>
                 </Td>
-                <Td color="#718096">{item?.wikisCreated[0]?.datetime.split('T')[0]}</Td>
+                <Td color="#718096">
+                  {item?.wikisCreated[0]?.datetime.split('T')[0]}
+                </Td>
                 <Td>
                   <Tag
                     bg={item.active ? '#F0FFF4' : '#FBD38D'}
@@ -191,19 +196,23 @@ export const InsightTableWikiEditors = (
                     <Text
                       cursor="pointer"
                       fontWeight="medium"
-                      // onClick={() => {
-                      //   onOpen()
-                      //   toggleUserFunc(item.active, item.id)
-                      // }}
+                      onClick={() => {
+                        onOpen()
+                        if (toggleUserFunc) {
+                          toggleUserFunc(item.active, item.id)
+                        }
+                      }}
                     >
                       Ban
                     </Text>
                   ) : (
                     <HStack
                       spacing={2}
-                      // onClick={() =>
-                      //   toggleUserFunc(item.active, item.id)
-                      // }
+                      onClick={() => {
+                        if (toggleUserFunc) {
+                          toggleUserFunc(item.active, item.id)
+                        }
+                      }}
                     >
                       <Text
                         color="#E2E8F0"

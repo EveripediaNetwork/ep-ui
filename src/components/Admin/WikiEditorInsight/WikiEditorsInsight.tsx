@@ -4,16 +4,10 @@ import {
   useGetHiddenEditorsQuery,
   useGetEditorsQuery,
 } from '@/services/admin'
-import { Editors, EditorsTable } from '@/types/admin'
+import { Editors } from '@/types/admin'
 import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
 import { pushItems } from '@/utils/AdminUtils/pushArrayData'
-import {
-  Text,
-  Flex,
-  Tag,
-  TagLabel,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, {
   useEffect,
   useMemo,
@@ -28,8 +22,6 @@ import { DeleteEditorModal } from './DeleteEditorModal'
 import { InsightTableWikiEditors } from './InsightTableWikiEditors'
 import WikiEditorInsightFooter from './WikiEditorInsightFooter'
 import WikiEditorsInsightActionBar from './WikiEditorsInsightActionBar'
-import { MdFilterList } from 'react-icons/md'
-import { FiSearch } from 'react-icons/fi'
 
 export const WikiEditorsInsightTable = () => {
   const editorTableRef = useRef<null | HTMLDivElement>(null)
@@ -42,8 +34,17 @@ export const WikiEditorsInsightTable = () => {
     useState<boolean>(true)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { isOpen, onToggle, onClose } = useDisclosure()
+  const {
+    isOpen: deleteModalIsOpen,
+    onToggle: deleteModalOnToggle,
+    onClose: deleteModalOnClose,
+  } = useDisclosure()
   const [checked, setChecked] = useState(0)
   const [editorsList, setEditorslist] = useState<Editors[] | undefined>()
+  const [editorState, setEditorState] = useState<{
+    id: string
+    active: boolean
+  }>({ id: '', active: false })
 
   const { data: editors, refetch } = useGetEditorsQuery({
     limit: 10,
@@ -105,7 +106,6 @@ export const WikiEditorsInsightTable = () => {
       if (checkbox.checked) data.push(checkbox.value)
     })
 
-    console.log(data)
     setFilterItems(data)
     onClose()
   }
@@ -210,6 +210,8 @@ export const WikiEditorsInsightTable = () => {
     }
   }
 
+  console.log(editorsList)
+
   return (
     <Flex
       flexDir="column"
@@ -251,16 +253,35 @@ export const WikiEditorsInsightTable = () => {
       <Flex pb={5}>
         <InsightTableWikiEditors
           wikiInsightData={editorsList}
-          // toggleUserFunc={(active: boolean, id: string) => {
-          //   const editorData = {
-          //     id,
-          //     active,
-          //   }
-          //   setEditorToBeToggled(editorData)
-          // }}
-          // filterBy={filterEditors}
+          toggleUserFunc={(active: boolean, id: string) => {
+            const editorData = {
+              id,
+              active,
+            }
+            setEditorState(editorData)
+          }}
         />
       </Flex>
+      <DeleteEditorModal
+        id={editorState.id}
+        isActive={editorState.active}
+        isOpen={deleteModalIsOpen}
+        onClose={deleteModalOnClose}
+        toggleUserFunc={(ban: boolean) => {
+          // toggleUser({
+          //   id: editorState.id,
+          //   active: ban,
+          // })
+          // Possibly apply conditon to this Optimistic state update
+          // setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
+          // setSearchedEditorsData(
+          //   dataUpdate(editorsData, ban, editorToBeToggled.id),
+          // )
+          // setHiddenEditorsData(
+          //   dataUpdate(editorsData, ban, editorToBeToggled.id),
+          // )
+        }}
+      />
     </Flex>
   )
 
@@ -290,25 +311,6 @@ export const WikiEditorsInsightTable = () => {
   //     scrolltoTableTop={scrolltoTableTop}
   //     increasePagination={increasePagination}
   //   />
-  //   <DeleteEditorModal
-  //     id={editorToBeToggled.id}
-  //     isActive={editorToBeToggled.active}
-  //     isOpen={isOpen}
-  //     onClose={onClose}
-  //     toggleUserFunc={(ban: boolean) => {
-  //       toggleUser({
-  //         id: editorToBeToggled.id,
-  //         active: ban,
-  //       })
-  //       // Possibly apply conditon to this Optimistic state update
-  //       setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
-  //       setSearchedEditorsData(
-  //         dataUpdate(editorsData, ban, editorToBeToggled.id),
-  //       )
-  //       setHiddenEditorsData(
-  //         dataUpdate(editorsData, ban, editorToBeToggled.id),
-  //       )
-  //     }}
-  //   />
+
   // </Flex>
 }

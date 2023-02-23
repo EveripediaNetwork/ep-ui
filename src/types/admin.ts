@@ -101,8 +101,8 @@ export interface Editors {
       title: string
       images: {
         id: string
-      }
-    }
+      }[]
+    }[]
   }[]
   wikisEdited: {
     id: string
@@ -113,8 +113,8 @@ export interface Editors {
       title: string
       images: {
         id: string
-      }
-    }
+      }[]
+    }[]
   }[]
 }
 
