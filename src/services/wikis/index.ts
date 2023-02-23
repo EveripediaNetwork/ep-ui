@@ -286,14 +286,13 @@ export const wikiApi = createApi({
       transformResponse: (response: GetWikisByCategoryResponse) =>
         response.wikisByCategory,
     }),
-    getTrendingWikis: builder.query<
-      { wikisPerVisits: Wiki[] },
-      TrendingWikisArgs
-    >({
+    getTrendingWikis: builder.query<Wiki[], TrendingWikisArgs>({
       query: ({ amount, startDay, endDay }: TrendingWikisArgs) => ({
         document: GET_TRENDING_WIKIS,
         variables: { amount, startDay, endDay },
       }),
+      transformResponse: (response: { wikisPerVisits: Wiki[] }) =>
+        response.wikisPerVisits,
     }),
     getTrendingCategoryWikis: builder.query<
       { wikisPerVisits: Wiki[] },
