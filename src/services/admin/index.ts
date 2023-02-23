@@ -157,7 +157,7 @@ export const adminApi = createApi({
         response.pageViewsCount,
     }),
     getHiddenEditors: builder.query<Editors[], number>({
-      query: (  offset: number ) => ({
+      query: (offset: number) => ({
         document: HIDDEN_EDITORS_TABLE,
         variables: { offset },
       }),

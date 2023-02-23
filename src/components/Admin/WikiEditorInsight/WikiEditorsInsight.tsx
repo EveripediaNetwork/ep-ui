@@ -5,7 +5,6 @@ import {
   useGetEditorsQuery,
 } from '@/services/admin'
 import { Editors } from '@/types/admin'
-import { dataUpdate } from '@/utils/AdminUtils/dataUpdate'
 import { Text, Flex, Tag, TagLabel, useDisclosure } from '@chakra-ui/react'
 import React, {
   useEffect,
@@ -284,7 +283,7 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           // Possibly apply conditon to this Optimistic state update
-          //TODO add conditions before setting the data
+          // TODO add conditions before setting the data
           // setEditorsData(dataUpdate(editorsData, ban, editorToBeToggled.id))
           // setSearchedEditorsData(
           //   dataUpdate(editorsData, ban, editorToBeToggled.id),
