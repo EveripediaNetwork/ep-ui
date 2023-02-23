@@ -47,7 +47,11 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         maxW="1050px"
         w="100%"
         mx="auto"
-        columns={[1, 2, 3]}
+        gridTemplateColumns={{
+          base: 'repeat(1, 1fr)',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+        }}
         spacingX={6}
         spacingY={12}
         px={6}
