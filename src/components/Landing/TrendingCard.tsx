@@ -67,7 +67,7 @@ const TrendingCard = ({
             <Select
               h="30px"
               fontSize="12px"
-              w="100px"
+              w="120px"
               icon={<ChevronDownIcon />}
               mr="2"
               onChange={e => {
