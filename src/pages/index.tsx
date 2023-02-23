@@ -75,7 +75,9 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  const { startDay, endDay } = getDateRange(TRENDING_WIKIS_DAY_RANGE)
+  const { startDay, endDay } = getDateRange({
+    dayRange: TRENDING_WIKIS_DAY_RANGE,
+  })
 
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())

@@ -6,14 +6,14 @@ import { RiBarChartFill } from 'react-icons/ri'
 import TrendingCard from './TrendingCard'
 
 const TrendingWikiCard = ({ trending }: { trending?: Wiki[] }) => {
-  const [trendingSelection, setTrendingSelection] = useState<number>()
+  const [trendingSelection, setTrendingSelection] = useState<string>()
   const [trendingWikis, setTrendingWikis] = useState(trending)
 
   const selectedRange = (range: string) => {
-    setTrendingSelection(+range)
+    setTrendingSelection(range)
   }
 
-  const { startDay, endDay } = getDateRange(trendingSelection)
+  const { startDay, endDay } = getDateRange({ rangeType: trendingSelection })
 
   const { data: trendingData } = useGetTrendingWikisQuery({
     endDay,

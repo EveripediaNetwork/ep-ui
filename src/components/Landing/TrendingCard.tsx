@@ -76,9 +76,9 @@ const TrendingCard = ({
                 }
               }}
             >
-              <option value="0">Today</option>
-              <option value="7">Last week</option>
-              <option value="30">Last Month</option>
+              <option value="today">Today</option>
+              <option value="lastWeek">Last week</option>
+              <option value="lastMonth">Last Month</option>
             </Select>
           )}
         </Flex>
