@@ -157,7 +157,7 @@ const CategoryPage = ({
 export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
-  const { startDay, endDay } = getDateRange(CATEGORY_DATE_RANGE)
+  const { startDay, endDay } = getDateRange({ dayRange: CATEGORY_DATE_RANGE })
   const wikisByCategory = await store.dispatch(
     getWikisByCategory.initiate({
       category: categoryId,

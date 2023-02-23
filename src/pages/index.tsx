@@ -75,7 +75,9 @@ export const Index = ({
 }
 
 export async function getStaticProps() {
-  const { startDay, endDay } = getDateRange(TRENDING_WIKIS_DAY_RANGE)
+  const { startDay, endDay } = getDateRange({
+    dayRange: TRENDING_WIKIS_DAY_RANGE,
+  })
 
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
@@ -110,7 +112,7 @@ export async function getStaticProps() {
     }),
   )
 
-  const { data: trendingWikisList } = await store.dispatch(
+  const { data: trending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
       startDay,
@@ -150,8 +152,6 @@ export async function getStaticProps() {
     NFTsListing: NFTsList,
     TokensListing: TokensList,
   }
-
-  const trending = trendingWikisList?.wikisPerVisits
 
   return {
     props: {
