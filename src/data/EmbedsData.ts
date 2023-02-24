@@ -2,7 +2,7 @@ export const embeds = [
   {
     name: 'Dune',
     desc: 'Embeds widgets from dune.com',
-    regex: /https:\/\/dune.com\/embeds\/\d+\/\d+\/(\w+|-)+/,
+    regex: /https:\/\/dune\.com\/embeds\/\d+/,
     type: 'DUNE',
   },
 ]
