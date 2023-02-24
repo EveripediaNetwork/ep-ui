@@ -1,12 +1,12 @@
-import { EditorsTable } from '@/types/admin'
+import { Editors } from '@/types/admin'
 
 export const dataUpdate = (
-  p: EditorsTable[] | undefined,
+  p: Editors[] | undefined,
   ban: boolean,
   id: string,
-): EditorsTable[] | undefined => {
+): Editors[] | undefined => {
   return p?.map(user => {
-    if (user.editorAddress === id) {
+    if (user.id === id) {
       return { ...user, active: ban }
     }
     return user

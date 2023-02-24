@@ -31,7 +31,8 @@ type WikiEditorsInsightActionBarProps = {
   sortIcon: JSX.Element
   setChecked: (checked: number) => void
   checked: number
-  setFilterEditors: (editors: string) => void
+  setFilterEditors: (editors: string[]) => void
+  setPaginateOffset: (offset: number) => void
 }
 
 const WikiEditorsInsightActionBar = ({
@@ -45,6 +46,7 @@ const WikiEditorsInsightActionBar = ({
   setChecked,
   checked,
   setFilterEditors,
+  setPaginateOffset,
   handleSearchKeyword,
 }: WikiEditorsInsightActionBarProps) => {
   return (
@@ -63,9 +65,7 @@ const WikiEditorsInsightActionBar = ({
           />
         </InputGroup>
         <Button
-          onClick={() => {
-            handleSortChange()
-          }}
+          onClick={handleSortChange}
           borderColor="#E2E8F0"
           _dark={{ borderColor: '#2c323d' }}
           py={2}
@@ -125,8 +125,9 @@ const WikiEditorsInsightActionBar = ({
                     borderWidth="1px"
                     onClick={() => {
                       setChecked(0)
+                      setFilterEditors([])
+                      setPaginateOffset(0)
                       onCloseFilter()
-                      setFilterEditors('')
                     }}
                     rounded="lg"
                     fontWeight="semibold"

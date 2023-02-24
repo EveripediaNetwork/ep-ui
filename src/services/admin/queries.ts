@@ -142,8 +142,8 @@ export const EDITORS_TABLE = gql`
 `
 
 export const HIDDEN_EDITORS_TABLE = gql`
-  query HiddenEditors($limit: Int!, $offset: Int!) {
-    usersHidden(limit: $limit, offset: $offset) {
+  query HiddenEditors($offset: Int!) {
+    usersHidden(limit: 10, offset: $offset) {
       id
       active
       profile {
