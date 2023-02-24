@@ -35,12 +35,12 @@ const parseLink = (link: string) =>
 interface ProfileListItemProps {
   title: string
   children: React.ReactNode
-  founders?: string[]
+  lengthyArr?: string[]
 }
 const ProfileListItem = ({
   title,
   children,
-  founders,
+  lengthyArr,
 }: ProfileListItemProps) => (
   <HStack
     bgColor="wikiCardItemBg"
@@ -48,11 +48,13 @@ const ProfileListItem = ({
     justify="space-between"
     gap="2"
     align={
-      founders && founders?.length > MAX_FOUNDERS_LIST ? 'initial' : 'center'
+      lengthyArr && lengthyArr?.length > MAX_FOUNDERS_LIST
+        ? 'initial'
+        : 'center'
     }
     p={4}
     flexDirection={
-      founders && founders?.length > MAX_FOUNDERS_LIST ? 'column' : 'row'
+      lengthyArr && lengthyArr?.length > MAX_FOUNDERS_LIST ? 'column' : 'row'
     }
   >
     <Text fontSize="14px" fontWeight="bold" color="linkColor">
@@ -193,7 +195,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         {wiki.linkedWikis?.founders && (
           <ProfileListItem
             title="Founders"
-            founders={wiki.linkedWikis?.founders}
+            lengthyArr={wiki.linkedWikis?.founders}
           >
             <Flex alignItems="start" flexWrap="wrap" gap="1">
               {wiki.linkedWikis?.founders.map((founder, i) => (
@@ -212,14 +214,17 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {wiki.linkedWikis?.blockchains && (
-          <ProfileListItem title="Blockchains">
-            <HStack spacing={2} wrap="wrap">
+          <ProfileListItem
+            title="Blockchains"
+            lengthyArr={wiki.linkedWikis?.blockchains}
+          >
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
               {wiki.linkedWikis?.blockchains.map((item, i) => (
-                <Link key={i} href={`/wiki/${item}`} py={1}>
+                <Link w="max-content" key={i} href={`/wiki/${item}`}>
                   <Tag py="1">{item}</Tag>
                 </Link>
               ))}
-            </HStack>
+            </Flex>
           </ProfileListItem>
         )}
       </WikiAccordion>
