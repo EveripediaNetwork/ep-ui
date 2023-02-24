@@ -1,32 +1,28 @@
 import React from 'react'
 import { Button, Flex } from '@chakra-ui/react'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { EditorsTable } from '@/types/admin'
+import { Editors } from '@/types/admin'
 
 type WikiEditorInsightFooterProps = {
   searchKeyWord: string
+  activatePrevious: ConstrainBoolean
   paginateOffset: number
-  activatePrevious: boolean
-  allowNext: boolean
-  editorsData?: EditorsTable[]
+  editorsData?: Editors[]
   scrolltoTableTop: () => void
   increasePagination: () => void
   decreasePagination: () => void
   setActivatePrevious: (activatePrev: boolean) => void
-  setAllowNext: (allowNext: boolean) => void
 }
 
 const WikiEditorInsightFooter = ({
   searchKeyWord,
-  paginateOffset,
   activatePrevious,
+  paginateOffset,
   editorsData,
   scrolltoTableTop,
   increasePagination,
-  allowNext,
   setActivatePrevious,
   decreasePagination,
-  setAllowNext,
 }: WikiEditorInsightFooterProps) => {
   return (
     <Flex
@@ -38,7 +34,7 @@ const WikiEditorInsightFooter = ({
       <Button
         leftIcon={<ArrowBackIcon />}
         variant="outline"
-        disabled={!activatePrevious}
+        disabled={!activatePrevious || paginateOffset === 0}
         onClick={() => {
           scrolltoTableTop()
           decreasePagination()
@@ -54,20 +50,12 @@ const WikiEditorInsightFooter = ({
         rightIcon={<ArrowForwardIcon />}
         variant="outline"
         onClick={() => {
-          if (allowNext) {
-            scrolltoTableTop()
-            increasePagination()
-          }
-          setAllowNext(false)
+          scrolltoTableTop()
+          increasePagination()
           if (editorsData && editorsData?.length >= 7) {
             setActivatePrevious(true)
           }
         }}
-        cursor={
-          !allowNext && editorsData && editorsData?.length >= 7
-            ? 'wait'
-            : 'pointer'
-        }
       >
         Next
       </Button>
