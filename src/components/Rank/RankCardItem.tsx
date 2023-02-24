@@ -1,7 +1,8 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { Link } from '../Elements'
 
 const MAX_LINKED_WIKIS = 3
 
