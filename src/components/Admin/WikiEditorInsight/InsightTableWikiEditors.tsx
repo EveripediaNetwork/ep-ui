@@ -25,39 +25,6 @@ import { Editors } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
 
-// interface WikiEditorInsightDataInterface {
-//   editorName: string
-//   createdWikis: {
-//     id: string
-//     wikiId: string
-//     datetime: string
-//     ipfs: string
-//     content: { title: string; images: { id: string } }
-//   }[]
-//   editiedWikis: {
-//     content: {
-//       title: string
-//       images: {
-//         id: string
-//       }
-//     }
-//     datetime: string
-//     id: string
-//     ipfs: string
-//     wikiId: string
-//   }[]
-//   lastCreatedWiki: {
-//     id: string
-//     wikiId: string
-//     datetime: string
-//     ipfs: string
-//     content: { title: string; images: { id: string }[] }[]
-//   }
-//   editorAvatar: string
-//   latestActivity: string
-//   editorAddress: string
-//   active: boolean
-// }
 
 type InsightTableWikiEditorsProps = {
   wikiInsightData: Editors[] | undefined
