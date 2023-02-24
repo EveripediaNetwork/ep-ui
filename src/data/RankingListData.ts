@@ -13,15 +13,12 @@ export const RankingListHead: RankinglistHeadProps[] = [
     label: 'Price',
   },
   {
-    label: 'Holders',
-  },
-  {
     label: 'Marketcap',
   },
   {
     label: 'Founders',
   },
   {
-    label: 'Date Founded',
+    label: 'Blockchain',
   },
 ]
