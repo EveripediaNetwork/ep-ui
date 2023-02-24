@@ -8,6 +8,7 @@ export interface RankCardType {
   tokenMarketData: TokenMarketData
   linkedWikis: {
     founders: string[]
+    blockchains: string[]
   }
 }
 
