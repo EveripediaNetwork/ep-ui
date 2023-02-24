@@ -21,24 +21,14 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1">
-          <Text color="rankingListText">NA</Text>
-        </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
           <Text color="rankingListText">Coming Soon</Text>
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         NA
       </Td>
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        color="rankingListText"
-        fontSize="14px"
-      >
-        Coming soon
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        NA
       </Td>
     </Tr>
   )

@@ -23,9 +23,6 @@ const SingularSkeleton = () => {
         </Flex>
       </Td>
       <Td verticalAlign="middle" borderColor="rankingListBorder">
-        <Skeleton h="15px" w="60px" borderRadius="15px" />
-      </Td>
-      <Td verticalAlign="middle" borderColor="rankingListBorder">
         <Flex>
           <Skeleton h="15px" w="80px" borderRadius="15px" />
           <Skeleton h="10px" w="30px" borderRadius="15px" />
