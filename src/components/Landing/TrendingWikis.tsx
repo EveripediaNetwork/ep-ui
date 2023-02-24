@@ -1,17 +1,17 @@
 import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { Wiki } from '@everipedia/iq-utils'
-import { RiTimeFill } from 'react-icons/ri'
+import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
+import { TrendingData } from '@/types/Home'
 import TrendingCard from './TrendingCard'
 import { FeaturedWikis } from './FeaturedWikis'
-import TrendingWikiCard from './TrendingWikiCard'
 
 const TrendingWikis = ({
-  trending = [],
+  trending,
   recent = [],
   featuredWikis = [],
 }: {
-  trending?: Wiki[]
+  trending?: TrendingData
   recent?: Wiki[]
   featuredWikis?: Wiki[]
 }) => {
@@ -32,7 +32,12 @@ const TrendingWikis = ({
         gap={4}
         minH="500px"
       >
-        <TrendingWikiCard trending={trending} />
+        <TrendingCard
+          title="Trending Wikis"
+          icon={RiBarChartFill}
+          wikis={trending}
+          isTrending
+        />
         <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
         <FeaturedWikis featuredWikis={featuredWikis} />
       </Flex>

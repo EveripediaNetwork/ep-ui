@@ -1,4 +1,12 @@
-export const getDateRange = ({ dayRange = 1, rangeType = 'today' }) => {
+export const DayRangeType = {
+  TODAY: 'today',
+  LAST_WEEK: 'lastWeek',
+  LAST_MONTH: 'lastMonth',
+}
+export const getDateRange = ({
+  dayRange = 1,
+  rangeType = DayRangeType.TODAY,
+}) => {
   let startDate
   let endDate
 
@@ -19,13 +27,13 @@ export const getDateRange = ({ dayRange = 1, rangeType = 'today' }) => {
     })
   }
 
-  if (rangeType === 'today') {
+  if (rangeType === DayRangeType.TODAY) {
     endDate = new Date()
     startDate = new Date(endDate.getTime() - dayRange * 24 * 60 * 60 * 1000)
-  } else if (rangeType === 'lastWeek') {
+  } else if (rangeType === DayRangeType.LAST_WEEK) {
     endDate = new Date()
     startDate = new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000)
-  } else if (rangeType === 'lastMonth') {
+  } else if (rangeType === DayRangeType.LAST_MONTH) {
     endDate = new Date()
     startDate = new Date(
       endDate.getFullYear(),
