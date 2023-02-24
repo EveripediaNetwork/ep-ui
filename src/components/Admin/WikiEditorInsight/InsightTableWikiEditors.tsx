@@ -25,7 +25,6 @@ import { Editors } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
 
-
 type InsightTableWikiEditorsProps = {
   wikiInsightData: Editors[] | undefined
   toggleUserFunc?: (active: boolean, id: string) => void
