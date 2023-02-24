@@ -1,7 +1,10 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Link, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { Link } from '../Elements'
+
+const MAX_LINKED_WIKIS = 3
 
 const RankingItem = ({
   index,
@@ -60,11 +63,6 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1">
-          <Text color="rankingListText">NA</Text>
-        </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
           <Text color="rankingListText">{marketCap}</Text>
           {item.nftMarketData ? (
             <Text
@@ -102,7 +100,7 @@ const RankingItem = ({
         {item.linkedWikis && item.linkedWikis.founders ? (
           <Flex flexWrap="wrap">
             {formatFoundersArray(item.linkedWikis.founders)
-              .slice(0, 3)
+              .slice(0, MAX_LINKED_WIKIS)
               .map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
                 return (
@@ -124,13 +122,30 @@ const RankingItem = ({
           'NA'
         )}
       </Td>
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        color="rankingListText"
-        fontSize="14px"
-      >
-        NA
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {item.linkedWikis && item.linkedWikis.blockchains ? (
+          <Flex flexWrap="wrap">
+            {item.linkedWikis.blockchains
+              .slice(0, MAX_LINKED_WIKIS)
+              .map((blockchain, i) => {
+                return (
+                  <React.Fragment key={`blockchain${i}`}>
+                    {i > 0 && (
+                      <Box as="span" color="brandLinkColor">
+                        ,
+                      </Box>
+                    )}
+                    <Link href={`wiki/${blockchain}`} color="brandLinkColor">
+                      {blockchain.charAt(0).toUpperCase() +
+                        blockchain.slice(1).replace('-', ' ')}
+                    </Link>
+                  </React.Fragment>
+                )
+              })}
+          </Flex>
+        ) : (
+          'NA'
+        )}
       </Td>
     </Tr>
   )
