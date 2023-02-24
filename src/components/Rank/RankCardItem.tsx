@@ -130,7 +130,7 @@ const RankingItem = ({
                 return (
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
-                      <Box as="span" color="brandLinkColor" mx={2}>
+                      <Box as="span" color="brandLinkColor">
                         ,
                       </Box>
                     )}
