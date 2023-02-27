@@ -80,7 +80,7 @@ const TrendingCard = ({
               }}
             >
               <option value="todayTrending">Today</option>
-              <option value="weekTrending">Last week</option>
+              <option value="weekTrending">Last Week</option>
               <option value="monthTrending">Last Month</option>
             </Select>
           )}
