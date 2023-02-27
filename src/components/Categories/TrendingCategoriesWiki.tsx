@@ -1,6 +1,7 @@
 import React from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
 import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
+import { manualTranformCategoryTitle } from '@/utils/DataTransform/changeCategoryTitle'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingCategoryCard from './TrendingCategoryCard'
 
@@ -13,28 +14,6 @@ const TrendingCategoriesWiki = ({
   trending: Wiki[]
   newWikis: Wiki[]
 }) => {
-  let title
-
-  switch (categoryType) {
-    case 'NFTs':
-      title = 'NFT'
-      break
-    case 'Dapps':
-      title = 'Dapp'
-      break
-    case 'Cryptocurrencies':
-      title = 'Cryptocurrency'
-      break
-    case 'Exchanges':
-      title = 'Exchange'
-      break
-    case 'DAOs':
-      title = 'DAO'
-      break
-    default:
-      title = categoryType
-  }
-
   return (
     <SimpleGrid
       width={{ base: '90%', lg: 'min(80%, 1300px)' }}
@@ -45,12 +24,12 @@ const TrendingCategoriesWiki = ({
     >
       <TrendingCategoryCard
         icon={RiBarChartFill}
-        title={`Popular ${title} Wikis`}
+        title={`Popular ${manualTranformCategoryTitle(categoryType)} Wikis`}
         wikis={trending}
       />
       <TrendingCategoryCard
         icon={RiTimeFill}
-        title={`New ${title} Wikis`}
+        title={`New ${manualTranformCategoryTitle(categoryType)} Wikis`}
         wikis={newWikis}
       />
     </SimpleGrid>
