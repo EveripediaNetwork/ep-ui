@@ -28,6 +28,7 @@ const ContentFeedback = ({
         flexDir="column"
         gap={2}
         title="Feedback"
+        normal
       >
         <VStack bgColor="wikiCardItemBg" borderRadius={4} gap="2" p={3}>
           {feedbackVal ? (
