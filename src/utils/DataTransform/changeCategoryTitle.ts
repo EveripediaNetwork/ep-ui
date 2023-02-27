@@ -1,4 +1,4 @@
-export const manualTranformCategoryTitle = (categoryType: string) => {
+export const TranformCategoryTitle = (categoryType: string) => {
   let title: string
 
   switch (categoryType) {
