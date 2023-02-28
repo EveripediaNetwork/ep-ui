@@ -47,7 +47,11 @@ export const WikiEditorsInsightTable = () => {
   }>({ id: '', active: false })
   const [toggleUser] = useToggleUserMutation()
 
-  const { data: editors, refetch } = useGetEditorsQuery({
+  const {
+    data: editors,
+    refetch,
+    isFetching,
+  } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
