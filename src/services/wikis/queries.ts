@@ -69,6 +69,13 @@ export const GET_WIKI_BY_ID = gql`
         }
       }
       views
+      events {
+        title
+        description
+        type
+        date
+        link
+      }
     }
   }
 `

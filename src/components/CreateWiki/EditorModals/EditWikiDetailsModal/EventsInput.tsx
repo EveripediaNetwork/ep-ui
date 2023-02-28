@@ -9,9 +9,9 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { useAppDispatch } from '@/store/hook'
-import { EventType } from '@everipedia/iq-utils'
+import { EventType, Wiki } from '@everipedia/iq-utils'
 
-const EventsInput = () => {
+const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [eventTitle, setEventTitle] = useState<string>('')
   const [eventDescription, setEventDescription] = useState<string>('')
@@ -22,6 +22,9 @@ const EventsInput = () => {
       type: 'wiki/events',
       payload: {
         type: EventType.CREATED,
+        description: eventDescription,
+        title: eventTitle,
+        date: eventDate,
       },
     })
   }

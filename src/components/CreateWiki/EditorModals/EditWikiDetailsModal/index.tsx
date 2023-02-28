@@ -57,7 +57,7 @@ const HighlightsModal = ({
             <TagsInput wiki={currentWiki} />
             <LinkedWikisInput wiki={currentWiki} />
             <LinksInput wiki={currentWiki} />
-            <EventsInput />
+            <EventsInput wiki={currentWiki} />
           </Stack>
         </ModalBody>
         <ModalFooter>
