@@ -12,11 +12,11 @@
   display: block;
 }
 
-.normalBlock {
+.accordionOpen {
   display: block;
 }
 
-.normalNone {
+.accordionClose {
   display: none;
 }
 

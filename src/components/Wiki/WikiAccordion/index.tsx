@@ -15,18 +15,18 @@ interface AccordionProps {
   withNoDarkBg?: boolean
   collapsed?: { base: boolean; xl: boolean }
   children: React.ReactNode
-  normal?: boolean
+  defaultOpen?: boolean
 }
 
 const WikiAccordion = ({
   title,
   withNoDarkBg,
   children,
-  normal,
+  defaultOpen,
   ...rest
 }: BoxProps & AccordionProps) => {
   const [first, setfirst] = useState(
-    normal ? Styles.normalBlock : Styles.accordionDisplay,
+    defaultOpen ? Styles.accordionOpen : Styles.accordionDisplay,
   )
 
   const ChangeStyle = () => {
@@ -34,10 +34,10 @@ const WikiAccordion = ({
       setfirst(Styles.accordionUnDisplay)
     } else if (first === Styles.accordionUnDisplay) {
       setfirst(Styles.accordionDisplay)
-    } else if (first === Styles.normalBlock) {
-      setfirst(Styles.normalNone)
+    } else if (first === Styles.accordionOpen) {
+      setfirst(Styles.accordionClose)
     } else {
-      setfirst(Styles.normalBlock)
+      setfirst(Styles.accordionOpen)
     }
   }
 
