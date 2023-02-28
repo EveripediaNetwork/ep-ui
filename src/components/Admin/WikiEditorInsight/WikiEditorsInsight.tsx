@@ -23,6 +23,7 @@ import WikiEditorInsightFooter from './WikiEditorInsightFooter'
 import WikiEditorsInsightActionBar from './WikiEditorsInsightActionBar'
 
 export const WikiEditorsInsightTable = () => {
+  const refetchFunc = useRef<() => void>()
   const editorTableRef = useRef<null | HTMLDivElement>(null)
   const [paginateOffset, setPaginateOffset] = useState<number>(0)
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
@@ -30,8 +31,6 @@ export const WikiEditorsInsightTable = () => {
     useState<boolean>(true)
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<string[]>()
-  const [initGetHiddenEditors, setInitGetHiddenEditors] =
-    useState<boolean>(true)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { isOpen, onToggle, onClose } = useDisclosure()
   const {
@@ -49,18 +48,15 @@ export const WikiEditorsInsightTable = () => {
 
   const {
     data: editors,
-    refetch,
     isFetching: editorsIsFetching,
+    refetch,
   } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
 
   const { data: hiddeneditors, isFetching: hiddenEditorsIsFetching } =
-    useGetHiddenEditorsQuery(paginateOffset, {
-      skip: initGetHiddenEditors,
-      refetchOnMountOrArgChange: true,
-    })
+    useGetHiddenEditorsQuery(paginateOffset)
 
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
@@ -88,13 +84,19 @@ export const WikiEditorsInsightTable = () => {
     banned = 'Banned',
   }
 
-  const handleSortChange = () => {
+  const handleSortChange = useCallback(() => {
     if (sortTableBy === 'default') {
       setSortTableBy('descending')
     } else if (sortTableBy === 'descending') {
       setSortTableBy('ascending')
     } else if (sortTableBy === 'ascending') {
       setSortTableBy('descending')
+    }
+  }, [sortTableBy, setSortTableBy])
+
+  const handleRefetch = () => {
+    if (refetchFunc.current) {
+      refetchFunc.current()
     }
   }
 
@@ -124,12 +126,12 @@ export const WikiEditorsInsightTable = () => {
   const newEditors = useMemo(() => {
     let filteredEditors = editors
     if (filterItems?.includes(FilterTypes.banned)) {
-      setInitGetHiddenEditors(false)
+      handleRefetch()
       filteredEditors = hiddeneditors
-      return filteredEditors
     }
 
     if (filterItems?.includes(FilterTypes.active)) {
+      handleRefetch()
       filteredEditors = editors
     }
 
@@ -154,9 +156,6 @@ export const WikiEditorsInsightTable = () => {
   )
 
   const editorsSortedArray = useMemo(() => {
-    if (sortTableBy === 'default') {
-      return newEditors
-    }
     if (sortTableBy === 'ascending') {
       return editorsSortByHighest
     }
@@ -194,19 +193,12 @@ export const WikiEditorsInsightTable = () => {
   }
 
   useEffect(() => {
+    refetchFunc.current = refetch
+  }, [refetch])
+
+  useEffect(() => {
     whichEditorList()
-    refetch()
-  }, [
-    whichEditorList,
-    refetch,
-    editors,
-    filterItems,
-    sortTableBy,
-    searchKeyWord,
-    hiddeneditors,
-    initGetHiddenEditors,
-    editorsList,
-  ])
+  }, [whichEditorList, editors, filterItems, hiddeneditors, editorsList])
 
   const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     setsearchKeyWord(() => {
@@ -289,7 +281,8 @@ export const WikiEditorsInsightTable = () => {
             id: editorState.id,
             active: ban,
           })
-          setEditorslist(dataUpdate(editorsList, ban, editorState.id))
+          setEditorslist(() => dataUpdate(editorsList, ban, editorState.id))
+          handleRefetch()
         }}
       />
     </Flex>
