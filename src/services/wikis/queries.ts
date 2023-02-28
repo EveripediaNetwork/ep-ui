@@ -68,7 +68,6 @@ export const GET_WIKI_BY_ID = gql`
           avatar
         }
       }
-      views
       events {
         title
         description
@@ -76,6 +75,7 @@ export const GET_WIKI_BY_ID = gql`
         date
         link
       }
+      views
     }
   }
 `

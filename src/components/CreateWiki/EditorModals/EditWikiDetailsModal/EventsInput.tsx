@@ -15,11 +15,18 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [eventTitle, setEventTitle] = useState<string>('')
   const [eventDescription, setEventDescription] = useState<string>('')
-  const [eventDate, setEventDate] = useState<string>()
+  const [eventDate, setEventDate] = useState<string>('')
 
   const handleAddEvent = () => {
+    console.log({
+      type: EventType.CREATED,
+      description: eventDescription,
+      title: eventTitle,
+      date: eventDate,
+    })
+
     dispatch({
-      type: 'wiki/events',
+      type: 'wiki/addEvent',
       payload: {
         type: EventType.CREATED,
         description: eventDescription,
@@ -27,6 +34,12 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         date: eventDate,
       },
     })
+
+    console.log(eventDate)
+
+    setEventDate('')
+    setEventDescription('')
+    setEventTitle('')
   }
 
   return (
@@ -39,6 +52,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               type="date"
               placeholder="Select date"
               fontSize="14px"
+              value={eventDate}
               onChange={e => {
                 setEventDate(e.target.value)
               }}
@@ -46,6 +60,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             <Input
               type="text"
               placeholder="Title"
+              value={eventTitle}
               onChange={e => {
                 setEventTitle(e.target.value)
               }}
@@ -53,6 +68,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           </SimpleGrid>
           <Textarea
             mt="3"
+            value={eventDescription}
             placeholder="Write a short description for the event date"
             onChange={e => {
               setEventDescription(e.target.value)
