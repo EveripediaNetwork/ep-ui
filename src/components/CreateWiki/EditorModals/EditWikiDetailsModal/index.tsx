@@ -11,13 +11,12 @@ import {
   Button,
   Stack,
 } from '@chakra-ui/react'
-
 import { useAppSelector } from '@/store/hook'
-
 import TagsInput from '@/components/CreateWiki/EditorModals/EditWikiDetailsModal/TagsInput'
 import LinksInput from './LinksInput'
 import CategoryInput from './CategoryInput'
 import LinkedWikisInput from './LinkedWikisInput'
+import EventsInput from './EventsInput'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -58,6 +57,7 @@ const HighlightsModal = ({
             <TagsInput wiki={currentWiki} />
             <LinkedWikisInput wiki={currentWiki} />
             <LinksInput wiki={currentWiki} />
+            <EventsInput />
           </Stack>
         </ModalBody>
         <ModalFooter>

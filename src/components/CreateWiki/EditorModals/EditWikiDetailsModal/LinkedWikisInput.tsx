@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-
 import { useAppDispatch } from '@/store/hook'
 import { LinkedWikiKey, Wiki, WikiPreview } from '@everipedia/iq-utils'
 import {
