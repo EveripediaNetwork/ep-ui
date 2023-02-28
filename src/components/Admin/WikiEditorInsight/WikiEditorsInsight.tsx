@@ -126,13 +126,13 @@ export const WikiEditorsInsightTable = () => {
   const newEditors = useMemo(() => {
     let filteredEditors = editors
     if (filterItems?.includes(FilterTypes.banned)) {
-      handleRefetch()
       filteredEditors = hiddeneditors
+      handleRefetch()
     }
 
     if (filterItems?.includes(FilterTypes.active)) {
-      handleRefetch()
       filteredEditors = editors
+      handleRefetch()
     }
 
     return filteredEditors
