@@ -20,11 +20,13 @@ export const DeleteEditorModal = ({
   onClose = () => {},
   isOpen = false,
   toggleUserFunc,
+  handleRefetch,
   ...rest
 }: {
   id: string
   isActive: boolean
   isOpen: boolean
+  handleRefetch: () => void
   toggleUserFunc: (ban: boolean) => void
   onClose: () => void
 }) => {
@@ -76,6 +78,7 @@ export const DeleteEditorModal = ({
               w="full"
               onClick={() => {
                 toggleUserFunc(!rest.isActive)
+                handleRefetch()
                 onClose()
               }}
             >

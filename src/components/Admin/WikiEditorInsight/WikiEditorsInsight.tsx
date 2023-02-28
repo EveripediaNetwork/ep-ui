@@ -198,13 +198,22 @@ export const WikiEditorsInsightTable = () => {
 
   useEffect(() => {
     whichEditorList()
-  }, [whichEditorList, editors, filterItems, hiddeneditors, editorsList])
+  }, [
+    whichEditorList,
+    editors,
+    filterItems,
+    hiddeneditors,
+    editorsList,
+    editorState,
+    setEditorState,
+  ])
 
   const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     setsearchKeyWord(() => {
       return e.target.value
     })
     if (e.target.value.length > 2) {
+      handleRefetch()
       setInitiateFetchSearchEditors(false)
     }
   }
@@ -276,12 +285,17 @@ export const WikiEditorsInsightTable = () => {
         isActive={editorState.active}
         isOpen={deleteModalIsOpen}
         onClose={deleteModalOnClose}
+        handleRefetch={handleRefetch}
         toggleUserFunc={(ban: boolean) => {
           toggleUser({
             id: editorState.id,
             active: ban,
           })
           setEditorslist(() => dataUpdate(editorsList, ban, editorState.id))
+          setEditorState({
+            id: editorState.id,
+            active: ban,
+          })
           handleRefetch()
         }}
       />
