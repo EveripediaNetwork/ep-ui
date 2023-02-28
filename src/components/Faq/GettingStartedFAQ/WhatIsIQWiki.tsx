@@ -8,15 +8,24 @@ const WhatIsIQWiki = () => {
       title="What is IQ.wiki?"
       content={
         <>
-          <SingleLink href="https://iq.wiki/wiki/iqwiki" title="IQ.wiki" />
-          formerly Everipedia, is the world’s largest crypto encyclopedia with
-          thousands of pages. The new IQ.wiki platform has been built from the
-          ground up to be fully Web3 with all edits recorded on-chain through
-          Polygon and IPFS. The encyclopedia is governed by IQ token stakers who
-          earn rewards for their contributions. For more information on IQ.wiki
-          see the{' '}
-          <SingleLink href="https://iq.wiki/wiki/iqwiki" title="IQ.wiki page" />
-          on IQ.wiki.
+          IQ.wiki formerly Everipedia is the largest{' '}
+          <SingleLink
+            href="https://iq.wiki/wiki/blockchain"
+            title="blockchain"
+          />
+          and{' '}
+          <SingleLink
+            href="https://iq.wiki/wiki/cryptocurrency"
+            title="cryptocurrency"
+          />{' '}
+          encyclopedia in the world with thousands of pages. IQ.wiki integrates
+          artificial intelligence for use cases including summarizing wiki
+          articles for search engines. The{' '}
+          <SingleLink href="https://iq.wiki/wiki/iq" title="IQ token" /> powers
+          IQ.wiki and all edits on the platform are recorded on-chain through{' '}
+          <SingleLink href="https://iq.wiki/wiki/polygon" title="Polygon" />
+          and the InterPlanetary File System (IPFS). The encyclopedia is
+          governed by IQ token stakers.
         </>
       }
     />
