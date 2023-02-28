@@ -90,10 +90,10 @@ export const resources = {
         'The most comprehensive blockchain and crypto knowledge base in the world provides users with thousands of wikis on everything from Bitcoin, NFTs, DAO’s and so much more.',
       abtFeatTwoHeading: 'Powered by the IQ token',
       abtFeatTwoContent:
-        'IQ.wiki is a central part of the IQ ecosystem. The IQ token powers the encyclopedia and allows anyone to be a stakeholder in the ecosystem.',
+        'IQ.wiki is a central part of the IQ ecosystem. The IQ token is the utility token of the encyclopedia.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
-        'Anyone with IQ tokens is a stakeholder in the IQ.wiki Network. IQ.wiki is fully Web3 with IQ token stakers earning rewards and governing the platform.',
+        'IQ.wiki is fully Web3 with IQ token stakers governing and moderating the platform.',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',

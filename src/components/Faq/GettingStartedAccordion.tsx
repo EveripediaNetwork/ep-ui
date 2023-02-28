@@ -1,12 +1,10 @@
 import React from 'react'
-
 import { Accordion, Text, Flex, Icon } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
 import WhatIsIQWiki from './GettingStartedFAQ/WhatIsIQWiki'
 import EditingIQWiki from './GettingStartedFAQ/EditingIQWiki'
 import WhatIsIQToken from './GettingStartedFAQ/WhatIsIQToken'
 import WhereToGetIQTokens from './GettingStartedFAQ/WhereToGetIQTokens'
-import StakeIQToEarnRewards from './GettingStartedFAQ/StakeIQToEarnRewards'
 import IQRules from './GettingStartedFAQ/IQRules'
 
 const GettingStartedAccordion = () => {
@@ -29,7 +27,6 @@ const GettingStartedAccordion = () => {
         <EditingIQWiki />
         <WhatIsIQToken />
         <WhereToGetIQTokens />
-        <StakeIQToEarnRewards />
         <IQRules />
       </Accordion>
     </Flex>

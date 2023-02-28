@@ -15,22 +15,32 @@ interface AccordionProps {
   withNoDarkBg?: boolean
   collapsed?: { base: boolean; xl: boolean }
   children: React.ReactNode
+  defaultOpen?: boolean
 }
 
 const WikiAccordion = ({
   title,
   withNoDarkBg,
   children,
+  defaultOpen,
   ...rest
 }: BoxProps & AccordionProps) => {
-  const [first, setfirst] = useState(Styles.accordionDisplay)
+  const [first, setfirst] = useState(
+    defaultOpen ? Styles.accordionOpen : Styles.accordionDisplay,
+  )
+
   const ChangeStyle = () => {
     if (first === Styles.accordionDisplay) {
       setfirst(Styles.accordionUnDisplay)
-    } else {
+    } else if (first === Styles.accordionUnDisplay) {
       setfirst(Styles.accordionDisplay)
+    } else if (first === Styles.accordionOpen) {
+      setfirst(Styles.accordionClose)
+    } else {
+      setfirst(Styles.accordionOpen)
     }
   }
+
   return (
     <Box
       w="100%"
@@ -47,7 +57,7 @@ const WikiAccordion = ({
           color="linkColor"
           variant="link"
           minW={3}
-          aria-label={`toggle ${title}`}
+          aria-label={`toggle${title}`}
           icon={<RiArrowDownSLine />}
         />
         <Text
