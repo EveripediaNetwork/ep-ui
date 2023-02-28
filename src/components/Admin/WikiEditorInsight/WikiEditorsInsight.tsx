@@ -43,7 +43,7 @@ export const WikiEditorsInsightTable = () => {
   const [editorState, setEditorState] = useState<{
     id: string
     active: boolean
-  }>({ id: '', active: false })
+  }>({ id: '', active: true })
   const [toggleUser] = useToggleUserMutation()
 
   const {
@@ -292,10 +292,6 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           setEditorslist(() => dataUpdate(editorsList, ban, editorState.id))
-          setEditorState({
-            id: editorState.id,
-            active: ban,
-          })
           handleRefetch()
         }}
       />
