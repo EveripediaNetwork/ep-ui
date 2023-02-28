@@ -50,16 +50,17 @@ export const WikiEditorsInsightTable = () => {
   const {
     data: editors,
     refetch,
-    isFetching,
+    isFetching: editorsIsFetching,
   } = useGetEditorsQuery({
     limit: 10,
     offset: paginateOffset,
   })
 
-  const { data: hiddeneditors } = useGetHiddenEditorsQuery(paginateOffset, {
-    skip: initGetHiddenEditors,
-    refetchOnMountOrArgChange: true,
-  })
+  const { data: hiddeneditors, isFetching: hiddenEditorsIsFetching } =
+    useGetHiddenEditorsQuery(paginateOffset, {
+      skip: initGetHiddenEditors,
+      refetchOnMountOrArgChange: true,
+    })
 
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
@@ -264,6 +265,8 @@ export const WikiEditorsInsightTable = () => {
             setEditorState(editorData)
             deleteModalOnOpen()
           }}
+          editorsIsFetching={editorsIsFetching}
+          hiddenEditorsIsFetching={hiddenEditorsIsFetching}
         />
       </Flex>
       <WikiEditorInsightFooter
