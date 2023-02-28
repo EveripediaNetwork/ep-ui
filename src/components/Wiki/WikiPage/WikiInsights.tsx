@@ -104,7 +104,9 @@ const WikiInsights = ({
             views={wiki.views}
           />
           <ProfileSummary wiki={wiki} />
-          <ContentFeedback feedback wikiId={wiki.id} userId={userAddress} />
+          <Box w="full" display={{ base: 'none', xl: 'block' }}>
+            <ContentFeedback feedback wikiId={wiki.id} userId={userAddress} />
+          </Box>
           {!!coingeckoLink && (
             <>
               <ProfileStatistics tokenStats={tokenStats} />
@@ -126,7 +128,6 @@ const WikiInsights = ({
             user={wiki.user}
             lastUpdated={wiki.updated || dateTime}
           />
-
           <Flex
             w="100%"
             display={{ base: 'none', xl: 'block', md: 'none' }}
