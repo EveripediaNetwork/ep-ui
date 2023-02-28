@@ -8,20 +8,36 @@ const WhatIsIQToken = () => {
       title="What is the IQ token?"
       content={
         <>
-          The <SingleLink title="IQ token" href="https://iq.wiki/wiki/iqwiki" />{' '}
-          is a cryptocurrency dedicated to the future of knowledge. The IQ token
-          powers IQ.wiki, the world&apos;s largest cryptocurrency encyclopedia.
-          IQ is both a governance and DeFi token with IQ stakers governing the
-          platform and earning rewards. The token is managed by BrainDAO and
-          backed by BrainDAO&apos;s treasury of IQ tokens, stablecoins, blue
-          chip NFTs, and other digital assets. <br />
-          <br /> For more information about the IQ token see the{' '}
+          The IQ token is a{' '}
           <SingleLink
-            title="IQ
-                    token page"
-            href="https://iq.wiki/wiki/iqwiki"
+            href="https://iq.wiki/wiki/cryptocurrency"
+            title="cryptocurrency"
           />{' '}
-          on IQ.wiki.
+          dedicated to building a more intelligent future through artificial
+          intelligence and{' '}
+          <SingleLink
+            href="https://iq.wiki/wiki/blockchain"
+            title="blockchain"
+          />{' '}
+          technology. The IQ token powers a knowledge ecosystem including
+          applications such as{' '}
+          <SingleLink href="https://iq.wiki/wiki/iqwiki" title="IQ.wiki" />, the
+          world&apos;s largest cryptocurrency and blockchain encyclopedia.
+          IQ.wiki integrates AI for tasks including summarizing wiki articles.
+          The IQ token is a DeFi and governance token with IQ stakers governing
+          the platform. The token is managed by{' '}
+          <SingleLink href="https://iq.wiki/wiki/braindao" title="BrainDAO" />{' '}
+          which holds a treasury of IQ tokens,{' '}
+          <SingleLink
+            href="https://iq.wiki/wiki/stablecoin"
+            title="stablecoins"
+          />{' '}
+          , blue chip{' '}
+          <SingleLink
+            href="https://iq.wiki/wiki/non-fungible-token-nft"
+            title="NFTs"
+          />{' '}
+          , and other digital assets.
         </>
       }
     />
