@@ -62,7 +62,7 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/locking-hiiq"
+                href="https://iq.braindao.org/dashboard/stake"
               >
                 {`${t('staking')}`}
               </Link>
