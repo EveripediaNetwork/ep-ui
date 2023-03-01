@@ -17,7 +17,14 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventDescription, setEventDescription] = useState<string>('')
   const [eventDate, setEventDate] = useState<string>('')
 
+  const inputIsValid =
+    eventDate.trim().length > 0 &&
+    eventDescription.trim().length > 0 &&
+    eventTitle.trim().length > 0
+
   const handleAddEvent = () => {
+    if (!inputIsValid) return
+
     const eventType =
       wiki?.events?.length === 0 || !wiki?.events
         ? EventType.CREATED
@@ -85,7 +92,13 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           />
         </Box>
         <Box flex="1" alignSelf="center" w="max-content">
-          <Button size="sm" rounded="md" w="98px" onClick={handleAddEvent}>
+          <Button
+            isDisabled={!inputIsValid}
+            size="sm"
+            rounded="md"
+            w="98px"
+            onClick={handleAddEvent}
+          >
             Add
           </Button>
         </Box>
