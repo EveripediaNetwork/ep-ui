@@ -24,10 +24,13 @@ import { RiQuestionLine } from 'react-icons/ri'
 import { Editors } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
+import { LoadingAdminTableSkeleton } from '../LoadingAdminTableSkeleton'
 
 type InsightTableWikiEditorsProps = {
   wikiInsightData: Editors[] | undefined
   toggleUserFunc?: (active: boolean, id: string) => void
+  editorsIsFetching: boolean
+  hiddenEditorsIsFetching: boolean
 }
 
 export const userNameData = (item: Editors) => {
@@ -37,7 +40,12 @@ export const userNameData = (item: Editors) => {
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
-  const { wikiInsightData: wikiEditorInsightData, toggleUserFunc } = props
+  const {
+    wikiInsightData: wikiEditorInsightData,
+    toggleUserFunc,
+    editorsIsFetching,
+    hiddenEditorsIsFetching,
+  } = props
 
   const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
@@ -56,12 +64,10 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiEditorInsightData
-            ?.filter(
-              editor =>
-                editor.wikisCreated.length > 0 || editor.wikisEdited.length > 0,
-            )
-            .map((item, i) => {
+          {hiddenEditorsIsFetching || editorsIsFetching ? (
+            <LoadingAdminTableSkeleton length={10} />
+          ) : (
+            wikiEditorInsightData.map((item, i) => {
               return (
                 <Tr key={i}>
                   <Td>
@@ -189,7 +195,8 @@ export const InsightTableWikiEditors = (
                   </Td>
                 </Tr>
               )
-            })}
+            })
+          )}
         </Tbody>
       </Table>
     </TableContainer>
