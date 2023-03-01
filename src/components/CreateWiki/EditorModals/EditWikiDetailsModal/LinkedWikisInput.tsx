@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
   HStack,
   Icon,
   Select,
@@ -13,6 +12,7 @@ import {
   Text,
   Wrap,
   chakra,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { getWikisByTitle } from '@/services/search'
 import { debounce } from 'debounce'
@@ -99,16 +99,16 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
-      <Flex
+      <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        direction={{ base: 'column', sm: 'row' }}
+        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
       >
         <Select
           value={linkType}
           onChange={e => setLinkType(e.target.value as LinkedWikiKey)}
-          size="sm"
+          h="40px"
           rounded="md"
           flex="5"
           placeholder="Select option"
@@ -136,7 +136,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
             }}
           >
             <AutoCompleteInput
-              size="sm"
+              h="40px"
               flex="8"
               rounded="md"
               disabled={!linkType}
@@ -175,15 +175,14 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         <Button
           isLoading={loading}
           disabled={!linkType}
-          flex="1"
-          size="sm"
+          gridColumn={{ base: 'span 2', md: 'unset' }}
+          h="40px"
           rounded="md"
-          mx="auto"
           onClick={handleAddWiki}
         >
           Add
         </Button>
-      </Flex>
+      </SimpleGrid>
       <Box
         borderWidth={containsLinkedWikis ? 1 : 0}
         p={containsLinkedWikis ? 2 : 0}

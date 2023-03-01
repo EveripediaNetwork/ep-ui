@@ -66,62 +66,75 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     setEventTitle('')
   }
 
+  const removeEventHandler = (id: string) => {
+    dispatch({
+      type: 'wiki/removeEvent',
+      payload: {
+        eventId: id,
+      },
+    })
+  }
+
   return (
     <>
       <Box>
         <Text fontWeight="semibold">Event Dates</Text>
-        <Flex
-          gap="3"
-          w="full"
-          mt="1.5"
-          flexDirection={{ base: 'column', md: 'row' }}
-        >
-          <Box flex="8" w="full">
-            <SimpleGrid
-              gridTemplateColumns={{ base: '1fr', md: '1.2fr 2fr' }}
-              gap="3"
-            >
-              <Input
-                type="date"
-                placeholder="Select date"
-                fontSize="14px"
-                value={eventDate}
-                onChange={e => {
-                  setEventDate(e.target.value)
-                }}
-              />
-              <Input
-                type="text"
-                placeholder="Title"
-                value={eventTitle}
-                onChange={e => {
-                  setEventTitle(e.target.value)
-                }}
-              />
-            </SimpleGrid>
-            <Textarea
-              mt="3"
-              value={eventDescription}
-              placeholder="Write a short description for the event date"
+        <Box flex="8" w="full" mt="1.5">
+          <SimpleGrid
+            gridTemplateColumns={{ base: '1fr', md: '0.8fr 1fr 1fr' }}
+            gap="3"
+          >
+            <Input
+              type="date"
+              placeholder="Select date"
+              fontSize={{ base: '12px', md: '14px' }}
+              value={eventDate}
               onChange={e => {
-                setEventDescription(e.target.value)
+                setEventDate(e.target.value)
               }}
             />
-          </Box>
-          <Box flex="1" alignSelf="center" w="max-content">
-            <Button
-              isDisabled={!inputIsValid}
-              size="sm"
-              rounded="md"
-              w="98px"
-              onClick={handleAddEvent}
-            >
-              {selectedEvent ? 'Update' : 'Add'}
-            </Button>
-          </Box>
-        </Flex>
+            <Input
+              fontSize={{ base: '12px', md: '14px' }}
+              type="text"
+              placeholder="Title"
+              value={eventTitle}
+              onChange={e => {
+                setEventTitle(e.target.value)
+              }}
+            />
+            <Input
+              type="url"
+              placeholder="Link"
+              fontSize={{ base: '12px', md: '14px' }}
+            />
+          </SimpleGrid>
+        </Box>
+        <SimpleGrid
+          gridTemplateColumns={{ base: '1fr', md: '2fr 110px' }}
+          gap="3"
+          mt="3"
+        >
+          <Textarea
+            value={eventDescription}
+            placeholder="Write a short description for the event date"
+            h={{ base: '80px', md: 'initial' }}
+            fontSize={{ base: '12px', md: '14px' }}
+            onChange={e => {
+              setEventDescription(e.target.value)
+            }}
+          />
+          <Button
+            isDisabled={!inputIsValid}
+            w="full"
+            rounded="md"
+            onClick={handleAddEvent}
+            h="40px"
+          >
+            {selectedEvent ? 'Update' : 'Add'}
+          </Button>
+        </SimpleGrid>
       </Box>
-      {wiki.events && (
+      {wiki.events && wiki.events?.length > 0 && (
         <Flex
           border="1px solid"
           borderRadius="6px"
@@ -181,6 +194,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                     bg="red.400"
                     _hover={{ bg: 'red.500' }}
                     rounded="full"
+                    onClick={() => removeEventHandler(wikiEvent.date)}
                   >
                     <Icon as={RiCloseLine} />
                   </Center>

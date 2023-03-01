@@ -28,7 +28,7 @@ const HighlightsModal = ({
   if (!isOpen) return null
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
+    <Modal onClose={onClose} isOpen={isOpen} isCentered size="2xl" {...rest}>
       <ModalOverlay />
       <ModalContent
         w="min(95vw, 600px)"
@@ -61,7 +61,12 @@ const HighlightsModal = ({
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mx="auto" onClick={onClose}>
+          <Button
+            colorScheme="blue"
+            mx="auto"
+            w={{ base: 'full', md: 'initial' }}
+            onClick={onClose}
+          >
             Close
           </Button>
         </ModalFooter>

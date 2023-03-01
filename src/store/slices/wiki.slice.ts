@@ -303,6 +303,20 @@ const wikiSlice = createSlice({
       saveDraftInLocalStorage(newState)
       return newState
     },
+    removeEvent(state, action) {
+      if (state.events) {
+        const updatedEvents = state.events.filter(
+          events => events.date !== action.payload.eventId,
+        )
+        const newState = {
+          ...state,
+          events: updatedEvents,
+        }
+        saveDraftInLocalStorage(newState)
+        return newState
+      }
+      return state
+    },
     reset() {
       return initialState
     },
