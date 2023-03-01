@@ -9,7 +9,7 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { useAppDispatch } from '@/store/hook'
-import { EventType, Wiki } from '@everipedia/iq-utils'
+import { EventType, Wiki, BaseEvents } from '@everipedia/iq-utils'
 
 const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
@@ -18,24 +18,25 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventDate, setEventDate] = useState<string>('')
 
   const handleAddEvent = () => {
-    console.log({
-      type: EventType.CREATED,
+    const eventType =
+      wiki?.events?.length === 0 || !wiki?.events
+        ? EventType.CREATED
+        : EventType.DEFAULT
+
+    const eventData: BaseEvents = {
+      type: eventType,
       description: eventDescription,
-      title: eventTitle,
       date: eventDate,
-    })
+      title: eventTitle,
+      link: '',
+    }
 
     dispatch({
       type: 'wiki/addEvent',
       payload: {
-        type: EventType.CREATED,
-        description: eventDescription,
-        title: eventTitle,
-        date: eventDate,
+        ...eventData,
       },
     })
-
-    console.log(eventDate)
 
     setEventDate('')
     setEventDescription('')
@@ -45,9 +46,17 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Box>
       <Text fontWeight="semibold">Event Dates</Text>
-      <Flex gap="3" w="full" mt="1.5">
+      <Flex
+        gap="3"
+        w="full"
+        mt="1.5"
+        flexDirection={{ base: 'column', md: 'row' }}
+      >
         <Box flex="8" w="full">
-          <SimpleGrid gridTemplateColumns="1.2fr 2fr" gap="3">
+          <SimpleGrid
+            gridTemplateColumns={{ base: '1fr', md: '1.2fr 2fr' }}
+            gap="3"
+          >
             <Input
               type="date"
               placeholder="Select date"

@@ -260,9 +260,10 @@ const wikiSlice = createSlice({
       const { title, description, type, date, link } =
         action.payload as BaseEvents
 
-      const index =
-        state.events &&
-        (state.events.findIndex(event => event.date === date) as number)
+      let index = -1
+      if (state.events) {
+        index = state.events.findIndex(event => event.date === date)
+      }
 
       if (index !== -1) {
         const updatedEvent = {
@@ -272,7 +273,7 @@ const wikiSlice = createSlice({
           date,
           type,
         }
-        const events = [...state.events]
+        const events = [...(state.events ?? [])]
         events[index] = updatedEvent
         events.sort((a, b) => {
           const dateA = a.date ? new Date(a.date) : null
