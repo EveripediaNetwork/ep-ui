@@ -21,12 +21,15 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventTitle, setEventTitle] = useState<string>('')
   const [eventDescription, setEventDescription] = useState<string>('')
   const [eventDate, setEventDate] = useState<string>('')
+  const [eventLink, setEventLink] = useState<string>('')
   const [selectedEvent, setSelectedEvent] = useState<BaseEvents | null>(null)
 
   const inputIsValid =
     eventDate.trim().length > 0 &&
     eventDescription.trim().length > 0 &&
-    eventTitle.trim().length > 0
+    eventTitle.trim().length > 0 &&
+    eventLink.trim().length > 0 &&
+    eventLink.startsWith('https://')
 
   const handleAddEvent = () => {
     if (!inputIsValid) return
@@ -41,7 +44,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       description: eventDescription,
       date: new Date(eventDate).toISOString(),
       title: eventTitle,
-      link: '',
+      link: eventLink,
     }
 
     if (selectedEvent) {
@@ -64,6 +67,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     setEventDate('')
     setEventDescription('')
     setEventTitle('')
+    setEventLink('')
   }
 
   const removeEventHandler = (id: string) => {
@@ -104,6 +108,8 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             />
             <Input
               type="url"
+              value={eventLink}
+              onChange={e => setEventLink(e.target.value)}
               placeholder="Link"
               fontSize={{ base: '12px', md: '14px' }}
             />
@@ -161,6 +167,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                     setEventDate(wikiEvent?.date as string)
                     setEventTitle(wikiEvent?.title as string)
                     setEventDescription(wikiEvent?.description as string)
+                    setEventLink(wikiEvent.link as string)
                   }}
                   _hover={{
                     bg: 'gray.100',
