@@ -13,7 +13,7 @@ import {
   Icon,
   HStack,
 } from '@chakra-ui/react'
-
+import { useRouter } from 'next/router'
 import { AiFillExclamationCircle } from 'react-icons/ai'
 
 export const DeleteEditorModal = ({
@@ -30,6 +30,8 @@ export const DeleteEditorModal = ({
   toggleUserFunc: (ban: boolean) => void
   onClose: () => void
 }) => {
+  const router = useRouter()
+
   if (!isOpen) return null
   return (
     <Modal
@@ -79,6 +81,7 @@ export const DeleteEditorModal = ({
               onClick={() => {
                 toggleUserFunc(!rest.isActive)
                 handleRefetch()
+                router.reload()
                 onClose()
               }}
             >

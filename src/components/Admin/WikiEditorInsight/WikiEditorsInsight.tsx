@@ -292,7 +292,6 @@ export const WikiEditorsInsightTable = () => {
             active: ban,
           })
           setEditorslist(() => dataUpdate(editorsList, ban, editorState.id))
-          handleRefetch()
         }}
       />
     </Flex>
