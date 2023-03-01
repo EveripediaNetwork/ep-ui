@@ -21,6 +21,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventTitle, setEventTitle] = useState<string>('')
   const [eventDescription, setEventDescription] = useState<string>('')
   const [eventDate, setEventDate] = useState<string>('')
+  const [selectedEvent, setSelectedEvent] = useState<BaseEvents | null>(null)
 
   const inputIsValid =
     eventDate.trim().length > 0 &&
@@ -36,19 +37,29 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         : EventType.DEFAULT
 
     const eventData: BaseEvents = {
-      type: eventType,
+      type: selectedEvent ? selectedEvent.type : eventType,
       description: eventDescription,
-      date: eventDate,
+      date: new Date(eventDate).toISOString(),
       title: eventTitle,
       link: '',
     }
 
-    dispatch({
-      type: 'wiki/addEvent',
-      payload: {
-        ...eventData,
-      },
-    })
+    if (selectedEvent) {
+      dispatch({
+        type: 'wiki/addEvent',
+        payload: {
+          ...eventData,
+        },
+      })
+      setSelectedEvent(null)
+    } else {
+      dispatch({
+        type: 'wiki/addEvent',
+        payload: {
+          ...eventData,
+        },
+      })
+    }
 
     setEventDate('')
     setEventDescription('')
@@ -105,7 +116,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               w="98px"
               onClick={handleAddEvent}
             >
-              Add
+              {selectedEvent ? 'Update' : 'Add'}
             </Button>
           </Box>
         </Flex>
@@ -132,6 +143,12 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   gap={2}
                   bg="gray.100"
                   color="black"
+                  onClick={() => {
+                    setSelectedEvent(() => wikiEvent)
+                    setEventDate(wikiEvent?.date as string)
+                    setEventTitle(wikiEvent?.title as string)
+                    setEventDescription(wikiEvent?.description as string)
+                  }}
                   _hover={{
                     bg: 'gray.100',
                   }}
@@ -144,8 +161,15 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   px={2}
                 >
                   <HStack>
-                    <Text fontWeight="normal" fontSize="xs">
-                      {wikiEvent.date}
+                    <Text
+                      fontWeight="normal"
+                      fontSize="xs"
+                      noOfLines={1}
+                      display="-webkit-box"
+                      overflow="clip"
+                      textOverflow="ellipsis"
+                    >
+                      {wikiEvent.title}
                     </Text>
                   </HStack>
                   <Center
