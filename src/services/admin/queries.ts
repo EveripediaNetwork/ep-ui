@@ -106,7 +106,7 @@ export const HIDDEN_WIKIS_TABLE = gql`
 
 export const EDITORS_TABLE = gql`
   query Editors($limit: Int!, $offset: Int!) {
-    users(limit: $limit, offset: $offset) {
+    users(limit: $limit, offset: $offset, edits: true) {
       id
       active
       profile {
