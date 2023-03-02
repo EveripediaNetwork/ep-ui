@@ -34,7 +34,12 @@ const MenuFooter = () => {
             px={{ base: 0, lg: 0 }}
             pb={{ base: '6', md: '0' }}
           >
-            {`${t('visionFooterText')}`}
+            IQ.wiki&apos;s vision is to bring blockchain knowledge to the world
+            and knowledge onto the blockchain. A part of{' '}
+            <Link href="https://www.brainfund.com/" target="_blank">
+              Brainfund
+            </Link>{' '}
+            Group.
           </Text>
         </Stack>
       </GridItem>
