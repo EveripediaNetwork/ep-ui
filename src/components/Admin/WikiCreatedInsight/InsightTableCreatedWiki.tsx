@@ -9,7 +9,7 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import {  RiQuestionLine, RiCloseLine } from 'react-icons/ri'
+import { RiQuestionLine, RiCloseLine } from 'react-icons/ri'
 import { Wikis } from '@/types/admin'
 import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'

@@ -21,8 +21,8 @@ import config from '@/config'
 import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { RiArrowDownLine, RiQuestionLine } from 'react-icons/ri'
-import { TableHead } from '../GraphHeads'
 import { Wikis } from '@/types/admin'
+import { TableHead } from '../GraphHeads'
 
 type WikisTableProps = {
   wikiTableData: Wikis[]
