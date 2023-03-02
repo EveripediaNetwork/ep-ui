@@ -160,7 +160,6 @@ export const Content = (props: ContentProps) => {
         </Text>
       )}
       {activeStep === 1 && (
-        <>
           <VStack gap={4}>
             {step2Titles === 'Promote to Trending wiki' && (
               <Box w="full">
@@ -191,7 +190,6 @@ export const Content = (props: ContentProps) => {
             )}
             <GetWiki Data={Data} />
           </VStack>
-        </>
       )}
       {activeStep === 2 && (
         <>
