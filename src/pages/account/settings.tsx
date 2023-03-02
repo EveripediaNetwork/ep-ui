@@ -85,7 +85,6 @@ const Settings = () => {
             />
           </VStack>
         </Box>
-
         <VStack
           ml="0 !important"
           p={{ base: 4, lg: 12 }}
