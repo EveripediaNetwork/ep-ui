@@ -26,14 +26,38 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventLink, setEventLink] = useState<string>('')
   const [eventLinkError, setEventLinkError] = useState<string>('')
   const [selectedEvent, setSelectedEvent] = useState<BaseEvents | null>(null)
+  const [inputsInvalid, setInputsInvalid] = useState<boolean>(false)
+
+  const clearInputs = () => {
+    setEventLinkError('')
+    setEventDescriptionError('')
+    setEventTitleError('')
+    setEventDate('')
+    setEventDescription('')
+    setEventTitle('')
+    setEventLink('')
+  }
 
   const inputIsValid =
-    eventDate.trim().length > 0 &&
+    eventDate.length > 0 &&
     eventDescription.trim().length > 0 &&
     eventTitle.trim().length > 0
 
+  const checkValididty = () => {
+    if (!inputIsValid) {
+      setInputsInvalid(true)
+    } else {
+      setInputsInvalid(false)
+    }
+  }
+
   const handleAddEvent = () => {
-    if (!inputIsValid) return
+    if (!inputIsValid) {
+      setInputsInvalid(true)
+      return
+    }
+
+    setInputsInvalid(false)
 
     if (eventTitle.length > 80) {
       setEventTitleError('Title must not be longer than 80 characters')
@@ -52,9 +76,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       return
     }
 
-    if (!eventLink.startsWith('https://')) {
-      setEventLinkError('Invalid link, link should start with https')
-      return
+    if (eventLink) {
+      if (!eventLink.startsWith('https://')) {
+        setEventLinkError('Invalid link, link should start with https')
+        return
+      }
     }
 
     const eventType =
@@ -86,14 +112,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         },
       })
     }
-
-    setEventLinkError('')
-    setEventDescriptionError('')
-    setEventTitleError('')
-    setEventDate('')
-    setEventDescription('')
-    setEventTitle('')
-    setEventLink('')
+    clearInputs()
   }
 
   const removeEventHandler = (id: string) => {
@@ -103,7 +122,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         eventId: id,
       },
     })
+
+    clearInputs()
   }
+
+  console.log(selectedEvent)
 
   return (
     <>
@@ -121,6 +144,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventDate}
               onChange={e => {
                 setEventDate(e.target.value)
+                checkValididty()
               }}
             />
             <Input
@@ -130,12 +154,15 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventTitle}
               onChange={e => {
                 setEventTitle(e.target.value)
+                checkValididty()
               }}
             />
             <Input
               type="url"
               value={eventLink}
-              onChange={e => setEventLink(e.target.value)}
+              onChange={e => {
+                setEventLink(e.target.value)
+              }}
               placeholder="Link"
               fontSize={{ base: '12px', md: '14px' }}
             />
@@ -153,10 +180,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             fontSize={{ base: '12px', md: '14px' }}
             onChange={e => {
               setEventDescription(e.target.value)
+              checkValididty()
             }}
           />
           <Button
-            isDisabled={!inputIsValid}
+            isDisabled={inputsInvalid}
             w="full"
             rounded="md"
             onClick={handleAddEvent}
@@ -242,6 +270,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         </Flex>
       )}
       <>
+        {inputsInvalid && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            Please fill in all required fields.
+          </chakra.span>
+        )}
         {eventTitleError && (
           <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
             {eventTitleError}
