@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormControl, FormLabel, VStack } from '@chakra-ui/react'
-import ImageUpload from './ImageUpload'
+import ImageUpload from '../ImageUpload'
 
 interface ProfileMediaProps {
   avatarIPFSHash: string
