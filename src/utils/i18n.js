@@ -31,7 +31,7 @@ export const resources = {
       subScribeFooterBttn: 'Join Now',
       communityFooterHeading: 'Community Hub',
       visionFooterText:
-        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain.",
+        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain. A part of Brainfund Group.",
       whatIQ: "What's IQ?",
       iq: 'IQ',
       bridges: 'Bridges',
