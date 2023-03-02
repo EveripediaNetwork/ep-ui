@@ -160,36 +160,36 @@ export const Content = (props: ContentProps) => {
         </Text>
       )}
       {activeStep === 1 && (
-          <VStack gap={4}>
-            {step2Titles === 'Promote to Trending wiki' && (
-              <Box w="full">
-                <Text fontWeight="bold" py="1">
-                  Select slot
-                </Text>
-                <Select
-                  cursor="pointer"
-                  onChange={e => setValue(e.target.value)}
-                  defaultValue={promotedWikis?.length}
-                >
-                  {promotedWikis &&
-                    [...promotedWikis]
-                      ?.sort((a, b) => a.promoted - b.promoted)
-                      ?.slice(1)
-                      ?.map(item => (
-                        <option value={item.promoted}>
-                          SLOT {item.promoted - 1} - {item.title}
-                        </option>
-                      ))}
-                  {promotedWikis && (
-                    <option value={promotedWikis && +promotedWikis.length + 1}>
-                      New Slot
-                    </option>
-                  )}
-                </Select>
-              </Box>
-            )}
-            <GetWiki Data={Data} />
-          </VStack>
+        <VStack gap={4}>
+          {step2Titles === 'Promote to Trending wiki' && (
+            <Box w="full">
+              <Text fontWeight="bold" py="1">
+                Select slot
+              </Text>
+              <Select
+                cursor="pointer"
+                onChange={e => setValue(e.target.value)}
+                defaultValue={promotedWikis?.length}
+              >
+                {promotedWikis &&
+                  [...promotedWikis]
+                    ?.sort((a, b) => a.promoted - b.promoted)
+                    ?.slice(1)
+                    ?.map(item => (
+                      <option value={item.promoted}>
+                        SLOT {item.promoted - 1} - {item.title}
+                      </option>
+                    ))}
+                {promotedWikis && (
+                  <option value={promotedWikis && +promotedWikis.length + 1}>
+                    New Slot
+                  </option>
+                )}
+              </Select>
+            </Box>
+          )}
+          <GetWiki Data={Data} />
+        </VStack>
       )}
       {activeStep === 2 && (
         <>
