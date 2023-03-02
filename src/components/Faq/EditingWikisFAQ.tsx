@@ -18,7 +18,6 @@ const EditingWikisFAQ = () => {
           Editing Wikis on IQ.wiki
         </Text>
       </Flex>
-
       <AccordionFAQItem
         title="Getting Started"
         content={
@@ -32,7 +31,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Editing Mode"
         content={
@@ -45,7 +43,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Headers and Sections"
         content={
@@ -66,7 +63,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Quotes"
         content={
@@ -83,7 +79,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Adding Item to the Media Gallery"
         content={
@@ -96,7 +91,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Embedding Images & Videos"
         content={
@@ -118,7 +112,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Categories and Tags"
         content={
@@ -144,7 +137,6 @@ const EditingWikisFAQ = () => {
           </>
         }
       />
-
       <AccordionFAQItem
         title="Adding Internal Links"
         content={
