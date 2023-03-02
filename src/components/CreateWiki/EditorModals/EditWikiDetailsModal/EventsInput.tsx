@@ -124,9 +124,8 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     })
 
     clearInputs()
+    setSelectedEvent(null)
   }
-
-  console.log(selectedEvent)
 
   return (
     <>
@@ -219,7 +218,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   color="black"
                   onClick={() => {
                     setSelectedEvent(() => wikiEvent)
-                    setEventDate(wikiEvent?.date as string)
+                    setEventDate(
+                      new Date(wikiEvent?.date as string).toISOString(),
+                    )
                     setEventTitle(wikiEvent?.title as string)
                     setEventDescription(wikiEvent?.description as string)
                     setEventLink(wikiEvent.link as string)
