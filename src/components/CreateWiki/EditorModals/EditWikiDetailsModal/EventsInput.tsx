@@ -4,12 +4,12 @@ import {
   Button,
   Center,
   Flex,
-  HStack,
   Icon,
   Input,
   SimpleGrid,
   Text,
   Textarea,
+  chakra,
 } from '@chakra-ui/react'
 import { useAppDispatch } from '@/store/hook'
 import { EventType, Wiki, BaseEvents } from '@everipedia/iq-utils'
@@ -19,20 +19,43 @@ import { RiCloseLine } from 'react-icons/ri'
 const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [eventTitle, setEventTitle] = useState<string>('')
+  const [eventTitleError, setEventTitleError] = useState<string>('')
   const [eventDescription, setEventDescription] = useState<string>('')
+  const [eventDescriptionError, setEventDescriptionError] = useState<string>('')
   const [eventDate, setEventDate] = useState<string>('')
   const [eventLink, setEventLink] = useState<string>('')
+  const [eventLinkError, setEventLinkError] = useState<string>('')
   const [selectedEvent, setSelectedEvent] = useState<BaseEvents | null>(null)
 
   const inputIsValid =
     eventDate.trim().length > 0 &&
     eventDescription.trim().length > 0 &&
-    eventTitle.trim().length > 0 &&
-    eventLink.trim().length > 0 &&
-    eventLink.startsWith('https://')
+    eventTitle.trim().length > 0
 
   const handleAddEvent = () => {
     if (!inputIsValid) return
+
+    if (eventTitle.length > 80) {
+      setEventTitleError('Title must not be longer than 80 characters')
+      return
+    }
+
+    if (eventLink.length > 500) {
+      setEventLinkError('Link must not be longer than 500 characters')
+      return
+    }
+
+    if (eventDescription.length > 255) {
+      setEventDescriptionError(
+        'Description must not be longer than 255 characters',
+      )
+      return
+    }
+
+    if (!eventLink.startsWith('https://')) {
+      setEventLinkError('Invalid link, link should start with https')
+      return
+    }
 
     const eventType =
       wiki?.events?.length === 0 || !wiki?.events
@@ -64,6 +87,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       })
     }
 
+    setEventLinkError('')
+    setEventDescriptionError('')
+    setEventTitleError('')
     setEventDate('')
     setEventDescription('')
     setEventTitle('')
@@ -154,10 +180,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           {wiki.events &&
             wiki.events.map(wikiEvent => (
               <Flex key={wikiEvent.date} gap="2">
-                <Flex alignItems="center" gap="1">
+                <Flex alignItems="center" gap="1" flexShrink={0}>
                   <Icon as={FiCalendar} w="16px" h="16px" />
                 </Flex>
                 <Button
+                  w="max-content"
                   display="flex"
                   gap={2}
                   bg="gray.100"
@@ -180,19 +207,20 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   size="xs"
                   px={2}
                 >
-                  <HStack>
-                    <Text
-                      fontWeight="normal"
-                      fontSize="xs"
-                      noOfLines={1}
-                      display="-webkit-box"
-                      overflow="clip"
-                      textOverflow="ellipsis"
-                    >
-                      {wikiEvent.title}
-                    </Text>
-                  </HStack>
+                  <Text
+                    fontWeight="normal"
+                    fontSize="xs"
+                    noOfLines={1}
+                    display="inline-block"
+                    overflowX="hidden"
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                    maxWidth="100px"
+                  >
+                    {wikiEvent.title}
+                  </Text>
                   <Center
+                    flexShrink={0}
                     boxSize={4}
                     fontSize="xs"
                     fontWeight="bold"
@@ -201,7 +229,10 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                     bg="red.400"
                     _hover={{ bg: 'red.500' }}
                     rounded="full"
-                    onClick={() => removeEventHandler(wikiEvent.date)}
+                    onClick={e => {
+                      e.stopPropagation()
+                      removeEventHandler(wikiEvent.date)
+                    }}
                   >
                     <Icon as={RiCloseLine} />
                   </Center>
@@ -210,6 +241,23 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             ))}
         </Flex>
       )}
+      <>
+        {eventTitleError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventTitleError}
+          </chakra.span>
+        )}
+        {eventLinkError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventLinkError}
+          </chakra.span>
+        )}
+        {eventDescriptionError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventDescriptionError}
+          </chakra.span>
+        )}
+      </>
     </>
   )
 }
