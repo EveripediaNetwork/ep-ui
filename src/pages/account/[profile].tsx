@@ -72,6 +72,16 @@ Profile.footer = false
 export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
 
+  // Redirect if /accounts/settings is hit
+  if (userIdentifier === 'settings') {
+    return {
+      redirect: {
+        destination: `/account/settings`,
+        permanent: false,
+      },
+    }
+  }
+
   // Redirect from regular ethereum address
   const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
   if (ethAddressRegex.test(userIdentifier)) {
@@ -105,6 +115,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const { isError, data: address } = await store.dispatch(
     getUserAddressFromUsername.initiate(userIdentifier),
   )
+
   if (!isError) {
     return {
       redirect: {
