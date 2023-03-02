@@ -72,7 +72,7 @@ Profile.footer = false
 export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
 
-  //redirect if /accounts/settings is hit
+  // Redirect if /accounts/settings is hit
   if (userIdentifier === 'settings') {
     return {
       redirect: {
