@@ -4,11 +4,7 @@ import {
   useGetAllHiddenWikiCountQuery,
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
-import {
-  Text,
-  Flex,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Text, Flex, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
