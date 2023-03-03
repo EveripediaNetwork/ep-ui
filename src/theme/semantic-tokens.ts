@@ -49,6 +49,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
     },
+    eventTextColor: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.800',
+    },
     linkHoverColor: {
       default: 'gray.800',
       _dark: 'gray.400',

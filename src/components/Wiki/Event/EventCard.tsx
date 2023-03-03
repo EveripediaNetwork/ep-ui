@@ -9,9 +9,9 @@ const EventCard = ({
   description,
   link,
 }: {
-  title: string
+  title?: string
   eventDate: string
-  description: string
+  description?: string
   link?: string
 }) => {
   const date = new Date(eventDate)
@@ -34,12 +34,20 @@ const EventCard = ({
       >
         <Icon color="white" as={RiArrowRightUpLine} />
       </Flex>
-      <Box bgColor="cardBg" borderRadius="16px" p="5" pb="8" minH="270px">
+      <Box
+        bgColor="cardBg"
+        flexGrow="1"
+        flexBasis="100%"
+        borderRadius="16px"
+        p="5"
+        pb="8"
+        minH="270px"
+      >
         <Heading fontSize="32px">{title}</Heading>
-        <Text mt="1.5" fontSize="18px" color="homeDescriptionColor">
+        <Text mt="1.5" fontSize="18px" color="eventTextColor">
           {formattedDate}
         </Text>
-        <Text mt="2" color="homeDescriptionColor">
+        <Text mt="2" color="eventTextColor">
           {description}
         </Text>
         {link && (
