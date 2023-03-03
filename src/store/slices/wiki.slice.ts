@@ -306,7 +306,7 @@ const wikiSlice = createSlice({
     removeEvent(state, action) {
       if (state.events) {
         const updatedEvents = state.events.filter(
-          events => events.date !== action.payload.eventId,
+          events => events.date !== action.payload.date,
         )
         const newState = {
           ...state,
