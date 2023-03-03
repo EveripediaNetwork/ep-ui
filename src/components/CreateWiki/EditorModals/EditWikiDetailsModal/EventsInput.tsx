@@ -55,7 +55,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       } else {
         setInputsInvalid(false)
       }
-    }, 500)
+    }, 5000)
   }
 
   const handleAddEvent = () => {
