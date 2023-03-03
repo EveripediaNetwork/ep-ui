@@ -35,3 +35,8 @@ export type ProfileData = {
   banner: string | null
   avatar: string | null
 }
+
+export interface StrEntry {
+  value: string
+  error: string
+}
