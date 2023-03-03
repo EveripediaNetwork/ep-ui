@@ -55,7 +55,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       } else {
         setInputsInvalid(false)
       }
-    }, 5000)
+    }, 1000)
   }
 
   const handleAddEvent = () => {
@@ -156,6 +156,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   setEventDateError('')
                 }
               }}
+              onBlur={() => {
+                checkValidity()
+              }}
             />
             <Input
               fontSize={{ base: '12px', md: '14px' }}
@@ -169,6 +172,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   setInputsInvalid(false)
                   setEventTitleError('')
                 }
+              }}
+              onBlur={() => {
+                checkValidity()
               }}
             />
             <Input
@@ -202,6 +208,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 setInputsInvalid(false)
                 setEventDescriptionError('')
               }
+            }}
+            onBlur={() => {
+              checkValidity()
             }}
           />
           <Button
