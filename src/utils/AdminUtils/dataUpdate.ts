@@ -1,4 +1,4 @@
-import { Editors } from '@/types/admin'
+import { CreatedWikisCount, Editors } from '@/types/admin'
 
 export const dataUpdate = (
   p: Editors[] | undefined,
@@ -15,4 +15,15 @@ export const dataUpdate = (
 
 export const userNameData = (item: Editors) => {
   return item.username || item.profile?.username || 'Unknown'
+}
+
+export const getWikiIdUsingLevel = (
+  level: number,
+  promotedWikis: CreatedWikisCount[] | undefined,
+) => {
+  const wiki = promotedWikis?.filter(item => {
+    return item.promoted === level
+  })[0]
+
+  return wiki?.id
 }

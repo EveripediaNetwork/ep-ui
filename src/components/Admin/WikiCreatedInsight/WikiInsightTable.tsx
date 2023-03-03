@@ -418,7 +418,7 @@ export const WikiInsightTable = () => {
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">
-            No data to display
+            No data to display 🐌
           </Text>
         )}
       </Flex>

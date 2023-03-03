@@ -21,15 +21,8 @@ import config from '@/config'
 import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { RiArrowDownLine, RiQuestionLine } from 'react-icons/ri'
-import { Wikis } from '@/types/admin'
+import { WikisTableProps } from '@/types/admin'
 import { TableHead } from '../GraphHeads'
-
-type WikisTableProps = {
-  wikiTableData: Wikis[]
-  findSection: (promotedNum: number) => void
-  shouldPromote: (wikiTitle: string, id: string) => void
-  shouldArchive: (ishidden: boolean, wikiId: string) => void
-}
 
 export const WikisTable = (props: WikisTableProps) => {
   const { wikiTableData, findSection, shouldArchive, shouldPromote } = props

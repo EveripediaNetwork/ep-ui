@@ -211,3 +211,26 @@ export type PromoteCreatedWikisModalProps = {
   wikiChosenId: string
   hideFunc: () => void
 }
+
+export type ContentProps = {
+  activeStep: number
+  steps?: {
+    label: string
+    description: string
+  }[]
+  HompageSelected?: () => void
+  buttonOne?: string
+  buttonTwo?: string
+  step2Titles: string
+  promotedWikis: CreatedWikisCount[] | undefined
+  Data: CreatedWikisCount | undefined
+  setValue: (value: React.SetStateAction<string>) => void
+  TrendingwikiSelected?: () => Promise<void>
+}
+
+export type WikisTableProps = {
+  wikiTableData: Wikis[]
+  findSection: (promotedNum: number) => void
+  shouldPromote: (wikiTitle: string, id: string) => void
+  shouldArchive: (ishidden: boolean, wikiId: string) => void
+}

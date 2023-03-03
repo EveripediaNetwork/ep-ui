@@ -4,16 +4,11 @@ import {
   ModalOverlay,
   ModalContent,
   ModalBody,
-  Box,
-  Text,
-  HStack,
   Icon,
-  Button,
   Flex,
-  VStack,
   useToast,
 } from '@chakra-ui/react'
-import { Step, Steps, useSteps } from 'chakra-ui-steps'
+import { useSteps } from 'chakra-ui-steps'
 import { RiCloseLine } from 'react-icons/ri'
 import {
   useGetSearchedWikisByTitleQuery,
@@ -21,7 +16,8 @@ import {
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
 import { PromoteCreatedWikisModalProps } from '@/types/admin'
-import { Content } from './PromotedWikiContent'
+import { PromoteModalContent } from './PromotedWikiContent'
+import { getWikiIdUsingLevel } from '@/utils/AdminUtils/dataUpdate'
 
 export const PromoteCreatedWikisModal = (
   props: PromoteCreatedWikisModalProps,
@@ -40,15 +36,6 @@ export const PromoteCreatedWikisModal = (
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
   const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
-
-  const getWikiIdUsingLevel = (level: number) => {
-    const wiki = promotedWikis?.filter(item => {
-      return item.promoted === level
-    })[0]
-
-    return wiki?.id
-  }
-
   const arrs = () => {
     const arr = []
     const data = promotedWikis || []
@@ -61,7 +48,6 @@ export const PromoteCreatedWikisModal = (
     skip: initGetSearchedWikis,
   })
   const [value, setValue] = useState('2')
-
   const toast = useToast()
   const ModalData = wiki?.filter(
     item => item.id === wikiChosenId && item.title === wikiChosenTitle,
@@ -76,7 +62,6 @@ export const PromoteCreatedWikisModal = (
     { label: 'Step 2', description: step2Titles },
     { label: 'Step 3', description: 'Promotion confirmation' },
   ]
-
   const [promoteWiki, { error: posTPromoteWikiError }] =
     usePostPromotedWikiMutation()
 
@@ -135,8 +120,7 @@ export const PromoteCreatedWikisModal = (
           level: Number(value),
         })
         handlePromoteWiki({ id: wikiChosenId, level: Number(value) })
-
-        const id = getWikiIdUsingLevel(+value)
+        const id = getWikiIdUsingLevel(+value, promotedWikis)
         if (id) {
           handlePromoteWiki({ id, level: 0 })
         }
@@ -144,7 +128,7 @@ export const PromoteCreatedWikisModal = (
         Close()
       } else {
         handlePromoteWiki({ id: wikiChosenId, level: 1 })
-        const id = getWikiIdUsingLevel(1)
+        const id = getWikiIdUsingLevel(1, promotedWikis)
         if (id) {
           handlePromoteWiki({ id, level: 0 })
         }
@@ -195,64 +179,18 @@ export const PromoteCreatedWikisModal = (
               alignSelf="center"
             />
           </Flex>
-
-          <VStack px="5" py="3" gap={4}>
-            <Text fontSize="xl" textAlign="start" w="100%" fontWeight="bold">
-              Promote
-            </Text>
-            <Flex flexDir="column" width="100%">
-              <Steps
-                labelOrientation="vertical"
-                colorScheme="brand"
-                activeStep={activeStep}
-                size="sm"
-              >
-                {steps.map(({ label, description }) => (
-                  <Step
-                    textAlign="left"
-                    label={label}
-                    key={label}
-                    description={description}
-                  >
-                    <Box pt="10" pb="10">
-                      <Content
-                        activeStep={activeStep}
-                        step2Titles={step2Titles}
-                        promotedWikis={promotedWikis}
-                        Data={Data}
-                        setValue={setValue}
-                      />
-                    </Box>
-                  </Step>
-                ))}
-              </Steps>
-              <Flex width="100%" justify="center" pt={4} pb={5}>
-                <HStack gap={3}>
-                  <Button
-                    p={4}
-                    onClick={HompageSelected}
-                    size="sm"
-                    variant="ghost"
-                    fontSize="xs"
-                  >
-                    {buttonOne}
-                  </Button>
-                  <Button
-                    size="sm"
-                    fontSize="xs"
-                    borderWidth="1px"
-                    onClick={TrendingwikiSelected}
-                    disabled={
-                      !promotedWikis?.length &&
-                      buttonTwo === 'Promote to Trending wikis'
-                    }
-                  >
-                    {buttonTwo}
-                  </Button>
-                </HStack>
-              </Flex>
-            </Flex>
-          </VStack>
+          <PromoteModalContent
+            activeStep={activeStep}
+            steps={steps}
+            HompageSelected={HompageSelected}
+            buttonOne={buttonOne}
+            buttonTwo={buttonTwo}
+            step2Titles={step2Titles}
+            promotedWikis={promotedWikis}
+            Data={Data}
+            setValue={setValue}
+            TrendingwikiSelected={TrendingwikiSelected}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>

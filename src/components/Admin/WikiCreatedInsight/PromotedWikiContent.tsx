@@ -1,15 +1,16 @@
-import { CreatedWikisCount } from '@/types/admin'
-import { VStack, Box, Text, Select } from '@chakra-ui/react'
+import { ContentProps } from '@/types/admin'
+import {
+  VStack,
+  Box,
+  Text,
+  Select,
+  Flex,
+  Button,
+  HStack,
+} from '@chakra-ui/react'
 import React from 'react'
 import { GetWiki } from './GetWikisComponent'
-
-type ContentProps = {
-  activeStep: number
-  step2Titles: string
-  promotedWikis: CreatedWikisCount[] | undefined
-  Data: CreatedWikisCount | undefined
-  setValue: (value: React.SetStateAction<string>) => void
-}
+import { Step, Steps } from 'chakra-ui-steps'
 
 export const Content = (props: ContentProps) => {
   const { activeStep, step2Titles, promotedWikis, Data, setValue } = props
@@ -68,5 +69,79 @@ export const Content = (props: ContentProps) => {
         </>
       )}
     </>
+  )
+}
+
+export const PromoteModalContent = (props: ContentProps) => {
+  const {
+    activeStep,
+    steps,
+    HompageSelected,
+    buttonOne,
+    buttonTwo,
+    step2Titles,
+    promotedWikis,
+    Data,
+    setValue,
+    TrendingwikiSelected,
+  } = props
+  return (
+    <VStack px="5" py="3" gap={4}>
+      <Text fontSize="xl" textAlign="start" w="100%" fontWeight="bold">
+        Promote
+      </Text>
+      <Flex flexDir="column" width="100%">
+        <Steps
+          labelOrientation="vertical"
+          colorScheme="brand"
+          activeStep={activeStep}
+          size="sm"
+        >
+          {steps?.map(({ label, description }) => (
+            <Step
+              textAlign="left"
+              label={label}
+              key={label}
+              description={description}
+            >
+              <Box pt="10" pb="10">
+                <Content
+                  activeStep={activeStep}
+                  step2Titles={step2Titles}
+                  promotedWikis={promotedWikis}
+                  Data={Data}
+                  setValue={setValue}
+                />
+              </Box>
+            </Step>
+          ))}
+        </Steps>
+        <Flex width="100%" justify="center" pt={4} pb={5}>
+          <HStack gap={3}>
+            <Button
+              p={4}
+              onClick={HompageSelected}
+              size="sm"
+              variant="ghost"
+              fontSize="xs"
+            >
+              {buttonOne}
+            </Button>
+            <Button
+              size="sm"
+              fontSize="xs"
+              borderWidth="1px"
+              onClick={TrendingwikiSelected}
+              disabled={
+                !promotedWikis?.length &&
+                buttonTwo === 'Promote to Trending wikis'
+              }
+            >
+              {buttonTwo}
+            </Button>
+          </HStack>
+        </Flex>
+      </Flex>
+    </VStack>
   )
 }
