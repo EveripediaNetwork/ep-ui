@@ -20,22 +20,20 @@ import {
   usePostPromotedWikiMutation,
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
-import { Content } from './WikiCreatedItems'
+import { PromoteCreatedWikisModalProps } from '@/types/admin'
+import { Content } from './PromotedWikiContent'
 
-export const PromoteCreatedWikisModal = ({
-  onClose = () => {},
-  isOpen = false,
-  wikiChosenTitle,
-  wikiChosenId,
-  hideFunc,
-  ...rest
-}: {
-  isOpen: boolean
-  onClose: () => void
-  wikiChosenTitle: string
-  wikiChosenId: string
-  hideFunc: () => void
-}) => {
+export const PromoteCreatedWikisModal = (
+  props: PromoteCreatedWikisModalProps,
+) => {
+  const {
+    onClose = () => {},
+    isOpen = false,
+    wikiChosenTitle,
+    wikiChosenId,
+    hideFunc,
+    ...rest
+  } = props
   const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
   const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
   const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')

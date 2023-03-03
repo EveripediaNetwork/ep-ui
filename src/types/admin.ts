@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 export type EditorsType = {
   id: string
   title: string
@@ -175,4 +177,37 @@ export interface EditorsTable {
   latestActivity: string
   editorAddress: string
   active: boolean
+}
+
+export type InsightTableWikiEditorsProps = {
+  wikiInsightData: Editors[] | undefined
+  toggleUserFunc?: (active: boolean, id: string) => void
+  editorsIsFetching: boolean
+  hiddenEditorsIsFetching: boolean
+}
+
+export type WikiEditorsInsightActionBarProps = {
+  handleSearchKeyword: (e: ChangeEvent<HTMLInputElement>) => void
+  handleSortChange: () => void
+  isOpenFilter: boolean
+  onCloseFilter: () => void
+  ApplyFilterItems: (e: React.FormEvent<HTMLFormElement>) => void
+  onToggleFilter: () => void
+  FilterArray: {
+    id: string
+    value: string
+  }[]
+  sortIcon: JSX.Element
+  setChecked: (checked: number) => void
+  checked: number
+  setFilterEditors: (editors: string[]) => void
+  setPaginateOffset: (offset: number) => void
+}
+
+export type PromoteCreatedWikisModalProps = {
+  isOpen: boolean
+  onClose: () => void
+  wikiChosenTitle: string
+  wikiChosenId: string
+  hideFunc: () => void
 }

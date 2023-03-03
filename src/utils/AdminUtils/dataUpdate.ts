@@ -12,3 +12,7 @@ export const dataUpdate = (
     return user
   })
 }
+
+export const userNameData = (item: Editors) => {
+  return item.username || item.profile?.username || 'Unknown'
+}
