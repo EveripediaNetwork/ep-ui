@@ -15,6 +15,7 @@ import { useAppDispatch } from '@/store/hook'
 import { EventType, Wiki, BaseEvents } from '@everipedia/iq-utils'
 import { FiCalendar } from 'react-icons/fi'
 import { RiCloseLine } from 'react-icons/ri'
+import { isValidUrl } from '@/utils/textUtils'
 
 const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
@@ -83,7 +84,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     }
 
     if (eventLink) {
-      if (!eventLink.startsWith('https://')) {
+      if (!isValidUrl(eventLink)) {
         setEventLinkError('Invalid link, link should start with https')
         return
       }
@@ -175,7 +176,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventLink}
               onChange={e => {
                 setEventLink(e.target.value)
-                if (eventLink.startsWith('https://')) {
+                if (isValidUrl(eventLink)) {
                   setEventLinkError('')
                 }
               }}

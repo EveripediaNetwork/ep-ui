@@ -12,7 +12,7 @@ const EventCard = ({
   title: string
   eventDate: string
   description: string
-  link: string
+  link?: string
 }) => {
   const date = new Date(eventDate)
   const formattedDate = date.toLocaleDateString('en-US', {
