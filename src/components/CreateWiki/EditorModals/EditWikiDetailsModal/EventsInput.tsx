@@ -55,7 +55,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       } else {
         setInputsInvalid(false)
       }
-    }, 1000)
+    }, 5000)
   }
 
   const handleAddEvent = () => {
@@ -68,12 +68,28 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
 
     if (eventTitle.length > 80) {
       setEventTitleError('Title must not be longer than 80 characters')
+      setEventDateError('')
+      setEventLinkError('')
+      setEventDescriptionError('')
       return
+    }
+
+    if (eventDateError.length > 0) {
+      setEventDateError('')
     }
 
     if (eventLink.length > 500) {
       setEventLinkError('Link must not be longer than 500 characters')
+      setEventDescriptionError('')
       return
+    }
+
+    if (eventLink) {
+      if (!isValidUrl(eventLink)) {
+        setEventLinkError('Invalid link, link should start with https')
+        setEventDescriptionError('')
+        return
+      }
     }
 
     if (eventDescription.length > 255) {
@@ -83,12 +99,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       return
     }
 
-    if (eventLink) {
-      if (!isValidUrl(eventLink)) {
-        setEventLinkError('Invalid link, link should start with https')
-        return
-      }
-    }
+    // If all input fields are valid, clear any existing error states
+    setEventTitleError('')
+    setEventDateError('')
+    setEventLinkError('')
+    setEventDescriptionError('')
 
     const eventType =
       wiki?.events?.length === 0 || !wiki?.events
