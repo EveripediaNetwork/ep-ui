@@ -1,7 +1,7 @@
 import { CreatedWikisCount } from '@/types/admin'
 import { VStack, Box, Text, Select } from '@chakra-ui/react'
-import { GetWiki } from './GetWikisComponent'
 import React from 'react'
+import { GetWiki } from './GetWikisComponent'
 
 type ContentProps = {
   activeStep: number
