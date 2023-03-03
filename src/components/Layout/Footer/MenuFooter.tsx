@@ -36,7 +36,12 @@ const MenuFooter = () => {
           >
             IQ.wiki&apos;s vision is to bring blockchain knowledge to the world
             and knowledge onto the blockchain. A part of{' '}
-            <Link href="https://www.brainfund.com/" target="_blank">
+            <Link
+              href="https://www.brainfund.com/"
+              opacity="0.8"
+              _hover={{ opacity: '1', textDecoration: 'underline' }}
+              target="_blank"
+            >
               Brainfund
             </Link>{' '}
             Group.
