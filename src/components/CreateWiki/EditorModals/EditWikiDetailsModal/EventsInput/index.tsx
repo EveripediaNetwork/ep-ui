@@ -45,6 +45,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     e.preventDefault()
 
     const data = new FormData(e.currentTarget)
+
     const date = data.get('date') as string
     const title = data.get('title') as string
     const link = data.get('link') as string
@@ -113,18 +114,15 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       } else {
         title = 'Date of creation'
       }
-
-      return {
-        value: title,
-        disabled: true,
-      }
     }
 
     return {
       value: title,
-      disabled: false,
     }
   }
+
+  const titlePropsObj = titleProps()
+  const titleValue = titlePropsObj.value
 
   return (
     <>
@@ -152,14 +150,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               />
               <Input
                 name="title"
-                defaultValue={titleProps().value}
                 fontSize={{ base: '12px', md: '14px' }}
                 type="text"
-                _disabled={{
-                  borderColor: 'gray.100',
-                }}
                 placeholder="Title"
-                {...titleProps()}
+                isReadOnly={wiki.events?.length === 0}
+                value={titleValue}
               />
               <Input
                 name="link"
