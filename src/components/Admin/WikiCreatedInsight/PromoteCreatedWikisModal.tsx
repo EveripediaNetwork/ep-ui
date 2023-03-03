@@ -16,8 +16,8 @@ import {
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
 import { PromoteCreatedWikisModalProps } from '@/types/admin'
-import { PromoteModalContent } from './PromotedWikiContent'
 import { getWikiIdUsingLevel } from '@/utils/AdminUtils/dataUpdate'
+import { PromoteModalContent } from './PromotedWikiContent'
 
 export const PromoteCreatedWikisModal = (
   props: PromoteCreatedWikisModalProps,

@@ -9,8 +9,8 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { GetWiki } from './GetWikisComponent'
 import { Step, Steps } from 'chakra-ui-steps'
+import { GetWiki } from './GetWikisComponent'
 
 export const Content = (props: ContentProps) => {
   const { activeStep, step2Titles, promotedWikis, Data, setValue } = props
