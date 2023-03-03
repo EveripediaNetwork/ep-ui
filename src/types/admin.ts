@@ -234,3 +234,36 @@ export type WikisTableProps = {
   shouldPromote: (wikiTitle: string, id: string) => void
   shouldArchive: (ishidden: boolean, wikiId: string) => void
 }
+
+export type WikiCreatedFooterProps = {
+  activatePrevious: boolean
+  scrolltoTableTop: () => void
+  decreasePagination: () => false | void | undefined
+  paginateOffset: number
+  setActivatePrevious: (value: React.SetStateAction<boolean>) => void
+  increasePagination: () => false | void | undefined
+  wikis: CreatedWikisCount[] | undefined
+  nextBtnDisabled: boolean
+}
+
+export type WikiCreatedActionBarProps = {
+  setsearchKeyWord: (value: React.SetStateAction<string>) => void
+  sortIcon: JSX.Element
+  SortArray: {
+    id: number
+    value: string
+  }[]
+  isOpen: boolean
+  onClose: () => void
+  onToggle: () => void
+  ApplyFilterItems: (e: any) => void
+  FilterArray: {
+    id: string
+    value: string
+  }[]
+  handleSortChange: (value: number) => void
+  checked: number
+  setChecked: (value: React.SetStateAction<number>) => void
+  setPaginateOffset: (value: React.SetStateAction<number>) => void
+  setFilterItems: (value: React.SetStateAction<unknown[] | undefined>) => void
+}

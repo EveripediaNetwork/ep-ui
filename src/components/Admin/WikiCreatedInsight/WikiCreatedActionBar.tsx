@@ -1,3 +1,4 @@
+import { WikiCreatedActionBarProps } from '@/types/admin'
 import {
   Flex,
   InputGroup,
@@ -21,28 +22,6 @@ import {
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-
-type WikiCreatedActionBarProps = {
-  setsearchKeyWord: (value: React.SetStateAction<string>) => void
-  sortIcon: JSX.Element
-  SortArray: {
-    id: number
-    value: string
-  }[]
-  isOpen: boolean
-  onClose: () => void
-  onToggle: () => void
-  ApplyFilterItems: (e: any) => void
-  FilterArray: {
-    id: string
-    value: string
-  }[]
-  handleSortChange: (value: number) => void
-  checked: number
-  setChecked: (value: React.SetStateAction<number>) => void
-  setPaginateOffset: (value: React.SetStateAction<number>) => void
-  setFilterItems: (value: React.SetStateAction<unknown[] | undefined>) => void
-}
 
 export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
   const {

@@ -1,18 +1,7 @@
-import { CreatedWikisCount } from '@/types/admin'
+import { WikiCreatedFooterProps } from '@/types/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { Flex, Button } from '@chakra-ui/react'
 import React from 'react'
-
-type WikiCreatedFooterProps = {
-  activatePrevious: boolean
-  scrolltoTableTop: () => void
-  decreasePagination: () => false | void | undefined
-  paginateOffset: number
-  setActivatePrevious: (value: React.SetStateAction<boolean>) => void
-  increasePagination: () => false | void | undefined
-  wikis: CreatedWikisCount[] | undefined
-  nextBtnDisabled: boolean
-}
 
 export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
   const {
