@@ -180,7 +180,6 @@ export const WikiDetails = ({
                   <Td display="flex" align="center" gap={3}>
                     <HStack py="2">
                       <Link
-                        target="_blank"
                         href={`/wiki/${wikiId}/events`}
                         color="brandLinkColor"
                       >
