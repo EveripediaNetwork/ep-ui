@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/react'
 import { Link } from '@/components/Elements'
-import { RiLink } from 'react-icons/ri'
+import { RiArrowRightUpLine, RiLink } from 'react-icons/ri'
 
 const EventCard = ({
   title,
@@ -22,21 +22,36 @@ const EventCard = ({
   })
 
   return (
-    <Box bgColor="cardBg" borderRadius="16px" p="5" pb="8" minH="270px">
-      <Heading fontSize="32px">{title}</Heading>
-      <Text mt="1" fontSize="18px" color="homeDescriptionColor">
-        {formattedDate}
-      </Text>
-      <Text mt="2" color="homeDescriptionColor">
-        {description}
-      </Text>
-      {link && (
-        <Flex gap="4" alignItems="center">
-          <Icon as={RiLink} color="brandLinkColor" />
-          <Link href={link} target="_blank" color="brandLinkColor" />
-        </Flex>
-      )}
-    </Box>
+    <Flex pos="relative" zIndex={2} gap="6">
+      <Flex
+        w="24px"
+        h="24px"
+        borderRadius="50%"
+        bgColor="brandLinkColor"
+        alignItems="center"
+        justifyContent="center"
+        flexShrink={0}
+      >
+        <Icon color="white" as={RiArrowRightUpLine} />
+      </Flex>
+      <Box bgColor="cardBg" borderRadius="16px" p="5" pb="8" minH="270px">
+        <Heading fontSize="32px">{title}</Heading>
+        <Text mt="1.5" fontSize="18px" color="homeDescriptionColor">
+          {formattedDate}
+        </Text>
+        <Text mt="2" color="homeDescriptionColor">
+          {description}
+        </Text>
+        {link && (
+          <Flex gap="2" alignItems="center" mt="4">
+            <Icon as={RiLink} color="brandLinkColor" />
+            <Link href={link} target="_blank" color="brandLinkColor">
+              {link}
+            </Link>
+          </Flex>
+        )}
+      </Box>
+    </Flex>
   )
 }
 

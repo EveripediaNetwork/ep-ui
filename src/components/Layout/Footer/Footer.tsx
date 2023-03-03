@@ -59,7 +59,7 @@ const Footer = () => {
   }, [storedLang])
 
   return (
-    <Box bg="brandBackground" color="default">
+    <Box bg="brandBackground" color="default" pos="relative" zIndex="2">
       <Container
         as={Stack}
         maxW={{ base: '7xl', xl: '7xl', '2xl': '80%' }}
