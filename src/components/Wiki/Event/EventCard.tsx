@@ -41,7 +41,6 @@ const EventCard = ({
         borderRadius="16px"
         p="5"
         pb="8"
-        minH="270px"
       >
         <Heading fontSize="32px">{title}</Heading>
         <Text mt="1.5" fontSize="18px" color="eventTextColor">
