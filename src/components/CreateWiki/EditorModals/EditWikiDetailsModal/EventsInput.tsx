@@ -23,6 +23,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [eventDescription, setEventDescription] = useState<string>('')
   const [eventDescriptionError, setEventDescriptionError] = useState<string>('')
   const [eventDate, setEventDate] = useState<string>('')
+  const [eventDateError, setEventDateError] = useState<string>('')
   const [eventLink, setEventLink] = useState<string>('')
   const [eventLinkError, setEventLinkError] = useState<string>('')
   const [selectedEvent, setSelectedEvent] = useState<BaseEvents | null>(null)
@@ -43,12 +44,17 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     eventDescription.trim().length > 0 &&
     eventTitle.trim().length > 0
 
-  const checkValididty = () => {
-    if (!inputIsValid) {
-      setInputsInvalid(true)
-    } else {
-      setInputsInvalid(false)
-    }
+  let timer: ReturnType<typeof setTimeout>
+
+  const checkValidity = () => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      if (!eventTitle || !eventDescription || !eventDate) {
+        setInputsInvalid(true)
+      } else {
+        setInputsInvalid(false)
+      }
+    }, 500)
   }
 
   const handleAddEvent = () => {
@@ -143,7 +149,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventDate}
               onChange={e => {
                 setEventDate(e.target.value)
-                checkValididty()
+                checkValidity()
+                if (eventTitle && eventDescription && eventDate) {
+                  setInputsInvalid(false)
+                  setEventDateError('')
+                }
               }}
             />
             <Input
@@ -153,7 +163,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventTitle}
               onChange={e => {
                 setEventTitle(e.target.value)
-                checkValididty()
+                checkValidity()
+                if (eventTitle && eventDescription && eventDate) {
+                  setInputsInvalid(false)
+                  setEventTitleError('')
+                }
               }}
             />
             <Input
@@ -161,6 +175,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               value={eventLink}
               onChange={e => {
                 setEventLink(e.target.value)
+                if (eventLink.startsWith('https://')) {
+                  setEventLinkError('')
+                }
               }}
               placeholder="Link"
               fontSize={{ base: '12px', md: '14px' }}
@@ -179,7 +196,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             fontSize={{ base: '12px', md: '14px' }}
             onChange={e => {
               setEventDescription(e.target.value)
-              checkValididty()
+              checkValidity()
+              if (eventTitle && eventDescription && eventDate) {
+                setInputsInvalid(false)
+                setEventDescriptionError('')
+              }
             }}
           />
           <Button
@@ -193,6 +214,33 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           </Button>
         </SimpleGrid>
       </Box>
+      <>
+        {inputsInvalid && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            Please fill in all required fields.
+          </chakra.span>
+        )}
+        {eventDateError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventDateError}
+          </chakra.span>
+        )}
+        {eventTitleError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventTitleError}
+          </chakra.span>
+        )}
+        {eventLinkError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventLinkError}
+          </chakra.span>
+        )}
+        {eventDescriptionError && (
+          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
+            {eventDescriptionError}
+          </chakra.span>
+        )}
+      </>
       {wiki.events && wiki.events?.length > 0 && (
         <Flex
           border="1px solid"
@@ -246,7 +294,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                     overflowX="hidden"
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
-                    maxWidth="100px"
+                    maxWidth="150px"
                   >
                     {wikiEvent.title}
                   </Text>
@@ -272,28 +320,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             ))}
         </Flex>
       )}
-      <>
-        {inputsInvalid && (
-          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
-            Please fill in all required fields.
-          </chakra.span>
-        )}
-        {eventTitleError && (
-          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
-            {eventTitleError}
-          </chakra.span>
-        )}
-        {eventLinkError && (
-          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
-            {eventLinkError}
-          </chakra.span>
-        )}
-        {eventDescriptionError && (
-          <chakra.span color="red.400" fontSize={{ base: '12px', md: '14px' }}>
-            {eventDescriptionError}
-          </chakra.span>
-        )}
-      </>
     </>
   )
 }
