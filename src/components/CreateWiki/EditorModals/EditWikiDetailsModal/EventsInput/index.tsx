@@ -105,9 +105,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   }
 
   const titleProps = () => {
-    if (wiki.events?.length === 0) {
-      let title = ''
+    let title = ''
 
+    if (wiki?.events?.length === 0) {
       if (wiki.categories[0].id === 'people') {
         title = 'Date of birth'
       } else {
@@ -119,7 +119,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         disabled: true,
       }
     }
-    return {}
+
+    return {
+      value: title,
+      disabled: false,
+    }
   }
 
   return (
@@ -148,8 +152,12 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               />
               <Input
                 name="title"
+                defaultValue={titleProps().value}
                 fontSize={{ base: '12px', md: '14px' }}
                 type="text"
+                _disabled={{
+                  borderColor: 'gray.100',
+                }}
                 placeholder="Title"
                 {...titleProps()}
               />
