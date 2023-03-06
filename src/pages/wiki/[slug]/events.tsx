@@ -32,7 +32,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               h="100%"
               w="2px"
               bgColor="brandLinkColor"
-              left="11px"
+              left={{ base: '9px', md: '11px' }}
               top="0px"
               zIndex="1"
             />
