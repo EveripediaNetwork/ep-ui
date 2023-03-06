@@ -305,18 +305,43 @@ const wikiSlice = createSlice({
     },
     removeEvent(state, action) {
       if (state.events) {
+        if (state.events.length === 1) {
+          const updatedEvents = state.events.filter(
+            event => event.date !== action.payload.date,
+          )
+
+          const newState = {
+            ...state,
+            events: updatedEvents,
+          }
+
+          saveDraftInLocalStorage(newState)
+          return newState
+        }
+      }
+
+      if (state.events && state.events?.length > 1) {
+        const firstEvent = state.events[0]
+
+        if (action.payload.date === firstEvent.date) {
+          return state
+        }
+
         const updatedEvents = state.events.filter(
-          events => events.date !== action.payload.date,
+          event => event.date !== action.payload.date,
         )
+
         const newState = {
           ...state,
           events: updatedEvents,
         }
+
         saveDraftInLocalStorage(newState)
         return newState
       }
       return state
     },
+
     reset() {
       return initialState
     },

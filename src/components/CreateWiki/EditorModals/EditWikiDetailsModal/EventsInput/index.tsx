@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -38,6 +38,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [errMsg, setErrMsg] = React.useState<string | null>(null)
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
+  const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
 
   const formRef = React.useRef<HTMLFormElement>(null)
 
@@ -105,21 +106,25 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  const titleProps = () => {
-    if (!wiki.events || wiki?.events?.length === 0) {
-      let title = ''
+  useEffect(() => {
+    if (wiki.events && wiki.events?.length === 1) {
+      setInputTitle(undefined)
+    }
+  }, [wiki.events, inputTitle])
 
-      if (wiki && wiki.categories[0]?.id === 'people') {
-        title = 'Date of birth'
-      } else {
-        title = 'Date of creation'
+  const titleProps = () => {
+    if (!wiki.events || wiki.events.length === 0) {
+      if (wiki.categories[0]?.id === 'people') {
+        return {
+          value: 'Date of birth',
+        }
       }
       return {
-        value: title,
+        value: 'Date of creation',
       }
     }
     return {
-      value: undefined,
+      value: inputTitle,
     }
   }
 

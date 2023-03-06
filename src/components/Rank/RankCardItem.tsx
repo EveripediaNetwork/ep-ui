@@ -1,7 +1,6 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
-import { EventType } from '@everipedia/iq-utils'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { Link } from '../Elements'
 
@@ -36,9 +35,7 @@ const RankingItem = ({
       : item.tokenMarketData.current_price?.toLocaleString()
   }`
 
-  const wikiEvent =
-    item.events && item.events.find(event => event.type === EventType.CREATED)
-  const dateFounded = wikiEvent?.date
+  const dateFounded = item.events && item?.events[0]?.date
 
   return (
     <Tr>
