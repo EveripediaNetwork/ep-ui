@@ -4,36 +4,14 @@ import {
   useGetAllHiddenWikiCountQuery,
   useGetAllPromotedWikiCountQuery,
 } from '@/services/admin'
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import {
-  Text,
-  Flex,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  Checkbox,
-  VStack,
-  HStack,
-  useDisclosure,
-  PopoverFooter,
-} from '@chakra-ui/react'
-
+import { Text, Flex, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import { MdFilterList } from 'react-icons/md'
 import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { CreatedWikisCount } from '@/types/admin'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
+import { WikiCreatedFooter } from './WikiElemets'
+import { WikiCreatedActionBar } from './WikiCreatedActionBar'
 
 export const WikiInsightTable = () => {
   const insightTableRef = useRef<null | HTMLDivElement>(null)
@@ -123,19 +101,6 @@ export const WikiInsightTable = () => {
       refetchOnMountOrArgChange: true,
     },
   )
-
-  const SortArray = [
-    { id: 1, value: 'Newest' },
-    { id: 2, value: 'Oldest' },
-    { id: 3, value: 'Alpabetical (A-Z)' },
-    { id: 4, value: 'Alpabetical (Z-A)' },
-  ]
-
-  const FilterArray = [
-    { id: 'promoted', value: 'Promoted' },
-    { id: 'archived', value: 'Archived' },
-    { id: 'normal', value: 'Normal' },
-  ]
 
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
@@ -271,144 +236,19 @@ export const WikiInsightTable = () => {
       rounded="lg"
       ref={insightTableRef}
     >
-      <Flex
-        borderBottomWidth="1px"
-        w="100%"
-        p={5}
-        gap={2}
-        justifyContent="flex-start"
-        flexDir="column"
-      >
-        <Text fontSize="lg" fontWeight="semibold">
-          Created Wikis
-        </Text>
-        <Text fontSize="sm" fontWeight="thin">
-          List of created wikis in order of creation from the most recently
-          created.
-        </Text>
-      </Flex>
-
-      <Flex justifyContent="flex-end" p={5}>
-        <Flex gap={5}>
-          <InputGroup w="100%">
-            <InputLeftElement pointerEvents="none">
-              <FiSearch color="#667085" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              placeholder="Search"
-              onChange={e => {
-                setsearchKeyWord(e.target.value)
-              }}
-            />
-          </InputGroup>
-          <Menu>
-            <MenuButton
-              transition="all 0.2s"
-              borderRadius="md"
-              _expanded={{ bg: 'brand.500', color: 'white' }}
-            >
-              <Button
-                borderColor="#E2E8F0"
-                _dark={{ borderColor: '#2c323d' }}
-                py={2}
-                px={5}
-                leftIcon={sortIcon}
-                variant="outline"
-                fontWeight="medium"
-              >
-                Sort
-              </Button>
-            </MenuButton>
-            <MenuList>
-              {SortArray.map((o, i) => (
-                <MenuItem
-                  key={i}
-                  onClick={() => {
-                    handleSortChange(o.id)
-                  }}
-                  py="1"
-                  px="3"
-                >
-                  {o.value}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-          <Popover isLazy isOpen={isOpen} onClose={onClose}>
-            <PopoverTrigger>
-              <Button
-                transition="all 0.2s"
-                borderRadius="md"
-                _expanded={{ bg: 'brand.500', color: 'white' }}
-                py={2}
-                px={10}
-                leftIcon={<MdFilterList fontSize="25px" />}
-                variant="outline"
-                fontWeight="medium"
-                onClick={onToggle}
-              >
-                Filters
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent w="fit-content">
-              <form onSubmit={e => ApplyFilterItems(e)}>
-                <PopoverBody py={3}>
-                  <VStack
-                    spacing={1}
-                    w="fit-content"
-                    alignItems="flex-start"
-                    justifyContent="flex-start"
-                  >
-                    {FilterArray.map((item, i) => (
-                      <Checkbox
-                        onChange={() => setChecked(i + 1)}
-                        key={i}
-                        colorScheme="pink"
-                        isChecked={checked === i + 1}
-                        py={1}
-                        value={item.id}
-                      >
-                        {item.value}
-                      </Checkbox>
-                    ))}
-                  </VStack>
-                </PopoverBody>
-                <PopoverFooter>
-                  <HStack gap={4} w="fit-content" px={2}>
-                    <Button
-                      type="button"
-                      px={6}
-                      py={1}
-                      variant="ghost"
-                      borderWidth="1px"
-                      onClick={() => {
-                        setChecked(0)
-                        setFilterItems([])
-                        setPaginateOffset(0)
-                        onClose()
-                      }}
-                      rounded="lg"
-                      fontWeight="semibold"
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      type="submit"
-                      rounded="lg"
-                      px={6}
-                      py={1}
-                      fontWeight="semibold"
-                    >
-                      Apply
-                    </Button>
-                  </HStack>
-                </PopoverFooter>
-              </form>
-            </PopoverContent>
-          </Popover>
-        </Flex>
-      </Flex>
+      <WikiCreatedActionBar
+        setsearchKeyWord={setsearchKeyWord}
+        sortIcon={sortIcon}
+        isOpen={isOpen}
+        onClose={onClose}
+        onToggle={onToggle}
+        ApplyFilterItems={ApplyFilterItems}
+        handleSortChange={handleSortChange}
+        checked={checked}
+        setChecked={setChecked}
+        setPaginateOffset={setChecked}
+        setFilterItems={setFilterItems}
+      />
 
       <Flex pb={5}>
         {wikis?.length && wikis.length > 0 ? (
@@ -418,41 +258,21 @@ export const WikiInsightTable = () => {
           />
         ) : (
           <Text pt="2" textAlign="center" w="full">
-            No data to display
+            No data to display 🐌
           </Text>
         )}
       </Flex>
 
-      <Flex justify="space-between" w="95%" m="0 auto">
-        <Button
-          leftIcon={<ArrowBackIcon />}
-          variant="outline"
-          disabled={!activatePrevious}
-          onClick={() => {
-            scrolltoTableTop()
-            decreasePagination()
-            if (paginateOffset === 0) {
-              setActivatePrevious(false)
-            }
-          }}
-        >
-          Previous
-        </Button>
-        <Button
-          rightIcon={<ArrowForwardIcon />}
-          variant="outline"
-          onClick={() => {
-            scrolltoTableTop()
-            increasePagination()
-            if (wikis && wikis?.length >= 10) {
-              setActivatePrevious(true)
-            }
-          }}
-          disabled={!wiki || wiki.length === 0}
-        >
-          Next
-        </Button>
-      </Flex>
+      <WikiCreatedFooter
+        activatePrevious={activatePrevious}
+        scrolltoTableTop={scrolltoTableTop}
+        decreasePagination={decreasePagination}
+        paginateOffset={paginateOffset}
+        setActivatePrevious={setActivatePrevious}
+        increasePagination={increasePagination}
+        wikis={wikis}
+        nextBtnDisabled={!wiki || wiki.length === 0}
+      />
     </Flex>
   )
 }
