@@ -106,7 +106,6 @@ export const WikiInsightTable = () => {
     FilterTypes.promoted,
     FilterTypes.normal,
   ])
-
   const sortWikisByDate = (
     items: CreatedWikisCount[] | undefined,
     highestFirst: boolean,
