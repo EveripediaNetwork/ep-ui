@@ -10,7 +10,7 @@ import { BiSortDown, BiSortUp } from 'react-icons/bi'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 import { CreatedWikisCount } from '@/types/admin'
 import { InsightTableWikiCreated } from './InsightTableCreatedWiki'
-import { WikiCreatedFooter } from './WikiCreatedFooter'
+import { WikiCreatedFooter } from './WikiElemets'
 import { WikiCreatedActionBar } from './WikiCreatedActionBar'
 
 export const WikiInsightTable = () => {

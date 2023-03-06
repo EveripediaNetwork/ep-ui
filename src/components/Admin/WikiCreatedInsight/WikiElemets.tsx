@@ -2,6 +2,7 @@ import { WikiCreatedFooterProps, Wikis } from '@/types/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { Flex, Button, HStack, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
+import { BsDot } from 'react-icons/bs'
 import { RiQuestionLine } from 'react-icons/ri'
 
 export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
@@ -123,5 +124,37 @@ export const WikiTableCol = (props: WikiTableColProps) => {
         )}
       </HStack>
     </Flex>
+  )
+}
+
+export const WikiColDate = ({ colDate }: { colDate: string | undefined }) => {
+  return (
+    <HStack>
+      <Text color="#718096">
+        {colDate
+          ? new Date(colDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          : '-'}
+      </Text>
+      <Icon
+        fontSize="20px"
+        cursor="pointer"
+        color="black"
+        alignSelf="center"
+        as={BsDot}
+        justifySelf="center"
+      />
+      <Text color="#718096" textTransform="lowercase">
+        {colDate
+          ? new Date(colDate).toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: 'numeric',
+            })
+          : '-'}
+      </Text>
+    </HStack>
   )
 }

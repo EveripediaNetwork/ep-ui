@@ -23,7 +23,7 @@ import { BsDot } from 'react-icons/bs'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { WikisTableProps } from '@/types/admin'
 import { TableHead } from '../GraphHeads'
-import { WikiTableCol } from './WikiCreatedFooter'
+import { WikiColDate, WikiTableCol } from './WikiElemets'
 
 export const WikisTable = (props: WikisTableProps) => {
   const { wikiTableData, findSection, shouldArchive, shouldPromote } = props
@@ -81,33 +81,7 @@ export const WikisTable = (props: WikisTableProps) => {
                   </Flex>
                 </Td>
                 <Td>
-                  <HStack>
-                    <Text color="#718096">
-                      {item.created
-                        ? new Date(item.created).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                        : '-'}
-                    </Text>
-                    <Icon
-                      fontSize="20px"
-                      cursor="pointer"
-                      color="black"
-                      alignSelf="center"
-                      as={BsDot}
-                      justifySelf="center"
-                    />
-                    <Text color="#718096" textTransform="lowercase">
-                      {item.created
-                        ? new Date(item.created).toLocaleTimeString('en-US', {
-                            hour: 'numeric',
-                            minute: 'numeric',
-                          })
-                        : '-'}
-                    </Text>
-                  </HStack>
+                  <WikiColDate colDate={item.created} />
                 </Td>
                 <Td py={1}>
                   <HStack
