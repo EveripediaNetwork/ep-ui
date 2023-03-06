@@ -30,13 +30,30 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
     handleSortChange,
     isOpen,
     onClose,
-    ApplyFilterItems,
     setChecked,
     checked,
     setPaginateOffset,
     setFilterItems,
     onToggle,
   } = props
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ApplyFilterItems = (e: any) => {
+    e.preventDefault()
+    // get all checkboxes from form
+    const checkboxes = Array.from(
+      e.currentTarget.querySelectorAll(
+        'input[type="checkbox"]',
+      ) as unknown as Array<HTMLInputElement>,
+    )
+    // get all the checked and unchecked checkboxes with their names
+    const data: string[] = []
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) data.push(checkbox.value)
+    })
+    setFilterItems(data)
+    onClose()
+  }
 
   const SortArray = [
     { id: 1, value: 'Newest' },

@@ -9,13 +9,24 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
   const {
     activatePrevious,
     scrolltoTableTop,
-    decreasePagination,
     paginateOffset,
     setActivatePrevious,
-    increasePagination,
+    setPaginateOffset,
     wikis,
     nextBtnDisabled,
   } = props
+
+  const increasePagination = () => {
+    return (
+      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
+    )
+  }
+
+  const decreasePagination = () => {
+    return (
+      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset - 10)
+    )
+  }
 
   return (
     <Flex justify="space-between" w="95%" m="0 auto">

@@ -76,24 +76,6 @@ export const WikiInsightTable = () => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ApplyFilterItems = (e: any) => {
-    e.preventDefault()
-    // get all checkboxes from form
-    const checkboxes = Array.from(
-      e.currentTarget.querySelectorAll(
-        'input[type="checkbox"]',
-      ) as unknown as Array<HTMLInputElement>,
-    )
-    // get all the checked and unchecked checkboxes with their names
-    const data: string[] = []
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) data.push(checkbox.value)
-    })
-    setFilterItems(data)
-    onClose()
-  }
-
   const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
     paginateOffset,
     {
@@ -194,18 +176,6 @@ export const WikiInsightTable = () => {
     })
   }
 
-  const increasePagination = () => {
-    return (
-      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
-    )
-  }
-
-  const decreasePagination = () => {
-    return (
-      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset - 10)
-    )
-  }
-
   useEffect(() => {
     whichWiki()
     refetch()
@@ -242,14 +212,12 @@ export const WikiInsightTable = () => {
         isOpen={isOpen}
         onClose={onClose}
         onToggle={onToggle}
-        ApplyFilterItems={ApplyFilterItems}
         handleSortChange={handleSortChange}
         checked={checked}
         setChecked={setChecked}
         setPaginateOffset={setChecked}
         setFilterItems={setFilterItems}
       />
-
       <Flex pb={5}>
         {wikis?.length && wikis.length > 0 ? (
           <InsightTableWikiCreated
@@ -262,14 +230,12 @@ export const WikiInsightTable = () => {
           </Text>
         )}
       </Flex>
-
       <WikiCreatedFooter
+        setPaginateOffset={setPaginateOffset}
         activatePrevious={activatePrevious}
         scrolltoTableTop={scrolltoTableTop}
-        decreasePagination={decreasePagination}
         paginateOffset={paginateOffset}
         setActivatePrevious={setActivatePrevious}
-        increasePagination={increasePagination}
         wikis={wikis}
         nextBtnDisabled={!wiki || wiki.length === 0}
       />
