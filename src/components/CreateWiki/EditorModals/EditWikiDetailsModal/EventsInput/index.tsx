@@ -65,7 +65,10 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         title,
         description,
         link,
-        type: wiki.events?.length === 0 ? EventType.CREATED : EventType.DEFAULT,
+        type:
+          !wiki.events || wiki.events?.length === 0
+            ? EventType.CREATED
+            : EventType.DEFAULT,
       },
     })
 
@@ -78,6 +81,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       const isExists = wiki.events?.some(
         event => new Date(event.date).toISOString() === dateObj.toISOString(),
       )
+
       setIsUpdate(!!isExists)
     }
   }
