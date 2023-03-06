@@ -1,7 +1,8 @@
-import { WikiCreatedFooterProps } from '@/types/admin'
+import { WikiCreatedFooterProps, Wikis } from '@/types/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { Flex, Button } from '@chakra-ui/react'
+import { Flex, Button, HStack, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
+import { RiQuestionLine } from 'react-icons/ri'
 
 export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
   const {
@@ -45,6 +46,82 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
       >
         Next
       </Button>
+    </Flex>
+  )
+}
+
+type WikiTableColProps = {
+  item: Wikis
+  PromoteClickOne: () => void
+  PromoteClickTwo: () => void
+  ArchiveClickOne: () => void
+  ArchiveClickTwo: () => void
+}
+export const WikiTableCol = (props: WikiTableColProps) => {
+  const {
+    item,
+    PromoteClickOne,
+    PromoteClickTwo,
+    ArchiveClickOne,
+    ArchiveClickTwo,
+  } = props
+  return (
+    <Flex w="100%" gap={2} alignItems="center" justifyContent="flex-end" pr={5}>
+      <HStack spacing={5}>
+        {!item.promoted ? (
+          <Text
+            color={item.hidden ? '#E2E8F0' : '#FF5CAA'}
+            _dark={{
+              color: item.hidden ? '#51565F' : '#FF1A88',
+            }}
+            cursor={item.hidden ? 'not-allowed' : 'pointer'}
+            fontWeight="semibold"
+            onClick={PromoteClickOne}
+          >
+            Promote
+          </Text>
+        ) : (
+          <HStack spacing={2} onClick={PromoteClickTwo}>
+            <Text
+              color="#E2E8F0"
+              _dark={{
+                color: item.hidden ? '#51565F' : '#495a68',
+              }}
+              cursor={item.hidden ? 'not-allowed' : 'pointer'}
+            >
+              Promote
+            </Text>
+            <Icon
+              fontSize="20px"
+              cursor="pointer"
+              color="#F11a82"
+              as={RiQuestionLine}
+            />
+          </HStack>
+        )}
+
+        {!item.hidden ? (
+          <Text
+            cursor={item.hidden ? 'not-allowed' : 'pointer'}
+            fontWeight="medium"
+            onClick={ArchiveClickOne}
+          >
+            Archive
+          </Text>
+        ) : (
+          <HStack spacing={2} onClick={ArchiveClickTwo}>
+            <Text color="#F11a82" _dark={{ color: '#FF1A88' }} cursor="pointer">
+              Unarchive
+            </Text>
+            <Icon
+              fontSize="20px"
+              cursor="pointer"
+              color="#F11a82"
+              as={RiQuestionLine}
+            />
+          </HStack>
+        )}
+      </HStack>
     </Flex>
   )
 }

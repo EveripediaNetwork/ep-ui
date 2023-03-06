@@ -20,9 +20,10 @@ import {
 import config from '@/config'
 import React from 'react'
 import { BsDot } from 'react-icons/bs'
-import { RiArrowDownLine, RiQuestionLine } from 'react-icons/ri'
+import { RiArrowDownLine } from 'react-icons/ri'
 import { WikisTableProps } from '@/types/admin'
 import { TableHead } from '../GraphHeads'
+import { WikiTableCol } from './WikiCreatedFooter'
 
 export const WikisTable = (props: WikisTableProps) => {
   const { wikiTableData, findSection, shouldArchive, shouldPromote } = props
@@ -176,91 +177,25 @@ export const WikisTable = (props: WikisTableProps) => {
                   </Tag>
                 </Td>
                 <Td>
-                  <Flex
-                    w="100%"
-                    gap={2}
-                    alignItems="center"
-                    justifyContent="flex-end"
-                    pr={5}
-                  >
-                    <HStack spacing={5}>
-                      {!item.promoted ? (
-                        <Text
-                          color={item.hidden ? '#E2E8F0' : '#FF5CAA'}
-                          _dark={{
-                            color: item.hidden ? '#51565F' : '#FF1A88',
-                          }}
-                          cursor={item.hidden ? 'not-allowed' : 'pointer'}
-                          fontWeight="semibold"
-                          onClick={() => {
-                            if (!item.hidden) {
-                              shouldPromote(item.title, item.id)
-                            }
-                          }}
-                        >
-                          Promote
-                        </Text>
-                      ) : (
-                        <HStack
-                          spacing={2}
-                          onClick={() => {
-                            if (!item.hidden) {
-                              findSection(item.promoted)
-                            }
-                          }}
-                        >
-                          <Text
-                            color="#E2E8F0"
-                            _dark={{
-                              color: item.hidden ? '#51565F' : '#495a68',
-                            }}
-                            cursor={item.hidden ? 'not-allowed' : 'pointer'}
-                          >
-                            Promote
-                          </Text>
-                          <Icon
-                            fontSize="20px"
-                            cursor="pointer"
-                            color="#F11a82"
-                            as={RiQuestionLine}
-                          />
-                        </HStack>
-                      )}
-
-                      {!item.hidden ? (
-                        <Text
-                          cursor={item.hidden ? 'not-allowed' : 'pointer'}
-                          fontWeight="medium"
-                          onClick={() => {
-                            if (!item.hidden) {
-                              shouldArchive(item.hidden, item.id)
-                            }
-                          }}
-                        >
-                          Archive
-                        </Text>
-                      ) : (
-                        <HStack
-                          spacing={2}
-                          onClick={() => shouldArchive(item.hidden, item.id)}
-                        >
-                          <Text
-                            color="#F11a82"
-                            _dark={{ color: '#FF1A88' }}
-                            cursor="pointer"
-                          >
-                            Unarchive
-                          </Text>
-                          <Icon
-                            fontSize="20px"
-                            cursor="pointer"
-                            color="#F11a82"
-                            as={RiQuestionLine}
-                          />
-                        </HStack>
-                      )}
-                    </HStack>
-                  </Flex>
+                  <WikiTableCol
+                    item={item}
+                    PromoteClickOne={() => {
+                      if (!item.hidden) {
+                        shouldPromote(item.title, item.id)
+                      }
+                    }}
+                    PromoteClickTwo={() => {
+                      if (!item.hidden) {
+                        findSection(item.promoted)
+                      }
+                    }}
+                    ArchiveClickOne={() => {
+                      if (!item.hidden) {
+                        shouldArchive(item.hidden, item.id)
+                      }
+                    }}
+                    ArchiveClickTwo={() => shouldArchive(item.hidden, item.id)}
+                  />
                 </Td>
               </Tr>
             )
