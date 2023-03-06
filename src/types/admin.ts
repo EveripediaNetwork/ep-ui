@@ -249,18 +249,10 @@ export type WikiCreatedFooterProps = {
 export type WikiCreatedActionBarProps = {
   setsearchKeyWord: (value: React.SetStateAction<string>) => void
   sortIcon: JSX.Element
-  SortArray: {
-    id: number
-    value: string
-  }[]
   isOpen: boolean
   onClose: () => void
   onToggle: () => void
   ApplyFilterItems: (e: any) => void
-  FilterArray: {
-    id: string
-    value: string
-  }[]
   handleSortChange: (value: number) => void
   checked: number
   setChecked: (value: React.SetStateAction<number>) => void

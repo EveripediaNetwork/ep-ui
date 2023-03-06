@@ -102,19 +102,6 @@ export const WikiInsightTable = () => {
     },
   )
 
-  const SortArray = [
-    { id: 1, value: 'Newest' },
-    { id: 2, value: 'Oldest' },
-    { id: 3, value: 'Alpabetical (A-Z)' },
-    { id: 4, value: 'Alpabetical (Z-A)' },
-  ]
-
-  const FilterArray = [
-    { id: 'promoted', value: 'Promoted' },
-    { id: 'archived', value: 'Archived' },
-    { id: 'normal', value: 'Normal' },
-  ]
-
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
@@ -252,12 +239,10 @@ export const WikiInsightTable = () => {
       <WikiCreatedActionBar
         setsearchKeyWord={setsearchKeyWord}
         sortIcon={sortIcon}
-        SortArray={SortArray}
         isOpen={isOpen}
         onClose={onClose}
         onToggle={onToggle}
         ApplyFilterItems={ApplyFilterItems}
-        FilterArray={FilterArray}
         handleSortChange={handleSortChange}
         checked={checked}
         setChecked={setChecked}

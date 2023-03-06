@@ -27,18 +27,29 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
   const {
     setsearchKeyWord,
     sortIcon,
-    SortArray,
     handleSortChange,
     isOpen,
     onClose,
     ApplyFilterItems,
-    FilterArray,
     setChecked,
     checked,
     setPaginateOffset,
     setFilterItems,
     onToggle,
   } = props
+
+  const SortArray = [
+    { id: 1, value: 'Newest' },
+    { id: 2, value: 'Oldest' },
+    { id: 3, value: 'Alpabetical (A-Z)' },
+    { id: 4, value: 'Alpabetical (Z-A)' },
+  ]
+
+  const FilterArray = [
+    { id: 'promoted', value: 'Promoted' },
+    { id: 'archived', value: 'Archived' },
+    { id: 'normal', value: 'Normal' },
+  ]
 
   return (
     <>
