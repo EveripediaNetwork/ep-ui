@@ -10,13 +10,22 @@ import { store } from '@/store/store'
 const Events = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Box bgColor="pageBg" mt={-3} pt={8}>
-      <Box w="min(90%, 1100px)" mx="auto" mt={{ base: '10', lg: '16' }}>
+      <Box
+        w={{ base: 'full', md: 'min(90%, 1100px)' }}
+        mx="auto"
+        mt={{ base: '10', lg: '16' }}
+        px={{ base: '3', md: 0 }}
+      >
         <Heading textAlign="center">Timeline of Events</Heading>
         <Text textAlign="center" pt={4} pb={8} color="linkColor">
           A timeline of events for this wiki
         </Text>
         {wiki && (
-          <SimpleGrid gap="10" pos="relative" pb={{ base: '18', lg: '24' }}>
+          <SimpleGrid
+            gap={{ base: '6', md: '10' }}
+            pos="relative"
+            pb={{ base: '10', lg: '24' }}
+          >
             <Box
               transform="translateY(11px)"
               pos="absolute"
@@ -29,8 +38,8 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
             />
             <Flex alignItems="center" gap="6" pos="relative" zIndex="2">
               <Flex
-                w="24px"
-                h="24px"
+                w={{ base: '20px', md: '24px' }}
+                h={{ base: '20px', md: '24px' }}
                 borderRadius="50%"
                 bgColor="brandLinkColor"
                 alignItems="center"
@@ -38,12 +47,15 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               >
                 <Icon color="white" as={RiCheckLine} />
               </Flex>
-              <Heading color="brandLinkColor" fontSize="36px">
+              <Heading
+                color="brandLinkColor"
+                fontSize={{ base: '24px', md: '30px', xl: '36px' }}
+              >
                 {wiki.title}
               </Heading>
             </Flex>
             {wiki.events && (
-              <SimpleGrid gap="16">
+              <SimpleGrid gap={{ md: '10', xl: '16' }}>
                 {wiki.events &&
                   wiki.events.map((event, i) => (
                     <EventCard

@@ -22,10 +22,10 @@ const EventCard = ({
   })
 
   return (
-    <Flex pos="relative" zIndex={2} gap="6">
+    <Flex pos="relative" zIndex={2} gap={{ base: '4', xl: '6' }}>
       <Flex
-        w="24px"
-        h="24px"
+        w={{ base: '20px', md: '24px' }}
+        h={{ base: '20px', md: '24px' }}
         borderRadius="50%"
         bgColor="brandLinkColor"
         alignItems="center"
@@ -42,15 +42,28 @@ const EventCard = ({
         p="5"
         pb="8"
       >
-        <Heading fontSize="32px">{title}</Heading>
-        <Text mt="1.5" fontSize="18px" color="eventTextColor">
+        <Heading fontSize={{ base: '14px', xl: '24px' }}>{title}</Heading>
+        <Text
+          mt={{ base: 0.5, md: '1.5' }}
+          fontSize={{ base: '12px', xl: '18px' }}
+          color="eventTextColor"
+        >
           {formattedDate}
         </Text>
-        <Text mt="2" color="eventTextColor">
+        <Text
+          mt={{ base: 1, md: '2' }}
+          color="eventTextColor"
+          fontSize={{ base: '12px', xl: '16px' }}
+        >
           {description}
         </Text>
         {link && (
-          <Flex gap="2" alignItems="center" mt="4">
+          <Flex
+            gap="2"
+            alignItems="center"
+            mt="4"
+            fontSize={{ base: '12px', xl: '16px' }}
+          >
             <Icon as={RiLink} color="brandLinkColor" />
             <Link href={link} target="_blank" color="brandLinkColor">
               {link}
