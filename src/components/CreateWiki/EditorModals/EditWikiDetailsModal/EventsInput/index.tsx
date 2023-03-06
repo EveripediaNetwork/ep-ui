@@ -108,7 +108,8 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const titleProps = () => {
     if (!wiki.events || wiki?.events?.length === 0) {
       let title = ''
-      if (wiki.categories[0].id === 'people') {
+
+      if (wiki && wiki.categories[0]?.id === 'people') {
         title = 'Date of birth'
       } else {
         title = 'Date of creation'
