@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react'
 import config from '@/config'
 import React from 'react'
-import { BsDot } from 'react-icons/bs'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { WikisTableProps } from '@/types/admin'
 import { TableHead } from '../GraphHeads'
