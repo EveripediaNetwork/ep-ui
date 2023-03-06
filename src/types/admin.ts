@@ -238,10 +238,9 @@ export type WikisTableProps = {
 export type WikiCreatedFooterProps = {
   activatePrevious: boolean
   scrolltoTableTop: () => void
-  decreasePagination: () => false | void | undefined
+  setPaginateOffset: React.Dispatch<React.SetStateAction<number>>
   paginateOffset: number
   setActivatePrevious: (value: React.SetStateAction<boolean>) => void
-  increasePagination: () => false | void | undefined
   wikis: CreatedWikisCount[] | undefined
   nextBtnDisabled: boolean
 }
@@ -252,7 +251,6 @@ export type WikiCreatedActionBarProps = {
   isOpen: boolean
   onClose: () => void
   onToggle: () => void
-  ApplyFilterItems: (e: any) => void
   handleSortChange: (value: number) => void
   checked: number
   setChecked: (value: React.SetStateAction<number>) => void
