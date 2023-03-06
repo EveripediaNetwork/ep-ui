@@ -106,23 +106,21 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   }
 
   const titleProps = () => {
-    let title = ''
-
-    if (wiki?.events?.length === 0) {
+    if (!wiki.events || wiki?.events?.length === 0) {
+      let title = ''
       if (wiki.categories[0].id === 'people') {
         title = 'Date of birth'
       } else {
         title = 'Date of creation'
       }
+      return {
+        value: title,
+      }
     }
-
     return {
-      value: title,
+      value: undefined,
     }
   }
-
-  const titlePropsObj = titleProps()
-  const titleValue = titlePropsObj.value
 
   return (
     <>
@@ -154,7 +152,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 type="text"
                 placeholder="Title"
                 isReadOnly={wiki.events?.length === 0}
-                value={titleValue}
+                {...titleProps()}
               />
               <Input
                 name="link"
