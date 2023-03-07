@@ -2,6 +2,7 @@ import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 
 const MAX_LINKED_WIKIS = 3
@@ -35,7 +36,9 @@ const RankingItem = ({
       : item.tokenMarketData.current_price?.toLocaleString()
   }`
 
-  const dateFounded = item.events && item?.events[0]?.date
+  const dateFounded =
+    item.events &&
+    item?.events.find(event => event.type === EventType.CREATED)?.date
 
   return (
     <Tr>
