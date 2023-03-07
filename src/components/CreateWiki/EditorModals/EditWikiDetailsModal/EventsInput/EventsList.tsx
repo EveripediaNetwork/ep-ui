@@ -3,7 +3,7 @@ import { Button, Center, Flex, Icon, Text } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { FiCalendar } from 'react-icons/fi'
 import { RiCloseLine } from 'react-icons/ri'
-import { BaseEvents } from '@everipedia/iq-utils'
+import { BaseEvents, EventType } from '@everipedia/iq-utils'
 
 export const EventsList = ({
   handleFormChange,
@@ -13,10 +13,16 @@ export const EventsList = ({
   const wiki = useAppSelector(state => state.wiki)
   const dispatch = useAppDispatch()
   const [feedbackMessage, setFeedbackMessage] = useState<string>('')
+  const dateFoundedEvent =
+    wiki.events && wiki.events.find(event => event.type === EventType.CREATED)
 
   const removeEventHandler = (date: string) => {
-    if (wiki.events && wiki.events.length > 1 && date === wiki.events[0].date) {
-      setFeedbackMessage('The first event cannot be removed.')
+    if (
+      wiki.events &&
+      wiki.events.length > 1 &&
+      date === dateFoundedEvent?.date
+    ) {
+      setFeedbackMessage('The Date Founded cannot be removed.')
       return
     }
 
@@ -50,6 +56,15 @@ export const EventsList = ({
           <Flex key={wikiEvent.date} gap="2">
             <Flex alignItems="center" gap="1" flexShrink={0}>
               <Icon as={FiCalendar} w="16px" h="16px" />
+              {wikiEvent.type === EventType.CREATED && (
+                <Text
+                  fontSize="8px"
+                  color="gray.800"
+                  _dark={{ color: 'whiteAlpha.900' }}
+                >
+                  Created
+                </Text>
+              )}
             </Flex>
             <Button
               onClick={() => {

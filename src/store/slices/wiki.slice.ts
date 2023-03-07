@@ -8,6 +8,7 @@ import {
   CreateNewWikiSlug,
   LinkedWikiKey,
   BaseEvents,
+  EventType,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
@@ -321,9 +322,11 @@ const wikiSlice = createSlice({
       }
 
       if (state.events && state.events?.length > 1) {
-        const firstEvent = state.events[0]
+        const firstEvent = state.events.find(
+          event => event.type === EventType.CREATED,
+        )
 
-        if (action.payload.date === firstEvent.date) {
+        if (action.payload.date === firstEvent?.date) {
           return state
         }
 
