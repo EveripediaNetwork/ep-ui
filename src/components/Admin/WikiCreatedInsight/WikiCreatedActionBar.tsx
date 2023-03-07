@@ -38,7 +38,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
   } = props
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ApplyFilterItems = (e: any) => {
+  const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
     const checkboxes = Array.from(
