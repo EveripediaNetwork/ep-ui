@@ -40,7 +40,6 @@ const EventCard = ({
         flexBasis="100%"
         borderRadius="16px"
         p="5"
-        pb="8"
       >
         <Heading fontSize={{ base: '14px', xl: '24px' }}>{title}</Heading>
         <Text
