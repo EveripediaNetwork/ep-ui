@@ -41,7 +41,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
   const [type, setType] = useState<EventType>()
-
+  const [tooltipOpen, setTooltipOpen] = useState<boolean>()
   const formRef = React.useRef<HTMLFormElement>(null)
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -173,18 +173,26 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 }}
               />
               <Tooltip
-                bgColor="white"
-                color="gray.600"
-                _dark={{
-                  color: 'whiteAlpha.700',
-                  bgColor: 'gray.800',
-                }}
-                isOpen={!wiki.events || wiki.events.length === 0}
+                bg="bodyBg"
+                color="emptyNotificationText"
+                hasArrow
+                placement="top"
+                rounded="md"
+                isOpen={tooltipOpen}
+                arrowShadowColor="bodyBg"
                 label={`Enter the event title here. ${
                   titleProps().value
-                } is mandatory as the title first entry for events`}
+                } is mandatory as the first entry for events`}
               >
                 <Input
+                  onMouseEnter={() => {
+                    if (!wiki.events || wiki.events?.length === 0) {
+                      setTooltipOpen(true)
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    setTooltipOpen(false)
+                  }}
                   name="title"
                   fontSize={{ base: '12px', md: '14px' }}
                   type="text"

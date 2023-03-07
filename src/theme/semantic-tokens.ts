@@ -18,6 +18,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#718096',
       _dark: '#FFFFFF',
     },
+    bodyBg: {
+      default: 'white',
+      _dark: 'gray.700',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
@@ -316,6 +320,10 @@ export const semanticTokens: SemanticTokens = {
     eventsInputColor: {
       default: 'gray.400',
       _dark: 'whiteAlpha.600',
+    },
+    eventsToolTip: {
+      default: 'gray.600',
+      _dark: 'gray.800',
     },
   },
 }
