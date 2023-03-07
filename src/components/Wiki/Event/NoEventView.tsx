@@ -1,10 +1,21 @@
 import { LinkButton } from '@/components/Elements'
 import { Image } from '@/components/Elements/Image/Image'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  Box,
+  Flex,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import React from 'react'
 
 const NoEventView = () => {
+  const imageSrc = useColorModeValue(
+    'event-timeline-light.png',
+    'event-timeline-dark.png',
+  )
+
   return (
     <Flex
       w="100%"
@@ -19,7 +30,7 @@ const NoEventView = () => {
             <Image
               imgBoxSize={300}
               alt="No Events "
-              src="/images/GIFs/event-timeline.png"
+              src={`/images/GIFs/${imageSrc}`}
               w="full"
               objectFit="contain"
             />
