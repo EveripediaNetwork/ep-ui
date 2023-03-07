@@ -53,13 +53,24 @@ export const EventsList = ({
         }}
       >
         {wiki.events?.map(wikiEvent => (
-          <Flex key={wikiEvent.date} gap="2">
+          <Flex
+            key={wikiEvent.date}
+            gap="2"
+            alignItems="center"
+            borderRadius="md"
+            bg="gray.200"
+            pl="2"
+            _dark={{
+              bg: 'whiteAlpha.200',
+            }}
+          >
             <Flex alignItems="center" gap="1" flexShrink={0}>
               <Icon as={FiCalendar} w="16px" h="16px" />
               {wikiEvent.type === EventType.CREATED && (
                 <Text
                   fontSize="8px"
                   color="gray.800"
+                  pt="1px"
                   _dark={{ color: 'whiteAlpha.900' }}
                 >
                   Created
@@ -76,7 +87,7 @@ export const EventsList = ({
               bg="gray.100"
               color="black"
               _active={{
-                bg: 'gray.200',
+                bg: 'gray.100',
               }}
               _hover={{
                 bg: 'gray.100',
@@ -85,7 +96,7 @@ export const EventsList = ({
                 color: 'white',
                 bg: 'whiteAlpha.100',
               }}
-              rounded="md"
+              borderLeftRadius="0"
               size="xs"
               px={2}
             >
