@@ -1,4 +1,5 @@
-import { CreatedWikisCount, Editors } from '@/types/admin'
+import { CreatedWikisCount, Editors, Wikis } from '@/types/admin'
+import { shortenAccount } from '../textUtils'
 
 export const dataUpdate = (
   p: Editors[] | undefined,
@@ -26,4 +27,14 @@ export const getWikiIdUsingLevel = (
   })[0]
 
   return wiki?.id
+}
+
+/* eslint-disable no-nested-ternary */
+export const accountUsername = (Data: CreatedWikisCount | Wikis) => {
+  const username = Data.author?.profile?.username
+    ? Data.author.profile.username
+    : Data.author?.id
+    ? shortenAccount(Data.author.id)
+    : 'Unknown'
+  return username
 }

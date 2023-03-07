@@ -141,7 +141,7 @@ export const WikiTableCol = (props: WikiTableColProps) => {
 export const WikiColDate = ({ colDate }: { colDate: string | undefined }) => {
   return (
     <HStack>
-      <Text color="#718096">
+      <Text color="primaryGray">
         {colDate
           ? new Date(colDate).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -158,7 +158,7 @@ export const WikiColDate = ({ colDate }: { colDate: string | undefined }) => {
         as={BsDot}
         justifySelf="center"
       />
-      <Text color="#718096" textTransform="lowercase">
+      <Text color="primaryGray" textTransform="lowercase">
         {colDate
           ? new Date(colDate).toLocaleTimeString('en-US', {
               hour: 'numeric',

@@ -14,8 +14,8 @@ import { WikiImage } from '@/components/WikiImage'
 import { CreatedWikisCount } from '@/types/admin'
 import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { shortenAccount } from '@/utils/textUtils'
 import { Image } from '@everipedia/iq-utils'
+import { accountUsername } from '@/utils/AdminUtils/dataUpdate'
 
 export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
   return (
@@ -115,12 +115,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                       color="brand.500"
                       fontWeight="bold"
                     >
-                      {/* eslint-disable no-nested-ternary */}
-                      {Data.author?.profile?.username
-                        ? Data.author.profile.username
-                        : Data.author?.id
-                        ? shortenAccount(Data.author.id)
-                        : 'Unknown'}
+                      {accountUsername(Data)}
                     </Link>
                   </Text>
                 </HStack>

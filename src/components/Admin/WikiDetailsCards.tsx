@@ -56,7 +56,7 @@ export const WikiDetailsCards = ({
             <Heading as="h3" fontSize="25" w="full">
               {currentValue}
             </Heading>
-            <Text fontSize="xs" color="#718096">
+            <Text fontSize="xs" color="primaryGray">
               {weeklyValue} this week
             </Text>
           </VStack>

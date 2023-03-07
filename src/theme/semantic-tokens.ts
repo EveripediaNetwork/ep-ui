@@ -14,6 +14,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#CBD5E0',
       _dark: '#3F444E',
     },
+    wikiSortBorder: {
+      default: '#E2E8F0',
+      _dark: '#2c323d',
+    },
     inactiveText: {
       default: '#718096',
       _dark: '#FFFFFF',

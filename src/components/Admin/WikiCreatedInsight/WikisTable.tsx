@@ -1,4 +1,4 @@
-import { shortenText, shortenAccount } from '@/utils/textUtils'
+import { shortenText } from '@/utils/textUtils'
 import {
   Flex,
   Table,
@@ -21,6 +21,7 @@ import config from '@/config'
 import React from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { WikisTableProps } from '@/types/admin'
+import { accountUsername } from '@/utils/AdminUtils/dataUpdate'
 import { TableHead } from '../GraphHeads'
 import { WikiColDate, WikiTableCol } from './WikiElemets'
 
@@ -34,14 +35,14 @@ export const WikisTable = (props: WikisTableProps) => {
             <TableHead text="Wiki Title" />
             <TableHead text="Date/Time" />
             <TableHead text="Tags" />
-            <Th color="#718096" textTransform="none" fontWeight="medium">
+            <Th color="primaryGray" textTransform="none" fontWeight="medium">
               <HStack spacing={1}>
                 <Text fontWeight="bold">Status</Text>
                 <Icon
                   fontSize="17px"
                   fontWeight="black"
                   cursor="pointer"
-                  color="#718096"
+                  color="primaryGray"
                   as={RiArrowDownLine}
                 />
               </HStack>
@@ -66,14 +67,9 @@ export const WikisTable = (props: WikisTableProps) => {
                       <Link href={`/wiki/${item.id}`} py={1}>
                         <Text>{shortenText(item.title, 20)}</Text>
                       </Link>
-                      <Text color="#718096" fontSize="sm">
+                      <Text color="primaryGray" fontSize="sm">
                         <Link href={`/account/${item.author?.id}`} py={1}>
-                          {/* eslint-disable no-nested-ternary */}
-                          {item.author?.profile?.username
-                            ? item.author.profile.username
-                            : item.author?.id
-                            ? shortenAccount(item.author.id)
-                            : 'UnKnown'}
+                          {accountUsername(item)}
                         </Link>
                       </Text>
                     </Flex>

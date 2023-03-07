@@ -37,7 +37,6 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
     onToggle,
   } = props
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
@@ -108,8 +107,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
               _expanded={{ bg: 'brand.500', color: 'white' }}
             >
               <Button
-                borderColor="#E2E8F0"
-                _dark={{ borderColor: '#2c323d' }}
+                borderColor="wikiSortBorder"
                 py={2}
                 px={5}
                 leftIcon={sortIcon}
