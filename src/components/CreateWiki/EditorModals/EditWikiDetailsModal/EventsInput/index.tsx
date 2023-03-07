@@ -6,6 +6,7 @@ import {
   SimpleGrid,
   Text,
   Textarea,
+  Tooltip,
 } from '@chakra-ui/react'
 import { useAppDispatch } from '@/store/hook'
 import { isValidUrl } from '@/utils/textUtils'
@@ -39,6 +40,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [errMsg, setErrMsg] = React.useState<string | null>(null)
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
+  const [type, setType] = useState<EventType>()
 
   const formRef = React.useRef<HTMLFormElement>(null)
 
@@ -58,6 +60,16 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       return
     }
 
+    let eventType
+
+    if (!wiki.events || wiki.events.length === 0) {
+      eventType = EventType.CREATED
+    } else if (type && isUpdate) {
+      eventType = type
+    } else {
+      eventType = EventType.DEFAULT
+    }
+
     dispatch({
       type: 'wiki/addEvent',
       payload: {
@@ -65,14 +77,14 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         title,
         description,
         link,
-        type:
-          !wiki.events || wiki.events?.length === 0
-            ? EventType.CREATED
-            : EventType.DEFAULT,
+        type: eventType,
       },
     })
 
     formRef.current?.reset()
+    if (wiki.events && wiki.events?.length >= 1) {
+      setInputTitle(undefined)
+    }
   }
 
   const handleIsUpdateCheck = (date: string) => {
@@ -106,15 +118,19 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       linkInput.value = data.link || ''
       descriptionInput.value = data.description || ''
 
+      if (data.type) {
+        setType(data.type)
+      }
+
       handleIsUpdateCheck(data.date)
     }
   }
 
   useEffect(() => {
-    if (wiki.events && wiki.events?.length === 1) {
+    if (!wiki.events || wiki.events.length === 1) {
       setInputTitle(undefined)
     }
-  }, [wiki.events, inputTitle])
+  }, [wiki.events, wiki.events?.length])
 
   const titleProps = () => {
     if (!wiki.events || wiki.events.length === 0) {
@@ -124,7 +140,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         }
       }
       return {
-        value: 'Date of creation',
+        value: 'Date Founded',
       }
     }
     return {
@@ -156,14 +172,37 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   handleIsUpdateCheck(date)
                 }}
               />
-              <Input
-                name="title"
-                fontSize={{ base: '12px', md: '14px' }}
-                type="text"
-                placeholder="Title"
-                isReadOnly={wiki.events?.length === 0}
-                {...titleProps()}
-              />
+              <Tooltip
+                bgColor="white"
+                color="gray.600"
+                _dark={{
+                  color: 'whiteAlpha.700',
+                  bgColor: 'gray.800',
+                }}
+                isOpen={!wiki.events || wiki.events.length === 0}
+                label={`Enter the event title here. ${
+                  titleProps().value
+                } is mandatory as the title first entry for events`}
+              >
+                <Input
+                  name="title"
+                  fontSize={{ base: '12px', md: '14px' }}
+                  type="text"
+                  placeholder="Title"
+                  isReadOnly={!wiki.events || wiki.events.length === 0}
+                  borderColor={
+                    !wiki.events || wiki.events.length === 0
+                      ? 'eventsBorderColor'
+                      : 'inherit'
+                  }
+                  color={
+                    !wiki.events || wiki.events.length === 0
+                      ? 'eventsInputColor'
+                      : 'initial'
+                  }
+                  {...titleProps()}
+                />
+              </Tooltip>
               <Input
                 name="link"
                 type="url"

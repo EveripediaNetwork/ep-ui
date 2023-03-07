@@ -309,5 +309,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
     },
+    eventsBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.400',
+    },
+    eventsInputColor: {
+      default: 'gray.400',
+      _dark: 'whiteAlpha.600',
+    },
   },
 }
