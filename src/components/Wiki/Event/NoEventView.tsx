@@ -15,11 +15,7 @@ const NoEventView = () => {
     >
       <Box textAlign="center" pb={8}>
         <Flex justifyContent="center">
-          <AspectRatio
-            ratio={WIKI_IMAGE_ASPECT_RATIO}
-            w={{ base: '399px', md: '500px' }}
-            h={{ base: '399px', md: '500px' }}
-          >
+          <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="300px" h="300px">
             <Image
               imgBoxSize={300}
               alt="No Events "
