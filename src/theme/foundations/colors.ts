@@ -27,4 +27,9 @@ export const colors = {
   primaryGray: '#718096',
   davyGray: '#51565F',
   electricPink: '#f11a82',
+  taupeGray: '#898787',
+  mediumGreen: '#38A169',
+  dewGray: '#F0FFF4',
+  tangRed: '#DD6B20',
+  dazBlue: '#385C8A',
 }

@@ -102,9 +102,8 @@ export const WikisTable = (props: WikisTableProps) => {
                         size="md"
                         borderRadius="full"
                         variant="solid"
-                        bg="#EBF8FF"
-                        _dark={{ bg: '#90CDF4' }}
-                        color="#385C8A"
+                        bg="wikiPromotedTag"
+                        color="dazBlue"
                       >
                         <TagLabel fontSize="13px" fontWeight="medium">
                           {item.promoted === 1
@@ -120,23 +119,20 @@ export const WikisTable = (props: WikisTableProps) => {
                     size="md"
                     borderRadius="full"
                     variant="solid"
-                    color={!item.hidden ? '#38A169' : '#DD6B20'}
-                    _dark={{ bg: item.hidden ? '#FBD38D' : '#F0FFF4' }}
-                    bg={!item.hidden ? '#F0FFF4' : '#FFF5F5'}
+                    color={!item.hidden ? 'mediumGreen' : 'tangRed'}
+                    bg={item.hidden ? 'tagArchiveBg' : 'dewGray'}
                     py="1"
                   >
                     <HStack spacing={2}>
                       <Box
                         w="8px"
                         h="8px"
-                        bg={!item.hidden ? '#38A169' : '#DD6B20'}
-                        _dark={{ bg: item.hidden ? '#AE5D35' : '#38A169' }}
+                        bg={item.hidden ? 'boxArchiveBg' : 'mediumGreen'}
                         borderRadius="100px"
                       />
                       <TagLabel
                         fontWeight="medium"
-                        color={!item.hidden ? '#38A169' : '#9C4221'}
-                        _dark={{ color: item.hidden ? '#AE5D35' : '#38A169' }}
+                        color={item.hidden ? 'archiveLabelBg' : 'mediumGreen'}
                         fontSize="13px"
                       >
                         {item.hidden ? 'Archived' : 'Active'}

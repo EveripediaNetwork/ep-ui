@@ -30,6 +30,22 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.700',
     },
+    wikiPromotedTag: {
+      default: '#EBF8FF',
+      _dark: '#90CDF4',
+    },
+    tagArchiveBg: {
+      default: '#FFF5F5',
+      _dark: '#FBD38D',
+    },
+    boxArchiveBg: {
+      default: 'tangRed',
+      _dark: '#AE5D35',
+    },
+    archiveLabelBg: {
+      default: '#9C4221',
+      _dark: '#AE5D35',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
