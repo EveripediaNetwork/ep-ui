@@ -122,7 +122,7 @@ export const InsightTableWikiEditors = (
                       </Flex>
                     </Link>
                   </Td>
-                  <Td color="#primaryGray">
+                  <Td color="primaryGray">
                     {item?.wikisCreated[0]?.datetime.split('T')[0]}
                   </Td>
                   <Td>
