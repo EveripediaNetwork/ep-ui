@@ -10,7 +10,7 @@ const WikiNotFound = () => {
       justifyContent={{ base: 'center' }}
       direction={{ base: 'column' }}
       mt={{ base: '9' }}
-      mb={{ base: '96' }}
+      pb={{ base: '96' }}
     >
       <Flex
         w={{ lg: '15%', base: '40%' }}

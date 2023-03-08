@@ -1,3 +1,5 @@
+import { BaseEvents } from '@everipedia/iq-utils'
+
 export interface RankCardType {
   id: string
   title: string
@@ -10,6 +12,7 @@ export interface RankCardType {
     founders: string[]
     blockchains: string[]
   }
+  events: BaseEvents[]
 }
 
 export interface Medum {

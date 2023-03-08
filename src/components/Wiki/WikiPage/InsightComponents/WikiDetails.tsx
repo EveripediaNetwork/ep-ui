@@ -47,7 +47,7 @@ export const WikiDetails = ({
   imgSrc?: string
   views: number | undefined
 }) => {
-  const { title, tags } = wikiTitle
+  const { title, tags, id: wikiId } = wikiTitle
   const [, username] = useENSData(createdBy?.id || '')
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   return (
@@ -135,7 +135,6 @@ export const WikiDetails = ({
                     </Td>
                   </Tr>
                 )}
-
                 <Tr>
                   <Td>
                     <HStack spacing={3} py="2">
@@ -170,6 +169,23 @@ export const WikiDetails = ({
                     >
                       <Text>{shortenAccount(txHash || '')}</Text>
                     </Link>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <HStack spacing={3} py="2">
+                      <Text>Events</Text>
+                    </HStack>
+                  </Td>
+                  <Td display="flex" align="center" gap={3}>
+                    <HStack py="2">
+                      <Link
+                        href={`/wiki/${wikiId}/events`}
+                        color="brandLinkColor"
+                      >
+                        <Text>View timeline of events</Text>
+                      </Link>
+                    </HStack>
                   </Td>
                 </Tr>
                 <Tr>
