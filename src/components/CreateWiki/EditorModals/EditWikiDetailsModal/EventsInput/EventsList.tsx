@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Center, Flex, Icon, Text } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { FiCalendar } from 'react-icons/fi'
@@ -15,6 +15,7 @@ export const EventsList = ({
   const [feedbackMessage, setFeedbackMessage] = useState<string>('')
   const dateFoundedEvent =
     wiki.events && wiki.events.find(event => event.type === EventType.CREATED)
+  const textFeedbackRef = useRef<HTMLParagraphElement>(null)
 
   const removeEventHandler = (date: string) => {
     if (
@@ -23,6 +24,7 @@ export const EventsList = ({
       date === dateFoundedEvent?.date
     ) {
       setFeedbackMessage('The Date Founded cannot be removed.')
+
       return
     }
 
@@ -35,6 +37,14 @@ export const EventsList = ({
       },
     })
   }
+
+  useEffect(() => {
+    if (feedbackMessage) {
+      textFeedbackRef.current?.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  }, [feedbackMessage])
 
   if (!wiki.events?.length) return <></>
 
@@ -136,7 +146,7 @@ export const EventsList = ({
         ))}
       </Flex>
       {feedbackMessage && (
-        <Text color="red.500" fontSize="sm" mt="2">
+        <Text ref={textFeedbackRef} color="red.500" fontSize="sm" mt="2">
           {feedbackMessage}
         </Text>
       )}
