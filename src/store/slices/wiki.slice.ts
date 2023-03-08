@@ -261,7 +261,9 @@ const wikiSlice = createSlice({
       const { title, description, type, date, link } =
         action.payload as BaseEvents
 
-      const index = state.events ? state.events?.findIndex(e => e.date === date) : -1
+      const index = state.events
+        ? state.events?.findIndex(e => e.date === date)
+        : -1
 
       if (index !== -1) {
         const updatedEvent = {
