@@ -21,7 +21,6 @@ const validateForm = (
 ) => {
   if (!date) return 'Date is required'
   if (!title) return 'Title is required'
-  if (!link) return 'Link is required'
   if (!description) return 'Description is required'
 
   if (new Date(date).toString() === 'Invalid Date')
