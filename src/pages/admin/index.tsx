@@ -15,8 +15,8 @@ import { adminApiClient, checkIsAdmin } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
-import SignTokenMessage from '../account/SignTokenMessage'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
+import SignTokenMessage from '../account/SignTokenMessage'
 
 const Admin = () => {
   const router = useRouter()
