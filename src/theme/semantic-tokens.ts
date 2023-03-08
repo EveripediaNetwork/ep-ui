@@ -18,6 +18,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#718096',
       _dark: '#FFFFFF',
     },
+    bodyBg: {
+      default: 'white',
+      _dark: 'gray.700',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
@@ -48,6 +52,10 @@ export const semanticTokens: SemanticTokens = {
     homeDescriptionColor: {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
+    },
+    eventTextColor: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.800',
     },
     linkHoverColor: {
       default: 'gray.800',
@@ -304,6 +312,18 @@ export const semanticTokens: SemanticTokens = {
     aboutFeaturesCardBorder: {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
+    },
+    eventsBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.400',
+    },
+    eventsInputColor: {
+      default: 'gray.400',
+      _dark: 'whiteAlpha.600',
+    },
+    eventsToolTip: {
+      default: 'gray.600',
+      _dark: 'gray.800',
     },
   },
 }

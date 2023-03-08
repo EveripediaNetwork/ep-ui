@@ -30,6 +30,9 @@ export const InvalidRankCardItem = ({ index }: { index: number }) => {
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         NA
       </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        NA
+      </Td>
     </Tr>
   )
 }

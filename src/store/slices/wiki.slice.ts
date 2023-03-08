@@ -7,6 +7,8 @@ import {
   EditSpecificMetaIds,
   CreateNewWikiSlug,
   LinkedWikiKey,
+  BaseEvents,
+  EventType,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
@@ -76,6 +78,7 @@ const initialState: Wiki = {
   },
   media: [],
   views: 0,
+  events: [],
 }
 
 const wikiSlice = createSlice({
@@ -254,6 +257,92 @@ const wikiSlice = createSlice({
       saveDraftInLocalStorage(newState)
       return newState
     },
+    addEvent(state, action) {
+      const { title, description, type, date, link } =
+        action.payload as BaseEvents
+
+      const index = state.events
+        ? state.events?.findIndex(e => e.date === date)
+        : -1
+
+      if (index !== -1) {
+        const updatedEvent = {
+          title,
+          description,
+          link,
+          date,
+          type,
+        }
+        const events = state.events ? [...state.events] : []
+        events[index] = updatedEvent
+        events.sort((a, b) => {
+          const dateA = a.date ? new Date(a.date) : null
+          const dateB = b.date ? new Date(b.date) : null
+          return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
+        })
+        const newState = { ...state, events }
+        saveDraftInLocalStorage(newState)
+        return newState
+      }
+
+      const newEvent = {
+        title,
+        description,
+        link,
+        date,
+        type,
+      }
+      const events = state.events ? [...state.events, newEvent] : [newEvent]
+      events.sort((a, b) => {
+        const dateA = a.date ? new Date(a.date) : null
+        const dateB = b.date ? new Date(b.date) : null
+        return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
+      })
+      const newState = { ...state, events }
+      saveDraftInLocalStorage(newState)
+      return newState
+    },
+    removeEvent(state, action) {
+      if (state.events) {
+        if (state.events.length === 1) {
+          const updatedEvents = state.events.filter(
+            event => event.date !== action.payload.date,
+          )
+
+          const newState = {
+            ...state,
+            events: updatedEvents,
+          }
+
+          saveDraftInLocalStorage(newState)
+          return newState
+        }
+      }
+
+      if (state.events && state.events?.length > 1) {
+        const firstEvent = state.events.find(
+          event => event.type === EventType.CREATED,
+        )
+
+        if (action.payload.date === firstEvent?.date) {
+          return state
+        }
+
+        const updatedEvents = state.events.filter(
+          event => event.date !== action.payload.date,
+        )
+
+        const newState = {
+          ...state,
+          events: updatedEvents,
+        }
+
+        saveDraftInLocalStorage(newState)
+        return newState
+      }
+      return state
+    },
+
     reset() {
       return initialState
     },

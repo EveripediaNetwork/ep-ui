@@ -21,4 +21,7 @@ export const RankingListHead: RankinglistHeadProps[] = [
   {
     label: 'Blockchain',
   },
+  {
+    label: 'Date Founded',
+  },
 ]
