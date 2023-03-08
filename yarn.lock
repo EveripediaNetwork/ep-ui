@@ -2747,10 +2747,10 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
-"@everipedia/iq-utils@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.2.tgz#23ffb2829074a8a12cbf4ce1169e2014abf2f6db"
-  integrity sha512-g8HH9vDUB2VnIZwyqhJg76EcCS0XernTv0ynWWXkz2jb4XlZWCUGZ94uRcgGZFh2l5dnXVHYAaS0FbB/6El5nw==
+"@everipedia/iq-utils@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.4.tgz#186e7c43b0bf260914c56f8517c66d9e5359cc44"
+  integrity sha512-UrEgexwKcLB/A1NJ4bn/nXcQXRXTm+IIPD0El3fw5k1ol2Pxx6TyP6LSgTopDbZUVBvBNAKpLu1ctAz5Hveozw==
 
 "@everipedia/wagmi-magic-connector@^0.7.0":
   version "0.7.0"

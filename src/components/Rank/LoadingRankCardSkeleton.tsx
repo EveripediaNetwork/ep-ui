@@ -34,6 +34,9 @@ const SingularSkeleton = () => {
       <Td verticalAlign="middle" borderColor="rankingListBorder">
         <Skeleton h="15px" w="60px" borderRadius="15px" />
       </Td>
+      <Td verticalAlign="middle" borderColor="rankingListBorder">
+        <Skeleton h="15px" w="60px" borderRadius="15px" />
+      </Td>
     </Tr>
   )
 }
