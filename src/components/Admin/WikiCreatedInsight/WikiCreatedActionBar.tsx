@@ -90,7 +90,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
         <Flex gap={5}>
           <InputGroup w="100%">
             <InputLeftElement pointerEvents="none">
-              <FiSearch color="#667085" />
+              <FiSearch color="metalGray" />
             </InputLeftElement>
             <Input
               type="text"

@@ -89,7 +89,7 @@ export const WikiTableCol = (props: WikiTableColProps) => {
             <Text
               color="tetiaryGray"
               _dark={{
-                color: item.hidden ? 'davyGray' : '#495a68',
+                color: item.hidden ? 'davyGray' : 'denceGray',
               }}
               cursor={item.hidden ? 'not-allowed' : 'pointer'}
             >

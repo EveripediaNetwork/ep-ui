@@ -32,4 +32,6 @@ export const colors = {
   dewGray: '#F0FFF4',
   tangRed: '#DD6B20',
   dazBlue: '#385C8A',
+  denceGray: '#495a68',
+  metalGray: '#667085',
 }
