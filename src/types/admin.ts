@@ -212,6 +212,14 @@ export type PromoteCreatedWikisModalProps = {
   hideFunc: () => void
 }
 
+export type HideWikiNotificationProps = {
+  isOpen: boolean
+  onClose: () => void
+  wikiChosenId: string
+  IsHide: boolean
+  hideFunc: () => void
+}
+
 export type ContentProps = {
   activeStep: number
   steps?: {
