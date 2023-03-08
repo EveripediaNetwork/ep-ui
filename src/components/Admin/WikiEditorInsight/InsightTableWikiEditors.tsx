@@ -92,7 +92,7 @@ export const InsightTableWikiEditors = (
                     <Text color="#primaryGray">{item.wikisEdited.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#primaryGray">
+                    <Text color="primaryGray">
                       {item.wikisCreated.length + item.wikisEdited.length}
                     </Text>
                   </Td>
