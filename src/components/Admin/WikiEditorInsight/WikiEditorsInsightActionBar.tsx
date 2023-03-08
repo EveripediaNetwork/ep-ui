@@ -49,7 +49,7 @@ const WikiEditorsInsightActionBar = ({
         </InputGroup>
         <Button
           onClick={handleSortChange}
-          borderColor='tetiaryGray'
+          borderColor="tetiaryGray"
           _dark={{ borderColor: '#2c323d' }}
           py={2}
           px={10}

@@ -168,7 +168,7 @@ export const InsightTableWikiEditors = (
                         }}
                       >
                         <Text
-                          color='tetiaryGray'
+                          color="tetiaryGray"
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
