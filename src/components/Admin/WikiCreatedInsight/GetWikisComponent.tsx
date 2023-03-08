@@ -66,7 +66,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                   {Data.title}
                 </Heading>
               </HStack>
-              {Data.categories.length ? (
+              {Data.categories.length && (
                 <HStack>
                   {Data.categories?.map((category, i) => (
                     <Link
@@ -78,12 +78,10 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                       cursor="pointer"
                       fontSize={{ base: '10px', lg: '12px' }}
                     >
-                      {category.title ? category.title : ''}
+                      {category.title && category.title}
                     </Link>
                   ))}
                 </HStack>
-              ) : (
-                <Text> </Text>
               )}
             </Flex>
             <Box

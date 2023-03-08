@@ -82,9 +82,9 @@ export const WikiTableCol = (props: WikiTableColProps) => {
       <HStack spacing={5}>
         {!item.promoted ? (
           <Text
-            color={item.hidden ? '#E2E8F0' : '#FF5CAA'}
+            color={item.hidden ? 'tetiaryGray' : 'brand.500'}
             _dark={{
-              color: item.hidden ? '#51565F' : '#FF1A88',
+              color: item.hidden ? 'davyGray' : 'brand.800',
             }}
             cursor={item.hidden ? 'not-allowed' : 'pointer'}
             fontWeight="semibold"
@@ -95,9 +95,9 @@ export const WikiTableCol = (props: WikiTableColProps) => {
         ) : (
           <HStack spacing={2} onClick={PromoteClickTwo}>
             <Text
-              color="#E2E8F0"
+              color="tetiaryGray"
               _dark={{
-                color: item.hidden ? '#51565F' : '#495a68',
+                color: item.hidden ? 'davyGray' : '#495a68',
               }}
               cursor={item.hidden ? 'not-allowed' : 'pointer'}
             >
@@ -106,7 +106,7 @@ export const WikiTableCol = (props: WikiTableColProps) => {
             <Icon
               fontSize="20px"
               cursor="pointer"
-              color="#F11a82"
+              color="electricPink"
               as={RiQuestionLine}
             />
           </HStack>
@@ -122,13 +122,13 @@ export const WikiTableCol = (props: WikiTableColProps) => {
           </Text>
         ) : (
           <HStack spacing={2} onClick={ArchiveClickTwo}>
-            <Text color="#F11a82" _dark={{ color: '#FF1A88' }} cursor="pointer">
+            <Text color="unArchiveWiki" cursor="pointer">
               Unarchive
             </Text>
             <Icon
               fontSize="20px"
               cursor="pointer"
-              color="#F11a82"
+              color="electricPink"
               as={RiQuestionLine}
             />
           </HStack>

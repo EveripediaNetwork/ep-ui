@@ -41,7 +41,7 @@ export const WikiDataGraph = ({
   const currentYear = new Date().getFullYear()
   const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
   const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
-  const createdStroke = useColorModeValue('#FF5CAA', '#FF1A88')
+  const createdStroke = useColorModeValue('brand.500', 'brand.800')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
 

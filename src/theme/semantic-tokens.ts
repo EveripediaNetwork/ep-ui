@@ -22,6 +22,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#718096',
       _dark: '#FFFFFF',
     },
+    unArchiveWiki: {
+      default: 'electricPink',
+      _dark: 'brand.800',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
@@ -216,6 +220,14 @@ export const semanticTokens: SemanticTokens = {
     tagActiveBgColor: {
       default: 'brand.50',
       _dark: '#FFB3D7',
+    },
+    tagNormalBgColor: {
+      default: '#F9F5FF',
+      _dark: '#FFB3D7',
+    },
+    tagNormalColor: {
+      default: '#FE6FB5',
+      _dark: '#FF409B',
     },
     tagActiveColor: {
       default: 'brand.500',

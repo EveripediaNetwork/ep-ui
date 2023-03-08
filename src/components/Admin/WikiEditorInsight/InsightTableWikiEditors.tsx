@@ -168,7 +168,7 @@ export const InsightTableWikiEditors = (
                         }}
                       >
                         <Text
-                          color="#E2E8F0"
+                          color='tetiaryGray'
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
@@ -177,7 +177,7 @@ export const InsightTableWikiEditors = (
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color="#F11a82"
+                          color="electricPink"
                           as={RiQuestionLine}
                         />
                       </HStack>

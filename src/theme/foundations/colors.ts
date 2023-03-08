@@ -25,4 +25,6 @@ export const colors = {
   primaryPink: '#E53E3E',
   tetiaryDark: '#1A202C',
   primaryGray: '#718096',
+  davyGray: '#51565F',
+  electricPink: '#f11a82',
 }

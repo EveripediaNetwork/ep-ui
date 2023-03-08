@@ -89,9 +89,8 @@ export const WikisTable = (props: WikisTableProps) => {
                       size="md"
                       borderRadius="full"
                       variant="solid"
-                      bg="#F9F5FF"
-                      _dark={{ bg: '#FFB3D7', color: '#FF409B' }}
-                      color="#FE6FB5"
+                      bg="tagNormalBgColor"
+                      color="tagNormalColor"
                       py="1"
                     >
                       <TagLabel fontSize="13px" fontWeight="medium">
