@@ -18,6 +18,10 @@ export const GET_NFT_RANKINGS = gql`
           founders
           blockchains
         }
+        events {
+          date
+          type
+        }
         nftMarketData {
           floor_price_eth
           floor_price_usd
@@ -48,6 +52,10 @@ export const GET_TOKEN_RANKINGS = gql`
         linkedWikis {
           founders
           blockchains
+        }
+        events {
+          date
+          type
         }
         tokenMarketData {
           image

@@ -4,7 +4,6 @@ import { useAppDispatch } from '@/store/hook'
 import {
   Button,
   Center,
-  Flex,
   HStack,
   Icon,
   Input,
@@ -13,6 +12,7 @@ import {
   Text,
   Wrap,
   chakra,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
@@ -94,14 +94,14 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Links</Text>
-      <Flex
+      <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        direction={{ base: 'column', sm: 'row' }}
+        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
       >
         <Select
-          size="sm"
+          h="40px"
           rounded="md"
           flex="5.5"
           value={currentLink}
@@ -143,8 +143,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Input
           disabled={!currentLink}
-          size="sm"
-          flex="8"
+          h="40px"
           rounded="md"
           placeholder="Enter link"
           value={currentLinkValue}
@@ -153,15 +152,15 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
         />
         <Button
           disabled={!currentLink}
-          flex="1"
-          size="sm"
           rounded="md"
-          mx="auto"
           onClick={insertLinks}
+          minW={{ base: 'full', md: '110px' }}
+          h="40px"
+          gridColumn={{ base: 'span 2', md: 'unset' }}
         >
           {atttributeExists(currentLink) ? 'Update' : 'Add'}
         </Button>
-      </Flex>
+      </SimpleGrid>
       <chakra.span color="red.300">{error}</chakra.span>
       {linksWithValue.length > 0 && (
         <Wrap gap="1">

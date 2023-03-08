@@ -68,6 +68,13 @@ export const GET_WIKI_BY_ID = gql`
           avatar
         }
       }
+      events {
+        title
+        description
+        type
+        date
+        link
+      }
       views
     }
   }

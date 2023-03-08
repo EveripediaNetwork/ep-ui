@@ -2,9 +2,20 @@ import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 
 const MAX_LINKED_WIKIS = 3
+
+const formatDate = (date: string) => {
+  const eventDate = new Date(date)
+
+  return eventDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 const RankingItem = ({
   index,
@@ -24,6 +35,10 @@ const RankingItem = ({
       ? item.nftMarketData.floor_price_usd.toLocaleString()
       : item.tokenMarketData.current_price?.toLocaleString()
   }`
+
+  const dateFounded =
+    item.events &&
+    item?.events.find(event => event.type === EventType.CREATED)?.date
 
   return (
     <Tr>
@@ -143,6 +158,13 @@ const RankingItem = ({
                 )
               })}
           </Flex>
+        ) : (
+          'NA'
+        )}
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {dateFounded ? (
+          <Text color="rankingListText">{formatDate(dateFounded)}</Text>
         ) : (
           'NA'
         )}
