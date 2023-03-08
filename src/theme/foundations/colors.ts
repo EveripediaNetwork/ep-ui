@@ -34,6 +34,5 @@ export const colors = {
   dazBlue: '#385C8A',
   denceGray: '#495a68',
   metalGray: '#667085',
-  rosePink:'#FF5DAA',
-  
+  rosePink: '#FF5DAA',
 }
