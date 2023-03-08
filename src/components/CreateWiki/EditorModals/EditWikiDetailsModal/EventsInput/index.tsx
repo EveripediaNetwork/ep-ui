@@ -82,6 +82,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     })
 
     formRef.current?.reset()
+    setIsUpdate(false)
     if (wiki.events && wiki.events?.length >= 1) {
       setInputTitle(undefined)
     }

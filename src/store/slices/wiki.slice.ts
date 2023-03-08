@@ -273,7 +273,7 @@ const wikiSlice = createSlice({
           date,
           type,
         }
-        const events = [...(state.events ?? [])]
+        const events = state.events ? [...state.events] : []
         events[index] = updatedEvent
         events.sort((a, b) => {
           const dateA = a.date ? new Date(a.date) : null
@@ -292,7 +292,7 @@ const wikiSlice = createSlice({
         date,
         type,
       }
-      const events = [...(state.events ?? []), newEvent]
+      const events = state.events ? [...state.events, newEvent] : [newEvent]
       events.sort((a, b) => {
         const dateA = a.date ? new Date(a.date) : null
         const dateB = b.date ? new Date(b.date) : null
