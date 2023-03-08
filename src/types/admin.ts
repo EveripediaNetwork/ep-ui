@@ -242,6 +242,13 @@ export type WikisTableProps = {
   shouldPromote: (wikiTitle: string, id: string) => void
   shouldArchive: (ishidden: boolean, wikiId: string) => void
 }
+export type WikiTableColProps = {
+  item: Wikis
+  PromoteClickOne: () => void
+  PromoteClickTwo: () => void
+  ArchiveClickOne: () => void
+  ArchiveClickTwo: () => void
+}
 
 export type WikiCreatedFooterProps = {
   activatePrevious: boolean

@@ -1,4 +1,4 @@
-import { WikiCreatedFooterProps, Wikis } from '@/types/admin'
+import { WikiCreatedFooterProps, WikiTableColProps } from '@/types/admin'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { Flex, Button, HStack, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
@@ -21,7 +21,6 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
       wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
     )
   }
-
   const decreasePagination = () => {
     return (
       wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset - 10)
@@ -62,13 +61,6 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
   )
 }
 
-type WikiTableColProps = {
-  item: Wikis
-  PromoteClickOne: () => void
-  PromoteClickTwo: () => void
-  ArchiveClickOne: () => void
-  ArchiveClickTwo: () => void
-}
 export const WikiTableCol = (props: WikiTableColProps) => {
   const {
     item,
@@ -111,7 +103,6 @@ export const WikiTableCol = (props: WikiTableColProps) => {
             />
           </HStack>
         )}
-
         {!item.hidden ? (
           <Text
             cursor={item.hidden ? 'not-allowed' : 'pointer'}
