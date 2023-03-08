@@ -75,7 +75,7 @@ export const InsightTableWikiEditors = (
                             {userNameData(item)}
                           </Text>
                           <Text
-                            color="#primaryGray"
+                            color="primaryGray"
                             fontSize="sm"
                             opacity={item.active ? 1 : 0.3}
                           >

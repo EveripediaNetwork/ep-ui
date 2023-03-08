@@ -32,7 +32,7 @@ export const WikiDataGraph = () => {
     { name: 'Editors', value: 400 },
     { name: 'Visitors', value: 300 },
   ]
-  const colors = ['#FF5DAA', 'brand.200']
+  const colors = ['rosePink', 'brand.200']
 
   const [graphFilter, setGraphFilter] = useState<string>('day')
 
@@ -120,7 +120,7 @@ export const WikiDataGraph = () => {
   const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
   const createdStroke = useColorModeValue('brand.500', 'brand.800')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
-  const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
+  const toolTipBg = useColorModeValue('white', 'tetiaryDark')
   const handleGraphFilterChange = (e: string) => {
     return setGraphFilter(e)
   }
