@@ -212,6 +212,14 @@ export type PromoteCreatedWikisModalProps = {
   hideFunc: () => void
 }
 
+export type HideWikiNotificationProps = {
+  isOpen: boolean
+  onClose: () => void
+  wikiChosenId: string
+  IsHide: boolean
+  hideFunc: () => void
+}
+
 export type ContentProps = {
   activeStep: number
   steps?: {
@@ -233,6 +241,13 @@ export type WikisTableProps = {
   findSection: (promotedNum: number) => void
   shouldPromote: (wikiTitle: string, id: string) => void
   shouldArchive: (ishidden: boolean, wikiId: string) => void
+}
+export type WikiTableColProps = {
+  item: Wikis
+  PromoteClickOne: () => void
+  PromoteClickTwo: () => void
+  ArchiveClickOne: () => void
+  ArchiveClickTwo: () => void
 }
 
 export type WikiCreatedFooterProps = {

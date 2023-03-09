@@ -75,7 +75,7 @@ export const InsightTableWikiEditors = (
                             {userNameData(item)}
                           </Text>
                           <Text
-                            color="#718096"
+                            color="primaryGray"
                             fontSize="sm"
                             opacity={item.active ? 1 : 0.3}
                           >
@@ -86,13 +86,13 @@ export const InsightTableWikiEditors = (
                     </Link>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.wikisCreated.length}</Text>
+                    <Text color="primaryGray">{item.wikisCreated.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.wikisEdited.length}</Text>
+                    <Text color="primaryGray">{item.wikisEdited.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">
+                    <Text color="primaryGray">
                       {item.wikisCreated.length + item.wikisEdited.length}
                     </Text>
                   </Td>
@@ -122,7 +122,7 @@ export const InsightTableWikiEditors = (
                       </Flex>
                     </Link>
                   </Td>
-                  <Td color="#718096">
+                  <Td color="primaryGray">
                     {item?.wikisCreated[0]?.datetime.split('T')[0]}
                   </Td>
                   <Td>
@@ -168,7 +168,7 @@ export const InsightTableWikiEditors = (
                         }}
                       >
                         <Text
-                          color="#E2E8F0"
+                          color="tetiaryGray"
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
@@ -177,7 +177,7 @@ export const InsightTableWikiEditors = (
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color="#F11a82"
+                          color="electricPink"
                           as={RiQuestionLine}
                         />
                       </HStack>

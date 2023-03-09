@@ -99,7 +99,7 @@ export const InsightTableWikiCreated = (
                 fontSize="3xl"
                 fontWeight={600}
                 as={RiQuestionLine}
-                color="#898787"
+                color="taupeGray"
                 mr={5}
               />
               <Text flex="1" fontSize="xl" fontWeight="black">

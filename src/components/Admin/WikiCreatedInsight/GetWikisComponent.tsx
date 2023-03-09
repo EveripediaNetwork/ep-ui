@@ -14,8 +14,8 @@ import { WikiImage } from '@/components/WikiImage'
 import { CreatedWikisCount } from '@/types/admin'
 import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { shortenAccount } from '@/utils/textUtils'
 import { Image } from '@everipedia/iq-utils'
+import { accountUsername } from '@/utils/AdminUtils/dataUpdate'
 
 export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
   return (
@@ -29,7 +29,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
           borderRadius="lg"
           borderStyle="dotted"
           px={{ base: 3, lg: 5 }}
-          py={{ base: 3, lg: 3 }}
+          py={3}
           w="full"
           align="normal"
         >
@@ -66,7 +66,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                   {Data.title}
                 </Heading>
               </HStack>
-              {Data.categories.length ? (
+              {Data.categories.length && (
                 <HStack>
                   {Data.categories?.map((category, i) => (
                     <Link
@@ -78,12 +78,10 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                       cursor="pointer"
                       fontSize={{ base: '10px', lg: '12px' }}
                     >
-                      {category.title ? category.title : ''}
+                      {category.title && category.title}
                     </Link>
                   ))}
                 </HStack>
-              ) : (
-                <Text> </Text>
               )}
             </Flex>
             <Box
@@ -115,12 +113,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                       color="brand.500"
                       fontWeight="bold"
                     >
-                      {/* eslint-disable no-nested-ternary */}
-                      {Data.author?.profile?.username
-                        ? Data.author.profile.username
-                        : Data.author?.id
-                        ? shortenAccount(Data.author.id)
-                        : 'Unknown'}
+                      {accountUsername(Data)}
                     </Link>
                   </Text>
                 </HStack>

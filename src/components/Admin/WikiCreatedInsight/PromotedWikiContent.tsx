@@ -104,7 +104,7 @@ export const PromoteModalContent = (props: ContentProps) => {
               key={label}
               description={description}
             >
-              <Box pt="10" pb="10">
+              <Box py="10">
                 <Content
                   activeStep={activeStep}
                   step2Titles={step2Titles}
