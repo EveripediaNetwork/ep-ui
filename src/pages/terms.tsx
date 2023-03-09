@@ -160,7 +160,7 @@ const Terms = () => (
             2300 West Sahara Ave., Suite 800 <br />
             PMB 214 <br />
             Las Vegas, NV 89102 <br /> <br />
-            or via email: info@iq.wiki or webmaster@iq.wiki <br />
+            or via email: webmaster@iq.wiki <br />
             or submit them via the{' '}
             <Link
               color="brandLinkColor"
