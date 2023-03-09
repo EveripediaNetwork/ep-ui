@@ -1,4 +1,4 @@
-import { shortenText, shortenAccount } from '@/utils/textUtils'
+import { shortenText } from '@/utils/textUtils'
 import {
   Flex,
   Table,
@@ -21,6 +21,7 @@ import config from '@/config'
 import React from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { WikisTableProps } from '@/types/admin'
+import { accountUsername } from '@/utils/AdminUtils/dataUpdate'
 import { TableHead } from '../GraphHeads'
 import { WikiColDate, WikiTableCol } from './WikiElemets'
 
@@ -34,14 +35,14 @@ export const WikisTable = (props: WikisTableProps) => {
             <TableHead text="Wiki Title" />
             <TableHead text="Date/Time" />
             <TableHead text="Tags" />
-            <Th color="#718096" textTransform="none" fontWeight="medium">
+            <Th color="primaryGray" textTransform="none" fontWeight="medium">
               <HStack spacing={1}>
                 <Text fontWeight="bold">Status</Text>
                 <Icon
                   fontSize="17px"
                   fontWeight="black"
                   cursor="pointer"
-                  color="#718096"
+                  color="primaryGray"
                   as={RiArrowDownLine}
                 />
               </HStack>
@@ -66,14 +67,9 @@ export const WikisTable = (props: WikisTableProps) => {
                       <Link href={`/wiki/${item.id}`} py={1}>
                         <Text>{shortenText(item.title, 20)}</Text>
                       </Link>
-                      <Text color="#718096" fontSize="sm">
+                      <Text color="primaryGray" fontSize="sm">
                         <Link href={`/account/${item.author?.id}`} py={1}>
-                          {/* eslint-disable no-nested-ternary */}
-                          {item.author?.profile?.username
-                            ? item.author.profile.username
-                            : item.author?.id
-                            ? shortenAccount(item.author.id)
-                            : 'UnKnown'}
+                          {accountUsername(item)}
                         </Link>
                       </Text>
                     </Flex>
@@ -93,9 +89,8 @@ export const WikisTable = (props: WikisTableProps) => {
                       size="md"
                       borderRadius="full"
                       variant="solid"
-                      bg="#F9F5FF"
-                      _dark={{ bg: '#FFB3D7', color: '#FF409B' }}
-                      color="#FE6FB5"
+                      bg="tagNormalBgColor"
+                      color="tagNormalColor"
                       py="1"
                     >
                       <TagLabel fontSize="13px" fontWeight="medium">
@@ -107,9 +102,8 @@ export const WikisTable = (props: WikisTableProps) => {
                         size="md"
                         borderRadius="full"
                         variant="solid"
-                        bg="#EBF8FF"
-                        _dark={{ bg: '#90CDF4' }}
-                        color="#385C8A"
+                        bg="wikiPromotedTag"
+                        color="dazBlue"
                       >
                         <TagLabel fontSize="13px" fontWeight="medium">
                           {item.promoted === 1
@@ -125,23 +119,20 @@ export const WikisTable = (props: WikisTableProps) => {
                     size="md"
                     borderRadius="full"
                     variant="solid"
-                    color={!item.hidden ? '#38A169' : '#DD6B20'}
-                    _dark={{ bg: item.hidden ? '#FBD38D' : '#F0FFF4' }}
-                    bg={!item.hidden ? '#F0FFF4' : '#FFF5F5'}
+                    color={!item.hidden ? 'mediumGreen' : 'tangRed'}
+                    bg={item.hidden ? 'tagArchiveBg' : 'dewGray'}
                     py="1"
                   >
                     <HStack spacing={2}>
                       <Box
                         w="8px"
                         h="8px"
-                        bg={!item.hidden ? '#38A169' : '#DD6B20'}
-                        _dark={{ bg: item.hidden ? '#AE5D35' : '#38A169' }}
+                        bg={item.hidden ? 'boxArchiveBg' : 'mediumGreen'}
                         borderRadius="100px"
                       />
                       <TagLabel
                         fontWeight="medium"
-                        color={!item.hidden ? '#38A169' : '#9C4221'}
-                        _dark={{ color: item.hidden ? '#AE5D35' : '#38A169' }}
+                        color={item.hidden ? 'archiveLabelBg' : 'mediumGreen'}
                         fontSize="13px"
                       >
                         {item.hidden ? 'Archived' : 'Active'}

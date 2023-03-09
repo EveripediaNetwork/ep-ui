@@ -34,7 +34,6 @@ export const WikiInsightTable = () => {
     skip: initGetHiddenWikis,
     refetchOnMountOrArgChange: true,
   })
-
   const { data: SearchedWikis } = useGetSearchedWikisByTitleQuery(
     searchKeyWord,
     {
@@ -42,7 +41,6 @@ export const WikiInsightTable = () => {
       refetchOnMountOrArgChange: true,
     },
   )
-
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
       return <RiArrowUpDownLine fontSize="1.3rem" />
@@ -83,7 +81,6 @@ export const WikiInsightTable = () => {
       refetchOnMountOrArgChange: true,
     },
   )
-
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
@@ -109,35 +106,34 @@ export const WikiInsightTable = () => {
     FilterTypes.promoted,
     FilterTypes.normal,
   ])
+  const sortWikisByDate = (
+    items: CreatedWikisCount[] | undefined,
+    highestFirst: boolean,
+  ) => {
+    items?.sort((a, b) => {
+      const dateA = new Date(a.created ? a.created : '').valueOf()
+      const dateB = new Date(b.created ? b.created : '').valueOf()
+      const comparison = dateA - dateB
+      return highestFirst ? -comparison : comparison
+    })
+  }
 
   const WikisSortByHighest = newWikis?.slice()
-  WikisSortByHighest?.sort((a, b) => {
-    const Data =
-      new Date(b.created ? b.created : '').valueOf() -
-      new Date(a.created ? a.created : '').valueOf()
-    return Data
-  })
+  sortWikisByDate(WikisSortByHighest, true)
 
   const WikisSortByLowest = newWikis?.slice()
-  WikisSortByLowest?.sort((a, b) => {
-    const Data =
-      new Date(a.created ? a.created : '').valueOf() -
-      new Date(b.created ? b.created : '').valueOf()
-    return Data
-  })
+  sortWikisByDate(WikisSortByLowest, false)
 
   const WikisSortByAlpaUp = newWikis?.slice()
   WikisSortByAlpaUp?.sort((a, b) => {
     const Data = a.title.trim().localeCompare(b.title.trim())
     return Data
   })
-
   const WikisSortByAlpaDown = newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
     const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
   })
-
   const wikiSorted = useMemo(() => {
     if (sortTableBy === 'Newest') {
       return WikisSortByHighest
@@ -169,7 +165,6 @@ export const WikiInsightTable = () => {
       setWikis(SearchedWikis)
     }
   }, [SearchedWikis, searchKeyWord.length, wikiSorted])
-
   const scrolltoTableTop = () => {
     insightTableRef?.current?.scrollIntoView({
       behavior: 'smooth',

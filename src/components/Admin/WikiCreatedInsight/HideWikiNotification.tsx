@@ -18,20 +18,10 @@ import {
   usePostUnHideWikiMutation,
   useRevalidateURLMutation,
 } from '@/services/admin'
+import { HideWikiNotificationProps } from '@/types/admin'
 
-export const HideWikiNotification = ({
-  onClose,
-  isOpen,
-  wikiChosenId,
-  IsHide,
-  hideFunc,
-}: {
-  isOpen: boolean
-  onClose: () => void
-  wikiChosenId: string
-  IsHide: boolean
-  hideFunc: () => void
-}) => {
+export const HideWikiNotification = (props: HideWikiNotificationProps) => {
+  const { onClose, isOpen, wikiChosenId, IsHide, hideFunc } = props
   const cancelRef = React.useRef<FocusableElement>(null)
   const wikiId = wikiChosenId
   const toast = useToast()
@@ -131,7 +121,7 @@ export const HideWikiNotification = ({
             fontWeight="normal"
           >
             {IsHide
-              ? ' You are about to archive the selected wiki. Do you wish to continue with this action?'
+              ? 'You are about to archive the selected wiki. Do you wish to continue with this action?'
               : 'This archive is currently archived. Do you want to unarchive this wiki?'}
           </Text>
           <ButtonGroup px={2} pt={2} w="full" spacing={8} onClick={onClose}>
