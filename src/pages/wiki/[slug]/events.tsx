@@ -15,7 +15,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
   if (wiki) {
     if (!wiki.events || wiki.events.length === 0) {
       eventContent = <NoEventView />
-    } else if (wiki.events && wiki.events.length > 1) {
+    } else if (wiki.events && wiki.events.length >= 1) {
       eventContent = (
         <SimpleGrid
           gap={{ base: '6', md: '10' }}
