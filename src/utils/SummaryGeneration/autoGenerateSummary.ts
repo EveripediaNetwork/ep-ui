@@ -22,7 +22,7 @@ export const generateSummary = async (
     },
   }
   const requestBody = {
-    model: 'text-davinci-003',
+    model: 'gpt-3.5-turbo',
     prompt: `
       Content about ${title}:
       ${content}
