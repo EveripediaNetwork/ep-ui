@@ -21,21 +21,11 @@ import {
 import React from 'react'
 import { shortenAccount, shortenText } from '@/utils/textUtils'
 import { RiQuestionLine } from 'react-icons/ri'
-import { Editors } from '@/types/admin'
+import { userNameData } from '@/utils/AdminUtils/dataUpdate'
+import { InsightTableWikiEditorsProps } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
 import { LoadingAdminTableSkeleton } from '../LoadingAdminTableSkeleton'
-
-type InsightTableWikiEditorsProps = {
-  wikiInsightData: Editors[] | undefined
-  toggleUserFunc?: (active: boolean, id: string) => void
-  editorsIsFetching: boolean
-  hiddenEditorsIsFetching: boolean
-}
-
-export const userNameData = (item: Editors) => {
-  return item.username || item.profile?.username || 'Unknown'
-}
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
