@@ -1,3 +1,4 @@
+import { WikiEditorsInsightActionBarProps } from '@/types/admin'
 import {
   Button,
   Checkbox,
@@ -13,27 +14,9 @@ import {
   PopoverTrigger,
   VStack,
 } from '@chakra-ui/react'
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-
-type WikiEditorsInsightActionBarProps = {
-  handleSearchKeyword: (e: ChangeEvent<HTMLInputElement>) => void
-  handleSortChange: () => void
-  isOpenFilter: boolean
-  onCloseFilter: () => void
-  ApplyFilterItems: (e: React.FormEvent<HTMLFormElement>) => void
-  onToggleFilter: () => void
-  FilterArray: {
-    id: string
-    value: string
-  }[]
-  sortIcon: JSX.Element
-  setChecked: (checked: number) => void
-  checked: number
-  setFilterEditors: (editors: string[]) => void
-  setPaginateOffset: (offset: number) => void
-}
 
 const WikiEditorsInsightActionBar = ({
   handleSortChange,
