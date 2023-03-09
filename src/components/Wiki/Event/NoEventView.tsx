@@ -1,4 +1,3 @@
-import { LinkButton } from '@/components/Elements'
 import { Image } from '@/components/Elements/Image/Image'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import {
@@ -44,9 +43,6 @@ const NoEventView = () => {
         >
           There are no records of events created for this wiki yet.
         </Text>
-        <LinkButton href="/create-wiki" mt={{ lg: '7', base: '6' }}>
-          Add Event
-        </LinkButton>
       </Box>
     </Flex>
   )
