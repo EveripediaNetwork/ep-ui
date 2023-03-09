@@ -32,8 +32,7 @@ export const WikiDataGraph = () => {
     { name: 'Editors', value: 400 },
     { name: 'Visitors', value: 300 },
   ]
-  const colors = ['rosePink', 'brand.200']
-
+  const colors = ['#FF5DAA', '#FFB3D7']
   const [graphFilter, setGraphFilter] = useState<string>('day')
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
@@ -116,11 +115,11 @@ export const WikiDataGraph = () => {
   }
 
   const currentYear = new Date().getFullYear()
-  const editedStroke = useColorModeValue('brand.400', 'brand.200')
+  const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
   const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
-  const createdStroke = useColorModeValue('brand.500', 'brand.800')
+  const createdStroke = useColorModeValue('#FF5CAA', '#ff1a88')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
-  const toolTipBg = useColorModeValue('white', 'tetiaryDark')
+  const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
   const handleGraphFilterChange = (e: string) => {
     return setGraphFilter(e)
   }
