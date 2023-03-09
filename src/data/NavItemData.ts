@@ -77,6 +77,13 @@ export const NAV_ITEMS: NavItem[] = [
         href: '/categories/dapps',
         hasImage: true,
       },
+      {
+        id: 108,
+        label: 'Organizations',
+        icon: RiCopperDiamondLine,
+        href: '/categories/organizations',
+        hasImage: true,
+      },
     ],
   },
   {
