@@ -30,6 +30,14 @@ const isMediaUploading = (wiki: Wiki) =>
 const isSummaryExceedsLimit = (wiki: Wiki) =>
   !!(wiki.summary && wiki.summary.length > WIKI_SUMMARY_LIMIT)
 
+const isCitationInvalid = (wiki: Wiki) => {
+  return (
+    wiki.metadata.find(meta => meta.id === 'references')?.value.length === 0 ||
+    !wiki.metadata.find(meta => meta.id === 'references') ||
+    !wiki.metadata.find(meta => meta.id === 'references')?.value
+  )
+}
+
 const NO_WIKI_TITLE_ERROR = 'Add a Title at the top for this Wiki to continue'
 const TITLE_EXCEEDS_LIMIT_ERROR = `Title should be less than 60 characters`
 const NO_WIKI_CONTENT_ERROR = 'Add a Content section to continue'
@@ -38,6 +46,7 @@ const NO_WIKI_IMAGES_ERROR = 'Add a main image on the right column to continue'
 const NO_WIKI_CATEGORIES_ERROR = 'Add one category to continue'
 const MEDIA_UPLOADING_ERROR = 'Some of media are still uploading, please wait'
 const EXTERNAL_LINKS_ERROR = 'Please remove all external links from the content'
+const NO_CITATION_EROR = 'Please add at least one citation'
 const CONTENT_WORDS_ERROR = (words: number) =>
   `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue. you have written ${words}`
 
@@ -53,5 +62,6 @@ export const isValidWiki = (toast: CreateToastFnReturn, wiki: Wiki) => {
     [NO_WIKI_CATEGORIES_ERROR, () => wiki.categories.length === 0],
     [SUMMARY_EXCEEDS_LIMIT_ERROR, () => isSummaryExceedsLimit(wiki)],
     [MEDIA_UPLOADING_ERROR, () => isMediaUploading(wiki)],
+    [NO_CITATION_EROR, () => isCitationInvalid(wiki)],
   ])
 }
