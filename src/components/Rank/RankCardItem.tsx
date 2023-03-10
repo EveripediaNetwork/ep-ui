@@ -12,9 +12,21 @@ const formatDate = (date: string) => {
 
   return eventDate.toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    month: 'short',
   })
+}
+
+const formatNumber = (number: number) => {
+  if (number >= 1000000000) {
+    return `$${(number / 1000000000).toFixed(1)}B`
+  }
+  if (number >= 1000000) {
+    return `$${(number / 1000000).toFixed(1)}M`
+  }
+  if (number >= 1000) {
+    return `$${(number / 1000).toFixed(1)}K`
+  }
+  return `$${number.toFixed(0)}`
 }
 
 const RankingItem = ({
@@ -24,16 +36,14 @@ const RankingItem = ({
   index: number
   item: RankCardType
 }) => {
-  const marketCap = `$${
-    item.nftMarketData
-      ? item.nftMarketData.market_cap_usd.toLocaleString()
-      : item.tokenMarketData.market_cap?.toLocaleString()
-  }`
+  const marketCap = item.nftMarketData
+    ? formatNumber(item.nftMarketData.market_cap_usd)
+    : formatNumber(item.tokenMarketData.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? item.nftMarketData.floor_price_usd.toLocaleString()
-      : item.tokenMarketData.current_price?.toLocaleString()
+      ? item.nftMarketData.floor_price_usd.toFixed(2).toLocaleString()
+      : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
   }`
 
   const dateFounded =
@@ -42,10 +52,20 @@ const RankingItem = ({
 
   return (
     <Tr>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pr="1"
+      >
         <Text color="rankingListText">{index + 1}</Text>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pl="2"
+      >
         <Flex gap="2.5" alignItems="center">
           <Box flexShrink="0" w="40px" h="40px">
             <Image
@@ -62,16 +82,10 @@ const RankingItem = ({
             />
           </Box>
           <Box>
-            <Box
-              color="brandLinkColor"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-              noOfLines={1}
-              w="100px"
-              display="inline-block"
-            >
-              <Link href={`wiki/${item.id}`}>{item.title}</Link>
+            <Box>
+              <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                {item.title}
+              </Link>
             </Box>
             <Text color="rankingListText">
               {item.nftMarketData
@@ -172,8 +186,8 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {dateFounded ? (
-          <Link href={`/wiki/${item.id}/events`}>
-            <Text color="rankingListText">{formatDate(dateFounded)}</Text>
+          <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
+            <Text>{formatDate(dateFounded)}</Text>
           </Link>
         ) : (
           'NA'
