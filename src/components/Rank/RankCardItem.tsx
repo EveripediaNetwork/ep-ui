@@ -62,9 +62,17 @@ const RankingItem = ({
             />
           </Box>
           <Box>
-            <Link href={`wiki/${item.id}`} color="brandLinkColor">
-              {item.title}
-            </Link>
+            <Box
+              color="brandLinkColor"
+              overflowX="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              noOfLines={1}
+              w="80px"
+              display="inline-block"
+            >
+              <Link href={`wiki/${item.id}`}>{item.title}</Link>
+            </Box>
             <Text color="rankingListText">
               {item.nftMarketData
                 ? item.nftMarketData.alias
@@ -164,7 +172,9 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {dateFounded ? (
-          <Text color="rankingListText">{formatDate(dateFounded)}</Text>
+          <Link href={`/wiki/${item.id}/events`}>
+            <Text color="rankingListText">{formatDate(dateFounded)}</Text>
+          </Link>
         ) : (
           'NA'
         )}
