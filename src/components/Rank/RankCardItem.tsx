@@ -68,7 +68,7 @@ const RankingItem = ({
               whiteSpace="nowrap"
               textOverflow="ellipsis"
               noOfLines={1}
-              w="80px"
+              w="100px"
               display="inline-block"
             >
               <Link href={`wiki/${item.id}`}>{item.title}</Link>
