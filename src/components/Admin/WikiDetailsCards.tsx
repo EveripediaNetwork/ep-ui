@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   VStack,
   Icon,
@@ -10,6 +10,13 @@ import {
   CircularProgressLabel,
 } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
+import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
+import {
+  useGetWikisCreatedCountQuery,
+  useGetWikisEditedCountQuery,
+  useGetEditorsCountQuery,
+} from '@/services/admin'
+import { WikisModifiedCount } from '@/types/admin'
 
 interface WikidetailsProps {
   detailHeader: string
@@ -56,7 +63,7 @@ export const WikiDetailsCards = ({
             <Heading as="h3" fontSize="25" w="full">
               {currentValue}
             </Heading>
-            <Text fontSize="xs" color="#718096">
+            <Text fontSize="xs" color="primaryGray">
               {weeklyValue} this week
             </Text>
           </VStack>
@@ -72,5 +79,96 @@ export const WikiDetailsCards = ({
         </Flex>
       </VStack>
     </Box>
+  )
+}
+
+export const AllWikiDetailsCards = () => {
+  const endDate = useMemo(() => Math.floor(new Date().getTime() / 1000), [])
+
+  const { data: totalWikisCreatedCountData } = useGetWikisCreatedCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
+    interval: 'year',
+  })
+
+  const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
+    startDate: 0,
+    endDate,
+    interval: 'year',
+  })
+
+  const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
+    startDate: 0,
+    interval: 'week',
+  })
+
+  const { data: totalEditorsCountData } = useGetEditorsCountQuery({
+    startDate: 0,
+  })
+
+  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
+
+  const addCountAMount = (data: WikisModifiedCount[]) => {
+    let total = 0
+    data.map((item: WikisModifiedCount) => {
+      total += item.amount
+      return total
+    })
+    return total
+  }
+
+  const wikiMetaData = [
+    {
+      icon: RiNewspaperFill,
+      value: totalWikisEditedCountData
+        ? addCountAMount(totalWikisEditedCountData)
+        : 0,
+      weeklyValue: weeklyWikiEditedCountData
+        ? weeklyWikiEditedCountData[weeklyWikiEditedCountData.length - 1]
+            ?.amount
+        : 0,
+      color: 'pink.400',
+      detailHeader: 'Total no of Edited Wikis',
+    },
+    {
+      icon: RiEditFill,
+      value: totalWikisCreatedCountData
+        ? addCountAMount(totalWikisCreatedCountData)
+        : 0,
+      weeklyValue: weeklyWikiCreatedCountData
+        ? weeklyWikiCreatedCountData[weeklyWikiCreatedCountData.length - 1]
+            ?.amount
+        : 0,
+      color: 'pink.400',
+      detailHeader: 'Total no. of Created Wikis',
+    },
+    {
+      icon: RiUser3Fill,
+      detailHeader: 'Total no. of Editors',
+      value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
+      weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
+      color: 'pink.400',
+    },
+  ]
+
+  return (
+    <>
+      {wikiMetaData.map((item, i) => {
+        return (
+          <WikiDetailsCards
+            detailHeader={item.detailHeader}
+            icon={item.icon}
+            key={i}
+            currentValue={item.value || 0}
+            weeklyValue={item.weeklyValue ? item.weeklyValue.toString() : '0'}
+            color={item.color}
+          />
+        )
+      })}
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Flex,
   VStack,
@@ -22,28 +22,107 @@ import {
   CartesianGrid,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
+import {
+  useGetWikisCreatedCountQuery,
+  useGetWikisEditedCountQuery,
+} from '@/services/admin'
 
-export const WikiDataGraph = ({
-  piedata,
-  data,
-  colors,
-  handleGraphFilterChange,
-}: {
-  piedata: Array<{ name: string | undefined; value: number | undefined }>
-  data: Array<{
+export const WikiDataGraph = () => {
+  const piedata = [
+    { name: 'Editors', value: 400 },
+    { name: 'Visitors', value: 300 },
+  ]
+  const colors = ['#FF5DAA', '#FFB3D7']
+  const [graphFilter, setGraphFilter] = useState<string>('day')
+
+  const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
+    interval: graphFilter,
+    startDate: 0,
+  })
+
+  const { data: GraphWikisEditedCountData } = useGetWikisEditedCountQuery({
+    interval: graphFilter,
+    startDate: 0,
+  })
+
+  const { data: DayTunedgraphWikisCreatedCountData } =
+    useGetWikisCreatedCountQuery({
+      interval: graphFilter,
+    })
+  const { data: DayTunedgraphWikisEditedCountData } =
+    useGetWikisEditedCountQuery({
+      interval: graphFilter,
+    })
+
+  const graphDataObj: Array<{
     name: string | undefined
     'Wikis Created': number | undefined
-    'Wikis Edited': number | undefined
-  }>
-  colors: Array<string>
-  handleGraphFilterChange: (arg0: string) => void
-}) => {
+    'Wikis Edited': number
+  }> = []
+
+  if (graphFilter === 'day') {
+    DayTunedgraphWikisEditedCountData?.map((item, index) => {
+      const editedCount = DayTunedgraphWikisEditedCountData[index].amount
+      const createdCount =
+        DayTunedgraphWikisCreatedCountData &&
+        DayTunedgraphWikisCreatedCountData[index]?.amount
+      const createCountStart =
+        DayTunedgraphWikisCreatedCountData &&
+        DayTunedgraphWikisCreatedCountData[index]?.startOn
+
+      graphDataObj.push({
+        name:
+          // eslint-disable-next-line
+          graphFilter !== 'day'
+            ? graphFilter === 'year'
+              ? createCountStart?.split('-')[0]
+              : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
+            : `${new Date(item.endOn).toDateString().split(' ')[0]} `,
+        'Wikis Created': createdCount,
+        'Wikis Edited': editedCount,
+      })
+      return null
+    })
+  } else {
+    GraphWikisEditedCountData?.map((item, index) => {
+      const editedCount = GraphWikisEditedCountData[index].amount
+      const createdCount =
+        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.amount
+      const createCountStart =
+        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.startOn
+      const getXaxis = () => {
+        if (graphFilter === 'week') {
+          return `Wk ${index + 1}`
+        }
+        if (graphFilter === 'year') {
+          return createCountStart?.split('-')[0]
+        }
+        if (graphFilter === 'month') {
+          return `${new Date(item.endOn).toDateString().split(' ')[1]} `
+        }
+        if (graphFilter === 'day') {
+          return `${new Date(item.endOn).toDateString().split(' ')[0]}`
+        }
+        return ''
+      }
+      graphDataObj.push({
+        name: getXaxis(),
+        'Wikis Created': createdCount,
+        'Wikis Edited': editedCount,
+      })
+      return null
+    })
+  }
+
   const currentYear = new Date().getFullYear()
   const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
   const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
-  const createdStroke = useColorModeValue('#FF5CAA', '#FF1A88')
+  const createdStroke = useColorModeValue('#FF5CAA', '#ff1a88')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
+  const handleGraphFilterChange = (e: string) => {
+    return setGraphFilter(e)
+  }
 
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
@@ -72,7 +151,7 @@ export const WikiDataGraph = ({
         </Flex>
         <Box p={5}>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart width={730} height={250} data={data}>
+            <AreaChart width={730} height={250} data={graphDataObj}>
               <XAxis dataKey="name" />
               <YAxis />
               <defs>
@@ -116,7 +195,6 @@ export const WikiDataGraph = ({
           </ResponsiveContainer>
         </Box>
       </Box>
-
       <Box rounded="xl" borderWidth="1px" p={6} w={{ lg: '31%', base: '100%' }}>
         <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
           User Data
@@ -132,7 +210,7 @@ export const WikiDataGraph = ({
               fill="#8884d8"
               dataKey="value"
             >
-              {data.map((ent, index: number) => (
+              {graphDataObj.map((ent, index: number) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={colors[index % colors.length]}
