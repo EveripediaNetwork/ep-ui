@@ -10,9 +10,9 @@ export const generateSummary = async (
   title: string,
   isAboutPerson = false,
 ) => {
-  let validChoices: string[] = []
+  const validChoices: string[] = []
   let completion: GPT3Completion
-  let allGeneratedSummaries: string[] = []
+  const allGeneratedSummaries: string[] = []
   let tries = 0
 
   const requestConfig = {
@@ -23,27 +23,35 @@ export const generateSummary = async (
   }
   const requestBody = {
     model: 'gpt-3.5-turbo',
-    prompt: `
-      Content about ${title}:
+    messages: [
+      {
+        role: 'user',
+        content: `Content about ${title}:
       ${content}
       Generate a wikipedia style summary on topic "${
         isAboutPerson ? 'who' : 'what'
       } is ${title} ?". IT MUST BE UNDER 25 WORDS.`,
+      },
+    ],
     max_tokens: 255,
-    n: 3,
+    n: 2,
   }
 
   try {
     do {
       tries += 1
       completion = await axios.post(
-        'https://api.openai.com/v1/completions',
+        'https://api.openai.com/v1/chat/completions',
         requestBody,
         requestConfig,
       )
-      const choices = completion.data.choices.map(c => c.text as string)
-      validChoices = choices.filter(c => c.length <= 255)
-      allGeneratedSummaries = [...allGeneratedSummaries, ...choices]
+
+      console.log(completion.data.choices)
+      console.log(completion.data.choices[0].message.content)
+      console.log(completion.data.choices[0].message.content.length)
+      // const choices = completion.data.choices.map(c => c.text as string)
+      // validChoices = choices.filter(c => c.length <= 255)
+      // allGeneratedSummaries = [...allGeneratedSummaries, ...choices]
     } while (validChoices.length === 0 && tries <= GPT3_MAX_TRIES)
 
     logExecutionSummary(content, allGeneratedSummaries, tries, completion)
@@ -55,3 +63,10 @@ export const generateSummary = async (
   if (!validChoices) return undefined
   return validChoices.map(c => c.trim().replaceAll('\\n', ' '))
 }
+
+// prompt: `
+//   Content about ${title}:
+//   ${content}
+//   Generate a wikipedia style summary on topic "${
+//     isAboutPerson ? 'who' : 'what'
+//   } is ${title} ?". IT MUST BE UNDER 25 WORDS.`,
