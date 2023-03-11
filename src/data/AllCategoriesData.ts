@@ -7,6 +7,7 @@ import {
   RiTeamFill,
   RiUser3Fill,
   RiCopperDiamondLine,
+  RiOrganizationChart,
 } from 'react-icons/ri'
 
 export type CategoryDataType = {
@@ -85,7 +86,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   {
     id: 'organizations',
     title: 'Organizations',
-    icon: RiCopperDiamondLine,
+    icon: RiOrganizationChart,
     description: '',
     cardImage: '/images/categories/dapps-card.png',
     heroImage: '/images/categories/dapps.jpg',

@@ -18,6 +18,7 @@ import {
   RiNumbersFill,
   RiGroup2Fill,
   RiCopperDiamondLine,
+  RiOrganizationChart,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -80,7 +81,7 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 108,
         label: 'Organizations',
-        icon: RiCopperDiamondLine,
+        icon: RiOrganizationChart,
         href: '/categories/organizations',
         hasImage: true,
       },
