@@ -10,9 +10,9 @@ export const generateSummary = async (
   title: string,
   isAboutPerson = false,
 ) => {
-  const validChoices: string[] = []
+  let validChoices: string[] = []
   let completion: GPT3Completion
-  const allGeneratedSummaries: string[] = []
+  let allGeneratedSummaries: string[] = []
   let tries = 0
 
   const requestConfig = {
@@ -46,12 +46,11 @@ export const generateSummary = async (
         requestConfig,
       )
 
-      console.log(completion.data.choices)
-      console.log(completion.data.choices[0].message.content)
-      console.log(completion.data.choices[0].message.content.length)
-      // const choices = completion.data.choices.map(c => c.text as string)
-      // validChoices = choices.filter(c => c.length <= 255)
-      // allGeneratedSummaries = [...allGeneratedSummaries, ...choices]
+      const choices = completion.data.choices.map(
+        c => c.message.content as string,
+      )
+      validChoices = choices.filter(c => c.length <= 255)
+      allGeneratedSummaries = [...allGeneratedSummaries, ...choices]
     } while (validChoices.length === 0 && tries <= GPT3_MAX_TRIES)
 
     logExecutionSummary(content, allGeneratedSummaries, tries, completion)
@@ -63,10 +62,3 @@ export const generateSummary = async (
   if (!validChoices) return undefined
   return validChoices.map(c => c.trim().replaceAll('\\n', ' '))
 }
-
-// prompt: `
-//   Content about ${title}:
-//   ${content}
-//   Generate a wikipedia style summary on topic "${
-//     isAboutPerson ? 'who' : 'what'
-//   } is ${title} ?". IT MUST BE UNDER 25 WORDS.`,
