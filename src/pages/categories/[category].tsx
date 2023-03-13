@@ -97,11 +97,14 @@ const CategoryPage = ({
           description={categoryData?.description}
           title={categoryData?.title}
         />
-        <TrendingCategoriesWiki
-          categoryType={categoryData?.title}
-          trending={trending}
-          newWikis={newWikis}
-        />
+        {trending.length > 0 ||
+          (newWikis.length > 0 && (
+            <TrendingCategoriesWiki
+              categoryType={categoryData?.title}
+              trending={trending}
+              newWikis={newWikis}
+            />
+          ))}
         <Divider
           opacity="1"
           borderColor="gray.300"
