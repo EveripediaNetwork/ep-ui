@@ -53,7 +53,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
         px={4}
         maxW="800"
       >{`${t('rankingListDescription')}`}</Text>
-      <Box maxW="1160px" mx="auto">
+      <Box maxW="1208px" mx="auto">
         <Tabs mt={10} defaultIndex={0} p="0">
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
