@@ -18,6 +18,8 @@ import {
   RiNumbersFill,
   RiGroup2Fill,
   RiCopperDiamondLine,
+  RiOrganizationChart,
+  RiHashtag,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -77,6 +79,13 @@ export const NAV_ITEMS: NavItem[] = [
         href: '/categories/dapps',
         hasImage: true,
       },
+      {
+        id: 108,
+        label: 'Organizations',
+        icon: RiOrganizationChart,
+        href: '/categories/organizations',
+        hasImage: true,
+      },
     ],
   },
   {
@@ -89,6 +98,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 3,
     label: 'Rank',
     href: '/rank',
+    icon: RiHashtag,
   },
   {
     id: 4,

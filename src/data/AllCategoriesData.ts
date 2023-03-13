@@ -1,3 +1,4 @@
+import { IconType } from 'react-icons'
 import {
   RiBitCoinFill,
   RiExchangeBoxFill,
@@ -5,10 +6,20 @@ import {
   RiMoneyCnyCircleFill,
   RiTeamFill,
   RiUser3Fill,
-  RiAppStoreFill,
+  RiCopperDiamondLine,
+  RiOrganizationChart,
 } from 'react-icons/ri'
 
-export const AllCategoriesData = [
+export type CategoryDataType = {
+  id: string
+  title: string
+  icon: IconType
+  description: string
+  cardImage: string
+  heroImage: string
+}
+
+export const AllCategoriesData: CategoryDataType[] = [
   {
     id: 'nfts',
     title: 'NFTs',
@@ -66,10 +77,19 @@ export const AllCategoriesData = [
   {
     id: 'dapps',
     title: 'Decentralized Applications',
-    icon: RiAppStoreFill,
+    icon: RiCopperDiamondLine,
     description:
       'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
     cardImage: '/images/categories/dapps-card.png',
     heroImage: '/images/categories/dapps.jpg',
+  },
+  {
+    id: 'organizations',
+    title: 'Organizations',
+    icon: RiOrganizationChart,
+    description:
+      'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',
+    cardImage: '/images/categories/organizations-card.png',
+    heroImage: '/images/categories/organizations.jpg',
   },
 ]
