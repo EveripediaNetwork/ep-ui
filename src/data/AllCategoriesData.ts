@@ -87,8 +87,9 @@ export const AllCategoriesData: CategoryDataType[] = [
     id: 'organizations',
     title: 'Organizations',
     icon: RiOrganizationChart,
-    description: '',
-    cardImage: '/images/categories/dapps-card.png',
-    heroImage: '/images/categories/dapps.jpg',
+    description:
+      'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',
+    cardImage: '/images/categories/organizations-card.png',
+    heroImage: '/images/categories/organizations.jpg',
   },
 ]

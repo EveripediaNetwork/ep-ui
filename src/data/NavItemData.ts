@@ -19,6 +19,7 @@ import {
   RiGroup2Fill,
   RiCopperDiamondLine,
   RiOrganizationChart,
+  RiHashtag,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -97,6 +98,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 3,
     label: 'Rank',
     href: '/rank',
+    icon: RiHashtag,
   },
   {
     id: 4,

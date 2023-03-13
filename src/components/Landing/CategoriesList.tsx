@@ -7,12 +7,15 @@ import {
   Center,
   Heading,
   VStack,
+  Flex,
+  Box,
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import { LinkButton } from '../Elements'
 
 const CATEGORY_IMAGE_BOX_SIZE = 300
 
@@ -91,6 +94,20 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           </div>
         ))}
       </SimpleGrid>
+      <Box mt="10 !important">
+        <Flex justifyContent="center">
+          <LinkButton
+            href="/categories"
+            h="50px"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
+            prefetch={false}
+          >
+            View More
+          </LinkButton>
+        </Flex>
+      </Box>
       {categories.length < 1 && (
         <Center w="full" h="16">
           <Spinner size="xl" />

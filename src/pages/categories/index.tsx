@@ -26,10 +26,10 @@ const Categories: NextPage = () => {
           pt={20}
           width="full"
           objectFit="cover"
-          bgColor="creamCardBg"
+          bgColor="careersBackground"
           backgroundImage="/images/backgrounds/homepage-bg-white.png"
           _dark={{
-            backgroundImage: '/images/backgrounds/homepage-bg-dark.png',
+            backgroundImage: '/images/backgrounds/careers-background-dark.png',
           }}
         >
           <Heading
