@@ -1,7 +1,9 @@
 export type GPT3Completion = {
   data: {
     choices: {
-      text: string
+      message: {
+        content: string
+      }
     }[]
     usage: {
       total_tokens: number
