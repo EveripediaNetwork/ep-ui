@@ -18,16 +18,30 @@ import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '../Elements'
 
 const CATEGORY_IMAGE_BOX_SIZE = 300
+const NUM_OF_CATEGORIES = 6
 
 interface CategoriesListProps {
   categories: Category[]
 }
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
-  const rand = Math.floor(Math.random() * categories.length)
-  const newCategoryList = categories.filter(
-    user => categories.indexOf(user) !== rand,
-  )
+  const newCategoryList: Category[] = []
+
+  while (newCategoryList.length < NUM_OF_CATEGORIES) {
+    const randIndex = Math.floor(Math.random() * categories.length)
+    const randCategory = categories[randIndex]
+
+    if (!newCategoryList.includes(randCategory)) {
+      newCategoryList.push(randCategory)
+    }
+
+    if (
+      randIndex === categories.length - 1 &&
+      !newCategoryList.includes(categories[randIndex])
+    ) {
+      newCategoryList.push(categories[randIndex])
+    }
+  }
 
   return (
     <VStack mt={10} mb={20} spacing={2}>
