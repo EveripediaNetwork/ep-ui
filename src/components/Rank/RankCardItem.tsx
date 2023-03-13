@@ -16,18 +16,9 @@ const formatDate = (date: string) => {
   })
 }
 
-const formatNumber = (number: number) => {
-  if (number >= 1000000000) {
-    return `$${(number / 1000000000).toFixed(1)}B`
-  }
-  if (number >= 1000000) {
-    return `$${(number / 1000000).toFixed(1)}M`
-  }
-  if (number >= 1000) {
-    return `$${(number / 1000).toFixed(1)}K`
-  }
-  return `$${number.toFixed(0)}`
-}
+const numFormatter = Intl.NumberFormat('en', {
+  notation: 'compact',
+}).format
 
 const RankingItem = ({
   index,
@@ -37,8 +28,8 @@ const RankingItem = ({
   item: RankCardType
 }) => {
   const marketCap = item.nftMarketData
-    ? formatNumber(item.nftMarketData.market_cap_usd)
-    : formatNumber(item.tokenMarketData.market_cap)
+    ? numFormatter(item.nftMarketData.market_cap_usd)
+    : numFormatter(item.tokenMarketData.market_cap)
 
   const price = `$${
     item.nftMarketData
