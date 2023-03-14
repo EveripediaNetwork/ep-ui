@@ -8,13 +8,14 @@ import { getWiki, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import NoEventView from '@/components/Wiki/Event/NoEventView'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
+import { Link } from '@/components/Elements'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
   let eventContent
 
   if (wiki) {
     if (!wiki.events || wiki.events.length === 0) {
-      eventContent = <NoEventView />
+      eventContent = <NoEventView wikiId={wiki.id} />
     } else if (wiki.events && wiki.events.length >= 1) {
       eventContent = (
         <SimpleGrid
@@ -47,7 +48,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               color="brandLinkColor"
               fontSize={{ base: '24px', md: '30px', xl: '36px' }}
             >
-              {wiki.title}
+              <Link href={`/wiki/${wiki.id}`}>{wiki.title}</Link>
             </Heading>
           </Flex>
           {wiki.events && (
@@ -67,7 +68,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
         </SimpleGrid>
       )
     } else {
-      eventContent = <NoEventView />
+      eventContent = <NoEventView wikiId={wiki.id} />
     }
   } else {
     eventContent = <WikiNotFound />
