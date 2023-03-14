@@ -15,7 +15,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
 
   if (wiki) {
     if (!wiki.events || wiki.events.length === 0) {
-      eventContent = <NoEventView />
+      eventContent = <NoEventView wikiId={wiki.id} />
     } else if (wiki.events && wiki.events.length >= 1) {
       eventContent = (
         <SimpleGrid
@@ -68,7 +68,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
         </SimpleGrid>
       )
     } else {
-      eventContent = <NoEventView />
+      eventContent = <NoEventView wikiId={wiki.id} />
     }
   } else {
     eventContent = <WikiNotFound />
