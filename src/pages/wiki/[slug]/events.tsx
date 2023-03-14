@@ -8,6 +8,7 @@ import { getWiki, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import NoEventView from '@/components/Wiki/Event/NoEventView'
 import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
+import { Link } from '@/components/Elements'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
   let eventContent
@@ -47,7 +48,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               color="brandLinkColor"
               fontSize={{ base: '24px', md: '30px', xl: '36px' }}
             >
-              {wiki.title}
+              <Link href={`/wiki/${wiki.id}`}>{wiki.title}</Link>
             </Heading>
           </Flex>
           {wiki.events && (
