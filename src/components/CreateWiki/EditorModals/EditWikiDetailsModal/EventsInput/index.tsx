@@ -164,7 +164,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             >
               <Input
                 name="date"
-                type="date"
+                type="month"
                 placeholder="Select date"
                 fontSize={{ base: '12px', md: '14px' }}
                 onChange={e => {
