@@ -24,7 +24,6 @@ export const EventsList = ({
       date === dateFoundedEvent?.date
     ) {
       setFeedbackMessage('The Date Founded cannot be removed.')
-
       return
     }
 
