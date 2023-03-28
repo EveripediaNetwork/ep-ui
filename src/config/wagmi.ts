@@ -4,9 +4,10 @@ import { chain, configureChains, Connector } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
-import { AlchemyProvider, Network } from '@ethersproject/providers'
+import { AlchemyProvider } from '@ethersproject/providers'
 import { MagicAuthConnector } from '@everipedia/wagmi-magic-connector'
 import config from './index'
+
 
 const chainArray =
   config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
@@ -17,7 +18,7 @@ export const { chains, provider } = configureChains(chainArray, [
   publicProvider({ weight: 3 }),
 ])
 
-const network: Network = {
+const network = {
   name: config.alchemyChain,
   chainId: Number(config.chainId),
 }

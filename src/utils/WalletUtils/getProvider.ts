@@ -1,4 +1,8 @@
 import config from '@/config'
-import { StaticJsonRpcProvider, BaseProvider } from '@ethersproject/providers'
+import { createPublicClient, http } from 'viem'
+import { polygon } from 'viem/chains'
 
-export const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
+export const provider = createPublicClient({
+    chain: polygon,
+    transport: http(config.ensRPC)
+  })
