@@ -1,11 +1,10 @@
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { ContractInterface } from 'ethers'
 import { useContractRead } from 'wagmi'
 
 const readContract = {
   addressOrName: config.editorAddress,
-  contractInterface: EditorABI as ContractInterface,
+  contractInterface: EditorABI,
 }
 
 export const useWhiteListValidator = (address: string | undefined | null) => {
