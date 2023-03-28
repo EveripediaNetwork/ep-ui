@@ -6,12 +6,13 @@ import {
   MediaType,
   Wiki,
 } from '@everipedia/iq-utils'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { TokenStats } from '@/services/token-stats'
 import { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -22,6 +23,7 @@ import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
+import ContentFeedback from './InsightComponents/ContentFeedback'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -76,7 +78,7 @@ const WikiInsights = ({
       fetchNFTData()
     }
   }, [coingeckoLink, wikiIsNFT])
-
+  const userAddress = getUserAddressFromCache()
   return (
     <VStack
       borderLeftWidth={{ base: 0, xl: '1px' }}
@@ -102,6 +104,9 @@ const WikiInsights = ({
             views={wiki.views}
           />
           <ProfileSummary wiki={wiki} />
+          <Box w="full" display={{ base: 'none', xl: 'block' }}>
+            <ContentFeedback feedback wikiId={wiki.id} userId={userAddress} />
+          </Box>
           {!!coingeckoLink && (
             <>
               <ProfileStatistics tokenStats={tokenStats} />
@@ -123,7 +128,6 @@ const WikiInsights = ({
             user={wiki.user}
             lastUpdated={wiki.updated || dateTime}
           />
-
           <Flex
             w="100%"
             display={{ base: 'none', xl: 'block', md: 'none' }}

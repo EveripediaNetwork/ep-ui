@@ -15,12 +15,13 @@ import {
   RiBook2Fill,
   RiTeamFill,
   RiUserSearchFill,
-  RiAppStoreFill,
   RiNumbersFill,
   RiGroup2Fill,
+  RiCopperDiamondLine,
+  RiOrganizationChart,
+  RiHashtag,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
-import { BsGraphUp } from 'react-icons/bs'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -74,8 +75,15 @@ export const NAV_ITEMS: NavItem[] = [
       {
         id: 107,
         label: 'Dapps',
-        icon: RiAppStoreFill,
+        icon: RiCopperDiamondLine,
         href: '/categories/dapps',
+        hasImage: true,
+      },
+      {
+        id: 108,
+        label: 'Organizations',
+        icon: RiOrganizationChart,
+        href: '/categories/organizations',
         hasImage: true,
       },
     ],
@@ -87,19 +95,19 @@ export const NAV_ITEMS: NavItem[] = [
     icon: RiBarChartFill,
   },
   {
-    id: 301,
+    id: 3,
     label: 'Rank',
-    icon: BsGraphUp,
-    href: '/rank/',
+    href: '/rank',
+    icon: RiHashtag,
   },
   {
-    id: 3,
+    id: 4,
     label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
       {
-        id: 301,
+        id: 401,
         label: 'IQ Learn',
         icon: RiBook2Fill,
         href: 'https://learn.everipedia.org/iq/',
@@ -107,7 +115,7 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 304,
+        id: 402,
         label: 'IQ Dashboard',
         icon: RiNumbersFill,
         href: 'https://iq.braindao.org',
@@ -115,21 +123,21 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 302,
+        id: 403,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
       {
-        id: 303,
+        id: 404,
         label: 'About Us',
         icon: RiUserSearchFill,
-        href: '/static/about',
+        href: '/about',
         hasImage: true,
       },
       {
-        id: 305,
+        id: 405,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
@@ -139,7 +147,7 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     label: 'Create Wiki',
     href: '/create-wiki',
     icon: RiAddBoxFill,

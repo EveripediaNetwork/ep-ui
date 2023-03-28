@@ -7,6 +7,7 @@ import {
   Icon,
   IconButton,
   Link,
+  Tag,
   Text,
   VStack,
   Wrap,
@@ -17,9 +18,12 @@ import {
   WikiPossibleSocialsList,
 } from '@everipedia/iq-utils'
 import { FiExternalLink } from 'react-icons/fi'
-import { shortenText } from '@/utils/shortenText'
+import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
+import { getFounderName } from '@/utils/DataTransform/getFounderName'
+
+const MAX_FOUNDERS_LIST = 3
 
 type ProfileSummaryProps = {
   wiki: Wiki
@@ -31,19 +35,32 @@ const parseLink = (link: string) =>
 interface ProfileListItemProps {
   title: string
   children: React.ReactNode
+  lengthyArr?: string[]
 }
-const ProfileListItem = ({ title, children }: ProfileListItemProps) => (
+const ProfileListItem = ({
+  title,
+  children,
+  lengthyArr,
+}: ProfileListItemProps) => (
   <HStack
     bgColor="wikiCardItemBg"
     borderRadius={4}
     justify="space-between"
-    align="center"
+    gap="2"
+    align={
+      lengthyArr && lengthyArr?.length > MAX_FOUNDERS_LIST
+        ? 'initial'
+        : 'center'
+    }
     p={4}
+    flexDirection={
+      lengthyArr && lengthyArr?.length > MAX_FOUNDERS_LIST ? 'column' : 'row'
+    }
   >
     <Text fontSize="14px" fontWeight="bold" color="linkColor">
       {title}:
     </Text>
-    <Box>{children}</Box>
+    <Box m="0 !important">{children}</Box>
   </HStack>
 )
 
@@ -173,6 +190,41 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                 <Icon color="brandLinkColor" as={RiExternalLinkLine} />
               </HStack>
             ))}
+          </ProfileListItem>
+        )}
+        {wiki.linkedWikis?.founders && (
+          <ProfileListItem
+            title="Founders"
+            lengthyArr={wiki.linkedWikis?.founders}
+          >
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
+              {wiki.linkedWikis?.founders.map((founder, i) => (
+                <Link
+                  w="max-content"
+                  key={i}
+                  href={`/wiki/${founder}`}
+                  rel="noopener nofollow"
+                >
+                  <Tag fontSize="10px" py="1">
+                    {getFounderName(founder)}
+                  </Tag>
+                </Link>
+              ))}
+            </Flex>
+          </ProfileListItem>
+        )}
+        {wiki.linkedWikis?.blockchains && (
+          <ProfileListItem
+            title="Blockchains"
+            lengthyArr={wiki.linkedWikis?.blockchains}
+          >
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
+              {wiki.linkedWikis?.blockchains.map((item, i) => (
+                <Link w="max-content" key={i} href={`/wiki/${item}`}>
+                  <Tag py="1">{item}</Tag>
+                </Link>
+              ))}
+            </Flex>
           </ProfileListItem>
         )}
       </WikiAccordion>

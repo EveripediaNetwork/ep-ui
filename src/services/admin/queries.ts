@@ -106,7 +106,7 @@ export const HIDDEN_WIKIS_TABLE = gql`
 
 export const EDITORS_TABLE = gql`
   query Editors($limit: Int!, $offset: Int!) {
-    users(limit: $limit, offset: $offset) {
+    users(limit: $limit, offset: $offset, edits: true) {
       id
       active
       profile {
@@ -142,8 +142,8 @@ export const EDITORS_TABLE = gql`
 `
 
 export const HIDDEN_EDITORS_TABLE = gql`
-  query HiddenEditors($limit: Int!, $offset: Int!) {
-    usersHidden(limit: $limit, offset: $offset) {
+  query HiddenEditors($offset: Int!) {
+    usersHidden(limit: 10, offset: $offset) {
       id
       active
       profile {
@@ -179,14 +179,13 @@ export const HIDDEN_EDITORS_TABLE = gql`
 `
 
 export const SEARCHED_EDITORS = gql`
-  query Editors($id: String!) {
-    usersById(id: $id) {
+  query Editors($id: String, $username: String) {
+    getProfileLikeUsername(id: $id, username: $username) {
       id
       active
-      profile {
-        username
-        avatar
-      }
+      username
+      avatar
+      bio
       wikisEdited {
         id
         wikiId
@@ -216,8 +215,8 @@ export const SEARCHED_EDITORS = gql`
 `
 
 export const EDITORS_COUNT = gql`
-  query EditorCount($startDate: Int, $endDate: Int) {
-    editorCount(startDate: $startDate, endDate: $endDate) {
+  query EditorCount($startDate: Int) {
+    editorCount(startDate: $startDate) {
       amount
     }
   }
@@ -234,6 +233,16 @@ export const HIDE_WIKI = gql`
 export const REVALIDATE_URL = gql`
   mutation RevalidateURL($route: String!) {
     revalidatePage(route: $route)
+  }
+`
+
+export const CONTENT_FEEDBACK = gql`
+  mutation ContentFeedback(
+    $wikiId: String!
+    $userId: String
+    $choice: Boolean!
+  ) {
+    contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)
   }
 `
 export const CHECK_ADMIN = gql`

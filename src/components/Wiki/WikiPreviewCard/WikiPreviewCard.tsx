@@ -10,16 +10,16 @@ import {
   AspectRatio,
 } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/getFormattedDate'
-import { WikiImage } from '@/components/WikiImage'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
+import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
-import { shortenText } from '@/utils/shortenText'
-import { getUsername } from '@/utils/getUsername'
+import { shortenText } from '@/utils/textUtils'
 import { Link } from '@/components/Elements'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { getUsername } from '@/utils/DataTransform/getUsername'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { Image } from '@/components/Elements/Image/Image'
 
 const WikiPreviewCard = ({
   wiki,
@@ -52,7 +52,12 @@ const WikiPreviewCard = ({
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
-        <WikiImage imageURL={getWikiImageUrl(wiki.images)} alt={wiki.title} />
+        <Image
+          src={getWikiImageUrl(wiki.images)}
+          alt={wiki.title}
+          boxSize="100%"
+          imgBoxSize={IMAGE_BOX_SIZE}
+        />
       </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>

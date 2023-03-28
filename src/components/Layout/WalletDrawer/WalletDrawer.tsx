@@ -23,7 +23,7 @@ import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import shortenAccount from '@/utils/shortenAccount'
+import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
@@ -120,7 +120,7 @@ const WalletDrawer = ({
                         <Image
                           boxSize="24px"
                           borderRadius="full"
-                          src={`/images/${walletsLogos[0]}`}
+                          src={`/images/logos/${walletsLogos[0]}`}
                           alt="MetaMask"
                           mr={3}
                         />

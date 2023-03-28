@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import {
   GET_NFT_RANKINGS,
+  GET_RANK_COUNT,
   GET_TOKEN_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
@@ -9,6 +10,12 @@ import { RankCardType } from '@/types/RankDataTypes'
 
 type RankListResponse = {
   rankList: RankCardType[]
+}
+
+type RankCount = {
+  categoryTotal: {
+    amount: number
+  }
 }
 
 export const rankingAPI = createApi({
@@ -59,9 +66,20 @@ export const rankingAPI = createApi({
       }),
       transformResponse: (response: RankListResponse) => response.rankList,
     }),
+    getCategoryTotal: builder.query<RankCount, { category: string }>({
+      query: ({ category }: { category: string }) => ({
+        document: GET_RANK_COUNT,
+        variables: { category },
+      }),
+    }),
   }),
 })
 
-export const { useGetNFTRankingQuery, useGetTokenRankingQuery } = rankingAPI
+export const {
+  useGetNFTRankingQuery,
+  useGetTokenRankingQuery,
+  useGetCategoryTotalQuery,
+} = rankingAPI
 
-export const { getNFTRanking, getTokenRanking } = rankingAPI.endpoints
+export const { getNFTRanking, getTokenRanking, getCategoryTotal } =
+  rankingAPI.endpoints

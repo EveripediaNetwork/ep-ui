@@ -18,6 +18,7 @@ import {
   GET_PAGE_COUNT,
   CHECK_ADMIN,
   REVALIDATE_URL,
+  CONTENT_FEEDBACK,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -25,6 +26,7 @@ import {
   CreatedWikisCount,
   Editors,
   ToggleUser,
+  ContentFeedbackArgs,
 } from '@/types/admin'
 import { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
@@ -36,6 +38,9 @@ type WikisModifiedCountArgs = {
   startDate?: number
   endDate?: number
   interval?: string
+}
+type EditorsModifiedCountArgs = {
+  startDate?: number
 }
 
 type PageViewCountArgs = {
@@ -60,6 +65,10 @@ type WikisEditedCountResponse = {
 
 type RevalidateURL = {
   revalidatePage: boolean
+}
+
+type ContentFeedback = {
+  contentFeedback: boolean
 }
 
 type WikisEditorsCountResponse = {
@@ -96,11 +105,12 @@ type HiddenEditorsRes = {
   usersHidden: Editors[]
 }
 type SearchedEditorQueryParams = {
-  id: string
+  id?: string
+  username?: string
 }
 
 type SearchedEditorsRes = {
-  usersById: Editors[]
+  getProfileLikeUsername: Editors[]
 }
 
 type EditorQueryParams = {
@@ -120,10 +130,13 @@ export const adminApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
   endpoints: builder => ({
-    getEditorsCount: builder.query<{ amount: number }, WikisModifiedCountArgs>({
-      query: ({ startDate, endDate }: WikisModifiedCountArgs) => ({
+    getEditorsCount: builder.query<
+      { amount: number },
+      EditorsModifiedCountArgs
+    >({
+      query: ({ startDate }: EditorsModifiedCountArgs) => ({
         document: EDITORS_COUNT,
-        variables: { startDate, endDate },
+        variables: { startDate },
       }),
       transformResponse: (response: WikisEditorsCountResponse) =>
         response.editorCount,
@@ -143,10 +156,10 @@ export const adminApi = createApi({
       transformResponse: (response: PageViewsCountResponse) =>
         response.pageViewsCount,
     }),
-    getHiddenEditors: builder.query<Editors[], EditorQueryParams>({
-      query: ({ limit, offset }: { limit: number; offset: number }) => ({
+    getHiddenEditors: builder.query<Editors[], number>({
+      query: (offset: number) => ({
         document: HIDDEN_EDITORS_TABLE,
-        variables: { limit, offset },
+        variables: { offset },
       }),
       transformResponse: (response: HiddenEditorsRes) => response.usersHidden,
     }),
@@ -209,6 +222,15 @@ export const adminApi = createApi({
         return response.revalidatePage
       },
     }),
+    contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
+      query: ({ wikiId, userId, choice }: ContentFeedbackArgs) => ({
+        document: CONTENT_FEEDBACK,
+        variables: { wikiId, userId, choice },
+      }),
+      transformResponse: (response: ContentFeedback) => {
+        return response.contentFeedback
+      },
+    }),
     postUnHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
         document: UNHIDE_WIKI,
@@ -218,11 +240,12 @@ export const adminApi = createApi({
         response.unhideWiki.Wiki,
     }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
-      query: ({ id }: { id: string }) => ({
+      query: ({ id, username }: { id: string; username: string }) => ({
         document: SEARCHED_EDITORS,
-        variables: { id },
+        variables: { id, username },
       }),
-      transformResponse: (response: SearchedEditorsRes) => response.usersById,
+      transformResponse: (response: SearchedEditorsRes) =>
+        response.getProfileLikeUsername,
     }),
     toggleUser: builder.mutation<ToggleUser, ToggleUserArgs>({
       query: ({ id, active }) => ({
@@ -280,11 +303,13 @@ export const {
   useGetPageViewCountQuery,
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
+  useContentFeedbackMutation,
 } = adminApi
 
 export const {
   checkIsAdmin,
   revalidateURL,
+  contentFeedback,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,

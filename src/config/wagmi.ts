@@ -37,7 +37,7 @@ export const connectors = [
       oauthOptions: {
         providers: ['google', 'discord', 'facebook', 'twitter'],
       },
-      customLogo: '/images/braindao-logo.svg',
+      customLogo: '/images/logos/braindao-logo.svg',
       accentColor: '#ea3b87',
       magicSdkConfiguration: {
         network: {

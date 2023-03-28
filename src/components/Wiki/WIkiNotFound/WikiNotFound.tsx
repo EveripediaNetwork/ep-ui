@@ -10,7 +10,7 @@ const WikiNotFound = () => {
       justifyContent={{ base: 'center' }}
       direction={{ base: 'column' }}
       mt={{ base: '9' }}
-      mb={{ base: '96' }}
+      pb={{ base: '96' }}
     >
       <Flex
         w={{ lg: '15%', base: '40%' }}
@@ -20,7 +20,7 @@ const WikiNotFound = () => {
         <Image
           flex={1}
           marginInlineStart="0 !important"
-          src="/images/wiki-error-img.png"
+          src="/images/defaults/wiki-error-img.png"
           w={{ base: '100%', sm: '80%', md: '60%', lg: '15%' }}
         />
       </Flex>

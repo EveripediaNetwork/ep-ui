@@ -12,11 +12,6 @@ import {
 import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
-import shortenBalance from '@/utils/shortenBallance'
-import {
-  fetchRateAndCalculateTotalBalance,
-  calculateTotalBalance,
-} from '@/utils/fetchWalletBalance'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateBalanceBreakdown,
@@ -29,6 +24,11 @@ import { RootState } from '@/store/store'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
+import {
+  fetchRateAndCalculateTotalBalance,
+  calculateTotalBalance,
+} from '@/utils/WalletUtils/fetchWalletBalance'
+import { shortenBalance } from '@/utils/textUtils'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -222,7 +222,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 <ConnectorDetails
                   connect={connect}
                   connector={connector}
-                  imageLink={`/images/${walletsLogos[index]}`}
+                  imageLink={`/images/logos/${walletsLogos[index]}`}
                   loading={isUserConnecting}
                 />
                 {index < walletsLogos.length - 1 && <Divider />}

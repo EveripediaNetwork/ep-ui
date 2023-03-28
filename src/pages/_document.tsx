@@ -16,7 +16,11 @@ export default class Document extends NextDocument {
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+          <link
+            rel="icon"
+            href="/images/icons/favicon.ico"
+            type="image/x-icon"
+          />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="viewport"

@@ -18,68 +18,24 @@ import {
   HStack,
   Icon,
 } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
-import shortenAccount from '@/utils/shortenAccount'
-import { shortenText } from '@/utils/shortenText'
+import React from 'react'
+import { shortenAccount, shortenText } from '@/utils/textUtils'
 import { RiQuestionLine } from 'react-icons/ri'
+import { userNameData } from '@/utils/AdminUtils/dataUpdate'
+import { InsightTableWikiEditorsProps } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
-
-interface WikiEditorInsightDataInterface {
-  editorName: string
-  createdWikis: {
-    id: string
-    wikiId: string
-    datetime: string
-    ipfs: string
-    content: { title: string; images: { id: string } }
-  }[]
-  editiedWikis: {
-    content: {
-      title: string
-      images: {
-        id: string
-      }
-    }
-    datetime: string
-    id: string
-    ipfs: string
-    wikiId: string
-  }[]
-  lastCreatedWiki: {
-    id: string
-    wikiId: string
-    datetime: string
-    ipfs: string
-    content: { title: string; images: { id: string }[] }[]
-  }
-  editorAvatar: string
-  latestActivity: string
-  editorAddress: string
-  active: boolean
-}
-
-type InsightTableWikiEditorsProps = {
-  wikiInsightData: WikiEditorInsightDataInterface[] | undefined
-  toggleUserFunc: (active: boolean, id: string) => void
-  filterBy: string
-}
+import { LoadingAdminTableSkeleton } from '../LoadingAdminTableSkeleton'
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
-  const { wikiInsightData: wikiEditorInsightData } = props
-  const { toggleUserFunc, filterBy } = props
-
-  const filterBoolean = useMemo(() => {
-    if (filterBy === 'Banned') {
-      return false
-    }
-    if (filterBy === 'Active') {
-      return true
-    }
-    return ''
-  }, [filterBy])
+  const {
+    wikiInsightData: wikiEditorInsightData,
+    toggleUserFunc,
+    editorsIsFetching,
+    hiddenEditorsIsFetching,
+  } = props
 
   const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
@@ -98,51 +54,50 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiEditorInsightData
-            .filter(item =>
-              filterBy.length > 0
-                ? item.active === filterBoolean
-                : item.createdWikis,
-            )
-            ?.map((item, i) => {
+          {hiddenEditorsIsFetching || editorsIsFetching ? (
+            <LoadingAdminTableSkeleton length={10} />
+          ) : (
+            wikiEditorInsightData.map((item, i) => {
               return (
                 <Tr key={i}>
                   <Td>
-                    <Link href={`/account/${item.editorAddress}`} py={1}>
+                    <Link href={`/account/${item.id}`} py={1}>
                       <Flex align="center" gap={2}>
                         <Avatar
                           boxSize="40px"
-                          name={item.editorName}
-                          src={item.editorAvatar}
+                          name={userNameData(item)}
+                          src={
+                            item?.profile?.avatar ? item?.profile?.avatar : ''
+                          }
                         />
                         <Flex flexDirection="column">
                           <Text opacity={item.active ? 1 : 0.3}>
-                            {item.editorName}
+                            {userNameData(item)}
                           </Text>
                           <Text
-                            color="#718096"
+                            color="primaryGray"
                             fontSize="sm"
                             opacity={item.active ? 1 : 0.3}
                           >
-                            {shortenAccount(item.editorAddress)}
+                            {shortenAccount(item.id)}
                           </Text>
                         </Flex>
                       </Flex>
                     </Link>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.createdWikis.length}</Text>
+                    <Text color="primaryGray">{item.wikisCreated.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.editiedWikis.length}</Text>
+                    <Text color="primaryGray">{item.wikisEdited.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">
-                      {item.createdWikis.length + item.editiedWikis.length}
+                    <Text color="primaryGray">
+                      {item.wikisCreated.length + item.wikisEdited.length}
                     </Text>
                   </Td>
                   <Td>
-                    <Link href={`/wiki/${item.editiedWikis[0]?.wikiId}`} py={1}>
+                    <Link href={`/wiki/${item.wikisEdited[0]?.wikiId}`} py={1}>
                       <Flex flexDir="row" align="center" gap={2}>
                         <AspectRatio ratio={WIKI_IMAGE_ASPECT_RATIO} w="40px">
                           <WikiImage
@@ -150,16 +105,16 @@ export const InsightTableWikiEditors = (
                             flexShrink={0}
                             alt="wiki"
                             imageURL={`${config.pinataBaseUrl}${
-                              item.lastCreatedWiki?.content
-                                ? item.lastCreatedWiki.content[0].images[0].id
+                              item.wikisEdited[0]?.content
+                                ? item.wikisEdited[0]?.content[0].images[0].id
                                 : ''
                             }`}
                           />
                         </AspectRatio>
                         <Text opacity={item.active ? 1 : 0.1}>
-                          {item.lastCreatedWiki?.content[0]
+                          {item.wikisEdited[0]?.content[0]
                             ? shortenText(
-                                item.lastCreatedWiki?.content[0].title,
+                                item.wikisEdited[0]?.content[0].title,
                                 18,
                               )
                             : ''}
@@ -167,7 +122,9 @@ export const InsightTableWikiEditors = (
                       </Flex>
                     </Link>
                   </Td>
-                  <Td color="#718096">{item.latestActivity}</Td>
+                  <Td color="primaryGray">
+                    {item?.wikisCreated[0]?.datetime.split('T')[0]}
+                  </Td>
                   <Td>
                     <Tag
                       bg={item.active ? '#F0FFF4' : '#FBD38D'}
@@ -194,7 +151,9 @@ export const InsightTableWikiEditors = (
                         fontWeight="medium"
                         onClick={() => {
                           onOpen()
-                          toggleUserFunc(item.active, item.editorAddress)
+                          if (toggleUserFunc) {
+                            toggleUserFunc(item.active, item.id)
+                          }
                         }}
                       >
                         Ban
@@ -202,12 +161,14 @@ export const InsightTableWikiEditors = (
                     ) : (
                       <HStack
                         spacing={2}
-                        onClick={() =>
-                          toggleUserFunc(item.active, item.editorAddress)
-                        }
+                        onClick={() => {
+                          if (toggleUserFunc) {
+                            toggleUserFunc(item.active, item.id)
+                          }
+                        }}
                       >
                         <Text
-                          color="#E2E8F0"
+                          color="tetiaryGray"
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
@@ -216,7 +177,7 @@ export const InsightTableWikiEditors = (
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color="#F11a82"
+                          color="electricPink"
                           as={RiQuestionLine}
                         />
                       </HStack>
@@ -224,7 +185,8 @@ export const InsightTableWikiEditors = (
                   </Td>
                 </Tr>
               )
-            })}
+            })
+          )}
         </Tbody>
       </Table>
     </TableContainer>

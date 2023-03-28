@@ -19,7 +19,7 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
       site_name: 'IQ.Wiki',
       images: [
         {
-          url: 'https://iq.wiki/images/og-image-default.png',
+          url: 'https://iq.wiki/images/defaults/og-image-default.png',
           width: 1200,
           height: 630,
           alt: 'IQ.Wiki | Crypto Encyclopedia',

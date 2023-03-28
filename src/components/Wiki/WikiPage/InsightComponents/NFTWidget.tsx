@@ -44,13 +44,14 @@ const NFTWidget = ({
       )
 
       const nftImgURL = data?.media[0].gateway
+
       if (data?.error) {
         setShowNFTFetchError(true)
         setIsLoading(false)
       } else setShowNFTFetchError(false)
-
       setCurrentNTFImage(nftImgURL || '')
       setCurrentNFTHashDisplay(currentNFTHash)
+      setIsLoading(false)
     }
   }, [contractID, currentNFTHash, isNFTWiki])
 
@@ -87,7 +88,11 @@ const NFTWidget = ({
             borderRadius={8}
           >
             {!showNFTFetchError ? (
-              <Image src={currentNFTImage} onLoad={() => setIsLoading(false)} />
+              <Image
+                src={currentNFTImage}
+                height="305px"
+                onLoad={() => setIsLoading(false)}
+              />
             ) : (
               <NFTImgFallback />
             )}

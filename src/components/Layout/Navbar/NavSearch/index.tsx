@@ -13,7 +13,6 @@ import {
   Avatar,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
-import { getWikiSummary, WikiSummarySize } from '@/utils/getWikiSummary'
 import {
   AutoComplete,
   AutoCompleteGroup,
@@ -37,6 +36,10 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { logEvent } from '@/utils/googleAnalytics'
+import {
+  getWikiSummary,
+  WikiSummarySize,
+} from '@/utils/WikiUtils/getWikiSummary'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -160,8 +163,7 @@ const NavSearch = (props: NavSearchProps) => {
             <WikiImage
               src={wikiImage}
               alt={wiki.title}
-              imgH={40}
-              imgW={WIKI_IMAGE_ASPECT_RATIO * 40}
+              imgBoxSize={WIKI_IMAGE_ASPECT_RATIO * 40}
               flexShrink={0}
               borderRadius={5}
               overflow="hidden"
@@ -331,7 +333,6 @@ const NavSearch = (props: NavSearchProps) => {
             {...inputProps}
           />
         </InputGroup>
-
         <AutoCompleteList
           mx={{ base: '15px', xl: 'unset' }}
           p="0"
@@ -343,7 +344,7 @@ const NavSearch = (props: NavSearchProps) => {
           {totalUnrendered > 0 && !isLoading && (
             <Flex _dark={{ color: 'whiteAlpha.600' }} py="5" justify="center">
               <LinkButton
-                href={`/search/${query}`}
+                href={`/search/${encodeURIComponent(query)}`}
                 variant="outline"
                 onClick={() => setHamburger(false)}
               >

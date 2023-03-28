@@ -50,10 +50,10 @@ const Profile = ({ profileData }: ProfileProps) => {
             width="full"
             height="56"
             objectFit="cover"
-            bgColor="profileBannerBg"
-            backgroundImage="/images/homepage-bg-white.png"
+            bgColor="careersBackground"
+            bgImage="/images/backgrounds/homepage-bg-white.png"
             _dark={{
-              backgroundImage: '/images/homepage-bg-dark.png',
+              bgImage: '/images/backgrounds/careers-background-dark.png',
             }}
             hideOnError
             src={`${config.pinataBaseUrl}${profileData?.banner}`}
@@ -71,6 +71,16 @@ Profile.footer = false
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
+
+  // Redirect if /accounts/settings is hit
+  if (userIdentifier === 'settings') {
+    return {
+      redirect: {
+        destination: `/account/settings`,
+        permanent: false,
+      },
+    }
+  }
 
   // Redirect from regular ethereum address
   const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
@@ -105,6 +115,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const { isError, data: address } = await store.dispatch(
     getUserAddressFromUsername.initiate(userIdentifier),
   )
+
   if (!isError) {
     return {
       redirect: {

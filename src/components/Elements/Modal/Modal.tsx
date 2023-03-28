@@ -27,7 +27,7 @@ const Modal = ({
 }: ModalType) => (
   <ChakraModal onClose={onClose} {...rest}>
     <ModalOverlay />
-    <ModalContent>
+    <ModalContent m={4}>
       <ModalHeader>{title}</ModalHeader>
       <ModalCloseButton />
       <ModalBody>{children}</ModalBody>

@@ -3,20 +3,34 @@ import { ProfileSettingsData } from '@/types/ProfileType'
 import { useEffect, useState } from 'react'
 import {
   getUserAvatar,
+  getUserEmail,
   getUsernameTaken,
   getUserProfile,
   getUserSettings,
+  UserEmail,
 } from '.'
 
-interface UserProfileOptions {
-  withAllSettings?: boolean
-  onlyAvatar?: boolean
+export enum UserProfileFetchOptions {
+  WITH_ALL_SETTINGS,
+  ONLY_EMAIL,
+  ONLY_AVATAR,
+  USER_PROFILE,
 }
-export const useUserProfileData = (
+
+type ProfileDataType<T extends UserProfileFetchOptions> =
+  T extends UserProfileFetchOptions.WITH_ALL_SETTINGS
+    ? ProfileSettingsData | undefined
+    : T extends UserProfileFetchOptions.ONLY_AVATAR
+    ? string | undefined
+    : T extends UserProfileFetchOptions.ONLY_EMAIL
+    ? UserEmail | undefined
+    : ProfileSettingsData
+
+export const useUserProfileData = <T extends UserProfileFetchOptions>(
+  options: T,
   address?: string,
-  options?: UserProfileOptions,
 ) => {
-  const [profileData, setProfileData] = useState<ProfileSettingsData>()
+  const [profileData, setProfileData] = useState<ProfileDataType<T>>()
   const [avatar, setAvatar] = useState<string>()
   const [account, setAccount] = useState<string>(address || '')
   const [loading, setLoading] = useState<boolean>(true)
@@ -25,21 +39,26 @@ export const useUserProfileData = (
     if (!account) return
     const fetchSettings = async () => {
       try {
-        if (options?.withAllSettings) {
+        if (options === UserProfileFetchOptions.WITH_ALL_SETTINGS) {
           const { data: fetchedProfileData } = await store.dispatch(
             getUserSettings.initiate(account),
           )
-          setProfileData(fetchedProfileData)
-        } else if (options?.onlyAvatar) {
+          setProfileData(fetchedProfileData as ProfileDataType<T>)
+        } else if (options === UserProfileFetchOptions.ONLY_AVATAR) {
           const { data: fetchedUserProfileAvatar } = await store.dispatch(
             getUserAvatar.initiate(account),
           )
           setAvatar(fetchedUserProfileAvatar)
-        } else {
+        } else if (options === UserProfileFetchOptions.ONLY_EMAIL) {
+          const { data: fetchedProfileData } = await store.dispatch(
+            getUserEmail.initiate(account),
+          )
+          setProfileData(fetchedProfileData as ProfileDataType<T>)
+        } else if (options === UserProfileFetchOptions.USER_PROFILE) {
           const { data: fetchedProfileData } = await store.dispatch(
             getUserProfile.initiate(account),
           )
-          setProfileData(fetchedProfileData)
+          setProfileData(fetchedProfileData as ProfileDataType<T>)
         }
         setLoading(false)
       } catch (err) {
@@ -47,7 +66,7 @@ export const useUserProfileData = (
       }
     }
     fetchSettings()
-  }, [account, options?.onlyAvatar, options?.withAllSettings])
+  }, [account, options])
 
   return { setAccount, profileData, loading, avatar }
 }

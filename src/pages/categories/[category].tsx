@@ -4,33 +4,48 @@ import { NextSeo } from 'next-seo'
 import {
   Divider,
   Box,
-  Heading,
   SimpleGrid,
-  Flex,
   Text,
   Button,
   Center,
   Spinner,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
-import { Image } from '@/components/Elements/Image/Image'
 import { getCategoriesById } from '@/services/categories'
 import { store } from '@/store/store'
 import { Category } from '@/types/CategoryDataTypes'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { getWikisByCategory, wikiApi } from '@/services/wikis'
+import {
+  getTrendingCategoryWikis,
+  getWikiActivityByCategory,
+  getWikisByCategory,
+  wikiApi,
+} from '@/services/wikis'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'react-i18next'
-import { useInfiniteData } from '@/utils/useInfiniteData'
+import { useInfiniteData } from '@/hooks/useInfiniteData'
+import CategoryHero from '@/components/Categories/CategoryHero'
+import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'
+import { getDateRange } from '@/utils/HomepageUtils/getDate'
+
+const CATEGORY_DATE_RANGE = 3
+const CATEGORY_AMOUNT = 5
 
 type CategoryPageProps = NextPage & {
   categoryData: Category
   wikis: Wiki[]
+  trending: Wiki[]
+  newWikis: Wiki[]
 }
 
-const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
+const CategoryPage = ({
+  categoryData,
+  wikis,
+  trending,
+  newWikis,
+}: CategoryPageProps) => {
   const router = useRouter()
   const category = router.query.category as string
   const {
@@ -77,39 +92,24 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
         />
       )}
       <Box mt="-3" bgColor="pageBg" pb={12}>
-        <Image
-          priority
-          src={`/images/categories/${categoryData.id}.jpg`}
-          height="250px"
-          alt={categoryData?.title}
+        <CategoryHero
+          id={categoryData?.id}
+          description={categoryData?.description}
+          title={categoryData?.title}
         />
-        <Heading
-          fontSize={{ base: 25, lg: 36 }}
-          maxW="80%"
-          mx="auto"
-          textAlign="center"
-          mt={8}
-          as="h1"
-        >
-          {categoryData?.title}
-        </Heading>
-        <Flex
-          textAlign="center"
-          justifyContent="center"
-          fontWeight="400"
-          maxW={{ base: '90%', md: '70%', lg: '60%' }}
-          mx="auto"
-          px={1}
-        >
-          <Text my={8} mx={{ base: '1', md: '8', lg: '14' }}>
-            {categoryData?.description || ''}
-          </Text>
-        </Flex>
-        <Divider />
+        {(trending.length > 0 || newWikis.length > 0) && (
+          <TrendingCategoriesWiki
+            categoryType={categoryData?.title}
+            trending={trending}
+            newWikis={newWikis}
+          />
+        )}
+        <Divider
+          opacity="1"
+          borderColor="gray.300"
+          _dark={{ borderColor: 'whiteAlpha.200' }}
+        />
         <Box mt={10}>
-          <Heading fontSize={25} textAlign="center">
-            {t('wikiInCategory')}
-          </Heading>
           {wikisInCategory.length > 0 ? (
             <>
               <SimpleGrid
@@ -159,6 +159,7 @@ const CategoryPage = ({ categoryData, wikis }: CategoryPageProps) => {
 export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const result = await store.dispatch(getCategoriesById.initiate(categoryId))
+  const { startDay, endDay } = getDateRange({ dayRange: CATEGORY_DATE_RANGE })
   const wikisByCategory = await store.dispatch(
     getWikisByCategory.initiate({
       category: categoryId,
@@ -166,14 +167,39 @@ export const getServerSideProps: GetServerSideProps = async context => {
       offset: 0,
     }),
   )
+
+  const { data: trendingWikisInCategory } = await store.dispatch(
+    getTrendingCategoryWikis.initiate({
+      amount: CATEGORY_AMOUNT,
+      startDay,
+      endDay,
+      category: categoryId,
+    }),
+  )
+
+  const { data: activitiesByCategory } = await store.dispatch(
+    getWikiActivityByCategory.initiate({
+      limit: CATEGORY_AMOUNT,
+      category: categoryId,
+      type: 'CREATED',
+      offset: 0,
+    }),
+  )
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
   ])
+
+  const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
+  const newCategoryWikis = activitiesByCategory
+
   return {
     props: {
       categoryData: result.data || [],
       wikis: wikisByCategory.data || [],
+      trending: popularCategoryWikis || [],
+      newWikis: newCategoryWikis || [],
     },
   }
 }

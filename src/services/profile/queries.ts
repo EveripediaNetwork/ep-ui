@@ -42,6 +42,14 @@ export const GET_USER_PROFILE = gql`
     }
   }
 `
+
+export const GET_USER_EMAIL = gql`
+  query getUserEmail($id: String!) {
+    getProfile(id: $id) {
+      email
+    }
+  }
+`
 export const POST_USER_SETTINGS = gql`
   mutation getUserProfile($profileInfo: String!) {
     createProfile(profileInfo: $profileInfo) {

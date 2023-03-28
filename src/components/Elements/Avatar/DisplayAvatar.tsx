@@ -12,7 +12,10 @@ import { AvatarColorArray } from '@/data/AvatarData'
 import { RiUserLine } from 'react-icons/ri'
 import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
-import { useUserProfileData } from '@/services/profile/utils'
+import {
+  UserProfileFetchOptions,
+  useUserProfileData,
+} from '@/services/profile/utils'
 import { Image, NextChakraImageProps } from '../Image/Image'
 
 type DisplayAvatarProps = ChakraProps & {
@@ -35,10 +38,7 @@ const DisplayAvatar = ({
   const [avatar] = useENSData(address)
 
   const { avatar: fetchedAvatarIPFS, setAccount } = useUserProfileData(
-    undefined,
-    {
-      onlyAvatar: true,
-    },
+    UserProfileFetchOptions.ONLY_AVATAR,
   )
   let content = null
 
@@ -51,8 +51,7 @@ const DisplayAvatar = ({
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
-        imgH={size}
-        imgW={size}
+        imgBoxSize={size}
         src={`${config.pinataBaseUrl}${avatarIPFS || fetchedAvatarIPFS}`}
         borderRadius="full"
         {...(rest as Omit<NextChakraImageProps, 'src'>)}

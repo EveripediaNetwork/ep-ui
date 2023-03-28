@@ -9,21 +9,21 @@ export type Network = {
 export const Networks: Network[] = [
   {
     id: 1,
-    image: '/images/polygon.svg',
+    image: '/images/logos/polygon.svg',
     name: 'Polygon',
     isActive: true,
     chainId: '0x13881',
   },
   {
     id: 2,
-    image: '/images/ethereum2.svg',
+    image: '/images/logos/ethereum2.svg',
     name: 'Ethereum',
     isActive: false,
     chainId: '0x1',
   },
   {
     id: 3,
-    image: '/images/bsc.svg',
+    image: '/images/logos/bsc.svg',
     name: 'Bsc',
     isActive: false,
     chainId: '0x38',

@@ -16,8 +16,8 @@ const EmptyNotification = () => {
         h={{ base: '218px', lg: '280px' }}
         bgSize="contain"
         bgRepeat="no-repeat"
-        bgImage="/images/empty-notification-light-bg.svg"
-        _dark={{ bgImage: '/images/empty-notification-dark-bg.svg' }}
+        bgImage="/images/svg-images/empty-notification-light-bg.svg"
+        _dark={{ bgImage: '/images/svg-images/empty-notification-dark-bg.svg' }}
       />
       <Flex direction="column">
         <Heading

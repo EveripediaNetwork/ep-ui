@@ -1,136 +1,191 @@
 import React from 'react'
-import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Flex, Box, Text } from '@chakra-ui/react'
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
-import Link from '@/components/Elements/LinkElements/Link'
 import { RankCardType } from '@/types/RankDataTypes'
+import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { EventType } from '@everipedia/iq-utils'
+import { Link } from '../Elements'
 
-export const RankCardItem = ({
-  cardData,
+const MAX_LINKED_WIKIS = 3
+
+const formatDate = (date: string) => {
+  const eventDate = new Date(date)
+
+  return eventDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+  })
+}
+
+const numFormatter = Intl.NumberFormat('en', {
+  notation: 'compact',
+}).format
+
+const RankingItem = ({
   index,
+  item,
 }: {
-  cardData: RankCardType
   index: number
+  item: RankCardType
 }) => {
-  const downIndicationIconColor = useColorModeValue('#E53E3E', '#FC8181')
-  const upIndicationIconColor = useColorModeValue('#25855A', '#68D391')
-  const getAlias = (text: string) => (text ?? 'Unknown') || text
+  const marketCap = item.nftMarketData
+    ? numFormatter(item.nftMarketData.market_cap_usd)
+    : numFormatter(item.tokenMarketData.market_cap)
 
-  const getTokenAlias = (text: string) => {
-    if (text === null) {
-      return 'Unknown'
-    }
-    if (text) {
-      return text
-    }
-    return ''
-  }
+  const price = `$${
+    item.nftMarketData
+      ? item.nftMarketData.floor_price_usd.toFixed(2).toLocaleString()
+      : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
+  }`
+
+  const dateFounded =
+    item.events &&
+    item?.events.find(event => event.type === EventType.CREATED)?.date
 
   return (
-    <Link
-      href={`https://iq.wiki/wiki/${cardData.id}`}
-      className="group"
-      _dark={{
-        _hover: { textDecoration: 'none' },
-      }}
-      _light={{
-        _hover: { textDecoration: 'none' },
-      }}
-      _groupHover={{ textDecoration: 'none' }}
-    >
-      <Flex
-        gap={4}
-        alignItems="center"
-        p={{ '2xl': 4, md: 2, base: 2 }}
-        w="100%"
+    <Tr>
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pr="1"
       >
-        <Text fontSize={{ base: 'sm', '2xl': 'lg' }} fontWeight={600}>
-          {index}
-        </Text>
-        <Flex gap={2} w="100%" alignItems="center">
-          <Box
-            w={{ lg: '60px', md: '40px', base: '40px' }}
-            h={{ lg: '50px', md: '30px', base: '30px' }}
-            bg={
-              cardData?.nftMarketData
-                ? `url(${cardData?.nftMarketData.image})`
-                : `url(${cardData?.tokenMarketData.image})`
-            }
-            bgPos="center"
-            bgSize="contain"
-            bgRepeat="no-repeat"
-            borderRadius="md"
-          />
-          <Flex w="100%" justifyContent="space-between">
-            <Flex
-              flexDir={cardData?.tokenMarketData ? 'column' : 'row'}
-              alignItems={cardData?.nftMarketData && 'center'}
-            >
-              <Text
-                color="primaryPinkIcon"
-                fontSize={{ base: 'xs', lg: 'md' }}
-                whiteSpace="nowrap"
-                _groupHover={{
-                  textDecoration: 'underline',
-                  textDecorationColor: 'brand.500',
-                }}
-                _dark={{
-                  _groupHover: { textDecorationColor: 'brand.500' },
-                }}
-              >
-                {cardData?.title}
-              </Text>
-              {cardData?.tokenMarketData && (
-                <Text color="inactiveText" fontSize={{ base: 'xs', lg: 'sm' }}>
-                  {cardData?.nftMarketData
-                    ? getAlias(cardData?.nftMarketData?.alias)
-                    : getTokenAlias(cardData?.tokenMarketData?.alias)}
-                </Text>
-              )}
-            </Flex>
-            <Flex
-              flexDir="column"
-              alignItems="flex-start"
-              justifyContent="space-around"
-            >
-              <Text
-                color="inactiveText"
-                fontSize={{ md: 'xs', base: 'sm' }}
-                width="100%"
-                textAlign="right"
-                whiteSpace="nowrap"
-              >
-                $
-                {cardData?.nftMarketData
-                  ? cardData?.nftMarketData?.market_cap_usd.toLocaleString()
-                  : cardData?.tokenMarketData?.market_cap?.toLocaleString()}
-              </Text>
-              <Flex
-                alignItems="center"
-                gap={0.5}
-                width="100%"
-                justifyContent="end"
-              >
-                {cardData?.nftMarketData
-                  ?.floor_price_in_usd_24h_percentage_change < 0 ? (
-                  <AiFillCaretDown color={downIndicationIconColor} />
-                ) : (
-                  <AiFillCaretUp color={upIndicationIconColor} />
-                )}
-                <Text fontWeight="bold" fontSize="xs">
-                  {Math.abs(
-                    cardData?.nftMarketData
-                      ? cardData?.nftMarketData
-                          ?.floor_price_in_usd_24h_percentage_change
-                      : cardData?.tokenMarketData.price_change_24h,
-                  ).toFixed(3)}
-                  %
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
+        <Text color="rankingListText">{index + 1}</Text>
+      </Td>
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pl="2"
+      >
+        <Flex gap="2.5" alignItems="center">
+          <Box flexShrink="0" w="40px" h="40px">
+            <Image
+              src={
+                item.nftMarketData
+                  ? item.nftMarketData.image
+                  : item.tokenMarketData.image
+              }
+              alt={item.title}
+              w="40px"
+              h="40px"
+              borderRadius="50%"
+              objectFit="cover"
+            />
+          </Box>
+          <Box>
+            <Box>
+              <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                {item.title}
+              </Link>
+            </Box>
+            <Text color="rankingListText">
+              {item.nftMarketData
+                ? item.nftMarketData.alias
+                : item.tokenMarketData.alias}
+            </Text>
+          </Box>
         </Flex>
-      </Flex>
-    </Link>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Text color="rankingListText">{price}</Text>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Flex gap="1">
+          <Text color="rankingListText">{marketCap}</Text>
+          {item.nftMarketData ? (
+            <Text
+              alignSelf="flex-start"
+              fontSize="10px"
+              lineHeight="15px"
+              color={
+                item.nftMarketData.floor_price_in_usd_24h_percentage_change < 0
+                  ? 'red.500'
+                  : 'green.500'
+              }
+            >
+              {Math.abs(
+                item.nftMarketData.floor_price_in_usd_24h_percentage_change,
+              ).toFixed(2)}
+              %
+            </Text>
+          ) : (
+            <Text
+              alignSelf="flex-start"
+              fontSize="10px"
+              lineHeight="15px"
+              color={
+                item.tokenMarketData.price_change_24h < 0
+                  ? 'red.500'
+                  : 'green.500'
+              }
+            >
+              {Math.abs(item.tokenMarketData.price_change_24h).toFixed(2)}%
+            </Text>
+          )}
+        </Flex>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {item.linkedWikis && item.linkedWikis.founders ? (
+          <Flex flexWrap="wrap">
+            {formatFoundersArray(item.linkedWikis.founders)
+              .slice(0, MAX_LINKED_WIKIS)
+              .map((founderName, i, arr) => {
+                const founder = item.linkedWikis.founders[i]
+                return (
+                  <Link
+                    href={`wiki/${founder}`}
+                    key={`founder${i}`}
+                    color="brandLinkColor"
+                  >
+                    {founderName}
+                    {i !== arr.length - 1 && arr.length > 1 && ', '}
+                  </Link>
+                )
+              })}
+            {item.linkedWikis.founders.length > 3 && (
+              <Text color="brandLinkColor">...</Text>
+            )}
+          </Flex>
+        ) : (
+          'NA'
+        )}
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {item.linkedWikis && item.linkedWikis.blockchains ? (
+          <Flex flexWrap="wrap">
+            {item.linkedWikis.blockchains
+              .slice(0, MAX_LINKED_WIKIS)
+              .map((blockchain, i) => {
+                return (
+                  <React.Fragment key={`blockchain${i}`}>
+                    {i > 0 && (
+                      <Box as="span" color="brandLinkColor">
+                        ,
+                      </Box>
+                    )}
+                    <Link href={`wiki/${blockchain}`} color="brandLinkColor">
+                      {blockchain.charAt(0).toUpperCase() +
+                        blockchain.slice(1).replace('-', ' ')}
+                    </Link>
+                  </React.Fragment>
+                )
+              })}
+          </Flex>
+        ) : (
+          'NA'
+        )}
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {dateFounded ? (
+          <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
+            <Text>{formatDate(dateFounded)}</Text>
+          </Link>
+        ) : (
+          'NA'
+        )}
+      </Td>
+    </Tr>
   )
 }
+
+export default RankingItem

@@ -16,9 +16,12 @@ export const resources = {
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
-      trendingWikis: 'Trending Wikis',
+      trendingWikis: 'Latest from IQ.Wiki',
+      rankingListHeading: 'Wiki Rank By MarketCap',
+      rankingListDescription:
+        'A list of wikis in different categories, including DeFi, NFTs, DAOs and Cryptocurrencies, ranked based on marketcap.',
       trendingWikisDescription:
-        'The latest and trending wikis on IQ.wiki and in the blockchain space.',
+        'Top wikis, recent edits and popular wikis on IQ.wiki.',
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
@@ -28,7 +31,7 @@ export const resources = {
       subScribeFooterBttn: 'Join Now',
       communityFooterHeading: 'Community Hub',
       visionFooterText:
-        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain.",
+        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain. A part of Brainfund Group.",
       whatIQ: "What's IQ?",
       iq: 'IQ',
       bridges: 'Bridges',
@@ -63,7 +66,7 @@ export const resources = {
       //Create wiki page
       wikiTitlePlaceholder: 'Title goes here',
       wikiSummaryLabel: 'Wiki Summary',
-      wikiSummaryPlaceholder: 'Summary of wiki',
+      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-4 AI',
       dragMainImgLabel: 'Drag and drop a main image, or click to select',
       pasteMainImgLabel: '(or) paste image link here',
       pasteModalMainImgLabel: '(or) paste a youtube or image link here',
@@ -73,9 +76,9 @@ export const resources = {
 
       //About page
       aboutHeroHeading:
-        'Bringing blockchain knowledge to the world and knowledge to the blockchain.',
+        'We use blockchain technology and artificial intelligence to scale crypto knowledge.',
       aboutHeroPhrase:
-        "IQ.Wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
+        "IQ.wiki is the world's largest blockchain and cryptocurrency encyclopedia with thousands of wikis on all topics and branches of knowledge in the crypto space.",
       aboutSignUpBttn: 'Sign Up',
       aboutgoTo: 'Go to IQ Site',
       aboutFeatHeading:
@@ -87,14 +90,20 @@ export const resources = {
         'The most comprehensive blockchain and crypto knowledge base in the world provides users with thousands of wikis on everything from Bitcoin, NFTs, DAO’s and so much more.',
       abtFeatTwoHeading: 'Powered by the IQ token',
       abtFeatTwoContent:
-        'IQ.wiki is a central part of the IQ ecosystem. The IQ token powers the encyclopedia and allows anyone to be a stakeholder in the ecosystem.',
+        'IQ.wiki is a central part of the IQ ecosystem. The IQ token is the utility token of the encyclopedia.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
-        'Anyone with IQ Tokens is a stakeholder in the IQ.Wiki Network. Using IQ tokens to vote, users decide which new articles and edits are added to the knowledge base.',
+        'IQ.wiki is fully Web3 with IQ token stakers governing and moderating the platform.',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',
+      aboutAiHeading: 'Integration of Artificial Intelligence',
+      aboutAiParagraph:
+        'IQ.wiki integrates artificial intelligence to scale our knowledge base. AI allows us to simplify routine tasks including summarizing wikis.',
       latestFromBlogHeading: 'Latest from our blog',
+      historyHeading: 'A little about our History',
+      historyBrief:
+        'The world’s largest blockchain encyclopedia wasn’t born overnight. IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014 and became the world’s first blockchain encyclopedia in 2018 after launching the IQ token. In 2022, Everipedia expanded to the Polygon blockchain and rebranded as IQ.wiki.',
 
       //Profile page
       selectAllItems: 'All items',

@@ -7,11 +7,20 @@ export const GET_NFT_RANKINGS = gql`
         id
         title
         ipfs
+        created
         media {
           thumbnail
         }
         images {
           id
+        }
+        linkedWikis {
+          founders
+          blockchains
+        }
+        events {
+          date
+          type
         }
         nftMarketData {
           floor_price_eth
@@ -33,11 +42,20 @@ export const GET_TOKEN_RANKINGS = gql`
         id
         title
         ipfs
+        created
         media {
           thumbnail
         }
         images {
           id
+        }
+        linkedWikis {
+          founders
+          blockchains
+        }
+        events {
+          date
+          type
         }
         tokenMarketData {
           image
@@ -50,6 +68,14 @@ export const GET_TOKEN_RANKINGS = gql`
           market_cap_change_24h
         }
       }
+    }
+  }
+`
+
+export const GET_RANK_COUNT = gql`
+  query getRankingTotal($category: String!) {
+    categoryTotal(category: $category) {
+      amount
     }
   }
 `

@@ -4,91 +4,91 @@ export const TagsSuggestions = [
     value: 'Artists',
   },
   {
-    label: 'Games',
-    value: 'Games',
-  },
-  {
-    label: 'Blockchains',
-    value: 'Blockchains',
-  },
-  {
-    label: 'Collections',
-    value: 'Collections',
-  },
-  {
-    label: 'Marketplaces',
-    value: 'Marketplaces',
-  },
-  {
-    label: 'Collectors',
-    value: 'Collectors',
-  },
-  {
-    label: 'Ethereum',
-    value: 'Ethereum',
-  },
-  {
-    label: 'Polygon',
-    value: 'Polygon',
+    label: 'AI',
+    value: 'AI',
   },
   {
     label: 'BinanceSmartChain',
     value: 'BinanceSmartChain',
   },
   {
-    label: 'Solana',
-    value: 'Solana',
-  },
-  {
-    label: 'Entertainment',
-    value: 'Entertainment',
-  },
-  {
-    label: 'Collector',
-    value: 'Collector',
-  },
-  {
-    label: 'Venture',
-    value: 'Venture',
-  },
-  {
-    label: 'Polkadot',
-    value: 'Polkadot',
-  },
-  {
-    label: 'PeopleInDeFi',
-    value: 'PeopleInDeFi',
-  },
-  {
-    label: 'Protocols',
-    value: 'Protocols',
-  },
-  {
-    label: 'Developers',
-    value: 'Developers',
-  },
-  {
-    label: 'Stablecoins',
-    value: 'Stablecoins',
-  },
-  {
-    label: 'Founders',
-    value: 'Founders',
-  },
-  {
-    label: 'DeFiTerms',
-    value: 'DeFiTerms',
-  },
-  {
-    label: 'DEXes',
-    value: 'DEXes',
+    label: 'Blockchains',
+    value: 'Blockchains',
   },
   {
     label: 'CEXes',
     value: 'CEXes',
   },
   {
+    label: 'Collections',
+    value: 'Collections',
+  },
+  {
+    label: 'Collectors',
+    value: 'Collectors',
+  },
+  {
+    label: 'DEXes',
+    value: 'DEXes',
+  },
+  {
+    label: 'Developers',
+    value: 'Developers',
+  },
+  {
+    label: 'Entertainment',
+    value: 'Entertainment',
+  },
+  {
+    label: 'Ethereum',
+    value: 'Ethereum',
+  },
+  {
+    label: 'Founders',
+    value: 'Founders',
+  },
+  {
+    label: 'Games',
+    value: 'Games',
+  },
+  {
     label: 'Glossary',
     value: 'Glossary',
+  },
+  {
+    label: 'Marketplaces',
+    value: 'Marketplaces',
+  },
+  {
+    label: 'Organizations',
+    value: 'Organizations',
+  },
+  {
+    label: 'PeopleInDeFi',
+    value: 'PeopleInDeFi',
+  },
+  {
+    label: 'Polkadot',
+    value: 'Polkadot',
+  },
+  {
+    label: 'Polygon',
+    value: 'Polygon',
+  },
+  {
+    label: 'Protocols',
+    value: 'Protocols',
+  },
+  {
+    label: 'Solana',
+    value: 'Solana',
+  },
+  {
+    label: 'Stablecoins',
+    value: 'Stablecoins',
+  },
+  {
+    label: 'Venture',
+    value: 'Venture',
   },
 ]

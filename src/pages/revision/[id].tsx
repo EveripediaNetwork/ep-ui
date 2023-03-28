@@ -11,13 +11,13 @@ import {
 } from '@/services/activities'
 import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
 import { getWikiPreviewsByCategory } from '@/services/wikis'
 import { Wiki } from '@everipedia/iq-utils'
 import { LinkButton } from '@/components/Elements'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 interface RevisionPageProps {
   wiki: Activity

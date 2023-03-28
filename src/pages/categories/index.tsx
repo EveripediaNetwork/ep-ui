@@ -3,7 +3,6 @@ import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
 import CategoryCard from '@/components/Categories/CategoryCard'
-
 import { useTranslation } from 'react-i18next'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
 
@@ -27,10 +26,10 @@ const Categories: NextPage = () => {
           pt={20}
           width="full"
           objectFit="cover"
-          bgColor="profileBannerBg"
-          backgroundImage="/images/homepage-bg-white.png"
+          bgColor="careersBackground"
+          backgroundImage="/images/backgrounds/homepage-bg-white.png"
           _dark={{
-            backgroundImage: '/images/homepage-bg-dark.png',
+            backgroundImage: '/images/backgrounds/careers-background-dark.png',
           }}
         >
           <Heading

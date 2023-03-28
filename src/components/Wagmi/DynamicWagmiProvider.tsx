@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 import dynamic from 'next/dynamic'
-import { getUserAddressFromCache } from '@/utils/getUserAddressFromCache'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 
 const WagmiProvider = dynamic(() => import('@/components/Wagmi/WagmiProvider'))
 

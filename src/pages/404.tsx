@@ -50,7 +50,12 @@ const Error = () => {
           py={{ base: 16, md: 20 }}
           px={{ base: 10, lg: 2 }}
         >
-          <Image alt="Astronaut" src="/images/astronaut.svg" h="90%" w="90%" />
+          <Image
+            alt="Astronaut"
+            src="/images/svg-images/astronaut.svg"
+            h="90%"
+            w="90%"
+          />
         </Box>
       </Stack>
     </Container>

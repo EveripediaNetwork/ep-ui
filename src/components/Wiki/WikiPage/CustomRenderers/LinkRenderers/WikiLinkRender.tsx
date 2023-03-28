@@ -1,7 +1,5 @@
 import { WikiImage } from '@/components/WikiImage'
 import { useGetWikiPreviewQuery } from '@/services/wikis'
-import { getWikiImageUrl } from '@/utils/getWikiImageUrl'
-import { getWikiSummary } from '@/utils/getWikiSummary'
 import {
   HStack,
   Icon,
@@ -21,6 +19,8 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiLightbulbLine, RiPriceTagLine } from 'react-icons/ri'
+import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 const WikiLinkPreviewSkeleton = () => (
   <>
@@ -83,7 +83,7 @@ const WikiLinkPreview = ({ wikiId }: { wikiId: string }) => {
           </PopoverBody>
           {wiki?.tags?.length !== 0 && (
             <PopoverFooter>
-              <HStack spacing={2} align="center" flexWrap="wrap">
+              <HStack gap="1" align="center" flexWrap="wrap">
                 <Tag variant="outline">
                   <TagLeftIcon mr={1} boxSize="12px" as={RiPriceTagLine} />
                   <TagLabel ml={0} fontSize="12px">

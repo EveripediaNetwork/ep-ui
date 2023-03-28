@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   ModalProps,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
   Flex,
   Text,
-  Box,
-  Link,
   Wrap,
   Icon,
   useClipboard,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  Center,
+  Image,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import {
@@ -31,6 +30,9 @@ import WhatsappIconColor from '@/components/Icons/whatsappIconColor'
 import LinkedinIconColor from '@/components/Icons/linkedinIconColor'
 import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
+import { Modal } from '@/components/Elements'
+import { logEvent } from '@/utils/googleAnalytics'
+import Link from 'next/link'
 
 const SHARING_OPTIONS = [
   {
@@ -61,71 +63,88 @@ const SHARING_OPTIONS = [
     label: EmailShareButton,
     icon: EmailIconColor,
   },
+  {
+    label: 'lenster',
+  },
 ]
 
 const ShareWikiModal = ({
   onClose = () => {},
-  isOpen = false,
-  ...rest
+  isOpen = true,
 }: Partial<ModalProps>) => {
   const router = useRouter()
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
-  if (!isOpen) return null
-  return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
-      <ModalOverlay />
-      <ModalContent
-        _dark={{
-          bg: 'gray.800',
-        }}
-      >
-        <ModalBody py="3rem" px="2rem">
-          <Flex
-            justify="space-between"
-            align="center"
-            border="2px solid"
-            borderColor="tetiaryGray"
-            p="1rem"
-            borderRadius="0.4rem"
-          >
-            <Text onClick={onCopy} color="brand.600" cursor="pointer">
-              {hasCopied ? 'Copied!' : 'Copy url'}
-            </Text>
-            <Box
-              overflowX="hidden"
-              w="80%"
-              p="0.5rem"
-              bg="brand.150"
-              _dark={{ bg: '#232934' }}
-            >
-              <Link
-                whiteSpace="nowrap"
-                href={router.asPath}
-                color="#2D3748"
-                _dark={{ color: '#b1b2b5' }}
-              >
-                {url}
-              </Link>
-            </Box>
-          </Flex>
+  useEffect(() => {
+    logEvent({
+      action: 'OPEN_SHARE_WIKI_MODAL',
+      label: router.asPath.replace('/wiki/', ''),
+      category: 'open_share_wiki_modal',
+      value: 1,
+    })
+  }, [router.asPath])
 
-          <Flex fontWeight="bold" mt="3rem" flexDirection="column">
-            <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
-              Or share via:
+  return (
+    <Modal
+      enableBottomCloseButton={false}
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Share"
+      isCentered
+    >
+      <InputGroup>
+        <Input
+          p={6}
+          whiteSpace="nowrap"
+          value={url}
+          color="#2D3748"
+          _dark={{ color: '#b1b2b5' }}
+        />
+        <InputRightAddon p={6}>
+          <Center w="50px">
+            <Text
+              textAlign="center"
+              onClick={onCopy}
+              color="brand.600"
+              cursor="pointer"
+            >
+              {hasCopied ? 'Copied!' : 'Copy'}
             </Text>
-            <Wrap mt="1rem" spacing="5">
-              {SHARING_OPTIONS.map(item => {
-                return (
+          </Center>
+        </InputRightAddon>
+      </InputGroup>
+
+      <Flex fontWeight="bold" mt="2rem" flexDirection="column">
+        <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
+          Or share via:
+        </Text>
+        <Wrap mt="1rem" spacing="3">
+          {SHARING_OPTIONS.map(item => {
+            return (
+              <>
+                {typeof item.label !== 'string' ? (
                   <item.label url={url}>
-                    <Icon as={item.icon} fontSize="40px" />
+                    <Icon as={item.icon} fontSize="38px" />
                   </item.label>
-                )
-              })}
-            </Wrap>
-          </Flex>
-        </ModalBody>
-      </ModalContent>
+                ) : (
+                  <Link
+                    href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
+                    rel="nofollow"
+                    target="_blank"
+                  >
+                    <Image
+                      alt="Lenster"
+                      src="/images/icons/lenster.svg"
+                      h="38px"
+                      w="38px"
+                    />
+                  </Link>
+                )}
+              </>
+            )
+          })}
+        </Wrap>
+      </Flex>
     </Modal>
   )
 }

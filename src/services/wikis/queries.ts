@@ -16,35 +16,6 @@ export const GET_PREVIEW_WIKI_BY_ID = gql`
   }
 `
 
-export const GET_ACTIVITY_CARD_DETAILS = gql`
-  query wikisByTitle($id: String!) {
-    wiki(id: $id) {
-      id
-      title
-      summary
-      updated
-      user {
-        id
-        profile {
-          username
-          avatar
-        }
-      }
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
-      images {
-        id
-        type
-      }
-    }
-  }
-`
-
 export const GET_WIKI_BY_ID = gql`
   query GetWiki($id: String!) {
     wiki(id: $id) {
@@ -97,6 +68,13 @@ export const GET_WIKI_BY_ID = gql`
           avatar
         }
       }
+      events {
+        title
+        description
+        type
+        date
+        link
+      }
       views
     }
   }
@@ -127,31 +105,11 @@ export const GET_WIKIS = gql`
   query GetWikis {
     wikis {
       id
-      ipfs
-      content
-      created
-      updated
       title
       summary
-      content
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      linkedWikis {
-        founders
-        blockchains
-      }
-      metadata {
-        id
-        value
       }
       user {
         id
@@ -168,78 +126,19 @@ export const GET_PROMOTED_WIKIS = gql`
   query GetPromotedWikis {
     promotedWikis {
       id
-      ipfs
-      created
       updated
       title
       summary
       promoted
-      categories {
-        id
-        title
-      }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      linkedWikis {
-        founders
-        blockchains
-      }
-      metadata {
-        id
-        value
       }
       user {
         id
         profile {
           username
           avatar
-        }
-      }
-    }
-  }
-`
-
-export const GET_USER_WIKIS_BY_ID = gql`
-  query GetUserWikis($id: String!, $limit: Int, $offset: Int) {
-    userById(id: $id) {
-      wikis(offset: $offset, limit: $limit) {
-        id
-        ipfs
-        title
-        summary
-        created
-        updated
-        content
-        categories {
-          id
-          title
-        }
-        tags {
-          id
-        }
-        images {
-          id
-          type
-        }
-        linkedWikis {
-          founders
-          blockchains
-        }
-        metadata {
-          id
-          value
-        }
-        user {
-          id
-          profile {
-            username
-            avatar
-          }
         }
       }
     }
@@ -258,7 +157,6 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           created
           updated
           summary
-          content
           categories {
             id
             title
@@ -269,10 +167,6 @@ export const GET_USER_CREATED_WIKIS_BY_ID = gql`
           images {
             id
             type
-          }
-          linkedWikis {
-            founders
-            blockchains
           }
           metadata {
             id
@@ -303,7 +197,6 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
           created
           updated
           summary
-          content
           categories {
             id
             title
@@ -314,10 +207,6 @@ export const GET_USER_EDITED_WIKIS_BY_ID = gql`
           images {
             id
             type
-          }
-          linkedWikis {
-            founders
-            blockchains
           }
           metadata {
             id
@@ -344,26 +233,14 @@ export const GET_WIKIS_BY_CATEGORY = gql`
       created
       title
       summary
-      content
       updated
       categories {
         id
         title
       }
-      tags {
-        id
-      }
       images {
         id
         type
-      }
-      linkedWikis {
-        founders
-        blockchains
-      }
-      metadata {
-        id
-        value
       }
       user {
         id
@@ -398,12 +275,10 @@ export const GET_TAG_WIKIS_BY_ID = gql`
       wikis(offset: $offset, limit: $limit) {
         id
         ipfs
-        content
         created
         updated
         title
         summary
-        content
         categories {
           id
           title
@@ -415,13 +290,8 @@ export const GET_TAG_WIKIS_BY_ID = gql`
           id
           type
         }
-        linkedWikis {
-          founders
-          blockchains
-        }
         metadata {
           id
-          value
         }
         user {
           id
@@ -443,6 +313,83 @@ export const GET_WIKI_SLUG_VALID = gql`
       }
       ... on Valid {
         valid
+      }
+    }
+  }
+`
+
+export const GET_TRENDING_WIKIS = gql`
+  query GetTrendingWikis($amount: Int!, $startDay: String!, $endDay: String!) {
+    wikisPerVisits(amount: $amount, startDay: $startDay, endDay: $endDay) {
+      id
+      title
+      summary
+      images {
+        id
+      }
+    }
+  }
+`
+
+export const GET_TRENDING_CATEGORY_WIKIS = gql`
+  query GetTrendingWikis(
+    $amount: Int!
+    $startDay: String!
+    $endDay: String!
+    $category: String
+  ) {
+    wikisPerVisits(
+      amount: $amount
+      startDay: $startDay
+      endDay: $endDay
+      category: $category
+    ) {
+      id
+      title
+      summary
+      updated
+      images {
+        id
+      }
+      user {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+    }
+  }
+`
+
+export const GET_WIKI_ACTIVITY_BY_CATEGORIES = gql`
+  query GetWikiActivityByCategory(
+    $offset: Int!
+    $limit: Int!
+    $type: ActivityType
+    $category: String!
+  ) {
+    activitiesByCategory(
+      offset: $offset
+      limit: $limit
+      type: $type
+      category: $category
+    ) {
+      content {
+        id
+        title
+        summary
+        updated
+        images {
+          id
+        }
+        user {
+          id
+          profile {
+            username
+            avatar
+          }
+        }
       }
     }
   }

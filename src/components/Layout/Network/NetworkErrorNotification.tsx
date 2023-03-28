@@ -15,7 +15,7 @@ import { ProviderDataType } from '@/types/ProviderDataType'
 import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useDispatch } from 'react-redux'
-import networkMap from '@/utils/networkMap'
+import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
 
 const NetworkErrorNotification = () => {
