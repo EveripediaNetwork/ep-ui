@@ -11,7 +11,6 @@ const abi = parseAbi([
 ])
 
 const HIIQ_CONTRACT_ADDRESS = '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba'
-// const hiiqContract = new Contract(HIIQ_CONTRACT_ADDRESS, abi, xx)
 
 export const useHiIQBalance = (address: string | undefined | null) => {
   const dispatch = useDispatch()
