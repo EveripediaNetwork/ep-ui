@@ -28,7 +28,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         address: HIIQ_CONTRACT_ADDRESS,
         abi,
         functionName: 'locked',
-        args: [address],
+        args: [address as `0x${string}`],
       })
       const hiiqBalance = fromHex(balance as unknown as `0x${string}`, 'number')
       const [amount, end] = lock as `0x${string}`[]
