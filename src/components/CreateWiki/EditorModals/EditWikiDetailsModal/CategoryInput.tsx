@@ -32,7 +32,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
             })
           }
         }}
-        defaultValue={wiki.categories[0]?.id}
+        value={wiki.categories[0]?.id}
         placeholder={wiki.categories.length > 0 ? undefined : 'Select Category'}
       >
         {categoryOptions?.map(o => (

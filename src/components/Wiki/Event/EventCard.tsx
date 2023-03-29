@@ -64,7 +64,15 @@ const EventCard = ({
             fontSize={{ base: '12px', xl: '16px' }}
           >
             <Icon as={RiLink} color="brandLinkColor" />
-            <Link href={link} target="_blank" color="brandLinkColor">
+            <Link
+              noOfLines={1}
+              maxW="70vw"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              href={link}
+              target="_blank"
+              color="brandLinkColor"
+            >
               {link}
             </Link>
           </Flex>

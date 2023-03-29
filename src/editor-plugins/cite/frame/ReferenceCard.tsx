@@ -240,7 +240,7 @@ export const ReferenceCard = ({
                     // eslint-disable-next-line no-nested-ternary
                     showRed
                       ? '#d34c46 !important'
-                      : (desc.length || '') > 25
+                      : (desc.length || 0) > 25
                       ? '#579f6e !important'
                       : '#cea046 !important'
                   }
