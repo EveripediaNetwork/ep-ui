@@ -31,7 +31,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         args: [address as `0x${string}`],
       })
       const hiiqBalance = fromHex(balance as unknown as `0x${string}`, 'number')
-      const [amount, end] = lock as `0x${string}`[]
+      const [amount, end] = lock as unknown as `0x${string}`[]
       const iqBalance = fromHex(amount, 'number')
       const endDate = fromHex(end, 'number')
       const coinGeckoIqPrice = await getIqTokenValue()
