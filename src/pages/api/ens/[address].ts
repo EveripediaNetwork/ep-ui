@@ -67,7 +67,7 @@ const resolveName = async (name: string, res: NextApiResponse<Data>) => {
   const displayName = name
   try {
     const [address, avatar] = await Promise.all([
-      provider.getEnsAddress({name}),
+      provider.getEnsAddress({ name }),
       etherProvider.getAvatar(name),
     ])
     res
