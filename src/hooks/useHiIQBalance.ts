@@ -22,7 +22,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         address: HIIQ_CONTRACT_ADDRESS,
         abi,
         functionName: 'balanceOf',
-        args: [address],
+        args: [address as string],
       })
       const lock = await provider.readContract({
         address: HIIQ_CONTRACT_ADDRESS,
