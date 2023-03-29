@@ -17,10 +17,10 @@ export const { chains, provider } = configureChains(chainArray, [
 ])
 
 const rpcs: {
-  [key: string]: string;
+  [key: string]: string
 } = {
   maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
-  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
+  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
 }
 
 export const connectors = [
