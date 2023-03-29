@@ -9,6 +9,8 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
+  console.log(wiki.categories)
+
   return (
     <Flex gap="2.5" align="start">
       <Text fontWeight="semibold">Category</Text>
@@ -32,7 +34,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
             })
           }
         }}
-        defaultValue={wiki.categories[0]?.id}
+        value={wiki.categories[0]?.id}
         placeholder={wiki.categories.length > 0 ? undefined : 'Select Category'}
       >
         {categoryOptions?.map(o => (
