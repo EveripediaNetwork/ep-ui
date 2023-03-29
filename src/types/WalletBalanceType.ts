@@ -1,9 +1,8 @@
-
 export type BalanceType = {
   data?: {
     formatted: string
     symbol: string
-    value: BigInt
+    value: bigint
   }
   error: Error | undefined
 }
