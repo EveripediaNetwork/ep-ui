@@ -1,10 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber'
 
 export type BalanceType = {
   data?: {
     formatted: string
     symbol: string
-    value: BigNumber
+    value: BigInt
   }
   error: Error | undefined
 }
