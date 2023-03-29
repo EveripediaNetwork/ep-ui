@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
-import { getAddress, isAddress } from '@ethersproject/address'
+import { getAddress, isAddress } from 'viem'
 import config from '@/config'
 
 const provider = new StaticJsonRpcProvider(config.ensRPC)
@@ -30,7 +30,9 @@ const resolveAddress = async (
   lowercaseAddress: string,
   res: NextApiResponse<Data>,
 ) => {
+  
   const address = getAddress(lowercaseAddress)
+
   let displayName = address.replace(
     /^(0x[0-9A-F]{3})[0-9A-F]+([0-9A-F]{4})$/i,
     '$1…$2',
