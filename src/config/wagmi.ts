@@ -8,7 +8,6 @@ import { AlchemyProvider } from '@ethersproject/providers'
 import { MagicAuthConnector } from '@everipedia/wagmi-magic-connector'
 import config from './index'
 
-
 const chainArray =
   config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
 
