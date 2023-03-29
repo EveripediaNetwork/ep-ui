@@ -9,8 +9,6 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const { data: categoryOptions } = useGetCategoriesLinksQuery()
 
-  console.log(wiki.categories)
-
   return (
     <Flex gap="2.5" align="start">
       <Text fontWeight="semibold">Category</Text>
