@@ -2,8 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
 import { getAddress, isAddress } from 'viem'
 import config from '@/config'
+import { provider } from '@/utils/WalletUtils/getProvider'
 
-const provider = new StaticJsonRpcProvider(config.ensRPC)
+const etherProvider = new StaticJsonRpcProvider(config.ensRPC)
 
 const firstParam = (param: string | string[]) => {
   return Array.isArray(param) ? param[0] : param
@@ -30,7 +31,6 @@ const resolveAddress = async (
   lowercaseAddress: string,
   res: NextApiResponse<Data>,
 ) => {
-  
   const address = getAddress(lowercaseAddress)
 
   let displayName = address.replace(
@@ -39,12 +39,12 @@ const resolveAddress = async (
   )
 
   try {
-    const name = await provider.lookupAddress(address)
+    const name = await provider.getEnsName({address})
     if (name) {
       displayName = name
     }
 
-    const avatar = name ? await provider.getAvatar(name) : null
+    const avatar = name ? await etherProvider.getAvatar(name) : null
 
     res
       .status(200)
@@ -67,8 +67,8 @@ const resolveName = async (name: string, res: NextApiResponse<Data>) => {
   const displayName = name
   try {
     const [address, avatar] = await Promise.all([
-      provider.resolveName(name),
-      provider.getAvatar(name),
+      etherProvider.resolveName(name),
+      etherProvider.getAvatar(name),
     ])
     res
       .status(200)
