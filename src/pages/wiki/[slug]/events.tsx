@@ -48,11 +48,13 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               color="brandLinkColor"
               fontSize={{ base: '24px', md: '30px', xl: '36px' }}
             >
-              <Link href={`/wiki/${wiki.id}`}>{wiki.title}</Link>
+              <Link noOfLines={1} maxW="full" href={`/wiki/${wiki.id}`}>
+                {wiki.title}
+              </Link>
             </Heading>
           </Flex>
           {wiki.events && (
-            <SimpleGrid gap={{ md: '10', xl: '16' }}>
+            <SimpleGrid gap={{ base: '8', xl: '16' }}>
               {wiki.events &&
                 wiki.events.map((event, i) => (
                   <EventCard
