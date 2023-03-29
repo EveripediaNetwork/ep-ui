@@ -39,7 +39,7 @@ const resolveAddress = async (
   )
 
   try {
-    const name = await provider.getEnsName({address})
+    const name = await provider.getEnsName({ address })
     if (name) {
       displayName = name
     }
@@ -67,7 +67,7 @@ const resolveName = async (name: string, res: NextApiResponse<Data>) => {
   const displayName = name
   try {
     const [address, avatar] = await Promise.all([
-      etherProvider.resolveName(name),
+      provider.getEnsAddress({name}),
       etherProvider.getAvatar(name),
     ])
     res
