@@ -4414,11 +4414,6 @@ big-integer@^1.6.16:
   resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.51.tgz#0df92a5d9880560d3ff2d5fd20245c889d130686"
   integrity sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==
 
-bignumber.js@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.0.tgz#805880f84a329b5eac6e7cb6f8274b6d82bdf075"
-  integrity sha512-t/OYhhJ2SD+YGBQcjY8GzzDHEk9f3nerxjtfa6tlMXfe7frs/WozhvCNoGvpM0P3bNf3Gq5ZRMlGr5f3r4/N8A==
-
 bignumber.js@^9.0.0, bignumber.js@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
@@ -8404,13 +8399,6 @@ node-releases@^2.0.3:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
   integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
 
-normalize-hex@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/normalize-hex/-/normalize-hex-0.0.2.tgz#5491c43759db2f06b7168d8419f4925c271ab27e"
-  integrity sha512-E2dx7XJQnjsm6SkS4G6GGvIXRHaLeWAZE2D2N3aia+OpIif2UT8y4S0KCjrX3WmFDSeFnlNOp0FSHFjLeJ4SJw==
-  dependencies:
-    bn.js "^4.11.8"
-
 normalize-package-data@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
@@ -10294,14 +10282,6 @@ to-fast-properties@^2.0.0:
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
 
-to-hex@0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/to-hex/-/to-hex-0.0.18.tgz#0a23ec34df0b7ec0c7b4d05dbbf081edfc6672b0"
-  integrity sha512-twjjF944fl3eUQBpO7bETUhUyCtUFHWJkSLq9+K/Aw+yh3l/xIYaNUmybRqmxsYoZyv9au4aikDiWoJEOMKBDQ==
-  dependencies:
-    bignumber.js "9.0.0"
-    normalize-hex "0.0.2"
-
 to-readable-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/to-readable-stream/-/to-readable-stream-1.0.0.tgz#ce0aa0c2f3df6adf852efb404a783e77c0475771"
@@ -10897,18 +10877,6 @@ web3-providers-ws@1.5.2:
     eventemitter3 "4.0.4"
     web3-core-helpers "1.5.2"
     websocket "^1.0.32"
-
-web3-token@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/web3-token/-/web3-token-1.0.2.tgz#12432b2bc85cf31ea1322ad238684e94abed81b6"
-  integrity sha512-adXWSRcmP06ao9h+HE+xJYsJy1bBYXG6XctJvjQz5TdkESTN8SLMAH5/gXmqTJe2qVBSvRDG/DvD0ZTHkbFfDw==
-  dependencies:
-    base-64 "^1.0.0"
-    ethereumjs-util "^7.1.5"
-    is-valid-domain "^0.1.6"
-    ms "^2.1.3"
-    parse-headers "^2.0.5"
-    to-hex "0.0.18"
 
 web3-utils@1.5.2:
   version "1.5.2"
