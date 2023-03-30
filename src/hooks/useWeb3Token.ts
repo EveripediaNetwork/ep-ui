@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
 import { useSigner } from 'wagmi'
-import { sign, verify } from 'web3-token'
+// import { sign, verify } from 'web3-token'
+import { sign, verify } from '@everipedia/web3-signer'
+import { provider } from '@/utils/WalletUtils/getProvider'
 
 export const useWeb3Token = () => {
   const [token, setToken] = React.useState<string>()
@@ -10,6 +12,7 @@ export const useWeb3Token = () => {
   const { data: signer } = useSigner()
 
   const generateNewTokenAndStore = useCallback(async () => {
+    // provider.getSi
     if (!signer) return
     const freshToken = await sign(msg => signer.signMessage(msg), {
       statement:

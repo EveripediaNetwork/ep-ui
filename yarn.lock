@@ -2764,6 +2764,17 @@
     "@wagmi/core" "^0.5.8"
     magic-sdk "^10.0.0"
 
+"@everipedia/web3-signer@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@everipedia/web3-signer/-/web3-signer-0.0.2.tgz#7cc19c9abf9247c77800cebd6d99a9d3d2054f6e"
+  integrity sha512-7p4drYSdoRi2+61LI3GhzOkz2ArwtFcHmdlj9TK62iDZlbCKuT21w3rX+bDCI/OhxXdLuqCXZ5m5E8JxhaX3GQ==
+  dependencies:
+    base-64 "^1.0.0"
+    is-valid-domain "^0.1.6"
+    ms "^2.1.3"
+    parse-headers "^2.0.5"
+    viem "0.1.23"
+
 "@floating-ui/core@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.0.1.tgz#00e64d74e911602c8533957af0cce5af6b2e93c8"
@@ -10754,7 +10765,7 @@ vfile@^5.0.0:
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
 
-viem@^0.1.23:
+viem@0.1.23, viem@^0.1.23:
   version "0.1.23"
   resolved "https://registry.yarnpkg.com/viem/-/viem-0.1.23.tgz#d8d2b7b903d579c3d0f98ca7db5e5b616d92e82c"
   integrity sha512-uHgiQn3c5vTxfdQ/cQ5Ty3z/HoJTV5pUUjl0aYXatd3daU5Q3IB3GLNFHvi4r7ti9afes7tGDBl+ZUS9+2czgQ==

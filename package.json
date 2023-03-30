@@ -37,6 +37,7 @@
     "@ethersproject/units": "^5.6.1",
     "@everipedia/iq-utils": "^0.1.4",
     "@everipedia/wagmi-magic-connector": "^0.7.0",
+    "@everipedia/web3-signer": "^0.0.2",
     "@metamask/detect-provider": "^1.2.0",
     "@next/font": "^13.0.3",
     "@reduxjs/toolkit": "^1.9.0",
