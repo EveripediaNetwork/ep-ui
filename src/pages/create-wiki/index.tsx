@@ -134,9 +134,9 @@ const CreateWikiContent = () => {
 
     if (
       initWikiData &&
-      initWikiData.content.length > 0 &&
-      initWikiData.images &&
-      initWikiData.images.length > 0
+      initWikiData?.content?.length > 0 &&
+      initWikiData?.images &&
+      initWikiData?.images?.length > 0
     ) {
       let { metadata } = initWikiData
 
