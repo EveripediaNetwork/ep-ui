@@ -2764,10 +2764,10 @@
     "@wagmi/core" "^0.5.8"
     magic-sdk "^10.0.0"
 
-"@everipedia/web3-signer@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@everipedia/web3-signer/-/web3-signer-0.0.2.tgz#7cc19c9abf9247c77800cebd6d99a9d3d2054f6e"
-  integrity sha512-7p4drYSdoRi2+61LI3GhzOkz2ArwtFcHmdlj9TK62iDZlbCKuT21w3rX+bDCI/OhxXdLuqCXZ5m5E8JxhaX3GQ==
+"@everipedia/web3-signer@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@everipedia/web3-signer/-/web3-signer-0.0.9.tgz#a19733ba3b85bd84942f5528c3b2787e06614045"
+  integrity sha512-eGG0QO17gSrWVb8AHhZ4SV/2URr8pKknkqXSmMlUEMm3fFKoCjARx8mSexJp68ip0Die0VT2Eqvvli9nYcb8xQ==
   dependencies:
     base-64 "^1.0.0"
     is-valid-domain "^0.1.6"
