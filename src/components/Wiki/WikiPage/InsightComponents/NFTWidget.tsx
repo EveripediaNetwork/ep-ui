@@ -92,7 +92,8 @@ const NFTWidget = ({
                 src={currentNFTImage}
                 height="auto"
                 onLoad={() => setIsLoading(false)}
-                maxHeight="500px"/>
+                maxHeight="500px"
+              />
             ) : (
               <NFTImgFallback />
             )}
