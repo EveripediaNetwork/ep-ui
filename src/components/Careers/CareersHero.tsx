@@ -1,7 +1,13 @@
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 
-const CareersHero = ({title, description}: {title: string, description?: string}) => {
+const CareersHero = ({
+  title,
+  description,
+}: {
+  title: string
+  description?: string
+}) => {
   return (
     <Box
       my={-2}
@@ -24,19 +30,19 @@ const CareersHero = ({title, description}: {title: string, description?: string}
         >
           {title}
         </Heading>
-        {
-          description && <Text
-          color="careersTextColor"
-          textAlign="center"
-          mt={{ md: 3 }}
-          fontSize={{ '2xl': '2xl', md: 'xl', base: 'md' }}
-          px={{ base: '3', md: 0 }}
-        >
-          Do you wish to join our great team? we&apos;re looking for
-          Intellectual Individuals who are committed to doing well by doing
-          good. here is the list of our open positions.
-        </Text>
-        }
+        {description && (
+          <Text
+            color="careersTextColor"
+            textAlign="center"
+            mt={{ md: 3 }}
+            fontSize={{ '2xl': '2xl', md: 'xl', base: 'md' }}
+            px={{ base: '3', md: 0 }}
+          >
+            Do you wish to join our great team? we&apos;re looking for
+            Intellectual Individuals who are committed to doing well by doing
+            good. here is the list of our open positions.
+          </Text>
+        )}
       </Flex>
     </Box>
   )
