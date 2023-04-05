@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useSigner } from 'wagmi'
-import { sign, verify } from 'web3-token'
+import { sign, verify } from '@everipedia/web3-signer'
 
 export const useWeb3Token = () => {
   const [token, setToken] = React.useState<string>()
