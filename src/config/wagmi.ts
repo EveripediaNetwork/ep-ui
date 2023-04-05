@@ -4,7 +4,6 @@ import { chain, configureChains, Connector } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
-import { AlchemyProvider, Network } from '@ethersproject/providers'
 import { MagicAuthConnector } from '@everipedia/wagmi-magic-connector'
 import config from './index'
 
@@ -17,9 +16,11 @@ export const { chains, provider } = configureChains(chainArray, [
   publicProvider({ weight: 3 }),
 ])
 
-const network: Network = {
-  name: config.alchemyChain,
-  chainId: Number(config.chainId),
+const rpcs: {
+  [key: string]: string
+} = {
+  maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
+  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
 }
 
 export const connectors = [
@@ -41,7 +42,7 @@ export const connectors = [
       accentColor: '#ea3b87',
       magicSdkConfiguration: {
         network: {
-          rpcUrl: AlchemyProvider.getUrl(network, config.alchemyApiKey).url,
+          rpcUrl: rpcs[config.alchemyChain],
           chainId: Number(config.chainId),
         },
       },
