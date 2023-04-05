@@ -5,12 +5,10 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  Tag,
   Text,
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
-import { AllCareers } from '@/data/CareersData'
 
 const MenuFooter = () => {
   const { t } = useTranslation()

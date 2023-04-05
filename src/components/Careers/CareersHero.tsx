@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 
-const CareersHero = () => {
+const CareersHero = ({title, description}: {title: string, description?: string}) => {
   return (
     <Box
       my={-2}
@@ -22,9 +22,10 @@ const CareersHero = () => {
           fontSize={{ lg: '6xl', md: '4xl', base: '2xl', '2xl': '7xl' }}
           mb={{ base: 6, md: 0 }}
         >
-          IQ.Wiki Careers
+          {title}
         </Heading>
-        <Text
+        {
+          description && <Text
           color="careersTextColor"
           textAlign="center"
           mt={{ md: 3 }}
@@ -35,6 +36,7 @@ const CareersHero = () => {
           Intellectual Individuals who are committed to doing well by doing
           good. here is the list of our open positions.
         </Text>
+        }
       </Flex>
     </Box>
   )
