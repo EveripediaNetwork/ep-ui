@@ -114,9 +114,8 @@ export const AllWikiDetailsCards = () => {
 
   const addCountAMount = (data: WikisModifiedCount[]) => {
     let total = 0
-    data.map((item: WikisModifiedCount) => {
+    data.forEach((item: WikisModifiedCount) => {
       total += item.amount
-      return total
     })
     return total
   }
