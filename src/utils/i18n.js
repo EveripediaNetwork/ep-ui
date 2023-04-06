@@ -39,6 +39,7 @@ export const resources = {
       bonds: 'Bonds',
       aboutUs: 'About us',
       careers: 'Careers',
+      usCareers: 'US Careers',
       brainies: 'brainies',
       resources: 'Resources',
       glossary: 'Glossary',

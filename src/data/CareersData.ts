@@ -1,7 +1,7 @@
 export type CareersDatatype = {
   title: string
   description: string
-  link: string
+  link?: string
   location: string
 }
 
