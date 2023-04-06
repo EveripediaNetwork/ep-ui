@@ -16,7 +16,7 @@ import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
-import SignTokenMessage from '../account/SignTokenMessage'
+import SignTokenMessage from '../settings/account/SignTokenMessage'
 
 const Admin = () => {
   const router = useRouter()

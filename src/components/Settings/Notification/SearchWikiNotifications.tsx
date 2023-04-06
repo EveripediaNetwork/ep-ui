@@ -249,7 +249,7 @@ const SearchWikiNotifications = () => {
           onSubmit={e => {
             e.preventDefault()
             router.push({
-              pathname: '/account/settings',
+              pathname: '/settings/account',
               query: { tab: 'notifications', q: query },
             })
           }}
@@ -277,7 +277,7 @@ const SearchWikiNotifications = () => {
                   })
                   if (!e.target.value) {
                     router.push({
-                      pathname: '/account/settings',
+                      pathname: '/settings/account',
                       query: { tab: 'notifications' },
                     })
                   }
@@ -313,7 +313,7 @@ const SearchWikiNotifications = () => {
                     justify="center"
                   >
                     <LinkButton
-                      href={`/account/settings?tab=notifications&q=${query}`}
+                      href={`/settings/account?tab=notifications&q=${query}`}
                       variant="outline"
                     >
                       +View {totalUnrenderedWikis} more Results

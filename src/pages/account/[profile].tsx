@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (userIdentifier === 'settings') {
     return {
       redirect: {
-        destination: `/account/settings`,
+        destination: `/settings/account`,
         permanent: false,
       },
     }
