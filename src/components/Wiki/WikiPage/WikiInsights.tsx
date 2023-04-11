@@ -105,7 +105,7 @@ const WikiInsights = ({
           />
           <ProfileSummary wiki={wiki} />
           <Box w="full" display={{ base: 'none', xl: 'block' }}>
-            <ContentFeedback feedback wikiId={wiki.id} userId={userAddress} />
+            <ContentFeedback choice wikiId={wiki.id} userId={userAddress} />
           </Box>
           {!!coingeckoLink && (
             <>
