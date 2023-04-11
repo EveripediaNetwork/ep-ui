@@ -11,9 +11,15 @@ export type EditorsType = {
 }
 
 export type ContentFeedbackArgs = {
-  wikiId: string
-  userId?: string
-  choice: boolean
+  contentId: string
+  userId: string
+  feedback: ContentFeedbackType
+}
+
+export enum ContentFeedbackType {
+  positive = 'POSITIVE',
+  negative = 'NEGATIVE',
+  neutral = 'NEUTRAL',
 }
 
 export type WikisModifiedCount = {
@@ -171,7 +177,7 @@ export interface EditorsTable {
     ipfs: string
     wikiId: string
   }[]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   lastCreatedWiki: any
   editorAvatar: string
   latestActivity: string

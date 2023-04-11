@@ -238,11 +238,16 @@ export const REVALIDATE_URL = gql`
 
 export const CONTENT_FEEDBACK = gql`
   mutation ContentFeedback(
-    $wikiId: String!
-    $userId: String
-    $choice: Boolean!
+    $contentId: String!
+    $userId: String!
+    $feedback: ContentFeedbackType
   ) {
-    contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)
+    contentFeedback(
+      site: IQWIKI
+      contentId: $contentId
+      userId: $userId
+      feedback: $feedback
+    )
   }
 `
 export const CHECK_ADMIN = gql`
