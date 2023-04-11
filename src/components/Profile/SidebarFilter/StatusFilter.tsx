@@ -61,7 +61,7 @@ export const StatusFilter = () => {
       <AccordionButton>Status</AccordionButton>
       <AccordionPanel>
         <SimpleGrid columns={2} spacing="2">
-          {options.map(option => (
+          {options.map((option) => (
             <StatusFilterButton
               key={option}
               {...getCheckboxProps({ value: option })}

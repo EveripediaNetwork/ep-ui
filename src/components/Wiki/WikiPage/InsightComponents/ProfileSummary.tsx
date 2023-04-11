@@ -65,29 +65,29 @@ const ProfileListItem = ({
 )
 
 const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
-  const socialMetaData = wiki.metadata.filter(meta =>
+  const socialMetaData = wiki.metadata.filter((meta) =>
     WikiPossibleSocialsList.includes(meta.id as CommonMetaIds),
   )
 
   if (!socialMetaData.length) return null
 
   const socialLinksData = socialMetaData.filter(
-    item =>
-      LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+    (item) =>
+      LINK_OPTIONS.find((option) => option.id === item.id)?.type ===
       LinkType.SOCIAL,
   )
   const explorerLinksData = socialMetaData.filter(
-    item =>
-      LINK_OPTIONS.find(option => option.id === item.id)?.type ===
+    (item) =>
+      LINK_OPTIONS.find((option) => option.id === item.id)?.type ===
       LinkType.EXPLORER,
   )
 
   const contractURL = socialMetaData.find(
-    item => item.id === CommonMetaIds.CONTRACT_URL,
+    (item) => item.id === CommonMetaIds.CONTRACT_URL,
   )?.value
 
   const websiteLink = socialMetaData.find(
-    item => item.id === CommonMetaIds.WEBSITE,
+    (item) => item.id === CommonMetaIds.WEBSITE,
   )?.value
 
   return (
@@ -134,12 +134,14 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             <Wrap spacing={2}>
               {socialLinksData
                 .filter(
-                  item =>
-                    LINK_OPTIONS.find(option => option.id === item.id)?.type ===
-                    LinkType.SOCIAL,
+                  (item) =>
+                    LINK_OPTIONS.find((option) => option.id === item.id)
+                      ?.type === LinkType.SOCIAL,
                 )
                 .map((social, i: number) => {
-                  const Ico = LINK_OPTIONS.find(li => li.id === social.id)?.icon
+                  const Ico = LINK_OPTIONS.find(
+                    (li) => li.id === social.id,
+                  )?.icon
                   return (
                     <Link
                       target="_blank"
@@ -171,7 +173,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         )}
         {explorerLinksData.length > 0 && (
           <ProfileListItem title="Explorers">
-            {explorerLinksData.map(item => (
+            {explorerLinksData.map((item) => (
               <HStack>
                 <Link
                   color="brandLinkColor"
@@ -185,7 +187,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
                     textDecoration: 'underline',
                   }}
                 >
-                  {LINK_OPTIONS.find(option => option.id === item.id)?.label}
+                  {LINK_OPTIONS.find((option) => option.id === item.id)?.label}
                 </Link>
                 <Icon color="brandLinkColor" as={RiExternalLinkLine} />
               </HStack>

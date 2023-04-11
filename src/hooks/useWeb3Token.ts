@@ -11,7 +11,7 @@ export const useWeb3Token = () => {
 
   const generateNewTokenAndStore = useCallback(async () => {
     if (!signer) return
-    const freshToken = await sign(msg => signer.signMessage(msg), {
+    const freshToken = await sign((msg) => signer.signMessage(msg), {
       statement:
         'Welcome to IQ.Wiki ! Click to sign in and accept the IQ.Wiki Terms of Service: https://everipedia.com/static/terms. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. ',
       expires_in: '1h',

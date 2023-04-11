@@ -14,13 +14,13 @@ type TagValue = MultiValue<{
 const TagsInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [value, setValue] = useState<TagValue>(
-    wiki.tags.map(ta => ({ label: ta.id, value: ta.id })),
+    wiki.tags.map((ta) => ({ label: ta.id, value: ta.id })),
   )
   const handleOnchange = (item: TagValue) => {
     setValue(item)
     dispatch({
       type: 'wiki/setTags',
-      payload: item.map(ta => ({ id: ta.value })),
+      payload: item.map((ta) => ({ id: ta.value })),
     })
   }
 
@@ -44,8 +44,8 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
           isMulti
           size="sm"
           options={TagsSuggestions}
-          onChange={item => handleOnchange(item)}
-          defaultValue={wiki.tags.map(ta => ({
+          onChange={(item) => handleOnchange(item)}
+          defaultValue={wiki.tags.map((ta) => ({
             label: ta.id,
             value: ta.id,
           }))}

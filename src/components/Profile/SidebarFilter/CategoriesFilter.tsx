@@ -62,7 +62,7 @@ const CategoryFilterItem = (props: CategoryFilterItemProps) => {
   const { value } = props
   const { state, getInputProps, getLabelProps, htmlProps } = useCheckbox(props)
 
-  const category = CATEGORIES.find(cat => cat.name === value)
+  const category = CATEGORIES.find((cat) => cat.name === value)
 
   const checkIcon = (
     <Circle size={7} borderWidth={1}>

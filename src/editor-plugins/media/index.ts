@@ -53,7 +53,7 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(tr.scrollIntoView())
         return true
       },
-      insertVideo: payload => {
+      insertVideo: (payload) => {
         const text = `[YOUTUBE@VID](${payload.alt})`
         const editor = wikiEditorRef.current?.getInstance()
         if (editor) {
@@ -72,7 +72,7 @@ export default function media(context: PluginContext): PluginInfo {
         dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
         return true
       },
-      insertVideo: payload => {
+      insertVideo: (payload) => {
         const text = `[YOUTUBE@VID](${payload.alt})`
         const editor = wikiEditorRef.current?.getInstance()
         if (editor) {

@@ -57,7 +57,7 @@ const GlossaryItem = ({
             direction="column"
             gap="14"
           >
-            {glossary?.map(ob => (
+            {glossary?.map((ob) => (
               <>
                 {cardOrder(ob.title, item) === 1 && (
                   <GlossaryWikiCard

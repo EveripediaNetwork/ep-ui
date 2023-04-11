@@ -2,7 +2,7 @@ import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<string>,
 ) {
   const apiUrl = config.graphqlUrl.replace('/graphql', '')

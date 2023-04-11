@@ -12,14 +12,14 @@ interface ProfileLinksProps {
 type Social = keyof typeof dt
 
 const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
-  const socialsWithURl = Object.entries(links || {}).filter(e =>
+  const socialsWithURl = Object.entries(links || {}).filter((e) =>
     Boolean(e[1]),
-  ) as Array<[Social, string?]>
+  ) as [Social, string?][]
 
   return (
     <HStack justify="center" align="center" spacing={4}>
       {links &&
-        socialsWithURl.map(social => {
+        socialsWithURl.map((social) => {
           return (
             <Link
               position="relative"

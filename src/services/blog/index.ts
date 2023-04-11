@@ -17,9 +17,9 @@ export const ArweaveApi = createApi({
   baseQuery: graphqlRequestBaseQuery({
     url: 'https://arweave.net/graphql',
   }),
-  endpoints: builder => ({
-    getBlogEntries: builder.query<RawTransactions, Array<string>>({
-      query: (addresses: Array<string>) => ({
+  endpoints: (builder) => ({
+    getBlogEntries: builder.query<RawTransactions, string[]>({
+      query: (addresses: string[]) => ({
         document: FETCH_TRANSACTIONS,
         variables: { addresses },
       }),

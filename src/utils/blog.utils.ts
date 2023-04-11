@@ -73,7 +73,7 @@ export const getEntryPaths = ({
         timestamp: node.block.timestamp,
       }
     })
-    .filter(entry => entry.slug && entry.slug !== '')
+    .filter((entry) => entry.slug && entry.slug !== '')
     .reduce((acc: EntryPath[], current) => {
       const x = acc.findIndex((entry: EntryPath) => entry.slug === current.slug)
       if (x === -1) return acc.concat([current])
@@ -112,7 +112,7 @@ const mapEntry = async (entry: EntryPath) => {
     }
 
     return undefined
-  } catch (error) {
+  } catch (_error) {
     return null
   }
 }

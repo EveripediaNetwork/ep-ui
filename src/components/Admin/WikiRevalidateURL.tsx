@@ -60,7 +60,7 @@ export const WikiRevalidateURL = () => {
         <FormLabel htmlFor="username">Enter URL</FormLabel>
         <Input
           mb={5}
-          onChange={e => {
+          onChange={(e) => {
             handleManualValidation(e.target.value)
           }}
         />

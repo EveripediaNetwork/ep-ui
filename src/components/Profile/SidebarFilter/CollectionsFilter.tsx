@@ -46,7 +46,7 @@ const CollectionFilterItem = (props: CollectionFilterItemProps) => {
   const { value } = props
   const { state, getInputProps, getLabelProps, htmlProps } = useCheckbox(props)
 
-  const collection = COLLECTIONS.find(col => col.name === value)
+  const collection = COLLECTIONS.find((col) => col.name === value)
 
   const checkIcon = (
     <Circle size={7} borderWidth={1}>
@@ -84,7 +84,7 @@ export const CollectionsFilter = () => {
     defaultValue: [],
   })
 
-  const valueCollections = COLLECTIONS.filter(col => value.includes(col.name))
+  const valueCollections = COLLECTIONS.filter((col) => value.includes(col.name))
 
   let filteredCollections = COLLECTIONS
 
@@ -96,12 +96,12 @@ export const CollectionsFilter = () => {
 
   // Prevent filtering out chosen collections
   const valuesNotInFilter = valueCollections.filter(
-    col => !filteredCollections.some(fCol => fCol.name === col.name),
+    (col) => !filteredCollections.some((fCol) => fCol.name === col.name),
   )
   filteredCollections = [...filteredCollections, ...valuesNotInFilter]
 
   // sort checked collections to bw above
-  filteredCollections = filteredCollections.sort(a =>
+  filteredCollections = filteredCollections.sort((a) =>
     value.includes(a.name) ? -1 : 1,
   )
 
@@ -125,7 +125,7 @@ export const CollectionsFilter = () => {
           <Input
             placeholder="Filter"
             value={query}
-            onChange={ev => setQuery(ev.target.value)}
+            onChange={(ev) => setQuery(ev.target.value)}
           />
         </InputGroup>
         <List mt="4" h="72" overflowY="scroll">

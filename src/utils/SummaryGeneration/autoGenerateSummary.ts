@@ -47,9 +47,9 @@ export const generateSummary = async (
       )
 
       const choices = completion.data.choices.map(
-        c => c.message.content as string,
+        (c) => c.message.content as string,
       )
-      validChoices = choices.filter(c => c.length <= 255)
+      validChoices = choices.filter((c) => c.length <= 255)
       allGeneratedSummaries = [...allGeneratedSummaries, ...choices]
     } while (validChoices.length === 0 && tries <= GPT3_MAX_TRIES)
 
@@ -60,5 +60,5 @@ export const generateSummary = async (
   }
 
   if (!validChoices) return undefined
-  return validChoices.map(c => c.trim().replaceAll('\\n', ' '))
+  return validChoices.map((c) => c.trim().replaceAll('\\n', ' '))
 }

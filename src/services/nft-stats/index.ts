@@ -27,7 +27,7 @@ export const nftStatsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.coingecko.com/api/v3/',
   }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getNFTStats: builder.query<NFTStats, string>({
       query: (nftID: string) => `nfts/${nftID}`,
     }),

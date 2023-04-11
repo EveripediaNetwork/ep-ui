@@ -56,7 +56,7 @@ export const store = configureStore({
     [notificationSubscriptionApi.reducerPath]:
       notificationSubscriptionApi.reducer,
   },
-  middleware: gDM =>
+  middleware: (gDM) =>
     gDM({ serializableCheck: true })
       .concat(MirrorApi.middleware)
       .concat(ArweaveApi.middleware)

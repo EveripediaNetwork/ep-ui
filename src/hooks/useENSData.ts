@@ -16,7 +16,7 @@ export const useENSData = (address?: string | null, skip?: boolean) => {
       )
       if (data) {
         setAvatar(data.avatar)
-        setDisplayName(p =>
+        setDisplayName((p) =>
           data.displayName.endsWith('.eth') ? data.displayName : p,
         )
       }

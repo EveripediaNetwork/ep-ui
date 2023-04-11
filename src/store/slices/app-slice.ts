@@ -7,7 +7,7 @@ interface ILoadAppDetails {
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const setAll = (state: any, properties: any) => {
   const props = Object.keys(properties)
-  props.forEach(key => {
+  props.forEach((key) => {
     state[key] = properties[key]
   })
 }
@@ -43,9 +43,9 @@ const appSlice = createSlice({
       state.isDrawerOpen = action.payload
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(loadAppDetails.pending, state => {
+      .addCase(loadAppDetails.pending, (state) => {
         state.loading = true
       })
       .addCase(loadAppDetails.fulfilled, (state, action) => {

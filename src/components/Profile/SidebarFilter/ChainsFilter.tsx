@@ -37,7 +37,7 @@ const ChainFilterItem = (props: ChainFilterItemProps) => {
   const { value } = props
   const { state, getInputProps, getLabelProps, htmlProps } = useCheckbox(props)
 
-  const chain = CHAINS.find(ch => ch.name === value)
+  const chain = CHAINS.find((ch) => ch.name === value)
 
   const checkIcon = (
     <Circle size={7} borderWidth={1}>

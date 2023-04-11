@@ -65,10 +65,12 @@ const initialState: Wiki = {
   promoted: 0,
   tags: [],
   metadata: [
-    ...Object.values({ ...CommonMetaIds, ...EditSpecificMetaIds }).map(mID => ({
-      id: mID,
-      value: '',
-    })),
+    ...Object.values({ ...CommonMetaIds, ...EditSpecificMetaIds }).map(
+      (mID) => ({
+        id: mID,
+        value: '',
+      }),
+    ),
   ],
   user: {
     id: '',
@@ -172,7 +174,7 @@ const wikiSlice = createSlice({
     removeMedia(state, action) {
       if (state.media) {
         const updatedMedia = state.media.filter(
-          media => media.id !== action.payload.id,
+          (media) => media.id !== action.payload.id,
         )
         const newState = {
           ...state,
@@ -186,7 +188,7 @@ const wikiSlice = createSlice({
     updateMediaDetails(state, action) {
       if (state.media) {
         const findMediaIndex = state.media.findIndex(
-          media => media.id === action.payload.id,
+          (media) => media.id === action.payload.id,
         )
         const updatedMedia = [...state.media]
         updatedMedia[findMediaIndex] = {
@@ -262,7 +264,7 @@ const wikiSlice = createSlice({
         action.payload as BaseEvents
 
       const index = state.events
-        ? state.events?.findIndex(e => e.date === date)
+        ? state.events?.findIndex((e) => e.date === date)
         : -1
 
       if (index !== -1) {
@@ -306,7 +308,7 @@ const wikiSlice = createSlice({
       if (state.events) {
         if (state.events.length === 1) {
           const updatedEvents = state.events.filter(
-            event => event.date !== action.payload.date,
+            (event) => event.date !== action.payload.date,
           )
 
           const newState = {
@@ -321,7 +323,7 @@ const wikiSlice = createSlice({
 
       if (state.events && state.events?.length > 1) {
         const firstEvent = state.events.find(
-          event => event.type === EventType.CREATED,
+          (event) => event.type === EventType.CREATED,
         )
 
         if (action.payload.date === firstEvent?.date) {
@@ -329,7 +331,7 @@ const wikiSlice = createSlice({
         }
 
         const updatedEvents = state.events.filter(
-          event => event.date !== action.payload.date,
+          (event) => event.date !== action.payload.date,
         )
 
         const newState = {

@@ -23,7 +23,7 @@ const HighlightsModal = ({
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
-  const currentWiki = useAppSelector(state => state.wiki)
+  const currentWiki = useAppSelector((state) => state.wiki)
 
   if (!isOpen) return null
 

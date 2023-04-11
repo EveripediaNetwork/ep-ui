@@ -5,7 +5,7 @@ export const getUsername = (user?: User | Author, ensDomain?: string) => {
   if (!user) {
     return 'Unknown'
   }
-  if (user.profile && user.profile.username) {
+  if (user.profile?.username) {
     return user.profile.username
   }
   if (ensDomain) {

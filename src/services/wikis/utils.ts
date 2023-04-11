@@ -15,7 +15,7 @@ export const incrementWikiViewCount = async (slug: string) => {
   const visitedWikis: { slug: string; timestamp: number }[] = JSON.parse(
     localStorage.getItem('VISITED_WIKIS') || '[]',
   )
-  const visitedWiki = visitedWikis.find(w => w.slug === slug)
+  const visitedWiki = visitedWikis.find((w) => w.slug === slug)
 
   if (
     !visitedWiki ||
@@ -57,7 +57,7 @@ export const useWikiSubRecommendations = (userId?: string) => {
       await Promise.all([
         store.dispatch(getUserCreatedWikis.initiate({ id: userId, limit: 10 })),
         store.dispatch(getUserEditedWikis.initiate({ id: userId, limit: 10 })),
-      ]).then(res => {
+      ]).then((res) => {
         const [createdWikis, editedWikis] = res
         userModifiedWikis = shuffleArray([
           ...(createdWikis.data || []),
@@ -70,40 +70,40 @@ export const useWikiSubRecommendations = (userId?: string) => {
         newRecommendations = userModifiedWikis
           .filter(
             (w, i, self) =>
-              i === self.findIndex(t => t.content[0].id === w.content[0].id),
+              i === self.findIndex((t) => t.content[0].id === w.content[0].id),
           )
-          .filter(w => !wikiSubs?.find(s => s.auxiliaryId === w.content[0].id))
+          .filter(
+            (w) => !wikiSubs?.find((s) => s.auxiliaryId === w.content[0].id),
+          )
           .slice(0, 3)
       } else {
-        const getNewRecommendation: () =>
-          | Activity
-          | UserActivity
-          | null = () => {
-          let randomWiki: Activity | UserActivity | null = null
-          userModifiedWikis.every(w => {
-            const isWikiAlreadyRecommended = recommendations.find(
-              r => r.content[0].id === w.content[0].id,
-            )
-            const isWikiAlreadySubscribed = wikiSubs?.find(
-              s => s.auxiliaryId === w.content[0].id,
-            )
-            if (!isWikiAlreadyRecommended && !isWikiAlreadySubscribed) {
-              randomWiki = w
-              return false
-            }
-            return true
-          })
-          return randomWiki
-        }
+        const getNewRecommendation: () => Activity | UserActivity | null =
+          () => {
+            let randomWiki: Activity | UserActivity | null = null
+            userModifiedWikis.every((w) => {
+              const isWikiAlreadyRecommended = recommendations.find(
+                (r) => r.content[0].id === w.content[0].id,
+              )
+              const isWikiAlreadySubscribed = wikiSubs?.find(
+                (s) => s.auxiliaryId === w.content[0].id,
+              )
+              if (!isWikiAlreadyRecommended && !isWikiAlreadySubscribed) {
+                randomWiki = w
+                return false
+              }
+              return true
+            })
+            return randomWiki
+          }
 
         // GET NEW RECOMMENDATION
         const newWiki = getNewRecommendation()
 
         // REPLACE OLD SUBSCRIBED RECOMMENDATION
         newRecommendations = recommendations
-          .map(r => {
+          .map((r) => {
             const isWikiAlreadySubscribed = wikiSubs?.find(
-              s => s.auxiliaryId === r.content[0].id,
+              (s) => s.auxiliaryId === r.content[0].id,
             )
             if (isWikiAlreadySubscribed) {
               return newWiki || null

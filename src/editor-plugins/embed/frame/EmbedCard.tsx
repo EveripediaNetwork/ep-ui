@@ -94,7 +94,7 @@ export const EmbedCard = ({
       {isOpen && (
         <Box borderWidth="1px" p="10px !important" mt="10px">
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault()
               initializeEmbed(type, url.replace('https://dune.com/embeds/', ''))
             }}

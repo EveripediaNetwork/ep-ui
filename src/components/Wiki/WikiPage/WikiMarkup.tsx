@@ -28,7 +28,7 @@ const MobileMeta = (wiki: {
 }) => {
   const { metadata, relatedWikis, media, id } = wiki
   const twitterLink = metadata.find(
-    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+    (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
 
   const userAddress = getUserAddressFromCache()

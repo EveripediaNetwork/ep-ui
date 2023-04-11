@@ -50,9 +50,9 @@ export const PromoteCreatedWikisModal = (
   const [value, setValue] = useState('2')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
-  const Data = ModalData && ModalData[0]
+  const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
   })

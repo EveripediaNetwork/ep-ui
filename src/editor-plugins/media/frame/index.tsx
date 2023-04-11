@@ -58,7 +58,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
 
   return (
     <Box>
-      {media && media.length ? (
+      {media?.length ? (
         <Box>
           <Heading fontSize="20px" mb="2px">
             Insert Media
@@ -72,7 +72,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             wiki.
           </Text>
           <SimpleGrid columns={3} gap={4}>
-            {media.map(m => {
+            {media.map((m) => {
               if (m.source === 'IPFS_IMG') {
                 return (
                   <Box key={m.id} pos="relative" h="100%">
