@@ -57,7 +57,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const clipboard = useClipboard(customLink || '')
   const toast = useToast()
   const { addressRank, leaderboard } = useAppSelector(
-    state => state.leaderboard,
+    (state) => state.leaderboard,
   )
   const dispatch = useAppDispatch()
   const isFetched = useRef(false)

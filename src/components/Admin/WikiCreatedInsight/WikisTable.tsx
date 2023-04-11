@@ -59,9 +59,7 @@ export const WikisTable = (props: WikisTableProps) => {
                     <Avatar
                       cursor="pointer"
                       name={item.author?.profile?.username}
-                      src={`${config.pinataBaseUrl}${
-                        item.images && item.images[0].id
-                      }  `}
+                      src={`${config.pinataBaseUrl}${item.images?.[0].id}  `}
                     />
                     <Flex flexDirection="column">
                       <Link href={`/wiki/${item.id}`} py={1}>

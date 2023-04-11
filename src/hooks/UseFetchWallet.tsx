@@ -17,7 +17,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
     const newIqData = refetchIqData()
     const newMaticData = refetchMaticData()
     const response = await Promise.all([newIqData, newMaticData])
-    const convertedResult: WalletBalanceType[] = response.map(res => ({
+    const convertedResult: WalletBalanceType[] = response.map((res) => ({
       data: {
         formatted: res.data?.formatted,
         symbol: res.data?.symbol,

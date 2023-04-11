@@ -27,16 +27,16 @@ export type WikiInsights =
       type: 'explorers'
       title: string
       titleTag?: string
-      content: Array<string>
+      content: string[]
     }
   | {
       type: 'socials'
       title: string
       titleTag?: string
-      content: Array<{
+      content: {
         icon: string
         url: string
-      }>
+      }[]
     }
   | {
       type: 'market-statistics'

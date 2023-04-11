@@ -68,7 +68,7 @@ const debouncedFetchResults = debounce(
       fetchWikisList(query),
       fetchCategoriesList(query),
       fetchAccountsList({ id: query, username: query }),
-    ]).then(res => {
+    ]).then((res) => {
       const [wikis = [], categories = [], accounts = []] = res
       cb({ wikis, categories, accounts })
     })
@@ -89,7 +89,7 @@ export const useNavSearch = () => {
   useEffect(() => {
     if (query && query.length >= 3) {
       setIsLoading(true)
-      debouncedFetchResults(query, res => {
+      debouncedFetchResults(query, (res) => {
         if (!res.accounts && !res.wikis && !res.categories) {
           logEvent({
             action: 'SEARCH_NO_RESULTS',

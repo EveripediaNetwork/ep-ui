@@ -83,7 +83,7 @@ const NavSearch = (props: NavSearchProps) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  useEventListener('keydown', event => {
+  useEventListener('keydown', (event) => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
     const el = event.target as Element | undefined
@@ -144,10 +144,8 @@ const NavSearch = (props: NavSearchProps) => {
 
   const wikisSearchList = (
     <>
-      {results.wikis?.slice(0, WIKIS_LIMIT).map(wiki => {
-        const wikiImage = `${config.pinataBaseUrl}${
-          wiki.images && wiki.images[0].id
-        }`
+      {results.wikis?.slice(0, WIKIS_LIMIT).map((wiki) => {
+        const wikiImage = `${config.pinataBaseUrl}${wiki.images?.[0].id}`
         const value = fillType(wiki, SEARCH_TYPES.WIKI)
         // This negates the bug that is caused by two wikis with the same title.
         // value.title = `${article.title}${article.id}`
@@ -155,7 +153,7 @@ const NavSearch = (props: NavSearchProps) => {
           <AutoCompleteItem
             key={wiki.id}
             value={value}
-            getValue={art => art.title}
+            getValue={(art) => art.title}
             label={wiki.title}
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
@@ -184,7 +182,7 @@ const NavSearch = (props: NavSearchProps) => {
               maxWidth="fit-content"
               display={wiki.tags.length > 0 ? 'flex' : 'none'}
             >
-              {wiki.tags?.map(tag => (
+              {wiki.tags?.map((tag) => (
                 <chakra.div
                   key={`${wiki.id}-${tag.id}`}
                   fontWeight="medium"
@@ -211,13 +209,13 @@ const NavSearch = (props: NavSearchProps) => {
 
   const accountsSearchList = (
     <>
-      {results.accounts?.slice(0, ACCOUNTS_LIMIT).map(account => {
+      {results.accounts?.slice(0, ACCOUNTS_LIMIT).map((account) => {
         const value = fillType(account, SEARCH_TYPES.ACCOUNT)
         return (
           <AutoCompleteItem
             key={account.id}
             value={value}
-            getValue={acc => acc.username}
+            getValue={(acc) => acc.username}
             label={account.bio}
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
@@ -243,13 +241,13 @@ const NavSearch = (props: NavSearchProps) => {
 
   const categoriesSearchList = (
     <>
-      {results.categories?.slice(0, CATEGORIES_LIMIT).map(category => {
+      {results.categories?.slice(0, CATEGORIES_LIMIT).map((category) => {
         const value = fillType(category, SEARCH_TYPES.CATEGORY)
         return (
           <AutoCompleteItem
             key={category.id}
             value={value}
-            getValue={art => art.title}
+            getValue={(art) => art.title}
             label={category.title}
             onClick={() => setHamburger(false)}
             {...generalItemStyles}
@@ -294,9 +292,9 @@ const NavSearch = (props: NavSearchProps) => {
         disableFilter
         suggestWhenEmpty
         emptyState={!isLoading && noResults && emptyState}
-        shouldRenderSuggestions={q => q.length >= 3}
+        shouldRenderSuggestions={(q) => q.length >= 3}
         openOnFocus={query.length >= 3}
-        onSelectOption={option => {
+        onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
           logEvent({
@@ -323,7 +321,7 @@ const NavSearch = (props: NavSearchProps) => {
           <AutoCompleteInput
             ml={{ base: '15px', xl: 'unset' }}
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Search wikis, categories, tags and users"
             _placeholderShown={{
               textOverflow: 'ellipsis',

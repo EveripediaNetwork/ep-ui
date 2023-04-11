@@ -18,7 +18,7 @@ export const TrendingSkeleton = () => {
       gap="5"
       overflow="hidden"
     >
-      {itemsCount.map((item, i) => (
+      {itemsCount.map((_item, i) => (
         <HStack w="full">
           <chakra.span minW="2" alignSelf="center">
             {i + 1}

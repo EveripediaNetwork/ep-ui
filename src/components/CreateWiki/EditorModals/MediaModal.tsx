@@ -40,7 +40,7 @@ const MediaModal = ({
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
-  const wiki = useAppSelector(state => state.wiki)
+  const wiki = useAppSelector((state) => state.wiki)
   const dispatch = useAppDispatch()
   const toast = useToast()
 
@@ -150,7 +150,7 @@ const MediaModal = ({
                 columns={{ base: 1, md: 2 }}
                 spacing={4}
               >
-                {wiki.media.map(media => (
+                {wiki.media.map((media) => (
                   <Flex
                     key={media.id}
                     gap={4}
@@ -212,7 +212,7 @@ const MediaModal = ({
                           maxW="28"
                           variant="outline"
                           value={media.type}
-                          onChange={e =>
+                          onChange={(e) =>
                             handleSetType(media.id, e.target.value as MediaType)
                           }
                         >
@@ -220,7 +220,7 @@ const MediaModal = ({
                           <option
                             disabled={
                               wiki.media?.find(
-                                m => m.type === MediaType.ICON,
+                                (m) => m.type === MediaType.ICON,
                               ) !== undefined
                             }
                             value={MediaType.ICON}

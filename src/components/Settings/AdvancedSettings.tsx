@@ -61,7 +61,7 @@ const AdvancedSettings = () => {
               colorScheme="pink"
               isChecked={isSigningOptionRelayer}
               size="lg"
-              onChange={e => setIsSigningOptionRelayer(e.target.checked)}
+              onChange={(e) => setIsSigningOptionRelayer(e.target.checked)}
             >
               <VStack align="left" spacing={2} ml={4}>
                 <Heading fontSize="md">Sign Edits with Relayer</Heading>

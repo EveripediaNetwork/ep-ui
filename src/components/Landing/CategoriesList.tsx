@@ -73,7 +73,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map(category => (
+        {newCategoryList.map((category) => (
           <div key={category.id}>
             <LinkBox
               _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}

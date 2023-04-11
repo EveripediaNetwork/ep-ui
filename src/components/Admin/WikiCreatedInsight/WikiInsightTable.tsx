@@ -24,7 +24,7 @@ export const WikiInsightTable = () => {
   const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
   const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
-  const [wikis, setWikis] = useState<Array<CreatedWikisCount>>()
+  const [wikis, setWikis] = useState<CreatedWikisCount[]>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()

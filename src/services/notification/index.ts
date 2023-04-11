@@ -37,7 +37,7 @@ export const notificationSubscriptionApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     addSubscription: builder.mutation<string, SubscriptionArgs>({
       query: (addWikiSubscriptionArgs: SubscriptionArgs) => {
         return {
@@ -58,7 +58,7 @@ export const notificationSubscriptionApi = createApi({
           notificationSubscriptionApi.util.updateQueryData(
             'getAllWikiSubscription',
             userId,
-            list => [...list, { auxiliaryId, subscriptionType, wiki }],
+            (list) => [...list, { auxiliaryId, subscriptionType, wiki }],
           ),
         )
         try {
@@ -91,7 +91,7 @@ export const notificationSubscriptionApi = createApi({
           notificationSubscriptionApi.util.updateQueryData(
             'getAllWikiSubscription',
             userId,
-            list => list.filter(sub => sub.auxiliaryId !== auxiliaryId),
+            (list) => list.filter((sub) => sub.auxiliaryId !== auxiliaryId),
           ),
         )
         try {

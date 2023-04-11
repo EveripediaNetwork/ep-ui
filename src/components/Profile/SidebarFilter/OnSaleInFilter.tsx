@@ -76,7 +76,7 @@ export const OnSaleInFilter = () => {
     defaultValue: [],
   })
 
-  const valueCollections = COLLECTIONS.filter(col => value.includes(col))
+  const valueCollections = COLLECTIONS.filter((col) => value.includes(col))
 
   let filteredCollections = COLLECTIONS
 
@@ -87,7 +87,7 @@ export const OnSaleInFilter = () => {
 
   // Prevent filtering out chosen collections
   const valuesNotInFilter = valueCollections.filter(
-    col => !filteredCollections.some(fCol => fCol === col),
+    (col) => !filteredCollections.some((fCol) => fCol === col),
   )
   filteredCollections = [...filteredCollections, ...valuesNotInFilter]
 
@@ -111,7 +111,7 @@ export const OnSaleInFilter = () => {
           <Input
             placeholder="Filter"
             value={query}
-            onChange={ev => setQuery(ev.target.value)}
+            onChange={(ev) => setQuery(ev.target.value)}
           />
         </InputGroup>
         <List mt="4" h="72" overflowY="scroll">

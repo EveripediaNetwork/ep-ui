@@ -49,7 +49,7 @@ export const ProfileLinks = ({
             <Input
               variant="flushed"
               value={twitter}
-              onChange={e => setTwitter(e.target.value)}
+              onChange={(e) => setTwitter(e.target.value)}
               _focus={{ borderBottomColor: 'inherit' }}
               placeholder="Your Twitter Handle"
             />
@@ -62,7 +62,7 @@ export const ProfileLinks = ({
             <Input
               _focus={{ borderBottomColor: 'inherit' }}
               value={instagram}
-              onChange={e => setInstagram(e.target.value)}
+              onChange={(e) => setInstagram(e.target.value)}
               variant="flushed"
               placeholder="Your Instagram Handle"
             />
@@ -76,7 +76,7 @@ export const ProfileLinks = ({
               borderBottomWidth="0"
               _focus={{ borderBottomColor: 'inherit' }}
               value={website}
-              onChange={e => setWebsite(e.target.value)}
+              onChange={(e) => setWebsite(e.target.value)}
               type="url"
               variant="flushed"
               _invalid={{
@@ -113,7 +113,7 @@ export const ProfileEmail = forwardRef(
           <Input
             ref={ref}
             value={inputEmail.value}
-            onChange={e => {
+            onChange={(e) => {
               setInputEmail({
                 value: e.target.value,
                 error: validateEmail(e.target.value),
@@ -166,7 +166,7 @@ export const ProfileUsername = forwardRef(
           <Input
             ref={ref}
             value={inputUsername.value}
-            onChange={e => {
+            onChange={(e) => {
               setInputUsername({
                 value: e.target.value,
                 error: validateUsername(e.target.value, userAddress),
@@ -197,7 +197,7 @@ export const ProfileBio = forwardRef(
           <Textarea
             ref={ref}
             value={inputBio.value}
-            onChange={e => {
+            onChange={(e) => {
               setInputBio({
                 value: e.target.value,
                 error: validateBio(e.target.value),

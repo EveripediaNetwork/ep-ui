@@ -32,7 +32,7 @@ export const tokenStatsApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getTokenStats: builder.query<
       TokenStats,
       { tokenName: string; cmcTokenName?: string }

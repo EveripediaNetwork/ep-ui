@@ -26,7 +26,7 @@ export type BlogNode = {
   block: {
     timestamp: number
   }
-  tags: Array<BlogTag>
+  tags: BlogTag[]
 }
 
 export type BlogTag = {
@@ -36,8 +36,8 @@ export type BlogTag = {
 
 export type RawTransactions = {
   transactions: {
-    edges: Array<{
+    edges: {
       node: BlogNode
-    }>
+    }[]
   }
 }

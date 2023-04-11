@@ -85,7 +85,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       label: 'Share',
       icon: BiShareAlt,
       isDisabled: !wiki,
-      isActive: router.asPath === ``,
+      isActive: router.asPath === '',
       handleClick: onShareBoxOpen,
     },
   ]

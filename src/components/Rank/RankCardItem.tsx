@@ -37,9 +37,9 @@ const RankingItem = ({
       : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
   }`
 
-  const dateFounded =
-    item.events &&
-    item?.events.find(event => event.type === EventType.CREATED)?.date
+  const dateFounded = item?.events?.find(
+    (event) => event.type === EventType.CREATED,
+  )?.date
 
   return (
     <Tr>
@@ -125,7 +125,7 @@ const RankingItem = ({
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis && item.linkedWikis.founders ? (
+        {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
             {formatFoundersArray(item.linkedWikis.founders)
               .slice(0, MAX_LINKED_WIKIS)
@@ -151,7 +151,7 @@ const RankingItem = ({
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis && item.linkedWikis.blockchains ? (
+        {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)

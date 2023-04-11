@@ -119,7 +119,7 @@ const ImageCrop = ({
     setSaving(true)
     const canvas = document.createElement('canvas')
     canvasPreview(previewCropRef.current, canvas, crop)
-    canvas.toBlob(b => {
+    canvas.toBlob((b) => {
       if (b) {
         const reader = new FileReader()
         reader.readAsArrayBuffer(b)
@@ -181,7 +181,7 @@ const ImageCrop = ({
               <ReactCrop
                 aspect={WIKI_IMAGE_ASPECT_RATIO}
                 crop={crop}
-                onChange={c => setCrop(c)}
+                onChange={(c) => setCrop(c)}
               >
                 <Image
                   crossOrigin="anonymous"

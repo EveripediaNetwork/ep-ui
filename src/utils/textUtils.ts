@@ -46,7 +46,7 @@ export const slugifyText = (text: string) => {
 export const isValidUrl = (urlString: string) => {
   try {
     return Boolean(new URL(urlString))
-  } catch (e) {
+  } catch (_e) {
     return false
   }
 }
@@ -54,7 +54,7 @@ export const isValidUrl = (urlString: string) => {
 export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
-  markdownLinks?.every(link => {
+  markdownLinks?.every((link) => {
     const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
     const text = linkMatch?.[1]
     const url = linkMatch?.[2]

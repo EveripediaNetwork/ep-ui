@@ -10,11 +10,12 @@ export const EventsList = ({
 }: {
   handleFormChange: (e: Exclude<BaseEvents, 'type'>) => void
 }) => {
-  const wiki = useAppSelector(state => state.wiki)
+  const wiki = useAppSelector((state) => state.wiki)
   const dispatch = useAppDispatch()
   const [feedbackMessage, setFeedbackMessage] = useState<string>('')
-  const dateFoundedEvent =
-    wiki.events && wiki.events.find(event => event.type === EventType.CREATED)
+  const dateFoundedEvent = wiki.events?.find(
+    (event) => event.type === EventType.CREATED,
+  )
   const textFeedbackRef = useRef<HTMLParagraphElement>(null)
 
   const removeEventHandler = (date: string) => {
@@ -61,7 +62,7 @@ export const EventsList = ({
           borderColor: 'whiteAlpha.200',
         }}
       >
-        {wiki.events?.map(wikiEvent => (
+        {wiki.events?.map((wikiEvent) => (
           <Flex
             key={wikiEvent.date}
             gap="2"
@@ -133,7 +134,7 @@ export const EventsList = ({
                   bg: 'red.500',
                 }}
                 rounded="full"
-                onClick={e => {
+                onClick={(e) => {
                   e.stopPropagation()
                   removeEventHandler(wikiEvent.date)
                 }}
