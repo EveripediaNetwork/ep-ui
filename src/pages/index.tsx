@@ -62,7 +62,7 @@ export const Index = ({
       >
         <TrendingWikis
           trending={trending}
-          recent={recentWikis && recentWikis.slice(0, 5)}
+          recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
         <RankingList rankings={rankings} />

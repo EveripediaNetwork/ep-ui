@@ -47,8 +47,8 @@ const Glossary: NextPage = () => {
   ) => {
     if (!searchKeyword) return glossaryAlphabetsData
     if (!searchResult) return []
-    const filteredAlphabet = glossaryAlphabetsData.filter(currentAlphabet =>
-      searchResult.some(result =>
+    const filteredAlphabet = glossaryAlphabetsData.filter((currentAlphabet) =>
+      searchResult.some((result) =>
         currentAlphabet === '#'
           ? /^\d/.test(result.title)
           : result.title.charAt(0).toLowerCase() ===
@@ -60,7 +60,7 @@ const Glossary: NextPage = () => {
 
   const filterGlossaryBySearchQuery = (text: string) => {
     const searchResult = GlossaryWikis?.filter(
-      wiki =>
+      (wiki) =>
         wiki.summary.toLowerCase().includes(text.toLowerCase()) ||
         wiki.title.toLowerCase().includes(text.toLowerCase()),
     )
@@ -115,7 +115,7 @@ const Glossary: NextPage = () => {
           {!shouldBeFixed ? (
             <>
               <GlossaryFilterSection
-                setSearchText={text => setSearchText(text)}
+                setSearchText={(text) => setSearchText(text)}
                 shouldBeFixed={shouldBeFixed}
                 searchText={searchText}
                 searchPage={(text: string) => searchPage(text)}
@@ -127,7 +127,7 @@ const Glossary: NextPage = () => {
             <>
               {isVisible && (
                 <GlossaryFilterSection
-                  setSearchText={text => setSearchText(text)}
+                  setSearchText={(text) => setSearchText(text)}
                   shouldBeFixed={shouldBeFixed}
                   searchText={searchText}
                   searchPage={(text: string) => searchPage(text)}

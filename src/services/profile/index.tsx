@@ -34,7 +34,7 @@ type IsUsernameTakenData = {
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getUserSettings: builder.query<ProfileSettingsData, string>({
       query: (id: string) => ({
         document: GET_USER_SETTINGS,

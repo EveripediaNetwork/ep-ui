@@ -56,7 +56,7 @@ export const PriceFilter = () => {
             {currentCurrency}
           </MenuButton>
           <MenuList>
-            {Object.values(CURRENCIES).map(currency => (
+            {Object.values(CURRENCIES).map((currency) => (
               <MenuItem
                 key={currency}
                 h="12"

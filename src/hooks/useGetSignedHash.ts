@@ -62,7 +62,7 @@ export const useGetSignedHash = () => {
         deadline: deadline.current,
       },
     })
-      .then(response => {
+      .then((response) => {
         if (response) {
           setActiveStep(1)
         } else {
@@ -70,7 +70,7 @@ export const useGetSignedHash = () => {
           setMsg(defaultErrorMessage)
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading('error')
         setMsg(err.message || defaultErrorMessage)
         logEvent({
@@ -85,7 +85,7 @@ export const useGetSignedHash = () => {
   const verifyTrxHash = useCallback(
     async () => {
       let timePassed = 0
-      const timer = setInterval(() => {
+      const _timer = setInterval(() => {
         if (timePassed >= 60 * 1000 && gasPrice > 250) {
           setMsg(`A little congestion on the polygon chain is causing a delay in the 
           creation of your wiki.This would be resolved in a little while.`)
@@ -102,11 +102,10 @@ export const useGetSignedHash = () => {
                 category: 'wiki_error',
                 value: 1,
               })
-              clearInterval(timer)
+              clearInterval(_timer)
             }
             if (
-              trx &&
-              trx.data &&
+              trx?.data &&
               trx.data.status === 1 &&
               trx.data.confirmations > 1
             ) {
@@ -114,7 +113,7 @@ export const useGetSignedHash = () => {
               setActiveStep(3)
               setMsg(successMessage)
               // clear all edit based metadata from redux state
-              Object.values(EditSpecificMetaIds).forEach(id => {
+              Object.values(EditSpecificMetaIds).forEach((id) => {
                 dispatch({
                   type: 'wiki/updateMetadata',
                   payload: {
@@ -125,7 +124,7 @@ export const useGetSignedHash = () => {
               })
               setCommitMessage('')
               removeDraftFromLocalStorage()
-              clearInterval(timer)
+              clearInterval(_timer)
             }
           }
           checkTrx()
@@ -139,7 +138,7 @@ export const useGetSignedHash = () => {
             category: 'wiki_error',
             value: 1,
           })
-          clearInterval(timer)
+          clearInterval(_timer)
         }
         timePassed += 3000
       }, 3000)

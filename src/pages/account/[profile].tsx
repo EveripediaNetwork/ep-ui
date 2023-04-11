@@ -69,14 +69,14 @@ const Profile = ({ profileData }: ProfileProps) => {
 
 Profile.footer = false
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const userIdentifier = context.params?.profile as string
 
   // Redirect if /accounts/settings is hit
   if (userIdentifier === 'settings') {
     return {
       redirect: {
-        destination: `/settings/account`,
+        destination: '/settings/account',
         permanent: false,
       },
     }
@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   // Redirect to 404 if no match
   return {
     redirect: {
-      destination: `/404`,
+      destination: '/404',
       permanent: false,
     },
   }

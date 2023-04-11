@@ -30,14 +30,14 @@ export const Content = (props: ContentProps) => {
               </Text>
               <Select
                 cursor="pointer"
-                onChange={e => setValue(e.target.value)}
+                onChange={(e) => setValue(e.target.value)}
                 defaultValue={promotedWikis?.length}
               >
                 {promotedWikis &&
                   [...promotedWikis]
                     ?.sort((a, b) => a.promoted - b.promoted)
                     ?.slice(1)
-                    ?.map(item => (
+                    ?.map((item) => (
                       <option value={item.promoted}>
                         SLOT {item.promoted - 1} - {item.title}
                       </option>

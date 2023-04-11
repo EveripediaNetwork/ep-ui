@@ -31,8 +31,8 @@ jobs:
 
       - name: Installing dependencies
         run: yarn install --frozen-lockfile
-      - name: Lint
-        run: yarn lint
+      - name: Lint rome
+        run: yarn rome ci .
       - name: Build
         run: yarn build
       - name: Tests

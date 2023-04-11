@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
-const Error = () => {
+const ErrorPage = () => {
   const router = useRouter()
   return (
     <Container maxW="6xl">
@@ -62,4 +62,4 @@ const Error = () => {
   )
 }
 
-export default Error
+export default ErrorPage

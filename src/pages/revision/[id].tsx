@@ -29,7 +29,7 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
   const { id: ActivityId } = router.query
   const [isTocEmpty, setIsTocEmpty] = React.useState<boolean>(true)
   const [isLatest, setIsLatest] = React.useState<boolean>(true)
-  const toc = useAppSelector(state => state.toc)
+  const toc = useAppSelector((state) => state.toc)
   const [wikiData, setWikiData] = useState(wiki)
 
   const wikiId = wikiData?.content[0].id
@@ -144,7 +144,7 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
   if (typeof id !== 'string') {
     return {

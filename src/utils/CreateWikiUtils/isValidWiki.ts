@@ -25,21 +25,22 @@ const checkErrors = (
 }
 
 const isMediaUploading = (wiki: Wiki) =>
-  !wiki.media?.every(m => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))
+  !wiki.media?.every((m) => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))
 
 const isSummaryExceedsLimit = (wiki: Wiki) =>
   !!(wiki.summary && wiki.summary.length > WIKI_SUMMARY_LIMIT)
 
 const isCitationInvalid = (wiki: Wiki) => {
   return (
-    wiki.metadata.find(meta => meta.id === 'references')?.value.length === 0 ||
-    !wiki.metadata.find(meta => meta.id === 'references') ||
-    !wiki.metadata.find(meta => meta.id === 'references')?.value
+    wiki.metadata.find((meta) => meta.id === 'references')?.value.length ===
+      0 ||
+    !wiki.metadata.find((meta) => meta.id === 'references') ||
+    !wiki.metadata.find((meta) => meta.id === 'references')?.value
   )
 }
 
 const NO_WIKI_TITLE_ERROR = 'Add a Title at the top for this Wiki to continue'
-const TITLE_EXCEEDS_LIMIT_ERROR = `Title should be less than 60 characters`
+const TITLE_EXCEEDS_LIMIT_ERROR = 'Title should be less than 60 characters'
 const NO_WIKI_CONTENT_ERROR = 'Add a Content section to continue'
 const SUMMARY_EXCEEDS_LIMIT_ERROR = `Summary exceeds maximum limit of ${WIKI_SUMMARY_LIMIT}`
 const NO_WIKI_IMAGES_ERROR = 'Add a main image on the right column to continue'

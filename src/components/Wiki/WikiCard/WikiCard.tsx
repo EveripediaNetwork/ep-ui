@@ -18,13 +18,13 @@ interface WikiCardProps {
 }
 
 interface IBlogTags {
-  tags: Array<TagType>
+  tags: TagType[]
   marginTop?: SpaceProps['marginTop']
 }
 
 const BlogTags: React.FC<IBlogTags> = ({ tags, marginTop }) => (
   <HStack spacing={2} marginTop={marginTop}>
-    {tags.map(tag => (
+    {tags.map((tag) => (
       <Tag size="md" variant="solid" colorScheme="orange" key={tag.id}>
         {tag.id}
       </Tag>

@@ -94,7 +94,7 @@ const NetworkErrorNotification = () => {
             ],
           })
           setOpenSwitch(false)
-        } catch (addError) {
+        } catch (_addError) {
           return null
         }
       }

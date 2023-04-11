@@ -1,6 +1,6 @@
 import { ValidatorCodes } from '@everipedia/iq-utils'
 
-export const initialEditorValue = ` `
+export const initialEditorValue = ' '
 export const initialMsg =
   'Your Wiki is being processed. It will be available on the blockchain soon.'
 export const defaultErrorMessage =

@@ -65,7 +65,7 @@ const Categories: NextPage = () => {
             gap={8}
           >
             {AllCategoriesData?.map(
-              category =>
+              (category) =>
                 category.cardImage && (
                   <CategoryCard
                     key={category.id}

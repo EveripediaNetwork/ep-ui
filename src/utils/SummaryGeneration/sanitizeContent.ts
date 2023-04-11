@@ -12,7 +12,7 @@ const MAX_CONTENT_LENGTH = 10000
 export const sanitizeContent = (content: string) => {
   const contentParagraphs = content.split('\n\n')
 
-  const filteredParagraphs = contentParagraphs.filter(paragraph => {
+  const filteredParagraphs = contentParagraphs.filter((paragraph) => {
     const para = paragraph.trim()
     const isValidParagraph =
       para.length !== 0 &&
@@ -26,7 +26,7 @@ export const sanitizeContent = (content: string) => {
   const sanitizedParagraphs: string[] = []
   let count = 0
 
-  filteredParagraphs.every(paragraph => {
+  filteredParagraphs.every((paragraph) => {
     if (count >= MAX_PARA_COUNT) return false
 
     const trimmedParagraph = paragraph.trim()

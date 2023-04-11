@@ -26,7 +26,7 @@ const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
 
   const { slug } = router.query
 
-  const toc = useAppSelector(state => state.toc)
+  const toc = useAppSelector((state) => state.toc)
 
   const [wikiData, setWikiData] = useState(wiki)
 
@@ -72,7 +72,7 @@ const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
@@ -101,7 +101,7 @@ export const getStaticProps: GetStaticProps = async context => {
         limit: 6,
       }),
     )
-    relatedWikis = data?.filter(w => w.id !== wiki.id)?.slice(0, 4)
+    relatedWikis = data?.filter((w) => w.id !== wiki.id)?.slice(0, 4)
     relatedWikisError = error
   }
   await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))

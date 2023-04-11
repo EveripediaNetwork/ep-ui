@@ -37,7 +37,7 @@ const TrendingCategoryCard = ({
         </Text>
       </Flex>
       <Carousel topArrow="25%" settings={carouselSettings}>
-        {wikis.map(wiki => (
+        {wikis.map((wiki) => (
           <Box
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '2' }}

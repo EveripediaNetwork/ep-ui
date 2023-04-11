@@ -58,11 +58,11 @@ export default function embed(context: PluginContext): PluginInfo {
       },
     ],
     markdownCommands: {
-      insertEmbed: payload =>
+      insertEmbed: (payload) =>
         insertEmbed(payload, wikiEditorRef.current?.getInstance()),
     },
     wysiwygCommands: {
-      insertEmbed: payload =>
+      insertEmbed: (payload) =>
         insertEmbed(payload, wikiEditorRef.current?.getInstance()),
     },
   }

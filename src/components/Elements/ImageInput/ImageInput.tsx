@@ -48,7 +48,7 @@ const ImageInput = ({
     }
     if (/(https?:\/\/)?(www.)?youtu(be\.com|.be)\//.test(url)) {
       const videoCode = url.match(validYTLinkReg)
-      return { type: 'youtube', value: videoCode && videoCode[1] }
+      return { type: 'youtube', value: videoCode?.[1] }
     }
     return { type: 'imageURL' }
   }
@@ -133,7 +133,7 @@ const ImageInput = ({
     if (urlType.type === 'imageURL') {
       try {
         tryUploadImg(url)
-      } catch (error) {
+      } catch (_error) {
         catchImageUploadError()
       }
     }

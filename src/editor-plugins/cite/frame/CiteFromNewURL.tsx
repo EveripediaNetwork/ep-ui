@@ -42,7 +42,7 @@ export const CiteFromNewURL = ({
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault()
         if (url) {
           handleCiteSubmit(url, desc)

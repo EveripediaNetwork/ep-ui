@@ -40,7 +40,7 @@ export const ReferenceCard = ({
   const [desc, setDesc] = React.useState<string>('')
   const [showRed, setShowRed] = React.useState(false)
   const isOpen = editingId === reference.id
-  const index = allReferences.findIndex(ref => ref.id === reference.id) + 1
+  const index = allReferences.findIndex((ref) => ref.id === reference.id) + 1
 
   useEffect(() => {
     setUrl(reference.url)
@@ -79,7 +79,7 @@ export const ReferenceCard = ({
     // Delete from metadata
     // =======================
 
-    const newReferences = allReferences.filter(ref => ref.id !== reference.id)
+    const newReferences = allReferences.filter((ref) => ref.id !== reference.id)
     store.dispatch({
       type: 'wiki/updateMetadata',
       payload: {
@@ -95,7 +95,7 @@ export const ReferenceCard = ({
   }
 
   const handleSaveRefClick = () => {
-    const newReferences = allReferences.map(ref =>
+    const newReferences = allReferences.map((ref) =>
       ref.id === reference.id
         ? {
             id: ref.id,
@@ -200,7 +200,7 @@ export const ReferenceCard = ({
       {isOpen && (
         <Box borderWidth="1px" p="10px !important" mt="10px">
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault()
               if (url) {
                 setUrl('')

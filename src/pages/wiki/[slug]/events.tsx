@@ -55,16 +55,15 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
           </Flex>
           {wiki.events && (
             <SimpleGrid gap={{ base: '8', xl: '16' }}>
-              {wiki.events &&
-                wiki.events.map((event, i) => (
-                  <EventCard
-                    key={i}
-                    link={event.link}
-                    title={event.title}
-                    eventDate={event.date}
-                    description={event.description}
-                  />
-                ))}
+              {wiki.events?.map((event, i) => (
+                <EventCard
+                  key={i}
+                  link={event.link}
+                  title={event.title}
+                  eventDate={event.date}
+                  description={event.description}
+                />
+              ))}
             </SimpleGrid>
           )}
         </SimpleGrid>
@@ -94,7 +93,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug
 
   if (typeof slug !== 'string') return { notFound: true }

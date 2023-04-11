@@ -26,9 +26,9 @@ export const UserProfileHeader = ({
         name={username}
         url={`${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`}
         sameAs={
-          socials.map(key =>
-            dt[key].urlPrefix((links && links[key]) || ''),
-          ) as Array<string>
+          socials.map((key) =>
+            dt[key].urlPrefix(links?.[key] || ''),
+          ) as string[]
         }
       />
       <NextSeo

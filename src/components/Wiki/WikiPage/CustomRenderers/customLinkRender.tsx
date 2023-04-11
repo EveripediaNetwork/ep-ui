@@ -27,7 +27,7 @@ export const customLinkRenderer = ({
     return <WikiLinkRender href={linkHref} text={linkText} slug={wikiSlug} />
   }
 
-  const isCiteIdPresent = linkHref && linkHref.match(/#cite-id-(.*)/)
+  const isCiteIdPresent = linkHref?.match(/#cite-id-(.*)/)
   if (isCiteIdPresent) {
     return (
       <CiteMarksRender

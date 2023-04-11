@@ -45,7 +45,7 @@ export const InsightTableWikiCreated = (
   const [hideNotify, setHideNotify] = useState(false)
 
   const findSection = (promotedNum: number) => {
-    const num = wikiCreatedInsightData && wikiCreatedInsightData[0].promoted
+    const num = wikiCreatedInsightData?.[0].promoted
     if (promotedNum === num) {
       setsectionType('hero section')
     } else {

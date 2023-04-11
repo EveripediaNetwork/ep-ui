@@ -19,7 +19,7 @@ const SearchWikiNotificationsResult = () => {
   useEffect(() => {
     if (q.length >= 3) {
       setIsLoading(true)
-      Promise.all([fetchWikisList(q)]).then(res => {
+      Promise.all([fetchWikisList(q)]).then((res) => {
         const [articles = []] = res
         if (articles.length) {
           setResults({ articles })
@@ -31,7 +31,7 @@ const SearchWikiNotificationsResult = () => {
 
   const { articles } = results
 
-  const articleList = articles.map(article => {
+  const articleList = articles.map((article) => {
     return (
       <NotificationCard
         key={article.id}

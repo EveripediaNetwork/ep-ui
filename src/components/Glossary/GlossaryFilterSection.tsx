@@ -45,7 +45,7 @@ const GlossaryFilterSection = ({
             type="tel"
             placeholder="Search for words"
             value={searchText}
-            onChange={e => searchPage(e.target.value)}
+            onChange={(e) => searchPage(e.target.value)}
             _placeholder={{ color: 'placeholderColor' }}
           />
         </InputGroup>
