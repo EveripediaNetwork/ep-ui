@@ -17,7 +17,7 @@ const SettingNavButton = ({
   isActive,
 }: SettingNavButtonProps) => (
   <Link
-    href={`/account/settings?tab=${tabName}`}
+    href={`/settings/account?tab=${tabName}`}
     display="flex"
     justifyContent="left"
     alignItems="center"

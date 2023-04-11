@@ -41,11 +41,13 @@ const CareerCard = ({
       >
         {description}
       </Text>
-      <Flex mt={{ base: '4', md: '6' }} justifyContent="flex-end">
-        <Button as="a" href={link} target="_blank" size="lg" variant="solid">
-          Apply now
-        </Button>
-      </Flex>
+      {link && (
+        <Flex mt={{ base: '4', md: '6' }} justifyContent="flex-end">
+          <Button as="a" href={link} target="_blank" size="lg" variant="solid">
+            Apply now
+          </Button>
+        </Flex>
+      )}
     </Box>
   )
 }

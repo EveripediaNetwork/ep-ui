@@ -5,12 +5,10 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  Tag,
   Text,
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
-import { AllCareers } from '@/data/CareersData'
 
 const MenuFooter = () => {
   const { t } = useTranslation()
@@ -99,9 +97,9 @@ const MenuFooter = () => {
                   prefetch={false}
                   href="/careers"
                 >
-                  <Box as="span">{`${t('careers')}`}</Box>
+                  {`${t('careers')}`}
                 </Link>
-                {AllCareers.length !== 0 && (
+                {/* {AllCareers.length !== 0 && (
                   <Tag
                     ml="2"
                     size="sm"
@@ -111,8 +109,13 @@ const MenuFooter = () => {
                   >
                     We&apos;re hiring
                   </Tag>
-                )}
+                )} */}
               </Box>
+              <Link
+                textAlign={{ base: 'center', md: 'left' }}
+                prefetch={false}
+                href="/us-careers"
+              >{`${t('usCareers')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
