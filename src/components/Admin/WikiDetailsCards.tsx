@@ -91,8 +91,12 @@ export const AllWikiDetailsCards = () => {
     interval: 'year',
   })
 
-  const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-    interval: 'year',
+  // const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
+  //   interval: 'year',
+  // })
+
+  const { data: wikisCreatedThisWeek } = useGetWikisCreatedCountQuery({
+    interval: 'week',
   })
 
   const { data: totalWikisEditedCountData } = useGetWikisEditedCountQuery({
@@ -101,10 +105,14 @@ export const AllWikiDetailsCards = () => {
     interval: 'year',
   })
 
-  const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
-    startDate: 0,
+  const { data: wikisEditedThisWeek } = useGetWikisEditedCountQuery({
     interval: 'week',
   })
+
+  // const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
+  //   startDate: 0,
+  //   interval: 'week',
+  // })
 
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
@@ -112,11 +120,10 @@ export const AllWikiDetailsCards = () => {
 
   const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
 
-  const addCountAMount = (data: WikisModifiedCount[]) => {
+  const addCountAmount = (data: WikisModifiedCount[]) => {
     let total = 0
-    data.map((item: WikisModifiedCount) => {
+    data.forEach((item: WikisModifiedCount) => {
       total += item.amount
-      return total
     })
     return total
   }
@@ -125,11 +132,10 @@ export const AllWikiDetailsCards = () => {
     {
       icon: RiNewspaperFill,
       value: totalWikisEditedCountData
-        ? addCountAMount(totalWikisEditedCountData)
+        ? addCountAmount(totalWikisEditedCountData)
         : 0,
-      weeklyValue: weeklyWikiEditedCountData
-        ? weeklyWikiEditedCountData[weeklyWikiEditedCountData.length - 1]
-            ?.amount
+      weeklyValue: wikisEditedThisWeek
+        ? addCountAmount(wikisEditedThisWeek)
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no of Edited Wikis',
@@ -137,11 +143,10 @@ export const AllWikiDetailsCards = () => {
     {
       icon: RiEditFill,
       value: totalWikisCreatedCountData
-        ? addCountAMount(totalWikisCreatedCountData)
+        ? addCountAmount(totalWikisCreatedCountData)
         : 0,
-      weeklyValue: weeklyWikiCreatedCountData
-        ? weeklyWikiCreatedCountData[weeklyWikiCreatedCountData.length - 1]
-            ?.amount
+      weeklyValue: wikisCreatedThisWeek
+        ? addCountAmount(wikisCreatedThisWeek)
         : 0,
       color: 'pink.400',
       detailHeader: 'Total no. of Created Wikis',
