@@ -12,7 +12,7 @@ export type EditorsType = {
 
 export type ContentFeedbackArgs = {
   contentId: string
-  userId: string
+  userId?: string
   feedback: ContentFeedbackType
 }
 

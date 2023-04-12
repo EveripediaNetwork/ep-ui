@@ -13,7 +13,7 @@ const ContentFeedback = ({
 }: {
   choice: boolean
   contentId: string
-  userId: string
+  userId?: string
 }) => {
   const [feedbackVal, setFeedbackVal] = useState<boolean>(choice)
   const [contentFeedback] = useContentFeedbackMutation()
