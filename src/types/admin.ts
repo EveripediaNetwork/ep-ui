@@ -177,7 +177,6 @@ export interface EditorsTable {
     ipfs: string
     wikiId: string
   }[]
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   lastCreatedWiki: any
   editorAvatar: string
   latestActivity: string
