@@ -239,7 +239,7 @@ export const REVALIDATE_URL = gql`
 export const CONTENT_FEEDBACK = gql`
   mutation ContentFeedback(
     $contentId: String!
-    $userId: String!
+    $userId: String
     $feedback: ContentFeedbackType
   ) {
     contentFeedback(
