@@ -3,22 +3,23 @@ import { VStack, Text, Flex, Button, Box } from '@chakra-ui/react'
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi'
 import { VscSmiley } from 'react-icons/vsc'
 import { useContentFeedbackMutation } from '@/services/admin'
+import { ContentFeedbackType } from '@/types/admin'
 import WikiAccordion from '../../WikiAccordion'
 
 const ContentFeedback = ({
-  feedback,
-  wikiId,
+  choice,
+  contentId,
   userId,
 }: {
-  feedback: boolean
-  wikiId: string
-  userId: string | undefined
+  choice: boolean
+  contentId: string
+  userId: string
 }) => {
-  const [feedbackVal, setFeedbackVal] = useState<boolean>(feedback)
+  const [feedbackVal, setFeedbackVal] = useState<boolean>(choice)
   const [contentFeedback] = useContentFeedbackMutation()
-  const sendFeedback = async (choice: boolean) => {
+  const sendFeedback = async (feedback: ContentFeedbackType) => {
     setFeedbackVal(false)
-    await contentFeedback({ wikiId, userId, choice })
+    await contentFeedback({ contentId, userId, feedback })
   }
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -49,7 +50,7 @@ const ContentFeedback = ({
                   size="md"
                   fontWeight="normal"
                   leftIcon={<FiThumbsUp fontSize="20px" />}
-                  onClick={() => sendFeedback(true)}
+                  onClick={() => sendFeedback(ContentFeedbackType.positive)}
                 >
                   Yes
                 </Button>
@@ -60,7 +61,7 @@ const ContentFeedback = ({
                   size="md"
                   fontWeight="normal"
                   leftIcon={<FiThumbsDown fontSize="20px" />}
-                  onClick={() => sendFeedback(false)}
+                  onClick={() => sendFeedback(ContentFeedbackType.negative)}
                 >
                   No
                 </Button>

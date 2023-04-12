@@ -42,7 +42,7 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', xl: 'none' }}
       spacing={6}
     >
-      <ContentFeedback feedback wikiId={id} userId={userAddress} />
+      <ContentFeedback choice contentId={id} userId={userAddress} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis relatedWikis={relatedWikis} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
