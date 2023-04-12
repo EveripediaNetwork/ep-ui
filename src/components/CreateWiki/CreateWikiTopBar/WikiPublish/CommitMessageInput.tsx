@@ -26,9 +26,9 @@ const baseStyle = {
 
 export const CommitMessageInput = () => {
   const [commitMessageLimitAlert, setCommitMessageLimitAlert] = useState(false)
-  const metadata = useAppSelector(state => state.wiki.metadata)
+  const metadata = useAppSelector((state) => state.wiki.metadata)
   const commitMessage = metadata.find(
-    m => m.id === EditSpecificMetaIds.COMMIT_MESSAGE,
+    (m) => m.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
   const commitMsgCountColor = () => {

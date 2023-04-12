@@ -20,7 +20,7 @@ export const tagsApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getTags: builder.query<BaseTag[], { startDate: number; endDate: number }>({
       query: ({ startDate, endDate }) => ({
         document: GET_TAGS,

@@ -50,7 +50,7 @@ export const navSearchApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getWikisByTitle: builder.query<WikiPreview[], string>({
       query: (title: string) => ({
         document: GET_WIKIS_BY_TITLE,

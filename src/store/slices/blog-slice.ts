@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { Blog } from '@/types/Blog'
 
-const initialState: Array<Blog> = []
+const initialState: Blog[] = []
 
 const blogSlice = createSlice({
   name: 'blog',

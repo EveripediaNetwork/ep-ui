@@ -172,7 +172,7 @@ export const BlogPostPage = ({
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
   const blog = formatBlog(result.data?.entry as Blog)

@@ -14,15 +14,11 @@ export const saveImage = async (image: WikiImageObjectProps) => {
   formData.append('0', blob)
   try {
     const {
-      data: {
-        data: {
-          pinImage: { IpfsHash },
-        },
-      },
+      data: { data: { pinImage: { IpfsHash } } },
     } = await axios.post(config.graphqlUrl, formData, {})
 
     return IpfsHash
-  } catch (err) {
+  } catch (_err) {
     return null
   }
 }

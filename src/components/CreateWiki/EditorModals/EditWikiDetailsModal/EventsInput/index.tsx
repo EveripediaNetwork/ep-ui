@@ -82,7 +82,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     if (date) {
       const dateObj = new Date(date)
       const isExists = wiki.events?.some(
-        event => new Date(event.date).toISOString() === dateObj.toISOString(),
+        (event) => new Date(event.date).toISOString() === dateObj.toISOString(),
       )
 
       setIsUpdate(!!isExists)
@@ -158,7 +158,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 type="month"
                 placeholder="Select date"
                 fontSize={{ base: '12px', md: '14px' }}
-                onChange={e => {
+                onChange={(e) => {
                   const date = e.target.value
                   handleIsUpdateCheck(date)
                 }}
@@ -179,7 +179,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   disabled={
                     !isUpdate &&
                     wiki?.events?.some(
-                      event => event.type === EventType.CREATED,
+                      (event) => event.type === EventType.CREATED,
                     )
                   }
                 >

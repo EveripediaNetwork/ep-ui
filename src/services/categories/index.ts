@@ -31,7 +31,7 @@ export const categoriesApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
       query: () => ({ document: GET_CATEGORIES }),
       transformResponse: (response: GetCategoriesResponse) =>

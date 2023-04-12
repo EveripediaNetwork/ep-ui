@@ -102,7 +102,7 @@ const FlaggingSystemModal = ({
               borderColor="wikiFlagTextAreaBorderColor"
               placeholder="Write your text here...."
               name="report-content"
-              onChange={e => setFlagContent(e.currentTarget.value)}
+              onChange={(e) => setFlagContent(e.currentTarget.value)}
             />
           </ModalBody>
           <ModalFooter justifyContent="center">

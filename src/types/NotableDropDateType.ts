@@ -1,4 +1,4 @@
-export type NotableDropsDataType = Array<NotableDropsObjDataType>
+export type NotableDropsDataType = NotableDropsObjDataType[]
 
 type NotableDropsObjDataType = {
   img: string

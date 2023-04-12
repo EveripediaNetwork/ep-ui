@@ -42,7 +42,7 @@ export const glossaryApi = createApi({
   },
 
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getGlossaryTagWikis: builder.query<Wiki[], WikiArg>({
       query: ({ id, limit, offset }: WikiArg) => ({
         document: GET_TAG_WIKIS_BY_ID,

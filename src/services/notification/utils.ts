@@ -5,5 +5,5 @@ export const useIsWikiSubscribed = (
   userID: string,
 ) => {
   const { data } = useGetAllWikiSubscriptionQuery(userID)
-  return data?.some(sub => sub.auxiliaryId === wikiId)
+  return data?.some((sub) => sub.auxiliaryId === wikiId)
 }

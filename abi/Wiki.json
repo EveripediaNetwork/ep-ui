@@ -1,6 +1,5 @@
 [
-  "event Posted(address indexed,string)",
-  "function post(string)",
+  "event Posted(address indexed,string)", "function post(string)",
   "function postBySig(string,address,uint256,uint8,bytes32,bytes32)",
   "function sigNonces(address) view returns (uint256)"
 ]

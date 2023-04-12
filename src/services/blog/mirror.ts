@@ -28,7 +28,7 @@ export const MirrorApi = createApi({
       Origin: 'https://mirror.xyz',
     },
   }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getBlogs: builder.query<Blog[], string>({
       query: (address: string) => ({
         document: FETCH_BLOGS,

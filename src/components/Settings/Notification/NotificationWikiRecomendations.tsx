@@ -36,7 +36,7 @@ export const WikiNotificationsRecommendations = ({
             <Divider />
             <VStack spacing={4}>
               {recommendations?.length &&
-                recommendations.map(r => {
+                recommendations.map((r) => {
                   const article = r.content[0]
                   return (
                     <NotificationCard

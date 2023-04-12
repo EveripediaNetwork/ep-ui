@@ -3,7 +3,7 @@ import { VStack, Heading, Divider, List, ListItem } from '@chakra-ui/react'
 import Link from '../LinkElements/Link'
 
 interface RelatedTopicsProp {
-  topics: Array<{ name: string; url: string; isSectionLink?: boolean }>
+  topics: { name: string; url: string; isSectionLink?: boolean }[]
 }
 const RelatedTopics = ({ topics }: RelatedTopicsProp) => (
   <VStack
@@ -20,7 +20,7 @@ const RelatedTopics = ({ topics }: RelatedTopicsProp) => (
     </Heading>
     <Divider filter="brightness(0.9)" />
     <List spacing={2}>
-      {topics.map(topic => (
+      {topics.map((topic) => (
         <ListItem mt="20px">
           <Link href={topic.url} scroll={!!topic.isSectionLink}>
             {topic.name}

@@ -7,7 +7,7 @@ import { useAppSelector } from '@/store/hook'
 
 export const WikiTitleInput = () => {
   const dispatch = useDispatch()
-  const title = useAppSelector(state => state.wiki.title)
+  const title = useAppSelector((state) => state.wiki.title)
   const { t } = useTranslation()
 
   return (

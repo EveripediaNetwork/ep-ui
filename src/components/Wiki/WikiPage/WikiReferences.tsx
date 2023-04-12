@@ -29,7 +29,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
     }
   }, [])
 
-  const citeMarks = useAppSelector(state => state.citeMarks)
+  const citeMarks = useAppSelector((state) => state.citeMarks)
 
   if (references.length === 0) return null
   return (

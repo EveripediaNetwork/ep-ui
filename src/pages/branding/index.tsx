@@ -123,8 +123,8 @@ const BrandingPage = () => {
         title="IQ.Wiki Branding kit & official logos"
         description="IQ.Wiki Branding kit & official logos"
         openGraph={{
-          title: `IQ.Wiki Branding kit & official logos`,
-          description: `IQ.Wiki Branding kit & official logos`,
+          title: 'IQ.Wiki Branding kit & official logos',
+          description: 'IQ.Wiki Branding kit & official logos',
         }}
       />
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">

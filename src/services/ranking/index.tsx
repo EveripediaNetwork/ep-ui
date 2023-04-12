@@ -21,7 +21,7 @@ type RankCount = {
 export const rankingAPI = createApi({
   reducerPath: 'rankingAPI',
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getNFTRanking: builder.query<
       RankCardType[],
       {

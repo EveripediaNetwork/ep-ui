@@ -54,21 +54,18 @@ export const WikiDataGraph = () => {
       interval: graphFilter,
     })
 
-  const graphDataObj: Array<{
+  const graphDataObj: {
     name: string | undefined
     'Wikis Created': number | undefined
     'Wikis Edited': number
-  }> = []
+  }[] = []
 
   if (graphFilter === 'day') {
     DayTunedgraphWikisEditedCountData?.map((item, index) => {
       const editedCount = DayTunedgraphWikisEditedCountData[index].amount
-      const createdCount =
-        DayTunedgraphWikisCreatedCountData &&
-        DayTunedgraphWikisCreatedCountData[index]?.amount
+      const createdCount = DayTunedgraphWikisCreatedCountData?.[index]?.amount
       const createCountStart =
-        DayTunedgraphWikisCreatedCountData &&
-        DayTunedgraphWikisCreatedCountData[index]?.startOn
+        DayTunedgraphWikisCreatedCountData?.[index]?.startOn
 
       graphDataObj.push({
         name:
@@ -86,10 +83,8 @@ export const WikiDataGraph = () => {
   } else {
     GraphWikisEditedCountData?.map((item, index) => {
       const editedCount = GraphWikisEditedCountData[index].amount
-      const createdCount =
-        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.amount
-      const createCountStart =
-        GraphWikisCreatedCountData && GraphWikisCreatedCountData[index]?.startOn
+      const createdCount = GraphWikisCreatedCountData?.[index]?.amount
+      const createCountStart = GraphWikisCreatedCountData?.[index]?.startOn
       const getXaxis = () => {
         if (graphFilter === 'week') {
           return `Wk ${index + 1}`
@@ -139,7 +134,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={e => {
+            onChange={(e) => {
               handleGraphFilterChange(e.target.value)
             }}
           >
@@ -210,7 +205,7 @@ export const WikiDataGraph = () => {
               fill="#8884d8"
               dataKey="value"
             >
-              {graphDataObj.map((ent, index: number) => (
+              {graphDataObj.map((_ent, index: number) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={colors[index % colors.length]}

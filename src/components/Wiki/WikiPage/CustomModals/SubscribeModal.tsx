@@ -51,7 +51,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
       SubscribeWikiHandler(email, wiki, userAddress, toast)
     }
 
-    setIsSubscribed(p => !p)
+    setIsSubscribed((p) => !p)
   }
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
           getAllWikiSubscription.initiate(userAddress),
         )
         const isWikiSubscribed = data
-          ? data.some(w => w.auxiliaryId === wiki.id)
+          ? data.some((w) => w.auxiliaryId === wiki.id)
           : false
         setIsSubscribed(isWikiSubscribed)
       }

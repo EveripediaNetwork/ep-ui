@@ -1,4 +1,4 @@
-export type TeamDataType = Array<TeamObjDataType>
+export type TeamDataType = TeamObjDataType[]
 type TeamObjDataType = {
   image: string
   name: string

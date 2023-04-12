@@ -10,12 +10,11 @@ interface WikiListCardProps {
 const WikiListCard = ({ wikis }: WikiListCardProps) => (
   <Container maxW="7xl" p="12">
     <VStack>
-      {wikis &&
-        wikis.map((wiki: Wiki) => (
-          <Box key={wiki.id}>
-            <WikiCard wiki={wiki} />
-          </Box>
-        ))}
+      {wikis?.map((wiki: Wiki) => (
+        <Box key={wiki.id}>
+          <WikiCard wiki={wiki} />
+        </Box>
+      ))}
     </VStack>
   </Container>
 )
