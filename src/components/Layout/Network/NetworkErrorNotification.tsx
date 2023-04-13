@@ -27,7 +27,6 @@ const NetworkErrorNotification = ({
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
-  // const [openSwitch, setOpenSwitch] = useState<boolean>(false)
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
   const { isConnected: isUserConnected } = useAccount()
@@ -38,45 +37,20 @@ const NetworkErrorNotification = ({
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
 
-  // const handleChainChanged = useCallback(
-  //   (chainDetails: string) => {
-  //     if (chainDetails !== chainId && isUserConnected && connector) {
-  //       if (connector.id !== 'magic') setOpenSwitch(true)
-  //     }
-  //   },
-  //   [chainId, connector, isUserConnected],
-  // )
 
   useEffect(() => {
-    // const getConnectedChain = async (provider: ProviderDataType) => {
-    //   const connectedChainId = await provider.request({
-    //     method: 'eth_chainId',
-    //   })
-
-    //   if (connectedChainId) handleChainChanged(connectedChainId)
-    // }
 
     const getDetectedProvider = async () => {
       const provider = (await detectEthereumProvider({
         silent: true,
       })) as ProviderDataType
       setDetectedProvider(provider as ProviderDataType)
-      // if (provider) getConnectedChain(provider)
     }
 
     if (!detectedProvider) {
       getDetectedProvider()
     }
-    // else {
-    // getConnectedChain(detectedProvider)
-    //   detectedProvider.on('chainChanged', handleChainChanged)
-    // }
 
-    // return () => {
-    //   if (detectedProvider) {
-    //     detectedProvider.removeListener('chainChanged', handleChainChanged)
-    //   }
-    // }
   }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
@@ -109,7 +83,6 @@ const NetworkErrorNotification = ({
     return null
   }
 
-  // if (!openSwitch) return null
   return (
     <AlertDialog
       motionPreset="slideInBottom"
