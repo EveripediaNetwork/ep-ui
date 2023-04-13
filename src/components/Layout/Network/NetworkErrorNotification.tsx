@@ -37,9 +37,7 @@ const NetworkErrorNotification = ({
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
 
-
   useEffect(() => {
-
     const getDetectedProvider = async () => {
       const provider = (await detectEthereumProvider({
         silent: true,
@@ -50,7 +48,6 @@ const NetworkErrorNotification = ({
     if (!detectedProvider) {
       getDetectedProvider()
     }
-
   }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
