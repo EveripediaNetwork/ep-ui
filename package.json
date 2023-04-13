@@ -10,7 +10,7 @@
     "export": "next export",
     "test": "echo \"Next-app tests\"",
     "format": "rome format . --write",
-    "lint": "rome check . --apply",
+    "lint": "rome check . --apply-unsafe",
     "lint:fix": "yarn lint --apply",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",

@@ -1,16 +1,16 @@
-import React, { Suspense, useContext } from 'react'
+import React, { Suspense } from 'react'
 import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
+// import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import Navbar from '../Navbar/Navbar'
 import GoogleAnalyticsScripts from '../GoogleAnalyticsScripts'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
 })
-const NetworkErrorNotification = dynamic(
-  () => import('@/components/Layout/Network/NetworkErrorNotification'),
-)
+// const NetworkErrorNotification = dynamic(
+//   () => import('@/components/Layout/Network/NetworkErrorNotification'),
+// )
 const Layout = ({
   children,
   noFooter,
@@ -18,7 +18,7 @@ const Layout = ({
   children: React.ReactNode
   noFooter?: boolean
 }) => {
-  const { isWagmiWrapped } = useContext(WagmiStatusContext)
+  // const { isWagmiWrapped } = useContext(WagmiStatusContext)
 
   return (
     <>
@@ -32,7 +32,7 @@ const Layout = ({
         <Suspense>{!noFooter && <Footer />}</Suspense>
       </Stack>
 
-      {isWagmiWrapped && <NetworkErrorNotification />}
+      {/* {isWagmiWrapped && <NetworkErrorNotification />} */}
     </>
   )
 }

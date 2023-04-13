@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   AlertDialog,
@@ -18,13 +18,19 @@ import { useDispatch } from 'react-redux'
 import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
 
-const NetworkErrorNotification = () => {
+const NetworkErrorNotification = ({
+  modalState,
+  setModalState,
+}: {
+  modalState: boolean
+  setModalState: (state: boolean) => void
+}) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
-  const [openSwitch, setOpenSwitch] = useState<boolean>(false)
+  // const [openSwitch, setOpenSwitch] = useState<boolean>(false)
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { isConnected: isUserConnected, connector } = useAccount()
+  const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
 
   const { chainId, chainName, rpcUrls } =
@@ -32,45 +38,46 @@ const NetworkErrorNotification = () => {
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
 
-  const handleChainChanged = useCallback(
-    (chainDetails: string) => {
-      if (chainDetails !== chainId && isUserConnected && connector) {
-        if (connector.id !== 'magic') setOpenSwitch(true)
-      }
-    },
-    [chainId, connector, isUserConnected],
-  )
+  // const handleChainChanged = useCallback(
+  //   (chainDetails: string) => {
+  //     if (chainDetails !== chainId && isUserConnected && connector) {
+  //       if (connector.id !== 'magic') setOpenSwitch(true)
+  //     }
+  //   },
+  //   [chainId, connector, isUserConnected],
+  // )
 
   useEffect(() => {
-    const getConnectedChain = async (provider: ProviderDataType) => {
-      const connectedChainId = await provider.request({
-        method: 'eth_chainId',
-      })
+    // const getConnectedChain = async (provider: ProviderDataType) => {
+    //   const connectedChainId = await provider.request({
+    //     method: 'eth_chainId',
+    //   })
 
-      if (connectedChainId) handleChainChanged(connectedChainId)
-    }
+    //   if (connectedChainId) handleChainChanged(connectedChainId)
+    // }
 
     const getDetectedProvider = async () => {
       const provider = (await detectEthereumProvider({
         silent: true,
       })) as ProviderDataType
       setDetectedProvider(provider as ProviderDataType)
-      if (provider) getConnectedChain(provider)
+      // if (provider) getConnectedChain(provider)
     }
 
     if (!detectedProvider) {
       getDetectedProvider()
-    } else {
-      getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', handleChainChanged)
     }
+    // else {
+    // getConnectedChain(detectedProvider)
+    //   detectedProvider.on('chainChanged', handleChainChanged)
+    // }
 
-    return () => {
-      if (detectedProvider) {
-        detectedProvider.removeListener('chainChanged', handleChainChanged)
-      }
-    }
-  }, [detectedProvider, handleChainChanged, dispatch, isUserConnected])
+    // return () => {
+    //   if (detectedProvider) {
+    //     detectedProvider.removeListener('chainChanged', handleChainChanged)
+    //   }
+    // }
+  }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
     try {
@@ -78,7 +85,7 @@ const NetworkErrorNotification = () => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId }],
       })
-      setOpenSwitch(false)
+      setModalState(false)
     } catch (switchError) {
       const err = switchError as Record<string, number>
       if (err.code === 4902) {
@@ -93,7 +100,7 @@ const NetworkErrorNotification = () => {
               },
             ],
           })
-          setOpenSwitch(false)
+          setModalState(false)
         } catch (_addError) {
           return null
         }
@@ -102,13 +109,13 @@ const NetworkErrorNotification = () => {
     return null
   }
 
-  if (!openSwitch) return null
+  // if (!openSwitch) return null
   return (
     <AlertDialog
       motionPreset="slideInBottom"
       leastDestructiveRef={cancelRef}
-      onClose={() => setOpenSwitch(false)}
-      isOpen={openSwitch}
+      onClose={() => setModalState(false)}
+      isOpen={modalState}
       isCentered
       size="lg"
     >
@@ -131,7 +138,7 @@ const NetworkErrorNotification = () => {
               fontSize="3xl"
               fontWeight={600}
               as={RiCloseLine}
-              onClick={() => setOpenSwitch(false)}
+              onClick={() => setModalState(false)}
             />
           </Flex>
           <Text mt="6" w="90%" lineHeight="2">
@@ -144,7 +151,7 @@ const NetworkErrorNotification = () => {
           </Text>
           <Flex mt="6">
             <Text
-              onClick={() => setOpenSwitch(false)}
+              onClick={() => setModalState(false)}
               color="primary"
               cursor="pointer"
               pt={2}
