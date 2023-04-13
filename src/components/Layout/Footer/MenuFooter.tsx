@@ -77,7 +77,7 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-ethereum"
+                href="https://app.bondprotocol.finance/#/market/1/80"
               >
                 {`${t('bonds')}`}
               </Link>

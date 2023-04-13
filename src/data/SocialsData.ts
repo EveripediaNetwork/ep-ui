@@ -37,7 +37,7 @@ export const Socials: Social[] = [
   },
   {
     id: 4,
-    href: 'https://instagram.com/everipedia',
+    href: 'https://www.instagram.com/iqwiki_/',
     name: 'instagram',
     icon: RiInstagramFill,
   },
