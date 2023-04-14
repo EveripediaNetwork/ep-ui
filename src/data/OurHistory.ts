@@ -32,6 +32,6 @@ export const OurHistoryData: OurHistoryType[] = [
   {
     year: 2023,
     content:
-      'In 2023, IQ.wiki became one of the first encyclopedias and decentralized applications to <Link href="https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY">integrate artificial intelligence</Link>. IQ.wiki first integrated OpenAI’s GPT-3 language model for tasks including summarizing wiki articles in February of 2023.',
+      'In February 2023, IQ.wiki became one of the first encyclopedias and decentralized applications to <Link href="https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY">integrate artificial intelligence</Link>. IQ.wiki integrated OpenAI’s GPT-3 for tasks like summarizing articles and later upgraded to GPT-4.  In 2023, BrainDAO aims to further integrate AI within the platform, develop additional AI powered tools, and use the IQ token to incentivized the training of AI models. for the first part of the issue.',
   },
 ]

@@ -36,7 +36,7 @@ export const Image = ({
       quality={95}
       style={{
         objectFit,
-        objectPosition: 'center',
+        objectPosition: 'top',
         width: '100%',
         height: '100%',
       }}
