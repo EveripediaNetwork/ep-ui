@@ -17,7 +17,7 @@ export const TeamData: TeamDataType = [
     name: 'Theodor Forselius',
     title: 'Co-founder',
     about:
-      'Theodor Forselius is a Swedish Internet entrepreneur and programmer. He co-founded IQ.wiki, formerly known as Everipedia, at the age of 20, gaining experience in digital advertising, web development, and online gaming industries in the process.',
+      'Theodor Forselius is a Swedish entrepreneur and programmer. He co-founded IQ.wiki at the age of 19. He currently serves as CEO of Brainfund which aims to advance the development of technologies in the education, AI and fintech sector. Brainfund is also the parent company of IQ.wiki.',
     socials: {
       iqWiki: 'https://iq.wiki/wiki/theodor-forselius',
       twitter: 'https://twitter.com/TeddeF',
