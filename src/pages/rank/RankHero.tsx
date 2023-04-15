@@ -21,8 +21,8 @@ const RankHero = () => {
         fontSize={{ '2xl': '2xl', md: 'xl', base: 'md' }}
         textAlign="center"
       >
-        A list of wikis in different categories, including Defi, NFTs, DAOs and
-        Cryptocurencies, ranked based on the global marketcap respectively.
+        A list of wikis in different categories, including DeFi, NFTs, DAOs and
+        Cryptocurrencies, ranked based on the global marketcap respectively.
       </Text>
     </Flex>
   )
