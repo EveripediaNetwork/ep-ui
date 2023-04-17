@@ -1,4 +1,5 @@
 import { whiteListedDomains, whiteListedLinkNames } from '@everipedia/iq-utils'
+import { BigNumber } from 'ethers'
 import slugify from 'slugify'
 
 export const lettersToNum = (str: string): number => {
@@ -23,6 +24,17 @@ export const shortenAccount = (
 
 export const shortenBalance = (balance: number | null) =>
   typeof balance === 'number' ? balance.toFixed(2) : balance
+
+export const shortenBigBalance = (balance: BigNumber) => {
+  const abbreviations = ['K', 'M', 'B', 'T']
+  let abbreviationIndex = 0
+  while (balance.div(1000).gte(1) && abbreviationIndex < abbreviations.length) {
+    balance = balance.div(1000)
+    abbreviationIndex++
+  }
+  return balance + abbreviations[abbreviationIndex]
+  // return balance.toFormat() + abbreviations[abbreviationIndex]
+}
 
 export const shortenText = (text: string, length: number) => {
   return text?.length > length ? `${text.substring(0, length)}...` : text

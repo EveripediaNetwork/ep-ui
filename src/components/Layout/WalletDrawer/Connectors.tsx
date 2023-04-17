@@ -29,6 +29,8 @@ import {
   calculateTotalBalance,
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
+// import { shortenBalance, shortenBigBalance } from '@/utils/textUtils'
+// import BigNumber from 'bignumber.js'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -45,6 +47,8 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
+  // const bigNumber = new BigNumber('23893287347847832789378943279387932973283')
+
   const dispatch = useDispatch()
 
   const { connectors, connect } = useConnect({
@@ -90,7 +94,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -197,19 +201,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        balance={shortenBalance(Number(hiiq?.hiiqBalance))}
-                        tokensArray={[hiIQData?.tokensArray]}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      balance={shortenBalance(Number(hiiq?.hiiqBalance))}
+                      tokensArray={[hiIQData?.tokensArray]}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
