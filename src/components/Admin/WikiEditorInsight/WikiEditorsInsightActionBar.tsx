@@ -33,8 +33,8 @@ const WikiEditorsInsightActionBar = ({
   handleSearchKeyword,
 }: WikiEditorsInsightActionBarProps) => {
   return (
-    <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
-      <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
+    <Flex justifyContent="flex-end" p={5}>
+      <Flex gap={5}>
         <InputGroup w="100%">
           <InputLeftElement pointerEvents="none">
             <FiSearch color="#667085" />
@@ -42,7 +42,7 @@ const WikiEditorsInsightActionBar = ({
           <Input
             type="text"
             placeholder="Search"
-            onChange={(e) => {
+            onChange={e => {
               handleSearchKeyword(e)
             }}
           />
@@ -76,7 +76,7 @@ const WikiEditorsInsightActionBar = ({
             </Button>
           </PopoverTrigger>
           <PopoverContent w="fit-content">
-            <form onSubmit={(e) => ApplyFilterItems(e)}>
+            <form onSubmit={e => ApplyFilterItems(e)}>
               <PopoverBody py={3}>
                 <VStack
                   spacing={1}

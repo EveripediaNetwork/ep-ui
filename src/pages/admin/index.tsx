@@ -57,7 +57,7 @@ const Admin = () => {
   return (
     <Box py={4} w="90%" mx="auto">
       <Flex direction={{ base: 'column', lg: 'row' }}>
-        <Box w={{ base: '100%', md: '80%' }} mr={{ base: 0, md: 4 }}>
+        <Box w={{ base: '100%', md: '70%' }}>
           <Heading
             as="h4"
             mt="4"
@@ -80,6 +80,7 @@ const Admin = () => {
       <SimpleGrid
         spacing={{ base: '4', lg: '0' }}
         py={7}
+        w="full"
         columns={{ base: 1, md: 2, lg: 4 }}
       >
         <AllWikiDetailsCards />
