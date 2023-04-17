@@ -15,6 +15,9 @@ import { store } from '@/store/store'
 import { formatBlog, getBlogsFromAllAccounts } from '@/utils/blog.utils'
 import ReactMarkdown from 'react-markdown'
 import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
+import { unified } from 'unified'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { Blog } from '@/types/Blog'
 import { NextSeo } from 'next-seo'
@@ -172,7 +175,15 @@ export const BlogPostPage = ({
 export const getStaticProps: GetStaticProps = async (context) => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
-  const blog = formatBlog(result.data?.entry as Blog)
+  const blog = formatBlog(result.data?.entry as Blog, true)
+
+  blog.body = String(
+    await unified()
+      .use(remarkParse) // Parse markdown
+      .use(remarkStringify) // Serialize markdown
+      .process(blog.body as string),
+  )
+
   const blogEntries = await getBlogsFromAllAccounts()
 
   return {
@@ -180,7 +191,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       blog,
       blogEntries,
     },
-    revalidate: 300,
   }
 }
 
