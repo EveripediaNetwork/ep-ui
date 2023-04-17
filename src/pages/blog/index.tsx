@@ -8,7 +8,7 @@ import {
   Text,
   Image,
 } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { useAppDispatch } from '@/store/hook'
 import { setBlogs } from '@/store/slices/blog-slice'
@@ -20,22 +20,15 @@ import { store } from '@/store/store'
 import { ArweaveApi } from '@/services/blog'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
-  const [mounted, setMounted] = useState(false)
+  // const [mounted, setMounted] = useState(false)
   const dispatch = useAppDispatch()
 
-  blogEntries?.sort((a, b) => {
-    const Data =
-      new Date(b.timestamp ? b.timestamp : '').valueOf() -
-      new Date(a.timestamp ? a.timestamp : '').valueOf()
-    return Data
-  })
-
   useEffect(() => {
-    if (mounted === false) {
-      dispatch(setBlogs(blogEntries))
-      setMounted(true)
-    }
-  }, [mounted, blogEntries, dispatch])
+    // if (mounted === false) {
+    dispatch(setBlogs(blogEntries))
+    // setMounted(true)
+    // }
+  }, [blogEntries, dispatch])
 
   return (
     <>
@@ -98,6 +91,12 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const blogEntries = await getBlogsFromAllAccounts()
   await Promise.all(store.dispatch(ArweaveApi.util.getRunningQueriesThunk()))
+  blogEntries?.sort((a, b) => {
+    const Data =
+      new Date(b.timestamp ? b.timestamp : '').valueOf() -
+      new Date(a.timestamp ? a.timestamp : '').valueOf()
+    return Data
+  })
   return {
     props: {
       blogEntries,
