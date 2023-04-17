@@ -1,12 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  Heading,
-  Text,
-  Box,
-  VStack,
-  Flex,
-  SimpleGrid,
-} from '@chakra-ui/react'
+import { Heading, Text, Box, VStack, Flex, SimpleGrid } from '@chakra-ui/react'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
