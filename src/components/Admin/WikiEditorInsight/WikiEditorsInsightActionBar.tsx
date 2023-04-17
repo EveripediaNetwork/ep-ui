@@ -42,7 +42,7 @@ const WikiEditorsInsightActionBar = ({
           <Input
             type="text"
             placeholder="Search"
-            onChange={e => {
+            onChange={(e) => {
               handleSearchKeyword(e)
             }}
           />
@@ -76,7 +76,7 @@ const WikiEditorsInsightActionBar = ({
             </Button>
           </PopoverTrigger>
           <PopoverContent w="fit-content">
-            <form onSubmit={e => ApplyFilterItems(e)}>
+            <form onSubmit={(e) => ApplyFilterItems(e)}>
               <PopoverBody py={3}>
                 <VStack
                   spacing={1}
