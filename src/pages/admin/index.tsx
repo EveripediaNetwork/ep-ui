@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { Heading, Text, Stack, Box, VStack, Flex } from '@chakra-ui/react'
+import {
+  Heading,
+  Text,
+  Box,
+  VStack,
+  Flex,
+  SimpleGrid,
+} from '@chakra-ui/react'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
@@ -56,7 +63,7 @@ const Admin = () => {
   }
   return (
     <Box py={4} w="90%" mx="auto">
-      <Flex direction={{ base: 'column', md: 'row' }}>
+      <Flex direction={{ base: 'column', lg: 'row' }}>
         <Box w={{ base: '100%', md: '80%' }} mr={{ base: 0, md: 4 }}>
           <Heading
             as="h4"
@@ -73,13 +80,17 @@ const Admin = () => {
             Welcome to the admin dashboard
           </Text>
         </Box>
-        <Box alignSelf="flex-end">
+        <Box alignSelf={{ lg: 'flex-end' }} pt={{ base: '10', lg: '0' }}>
           <WikiRevalidateURL />
         </Box>
       </Flex>
-      <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
+      <SimpleGrid
+        spacing={{ base: '4', lg: '0' }}
+        py={7}
+        columns={{ base: 1, md: 2, lg: 4 }}
+      >
         <AllWikiDetailsCards />
-      </Stack>
+      </SimpleGrid>
       <WikiViewsData />
       <WikiDataGraph />
       <VStack spacing={15} mb="3rem">
