@@ -119,7 +119,7 @@ const ShareWikiModal = ({
           Or share via:
         </Text>
         <Wrap mt="1rem" spacing="3">
-          {SHARING_OPTIONS.map((item) => {
+          {SHARING_OPTIONS.map(item => {
             return (
               <>
                 {typeof item.label !== 'string' ? (
@@ -131,6 +131,14 @@ const ShareWikiModal = ({
                     href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
                     rel="nofollow"
                     target="_blank"
+                    onClick={() =>
+                      logEvent({
+                        action: 'SHARE_ON_LEN',
+                        label: router.asPath.replace('/wiki/', ''),
+                        category: 'sharing',
+                        value: 1,
+                      })
+                    }
                   >
                     <Image
                       alt="Lenster"

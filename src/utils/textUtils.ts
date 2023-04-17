@@ -1,5 +1,4 @@
 import { whiteListedDomains, whiteListedLinkNames } from '@everipedia/iq-utils'
-import { BigNumber } from 'ethers'
 import slugify from 'slugify'
 
 export const lettersToNum = (str: string): number => {
@@ -25,15 +24,19 @@ export const shortenAccount = (
 export const shortenBalance = (balance: number | null) =>
   typeof balance === 'number' ? balance.toFixed(2) : balance
 
-export const shortenBigBalance = (balance: BigNumber) => {
-  const abbreviations = ['K', 'M', 'B', 'T']
-  let abbreviationIndex = 0
-  while (balance.div(1000).gte(1) && abbreviationIndex < abbreviations.length) {
-    balance = balance.div(1000)
-    abbreviationIndex++
+export const shortenBigBalance = (balance: number) => {
+  if (balance) {
+    const abbrev = ['', 'K', 'M', 'B', 'T', 'Q', 'Qn', 'S']
+    const absNum = Math.abs(balance)
+    const index = Math.min(
+      abbrev.length - 1,
+      Math.floor(Math.log10(absNum) / 3),
+    )
+    const shortNum = (absNum / Math.pow(1000, index)).toFixed(1)
+    return `${shortNum} ${abbrev[index]}`
+  } else {
+    return `${balance.toFixed(2)}`
   }
-  return balance + abbreviations[abbreviationIndex]
-  // return balance.toFormat() + abbreviations[abbreviationIndex]
 }
 
 export const shortenText = (text: string, length: number) => {
@@ -66,7 +69,7 @@ export const isValidUrl = (urlString: string) => {
 export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
-  markdownLinks?.every((link) => {
+  markdownLinks?.every(link => {
     const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
     const text = linkMatch?.[1]
     const url = linkMatch?.[2]

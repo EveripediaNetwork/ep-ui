@@ -28,7 +28,7 @@ import {
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
 } from '@/utils/WalletUtils/fetchWalletBalance'
-import { shortenBalance } from '@/utils/textUtils'
+import { shortenBalance, shortenBigBalance } from '@/utils/textUtils'
 // import { shortenBalance, shortenBigBalance } from '@/utils/textUtils'
 // import BigNumber from 'bignumber.js'
 
@@ -48,20 +48,9 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
 
-  function formatNumber(num: number) {
-    const abbrev = ['', 'K', 'M', 'B', 'T', 'Q', 'Qn', 'S']
-    const absNum = Math.abs(num)
-    const index = Math.min(
-      abbrev.length - 1,
-      Math.floor(Math.log10(absNum) / 3),
-    )
-    const shortNum = (absNum / Math.pow(1000, index)).toFixed(1)
-    return `${shortNum} ${abbrev[index]}`
-  }
-
   // const bigNumber = new BigNumber('23893287347847832789378943279387932973283')
-  const bigNum = BigInt('23666799263789467256737654567789')
-  const formatted = formatNumber(Number(bigNum))
+  // const bigNum = BigInt('23666799263789467256737654567789')
+  // const formatted = formatNumber(Number(bigNum))
 
   const dispatch = useDispatch()
 
@@ -103,12 +92,13 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   useEffect(() => {
     if (userBalance && !walletDetails) {
       dispatch(updateWalletDetails(userBalance))
+      console.log(hiiq?.hiiqBalance)
     }
   }, [dispatch, walletDetails, userBalance])
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -207,28 +197,30 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               <Box borderWidth="1px" borderRadius="md">
                 {walletDetails.map((details, key) => (
                   <React.Fragment key={key}>
+                    {/* {typeof details.data.formatted} */}
                     <WalletDetails
                       symbol={details?.data?.symbol}
                       balance={shortenBalance(Number(details?.data?.formatted))}
+                      // balance={shortenBigBalance(
+                      //   Number(BigInt(String(details?.data?.formatted))),
+                      // )}
                       tokensArray={balanceBreakdown}
                     />
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        // balance={shortenBalance(Number(hiiq?.hiiqBalance))}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={formatted}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBigBalance(
+                        Number(BigInt(String(hiiq?.hiiqBalance))),
+                      )}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
