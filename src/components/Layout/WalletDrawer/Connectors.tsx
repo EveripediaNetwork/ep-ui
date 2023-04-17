@@ -94,7 +94,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -201,16 +201,19 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
-                  <>
-                    <WalletDetails
-                      symbol={hiIQData?.symbol}
-                      balance={shortenBalance(Number(hiiq?.hiiqBalance))}
-                      tokensArray={[hiIQData?.tokensArray]}
-                    />
-                    <Divider />
-                  </>
-                )}
+                {hiiq &&
+                  walletDetails &&
+                  walletDetails.length > 0 &&
+                  hiIQData && (
+                    <>
+                      <WalletDetails
+                        symbol={hiIQData?.symbol}
+                        balance={shortenBalance(Number(hiiq?.hiiqBalance))}
+                        tokensArray={[hiIQData?.tokensArray]}
+                      />
+                      <Divider />
+                    </>
+                  )}
               </Box>
             )}
           </>
