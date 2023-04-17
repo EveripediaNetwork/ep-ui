@@ -47,7 +47,18 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
+
+  function formatNumber(num: number) {
+    const abbrev = ['', 'K', 'M', 'B', 'T', 'Q', 'Qn', 'S'];
+    const absNum = Math.abs(num);
+    const index = Math.min(abbrev.length - 1, Math.floor(Math.log10(absNum) / 3));
+    const shortNum = (absNum / Math.pow(1000, index)).toFixed(1);
+    return `${shortNum} ${abbrev[index]}`;
+  }
+
   // const bigNumber = new BigNumber('23893287347847832789378943279387932973283')
+  const bigNum = BigInt('23666799263789467256737654567789');
+  const formatted = formatNumber(Number(bigNum));
 
   const dispatch = useDispatch()
 
@@ -208,8 +219,9 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <>
                       <WalletDetails
                         symbol={hiIQData?.symbol}
-                        balance={shortenBalance(Number(hiiq?.hiiqBalance))}
+                        // balance={shortenBalance(Number(hiiq?.hiiqBalance))}
                         tokensArray={[hiIQData?.tokensArray]}
+                        balance={formatted}
                       />
                       <Divider />
                     </>
