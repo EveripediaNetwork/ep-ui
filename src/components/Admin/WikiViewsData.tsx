@@ -31,7 +31,6 @@ import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
 } from '@/services/admin'
-import { TableHead } from './GraphHeads'
 
 export const WikiViewsData = () => {
   const [graphFilter, setGraphFilter] = useState<string>('day')
