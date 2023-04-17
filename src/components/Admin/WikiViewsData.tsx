@@ -7,18 +7,21 @@ import {
   Text,
   Select,
   useColorModeValue,
-  HStack,
   Circle,
+  HStack,
+  TableContainer,
+  Table,
+  Tr,
+  Tbody,
+  Td,
+  Th,
+  Thead,
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
   Area,
   AreaChart,
   CartesianGrid,
@@ -28,13 +31,9 @@ import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
 } from '@/services/admin'
+import { TableHead } from './GraphHeads'
 
-export const WikiDataGraph = () => {
-  const piedata = [
-    { name: 'Editors', value: 400 },
-    { name: 'Visitors', value: 300 },
-  ]
-  const colors = ['#FF5DAA', '#FFB3D7']
+export const WikiViewsData = () => {
   const [graphFilter, setGraphFilter] = useState<string>('day')
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
@@ -112,10 +111,7 @@ export const WikiDataGraph = () => {
   }
 
   const currentYear = new Date().getFullYear()
-  const editedStroke = useColorModeValue('#FF80BD', '#FFB3D7')
-  const editedFill = useColorModeValue('#FFF5F9', '#FFF5FA')
-  const createdStroke = useColorModeValue('#FF5CAA', '#ff1a88')
-  const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
+  const viewsColor = useColorModeValue('#FF5CAA', '#FF1A88')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
   const handleGraphFilterChange = (e: string) => {
     return setGraphFilter(e)
@@ -124,13 +120,13 @@ export const WikiDataGraph = () => {
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
       <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '68%', base: '100%' }}>
-        <Flex justifyContent="space-between" pt="2" pb="6">
+        <Flex justifyContent="space-between" pt="2" pb="10">
           <VStack spacing={2} w="full">
             <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
-              Wiki Data
+              Wiki Views
             </Heading>
             <Text fontSize="sm" w="full">
-              Track wikis created and wikis edited
+              The no of views for wikis on iq wiki
             </Text>
           </VStack>
           <Select
@@ -155,10 +151,7 @@ export const WikiDataGraph = () => {
             justifyContent="flex-end"
           >
             <Flex alignItems="center" gap="2">
-              <Circle size="10px" bg={createdStroke} /> wikis created
-            </Flex>
-            <Flex alignItems="center" gap="2">
-              <Circle size="10px" bg={editedStroke} /> wikis edited
+              <Circle size="10px" bg={viewsColor} /> wikis views
             </Flex>
           </HStack>
           <ResponsiveContainer width="100%" height={300}>
@@ -167,12 +160,8 @@ export const WikiDataGraph = () => {
               <YAxis />
               <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={createdFill} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={createdFill} stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={editedFill} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={editedFill} stopOpacity={0} />
+                  <stop offset="10%" stopColor={viewsColor} stopOpacity={0.2} />
+                  <stop offset="95%" stopColor={viewsColor} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="0" vertical={false} />
@@ -180,20 +169,12 @@ export const WikiDataGraph = () => {
                 type="monotone"
                 dataKey="Wikis Edited"
                 strokeWidth="2"
-                stroke={editedStroke}
+                stroke={viewsColor}
                 fill="url(#colorUv)"
                 opacity="0.8"
                 fillOpacity={1}
               />
-              <Area
-                type="monotone"
-                dataKey="Wikis Created"
-                strokeWidth="2"
-                opacity="1"
-                stroke={createdStroke}
-                fill="url(#colorUv)"
-                fillOpacity={1}
-              />
+
               <Tooltip
                 contentStyle={{
                   borderRadius: '20px',
@@ -206,41 +187,88 @@ export const WikiDataGraph = () => {
           </ResponsiveContainer>
         </Box>
       </Box>
-      <Box rounded="xl" borderWidth="1px" p={6} w={{ lg: '31%', base: '100%' }}>
-        <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
-          User Data
-        </Heading>
-        <Flex alignItems="center" justifyContent="center" w="full">
-          <PieChart width={350} height={400}>
-            <Pie
-              data={piedata}
-              cx={170}
-              cy={200}
-              innerRadius={50}
-              outerRadius={130}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {graphDataObj.map((_ent, index: number) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={colors[index % colors.length]}
-                />
-              ))}
-            </Pie>
-            <Legend
-              payload={piedata.map((item, index) => ({
-                id: item.name,
-                type: 'circle',
-                value: item.name,
-                color: colors[index % colors.length],
-              }))}
-              layout="horizontal"
-              verticalAlign="bottom"
-              align="center"
-            />
-          </PieChart>
-        </Flex>
+      <Box
+        rounded="xl"
+        borderWidth="1px"
+        py={3}
+        w={{ lg: '31%', base: '100%' }}
+      >
+        <Text
+          pl={5}
+          pb={1}
+          borderBottomWidth="1px"
+          fontSize="18"
+          fontWeight="normal"
+          w="full"
+        >
+          Views per day
+        </Text>
+        <Box h="430px" overflowY="scroll">
+          <TableContainer w="100%">
+            <Table size="md">
+              <Thead bg="wikiTitleBg">
+                <Tr>
+                  <Th
+                    color="black"
+                    _dark={{ color: 'white' }}
+                    textTransform="capitalize"
+                    fontWeight="semibold"
+                    fontSize={14}
+                  >
+                    Date
+                  </Th>
+                  <Th
+                    color="black"
+                    _dark={{ color: 'white' }}
+                    textTransform="capitalize"
+                    fontWeight="semibold"
+                    fontSize={14}
+                  >
+                    Views
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,345,345</Td>
+                </Tr>
+                <Tr>
+                  <Td>01-02-2023</Td>
+                  <Td>123,566,345,345</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
     </Flex>
   )

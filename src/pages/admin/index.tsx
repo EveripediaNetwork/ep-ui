@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Heading, Text, Stack, Box, VStack } from '@chakra-ui/react'
+import { Heading, Text, Stack, Box, VStack, Flex } from '@chakra-ui/react'
 import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
@@ -17,6 +17,7 @@ import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
 import SignTokenMessage from '../settings/account/SignTokenMessage'
+import { WikiViewsData } from '@/components/Admin/WikiViewsData'
 
 const Admin = () => {
   const router = useRouter()
@@ -55,27 +56,31 @@ const Admin = () => {
   }
   return (
     <Box py={4} w="90%" mx="auto">
-      <Heading
-        as="h4"
-        mt="4"
-        py="2"
-        fontWeight="black"
-        w="80%"
-        fontSize={{ base: '29', md: '37' }}
-        lineHeight="normal"
-        letterSpacing="wider"
-      >
-        Admin Dashboard
-      </Heading>
-
-      <Text w="80%" fontSize="sm" fontWeight="light">
-        Welcome to the admin dashboard
-      </Text>
-
+      <Flex direction={{ base: 'column', md: 'row' }}>
+        <Box w={{ base: '100%', md: '80%' }} mr={{ base: 0, md: 4 }}>
+          <Heading
+            as="h4"
+            mt="4"
+            py="2"
+            fontWeight="black"
+            fontSize={{ base: '29', md: '37' }}
+            lineHeight="normal"
+            letterSpacing="wider"
+          >
+            Admin Dashboard
+          </Heading>
+          <Text fontSize="sm" fontWeight="light">
+            Welcome to the admin dashboard
+          </Text>
+        </Box>
+        <Box alignSelf="flex-end">
+          <WikiRevalidateURL />
+        </Box>
+      </Flex>
       <Stack spacing={8} py={7} direction={{ base: 'column', lg: 'row' }}>
         <AllWikiDetailsCards />
-        <WikiRevalidateURL />
       </Stack>
+      <WikiViewsData />
       <WikiDataGraph />
       <VStack spacing={15} mb="3rem">
         <WikiInsightTable />

@@ -10,7 +10,12 @@ import {
   CircularProgressLabel,
 } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
-import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
+import {
+  RiNewspaperFill,
+  RiEditFill,
+  RiUser3Fill,
+  RiEyeFill,
+} from 'react-icons/ri'
 import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
@@ -156,6 +161,13 @@ export const AllWikiDetailsCards = () => {
       detailHeader: 'Total no. of Editors',
       value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
+      color: 'pink.400',
+    },
+    {
+      icon: RiEyeFill,
+      detailHeader: 'Daily no. of views',
+      value: 500,
+      weeklyValue: 120,
       color: 'pink.400',
     },
   ]
