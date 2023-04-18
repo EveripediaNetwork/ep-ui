@@ -1,5 +1,6 @@
 import { whiteListedDomains, whiteListedLinkNames } from '@everipedia/iq-utils'
 import slugify from 'slugify'
+import * as Humanize from 'humanize-plus'
 
 export const lettersToNum = (str: string): number => {
   let out = 0
@@ -21,27 +22,8 @@ export const shortenAccount = (
   return `${firstChunk}...${secondChunk}`
 }
 
-export function numberWithCommas(num: number | string) {
-  if (num) return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-}
-
 export const shortenBalance = (balance: number | null) =>
-  typeof balance === 'number' ? balance.toFixed(2) : balance
-
-export const shortenBigBalance = (balance: number) => {
-  if (balance) {
-    const abbrev = ['', 'K', 'M', 'B', 'T', 'Q', 'Qn', 'S']
-    const absNum = Math.abs(balance)
-    const index = Math.min(
-      abbrev.length - 1,
-      Math.floor(Math.log10(absNum) / 3),
-    )
-    const shortNum = (absNum / Math.pow(1000, index)).toFixed(1)
-    return `${numberWithCommas(shortNum)} ${abbrev[index]}`
-  } else {
-    return `${balance.toFixed(2)}`
-  }
-}
+  typeof balance === 'number' ? Humanize.formatNumber(balance, 2) : balance
 
 export const shortenText = (text: string, length: number) => {
   return text?.length > length ? `${text.substring(0, length)}...` : text
@@ -73,7 +55,7 @@ export const isValidUrl = (urlString: string) => {
 export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
-  markdownLinks?.every((link) => {
+  markdownLinks?.every(link => {
     const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
     const text = linkMatch?.[1]
     const url = linkMatch?.[2]

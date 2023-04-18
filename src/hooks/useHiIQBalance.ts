@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateHiIQDetails } from '@/store/slices/user-slice'
 import { provider } from '@/utils/WalletUtils/getProvider'
-import { parseAbi, fromHex } from 'viem'
+import { parseAbi, formatEther } from 'viem'
 import { getIqTokenValue } from '../utils/WalletUtils/getTokenValue'
 
 const abi = parseAbi([
@@ -24,16 +24,18 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         functionName: 'balanceOf',
         args: [address as `0x${string}`],
       })
+
       const lock = await provider.readContract({
         address: HIIQ_CONTRACT_ADDRESS,
         abi,
         functionName: 'locked',
         args: [address as `0x${string}`],
       })
-      const hiiqBalance = fromHex(balance as unknown as `0x${string}`, 'number')
+
+      const hiiqBalance = Number(formatEther(balance as unknown as bigint))
       const [amount, end] = lock as unknown as `0x${string}`[]
-      const iqBalance = fromHex(amount, 'number')
-      const endDate = fromHex(end, 'number')
+      const iqBalance = Number(formatEther(amount as unknown as bigint))
+      const endDate = Number(formatEther(end as unknown as bigint))
       const coinGeckoIqPrice = await getIqTokenValue()
 
       dispatch(
