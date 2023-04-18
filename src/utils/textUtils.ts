@@ -21,6 +21,10 @@ export const shortenAccount = (
   return `${firstChunk}...${secondChunk}`
 }
 
+export function numberWithCommas(num: number | string) {
+  if (num) return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 export const shortenBalance = (balance: number | null) =>
   typeof balance === 'number' ? balance.toFixed(2) : balance
 
@@ -35,7 +39,7 @@ export const shortenBigBalance = (balance: number) => {
       Math.floor(Math.log10(absNum) / 3),
     )
     const shortNum = (absNum / Math.pow(1000, index)).toFixed(1)
-    return `${shortNum} ${abbrev[index]}`
+    return `${numberWithCommas(shortNum)} ${abbrev[index]}`
   } else {
     return `${balance.toFixed(2)}`
   }
