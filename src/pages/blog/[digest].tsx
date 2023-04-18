@@ -175,7 +175,7 @@ export const BlogPostPage = ({
 export const getStaticProps: GetStaticProps = async (context) => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
-  const blog = formatBlog(result.data?.entry as Blog)
+  const blog = formatBlog(result.data?.entry as Blog, true)
 
   blog.body = String(
     await unified()
@@ -191,7 +191,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       blog,
       blogEntries,
     },
-    revalidate: 300,
   }
 }
 
