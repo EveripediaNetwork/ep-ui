@@ -29,7 +29,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         address: HIIQ_CONTRACT_ADDRESS,
         abi,
         functionName: 'balanceOf',
-        args: ["0xFF1D1d9E1E3a88A1176870244b5a456FC42e5E90" as `0x${string}`],
+        args: ['0xFF1D1d9E1E3a88A1176870244b5a456FC42e5E90' as `0x${string}`],
       })
       console.log(result)
       console.log(result)
