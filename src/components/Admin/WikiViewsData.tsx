@@ -5,7 +5,6 @@ import {
   Heading,
   Box,
   Text,
-  Select,
   useColorModeValue,
   Circle,
   HStack,
@@ -26,29 +25,11 @@ import {
   AreaChart,
   CartesianGrid,
 } from 'recharts'
-import { MdArrowDropDown } from 'react-icons/md'
-import {
-  useGetWikisCreatedCountQuery,
-  useGetWikisEditedCountQuery,
-} from '@/services/admin'
+import { useGetWikisEditedCountQuery } from '@/services/admin'
 
 export const WikiViewsData = () => {
-  const [graphFilter, setGraphFilter] = useState<string>('day')
+  const [graphFilter] = useState<string>('day')
 
-  const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
-    interval: graphFilter,
-    startDate: 0,
-  })
-
-  const { data: GraphWikisEditedCountData } = useGetWikisEditedCountQuery({
-    interval: graphFilter,
-    startDate: 0,
-  })
-
-  const { data: DayTunedgraphWikisCreatedCountData } =
-    useGetWikisCreatedCountQuery({
-      interval: graphFilter,
-    })
   const { data: DayTunedgraphWikisEditedCountData } =
     useGetWikisEditedCountQuery({
       interval: graphFilter,
@@ -56,65 +37,26 @@ export const WikiViewsData = () => {
 
   const graphDataObj: {
     name: string | undefined
-    'Wikis Created': number | undefined
     'Wikis Edited': number
   }[] = []
 
-  if (graphFilter === 'day') {
-    DayTunedgraphWikisEditedCountData?.map((item, index) => {
-      const editedCount = DayTunedgraphWikisEditedCountData[index].amount
-      const createdCount = DayTunedgraphWikisCreatedCountData?.[index]?.amount
-      const createCountStart =
-        DayTunedgraphWikisCreatedCountData?.[index]?.startOn
+  DayTunedgraphWikisEditedCountData?.map((item, index) => {
+    const editedCount = DayTunedgraphWikisEditedCountData[index].amount
 
-      graphDataObj.push({
-        name:
-          // eslint-disable-next-line
-          graphFilter !== 'day'
-            ? graphFilter === 'year'
-              ? createCountStart?.split('-')[0]
-              : createCountStart?.split('T')[0].split('-').slice(0, 2).join('-')
-            : `${new Date(item.endOn).toDateString().split(' ')[0]} `,
-        'Wikis Created': createdCount,
-        'Wikis Edited': editedCount,
-      })
-      return null
+    graphDataObj.push({
+      name: `${new Date(item.endOn)
+        .toISOString()
+        .split('T')[0]
+        .split('-')
+        .slice(0, 4)
+        .join('-')}`,
+      'Wikis Edited': editedCount,
     })
-  } else {
-    GraphWikisEditedCountData?.map((item, index) => {
-      const editedCount = GraphWikisEditedCountData[index].amount
-      const createdCount = GraphWikisCreatedCountData?.[index]?.amount
-      const createCountStart = GraphWikisCreatedCountData?.[index]?.startOn
-      const getXaxis = () => {
-        if (graphFilter === 'week') {
-          return `Wk ${index + 1}`
-        }
-        if (graphFilter === 'year') {
-          return createCountStart?.split('-')[0]
-        }
-        if (graphFilter === 'month') {
-          return `${new Date(item.endOn).toDateString().split(' ')[1]} `
-        }
-        if (graphFilter === 'day') {
-          return `${new Date(item.endOn).toDateString().split(' ')[0]}`
-        }
-        return ''
-      }
-      graphDataObj.push({
-        name: getXaxis(),
-        'Wikis Created': createdCount,
-        'Wikis Edited': editedCount,
-      })
-      return null
-    })
-  }
+    return null
+  })
 
-  const currentYear = new Date().getFullYear()
   const viewsColor = useColorModeValue('#FF5CAA', '#FF1A88')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
-  const handleGraphFilterChange = (e: string) => {
-    return setGraphFilter(e)
-  }
 
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
@@ -128,18 +70,6 @@ export const WikiViewsData = () => {
               The no of views for wikis on iq wiki
             </Text>
           </VStack>
-          <Select
-            w={{ lg: '27%', md: '39%', base: '50%' }}
-            icon={<MdArrowDropDown />}
-            onChange={(e) => {
-              handleGraphFilterChange(e.target.value)
-            }}
-          >
-            <option value="day">{`Daily (${currentYear})`}</option>
-            <option value="week">{`Weekly (${currentYear})`}</option>
-            <option value="month">{`Monthly (${currentYear})`}</option>
-            <option value="year">{`Yearly (${currentYear})`}</option>
-          </Select>
         </Flex>
         <Box pr={3}>
           <HStack
