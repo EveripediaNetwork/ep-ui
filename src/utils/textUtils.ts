@@ -25,6 +25,8 @@ export const shortenBalance = (balance: number | null) =>
   typeof balance === 'number' ? balance.toFixed(2) : balance
 
 export const shortenBigBalance = (balance: number) => {
+  console.log(balance)
+  console.log(balance)
   if (balance) {
     const abbrev = ['', 'K', 'M', 'B', 'T', 'Q', 'Qn', 'S']
     const absNum = Math.abs(balance)

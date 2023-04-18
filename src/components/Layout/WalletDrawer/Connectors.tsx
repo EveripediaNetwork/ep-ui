@@ -200,10 +200,10 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     {/* {typeof details.data.formatted} */}
                     <WalletDetails
                       symbol={details?.data?.symbol}
-                      balance={shortenBalance(Number(details?.data?.formatted))}
-                      // balance={shortenBigBalance(
-                      //   Number(BigInt(String(details?.data?.formatted))),
-                      // )}
+                      //balance={shortenBalance(Number(details?.data?.formatted))}
+                      balance={shortenBigBalance(
+                        Number(BigInt(String(details?.data?.formatted))),
+                      )}
                       tokensArray={balanceBreakdown}
                     />
                     <Divider />
