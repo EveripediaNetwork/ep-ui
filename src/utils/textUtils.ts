@@ -73,7 +73,7 @@ export const isValidUrl = (urlString: string) => {
 export const isVerifiedContentLinks = (content: string) => {
   const markdownLinks = content.match(/\[(.*?)\]\((.*?)\)/g)
   let isValid = true
-  markdownLinks?.every(link => {
+  markdownLinks?.every((link) => {
     const linkMatch = link.match(/\[(.*?)\]\((.*?)\)/)
     const text = linkMatch?.[1]
     const url = linkMatch?.[2]

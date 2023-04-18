@@ -204,11 +204,8 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <WalletDetails
                       symbol={hiIQData?.symbol}
                       tokensArray={[hiIQData?.tokensArray]}
-                      // balance={shortenBigBalance(
-                      //   Number(BigInt(String(hiiq?.hiiqBalance))),
-                      // )}
                       balance={shortenBigBalance(
-                        Number(BigInt('1223328463643784287328781291971327')),
+                        Number(BigInt(String(hiiq?.hiiqBalance))),
                       )}
                     />
                     <Divider />
