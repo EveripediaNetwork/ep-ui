@@ -3,7 +3,6 @@ import { HStack, Image, Text, VStack } from '@chakra-ui/react'
 import { TokenDetailsType } from '@/types/WalletBalanceType'
 import { tokenDetails } from '@/data/WalletData'
 import { getTokenValue } from '@/utils/WalletUtils/getTokenValue'
-// import { shortenBalance } from '@/utils/textUtils'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
 

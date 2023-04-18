@@ -134,7 +134,7 @@ const ShareWikiModal = ({
                     onClick={() =>
                       logEvent({
                         action: 'SHARE_ON_LEN',
-                        label: router.asPath.replace('/wiki/', ''),
+                        label: url,
                         category: 'sharing',
                         value: 1,
                       })
