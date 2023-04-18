@@ -13,6 +13,7 @@ import {
   PopoverFooter,
   PopoverTrigger,
   VStack,
+  Text,
 } from '@chakra-ui/react'
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
@@ -33,8 +34,8 @@ const WikiEditorsInsightActionBar = ({
   handleSearchKeyword,
 }: WikiEditorsInsightActionBarProps) => {
   return (
-    <Flex justifyContent={{ base: 'center', md: 'flex-end' }} p={5}>
-      <Flex gap={5} direction={{ base: 'column', md: 'row' }}>
+    <Flex justifyContent="flex-end" p={5}>
+      <Flex gap={5}>
         <InputGroup w="100%">
           <InputLeftElement pointerEvents="none">
             <FiSearch color="#667085" />
@@ -42,7 +43,7 @@ const WikiEditorsInsightActionBar = ({
           <Input
             type="text"
             placeholder="Search"
-            onChange={(e) => {
+            onChange={e => {
               handleSearchKeyword(e)
             }}
           />
@@ -51,13 +52,14 @@ const WikiEditorsInsightActionBar = ({
           onClick={handleSortChange}
           borderColor="tetiaryGray"
           _dark={{ borderColor: '#2c323d' }}
-          py={2}
-          px={10}
           rightIcon={sortIcon}
+          py={2}
+          px={{ md: '10' }}
+          pr={{ base: '2' }}
           variant="outline"
           fontWeight="medium"
         >
-          Sort
+          <Text display={{ base: 'none', md: 'block' }}>Sort</Text>
         </Button>
         <Popover isLazy isOpen={isOpenFilter} onClose={onCloseFilter}>
           <PopoverTrigger>
@@ -66,17 +68,18 @@ const WikiEditorsInsightActionBar = ({
               borderRadius="md"
               _expanded={{ bg: 'brand.500', color: 'white' }}
               py={2}
-              px={10}
+              px={{ md: '10' }}
+              pl={{ base: '2' }}
               leftIcon={<MdFilterList fontSize="25px" />}
               variant="outline"
               onClick={onToggleFilter}
               fontWeight="medium"
             >
-              Filters
+              <Text display={{ base: 'none', md: 'block' }}>Filters</Text>
             </Button>
           </PopoverTrigger>
           <PopoverContent w="fit-content">
-            <form onSubmit={(e) => ApplyFilterItems(e)}>
+            <form onSubmit={e => ApplyFilterItems(e)}>
               <PopoverBody py={3}>
                 <VStack
                   spacing={1}

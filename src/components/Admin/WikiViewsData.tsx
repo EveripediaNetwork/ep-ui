@@ -15,6 +15,7 @@ import {
   Td,
   Th,
   Thead,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
@@ -57,6 +58,7 @@ export const WikiViewsData = () => {
 
   const viewsColor = useColorModeValue('#FF5CAA', '#FF1A88')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
+  const leftMargin = useBreakpointValue({ base: -30, md: 0 })
 
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
@@ -80,11 +82,16 @@ export const WikiViewsData = () => {
             justifyContent="flex-end"
           >
             <Flex alignItems="center" gap="2">
-              <Circle size="10px" bg={viewsColor} /> wikis views
+              <Circle size="10px" bg={viewsColor} /> wiki views
             </Flex>
           </HStack>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart width={730} height={250} data={graphDataObj}>
+            <AreaChart
+              margin={{ left: leftMargin }}
+              width={730}
+              height={250}
+              data={graphDataObj}
+            >
               <XAxis dataKey="name" />
               <YAxis />
               <defs>

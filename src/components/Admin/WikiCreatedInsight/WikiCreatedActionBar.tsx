@@ -47,7 +47,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach((checkbox) => {
+    checkboxes.forEach(checkbox => {
       if (checkbox.checked) data.push(checkbox.value)
     })
     setFilterItems(data)
@@ -86,8 +86,8 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
         </Text>
       </Flex>
 
-      <Flex justifyContent={{ base: 'center', md: 'flex-end' }} p={5}>
-        <Flex gap={5} direction={{ base: 'column', md: 'row' }}>
+      <Flex justifyContent="flex-end" p={5}>
+        <Flex gap={5}>
           <InputGroup w="100%">
             <InputLeftElement pointerEvents="none">
               <FiSearch color="metalGray" />
@@ -95,7 +95,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
             <Input
               type="text"
               placeholder="Search"
-              onChange={(e) => {
+              onChange={e => {
                 setsearchKeyWord(e.target.value)
               }}
             />
@@ -107,15 +107,17 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
               _expanded={{ bg: 'brand.500', color: 'white' }}
             >
               <Button
-                borderColor="wikiSortBorder"
+                borderColor="tetiaryGray"
+                _dark={{ borderColor: '#2c323d' }}
                 py={2}
-                px={5}
+                px={{ md: '5' }}
+                pl={{ base: '2' }}
                 w={{ base: 'full' }}
                 leftIcon={sortIcon}
                 variant="outline"
                 fontWeight="medium"
               >
-                Sort
+                <Text display={{ base: 'none', md: 'block' }}>Sort</Text>
               </Button>
             </MenuButton>
             <MenuList>
@@ -140,17 +142,18 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
                 borderRadius="md"
                 _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
-                px={10}
+                px={{ md: '10' }}
+                pl={{ base: '2' }}
                 leftIcon={<MdFilterList fontSize="25px" />}
                 variant="outline"
                 fontWeight="medium"
                 onClick={onToggle}
               >
-                Filters
+                <Text display={{ base: 'none', md: 'block' }}>Filters</Text>
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
-              <form onSubmit={(e) => ApplyFilterItems(e)}>
+              <form onSubmit={e => ApplyFilterItems(e)}>
                 <PopoverBody py={3}>
                   <VStack
                     spacing={1}

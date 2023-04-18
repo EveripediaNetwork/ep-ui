@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   HStack,
   Circle,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
@@ -117,6 +118,8 @@ export const WikiDataGraph = () => {
   const createdStroke = useColorModeValue('#FF5CAA', '#ff1a88')
   const createdFill = useColorModeValue('#FFB8DA', '#FFB8DA')
   const toolTipBg = useColorModeValue('#ffffff', '#1A202C')
+  const leftMargin = useBreakpointValue({ base: -30, md: 0 })
+
   const handleGraphFilterChange = (e: string) => {
     return setGraphFilter(e)
   }
@@ -136,7 +139,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={(e) => {
+            onChange={e => {
               handleGraphFilterChange(e.target.value)
             }}
           >
@@ -162,7 +165,12 @@ export const WikiDataGraph = () => {
             </Flex>
           </HStack>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart width={730} height={250} data={graphDataObj}>
+            <AreaChart
+              margin={{ left: leftMargin }}
+              width={730}
+              height={250}
+              data={graphDataObj}
+            >
               <XAxis dataKey="name" />
               <YAxis />
               <defs>
