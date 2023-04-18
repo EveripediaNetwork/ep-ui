@@ -47,7 +47,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach((checkbox) => {
+    checkboxes.forEach(checkbox => {
       if (checkbox.checked) data.push(checkbox.value)
     })
     setFilterItems(data)
@@ -86,8 +86,8 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
         </Text>
       </Flex>
 
-      <Flex justifyContent="flex-end" p={5}>
-        <Flex gap={5}>
+      <Flex justifyContent={{ base: 'center', md: 'flex-end' }} p={5}>
+        <Flex gap={5} direction={{ base: 'column', md: 'row' }}>
           <InputGroup w="100%">
             <InputLeftElement pointerEvents="none">
               <FiSearch color="metalGray" />
@@ -95,7 +95,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
             <Input
               type="text"
               placeholder="Search"
-              onChange={(e) => {
+              onChange={e => {
                 setsearchKeyWord(e.target.value)
               }}
             />
@@ -110,6 +110,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
                 borderColor="wikiSortBorder"
                 py={2}
                 px={5}
+                w={{ base: 'full' }}
                 leftIcon={sortIcon}
                 variant="outline"
                 fontWeight="medium"
@@ -149,7 +150,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
-              <form onSubmit={(e) => ApplyFilterItems(e)}>
+              <form onSubmit={e => ApplyFilterItems(e)}>
                 <PopoverBody py={3}>
                   <VStack
                     spacing={1}
