@@ -29,8 +29,6 @@ import {
   calculateTotalBalance,
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance, shortenBigBalance } from '@/utils/textUtils'
-// import { shortenBalance, shortenBigBalance } from '@/utils/textUtils'
-// import BigNumber from 'bignumber.js'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -47,10 +45,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
-
-  // const bigNumber = new BigNumber('23893287347847832789378943279387932973283')
-  // const bigNum = BigInt('23666799263789467256737654567789')
-  // const formatted = formatNumber(Number(bigNum))
 
   const dispatch = useDispatch()
 
@@ -197,13 +191,9 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               <Box borderWidth="1px" borderRadius="md">
                 {walletDetails.map((details, key) => (
                   <React.Fragment key={key}>
-                    {/* {typeof details.data.formatted} */}
                     <WalletDetails
                       symbol={details?.data?.symbol}
                       balance={shortenBalance(Number(details?.data?.formatted))}
-                      // balance={shortenBigBalance(
-                      //   Number(BigInt(String(details?.data?.formatted))),
-                      // )}
                       tokensArray={balanceBreakdown}
                     />
                     <Divider />
