@@ -22,4 +22,12 @@ export const UserSocialLinksData = {
       return `https://instagram.com/${username}`
     },
   },
+  lens: {
+    label: 'Lenster',
+    icon: RiInstagramLine,
+    urlPrefix: (username?: string) => {
+      if (username?.startsWith('https://lenster.xyz')) return username
+      return `https://lenster.xyz/u/${username}`
+    },
+  },
 }
