@@ -131,6 +131,14 @@ const ShareWikiModal = ({
                     href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
                     rel="nofollow"
                     target="_blank"
+                    onClick={() =>
+                      logEvent({
+                        action: 'SHARE_ON_LEN',
+                        label: url,
+                        category: 'sharing',
+                        value: 1,
+                      })
+                    }
                   >
                     <Image
                       alt="Lenster"

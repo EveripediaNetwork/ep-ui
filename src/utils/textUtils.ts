@@ -1,5 +1,6 @@
 import { whiteListedDomains, whiteListedLinkNames } from '@everipedia/iq-utils'
 import slugify from 'slugify'
+import * as Humanize from 'humanize-plus'
 
 export const lettersToNum = (str: string): number => {
   let out = 0
@@ -22,7 +23,7 @@ export const shortenAccount = (
 }
 
 export const shortenBalance = (balance: number | null) =>
-  typeof balance === 'number' ? balance.toFixed(2) : balance
+  typeof balance === 'number' ? Humanize.formatNumber(balance, 2) : balance
 
 export const shortenText = (text: string, length: number) => {
   return text?.length > length ? `${text.substring(0, length)}...` : text
