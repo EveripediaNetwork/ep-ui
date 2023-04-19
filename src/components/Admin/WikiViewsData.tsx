@@ -35,11 +35,11 @@ export const WikiViewsData = () => {
     'Wiki Views': number
   }[] = []
 
-  wikiViews?.map((item, index) => {
-    const visitCount = wikiViews[index].visits
+  wikiViews?.map((_item, index) => {
+    const visitCount = wikiViews[wikiViews.length - index - 1].visits
 
     graphDataObj.push({
-      name: `${item.day.slice(0, 10)}`,
+      name: `${wikiViews[wikiViews.length - index - 1].day.slice(0, 10)}`,
       'Wiki Views': visitCount,
     })
     return null
