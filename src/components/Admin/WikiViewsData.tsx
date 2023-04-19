@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Flex,
   VStack,
@@ -26,32 +26,21 @@ import {
   AreaChart,
   CartesianGrid,
 } from 'recharts'
-import { useGetWikisEditedCountQuery } from '@/services/admin'
+import { useGetWikisViewsCountQuery } from '@/services/admin'
 
 export const WikiViewsData = () => {
-  const [graphFilter] = useState<string>('day')
-
-  const { data: DayTunedgraphWikisEditedCountData } =
-    useGetWikisEditedCountQuery({
-      interval: graphFilter,
-    })
-
+  const { data: wikiViews } = useGetWikisViewsCountQuery(0)
   const graphDataObj: {
     name: string | undefined
-    'Wikis Edited': number
+    'Wiki Views': number
   }[] = []
 
-  DayTunedgraphWikisEditedCountData?.map((item, index) => {
-    const editedCount = DayTunedgraphWikisEditedCountData[index].amount
+  wikiViews?.map((item, index) => {
+    const visitCount = wikiViews[index].visits
 
     graphDataObj.push({
-      name: `${new Date(item.endOn)
-        .toISOString()
-        .split('T')[0]
-        .split('-')
-        .slice(0, 4)
-        .join('-')}`,
-      'Wikis Edited': editedCount,
+      name: `${item.day.slice(0, 10)}`,
+      'Wiki Views': visitCount,
     })
     return null
   })
@@ -103,7 +92,7 @@ export const WikiViewsData = () => {
               <CartesianGrid strokeDasharray="0" vertical={false} />
               <Area
                 type="monotone"
-                dataKey="Wikis Edited"
+                dataKey="Wiki Views"
                 strokeWidth="2"
                 stroke={viewsColor}
                 fill="url(#colorUv)"
@@ -165,42 +154,12 @@ export const WikiViewsData = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,345,345</Td>
-                </Tr>
-                <Tr>
-                  <Td>01-02-2023</Td>
-                  <Td>123,566,345,345</Td>
-                </Tr>
+                {wikiViews?.map((element, i) => (
+                  <Tr key={i}>
+                    <Td>{element.day.slice(0, 10)}</Td>
+                    <Td>{element.visits}</Td>
+                  </Tr>
+                ))}
               </Tbody>
             </Table>
           </TableContainer>
