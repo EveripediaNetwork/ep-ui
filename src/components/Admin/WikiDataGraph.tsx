@@ -84,7 +84,7 @@ export const WikiDataGraph = () => {
       return null
     })
   } else {
-    GraphWikisEditedCountData?.map((item, index:number) => {
+    GraphWikisEditedCountData?.map((item, index: number) => {
       const editedCount = GraphWikisEditedCountData[index].amount
       const createdCount = GraphWikisCreatedCountData?.[index]?.amount
       const createCountStart = GraphWikisCreatedCountData?.[index]?.startOn
