@@ -212,7 +212,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={e => {
+            onChange={(e) => {
               handleGraphFilterChange(e.target.value)
             }}
           >
@@ -295,7 +295,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '40%', md: '60%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={e => {
+            onChange={(e) => {
               handlePieFilterChange(e.target.value)
             }}
           >
