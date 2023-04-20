@@ -35,7 +35,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => (
       </chakra.div>
       {featuredWikis ? (
         <Carousel topArrow="25%" settings={carouselSettings}>
-          {featuredWikis.map(wiki => (
+          {featuredWikis.map((wiki) => (
             <Box
               px="3"
               pt={{ base: '1', md: '3' }}
