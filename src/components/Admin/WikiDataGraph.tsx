@@ -26,17 +26,21 @@ import {
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 import {
+  useGetEditorsCountQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
+  useGetWikisViewsCountQuery,
 } from '@/services/admin'
 
 export const WikiDataGraph = () => {
-  const piedata = [
-    { name: 'Editors', value: 400 },
-    { name: 'Visitors', value: 300 },
-  ]
   const colors = ['#FF5DAA', '#FFB3D7']
   const [graphFilter, setGraphFilter] = useState<string>('day')
+
+  const dayVal = 24 * 60 * 60 * 1000
+
+  const targetDay = new Date(new Date().getTime() - 1 * dayVal)
+  const prevDay = Math.floor(targetDay.getTime() / 1000)
+  const [pieFilter, setPieFilter] = useState<string>('day')
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
@@ -56,6 +60,71 @@ export const WikiDataGraph = () => {
     useGetWikisEditedCountQuery({
       interval: graphFilter,
     })
+
+  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
+  const { data: editorsCountData } = useGetEditorsCountQuery({
+    startDate: prevDay,
+  })
+
+  const { data: wikiViews } = useGetWikisViewsCountQuery(0)
+
+  let piedata: {
+    name: string
+    value: number
+  }[] = []
+
+  if (pieFilter === 'day') {
+    piedata = [
+      {
+        name: 'Editors',
+        value: editorsCountData ? editorsCountData.amount : 0,
+      },
+      { name: 'Visitors', value: wikiViews ? wikiViews[0].visits : 0 },
+    ]
+  } else if (pieFilter === 'week') {
+    let weeklyViews: number = 0
+    wikiViews?.map((views, item) => {
+      if (item < 7) {
+        weeklyViews = weeklyViews + views.visits
+      }
+    })
+    piedata = [
+      {
+        name: 'Editors',
+        value: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
+      },
+      { name: 'Visitors', value: weeklyViews },
+    ]
+
+    // if (pieFilter === 'month') {
+    //   let monthlyViews: number = 0
+    //   wikiViews?.map((views, item) => {
+    //     if (item < 30) {
+    //       monthlyViews = monthlyViews + views.visits
+    //     }
+    //   })
+    //   piedata = [
+    //     {
+    //       name: 'Editors',
+    //       value: editorsCountData ? editorsCountData.amount : 0,
+    //     },
+    //     { name: 'Visitors', value: monthlyViews },
+    //   ]
+    // }
+    // if (pieFilter === 'year') {
+    //   let yearlyViews: number = 0
+    //   wikiViews?.map((views, _item) => {
+    //     yearlyViews = yearlyViews + views.visits
+    //   })
+    //   piedata = [
+    //     {
+    //       name: 'Editors',
+    //       value: editorsCountData ? editorsCountData.amount : 0,
+    //     },
+    //     { name: 'Visitors', value: yearlyViews },
+    //   ]
+    // }
+  }
 
   const graphDataObj: {
     name: string | undefined
@@ -124,6 +193,10 @@ export const WikiDataGraph = () => {
     return setGraphFilter(e)
   }
 
+  const handlePieFilterChange = (e: string) => {
+    return setPieFilter(e)
+  }
+
   return (
     <Flex gap={4} py="4" w="100%" flexDir={{ base: 'column', lg: 'row' }}>
       <Box rounded="xl" borderWidth="1px" p={4} w={{ lg: '68%', base: '100%' }}>
@@ -139,7 +212,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={(e) => {
+            onChange={e => {
               handleGraphFilterChange(e.target.value)
             }}
           >
@@ -215,9 +288,21 @@ export const WikiDataGraph = () => {
         </Box>
       </Box>
       <Box rounded="xl" borderWidth="1px" p={6} w={{ lg: '31%', base: '100%' }}>
-        <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
-          User Data
-        </Heading>
+        <Flex w="full" justifyContent="space-between">
+          <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
+            User Data
+          </Heading>
+          <Select
+            w={{ lg: '40%', md: '60%', base: '50%' }}
+            icon={<MdArrowDropDown />}
+            onChange={e => {
+              handlePieFilterChange(e.target.value)
+            }}
+          >
+            <option value="day">{`Daily (${currentYear})`}</option>
+            <option value="week">{`Weekly (${currentYear})`}</option>
+          </Select>
+        </Flex>
         <Flex alignItems="center" justifyContent="center" w="full">
           <PieChart width={350} height={400}>
             <Pie
@@ -228,8 +313,9 @@ export const WikiDataGraph = () => {
               outerRadius={130}
               fill="#8884d8"
               dataKey="value"
+              label
             >
-              {graphDataObj.map((_ent, index: number) => (
+              {piedata.map((_ent, index: number) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={colors[index % colors.length]}
