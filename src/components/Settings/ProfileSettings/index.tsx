@@ -64,7 +64,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       setInputBio({ value: settingsData.bio || '', error: '' })
       setInputEmail({ value: settingsData.email || '', error: '' })
       setWebsite(settingsData.links[0]?.website || '')
-      setWebsite(settingsData.links[0]?.website || '')
+      setLens(settingsData.links[0]?.lens || '')
       setInstagram(settingsData.links[0]?.instagram || '')
       setTwitter(settingsData.links[0]?.twitter || '')
       setAvatarIPFSHash(settingsData.avatar || '')

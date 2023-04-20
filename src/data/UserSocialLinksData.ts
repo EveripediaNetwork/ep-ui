@@ -1,3 +1,4 @@
+import LensterIcon from '@/components/Icons/lensterIcon'
 import { RiInstagramLine, RiLink, RiTwitterLine } from 'react-icons/ri'
 
 export const UserSocialLinksData = {
@@ -24,7 +25,7 @@ export const UserSocialLinksData = {
   },
   lens: {
     label: 'Lenster',
-    icon: RiInstagramLine,
+    icon: LensterIcon,
     urlPrefix: (username?: string) => {
       if (username?.startsWith('https://lenster.xyz')) return username
       return `https://lenster.xyz/u/${username}`

@@ -17,6 +17,7 @@ import {
   validateUsername,
 } from '@/utils/ProfileUtils/Validations'
 import { StrEntry } from '@/types/ProfileType'
+import LensterIcon from '@/components/Icons/lensterIcon'
 
 interface ProfileLinksProps {
   twitter: string
@@ -74,7 +75,7 @@ export const ProfileLinks = ({
           {/* LINKS: Instagram */}
           <InputGroup>
             <InputLeftElement pointerEvents="none">
-              <FaInstagram color="gray" />
+              <LensterIcon color="gray" />
             </InputLeftElement>
             <Input
               _focus={{ borderBottomColor: 'inherit' }}

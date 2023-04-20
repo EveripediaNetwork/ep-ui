@@ -1,6 +1,6 @@
 import { UserSocialLinksData as dt } from '@/data/UserSocialLinksData'
 import { ProfileLinks } from '@/types/ProfileType'
-import { HStack, Icon, Link, Tooltip } from '@chakra-ui/react'
+import { Flex, Icon, Link, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import EtherscanIcon from '../Icons/etherscan'
 
@@ -17,12 +17,13 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
   ) as [Social, string?][]
 
   return (
-    <HStack justify="center" align="center" spacing={4}>
+    <Flex justify="center" align="center" gap={4}>
       {links &&
         socialsWithURl.map((social) => {
           return (
             <Link
               position="relative"
+              height="25px"
               isExternal
               rel="noopener nofollow"
               href={dt[social[0]].urlPrefix(social[1] || '')}
@@ -59,7 +60,6 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
                 _dark={{
                   filter: 'invert(100%) hue-rotate(180deg)',
                 }}
-                mt="-9px"
                 _hover={{
                   opacity: 0.7,
                 }}
@@ -68,7 +68,7 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
           </Tooltip>
         </Link>
       )}
-    </HStack>
+    </Flex>
   )
 }
 
