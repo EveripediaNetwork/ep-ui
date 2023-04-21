@@ -18,6 +18,15 @@ export const WIKIS_EDITED = gql`
   }
 `
 
+export const WIKIS_VIEWS = gql`
+  query WikiViews($offset: Int!) {
+    wikiViews(limit: 50, offset: $offset) {
+      day
+      visits
+    }
+  }
+`
+
 export const WIKIS_CREATED = gql`
   query WikisCreated($startDate: Int, $endDate: Int, $interval: String) {
     wikisCreated(

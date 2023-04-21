@@ -107,14 +107,17 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
               _expanded={{ bg: 'brand.500', color: 'white' }}
             >
               <Button
-                borderColor="wikiSortBorder"
+                borderColor="tetiaryGray"
+                _dark={{ borderColor: '#2c323d' }}
                 py={2}
-                px={5}
+                px={{ md: '5' }}
+                pl={{ base: '2' }}
+                w={{ base: 'full' }}
                 leftIcon={sortIcon}
                 variant="outline"
                 fontWeight="medium"
               >
-                Sort
+                <Text display={{ base: 'none', md: 'block' }}>Sort</Text>
               </Button>
             </MenuButton>
             <MenuList>
@@ -139,13 +142,14 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
                 borderRadius="md"
                 _expanded={{ bg: 'brand.500', color: 'white' }}
                 py={2}
-                px={10}
+                px={{ md: '10' }}
+                pl={{ base: '2' }}
                 leftIcon={<MdFilterList fontSize="25px" />}
                 variant="outline"
                 fontWeight="medium"
                 onClick={onToggle}
               >
-                Filters
+                <Text display={{ base: 'none', md: 'block' }}>Filters</Text>
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
