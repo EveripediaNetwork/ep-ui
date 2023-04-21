@@ -72,7 +72,7 @@ export const ProfileLinks = ({
               placeholder="Your Instagram Handle"
             />
           </InputGroup>
-          {/* LINKS: Instagram */}
+          {/* LINKS: Lenster */}
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <LensterIcon color="gray" />
