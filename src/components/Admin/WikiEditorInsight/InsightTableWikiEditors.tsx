@@ -59,7 +59,7 @@ export const InsightTableWikiEditors = (
           ) : (
             wikiEditorInsightData.map((item, i) => {
               return (
-                <Tr key={i}>
+                <Tr key={i} color="primaryGray" _dark={{ color: 'white' }}>
                   <Td>
                     <Link href={`/account/${item.id}`} py={1}>
                       <Flex align="center" gap={2}>
@@ -86,13 +86,13 @@ export const InsightTableWikiEditors = (
                     </Link>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="primaryGray">{item.wikisCreated.length}</Text>
+                    <Text>{item.wikisCreated.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="primaryGray">{item.wikisEdited.length}</Text>
+                    <Text>{item.wikisEdited.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="primaryGray">
+                    <Text>
                       {item.wikisCreated.length + item.wikisEdited.length}
                     </Text>
                   </Td>
@@ -122,9 +122,7 @@ export const InsightTableWikiEditors = (
                       </Flex>
                     </Link>
                   </Td>
-                  <Td color="primaryGray">
-                    {item?.wikisCreated[0]?.datetime.split('T')[0]}
-                  </Td>
+                  <Td>{item?.wikisCreated[0]?.datetime.split('T')[0]}</Td>
                   <Td>
                     <Tag
                       bg={item.active ? '#F0FFF4' : '#FBD38D'}

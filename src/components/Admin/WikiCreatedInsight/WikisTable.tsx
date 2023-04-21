@@ -35,7 +35,12 @@ export const WikisTable = (props: WikisTableProps) => {
             <TableHead text="Wiki Title" />
             <TableHead text="Date/Time" />
             <TableHead text="Tags" />
-            <Th color="primaryGray" textTransform="none" fontWeight="medium">
+            <Th
+              color="primaryGray"
+              _dark={{ color: 'white' }}
+              textTransform="none"
+              fontWeight="medium"
+            >
               <HStack spacing={1}>
                 <Text fontWeight="bold">Status</Text>
                 <Icon
@@ -43,6 +48,7 @@ export const WikisTable = (props: WikisTableProps) => {
                   fontWeight="black"
                   cursor="pointer"
                   color="primaryGray"
+                  _dark={{ color: 'white' }}
                   as={RiArrowDownLine}
                 />
               </HStack>

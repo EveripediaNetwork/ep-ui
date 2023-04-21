@@ -1,13 +1,6 @@
 import { useRevalidateURLMutation } from '@/services/admin'
 import { isValidUrl } from '@/utils/textUtils'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  useToast,
-} from '@chakra-ui/react'
+import { Button, Flex, FormControl, Input, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 export const WikiRevalidateURL = () => {
@@ -46,33 +39,27 @@ export const WikiRevalidateURL = () => {
     }
   }
   return (
-    <Box
-      w={{ lg: '90%', base: '100%' }}
-      px="5"
-      py="4"
-      cursor="pointer"
-      borderWidth="1px"
-      rounded="xl"
-      alignItems="center"
-      justifyContent="flex-start"
-    >
-      <FormControl isRequired>
-        <FormLabel htmlFor="username">Enter URL</FormLabel>
+    <FormControl isRequired>
+      <Flex>
         <Input
-          mb={5}
           onChange={(e) => {
             handleManualValidation(e.target.value)
           }}
+          placeholder="Enter URL"
+          borderLeftRadius="md"
+          borderRightRadius="none"
         />
         <Button
           disabled={revalidateActive}
           onClick={() => {
             revalidateURLFunc()
           }}
+          borderLeftRadius="none"
+          borderRightRadius="md"
         >
           Revalidate Url
         </Button>
-      </FormControl>
-    </Box>
+      </Flex>
+    </FormControl>
   )
 }
