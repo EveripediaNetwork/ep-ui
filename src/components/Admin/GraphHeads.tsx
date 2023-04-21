@@ -3,7 +3,12 @@ import { Th, Text } from '@chakra-ui/react'
 
 export const TableHead = ({ text }: { text: string }) => {
   return (
-    <Th color="primaryGray" textTransform="capitalize" fontWeight="normal">
+    <Th
+      color="primaryGray"
+      _dark={{ color: 'white' }}
+      textTransform="capitalize"
+      fontWeight="normal"
+    >
       <Text fontWeight="bold">{text}</Text>
     </Th>
   )
