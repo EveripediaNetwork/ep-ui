@@ -1,5 +1,7 @@
-export const carouselSettings = {
-  dots: true,
+import { Settings } from 'react-slick'
+
+export const carouselSettings: Settings = {
+  dots: false,
   autoplay: true,
   infinite: true,
   arrows: false,
@@ -14,7 +16,7 @@ export const carouselSettings = {
         slidesToScroll: 1,
         initialSlide: 1,
         infinite: true,
-        dots: true,
+        dots: false,
       },
     },
     {
@@ -24,7 +26,7 @@ export const carouselSettings = {
         slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,
-        dots: true,
+        dots: false,
       },
     },
   ],
