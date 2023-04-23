@@ -132,7 +132,6 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
                 key={sid}
                 fontWeight="semibold"
                 p={tabPadding}
-                isDisabled={section.disabled}
               >
                 {section.period}{' '}
               </CustomTab>

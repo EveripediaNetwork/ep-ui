@@ -14,16 +14,13 @@ import { WikiHeader } from '@/components/SEO/Wiki'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
-import { getWikiPreviewsByCategory } from '@/services/wikis'
-import { Wiki } from '@everipedia/iq-utils'
 import { LinkButton } from '@/components/Elements'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 interface RevisionPageProps {
   wiki: Activity
-  relatedWikis: Wiki[] | null
 }
-const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
+const Revision = ({ wiki }: RevisionPageProps) => {
   const router = useRouter()
 
   const { id: ActivityId } = router.query
@@ -134,11 +131,7 @@ const Revision = ({ wiki, relatedWikis }: RevisionPageProps) => {
             </LinkButton>
           </Flex>
         )}
-        <WikiMarkup
-          wiki={wikiData?.content[0]}
-          relatedWikis={relatedWikis}
-          ipfs={wikiData?.ipfs}
-        />
+        <WikiMarkup wiki={wikiData?.content[0]} ipfs={wikiData?.ipfs} />
       </Box>
     </>
   )
@@ -156,22 +149,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     getActivityById.initiate(id),
   )
 
-  let relatedWikis = null
-  if (activityData?.content[0].categories) {
-    const { data } = await store.dispatch(
-      getWikiPreviewsByCategory.initiate({
-        category: activityData.content[0].categories[0].id || '',
-        limit: 4,
-      }),
-    )
-    relatedWikis = data
-  }
-
   if (activityData && !activityError)
     return {
       props: {
         wiki: activityData,
-        relatedWikis,
       },
     }
 
