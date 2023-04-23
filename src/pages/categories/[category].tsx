@@ -186,10 +186,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }),
   )
 
-  await Promise.all([
-    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
-    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
-  ])
+  await Promise.all([store.dispatch(wikiApi.util.getRunningQueriesThunk())])
 
   const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
   const newCategoryWikis = activitiesByCategory

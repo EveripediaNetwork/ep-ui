@@ -1,5 +1,5 @@
 import React from 'react'
-import { Wiki, WikiPreview } from '@everipedia/iq-utils'
+import { WikiPreview } from '@everipedia/iq-utils'
 import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import { WikiImage } from '@/components/WikiImage'
@@ -9,6 +9,7 @@ import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
+import { useGetWikiPreviewsByCategoryQuery } from '@/services/wikis'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
@@ -44,11 +45,20 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
     </LinkBox>
   )
 }
+// TODO: even better load only when near viewport
 export const RelatedWikis = ({
-  relatedWikis,
+  wikiId,
+  category,
 }: {
-  relatedWikis: Wiki[] | null
+  wikiId: string
+  category: string
 }) => {
+  const { data } = useGetWikiPreviewsByCategoryQuery({
+    category: category,
+    limit: 6,
+  })
+
+  const relatedWikis = data?.filter((w) => w.id !== wikiId)?.slice(0, 4)
   if (!relatedWikis) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2} mb="5">
