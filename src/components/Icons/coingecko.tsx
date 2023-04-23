@@ -19,5 +19,3 @@ const CoinGeckoIcon = (props: IconProps) => {
 }
 
 export default CoinGeckoIcon
-
-
