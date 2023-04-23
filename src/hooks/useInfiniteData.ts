@@ -9,9 +9,9 @@ type Opts = {
   defaultLoading?: boolean
 }
 
-export const useInfiniteData = <T>(opts: Opts) => {
+export const useInfiniteData = <T>(opts: Opts, initialData: T[] = []) => {
   const [hasMore, setHasMore] = useState<boolean>(true)
-  const [data, setData] = useState<T[] | []>([])
+  const [data, setData] = useState<T[]>(initialData)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(opts.defaultLoading || false)
   const updatedOffset = offset + ITEM_PER_PAGE
