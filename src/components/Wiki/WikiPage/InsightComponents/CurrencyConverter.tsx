@@ -52,7 +52,7 @@ const CurrencyBox = ({
         placeholder="0"
         value={value}
         opacity={value ? '1' : '0.4'}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         textAlign="right"
         fontSize="14px"
         variant="unstyled"
@@ -145,7 +145,7 @@ const CurrencyConverter = ({
               tokenSymbol={tokenSymbol}
               tokenImage={tokenImage}
               value={fromCurrency}
-              setValue={e => updateValues(e, true)}
+              setValue={(e) => updateValues(e, true)}
             />
             <IconButton
               bgColor="gray.100"
@@ -171,7 +171,7 @@ const CurrencyConverter = ({
             <CurrencyBox
               tokenSymbol="USD"
               value={toCurrency}
-              setValue={e => updateValues(e, false)}
+              setValue={(e) => updateValues(e, false)}
             />
           </HStack>
         </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { useAppSelector } from '@/store/hook'
@@ -30,12 +30,29 @@ import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import dynamic from 'next/dynamic'
+import config from '@/config'
+import networkMap from '@/data/NetworkMap'
+import { ProviderDataType } from '@/types/ProviderDataType'
+import detectEthereumProvider from '@metamask/detect-provider'
+
+const NetworkErrorNotification = dynamic(
+  () => import('@/components/Layout/Network/NetworkErrorNotification'),
+)
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector(state => state.wiki)
+  const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { userCanEdit } = useWhiteListValidator(userAddress)
+  const [connectedChainId, setConnectedChainId] = useState<string>()
+  const [showNetworkModal, setShowNetworkModal] = useState(false)
+  const { chainId } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
+  const [detectedProvider, setDetectedProvider] =
+    useState<ProviderDataType | null>(null)
   const {
     isOpen: isOverrideModalOpen,
     onOpen: onOverrideModalOpen,
@@ -79,6 +96,41 @@ export const WikiPublishButton = () => {
     submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
 
   const { fireConfetti, confettiProps } = useConfetti()
+
+  useEffect(() => {
+    const getConnectedChain = async (provider: ProviderDataType) => {
+      const connectedChainId = await provider.request({
+        method: 'eth_chainId',
+      })
+      setConnectedChainId(connectedChainId)
+    }
+
+    const getDetectedProvider = async () => {
+      const provider = (await detectEthereumProvider({
+        silent: true,
+      })) as ProviderDataType
+      setDetectedProvider(provider as ProviderDataType)
+      if (provider) getConnectedChain(provider)
+    }
+
+    if (!detectedProvider) {
+      getDetectedProvider()
+    } else {
+      getConnectedChain(detectedProvider)
+      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+        setConnectedChainId(newlyConnectedChain),
+      )
+    }
+
+    return () => {
+      if (detectedProvider) {
+        detectedProvider.removeListener(
+          'chainChanged',
+          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        )
+      }
+    }
+  }, [detectedProvider, isUserConnected])
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -150,6 +202,10 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
+    if (connectedChainId !== chainId) {
+      setShowNetworkModal(true)
+      return
+    }
     if (!isValidWiki(toast, wiki)) return
 
     logEvent({
@@ -180,7 +236,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter(m => m.value),
+        metadata: wiki.metadata.filter((m) => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)
@@ -265,6 +321,10 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
+      <NetworkErrorNotification
+        modalState={showNetworkModal}
+        setModalState={(state: boolean) => setShowNetworkModal(state)}
+      />
     </>
   )
 }

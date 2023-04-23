@@ -4,10 +4,10 @@ import { Flex, Box, Skeleton, Tr, Td } from '@chakra-ui/react'
 const SingularSkeleton = () => {
   return (
     <Tr verticalAlign="middle">
-      <Td verticalAlign="middle" borderColor="rankingListBorder">
+      <Td verticalAlign="middle" borderColor="rankingListBorder" pr="1">
         <Skeleton h="12px" w="36px" borderRadius="15px" />
       </Td>
-      <Td borderColor="rankingListBorder">
+      <Td borderColor="rankingListBorder" pl="2">
         <Flex gap="2.5" alignItems="center">
           <Skeleton h="40px" w="40px" borderRadius="50%" />
           <Box>
@@ -30,6 +30,9 @@ const SingularSkeleton = () => {
       </Td>
       <Td verticalAlign="middle" borderColor="rankingListBorder">
         <Skeleton h="15px" w="80px" borderRadius="15px" />
+      </Td>
+      <Td verticalAlign="middle" borderColor="rankingListBorder">
+        <Skeleton h="15px" w="60px" borderRadius="15px" />
       </Td>
       <Td verticalAlign="middle" borderColor="rankingListBorder">
         <Skeleton h="15px" w="60px" borderRadius="15px" />

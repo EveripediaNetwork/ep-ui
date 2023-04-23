@@ -5,12 +5,10 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  Tag,
   Text,
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
-import { AllCareers } from '@/data/CareersData'
 
 const MenuFooter = () => {
   const { t } = useTranslation()
@@ -34,7 +32,17 @@ const MenuFooter = () => {
             px={{ base: 0, lg: 0 }}
             pb={{ base: '6', md: '0' }}
           >
-            {`${t('visionFooterText')}`}
+            IQ.wiki&apos;s vision is to bring blockchain knowledge to the world
+            and knowledge onto the blockchain. A part of{' '}
+            <Link
+              href="https://www.brainfund.com/"
+              opacity="0.8"
+              _hover={{ opacity: '1', textDecoration: 'underline' }}
+              target="_blank"
+            >
+              Brainfund
+            </Link>{' '}
+            Group.
           </Text>
         </Stack>
       </GridItem>
@@ -62,14 +70,14 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/locking-hiiq"
+                href="https://iq.braindao.org/dashboard/stake"
               >
                 {`${t('staking')}`}
               </Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://learn.everipedia.org/iq/iq/iq-bonds-guide-ethereum"
+                href="https://app.bondprotocol.finance/#/market/1/80"
               >
                 {`${t('bonds')}`}
               </Link>
@@ -89,9 +97,9 @@ const MenuFooter = () => {
                   prefetch={false}
                   href="/careers"
                 >
-                  <Box as="span">{`${t('careers')}`}</Box>
+                  {`${t('careers')}`}
                 </Link>
-                {AllCareers.length !== 0 && (
+                {/* {AllCareers.length !== 0 && (
                   <Tag
                     ml="2"
                     size="sm"
@@ -101,8 +109,13 @@ const MenuFooter = () => {
                   >
                     We&apos;re hiring
                   </Tag>
-                )}
+                )} */}
               </Box>
+              <Link
+                textAlign={{ base: 'center', md: 'left' }}
+                prefetch={false}
+                href="/us-careers"
+              >{`${t('usCareers')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}

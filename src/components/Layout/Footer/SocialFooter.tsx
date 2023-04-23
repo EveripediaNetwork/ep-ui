@@ -12,7 +12,7 @@ const SocialFooter = () => {
         {`${t('communityFooterHeading')}`}
       </Text>
       <SimpleGrid columns={{ base: 3, lg: 7 }}>
-        {Socials.map(social => (
+        {Socials.map((social) => (
           <SocialIcon
             key={social.href}
             link={social.href}

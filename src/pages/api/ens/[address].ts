@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { StaticJsonRpcProvider } from '@ethersproject/providers'
-import { getAddress, isAddress } from '@ethersproject/address'
-import config from '@/config'
-
-const provider = new StaticJsonRpcProvider(config.ensRPC)
+import { getAddress, isAddress } from 'viem'
+import { provider } from '@/utils/WalletUtils/getProvider'
 
 const firstParam = (param: string | string[]) => {
   return Array.isArray(param) ? param[0] : param
@@ -31,22 +28,23 @@ const resolveAddress = async (
   res: NextApiResponse<Data>,
 ) => {
   const address = getAddress(lowercaseAddress)
+
   let displayName = address.replace(
     /^(0x[0-9A-F]{3})[0-9A-F]+([0-9A-F]{4})$/i,
     '$1…$2',
   )
 
   try {
-    const name = await provider.lookupAddress(address)
+    const name = await provider.getEnsName({ address })
     if (name) {
       displayName = name
     }
 
-    const avatar = name ? await provider.getAvatar(name) : null
+    const avatar = name ? await provider.getEnsAvatar({ name }) : null
 
     res
       .status(200)
-      .setHeader('Cache-Control', `s-maxage=300, stale-while-revalidate=3600`)
+      .setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=3600')
       .json({ address, name, displayName, avatar })
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -65,12 +63,12 @@ const resolveName = async (name: string, res: NextApiResponse<Data>) => {
   const displayName = name
   try {
     const [address, avatar] = await Promise.all([
-      provider.resolveName(name),
-      provider.getAvatar(name),
+      provider.getEnsAddress({ name }),
+      provider.getEnsAvatar({ name }),
     ])
     res
       .status(200)
-      .setHeader('Cache-Control', `s-maxage=300, stale-while-revalidate=3600`)
+      .setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=3600')
       .json({ address, name, displayName, avatar })
   } catch (error: unknown) {
     if (error instanceof Error) {

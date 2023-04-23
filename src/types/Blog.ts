@@ -15,6 +15,17 @@ export type Blog = {
   }
 }
 
+export type FormatedBlogType = {
+  title: string
+  body?: string
+  slug: string
+  digest: string
+  contributor: string
+  timestamp: number | undefined
+  cover_image: string
+  image_sizes: number
+}
+
 type EntryPathPicked = Pick<Blog, 'slug' | 'timestamp'>
 
 export interface EntryPath extends EntryPathPicked {
@@ -26,7 +37,7 @@ export type BlogNode = {
   block: {
     timestamp: number
   }
-  tags: Array<BlogTag>
+  tags: BlogTag[]
 }
 
 export type BlogTag = {
@@ -36,8 +47,8 @@ export type BlogTag = {
 
 export type RawTransactions = {
   transactions: {
-    edges: Array<{
+    edges: {
       node: BlogNode
-    }>
+    }[]
   }
 }

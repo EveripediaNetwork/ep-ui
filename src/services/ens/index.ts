@@ -12,7 +12,7 @@ export const ensApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api',
   }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getEns: builder.query<ENSData, string>({
       query: (address: string) => ({ url: `/ens/${address}` }),
     }),

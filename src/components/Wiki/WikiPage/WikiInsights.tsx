@@ -40,15 +40,15 @@ const WikiInsights = ({
 }: WikiInsightsProps) => {
   const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
-    meta => meta.id === CommonMetaIds.COINGECKO_PROFILE,
+    (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
 
   const twitterLink = wiki.metadata.find(
-    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+    (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
 
   const commitMessage = wiki.metadata.find(
-    meta => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
+    (meta) => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
   const wikiIsNFT = /https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/.test(
@@ -60,7 +60,7 @@ const WikiInsights = ({
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {
-        await fetchTokenStats(coingeckoLink).then(res => {
+        await fetchTokenStats(coingeckoLink).then((res) => {
           setTokenStats(res)
         })
       }
@@ -70,7 +70,7 @@ const WikiInsights = ({
 
     if (wikiIsNFT) {
       const fetchNFTData = async () => {
-        await fetchNFTStats(coingeckoLink).then(res => {
+        await fetchNFTStats(coingeckoLink).then((res) => {
           setNftStats(res)
         })
       }
@@ -104,7 +104,9 @@ const WikiInsights = ({
             views={wiki.views}
           />
           <ProfileSummary wiki={wiki} />
-          <ContentFeedback feedback wikiId={wiki.id} userId={userAddress} />
+          <Box w="full" display={{ base: 'none', xl: 'block' }}>
+            <ContentFeedback choice contentId={wiki.id} userId={userAddress} />
+          </Box>
           {!!coingeckoLink && (
             <>
               <ProfileStatistics tokenStats={tokenStats} />
@@ -112,7 +114,7 @@ const WikiInsights = ({
               {tokenStats && (
                 <CurrencyConverter
                   tokenImage={
-                    wiki.media?.find(m => m.type === MediaType.ICON)?.id
+                    wiki.media?.find((m) => m.type === MediaType.ICON)?.id
                   }
                   token={getTokenFromURI(coingeckoLink)}
                   tokenStats={tokenStats}
@@ -126,7 +128,6 @@ const WikiInsights = ({
             user={wiki.user}
             lastUpdated={wiki.updated || dateTime}
           />
-
           <Flex
             w="100%"
             display={{ base: 'none', xl: 'block', md: 'none' }}

@@ -11,10 +11,10 @@ import {
 } from '.'
 
 export enum UserProfileFetchOptions {
-  WITH_ALL_SETTINGS,
-  ONLY_EMAIL,
-  ONLY_AVATAR,
-  USER_PROFILE,
+  WITH_ALL_SETTINGS = 0,
+  ONLY_EMAIL = 1,
+  ONLY_AVATAR = 2,
+  USER_PROFILE = 3,
 }
 
 type ProfileDataType<T extends UserProfileFetchOptions> =
@@ -61,7 +61,7 @@ export const useUserProfileData = <T extends UserProfileFetchOptions>(
           setProfileData(fetchedProfileData as ProfileDataType<T>)
         }
         setLoading(false)
-      } catch (err) {
+      } catch (_err) {
         setLoading(false)
       }
     }

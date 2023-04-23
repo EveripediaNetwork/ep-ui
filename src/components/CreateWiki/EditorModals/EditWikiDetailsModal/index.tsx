@@ -11,25 +11,24 @@ import {
   Button,
   Stack,
 } from '@chakra-ui/react'
-
 import { useAppSelector } from '@/store/hook'
-
 import TagsInput from '@/components/CreateWiki/EditorModals/EditWikiDetailsModal/TagsInput'
 import LinksInput from './LinksInput'
 import CategoryInput from './CategoryInput'
 import LinkedWikisInput from './LinkedWikisInput'
+import EventsInput from './EventsInput'
 
 const HighlightsModal = ({
   onClose = () => {},
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
-  const currentWiki = useAppSelector(state => state.wiki)
+  const currentWiki = useAppSelector((state) => state.wiki)
 
   if (!isOpen) return null
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered size="xl" {...rest}>
+    <Modal onClose={onClose} isOpen={isOpen} isCentered size="2xl" {...rest}>
       <ModalOverlay />
       <ModalContent
         w="min(95vw, 600px)"
@@ -58,10 +57,16 @@ const HighlightsModal = ({
             <TagsInput wiki={currentWiki} />
             <LinkedWikisInput wiki={currentWiki} />
             <LinksInput wiki={currentWiki} />
+            <EventsInput wiki={currentWiki} />
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mx="auto" onClick={onClose}>
+          <Button
+            colorScheme="blue"
+            mx="auto"
+            w={{ base: 'full', md: 'initial' }}
+            onClick={onClose}
+          >
             Close
           </Button>
         </ModalFooter>

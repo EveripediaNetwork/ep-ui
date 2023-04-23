@@ -2,6 +2,7 @@ import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
@@ -11,6 +12,7 @@ import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
 import WikiReferences from './WikiReferences'
 import WikiTableOfContents from './WikiTableOfContents'
+import ContentFeedback from './InsightComponents/ContentFeedback'
 
 interface WikiLayoutProps {
   wiki?: Wiki | null
@@ -22,11 +24,14 @@ const MobileMeta = (wiki: {
   metadata: { id: string; value: string }[]
   relatedWikis: Wiki[] | null
   media?: Media[]
+  id: string
 }) => {
-  const { metadata, relatedWikis, media } = wiki
+  const { metadata, relatedWikis, media, id } = wiki
   const twitterLink = metadata.find(
-    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+    (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
+
+  const userAddress = getUserAddressFromCache()
 
   return (
     <VStack
@@ -37,6 +42,7 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', xl: 'none' }}
       spacing={6}
     >
+      <ContentFeedback choice contentId={id} userId={userAddress} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis relatedWikis={relatedWikis} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
@@ -96,6 +102,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
                 metadata={wiki.metadata}
                 relatedWikis={relatedWikis}
                 media={wiki.media}
+                id={wiki.id}
               />
             </chakra.div>
             <WikiReferences

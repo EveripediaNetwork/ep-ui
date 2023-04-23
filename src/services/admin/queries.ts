@@ -18,6 +18,15 @@ export const WIKIS_EDITED = gql`
   }
 `
 
+export const WIKIS_VIEWS = gql`
+  query WikiViews($offset: Int!) {
+    wikiViews(limit: 50, offset: $offset) {
+      day
+      visits
+    }
+  }
+`
+
 export const WIKIS_CREATED = gql`
   query WikisCreated($startDate: Int, $endDate: Int, $interval: String) {
     wikisCreated(
@@ -106,7 +115,7 @@ export const HIDDEN_WIKIS_TABLE = gql`
 
 export const EDITORS_TABLE = gql`
   query Editors($limit: Int!, $offset: Int!) {
-    users(limit: $limit, offset: $offset) {
+    users(limit: $limit, offset: $offset, edits: true) {
       id
       active
       profile {
@@ -238,11 +247,16 @@ export const REVALIDATE_URL = gql`
 
 export const CONTENT_FEEDBACK = gql`
   mutation ContentFeedback(
-    $wikiId: String!
+    $contentId: String!
     $userId: String
-    $choice: Boolean!
+    $feedback: ContentFeedbackType
   ) {
-    contentFeedback(wikiId: $wikiId, userId: $userId, choice: $choice)
+    contentFeedback(
+      site: IQWIKI
+      contentId: $contentId
+      userId: $userId
+      feedback: $feedback
+    )
   }
 `
 export const CHECK_ADMIN = gql`

@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightAddon,
   Center,
+  Image,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import {
@@ -31,6 +32,7 @@ import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
+import Link from 'next/link'
 
 const SHARING_OPTIONS = [
   {
@@ -61,6 +63,9 @@ const SHARING_OPTIONS = [
     label: EmailShareButton,
     icon: EmailIconColor,
   },
+  {
+    label: 'lenster',
+  },
 ]
 
 const ShareWikiModal = ({
@@ -70,7 +75,6 @@ const ShareWikiModal = ({
   const router = useRouter()
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
-
   useEffect(() => {
     logEvent({
       action: 'OPEN_SHARE_WIKI_MODAL',
@@ -114,12 +118,37 @@ const ShareWikiModal = ({
         <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
           Or share via:
         </Text>
-        <Wrap mt="1rem" spacing="5">
-          {SHARING_OPTIONS.map(item => {
+        <Wrap mt="1rem" spacing="3">
+          {SHARING_OPTIONS.map((item) => {
             return (
-              <item.label url={url}>
-                <Icon as={item.icon} fontSize="40px" />
-              </item.label>
+              <>
+                {typeof item.label !== 'string' ? (
+                  <item.label url={url}>
+                    <Icon as={item.icon} fontSize="38px" />
+                  </item.label>
+                ) : (
+                  <Link
+                    href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
+                    rel="nofollow"
+                    target="_blank"
+                    onClick={() =>
+                      logEvent({
+                        action: 'SHARE_ON_LEN',
+                        label: url,
+                        category: 'sharing',
+                        value: 1,
+                      })
+                    }
+                  >
+                    <Image
+                      alt="Lenster"
+                      src="/images/icons/lenster.svg"
+                      h="38px"
+                      w="38px"
+                    />
+                  </Link>
+                )}
+              </>
             )
           })}
         </Wrap>

@@ -19,6 +19,7 @@ import {
   CHECK_ADMIN,
   REVALIDATE_URL,
   CONTENT_FEEDBACK,
+  WIKIS_VIEWS,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -118,6 +119,15 @@ type EditorQueryParams = {
   offset: number
 }
 
+type WikiViewsResult = {
+  day: string
+  visits: number
+}
+
+type WikiViewsResponse = {
+  wikiViews: WikiViewsResult[]
+}
+
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   refetchOnMountOrArgChange: 30,
@@ -129,7 +139,7 @@ export const adminApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getEditorsCount: builder.query<
       { amount: number },
       EditorsModifiedCountArgs
@@ -205,6 +215,13 @@ export const adminApi = createApi({
       transformResponse: (response: WikisEditedCountResponse) =>
         response.wikisEdited,
     }),
+    getWikisViewsCount: builder.query<WikiViewsResult[], number>({
+      query: (offset: number) => ({
+        document: WIKIS_VIEWS,
+        variables: { offset },
+      }),
+      transformResponse: (response: WikiViewsResponse) => response.wikiViews,
+    }),
     postHideWiki: builder.mutation<Wiki, string>({
       query: (id: string) => ({
         document: HIDE_WIKI,
@@ -223,9 +240,9 @@ export const adminApi = createApi({
       },
     }),
     contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
-      query: ({ wikiId, userId, choice }: ContentFeedbackArgs) => ({
+      query: ({ contentId, userId, feedback }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { wikiId, userId, choice },
+        variables: { contentId, userId, feedback },
       }),
       transformResponse: (response: ContentFeedback) => {
         return response.contentFeedback
@@ -304,6 +321,7 @@ export const {
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
   useContentFeedbackMutation,
+  useGetWikisViewsCountQuery,
 } = adminApi
 
 export const {
@@ -325,4 +343,5 @@ export const {
   postUnHideWiki,
   postPromotedWiki,
   getSearchedEditors,
+  getWikisViewsCount,
 } = adminApi.endpoints

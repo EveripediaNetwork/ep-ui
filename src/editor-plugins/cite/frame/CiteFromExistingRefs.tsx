@@ -72,7 +72,7 @@ export const CiteFromExistingRefs = ({
   useEffect(() => {
     if (search.length > 0) {
       const results = fuse.search(search)
-      setSearchResults(results.map(result => result.item))
+      setSearchResults(results.map((result) => result.item))
     } else {
       setSearchResults([])
     }
@@ -90,7 +90,7 @@ export const CiteFromExistingRefs = ({
   // and if there are any search results, change shown references
   let shownReferences = []
   if (editingId) {
-    shownReferences = references.filter(ref => {
+    shownReferences = references.filter((ref) => {
       return ref.id === editingId
     })
   } else if (searchResults.length > 0) {

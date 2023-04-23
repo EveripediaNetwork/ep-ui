@@ -1,6 +1,12 @@
 import slugify from 'slugify'
 import arweave from '@/config/arweave'
-import { Blog, BlogTag, EntryPath, RawTransactions } from '@/types/Blog'
+import {
+  Blog,
+  BlogTag,
+  EntryPath,
+  FormatedBlogType,
+  RawTransactions,
+} from '@/types/Blog'
 import config from '@/config'
 import { store } from '@/store/store'
 import { getBlogs } from '@/services/blog/mirror'
@@ -25,23 +31,26 @@ export const formatEntry = async (
   image_sizes: 50,
 })
 
-export const formatBlog = (blog: Blog) => ({
-  title: blog.title,
-  slug: slugify(blog.title || ''),
-  body: blog.body,
-  digest: blog.digest,
-  contributor: blog?.publisher?.project?.address || '',
-  timestamp: blog.timestamp,
-  cover_image: blog.body
-    ? (blog.body
-        .split('\n\n')[0]
-        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
-    : '',
-  image_sizes: 50,
-})
+export const formatBlog = (blog: Blog, hasBody?: boolean) => {
+  const newBlog: FormatedBlogType = {
+    title: blog.title,
+    slug: slugify(blog.title || ''),
+    digest: blog.digest,
+    contributor: blog?.publisher?.project?.address || '',
+    timestamp: blog.timestamp,
+    cover_image: blog.body
+      ? (blog.body
+          .split('\n\n')[0]
+          .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+      : '',
+    image_sizes: 50,
+  }
+  if (hasBody) newBlog.body = blog?.body
+  return newBlog
+}
 
 export const getBlogsFromAllAccounts = async () => {
-  let blogs: Blog[] = []
+  let blogs: FormatedBlogType[] = []
   const accounts = [config.blogAccount2, config.blogAccount3]
 
   // eslint-disable-next-line no-plusplus
@@ -50,7 +59,8 @@ export const getBlogsFromAllAccounts = async () => {
     const { data: entries } = await store.dispatch(
       getBlogs.initiate(accounts[i]),
     )
-    if (entries) blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b))]
+    if (entries)
+      blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b, false))]
   }
 
   return blogs
@@ -73,7 +83,7 @@ export const getEntryPaths = ({
         timestamp: node.block.timestamp,
       }
     })
-    .filter(entry => entry.slug && entry.slug !== '')
+    .filter((entry) => entry.slug && entry.slug !== '')
     .reduce((acc: EntryPath[], current) => {
       const x = acc.findIndex((entry: EntryPath) => entry.slug === current.slug)
       if (x === -1) return acc.concat([current])
@@ -112,7 +122,7 @@ const mapEntry = async (entry: EntryPath) => {
     }
 
     return undefined
-  } catch (error) {
+  } catch (_error) {
     return null
   }
 }

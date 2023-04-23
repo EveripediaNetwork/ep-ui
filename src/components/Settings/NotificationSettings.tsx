@@ -19,7 +19,7 @@ const NotificationSettings = ({ address }: NotificationSettingsProps) => {
   const route = useRouter()
 
   const wikiSubscriptions = useMemo(
-    () => wikiSubscriptionsData?.map(item => item.wiki) ?? [],
+    () => wikiSubscriptionsData?.map((item) => item.wiki) ?? [],
     [wikiSubscriptionsData],
   )
 
@@ -33,7 +33,7 @@ const NotificationSettings = ({ address }: NotificationSettingsProps) => {
           {!isLoading &&
             wikiSubscriptions &&
             wikiSubscriptions.length !== 0 &&
-            wikiSubscriptions.map(wiki => (
+            wikiSubscriptions.map((wiki) => (
               <NotificationCard
                 key={wiki.id}
                 defaultSubscribed

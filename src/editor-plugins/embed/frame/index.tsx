@@ -45,7 +45,7 @@ export const EmbedFrame = ({
       <VStack w="100%" overflowY="scroll" spacing={8} pb="10">
         {activeAccordion !== ''
           ? embeds
-              .filter(e => e.name === activeAccordion)
+              .filter((e) => e.name === activeAccordion)
               ?.map((embed, i) => (
                 <EmbedCard key={i} {...embedCardProps(embed)} />
               ))

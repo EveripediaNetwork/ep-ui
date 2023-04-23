@@ -24,7 +24,7 @@ export const editorApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.editorGraphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getLeaderboard: builder.query<LeaderBoardType[], void>({
       query: () => ({ document: GET_LEADER_BOARD }),
       transformResponse: (response: LeaderboardResponseType) =>

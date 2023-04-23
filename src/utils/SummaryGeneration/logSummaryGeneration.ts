@@ -8,7 +8,7 @@ export const logExecutionSummary = (
   completion: GPT3Completion,
 ) => {
   const summaryLengths = allGeneratedSummaries
-    .map(c => {
+    .map((c) => {
       const l = c.length || 0
       return `${l}${l > 255 ? ' (x)' : ''}`
     })

@@ -1,21 +1,29 @@
 .accordionDisplay {
-  display:  none
+  display: none;
 }
 
 @media (min-width: 768px) {
   .accordionDisplay {
-    display:  block
- }
+    display: block;
+  }
 }
 
 .accordionUnDisplay {
-  display:  block
+  display: block;
+}
+
+.accordionOpen {
+  display: block;
+}
+
+.accordionClose {
+  display: none;
 }
 
 @media (min-width: 768px) {
   .accordionUnDisplay {
-    display:  none
- }
+    display: none;
+  }
 }
 
 .markdownBody {

@@ -121,7 +121,7 @@ export const HistoryCard = ({
       w={
         isFullWidth
           ? `calc(100% - ${isFullWidth ? '17px' : '15px'})`
-          : `calc(50% - 30px)`
+          : 'calc(50% - 30px)'
       }
       bgColor="cardBg"
       borderRadius={4}

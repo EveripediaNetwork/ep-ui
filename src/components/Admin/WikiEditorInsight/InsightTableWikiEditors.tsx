@@ -21,23 +21,21 @@ import {
 import React from 'react'
 import { shortenAccount, shortenText } from '@/utils/textUtils'
 import { RiQuestionLine } from 'react-icons/ri'
-import { Editors } from '@/types/admin'
+import { userNameData } from '@/utils/AdminUtils/dataUpdate'
+import { InsightTableWikiEditorsProps } from '@/types/admin'
 import { WikiImage } from '../../WikiImage'
 import { TableHead } from '../GraphHeads'
-
-type InsightTableWikiEditorsProps = {
-  wikiInsightData: Editors[] | undefined
-  toggleUserFunc?: (active: boolean, id: string) => void
-}
-
-export const userNameData = (item: Editors) => {
-  return item.username || item.profile?.username || 'Unknown'
-}
+import { LoadingAdminTableSkeleton } from '../LoadingAdminTableSkeleton'
 
 export const InsightTableWikiEditors = (
   props: InsightTableWikiEditorsProps,
 ) => {
-  const { wikiInsightData: wikiEditorInsightData, toggleUserFunc } = props
+  const {
+    wikiInsightData: wikiEditorInsightData,
+    toggleUserFunc,
+    editorsIsFetching,
+    hiddenEditorsIsFetching,
+  } = props
 
   const { onOpen } = useDisclosure()
   return wikiEditorInsightData && wikiEditorInsightData?.length > 0 ? (
@@ -56,14 +54,12 @@ export const InsightTableWikiEditors = (
           </Tr>
         </Thead>
         <Tbody>
-          {wikiEditorInsightData
-            ?.filter(
-              editor =>
-                editor.wikisCreated.length > 0 || editor.wikisEdited.length > 0,
-            )
-            .map((item, i) => {
+          {hiddenEditorsIsFetching || editorsIsFetching ? (
+            <LoadingAdminTableSkeleton length={10} />
+          ) : (
+            wikiEditorInsightData.map((item, i) => {
               return (
-                <Tr key={i}>
+                <Tr key={i} color="primaryGray" _dark={{ color: 'white' }}>
                   <Td>
                     <Link href={`/account/${item.id}`} py={1}>
                       <Flex align="center" gap={2}>
@@ -79,7 +75,7 @@ export const InsightTableWikiEditors = (
                             {userNameData(item)}
                           </Text>
                           <Text
-                            color="#718096"
+                            color="primaryGray"
                             fontSize="sm"
                             opacity={item.active ? 1 : 0.3}
                           >
@@ -90,13 +86,13 @@ export const InsightTableWikiEditors = (
                     </Link>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.wikisCreated.length}</Text>
+                    <Text>{item.wikisCreated.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">{item.wikisEdited.length}</Text>
+                    <Text>{item.wikisEdited.length}</Text>
                   </Td>
                   <Td opacity={item.active ? 1 : 0.3}>
-                    <Text color="#718096">
+                    <Text>
                       {item.wikisCreated.length + item.wikisEdited.length}
                     </Text>
                   </Td>
@@ -126,9 +122,7 @@ export const InsightTableWikiEditors = (
                       </Flex>
                     </Link>
                   </Td>
-                  <Td color="#718096">
-                    {item?.wikisCreated[0]?.datetime.split('T')[0]}
-                  </Td>
+                  <Td>{item?.wikisCreated[0]?.datetime.split('T')[0]}</Td>
                   <Td>
                     <Tag
                       bg={item.active ? '#F0FFF4' : '#FBD38D'}
@@ -172,7 +166,7 @@ export const InsightTableWikiEditors = (
                         }}
                       >
                         <Text
-                          color="#E2E8F0"
+                          color="tetiaryGray"
                           _dark={{ color: '#495a68' }}
                           cursor="pointer"
                         >
@@ -181,7 +175,7 @@ export const InsightTableWikiEditors = (
                         <Icon
                           fontSize="20px"
                           cursor="pointer"
-                          color="#F11a82"
+                          color="electricPink"
                           as={RiQuestionLine}
                         />
                       </HStack>
@@ -189,7 +183,8 @@ export const InsightTableWikiEditors = (
                   </Td>
                 </Tr>
               )
-            })}
+            })
+          )}
         </Tbody>
       </Table>
     </TableContainer>

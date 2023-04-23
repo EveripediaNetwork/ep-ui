@@ -17,5 +17,5 @@ export const getEditorRank = (
   address: string,
   leaderboard: LeaderBoardType[],
 ) => {
-  return leaderboard.findIndex(editor => editor.id === address)
+  return leaderboard.findIndex((editor) => editor.id === address)
 }

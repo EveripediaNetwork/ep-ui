@@ -4,7 +4,6 @@ import { useAppDispatch } from '@/store/hook'
 import {
   Button,
   Center,
-  Flex,
   HStack,
   Icon,
   Input,
@@ -13,6 +12,7 @@ import {
   Text,
   Wrap,
   chakra,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
@@ -25,7 +25,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
 
   const getWikiAttribute = (attr: string) => {
-    const attribute = wiki.metadata.find(att => att.id === attr)?.value
+    const attribute = wiki.metadata.find((att) => att.id === attr)?.value
     return {
       isDefined: !!attribute,
       value: attribute,
@@ -48,14 +48,14 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
 
   const insertLinks = () => {
     if (currentLinkValue) {
-      const link = LINK_OPTIONS.find(l => l.id === currentLink)
+      const link = LINK_OPTIONS.find((l) => l.id === currentLink)
 
       if (currentLinkValue.length > WIKI_METADATA_VALUE_LIMIT) {
         setError(`Link exceeds limit of ${WIKI_METADATA_VALUE_LIMIT}.`)
         return
       }
 
-      const linkIsValid = link?.tests?.some(t => t.test(currentLinkValue))
+      const linkIsValid = link?.tests?.some((t) => t.test(currentLinkValue))
 
       if (linkIsValid) {
         updateLink(currentLink, currentLinkValue)
@@ -67,7 +67,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   }
 
   const linksWithValue = LINK_OPTIONS.filter(
-    med => !!wiki.metadata.find((m: MData) => m.id === med.id)?.value,
+    (med) => !!wiki.metadata.find((m: MData) => m.id === med.id)?.value,
   )
 
   const removeLink = (network: string) => {
@@ -94,36 +94,36 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Links</Text>
-      <Flex
+      <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        direction={{ base: 'column', sm: 'row' }}
+        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
       >
         <Select
-          size="sm"
+          h="40px"
           rounded="md"
           flex="5.5"
           value={currentLink}
-          onChange={event => {
+          onChange={(event) => {
             const attr = event.target.value
             setCurrentLink(attr)
           }}
           placeholder="Select option"
         >
           <optgroup label="Socials">
-            {LINK_OPTIONS.filter(option => option.type === LinkType.SOCIAL).map(
-              med => (
-                <chakra.option key={med.id} value={med.id}>
-                  {med.label}
-                </chakra.option>
-              ),
-            )}
+            {LINK_OPTIONS.filter(
+              (option) => option.type === LinkType.SOCIAL,
+            ).map((med) => (
+              <chakra.option key={med.id} value={med.id}>
+                {med.label}
+              </chakra.option>
+            ))}
           </optgroup>
           <optgroup label="Explorers">
             {LINK_OPTIONS.filter(
-              option => option.type === LinkType.EXPLORER,
-            ).map(med => (
+              (option) => option.type === LinkType.EXPLORER,
+            ).map((med) => (
               <chakra.option key={med.id} value={med.id}>
                 {med.label}
               </chakra.option>
@@ -131,10 +131,10 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           </optgroup>
           <optgroup label="Other">
             {LINK_OPTIONS.filter(
-              option =>
+              (option) =>
                 option.type !== LinkType.SOCIAL &&
                 option.type !== LinkType.EXPLORER,
-            ).map(med => (
+            ).map((med) => (
               <chakra.option key={med.id} value={med.id}>
                 {med.label}
               </chakra.option>
@@ -143,29 +143,28 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Input
           disabled={!currentLink}
-          size="sm"
-          flex="8"
+          h="40px"
           rounded="md"
           placeholder="Enter link"
           value={currentLinkValue}
-          onChange={event => setCurrentLinkValue(event.target.value)}
+          onChange={(event) => setCurrentLinkValue(event.target.value)}
           type="url"
         />
         <Button
           disabled={!currentLink}
-          flex="1"
-          size="sm"
           rounded="md"
-          mx="auto"
           onClick={insertLinks}
+          minW={{ base: 'full', md: '110px' }}
+          h="40px"
+          gridColumn={{ base: 'span 2', md: 'unset' }}
         >
           {atttributeExists(currentLink) ? 'Update' : 'Add'}
         </Button>
-      </Flex>
+      </SimpleGrid>
       <chakra.span color="red.300">{error}</chakra.span>
       {linksWithValue.length > 0 && (
         <Wrap gap="1">
-          {linksWithValue.map(network => (
+          {linksWithValue.map((network) => (
             <Button
               key={network.id}
               display="flex"

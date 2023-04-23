@@ -31,7 +31,7 @@ export const resources = {
       subScribeFooterBttn: 'Join Now',
       communityFooterHeading: 'Community Hub',
       visionFooterText:
-        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain.",
+        "IQ.wiki's vision is to bring blockchain knowledge to the world and knowledge onto the blockchain. A part of Brainfund Group.",
       whatIQ: "What's IQ?",
       iq: 'IQ',
       bridges: 'Bridges',
@@ -39,6 +39,7 @@ export const resources = {
       bonds: 'Bonds',
       aboutUs: 'About us',
       careers: 'Careers',
+      usCareers: 'US Careers',
       brainies: 'brainies',
       resources: 'Resources',
       glossary: 'Glossary',
@@ -66,7 +67,7 @@ export const resources = {
       //Create wiki page
       wikiTitlePlaceholder: 'Title goes here',
       wikiSummaryLabel: 'Wiki Summary',
-      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-3 AI',
+      wikiSummaryPlaceholder: 'Write wiki summary or Generate with GPT-4 AI',
       dragMainImgLabel: 'Drag and drop a main image, or click to select',
       pasteMainImgLabel: '(or) paste image link here',
       pasteModalMainImgLabel: '(or) paste a youtube or image link here',
@@ -90,10 +91,10 @@ export const resources = {
         'The most comprehensive blockchain and crypto knowledge base in the world provides users with thousands of wikis on everything from Bitcoin, NFTs, DAO’s and so much more.',
       abtFeatTwoHeading: 'Powered by the IQ token',
       abtFeatTwoContent:
-        'IQ.wiki is a central part of the IQ ecosystem. The IQ token powers the encyclopedia and allows anyone to be a stakeholder in the ecosystem.',
+        'IQ.wiki is a central part of the IQ ecosystem. The IQ token is the utility token of the encyclopedia.',
       abtFeatThreeHeading: 'Democratic Governance',
       abtFeatThreeContent:
-        'Anyone with IQ tokens is a stakeholder in the IQ.wiki Network. IQ.wiki is fully Web3 with IQ token stakers earning rewards and governing the platform.',
+        'IQ.wiki is fully Web3 with IQ token stakers governing and moderating the platform.',
       meetTeamHead: 'Meet our team',
       meetTeamContent:
         'At IQ.wiki we are fortunate to have a passionate team of people with deep experience and knowledge in both the educational and blockchain industry.',
@@ -158,22 +159,6 @@ export const resources = {
       getterStartedSixHead: 'IQ.wiki Rules',
       getterStartedSixBody:
         'Standards: IQ.wiki is a cryptocurrency encyclopedia so all IQ.wiki articles must be related to the cryptocurrency or blockchain space.For people to have a wiki, they need to have made contributions to the crypto space or worked in the crypto space.  Editors should follow the minimum content requirements: at least 300 words in the wiki’s main body, using appropriate categories and tags, and uploaded media should be only of high quality.All content has to be cited. This allows the community to check editors’ work and work with editors in an environment that is inherently collaborative.All content has to be neutral. Because IQ.wiki is a knowledge base, editors should think from the perspective of an academic scholar and provide unbiased information.All content should be written in the third person.  Spelling and grammar should be carefully checked before an edit submission.Pages that have a completion score lower than 50 are subject to removal.To maintain the quality of the encyclopedia low quality wikis will be removed. Do Not: Plagiarize content that is not your own and represent it as your work; this typically includes copying/pasting content without citing its original source and giving proper credit to the creator. It also includes violating copyright.Vandalize: deliberately attempt to add, change, or remove content to tarnish the wiki.Spam: reference content that attempts to promote irrelevant or inappropriate products to a page; these edit proposals tend to be in the form of advertisements and violate IQ.wiki’s policy of writing in a neutral tone.',
-
-      usingEveripediaOneHead: 'Getting Started',
-      usingEveripediaOneBody:
-        "Before you can create or edit an IQ.wiki article you'll need to click the wallet icon and log in with your Brainlisted Polygon address using MetaMask or WalletConnect. Prior to creating the new wiki, check if it does not exist yet. Go to the Search Bar and insert the title. The site will search our existing database to see if an article about the same topic already exists. If it does, edit the existing article. If there are no suggestions from the system, you can feel free to create a new article. Click the Create Wiki button in the header navigation. Add your desired article title. Make sure that it is short and comprehensive - the system will generate the unique URL from the title. https://www.youtube.com/watch?v=Y4gWJUFchrc ",
-      usingEveripediaTwoHead: 'Adding a featured image',
-      usingEveripediaTwoBody:
-        'To add or update a featured image, click on the placeholder image. You can easily add a photo by dragging and dropping it or clicking to select an image from your PC. You can also clicking "Image URL" and paste in a link to the image and the system will fetch it automatically. https://www.youtube.com/watch?v=3DFzzleCCNo ',
-      usingEveripediaThreeHead: 'Filling in the article',
-      usingEveripediaThreeBody:
-        'This is your chance to start writing and explaining the topic of your article. The intro should answer the basics and provide the most important info while headers can be used to create sections that provide additional details.',
-      usingEveripediaFourHead: 'Adding a citation',
-      usingEveripediaFourBody:
-        'To add a reference or citation to the body of an article, first select where you want to add the citation by clicking on the place in the article where you would like to add the citation (you can start with adding a citation at the end of the first paragraph). To actually add the citation click the “Cite” button, enter the URL, and a short description of the link you’re choosing to add (for example, you can enter the title of the article, the author, and/or the publishing date in the description). To actually insert the reference, click the pink “Cite” button. https://www.youtube.com/watch?v=NrAUvtOpY0E ',
-      usingEveripediaFiveHead: 'Submitting a wiki',
-      usingEveripediaFiveBody:
-        "category, tags and add social media links in the Edit Wiki Details section. When all these steps are done, you can hit the Publish button to save your page. You will have the option to add a comment while publishing.Comments give editors the opportunity to provide additional context or rationale for their edits. This creates more transparency within the community.After pushing the Publish button, the system will initiate a gasless transaction, which you should sign with your wallet. Press Sign in the wallet pop-up window. In several moments your page should be recorded on the blockchain. Once your changes have been authorized by your wallet, you can see your wiki in the Reading Mode. After submission, you will also be able to view the transaction on block explorer and IPFS. If the changes are not visible make sure to hard refresh the page. Most edits go through in under a minute but it could take a few minutes if the Polygon network is congested. https://www.youtube.com/watch?v=8ml3S6KUX3U  If you're looking for ways to improve your editing skills and make your pages stand out with Twitter feeds, headers, links to other IQ.wiki pages, quotes, categories, and infoboxes check out our Editing Guide below. ",
 
       usingEveripediaOneHead: 'Getting Started',
       usingEveripediaOneBody:

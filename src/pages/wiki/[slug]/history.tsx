@@ -114,7 +114,7 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { notFound: true }
   const { data: wikiHistory, error: wikiHistoryError } = await store.dispatch(

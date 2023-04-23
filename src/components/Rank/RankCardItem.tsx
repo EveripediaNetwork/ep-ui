@@ -2,9 +2,23 @@ import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 
 const MAX_LINKED_WIKIS = 3
+
+const formatDate = (date: string) => {
+  const eventDate = new Date(date)
+
+  return eventDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+  })
+}
+
+const numFormatter = Intl.NumberFormat('en', {
+  notation: 'compact',
+}).format
 
 const RankingItem = ({
   index,
@@ -13,24 +27,36 @@ const RankingItem = ({
   index: number
   item: RankCardType
 }) => {
-  const marketCap = `$${
-    item.nftMarketData
-      ? item.nftMarketData.market_cap_usd.toLocaleString()
-      : item.tokenMarketData.market_cap?.toLocaleString()
-  }`
+  const marketCap = item.nftMarketData
+    ? numFormatter(item.nftMarketData.market_cap_usd)
+    : numFormatter(item.tokenMarketData.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? item.nftMarketData.floor_price_usd.toLocaleString()
-      : item.tokenMarketData.current_price?.toLocaleString()
+      ? item.nftMarketData.floor_price_usd.toFixed(2).toLocaleString()
+      : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
   }`
+
+  const dateFounded = item?.events?.find(
+    (event) => event.type === EventType.CREATED,
+  )?.date
 
   return (
     <Tr>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pr="1"
+      >
         <Text color="rankingListText">{index + 1}</Text>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pl="2"
+      >
         <Flex gap="2.5" alignItems="center">
           <Box flexShrink="0" w="40px" h="40px">
             <Image
@@ -47,9 +73,11 @@ const RankingItem = ({
             />
           </Box>
           <Box>
-            <Link href={`wiki/${item.id}`} color="brandLinkColor">
-              {item.title}
-            </Link>
+            <Box>
+              <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                {item.title}
+              </Link>
+            </Box>
             <Text color="rankingListText">
               {item.nftMarketData
                 ? item.nftMarketData.alias
@@ -97,7 +125,7 @@ const RankingItem = ({
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis && item.linkedWikis.founders ? (
+        {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
             {formatFoundersArray(item.linkedWikis.founders)
               .slice(0, MAX_LINKED_WIKIS)
@@ -123,7 +151,7 @@ const RankingItem = ({
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis && item.linkedWikis.blockchains ? (
+        {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
@@ -143,6 +171,15 @@ const RankingItem = ({
                 )
               })}
           </Flex>
+        ) : (
+          'NA'
+        )}
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        {dateFounded ? (
+          <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
+            <Text>{formatDate(dateFounded)}</Text>
+          </Link>
         ) : (
           'NA'
         )}

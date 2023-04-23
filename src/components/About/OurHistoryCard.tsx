@@ -16,10 +16,10 @@ const Paragraph = ({ text }: { text: string }) => {
           <Link
             color="brandLinkColor"
             key={index}
-            href={part && part.match(/href="(.*?)"/)?.[1]}
+            href={part?.match(/href="(.*?)"/)?.[1]}
             target="_blank"
           >
-            {part && part.match(/>(.*?)</)?.[1]}
+            {part?.match(/>(.*?)</)?.[1]}
           </Link>
         ) : (
           <React.Fragment key={index}>{part}</React.Fragment>

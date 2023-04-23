@@ -17,7 +17,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
         rounded="md"
         maxW="52"
         ml="auto"
-        onChange={event => {
+        onChange={(event) => {
           if (event.target.value) {
             dispatch({
               type: 'wiki/updateCategories',
@@ -32,10 +32,10 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
             })
           }
         }}
-        defaultValue={wiki.categories[0]?.id}
+        value={wiki.categories[0]?.id}
         placeholder={wiki.categories.length > 0 ? undefined : 'Select Category'}
       >
-        {categoryOptions?.map(o => (
+        {categoryOptions?.map((o) => (
           <option key={o.id} value={o.id}>
             {o.title}
           </option>

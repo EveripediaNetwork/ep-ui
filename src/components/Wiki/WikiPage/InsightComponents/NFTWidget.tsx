@@ -29,7 +29,9 @@ const NFTWidget = ({
   const [showNFTFetchError, setShowNFTFetchError] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const contractData = metaData.find(item => item.id === 'contract_url')?.value
+  const contractData = metaData.find(
+    (item) => item.id === 'contract_url',
+  )?.value
 
   const contractID = contractData?.split('/').pop()
 
@@ -90,8 +92,9 @@ const NFTWidget = ({
             {!showNFTFetchError ? (
               <Image
                 src={currentNFTImage}
-                height="305px"
+                height="auto"
                 onLoad={() => setIsLoading(false)}
+                maxHeight="500px"
               />
             ) : (
               <NFTImgFallback />
@@ -118,7 +121,7 @@ const NFTWidget = ({
               border="none"
               type="number"
               placeholder="Input NFT ID"
-              onChange={e => {
+              onChange={(e) => {
                 const value = Number(e.target.value)
                 if (!Number.isNaN(value)) {
                   setCurrentNFTHash(value)

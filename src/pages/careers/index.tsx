@@ -9,7 +9,12 @@ import CareerCard from '@/components/Careers/CareersCard'
 const OurCareers = () => {
   return (
     <main>
-      <CareersHero />
+      <CareersHero
+        title="IQ.Wiki Careers"
+        description="Do you wish to join our great team? we're looking for
+          Intellectual Individuals who are committed to doing well by doing
+          good. here is the list of our open positions."
+      />
       <SimpleGrid
         maxW={{ base: '100%', md: '95%', '2xl': '1280px' }}
         py={{ base: 8, lg: 16 }}

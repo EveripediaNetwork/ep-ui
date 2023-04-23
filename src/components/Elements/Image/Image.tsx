@@ -36,14 +36,14 @@ export const Image = ({
       quality={95}
       style={{
         objectFit,
-        objectPosition: 'center',
+        objectPosition: 'top',
         width: '100%',
         height: '100%',
       }}
       fill={!(imgW && imgH) || !imgBoxSize}
       src={src}
       alt={alt}
-      onError={e => {
+      onError={(e) => {
         if (hideOnError) {
           e.currentTarget.style.visibility = 'hidden'
         }

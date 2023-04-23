@@ -7,24 +7,41 @@ import {
   Center,
   Heading,
   VStack,
+  Flex,
+  Box,
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
 import { Category } from '@/types/CategoryDataTypes'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import { LinkButton } from '../Elements'
 
 const CATEGORY_IMAGE_BOX_SIZE = 300
+const NUM_OF_CATEGORIES = 6
 
 interface CategoriesListProps {
   categories: Category[]
 }
 const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation()
-  const rand = Math.floor(Math.random() * categories.length)
-  const newCategoryList = categories.filter(
-    user => categories.indexOf(user) !== rand,
-  )
+  const newCategoryList: Category[] = []
+
+  while (newCategoryList.length < NUM_OF_CATEGORIES) {
+    const randIndex = Math.floor(Math.random() * categories.length)
+    const randCategory = categories[randIndex]
+
+    if (!newCategoryList.includes(randCategory)) {
+      newCategoryList.push(randCategory)
+    }
+
+    if (
+      randIndex === categories.length - 1 &&
+      !newCategoryList.includes(categories[randIndex])
+    ) {
+      newCategoryList.push(categories[randIndex])
+    }
+  }
 
   return (
     <VStack mt={10} mb={20} spacing={2}>
@@ -56,7 +73,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map(category => (
+        {newCategoryList.map((category) => (
           <div key={category.id}>
             <LinkBox
               _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
@@ -91,6 +108,20 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           </div>
         ))}
       </SimpleGrid>
+      <Box mt="10 !important">
+        <Flex justifyContent="center">
+          <LinkButton
+            href="/categories"
+            h="50px"
+            w={{ base: 32, lg: 40 }}
+            variant="outline"
+            bgColor="btnBgColor"
+            prefetch={false}
+          >
+            View More
+          </LinkButton>
+        </Flex>
+      </Box>
       {categories.length < 1 && (
         <Center w="full" h="16">
           <Spinner size="xl" />

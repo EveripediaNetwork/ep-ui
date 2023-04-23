@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
-
 import { useAppDispatch } from '@/store/hook'
 import { LinkedWikiKey, Wiki, WikiPreview } from '@everipedia/iq-utils'
 import {
   Box,
   Button,
   Center,
-  Flex,
   HStack,
   Icon,
   Select,
@@ -14,6 +12,7 @@ import {
   Text,
   Wrap,
   chakra,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { getWikisByTitle } from '@/services/search'
 import { debounce } from 'debounce'
@@ -40,8 +39,8 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-    const filteredData = data?.filter(w =>
-      w.tags.find(t => t.id.toLocaleLowerCase() === tag),
+    const filteredData = data?.filter((w) =>
+      w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
     )
     cb(filteredData || [])
   }
@@ -56,7 +55,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   useEffect(() => {
     if (search.length >= 3) {
       setLoading(true)
-      debouncedFetchWikis(search, data => {
+      debouncedFetchWikis(search, (data) => {
         setResults(data.slice(0, 6))
         setLoading(false)
       })
@@ -90,31 +89,31 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
 
   const onlyLastTypeHasWikis =
     wiki.linkedWikis &&
-    Object.values(wiki.linkedWikis).filter(w => w.length > 0).length === 1 &&
+    Object.values(wiki.linkedWikis).filter((w) => w.length > 0).length === 1 &&
     Object.values(wiki.linkedWikis).reverse()[0].length > 0
 
   const containsLinkedWikis =
     wiki.linkedWikis &&
-    Object.values(wiki.linkedWikis).some(wikis => wikis.length > 0)
+    Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
 
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
-      <Flex
+      <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        direction={{ base: 'column', sm: 'row' }}
+        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
       >
         <Select
           value={linkType}
-          onChange={e => setLinkType(e.target.value as LinkedWikiKey)}
-          size="sm"
+          onChange={(e) => setLinkType(e.target.value as LinkedWikiKey)}
+          h="40px"
           rounded="md"
           flex="5"
           placeholder="Select option"
         >
-          {Object.values(LinkedWikiKey).map(key => (
+          {Object.values(LinkedWikiKey).map((key) => (
             <chakra.option key={key} value={key}>
               {key}
             </chakra.option>
@@ -131,19 +130,19 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 </Text>
               </Center>
             }
-            onChange={val => {
+            onChange={(val) => {
               setSelectedWiki(val)
               setSearch('')
             }}
           >
             <AutoCompleteInput
-              size="sm"
+              h="40px"
               flex="8"
               rounded="md"
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               type="url"
             />
             {!loading && (
@@ -155,7 +154,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 p={2}
                 px={0}
               >
-                {results.map(result => (
+                {results.map((result) => (
                   <AutoCompleteItem
                     px={4}
                     py={1}
@@ -176,15 +175,14 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         <Button
           isLoading={loading}
           disabled={!linkType}
-          flex="1"
-          size="sm"
+          gridColumn={{ base: 'span 2', md: 'unset' }}
+          h="40px"
           rounded="md"
-          mx="auto"
           onClick={handleAddWiki}
         >
           Add
         </Button>
-      </Flex>
+      </SimpleGrid>
       <Box
         borderWidth={containsLinkedWikis ? 1 : 0}
         p={containsLinkedWikis ? 2 : 0}
@@ -206,7 +204,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                   <Text fontSize="sm">{key}</Text>
                 </HStack>
                 <Wrap>
-                  {value.map(wikiId => (
+                  {value.map((wikiId) => (
                     <Button
                       key={`${wikiId}-${key}`}
                       display="flex"

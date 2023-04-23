@@ -1,3 +1,4 @@
+import { WikiEditorsInsightActionBarProps } from '@/types/admin'
 import {
   Button,
   Checkbox,
@@ -12,28 +13,11 @@ import {
   PopoverFooter,
   PopoverTrigger,
   VStack,
+  Text,
 } from '@chakra-ui/react'
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { MdFilterList } from 'react-icons/md'
-
-type WikiEditorsInsightActionBarProps = {
-  handleSearchKeyword: (e: ChangeEvent<HTMLInputElement>) => void
-  handleSortChange: () => void
-  isOpenFilter: boolean
-  onCloseFilter: () => void
-  ApplyFilterItems: (e: React.FormEvent<HTMLFormElement>) => void
-  onToggleFilter: () => void
-  FilterArray: {
-    id: string
-    value: string
-  }[]
-  sortIcon: JSX.Element
-  setChecked: (checked: number) => void
-  checked: number
-  setFilterEditors: (editors: string[]) => void
-  setPaginateOffset: (offset: number) => void
-}
 
 const WikiEditorsInsightActionBar = ({
   handleSortChange,
@@ -50,8 +34,8 @@ const WikiEditorsInsightActionBar = ({
   handleSearchKeyword,
 }: WikiEditorsInsightActionBarProps) => {
   return (
-    <Flex justifyContent={{ base: 'center', lg: 'flex-end' }} p={5}>
-      <Flex gap={5} flexDir={{ base: 'column', md: 'row' }}>
+    <Flex justifyContent="flex-end" p={5}>
+      <Flex gap={5}>
         <InputGroup w="100%">
           <InputLeftElement pointerEvents="none">
             <FiSearch color="#667085" />
@@ -59,22 +43,23 @@ const WikiEditorsInsightActionBar = ({
           <Input
             type="text"
             placeholder="Search"
-            onChange={e => {
+            onChange={(e) => {
               handleSearchKeyword(e)
             }}
           />
         </InputGroup>
         <Button
           onClick={handleSortChange}
-          borderColor="#E2E8F0"
+          borderColor="tetiaryGray"
           _dark={{ borderColor: '#2c323d' }}
-          py={2}
-          px={10}
           rightIcon={sortIcon}
+          py={2}
+          px={{ md: '10' }}
+          pr={{ base: '2' }}
           variant="outline"
           fontWeight="medium"
         >
-          Sort
+          <Text display={{ base: 'none', md: 'block' }}>Sort</Text>
         </Button>
         <Popover isLazy isOpen={isOpenFilter} onClose={onCloseFilter}>
           <PopoverTrigger>
@@ -83,17 +68,18 @@ const WikiEditorsInsightActionBar = ({
               borderRadius="md"
               _expanded={{ bg: 'brand.500', color: 'white' }}
               py={2}
-              px={10}
+              px={{ md: '10' }}
+              pl={{ base: '2' }}
               leftIcon={<MdFilterList fontSize="25px" />}
               variant="outline"
               onClick={onToggleFilter}
               fontWeight="medium"
             >
-              Filters
+              <Text display={{ base: 'none', md: 'block' }}>Filters</Text>
             </Button>
           </PopoverTrigger>
           <PopoverContent w="fit-content">
-            <form onSubmit={e => ApplyFilterItems(e)}>
+            <form onSubmit={(e) => ApplyFilterItems(e)}>
               <PopoverBody py={3}>
                 <VStack
                   spacing={1}

@@ -59,7 +59,7 @@ const Footer = () => {
   }, [storedLang])
 
   return (
-    <Box bg="brandBackground" color="default">
+    <Box bg="brandBackground" color="default" pos="relative" zIndex="2">
       <Container
         as={Stack}
         maxW={{ base: '7xl', xl: '7xl', '2xl': '80%' }}
@@ -85,16 +85,20 @@ const Footer = () => {
               <Text py={3} pr={2}>
                 {' '}
                 © {thisYear} {`${t('copyRight')}`}
-              </Text>
-              <Flex>
                 <Link target="_blank" href="https://braindao.org/">
-                  <Text _hover={{ textDecoration: 'underline' }}>BrainDAO</Text>
+                  <Text as="span" _hover={{ textDecoration: 'underline' }}>
+                    BrainDAO
+                  </Text>
                 </Link>
-                <Text px="1">& </Text>
+                <Text as="span" px="1">
+                  &{' '}
+                </Text>
                 <Link target="_blank" href="https://iq.braindao.org/">
-                  <Text _hover={{ textDecoration: 'underline' }}>IQ </Text>
+                  <Text as="span" _hover={{ textDecoration: 'underline' }}>
+                    IQ{' '}
+                  </Text>
                 </Link>
-              </Flex>
+              </Text>
             </Flex>
           </Stack>
           <Stack mt={[4, 0]} align={{ base: 'center', lg: 'flex-end' }}>
@@ -112,7 +116,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map(langObj => (
+                      {languageData.map((langObj) => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"

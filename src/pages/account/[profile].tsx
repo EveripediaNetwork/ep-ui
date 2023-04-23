@@ -10,8 +10,8 @@ import { useENSData } from '@/hooks/useENSData'
 import { getUserAddressFromUsername, getUserProfile } from '@/services/profile'
 import { store } from '@/store/store'
 import { ProfileData } from '@/types/ProfileType'
+import { provider } from '@/utils/WalletUtils/getProvider'
 import { Box, Flex } from '@chakra-ui/react'
-import { BaseProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -69,8 +69,18 @@ const Profile = ({ profileData }: ProfileProps) => {
 
 Profile.footer = false
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const userIdentifier = context.params?.profile as string
+
+  // Redirect if /accounts/settings is hit
+  if (userIdentifier === 'settings') {
+    return {
+      redirect: {
+        destination: '/settings/account',
+        permanent: false,
+      },
+    }
+  }
 
   // Redirect from regular ethereum address
   const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
@@ -87,10 +97,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   // Redirect from ens domain
   if (userIdentifier.endsWith('.eth')) {
-    const provider: BaseProvider = new StaticJsonRpcProvider(config.ensRPC)
-    const resolvedAddress = (await provider.resolveName(
-      userIdentifier,
-    )) as string
+    const resolvedAddress = (await provider.getEnsAddress({
+      name: userIdentifier,
+    })) as string
     if (resolvedAddress) {
       return {
         redirect: {
@@ -105,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const { isError, data: address } = await store.dispatch(
     getUserAddressFromUsername.initiate(userIdentifier),
   )
+
   if (!isError) {
     return {
       redirect: {
@@ -117,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   // Redirect to 404 if no match
   return {
     redirect: {
-      destination: `/404`,
+      destination: '/404',
       permanent: false,
     },
   }

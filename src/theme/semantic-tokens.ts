@@ -14,9 +14,37 @@ export const semanticTokens: SemanticTokens = {
       default: '#CBD5E0',
       _dark: '#3F444E',
     },
+    wikiSortBorder: {
+      default: '#E2E8F0',
+      _dark: '#2c323d',
+    },
     inactiveText: {
       default: '#718096',
       _dark: '#FFFFFF',
+    },
+    unArchiveWiki: {
+      default: 'electricPink',
+      _dark: 'brand.800',
+    },
+    bodyBg: {
+      default: 'white',
+      _dark: 'gray.700',
+    },
+    wikiPromotedTag: {
+      default: '#EBF8FF',
+      _dark: '#90CDF4',
+    },
+    tagArchiveBg: {
+      default: '#FFF5F5',
+      _dark: '#FBD38D',
+    },
+    boxArchiveBg: {
+      default: 'tangRed',
+      _dark: '#AE5D35',
+    },
+    archiveLabelBg: {
+      default: '#9C4221',
+      _dark: '#AE5D35',
     },
     primaryPinkIcon: {
       default: '#FF5CAA',
@@ -48,6 +76,10 @@ export const semanticTokens: SemanticTokens = {
     homeDescriptionColor: {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
+    },
+    eventTextColor: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.800',
     },
     linkHoverColor: {
       default: 'gray.800',
@@ -213,6 +245,14 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.50',
       _dark: '#FFB3D7',
     },
+    tagNormalBgColor: {
+      default: '#F9F5FF',
+      _dark: '#FFB3D7',
+    },
+    tagNormalColor: {
+      default: '#FE6FB5',
+      _dark: '#FF409B',
+    },
     tagActiveColor: {
       default: 'brand.500',
       _dark: 'brand.800',
@@ -304,6 +344,18 @@ export const semanticTokens: SemanticTokens = {
     aboutFeaturesCardBorder: {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
+    },
+    eventsBorderColor: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.400',
+    },
+    eventsInputColor: {
+      default: 'gray.400',
+      _dark: 'whiteAlpha.600',
+    },
+    eventsToolTip: {
+      default: 'gray.600',
+      _dark: 'gray.800',
     },
   },
 }

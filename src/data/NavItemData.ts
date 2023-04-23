@@ -18,6 +18,8 @@ import {
   RiNumbersFill,
   RiGroup2Fill,
   RiCopperDiamondLine,
+  RiOrganizationChart,
+  RiHashtag,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -77,6 +79,13 @@ export const NAV_ITEMS: NavItem[] = [
         href: '/categories/dapps',
         hasImage: true,
       },
+      {
+        id: 108,
+        label: 'Organizations',
+        icon: RiOrganizationChart,
+        href: '/categories/organizations',
+        hasImage: true,
+      },
     ],
   },
   {
@@ -89,6 +98,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 3,
     label: 'Rank',
     href: '/rank',
+    icon: RiHashtag,
   },
   {
     id: 4,
@@ -152,7 +162,7 @@ export const NAV_ICON = {
     {
       id: 503,
       label: 'Settings',
-      href: '/account/settings',
+      href: '/settings/account',
       hasImage: true,
       icon: RiSettings5Fill,
     },
@@ -193,19 +203,19 @@ export const MOBILE_NAV_ITEMS = ({
           {
             id: 7003,
             label: 'Profile Settings',
-            href: '/account/settings?tab=profile',
+            href: '/settings/account?tab=profile',
             hasImage: false,
           },
           {
             id: 7004,
             label: 'Notification Settings',
-            href: '/account/settings?tab=notifications',
+            href: '/settings/account?tab=notifications',
             hasImage: false,
           },
           {
             id: 7006,
             label: 'Advanced Settings',
-            href: '/account/settings?tab=advanced',
+            href: '/settings/account?tab=advanced',
             hasImage: false,
           },
         ],

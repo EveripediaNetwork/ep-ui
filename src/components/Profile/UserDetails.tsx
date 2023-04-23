@@ -57,7 +57,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const clipboard = useClipboard(customLink || '')
   const toast = useToast()
   const { addressRank, leaderboard } = useAppSelector(
-    state => state.leaderboard,
+    (state) => state.leaderboard,
   )
   const dispatch = useAppDispatch()
   const isFetched = useRef(false)
@@ -197,7 +197,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 icon={<RiSettings5Fill size={isSticky ? '15' : '20'} />}
                 rounded="xl"
                 _hover={{ shadow: 'xl' }}
-                onClick={() => router.push('/account/settings')}
+                onClick={() => router.push('/settings/account')}
                 disabled={address !== userAddress}
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
