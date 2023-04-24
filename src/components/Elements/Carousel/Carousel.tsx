@@ -80,7 +80,7 @@ const Carousel = ({ settings, children, topArrow }: CarouselProps) => {
         {children}
       </Slider>
       <HStack gap="2" w="full" justifyContent="center" pt="3">
-        {circles.map(index => {
+        {circles.map((index) => {
           const isActive = activeSlide < 4 ? activeSlide === index : index === 2
           const bg = isActive ? 'brand.500' : 'brand.50'
           const darkBg = isActive ? 'brand.800' : 'brand.200'
