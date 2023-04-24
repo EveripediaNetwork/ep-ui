@@ -13,6 +13,7 @@ export const GET_USER_SETTINGS = gql`
         twitter
         website
         instagram
+        lens
       }
       notifications {
         EVERIPEDIA_NOTIFICATIONS
@@ -38,6 +39,7 @@ export const GET_USER_PROFILE = gql`
         twitter
         website
         instagram
+        lens
       }
     }
   }
@@ -63,6 +65,7 @@ export const POST_USER_SETTINGS = gql`
         twitter
         website
         instagram
+        lens
       }
       notifications {
         EVERIPEDIA_NOTIFICATIONS
