@@ -68,18 +68,24 @@ const CategoryCard = ({
             />
           </Box>
         </Box>
-        <Box p={5}>
-          <LinkOverlay href={`/categories/${categoryId}`}>
+        <LinkOverlay href={`/categories/${categoryId}`}>
+          <Box p={5}>
             <Heading textAlign="center" size="sm" my="10px">
               {title}
             </Heading>
-          </LinkOverlay>
-          <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
-            {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
-              ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
-              : brief}
-          </Text>
-        </Box>
+
+            <Text
+              maxWidth="300px"
+              fontSize="xs"
+              textAlign="center"
+              opacity="0.6"
+            >
+              {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
+                ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
+                : brief}
+            </Text>
+          </Box>
+        </LinkOverlay>
       </VStack>
     </LinkBox>
   )
