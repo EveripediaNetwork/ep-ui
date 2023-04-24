@@ -4,9 +4,7 @@ import {
   Flex,
   Heading,
   HStack,
-  Link,
   LinkBox,
-  LinkOverlay,
   Text,
   chakra,
 } from '@chakra-ui/react'
@@ -22,7 +20,8 @@ import {
 } from '@/utils/WikiUtils/getWikiSummary'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Image } from '../Elements/Image/Image'
-import NextLink from 'next/link'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import Link from '@/components/Elements/LinkElements/Link'
 
 export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -71,7 +70,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
             fontWeight="semibold"
             p={4}
           >
-            <LinkOverlay as={NextLink} href={`/wiki/${wiki?.id}`}>
+            <LinkOverlay href={`/wiki/${wiki?.id}`}>
               <Heading
                 width="90%"
                 overflow="hidden"

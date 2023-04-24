@@ -1,14 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import {
   AspectRatio,
   Box,
   Flex,
   Heading,
-  // Link,
   LinkBox,
-  LinkOverlay,
   Text,
 } from '@chakra-ui/react'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
@@ -18,6 +15,7 @@ import { Image as ImageType, User } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 interface TrendingCategoryItemProps {
   title: string
@@ -99,7 +97,6 @@ const TrendingCategoryItem = ({
                 href={`/account/${editor.id}`}
                 color="brandLinkColor"
                 fontWeight="bold"
-                as={Link}
               >
                 {getUsername(editor)}
               </LinkOverlay>
