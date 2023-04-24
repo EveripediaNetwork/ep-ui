@@ -9,6 +9,7 @@ export type ProfileLinks = {
   twitter: string | null
   website: string | null
   instagram: string | null
+  lens: string | null
 }
 
 export type AdvancedSettings = {
