@@ -22,6 +22,7 @@ import {
 } from '@/utils/WikiUtils/getWikiSummary'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Image } from '../Elements/Image/Image'
+import NextLink from 'next/link'
 
 export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -70,7 +71,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
             fontWeight="semibold"
             p={4}
           >
-            <LinkOverlay href={`/wiki/${wiki?.id}`}>
+            <LinkOverlay as={NextLink} href={`/wiki/${wiki?.id}`}>
               <Heading
                 width="90%"
                 overflow="hidden"
