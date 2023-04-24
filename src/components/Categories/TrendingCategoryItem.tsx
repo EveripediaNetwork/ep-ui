@@ -1,12 +1,14 @@
 import React from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import {
   AspectRatio,
   Box,
   Flex,
   Heading,
-  Link,
+  // Link,
   LinkBox,
+  LinkOverlay,
   Text,
 } from '@chakra-ui/react'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
@@ -93,13 +95,14 @@ const TrendingCategoryItem = ({
               alt={editor.profile?.username}
             />
             <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
-              <Link
+              <LinkOverlay
                 href={`/account/${editor.id}`}
                 color="brandLinkColor"
                 fontWeight="bold"
+                as={Link}
               >
                 {getUsername(editor)}
-              </Link>
+              </LinkOverlay>
             </Text>
           </Flex>
           <Text

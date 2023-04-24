@@ -15,6 +15,7 @@ import {
 } from '@/data/Constants'
 import { IconType } from 'react-icons'
 import { Image } from '../Elements/Image/Image'
+import Link from 'next/link'
 
 interface CategoryCardProps {
   imageCard: string
@@ -33,13 +34,13 @@ const CategoryCard = ({
 }: CategoryCardProps) => {
   return (
     <LinkBox
-      as="article"
       bgColor="cardBg"
       borderWidth="1px"
       borderColor="dimColor"
       _hover={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}
       overflow="hidden"
       borderRadius="12px"
+      key={categoryId}
     >
       <VStack cursor="pointer">
         <Box w="100%" position="relative">
@@ -68,12 +69,12 @@ const CategoryCard = ({
             />
           </Box>
         </Box>
-        <LinkOverlay href={`/categories/${categoryId}`}>
-          <Box p={5}>
-            <Heading textAlign="center" size="sm" my="10px">
-              {title}
-            </Heading>
 
+        <Box p={5}>
+          <Heading textAlign="center" size="sm" my="10px">
+            {title}
+          </Heading>
+          <LinkOverlay as={Link} href={`/categories/${categoryId}`}>
             <Text
               maxWidth="300px"
               fontSize="xs"
@@ -84,8 +85,8 @@ const CategoryCard = ({
                 ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
                 : brief}
             </Text>
-          </Box>
-        </LinkOverlay>
+          </LinkOverlay>
+        </Box>
       </VStack>
     </LinkBox>
   )
