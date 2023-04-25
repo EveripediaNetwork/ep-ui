@@ -27,7 +27,12 @@ export const ProfileMedia = ({
     <>
       <VStack flex="1" align={{ base: 'center', lg: 'left' }} spacing={8}>
         <FormControl w={{ base: 'auto', md: '100%' }}>
-          <FormLabel htmlFor="profile-image">Profile Image</FormLabel>
+          <FormLabel
+            htmlFor="profile-image"
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Profile Image
+          </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
             w="140px"
@@ -41,7 +46,12 @@ export const ProfileMedia = ({
           />
         </FormControl>
         <FormControl w={{ base: 'auto', md: '100%' }}>
-          <FormLabel htmlFor="profile-banner">Profile Banner</FormLabel>
+          <FormLabel
+            htmlFor="profile-banner"
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Profile Banner
+          </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
             w="300px"
