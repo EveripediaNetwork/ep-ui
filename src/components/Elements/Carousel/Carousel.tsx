@@ -115,12 +115,12 @@ export const WikiCarousel = <T extends unknown>({
           ))}
         </Flex>
       </chakra.div>
-      <Flex w="full" alignItems="center" gap="2" pt="4" justifyContent="center">
+      <Flex w="full" alignItems="center" gap="3" pt="4" justifyContent="center">
         {scrollSnaps.map((_, index) => (
           <Icon
             key={index}
             as={RiCheckboxBlankCircleFill}
-            fontSize="10px"
+            fontSize="8px"
             color={index !== selectedIndex ? 'brand.200' : 'brand.500'}
             cursor="pointer"
             onClick={() => scrollTo(index)}
