@@ -59,15 +59,9 @@ export const WikiCarousel = <T extends unknown>({
     setNextBtnEnabled(emblaApi.canScrollNext())
   }, [emblaApi, setSelectedIndex])
 
-  const scrollPrev = useCallback(
-    () => emblaApi?.scrollPrev(),
-    [emblaApi],
-  )
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
 
-  const scrollNext = useCallback(
-    () => emblaApi?.scrollNext(),
-    [emblaApi],
-  )
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
