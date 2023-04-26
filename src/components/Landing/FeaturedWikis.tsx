@@ -2,10 +2,10 @@ import { Box, Flex, Icon, Text, chakra } from '@chakra-ui/react'
 import React from 'react'
 import { RiStarFill } from 'react-icons/ri'
 import { Wiki } from '@everipedia/iq-utils'
-import { carouselSettings } from '@/utils/Settings/carouselSettings'
-import { Carousel } from '../Elements'
 import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
+import Autoplay from 'embla-carousel-autoplay'
+import { WikiCarousel } from '../Elements/Carousel/Carousel'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   return (
@@ -36,8 +36,9 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         </chakra.div>
         {featuredWikis ? (
           <>
-            <Carousel topArrow="25%" settings={carouselSettings}>
-              {featuredWikis.map((wiki) => (
+            <WikiCarousel
+              data={featuredWikis}
+              item={(wiki) => (
                 <Box
                   px="3"
                   pt={{ base: '1', md: '3' }}
@@ -46,8 +47,9 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
                 >
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>
-              ))}
-            </Carousel>
+              )}
+              plugins={[Autoplay()]}
+            />
           </>
         ) : (
           <LoadingFeaturedWikiCard />
