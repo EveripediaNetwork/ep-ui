@@ -10,11 +10,17 @@ import {
   CircularProgressLabel,
 } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
-import { RiNewspaperFill, RiEditFill, RiUser3Fill } from 'react-icons/ri'
+import {
+  RiNewspaperFill,
+  RiEditFill,
+  RiUser3Fill,
+  RiEyeFill,
+} from 'react-icons/ri'
 import {
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
   useGetEditorsCountQuery,
+  useGetWikisViewsCountQuery,
 } from '@/services/admin'
 import { WikisModifiedCount } from '@/types/admin'
 
@@ -33,6 +39,13 @@ export const WikiDetailsCards = ({
   weeklyValue,
   color,
 }: WikidetailsProps) => {
+  let percentage: number = 0
+
+  if (currentValue < parseInt(weeklyValue, 10)) {
+    percentage = Math.round((currentValue / parseInt(weeklyValue, 10)) * 100)
+  } else {
+    percentage = Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)
+  }
   return (
     <Box
       w={{ lg: '90%', base: '100%' }}
@@ -67,13 +80,9 @@ export const WikiDetailsCards = ({
               {weeklyValue} this week
             </Text>
           </VStack>
-          <CircularProgress
-            value={Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)}
-            color={color}
-            size="45px"
-          >
+          <CircularProgress value={percentage} color={color} size="45px">
             <CircularProgressLabel fontSize="xs">
-              {Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)}%
+              {percentage}%
             </CircularProgressLabel>
           </CircularProgress>
         </Flex>
@@ -109,6 +118,17 @@ export const AllWikiDetailsCards = () => {
     interval: 'week',
   })
 
+  const { data: wikiViews } = useGetWikisViewsCountQuery(0)
+
+  let wikiViewsWeekCount: number = 0
+
+  wikiViews?.map((_item, index) => {
+    if (index < 7) {
+      const dayCount = wikiViews[index].visits
+      wikiViewsWeekCount = wikiViewsWeekCount + dayCount
+    }
+    return null
+  })
   // const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
   //   startDate: 0,
   //   interval: 'week',
@@ -156,6 +176,13 @@ export const AllWikiDetailsCards = () => {
       detailHeader: 'Total no. of Editors',
       value: totalEditorsCountData ? totalEditorsCountData.amount : 0,
       weeklyValue: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
+      color: 'pink.400',
+    },
+    {
+      icon: RiEyeFill,
+      detailHeader: 'Daily no. of views',
+      value: wikiViews ? wikiViews[0].visits : 0,
+      weeklyValue: wikiViewsWeekCount,
       color: 'pink.400',
     },
   ]

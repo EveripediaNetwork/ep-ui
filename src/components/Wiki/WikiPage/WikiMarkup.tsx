@@ -15,18 +15,18 @@ import WikiTableOfContents from './WikiTableOfContents'
 import ContentFeedback from './InsightComponents/ContentFeedback'
 
 interface WikiLayoutProps {
-  wiki?: Wiki | null
-  relatedWikis: Wiki[] | null
+  wiki: Wiki
   ipfs?: string
 }
 
+//TODO: use Wiki partial
 const MobileMeta = (wiki: {
   metadata: { id: string; value: string }[]
-  relatedWikis: Wiki[] | null
   media?: Media[]
   id: string
+  categories: { id: string }[]
 }) => {
-  const { metadata, relatedWikis, media, id } = wiki
+  const { metadata, media, id, categories } = wiki
   const twitterLink = metadata.find(
     (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
@@ -44,13 +44,13 @@ const MobileMeta = (wiki: {
     >
       <ContentFeedback choice contentId={id} userId={userAddress} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-      <RelatedWikis relatedWikis={relatedWikis} />
+      <RelatedWikis wikiId={id} category={categories[0].id} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
     </VStack>
   )
 }
 
-export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
+export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -73,11 +73,7 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
               }}
             >
               <WikiMainContent wiki={wiki} />
-              <WikiInsights
-                wiki={wiki}
-                ipfs={ipfs}
-                relatedWikis={relatedWikis}
-              />
+              <WikiInsights wiki={wiki} ipfs={ipfs} />
               <Text
                 fontSize="4xl"
                 fontWeight="bold"
@@ -100,9 +96,9 @@ export const WikiMarkup = ({ wiki, relatedWikis, ipfs }: WikiLayoutProps) => {
             >
               <MobileMeta
                 metadata={wiki.metadata}
-                relatedWikis={relatedWikis}
                 media={wiki.media}
                 id={wiki.id}
+                categories={wiki.categories}
               />
             </chakra.div>
             <WikiReferences

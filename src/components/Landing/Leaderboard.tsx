@@ -16,11 +16,11 @@ import React from 'react'
 import { LeaderBoardType } from '@/services/editor'
 import { useENSData } from '@/hooks/useENSData'
 import * as Humanize from 'humanize-plus'
-import { Carousel } from '../Elements'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import RankIcon from '../Elements/EditorRank/EditorRank'
+import { Carousel } from '../Elements/Carousel/Carousel'
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -132,7 +132,6 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
                 key={sid}
                 fontWeight="semibold"
                 p={tabPadding}
-                isDisabled={section.disabled}
               >
                 {section.period}{' '}
               </CustomTab>

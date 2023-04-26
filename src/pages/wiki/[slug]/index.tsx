@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import {
-  getWiki,
-  getWikiCreatorAndEditor,
-  getWikiPreviewsByCategory,
-  wikiApi,
-} from '@/services/wikis'
+import { getWiki, getWikiCreatorAndEditor } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Box } from '@chakra-ui/react'
-import { useAppSelector } from '@/store/hook'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
@@ -17,56 +11,39 @@ import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 interface WikiProps {
-  wiki: WikiType | null
-  relatedWikis: WikiType[] | null
+  wiki: WikiType
 }
 
-const Wiki = ({ wiki, relatedWikis }: WikiProps) => {
+const Wiki = ({ wiki }: WikiProps) => {
   const router = useRouter()
-
-  const { slug } = router.query
-
-  const toc = useAppSelector((state) => state.toc)
-
-  const [wikiData, setWikiData] = useState(wiki)
-
-  // get the link id if available to scroll to the correct position
-  useEffect(() => {
-    if (!(toc.length === 0)) {
-      const linkId = window.location.hash
-      if (linkId) router.push(`/wiki/${slug}${linkId}`)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toc])
+  const { slug } = router.query as { slug: string }
 
   useEffect(() => {
     const fetchUserDataAndIncView = async () => {
-      if (slug && typeof slug === 'string') {
-        const { data } = await store.dispatch(
-          getWikiCreatorAndEditor.initiate(slug),
-        )
-        setWikiData(wiki ? { ...wiki, ...data } : null)
+      if (slug) {
         incrementWikiViewCount(slug)
       }
     }
     fetchUserDataAndIncView()
-  }, [slug, wiki])
+  }, [slug])
+
+  console.log('rendering')
 
   return (
     <>
-      {wikiData && (
+      {wiki && (
         <WikiHeader
           slug={slug as string}
-          author={wikiData.author.profile?.username || wikiData.author.id || ''}
-          dateModified={wikiData.updated}
-          datePublished={wikiData.created}
-          title={`${wikiData.title} - ${wikiData?.categories[0]?.title}`}
-          description={wikiData.summary}
-          mainImage={getWikiImageUrl(wikiData.images)}
+          author={wiki.author.profile?.username || wiki.author.id || ''}
+          dateModified={wiki.updated}
+          datePublished={wiki.created}
+          title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
+          description={wiki.summary}
+          mainImage={getWikiImageUrl(wiki.images)}
         />
       )}
       <Box as="main" mt={-2}>
-        <WikiMarkup wiki={wikiData} relatedWikis={relatedWikis} />
+        <WikiMarkup wiki={wiki} />
       </Box>
     </>
   )
@@ -92,27 +69,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
-  let relatedWikis = null
-  let relatedWikisError = null
-  if (wiki?.categories) {
-    const { data, error } = await store.dispatch(
-      getWikiPreviewsByCategory.initiate({
-        category: wiki.categories[0].id || '',
-        limit: 6,
-      }),
-    )
-    relatedWikis = data?.filter((w) => w.id !== wiki.id)?.slice(0, 4)
-    relatedWikisError = error
-  }
-  await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
-
-  if (relatedWikisError)
-    throw new Error(
-      `There was an error fetching the related wikis: ${wikiError}`,
-    )
+  // TODO: probably can be async in the components
+  const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
 
   return {
-    props: { wiki: wiki || null, relatedWikis },
+    props: { wiki: { ...wiki, ...data } },
   }
 }
 
