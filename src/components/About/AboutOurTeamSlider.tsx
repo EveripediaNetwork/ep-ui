@@ -1,5 +1,5 @@
 import React from 'react'
-import Carousel from '../Elements/Carousel/Carousel'
+import { Carousel } from '../Elements/Carousel/Carousel'
 
 interface AboutOurTeamSliderProps {
   children: React.ReactNode
