@@ -128,7 +128,7 @@ const ShareWikiModal = ({
                   </item.label>
                 ) : (
                   <Link
-                    href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
+                    href={`https://lenster.xyz/?text=Checkout%20this%20article%20on%20the%20World’s%20Largest%20Blockchain%20Encyclopedia,%20IQ.wiki&url=${url}`}
                     rel="nofollow"
                     target="_blank"
                     onClick={() =>
