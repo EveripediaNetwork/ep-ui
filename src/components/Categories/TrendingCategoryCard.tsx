@@ -1,10 +1,10 @@
 import React from 'react'
-import { Box, Flex, Icon, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text, chakra } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
-import { carouselSettings } from '@/utils/Settings/carouselSettings'
 import { Wiki } from '@everipedia/iq-utils'
-import { Carousel } from '../Elements'
 import TrendingCategoryItem from './TrendingCategoryItem'
+import Autoplay from 'embla-carousel-autoplay'
+import { WikiCarousel } from '../Elements/Carousel/Carousel'
 
 const TrendingCategoryCard = ({
   title,
@@ -20,7 +20,6 @@ const TrendingCategoryCard = ({
       bgColor="cardBg"
       boxShadow="md"
       p={{ base: '2.5', md: '5' }}
-      pb={{ base: '8', md: '10' }}
       borderRadius="12px"
       overflowX="hidden"
     >
@@ -36,13 +35,13 @@ const TrendingCategoryCard = ({
           {title}
         </Text>
       </Flex>
-      <Carousel topArrow="25%" settings={carouselSettings}>
-        {wikis.map((wiki) => (
-          <Box
+      <WikiCarousel
+        data={wikis}
+        item={(wiki) => (
+          <chakra.div
             key={`wiki-${wiki.id}`}
-            px={{ base: '1', md: '2' }}
-            pt="3"
-            pb="3"
+            px={{ base: '1', md: '4' }}
+            py="2"
           >
             <TrendingCategoryItem
               title={wiki.title}
@@ -52,9 +51,10 @@ const TrendingCategoryCard = ({
               lastModTimeStamp={wiki.updated}
               wikiId={wiki.id}
             />
-          </Box>
-        ))}
-      </Carousel>
+          </chakra.div>
+        )}
+        plugins={[Autoplay()]}
+      />
     </Box>
   )
 }

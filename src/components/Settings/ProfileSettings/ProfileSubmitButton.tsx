@@ -25,6 +25,7 @@ export const ProfileSubmitButton = ({
       }}
       size="lg"
       mt={8}
+      w={{ base: '100%', md: '200px' }}
     >
       Save
     </Button>

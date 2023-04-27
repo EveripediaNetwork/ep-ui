@@ -1,6 +1,5 @@
 export { default as Avatar } from './Avatar/DisplayAvatar'
 export { default as LinkButton } from './LinkElements/LinkButton'
-export { default as Carousel } from './Carousel/Carousel'
 export { default as Dropzone } from './Dropzone/Dropzone'
 export { default as ImageInput } from './ImageInput/ImageInput'
 export { default as Link } from './LinkElements/Link'
