@@ -73,17 +73,17 @@ const Navbar = () => {
           _hover={{ textDecoration: 'none' }}
         >
           <Link prefetch={false} href="/">
-              <HStack width="150px">
-                <Logo />
-                <Text
-                  fontWeight="bold"
-                  fontSize="xl"
-                  color="gray.900"
-                  _dark={{ color: 'white' }}
-                >
-                  IQ.wiki
-                </Text>
-              </HStack>
+            <HStack width="150px">
+              <Logo />
+              <Text
+                fontWeight="bold"
+                fontSize="xl"
+                color="gray.900"
+                _dark={{ color: 'white' }}
+              >
+                IQ.wiki
+              </Text>
+            </HStack>
           </Link>
         </Box>
         <Suspense>
