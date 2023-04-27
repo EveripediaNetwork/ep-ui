@@ -30,7 +30,6 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 
-
 interface ConnectorsProps {
   openWalletDrawer?: () => void
 }
@@ -151,10 +150,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                   <Spinner color="color" mt="1" />
                 ) : (
                   <Text fontWeight="bold" fontSize="xl">
-                    $
-                    {totalBalance &&
-                      shortenBalance(totalBalance)}{' '}
-                    USD
+                    ${totalBalance && shortenBalance(totalBalance)} USD
                   </Text>
                 )}
               </Flex>
