@@ -30,6 +30,7 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 
+
 interface ConnectorsProps {
   openWalletDrawer?: () => void
 }
@@ -73,7 +74,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     },
   })
 
-  const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
   const hiIQData = {
@@ -153,9 +153,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                   <Text fontWeight="bold" fontSize="xl">
                     $
                     {totalBalance &&
-                      dollarUSLocale.format(
-                        Number(shortenBalance(totalBalance)),
-                      )}{' '}
+                      shortenBalance(totalBalance)}{' '}
                     USD
                   </Text>
                 )}

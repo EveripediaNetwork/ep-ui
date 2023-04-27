@@ -5,6 +5,7 @@ import { tokenDetails } from '@/data/WalletData'
 import { getTokenValue } from '@/utils/WalletUtils/getTokenValue'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
+import { shortenBalance } from '@/utils/textUtils'
 
 const WalletDetails = ({
   symbol,
@@ -32,7 +33,7 @@ const WalletDetails = ({
         <VStack spacing="0" align="flex-end">
           <Text fontWeight="bold">{balance}</Text>
           <Text mr={3} color="GrayText" fontSize="smaller" fontWeight="bold">
-            ${getTokenValue(tokensArray, symbol)}
+            ${shortenBalance(getTokenValue(tokensArray, symbol))}
           </Text>
         </VStack>
         <TokenDetailsMenu token={symbol} />
