@@ -16,19 +16,12 @@ import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
-import { StaticContent } from '@/components/StaticElement'
 import DesktopNav from './DesktopNav'
 import WalletNavMenu from './WalletNavMenu'
+import Logo from '@/components/Elements/Logo/Logo'
 
 const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
-
-const Logo = dynamic(() => import('@/components/Elements/Logo/Logo'))
-const NavSearch = dynamic(
-  () => import('@/components/Layout/Navbar/NavSearch'),
-  {
-    suspense: true,
-  },
-)
+const NavSearch = dynamic(() => import('@/components/Layout/Navbar/NavSearch'))
 const MobileNav = dynamic(() => import('./MobileNav'))
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
@@ -80,7 +73,6 @@ const Navbar = () => {
           _hover={{ textDecoration: 'none' }}
         >
           <Link prefetch={false} href="/">
-            <StaticContent>
               <HStack width="150px">
                 <Logo />
                 <Text
@@ -92,7 +84,6 @@ const Navbar = () => {
                   IQ.wiki
                 </Text>
               </HStack>
-            </StaticContent>
           </Link>
         </Box>
         <Suspense>

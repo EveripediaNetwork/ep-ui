@@ -15,7 +15,6 @@ import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { StaticContent } from '@/components/StaticElement'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -34,7 +33,6 @@ const NavMenu = ({
   const router = useRouter()
   const { t } = useTranslation()
   return (
-    <StaticContent>
       <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
         <MenuButton
           pr={4}
@@ -103,7 +101,6 @@ const NavMenu = ({
           </MenuList>
         )}
       </Menu>
-    </StaticContent>
   )
 }
 export default NavMenu
