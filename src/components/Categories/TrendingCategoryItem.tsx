@@ -5,7 +5,6 @@ import {
   Box,
   Flex,
   Heading,
-  Link,
   LinkBox,
   Text,
 } from '@chakra-ui/react'
@@ -16,6 +15,7 @@ import { Image as ImageType, User } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 interface TrendingCategoryItemProps {
   title: string
@@ -93,13 +93,13 @@ const TrendingCategoryItem = ({
               alt={editor.profile?.username}
             />
             <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
-              <Link
+              <LinkOverlay
                 href={`/account/${editor.id}`}
                 color="brandLinkColor"
                 fontWeight="bold"
               >
                 {getUsername(editor)}
-              </Link>
+              </LinkOverlay>
             </Text>
           </Flex>
           <Text

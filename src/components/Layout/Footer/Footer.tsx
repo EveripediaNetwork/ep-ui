@@ -30,7 +30,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
-import Link from 'next/link'
+import Link from '@/components/Elements/LinkElements/Link'
 
 const Footer = () => {
   const { t, i18n } = useTranslation()
