@@ -5,10 +5,10 @@ import {
   Text,
   Box,
   LinkBox,
-  LinkOverlay,
   Highlight,
 } from '@chakra-ui/react'
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 
 interface GlossaryWikiCardProps {
   highlightText: string

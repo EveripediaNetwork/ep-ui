@@ -32,7 +32,7 @@ import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
-import Link from 'next/link'
+import Link from '@/components/Elements/LinkElements/Link'
 
 const SHARING_OPTIONS = [
   {
