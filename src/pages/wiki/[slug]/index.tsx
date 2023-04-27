@@ -27,8 +27,6 @@ const Wiki = ({ wiki }: WikiProps) => {
     fetchUserDataAndIncView()
   }, [slug])
 
-  console.log('rendering')
-
   return (
     <>
       {wiki && (

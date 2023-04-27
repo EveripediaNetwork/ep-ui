@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import {
@@ -19,7 +19,6 @@ import {
   getTrendingCategoryWikis,
   getWikiActivityByCategory,
   getWikisByCategory,
-  wikiApi,
 } from '@/services/wikis'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
@@ -40,6 +39,8 @@ type CategoryPageProps = NextPage & {
   newWikis: Wiki[]
 }
 
+// TODO: load page 4 or 5 times. probably useInfiniteData doing rerenderings bcs of state changing. review
+// TODO: i added a new param to allow inject directly data, instead of using an effect. it can be fixed in all places
 const CategoryPage = ({
   categoryData,
   wikis,
@@ -50,23 +51,16 @@ const CategoryPage = ({
   const category = router.query.category as string
   const {
     data: wikisInCategory,
-    setData: setWikisInCategory,
-    setHasMore,
     fetcher: fetchMoreWikis,
     loading,
     hasMore,
-    setOffset,
-  } = useInfiniteData<Wiki>({
-    initiator: getWikisByCategory,
-    arg: { category },
-  })
-
-  useEffect(() => {
-    setHasMore(true)
-    setOffset(0)
-    setWikisInCategory(wikis)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, wikis])
+  } = useInfiniteData<Wiki>(
+    {
+      initiator: getWikisByCategory,
+      arg: { category },
+    },
+    wikis,
+  )
 
   const [sentryRef] = useInfiniteScroll({
     loading,
@@ -74,6 +68,7 @@ const CategoryPage = ({
     onLoadMore: fetchMoreWikis,
   })
   const { t } = useTranslation()
+
   return (
     <>
       {categoryData && (
@@ -158,45 +153,46 @@ const CategoryPage = ({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const categoryId: string = context.params?.category as string
-  const result = await store.dispatch(getCategoriesById.initiate(categoryId))
   const { startDay, endDay } = getDateRange({ dayRange: CATEGORY_DATE_RANGE })
-  const wikisByCategory = await store.dispatch(
-    getWikisByCategory.initiate({
-      category: categoryId,
-      limit: ITEM_PER_PAGE,
-      offset: 0,
-    }),
-  )
 
-  const { data: trendingWikisInCategory } = await store.dispatch(
-    getTrendingCategoryWikis.initiate({
-      amount: CATEGORY_AMOUNT,
-      startDay,
-      endDay,
-      category: categoryId,
-    }),
-  )
-
-  const { data: activitiesByCategory } = await store.dispatch(
-    getWikiActivityByCategory.initiate({
-      limit: CATEGORY_AMOUNT,
-      category: categoryId,
-      type: 'CREATED',
-      offset: 0,
-    }),
-  )
-
-  await Promise.all([store.dispatch(wikiApi.util.getRunningQueriesThunk())])
-
-  const popularCategoryWikis = trendingWikisInCategory?.wikisPerVisits
-  const newCategoryWikis = activitiesByCategory
+  const [
+    categoryData,
+    wikisByCategory,
+    trendingWikisInCategory,
+    activitiesByCategory,
+  ] = await Promise.all([
+    store.dispatch(getCategoriesById.initiate(categoryId)),
+    store.dispatch(
+      getWikisByCategory.initiate({
+        category: categoryId,
+        limit: ITEM_PER_PAGE,
+        offset: 0,
+      }),
+    ),
+    store.dispatch(
+      getTrendingCategoryWikis.initiate({
+        amount: CATEGORY_AMOUNT,
+        startDay,
+        endDay,
+        category: categoryId,
+      }),
+    ),
+    store.dispatch(
+      getWikiActivityByCategory.initiate({
+        limit: CATEGORY_AMOUNT,
+        category: categoryId,
+        type: 'CREATED',
+        offset: 0,
+      }),
+    ),
+  ])
 
   return {
     props: {
-      categoryData: result.data || [],
+      categoryData: categoryData.data || [],
       wikis: wikisByCategory.data || [],
-      trending: popularCategoryWikis || [],
-      newWikis: newCategoryWikis || [],
+      trending: trendingWikisInCategory.data?.wikisPerVisits || [],
+      newWikis: activitiesByCategory.data || [],
     },
   }
 }
