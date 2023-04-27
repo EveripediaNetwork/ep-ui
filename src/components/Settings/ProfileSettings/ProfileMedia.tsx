@@ -25,9 +25,14 @@ export const ProfileMedia = ({
 }: ProfileMediaProps) => {
   return (
     <>
-      <VStack flex="1" align="left" spacing={8}>
-        <FormControl>
-          <FormLabel htmlFor="profile-image">Profile Image</FormLabel>
+      <VStack flex="1" align={{ base: 'center', lg: 'left' }} spacing={8}>
+        <FormControl w={{ base: 'auto', md: '100%' }}>
+          <FormLabel
+            htmlFor="profile-image"
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Profile Image
+          </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
             w="140px"
@@ -40,8 +45,13 @@ export const ProfileMedia = ({
             setIsLoading={setIsAvatarLoading}
           />
         </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="profile-banner">Profile Banner</FormLabel>
+        <FormControl w={{ base: 'auto', md: '100%' }}>
+          <FormLabel
+            htmlFor="profile-banner"
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Profile Banner
+          </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
             w="300px"
