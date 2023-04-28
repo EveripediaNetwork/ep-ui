@@ -3,7 +3,7 @@ import { z } from 'zod'
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
   REVALIDATE_PAGES_SECRET: z.string(),
-  OPENAI_API_KEY: z.string(),
+  OPENAI_API_KEY: z.string().optional(),
   PINATA_KEY: z.string().optional(),
   PINATA_SECRET: z.string().optional(),
 })
@@ -21,7 +21,7 @@ const client = z.object({
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS: z.string().startsWith('0x').length(42),
-  NEXT_PUBLIC_IQ_ADDRESS: z.string().startsWith('0x').length(42),
+  NEXT_PUBLIC_IQ_ADDRESS: z.string().optional(),
   NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL: z.string().url(),
   NEXT_PUBLIC_ALCHEMY_CHAIN: z.string(),
   NEXT_PUBLIC_CHAIN_ID: z.string(),
