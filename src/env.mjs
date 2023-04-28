@@ -9,7 +9,7 @@ const server = z.object({
 })
 
 const client = z.object({
-  NEXT_PUBLIC_IS_PRODUCTION: z.boolean(),
+  NEXT_PUBLIC_IS_PRODUCTION: z.string(),
   NEXT_PUBLIC_INFURA_ID: z.string(),
   NEXT_PUBLIC_ALCHEMY_API_KEY: z.string(),
   NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL: z.string().url(),
@@ -24,7 +24,7 @@ const client = z.object({
   NEXT_PUBLIC_IQ_ADDRESS: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL: z.string().url(),
   NEXT_PUBLIC_ALCHEMY_CHAIN: z.string(),
-  NEXT_PUBLIC_CHAIN_ID: z.number().min(1),
+  NEXT_PUBLIC_CHAIN_ID: z.string(),
   NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_DOMAIN: z.string().url(),
   NEXT_PUBLIC_EP_API: z.string().url(),
