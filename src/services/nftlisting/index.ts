@@ -26,7 +26,7 @@ export const nftLisitngAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `https://eth-mainnet.g.alchemy.com/nft/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}/`,
   }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     nftListing: builder.query<
       NFTStats,
       { nftContractID: string; nftHash: number }
