@@ -1,3 +1,4 @@
+import { env } from '@/env.mjs'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 
@@ -23,9 +24,9 @@ export const nftLisitngAPI = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://eth-mainnet.g.alchemy.com/nft/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/`,
+    baseUrl: `https://eth-mainnet.g.alchemy.com/nft/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}/`,
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     nftListing: builder.query<
       NFTStats,
       { nftContractID: string; nftHash: number }

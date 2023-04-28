@@ -4,8 +4,8 @@ const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
   REVALIDATE_PAGES_SECRET: z.string(),
   OPENAI_API_KEY: z.string(),
-  PINATA_KEY: z.string(),
-  PINATA_SECRET: z.string(),
+  PINATA_KEY: z.string().optional(),
+  PINATA_SECRET: z.string().optional(),
 })
 
 const client = z.object({

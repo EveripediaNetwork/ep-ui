@@ -29,6 +29,7 @@ import {
   calculateTotalBalance,
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
+import { env } from '@/env.mjs'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -66,7 +67,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       dispatch(updateUserAddress(data.account))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const w = window as any
-      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+      w.gtag('config', env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
         user_id: data.account,
       })
       router.push(router.asPath).then(openWalletDrawer)
@@ -90,7 +91,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -197,19 +198,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>

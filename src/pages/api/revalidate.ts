@@ -1,10 +1,11 @@
+import { env } from '@/env.mjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.query.secret !== process.env.REVALIDATE_PAGES_SECRET) {
+  if (req.query.secret !== env.REVALIDATE_PAGES_SECRET) {
     return res.status(401).json({ message: 'Invalid token' })
   }
   if (!req.query.path) {
