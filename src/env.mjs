@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const server = z.object({
-  NODE_ENV: z.enum(['development', 'test', 'production']),
+  NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
   REVALIDATE_PAGES_SECRET: z.string(),
   OPENAI_API_KEY: z.string(),
   PINATA_KEY: z.string(),
@@ -34,6 +34,11 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
+  NODE_ENV: process.env.NODE_ENV,
+  REVALIDATE_PAGES_SECRET: process.env.REVALIDATE_PAGES_SECRET,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  PINATA_KEY: process.env.PINATA_KEY,
+  PINATA_SECRET: process.env.PINATA_SECRET,
   NEXT_PUBLIC_IQ_ADDRESS: process.env.NEXT_PUBLIC_IQ_ADDRESS,
   NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS:
     process.env.NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS,
