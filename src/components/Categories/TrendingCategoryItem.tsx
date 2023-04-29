@@ -85,11 +85,7 @@ const TrendingCategoryItem = ({
           >
             {brief}
           </Text>
-          <Flex            
-            mt="2.5"
-            gap="3"
-            alignItems="center"
-          >
+          <Flex mt="2.5" gap="3" alignItems="center">
             <DisplayAvatar
               address={editor.id}
               avatarIPFS={editor.profile?.avatar}
