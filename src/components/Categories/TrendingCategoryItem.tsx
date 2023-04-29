@@ -1,5 +1,4 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import {
   AspectRatio,
   Box,
@@ -34,7 +33,6 @@ const TrendingCategoryItem = ({
   editor,
   lastModTimeStamp,
 }: TrendingCategoryItemProps) => {
-  const router = useRouter()
 
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
@@ -58,20 +56,21 @@ const TrendingCategoryItem = ({
           </AspectRatio>
         </Box>
         <Box flexGrow="1" alignSelf="center">
-          <Heading
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            cursor="pointer"
-            maxW="90%"
-            onClick={() => router.push(`/wiki/${wikiId}`)}
-            fontSize={{
-              base: '16px',
-              md: '20px',
-            }}
-          >
-            {title}
-          </Heading>
+          <LinkOverlay href={`/wiki/${wikiId}`}>
+            <Heading
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              cursor="pointer"
+              maxW="90%"
+              fontSize={{
+                base: '16px',
+                md: '20px',
+              }}
+            >
+              {title}
+            </Heading>
+          </LinkOverlay>
           <Text
             noOfLines={{ base: 2, md: 3 }}
             color="homeDescriptionColor"
@@ -86,20 +85,24 @@ const TrendingCategoryItem = ({
           >
             {brief}
           </Text>
-          <Flex mt="2.5" gap="3" alignItems="center">
+          <Flex
+            as='a'
+            href={`/account/${editor.id}`}
+            mt="2.5"
+            gap="3"
+            alignItems="center"
+          >
             <DisplayAvatar
               address={editor.id}
               avatarIPFS={editor.profile?.avatar}
               alt={editor.profile?.username}
             />
-            <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
-              <LinkOverlay
-                href={`/account/${editor.id}`}
-                color="brandLinkColor"
-                fontWeight="bold"
-              >
-                {getUsername(editor)}
-              </LinkOverlay>
+            <Text
+              fontSize={{ base: '10px', md: '14px' }}
+              color="brandLinkColor"
+              fontWeight="bold"
+            >
+              {getUsername(editor)}
             </Text>
           </Flex>
           <Text
