@@ -33,7 +33,6 @@ const TrendingCategoryItem = ({
   editor,
   lastModTimeStamp,
 }: TrendingCategoryItemProps) => {
-
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
