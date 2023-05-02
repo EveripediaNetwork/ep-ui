@@ -74,7 +74,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     },
   })
 
-  const dollarUSLocale = Intl.NumberFormat('en-US')
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] =
     useState<boolean>(true)
   const hiIQData = {
@@ -152,12 +151,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                   <Spinner color="color" mt="1" />
                 ) : (
                   <Text fontWeight="bold" fontSize="xl">
-                    $
-                    {totalBalance &&
-                      dollarUSLocale.format(
-                        Number(shortenBalance(totalBalance)),
-                      )}{' '}
-                    USD
+                    ${totalBalance && shortenBalance(totalBalance)} USD
                   </Text>
                 )}
               </Flex>

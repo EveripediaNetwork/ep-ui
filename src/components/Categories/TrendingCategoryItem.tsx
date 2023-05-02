@@ -1,11 +1,9 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import {
   AspectRatio,
   Box,
   Flex,
   Heading,
-  Link,
   LinkBox,
   Text,
 } from '@chakra-ui/react'
@@ -16,6 +14,8 @@ import { Image as ImageType, User } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import Link from '@/components/Elements/LinkElements/Link'
 
 interface TrendingCategoryItemProps {
   title: string
@@ -34,8 +34,6 @@ const TrendingCategoryItem = ({
   editor,
   lastModTimeStamp,
 }: TrendingCategoryItemProps) => {
-  const router = useRouter()
-
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
@@ -58,20 +56,21 @@ const TrendingCategoryItem = ({
           </AspectRatio>
         </Box>
         <Box flexGrow="1" alignSelf="center">
-          <Heading
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            cursor="pointer"
-            maxW="90%"
-            onClick={() => router.push(`/wiki/${wikiId}`)}
-            fontSize={{
-              base: '16px',
-              md: '20px',
-            }}
-          >
-            {title}
-          </Heading>
+          <LinkOverlay href={`/wiki/${wikiId}`}>
+            <Heading
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              cursor="pointer"
+              maxW="90%"
+              fontSize={{
+                base: '16px',
+                md: '20px',
+              }}
+            >
+              {title}
+            </Heading>
+          </LinkOverlay>
           <Text
             noOfLines={{ base: 2, md: 3 }}
             color="homeDescriptionColor"
@@ -92,15 +91,15 @@ const TrendingCategoryItem = ({
               avatarIPFS={editor.profile?.avatar}
               alt={editor.profile?.username}
             />
-            <Text fontSize={{ base: '10px', md: '14px' }} color="linkColor">
-              <Link
-                href={`/account/${editor.id}`}
+            <Link href={`/account/${editor.id}`}>
+              <Text
+                fontSize={{ base: '10px', md: '14px' }}
                 color="brandLinkColor"
                 fontWeight="bold"
               >
                 {getUsername(editor)}
-              </Link>
-            </Text>
+              </Text>
+            </Link>
           </Flex>
           <Text
             mt="4px !important"
