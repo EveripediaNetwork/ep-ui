@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useMemo } from 'react'
+import React, { useEffect, memo, useMemo, ReactElement } from 'react'
 import dynamic from 'next/dynamic'
 import {
   Flex,
@@ -222,7 +222,7 @@ const CreateWiki = () => {
 }
 
 const Page: PageWithoutFooter = authenticatedRoute(
-  memo(CreateWiki) as unknown as () => JSX.Element,
+  memo(CreateWiki) as ReactElement,
 )
 
 Page.noFooter = true

@@ -40,14 +40,12 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
   const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
-    const checkboxes = Array.from(
-      e.currentTarget.querySelectorAll(
-        'input[type="checkbox"]',
-      ) as unknown as HTMLInputElement[],
+    const checkboxes: HTMLInputElement[] = Array.from(
+      e.currentTarget.querySelectorAll('input[type="checkbox"]'),
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach((checkbox) => {
+    checkboxes.forEach(checkbox => {
       if (checkbox.checked) data.push(checkbox.value)
     })
     setFilterItems(data)
@@ -95,7 +93,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
             <Input
               type="text"
               placeholder="Search"
-              onChange={(e) => {
+              onChange={e => {
                 setsearchKeyWord(e.target.value)
               }}
             />
@@ -153,7 +151,7 @@ export const WikiCreatedActionBar = (props: WikiCreatedActionBarProps) => {
               </Button>
             </PopoverTrigger>
             <PopoverContent w="fit-content">
-              <form onSubmit={(e) => ApplyFilterItems(e)}>
+              <form onSubmit={e => ApplyFilterItems(e)}>
                 <PopoverBody py={3}>
                   <VStack
                     spacing={1}

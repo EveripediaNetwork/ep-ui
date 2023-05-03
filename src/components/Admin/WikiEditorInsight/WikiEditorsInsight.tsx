@@ -103,14 +103,12 @@ export const WikiEditorsInsightTable = () => {
   const ApplyFilterItems = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // get all checkboxes from form
-    const checkboxes = Array.from(
-      e.currentTarget.querySelectorAll(
-        'input[type="checkbox"]',
-      ) as unknown as HTMLInputElement[],
+    const checkboxes: HTMLInputElement[] = Array.from(
+      e.currentTarget.querySelectorAll('input[type="checkbox"]'),
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach((checkbox) => {
+    checkboxes.forEach(checkbox => {
       if (checkbox.checked) data.push(checkbox.value)
     })
 

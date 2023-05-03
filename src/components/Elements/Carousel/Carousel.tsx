@@ -18,11 +18,13 @@ type WikiCarouselProps<T> = {
   Buttons?: false
 }
 
-const Slider = SliderClass as unknown as (props: {
-  children: React.ReactNode
-  nextArrow: JSX.Element
-  prevArrow: JSX.Element
-}) => JSX.Element
+const Slider: React.FunctionComponent<{ 
+  children: React.ReactNode; 
+  nextArrow: JSX.Element; 
+  prevArrow: JSX.Element; 
+}> = SliderClass as any;
+
+
 interface ArrowProps {
   ArrowIcon?: IconType
   isNext?: boolean

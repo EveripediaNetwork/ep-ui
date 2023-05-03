@@ -17,9 +17,7 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
-const ReduxProvider = ReduxProviderClass as unknown as (
-  props: Dict,
-) => JSX.Element
+const ReduxProvider = ReduxProviderClass as unknown as (props: Dict) => JSX.Element
 
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }

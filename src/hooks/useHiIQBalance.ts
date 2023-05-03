@@ -30,10 +30,10 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         functionName: 'locked',
         args: [address as `0x${string}`],
       })
-      const hiiqBalance = Number(formatEther(balance as unknown as bigint))
-      const [amount, end] = lock as unknown as `0x${string}`[]
-      const iqBalance = Number(formatEther(amount as unknown as bigint))
-      const endDate = Number(formatEther(end as unknown as bigint))
+      const hiiqBalance = Number(formatEther(balance as bigint))
+      const [amount, end] = lock as `0x${string}`[]
+      const iqBalance = Number(formatEther(BigInt(amount)))
+      const endDate = Number(formatEther(BigInt(end)))
       const coinGeckoIqPrice = await getIqTokenValue()
 
       dispatch(
