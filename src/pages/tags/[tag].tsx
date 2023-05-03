@@ -7,11 +7,8 @@ import {
   Heading,
   SimpleGrid,
   Text,
-  Button,
   Center,
   Spinner,
-  Flex,
-  Image,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { store } from '@/store/store'
@@ -73,96 +70,64 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         }}
       />
       <Box bgColor="pageBg" mt={-2} border="solid 1px transparent" pb={12}>
-        {wikis.length > 0 ? (
-          <>
-            <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
-              Wikis with this tag
-            </Heading>
+        <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
+          Wikis with this tag
+        </Heading>
 
-            <Divider />
-            <Box mt={7}>
-              <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
-                You are seeing the wikis that are tagged with
-                <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
-                  {tagId}
-                </Link>
-                . If you are interested in seeing other topics in common, you
-                can click on other tags.
-              </Text>
+        <Divider />
+        <Box mt={7}>
+          <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
+            You are seeing the wikis that are tagged with
+            <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
+              {tagId}
+            </Link>
+            . If you are interested in seeing other topics in common, you can
+            click on other tags.
+          </Text>
 
-              <SimpleGrid
-                columns={{ base: 1, sm: 2, lg: 3 }}
-                width="min(90%, 1200px)"
-                mt={17}
-                mx="auto"
-                mb={12}
-                gap={8}
-              >
-                {wikisByTag.map((wiki, i) => (
-                  <Box key={i} w="100%">
-                    <WikiPreviewCard wiki={wiki} />
-                  </Box>
-                ))}
-              </SimpleGrid>
-              {loading || hasMore ? (
-                <Center ref={sentryRef} mt="10" w="full" h="16">
-                  <Spinner size="xl" />
-                </Center>
-              ) : (
-                <Center mt="10">
-                  <Text fontWeight="semibold">{t('seenItAll')}</Text>
-                </Center>
-              )}
-            </Box>
-          </>
-        ) : (
-          <Flex
-            w={{ base: '100%' }}
-            alignItems={{ base: 'center' }}
-            justifyContent={{ base: 'center' }}
-            direction={{ base: 'column' }}
-            mt={{ base: '9' }}
-            pb={{ base: '20' }}
+          <SimpleGrid
+            columns={{ base: 1, sm: 2, lg: 3 }}
+            width="min(90%, 1200px)"
+            mt={17}
+            mx="auto"
+            mb={12}
+            gap={8}
           >
-            <Flex
-              w={{ lg: '15%', base: '40%' }}
-              alignItems={{ base: 'center' }}
-              justifyContent={{ base: 'center' }}
-            >
-              <Image
-                flex={1}
-                marginInlineStart="0 !important"
-                src="/images/defaults/wiki-error-img.png"
-                w={{ base: '100%', sm: '80%', md: '60%', lg: '15%' }}
-              />
-            </Flex>
-            <Box mt={{ lg: '16', base: '6' }} gap="4" textAlign="center">
-              <Text fontWeight="bold" fontSize="2xl">
-                Oops, No Wiki Found with this Tag
-              </Text>
-              <Button
-                mt={{ lg: '5', base: '3' }}
-                colorScheme="primary"
-                color="white"
-                variant="solid"
-                onClick={() => router.back()}
-              >
-                Go Back
-              </Button>
-            </Box>
-          </Flex>
-        )}
+            {wikisByTag.map((wiki, i) => (
+              <Box key={i} w="100%">
+                <WikiPreviewCard wiki={wiki} />
+              </Box>
+            ))}
+          </SimpleGrid>
+          {loading || hasMore ? (
+            <Center ref={sentryRef} mt="10" w="full" h="16">
+              <Spinner size="xl" />
+            </Center>
+          ) : (
+            <Center mt="10">
+              <Text fontWeight="semibold">{t('seenItAll')}</Text>
+            </Center>
+          )}
+        </Box>
       </Box>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const tagId: string = context.params?.tag as string
   const tagWikis = await store.dispatch(
     getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
   )
   await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
+  if (!tagWikis.data?.length) {
+    return {
+      redirect: {
+        destination: `/NotFound/?tags=${tagId}`,
+        permanent: false,
+      },
+    }
+  }
   return {
     props: {
       tagId,

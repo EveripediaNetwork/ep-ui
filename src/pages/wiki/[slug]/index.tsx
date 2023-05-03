@@ -69,9 +69,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
-  const wikiData = wiki ? { ...wiki, ...data } : null
+  if (!wiki) {
+    return {
+      redirect: {
+        destination: `/NotFound/?wiki=${slug}`,
+        permanent: false,
+      },
+    }
+  }
   return {
-    props: { wiki: wikiData },
+    props: { wiki: { ...wiki, ...data } },
   }
 }
 
