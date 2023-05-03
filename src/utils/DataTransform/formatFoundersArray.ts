@@ -1,10 +1,15 @@
 export const formatFoundersArray = (founders: string[]) => {
   if (founders.length > 2) {
     return founders.map((founder) => {
-      const [firstName, lastName] = founder.split('-')
-      return `${firstName
-        .charAt(0)
-        .toUpperCase()}${firstName.slice(1)} ${lastName[0].toUpperCase()}`
+      const names = founder.split('-')
+      if (names.length > 1) {
+        const [firstName, lastName] = names
+        return `${firstName.charAt(0).toUpperCase()}${firstName.slice(
+          1,
+        )} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1)}`
+      } else {
+        return `${names[0].charAt(0).toUpperCase()}${names[0].slice(1)}`
+      }
     })
   }
 
