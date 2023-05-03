@@ -47,7 +47,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
@@ -69,9 +69,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
-
+  const wikiData = wiki ? { ...wiki, ...data } : null
   return {
-    props: { wiki: { ...wiki, ...data } },
+    props: { wiki: wikiData },
   }
 }
 

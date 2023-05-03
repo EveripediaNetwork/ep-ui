@@ -10,6 +10,8 @@ import {
   Button,
   Center,
   Spinner,
+  Flex,
+  Image,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { store } from '@/store/store'
@@ -71,22 +73,23 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
         }}
       />
       <Box bgColor="pageBg" mt={-2} border="solid 1px transparent" pb={12}>
-        <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
-          Wikis with this tag
-        </Heading>
+        {wikis.length > 0 ? (
+          <>
+            <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
+              Wikis with this tag
+            </Heading>
 
-        <Divider />
-        <Box mt={7}>
-          <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
-            You are seeing the wikis that are tagged with
-            <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
-              {tagId}
-            </Link>
-            . If you are interested in seeing other topics in common, you can
-            click on other tags.
-          </Text>
-          {wikis.length > 0 ? (
-            <>
+            <Divider />
+            <Box mt={7}>
+              <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
+                You are seeing the wikis that are tagged with
+                <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
+                  {tagId}
+                </Link>
+                . If you are interested in seeing other topics in common, you
+                can click on other tags.
+              </Text>
+
               <SimpleGrid
                 columns={{ base: 1, sm: 2, lg: 3 }}
                 width="min(90%, 1200px)"
@@ -110,13 +113,35 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
                   <Text fontWeight="semibold">{t('seenItAll')}</Text>
                 </Center>
               )}
-            </>
-          ) : (
-            <Box textAlign="center" py={10} px={6}>
-              <Text fontSize="lg" mt={3} mb={3}>
+            </Box>
+          </>
+        ) : (
+          <Flex
+            w={{ base: '100%' }}
+            alignItems={{ base: 'center' }}
+            justifyContent={{ base: 'center' }}
+            direction={{ base: 'column' }}
+            mt={{ base: '9' }}
+            pb={{ base: '20' }}
+          >
+            <Flex
+              w={{ lg: '15%', base: '40%' }}
+              alignItems={{ base: 'center' }}
+              justifyContent={{ base: 'center' }}
+            >
+              <Image
+                flex={1}
+                marginInlineStart="0 !important"
+                src="/images/defaults/wiki-error-img.png"
+                w={{ base: '100%', sm: '80%', md: '60%', lg: '15%' }}
+              />
+            </Flex>
+            <Box mt={{ lg: '16', base: '6' }} gap="4" textAlign="center">
+              <Text fontWeight="bold" fontSize="2xl">
                 Oops, No Wiki Found with this Tag
               </Text>
               <Button
+                mt={{ lg: '5', base: '3' }}
                 colorScheme="primary"
                 color="white"
                 variant="solid"
@@ -125,14 +150,14 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
                 Go Back
               </Button>
             </Box>
-          )}
-        </Box>
+          </Flex>
+        )}
       </Box>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const tagId: string = context.params?.tag as string
   const tagWikis = await store.dispatch(
     getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
