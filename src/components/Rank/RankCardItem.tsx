@@ -128,8 +128,8 @@ const RankingItem = ({
         {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
             {formatFoundersArray(item.linkedWikis.founders)
-              .slice(0, MAX_LINKED_WIKIS)
-              .map((founderName, i, arr) => {
+              ?.slice(0, MAX_LINKED_WIKIS)
+              ?.map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
                 return (
                   <Link
@@ -141,13 +141,13 @@ const RankingItem = ({
                     {i !== arr.length - 1 && arr.length > 1 && ', '}
                   </Link>
                 )
-              })}
+              }) ?? <Text color="brandLinkColor">NA</Text>}
             {item.linkedWikis.founders.length > 3 && (
               <Text color="brandLinkColor">...</Text>
             )}
           </Flex>
         ) : (
-          'NA'
+          <Text color="brandLinkColor">NA</Text>
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
