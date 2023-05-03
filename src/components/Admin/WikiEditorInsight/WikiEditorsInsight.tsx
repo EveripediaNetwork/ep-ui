@@ -108,7 +108,7 @@ export const WikiEditorsInsightTable = () => {
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach(checkbox => {
+    checkboxes.forEach((checkbox) => {
       if (checkbox.checked) data.push(checkbox.value)
     })
 
