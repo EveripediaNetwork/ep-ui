@@ -157,7 +157,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const tagId: string = context.params?.tag as string
   const tagWikis = await store.dispatch(
     getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
