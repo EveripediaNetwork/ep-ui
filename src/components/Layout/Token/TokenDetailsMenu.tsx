@@ -31,7 +31,7 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
           params: {
             type: 'ERC20',
             options: {
-              address: config.iqAddress,
+              address: config.iqAddress ?? '',
               symbol: tokenSymbol,
               decimals: 18,
               image:
