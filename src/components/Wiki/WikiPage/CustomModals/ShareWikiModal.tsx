@@ -133,9 +133,9 @@ const ShareWikiModal = ({
                     target="_blank"
                     onClick={() =>
                       logEvent({
-                        action: 'SHARE_ON_LEN',
+                        action: 'SHARING_WIKI_ON_LENS',
                         label: url,
-                        category: 'sharing',
+                        category: 'sharing_wiki_on_lens',
                         value: 1,
                       })
                     }
