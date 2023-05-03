@@ -1,3 +1,4 @@
+import { env } from '@/env.mjs'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
 import React from 'react'
 
@@ -24,14 +25,14 @@ export const WikiHeader = ({
 }: WikiHeaderProps) => (
   <>
     <ArticleJsonLd
-      url={`${process.env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`}
+      url={`${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`}
       title={title}
       images={[mainImage]}
       datePublished={datePublished || ''}
       dateModified={dateModified || ''}
       authorName={author}
       publisherName="Everipedia"
-      publisherLogo={`${process.env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
+      publisherLogo={`${env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
       description={description}
     />
     <NextSeo
@@ -43,7 +44,7 @@ export const WikiHeader = ({
         description,
         images: [
           {
-            url: `${process.env.NEXT_PUBLIC_DOMAIN}/_next/image?url=${mainImage}&w=1200&q=95`,
+            url: `${env.NEXT_PUBLIC_DOMAIN}/_next/image?url=${mainImage}&w=1200&q=95`,
           },
         ],
       }}
