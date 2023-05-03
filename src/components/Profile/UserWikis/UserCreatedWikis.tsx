@@ -1,38 +1,31 @@
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { getUserCreatedWikis } from '@/services/wikis'
 import { Center, Text, Spinner, Box } from '@chakra-ui/react'
-import React, { useEffect, useRef } from 'react'
+// import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { EmptyState } from '@/components/Profile/EmptyState'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import { useTranslation } from 'react-i18next'
-import { Activity } from '@/types/ActivityDataType'
 import Collected from '../Collected'
+import { Activity } from '@/types/ActivityDataType'
 
-const UserCreatedWikis = () => {
+const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
   const router = useRouter()
   const address = router.query.profile as string
   const { t } = useTranslation()
-  const firstTimeFetch = useRef(false)
   const {
     data: wikis,
     fetcher: fetchMoreWikis,
     loading,
     hasMore,
-  } = useInfiniteData<Activity>({
-    initiator: getUserCreatedWikis,
-    arg: { id: address },
-  })
-
-  useEffect(() => {
-    if (!firstTimeFetch.current) {
-      if (address) {
-        fetchMoreWikis(true)
-        firstTimeFetch.current = true
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
+  } = useInfiniteData<Activity>(
+    {
+      initiator: getUserCreatedWikis,
+      arg: { id: address },
+    },
+    createdWikis,
+  )
 
   const [createdWikisSentryRef] = useInfiniteScroll({
     loading,
