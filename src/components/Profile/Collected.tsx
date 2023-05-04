@@ -1,7 +1,7 @@
 import { SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
-import { Activity } from '@/types/ActivityDataType'
 import WikiPreviewCard from '../Wiki/WikiPreviewCard/WikiPreviewCard'
+import { Activity } from '@/types/ActivityDataType'
 
 const Collected = ({ wikis }: { wikis: Activity[] }) => {
   return (
