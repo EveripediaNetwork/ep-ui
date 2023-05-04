@@ -19,9 +19,10 @@ const UserSocialLinks = ({ links, address }: ProfileLinksProps) => {
   return (
     <Flex justify="center" align="center" gap={4}>
       {links &&
-        socialsWithURl.map((social) => {
+        socialsWithURl.map((social, index) => {
           return (
             <Link
+              key={index}
               position="relative"
               height="25px"
               isExternal
