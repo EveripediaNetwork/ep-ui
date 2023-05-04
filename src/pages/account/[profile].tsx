@@ -17,6 +17,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Activity } from '@/types/ActivityDataType'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 
 interface ProfileProps {
   profileData: ProfileData
@@ -91,8 +92,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (ethAddressRegex.test(userIdentifier)) {
     const [profileData, createdWikiData, editedWikiData] = await Promise.all([
       store.dispatch(getUserProfile.initiate(userIdentifier)),
-      store.dispatch(getUserCreatedWikis.initiate({ id: userIdentifier })),
-      store.dispatch(getUserEditedWikis.initiate({ id: userIdentifier })),
+      store.dispatch(
+        getUserCreatedWikis.initiate({
+          id: userIdentifier,
+          limit: ITEM_PER_PAGE,
+          offset: 0,
+        }),
+      ),
+      store.dispatch(
+        getUserEditedWikis.initiate({
+          id: userIdentifier,
+          limit: ITEM_PER_PAGE,
+          offset: 0,
+        }),
+      ),
     ])
     return {
       props: {
