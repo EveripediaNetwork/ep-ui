@@ -30,9 +30,10 @@ const ActivityCardTop = ({
         flex="1"
         sx={{
           '@media screen and (max-width: 450px)': {
-            maxWidth: '150px',
+            maxWidth: '130px',
           },
         }}
+        spacing={0}
       >
         <Heading
           overflow="hidden"
