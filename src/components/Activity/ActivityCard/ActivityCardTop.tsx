@@ -17,6 +17,7 @@ const ActivityCardTop = ({
   link,
 }: ActivityCardTopProps) => {
   const router = useRouter()
+
   return (
     <Flex
       justifyContent="space-between"
@@ -25,9 +26,15 @@ const ActivityCardTop = ({
       mb={{ base: 0, md: 2 }}
       width="100%"
     >
-      <HStack flex="1">
+      <HStack
+        flex="1"
+        sx={{
+          '@media screen and (max-width: 450px)': {
+            maxWidth: '150px',
+          },
+        }}
+      >
         <Heading
-          maxWidth={{ base: '140px', md: 'none' }}
           overflow="hidden"
           textOverflow="ellipsis"
           whiteSpace="nowrap"
@@ -53,10 +60,11 @@ const ActivityCardTop = ({
           cursor="pointer"
           fontSize={{ base: '14px', lg: '16px' }}
         >
-          {category?.id === 'cryptocurrencies'
-            ? 'Crypto'
-            : category?.id.substring(0, 1).toUpperCase() +
-              category?.id.substring(1)}
+          {category.title
+            ? category.title === 'Decentralized Finance'
+              ? 'Defi'
+              : category.title
+            : category.id}
         </Link>
       )}
     </Flex>
