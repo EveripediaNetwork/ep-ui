@@ -34,13 +34,13 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
         {wiki && wikiHistory && wikiHistory?.length > 1 && (
           <ActivityCard
             title={wiki.title}
-            brief={wiki.summary}
+            summary={wiki.summary}
             editor={wiki.user}
             lastModTimeStamp={wiki.updated}
             wikiId={wiki.id}
             tags={wiki.tags}
             categories={wiki.categories}
-            WikiImgObj={wiki.images}
+            wikiImgObj={wiki.images}
           />
         )}
         <Flex
