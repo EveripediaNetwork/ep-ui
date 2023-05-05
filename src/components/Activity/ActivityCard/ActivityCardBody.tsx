@@ -22,6 +22,7 @@ const ActivityCardBody = ({
         noOfLines={{ base: 3, md: 2 }}
         textOverflow="ellipsis"
         overflow="hidden"
+        width="100%"
         fontSize={{
           base: '14px',
           md: isNotifSubCard ? '14px' : '16px',

@@ -27,7 +27,7 @@ const ActivityCardTop = ({
     >
       <HStack flex="1">
         <Heading
-          maxWidth={{ base: '70%', md: 'auto' }}
+          maxWidth={{ base: '140px', md: 'none' }}
           overflow="hidden"
           textOverflow="ellipsis"
           whiteSpace="nowrap"
@@ -53,7 +53,10 @@ const ActivityCardTop = ({
           cursor="pointer"
           fontSize={{ base: '14px', lg: '16px' }}
         >
-          {category?.title ? category?.title : category?.id}
+          {category?.id === 'cryptocurrencies'
+            ? 'Crypto'
+            : category?.id.substring(0, 1).toUpperCase() +
+              category?.id.substring(1)}
         </Link>
       )}
     </Flex>
