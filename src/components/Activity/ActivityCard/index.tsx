@@ -10,10 +10,10 @@ interface ActivityCardProps {
   title: string
   summary: string
   editor: User
-  lastModTimeStamp: string
-  activityId: string
+  lastModTimeStamp?: string
+  activityId?: string
   wikiId: string
-  type: string
+  type?: string
   categories: BaseCategory[]
   tags: BaseTag[]
   wikiImgObj?: Image[]

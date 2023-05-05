@@ -8,7 +8,7 @@ import ActivityCardTags from './ActivityCardTags'
 interface ActivityCardBottomProps {
   editor: User
   isNotifSubCard: boolean
-  lastModTimeStamp: string
+  lastModTimeStamp?: string
   activity: 'New' | 'Edited'
   tags: BaseTag[]
 }
@@ -58,7 +58,7 @@ const ActivityCardBottom = ({
         whiteSpace="nowrap"
       >
         {`${activity === 'Edited' ? activity : 'Created'} ${getReadableDate(
-          lastModTimeStamp,
+          lastModTimeStamp ?? '',
         )} ago`}
       </Text>
     </HStack>

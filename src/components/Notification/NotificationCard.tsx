@@ -125,14 +125,14 @@ const NotificationCard = ({
       <ActivityCard
         isNotifSubCard
         title={title}
-        brief={brief}
+        summary={brief}
         editor={editor}
         lastModTimeStamp={lastModTimeStamp}
         type={type}
         wikiId={wikiId}
         categories={categories}
         tags={tags}
-        WikiImgObj={WikiImgObj}
+        wikiImgObj={WikiImgObj}
       />
       {defaultSubscribed || isWikiSubscribed ? (
         <Button
