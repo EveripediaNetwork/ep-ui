@@ -10,6 +10,27 @@ interface ActivityCardTopProps {
   link: string
 }
 
+const getCategoryAbbr = (id: string) => {
+  switch (id) {
+    case 'defi':
+      return 'Defi'
+    case 'people':
+      return 'PIC'
+    case 'dapps':
+      return 'Dapps'
+    case 'cryptocurrencies':
+      return 'Crypto'
+    case 'daos':
+      return 'DAOs'
+    case 'exchanges':
+      return 'Exch'
+    case 'nfts':
+      return 'Nfts'
+    case 'organizations':
+      return 'Org'
+  }
+}
+
 const ActivityCardTop = ({
   title,
   activity,
@@ -30,10 +51,9 @@ const ActivityCardTop = ({
         flex="1"
         sx={{
           '@media screen and (max-width: 450px)': {
-            maxWidth: '130px',
+            maxWidth: '200px',
           },
         }}
-        spacing={0}
       >
         <Heading
           overflow="hidden"
@@ -52,6 +72,9 @@ const ActivityCardTop = ({
           {activity}
         </Text>
       </HStack>
+      {/* We need to show category abbreviations on mobile,
+      and the full title on desktop, so we create
+      two links, one for mobile and one for desktop */}
       {category && (
         <Link
           as={NextLink}
@@ -60,12 +83,22 @@ const ActivityCardTop = ({
           fontWeight="bold"
           cursor="pointer"
           fontSize={{ base: '14px', lg: '16px' }}
+          display={{ base: 'none', md: 'unset' }}
         >
-          {category.title
-            ? category.title === 'Decentralized Finance'
-              ? 'Defi'
-              : category.title
-            : category.id}
+          {category?.title ? category?.title : category?.id}
+        </Link>
+      )}
+      {category && (
+        <Link
+          as={NextLink}
+          href={`/categories/${category?.id}`}
+          color="brandLinkColor"
+          fontWeight="bold"
+          cursor="pointer"
+          fontSize={{ base: '14px', lg: '16px' }}
+          display={{ base: 'block', md: 'none' }}
+        >
+          {category?.title ? getCategoryAbbr(category?.id) : category?.id}
         </Link>
       )}
     </Flex>
