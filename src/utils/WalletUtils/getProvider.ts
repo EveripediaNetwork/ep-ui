@@ -1,8 +1,8 @@
 import config from '@/config'
-import { createPublicClient, http } from 'viem'
+import { createPublicClient, http, PublicClient } from 'viem'
 import { mainnet } from 'viem/chains'
 
-export const provider = createPublicClient({
+export const provider: PublicClient = createPublicClient({
   chain: mainnet,
   transport: http(config.ensRPC),
 })
