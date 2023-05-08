@@ -1,5 +1,5 @@
 export const getUserAddressFromCache = () => {
-   try {
+  try {
     if (typeof window !== 'undefined') {
       const storedData = localStorage.getItem('wagmi.store')
       const parsedData = JSON.parse(storedData as string)
