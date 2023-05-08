@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useSigner } from 'wagmi'
+import { useWalletClient } from 'wagmi'
 import { sign, verify } from '@everipedia/web3-signer'
 
 export const useWeb3Token = () => {
@@ -7,11 +7,11 @@ export const useWeb3Token = () => {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [error, setError] = React.useState<string>()
   const [isReSignToken, reSignToken] = React.useState<boolean>(false)
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
 
   const generateNewTokenAndStore = useCallback(async () => {
     if (!signer) return
-    const freshToken = await sign((msg) => signer.signMessage(msg), {
+    const freshToken = await sign((msg) => signer.signMessage({message: msg}), {
       statement:
         'Welcome to IQ.Wiki ! Click to sign in and accept the IQ.Wiki Terms of Service: https://everipedia.com/static/terms. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. ',
       expires_in: '1h',
