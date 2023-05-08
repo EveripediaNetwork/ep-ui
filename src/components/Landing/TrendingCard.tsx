@@ -51,6 +51,7 @@ const TrendingCard = ({
           w="full"
           alignItems="center"
           pl="2"
+          mb="4"
           justifyContent="space-between"
         >
           <Flex alignItems="center">
