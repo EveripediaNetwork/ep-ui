@@ -41,7 +41,10 @@ export const useGetSignedHash = () => {
     signTypedDataAsync,
   } = useSignTypedData()
 
-  const { refetch } = useWaitForTransaction({ hash: txHash as `0x${string}`, confirmations: 2 })
+  const { refetch } = useWaitForTransaction({
+    hash: txHash as `0x${string}`,
+    confirmations: 2,
+  })
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
   })
@@ -95,7 +98,7 @@ export const useGetSignedHash = () => {
           const checkTrx = async () => {
             const trx = await refetch()
             console.log(trx.data?.status, 'status')
-            if (trx.error || trx.data?.status === "reverted") {
+            if (trx.error || trx.data?.status === 'reverted') {
               setIsLoading('error')
               setMsg(defaultErrorMessage)
               logEvent({
@@ -106,10 +109,7 @@ export const useGetSignedHash = () => {
               })
               clearInterval(_timer)
             }
-            if (
-              trx?.data &&
-              trx.data.status === "success"
-            ) {
+            if (trx?.data && trx.data.status === 'success') {
               setIsLoading(undefined)
               setActiveStep(3)
               setMsg(successMessage)
