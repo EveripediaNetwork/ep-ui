@@ -41,7 +41,7 @@ export const useGetSignedHash = () => {
     signTypedDataAsync,
   } = useSignTypedData()
 
-  const { refetch } = useWaitForTransaction({ hash: txHash })
+  const { refetch } = useWaitForTransaction({ hash: txHash as `0x${string}` })
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
   })
@@ -54,9 +54,10 @@ export const useGetSignedHash = () => {
     deadline.current = getDeadline()
     setWikiHash(ipfs)
     signTypedDataAsync({
+      primaryType: "SignedPost",
       domain,
       types,
-      value: {
+      message: {
         ipfs,
         user: userAddress,
         deadline: deadline.current,
