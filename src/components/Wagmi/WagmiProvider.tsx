@@ -1,15 +1,15 @@
-import { createClient, WagmiConfig } from 'wagmi'
-import { provider, connectors } from '@/config/wagmi'
+import { createConfig, WagmiConfig } from 'wagmi'
+import { publicClient, connectors } from '@/config/wagmi'
 import React, { ReactNode } from 'react'
 
-const client = createClient({
+const client = createConfig({
   autoConnect: true,
   connectors,
-  provider,
+  publicClient,
 })
 
 const WagmiProvider = ({ children }: { children: ReactNode }) => {
-  return <WagmiConfig client={client}>{children}</WagmiConfig>
+  return <WagmiConfig config={client}>{children}</WagmiConfig>
 }
 
 export default WagmiProvider
