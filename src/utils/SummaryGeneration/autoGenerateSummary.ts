@@ -4,6 +4,7 @@ import { GPT3_MAX_TRIES } from '@/data/Constants'
 import axios, { AxiosError } from 'axios'
 import { GPT3Completion } from '@/types/GPT3'
 import { logExecutionSummary } from './logSummaryGeneration'
+import { env } from '@/env.mjs'
 
 export const generateSummary = async (
   content: string,
@@ -18,7 +19,7 @@ export const generateSummary = async (
   const requestConfig = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      Authorization: `Bearer ${env.OPENAI_API_KEY}`,
     },
   }
   const requestBody = {

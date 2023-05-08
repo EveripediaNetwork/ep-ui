@@ -39,6 +39,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [inputBio, setInputBio] = useState<StrEntry>(strInitState)
   const [inputEmail, setInputEmail] = useState<StrEntry>(strInitState)
   const [website, setWebsite] = useState<string>('')
+  const [lens, setLens] = useState<string>('')
   const [instagram, setInstagram] = useState<string>('')
   const [twitter, setTwitter] = useState<string>('')
   const [avatarIPFSHash, setAvatarIPFSHash] = useState<string>('')
@@ -63,6 +64,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       setInputBio({ value: settingsData.bio || '', error: '' })
       setInputEmail({ value: settingsData.email || '', error: '' })
       setWebsite(settingsData.links[0]?.website || '')
+      setLens(settingsData.links[0]?.lens || '')
       setInstagram(settingsData.links[0]?.instagram || '')
       setTwitter(settingsData.links[0]?.twitter || '')
       setAvatarIPFSHash(settingsData.avatar || '')
@@ -131,6 +133,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
           instagram,
           twitter,
           website,
+          lens,
         },
       ],
       avatar: avatarIPFSHash,
@@ -178,9 +181,11 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
             twitter={twitter}
             instagram={instagram}
             website={website}
+            lens={lens}
             setWebsite={setWebsite}
             setTwitter={setTwitter}
             setInstagram={setInstagram}
+            setLens={setLens}
           />
           <ProfileWalletInfo userAddress={userAddress} />
         </VStack>

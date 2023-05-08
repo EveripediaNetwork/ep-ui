@@ -32,7 +32,7 @@ import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
-import Link from 'next/link'
+import Link from '@/components/Elements/LinkElements/Link'
 
 const SHARING_OPTIONS = [
   {
@@ -128,14 +128,14 @@ const ShareWikiModal = ({
                   </item.label>
                 ) : (
                   <Link
-                    href={`https://lenster.xyz/?text=Checkout%20my%20recent%20wiki%20here&url=${url}`}
+                    href={`https://lenster.xyz/?text=Checkout%20this%20article%20on%20the%20World’s%20Largest%20Blockchain%20Encyclopedia,%20IQ.wiki&url=${url}`}
                     rel="nofollow"
                     target="_blank"
                     onClick={() =>
                       logEvent({
-                        action: 'SHARE_ON_LEN',
+                        action: 'SHARING_WIKI_ON_LENS',
                         label: url,
-                        category: 'sharing',
+                        category: 'sharing_wiki_on_lens',
                         value: 1,
                       })
                     }

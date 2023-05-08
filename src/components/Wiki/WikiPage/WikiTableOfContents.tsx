@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   VStack,
   Text,
@@ -13,6 +13,7 @@ import {
 import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
+import { useRouter } from 'next/router'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
@@ -20,6 +21,17 @@ interface WikiTableOfContentsProps {
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   const toc = useAppSelector((state) => state.toc)
+  const { asPath, query, push } = useRouter()
+
+  const { slug } = query
+
+  // get the link id if available to scroll to the correct position
+  useEffect(() => {
+    if (!(toc.length === 0)) {
+      const linkId = asPath.split('#')[1]
+      if (linkId) push(`/wiki/${slug}#${linkId}`)
+    }
+  }, [asPath])
 
   const { colorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
@@ -170,4 +182,4 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   )
 }
 
-export default WikiTableOfContents
+export default React.memo(WikiTableOfContents)

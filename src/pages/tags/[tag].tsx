@@ -7,7 +7,6 @@ import {
   Heading,
   SimpleGrid,
   Text,
-  Button,
   Center,
   Spinner,
 } from '@chakra-ui/react'
@@ -85,46 +84,29 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
             . If you are interested in seeing other topics in common, you can
             click on other tags.
           </Text>
-          {wikis.length > 0 ? (
-            <>
-              <SimpleGrid
-                columns={{ base: 1, sm: 2, lg: 3 }}
-                width="min(90%, 1200px)"
-                mt={17}
-                mx="auto"
-                mb={12}
-                gap={8}
-              >
-                {wikisByTag.map((wiki, i) => (
-                  <Box key={i} w="100%">
-                    <WikiPreviewCard wiki={wiki} />
-                  </Box>
-                ))}
-              </SimpleGrid>
-              {loading || hasMore ? (
-                <Center ref={sentryRef} mt="10" w="full" h="16">
-                  <Spinner size="xl" />
-                </Center>
-              ) : (
-                <Center mt="10">
-                  <Text fontWeight="semibold">{t('seenItAll')}</Text>
-                </Center>
-              )}
-            </>
+
+          <SimpleGrid
+            columns={{ base: 1, sm: 2, lg: 3 }}
+            width="min(90%, 1200px)"
+            mt={17}
+            mx="auto"
+            mb={12}
+            gap={8}
+          >
+            {wikisByTag.map((wiki, i) => (
+              <Box key={i} w="100%">
+                <WikiPreviewCard wiki={wiki} />
+              </Box>
+            ))}
+          </SimpleGrid>
+          {loading || hasMore ? (
+            <Center ref={sentryRef} mt="10" w="full" h="16">
+              <Spinner size="xl" />
+            </Center>
           ) : (
-            <Box textAlign="center" py={10} px={6}>
-              <Text fontSize="lg" mt={3} mb={3}>
-                Oops, No Wiki Found with this Tag
-              </Text>
-              <Button
-                colorScheme="primary"
-                color="white"
-                variant="solid"
-                onClick={() => router.back()}
-              >
-                Go Back
-              </Button>
-            </Box>
+            <Center mt="10">
+              <Text fontWeight="semibold">{t('seenItAll')}</Text>
+            </Center>
           )}
         </Box>
       </Box>
@@ -138,6 +120,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
   )
   await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
+  if (!tagWikis.data?.length) {
+    return {
+      redirect: {
+        destination: `/NotFound/?tags=${tagId}`,
+        permanent: false,
+      },
+    }
+  }
   return {
     props: {
       tagId,

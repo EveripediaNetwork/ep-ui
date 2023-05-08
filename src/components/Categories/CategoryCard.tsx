@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  VStack,
-  Heading,
-  Text,
-  Box,
-  LinkBox,
-  LinkOverlay,
-  Icon,
-} from '@chakra-ui/react'
+import { VStack, Heading, Text, Box, LinkBox, Icon } from '@chakra-ui/react'
 import {
   CATEGORY_DESCRIPTION_WORD_LIMIT,
   IMAGE_BOX_SIZE,
@@ -15,7 +7,7 @@ import {
 } from '@/data/Constants'
 import { IconType } from 'react-icons'
 import { Image } from '../Elements/Image/Image'
-
+import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 interface CategoryCardProps {
   imageCard: string
   coverIcon: IconType
@@ -33,13 +25,13 @@ const CategoryCard = ({
 }: CategoryCardProps) => {
   return (
     <LinkBox
-      as="article"
       bgColor="cardBg"
       borderWidth="1px"
       borderColor="dimColor"
       _hover={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}
       overflow="hidden"
       borderRadius="12px"
+      key={categoryId}
     >
       <VStack cursor="pointer">
         <Box w="100%" position="relative">
@@ -68,17 +60,23 @@ const CategoryCard = ({
             />
           </Box>
         </Box>
+
         <Box p={5}>
+          <Heading textAlign="center" size="sm" my="10px">
+            {title}
+          </Heading>
           <LinkOverlay href={`/categories/${categoryId}`}>
-            <Heading textAlign="center" size="sm" my="10px">
-              {title}
-            </Heading>
+            <Text
+              maxWidth="300px"
+              fontSize="xs"
+              textAlign="center"
+              opacity="0.6"
+            >
+              {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
+                ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
+                : brief}
+            </Text>
           </LinkOverlay>
-          <Text maxWidth="300px" fontSize="xs" textAlign="center" opacity="0.6">
-            {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
-              ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
-              : brief}
-          </Text>
         </Box>
       </VStack>
     </LinkBox>

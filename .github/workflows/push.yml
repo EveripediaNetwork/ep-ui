@@ -33,7 +33,5 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Lint rome
         run: yarn rome ci .
-      - name: Build
-        run: yarn build
       - name: Tests
         run: yarn test

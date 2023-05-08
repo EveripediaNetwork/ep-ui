@@ -17,23 +17,28 @@ import {
   validateUsername,
 } from '@/utils/ProfileUtils/Validations'
 import { StrEntry } from '@/types/ProfileType'
+import LensterIcon from '@/components/Icons/lensterIcon'
 
 interface ProfileLinksProps {
   twitter: string
   instagram: string
   website: string
+  lens: string
   setTwitter: (twitterLink: string) => void
   setWebsite: (websiteLink: string) => void
   setInstagram: (instagramLink: string) => void
+  setLens: (lensLink: string) => void
 }
 
 export const ProfileLinks = ({
   twitter,
   instagram,
   website,
+  lens,
   setInstagram,
   setWebsite,
   setTwitter,
+  setLens,
 }: ProfileLinksProps) => {
   return (
     <>
@@ -65,6 +70,19 @@ export const ProfileLinks = ({
               onChange={(e) => setInstagram(e.target.value)}
               variant="flushed"
               placeholder="Your Instagram Handle"
+            />
+          </InputGroup>
+          {/* LINKS: Lenster */}
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <LensterIcon color="gray" />
+            </InputLeftElement>
+            <Input
+              _focus={{ borderBottomColor: 'inherit' }}
+              value={lens}
+              onChange={(e) => setLens(e.target.value)}
+              variant="flushed"
+              placeholder="Your Lens Handle"
             />
           </InputGroup>
           {/* LINKS: Website */}

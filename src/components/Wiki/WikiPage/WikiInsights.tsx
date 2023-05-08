@@ -27,17 +27,11 @@ import ContentFeedback from './InsightComponents/ContentFeedback'
 
 interface WikiInsightsProps {
   wiki: Wiki
-  relatedWikis: Wiki[] | null
   ipfs?: string
   dateTime?: string | undefined
 }
 
-const WikiInsights = ({
-  wiki,
-  relatedWikis,
-  ipfs,
-  dateTime,
-}: WikiInsightsProps) => {
+const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
@@ -135,7 +129,7 @@ const WikiInsights = ({
           >
             {!!twitterLink && <TwitterTimeline url={twitterLink} />}
             {wiki.categories.length !== 0 && (
-              <RelatedWikis relatedWikis={relatedWikis} />
+              <RelatedWikis wikiId={wiki.id} category={wiki.categories[0].id} />
             )}
             {wiki.media && wiki.media.length > 0 && (
               <RelatedMediaGrid media={wiki.media} />

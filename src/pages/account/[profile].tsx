@@ -8,6 +8,7 @@ import config from '@/config'
 import { AvatarColorArray } from '@/data/AvatarData'
 import { useENSData } from '@/hooks/useENSData'
 import { getUserAddressFromUsername, getUserProfile } from '@/services/profile'
+import { getUserCreatedWikis, getUserEditedWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { ProfileData } from '@/types/ProfileType'
 import { provider } from '@/utils/WalletUtils/getProvider'
@@ -15,12 +16,16 @@ import { Box, Flex } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Activity } from '@/types/ActivityDataType'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 
 interface ProfileProps {
   profileData: ProfileData
+  createdWikis: Activity[]
+  editedWikis: Activity[]
 }
 
-const Profile = ({ profileData }: ProfileProps) => {
+const Profile = ({ profileData, createdWikis, editedWikis }: ProfileProps) => {
   const router = useRouter()
   const address = router.query.profile as string
   const [avatar] = useENSData(address)
@@ -41,7 +46,7 @@ const Profile = ({ profileData }: ProfileProps) => {
       <UserProfileHeader
         username={profileData?.username || address}
         avatarURL={userAvatar}
-        links={profileData?.links[0]}
+        links={profileData?.links?.[0]}
         bio={profileData?.bio}
       />
       <ProfileProvider value={profileContext}>
@@ -60,7 +65,7 @@ const Profile = ({ profileData }: ProfileProps) => {
             alt={`${profileData?.username || address}-background-image`}
           />
           <UserInfo />
-          <Collections />
+          <Collections createdWikis={createdWikis} editedWikis={editedWikis} />
         </Flex>
       </ProfileProvider>
     </Box>
@@ -85,12 +90,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // Redirect from regular ethereum address
   const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/
   if (ethAddressRegex.test(userIdentifier)) {
-    const { data: profileData } = await store.dispatch(
-      getUserProfile.initiate(userIdentifier),
-    )
+    const [profileData, createdWikiData, editedWikiData] = await Promise.all([
+      store.dispatch(getUserProfile.initiate(userIdentifier)),
+      store.dispatch(
+        getUserCreatedWikis.initiate({
+          id: userIdentifier,
+          limit: ITEM_PER_PAGE,
+          offset: 0,
+        }),
+      ),
+      store.dispatch(
+        getUserEditedWikis.initiate({
+          id: userIdentifier,
+          limit: ITEM_PER_PAGE,
+          offset: 0,
+        }),
+      ),
+    ])
     return {
       props: {
-        profileData: profileData || null,
+        profileData: profileData.data || null,
+        createdWikis: createdWikiData.data || [],
+        editedWikis: editedWikiData.data || [],
       },
     }
   }

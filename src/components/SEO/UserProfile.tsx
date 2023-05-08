@@ -1,4 +1,5 @@
 import { UserSocialLinksData as dt } from '@/data/UserSocialLinksData'
+import { env } from '@/env.mjs'
 import { ProfileLinks } from '@/types/ProfileType'
 import { NextSeo, SocialProfileJsonLd } from 'next-seo'
 import React from 'react'
@@ -24,7 +25,7 @@ export const UserProfileHeader = ({
       <SocialProfileJsonLd
         type="Person"
         name={username}
-        url={`${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`}
+        url={`${env.NEXT_PUBLIC_DOMAIN}/account/${username}`}
         sameAs={
           socials.map((key) =>
             dt[key].urlPrefix(links?.[key] || ''),
@@ -37,7 +38,7 @@ export const UserProfileHeader = ({
         openGraph={{
           title: `${username} · IQ.Wiki`,
           description: bio || 'check out this user on IQ.Wiki',
-          url: `${process.env.NEXT_PUBLIC_DOMAIN}/account/${username}`,
+          url: `${env.NEXT_PUBLIC_DOMAIN}/account/${username}`,
           type: 'profile',
           profile: {
             username,
