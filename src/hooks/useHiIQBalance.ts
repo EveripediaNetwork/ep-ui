@@ -30,7 +30,6 @@ export const useHiIQBalance = (address: string | undefined | null) => {
     functionName: 'locked',
     args: [address],
   })
-  console.log(balanceOf, locked)
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
