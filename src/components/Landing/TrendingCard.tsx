@@ -1,6 +1,5 @@
 import {
   Text,
-  chakra,
   Box,
   AspectRatio,
   Flex,
@@ -89,10 +88,6 @@ const TrendingCard = ({
           <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
             {wikiData?.map((wiki, i) => (
               <HStack w="full" key={i}>
-                <chakra.span minW="2" alignSelf="center">
-                  {' '}
-                  {i + 1}
-                </chakra.span>
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
                     <AspectRatio
