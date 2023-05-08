@@ -7,7 +7,7 @@ import { Wiki } from '@everipedia/iq-utils'
 import { getWiki, wikiApi } from '@/services/wikis'
 import { store } from '@/store/store'
 import NoEventView from '@/components/Wiki/Event/NoEventView'
-import WikiNotFound from '@/components/Wiki/WIkiNotFound/WikiNotFound'
+import NotFound from '@/pages/NotFound'
 import { Link } from '@/components/Elements'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
@@ -72,7 +72,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
       eventContent = <NoEventView wikiId={wiki.id} />
     }
   } else {
-    eventContent = <WikiNotFound />
+    eventContent = <NotFound />
   }
 
   return (

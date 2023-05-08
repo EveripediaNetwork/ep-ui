@@ -1,13 +1,14 @@
+import { env } from '@/env.mjs'
 import { SiteLinksSearchBoxJsonLd } from 'next-seo'
 import React from 'react'
 
 const SearchSEO = () => {
   return (
     <SiteLinksSearchBoxJsonLd
-      url={process.env.NEXT_PUBLIC_DOMAIN || ''}
+      url={env.NEXT_PUBLIC_DOMAIN || ''}
       potentialActions={[
         {
-          target: `${process.env.NEXT_PUBLIC_DOMAIN}/search/?q`,
+          target: `${env.NEXT_PUBLIC_DOMAIN}/search/?q`,
           queryInput: 'search_term_string',
         },
       ]}

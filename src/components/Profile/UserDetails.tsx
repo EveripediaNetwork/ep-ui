@@ -37,6 +37,7 @@ import {
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
+import { env } from '@/env.mjs'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -51,7 +52,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const { headerIsSticky } = useProfileContext()
   const [, ensUserName, loading] = useENSData(address)
   const isSticky = headerIsSticky && hide
-  const customLink = `${process.env.NEXT_PUBLIC_DOMAIN}/account/${
+  const customLink = `${env.NEXT_PUBLIC_DOMAIN}/account/${
     profileData?.username || address || ensUserName
   }`
   const clipboard = useClipboard(customLink || '')
