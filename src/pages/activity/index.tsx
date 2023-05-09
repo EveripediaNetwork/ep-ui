@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Heading, VStack, Center, Spinner, Text } from '@chakra-ui/react'
+import { Box, Heading, Flex, Center, Spinner, Text } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { activitiesApi, getLatestActivities } from '@/services/activities'
@@ -84,18 +84,19 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     <ActivityCard
       key={activity.id}
       title={activity.content[0].title}
-      brief={getWikiSummary(activity?.content[0])}
+      summary={getWikiSummary(activity?.content[0])}
       editor={activity.content[0].user}
       lastModTimeStamp={activity.datetime}
       activityId={activity.id}
       type={activity.type}
       wikiId={activity.wikiId}
       ipfs={activity.ipfs}
-      WikiImgObj={activity.content[0].images}
+      wikiImgObj={activity.content[0].images}
       categories={activity.content[0].categories}
       tags={activity.content[0].tags}
     />
   )
+
   const { t } = useTranslation()
 
   return (
@@ -109,15 +110,15 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             size={{ base: 'lg', md: '2xl' }}
             letterSpacing="wide"
           >
-            Recent Activities
+            Recent Activity
           </Heading>
           <Box>
             <Box>
-              <VStack overflow="hidden" spacing={4}>
+              <Flex flexDirection="column" overflow="hidden" gap={4}>
                 {LatestActivityData?.map((activity) =>
                   renderActivityCard(activity),
                 )}
-              </VStack>
+              </Flex>
             </Box>
             {loading || hasMore ? (
               <Center ref={sentryRef} my="10" w="full" h="16">
