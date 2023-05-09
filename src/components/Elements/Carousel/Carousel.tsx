@@ -71,7 +71,7 @@ export const WikiCarousel = <T extends unknown>({
     onClick: () => void
   }
 
-  const PrevButton: React.FC<PrevNextButtonPropType> = props => {
+  const PrevButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
 
     return (
@@ -85,7 +85,7 @@ export const WikiCarousel = <T extends unknown>({
     )
   }
 
-  const NextButton: React.FC<PrevNextButtonPropType> = props => {
+  const NextButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
 
     return (
