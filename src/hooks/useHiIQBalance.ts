@@ -34,9 +34,10 @@ export const useHiIQBalance = (address: string | undefined | null) => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getBalance = async () => {
-      const hiiqBalance = Number(
-        formatUnits(BigInt(balanceOf?.toString() ?? 0), 18),
-      )
+      const fetchedBalance = balanceOf
+        ? BigInt(balanceOf?.toString())
+        : BigInt(0)
+      const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
       const lockInfo = {
         iqLocked: Number(formatUnits(locked?.amount, 18)),
         end: new Date(Number(locked?.end) * 1000),
