@@ -8,6 +8,7 @@ export const getUserAddressFromCache = () => {
       }
     }
   } catch (_e) {
+    console.log('Error getting user address from cache')
     return null
   }
   return null
