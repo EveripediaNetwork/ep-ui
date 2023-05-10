@@ -10,8 +10,6 @@ const client = createConfig({
 })
 
 const WagmiProvider = ({ children }: { children: ReactNode }) => {
-  console.log('connectors', connectors)
-  console.log('connectors', connectors)
   return <WagmiConfig config={client}>{children}</WagmiConfig>
 }
 

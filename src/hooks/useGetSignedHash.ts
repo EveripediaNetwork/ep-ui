@@ -97,7 +97,6 @@ export const useGetSignedHash = () => {
         try {
           const checkTrx = async () => {
             const trx = await refetch()
-            console.log(trx.data?.status, 'status')
             if (trx.error || trx.data?.status === 'reverted') {
               setIsLoading('error')
               setMsg(defaultErrorMessage)
