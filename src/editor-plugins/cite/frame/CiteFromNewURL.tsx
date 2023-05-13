@@ -91,7 +91,7 @@ export const CiteFromNewURL = ({
                 : '#cea046 !important'
             }
           >
-            {desc.length || 0}/60
+            {desc.length || 0}/120
           </Tag>
         </HStack>
         <Textarea
@@ -107,7 +107,7 @@ export const CiteFromNewURL = ({
           bgColor={showRed ? '#d406082a' : 'transparent'}
           outline={!showRed ? 'none' : '1px solid red !important'}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-            if (event.target.value.length <= 60) setDesc(event.target.value)
+            if (event.target.value.length <= 120) setDesc(event.target.value)
             else {
               setShowRed(true)
               setTimeout(() => setShowRed(false), 2000)
