@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
 import React from 'react'
-import SliderClass, { Settings } from 'react-slick'
+import { default as Slider, Settings } from 'react-slick'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { IconType } from 'react-icons/lib'
 import 'slick-carousel/slick/slick.css'
@@ -18,11 +18,6 @@ type WikiCarouselProps<T> = {
   Buttons?: false
 }
 
-const Slider = SliderClass as unknown as (props: {
-  children: React.ReactNode
-  nextArrow: JSX.Element
-  prevArrow: JSX.Element
-}) => JSX.Element
 interface ArrowProps {
   ArrowIcon?: IconType
   isNext?: boolean

@@ -56,11 +56,11 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
       <ActivityCard
         key={wiki.id}
         title={wiki.title}
-        brief={wiki.summary}
+        summary={wiki.summary}
         editor={wiki.user}
         wikiId={wiki.id}
         lastModTimeStamp={wiki.updated}
-        WikiImgObj={wiki.images}
+        wikiImgObj={wiki.images}
         activityId={wiki.id}
         categories={wiki.categories}
         tags={wiki.tags}

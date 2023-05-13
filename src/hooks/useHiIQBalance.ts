@@ -1,46 +1,54 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateHiIQDetails } from '@/store/slices/user-slice'
-import { provider } from '@/utils/WalletUtils/getProvider'
-import { parseAbi, formatEther } from 'viem'
+import { formatUnits } from 'viem'
 import { getIqTokenValue } from '../utils/WalletUtils/getTokenValue'
+import { useContractRead } from 'wagmi'
 
-const abi = parseAbi([
+const abi = [
   'function balanceOf(address addr) view returns (uint256)',
   'function locked(address addr) view returns (int128 amount, uint256 end)',
-])
+]
 
 const HIIQ_CONTRACT_ADDRESS = '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba'
 
+const contractConfig = {
+  addressOrName: HIIQ_CONTRACT_ADDRESS,
+  contractInterface: abi,
+}
 export const useHiIQBalance = (address: string | undefined | null) => {
   const dispatch = useDispatch()
+
+  const { data: balanceOf } = useContractRead({
+    ...contractConfig,
+    functionName: 'balanceOf',
+    args: [address],
+  })
+
+  const { data: locked } = useContractRead({
+    ...contractConfig,
+    functionName: 'locked',
+    args: [address],
+  })
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getBalance = async () => {
-      const balance = await provider.readContract({
-        address: HIIQ_CONTRACT_ADDRESS,
-        abi,
-        functionName: 'balanceOf',
-        args: [address as `0x${string}`],
-      })
-      const lock = await provider.readContract({
-        address: HIIQ_CONTRACT_ADDRESS,
-        abi,
-        functionName: 'locked',
-        args: [address as `0x${string}`],
-      })
-      const hiiqBalance = Number(formatEther(balance as unknown as bigint))
-      const [amount, end] = lock as unknown as `0x${string}`[]
-      const iqBalance = Number(formatEther(amount as unknown as bigint))
-      const endDate = Number(formatEther(end as unknown as bigint))
+      const fetchedBalance = balanceOf
+        ? BigInt(balanceOf?.toString())
+        : BigInt(0)
+      const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
+      const lockInfo = {
+        iqLocked: Number(formatUnits(locked?.amount, 18)),
+        end: new Date(Number(locked?.end) * 1000),
+      }
       const coinGeckoIqPrice = await getIqTokenValue()
 
       dispatch(
         updateHiIQDetails({
           hiiqBalance,
-          iqBalance,
-          lockEndDate: new Date(endDate * 1000),
+          iqBalance: lockInfo.iqLocked,
+          lockEndDate: lockInfo.end,
           symbol: 'HiIQ',
           iqPrice: coinGeckoIqPrice,
           totalUsdBalance: coinGeckoIqPrice * 0,
