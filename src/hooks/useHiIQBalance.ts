@@ -19,24 +19,23 @@ const contractConfig = {
 export const useHiIQBalance = (address: string | undefined | null) => {
   const dispatch = useDispatch()
 
-  const { data }: {data?: bigint} = useContractRead({
+  const { data }: { data?: bigint } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [address],
   })
 
-  const { data: locked }: {data?: {amount: bigint, end: bigint}} = useContractRead({
-    ...contractConfig,
-    functionName: 'locked',
-    args: [address],
-  })
+  const { data: locked }: { data?: { amount: bigint; end: bigint } } =
+    useContractRead({
+      ...contractConfig,
+      functionName: 'locked',
+      args: [address],
+    })
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getBalance = async () => {
-      const fetchedBalance = data
-        ? BigInt(data?.toString())
-        : BigInt(0)
+      const fetchedBalance = data ? BigInt(data?.toString()) : BigInt(0)
       const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
       const lockInfo = {
         iqLocked: Number(formatUnits(locked?.amount as bigint, 18)),
