@@ -28,6 +28,7 @@ const client = z.object({
   NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_DOMAIN: z.string().url(),
   NEXT_PUBLIC_EP_API: z.string().url(),
+  NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string(),
 })
 
 /**
@@ -65,6 +66,8 @@ const processEnv = {
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2,
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3:
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
+  NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
+    process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
 }
 
 // Don't touch the part below
