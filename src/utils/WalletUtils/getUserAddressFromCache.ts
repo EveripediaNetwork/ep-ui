@@ -2,8 +2,7 @@ export const getUserAddressFromCache = () => {
   try {
     if (typeof window !== 'undefined') {
       const storedData = localStorage.getItem('wagmi.store')
-      const data = JSON.parse(storedData as string)
-      const parsedData = JSON.parse(data)
+      const parsedData = JSON.parse(storedData as string)
       if (parsedData?.state?.data) {
         return parsedData.state.data?.account
       }
