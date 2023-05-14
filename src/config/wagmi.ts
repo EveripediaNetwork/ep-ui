@@ -1,20 +1,23 @@
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { chain, configureChains, Connector } from 'wagmi'
+import { configureChains, Connector } from 'wagmi'
+import { polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { MagicAuthConnector } from '@everipedia/wagmi-magic-connector'
 import config from './index'
 
-const chainArray =
-  config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
+const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
 
-export const { chains, provider } = configureChains(chainArray, [
-  alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
-  infuraProvider({ infuraId: config.infuraId, weight: 2 }),
-  publicProvider({ weight: 3 }),
-])
+export const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [chainArray],
+  [
+    alchemyProvider({ apiKey: config.alchemyApiKey }),
+    infuraProvider({ apiKey: config.infuraId }),
+    publicProvider(),
+  ],
+)
 
 const rpcs: {
   [key: string]: string
@@ -28,7 +31,7 @@ export const connectors = [
   new WalletConnectConnector({
     chains,
     options: {
-      qrcode: true,
+      projectId: config.walletConnectProjectId,
     },
   }),
   new MagicAuthConnector({
