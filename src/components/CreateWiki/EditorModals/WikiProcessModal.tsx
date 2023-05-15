@@ -26,7 +26,7 @@ type WikiProcessType = {
   txHash: string | undefined
   msg: string
   wikiId: string
-  isNewWiki:boolean
+  isNewWiki: boolean
 }
 
 const WikiProcessModal = ({

@@ -64,7 +64,7 @@ export const useGetSignedHash = () => {
         deadline: deadline.current,
       },
     })
-      .then(response => {
+      .then((response) => {
         if (response) {
           setActiveStep(1)
         } else {
@@ -72,7 +72,7 @@ export const useGetSignedHash = () => {
           setMsg(defaultErrorMessage)
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading('error')
         setMsg(err.message || defaultErrorMessage)
         logEvent({
@@ -115,7 +115,7 @@ export const useGetSignedHash = () => {
               setActiveStep(3)
               setMsg(isNewCreateWiki ? successMessage : editedMessage)
               // clear all edit based metadata from redux state
-              Object.values(EditSpecificMetaIds).forEach(id => {
+              Object.values(EditSpecificMetaIds).forEach((id) => {
                 dispatch({
                   type: 'wiki/updateMetadata',
                   payload: {
