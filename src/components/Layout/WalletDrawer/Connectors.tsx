@@ -82,7 +82,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
   }
 
-
   useEffect(() => {
     if (userBalance && !walletDetails) {
       dispatch(updateWalletDetails(userBalance))

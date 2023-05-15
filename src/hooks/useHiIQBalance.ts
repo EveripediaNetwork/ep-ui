@@ -33,17 +33,17 @@ export const useHiIQBalance = (address: string | undefined | null) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getBalance = async () => {
       const userBalance = await getContractDetails('balanceOf')
-        const fetchedBalance = userBalance ? BigInt(userBalance) : BigInt(0)
-        const hiiqBalance = Number(formatEther(fetchedBalance))
-        const coinGeckoIqPrice = await getIqTokenValue()
-        dispatch(
-          updateHiIQDetails({
-            hiiqBalance,
-            symbol: 'HiIQ',
-            iqPrice: coinGeckoIqPrice,
-            totalUsdBalance: coinGeckoIqPrice * hiiqBalance,
-          }),
-        )
+      const fetchedBalance = userBalance ? BigInt(userBalance) : BigInt(0)
+      const hiiqBalance = Number(formatEther(fetchedBalance))
+      const coinGeckoIqPrice = await getIqTokenValue()
+      dispatch(
+        updateHiIQDetails({
+          hiiqBalance,
+          symbol: 'HiIQ',
+          iqPrice: coinGeckoIqPrice,
+          totalUsdBalance: coinGeckoIqPrice * hiiqBalance,
+        }),
+      )
     }
     if (address?.length) {
       getBalance()
