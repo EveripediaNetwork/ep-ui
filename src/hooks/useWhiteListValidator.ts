@@ -10,7 +10,6 @@ export const useWhiteListValidator = (address: string | undefined | null) => {
     args: [address],
   })
 
-
   return {
     userCanEdit: config.isProduction === 'true' ? isEditorWhiteListed : true,
   }
