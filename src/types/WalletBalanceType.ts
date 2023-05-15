@@ -44,9 +44,7 @@ export type TokenDetailsType = {
 
 export type HiIQDetailsType = {
   hiiqBalance: number
-  iqBalance: number
   iqPrice: number
-  lockEndDate?: Date
   symbol: string
   totalUsdBalance: number
 }
