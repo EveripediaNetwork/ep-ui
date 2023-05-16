@@ -15,7 +15,6 @@ import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import {
   Wiki,
   CommonMetaIds,
@@ -221,9 +220,7 @@ const CreateWiki = () => {
   )
 }
 
-const Page: PageWithoutFooter = authenticatedRoute(
-  CreateWiki as () => JSX.Element,
-)
+const Page: PageWithoutFooter = CreateWiki as () => JSX.Element
 
 Page.noFooter = true
 

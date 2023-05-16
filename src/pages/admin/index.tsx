@@ -5,7 +5,6 @@ import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
@@ -95,6 +94,6 @@ const Admin = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
+export default dynamic(() => Promise.resolve(Admin), {
   ssr: false,
 })

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import {
@@ -111,6 +110,6 @@ const Settings = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(authenticatedRoute(Settings)), {
+export default dynamic(() => Promise.resolve(Settings), {
   ssr: false,
 })
