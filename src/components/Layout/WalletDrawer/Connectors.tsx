@@ -8,6 +8,8 @@ import {
   Center,
   Spinner,
   Tooltip,
+  Button,
+  Image,
 } from '@chakra-ui/react'
 import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
@@ -192,19 +194,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -228,6 +227,25 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             ))}
           </Box>
         )}
+        <Box
+          border="1px"
+          borderColor="walletDrawerBorderColor"
+          overflow="hidden"
+          mt={8}
+          roundedTop="lg"
+          p={4}
+        >
+          <Box
+            rounded="lg"
+            mixBlendMode={isUserConnected ? 'normal' : 'luminosity'}
+            opacity={isUserConnected ? 1 : 0.4}
+          >
+            <Image src="/images/nft-pass/pass.png" />
+          </Box>
+        </Box>
+        <Button w="full" roundedTop="none">
+          Mint
+        </Button>
       </Box>
     </>
   )
