@@ -43,7 +43,6 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   const headingElementsRef: any = useRef({})
 
   useEffect(() => {
-    console.log('tktktkrk')
     // get all the heading elements
     const headingElements = Array.from(
       document.querySelectorAll('h1, h2, h3, h4, h5, h6'),
