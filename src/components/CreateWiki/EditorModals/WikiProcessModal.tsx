@@ -17,12 +17,6 @@ import { Step, Steps } from 'chakra-ui-steps'
 import config from '@/config'
 import { useRouter } from 'next/router'
 
-const steps = [
-  { label: 'Signed Wiki' },
-  { label: 'Sent to Relayer' },
-  { label: 'Wiki created' },
-]
-
 type WikiProcessType = {
   isOpen: boolean
   onClose: () => void
@@ -32,6 +26,7 @@ type WikiProcessType = {
   txHash: string | undefined
   msg: string
   wikiId: string
+  isNewWiki: boolean
 }
 
 const WikiProcessModal = ({
@@ -43,11 +38,16 @@ const WikiProcessModal = ({
   txHash,
   msg,
   wikiId,
+  isNewWiki,
 }: WikiProcessType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
   const router = useRouter()
-
+  const steps = [
+    { label: 'Signed Wiki' },
+    { label: 'Sent to Relayer' },
+    { label: isNewWiki ? 'Wiki created' : 'Wiki updated' },
+  ]
   if (!isOpen) return null
 
   return (

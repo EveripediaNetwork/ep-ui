@@ -6,6 +6,7 @@ export const initialMsg =
 export const defaultErrorMessage =
   'Oops, An Error Occurred. Wiki could not be created'
 export const successMessage = 'Wiki has been created successfully.'
+export const editedMessage = 'Wiki has been updated successfully'
 export const ValidationErrorMessage = (type: string) => {
   switch (type) {
     case ValidatorCodes.CATEGORY:
