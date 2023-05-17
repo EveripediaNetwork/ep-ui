@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
 import SignTokenMessage from '../settings/account/SignTokenMessage'
 import { WikiViewsData } from '@/components/Admin/WikiViewsData'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 const Admin = () => {
   const router = useRouter()
@@ -94,6 +95,6 @@ const Admin = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(Admin), {
+export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
   ssr: false,
 })

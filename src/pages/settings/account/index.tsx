@@ -14,6 +14,7 @@ import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 const NotificationSettings = dynamic(
   () => import('@/components/Settings/NotificationSettings'),
@@ -110,6 +111,6 @@ const Settings = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(Settings), {
+export default dynamic(() => Promise.resolve(authenticatedRoute(Settings)), {
   ssr: false,
 })
