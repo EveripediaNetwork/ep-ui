@@ -246,7 +246,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             <Image src="/images/nft-pass/pass.png" />
           </Box>
         </Box>
-        <Button w="full" roundedTop="none">
+        <Button w="full" roundedTop="none" onClick={() => router.push('/mint')}>
           Mint
         </Button>
       </Box>
