@@ -13,14 +13,8 @@ import {
   InputGroup,
   InputRightElement,
   Select,
-  Table,
-  TableContainer,
   Text,
-  Th,
-  Tr,
   VStack,
-  Badge,
-  Thead,
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiMore2Fill, RiShareBoxLine } from 'react-icons/ri'
@@ -32,27 +26,13 @@ const Mint = () => {
       maxW={{ base: '7xl', xl: '6xl', '2xl': '80%' }}
       my={{ base: '10', lg: '16' }}
     >
-      <Grid templateColumns="repeat(2, 1fr)" gap={8}>
+      <Grid
+        templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }}
+        gap={14}
+      >
         <GridItem>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="635px"
-            height="631px"
-            position="relative"
-            bgColor="creamCardBg"
-          >
-            <Box
-              position="absolute"
-              top="50%"
-              left="50%"
-              transform="translate(-50%, -50%) rotate(-45deg)"
-              width="459px"
-              height="272px"
-            >
-              <Image src="/images/nft-pass/pass.png" alt="your-image" />
-            </Box>
+          <Box position="relative" bgColor="creamCardBg" p={10}>
+            <Image src="/images/nft-pass/rotated-pass.png" alt="your-image" />
           </Box>
         </GridItem>
         <GridItem w="100%">
@@ -139,7 +119,7 @@ const Mint = () => {
         gap={4}
       >
         <Text color="brandLinkColor">Pricing</Text>
-        <Text color="#101828" fontSize="4xl">
+        <Text fontWeight="semibold" color="#101828" fontSize="4xl">
           Compare our plans and find yours
         </Text>
         <Text color="#101828" fontSize="lg">
@@ -161,45 +141,6 @@ const Mint = () => {
             <Text>Annual Billing</Text>
           </Box>
         </Box>
-        <Flex direction="column" w="full">
-          <TableContainer>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th visibility="hidden">Placeholder</Th>
-                  <Th fontSize="lg" color="#1A202C">
-                    Gold pass{' '}
-                    <Badge rounded="full" p={2} colorScheme="pink">
-                      Popular
-                    </Badge>
-                  </Th>
-                  <Th color="#1A202C" fontSize="lg">
-                    Silver
-                  </Th>
-                  <Th color="#1A202C" fontSize="lg">
-                    Platinum
-                  </Th>
-                </Tr>
-              </Thead>
-              {/* <Tbody>
-                <Tr>
-                  <Td border="none" visibility="hidden">
-                    Placeholder
-                  </Td>
-                  <Td border="none">
-                    <Text fontSize="lg" fontWeight="bold">
-                      2000IQ <chakra.span> per month</chakra.span>
-                    </Text>
-                    <Text border="1px solid yellow" w="200px">
-                      Basic features for up to 10 employees with everything you
-                      need.
-                    </Text>
-                  </Td>
-                </Tr>
-              </Tbody> */}
-            </Table>
-          </TableContainer>
-        </Flex>
       </Box>
     </Container>
   )
