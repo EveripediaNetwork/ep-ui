@@ -316,6 +316,7 @@ export const WikiPublishButton = () => {
         txHash={txHash}
         wikiHash={wikiHash}
         activeStep={activeStep}
+        isNewWiki={isNewCreateWiki}
         state={loadingState}
         isOpen={isWikiProcessModalOpen}
         onClose={handlePopupClose}
