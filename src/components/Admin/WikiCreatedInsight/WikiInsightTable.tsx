@@ -232,7 +232,7 @@ export const WikiInsightTable = () => {
         paginateOffset={paginateOffset}
         setActivatePrevious={setActivatePrevious}
         wikis={wikis}
-        nextBtnDisabled={!wiki || wiki.length === 0}
+        nextBtnDisabled={!wiki || wiki.length === 0 || wiki.length < 10}
       />
     </Flex>
   )
