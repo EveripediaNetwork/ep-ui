@@ -45,13 +45,7 @@ export const InsightTableWikiCreated = (
   const [hideNotify, setHideNotify] = useState(false)
 
   const findSection = (promotedNum: number) => {
-    const num =
-      wikiCreatedInsightData?.[wikiCreatedInsightData.length - 1].promoted
-    if (promotedNum === num) {
-      setsectionType('hero section')
-    } else {
-      setsectionType('trending wiki section')
-    }
+    setsectionType(`Slot ${promotedNum}`)
     onOpenPromotion()
   }
   const shouldArchive = (ishidden: boolean, wikiId: string) => {
@@ -121,8 +115,8 @@ export const InsightTableWikiCreated = (
               textAlign="center"
               fontWeight="normal"
             >
-              This wiki is currently promoted to the {sectionType} of the home
-              page
+              This wiki is currently promoted to {sectionType} of the featured
+              wikis
             </Text>
           </Box>
         </AlertDialogContent>

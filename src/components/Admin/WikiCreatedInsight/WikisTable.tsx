@@ -154,6 +154,7 @@ export const WikisTable = (props: WikisTableProps) => {
                     }}
                     PromoteClickTwo={() => {
                       if (!item.hidden) {
+                        console.log(item.promoted)
                         findSection(item.promoted)
                       }
                     }}
