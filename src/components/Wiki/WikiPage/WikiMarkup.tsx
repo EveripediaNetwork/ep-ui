@@ -3,7 +3,6 @@ import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
-import WikiNotFound from '../WIkiNotFound/WikiNotFound'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
@@ -62,55 +61,51 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
         }}
       >
         <WikiActionBar wiki={wiki} />
-        {wiki ? (
-          <Box w="100%">
-            <Flex
-              w="100%"
-              justify="space-between"
-              direction={{
-                base: 'column-reverse',
-                xl: 'row',
-              }}
-            >
-              <WikiMainContent wiki={wiki} />
-              <WikiInsights wiki={wiki} ipfs={ipfs} />
-              <Text
-                fontSize="4xl"
-                fontWeight="bold"
-                mt={8}
-                mb={-4}
-                display={{
-                  xl: 'none',
-                }}
-                textAlign={{ base: 'center', md: 'left' }}
-                px={{ base: 4, md: 6 }}
-              >
-                {wiki?.title}
-              </Text>
-            </Flex>
-            <chakra.div
+        <Box w="100%">
+          <Flex
+            w="100%"
+            justify="space-between"
+            direction={{
+              base: 'column-reverse',
+              xl: 'row',
+            }}
+          >
+            <WikiMainContent wiki={wiki} />
+            <WikiInsights wiki={wiki} ipfs={ipfs} />
+            <Text
+              fontSize="4xl"
+              fontWeight="bold"
+              mt={8}
+              mb={-4}
               display={{
-                base: 'block',
                 xl: 'none',
               }}
+              textAlign={{ base: 'center', md: 'left' }}
+              px={{ base: 4, md: 6 }}
             >
-              <MobileMeta
-                metadata={wiki.metadata}
-                media={wiki.media}
-                id={wiki.id}
-                categories={wiki.categories}
-              />
-            </chakra.div>
-            <WikiReferences
-              references={JSON.parse(
-                getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ||
-                  '[]',
-              )}
+              {wiki?.title}
+            </Text>
+          </Flex>
+          <chakra.div
+            display={{
+              base: 'block',
+              xl: 'none',
+            }}
+          >
+            <MobileMeta
+              metadata={wiki.metadata}
+              media={wiki.media}
+              id={wiki.id}
+              categories={wiki.categories}
             />
-          </Box>
-        ) : (
-          <WikiNotFound />
-        )}
+          </chakra.div>
+          <WikiReferences
+            references={JSON.parse(
+              getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ||
+                '[]',
+            )}
+          />
+        </Box>
       </Flex>
       {wiki?.content.includes('# ') && <WikiTableOfContents />}
     </HStack>

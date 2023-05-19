@@ -1,6 +1,5 @@
 import {
   Text,
-  chakra,
   Box,
   AspectRatio,
   Flex,
@@ -44,7 +43,7 @@ const TrendingCard = ({
         rounded="lg"
         shadow="lg"
         minH="500px"
-        py={3}
+        py={5}
         bg="white"
         _dark={{ bgColor: 'gray.700', color: 'white' }}
       >
@@ -52,6 +51,7 @@ const TrendingCard = ({
           w="full"
           alignItems="center"
           pl="2"
+          mb="2"
           justifyContent="space-between"
         >
           <Flex alignItems="center">
@@ -86,13 +86,9 @@ const TrendingCard = ({
           )}
         </Flex>
         {wikis ? (
-          <VStack w="full" pt="2" px="2" gap="4" overflow="hidden">
+          <VStack w="full" pt="2" px="2" gap="2" overflow="hidden">
             {wikiData?.map((wiki, i) => (
-              <HStack w="full" key={i}>
-                <chakra.span minW="2" alignSelf="center">
-                  {' '}
-                  {i + 1}
-                </chakra.span>
+              <HStack w="full" key={i} px={1}>
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
                     <AspectRatio

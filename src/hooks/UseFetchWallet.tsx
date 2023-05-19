@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react'
 import { useBalance } from 'wagmi'
 import { WalletBalanceType } from '@/types/WalletBalanceType'
 import config from '@/config'
-
-export const useFetchWalletBalance = (addressOrName: string | undefined) => {
+export const useFetchWalletBalance = (address: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
+
   const { data: iqData, refetch: refetchIqData } = useBalance({
-    addressOrName,
-    token: config.iqAddress,
+    address: address as `0x${string}`,
+    token: config.iqAddress as `0x${string}`,
   })
   const { data: maticData, refetch: refetchMaticData } = useBalance({
-    addressOrName,
+    address: address as `0x${string}`,
   })
 
   const refreshBalance = async () => {

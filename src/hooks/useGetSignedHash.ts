@@ -11,6 +11,7 @@ import { getDeadline } from '@/utils/DataTransform/getDeadline'
 import {
   defaultErrorMessage,
   successMessage,
+  editedMessage,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
@@ -22,6 +23,7 @@ export const useGetSignedHash = () => {
   const {
     setWikiHash,
     wikiHash,
+    isNewCreateWiki,
     setMsg,
     setIsLoading,
     setTxHash,
@@ -41,7 +43,10 @@ export const useGetSignedHash = () => {
     signTypedDataAsync,
   } = useSignTypedData()
 
-  const { refetch } = useWaitForTransaction({ hash: txHash })
+  const { refetch } = useWaitForTransaction({
+    hash: txHash as `0x${string}`,
+    confirmations: 2,
+  })
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
   })
@@ -54,14 +59,15 @@ export const useGetSignedHash = () => {
     deadline.current = getDeadline()
     setWikiHash(ipfs)
     signTypedDataAsync({
+      primaryType: 'SignedPost',
       domain,
       types,
-      value: {
+      message: {
         ipfs,
         user: userAddress,
         deadline: deadline.current,
       },
-    })
+    } as Dict)
       .then((response) => {
         if (response) {
           setActiveStep(1)
@@ -93,7 +99,7 @@ export const useGetSignedHash = () => {
         try {
           const checkTrx = async () => {
             const trx = await refetch()
-            if (trx.error || trx.data?.status === 0) {
+            if (trx.error || trx.data?.status === 'reverted') {
               setIsLoading('error')
               setMsg(defaultErrorMessage)
               logEvent({
@@ -104,14 +110,10 @@ export const useGetSignedHash = () => {
               })
               clearInterval(_timer)
             }
-            if (
-              trx?.data &&
-              trx.data.status === 1 &&
-              trx.data.confirmations > 1
-            ) {
+            if (trx?.data && trx.data.status === 'success') {
               setIsLoading(undefined)
               setActiveStep(3)
-              setMsg(successMessage)
+              setMsg(isNewCreateWiki ? successMessage : editedMessage)
               // clear all edit based metadata from redux state
               Object.values(EditSpecificMetaIds).forEach((id) => {
                 dispatch({
