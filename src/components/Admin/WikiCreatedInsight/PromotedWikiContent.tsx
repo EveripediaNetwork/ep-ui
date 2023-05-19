@@ -14,6 +14,7 @@ import { GetWiki } from './GetWikisComponent'
 
 export const Content = (props: ContentProps) => {
   const { activeStep, step2Titles, promotedWikis, Data, setValue } = props
+
   return (
     <>
       {activeStep === 0 && (
@@ -30,19 +31,19 @@ export const Content = (props: ContentProps) => {
               </Text>
               <Select
                 cursor="pointer"
-                onChange={(e) => setValue(e.target.value)}
+                onChange={e => setValue(e.target.value)}
                 defaultValue={promotedWikis?.length}
               >
                 {promotedWikis &&
                   [...promotedWikis]
                     ?.sort((a, b) => a.promoted - b.promoted)
                     ?.slice(1)
-                    ?.map((item) => (
-                      <option value={item.promoted}>
+                    ?.map((item, i) => (
+                      <option key={i} value={item.promoted}>
                         SLOT {item.promoted - 1} - {item.title}
                       </option>
                     ))}
-                {promotedWikis && (
+                {promotedWikis && promotedWikis.length <= 9 && (
                   <option value={promotedWikis && +promotedWikis.length + 1}>
                     New Slot
                   </option>

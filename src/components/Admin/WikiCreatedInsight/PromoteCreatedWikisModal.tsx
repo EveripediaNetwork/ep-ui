@@ -50,7 +50,7 @@ export const PromoteCreatedWikisModal = (
   const [value, setValue] = useState('2')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
@@ -75,30 +75,34 @@ export const PromoteCreatedWikisModal = (
   const handlePromoteWiki = async ({
     id,
     level,
+    isModal,
   }: {
     id: string
     level: number
+    isModal: boolean
   }) => {
     await promoteWiki({
       id,
       level,
     })
-    let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
-    let toastMessage =
-      'The selected wiki has been promoted to the trending wikis.'
-    let toastType: 'success' | 'error' = 'success'
-    if (posTPromoteWikiError) {
-      toastTitle = 'Wiki Archive Failed'
-      toastMessage = "We couldn't save your wiki changes."
-      toastType = 'error'
+    if (isModal) {
+      let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
+      let toastMessage =
+        'The selected wiki has been promoted to the trending wikis.'
+      let toastType: 'success' | 'error' = 'success'
+      if (posTPromoteWikiError) {
+        toastTitle = 'Wiki Archive Failed'
+        toastMessage = "We couldn't save your wiki changes."
+        toastType = 'error'
+      }
+      toast({
+        title: toastTitle,
+        description: toastMessage,
+        status: toastType,
+        duration: 5000,
+        isClosable: true,
+      })
     }
-    toast({
-      title: toastTitle,
-      description: toastMessage,
-      status: toastType,
-      duration: 5000,
-      isClosable: true,
-    })
   }
 
   const TrendingwikiSelected = async () => {
@@ -119,18 +123,22 @@ export const PromoteCreatedWikisModal = (
           id: wikiChosenId,
           level: Number(value),
         })
-        handlePromoteWiki({ id: wikiChosenId, level: Number(value) })
-        const id = getWikiIdUsingLevel(+value, promotedWikis)
+        handlePromoteWiki({
+          id: wikiChosenId,
+          level: Number(value),
+          isModal: true,
+        })
+        const id = getWikiIdUsingLevel(Number(value), promotedWikis)
         if (id) {
-          handlePromoteWiki({ id, level: 0 })
+          handlePromoteWiki({ id, level: 0, isModal: false })
         }
         hideFunc()
         Close()
       } else {
-        handlePromoteWiki({ id: wikiChosenId, level: 1 })
+        handlePromoteWiki({ id: wikiChosenId, level: 1, isModal: true })
         const id = getWikiIdUsingLevel(1, promotedWikis)
         if (id) {
-          handlePromoteWiki({ id, level: 0 })
+          handlePromoteWiki({ id, level: 0, isModal: false })
         }
         hideFunc()
         Close()

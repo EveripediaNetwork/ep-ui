@@ -6,7 +6,7 @@ export const dataUpdate = (
   ban: boolean,
   id: string,
 ): Editors[] | undefined => {
-  return p?.map((user) => {
+  return p?.map(user => {
     if (user.id === id) {
       return { ...user, active: ban }
     }
@@ -22,7 +22,7 @@ export const getWikiIdUsingLevel = (
   level: number,
   promotedWikis: CreatedWikisCount[] | undefined,
 ) => {
-  const wiki = promotedWikis?.filter((item) => {
+  const wiki = promotedWikis?.filter(item => {
     return item.promoted === level
   })[0]
 
