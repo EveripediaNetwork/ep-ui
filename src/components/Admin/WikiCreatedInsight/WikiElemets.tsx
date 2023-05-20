@@ -27,6 +27,8 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
     )
   }
 
+  const _IsNextCanGo = () => {}
+
   return (
     <Flex justify="space-between" w="95%" m="0 auto">
       <Button

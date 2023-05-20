@@ -101,6 +101,7 @@ export const WikiInsightTable = () => {
     wiki,
     filterItems,
     promotedWikis,
+    searchKeyWord,
     hidden,
     FilterTypes.archived,
     FilterTypes.promoted,
@@ -118,18 +119,23 @@ export const WikiInsightTable = () => {
     })
   }
 
-  const WikisSortByHighest = newWikis?.slice()
+  const WikisSortByHighest =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
+  console.log(WikisSortByHighest)
   sortWikisByDate(WikisSortByHighest, true)
 
-  const WikisSortByLowest = newWikis?.slice()
+  const WikisSortByLowest =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   sortWikisByDate(WikisSortByLowest, false)
 
-  const WikisSortByAlpaUp = newWikis?.slice()
+  const WikisSortByAlpaUp =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   WikisSortByAlpaUp?.sort((a, b) => {
     const Data = a.title.trim().localeCompare(b.title.trim())
     return Data
   })
-  const WikisSortByAlpaDown = newWikis?.slice()
+  const WikisSortByAlpaDown =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
     const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
@@ -148,17 +154,13 @@ export const WikiInsightTable = () => {
       return WikisSortByAlpaDown
     }
     return newWikis
-  }, [
-    newWikis,
-    sortTableBy,
-    WikisSortByAlpaDown,
-    WikisSortByAlpaUp,
-    WikisSortByHighest,
-    WikisSortByLowest,
-  ])
+  }, [sortTableBy])
 
   const whichWiki = useCallback(() => {
     if (searchKeyWord.length < 2) {
+      setWikis(wikiSorted)
+    } else if (searchKeyWord.length > 2 && sortTableBy !== 'default') {
+      setInitGetSearchedWikis(false)
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
@@ -169,6 +171,10 @@ export const WikiInsightTable = () => {
     insightTableRef?.current?.scrollIntoView({
       behavior: 'smooth',
     })
+  }
+
+  const _nextButtonValidity = () => {
+    console.log('dm')
   }
 
   useEffect(() => {
@@ -232,7 +238,7 @@ export const WikiInsightTable = () => {
         paginateOffset={paginateOffset}
         setActivatePrevious={setActivatePrevious}
         wikis={wikis}
-        nextBtnDisabled={!wiki || wiki.length === 0 || wiki.length < 10}
+        nextBtnDisabled={!wiki || wiki.length < 10}
       />
     </Flex>
   )
