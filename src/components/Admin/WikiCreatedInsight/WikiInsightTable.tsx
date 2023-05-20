@@ -101,7 +101,6 @@ export const WikiInsightTable = () => {
     wiki,
     filterItems,
     promotedWikis,
-    searchKeyWord,
     hidden,
     FilterTypes.archived,
     FilterTypes.promoted,
@@ -121,7 +120,7 @@ export const WikiInsightTable = () => {
 
   const WikisSortByHighest =
     searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
-  console.log(WikisSortByHighest)
+
   sortWikisByDate(WikisSortByHighest, true)
 
   const WikisSortByLowest =
@@ -153,33 +152,38 @@ export const WikiInsightTable = () => {
     if (sortTableBy === 'AlpaDown') {
       return WikisSortByAlpaDown
     }
-    return newWikis
-  }, [sortTableBy])
+    return searchKeyWord.length > 2 ? SearchedWikis : newWikis
+  }, [newWikis, sortTableBy, searchKeyWord, SearchedWikis])
 
   const whichWiki = useCallback(() => {
     if (searchKeyWord.length < 2) {
-      setWikis(wikiSorted)
-    } else if (searchKeyWord.length > 2 && sortTableBy !== 'default') {
-      setInitGetSearchedWikis(false)
+      setInitGetSearchedWikis(true)
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
-      setWikis(SearchedWikis)
+      setWikis(wikiSorted)
     }
   }, [SearchedWikis, searchKeyWord.length, wikiSorted])
+
   const scrolltoTableTop = () => {
     insightTableRef?.current?.scrollIntoView({
       behavior: 'smooth',
     })
   }
 
-  const _nextButtonValidity = () => {
-    console.log('dm')
+  const nextButtonIsValid = () => {
+    if (FilterTypes.promoted || searchKeyWord.length > 2) {
+      // since the predefined total no of promoted is 10
+      return true
+    } else {
+      return !wiki || wiki.length < 10
+    }
   }
 
   useEffect(() => {
     whichWiki()
     refetch()
+    nextButtonIsValid()
   }, [
     wiki,
     refetch,
@@ -238,7 +242,7 @@ export const WikiInsightTable = () => {
         paginateOffset={paginateOffset}
         setActivatePrevious={setActivatePrevious}
         wikis={wikis}
-        nextBtnDisabled={!wiki || wiki.length < 10}
+        nextBtnDisabled={nextButtonIsValid()}
       />
     </Flex>
   )
