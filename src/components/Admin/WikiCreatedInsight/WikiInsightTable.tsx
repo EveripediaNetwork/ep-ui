@@ -172,7 +172,10 @@ export const WikiInsightTable = () => {
   }
 
   const nextButtonIsValid = () => {
-    if (FilterTypes.promoted || searchKeyWord.length > 2) {
+    if (
+      filterItems?.includes(FilterTypes.promoted) ||
+      searchKeyWord.length > 2
+    ) {
       // since the predefined total no of promoted is 10
       return true
     } else {
