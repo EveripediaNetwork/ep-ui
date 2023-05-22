@@ -270,12 +270,12 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             <Button
               w="full"
               roundedTop="none"
-              onClick={() => router.push('/mint')}
+              onClick={() => router.push('/mint-pass')}
             >
               Mint
             </Button>
           ) : (
-            <Center w="full" onClick={() => router.push('/mint')} py={2}>
+            <Center w="full" onClick={() => router.push('/mint-pass')} py={2}>
               <Text fontSize="lg" fontWeight="semibold">
                 View Details
               </Text>
