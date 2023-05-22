@@ -15,7 +15,6 @@ import { store } from '@/store/store'
 import { GetServerSideProps, NextPage } from 'next'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import {
   Wiki,
   CommonMetaIds,
@@ -37,6 +36,7 @@ import {
 import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean

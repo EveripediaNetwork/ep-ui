@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Flex,
@@ -21,10 +21,10 @@ import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import { WagmiStatusContext } from '@/components/Wagmi/DynamicWagmiProvider'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
+import { useAccount } from 'wagmi'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -35,7 +35,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { isWagmiWrapped } = useContext(WagmiStatusContext)
+  const { isConnected } = useAccount()
 
   const iconSize = 20
 
@@ -113,7 +113,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               <Menu>
                 <Flex gap="4" direction="column">
                   <ColorModeToggle isInMobileMenu />
-                  {isWagmiWrapped && <LogOutBtn isInMobileMenu />}
+                  {isConnected && <LogOutBtn isInMobileMenu />}
                 </Flex>
               </Menu>
             </Box>
