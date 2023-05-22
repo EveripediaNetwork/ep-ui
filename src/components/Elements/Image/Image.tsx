@@ -9,7 +9,7 @@ interface CfLoaderArgs {
   quality?: number
 }
 
-const BASE_URL = 'https://everipedia.org'
+const BASE_URL = 'https://iq.wiki'
 
 export const cfLoader: ImageLoader = ({
   src,
