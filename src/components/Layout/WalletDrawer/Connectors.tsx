@@ -10,6 +10,8 @@ import {
   Tooltip,
   Button,
   Image,
+  HStack,
+  Icon,
 } from '@chakra-ui/react'
 import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
@@ -32,6 +34,7 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
+import { RiTicket2Line } from 'react-icons/ri'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -194,19 +197,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -236,14 +236,22 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
           overflow="hidden"
           mt={8}
           roundedTop="lg"
-          p={4}
         >
           <Box
             rounded="lg"
             mixBlendMode={isUserConnected ? 'normal' : 'luminosity'}
             opacity={isUserConnected ? 1 : 0.4}
+            p={4}
           >
             <Image src="/images/nft-pass/pass.png" />
+          </Box>
+          <Box bgColor="paginationButtonActiveBg" p={2}>
+            <HStack gap={2}>
+              <Icon as={RiTicket2Line} boxSize={6} color="paginationButtonActive" />
+              <Text fontSize="xs" fontWeight="semibold">
+                Subscription expires in 30days (14. 05. 2023)
+              </Text>
+            </HStack>
           </Box>
         </Box>
         <Button w="full" roundedTop="none" onClick={() => router.push('/mint')}>
