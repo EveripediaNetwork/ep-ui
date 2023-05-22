@@ -95,7 +95,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -197,16 +197,19 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
-                  <>
-                    <WalletDetails
-                      symbol={hiIQData?.symbol}
-                      tokensArray={[hiIQData?.tokensArray]}
-                      balance={shortenBalance(hiiq?.hiiqBalance)}
-                    />
-                    <Divider />
-                  </>
-                )}
+                {hiiq &&
+                  walletDetails &&
+                  walletDetails.length > 0 &&
+                  hiIQData && (
+                    <>
+                      <WalletDetails
+                        symbol={hiIQData?.symbol}
+                        tokensArray={[hiIQData?.tokensArray]}
+                        balance={shortenBalance(hiiq?.hiiqBalance)}
+                      />
+                      <Divider />
+                    </>
+                  )}
               </Box>
             )}
           </>
@@ -272,11 +275,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               Mint
             </Button>
           ) : (
-            <Center
-              w="full"
-              onClick={() => router.push('/mint')}
-              p={2}
-            >
+            <Center w="full" onClick={() => router.push('/mint')} p={2}>
               <Text fontSize="lg" fontWeight="semibold">
                 View Details
               </Text>
