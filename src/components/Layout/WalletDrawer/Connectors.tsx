@@ -95,7 +95,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
 
@@ -245,14 +245,24 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
           >
             <Image src="/images/nft-pass/pass.png" />
           </Box>
-          <Box bgColor="paginationButtonActiveBg" p={2}>
-            <HStack gap={2}>
-              <Icon as={RiTicket2Line} boxSize={6} color="paginationButtonActive" />
-              <Text fontSize="xs" fontWeight="semibold">
-                Subscription expires in 30days (14. 05. 2023)
-              </Text>
-            </HStack>
-          </Box>
+          {isUserConnected && (
+            <Box
+              bgColor="brand.50"
+              _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
+              p={2}
+            >
+              <HStack gap={2}>
+                <Icon
+                  as={RiTicket2Line}
+                  boxSize={6}
+                  color="paginationButtonActive"
+                />
+                <Text fontSize="xs" fontWeight="semibold">
+                  Subscription expires in 30days (14. 05. 2023)
+                </Text>
+              </HStack>
+            </Box>
+          )}
         </Box>
         <Button w="full" roundedTop="none" onClick={() => router.push('/mint')}>
           Mint
