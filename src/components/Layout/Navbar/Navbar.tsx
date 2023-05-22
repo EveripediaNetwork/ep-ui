@@ -11,7 +11,6 @@ import {
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { WagmiNeededComponent } from '@/components/WrapperRoutes/WagmiNeededComponent'
 import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
@@ -134,13 +133,11 @@ const Navbar = () => {
         </HStack>
       </Flex>
       {drawerOperations.isOpen && (
-        <WagmiNeededComponent>
-          <WalletDrawer
-            finalFocusRef={loginButtonRef}
-            setHamburger={setHamburger}
-            toggleOperations={drawerOperations}
-          />
-        </WagmiNeededComponent>
+        <WalletDrawer
+          finalFocusRef={loginButtonRef}
+          setHamburger={setHamburger}
+          toggleOperations={drawerOperations}
+        />
       )}
       <Collapse
         in={isHamburgerOpen}
