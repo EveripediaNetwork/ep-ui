@@ -64,7 +64,9 @@ export const Image = ({
         width: '100%',
         height: '100%',
       }}
-      loader={cfLoader}
+      loader={
+        typeof src === 'string' && src.startsWith('http') ? cfLoader : undefined
+      }
       fill={!(imgW && imgH) || !imgBoxSize}
       src={src}
       alt={alt}
