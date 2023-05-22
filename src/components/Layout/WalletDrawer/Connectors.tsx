@@ -235,7 +235,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
           borderColor="walletDrawerBorderColor"
           overflow="hidden"
           mt={8}
-          roundedTop="lg"
+          rounded="md"
         >
           <Box
             rounded="lg"
@@ -263,10 +263,26 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               </HStack>
             </Box>
           )}
+          {!isUserConnected ? (
+            <Button
+              w="full"
+              roundedTop="none"
+              onClick={() => router.push('/mint')}
+            >
+              Mint
+            </Button>
+          ) : (
+            <Center
+              w="full"
+              onClick={() => router.push('/mint')}
+              p={2}
+            >
+              <Text fontSize="lg" fontWeight="semibold">
+                View Details
+              </Text>
+            </Center>
+          )}
         </Box>
-        <Button w="full" roundedTop="none" onClick={() => router.push('/mint')}>
-          Mint
-        </Button>
       </Box>
     </>
   )
