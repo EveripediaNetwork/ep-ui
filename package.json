@@ -17,7 +17,9 @@
     "postinstall": "yarn gen:theme-typings",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
-    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
+    "env:prod": "vercel env pull --environment=Production",
+    "env:dev": "vercel env pull --environment=Development"
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.0",
