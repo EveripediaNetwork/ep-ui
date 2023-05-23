@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -200,13 +201,80 @@ const Mint = () => {
       </Grid>
 
       <Box
-        mt={10}
+        mt={14}
         display="flex"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
         gap={4}
-      />
+        bgColor="creamCardBg"
+        py={16}
+        rounded="lg"
+      >
+        <VStack align="center" gap={6}>
+          <Box
+            py={1}
+            px={2}
+            rounded="full"
+            bgColor="rgba(255, 229, 241, 0.8)"
+            _dark={{ bgColor: 'brand.200', color: 'gray.800' }}
+          >
+            <Text fontSize="sm" fontWeight="light">
+              General Pass
+            </Text>
+          </Box>
+          <Text fontSize="xl" fontWeight="bold">
+            NFT EDITOR PASS PERKS
+          </Text>
+          <Text fontSize="sm" fontWeight="light">
+            Some benefits associated with owning an NFT editor pass on IQ Wiki
+          </Text>
+          <HStack>
+            <Icon
+              rounded="full"
+              bg="#12B76A"
+              color="#D1FADF"
+              as={CheckCircleIcon}
+            />
+            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+              Exclusive support from the engineering team.
+            </Text>
+          </HStack>
+          <HStack>
+            <Icon
+              rounded="full"
+              bg="#12B76A"
+              color="#D1FADF"
+              as={CheckCircleIcon}
+            />
+            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+              Exclusive support from the engineering team.
+            </Text>
+          </HStack>
+          <HStack>
+            <Icon
+              rounded="full"
+              bg="#12B76A"
+              color="#D1FADF"
+              as={CheckCircleIcon}
+            />
+            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+              Exclusive support from the engineering team.
+            </Text>
+          </HStack>
+          <HStack>
+            <Icon
+              rounded="full"
+              bg="#12B76A"
+              color="#D1FADF"
+              as={CheckCircleIcon}
+            />
+            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+              Exclusive support from the engineering team.
+            </Text>
+          </HStack>
+        </VStack>
+      </Box>
     </Container>
   )
 }
