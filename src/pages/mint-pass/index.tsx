@@ -15,6 +15,9 @@ import {
   InputLeftAddon,
   InputRightAddon,
   InputRightElement,
+  List,
+  ListIcon,
+  ListItem,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -22,6 +25,7 @@ import {
   Spacer,
   Text,
   VStack,
+  chakra,
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiMore2Fill, RiQuestionLine, RiShareBoxLine } from 'react-icons/ri'
@@ -211,7 +215,7 @@ const Mint = () => {
         py={16}
         rounded="lg"
       >
-        <VStack align="center" gap={6}>
+        <VStack align="center" gap={4}>
           <Box
             py={1}
             px={2}
@@ -226,73 +230,75 @@ const Mint = () => {
           <Text fontSize="xl" fontWeight="bold">
             NFT EDITOR PASS PERKS
           </Text>
-          <Text fontSize="sm" fontWeight="light">
+          <Text fontSize="sm" fontWeight="light" textAlign="center" px={6}>
             Some benefits associated with owning an NFT editor pass on IQ Wiki
           </Text>
-          <HStack>
-            <Icon
-              rounded="full"
-              bg="#12B76A"
-              color="#D1FADF"
-              as={CheckCircleIcon}
-            />
-            <Text
-              color="#667085"
-              _dark={{ color: 'whiteAlpha.900' }}
-              fontSize="md"
-              fontWeight="light"
-            >
-              Exclusive support from the engineering team.
-            </Text>
-          </HStack>
-          <HStack>
-            <Icon
-              rounded="full"
-              bg="#12B76A"
-              color="#D1FADF"
-              as={CheckCircleIcon}
-            />
-            <Text
-              color="#667085"
-              _dark={{ color: 'whiteAlpha.900' }}
-              fontSize="md"
-              fontWeight="light"
-            >
-              Exclusive support from the engineering team.
-            </Text>
-          </HStack>
-          <HStack>
-            <Icon
-              rounded="full"
-              bg="#12B76A"
-              color="#D1FADF"
-              as={CheckCircleIcon}
-            />
-            <Text
-              color="#667085"
-              _dark={{ color: 'whiteAlpha.900' }}
-              fontSize="md"
-              fontWeight="light"
-            >
-              Exclusive support from the engineering team.
-            </Text>
-          </HStack>
-          <HStack>
-            <Icon
-              rounded="full"
-              bg="#12B76A"
-              color="#D1FADF"
-              as={CheckCircleIcon}
-            />
-            <Text
-              color="#667085"
-              _dark={{ color: 'whiteAlpha.900' }}
-              fontSize="md"
-              fontWeight="light"
-            >
-              Exclusive support from the engineering team.
-            </Text>
-          </HStack>
+          <List spacing={6} textAlign="start" px={8}>
+            <ListItem>
+              <ListIcon
+                rounded="full"
+                bg="#12B76A"
+                color="#D1FADF"
+                as={CheckCircleIcon}
+              />
+              <chakra.span
+                color="#667085"
+                _dark={{ color: 'whiteAlpha.900' }}
+                fontSize="md"
+                fontWeight="light"
+              >
+                Exclusive support from the engineering team.
+              </chakra.span>
+            </ListItem>
+            <ListItem>
+              <ListIcon
+                rounded="full"
+                bg="#12B76A"
+                color="#D1FADF"
+                as={CheckCircleIcon}
+              />
+              <chakra.span
+                color="#667085"
+                _dark={{ color: 'whiteAlpha.900' }}
+                fontSize="md"
+                fontWeight="light"
+              >
+                Exclusive support from the engineering team.
+              </chakra.span>
+            </ListItem>
+            <ListItem>
+              <ListIcon
+                rounded="full"
+                bg="#12B76A"
+                color="#D1FADF"
+                as={CheckCircleIcon}
+              />
+              <chakra.span
+                color="#667085"
+                _dark={{ color: 'whiteAlpha.900' }}
+                fontSize="md"
+                fontWeight="light"
+              >
+                Exclusive support from the engineering team.
+              </chakra.span>
+            </ListItem>
+            <ListItem>
+              <ListIcon
+                rounded="full"
+                bg="#12B76A"
+                color="#D1FADF"
+                as={CheckCircleIcon}
+              />
+              <chakra.span
+                color="#667085"
+                _dark={{ color: 'whiteAlpha.900' }}
+                fontSize="md"
+                fontWeight="light"
+              >
+                Exclusive support from the engineering team.
+              </chakra.span>
+            </ListItem>
+          </List>
         </VStack>
       </Box>
     </Container>
