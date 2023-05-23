@@ -53,6 +53,18 @@ const Mint = () => {
           </Box>
         </GridItem>
         <GridItem w="100%">
+          <Box
+            py={1}
+            rounded="full"
+            bgColor="rgba(255, 229, 241, 0.8)"
+            _dark={{ bgColor: 'brand.200', color: 'gray.800' }}
+            maxW="238px"
+            mb={4}
+          >
+            <Text fontSize="md" fontWeight="semibold" textAlign="center">
+              Renew pass Subscription
+            </Text>
+          </Box>
           <Text
             color="wikiSummaryLabel"
             mb={3}
