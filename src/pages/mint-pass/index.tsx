@@ -42,7 +42,13 @@ const Mint = () => {
         gap={8}
       >
         <GridItem>
-          <Box position="relative" bgColor="creamCardBg" p={10}>
+          <Box
+            position="relative"
+            border="1px solid"
+            borderColor="divider"
+            rounded="lg"
+            p={10}
+          >
             <Image src="/images/nft-pass/rotated-pass.png" alt="your-image" />
           </Box>
         </GridItem>
@@ -212,8 +218,10 @@ const Mint = () => {
         alignItems="center"
         gap={4}
         bgColor="creamCardBg"
-        py={16}
+        py={14}
         rounded="lg"
+        maxW="858px"
+        mx="auto"
       >
         <VStack align="center" gap={4}>
           <Box
