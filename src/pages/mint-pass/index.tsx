@@ -183,7 +183,7 @@ const Mint = () => {
                 color="brandLinkColor"
                 fontSize={{ base: 'xx-small', md: 'xs' }}
               >
-                Your lock end date will be
+                Min of 1 month / Max of 12 months (1 year)
               </Text>
             </Flex>
             <Box p={3} w="full" rounded="md" bgColor="aboutFeaturesCardBg">
