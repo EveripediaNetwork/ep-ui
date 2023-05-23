@@ -236,7 +236,12 @@ const Mint = () => {
               color="#D1FADF"
               as={CheckCircleIcon}
             />
-            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+            <Text
+              color="#667085"
+              _dark={{ color: 'whiteAlpha.900' }}
+              fontSize="md"
+              fontWeight="light"
+            >
               Exclusive support from the engineering team.
             </Text>
           </HStack>
@@ -247,7 +252,12 @@ const Mint = () => {
               color="#D1FADF"
               as={CheckCircleIcon}
             />
-            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+            <Text
+              color="#667085"
+              _dark={{ color: 'whiteAlpha.900' }}
+              fontSize="md"
+              fontWeight="light"
+            >
               Exclusive support from the engineering team.
             </Text>
           </HStack>
@@ -258,7 +268,12 @@ const Mint = () => {
               color="#D1FADF"
               as={CheckCircleIcon}
             />
-            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+            <Text
+              color="#667085"
+              _dark={{ color: 'whiteAlpha.900' }}
+              fontSize="md"
+              fontWeight="light"
+            >
               Exclusive support from the engineering team.
             </Text>
           </HStack>
@@ -269,7 +284,12 @@ const Mint = () => {
               color="#D1FADF"
               as={CheckCircleIcon}
             />
-            <Text color="#667085" _dark={{color: "whiteAlpha.900"}} fontSize="md" fontWeight="light">
+            <Text
+              color="#667085"
+              _dark={{ color: 'whiteAlpha.900' }}
+              fontSize="md"
+              fontWeight="light"
+            >
               Exclusive support from the engineering team.
             </Text>
           </HStack>
