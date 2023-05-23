@@ -266,7 +266,7 @@ const Mint = () => {
                 as={CheckCircleIcon}
               />
               <chakra.span
-                color="#667085"
+                color="gray.700"
                 _dark={{ color: 'whiteAlpha.900' }}
                 fontSize="md"
                 fontWeight="light"
@@ -282,7 +282,7 @@ const Mint = () => {
                 as={CheckCircleIcon}
               />
               <chakra.span
-                color="#667085"
+                color="gray.700"
                 _dark={{ color: 'whiteAlpha.900' }}
                 fontSize="md"
                 fontWeight="light"
@@ -298,7 +298,7 @@ const Mint = () => {
                 as={CheckCircleIcon}
               />
               <chakra.span
-                color="#667085"
+                color="gray.700"
                 _dark={{ color: 'whiteAlpha.900' }}
                 fontSize="md"
                 fontWeight="light"
@@ -314,7 +314,7 @@ const Mint = () => {
                 as={CheckCircleIcon}
               />
               <chakra.span
-                color="#667085"
+                color="gray.700"
                 _dark={{ color: 'whiteAlpha.900' }}
                 fontSize="md"
                 fontWeight="light"
