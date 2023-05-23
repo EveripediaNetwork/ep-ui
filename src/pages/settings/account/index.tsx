@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
 import {
@@ -15,6 +14,7 @@ import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 const NotificationSettings = dynamic(
   () => import('@/components/Settings/NotificationSettings'),

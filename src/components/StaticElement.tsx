@@ -37,11 +37,5 @@ export const StaticContent = ({
     )
   }
 
-  // avoid re-render on the client
-  return createElement(element, {
-    ...props,
-    ref,
-    suppressHydrationWarning: true,
-    dangerouslySetInnerHTML: { __html: '' },
-  })
+  return createElement(element, { ...props, ref }, children)
 }
