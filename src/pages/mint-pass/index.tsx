@@ -1,3 +1,4 @@
+import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -27,10 +28,11 @@ import {
   VStack,
   chakra,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { RiMore2Fill, RiQuestionLine, RiShareBoxLine } from 'react-icons/ri'
 
 const Mint = () => {
+  const [showNetworkModal, setShowNetworkModal] = useState(false)
   return (
     <Container
       w="min(90%, 1200px)"
@@ -217,7 +219,9 @@ const Mint = () => {
                 </Text>
               </Flex>
             </Box>
-            <Button w="full">MINT</Button>
+            <Button onClick={() => setShowNetworkModal(true)} w="full">
+              MINT
+            </Button>
           </VStack>
         </GridItem>
       </Grid>
@@ -321,6 +325,10 @@ const Mint = () => {
           </List>
         </VStack>
       </Box>
+      <NetworkConnectionInfo
+        modalState={showNetworkModal}
+        setModalState={setShowNetworkModal}
+      />
     </Container>
   )
 }
