@@ -60,7 +60,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const clipboard = useClipboard(customLink || '')
   const toast = useToast()
   const { addressRank, leaderboard } = useAppSelector(
-    state => state.leaderboard,
+    (state) => state.leaderboard,
   )
   const dispatch = useAppDispatch()
   const isFetched = useRef(false)
@@ -160,8 +160,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     shouldWrapChildren
                     hasArrow={true}
                     label="An editor on iq wiki with an inactive NFT Brainpass"
-                    _dark={{bg: "white", color: "black"}}
-                    
+                    _dark={{ bg: 'white', color: 'black' }}
                   >
                     <Icon boxSize={6} as={BrainIcon} />
                   </Tooltip>
