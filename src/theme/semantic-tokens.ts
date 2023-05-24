@@ -317,6 +317,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.50',
       _dark: 'brand.300',
     },
+    iconBg: {
+      default: 'brand.100',
+      _dark: 'brand.300',
+    },
     careersBackground: {
       default: 'gray.50',
       _dark: 'whiteAlpha.50',

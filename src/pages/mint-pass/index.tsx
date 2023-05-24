@@ -1,5 +1,4 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
-import { CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -16,9 +15,6 @@ import {
   InputLeftAddon,
   InputRightAddon,
   InputRightElement,
-  List,
-  ListIcon,
-  ListItem,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -26,10 +22,48 @@ import {
   Spacer,
   Text,
   VStack,
-  chakra,
+  SimpleGrid,
+  Center,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { RiMore2Fill, RiQuestionLine, RiShareBoxLine } from 'react-icons/ri'
+import React, { useState, ReactElement } from 'react'
+import {
+  RiHeartLine,
+  RiMailLine,
+  RiMore2Fill,
+  RiQuestionLine,
+  RiRobotLine,
+  RiSearchEyeLine,
+  RiShareBoxLine,
+} from 'react-icons/ri'
+
+interface FeatureProps {
+  title: string
+  text: string
+  icon: ReactElement
+}
+
+const Feature = ({ title, text, icon }: FeatureProps) => {
+  return (
+    <VStack align="center" textAlign="center">
+      <Flex
+        w={14}
+        h={14}
+        align={'center'}
+        justify={'center'}
+        rounded={'full'}
+        bg="tagActiveBgColor"
+      >
+        <Center rounded={'full'} bg="iconBg" w={10} h={10}>
+          {icon}
+        </Center>
+      </Flex>
+      <Text fontWeight="semibold">{title}</Text>
+      <Text fontSize="sm" color="eventTextColor">
+        {text}
+      </Text>
+    </VStack>
+  )
+}
 
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
@@ -50,6 +84,7 @@ const Mint = () => {
             borderColor="divider"
             rounded="lg"
             p={10}
+            bgColor="creamCardBg"
           >
             <Image src="/images/nft-pass/rotated-pass.png" alt="your-image" />
           </Box>
@@ -233,13 +268,11 @@ const Mint = () => {
         justifyContent="center"
         alignItems="center"
         gap={4}
-        bgColor="creamCardBg"
         py={14}
         rounded="lg"
-        maxW="858px"
         mx="auto"
       >
-        <VStack align="center" gap={4}>
+        <VStack align="center">
           <Box
             py={1}
             px={2}
@@ -257,72 +290,56 @@ const Mint = () => {
           <Text fontSize="sm" fontWeight="light" textAlign="center" px={6}>
             Some benefits associated with owning an NFT editor pass on IQ Wiki
           </Text>
-          <List spacing={6} textAlign="start" px={8}>
-            <ListItem>
-              <ListIcon
-                rounded="full"
-                bg="#12B76A"
-                color="#D1FADF"
-                as={CheckCircleIcon}
-              />
-              <chakra.span
-                color="gray.700"
-                _dark={{ color: 'whiteAlpha.900' }}
-                fontSize="md"
-                fontWeight="light"
-              >
-                Exclusive support from the engineering team.
-              </chakra.span>
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                rounded="full"
-                bg="#12B76A"
-                color="#D1FADF"
-                as={CheckCircleIcon}
-              />
-              <chakra.span
-                color="gray.700"
-                _dark={{ color: 'whiteAlpha.900' }}
-                fontSize="md"
-                fontWeight="light"
-              >
-                Exclusive support from the engineering team.
-              </chakra.span>
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                rounded="full"
-                bg="#12B76A"
-                color="#D1FADF"
-                as={CheckCircleIcon}
-              />
-              <chakra.span
-                color="gray.700"
-                _dark={{ color: 'whiteAlpha.900' }}
-                fontSize="md"
-                fontWeight="light"
-              >
-                Exclusive support from the engineering team.
-              </chakra.span>
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                rounded="full"
-                bg="#12B76A"
-                color="#D1FADF"
-                as={CheckCircleIcon}
-              />
-              <chakra.span
-                color="gray.700"
-                _dark={{ color: 'whiteAlpha.900' }}
-                fontSize="md"
-                fontWeight="light"
-              >
-                Exclusive support from the engineering team.
-              </chakra.span>
-            </ListItem>
-          </List>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
+            <Feature
+              icon={
+                <Icon
+                  as={RiHeartLine}
+                  w={6}
+                  h={6}
+                  color="brandAssetDownloadBttnColor"
+                />
+              }
+              title="Exclusive support from the engineering team."
+              text="Benefit from dedicated and exclusive support from our highly skilled engineering team. Our team is committed to providing unparalleled assistance, ensuring prompt resolution of any technical issues or challenges you may encounter. "
+            />
+            <Feature
+              icon={
+                <Icon
+                  as={RiRobotLine}
+                  w={6}
+                  h={6}
+                  color="brandAssetDownloadBttnColor"
+                />
+              }
+              title="AI Insight for creating wikis."
+              text="Leverage the power of AI Insight to enhance your wiki creation process. Our AI-powered tool provides valuable insights and suggestions, helping you craft comprehensive and informative wikis."
+            />
+            <Feature
+              icon={
+                <Icon
+                  as={RiMailLine}
+                  w={6}
+                  h={6}
+                  color="brandAssetDownloadBttnColor"
+                />
+              }
+              title="Market Updates via Email."
+              text="Stay informed with our market updates delivered directly to your inbox. Receive timely and relevant information about the latest market trends, news, and insights, conveniently curated and sent to you via email."
+            />
+            <Feature
+              icon={
+                <Icon
+                  color="brandAssetDownloadBttnColor"
+                  as={RiSearchEyeLine}
+                  w={6}
+                  h={6}
+                />
+              }
+              title="Exclusive access to IQ GPT."
+              text="Gain exclusive access to IQ GPT, our advanced language model powered by cutting-edge artificial intelligence technology. With this exclusive access, you can leverage the full capabilities of IQ GPT for a wide range of applications."
+            />
+          </SimpleGrid>
         </VStack>
       </Box>
       <NetworkConnectionInfo
