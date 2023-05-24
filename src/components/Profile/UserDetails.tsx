@@ -13,6 +13,7 @@ import {
   useClipboard,
   useToast,
   HStack,
+  Icon,
 } from '@chakra-ui/react'
 import { useProfileContext } from '@/components/Profile/utils'
 import { useRouter } from 'next/router'
@@ -38,6 +39,7 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { env } from '@/env.mjs'
+import BrainIcon from '../Icons/brainIcon'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -146,6 +148,9 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                   {profileData?.username ||
                     ensUserName ||
                     shortenAccount(address)}
+                </chakra.span>
+                <chakra.span mb="18px !important">
+                  <Icon boxSize={6} as={BrainIcon} />
                 </chakra.span>
                 {addressRank !== null && (
                   <chakra.span mb="18px !important">
