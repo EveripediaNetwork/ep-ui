@@ -60,7 +60,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
   const clipboard = useClipboard(customLink || '')
   const toast = useToast()
   const { addressRank, leaderboard } = useAppSelector(
-    (state) => state.leaderboard,
+    state => state.leaderboard,
   )
   const dispatch = useAppDispatch()
   const isFetched = useRef(false)
@@ -149,9 +149,24 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     ensUserName ||
                     shortenAccount(address)}
                 </chakra.span>
+
                 <chakra.span mb="18px !important">
-                  <Icon boxSize={6} as={BrainIcon} />
+                  <Tooltip
+                    color="white"
+                    placement="right"
+                    rounded="md"
+                    p={3}
+                    bg="black"
+                    shouldWrapChildren
+                    hasArrow={true}
+                    label="An editor on iq wiki with an inactive NFT Brainpass"
+                    _dark={{bg: "white", color: "black"}}
+                    
+                  >
+                    <Icon boxSize={6} as={BrainIcon} />
+                  </Tooltip>
                 </chakra.span>
+
                 {addressRank !== null && (
                   <chakra.span mb="18px !important">
                     <RankIcon size="22" rank={addressRank} />
