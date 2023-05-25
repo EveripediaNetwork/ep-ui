@@ -13,12 +13,15 @@ import {
   ListIcon,
   Grid,
   GridItem,
+  Flex,
 } from '@chakra-ui/react'
 import React from 'react'
 // import { useRouter } from 'next/router'
 import { RiTicket2Line } from 'react-icons/ri'
 import { FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { LinkButton } from '@/components/Elements'
+import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
 
 const UserPass = () => {
   //   const router = useRouter()
@@ -30,6 +33,18 @@ const UserPass = () => {
       maxW={{ base: '7xl', xl: '6xl', '2xl': '80%' }}
       my={{ base: '10', lg: '16' }}
     >
+      <Center py={20}>
+        <Flex flexDir="column" textAlign="center" align="center" gap={6}>
+          <MintEmptyState maxBlockSize="20vw" />
+          <Text color="fadedText2" maxW="350px">
+            No NFT editor pass yet. You can mint one and become an editor on iq
+            wiki.
+          </Text>
+          <LinkButton href="/create-wiki" px="16" w="fit-content" >
+            Mint
+          </LinkButton>
+        </Flex>
+      </Center>
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
         gap={8}
