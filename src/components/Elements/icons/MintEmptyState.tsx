@@ -8,40 +8,6 @@ export const MintEmptyState = (props: IconProps) => {
       height="427"
       viewBox="0 0 402 427"
       fill="none"
-      // sx={{
-      //   '.rect-1': {
-      //     fill: '#F7FAFC',
-      //   },
-      //   '.rect-2': {
-      //     fill: 'white',
-      //   },
-      //   '.rect-3': {
-      //     fill: '#E6E6E6',
-      //     stroke: '#E6E6E6',
-      //   },
-      //   '.rect-5': {
-      //     stroke: '#CBD5E0',
-      //   },
-      //   _dark: {
-      //     '.rect-1': {
-      //       fill: 'white',
-      //       fillOpacity: '0.04',
-      //     },
-      //     '.rect-2': {
-      //       fill: '#2D3748',
-      //     },
-      //     '.rect-3': {
-      //       fill: '#718096',
-      //       stroke: '#718096',
-      //     },
-      //     '.rect-5': {
-      //       stroke: 'white',
-      //       strokeOpacity: '0.16',
-      //       strokeWidth: '0.528579',
-      //     },
-      //   },
-      // }}
-      // {...props}
       {...props}
     >
       <path
