@@ -1,4 +1,5 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
+import MintNotification from '@/components/Layout/Nft/MintNotification'
 import {
   Box,
   Button,
@@ -67,6 +68,7 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
+  const [showNotification, setShowNotification] = useState(false)
   return (
     <Container
       w="min(90%, 1200px)"
@@ -137,6 +139,7 @@ const Mint = () => {
                 icon={<RiShareBoxLine />}
                 size="lg"
                 variant="outline"
+                onClick={() => setShowNotification(true)}
               />
             </HStack>
             <Text fontSize="sm">
@@ -345,6 +348,10 @@ const Mint = () => {
       <NetworkConnectionInfo
         modalState={showNetworkModal}
         setModalState={setShowNetworkModal}
+      />
+      <MintNotification
+        modalState={showNotification}
+        setModalState={setShowNotification}
       />
     </Container>
   )
