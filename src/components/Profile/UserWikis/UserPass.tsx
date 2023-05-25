@@ -40,7 +40,7 @@ const UserPass = () => {
             No NFT editor pass yet. You can mint one and become an editor on iq
             wiki.
           </Text>
-          <LinkButton href="/create-wiki" px="16" w="fit-content" >
+          <LinkButton href="/create-wiki" px="16" w="fit-content">
             Mint
           </LinkButton>
         </Flex>
