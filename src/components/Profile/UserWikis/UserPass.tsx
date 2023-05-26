@@ -178,7 +178,7 @@ const UserPass = () => {
           <Thead border="none" bg="aboutFeaturesCardBg">
             <Tr>
               {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                column => (
+                (column) => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
@@ -262,8 +262,8 @@ const UserPass = () => {
               </Td>
             </Tr>
           </Tbody>
-          <TableCaption  mt={0}>
-            <Flex >
+          <TableCaption mt={0}>
+            <Flex>
               <Box>
                 <Button
                   variant="outline"
