@@ -111,7 +111,7 @@ const Mint = () => {
             fontWeight="bold"
             mt={-2}
           >
-            NFT EDITOR PASS
+            BrainPass Mint
           </Text>
           <Text
             mb={3}
@@ -143,8 +143,8 @@ const Mint = () => {
               />
             </HStack>
             <Text fontSize="sm">
-              The NFT Editor Pass acts as a unique opportunity for individuals
-              to obtain exclusive access to the IQ Wiki platform as esteemed
+              The BrainPass Mint acts as a unique opportunity for individuals to
+              obtain exclusive access to the IQ Wiki platform as esteemed
               editors. With this pass, holders are empowered to contribute,
               modify, and create captivating content, thereby augmenting the
               platform's wealth of knowledge and enhancing its appeal to those
@@ -288,10 +288,10 @@ const Mint = () => {
             </Text>
           </Box>
           <Text fontSize="xl" fontWeight="bold">
-            NFT EDITOR PASS PERKS
+            BRAINPASS PERKS PERKS
           </Text>
           <Text fontSize="sm" fontWeight="light" textAlign="center" px={6}>
-            Some benefits associated with owning an NFT editor pass on IQ Wiki
+            Some benefits associated with owning an BrainPass on IQ Wiki
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
             <Feature
