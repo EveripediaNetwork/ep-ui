@@ -1,12 +1,13 @@
 import { Tabs, TabList, TabPanels, TabPanel, Icon } from '@chakra-ui/react'
 import React from 'react'
 import { TiDocumentAdd } from 'react-icons/ti'
-import { RiEdit2Line, RiTicket2Line } from 'react-icons/ri'
+import { RiEdit2Line } from 'react-icons/ri'
 import { CustomTab } from './CustomTab'
 import UserCreatedWikis from './UserWikis/UserCreatedWikis'
 import UserEditedWikis from './UserWikis/UserEditedWikis'
 import { Activity } from '@/types/ActivityDataType'
 import UserPass from './UserWikis/UserPass'
+import BrainPassIcon from '../Icons/brainPassIcon'
 
 interface CollectionsProps {
   createdWikis: Activity[]
@@ -30,7 +31,7 @@ export const Collections = ({
     },
     {
       label: 'Nft editor pass',
-      icon: RiTicket2Line,
+      icon: BrainPassIcon,
       Component: () => <UserPass />,
     },
   ]
