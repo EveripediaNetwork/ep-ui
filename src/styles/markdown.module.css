@@ -34,14 +34,7 @@
   font-size: 16px;
   line-height: 1.625;
   word-wrap: break-word;
-  width: 560px;
 }
-@media (min-width: 1200px) {
-  .markdownBody {
-    max-width: 900px;
-  }
-}
-
 
 .markdownBody details,
 .markdownBody figcaption,
@@ -512,7 +505,7 @@ html[data-theme='dark'] .markdownBody a {
   padding: 6px;
   border: 1px solid #d0d7de;
   word-break: break-all;
-  width:'50%';
+  /* width:50%; */
 }
 
 .markdownBody table td  {
