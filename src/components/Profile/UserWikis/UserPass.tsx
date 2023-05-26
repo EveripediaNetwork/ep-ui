@@ -14,11 +14,20 @@ import {
   Grid,
   GridItem,
   Flex,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  TableCaption,
+  Button,
+  Spacer,
 } from '@chakra-ui/react'
 import React from 'react'
 // import { useRouter } from 'next/router'
 import { RiTicket2Line } from 'react-icons/ri'
-import { FaCheckCircle } from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { LinkButton } from '@/components/Elements'
 import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
@@ -138,6 +147,146 @@ const UserPass = () => {
           </Box>
         </GridItem>
       </Grid>
+      <chakra.div
+        overflowX="auto"
+        border="solid 1px"
+        borderColor="walletDrawerBorderColor"
+        rounded="lg"
+        my="16"
+        fontSize="sm"
+        mb={{ base: '24', md: '0' }}
+      >
+        <Flex
+          py={4}
+          justify="space-between"
+          display="flex"
+          direction={{ base: 'column', lg: 'row' }}
+          align={{ lg: 'center' }}
+        >
+          <Text
+            color="wikiSummaryLabel"
+            fontSize="lg"
+            px={4}
+            mb={{ base: 4, lg: 0 }}
+            fontWeight="medium"
+          >
+            Subscription History
+          </Text>
+        </Flex>
+        <Divider />
+        <Table fontWeight="semibold">
+          <Thead border="none" bg="aboutFeaturesCardBg">
+            <Tr>
+              {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
+                column => (
+                  <Th
+                    border="none"
+                    whiteSpace="nowrap"
+                    py="5"
+                    textTransform="none"
+                    fontSize={{ base: 'xs', md: 'sx' }}
+                    color="tagColor"
+                    textAlign={column.includes('Date') ? 'left' : 'center'}
+                  >
+                    {column}
+                  </Th>
+                ),
+              )}
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr
+              whiteSpace="nowrap"
+              border="1px solid"
+              borderColor="divider"
+              borderBottom="none"
+            >
+              <Td fontSize="sm" color="tagColor">
+                Jan 6, 2023
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                General Pass
+              </Td>
+              <Td fontSize="sm" textAlign="center" color="tagColor">
+                0.2TH
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                <chakra.span color="paginationButtonActive" fontSize="sm">
+                  {' '}
+                  0X03D3...1766 <ExternalLinkIcon mx="2px" mt={-3} />
+                </chakra.span>
+              </Td>
+            </Tr>
+            <Tr
+              whiteSpace="nowrap"
+              border="1px solid"
+              borderColor="divider"
+              borderBottom="none"
+            >
+              <Td fontSize="sm" color="tagColor">
+                Jan 6, 2023
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                General Pass
+              </Td>
+              <Td fontSize="sm" textAlign="center" color="tagColor">
+                0.2TH
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                <chakra.span color="paginationButtonActive" fontSize="sm">
+                  {' '}
+                  0X03D3...1766 <ExternalLinkIcon mx="2px" mt={-3} />
+                </chakra.span>
+              </Td>
+            </Tr>
+            <Tr
+              whiteSpace="nowrap"
+              border="1px solid"
+              borderColor="divider"
+              borderBottom="none"
+            >
+              <Td fontSize="sm" color="tagColor">
+                Jan 6, 2023
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                General Pass
+              </Td>
+              <Td fontSize="sm" textAlign="center" color="tagColor">
+                0.2TH
+              </Td>
+              <Td fontSize="sm" color="tagColor" textAlign="center">
+                <chakra.span color="paginationButtonActive" fontSize="sm">
+                  {' '}
+                  0X03D3...1766 <ExternalLinkIcon mx="2px" mt={-3} />
+                </chakra.span>
+              </Td>
+            </Tr>
+          </Tbody>
+          <TableCaption  mt={0}>
+            <Flex >
+              <Box>
+                <Button
+                  variant="outline"
+                  leftIcon={<FaArrowLeft />}
+                  rounded="md"
+                >
+                  <Text fontSize="sm">Previous</Text>
+                </Button>
+              </Box>
+              <Spacer />
+              <Box>
+                <Button
+                  variant="outline"
+                  rightIcon={<FaArrowRight />}
+                  rounded="md"
+                >
+                  <Text fontSize="sm">Next</Text>
+                </Button>
+              </Box>
+            </Flex>
+          </TableCaption>
+        </Table>
+      </chakra.div>
     </Container>
   )
 }
