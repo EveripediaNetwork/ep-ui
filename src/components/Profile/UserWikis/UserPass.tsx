@@ -31,6 +31,7 @@ import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { LinkButton } from '@/components/Elements'
 import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
+import { SubscriptionEmptyState } from '@/components/Elements/icons/SubscriptionEmptyState'
 
 const UserPass = () => {
   //   const router = useRouter()
@@ -178,7 +179,7 @@ const UserPass = () => {
           <Thead border="none" bg="aboutFeaturesCardBg">
             <Tr>
               {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                (column) => (
+                column => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
@@ -286,6 +287,10 @@ const UserPass = () => {
             </Flex>
           </TableCaption>
         </Table>
+        <Center>
+          <SubscriptionEmptyState maxBlockSize="40vw" />
+        </Center>
+        <Text mb={6} ml={4} fontSize="xl" textAlign="center" color="insertMediaDialogText">No subscription history yet.</Text>
       </chakra.div>
     </Container>
   )

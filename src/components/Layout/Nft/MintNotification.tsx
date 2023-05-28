@@ -50,7 +50,7 @@ const MintNotification = ({
             BrainPass subscription renewed!
           </Text>
           <Text fontSize="sm" mt="5" textAlign="center">
-            Your BrainPass subscription has been successfully Renewed. You can
+            Your Brainpass subscription has been successfully Renewed. You can
             continue to create and edit wikis and contribute to the platform's
             wealth of knowledge.
           </Text>

@@ -143,7 +143,7 @@ const Mint = () => {
               />
             </HStack>
             <Text fontSize="sm">
-              The BrainPass Mint acts as a unique opportunity for individuals to
+              The BrainPass acts as a unique opportunity for individuals to
               obtain exclusive access to the IQ Wiki platform as esteemed
               editors. With this pass, holders are empowered to contribute,
               modify, and create captivating content, thereby augmenting the
@@ -181,7 +181,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Sale Price</Text>
-              <Text>0.2ETH</Text>
+              <Text>300IQ</Text>
             </Flex>
           </VStack>
           <VStack align="start" gap={3} w="100%">
@@ -304,7 +304,7 @@ const Mint = () => {
                 />
               }
               title="Exclusive support from the engineering team."
-              text="Benefit from dedicated and exclusive support from our highly skilled engineering team. Our team is committed to providing unparalleled assistance, ensuring prompt resolution of any technical issues or challenges you may encounter. "
+              text="Benefit from dedicated and exclusive support from our highly skilled engineering team. Our team is committed to providing unparalleled assistance, ensuring prompt resolution of any technical issues or challenges you may encounter."
             />
             <Feature
               icon={
