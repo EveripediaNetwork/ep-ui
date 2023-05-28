@@ -179,7 +179,7 @@ const UserPass = () => {
           <Thead border="none" bg="aboutFeaturesCardBg">
             <Tr>
               {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                column => (
+                (column) => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
@@ -290,7 +290,15 @@ const UserPass = () => {
         <Center>
           <SubscriptionEmptyState maxBlockSize="40vw" />
         </Center>
-        <Text mb={6} ml={4} fontSize="xl" textAlign="center" color="insertMediaDialogText">No subscription history yet.</Text>
+        <Text
+          mb={6}
+          ml={4}
+          fontSize="xl"
+          textAlign="center"
+          color="insertMediaDialogText"
+        >
+          No subscription history yet.
+        </Text>
       </chakra.div>
     </Container>
   )

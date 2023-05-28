@@ -3,20 +3,14 @@ import React from 'react'
 
 export const SubscriptionEmptyState = (props: IconProps) => {
   return (
-    <Icon
-      width="326"
-      height="286"
-      viewBox="0 0 326 286"
-      fill="none"
-      {...props}
-    >
+    <Icon width="326" height="286" viewBox="0 0 326 286" fill="none" {...props}>
       <path
         d="M59.2082 139.758C59.2082 139.758 31.4619 149.441 35.229 173.604C38.9962 197.768 66.4073 209.205 70.0446 206.866C73.6819 204.526 51.2091 192.057 48.9995 174.646C46.79 157.235 65.5621 156.58 65.5621 156.58L59.2082 139.758Z"
         fill="#FF8D76"
       />
       <mask
         id="mask0_20303_168100"
-        style={{maskType:"luminance"}}
+        style={{ maskType: 'luminance' }}
         maskUnits="userSpaceOnUse"
         x="34"
         y="139"
@@ -48,7 +42,7 @@ export const SubscriptionEmptyState = (props: IconProps) => {
       />
       <mask
         id="mask1_20303_168100"
-        style={{maskType:"luminance"}}
+        style={{ maskType: 'luminance' }}
         maskUnits="userSpaceOnUse"
         x="56"
         y="57"
@@ -215,7 +209,3 @@ export const SubscriptionEmptyState = (props: IconProps) => {
     </Icon>
   )
 }
-
-
-
-
