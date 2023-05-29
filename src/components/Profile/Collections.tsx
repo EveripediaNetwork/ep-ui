@@ -30,7 +30,7 @@ export const Collections = ({
       Component: () => <UserEditedWikis editedWikis={editedWikis} />,
     },
     {
-      label: 'Nft editor pass',
+      label: 'BrainPass',
       icon: BrainPassIcon,
       Component: () => <UserPass />,
     },

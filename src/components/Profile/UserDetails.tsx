@@ -39,7 +39,7 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { env } from '@/env.mjs'
-import BrainPassIcon from '../Icons/brainPassIcon'
+import BrainIcon from '../Icons/brainIcon'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -162,7 +162,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     label="An editor on iq wiki with an inactive NFT Brainpass"
                     _dark={{ bg: 'white', color: 'black' }}
                   >
-                    <Icon boxSize={6} as={BrainPassIcon} />
+                    <Icon boxSize={6} as={BrainIcon} />
                   </Tooltip>
                 </chakra.span>
 
