@@ -20,6 +20,7 @@ const config = {
   blogAccount2: env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2,
   blogAccount3: env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   walletConnectProjectId: env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+  brainpassAddress: env.NEXT_PUBLIC_BRAINPASS_ADDRESS,
 }
 
 export default config

@@ -22,6 +22,7 @@ const client = z.object({
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_IQ_ADDRESS: z.string().optional(),
+  NEXT_PUBLIC_BRAINPASS_ADDRESS: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL: z.string().url(),
   NEXT_PUBLIC_ALCHEMY_CHAIN: z.string(),
   NEXT_PUBLIC_CHAIN_ID: z.string(),
@@ -41,6 +42,7 @@ const processEnv = {
   PINATA_KEY: process.env.PINATA_KEY,
   PINATA_SECRET: process.env.PINATA_SECRET,
   NEXT_PUBLIC_IQ_ADDRESS: process.env.NEXT_PUBLIC_IQ_ADDRESS,
+  NEXT_PUBLIC_BRAINPASS_ADDRESS: process.env.NEXT_PUBLIC_BRAINPASS_ADDRESS,
   NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS:
     process.env.NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS,
   NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS:
