@@ -35,6 +35,7 @@ import {
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
 import { RiTicket2Line } from 'react-icons/ri'
+import useBrainPass from '@/hooks/useBrainPass'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -52,6 +53,9 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
+  const {userPass} = useBrainPass()
+
+  console.log(userPass, 'userPass')
 
   const { connectors, connect } = useConnect({
     onError(error) {
