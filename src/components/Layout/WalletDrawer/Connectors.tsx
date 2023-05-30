@@ -53,7 +53,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
-  const {userPass} = useBrainPass()
+  const { userPass } = useBrainPass()
 
   console.log(userPass, 'userPass')
 
