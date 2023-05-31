@@ -15,8 +15,9 @@ export const useBrainPass = () => {
   const { data: userPass } = useContractRead({
     ...brainpassConfig,
     functionName: 'getUserPassDetails',
-    args: [address, 0],
+    args: [address],
   })
+
   const { endTimestamp } = (userPass as { endTimestamp: bigint }) || {
     endTimestamp: DEFAULT_VALUE,
   }
