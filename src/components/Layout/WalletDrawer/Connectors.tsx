@@ -34,8 +34,8 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
-import { RiTicket2Line } from 'react-icons/ri'
 import useBrainPass from '@/hooks/useBrainPass'
+import BrainPassIcon from '@/components/Icons/brainPassIcon'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -53,9 +53,19 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
-  const { userPass } = useBrainPass()
+  const { isUserPassActive, passEndDate } = useBrainPass()
 
-  console.log(userPass, 'userPass')
+  const displayPassInfo = (endTime: number) => {
+    const todayToTimestamp = new Date().getTime()
+    if (endTime < todayToTimestamp) {
+      return 'Your Brain Pass Subscription has expired'
+    } else {
+      const daysLeft = Math.floor(
+        (endTime - todayToTimestamp) / (1000 * 60 * 60 * 24),
+      )
+      return `Brain Pass Subscription expires in ${daysLeft} days`
+    }
+  }
 
   const { connectors, connect } = useConnect({
     onError(error) {
@@ -246,13 +256,13 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
         >
           <Box
             rounded="lg"
-            mixBlendMode={isUserConnected ? 'normal' : 'luminosity'}
-            opacity={isUserConnected ? 1 : 0.4}
+            mixBlendMode={isUserPassActive ? 'normal' : 'luminosity'}
+            opacity={isUserPassActive ? 1 : 0.4}
             p={4}
           >
             <Image src="/images/nft-pass/pass.png" />
           </Box>
-          {isUserConnected && (
+          {isUserConnected && passEndDate && (
             <Box
               bgColor="brand.50"
               _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
@@ -260,25 +270,17 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             >
               <HStack gap={2}>
                 <Icon
-                  as={RiTicket2Line}
+                  as={BrainPassIcon}
                   boxSize={6}
                   color="paginationButtonActive"
                 />
                 <Text fontSize="xs" fontWeight="semibold">
-                  Subscription expires in 30days (14. 05. 2023)
+                  {`${displayPassInfo(passEndDate)}`}
                 </Text>
               </HStack>
             </Box>
           )}
-          {!isUserConnected ? (
-            <Button
-              w="full"
-              roundedTop="none"
-              onClick={() => router.push('/mint-pass')}
-            >
-              Mint
-            </Button>
-          ) : (
+          {isUserConnected && isUserPassActive ? (
             <Center
               w="full"
               cursor="pointer"
@@ -289,6 +291,14 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 View Details
               </Text>
             </Center>
+          ) : (
+            <Button
+              w="full"
+              roundedTop="none"
+              onClick={() => router.push('/mint-pass')}
+            >
+              Mint
+            </Button>
           )}
         </Box>
       </Box>
