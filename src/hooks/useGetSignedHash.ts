@@ -11,6 +11,7 @@ import { getDeadline } from '@/utils/DataTransform/getDeadline'
 import {
   defaultErrorMessage,
   successMessage,
+  editedMessage,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
@@ -22,6 +23,7 @@ export const useGetSignedHash = () => {
   const {
     setWikiHash,
     wikiHash,
+    isNewCreateWiki,
     setMsg,
     setIsLoading,
     setTxHash,
@@ -111,7 +113,7 @@ export const useGetSignedHash = () => {
             if (trx?.data && trx.data.status === 'success') {
               setIsLoading(undefined)
               setActiveStep(3)
-              setMsg(successMessage)
+              setMsg(isNewCreateWiki ? successMessage : editedMessage)
               // clear all edit based metadata from redux state
               Object.values(EditSpecificMetaIds).forEach((id) => {
                 dispatch({

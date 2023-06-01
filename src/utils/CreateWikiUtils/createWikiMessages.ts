@@ -2,10 +2,11 @@ import { ValidatorCodes } from '@everipedia/iq-utils'
 
 export const initialEditorValue = ' '
 export const initialMsg =
-  'Your Wiki is being processed. It will be available on the blockchain soon.'
+  'Your Wiki is being processed and will be available within 5 minutes depending on blockchain congestion'
 export const defaultErrorMessage =
   'Oops, An Error Occurred. Wiki could not be created'
 export const successMessage = 'Wiki has been created successfully.'
+export const editedMessage = 'Wiki has been updated successfully'
 export const ValidationErrorMessage = (type: string) => {
   switch (type) {
     case ValidatorCodes.CATEGORY:

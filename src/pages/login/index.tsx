@@ -4,7 +4,6 @@ import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
 import dynamic from 'next/dynamic'
-import { wagmiNeededRoute } from '@/components/WrapperRoutes/WagmiNeededRoute'
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -39,6 +38,6 @@ const Login = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(wagmiNeededRoute(Login)), {
+export default dynamic(() => Promise.resolve(Login), {
   ssr: false,
 })
