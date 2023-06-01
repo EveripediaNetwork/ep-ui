@@ -1,5 +1,8 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
+import { env } from '@/env.mjs'
+import useBrainPass from '@/hooks/useBrainPass'
+import { shortenAccount } from '@/utils/textUtils'
 import {
   Box,
   Button,
@@ -69,6 +72,17 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
+  const { passEndDate, getCurrentPassName } = useBrainPass()
+  const checkPassStatus = () => {
+    if (!passEndDate) {
+      return false
+    }
+    const todayToTimestamp = new Date().getTime()
+    if (passEndDate < todayToTimestamp) {
+      return true
+    }
+    return false
+  }
   return (
     <Container
       w="min(90%, 1200px)"
@@ -92,18 +106,20 @@ const Mint = () => {
           </Box>
         </GridItem>
         <GridItem w="100%">
-          <Box
-            py={1}
-            rounded="full"
-            bgColor="rgba(255, 229, 241, 0.8)"
-            _dark={{ bgColor: 'brand.200', color: 'gray.800' }}
-            maxW="238px"
-            mb={4}
-          >
-            <Text fontSize="md" fontWeight="semibold" textAlign="center">
-              Renew pass Subscription
-            </Text>
-          </Box>
+          {checkPassStatus() && (
+            <Box
+              py={1}
+              rounded="full"
+              bgColor="rgba(255, 229, 241, 0.8)"
+              _dark={{ bgColor: 'brand.200', color: 'gray.800' }}
+              maxW="238px"
+              mb={4}
+            >
+              <Text fontSize="md" fontWeight="semibold" textAlign="center">
+                Renew pass Subscription
+              </Text>
+            </Box>
+          )}
           <Text
             color="wikiSummaryLabel"
             mb={3}
@@ -119,7 +135,7 @@ const Mint = () => {
             fontSize="2xl"
             fontWeight="bold"
           >
-            #OO1
+            {getCurrentPassName} Pass
           </Text>
           <VStack align="start" gap={4}>
             <HStack w="full">
@@ -129,6 +145,9 @@ const Mint = () => {
                   size="lg"
                   _placeholder={{ fontSize: 'sm' }}
                   w="full"
+                  disabled={true}
+                  value={shortenAccount(env.NEXT_PUBLIC_BRAINPASS_ADDRESS)}
+                  fontSize="sm"
                 />
                 <InputRightElement p={6}>
                   <Icon as={RiMore2Fill} />
