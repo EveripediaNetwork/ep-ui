@@ -74,7 +74,8 @@ const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
   const { passEndDate, passDetails } = useBrainPass()
-  console.log('passDetails', passDetails)
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
+  const [maxPeriod] = useState(365)
   const checkPassStatus = () => {
     if (!passEndDate) {
       return false
@@ -227,7 +228,10 @@ const Mint = () => {
                   <Slider
                     aria-label="slider-ex-2"
                     colorScheme="pink"
-                    defaultValue={30}
+                    defaultValue={subscriptionPeriod}
+                    max={maxPeriod}
+                    onChange={(value) => setSubscriptionPeriod(value)}
+                    value={subscriptionPeriod}
                   >
                     <SliderTrack>
                       <SliderFilledTrack />
@@ -242,20 +246,29 @@ const Mint = () => {
                       cursor="pointer"
                       bg="lightCard"
                       color="grayText4"
+                      onClick={() =>
+                        setSubscriptionPeriod(subscriptionPeriod - 1)
+                      }
                     >
                       <Text>-</Text>
                     </InputLeftAddon>
                     <Input
-                      value={3}
+                      value={subscriptionPeriod}
                       w={{ base: 'full', md: '10' }}
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
+                      onChange={(e) =>
+                        setSubscriptionPeriod(Number(e.target.value))
+                      }
                     />
                     <InputRightAddon
                       cursor="pointer"
                       color="grayText4"
                       bg="lightCard"
+                      onClick={() =>
+                        setSubscriptionPeriod(subscriptionPeriod + 1)
+                      }
                     >
                       <Text>+</Text>
                     </InputRightAddon>
