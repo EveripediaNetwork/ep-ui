@@ -5,7 +5,6 @@ import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
@@ -18,6 +17,7 @@ import { useRouter } from 'next/router'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
 import SignTokenMessage from '../settings/account/SignTokenMessage'
 import { WikiViewsData } from '@/components/Admin/WikiViewsData'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 const Admin = () => {
   const router = useRouter()

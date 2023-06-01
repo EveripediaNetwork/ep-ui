@@ -111,11 +111,11 @@ const MenuFooter = () => {
                   </Tag>
                 )} */}
               </Box>
-              <Link
+              {/* <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
                 href="/us-careers"
-              >{`${t('usCareers')}`}</Link>
+              >{`${t('usCareers')}`}</Link> */}
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
