@@ -28,6 +28,7 @@ import {
   VStack,
   SimpleGrid,
   Center,
+  Link,
 } from '@chakra-ui/react'
 import React, { useState, ReactElement } from 'react'
 import {
@@ -72,7 +73,8 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passEndDate, getCurrentPassName } = useBrainPass()
+  const { passEndDate, passDetails } = useBrainPass()
+  console.log('passDetails', passDetails)
   const checkPassStatus = () => {
     if (!passEndDate) {
       return false
@@ -135,7 +137,7 @@ const Mint = () => {
             fontSize="2xl"
             fontWeight="bold"
           >
-            {getCurrentPassName} Pass
+            {passDetails?.name} Pass
           </Text>
           <VStack align="start" gap={4}>
             <HStack w="full">
@@ -153,13 +155,20 @@ const Mint = () => {
                   <Icon as={RiMore2Fill} />
                 </InputRightElement>
               </InputGroup>
-              <IconButton
-                aria-label="view contract"
-                icon={<RiShareBoxLine />}
-                size="lg"
-                variant="outline"
-                onClick={() => setShowNotification(true)}
-              />
+              <Link
+                href={`https://mumbai.polygonscan.com/address/${env.NEXT_PUBLIC_BRAINPASS_ADDRESS}`}
+                isExternal
+                display="flex"
+                gap={1}
+                fontSize="sm"
+              >
+                <IconButton
+                  aria-label="view contract"
+                  icon={<RiShareBoxLine />}
+                  size="lg"
+                  variant="outline"
+                />
+              </Link>
             </HStack>
             <Text fontSize="sm">
               The BrainPass acts as a unique opportunity for individuals to
@@ -182,7 +191,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Sale Status</Text>
-              <Text>Open</Text>
+              <Text>{passDetails?.isPaused ? 'Close' : 'Open'}</Text>
             </Flex>
             <Flex
               w="full"
@@ -191,7 +200,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Supply</Text>
-              <Text>n/1000</Text>
+              <Text>n/{passDetails?.supply}</Text>
             </Flex>
             <Flex
               w="full"
@@ -200,7 +209,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Sale Price</Text>
-              <Text>300IQ</Text>
+              <Text>{passDetails?.price} IQ</Text>
             </Flex>
           </VStack>
           <VStack align="start" gap={3} w="100%">

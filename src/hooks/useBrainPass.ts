@@ -48,11 +48,17 @@ export const useBrainPass = () => {
     return true
   }
 
-  const getCurrentPassName = () => {
+  const getPassDetails = () => {
     if (!passTypes) return null
     const result = passTypes as PassType[]
-    const name = result[1].name
-    return name
+    const currentPass = result[1]
+    return {
+      name: currentPass.name,
+      price: Number(formatUnits(currentPass.pricePerDay, 18)),
+      passId: Number(currentPass.passId),
+      isPaused: currentPass.isPaused,
+      supply: Number(formatUnits(currentPass.maxTokens, 18)),
+    }
   }
 
   const getPassEndDate = () => {
@@ -78,7 +84,7 @@ export const useBrainPass = () => {
     UserPass: refinePassDetails(),
     passEndDate: getPassEndDate(),
     isUserPassActive: isUserPassActive(),
-    getCurrentPassName: getCurrentPassName(),
+    passDetails: getPassDetails(),
   }
 }
 
