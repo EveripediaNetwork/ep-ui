@@ -75,7 +75,7 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passEndDate, passDetails } = useBrainPass()
+  const { passDetails, UserPass } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
@@ -92,8 +92,8 @@ const Mint = () => {
   }
 
   useEffect(() => {
-    if (passEndDate) {
-      const endDate = new Date(passEndDate)
+    if (UserPass) {
+      const endDate = new Date(UserPass.endTimeStamp)
       endDate.setDate(endDate.getDate() + subscriptionPeriod)
       setEndDate(endDate)
     } else {
@@ -101,14 +101,14 @@ const Mint = () => {
       today.setDate(today.getDate() + subscriptionPeriod)
       setEndDate(today)
     }
-  }, [passEndDate, subscriptionPeriod])
+  }, [UserPass, subscriptionPeriod])
 
   const checkPassStatus = () => {
-    if (!passEndDate) {
+    if (!UserPass) {
       return false
     }
     const todayToTimestamp = new Date().getTime()
-    if (passEndDate < todayToTimestamp) {
+    if (UserPass.endTimeStamp < todayToTimestamp) {
       return true
     }
     return false
@@ -280,7 +280,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -308,7 +308,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />

@@ -63,7 +63,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     if (endTimestamp > currentDate) {
       return `Brain Pass Subscription expires in  ${daysLeft} day(s)`
     } else {
-      return "Your Brain Pass Subscription has expired"
+      return 'Your Brain Pass Subscription has expired'
     }
   }
 

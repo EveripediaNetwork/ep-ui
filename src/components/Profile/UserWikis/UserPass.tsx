@@ -57,7 +57,7 @@ const UserPass = () => {
     if (endTimestamp > currentDate) {
       daysDifference = `Subscription expires in ${difference} day(s)`
     } else {
-      daysDifference = "Brain Pass Subscription has expired"
+      daysDifference = 'Brain Pass Subscription has expired'
     }
 
     const endDateVal = new Date(endDate * 1000)
