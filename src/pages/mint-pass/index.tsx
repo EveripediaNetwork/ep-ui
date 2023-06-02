@@ -29,6 +29,7 @@ import {
   SimpleGrid,
   Center,
   Link,
+  useToast,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, ReactElement } from 'react'
 import {
@@ -40,6 +41,7 @@ import {
   RiSearchEyeLine,
   RiShareBoxLine,
 } from 'react-icons/ri'
+import { useAccount } from 'wagmi'
 
 interface FeatureProps {
   title: string
@@ -77,6 +79,17 @@ const Mint = () => {
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
+  const toast = useToast()
+  const { isConnected } = useAccount()
+
+  const showToast = (msg: string, status: 'error' | 'success') => {
+    toast({
+      title: msg,
+      position: 'top-right',
+      isClosable: true,
+      status,
+    })
+  }
 
   useEffect(() => {
     if (passEndDate) {
@@ -103,6 +116,24 @@ const Mint = () => {
 
   const updateSubscriptionPeriod = (period: number) => {
     setSubscriptionPeriod(period || 1)
+  }
+
+  const mintHandler = () => {
+    if (subscriptionPeriod < 28) {
+      showToast("Subscription period cannot be less than 28 days", "error")
+      return
+    }
+    if (subscriptionPeriod > maxPeriod) {
+      showToast(
+        `Subscription period cannot be more than ${maxPeriod} days`,
+        'error',
+      )
+      return
+    }
+    if (!isConnected) {
+      setShowNetworkModal(true)
+      return
+    }
   }
 
   return (
@@ -317,7 +348,7 @@ const Mint = () => {
                 </Text>
               </Flex>
             </Box>
-            <Button onClick={() => setShowNetworkModal(true)} w="full">
+            <Button onClick={() => mintHandler()} w="full">
               MINT
             </Button>
           </VStack>
