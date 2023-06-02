@@ -120,7 +120,7 @@ const Mint = () => {
 
   const mintHandler = () => {
     if (subscriptionPeriod < 28) {
-      showToast("Subscription period cannot be less than 28 days", "error")
+      showToast('Subscription period cannot be less than 28 days', 'error')
       return
     }
     if (subscriptionPeriod > maxPeriod) {
