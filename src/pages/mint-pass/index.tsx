@@ -30,6 +30,7 @@ import {
   Center,
   Link,
   useToast,
+  Divider,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, ReactElement } from 'react'
 import {
@@ -260,7 +261,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Sale Price</Text>
-              <Text>{(passDetails?.price || 0) * subscriptionPeriod} IQ</Text>
+              <Text>{passDetails?.price} IQ</Text>
             </Flex>
           </VStack>
           <VStack align="start" gap={3} w="100%">
@@ -280,7 +281,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -308,7 +309,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -341,6 +342,20 @@ const Mint = () => {
                 fontSize="sm"
                 justifyContent="space-between"
                 alignContent="center"
+                p={3}
+              >
+                <Text fontSize="xs">Total Price:</Text>
+                <Text fontSize="xs" color="brandLinkColor">
+                  {(passDetails?.price || 0) * subscriptionPeriod} IQ
+                </Text>
+              </Flex>
+              <Divider orientation="horizontal" />
+              <Flex
+                w="full"
+                fontSize="sm"
+                justifyContent="space-between"
+                alignContent="center"
+                p={3}
               >
                 <Text fontSize="xs">Expiration date:</Text>
                 <Text fontSize="xs" color="brandLinkColor">
