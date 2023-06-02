@@ -76,7 +76,7 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passEndDate, passDetails } = useBrainPass()
+  const { passDetails, UserPass } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
@@ -93,8 +93,8 @@ const Mint = () => {
   }
 
   useEffect(() => {
-    if (passEndDate) {
-      const endDate = new Date(passEndDate)
+    if (UserPass && UserPass?.endTimeStamp > 0) {
+      const endDate = new Date(UserPass.endTimeStamp * 1000)
       endDate.setDate(endDate.getDate() + subscriptionPeriod)
       setEndDate(endDate)
     } else {
@@ -102,14 +102,14 @@ const Mint = () => {
       today.setDate(today.getDate() + subscriptionPeriod)
       setEndDate(today)
     }
-  }, [passEndDate, subscriptionPeriod])
+  }, [UserPass, subscriptionPeriod])
 
   const checkPassStatus = () => {
-    if (!passEndDate) {
+    if (UserPass?.endTimeStamp === 0 || undefined) {
       return false
     }
     const todayToTimestamp = new Date().getTime()
-    if (passEndDate < todayToTimestamp) {
+    if (UserPass && UserPass?.endTimeStamp < todayToTimestamp) {
       return true
     }
     return false

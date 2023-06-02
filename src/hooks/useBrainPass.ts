@@ -39,7 +39,7 @@ export const useBrainPass = () => {
   const isUserPassActive = () => {
     if (!userPass) return false
     const { endTimestamp } = userPass as UserPass
-    const endTime = Number(formatUnits(endTimestamp, 18))
+    const endTime = Number(endTimestamp)
     const todayToTimestamp = new Date().getTime() / 1000
     if (!endTime || endTime < todayToTimestamp) return false
     return true
@@ -57,13 +57,6 @@ export const useBrainPass = () => {
       supply: Number(formatUnits(currentPass.maxTokens, 18)),
     }
   }
-  const getPassEndDate = () => {
-    if (!userPass) return null
-    const { endTimestamp } = userPass as UserPass
-    const endTime = Number(formatUnits(endTimestamp, 18))
-    if (!endTime) return null
-    return endTime * 1000
-  }
   const refinePassDetails = () => {
     if (!userPass) return null
     const userPassDetails = userPass as UserPass
@@ -78,7 +71,6 @@ export const useBrainPass = () => {
 
   return {
     UserPass: refinePassDetails(),
-    passEndDate: getPassEndDate(),
     isUserPassActive: isUserPassActive(),
     passDetails: getPassDetails(),
   }
