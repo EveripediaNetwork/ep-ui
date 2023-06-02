@@ -30,7 +30,7 @@ import {
   Center,
   Link,
 } from '@chakra-ui/react'
-import React, { useState, ReactElement } from 'react'
+import React, { useState,useEffect, ReactElement } from 'react'
 import {
   RiHeartLine,
   RiMailLine,
@@ -76,6 +76,21 @@ const Mint = () => {
   const { passEndDate, passDetails } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
+  const [endDate, setEndDate] = useState<Date>()
+
+  useEffect(() => {
+    if (passEndDate) {
+      const endDate = new Date(passEndDate)
+      endDate.setDate(endDate.getDate() + subscriptionPeriod)
+      setEndDate(endDate)
+    }
+    else{
+      const today = new Date()
+      today.setDate(today.getDate() + subscriptionPeriod)
+      setEndDate(today)
+    }
+  }, [passEndDate, subscriptionPeriod])
+
   const checkPassStatus = () => {
     if (!passEndDate) {
       return false
@@ -86,6 +101,12 @@ const Mint = () => {
     }
     return false
   }
+
+  const updateSubscriptionPeriod = (period: number) => {
+    setSubscriptionPeriod(period || 1)
+
+  }
+
   return (
     <Container
       w="min(90%, 1200px)"
@@ -210,7 +231,7 @@ const Mint = () => {
               alignContent="center"
             >
               <Text>Sale Price</Text>
-              <Text>{passDetails?.price} IQ</Text>
+              <Text>{(passDetails?.price || 0) * subscriptionPeriod} IQ</Text>
             </Flex>
           </VStack>
           <VStack align="start" gap={3} w="100%">
@@ -222,7 +243,7 @@ const Mint = () => {
               px={4}
               w="full"
             >
-              <Text fontSize="xs">Subscription Duration (Months)</Text>
+              <Text fontSize="xs">Subscription Duration (Days)</Text>
               <Flex mt={1} direction="row" gap={6}>
                 <Box w="full">
                   <Slider
@@ -230,7 +251,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => setSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -247,7 +268,7 @@ const Mint = () => {
                       bg="lightCard"
                       color="grayText4"
                       onClick={() =>
-                        setSubscriptionPeriod(subscriptionPeriod - 1)
+                        updateSubscriptionPeriod(subscriptionPeriod - 1)
                       }
                     >
                       <Text>-</Text>
@@ -258,8 +279,8 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
-                        setSubscriptionPeriod(Number(e.target.value))
+                      onChange={e =>
+                        updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
                     <InputRightAddon
@@ -267,7 +288,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       onClick={() =>
-                        setSubscriptionPeriod(subscriptionPeriod + 1)
+                        updateSubscriptionPeriod(subscriptionPeriod + 1)
                       }
                     >
                       <Text>+</Text>
@@ -294,7 +315,7 @@ const Mint = () => {
               >
                 <Text fontSize="xs">Expiration date:</Text>
                 <Text fontSize="xs" color="brandLinkColor">
-                  Thur, 06 Dec 2024, 01:00 GMT+1
+                  {endDate?.toDateString()}
                 </Text>
               </Flex>
             </Box>
@@ -304,7 +325,6 @@ const Mint = () => {
           </VStack>
         </GridItem>
       </Grid>
-
       <Box
         mt={14}
         display="flex"
