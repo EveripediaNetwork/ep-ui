@@ -92,8 +92,8 @@ const Mint = () => {
   }
 
   useEffect(() => {
-    if (UserPass) {
-      const endDate = new Date(UserPass.endTimeStamp)
+    if (UserPass && UserPass?.endTimeStamp > 0) {
+      const endDate = new Date(UserPass.endTimeStamp * 1000)
       endDate.setDate(endDate.getDate() + subscriptionPeriod)
       setEndDate(endDate)
     } else {
@@ -104,11 +104,11 @@ const Mint = () => {
   }, [UserPass, subscriptionPeriod])
 
   const checkPassStatus = () => {
-    if (!UserPass) {
+    if (UserPass?.endTimeStamp === 0 || undefined) {
       return false
     }
     const todayToTimestamp = new Date().getTime()
-    if (UserPass.endTimeStamp < todayToTimestamp) {
+    if (UserPass && UserPass?.endTimeStamp < todayToTimestamp) {
       return true
     }
     return false
@@ -280,7 +280,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -308,7 +308,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
