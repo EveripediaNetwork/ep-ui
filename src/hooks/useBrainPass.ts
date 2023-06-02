@@ -36,9 +36,6 @@ export const useBrainPass = () => {
     ...brainpassConfig,
     functionName: 'getAllPassType',
   })
-
-  const userPassDetails = userPass as UserPass
-
   const isUserPassActive = () => {
     if (!userPass) return false
     const { endTimestamp } = userPass as UserPass
@@ -60,7 +57,6 @@ export const useBrainPass = () => {
       supply: Number(formatUnits(currentPass.maxTokens, 18)),
     }
   }
-
   const getPassEndDate = () => {
     if (!userPass) return null
     const { endTimestamp } = userPass as UserPass
@@ -68,9 +64,9 @@ export const useBrainPass = () => {
     if (!endTime) return null
     return endTime * 1000
   }
-
   const refinePassDetails = () => {
     if (!userPass) return null
+    const userPassDetails = userPass as UserPass
     const details = {
       tokenId: Number(userPassDetails.tokenId),
       passId: Number(userPassDetails.passId),

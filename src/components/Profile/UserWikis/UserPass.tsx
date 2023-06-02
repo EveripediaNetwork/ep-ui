@@ -47,13 +47,18 @@ const UserPass = () => {
     return val?.toString().padStart(3, '0')
   }
 
-  const dateDetails = (startDate: number, endDate: number) => {
-    const startTimestamp = new Date(startDate * 1000).getTime()
+  const dateDetails = (endDate: number) => {
+    const currentDate = Date.now()
     const endTimestamp = new Date(endDate * 1000).getTime()
-
-    const difference = Math.abs(endTimestamp - startTimestamp)
     const oneDay = 24 * 60 * 60 * 1000
-    const daysDifference = Math.round(difference / oneDay)
+    const difference = Math.round(Math.abs(endTimestamp - currentDate) / oneDay)
+
+    let daysDifference = ''
+    if (endTimestamp > currentDate) {
+      daysDifference = `Subscription expires in ${difference} day(s)`
+    } else {
+      daysDifference = 'Brain Pass Subscription has expired'
+    }
 
     const endDateVal = new Date(endDate * 1000)
     const month = endDateVal.getMonth() + 1
@@ -68,10 +73,7 @@ const UserPass = () => {
   const [dateData, setDateData] = useState<any>()
 
   useEffect(() => {
-    const info = dateDetails(
-      UserPass?.startTimeStamp || 0,
-      UserPass?.endTimeStamp || 0,
-    )
+    const info = dateDetails(UserPass?.endTimeStamp || 0)
     setDateData(info)
   }, [])
 
@@ -103,9 +105,12 @@ const UserPass = () => {
                     px={4}
                     py={1}
                     rounded="md"
-                    bgColor="green.50"
-                    _dark={{ bgColor: 'green.200', color: 'green.800' }}
-                    color="green.500"
+                    bgColor={isUserPassActive ? 'green.50' : 'red.50'}
+                    _dark={{
+                      bgColor: isUserPassActive ? 'green.200' : 'red.200',
+                      color: isUserPassActive ? 'green.800' : 'red.800',
+                    }}
+                    color={isUserPassActive ? 'green.500' : 'red.500'}
                   >
                     <Text fontWeight="semibold">
                       {isUserPassActive ? 'Active' : 'Expired'}
@@ -154,8 +159,7 @@ const UserPass = () => {
                       color="paginationButtonActive"
                     />
                     <Text fontSize="xs" fontWeight="semibold">
-                      Subscription expires in {dateData?.daysDifference}days (
-                      {dateData?.formattedDate})
+                      {dateData?.daysDifference} ({dateData?.formattedDate})
                     </Text>
                   </HStack>
                 </Box>
