@@ -30,7 +30,7 @@ import {
   Center,
   Link,
 } from '@chakra-ui/react'
-import React, { useState,useEffect, ReactElement } from 'react'
+import React, { useState, useEffect, ReactElement } from 'react'
 import {
   RiHeartLine,
   RiMailLine,
@@ -83,8 +83,7 @@ const Mint = () => {
       const endDate = new Date(passEndDate)
       endDate.setDate(endDate.getDate() + subscriptionPeriod)
       setEndDate(endDate)
-    }
-    else{
+    } else {
       const today = new Date()
       today.setDate(today.getDate() + subscriptionPeriod)
       setEndDate(today)
@@ -104,7 +103,6 @@ const Mint = () => {
 
   const updateSubscriptionPeriod = (period: number) => {
     setSubscriptionPeriod(period || 1)
-
   }
 
   return (
@@ -251,7 +249,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={value => updateSubscriptionPeriod(value)}
+                    onChange={(value) => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -279,7 +277,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={e =>
+                      onChange={(e) =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
