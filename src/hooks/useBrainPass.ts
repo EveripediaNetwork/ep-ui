@@ -37,12 +37,10 @@ export const useBrainPass = () => {
     functionName: 'getAllPassType',
   })
 
-  const userPassDetails = userPass as UserPass
-
   const isUserPassActive = () => {
     if (!userPass) return false
     const { endTimestamp } = userPass as UserPass
-    const endTime = Number(formatUnits(endTimestamp, 18))
+    const endTime = Number(endTimestamp)
     const todayToTimestamp = new Date().getTime() / 1000
     if (!endTime || endTime < todayToTimestamp) return false
     return true
@@ -71,6 +69,7 @@ export const useBrainPass = () => {
 
   const refinePassDetails = () => {
     if (!userPass) return null
+    const userPassDetails = userPass as UserPass
     const details = {
       tokenId: Number(userPassDetails.tokenId),
       passId: Number(userPassDetails.passId),
