@@ -53,17 +53,17 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
-  const { isUserPassActive, passEndDate } = useBrainPass()
+  const { isUserPassActive, UserPass } = useBrainPass()
 
   const displayPassInfo = (endTime: number) => {
-    const todayToTimestamp = new Date().getTime()
-    if (endTime < todayToTimestamp) {
-      return 'Your Brain Pass Subscription has expired'
+    const currentDate = Date.now()
+    const endTimestamp = new Date(endTime * 1000).getTime()
+    const oneDay = 24 * 60 * 60 * 1000
+    const daysLeft = Math.round(Math.abs(endTimestamp - currentDate) / oneDay)
+    if (endTimestamp > currentDate) {
+      return `Brain Pass Subscription expires in  ${daysLeft} day(s)`
     } else {
-      const daysLeft = Math.floor(
-        (endTime - todayToTimestamp) / (1000 * 60 * 60 * 24),
-      )
-      return `Brain Pass Subscription expires in ${daysLeft} days`
+      return "Your Brain Pass Subscription has expired"
     }
   }
 
@@ -262,7 +262,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
           >
             <Image src="/images/nft-pass/pass.png" />
           </Box>
-          {isUserConnected && passEndDate && (
+          {isUserConnected && UserPass && (
             <Box
               bgColor="brand.50"
               _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
@@ -275,7 +275,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                   color="paginationButtonActive"
                 />
                 <Text fontSize="xs" fontWeight="semibold">
-                  {`${displayPassInfo(passEndDate)}`}
+                  {`${displayPassInfo(UserPass?.endTimeStamp)}`}
                 </Text>
               </HStack>
             </Box>
