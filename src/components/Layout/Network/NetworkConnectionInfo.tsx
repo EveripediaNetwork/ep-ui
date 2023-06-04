@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 const NetworkConnectionInfo = ({
   modalState,
@@ -20,7 +21,7 @@ const NetworkConnectionInfo = ({
   setModalState: (state: boolean) => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-
+  const router = useRouter()
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -57,7 +58,16 @@ const NetworkConnectionInfo = ({
             to iq wiki.
           </Text>
           <Flex my="10" justifyContent="center">
-            <Button>Connect Wallet</Button>
+            <Button
+              onClick={() =>
+                router.push({
+                  pathname: '/login',
+                  query: { from: router.asPath },
+                })
+              }
+            >
+              Connect Wallet
+            </Button>
           </Flex>
         </Box>
       </AlertDialogContent>

@@ -1,7 +1,8 @@
 import { BrainPassABI } from '@/abi/BrainPass.abi'
 import config from '@/config'
 import { formatUnits } from 'viem'
-import { useAccount, useContractRead } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { waitForTransaction } from 'wagmi/actions'
 
 interface PassType {
   name: string
@@ -23,6 +24,16 @@ const brainpassConfig = {
   address: config.brainpassAddress as `0x${string}`,
   abi: BrainPassABI,
 }
+
+type ErrorResponse = {
+  cause: {
+    data: {
+      errorName: string
+      args: string[]
+    }
+  }
+}
+
 export const useBrainPass = () => {
   const { address } = useAccount()
 
@@ -30,6 +41,13 @@ export const useBrainPass = () => {
     ...brainpassConfig,
     functionName: 'getUserPassDetails',
     args: [address],
+  })
+
+  const {
+    writeAsync: mint,
+  } = useContractWrite({
+    ...brainpassConfig,
+    functionName: 'mintNFT',
   })
 
   const { data: passTypes } = useContractRead({
@@ -69,10 +87,32 @@ export const useBrainPass = () => {
     return details
   }
 
+  const mintNftPass = async (
+    passId: number,
+    startTimestamp: number,
+    endTimestamp: number,
+  ) => {
+    try {
+      const { hash } = await mint({
+        args: [passId, startTimestamp, endTimestamp],
+      })
+      const receipt = await waitForTransaction({ hash })
+      return { isError: false, msg: 'Brainy minted successfully', receipt }
+    } catch (error) {
+      const { cause } = error as ErrorResponse
+      return { isError: true, msg: cause?.data?.args[0] || "Can't mint brainy" }
+    }
+  }
+
   return {
     UserPass: refinePassDetails(),
     isUserPassActive: isUserPassActive(),
     passDetails: getPassDetails(),
+    mintNftPass: (
+      passId: number,
+      startTimestamp: number,
+      endTimestamp: number,
+    ) => mintNftPass(passId, startTimestamp, endTimestamp),
   }
 }
 

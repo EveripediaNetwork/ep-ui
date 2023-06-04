@@ -1,5 +1,6 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import { shortenAccount } from '@/utils/textUtils'
@@ -76,12 +77,13 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passDetails, UserPass } = useBrainPass()
+  const { passDetails, UserPass, mintNftPass } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
   const toast = useToast()
   const { isConnected } = useAccount()
+  const [isMinting, setIsMinting] = useState(false)
 
   const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
@@ -119,7 +121,7 @@ const Mint = () => {
     setSubscriptionPeriod(period || 1)
   }
 
-  const mintHandler = () => {
+  const mintHandler = async () => {
     if (subscriptionPeriod < 28) {
       showToast('Subscription period cannot be less than 28 days', 'error')
       return
@@ -135,6 +137,10 @@ const Mint = () => {
       setShowNetworkModal(true)
       return
     }
+    setIsMinting(true)
+    const { msg, isError } = await mintNftPass(1, 1685839313, 1688604113)
+    showToast(msg, isError ? 'error' : 'success')
+    setIsMinting(false)
   }
 
   return (
@@ -363,7 +369,13 @@ const Mint = () => {
                 </Text>
               </Flex>
             </Box>
-            <Button onClick={() => mintHandler()} w="full">
+            <Button
+              isDisabled={isMinting}
+              isLoading={isMinting}
+              loadingText="Minting..."
+              onClick={() => mintHandler()}
+              w="full"
+            >
               MINT
             </Button>
           </VStack>
@@ -462,4 +474,4 @@ const Mint = () => {
   )
 }
 
-export default Mint
+export default authenticatedRoute(Mint)
