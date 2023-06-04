@@ -43,9 +43,7 @@ export const useBrainPass = () => {
     args: [address],
   })
 
-  const {
-    writeAsync: mint,
-  } = useContractWrite({
+  const { writeAsync: mint } = useContractWrite({
     ...brainpassConfig,
     functionName: 'mintNFT',
   })
