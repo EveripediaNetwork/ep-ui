@@ -1,7 +1,11 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
+import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
+import config from '@/config'
+import networkMap from '@/data/NetworkMap'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
+import { ProviderDataType } from '@/types/ProviderDataType'
 import { shortenAccount } from '@/utils/textUtils'
 import {
   Box,
@@ -32,6 +36,7 @@ import {
   useToast,
   Divider,
 } from '@chakra-ui/react'
+import detectEthereumProvider from '@metamask/detect-provider'
 import React, { useState, useEffect, ReactElement } from 'react'
 import {
   RiHeartLine,
@@ -75,6 +80,7 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
+  const [showInvalidNetworkModal, setShowInvalidNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
   const { passDetails, UserPass, mintNftPass, extendEndTime } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
@@ -87,6 +93,14 @@ const Mint = () => {
     header: '',
     body: '',
   })
+ const [connectedChainId, setConnectedChainId] = useState<string>()
+
+  const { chainId } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
+  const [detectedProvider, setDetectedProvider] =
+    useState<ProviderDataType | null>(null)
 
   const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
@@ -108,6 +122,40 @@ const Mint = () => {
       setEndDate(today)
     }
   }, [subscriptionPeriod])
+
+    useEffect(() => {
+      const getConnectedChain = async (provider: ProviderDataType) => {
+        const connectedChainId = await provider.request({
+          method: 'eth_chainId',
+        })
+        setConnectedChainId(connectedChainId)
+      }
+
+      const getDetectedProvider = async () => {
+        const provider = (await detectEthereumProvider({
+          silent: true,
+        })) as ProviderDataType
+        setDetectedProvider(provider as ProviderDataType)
+        if (provider) getConnectedChain(provider)
+      }
+
+      if (!detectedProvider) {
+        getDetectedProvider()
+      } else {
+        getConnectedChain(detectedProvider)
+        detectedProvider.on('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
+        )
+      }
+
+      return () => {
+        if (detectedProvider) {
+          detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+            setConnectedChainId(newlyConnectedChain),
+          )
+        }
+      }
+    }, [detectedProvider, isConnected])
 
   const checkPassStatus = () => {
     if (UserPass?.endTimeStamp === 0 || undefined) {
@@ -179,6 +227,10 @@ const Mint = () => {
     }
     if (!isConnected) {
       setShowNetworkModal(true)
+      return
+    }
+    if (connectedChainId !== chainId) {
+      setShowInvalidNetworkModal(true)
       return
     }
     setIsMinting(true)
@@ -333,7 +385,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -361,7 +413,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -517,6 +569,10 @@ const Mint = () => {
         setModalState={setShowNotification}
         header={notificationDetails.header}
         body={notificationDetails.body}
+      />
+      <NetworkErrorNotification
+        modalState={showInvalidNetworkModal}
+        setModalState={(state: boolean) => setShowInvalidNetworkModal(state)}
       />
     </Container>
   )
