@@ -85,8 +85,13 @@ export const useBrainPass = () => {
       const { hash } = await approve({
         args: [config.brainpassAddress, amount],
       })
-      return hash
+      const receipt = await waitForTransaction({ hash })
+      if (receipt.status === 'success') {
+        return true
+      }
+      return false
     }
+    return true
   }
 
   const isUserPassActive = () => {
@@ -131,8 +136,8 @@ export const useBrainPass = () => {
   ) => {
     try {
       const convertedAmount = parseUnits(`${amount}`, 18)
-      await needsApproval(convertedAmount)
-      if ((allowance as bigint) >= convertedAmount) {
+      const hasApproval = await needsApproval(convertedAmount)
+      if (hasApproval) {
         const { hash } = await mint({
           args: [passId, startTimestamp, endTimestamp],
         })
