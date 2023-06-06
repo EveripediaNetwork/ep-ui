@@ -119,7 +119,7 @@ const UserPass = () => {
                   </Center>
                   {!isUserPassActive && (
                     <Link
-                      href={"/mint-pass"}
+                      href={'/mint-pass'}
                       color="brandLinkColor"
                       fontWeight="bold"
                     >
