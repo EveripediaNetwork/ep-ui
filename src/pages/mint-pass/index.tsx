@@ -237,9 +237,11 @@ const Mint = () => {
     setIsMinting(true)
     if (UserPass && UserPass?.endTimeStamp > 0) {
       extendEndTimeHandler()
-      return
     }
-    mintPass()
+    else{
+      mintPass()
+    }
+    setSubscriptionPeriod(1)
   }
 
   return (
