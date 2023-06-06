@@ -1,6 +1,5 @@
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import { shortenAccount } from '@/utils/textUtils'
@@ -523,4 +522,4 @@ const Mint = () => {
   )
 }
 
-export default authenticatedRoute(Mint)
+export default Mint
