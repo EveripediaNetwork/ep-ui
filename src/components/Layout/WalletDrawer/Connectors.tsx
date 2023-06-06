@@ -211,19 +211,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -247,60 +244,62 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             ))}
           </Box>
         )}
-        <Box
-          border="1px"
-          borderColor="walletDrawerBorderColor"
-          overflow="hidden"
-          mt={8}
-          rounded="md"
-        >
+        {router.pathname !== '/login' && (
           <Box
-            rounded="lg"
-            mixBlendMode={isUserPassActive ? 'normal' : 'luminosity'}
-            opacity={isUserPassActive ? 1 : 0.4}
-            p={4}
+            border="1px"
+            borderColor="walletDrawerBorderColor"
+            overflow="hidden"
+            mt={8}
+            rounded="md"
           >
-            <Image src="/images/nft-pass/pass.png" />
-          </Box>
-          {isUserConnected && UserPass && UserPass.endTimeStamp > 0 && (
             <Box
-              bgColor="brand.50"
-              _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
-              p={2}
+              rounded="lg"
+              mixBlendMode={isUserPassActive ? 'normal' : 'luminosity'}
+              opacity={isUserPassActive ? 1 : 0.4}
+              p={4}
             >
-              <HStack gap={2}>
-                <Icon
-                  as={BrainPassIcon}
-                  boxSize={6}
-                  color="paginationButtonActive"
-                />
-                <Text fontSize="xs" fontWeight="semibold">
-                  {`${displayPassInfo(UserPass?.endTimeStamp)}`}
-                </Text>
-              </HStack>
+              <Image src="/images/nft-pass/pass.png" />
             </Box>
-          )}
-          {isUserConnected && isUserPassActive ? (
-            <Center
-              w="full"
-              cursor="pointer"
-              onClick={() => router.push('/mint-pass')}
-              py={2}
-            >
-              <Text fontSize="lg" fontWeight="semibold">
-                View Details
-              </Text>
-            </Center>
-          ) : (
-            <Button
-              w="full"
-              roundedTop="none"
-              onClick={() => router.push('/mint-pass')}
-            >
-              Mint
-            </Button>
-          )}
-        </Box>
+            {isUserConnected && UserPass && UserPass.endTimeStamp > 0 && (
+              <Box
+                bgColor="brand.50"
+                _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
+                p={2}
+              >
+                <HStack gap={2}>
+                  <Icon
+                    as={BrainPassIcon}
+                    boxSize={6}
+                    color="paginationButtonActive"
+                  />
+                  <Text fontSize="xs" fontWeight="semibold">
+                    {`${displayPassInfo(UserPass?.endTimeStamp)}`}
+                  </Text>
+                </HStack>
+              </Box>
+            )}
+            {isUserConnected && isUserPassActive ? (
+              <Center
+                w="full"
+                cursor="pointer"
+                onClick={() => router.push('/mint-pass')}
+                py={2}
+              >
+                <Text fontSize="lg" fontWeight="semibold">
+                  View Details
+                </Text>
+              </Center>
+            ) : (
+              <Button
+                w="full"
+                roundedTop="none"
+                onClick={() => router.push('/mint-pass')}
+              >
+                Mint
+              </Button>
+            )}
+          </Box>
+        )}
       </Box>
     </>
   )
