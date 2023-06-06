@@ -93,7 +93,7 @@ const Mint = () => {
     header: '',
     body: '',
   })
- const [connectedChainId, setConnectedChainId] = useState<string>()
+  const [connectedChainId, setConnectedChainId] = useState<string>()
 
   const { chainId } =
     config.alchemyChain === 'maticmum'
@@ -123,39 +123,40 @@ const Mint = () => {
     }
   }, [subscriptionPeriod])
 
-    useEffect(() => {
-      const getConnectedChain = async (provider: ProviderDataType) => {
-        const connectedChainId = await provider.request({
-          method: 'eth_chainId',
-        })
-        setConnectedChainId(connectedChainId)
-      }
+  useEffect(() => {
+    const getConnectedChain = async (provider: ProviderDataType) => {
+      const connectedChainId = await provider.request({
+        method: 'eth_chainId',
+      })
+      setConnectedChainId(connectedChainId)
+    }
 
-      const getDetectedProvider = async () => {
-        const provider = (await detectEthereumProvider({
-          silent: true,
-        })) as ProviderDataType
-        setDetectedProvider(provider as ProviderDataType)
-        if (provider) getConnectedChain(provider)
-      }
+    const getDetectedProvider = async () => {
+      const provider = (await detectEthereumProvider({
+        silent: true,
+      })) as ProviderDataType
+      setDetectedProvider(provider as ProviderDataType)
+      if (provider) getConnectedChain(provider)
+    }
 
-      if (!detectedProvider) {
-        getDetectedProvider()
-      } else {
-        getConnectedChain(detectedProvider)
-        detectedProvider.on('chainChanged', newlyConnectedChain =>
-          setConnectedChainId(newlyConnectedChain),
+    if (!detectedProvider) {
+      getDetectedProvider()
+    } else {
+      getConnectedChain(detectedProvider)
+      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+        setConnectedChainId(newlyConnectedChain),
+      )
+    }
+
+    return () => {
+      if (detectedProvider) {
+        detectedProvider.removeListener(
+          'chainChanged',
+          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
         )
       }
-
-      return () => {
-        if (detectedProvider) {
-          detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
-            setConnectedChainId(newlyConnectedChain),
-          )
-        }
-      }
-    }, [detectedProvider, isConnected])
+    }
+  }, [detectedProvider, isConnected])
 
   const checkPassStatus = () => {
     if (UserPass?.endTimeStamp === 0 || undefined) {
@@ -385,7 +386,7 @@ const Mint = () => {
                     colorScheme="pink"
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={value => updateSubscriptionPeriod(value)}
+                    onChange={(value) => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -413,7 +414,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={e =>
+                      onChange={(e) =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
