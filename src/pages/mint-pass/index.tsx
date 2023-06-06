@@ -129,7 +129,7 @@ const Mint = () => {
     if (!endDate) return
     const newEndDate = endDate?.getTime() / 1000
     const { msg, isError } = await extendEndTime(
-      4,
+      UserPass?.tokenId || 0,
       Math.floor(newEndDate),
       subscriptionPeriod * (passDetails?.price || 0),
     )

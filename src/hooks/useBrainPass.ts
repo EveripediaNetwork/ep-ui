@@ -153,17 +153,16 @@ export const useBrainPass = () => {
   }
 
   const extendEndTime = async (
-    passId: number,
+    tokenId: number,
     endTimestamp: number,
     amount: number,
   ) => {
     try {
-      console.log(endTimestamp)
       const convertedAmount = parseUnits(`${amount}`, 18)
       await needsApproval(convertedAmount)
       if ((allowance as bigint) >= convertedAmount) {
         const { hash } = await increaseEndTime({
-          args: [passId, endTimestamp],
+          args: [tokenId, endTimestamp],
         })
         const receipt = await waitForTransaction({ hash })
         if (receipt) {
@@ -194,8 +193,8 @@ export const useBrainPass = () => {
       endTimestamp: number,
       amount: number,
     ) => mintNftPass(passId, startTimestamp, endTimestamp, amount),
-    extendEndTime: (passId: number, endTimestamp: number, amount: number) =>
-      extendEndTime(passId, endTimestamp, amount),
+    extendEndTime: (tokenId: number, endTimestamp: number, amount: number) =>
+      extendEndTime(tokenId, endTimestamp, amount),
   }
 }
 
