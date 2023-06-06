@@ -38,7 +38,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
 
   return (
@@ -74,9 +74,13 @@ const RankingItem = ({
           </Box>
           <Box>
             <Box>
-              <Link color="brandLinkColor" href={`wiki/${item.id}`}>
-                {item.title}
-              </Link>
+              {item.events[0].date !== '1900-01' ? (
+                <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                  {item.title}
+                </Link>
+              ) : (
+                <Text>{item.title}</Text>
+              )}
             </Box>
             <Text color="rankingListText">
               {item.nftMarketData
@@ -131,7 +135,7 @@ const RankingItem = ({
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
-                return (
+                return founder !== 'no-content' ? (
                   <Link
                     href={`wiki/${founder}`}
                     key={`founder${i}`}
@@ -140,6 +144,8 @@ const RankingItem = ({
                     {founderName}
                     {i !== arr.length - 1 && arr.length > 1 && ', '}
                   </Link>
+                ) : (
+                  <Text color="brandLinkColor">NA</Text>
                 )
               }) ?? <Text color="brandLinkColor">NA</Text>}
             {item.linkedWikis.founders.length > 3 && (
@@ -156,7 +162,7 @@ const RankingItem = ({
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
               .map((blockchain, i) => {
-                return (
+                return blockchain !== 'no-content' ? (
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
@@ -168,6 +174,8 @@ const RankingItem = ({
                         blockchain.slice(1).replace('-', ' ')}
                     </Link>
                   </React.Fragment>
+                ) : (
+                  <Text color="brandLinkColor">NA</Text>
                 )
               })}
           </Flex>
