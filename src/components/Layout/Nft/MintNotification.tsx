@@ -17,9 +17,13 @@ import { RiCloseLine } from 'react-icons/ri'
 const MintNotification = ({
   modalState,
   setModalState,
+  header,
+  body,
 }: {
   modalState: boolean
   setModalState: (state: boolean) => void
+  header: string
+  body: string
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
@@ -47,15 +51,13 @@ const MintNotification = ({
           </Flex>
           <Image src="/images/nft-pass/success.gif" alt="success" />
           <Text mt="5" fontSize="xl" textAlign="center">
-            BrainPass subscription renewed!
+            {header}
           </Text>
           <Text fontSize="sm" mt="5" textAlign="center">
-            Your Brainpass subscription has been successfully Renewed. You can
-            continue to create and edit wikis and contribute to the platform's
-            wealth of knowledge.
+            {body}
           </Text>
           <Flex my="5" justifyContent="center">
-            <Button>Connect Wallet</Button>
+            <Button onClick={() => setModalState(false)}>Close</Button>
           </Flex>
         </Box>
       </AlertDialogContent>

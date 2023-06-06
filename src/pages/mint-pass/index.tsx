@@ -77,13 +77,17 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passDetails, UserPass, mintNftPass } = useBrainPass()
+  const { passDetails, UserPass, mintNftPass, extendEndTime } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
   const toast = useToast()
   const { isConnected } = useAccount()
   const [isMinting, setIsMinting] = useState(false)
+  const [notificationDetails, setNotificationDetails] = useState({
+    header: '',
+    body: '',
+  })
 
   const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
@@ -104,7 +108,7 @@ const Mint = () => {
       today.setDate(today.getDate() + subscriptionPeriod)
       setEndDate(today)
     }
-  }, [UserPass, subscriptionPeriod])
+  }, [subscriptionPeriod])
 
   const checkPassStatus = () => {
     if (UserPass?.endTimeStamp === 0 || undefined) {
@@ -119,6 +123,47 @@ const Mint = () => {
 
   const updateSubscriptionPeriod = (period: number) => {
     setSubscriptionPeriod(period || 1)
+  }
+
+  const extendEndTimeHandler = async () => {
+    if (!endDate) return
+    const newEndDate = endDate?.getTime() / 1000
+    const { msg, isError } = await extendEndTime(
+      4,
+      Math.floor(newEndDate),
+      subscriptionPeriod * (passDetails?.price || 0),
+    )
+    if (!isError) {
+      setNotificationDetails({
+        header: 'BrainPass subscription renewed!',
+        body: "Your Brainpass subscription has been successfully Renewed.  You can continue to create and edit wikis and contribute to the platform's wealth of knowledge.",
+      })
+      setShowNotification(true)
+    }
+    showToast(msg, isError ? 'error' : 'success')
+    setIsMinting(false)
+  }
+
+  const mintPass = async () => {
+    const currentDate = new Date()
+    const endTimestamp =
+      (currentDate.getTime() + subscriptionPeriod * 24 * 60 * 60 * 1000) / 1000
+    const startTimestamp = currentDate.getTime() / 1000
+    const { msg, isError } = await mintNftPass(
+      1,
+      Math.floor(startTimestamp),
+      Math.floor(endTimestamp),
+      subscriptionPeriod * (passDetails?.price || 0),
+    )
+    if (!isError) {
+      setNotificationDetails({
+        header: 'BrainPass successfully Minted!',
+        body: "Your Brainpass has been successfully Minted and you are now an editor on IQ Wiki. You can now create wikis and also edit wikis and contribute to the platform's wealth of knowledge.",
+      })
+      setShowNotification(true)
+    }
+    showToast(msg, isError ? 'error' : 'success')
+    setIsMinting(false)
   }
 
   const mintHandler = async () => {
@@ -138,9 +183,11 @@ const Mint = () => {
       return
     }
     setIsMinting(true)
-    const { msg, isError } = await mintNftPass(1, 1685839313, 1688604113)
-    showToast(msg, isError ? 'error' : 'success')
-    setIsMinting(false)
+    if (UserPass && UserPass?.endTimeStamp > 0) {
+      extendEndTimeHandler()
+      return
+    }
+    mintPass()
   }
 
   return (
@@ -372,11 +419,11 @@ const Mint = () => {
             <Button
               isDisabled={isMinting}
               isLoading={isMinting}
-              loadingText="Minting..."
+              loadingText="Loading..."
               onClick={() => mintHandler()}
               w="full"
             >
-              MINT
+              {checkPassStatus() ? 'Subscribe' : 'MINT'}
             </Button>
           </VStack>
         </GridItem>
@@ -469,6 +516,8 @@ const Mint = () => {
       <MintNotification
         modalState={showNotification}
         setModalState={setShowNotification}
+        header={notificationDetails.header}
+        body={notificationDetails.body}
       />
     </Container>
   )

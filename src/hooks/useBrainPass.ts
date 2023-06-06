@@ -1,6 +1,7 @@
 import { BrainPassABI } from '@/abi/BrainPass.abi'
+import { IQAbi } from '@/abi/IQAbi.abi'
 import config from '@/config'
-import { formatUnits } from 'viem'
+import { formatUnits, parseUnits } from 'viem'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
 
@@ -25,6 +26,11 @@ const brainpassConfig = {
   abi: BrainPassABI,
 }
 
+const erc20ContractConfig = {
+  address: config.iqAddress as `0x${string}`,
+  abi: IQAbi,
+}
+
 type ErrorResponse = {
   cause: {
     data: {
@@ -32,12 +38,28 @@ type ErrorResponse = {
       args: string[]
     }
   }
+  details: string
+}
+
+export const calculateGasBuffer = (gasFee: number) => {
+  return gasFee + gasFee * 0.1
 }
 
 export const useBrainPass = () => {
   const { address } = useAccount()
 
-  const { data: userPass } = useContractRead({
+  const { writeAsync: approve } = useContractWrite({
+    ...erc20ContractConfig,
+    functionName: 'approve',
+  })
+
+  const { data: allowance } = useContractRead({
+    ...erc20ContractConfig,
+    functionName: 'allowance',
+    args: [address, config.brainpassAddress],
+  })
+
+  const { data: userPass, refetch: refetchUserPass } = useContractRead({
     ...brainpassConfig,
     functionName: 'getUserPassDetails',
     args: [address],
@@ -48,10 +70,25 @@ export const useBrainPass = () => {
     functionName: 'mintNFT',
   })
 
+  const { writeAsync: increaseEndTime } = useContractWrite({
+    ...brainpassConfig,
+    functionName: 'increaseEndTime',
+  })
+
   const { data: passTypes } = useContractRead({
     ...brainpassConfig,
     functionName: 'getAllPassType',
   })
+
+  const needsApproval = async (amount: bigint) => {
+    if ((allowance as bigint) < amount) {
+      const { hash } = await approve({
+        args: [config.brainpassAddress, amount],
+      })
+      return hash
+    }
+  }
+
   const isUserPassActive = () => {
     if (!userPass) return false
     const { endTimestamp } = userPass as UserPass
@@ -73,6 +110,7 @@ export const useBrainPass = () => {
       supply: Number(formatUnits(currentPass.maxTokens, 18)),
     }
   }
+
   const refinePassDetails = () => {
     if (!userPass) return null
     const userPassDetails = userPass as UserPass
@@ -89,16 +127,60 @@ export const useBrainPass = () => {
     passId: number,
     startTimestamp: number,
     endTimestamp: number,
+    amount: number,
   ) => {
     try {
-      const { hash } = await mint({
-        args: [passId, startTimestamp, endTimestamp],
-      })
-      const receipt = await waitForTransaction({ hash })
-      return { isError: false, msg: 'Brainy minted successfully', receipt }
+      const convertedAmount = parseUnits(`${amount}`, 18)
+      await needsApproval(convertedAmount)
+      if ((allowance as bigint) >= convertedAmount) {
+        const { hash } = await mint({
+          args: [passId, startTimestamp, endTimestamp],
+        })
+        const receipt = await waitForTransaction({ hash })
+        if (receipt) {
+          refetchUserPass()
+          return { isError: false, msg: 'BrainPass successfully minted' }
+        }
+      }
+      return { isError: true, msg: 'Allowance Error' }
     } catch (error) {
-      const { cause } = error as ErrorResponse
-      return { isError: true, msg: cause?.data?.args[0] || "Can't mint brainy" }
+      const { cause, details } = error as ErrorResponse
+      return {
+        isError: true,
+        msg: cause?.data?.args[0] || details || 'BrainPass could not be minted',
+      }
+    }
+  }
+
+  const extendEndTime = async (
+    passId: number,
+    endTimestamp: number,
+    amount: number,
+  ) => {
+    try {
+      console.log(endTimestamp)
+      const convertedAmount = parseUnits(`${amount}`, 18)
+      await needsApproval(convertedAmount)
+      if ((allowance as bigint) >= convertedAmount) {
+        const { hash } = await increaseEndTime({
+          args: [passId, endTimestamp],
+        })
+        const receipt = await waitForTransaction({ hash })
+        if (receipt) {
+          refetchUserPass()
+          return { isError: false, msg: 'BrainPass subscription renewed!' }
+        }
+      }
+      return { isError: true, msg: 'Allowance Error' }
+    } catch (error) {
+      const { cause, details } = error as ErrorResponse
+      return {
+        isError: true,
+        msg:
+          cause?.data?.args[0] ||
+          details ||
+          'BrainPass subscription could not be renewed!',
+      }
     }
   }
 
@@ -110,7 +192,10 @@ export const useBrainPass = () => {
       passId: number,
       startTimestamp: number,
       endTimestamp: number,
-    ) => mintNftPass(passId, startTimestamp, endTimestamp),
+      amount: number,
+    ) => mintNftPass(passId, startTimestamp, endTimestamp, amount),
+    extendEndTime: (passId: number, endTimestamp: number, amount: number) =>
+      extendEndTime(passId, endTimestamp, amount),
   }
 }
 
