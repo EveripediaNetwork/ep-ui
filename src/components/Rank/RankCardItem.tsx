@@ -74,7 +74,7 @@ const RankingItem = ({
           </Box>
           <Box>
             <Box>
-             {item.events && item.events[0]?.date !== '1900-01' ? (
+              {item.events && item.events[0]?.date !== '1900-01' ? (
                 <Link color="brandLinkColor" href={`wiki/${item.id}`}>
                   {item.title}
                 </Link>
