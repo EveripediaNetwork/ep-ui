@@ -23,6 +23,7 @@ import {
   TableCaption,
   Button,
   Spacer,
+  Link,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 // import { useRouter } from 'next/router'
@@ -113,9 +114,18 @@ const UserPass = () => {
                     color={isUserPassActive ? 'green.500' : 'red.500'}
                   >
                     <Text fontWeight="semibold">
-                      {isUserPassActive ? 'Active' : 'Expired'}
+                      {isUserPassActive ? 'Active' : 'Inactive'}
                     </Text>
                   </Center>
+                  {!isUserPassActive && (
+                    <Link
+                      href={"/mint-pass"}
+                      color="brandLinkColor"
+                      fontWeight="bold"
+                    >
+                      Renew
+                    </Link>
+                  )}
                 </HStack>
               </Box>
             </GridItem>
