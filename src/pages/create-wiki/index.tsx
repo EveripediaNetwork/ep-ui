@@ -36,10 +36,7 @@ import {
 import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
-import {
-  authenticatedRoute,
-  brainPassAuthenticatedRoute,
-} from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { brainPassAuthenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
