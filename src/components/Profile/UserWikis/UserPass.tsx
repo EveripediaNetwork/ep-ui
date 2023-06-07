@@ -137,7 +137,7 @@ const UserPass = () => {
                   fontWeight="bold"
                   mt={-2}
                 >
-                  NFT EDITOR PASS
+                  BRAINPASS
                 </Text>
                 <Text
                   mt={2}
@@ -146,14 +146,6 @@ const UserPass = () => {
                   fontWeight="bold"
                 >
                   #{padNumber(UserPass?.tokenId)}
-                </Text>
-                <Text mt={3} fontSize="lg">
-                  Owned by:
-                  <chakra.span color="paginationButtonActive" fontSize="sm">
-                    {' '}
-                    {shortenAccount(address?.toString() || '')}
-                    <ExternalLinkIcon mx="2px" mt={-3} />
-                  </chakra.span>
                 </Text>
                 <Box
                   bgColor="brand.50"
@@ -225,7 +217,7 @@ const UserPass = () => {
               <Thead border="none" bg="aboutFeaturesCardBg">
                 <Tr>
                   {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                    (column) => (
+                    column => (
                       <Th
                         border="none"
                         whiteSpace="nowrap"
