@@ -38,8 +38,10 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED && event.date !== '1900-01',
+    event => event.type === EventType.CREATED && event.date !== '1900-01',
   )?.date
+
+  const NoContent = 'no-content'
 
   return (
     <Tr>
@@ -135,7 +137,7 @@ const RankingItem = ({
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
-                return founder !== 'no-content' ? (
+                return founder !== NoContent ? (
                   <Link
                     href={`wiki/${founder}`}
                     key={`founder${i}`}
@@ -162,7 +164,7 @@ const RankingItem = ({
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
               .map((blockchain, i) => {
-                return blockchain !== 'no-content' ? (
+                return blockchain !== NoContent ? (
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
