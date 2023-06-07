@@ -66,7 +66,7 @@ const UserPass = () => {
     const day = endDateVal.getDate()
     const year = endDateVal.getFullYear()
 
-    const formattedDate = `${month}.${day}.${year}`
+    const formattedDate = `${day}. ${month}. ${year}`
 
     return { daysDifference, formattedDate }
   }
@@ -165,7 +165,7 @@ const UserPass = () => {
                     </Text>
                   </HStack>
                 </Box>
-                <List mt={4} spacing={4} textAlign="start">
+                <List mt={7} spacing={7} textAlign="start">
                   <ListItem>
                     <ListIcon as={FaCheckCircle} color="green.500" />
                     Exclusive support from the engineering team.
@@ -217,7 +217,7 @@ const UserPass = () => {
               <Thead border="none" bg="aboutFeaturesCardBg">
                 <Tr>
                   {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                    (column) => (
+                    column => (
                       <Th
                         border="none"
                         whiteSpace="nowrap"
