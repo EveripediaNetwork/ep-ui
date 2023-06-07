@@ -38,7 +38,7 @@ export const resources = {
       staking: 'Staking',
       bonds: 'Bonds',
       aboutUs: 'About us',
-      mintBrainPass: 'Mint BrainPass',
+      mintBrainPass: 'BrainPass',
       careers: 'Careers',
       usCareers: 'US Careers',
       brainies: 'brainies',

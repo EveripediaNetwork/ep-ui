@@ -6,6 +6,7 @@ import networkMap from '@/data/NetworkMap'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import { ProviderDataType } from '@/types/ProviderDataType'
+import { padNumber } from '@/utils/ProfileUtils/padNumber'
 import { shortenAccount } from '@/utils/textUtils'
 import {
   Box,
@@ -83,7 +84,7 @@ const Mint = () => {
   const [showInvalidNetworkModal, setShowInvalidNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
   const { passDetails, UserPass, mintNftPass, extendEndTime } = useBrainPass()
-  const [subscriptionPeriod, setSubscriptionPeriod] = useState(1)
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState(28)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
   const toast = useToast()
@@ -94,6 +95,7 @@ const Mint = () => {
     body: '',
   })
   const [connectedChainId, setConnectedChainId] = useState<string>()
+  const { address } = useAccount()
 
   const { chainId } =
     config.alchemyChain === 'maticmum'
@@ -170,7 +172,7 @@ const Mint = () => {
   }
 
   const updateSubscriptionPeriod = (period: number) => {
-    setSubscriptionPeriod(period || 1)
+    setSubscriptionPeriod(period < 28 ? 28 : period)
   }
 
   const extendEndTimeHandler = async () => {
@@ -189,6 +191,7 @@ const Mint = () => {
       setShowNotification(true)
     }
     showToast(msg, isError ? 'error' : 'success')
+    setSubscriptionPeriod(28)
     setIsMinting(false)
   }
 
@@ -211,6 +214,7 @@ const Mint = () => {
       setShowNotification(true)
     }
     showToast(msg, isError ? 'error' : 'success')
+    setSubscriptionPeriod(28)
     setIsMinting(false)
   }
 
@@ -240,7 +244,6 @@ const Mint = () => {
     } else {
       mintPass()
     }
-    setSubscriptionPeriod(1)
   }
 
   return (
@@ -259,10 +262,13 @@ const Mint = () => {
             border="1px solid"
             borderColor="divider"
             rounded="lg"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
             p={10}
             bgColor="creamCardBg"
           >
-            <Image src="/images/nft-pass/rotated-pass.png" alt="your-image" />
+            <Image src="/images/nft-pass/brainPass.png" alt="your-image" />
           </Box>
         </GridItem>
         <GridItem w="100%">
@@ -296,6 +302,12 @@ const Mint = () => {
             fontWeight="bold"
           >
             {passDetails?.name} Pass
+            <span>
+              {' '}
+              {UserPass?.tokenId !== 0 &&
+                address &&
+                `#${padNumber(UserPass?.tokenId)}`}
+            </span>
           </Text>
           <VStack align="start" gap={4}>
             <HStack w="full">
@@ -357,15 +369,6 @@ const Mint = () => {
               justifyContent="space-between"
               alignContent="center"
             >
-              <Text>Supply</Text>
-              <Text>n/{passDetails?.supply}</Text>
-            </Flex>
-            <Flex
-              w="full"
-              fontSize="sm"
-              justifyContent="space-between"
-              alignContent="center"
-            >
               <Text>Sale Price</Text>
               <Text>{passDetails?.price} IQ</Text>
             </Flex>
@@ -385,6 +388,7 @@ const Mint = () => {
                   <Slider
                     aria-label="slider-ex-2"
                     colorScheme="pink"
+                    min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
                     onChange={(value) => updateSubscriptionPeriod(value)}
@@ -472,6 +476,7 @@ const Mint = () => {
             <Button
               isDisabled={isMinting}
               isLoading={isMinting}
+              _hover={{ bg: isMinting && 'brand.400' }}
               loadingText="Loading..."
               onClick={() => mintHandler()}
               w="full"

@@ -36,17 +36,14 @@ import { SubscriptionEmptyState } from '@/components/Elements/icons/Subscription
 import useBrainPass from '@/hooks/useBrainPass'
 import { useAccount } from 'wagmi'
 import { shortenAccount } from '@/utils/textUtils'
+import { padNumber } from '@/utils/ProfileUtils/padNumber'
 
 const UserPass = () => {
   //   const router = useRouter()
   //   const address = router.query.profile as string
 
   const { address } = useAccount()
-  const { UserPass, isUserPassActive } = useBrainPass()
-
-  const padNumber = (val: number | undefined) => {
-    return val?.toString().padStart(3, '0')
-  }
+  const { UserPass, isUserPassActive, passDetails } = useBrainPass()
 
   const dateDetails = (endDate: number) => {
     const currentDate = Date.now()
@@ -290,7 +287,7 @@ const UserPass = () => {
                     Jan 6, 2023
                   </Td>
                   <Td fontSize="sm" color="tagColor" textAlign="center">
-                    General Pass
+                    {passDetails?.name} Pass
                   </Td>
                   <Td fontSize="sm" textAlign="center" color="tagColor">
                     0.2TH
