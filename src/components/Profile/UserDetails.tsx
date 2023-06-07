@@ -159,7 +159,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     bg="black"
                     shouldWrapChildren
                     hasArrow={true}
-                    label="An editor on iq wiki with an inactive NFT Brainpass"
+                    label="An editor on iq wiki with an inactive Brainpass"
                     _dark={{ bg: 'white', color: 'black' }}
                   >
                     <Icon boxSize={6} as={BrainIcon} />

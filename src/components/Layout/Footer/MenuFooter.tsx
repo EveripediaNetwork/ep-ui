@@ -148,6 +148,11 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
+                href="/mint-pass"
+              >{`${t('mintBrainPass')}`}</Link>
+              <Link
+                textAlign={{ base: 'center', md: 'left' }}
+                prefetch={false}
                 href="/faq"
               >{`${t('faq')}`}</Link>
               <Link
