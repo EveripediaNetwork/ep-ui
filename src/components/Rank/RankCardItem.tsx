@@ -38,7 +38,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    event => event.type === EventType.CREATED && event.date !== '1900-01',
+    (event) => event.type === EventType.CREATED && event.date !== '1900-01',
   )?.date
 
   const NoContent = 'no-content'
