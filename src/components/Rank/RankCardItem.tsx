@@ -74,7 +74,15 @@ const RankingItem = ({
           </Box>
           <Box>
             <Box>
-              {item.hasWiki ? (
+              {item.nftMarketData ? (
+                item.nftMarketData?.hasWiki ? (
+                  <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                    {item.title}
+                  </Link>
+                ) : (
+                  <Text>{item.title}</Text>
+                )
+              ) : item.tokenMarketData?.hasWiki ? (
                 <Link color="brandLinkColor" href={`wiki/${item.id}`}>
                   {item.title}
                 </Link>
