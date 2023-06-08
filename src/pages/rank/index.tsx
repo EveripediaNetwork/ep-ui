@@ -58,7 +58,6 @@ const Rank = ({
       limit: LISTING_LIMITS,
     },
   )
-
   return (
     <Box>
       <RankHeader />
