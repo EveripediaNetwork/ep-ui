@@ -300,7 +300,6 @@ const Mint = () => {
             fontSize="2xl"
             fontWeight="bold"
           >
-            {passDetails?.name} Pass
             <span>
               {' '}
               {UserPass?.tokenId !== 0 &&

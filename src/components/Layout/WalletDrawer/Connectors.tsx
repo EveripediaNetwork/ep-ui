@@ -211,19 +211,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -261,7 +258,13 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               opacity={isUserPassActive ? 1 : 0.4}
               p={4}
             >
-              <Image src="/images/nft-pass/pass.png" />
+              <Center>
+                <Image
+                  src="/images/nft-pass/rotated-brainpass.png"
+                  maxH="348px"
+                  maxW="348px"
+                />
+              </Center>
             </Box>
             {isUserConnected && UserPass && UserPass.endTimeStamp > 0 && (
               <Box
