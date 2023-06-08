@@ -172,8 +172,8 @@ export async function getStaticProps() {
   const sortedleaderboards = sortLeaderboards(leaderboard)
 
   const rankings = {
-    NFTsListing: NFTsList,
-    TokensListing: TokensList,
+    NFTsListing: NFTsList || [],
+    TokensListing: TokensList || [],
   }
 
   return {
@@ -183,7 +183,7 @@ export async function getStaticProps() {
       categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
-      rankings: rankings || [],
+      rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
     },
   }
