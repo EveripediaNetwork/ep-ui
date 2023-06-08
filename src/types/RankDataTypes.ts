@@ -1,6 +1,7 @@
 import { BaseEvents } from '@everipedia/iq-utils'
 
 export interface RankCardType {
+  hasWiki: any
   id: string
   title: string
   ipfs: string
@@ -24,6 +25,7 @@ export interface Image {
 }
 
 export interface NftMarketData {
+  hasWiki: boolean
   floor_price_eth: number
   floor_price_usd: number
   market_cap_usd: number
@@ -32,6 +34,7 @@ export interface NftMarketData {
   image: string
 }
 export interface TokenMarketData {
+  hasWiki: boolean
   floor_price_eth: number
   floor_price_usd: number
   market_cap: number
