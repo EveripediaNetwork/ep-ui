@@ -38,10 +38,8 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED && event.date !== '1900-01',
+    event => event.type === EventType.CREATED,
   )?.date
-
-  const NoContent = 'no-content'
 
   return (
     <Tr>
@@ -76,7 +74,7 @@ const RankingItem = ({
           </Box>
           <Box>
             <Box>
-              {item.events && item.events[0]?.date !== '1900-01' ? (
+              {item.hasWiki ? (
                 <Link color="brandLinkColor" href={`wiki/${item.id}`}>
                   {item.title}
                 </Link>
@@ -137,7 +135,7 @@ const RankingItem = ({
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
                 const founder = item.linkedWikis.founders[i]
-                return founder !== NoContent ? (
+                return (
                   <Link
                     href={`wiki/${founder}`}
                     key={`founder${i}`}
@@ -146,10 +144,8 @@ const RankingItem = ({
                     {founderName}
                     {i !== arr.length - 1 && arr.length > 1 && ', '}
                   </Link>
-                ) : (
-                  <Text>NA</Text>
                 )
-              }) ?? <Text>NA</Text>}
+              })}
             {item.linkedWikis.founders.length > 3 && (
               <Text color="brandLinkColor">...</Text>
             )}
@@ -164,7 +160,7 @@ const RankingItem = ({
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
               .map((blockchain, i) => {
-                return blockchain !== NoContent ? (
+                return (
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
@@ -176,13 +172,11 @@ const RankingItem = ({
                         blockchain.slice(1).replace('-', ' ')}
                     </Link>
                   </React.Fragment>
-                ) : (
-                  <Text>NA</Text>
                 )
               })}
           </Flex>
         ) : (
-          'NA'
+          <Text>NA</Text>
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
