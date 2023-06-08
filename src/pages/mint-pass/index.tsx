@@ -7,7 +7,6 @@ import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
-import { shortenAccount } from '@/utils/textUtils'
 import {
   Box,
   Button,
@@ -17,13 +16,11 @@ import {
   GridItem,
   HStack,
   Icon,
-  IconButton,
   Image,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
-  InputRightElement,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -42,7 +39,6 @@ import React, { useState, useEffect, ReactElement } from 'react'
 import {
   RiHeartLine,
   RiMailLine,
-  RiMore2Fill,
   RiQuestionLine,
   RiRobotLine,
   RiSearchEyeLine,
@@ -309,50 +305,33 @@ const Mint = () => {
                 `#${padNumber(UserPass?.tokenId)}`}
             </span>
           </Text>
-          <VStack align="start" gap={4}>
-            <HStack w="full">
-              <InputGroup>
-                <Input
-                  placeholder="0X03D3...1766"
-                  size="lg"
-                  _placeholder={{ fontSize: 'sm' }}
-                  w="full"
-                  disabled={true}
-                  value={shortenAccount(env.NEXT_PUBLIC_BRAINPASS_ADDRESS)}
-                  fontSize="sm"
-                />
-                <InputRightElement p={6}>
-                  <Icon as={RiMore2Fill} />
-                </InputRightElement>
-              </InputGroup>
-              <Link
-                href={`https://mumbai.polygonscan.com/address/${env.NEXT_PUBLIC_BRAINPASS_ADDRESS}`}
-                isExternal
-                display="flex"
-                gap={1}
-                fontSize="sm"
-              >
-                <IconButton
-                  aria-label="view contract"
-                  icon={<RiShareBoxLine />}
-                  size="lg"
-                  variant="outline"
-                />
-              </Link>
+          <Link
+            href={`https://mumbai.polygonscan.com/address/${env.NEXT_PUBLIC_BRAINPASS_ADDRESS}`}
+            isExternal
+            display="flex"
+            gap={1}
+            fontSize="sm"
+            color="brandLinkColor"
+          >
+            <HStack mb={4}>
+              <Text color="brandLinkColor" fontSize="sm">
+                View on polygonscan
+              </Text>
+              <RiShareBoxLine fontSize={20} />
             </HStack>
-            <Text fontSize="sm">
-              The BrainPass acts as a unique opportunity for individuals to
-              obtain exclusive access to the IQ Wiki platform as esteemed
-              editors. With this pass, holders are empowered to contribute,
-              modify, and create captivating content, thereby augmenting the
-              platform's wealth of knowledge and enhancing its appeal to those
-              deeply invested in the crypto space. By harnessing the power of
-              this pass, editors have the ability to shape and enrich the
-              collective understanding of cryptocurrencies, fostering an
-              inclusive and collaborative environment for the benefit of all
-              users seeking comprehensive insights and valuable information.
-            </Text>
-          </VStack>
+          </Link>
+          <Text fontSize="sm">
+            The BrainPass acts as a unique opportunity for individuals to obtain
+            exclusive access to the IQ Wiki platform as esteemed editors. With
+            this pass, holders are empowered to contribute, modify, and create
+            captivating content, thereby augmenting the platform's wealth of
+            knowledge and enhancing its appeal to those deeply invested in the
+            crypto space. By harnessing the power of this pass, editors have the
+            ability to shape and enrich the collective understanding of
+            cryptocurrencies, fostering an inclusive and collaborative
+            environment for the benefit of all users seeking comprehensive
+            insights and valuable information.
+          </Text>
           <VStack gap={4} my={8}>
             <Flex
               w="full"
