@@ -264,7 +264,10 @@ const Mint = () => {
             p={5}
             bgColor="creamCardBg"
           >
-            <Image src="/images/nft-pass/rotated-brainpass.png" alt="your-image" />
+            <Image
+              src="/images/nft-pass/rotated-brainpass.png"
+              alt="your-image"
+            />
           </Box>
         </GridItem>
         <GridItem w="100%">
