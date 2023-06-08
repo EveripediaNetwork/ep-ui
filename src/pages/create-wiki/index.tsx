@@ -36,7 +36,7 @@ import {
 import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
-import { brainPassAuthenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -221,7 +221,7 @@ const CreateWiki = () => {
   )
 }
 
-const Page: PageWithoutFooter = brainPassAuthenticatedRoute(
+const Page: PageWithoutFooter = authenticatedRoute(
   CreateWiki as () => JSX.Element,
 )
 
