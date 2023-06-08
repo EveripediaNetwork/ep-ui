@@ -79,7 +79,7 @@ const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showInvalidNetworkModal, setShowInvalidNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passDetails, UserPass, mintNftPass, extendEndTime } = useBrainPass()
+  const { passDetails, userPass, mintNftPass, extendEndTime } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(28)
   const [maxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
@@ -110,8 +110,8 @@ const Mint = () => {
   }
 
   useEffect(() => {
-    if (UserPass && UserPass?.endTimeStamp > 0) {
-      const endDate = new Date(UserPass.endTimeStamp * 1000)
+    if (userPass && userPass?.endTimeStamp > 0) {
+      const endDate = new Date(userPass.endTimeStamp * 1000)
       endDate.setDate(endDate.getDate() + subscriptionPeriod)
       setEndDate(endDate)
     } else {
@@ -157,11 +157,11 @@ const Mint = () => {
   }, [detectedProvider, isConnected])
 
   const checkPassStatus = () => {
-    if (UserPass?.endTimeStamp === 0 || undefined) {
+    if (userPass?.endTimeStamp === 0 || undefined) {
       return false
     }
     const todayToTimestamp = new Date().getTime()
-    if (UserPass && UserPass?.endTimeStamp < todayToTimestamp) {
+    if (userPass && userPass?.endTimeStamp < todayToTimestamp) {
       return true
     }
     return false
@@ -175,7 +175,7 @@ const Mint = () => {
     if (!endDate) return
     const newEndDate = endDate?.getTime() / 1000
     const { msg, isError } = await extendEndTime(
-      UserPass?.tokenId || 0,
+      userPass?.tokenId || 0,
       Math.floor(newEndDate),
       subscriptionPeriod * (passDetails?.price || 0),
     )
@@ -235,7 +235,7 @@ const Mint = () => {
       return
     }
     setIsMinting(true)
-    if (UserPass && UserPass?.endTimeStamp > 0) {
+    if (userPass && userPass?.endTimeStamp > 0) {
       extendEndTimeHandler()
     } else {
       mintPass()
@@ -302,9 +302,9 @@ const Mint = () => {
           >
             <span>
               {' '}
-              {UserPass?.tokenId !== 0 &&
+              {userPass?.tokenId !== 0 &&
                 address &&
-                `#${padNumber(UserPass?.tokenId)}`}
+                `#${padNumber(userPass?.tokenId)}`}
             </span>
           </Text>
           <Link
@@ -372,7 +372,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -400,7 +400,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />

@@ -76,9 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     py: 2,
   }
   const { t } = useTranslation()
-  const { UserPass } = useBrainPass()
-
-  console.log(UserPass)
+  const {userPass} = useBrainPass()
   // TODO: change
   useEffect(() => {
     if (leaderboard.length < 1 && !isFetched.current) {
@@ -155,7 +153,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     shortenAccount(address)}
                 </chakra.span>
 
-                {UserPass?.tokenId && (
+                {userPass?.tokenId && (
                   <chakra.span mb="18px !important">
                     <Tooltip
                       color="white"
@@ -166,7 +164,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                       shouldWrapChildren
                       hasArrow={true}
                       label={`An editor on iq wiki with an ${
-                        compareDate(UserPass?.endTimeStamp)
+                        compareDate(userPass?.endTimeStamp)
                           ? 'active'
                           : 'inactive'
                       } Brainpass`}
@@ -176,7 +174,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                         boxSize={6}
                         as={BrainPassIcon}
                         color={
-                          compareDate(UserPass?.endTimeStamp)
+                          compareDate(userPass?.endTimeStamp)
                             ? 'paginationButtonActive'
                             : 'none'
                         }

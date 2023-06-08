@@ -41,11 +41,11 @@ import { dateDetails } from '@/utils/DataTransform/passUtils'
 const UserPass = () => {
   const router = useRouter()
   const { address } = useAccount()
-  const { UserPass, isUserPassActive, passDetails } = useBrainPass()
+  const { userPass, isUserPassActive, passDetails } = useBrainPass()
   const [dateData, setDateData] = useState<any>()
 
   useEffect(() => {
-    const info = dateDetails(UserPass?.endTimeStamp || 0)
+    const info = dateDetails(userPass?.endTimeStamp || 0)
     setDateData(info)
   }, [])
 
@@ -55,7 +55,7 @@ const UserPass = () => {
       maxW={{ base: '7xl', xl: '6xl', '2xl': '80%' }}
       my={{ base: '10', lg: '16' }}
     >
-      {UserPass?.tokenId !== 0 ? (
+      {userPass?.tokenId !== 0 ? (
         <>
           <Grid
             templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
@@ -116,7 +116,7 @@ const UserPass = () => {
                   fontSize="2xl"
                   fontWeight="bold"
                 >
-                  #{padNumber(UserPass?.tokenId)}
+                  #{padNumber(userPass?.tokenId)}
                 </Text>
                 <Box
                   bgColor="brand.50"
@@ -188,7 +188,7 @@ const UserPass = () => {
               <Thead border="none" bg="aboutFeaturesCardBg">
                 <Tr>
                   {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                    (column) => (
+                    column => (
                       <Th
                         border="none"
                         whiteSpace="nowrap"

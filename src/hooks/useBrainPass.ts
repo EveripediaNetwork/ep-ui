@@ -189,7 +189,7 @@ export const useBrainPass = () => {
   }
 
   return {
-    UserPass: refinePassDetails(),
+    userPass: refinePassDetails(),
     isUserPassActive: isUserPassActive(),
     passDetails: getPassDetails(),
     mintNftPass: (

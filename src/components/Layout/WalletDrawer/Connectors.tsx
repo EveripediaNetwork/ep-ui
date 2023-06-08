@@ -53,7 +53,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
-  const { isUserPassActive, UserPass } = useBrainPass()
+  const { isUserPassActive, userPass } = useBrainPass()
 
   const displayPassInfo = (endTime: number) => {
     const currentDate = Date.now()
@@ -211,19 +211,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -269,7 +266,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 />
               </Center>
             </Box>
-            {isUserConnected && UserPass && UserPass.endTimeStamp > 0 && (
+            {isUserConnected && userPass && userPass.endTimeStamp > 0 && (
               <Box
                 bgColor="brand.50"
                 _dark={{ bgColor: 'rgba(49, 4, 25, 0.7);' }}
@@ -282,7 +279,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     color="paginationButtonActive"
                   />
                   <Text fontSize="xs" fontWeight="semibold">
-                    {`${displayPassInfo(UserPass?.endTimeStamp)}`}
+                    {`${displayPassInfo(userPass?.endTimeStamp)}`}
                   </Text>
                 </HStack>
               </Box>
