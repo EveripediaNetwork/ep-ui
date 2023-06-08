@@ -2,7 +2,6 @@ import { WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL } from '@/data/Constants'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { Button, Tooltip } from '@chakra-ui/react'
 import React from 'react'
-import { useAccount } from 'wagmi'
 
 const AIGenerateButton = ({
   isGenerating,
@@ -13,8 +12,7 @@ const AIGenerateButton = ({
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false)
   const [timeLeft, setTimeLeft] = React.useState(0)
-  const { address: userAddress } = useAccount()
-  const { userCanEdit } = useWhiteListValidator(userAddress)
+  const { userCanEdit } = useWhiteListValidator()
 
   React.useEffect(() => {
     const timeCounter = setInterval(() => {
