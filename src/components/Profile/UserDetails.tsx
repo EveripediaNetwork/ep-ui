@@ -39,7 +39,9 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { env } from '@/env.mjs'
-import BrainIcon from '../Icons/brainIcon'
+import BrainPassIcon from '../Icons/brainPassIcon'
+import useBrainPass from '@/hooks/useBrainPass'
+import { compareDate } from '@/utils/DataTransform/passUtils'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -74,6 +76,9 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     py: 2,
   }
   const { t } = useTranslation()
+  const {UserPass } = useBrainPass()
+
+  console.log(UserPass)
   // TODO: change
   useEffect(() => {
     if (leaderboard.length < 1 && !isFetched.current) {
@@ -150,22 +155,27 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                     shortenAccount(address)}
                 </chakra.span>
 
-                <chakra.span mb="18px !important">
-                  <Tooltip
-                    color="white"
-                    placement="right"
-                    rounded="md"
-                    p={3}
-                    bg="black"
-                    shouldWrapChildren
-                    hasArrow={true}
-                    label="An editor on iq wiki with an inactive Brainpass"
-                    _dark={{ bg: 'white', color: 'black' }}
-                  >
-                    <Icon boxSize={6} as={BrainIcon} />
-                  </Tooltip>
-                </chakra.span>
-
+                {UserPass?.tokenId && (
+                  <chakra.span mb="18px !important">
+                    <Tooltip
+                      color="white"
+                      placement="right"
+                      rounded="md"
+                      p={3}
+                      bg="black"
+                      shouldWrapChildren
+                      hasArrow={true}
+                      label={`An editor on iq wiki with an ${compareDate(UserPass?.endTimeStamp) ? "active" : "inactive"} Brainpass`}
+                      _dark={{ bg: 'white', color: 'black' }}
+                    >
+                      <Icon
+                        boxSize={6}
+                        as={BrainPassIcon}
+                        color={compareDate(UserPass?.endTimeStamp) ? "paginationButtonActive":"none"}
+                      />
+                    </Tooltip>
+                  </chakra.span>
+                )}
                 {addressRank !== null && (
                   <chakra.span mb="18px !important">
                     <RankIcon size="22" rank={addressRank} />

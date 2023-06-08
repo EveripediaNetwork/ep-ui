@@ -36,35 +36,12 @@ import { shortenAccount } from '@/utils/textUtils'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
 import BrainPassIcon from '@/components/Icons/brainPassIcon'
 import { useRouter } from 'next/router'
+import { dateDetails } from '@/utils/DataTransform/passUtils'
 
 const UserPass = () => {
   const router = useRouter()
   const { address } = useAccount()
   const { UserPass, isUserPassActive, passDetails } = useBrainPass()
-
-  const dateDetails = (endDate: number) => {
-    const currentDate = Date.now()
-    const endTimestamp = new Date(endDate * 1000).getTime()
-    const oneDay = 24 * 60 * 60 * 1000
-    const difference = Math.round(Math.abs(endTimestamp - currentDate) / oneDay)
-
-    let daysDifference = ''
-    if (endTimestamp > currentDate) {
-      daysDifference = `Subscription expires in ${difference} day(s)`
-    } else {
-      daysDifference = 'Brain Pass Subscription has expired'
-    }
-
-    const endDateVal = new Date(endDate * 1000)
-    const month = endDateVal.getMonth() + 1
-    const day = endDateVal.getDate()
-    const year = endDateVal.getFullYear()
-
-    const formattedDate = `${day}. ${month}. ${year}`
-
-    return { daysDifference, formattedDate }
-  }
-
   const [dateData, setDateData] = useState<any>()
 
   useEffect(() => {
@@ -155,7 +132,7 @@ const UserPass = () => {
                       color="paginationButtonActive"
                     />
                     <Text fontSize="xs" fontWeight="semibold">
-                      {dateData?.daysDifference} ({dateData?.formattedDate})
+                      {dateData?.text} ({dateData?.formattedDate})
                     </Text>
                   </HStack>
                 </Box>
