@@ -41,7 +41,12 @@ export const Collections = ({
   ]
 
   return (
-    <Tabs alignSelf="self-start" w="full" mt="6" defaultIndex={currentTab === 'brainpass' ? 2: 0}>
+    <Tabs
+      alignSelf="self-start"
+      w="full"
+      mt="6"
+      defaultIndex={currentTab === 'brainpass' ? 2 : 0}
+    >
       <TabList pl={5}>
         {SECTIONS.map((section, sid) => (
           <CustomTab

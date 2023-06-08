@@ -29,7 +29,7 @@ const MintNotification = ({
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
   const router = useRouter()
-  const {address} = useAccount()
+  const { address } = useAccount()
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -60,7 +60,11 @@ const MintNotification = ({
             {body}
           </Text>
           <Flex my="5" justifyContent="center">
-            <Button onClick={() => router.push(`/account/${address}?tab=brainpass`)}>View BrainPass</Button>
+            <Button
+              onClick={() => router.push(`/account/${address}?tab=brainpass`)}
+            >
+              View BrainPass
+            </Button>
           </Flex>
         </Box>
       </AlertDialogContent>
