@@ -491,7 +491,7 @@ const Mint = () => {
             </Text>
           </Box>
           <Text fontSize="xl" fontWeight="bold">
-            BRAINPASS PERKS PERKS
+            BRAINPASS PERKS
           </Text>
           <Text fontSize="sm" fontWeight="light" textAlign="center" px={6}>
             Some benefits associated with owning an BrainPass on IQ Wiki

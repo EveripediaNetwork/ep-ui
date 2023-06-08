@@ -66,6 +66,7 @@ const UserPass = () => {
                 rounded="lg"
                 border="1px solid"
                 borderColor="walletDrawerBorderColor"
+                bgColor="careersBackground"
               >
                 <Center py={5}>
                   <Image maxH="378px" src="/images/nft-pass/brainPass.png" />
@@ -188,7 +189,7 @@ const UserPass = () => {
               <Thead border="none" bg="aboutFeaturesCardBg">
                 <Tr>
                   {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                    (column) => (
+                    column => (
                       <Th
                         border="none"
                         whiteSpace="nowrap"
