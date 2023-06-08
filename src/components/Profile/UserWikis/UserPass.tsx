@@ -330,8 +330,8 @@ const UserPass = () => {
             <Flex flexDir="column" textAlign="center" align="center" gap={6}>
               <MintEmptyState maxBlockSize="20vw" />
               <Text color="fadedText2" maxW="350px">
-                No BrainPass yet. You can mint one and become an editor on
-                iq wiki.
+                No BrainPass yet. You can mint one and become an editor on iq
+                wiki.
               </Text>
               <LinkButton href="/mint-pass" px="16" w="fit-content">
                 Mint
