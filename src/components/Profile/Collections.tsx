@@ -8,6 +8,7 @@ import UserEditedWikis from './UserWikis/UserEditedWikis'
 import { Activity } from '@/types/ActivityDataType'
 import UserPass from './UserWikis/UserPass'
 import BrainPassIcon from '../Icons/brainPassIcon'
+import { useRouter } from 'next/router'
 
 interface CollectionsProps {
   createdWikis: Activity[]
@@ -18,6 +19,9 @@ export const Collections = ({
   createdWikis,
   editedWikis,
 }: CollectionsProps) => {
+  const router = useRouter()
+  const currentTab = router?.query?.tab
+
   const SECTIONS = [
     {
       label: 'Wikis',
@@ -37,7 +41,7 @@ export const Collections = ({
   ]
 
   return (
-    <Tabs alignSelf="self-start" w="full" mt="6">
+    <Tabs alignSelf="self-start" w="full" mt="6" defaultIndex={currentTab === 'brainpass' ? 2: 0}>
       <TabList pl={5}>
         {SECTIONS.map((section, sid) => (
           <CustomTab

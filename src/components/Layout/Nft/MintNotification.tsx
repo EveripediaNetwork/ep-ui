@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine } from 'react-icons/ri'
+import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
 
 const MintNotification = ({
   modalState,
@@ -26,7 +28,8 @@ const MintNotification = ({
   body: string
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-
+  const router = useRouter()
+  const {address} = useAccount()
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -57,7 +60,7 @@ const MintNotification = ({
             {body}
           </Text>
           <Flex my="5" justifyContent="center">
-            <Button onClick={() => setModalState(false)}>Close</Button>
+            <Button onClick={() => router.push(`/account/${address}?tab=brainpass`)}>View BrainPass</Button>
           </Flex>
         </Box>
       </AlertDialogContent>
