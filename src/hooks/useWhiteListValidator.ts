@@ -1,17 +1,11 @@
-import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { useContractRead } from 'wagmi'
+import useBrainPass from './useBrainPass'
 
-export const useWhiteListValidator = (address: string | undefined | null) => {
-  const { data: isEditorWhiteListed } = useContractRead({
-    address: config.editorAddress as `0x${string}`,
-    abi: EditorABI,
-    functionName: 'isEditorWhitelisted',
-    args: [address],
-  })
+export const useWhiteListValidator = () => {
+  const { isUserPassActive } = useBrainPass()
 
   return {
-    userCanEdit: config.isProduction === 'true' ? isEditorWhiteListed : true,
+    userCanEdit: config.isProduction === 'true' ? isUserPassActive : true,
   }
 }
 
