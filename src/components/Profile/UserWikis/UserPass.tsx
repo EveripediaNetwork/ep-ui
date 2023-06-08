@@ -23,11 +23,8 @@ import {
   TableCaption,
   Button,
   Spacer,
-  Link,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-// import { useRouter } from 'next/router'
-import { RiTicket2Line } from 'react-icons/ri'
 import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { LinkButton } from '@/components/Elements'
@@ -37,11 +34,11 @@ import useBrainPass from '@/hooks/useBrainPass'
 import { useAccount } from 'wagmi'
 import { shortenAccount } from '@/utils/textUtils'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
+import BrainPassIcon from '@/components/Icons/brainPassIcon'
+import { useRouter } from 'next/router'
 
 const UserPass = () => {
-  //   const router = useRouter()
-  //   const address = router.query.profile as string
-
+  const router = useRouter()
   const { address } = useAccount()
   const { UserPass, isUserPassActive, passDetails } = useBrainPass()
 
@@ -93,9 +90,9 @@ const UserPass = () => {
                 border="1px solid"
                 borderColor="walletDrawerBorderColor"
               >
-                <Box p={4}>
-                  <Image src="/images/nft-pass/pass.png" />
-                </Box>
+                <Center py={5}>
+                  <Image maxH="378px" src="/images/nft-pass/brainPass.png" />
+                </Center>
                 <Divider orientation="horizontal" />
                 <HStack px={4} py={2} columnGap={4}>
                   <Text>Subscription Status:</Text>
@@ -114,15 +111,15 @@ const UserPass = () => {
                       {isUserPassActive ? 'Active' : 'Inactive'}
                     </Text>
                   </Center>
-                  {!isUserPassActive && (
-                    <Link
-                      href={'/mint-pass'}
-                      color="brandLinkColor"
-                      fontWeight="bold"
-                    >
-                      Renew
-                    </Link>
-                  )}
+                  <Spacer />
+                  <Button
+                    onClick={() => router.push('/mint-pass')}
+                    fontSize="xs"
+                    size="sm"
+                    px={4}
+                  >
+                    Subscribe
+                  </Button>
                 </HStack>
               </Box>
             </GridItem>
@@ -153,7 +150,7 @@ const UserPass = () => {
                 >
                   <HStack gap={2}>
                     <Icon
-                      as={RiTicket2Line}
+                      as={BrainPassIcon}
                       boxSize={6}
                       color="paginationButtonActive"
                     />
