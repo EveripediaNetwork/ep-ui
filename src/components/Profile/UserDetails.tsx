@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     py: 2,
   }
   const { t } = useTranslation()
-  const {userPass} = useBrainPass()
+  const { userPass } = useBrainPass()
   // TODO: change
   useEffect(() => {
     if (leaderboard.length < 1 && !isFetched.current) {
