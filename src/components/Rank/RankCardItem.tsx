@@ -74,9 +74,21 @@ const RankingItem = ({
           </Box>
           <Box>
             <Box>
-              <Link color="brandLinkColor" href={`wiki/${item.id}`}>
-                {item.title}
-              </Link>
+              {item.nftMarketData ? (
+                item.nftMarketData?.hasWiki ? (
+                  <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                    {item.title}
+                  </Link>
+                ) : (
+                  <Text>{item.title}</Text>
+                )
+              ) : item.tokenMarketData?.hasWiki ? (
+                <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                  {item.title}
+                </Link>
+              ) : (
+                <Text>{item.title}</Text>
+              )}
             </Box>
             <Text color="rankingListText">
               {item.nftMarketData
@@ -141,13 +153,13 @@ const RankingItem = ({
                     {i !== arr.length - 1 && arr.length > 1 && ', '}
                   </Link>
                 )
-              }) ?? <Text color="brandLinkColor">NA</Text>}
+              })}
             {item.linkedWikis.founders.length > 3 && (
               <Text color="brandLinkColor">...</Text>
             )}
           </Flex>
         ) : (
-          <Text color="brandLinkColor">NA</Text>
+          <Text>NA</Text>
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
@@ -172,7 +184,7 @@ const RankingItem = ({
               })}
           </Flex>
         ) : (
-          'NA'
+          <Text>NA</Text>
         )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
