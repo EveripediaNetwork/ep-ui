@@ -76,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     py: 2,
   }
   const { t } = useTranslation()
-  const {UserPass } = useBrainPass()
+  const { UserPass } = useBrainPass()
 
   console.log(UserPass)
   // TODO: change
@@ -165,13 +165,21 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                       bg="black"
                       shouldWrapChildren
                       hasArrow={true}
-                      label={`An editor on iq wiki with an ${compareDate(UserPass?.endTimeStamp) ? "active" : "inactive"} Brainpass`}
+                      label={`An editor on iq wiki with an ${
+                        compareDate(UserPass?.endTimeStamp)
+                          ? 'active'
+                          : 'inactive'
+                      } Brainpass`}
                       _dark={{ bg: 'white', color: 'black' }}
                     >
                       <Icon
                         boxSize={6}
                         as={BrainPassIcon}
-                        color={compareDate(UserPass?.endTimeStamp) ? "paginationButtonActive":"none"}
+                        color={
+                          compareDate(UserPass?.endTimeStamp)
+                            ? 'paginationButtonActive'
+                            : 'none'
+                        }
                       />
                     </Tooltip>
                   </chakra.span>
