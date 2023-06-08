@@ -114,7 +114,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMITS}
-                onPageChange={page => setTokensOffset(page)}
+                onPageChange={(page) => setTokensOffset(page)}
               >
                 <RankTableHead />
                 <Tbody>
@@ -156,7 +156,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMITS}
-                onPageChange={page => setNftOffset(page)}
+                onPageChange={(page) => setNftOffset(page)}
               >
                 <RankTableHead />
                 <Tbody>
