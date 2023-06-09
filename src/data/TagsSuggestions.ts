@@ -60,6 +60,10 @@ export const TagsSuggestions = [
     value: 'Marketplaces',
   },
   {
+    label: 'Memecoins',
+    value: 'Memecoins',
+  },
+  {
     label: 'Organizations',
     value: 'Organizations',
   },
