@@ -53,7 +53,7 @@ const PublishNotification = ({
             {text}
           </Text>
           <Flex my="5" justifyContent="center">
-            <Button onClick={() => router.push("/mint-pass")}>
+            <Button onClick={() => router.push('/mint-pass')}>
               {buttonTitle}
             </Button>
           </Flex>
