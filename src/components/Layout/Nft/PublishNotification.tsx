@@ -12,16 +12,21 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
-const MintNotification = ({
+const PublishNotification = ({
   modalState,
   setModalState,
+  buttonTitle,
+  text,
 }: {
   modalState: boolean
   setModalState: (state: boolean) => void
+  buttonTitle: string
+  text: string
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-
+  const router = useRouter()
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -45,12 +50,12 @@ const MintNotification = ({
             />
           </Flex>
           <Text fontSize="sm" mt="5" textAlign="center">
-            To publish a wiki, it is mandatory to possess a BrainPass. Don't
-            worry if you don't have one yet! Simply mint your own BrainPass to
-            gain access.
+            {text}
           </Text>
           <Flex my="5" justifyContent="center">
-            <Button>Mint</Button>
+            <Button onClick={() => router.push("/mint-pass")}>
+              {buttonTitle}
+            </Button>
           </Flex>
         </Box>
       </AlertDialogContent>
@@ -58,4 +63,4 @@ const MintNotification = ({
   )
 }
 
-export default MintNotification
+export default PublishNotification

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
+import { Button, Box, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { useAppSelector } from '@/store/hook'
 import { logEvent } from '@/utils/googleAnalytics'
@@ -11,7 +11,7 @@ import {
 } from '@everipedia/iq-utils'
 import { useAccount } from 'wagmi'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
-import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
+import { useBrainPass } from '@/hooks/useBrainPass'
 import { store } from '@/store/store'
 import { postWiki } from '@/services/wikis'
 import { ClientError } from 'graphql-request'
@@ -25,6 +25,7 @@ import {
 import ReactCanvasConfetti from 'react-canvas-confetti'
 import useConfetti from '@/hooks/useConfetti'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
+import { compareDate } from '@/utils/DataTransform/passUtils'
 import { useGetSignedHash } from '@/hooks/useGetSignedHash'
 import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
@@ -35,6 +36,7 @@ import config from '@/config'
 import networkMap from '@/data/NetworkMap'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import detectEthereumProvider from '@metamask/detect-provider'
+import PublishNotification from '@/components/Layout/Nft/PublishNotification'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -44,7 +46,6 @@ export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
-  const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const { chainId } =
@@ -93,9 +94,15 @@ export const WikiPublishButton = () => {
     useGetSignedHash()
 
   const isPublishDisabled =
-    submittingWiki || !userAddress || signing || isLoadingWiki || !userCanEdit
+    submittingWiki || !userAddress || signing || isLoadingWiki
 
   const { fireConfetti, confettiProps } = useConfetti()
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationDetails, setNotificationDetails] = useState({
+    text: '',
+    buttonTitle: '',
+  })
+  const { userPass } = useBrainPass()
 
   useEffect(() => {
     const getConnectedChain = async (provider: ProviderDataType) => {
@@ -202,6 +209,22 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
+    if (!userPass?.tokenId) {
+      setNotificationDetails({
+        text: "To publish a wiki, it is mandatory to possess a BrainPass. Don't worry if you don't have one yet! Simply Mint your own BrainPass to gain access.",
+        buttonTitle: 'Mint',
+      })
+      setShowNotification(true)
+      return
+    }
+    if (!compareDate(userPass?.endTimeStamp)) {
+      setNotificationDetails({
+        text: 'Unfortunately, your subscription has expired, which means you are currently unable to publish a wiki. To regain access and continue enjoying the benefits, kindly renew your subscription..',
+        buttonTitle: 'Subscribe',
+      })
+      setShowNotification(true)
+      return
+    }
     if (connectedChainId !== chainId) {
       setShowNetworkModal(true)
       return
@@ -269,18 +292,7 @@ export const WikiPublishButton = () => {
 
   return (
     <>
-      <Tooltip
-        isDisabled={!!userCanEdit}
-        p={2}
-        rounded="md"
-        placement="bottom-start"
-        shouldWrapChildren
-        color="white"
-        bg="toolTipBg"
-        hasArrow
-        label="Your address is not yet whitelisted"
-        mt="3"
-      >
+      <Box>
         {!isNewCreateWiki ? (
           <PublishWithCommitMessage
             handleWikiPublish={() => handleWikiPublish()}
@@ -290,7 +302,6 @@ export const WikiPublishButton = () => {
         ) : (
           <Button
             onClick={() => handleWikiPublish()}
-            disabled={!userCanEdit}
             _disabled={{
               opacity: isPublishDisabled ? 0.5 : undefined,
               _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
@@ -299,7 +310,7 @@ export const WikiPublishButton = () => {
             Publish
           </Button>
         )}
-      </Tooltip>
+      </Box>
       <OverrideExistingWikiDialog
         isOpen={isOverrideModalOpen}
         publish={() => {
@@ -325,6 +336,12 @@ export const WikiPublishButton = () => {
       <NetworkErrorNotification
         modalState={showNetworkModal}
         setModalState={(state: boolean) => setShowNetworkModal(state)}
+      />
+      <PublishNotification
+        text={notificationDetails.text}
+        buttonTitle={notificationDetails.buttonTitle}
+        modalState={showNotification}
+        setModalState={setShowNotification}
       />
     </>
   )

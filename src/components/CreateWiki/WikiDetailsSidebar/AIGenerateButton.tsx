@@ -13,7 +13,8 @@ const AIGenerateButton = ({
   const [isDisabled, setIsDisabled] = React.useState(false)
   const [timeLeft, setTimeLeft] = React.useState(0)
   const { userCanEdit } = useWhiteListValidator()
-
+  console.log('isDisabled', isDisabled)
+  console.log(userCanEdit, 'userCanEdit')
   React.useEffect(() => {
     const timeCounter = setInterval(() => {
       const lastTime = localStorage.getItem('AI_SUMMARY_GENERATE_RATE_LIMITED')
