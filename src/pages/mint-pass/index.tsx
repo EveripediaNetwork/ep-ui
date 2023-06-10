@@ -81,7 +81,7 @@ const Mint = () => {
   const [showNotification, setShowNotification] = useState(false)
   const { passDetails, userPass, mintNftPass, extendEndTime } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(28)
-  const [maxPeriod] = useState(365)
+  const [maxPeriod, setMaxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
   const toast = useToast()
   const { isConnected } = useAccount()
@@ -108,6 +108,19 @@ const Mint = () => {
       status,
     })
   }
+
+  useEffect(() => {
+    if (userPass && userPass?.endTimeStamp > 0) {
+      const startTimestamp = new Date(userPass.startTimeStamp * 1000).getTime()
+      const endTimestamp = new Date(userPass.endTimeStamp * 1000).getTime()
+      const oneDay = 24 * 60 * 60 * 1000
+      const difference = Math.round(
+        Math.abs(endTimestamp - startTimestamp) / oneDay,
+      )
+      const daysLeft = maxPeriod - difference
+      setMaxPeriod(daysLeft)
+    }
+  }, [userPass?.endTimeStamp, userPass?.startTimeStamp])
 
   useEffect(() => {
     if (userPass && userPass?.endTimeStamp > 0) {
