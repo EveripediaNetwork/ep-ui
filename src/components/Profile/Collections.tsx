@@ -1,4 +1,10 @@
-import { Tabs, TabList, TabPanels, TabPanel, Icon } from '@chakra-ui/react'
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Icon,
+} from '@chakra-ui/react'
 import React from 'react'
 import { TiDocumentAdd } from 'react-icons/ti'
 import { RiEdit2Line } from 'react-icons/ri'
@@ -21,7 +27,6 @@ export const Collections = ({
 }: CollectionsProps) => {
   const router = useRouter()
   const currentTab = router?.query?.tab
-
   const SECTIONS = [
     {
       label: 'Wikis',

@@ -277,11 +277,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 p={2}
               >
                 <HStack gap={2}>
-                  <Icon
-                    as={BrainPassIcon}
-                    boxSize={6}
-                    color="paginationButtonActive"
-                  />
+                  <Icon as={BrainPassIcon} boxSize={6} />
                   <Text fontSize="xs" fontWeight="semibold">
                     {`${displayPassInfo(userPass?.endTimeStamp)}`}
                   </Text>

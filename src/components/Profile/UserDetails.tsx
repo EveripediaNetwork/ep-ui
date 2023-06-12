@@ -39,9 +39,10 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { env } from '@/env.mjs'
-import BrainPassIcon from '../Icons/brainPassIcon'
 import useBrainPass from '@/hooks/useBrainPass'
 import { compareDate } from '@/utils/DataTransform/passUtils'
+import BrainPassInactiveIcon from '../Icons/brainPassInactiveIcon'
+import BrainIcon from '../Icons/brainIcon'
 
 export type UserDetailsProps = { hide?: boolean }
 
@@ -170,15 +171,19 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                       } Brainpass`}
                       _dark={{ bg: 'white', color: 'black' }}
                     >
-                      <Icon
-                        boxSize={6}
-                        as={BrainPassIcon}
-                        color={
-                          compareDate(userPass?.endTimeStamp)
-                            ? 'paginationButtonActive'
-                            : 'none'
-                        }
-                      />
+                      {compareDate(userPass?.endTimeStamp) ? (
+                        <Icon boxSize={8} as={BrainIcon} />
+                      ) : (
+                        <Icon
+                          boxSize={8}
+                          as={BrainPassInactiveIcon}
+                          color={
+                            compareDate(userPass?.endTimeStamp)
+                              ? 'paginationButtonActive'
+                              : 'none'
+                          }
+                        />
+                      )}
                     </Tooltip>
                   </chakra.span>
                 )}
