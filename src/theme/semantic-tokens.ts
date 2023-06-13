@@ -69,6 +69,14 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.500',
       _dark: 'brand.800',
     },
+    disclaimerBorder: {
+      default: 'brand.200',
+      _dark: 'brand.400',
+    },
+    disclaimerBg: {
+      default: '#FFE5F1',
+      _dark: '#FFB3D7',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',

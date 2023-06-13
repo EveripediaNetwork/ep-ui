@@ -37,6 +37,8 @@ import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import Disclaimer from '@/components/CreateWiki/Disclaimer'
+import useBrainPass from '@/hooks/useBrainPass'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -60,6 +62,8 @@ const CreateWikiContent = () => {
     txError,
     setTxError,
   } = useCreateWikiContext()
+
+  const { isUserPassActive } = useBrainPass()
 
   const handleOnEditorChanges = (
     val: string | undefined,
@@ -175,6 +179,7 @@ const CreateWikiContent = () => {
     <>
       <CreateWikiPageHeader />
       <Box scrollBehavior="auto" maxW="1900px" mx="auto">
+        {!isUserPassActive && <Disclaimer />}
         <CreateWikiTopBar />
         <Flex
           flexDirection={{ base: 'column', xl: 'row' }}
