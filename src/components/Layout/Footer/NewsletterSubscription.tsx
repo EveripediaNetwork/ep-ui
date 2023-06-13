@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  Stack,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Button, HStack, Input, Stack, Text } from '@chakra-ui/react'
 
 const NewsletterSubscription = () => {
   return (
