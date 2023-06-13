@@ -11,7 +11,7 @@ const NewsletterSubscription = () => {
         Never miss any of the most popular and trending articles on IQ.Social
         when you sign up to our email newsletter.
       </Text>
-      <Box p={2} rounded="md" bg="#ffffff" w="80%">
+      <Box p={2} rounded="md" bg="#ffffff" w={{ base: '100%', md: '80%' }}>
         <HStack>
           <Input
             variant={'solid'}
