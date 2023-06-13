@@ -7,8 +7,8 @@ import UserCreatedWikis from './UserWikis/UserCreatedWikis'
 import UserEditedWikis from './UserWikis/UserEditedWikis'
 import { Activity } from '@/types/ActivityDataType'
 import UserPass from './UserWikis/UserPass'
-import BrainPassIcon from '../Icons/brainPassIcon'
 import { useRouter } from 'next/router'
+import BrainPassIcon from '../Icons/brainPassIcon'
 
 interface CollectionsProps {
   createdWikis: Activity[]

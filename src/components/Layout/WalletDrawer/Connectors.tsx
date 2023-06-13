@@ -211,19 +211,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -277,7 +274,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 p={2}
               >
                 <HStack gap={2}>
-                  <Icon as={BrainPassIcon} boxSize={6} />
+                  <Icon color="brandLinkColor" as={BrainPassIcon} boxSize={6} />
                   <Text fontSize="xs" fontWeight="semibold">
                     {`${displayPassInfo(userPass?.endTimeStamp)}`}
                   </Text>
