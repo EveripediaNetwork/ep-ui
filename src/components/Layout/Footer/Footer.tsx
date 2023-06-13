@@ -19,11 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { isString } from '@chakra-ui/utils'
 
-import {
-  MenuFooter,
-  Newsletter,
-  SocialFooter,
-} from '@/components/Layout/Footer'
+import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
@@ -31,6 +27,7 @@ import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
+import NewsletterSubscription from './NewsletterSubscription'
 
 const Footer = () => {
   const { t, i18n } = useTranslation()
@@ -70,7 +67,7 @@ const Footer = () => {
             <Newsletter />
           </GridItem>
           <GridItem>
-            <SocialFooter />
+            <NewsletterSubscription />
           </GridItem>
         </SimpleGrid>
         <Divider orientation="horizontal" />
