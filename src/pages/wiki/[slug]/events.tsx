@@ -9,13 +9,14 @@ import { store } from '@/store/store'
 import NoEventView from '@/components/Wiki/Event/NoEventView'
 import NotFound from '@/pages/NotFound'
 import { Link } from '@/components/Elements'
+import Head from 'next/head'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
   let eventContent
 
   if (wiki) {
     if (!wiki.events || wiki.events.length === 0) {
-      eventContent = <NoEventView wikiId={wiki.id} />
+      eventContent = <NoEventView />
     } else if (wiki.events && wiki.events.length >= 1) {
       eventContent = (
         <SimpleGrid
@@ -69,7 +70,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
         </SimpleGrid>
       )
     } else {
-      eventContent = <NoEventView wikiId={wiki.id} />
+      eventContent = <NoEventView />
     }
   } else {
     eventContent = <NotFound />
@@ -77,6 +78,10 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <Box bgColor="pageBg" mt={-3} pt={8}>
+      <Head>
+        <title>{wiki.title} timeline of events - IQ Wiki</title>
+        <meta name="description" content={`Discover a comprehensive timeline of ${wiki.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`} />
+      </Head>
       <Box
         w={{ base: 'full', md: 'min(90%, 1100px)' }}
         mx="auto"
