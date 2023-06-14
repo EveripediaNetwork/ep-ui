@@ -208,7 +208,7 @@ const Mint = () => {
   const mintPass = async () => {
     const currentDate = new Date()
     const endTimestamp =
-      (currentDate.getTime() + subscriptionPeriod * 24 * 60 * 60 * 1000) / 1000
+      (currentDate.getTime() + subscriptionPeriod * 24 * 60 * 60 * 1000) / 1000 // convert to seconds
     const startTimestamp = currentDate.getTime() / 1000
     const { msg, isError } = await mintNftPass(
       1,
@@ -235,10 +235,7 @@ const Mint = () => {
       return
     }
     if (subscriptionPeriod > maxPeriod) {
-      showToast(
-        `Subscription period cannot be more than ${maxPeriod} days`,
-        'error',
-      )
+      showToast('Subscription period cannot be more than 365 days', 'error')
       return
     }
     if (!isConnected) {
@@ -470,14 +467,14 @@ const Mint = () => {
               </Flex>
             </Box>
             <Button
-              isDisabled={isMinting || maxPeriod < 28}
+              isDisabled={isMinting}
               isLoading={isMinting}
               _hover={{ bg: isMinting && 'brand.400' }}
               loadingText="Loading..."
               onClick={() => mintHandler()}
               w="full"
             >
-              {checkPassStatus() ? 'Subscribe' : 'MINT'}
+              {checkPassStatus() ? 'Subscribe' : 'Mint'}
             </Button>
           </VStack>
         </GridItem>
