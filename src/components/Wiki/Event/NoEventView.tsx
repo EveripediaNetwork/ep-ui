@@ -1,4 +1,4 @@
-import { LinkButton } from '@/components/Elements'
+import { Button } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import {
@@ -9,8 +9,10 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useRouter } from 'next/router'
 
-const NoEventView = ({ wikiId }: { wikiId: string }) => {
+const NoEventView = () => {
+  const router = useRouter()
   const imageSrc = useColorModeValue(
     'event-timeline-light.png',
     'event-timeline-dark.png',
@@ -44,12 +46,9 @@ const NoEventView = ({ wikiId }: { wikiId: string }) => {
         >
           There are no records of events created for this wiki yet.
         </Text>
-        <LinkButton
-          href={`/create-wiki?slug=${wikiId}`}
-          mt={{ lg: '7', base: '6' }}
-        >
-          Edit Wiki
-        </LinkButton>
+        <Button onClick={() => router.back()} mt={{ lg: '7', base: '6' }}>
+          Back to wiki
+        </Button>
       </Box>
     </Flex>
   )
