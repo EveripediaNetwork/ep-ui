@@ -50,7 +50,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
               fontSize={{ base: '24px', md: '30px', xl: '36px' }}
             >
               <Link noOfLines={1} maxW="full" href={`/wiki/${wiki.id}`}>
-                {wiki.title}
+                {wiki?.title}
               </Link>
             </Heading>
           </Flex>
@@ -79,10 +79,10 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Box bgColor="pageBg" mt={-3} pt={8}>
       <Head>
-        <title>{wiki.title} timeline of events - IQ Wiki</title>
+        <title>{wiki?.title} timeline of events - IQ Wiki</title>
         <meta
           name="description"
-          content={`Discover a comprehensive timeline of ${wiki.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`}
+          content={`Discover a comprehensive timeline of ${wiki?.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki?.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki?.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`}
         />
       </Head>
       <Box
