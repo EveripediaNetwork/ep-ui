@@ -169,8 +169,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                           ? 'active'
                           : 'inactive'
                       } Brainpass`}
-                      _dark={{color: 'white' }}
-               
+                      _dark={{ color: 'white' }}
                     >
                       {compareDate(userPass?.endTimeStamp) ? (
                         <Icon boxSize={8} as={BrainIcon} />
