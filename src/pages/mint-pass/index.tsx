@@ -200,6 +200,7 @@ const Mint = () => {
       setShowNotification(true)
     }
     showToast(msg, isError ? 'error' : 'success')
+    setMaxPeriod(maxPeriod - subscriptionPeriod)
     setSubscriptionPeriod(28)
     setIsMinting(false)
   }
@@ -223,6 +224,7 @@ const Mint = () => {
       setShowNotification(true)
     }
     showToast(msg, isError ? 'error' : 'success')
+    setMaxPeriod(maxPeriod - subscriptionPeriod)
     setSubscriptionPeriod(28)
     setIsMinting(false)
   }
@@ -468,7 +470,7 @@ const Mint = () => {
               </Flex>
             </Box>
             <Button
-              isDisabled={isMinting}
+              isDisabled={isMinting || maxPeriod < 28}
               isLoading={isMinting}
               _hover={{ bg: isMinting && 'brand.400' }}
               loadingText="Loading..."
