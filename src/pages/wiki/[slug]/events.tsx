@@ -9,7 +9,7 @@ import { store } from '@/store/store'
 import NoEventView from '@/components/Wiki/Event/NoEventView'
 import NotFound from '@/pages/NotFound'
 import { Link } from '@/components/Elements'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
   let eventContent
@@ -76,28 +76,34 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
     eventContent = <NotFound />
   }
 
+  const SEOTitle = `${wiki?.title} timeline of events - IQ Wiki`
+  const SEODescription = `Discover a comprehensive timeline of ${wiki?.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki?.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki?.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`
+
   return (
-    <Box bgColor="pageBg" mt={-3} pt={8}>
-      <Head>
-        <title>{wiki?.title} timeline of events - IQ Wiki</title>
-        <meta
-          name="description"
-          content={`Discover a comprehensive timeline of ${wiki?.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki?.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki?.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`}
-        />
-      </Head>
-      <Box
-        w={{ base: 'full', md: 'min(90%, 1100px)' }}
-        mx="auto"
-        mt={{ base: '10', lg: '16' }}
-        px={{ base: '3', md: 0 }}
-      >
-        <Heading textAlign="center">Timeline of Events</Heading>
-        <Text textAlign="center" pt={4} pb={8} color="linkColor">
-          A timeline of events for this wiki
-        </Text>
-        {eventContent}
+    <>
+      <NextSeo
+        title={SEOTitle}
+        description={SEODescription}
+        openGraph={{
+          title: SEOTitle,
+          description: SEODescription,
+        }}
+      />
+      <Box bgColor="pageBg" mt={-3} pt={8}>
+        <Box
+          w={{ base: 'full', md: 'min(90%, 1100px)' }}
+          mx="auto"
+          mt={{ base: '10', lg: '16' }}
+          px={{ base: '3', md: 0 }}
+        >
+          <Heading textAlign="center">Timeline of Events</Heading>
+          <Text textAlign="center" pt={4} pb={8} color="linkColor">
+            A timeline of events for this wiki
+          </Text>
+          {eventContent}
+        </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 
