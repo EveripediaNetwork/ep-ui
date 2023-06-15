@@ -21,13 +21,16 @@ export const subscriptionHistoryApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: (builder) => ({
-    getSubscriptionHistory: builder.query<NftPassType[], string>({
-      query: (address: string) => ({
+    getSubscriptionHistory: builder.query<
+      NftPassType[],
+      `0x${string}` | undefined
+    >({
+      query: (address: `0x${string}` | undefined) => ({
         document: GET_SUBSCRIPTION_HISTORY,
         variables: { address },
       }),
       transformResponse: (response: GetSubscriptionHistory) =>
-        response.subscriptionHistory,
+        response?.subscriptionHistory,
     }),
   }),
 })

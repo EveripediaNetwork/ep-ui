@@ -31,18 +31,48 @@ import { LinkButton } from '@/components/Elements'
 import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
 import { SubscriptionEmptyState } from '@/components/Elements/icons/SubscriptionEmptyState'
 import useBrainPass from '@/hooks/useBrainPass'
-import { useAccount } from 'wagmi'
+// import { useAccount } from 'wagmi'
 import { shortenAccount } from '@/utils/textUtils'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
 import BrainPassIcon from '@/components/Icons/brainPassIcon'
 import { useRouter } from 'next/router'
 import { dateDetails } from '@/utils/DataTransform/passUtils'
+// import { useGetSubscriptionHistoryQuery } from '@/services/nftpass'
+
+const DATA = [
+  {
+    id: 1,
+    name: 'General Pass',
+    price: '0.1 IQ',
+    date: '2021-09-01',
+    hash: '0x1234567890',
+  },
+  {
+    id: 1,
+    name: 'General Pass',
+    price: '0.1 IQ',
+    date: '2021-09-01',
+    hash: '0x1234567890',
+  },
+  {
+    id: 1,
+    name: 'General Pass',
+    price: '0.1 IQ',
+    date: '2021-09-01',
+    hash: '0x1234567890',
+  },
+]
 
 const UserPass = () => {
   const router = useRouter()
-  const { address } = useAccount()
-  const { userPass, isUserPassActive, passDetails } = useBrainPass()
-  const [dateData, setDateData] = useState<any>()
+  // const { address } = useAccount()
+  const { userPass, isUserPassActive } = useBrainPass()
+  const [dateData, setDateData] = useState<{
+    text: string
+    formattedDate: string
+  }>()
+  // const { data: subscriptionHistory } =
+  //   useGetSubscriptionHistoryQuery(address)
 
   useEffect(() => {
     const info = dateDetails(userPass?.endTimeStamp || 0)
@@ -206,75 +236,36 @@ const UserPass = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                <Tr
-                  whiteSpace="nowrap"
-                  border="1px solid"
-                  borderColor="divider"
-                  borderBottom="none"
-                >
-                  <Td fontSize="sm" color="tagColor">
-                    Jan 6, 2023
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    General Pass
-                  </Td>
-                  <Td fontSize="sm" textAlign="center" color="tagColor">
-                    0.2TH
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    <chakra.span color="paginationButtonActive" fontSize="sm">
-                      {' '}
-                      {shortenAccount(address?.toString() || '')}{' '}
-                      <ExternalLinkIcon mx="2px" mt={-3} />
-                    </chakra.span>
-                  </Td>
-                </Tr>
-                <Tr
-                  whiteSpace="nowrap"
-                  border="1px solid"
-                  borderColor="divider"
-                  borderBottom="none"
-                >
-                  <Td fontSize="sm" color="tagColor">
-                    Jan 6, 2023
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    General Pass
-                  </Td>
-                  <Td fontSize="sm" textAlign="center" color="tagColor">
-                    0.2TH
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    <chakra.span color="paginationButtonActive" fontSize="sm">
-                      {' '}
-                      {shortenAccount(address?.toString() || '')}{' '}
-                      <ExternalLinkIcon mx="2px" mt={-3} />
-                    </chakra.span>
-                  </Td>
-                </Tr>
-                <Tr
-                  whiteSpace="nowrap"
-                  border="1px solid"
-                  borderColor="divider"
-                  borderBottom="none"
-                >
-                  <Td fontSize="sm" color="tagColor">
-                    Jan 6, 2023
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    {passDetails?.name} Pass
-                  </Td>
-                  <Td fontSize="sm" textAlign="center" color="tagColor">
-                    0.2TH
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    <chakra.span color="paginationButtonActive" fontSize="sm">
-                      {' '}
-                      {shortenAccount(address?.toString() || '')}{' '}
-                      <ExternalLinkIcon mx="2px" mt={-3} />
-                    </chakra.span>
-                  </Td>
-                </Tr>
+                {DATA.map((history) => (
+                  <>
+                    <Tr
+                      whiteSpace="nowrap"
+                      border="1px solid"
+                      borderColor="divider"
+                      borderBottom="none"
+                    >
+                      <Td fontSize="sm" color="tagColor">
+                        {history.date}
+                      </Td>
+                      <Td fontSize="sm" color="tagColor" textAlign="center">
+                        {history.name}
+                      </Td>
+                      <Td fontSize="sm" textAlign="center" color="tagColor">
+                        {history.price}
+                      </Td>
+                      <Td fontSize="sm" color="tagColor" textAlign="center">
+                        <chakra.span
+                          color="paginationButtonActive"
+                          fontSize="sm"
+                        >
+                          {' '}
+                          {shortenAccount(history.hash?.toString() || '')}{' '}
+                          <ExternalLinkIcon mx="2px" mt={-3} />
+                        </chakra.span>
+                      </Td>
+                    </Tr>
+                  </>
+                ))}
               </Tbody>
               <TableCaption mt={0}>
                 <Flex>
