@@ -1,4 +1,3 @@
-
 export type NftPassType = {
   id: string
   address: string

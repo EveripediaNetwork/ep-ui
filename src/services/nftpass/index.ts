@@ -9,7 +9,6 @@ type GetSubscriptionHistory = {
   subscriptionHistory: NftPassType[]
 }
 
-
 export const subscriptionHistoryApi = createApi({
   reducerPath: 'subscriptionHistoryApi',
   refetchOnMountOrArgChange: 30,
@@ -21,7 +20,7 @@ export const subscriptionHistoryApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getSubscriptionHistory: builder.query<NftPassType[], string>({
       query: (address: string) => ({
         document: GET_SUBSCRIPTION_HISTORY,
