@@ -28,7 +28,7 @@ export default async function handler(
           'Access-Control-Allow-Headers',
           'Content-Type, Authorization',
         )
-        .json(ress.addressToWiki.map(w => w.wiki))
+        .json(ress.addressToWiki.map((w) => w.wiki))
     }
   } catch (_e) {
     return res.status(500).json({ error: 'an error occurred' })
