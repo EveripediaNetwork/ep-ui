@@ -59,7 +59,7 @@ export const PrivacyPolicySEO = () => (
 export const CareersHeader = () => (
   <NextSeo
     title="Jobs"
-    description="Join us to spread the knowledge of blockchain | Search Job Openings across IQWiki Network"
+    description="Join us to spread the knowledge of blockchain | Search Job Openings across IQ.Wiki Network"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/careers"
     openGraph={{
