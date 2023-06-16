@@ -218,7 +218,7 @@ const UserPass = () => {
               <Thead border="none" bg="aboutFeaturesCardBg">
                 <Tr>
                   {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                    column => (
+                    (column) => (
                       <Th
                         border="none"
                         whiteSpace="nowrap"
@@ -235,7 +235,7 @@ const UserPass = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {DATA.map(history => (
+                {DATA.map((history) => (
                   <>
                     <Tr
                       whiteSpace="nowrap"
