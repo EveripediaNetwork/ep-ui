@@ -330,7 +330,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'brand.300',
     },
     careersBackground: {
-      default: 'gray.50',
+      default: 'gray.100',
       _dark: 'whiteAlpha.50',
     },
     careersHeadingColor: {
