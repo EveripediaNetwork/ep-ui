@@ -9,11 +9,11 @@ export const BrainPassABI = [
   },
   { inputs: [], name: 'AlreadyMintedAPass', type: 'error' },
   { inputs: [], name: 'DurationNotInTimeFrame', type: 'error' },
+  { inputs: [], name: 'EtherNotEnoughToWithdraw', type: 'error' },
+  { inputs: [], name: 'IQNotEnoughToWithdraw', type: 'error' },
   { inputs: [], name: 'IncreseTimePaymentFailed', type: 'error' },
   { inputs: [], name: 'InvalidMaxTokensForAPass', type: 'error' },
   { inputs: [], name: 'MintingPaymentFailed', type: 'error' },
-  { inputs: [], name: 'NoEtherLeftToWithdraw', type: 'error' },
-  { inputs: [], name: 'NoIQLeftToWithdraw', type: 'error' },
   { inputs: [], name: 'NotTheOwnerOfThisNft', type: 'error' },
   { inputs: [], name: 'PassMaxSupplyReached', type: 'error' },
   { inputs: [], name: 'PassTypeIsPaused', type: 'error' },
@@ -72,6 +72,18 @@ export const BrainPassABI = [
         internalType: 'address',
         name: '_owner',
         type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: '_passName',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_price',
+        type: 'uint256',
       },
       {
         indexed: false,
@@ -151,36 +163,21 @@ export const BrainPassABI = [
     inputs: [
       {
         indexed: true,
-        internalType: 'uint256',
-        name: '_passId',
-        type: 'uint256',
-      },
-      { indexed: false, internalType: 'string', name: '_name', type: 'string' },
-    ],
-    name: 'PassTypeStatusToggled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'Paused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         internalType: 'address',
         name: '_owner',
         type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_price',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_passId',
+        type: 'uint256',
       },
       {
         indexed: false,
@@ -201,7 +198,34 @@ export const BrainPassABI = [
         type: 'uint256',
       },
     ],
-    name: 'TimeIncreased',
+    name: 'PassTimeIncreased',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: '_passId',
+        type: 'uint256',
+      },
+      { indexed: false, internalType: 'string', name: '_name', type: 'string' },
+    ],
+    name: 'PassTypeStatusToggled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'Paused',
     type: 'event',
   },
   {
@@ -251,23 +275,10 @@ export const BrainPassABI = [
       { internalType: 'uint256', name: 'pricePerDay', type: 'uint256' },
       { internalType: 'string', name: 'name', type: 'string' },
       { internalType: 'uint256', name: 'maxTokens', type: 'uint256' },
-      { internalType: 'uint256', name: 'discount', type: 'uint256' },
     ],
     name: 'addPassType',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'addressToNFTPass',
-    outputs: [
-      { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-      { internalType: 'uint256', name: 'passId', type: 'uint256' },
-      { internalType: 'uint256', name: 'startTimestamp', type: 'uint256' },
-      { internalType: 'uint256', name: 'endTimestamp', type: 'uint256' },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -314,7 +325,6 @@ export const BrainPassABI = [
           { internalType: 'string', name: 'name', type: 'string' },
           { internalType: 'uint256', name: 'pricePerDay', type: 'uint256' },
           { internalType: 'uint256', name: 'maxTokens', type: 'uint256' },
-          { internalType: 'uint256', name: 'discount', type: 'uint256' },
           { internalType: 'uint256', name: 'lastMintedId', type: 'uint256' },
           { internalType: 'bool', name: 'isPaused', type: 'bool' },
         ],
@@ -343,7 +353,6 @@ export const BrainPassABI = [
           { internalType: 'string', name: 'name', type: 'string' },
           { internalType: 'uint256', name: 'pricePerDay', type: 'uint256' },
           { internalType: 'uint256', name: 'maxTokens', type: 'uint256' },
-          { internalType: 'uint256', name: 'discount', type: 'uint256' },
           { internalType: 'uint256', name: 'lastMintedId', type: 'uint256' },
           { internalType: 'bool', name: 'isPaused', type: 'bool' },
         ],
@@ -441,7 +450,6 @@ export const BrainPassABI = [
       { internalType: 'string', name: 'name', type: 'string' },
       { internalType: 'uint256', name: 'pricePerDay', type: 'uint256' },
       { internalType: 'uint256', name: 'maxTokens', type: 'uint256' },
-      { internalType: 'uint256', name: 'discount', type: 'uint256' },
       { internalType: 'uint256', name: 'lastMintedId', type: 'uint256' },
       { internalType: 'bool', name: 'isPaused', type: 'bool' },
     ],
@@ -563,14 +571,20 @@ export const BrainPassABI = [
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      { internalType: 'address', name: 'receiver', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
     name: 'withdrawEther',
     outputs: [],
     stateMutability: 'payable',
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      { internalType: 'address', name: 'receiver', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
     name: 'withdrawIQ',
     outputs: [],
     stateMutability: 'payable',
