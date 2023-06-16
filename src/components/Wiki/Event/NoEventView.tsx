@@ -50,9 +50,11 @@ const NoEventView = () => {
         >
           There are no records of events created for this wiki yet.
         </Text>
-        { wikiPath && <LinkButton href={wikiPath} mt={{ lg: '7', base: '6' }}>
-          Back to wiki
-        </LinkButton> }
+        {wikiPath && (
+          <LinkButton href={wikiPath} mt={{ lg: '7', base: '6' }}>
+            Back to wiki
+          </LinkButton>
+        )}
       </Box>
     </Flex>
   )
