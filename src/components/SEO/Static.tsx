@@ -65,7 +65,7 @@ export const CareersHeader = () => (
     openGraph={{
       title: 'Jobs',
       description:
-        'Join us to spread the knowledge of blockchain | Search Job Openings across IQWiki Network',
+        'Join us to spread the knowledge of blockchain | Search Job Openings across IQ.Wiki Network',
     }}
     twitter={{
       cardType: 'summary_large_image',
