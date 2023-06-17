@@ -105,8 +105,6 @@ export const useBrainPass = () => {
   const getPassDetails = () => {
     if (!passTypes) return null
     const result = passTypes as PassType[]
-    console.log(result)
-    console.log(result)
     const currentPass = result[1]
     return {
       name: currentPass.name,

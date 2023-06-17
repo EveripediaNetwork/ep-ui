@@ -41,7 +41,7 @@ const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
   const [showInvalidNetworkModal, setShowInvalidNetworkModal] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
-  const { passDetails, userPass, mintNftPass, extendEndTime } = useBrainPass()
+  const { passDetails, userPass, mintNftPass, extendEndTime, isUserPassActive } = useBrainPass()
   const [subscriptionPeriod, setSubscriptionPeriod] = useState(28)
   const [maxPeriod, setMaxPeriod] = useState(365)
   const [endDate, setEndDate] = useState<Date>()
@@ -88,17 +88,6 @@ const Mint = () => {
       setEndDate(today)
     }
   }, [subscriptionPeriod])
-
-  const checkPassStatus = () => {
-    if (userPass?.endTimeStamp === 0 || undefined) {
-      return false
-    }
-    const todayToTimestamp = new Date().getTime()
-    if (userPass && userPass?.endTimeStamp < todayToTimestamp) {
-      return true
-    }
-    return false
-  }
 
   const updateSubscriptionPeriod = (period: number) => {
     setSubscriptionPeriod(period < 28 ? 28 : period)
@@ -205,7 +194,7 @@ const Mint = () => {
           </Box>
         </GridItem>
         <GridItem w="100%">
-          {checkPassStatus() && (
+          {isUserPassActive && (
             <Box
               py={1}
               rounded="full"
@@ -226,7 +215,7 @@ const Mint = () => {
             fontWeight="bold"
             mt={-2}
           >
-            {checkPassStatus() ? 'BrainPass Renewal' : 'BrainPass Mint'}
+            {isUserPassActive ? 'BrainPass Renewal' : 'BrainPass Mint'}
           </Text>
           <Text
             mb={3}
@@ -306,7 +295,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -334,7 +323,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -396,7 +385,7 @@ const Mint = () => {
               onClick={() => mintOrExtendHandler()}
               w="full"
             >
-              {checkPassStatus() ? 'Subscribe' : 'Mint'}
+              {isUserPassActive ? 'Subscribe' : 'Mint'}
             </Button>
           </VStack>
         </GridItem>
@@ -431,7 +420,7 @@ const Mint = () => {
             Some benefits associated with owning an BrainPass on IQ Wiki
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
-            {PASS_FEATURES.map((feature) => (
+            {PASS_FEATURES.map(feature => (
               <Feature
                 icon={
                   <Icon

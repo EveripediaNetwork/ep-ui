@@ -25,7 +25,6 @@ import {
 import ReactCanvasConfetti from 'react-canvas-confetti'
 import useConfetti from '@/hooks/useConfetti'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
-import { compareDate } from '@/utils/DataTransform/passUtils'
 import { useGetSignedHash } from '@/hooks/useGetSignedHash'
 import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
@@ -93,7 +92,7 @@ export const WikiPublishButton = () => {
     text: '',
     buttonTitle: '',
   })
-  const { userPass } = useBrainPass()
+  const { userPass, isUserPassActive } = useBrainPass()
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -173,7 +172,7 @@ export const WikiPublishButton = () => {
       setShowNotification(true)
       return
     }
-    if (!compareDate(userPass?.endTimeStamp)) {
+    if (!isUserPassActive) {
       setNotificationDetails({
         text: 'Unfortunately, your subscription has expired, which means you are currently unable to publish a wiki. To regain access and continue enjoying the benefits, kindly renew your subscription..',
         buttonTitle: 'Subscribe',
