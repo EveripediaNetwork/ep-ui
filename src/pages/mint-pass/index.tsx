@@ -184,7 +184,11 @@ const Mint = () => {
     setSubscriptionPeriod(period < 28 ? 28 : period)
   }
 
-  const finalizeMint = async (isError: boolean, msg: string, notificationDetails: {body: string, header: string}) => {
+  const finalizeMint = async (
+    isError: boolean,
+    msg: string,
+    notificationDetails: { body: string; header: string },
+  ) => {
     if (!isError) {
       setNotificationDetails(notificationDetails)
       setShowNotification(true)
