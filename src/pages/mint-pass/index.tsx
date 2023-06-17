@@ -386,7 +386,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={value => updateSubscriptionPeriod(value)}
+                    onChange={(value) => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -414,7 +414,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={e =>
+                      onChange={(e) =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
