@@ -32,11 +32,8 @@ import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiD
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import dynamic from 'next/dynamic'
-import config from '@/config'
-import networkMap from '@/data/NetworkMap'
-import { ProviderDataType } from '@/types/ProviderDataType'
-import detectEthereumProvider from '@metamask/detect-provider'
 import PublishNotification from '@/components/Layout/Nft/PublishNotification'
+import useNetworkProvider from '@/hooks/useNetworkProvider'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -46,14 +43,8 @@ export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
-  const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)
-  const { chainId } =
-    config.alchemyChain === 'maticmum'
-      ? networkMap.MUMBAI_TESTNET
-      : networkMap.POLYGON_MAINNET
-  const [detectedProvider, setDetectedProvider] =
-    useState<ProviderDataType | null>(null)
+  const { chainId, connectedChainId } = useNetworkProvider()
   const {
     isOpen: isOverrideModalOpen,
     onOpen: onOverrideModalOpen,
@@ -103,41 +94,6 @@ export const WikiPublishButton = () => {
     buttonTitle: '',
   })
   const { userPass } = useBrainPass()
-
-  useEffect(() => {
-    const getConnectedChain = async (provider: ProviderDataType) => {
-      const connectedChainId = await provider.request({
-        method: 'eth_chainId',
-      })
-      setConnectedChainId(connectedChainId)
-    }
-
-    const getDetectedProvider = async () => {
-      const provider = (await detectEthereumProvider({
-        silent: true,
-      })) as ProviderDataType
-      setDetectedProvider(provider as ProviderDataType)
-      if (provider) getConnectedChain(provider)
-    }
-
-    if (!detectedProvider) {
-      getDetectedProvider()
-    } else {
-      getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
-        setConnectedChainId(newlyConnectedChain),
-      )
-    }
-
-    return () => {
-      if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
-        )
-      }
-    }
-  }, [detectedProvider, isUserConnected])
 
   useEffect(() => {
     if (activeStep === 3) {
