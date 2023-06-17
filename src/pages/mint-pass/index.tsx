@@ -184,6 +184,18 @@ const Mint = () => {
     setSubscriptionPeriod(period < 28 ? 28 : period)
   }
 
+  const finalizeMint = async (isError: boolean, msg: string, notificationDetails: {body: string, header: string}) => {
+    if (!isError) {
+      setNotificationDetails(notificationDetails)
+      setShowNotification(true)
+    } else {
+      showToast(msg, 'error')
+    }
+    setMaxPeriod(maxPeriod - subscriptionPeriod)
+    setSubscriptionPeriod(28)
+    setIsMinting(false)
+  }
+
   const extendEndTimeHandler = async () => {
     if (!endDate) return
     const newEndDate = endDate?.getTime() / 1000
@@ -192,17 +204,10 @@ const Mint = () => {
       Math.floor(newEndDate),
       subscriptionPeriod * (passDetails?.price || 0),
     )
-    if (!isError) {
-      setNotificationDetails({
-        header: 'BrainPass subscription renewed!',
-        body: "Your Brainpass subscription has been successfully Renewed.  You can continue to create and edit wikis and contribute to the platform's wealth of knowledge.",
-      })
-      setShowNotification(true)
-    }
-    showToast(msg, isError ? 'error' : 'success')
-    setMaxPeriod(maxPeriod - subscriptionPeriod)
-    setSubscriptionPeriod(28)
-    setIsMinting(false)
+    finalizeMint(isError, msg, {
+      header: 'BrainPass subscription renewed!',
+      body: "Your Brainpass subscription has been successfully Renewed.  You can continue to create and edit wikis and contribute to the platform's wealth of knowledge.",
+    })
   }
 
   const mintPass = async () => {
@@ -216,17 +221,10 @@ const Mint = () => {
       Math.floor(endTimestamp),
       subscriptionPeriod * (passDetails?.price || 0),
     )
-    if (!isError) {
-      setNotificationDetails({
-        header: 'BrainPass successfully Minted!',
-        body: "Your Brainpass has been successfully Minted and you are now an editor on IQ Wiki. You can now create wikis and also edit wikis and contribute to the platform's wealth of knowledge.",
-      })
-      setShowNotification(true)
-    }
-    showToast(msg, isError ? 'error' : 'success')
-    setMaxPeriod(maxPeriod - subscriptionPeriod)
-    setSubscriptionPeriod(28)
-    setIsMinting(false)
+    finalizeMint(isError, msg, {
+      header: 'BrainPass successfully Minted!',
+      body: "Your Brainpass has been successfully Minted and you are now an editor on IQ Wiki. You can now create wikis and also edit wikis and contribute to the platform's wealth of knowledge.",
+    })
   }
 
   const mintHandler = async () => {

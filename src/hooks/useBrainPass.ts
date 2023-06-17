@@ -105,7 +105,9 @@ export const useBrainPass = () => {
   const getPassDetails = () => {
     if (!passTypes) return null
     const result = passTypes as PassType[]
-    const currentPass = result[0]
+    console.log(result)
+    console.log(result)
+    const currentPass = result[1]
     return {
       name: currentPass.name,
       price: Number(formatUnits(currentPass.pricePerDay, 18)),
