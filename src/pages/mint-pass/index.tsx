@@ -1,3 +1,4 @@
+import Feature from '@/components/BrainPass/Feature'
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
@@ -29,13 +30,12 @@ import {
   Text,
   VStack,
   SimpleGrid,
-  Center,
   Link,
   useToast,
   Divider,
 } from '@chakra-ui/react'
 import detectEthereumProvider from '@metamask/detect-provider'
-import React, { useState, useEffect, ReactElement } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   RiHeartLine,
   RiMailLine,
@@ -45,35 +45,6 @@ import {
   RiShareBoxLine,
 } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
-
-interface FeatureProps {
-  title: string
-  text: string
-  icon: ReactElement
-}
-
-const Feature = ({ title, text, icon }: FeatureProps) => {
-  return (
-    <VStack align="center" textAlign="center">
-      <Flex
-        w={14}
-        h={14}
-        align={'center'}
-        justify={'center'}
-        rounded={'full'}
-        bg="tagActiveBgColor"
-      >
-        <Center rounded={'full'} bg="iconBg" w={10} h={10}>
-          {icon}
-        </Center>
-      </Flex>
-      <Text fontWeight="semibold">{title}</Text>
-      <Text fontSize="sm" color="eventTextColor">
-        {text}
-      </Text>
-    </VStack>
-  )
-}
 
 const Mint = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(false)
