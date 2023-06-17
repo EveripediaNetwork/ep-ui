@@ -231,7 +231,7 @@ const Mint = () => {
     })
   }
 
-  const mintHandler = async () => {
+  const mintOrExtendHandler = async () => {
     if (subscriptionPeriod < 28) {
       showToast('Subscription period cannot be less than 28 days', 'error')
       return
@@ -386,7 +386,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -414,7 +414,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -473,7 +473,7 @@ const Mint = () => {
               isLoading={isMinting}
               _hover={{ bg: isMinting && 'brand.400' }}
               loadingText="Loading..."
-              onClick={() => mintHandler()}
+              onClick={() => mintOrExtendHandler()}
               w="full"
             >
               {checkPassStatus() ? 'Subscribe' : 'Mint'}
