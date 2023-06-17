@@ -2,11 +2,9 @@ import Feature from '@/components/BrainPass/Feature'
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
-import config from '@/config'
-import networkMap from '@/data/NetworkMap'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
-import { ProviderDataType } from '@/types/ProviderDataType'
+import useNetworkProvider from '@/hooks/useNetworkProvider'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
 import {
   Box,
@@ -34,7 +32,6 @@ import {
   useToast,
   Divider,
 } from '@chakra-ui/react'
-import detectEthereumProvider from '@metamask/detect-provider'
 import React, { useState, useEffect } from 'react'
 import {
   RiHeartLine,
@@ -61,15 +58,8 @@ const Mint = () => {
     header: '',
     body: '',
   })
-  const [connectedChainId, setConnectedChainId] = useState<string>()
   const { address } = useAccount()
-
-  const { chainId } =
-    config.alchemyChain === 'maticmum'
-      ? networkMap.MUMBAI_TESTNET
-      : networkMap.POLYGON_MAINNET
-  const [detectedProvider, setDetectedProvider] =
-    useState<ProviderDataType | null>(null)
+  const {chainId, connectedChainId} = useNetworkProvider()
 
   const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
@@ -104,41 +94,6 @@ const Mint = () => {
       setEndDate(today)
     }
   }, [subscriptionPeriod])
-
-  useEffect(() => {
-    const getConnectedChain = async (provider: ProviderDataType) => {
-      const connectedChainId = await provider.request({
-        method: 'eth_chainId',
-      })
-      setConnectedChainId(connectedChainId)
-    }
-
-    const getDetectedProvider = async () => {
-      const provider = (await detectEthereumProvider({
-        silent: true,
-      })) as ProviderDataType
-      setDetectedProvider(provider as ProviderDataType)
-      if (provider) getConnectedChain(provider)
-    }
-
-    if (!detectedProvider) {
-      getDetectedProvider()
-    } else {
-      getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
-        setConnectedChainId(newlyConnectedChain),
-      )
-    }
-
-    return () => {
-      if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
-        )
-      }
-    }
-  }, [detectedProvider, isConnected])
 
   const checkPassStatus = () => {
     if (userPass?.endTimeStamp === 0 || undefined) {
