@@ -1,4 +1,9 @@
-import { RiHeartLine, RiMailLine, RiRobotLine, RiSearchEyeLine } from "react-icons/ri";
+import {
+  RiHeartLine,
+  RiMailLine,
+  RiRobotLine,
+  RiSearchEyeLine,
+} from 'react-icons/ri'
 
 export const PASS_FEATURES = [
   {
