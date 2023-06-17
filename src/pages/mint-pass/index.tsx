@@ -59,7 +59,7 @@ const Mint = () => {
     body: '',
   })
   const { address } = useAccount()
-  const {chainId, connectedChainId} = useNetworkProvider()
+  const { chainId, connectedChainId } = useNetworkProvider()
 
   const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
