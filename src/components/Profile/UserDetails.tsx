@@ -40,7 +40,6 @@ import UserSocialLinks from './UserSocialLinks'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
-import { compareDate } from '@/utils/DataTransform/passUtils'
 import BrainPassInactiveIcon from '../Icons/brainPassInactiveIcon'
 import BrainIcon from '../Icons/brainIcon'
 
@@ -77,7 +76,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     py: 2,
   }
   const { t } = useTranslation()
-  const { userPass } = useBrainPass()
+  const { userPass, isUserPassActive } = useBrainPass()
   // TODO: change
   useEffect(() => {
     if (leaderboard.length < 1 && !isFetched.current) {
@@ -165,22 +164,18 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                       shouldWrapChildren
                       hasArrow={true}
                       label={`An editor on iq wiki with an ${
-                        compareDate(userPass?.endTimeStamp)
-                          ? 'active'
-                          : 'inactive'
+                        isUserPassActive ? 'active' : 'inactive'
                       } Brainpass`}
                       _dark={{ color: 'white' }}
                     >
-                      {compareDate(userPass?.endTimeStamp) ? (
+                      {isUserPassActive ? (
                         <Icon boxSize={8} as={BrainIcon} />
                       ) : (
                         <Icon
                           boxSize={8}
                           as={BrainPassInactiveIcon}
                           color={
-                            compareDate(userPass?.endTimeStamp)
-                              ? 'paginationButtonActive'
-                              : 'none'
+                            isUserPassActive ? 'paginationButtonActive' : 'none'
                           }
                         />
                       )}
