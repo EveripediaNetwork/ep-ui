@@ -2,6 +2,7 @@ import Feature from '@/components/BrainPass/Feature'
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
+import { PASS_FEATURES } from '@/data/PassFeatureData'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import useNetworkProvider from '@/hooks/useNetworkProvider'
@@ -34,11 +35,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import {
-  RiHeartLine,
-  RiMailLine,
   RiQuestionLine,
-  RiRobotLine,
-  RiSearchEyeLine,
   RiShareBoxLine,
 } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
@@ -312,7 +309,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -340,7 +337,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -437,54 +434,21 @@ const Mint = () => {
             Some benefits associated with owning an BrainPass on IQ Wiki
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
-            <Feature
-              icon={
-                <Icon
-                  as={RiHeartLine}
-                  w={6}
-                  h={6}
-                  color="brandAssetDownloadBttnColor"
-                />
-              }
-              title="Exclusive support from the engineering team."
-              text="Benefit from dedicated and exclusive support from our highly skilled engineering team. Our team is committed to providing unparalleled assistance, ensuring prompt resolution of any technical issues or challenges you may encounter."
-            />
-            <Feature
-              icon={
-                <Icon
-                  as={RiRobotLine}
-                  w={6}
-                  h={6}
-                  color="brandAssetDownloadBttnColor"
-                />
-              }
-              title="AI Insight for creating wikis."
-              text="Leverage the power of AI Insight to enhance your wiki creation process. Our AI-powered tool provides valuable insights and suggestions, helping you craft comprehensive and informative wikis."
-            />
-            <Feature
-              icon={
-                <Icon
-                  as={RiMailLine}
-                  w={6}
-                  h={6}
-                  color="brandAssetDownloadBttnColor"
-                />
-              }
-              title="Market Updates via Email."
-              text="Stay informed with our market updates delivered directly to your inbox. Receive timely and relevant information about the latest market trends, news, and insights, conveniently curated and sent to you via email."
-            />
-            <Feature
-              icon={
-                <Icon
-                  color="brandAssetDownloadBttnColor"
-                  as={RiSearchEyeLine}
-                  w={6}
-                  h={6}
-                />
-              }
-              title="Exclusive access to IQ GPT."
-              text="Gain exclusive access to IQ GPT, our advanced language model powered by cutting-edge artificial intelligence technology. With this exclusive access, you can leverage the full capabilities of IQ GPT for a wide range of applications."
-            />
+            {PASS_FEATURES.map(feature => (
+              <Feature
+                icon={
+                  <Icon
+                    as={feature.icon}
+                    w={6}
+                    h={6}
+                    color="brandAssetDownloadBttnColor"
+                  />
+                }
+                title={feature.title}
+                text={feature.description}
+                key={feature.title}
+              />
+            ))}
           </SimpleGrid>
         </VStack>
       </Box>
