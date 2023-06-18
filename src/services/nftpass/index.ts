@@ -31,7 +31,7 @@ export const subscriptionHistoryApi = createApi({
       }),
       transformResponse: (response: GetSubscriptionHistory) => {
         return response.retrieveBrainPass
-      } 
+      },
     }),
   }),
 })
