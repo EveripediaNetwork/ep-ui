@@ -1,8 +1,10 @@
 export type NftPassType = {
   id: string
-  address: string
-  name: string
-  date: string
-  price: string
-  hash: string
+  tokenId: string
+  passId: string
+  owner: string
+  transactionHash: string
+  passName: string
+  price: number
+  created: string
 }

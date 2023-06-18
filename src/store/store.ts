@@ -26,6 +26,7 @@ import { nftLisitngAPI } from '@/services/nftlisting/index'
 import { nftStatsApi } from '@/services/nft-stats'
 import { editorApi } from '@/services/editor'
 import { notificationSubscriptionApi } from '@/services/notification'
+import { subscriptionHistoryApi } from '@/services/nftpass'
 
 export const store = configureStore({
   reducer: {
@@ -55,6 +56,7 @@ export const store = configureStore({
     [editorApi.reducerPath]: editorApi.reducer,
     [notificationSubscriptionApi.reducerPath]:
       notificationSubscriptionApi.reducer,
+    [subscriptionHistoryApi.reducerPath]: subscriptionHistoryApi.reducer,
   },
   middleware: (gDM) =>
     gDM({ serializableCheck: true })
@@ -74,7 +76,8 @@ export const store = configureStore({
       .concat(nftStatsApi.middleware)
       .concat(editorApi.middleware)
       .concat(notificationSubscriptionApi.middleware)
-      .concat(rankingAPI.middleware),
+      .concat(rankingAPI.middleware)
+      .concat(subscriptionHistoryApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

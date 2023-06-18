@@ -6,7 +6,7 @@ import { GET_SUBSCRIPTION_HISTORY } from './queries'
 import { NftPassType } from '@/types/nftPass'
 
 type GetSubscriptionHistory = {
-  subscriptionHistory: NftPassType[]
+  retrieveBrainPass: NftPassType[]
 }
 
 export const subscriptionHistoryApi = createApi({
@@ -29,8 +29,9 @@ export const subscriptionHistoryApi = createApi({
         document: GET_SUBSCRIPTION_HISTORY,
         variables: { address },
       }),
-      transformResponse: (response: GetSubscriptionHistory) =>
-        response?.subscriptionHistory,
+      transformResponse: (response: GetSubscriptionHistory) => {
+        return response.retrieveBrainPass
+      } 
     }),
   }),
 })
