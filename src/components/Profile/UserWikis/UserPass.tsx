@@ -209,7 +209,7 @@ const UserPass = () => {
           <Table fontWeight="semibold">
             <Thead border="none" bg="aboutFeaturesCardBg">
               <Tr>
-                {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
+                {['Date', 'Details', 'Amount paid', 'View on polyscan'].map(
                   (column) => (
                     <Th
                       border="none"
