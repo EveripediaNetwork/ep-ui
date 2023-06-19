@@ -18,3 +18,26 @@ export const dateDetails = (endDate: number) => {
 
   return { text, formattedDate }
 }
+
+export const getFormattedDate = (dateToFormat: string) => {
+  const date = new Date(dateToFormat)
+
+  const options: {
+    year: 'numeric'
+    month: 'short'
+    day: 'numeric'
+    hour: 'numeric'
+    minute: 'numeric'
+    hour12: boolean
+  } = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  }
+
+  const formattedDate = date.toLocaleString('en-US', options)
+  return formattedDate
+}

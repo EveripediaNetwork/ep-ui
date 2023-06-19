@@ -20,23 +20,22 @@ import {
   Th,
   Tbody,
   Td,
-  TableCaption,
   Button,
   Spacer,
+  Link,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
+import { FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { LinkButton } from '@/components/Elements'
 import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
-import { SubscriptionEmptyState } from '@/components/Elements/icons/SubscriptionEmptyState'
 import useBrainPass from '@/hooks/useBrainPass'
 import { useAccount } from 'wagmi'
 import { shortenAccount } from '@/utils/textUtils'
 import { padNumber } from '@/utils/ProfileUtils/padNumber'
 import BrainPassIcon from '@/components/Icons/brainPassIcon'
 import { useRouter } from 'next/router'
-import { dateDetails } from '@/utils/DataTransform/passUtils'
+import { dateDetails, getFormattedDate } from '@/utils/DataTransform/passUtils'
 import { useGetSubscriptionHistoryQuery } from '@/services/nftpass'
 import { NftPassType } from '@/types/nftPass'
 
@@ -179,7 +178,7 @@ const UserPass = () => {
           </Center>
         </>
       )}
-      {subscriptionHistory && subscriptionHistory.length > 0 ? (
+      {subscriptionHistory && subscriptionHistory.length > 0 && (
         <chakra.div
           overflowX="auto"
           border="solid 1px"
@@ -211,7 +210,7 @@ const UserPass = () => {
             <Thead border="none" bg="aboutFeaturesCardBg">
               <Tr>
                 {['Date', 'Details', 'Amount paid', 'View on etherscan'].map(
-                  (column) => (
+                  column => (
                     <Th
                       border="none"
                       whiteSpace="nowrap"
@@ -236,7 +235,7 @@ const UserPass = () => {
                   borderBottom="none"
                 >
                   <Td fontSize="sm" color="tagColor">
-                    {history.created}
+                    {getFormattedDate(history.created)}
                   </Td>
                   <Td fontSize="sm" color="tagColor" textAlign="center">
                     {history.passName}
@@ -245,18 +244,32 @@ const UserPass = () => {
                     {history.price}
                   </Td>
                   <Td fontSize="sm" color="tagColor" textAlign="center">
-                    <chakra.span color="paginationButtonActive" fontSize="sm">
-                      {' '}
-                      {shortenAccount(
-                        history.transactionHash?.toString() || '',
-                      )}{' '}
-                      <ExternalLinkIcon mx="2px" mt={-3} />
-                    </chakra.span>
+                    <Center>
+                      <Link
+                        href={`https://mumbai.polygonscan.com/tx/${history.transactionHash}`}
+                        isExternal
+                        display="flex"
+                        gap={1}
+                        fontSize="sm"
+                        color="paginationButtonActive"
+                      >
+                        <chakra.span
+                          color="paginationButtonActive"
+                          fontSize="sm"
+                        >
+                          {' '}
+                          {shortenAccount(
+                            history.transactionHash?.toString() || '',
+                          )}{' '}
+                          <ExternalLinkIcon mx="2px" mt={-3} />
+                        </chakra.span>
+                      </Link>
+                    </Center>
                   </Td>
                 </Tr>
               ))}
             </Tbody>
-            <TableCaption mt={0}>
+            {/* <TableCaption mt={0}>
               <Flex>
                 <Box>
                   <Button
@@ -278,49 +291,8 @@ const UserPass = () => {
                   </Button>
                 </Box>
               </Flex>
-            </TableCaption>
+            </TableCaption> */}
           </Table>
-        </chakra.div>
-      ) : (
-        <chakra.div
-          overflowX="auto"
-          border="solid 1px"
-          borderColor="walletDrawerBorderColor"
-          rounded="lg"
-          my="16"
-          fontSize="sm"
-          mb={{ base: '24', md: '0' }}
-        >
-          <Flex
-            py={4}
-            justify="space-between"
-            display="flex"
-            direction={{ base: 'column', lg: 'row' }}
-            align={{ lg: 'center' }}
-          >
-            <Text
-              color="wikiSummaryLabel"
-              fontSize="lg"
-              px={4}
-              mb={{ base: 4, lg: 0 }}
-              fontWeight="medium"
-            >
-              Subscription History
-            </Text>
-          </Flex>
-          <Divider />
-          <Center>
-            <SubscriptionEmptyState maxBlockSize="40vw" />
-          </Center>
-          <Text
-            mb={6}
-            ml={4}
-            fontSize="xl"
-            textAlign="center"
-            color="insertMediaDialogText"
-          >
-            No subscription history yet.
-          </Text>
         </chakra.div>
       )}
     </Container>

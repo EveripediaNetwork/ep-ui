@@ -5,3 +5,4 @@ export const getReadableDate = (dateToFormat: string, addSuffix = false) => {
     addSuffix,
   })
 }
+
