@@ -32,7 +32,6 @@ export default class Document extends NextDocument {
           />
           <link rel="manifest" href="/manifest.json" />
         </Head>
-
         <body>
           <ColorModeScript
             initialColorMode={chakraTheme.config.initialColorMode}
