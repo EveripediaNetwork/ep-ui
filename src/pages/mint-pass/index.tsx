@@ -302,7 +302,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -330,7 +330,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -385,6 +385,7 @@ const Mint = () => {
               </Flex>
             </Box>
             <Button
+              _disabled={{ backgroundColor: 'brand.400' }}
               isDisabled={isMinting}
               isLoading={isMinting}
               _hover={{ bg: isMinting && 'brand.400' }}
@@ -427,7 +428,7 @@ const Mint = () => {
             Some benefits associated with owning an BrainPass on IQ Wiki
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
-            {PASS_FEATURES.map((feature) => (
+            {PASS_FEATURES.map(feature => (
               <Feature
                 icon={
                   <Icon
