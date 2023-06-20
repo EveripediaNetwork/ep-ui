@@ -2,6 +2,7 @@ import Feature from '@/components/BrainPass/Feature'
 import NetworkConnectionInfo from '@/components/Layout/Network/NetworkConnectionInfo'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
 import MintNotification from '@/components/Layout/Nft/MintNotification'
+import config from '@/config'
 import { PASS_FEATURES } from '@/data/PassData'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
@@ -237,7 +238,7 @@ const Mint = () => {
             </span>
           </Text>
           <Link
-            href={`https://mumbai.polygonscan.com/address/${env.NEXT_PUBLIC_BRAINPASS_ADDRESS}`}
+            href={`${config.blockExplorerUrl}/address/${env.NEXT_PUBLIC_BRAINPASS_ADDRESS}`}
             isExternal
             display="flex"
             gap={1}

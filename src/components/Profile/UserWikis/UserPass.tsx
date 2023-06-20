@@ -201,21 +201,24 @@ const UserPass = () => {
           <Table fontWeight="semibold">
             <Thead border="none" bg="aboutFeaturesCardBg">
               <Tr>
-                {['Date', 'Details', 'Amount paid', 'View Trx on Polygonscan'].map(
-                  (column) => (
-                    <Th
-                      border="none"
-                      whiteSpace="nowrap"
-                      py="5"
-                      textTransform="none"
-                      fontSize={{ base: 'xs', md: 'sx' }}
-                      color="tagColor"
-                      textAlign={column.includes('Date') ? 'left' : 'center'}
-                    >
-                      {column}
-                    </Th>
-                  ),
-                )}
+                {[
+                  'Date',
+                  'Details',
+                  'Amount paid',
+                  'View Trx on Polygonscan',
+                ].map((column) => (
+                  <Th
+                    border="none"
+                    whiteSpace="nowrap"
+                    py="5"
+                    textTransform="none"
+                    fontSize={{ base: 'xs', md: 'sx' }}
+                    color="tagColor"
+                    textAlign={column.includes('Date') ? 'left' : 'center'}
+                  >
+                    {column}
+                  </Th>
+                ))}
               </Tr>
             </Thead>
             <Tbody>
