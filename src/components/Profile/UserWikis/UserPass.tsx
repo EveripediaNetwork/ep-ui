@@ -39,6 +39,7 @@ import { dateDetails, getFormattedDate } from '@/utils/DataTransform/passUtils'
 import { useGetSubscriptionHistoryQuery } from '@/services/nftpass'
 import { NftPassType } from '@/types/nftPass'
 import { PASS_FEATURES } from '@/data/PassData'
+import config from '@/config'
 
 const UserPass = () => {
   const router = useRouter()
@@ -200,7 +201,7 @@ const UserPass = () => {
           <Table fontWeight="semibold">
             <Thead border="none" bg="aboutFeaturesCardBg">
               <Tr>
-                {['Date', 'Details', 'Amount paid', 'View on polyscan'].map(
+                {['Date', 'Details', 'Amount paid', 'View Trx on Polygonscan'].map(
                   (column) => (
                     <Th
                       border="none"
@@ -237,7 +238,7 @@ const UserPass = () => {
                   <Td fontSize="sm" color="tagColor" textAlign="center">
                     <Center>
                       <Link
-                        href={`https://mumbai.polygonscan.com/tx/${history.transactionHash}`}
+                        href={`${config.blockExplorerUrl}/tx/${history.transactionHash}`}
                         isExternal
                         display="flex"
                         gap={1}
