@@ -59,7 +59,9 @@ export const Collections = ({
             fontWeight="semibold"
             color="fadedText"
           >
-            <Icon fontSize="2xl" as={section.icon} mr="3" /> {section.label}{' '}
+            <Icon fontSize="2xl" as={section.icon} mr="3" /> {
+              section.label
+            }{' '}
           </CustomTab>
         ))}
       </TabList>
