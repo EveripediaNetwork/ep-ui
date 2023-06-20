@@ -36,6 +36,7 @@ import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
 import useBrainPass from '@/hooks/useBrainPass'
 import BrainPassIcon from '@/components/Icons/brainPassIcon'
+import { dateDetails } from '@/utils/DataTransform/passUtils'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -54,18 +55,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   )
   const dispatch = useDispatch()
   const { isUserPassActive, userPass } = useBrainPass()
-
-  const displayPassInfo = (endTime: number) => {
-    const currentDate = Date.now()
-    const endTimestamp = new Date(endTime * 1000).getTime()
-    const oneDay = 24 * 60 * 60 * 1000
-    const daysLeft = Math.round(Math.abs(endTimestamp - currentDate) / oneDay)
-    if (endTimestamp > currentDate) {
-      return `Brain Pass Subscription expires in  ${daysLeft} day(s)`
-    } else {
-      return 'Your Brain Pass Subscription has expired'
-    }
-  }
 
   const { connectors, connect } = useConnect({
     onError(error) {
@@ -279,7 +268,8 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 <HStack gap={2}>
                   <Icon color="brandLinkColor" as={BrainPassIcon} boxSize={6} />
                   <Text fontSize="xs" fontWeight="semibold">
-                    {`${displayPassInfo(userPass?.endTimeStamp)}`}
+                    {`${dateDetails(userPass?.endTimeStamp)?.text}`} ({' '}
+                    {dateDetails(userPass?.endTimeStamp)?.formattedDate} )
                   </Text>
                 </HStack>
               </Box>
