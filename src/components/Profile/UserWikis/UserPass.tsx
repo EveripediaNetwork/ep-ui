@@ -167,7 +167,7 @@ const UserPass = () => {
           <Center py={20}>
             <Flex flexDir="column" textAlign="center" align="center" gap={6}>
               <MintEmptyState maxBlockSize="20vw" />
-              <Text color="fadedText2" maxW="350px">
+              <Text color="fadedText" maxW="350px">
                 No BrainPass yet. You can mint one and become an editor on iq
                 wiki.
               </Text>

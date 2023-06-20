@@ -16,7 +16,7 @@ export const EmptyState = ({
       <Text fontWeight="bold" fontSize="3xl" mt="8">
         {title}
       </Text>
-      <Text color="fadedText2">{body}</Text>
+      <Text color="fadedText">{body}</Text>
 
       <LinkButton href="/create-wiki" px="16" w="fit-content" mt="16">
         Create Wiki
