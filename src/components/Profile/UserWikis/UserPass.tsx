@@ -38,6 +38,7 @@ import { useRouter } from 'next/router'
 import { dateDetails, getFormattedDate } from '@/utils/DataTransform/passUtils'
 import { useGetSubscriptionHistoryQuery } from '@/services/nftpass'
 import { NftPassType } from '@/types/nftPass'
+import { PASS_FEATURES } from '@/data/PassData'
 
 const UserPass = () => {
   const router = useRouter()
@@ -142,22 +143,12 @@ const UserPass = () => {
                 </HStack>
               </Box>
               <List mt={7} spacing={7} textAlign="start">
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  Exclusive support from the engineering team.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  AI Insight for creating wikis.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  Market Updates via Email.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  Exclusive access to IQ GPT.
-                </ListItem>
+                {PASS_FEATURES.map((feature) => (
+                  <ListItem key={feature.title}>
+                    <ListIcon as={FaCheckCircle} color="green.500" />
+                    {feature.title}
+                  </ListItem>
+                ))}
               </List>
             </Box>
           </GridItem>
