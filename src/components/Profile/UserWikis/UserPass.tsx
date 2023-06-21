@@ -77,7 +77,7 @@ const UserPass = () => {
               <Center py={5} bgColor="careersBackground">
                 <Image
                   maxH="378px"
-                  src="/images/nft-pass/brain-image.png.png"
+                  src="/images/nft-pass/brain-image.png"
                 />
               </Center>
               <Divider orientation="horizontal" />
