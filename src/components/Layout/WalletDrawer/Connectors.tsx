@@ -253,7 +253,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             >
               <Center>
                 <Image
-                  src="/images/nft-pass/rotated-brainpass.png"
+                  src="/images/nft-pass/brainpass.png"
                   maxH="233px"
                   maxW="348px"
                 />

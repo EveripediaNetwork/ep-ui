@@ -191,11 +191,12 @@ const Mint = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            p={5}
+            px={5}
+            py={{base: 8, md: 16, lg: 28}}
             bgColor="creamCardBg"
           >
             <Image
-              src="/images/nft-pass/rotated-brainpass.png"
+              src="/images/nft-pass/brainpass.png"
               alt="your-image"
             />
           </Box>
