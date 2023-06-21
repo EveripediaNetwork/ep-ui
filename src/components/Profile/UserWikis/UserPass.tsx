@@ -75,7 +75,10 @@ const UserPass = () => {
               borderColor="walletDrawerBorderColor"
             >
               <Center py={5} bgColor="careersBackground">
-                <Image maxH="378px" src="/images/nft-pass/brainPass.png" />
+                <Image
+                  maxH="378px"
+                  src="/images/nft-pass/brain-image.png.png"
+                />
               </Center>
               <Divider orientation="horizontal" />
               <HStack px={4} py={2} columnGap={4}>
@@ -144,7 +147,7 @@ const UserPass = () => {
                 </HStack>
               </Box>
               <List mt={7} spacing={7} textAlign="start">
-                {PASS_FEATURES.map((feature) => (
+                {PASS_FEATURES.map(feature => (
                   <ListItem key={feature.title}>
                     <ListIcon as={FaCheckCircle} color="green.500" />
                     {feature.title}
@@ -207,7 +210,7 @@ const UserPass = () => {
                   'Amount paid',
                   'Transaction Type',
                   'View Trx on Polygonscan',
-                ].map((column) => (
+                ].map(column => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
