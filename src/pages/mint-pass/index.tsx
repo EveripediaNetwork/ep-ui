@@ -192,13 +192,10 @@ const Mint = () => {
             justifyContent="center"
             alignItems="center"
             px={5}
-            py={{base: 8, md: 16, lg: 28}}
+            py={{ base: 8, md: 16, lg: 28 }}
             bgColor="creamCardBg"
           >
-            <Image
-              src="/images/nft-pass/brainpass.png"
-              alt="your-image"
-            />
+            <Image src="/images/nft-pass/brainpass.png" alt="brainpass-image" />
           </Box>
         </GridItem>
         <GridItem w="100%">
