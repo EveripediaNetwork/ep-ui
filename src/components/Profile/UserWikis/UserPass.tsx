@@ -205,7 +205,7 @@ const UserPass = () => {
                   'Date',
                   'Details',
                   'Amount paid',
-                  'Transaction Type',
+                  'Transaction Name',
                   'View Trx on Polygonscan',
                 ].map((column) => (
                   <Th
@@ -240,7 +240,7 @@ const UserPass = () => {
                     {history.price}
                   </Td>
                   <Td fontSize="sm" textAlign="center" color="tagColor">
-                    Mint
+                    {history.transactionType || '-'}
                   </Td>
                   <Td fontSize="sm" color="tagColor" textAlign="center">
                     <Center>
