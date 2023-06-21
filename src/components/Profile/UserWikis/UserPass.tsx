@@ -147,7 +147,7 @@ const UserPass = () => {
                 </HStack>
               </Box>
               <List mt={7} spacing={7} textAlign="start">
-                {PASS_FEATURES.map(feature => (
+                {PASS_FEATURES.map((feature) => (
                   <ListItem key={feature.title}>
                     <ListIcon as={FaCheckCircle} color="green.500" />
                     {feature.title}
@@ -210,7 +210,7 @@ const UserPass = () => {
                   'Amount paid',
                   'Transaction Type',
                   'View Trx on Polygonscan',
-                ].map(column => (
+                ].map((column) => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
