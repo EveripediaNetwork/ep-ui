@@ -74,7 +74,7 @@ const UserPass = () => {
               border="1px solid"
               borderColor="walletDrawerBorderColor"
             >
-              <Center py={5} bgColor="careersBackground">
+              <Center py={8} px={4} bgColor="careersBackground">
                 <Image maxH="378px" src="/images/nft-pass/brain-image.png" />
               </Center>
               <Divider orientation="horizontal" />
