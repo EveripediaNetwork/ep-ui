@@ -205,7 +205,7 @@ const UserPass = () => {
                   'Date',
                   'Details',
                   'Amount paid',
-                  'Transaction Name',
+                  'Transaction Type',
                   'View Trx on Polygonscan',
                 ].map((column) => (
                   <Th
