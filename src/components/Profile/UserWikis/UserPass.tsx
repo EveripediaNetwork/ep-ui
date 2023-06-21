@@ -75,10 +75,7 @@ const UserPass = () => {
               borderColor="walletDrawerBorderColor"
             >
               <Center py={5} bgColor="careersBackground">
-                <Image
-                  maxH="378px"
-                  src="/images/nft-pass/brain-image.png"
-                />
+                <Image maxH="378px" src="/images/nft-pass/brain-image.png" />
               </Center>
               <Divider orientation="horizontal" />
               <HStack px={4} py={2} columnGap={4}>
