@@ -11,6 +11,7 @@ export const GET_SUBSCRIPTION_HISTORY = gql`
       passName
       price
       created
+      transactionType
     }
   }
 `

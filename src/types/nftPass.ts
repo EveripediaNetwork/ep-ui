@@ -7,4 +7,5 @@ export type NftPassType = {
   passName: string
   price: number
   created: string
+  transactionType: string
 }
