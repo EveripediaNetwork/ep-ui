@@ -34,6 +34,7 @@ export default class Document extends NextDocument {
         </Head>
         <body>
           <ColorModeScript
+            type="cookie"
             initialColorMode={chakraTheme.config.initialColorMode}
           />
           <Main />
