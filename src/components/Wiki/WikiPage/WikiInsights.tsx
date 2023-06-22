@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, VStack } from '@chakra-ui/react'
-import {
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  Wiki,
-} from '@everipedia/iq-utils'
+import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
 import { TokenStats } from '@/services/token-stats'
 import { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
