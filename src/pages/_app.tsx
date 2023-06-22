@@ -7,7 +7,6 @@ import {
   ChakraProvider,
   createStandaloneToast,
   cookieStorageManagerSSR,
-  localStorageManager,
 } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -48,10 +47,7 @@ const App = ({ Component, pageProps, router, cookies }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
-  const colorModeManager =
-    typeof cookies === 'string'
-      ? cookieStorageManagerSSR(cookies)
-      : localStorageManager
+  const colorModeManager = cookieStorageManagerSSR(cookies)
 
   return (
     <StrictMode>
