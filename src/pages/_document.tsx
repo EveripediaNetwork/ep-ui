@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { DocumentContext } from 'next/document'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
-import { ColorMode } from '@chakra-ui/react'
+import { ColorModeScript, ColorMode } from '@chakra-ui/react'
 import chakraTheme from '@/theme'
 
 type MaybeColorMode = ColorMode | undefined
@@ -49,6 +49,10 @@ export default class Document extends NextDocument<{ colorMode: string }> {
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body className={`chakra-ui-${colorMode}`}>
+          <ColorModeScript
+            type="cookie"
+            initialColorMode={chakraTheme.config.initialColorMode}
+          />
           <Main />
           <NextScript />
         </body>
