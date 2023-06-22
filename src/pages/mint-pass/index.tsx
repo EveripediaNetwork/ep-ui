@@ -202,7 +202,7 @@ const Mint = () => {
           </Box>
         </GridItem>
         <GridItem w="100%">
-          {isUserPassActive && (
+          {userPass?.tokenId ? (
             <Box
               py={1}
               rounded="full"
@@ -215,7 +215,7 @@ const Mint = () => {
                 Renew pass Subscription
               </Text>
             </Box>
-          )}
+          ): null}
           <Text
             color="wikiSummaryLabel"
             mb={3}
@@ -223,7 +223,7 @@ const Mint = () => {
             fontWeight="bold"
             mt={-2}
           >
-            {isUserPassActive ? 'BrainPass Renewal' : 'BrainPass Mint'}
+            {userPass?.tokenId ? 'BrainPass Renewal' : 'BrainPass Mint'}
           </Text>
           <Text
             mb={3}
@@ -303,7 +303,7 @@ const Mint = () => {
                     min={28}
                     defaultValue={subscriptionPeriod}
                     max={maxPeriod}
-                    onChange={(value) => updateSubscriptionPeriod(value)}
+                    onChange={value => updateSubscriptionPeriod(value)}
                     value={subscriptionPeriod}
                   >
                     <SliderTrack>
@@ -331,7 +331,7 @@ const Mint = () => {
                       color="grayText4"
                       bg="lightCard"
                       textAlign="center"
-                      onChange={(e) =>
+                      onChange={e =>
                         updateSubscriptionPeriod(Number(e.target.value))
                       }
                     />
@@ -429,7 +429,7 @@ const Mint = () => {
             Some benefits associated with owning an BrainPass on IQ Wiki
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} pt={10}>
-            {PASS_FEATURES.map((feature) => (
+            {PASS_FEATURES.map(feature => (
               <Feature
                 icon={
                   <Icon
