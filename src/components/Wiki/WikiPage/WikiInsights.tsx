@@ -37,6 +37,10 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
 
+  const coinmarketcapLink = wiki.metadata.find(
+    (meta) => meta.id === CommonMetaIds.COIN_MARKET_CAP,
+  )?.value
+
   const twitterLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
@@ -54,7 +58,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {
-        await fetchTokenStats(coingeckoLink).then((res) => {
+        await fetchTokenStats(coingeckoLink, coinmarketcapLink).then((res) => {
           setTokenStats(res)
         })
       }
