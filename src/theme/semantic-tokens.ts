@@ -233,6 +233,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'blackAlpha.200',
       _dark: 'whiteAlpha.200',
     },
+    modalCloseBtn: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.700',
+    },
     thirdRankColor: {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',

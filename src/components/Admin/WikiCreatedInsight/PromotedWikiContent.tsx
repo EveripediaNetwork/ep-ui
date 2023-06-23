@@ -30,7 +30,7 @@ export const Content = (props: ContentProps) => {
             </Text>
             <Select
               cursor="pointer"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={e => setValue(e.target.value)}
               defaultValue={0}
             >
               {promotedWikis &&
@@ -110,20 +110,18 @@ export const PromoteModalContent = (props: ContentProps) => {
         <Flex width="100%" justify="center" pt={4} pb={5}>
           <HStack gap={3}>
             <Button
-              p={4}
+              py={4}
+              px={9}
               onClick={Close}
               size="sm"
               variant="ghost"
               fontSize="xs"
+              borderWidth="1px"
+              borderColor="modalCloseBtn"
             >
               {buttonOne}
             </Button>
-            <Button
-              size="sm"
-              fontSize="xs"
-              borderWidth="1px"
-              onClick={TrendingwikiSelected}
-            >
+            <Button size="sm" fontSize="xs" onClick={TrendingwikiSelected}>
               {buttonTwo}
             </Button>
           </HStack>

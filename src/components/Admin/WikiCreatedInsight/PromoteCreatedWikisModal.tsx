@@ -32,7 +32,7 @@ export const PromoteCreatedWikisModal = (
   } = props
   const [buttonOne, setbuttonOne] = useState('Cancel')
   const [buttonTwo, setbuttonTwo] = useState('Continue')
-  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
+  const { data: promotedWikis, refetch } = useGetAllPromotedWikiCountQuery(0)
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
   const [value, setValue] = useState('1')
   const toast = useToast()
@@ -109,6 +109,7 @@ export const PromoteCreatedWikisModal = (
       if (id) {
         handlePromoteWiki({ id, level: 0, isModal: false })
       }
+      refetch()
       hideFunc()
       Close()
     }
