@@ -42,7 +42,7 @@ import { NftPassType } from '@/types/nftPass'
 import { PASS_FEATURES } from '@/data/PassData'
 import config from '@/config'
 
-const LIMIT = 2
+const LIMIT = 5
 
 const UserPass = () => {
   const router = useRouter()
@@ -53,7 +53,7 @@ const UserPass = () => {
     formattedDate: string
   }>()
 
-  const [offset] = useState(0)
+  const [offset, setOffset] = useState(0)
 
   const { data: subscriptionHistory } = useGetSubscriptionHistoryQuery({
     address,
@@ -284,6 +284,7 @@ const UserPass = () => {
                     variant="outline"
                     leftIcon={<FaArrowLeft />}
                     rounded="md"
+                    disabled={!offset}
                   >
                     <Text fontSize="sm">Previous</Text>
                   </Button>
@@ -294,6 +295,8 @@ const UserPass = () => {
                     variant="outline"
                     rightIcon={<FaArrowRight />}
                     rounded="md"
+                    disabled={subscriptionHistory?.length < LIMIT}
+                    onClick={() => setOffset(offset + LIMIT)}
                   >
                     <Text fontSize="sm">Next</Text>
                   </Button>
