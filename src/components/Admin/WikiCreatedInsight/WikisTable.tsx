@@ -30,7 +30,7 @@ export const WikisTable = (props: WikisTableProps) => {
   return (
     <TableContainer w="100%">
       <Table>
-        <Thead bg="wikiTitleBg">
+        <Thead bg="wikiAdminTableBg">
           <Tr>
             <TableHead text="Wiki Title" />
             <TableHead text="Date/Time" />

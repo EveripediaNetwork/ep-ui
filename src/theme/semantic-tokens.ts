@@ -173,6 +173,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#0000000A',
       _dark: 'gray.700',
     },
+    wikiAdminTableBg: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
     wikiActionBtnDisabled: {
       default: 'gray.400',
       _dark: 'gray.600',
