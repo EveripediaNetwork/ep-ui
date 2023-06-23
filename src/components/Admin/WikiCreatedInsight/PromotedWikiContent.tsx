@@ -30,7 +30,7 @@ export const Content = (props: ContentProps) => {
             </Text>
             <Select
               cursor="pointer"
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
               defaultValue={0}
             >
               {promotedWikis &&
