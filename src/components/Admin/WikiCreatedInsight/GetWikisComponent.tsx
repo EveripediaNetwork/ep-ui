@@ -83,12 +83,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                   </HStack>
                 )}
               </Flex>
-              <Box
-                mb="2"
-                mt="-2%"
-                maxW={{ base: '70%', lg: '80%' }}
-                overflow="hidden"
-              >
+              <Box mb="2" maxW={{ base: '70%', lg: '80%' }} overflow="hidden">
                 <Text
                   fontSize="xs"
                   fontWeight="500"
@@ -108,7 +103,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                       address={Data.author?.id}
                       avatarIPFS={Data.author.profile?.avatar}
                       size={20}
-                      alt="unknown"
+                      alt="user"
                     />
                     <Text fontSize="14px" color="linkColor">
                       <Link
