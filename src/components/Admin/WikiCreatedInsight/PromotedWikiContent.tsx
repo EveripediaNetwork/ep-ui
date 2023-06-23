@@ -13,60 +13,50 @@ import { Step, Steps } from 'chakra-ui-steps'
 import { GetWiki } from './GetWikisComponent'
 
 export const Content = (props: ContentProps) => {
-  const { activeStep, step2Titles, promotedWikis, Data, setValue } = props
+  const { activeStep, promotedWikis, Data, setValue, value } = props
 
   return (
     <>
       {activeStep === 0 && (
-        <Text textAlign="center">
-          Select the appropriate action you would like to take for this wiki
-        </Text>
+        <Box w="full">
+          <GetWiki Data={Data} />
+        </Box>
       )}
       {activeStep === 1 && (
         <VStack gap={4}>
-          {step2Titles === 'Promote to Trending wiki' && (
-            <Box w="full">
-              <Text fontWeight="bold" py="1">
-                Select slot
-              </Text>
-              <Select
-                cursor="pointer"
-                onChange={(e) => setValue(e.target.value)}
-                defaultValue={promotedWikis?.length}
-              >
-                {promotedWikis &&
-                  [...promotedWikis]
-                    ?.sort((a, b) => a.promoted - b.promoted)
-                    ?.slice(1)
-                    ?.map((item, i) => (
-                      <option key={i} value={item.promoted}>
-                        SLOT {item.promoted - 1} - {item.title}
-                      </option>
-                    ))}
-                {promotedWikis && promotedWikis.length <= 9 && (
-                  <option value={promotedWikis && +promotedWikis.length + 1}>
-                    New Slot
-                  </option>
-                )}
-              </Select>
-            </Box>
-          )}
+          <Box w="full">
+            <Text fontWeight="bold" py="1">
+              Select slot
+            </Text>
+            <Select
+              cursor="pointer"
+              onChange={e => setValue(e.target.value)}
+              defaultValue={0}
+            >
+              {promotedWikis &&
+                [...promotedWikis]
+                  ?.sort((a, b) => a.promoted - b.promoted)
+                  ?.map((item, i) => (
+                    <option key={i} value={item.promoted}>
+                      SLOT {item.promoted} - {item.title}
+                    </option>
+                  ))}
+              {promotedWikis && promotedWikis.length <= 9 && (
+                <option value={promotedWikis && +promotedWikis.length + 1}>
+                  New Slot
+                </option>
+              )}
+            </Select>
+          </Box>
           <GetWiki Data={Data} />
         </VStack>
       )}
       {activeStep === 2 && (
         <>
-          {step2Titles === 'Promote to Trending wiki' ? (
-            <Text textAlign="center">
-              You are about to promote a wiki to the Trending wiki section of
-              the homepage. Do you wish to continue this action?
-            </Text>
-          ) : (
-            <Text textAlign="center">
-              You are about to promote a wiki to the hero section of the
-              homepage. Do you wish to continue this action?
-            </Text>
-          )}
+          <Text textAlign="center">
+            {`You are about to promote a wiki to slot ${value} of featured wikis,
+            on the homepage, Do you wish to continue with this action?`}
+          </Text>
         </>
       )}
     </>
@@ -77,12 +67,12 @@ export const PromoteModalContent = (props: ContentProps) => {
   const {
     activeStep,
     steps,
-    HompageSelected,
+    Close,
     buttonOne,
     buttonTwo,
-    step2Titles,
     promotedWikis,
     Data,
+    value,
     setValue,
     TrendingwikiSelected,
   } = props
@@ -108,9 +98,9 @@ export const PromoteModalContent = (props: ContentProps) => {
               <Box py="10">
                 <Content
                   activeStep={activeStep}
-                  step2Titles={step2Titles}
                   promotedWikis={promotedWikis}
                   Data={Data}
+                  value={value}
                   setValue={setValue}
                 />
               </Box>
@@ -121,7 +111,7 @@ export const PromoteModalContent = (props: ContentProps) => {
           <HStack gap={3}>
             <Button
               p={4}
-              onClick={HompageSelected}
+              onClick={Close}
               size="sm"
               variant="ghost"
               fontSize="xs"
@@ -133,10 +123,6 @@ export const PromoteModalContent = (props: ContentProps) => {
               fontSize="xs"
               borderWidth="1px"
               onClick={TrendingwikiSelected}
-              disabled={
-                !promotedWikis?.length &&
-                buttonTwo === 'Promote to Trending wikis'
-              }
             >
               {buttonTwo}
             </Button>

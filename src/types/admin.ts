@@ -231,12 +231,12 @@ export type ContentProps = {
     label: string
     description: string
   }[]
-  HompageSelected?: () => void
+  Close?: () => void
   buttonOne?: string
   buttonTwo?: string
-  step2Titles: string
   promotedWikis: CreatedWikisCount[] | undefined
   Data: CreatedWikisCount | undefined
+  value: string
   setValue: (value: React.SetStateAction<string>) => void
   TrendingwikiSelected?: () => Promise<void>
 }

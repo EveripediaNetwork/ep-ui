@@ -30,9 +30,8 @@ export const PromoteCreatedWikisModal = (
     hideFunc,
     ...rest
   } = props
-  const [step2Titles, setStep2Titles] = useState('Promote to Homepage')
-  const [buttonOne, setbuttonOne] = useState('Promote to Hero section')
-  const [buttonTwo, setbuttonTwo] = useState('Promote to Trending wikis')
+  const [buttonOne, setbuttonOne] = useState('Cancel')
+  const [buttonTwo, setbuttonTwo] = useState('Continue')
   const [initGetSearchedWikis, setInitGetSearchedWikis] =
     useState<boolean>(true)
   const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
@@ -47,10 +46,10 @@ export const PromoteCreatedWikisModal = (
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
     skip: initGetSearchedWikis,
   })
-  const [value, setValue] = useState('2')
+  const [value, setValue] = useState('1')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
@@ -58,17 +57,16 @@ export const PromoteCreatedWikisModal = (
   })
 
   const steps = [
-    { label: 'Step 1', description: 'Select Promotion Type' },
-    { label: 'Step 2', description: step2Titles },
-    { label: 'Step 3', description: 'Promotion confirmation' },
+    { label: 'STEP 1', description: 'Promote to Featured wiki section' },
+    { label: 'STEP 2', description: 'Select promotion slot' },
+    { label: 'STEP 3', description: 'Promotion confirmation' },
   ]
   const [promoteWiki, { error: posTPromoteWikiError }] =
     usePostPromotedWikiMutation()
 
   const Close = () => {
-    setStep2Titles('Promote to Homepage')
-    setbuttonOne('Promote to Hero section')
-    setbuttonTwo('Promote to Trending wikis')
+    setbuttonOne('Cancel')
+    setbuttonTwo('Continue')
     reset()
     onClose()
   }
@@ -107,7 +105,6 @@ export const PromoteCreatedWikisModal = (
 
   const TrendingwikiSelected = async () => {
     if (activeStep === 0) {
-      setStep2Titles('Promote to Trending wiki')
       arrs()
       nextStep()
       setInitGetSearchedWikis(false)
@@ -118,48 +115,24 @@ export const PromoteCreatedWikisModal = (
       setbuttonOne('Cancel')
       setbuttonTwo('Promote')
     } else if (activeStep === 2) {
-      if (step2Titles === 'Promote to Trending wiki') {
-        await promoteWiki({
-          id: wikiChosenId,
-          level: Number(value),
-        })
-        handlePromoteWiki({
-          id: wikiChosenId,
-          level: Number(value),
-          isModal: true,
-        })
-        const id = getWikiIdUsingLevel(Number(value), promotedWikis)
-        if (id) {
-          handlePromoteWiki({ id, level: 0, isModal: false })
-        }
-        hideFunc()
-        Close()
-      } else {
-        handlePromoteWiki({ id: wikiChosenId, level: 1, isModal: true })
-        const id = getWikiIdUsingLevel(1, promotedWikis)
-        if (id) {
-          handlePromoteWiki({ id, level: 0, isModal: false })
-        }
-        hideFunc()
-        Close()
+      await promoteWiki({
+        id: wikiChosenId,
+        level: Number(value),
+      })
+      handlePromoteWiki({
+        id: wikiChosenId,
+        level: Number(value),
+        isModal: true,
+      })
+      const id = getWikiIdUsingLevel(Number(value), promotedWikis)
+      if (id) {
+        handlePromoteWiki({ id, level: 0, isModal: false })
       }
+      hideFunc()
+      Close()
     }
   }
 
-  const HompageSelected = () => {
-    if (activeStep === 0) {
-      setStep2Titles('Promote to Hero Section')
-      arrs()
-      nextStep()
-      setInitGetSearchedWikis(false)
-      setbuttonOne('Cancel')
-      setbuttonTwo('Apply')
-    } else if (activeStep === 1) {
-      Close()
-    } else if (activeStep === 2) {
-      Close()
-    }
-  }
   if (!isOpen) return null
 
   return (
@@ -190,12 +163,12 @@ export const PromoteCreatedWikisModal = (
           <PromoteModalContent
             activeStep={activeStep}
             steps={steps}
-            HompageSelected={HompageSelected}
+            Close={() => Close()}
             buttonOne={buttonOne}
             buttonTwo={buttonTwo}
-            step2Titles={step2Titles}
             promotedWikis={promotedWikis}
             Data={Data}
+            value={value}
             setValue={setValue}
             TrendingwikiSelected={TrendingwikiSelected}
           />
