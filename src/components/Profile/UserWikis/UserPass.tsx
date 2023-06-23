@@ -53,7 +53,7 @@ const UserPass = () => {
     formattedDate: string
   }>()
 
-  const [offset, ] = useState(0)
+  const [offset] = useState(0)
 
   const { data: subscriptionHistory } = useGetSubscriptionHistoryQuery({
     address,
