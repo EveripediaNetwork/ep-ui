@@ -3,7 +3,6 @@ import { Box, HStack, IconButton, Input, Text, VStack } from '@chakra-ui/react'
 import { RiArrowLeftRightLine } from 'react-icons/ri'
 import { TokenStats } from '@/services/token-stats'
 import { Image } from '@/components/Elements/Image/Image'
-import config from '@/config'
 
 const CURRENCY_BOX_SIZE = 18
 
@@ -21,7 +20,7 @@ const CurrencyBox = ({
   setValue: (value: string) => void
 }) => {
   const tokenImageSrc = tokenImage
-    ? `${config.pinataBaseUrl}${tokenImage}`
+    ? tokenImage
     : `https://icons.iq.wiki/128/${token}.png`
   return (
     <HStack
