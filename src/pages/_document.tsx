@@ -50,7 +50,6 @@ export default class Document extends NextDocument<{ colorMode: string }> {
         </Head>
         <body className={`chakra-ui-${colorMode}`}>
           <ColorModeScript
-            type="cookie"
             initialColorMode={chakraTheme.config.initialColorMode}
           />
           <Main />
