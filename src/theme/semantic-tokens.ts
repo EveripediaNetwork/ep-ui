@@ -46,6 +46,14 @@ export const semanticTokens: SemanticTokens = {
       default: '#9C4221',
       _dark: '#AE5D35',
     },
+    archivedTagColor: {
+      default: '#F9F5FF',
+      _dark: '#3F444E',
+    },
+    archivedTextColor: {
+      default: 'gray.200',
+      _dark: 'whiteAlpha.200',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',

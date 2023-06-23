@@ -69,9 +69,22 @@ export const WikisTable = (props: WikisTableProps) => {
                     />
                     <Flex flexDirection="column">
                       <Link href={`/wiki/${item.id}`} py={1}>
-                        <Text>{shortenText(item.title, 20)}</Text>
+                        <Text
+                          color={
+                            item.hidden
+                              ? 'archivedTextColor'
+                              : 'wikiFlagTextColor'
+                          }
+                        >
+                          {shortenText(item.title, 20)}
+                        </Text>
                       </Link>
-                      <Text color="primaryGray" fontSize="sm">
+                      <Text
+                        color={
+                          item.hidden ? 'archivedTextColor' : 'primaryGray'
+                        }
+                        fontSize="sm"
+                      >
                         <Link href={`/account/${item.author?.id}`} py={1}>
                           {accountUsername(item)}
                         </Link>
@@ -79,7 +92,11 @@ export const WikisTable = (props: WikisTableProps) => {
                     </Flex>
                   </Flex>
                 </Td>
-                <Td>
+                <Td
+                  color={
+                    item.hidden ? 'archivedTextColor' : 'wikiFlagTextColor'
+                  }
+                >
                   <WikiColDate colDate={item.created} />
                 </Td>
                 <Td py={1}>
@@ -93,8 +110,10 @@ export const WikisTable = (props: WikisTableProps) => {
                       size="md"
                       borderRadius="full"
                       variant="solid"
-                      bg="tagNormalBgColor"
-                      color="tagNormalColor"
+                      bg={item.hidden ? 'archivedTagColor' : 'tagNormalBgColor'}
+                      color={
+                        item.hidden ? 'archivedTextColor' : 'tagNormalColor'
+                      }
                       py="1"
                     >
                       <TagLabel fontSize="13px" fontWeight="medium">
