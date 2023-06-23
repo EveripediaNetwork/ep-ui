@@ -37,7 +37,7 @@ export const PromoteCreatedWikisModal = (
   const [value, setValue] = useState('1')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
@@ -94,7 +94,6 @@ export const PromoteCreatedWikisModal = (
   const promotion = async () => {
     if (activeStep === 0) {
       nextStep()
-      setbuttonOne('Cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
       nextStep()
@@ -135,10 +134,10 @@ export const PromoteCreatedWikisModal = (
         }}
       >
         <ModalBody>
-          <Flex w="full" justify="flex-end" m={0} pt="2">
+          <Flex w="full" justify="flex-end" m={0}>
             <Icon
               cursor="pointer"
-              fontSize="2xl"
+              fontSize="xl"
               fontWeight={600}
               as={RiCloseLine}
               onClick={Close}
