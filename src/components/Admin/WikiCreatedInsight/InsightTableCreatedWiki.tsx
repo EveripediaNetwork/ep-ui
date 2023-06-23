@@ -16,6 +16,7 @@ import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
 import { WikisTable } from './WikisTable'
+import { PromotedSuccessModal } from './PromotedSuccessModal'
 
 type InsightTableWikiCreatedProps = {
   wikiCreatedInsightData: Wikis[]
@@ -36,6 +37,7 @@ export const InsightTableWikiCreated = (
     onOpen: onOpenWikiHideNotification,
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
+  const { onClose: onClosePromotionModal } = useDisclosure()
   const cancelRef = React.useRef<FocusableElement>(null)
   const {
     isOpen: isOpenPromotion,
@@ -44,6 +46,7 @@ export const InsightTableWikiCreated = (
   } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
   const [hideNotify, setHideNotify] = useState(false)
+  const [successModal, setSuccessModal] = useState(false)
 
   const findSection = (promotedNum: number) => {
     setsectionType(`Slot ${promotedNum}`)
@@ -141,6 +144,11 @@ export const InsightTableWikiCreated = (
         hideFunc={() => {
           setHideNotify(!hideNotify)
         }}
+        setSuccessModal={setSuccessModal}
+      />
+      <PromotedSuccessModal
+        isOpen={!isOpen && successModal}
+        onClose={onClosePromotionModal}
       />
     </>
   )

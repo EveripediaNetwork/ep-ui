@@ -215,6 +215,7 @@ export type PromoteCreatedWikisModalProps = {
   wikiChosenTitle: string
   wikiChosenId: string
   hideFunc: () => void
+  setSuccessModal: (value: React.SetStateAction<boolean>) => void
 }
 
 export type HideWikiNotificationProps = {

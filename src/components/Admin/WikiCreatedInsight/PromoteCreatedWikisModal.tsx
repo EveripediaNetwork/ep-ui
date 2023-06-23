@@ -18,6 +18,7 @@ import {
 import { PromoteCreatedWikisModalProps } from '@/types/admin'
 import { getWikiIdUsingLevel } from '@/utils/AdminUtils/dataUpdate'
 import { PromoteModalContent } from './PromotedWikiContent'
+import { FocusableElement } from '@chakra-ui/utils'
 
 export const PromoteCreatedWikisModal = (
   props: PromoteCreatedWikisModalProps,
@@ -28,6 +29,7 @@ export const PromoteCreatedWikisModal = (
     wikiChosenTitle,
     wikiChosenId,
     hideFunc,
+    setSuccessModal,
     ...rest
   } = props
   const [buttonOne, setbuttonOne] = useState('Cancel')
@@ -36,6 +38,8 @@ export const PromoteCreatedWikisModal = (
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
   const [value, setValue] = useState('1')
   const toast = useToast()
+
+  const _cancelRef = React.useRef<FocusableElement>(null)
   const ModalData = wiki?.filter(
     (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
@@ -51,7 +55,6 @@ export const PromoteCreatedWikisModal = (
   ]
   const [promoteWiki, { error: postPromoteWikiError }] =
     usePostPromotedWikiMutation()
-
   const Close = () => {
     setbuttonOne('Cancel')
     setbuttonTwo('Continue')
@@ -61,26 +64,19 @@ export const PromoteCreatedWikisModal = (
   const handlePromoteWiki = async ({
     id,
     level,
-    isModal,
   }: {
     id: string
     level: number
-    isModal: boolean
   }) => {
     await promoteWiki({
       id,
       level,
     })
-    if (isModal) {
-      let toastTitle = 'Wiki Successfully Promoted to Trending wikis'
-      let toastMessage =
-        'The selected wiki has been promoted to the trending wikis.'
-      let toastType: 'success' | 'error' = 'success'
-      if (postPromoteWikiError) {
-        toastTitle = 'Wiki Promotion Failed'
-        toastMessage = "We couldn't save your wiki changes."
-        toastType = 'error'
-      }
+    if (postPromoteWikiError) {
+      const toastTitle = 'Wiki Promotion Failed'
+      const toastMessage = "We couldn't save your wiki changes."
+      const toastType: 'success' | 'error' = 'error'
+
       toast({
         title: toastTitle,
         description: toastMessage,
@@ -103,8 +99,8 @@ export const PromoteCreatedWikisModal = (
       handlePromoteWiki({
         id: wikiChosenId,
         level: Number(value),
-        isModal: true,
       })
+
       if (id) {
         await promoteWiki({
           id,
@@ -113,6 +109,9 @@ export const PromoteCreatedWikisModal = (
       }
       refetch()
       hideFunc()
+      if (!postPromoteWikiError) {
+        setSuccessModal(true)
+      }
       Close()
     }
   }
@@ -120,44 +119,46 @@ export const PromoteCreatedWikisModal = (
   if (!isOpen) return null
 
   return (
-    <Modal
-      onClose={Close}
-      isOpen={isOpen}
-      isCentered
-      size={{ lg: '3xl', base: 'xl' }}
-      {...rest}
-    >
-      <ModalOverlay />
-      <ModalContent
-        _dark={{
-          bg: 'gray.800',
-        }}
+    <>
+      <Modal
+        onClose={Close}
+        isOpen={isOpen}
+        isCentered
+        size={{ lg: '3xl', base: 'xl' }}
+        {...rest}
       >
-        <ModalBody>
-          <Flex w="full" justify="flex-end" m={0}>
-            <Icon
-              cursor="pointer"
-              fontSize="xl"
-              fontWeight={600}
-              as={RiCloseLine}
-              onClick={Close}
-              alignSelf="center"
+        <ModalOverlay />
+        <ModalContent
+          _dark={{
+            bg: 'gray.800',
+          }}
+        >
+          <ModalBody>
+            <Flex w="full" justify="flex-end" mt={2}>
+              <Icon
+                cursor="pointer"
+                fontSize="xl"
+                fontWeight={600}
+                as={RiCloseLine}
+                onClick={Close}
+                alignSelf="center"
+              />
+            </Flex>
+            <PromoteModalContent
+              activeStep={activeStep}
+              steps={steps}
+              Close={() => Close()}
+              buttonOne={buttonOne}
+              buttonTwo={buttonTwo}
+              promotedWikis={promotedWikis}
+              Data={Data}
+              value={value}
+              setValue={setValue}
+              promotion={promotion}
             />
-          </Flex>
-          <PromoteModalContent
-            activeStep={activeStep}
-            steps={steps}
-            Close={() => Close()}
-            buttonOne={buttonOne}
-            buttonTwo={buttonTwo}
-            promotedWikis={promotedWikis}
-            Data={Data}
-            value={value}
-            setValue={setValue}
-            promotion={promotion}
-          />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }

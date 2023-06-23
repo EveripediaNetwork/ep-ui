@@ -96,7 +96,7 @@ export const PromoteModalContent = (props: ContentProps) => {
               key={label}
               description={description}
             >
-              <Box py="10">
+              <Box py="5">
                 <Content
                   activeStep={activeStep}
                   promotedWikis={promotedWikis}
@@ -108,7 +108,7 @@ export const PromoteModalContent = (props: ContentProps) => {
             </Step>
           ))}
         </Steps>
-        <Flex width="100%" justify="center" pt={4} pb={5}>
+        <Flex width="100%" justify="center" pt={4}>
           <HStack gap={3}>
             <Button
               py={4}
