@@ -46,6 +46,14 @@ export const semanticTokens: SemanticTokens = {
       default: '#9C4221',
       _dark: '#AE5D35',
     },
+    archivedTagColor: {
+      default: '#F9F5FF',
+      _dark: '#3F444E',
+    },
+    archivedTextColor: {
+      default: 'gray.200',
+      _dark: 'whiteAlpha.200',
+    },
     primaryPinkIcon: {
       default: '#FF5CAA',
       _dark: '#FF1A88',
@@ -165,6 +173,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#0000000A',
       _dark: 'gray.700',
     },
+    wikiAdminTableBg: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
     wikiActionBtnDisabled: {
       default: 'gray.400',
       _dark: 'gray.600',
@@ -215,6 +227,14 @@ export const semanticTokens: SemanticTokens = {
     },
     wikiDropzoneText: {
       default: 'blackAlpha.500',
+      _dark: 'whiteAlpha.700',
+    },
+    modalIconBg: {
+      default: 'blackAlpha.200',
+      _dark: 'whiteAlpha.200',
+    },
+    modalCloseBtn: {
+      default: 'gray.300',
       _dark: 'whiteAlpha.700',
     },
     thirdRankColor: {
@@ -308,6 +328,10 @@ export const semanticTokens: SemanticTokens = {
     paginationButtonDefault: {
       default: 'gray.500',
       _dark: 'whiteAlpha.700',
+    },
+    closeBtnModal: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.500',
     },
     paginationButtonActive: {
       default: 'brand.500',
