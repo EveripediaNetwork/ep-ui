@@ -23,9 +23,10 @@ import {
   Button,
   Spacer,
   Link,
+  TableCaption,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { FaCheckCircle } from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { LinkButton } from '@/components/Elements'
 import { MintEmptyState } from '@/components/Elements/icons/MintEmptyState'
@@ -41,6 +42,8 @@ import { NftPassType } from '@/types/nftPass'
 import { PASS_FEATURES } from '@/data/PassData'
 import config from '@/config'
 
+const LIMIT = 2
+
 const UserPass = () => {
   const router = useRouter()
   const { address } = useAccount()
@@ -50,7 +53,13 @@ const UserPass = () => {
     formattedDate: string
   }>()
 
-  const { data: subscriptionHistory } = useGetSubscriptionHistoryQuery(address)
+  const [offset, ] = useState(0)
+
+  const { data: subscriptionHistory } = useGetSubscriptionHistoryQuery({
+    address,
+    offset,
+    limit: LIMIT,
+  })
 
   useEffect(() => {
     const info = dateDetails(userPass?.endTimeStamp || 0)
@@ -268,7 +277,7 @@ const UserPass = () => {
                 </Tr>
               ))}
             </Tbody>
-            {/* <TableCaption mt={0}>
+            <TableCaption mt={0}>
               <Flex>
                 <Box>
                   <Button
@@ -290,7 +299,7 @@ const UserPass = () => {
                   </Button>
                 </Box>
               </Flex>
-            </TableCaption> */}
+            </TableCaption>
           </Table>
         </chakra.div>
       )}

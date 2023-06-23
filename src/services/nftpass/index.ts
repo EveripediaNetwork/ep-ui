@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { GET_SUBSCRIPTION_HISTORY } from './queries'
-import { NftPassType } from '@/types/nftPass'
+import { NftPassType, PassParamsType } from '@/types/nftPass'
 
 type GetSubscriptionHistory = {
   retrieveBrainPass: NftPassType[]
@@ -21,13 +21,10 @@ export const subscriptionHistoryApi = createApi({
   },
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   endpoints: (builder) => ({
-    getSubscriptionHistory: builder.query<
-      NftPassType[],
-      `0x${string}` | undefined
-    >({
-      query: (address: `0x${string}` | undefined) => ({
+    getSubscriptionHistory: builder.query<NftPassType[], PassParamsType>({
+      query: ({ address, limit, offset }: PassParamsType) => ({
         document: GET_SUBSCRIPTION_HISTORY,
-        variables: { address },
+        variables: { address, limit, offset },
       }),
       transformResponse: (response: GetSubscriptionHistory) => {
         return response.retrieveBrainPass

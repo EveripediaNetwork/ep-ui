@@ -9,3 +9,9 @@ export type NftPassType = {
   created: string
   transactionType: string
 }
+
+export type PassParamsType = {
+  address: `0x${string}` | undefined
+  limit: number
+  offset: number
+}
