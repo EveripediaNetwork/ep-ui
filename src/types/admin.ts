@@ -238,7 +238,7 @@ export type ContentProps = {
   Data: CreatedWikisCount | undefined
   value: string
   setValue: (value: React.SetStateAction<string>) => void
-  TrendingwikiSelected?: () => Promise<void>
+  promotion?: () => Promise<void>
 }
 
 export type WikisTableProps = {

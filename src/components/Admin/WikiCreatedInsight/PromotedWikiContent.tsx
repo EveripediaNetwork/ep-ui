@@ -30,8 +30,9 @@ export const Content = (props: ContentProps) => {
             </Text>
             <Select
               cursor="pointer"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={e => setValue(e.target.value)}
               defaultValue={0}
+              width="fit-content"
             >
               {promotedWikis &&
                 [...promotedWikis]
@@ -41,8 +42,8 @@ export const Content = (props: ContentProps) => {
                       SLOT {item.promoted} - {item.title}
                     </option>
                   ))}
-              {promotedWikis && promotedWikis.length <= 9 && (
-                <option value={promotedWikis && +promotedWikis.length + 1}>
+              {promotedWikis && promotedWikis.length < 10 && (
+                <option value={promotedWikis && promotedWikis.length + 1}>
                   New Slot
                 </option>
               )}
@@ -74,7 +75,7 @@ export const PromoteModalContent = (props: ContentProps) => {
     Data,
     value,
     setValue,
-    TrendingwikiSelected,
+    promotion,
   } = props
   return (
     <VStack px="5" py="3" gap={4}>
@@ -121,7 +122,7 @@ export const PromoteModalContent = (props: ContentProps) => {
             >
               {buttonOne}
             </Button>
-            <Button size="sm" fontSize="xs" onClick={TrendingwikiSelected}>
+            <Button size="sm" fontSize="xs" onClick={promotion}>
               {buttonTwo}
             </Button>
           </HStack>

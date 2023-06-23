@@ -37,7 +37,7 @@ export const PromoteCreatedWikisModal = (
   const [value, setValue] = useState('1')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
@@ -91,7 +91,7 @@ export const PromoteCreatedWikisModal = (
     }
   }
 
-  const TrendingwikiSelected = async () => {
+  const promotion = async () => {
     if (activeStep === 0) {
       nextStep()
       setbuttonOne('Cancel')
@@ -107,7 +107,10 @@ export const PromoteCreatedWikisModal = (
         isModal: true,
       })
       if (id) {
-        handlePromoteWiki({ id, level: 0, isModal: false })
+        await promoteWiki({
+          id,
+          level: 0,
+        })
       }
       refetch()
       hideFunc()
@@ -152,7 +155,7 @@ export const PromoteCreatedWikisModal = (
             Data={Data}
             value={value}
             setValue={setValue}
-            TrendingwikiSelected={TrendingwikiSelected}
+            promotion={promotion}
           />
         </ModalBody>
       </ModalContent>
