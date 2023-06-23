@@ -43,7 +43,7 @@ import { PASS_FEATURES } from '@/data/PassData'
 import config from '@/config'
 import { SubscriptionEmptyState } from '@/components/Elements/icons/SubscriptionEmptyState'
 
-const LIMIT = 2
+const LIMIT = 10
 
 const UserPass = () => {
   const router = useRouter()
