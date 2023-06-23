@@ -32,9 +32,9 @@ export default class Document extends NextDocument {
           />
           <link rel="manifest" href="/manifest.json" />
         </Head>
-
         <body>
           <ColorModeScript
+            type="cookie"
             initialColorMode={chakraTheme.config.initialColorMode}
           />
           <Main />

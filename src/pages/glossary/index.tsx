@@ -1,6 +1,6 @@
 import { Stack, Box, VStack, Grid } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
 import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
@@ -11,18 +11,33 @@ import GlossaryAlphabets from '@/components/Glossary/GlossaryAlphabets'
 import GlossaryIconButton from '@/components/Glossary/GlossaryIconButton'
 import GlossaryFilterSection from '@/components/Glossary/GlossaryFilterSection'
 
+interface GlossaryData {
+  offset: number
+  wikis: Wiki[]
+}
 const Glossary: NextPage = () => {
+  const [glossaryData, setGlossaryData] = useState<GlossaryData>({
+    offset: 0,
+    wikis: [],
+  })
   const { ref, entry } = useInView({
     threshold: 0,
   })
   const { ref: newRef, entry: newEntry } = useInView({
     threshold: 0,
   })
-  const { data: GlossaryWikis } = useGetGlossaryTagWikisQuery({
+  const { data: fetchedGlossaryWikis } = useGetGlossaryTagWikisQuery({
     id: 'Glossary',
-    offset: 0,
+    offset: glossaryData.offset,
     limit: 50,
   })
+
+  if (fetchedGlossaryWikis && fetchedGlossaryWikis?.length > 0) {
+    setGlossaryData({
+      offset: glossaryData.offset + 50,
+      wikis: [...glossaryData.wikis, ...fetchedGlossaryWikis],
+    })
+  }
 
   const [searchText, setSearchText] = useState<string>('')
 
@@ -32,14 +47,8 @@ const Glossary: NextPage = () => {
   const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>()
-  const [glossary, setGlossary] = useState<Wiki[]>()
+  const [queryResult, setQueryResult] = useState<Wiki[]>()
   const [alphabet, setAlphabet] = useState(glossaryAlphabetsData)
-
-  useEffect(() => {
-    if (!glossary && GlossaryWikis) {
-      setGlossary(GlossaryWikis)
-    }
-  }, [glossary, GlossaryWikis])
 
   const filterGlossaryAlphabetBySearchResult = (
     searchResult: Wiki[] | undefined,
@@ -59,7 +68,7 @@ const Glossary: NextPage = () => {
   }
 
   const filterGlossaryBySearchQuery = (text: string) => {
-    const searchResult = GlossaryWikis?.filter(
+    const searchResult = glossaryData?.wikis?.filter(
       (wiki) =>
         wiki.summary.toLowerCase().includes(text.toLowerCase()) ||
         wiki.title.toLowerCase().includes(text.toLowerCase()),
@@ -69,7 +78,7 @@ const Glossary: NextPage = () => {
       text,
     )
     setAlphabet(filteredAlphabet)
-    setGlossary(searchResult)
+    setQueryResult(searchResult)
   }
 
   const searchPage = (input: string) => {
@@ -113,26 +122,24 @@ const Glossary: NextPage = () => {
             ))}
           </Grid>
           {!shouldBeFixed ? (
-            <>
-              <GlossaryFilterSection
-                setSearchText={(text) => setSearchText(text)}
-                shouldBeFixed={shouldBeFixed}
-                searchText={searchText}
-                searchPage={(text: string) => searchPage(text)}
-                activeIndex={activeIndex}
-                setActiveIndex={(index: number) => setActiveIndex(index)}
-              />
-            </>
+            <GlossaryFilterSection
+              setSearchText={setSearchText}
+              shouldBeFixed={shouldBeFixed}
+              searchText={searchText}
+              searchPage={searchPage}
+              activeIndex={searchText === '' ? undefined : activeIndex}
+              setActiveIndex={setActiveIndex}
+            />
           ) : (
             <>
               {isVisible && (
                 <GlossaryFilterSection
-                  setSearchText={(text) => setSearchText(text)}
+                  setSearchText={setSearchText}
                   shouldBeFixed={shouldBeFixed}
                   searchText={searchText}
-                  searchPage={(text: string) => searchPage(text)}
-                  activeIndex={activeIndex}
-                  setActiveIndex={(index: number) => setActiveIndex(index)}
+                  searchPage={searchPage}
+                  activeIndex={searchText === '' ? undefined : activeIndex}
+                  setActiveIndex={setActiveIndex}
                 />
               )}
               <GlossaryIconButton
@@ -145,7 +152,7 @@ const Glossary: NextPage = () => {
       </VStack>
       <GlossaryItem
         highlightText={searchText}
-        glossary={glossary ?? []}
+        glossary={queryResult ?? glossaryData?.wikis ?? []}
         glossaryAlphabets={alphabet}
       />
     </Stack>

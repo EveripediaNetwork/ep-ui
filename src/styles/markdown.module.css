@@ -218,6 +218,7 @@ html[data-theme='dark'] .markdownBody a {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
 }
 .markdownBody .table-container {
   overflow-x: auto;
@@ -501,8 +502,14 @@ html[data-theme='dark'] .markdownBody a {
 
 .markdownBody table th,
 .markdownBody table td {
-  padding: 6px 13px;
+  padding: 6px;
   border: 1px solid #d0d7de;
+  word-break: break-all;
+  /* width:50%; */
+}
+
+.markdownBody table td  {
+  vertical-align: top;
 }
 
 .markdownBody table tr {

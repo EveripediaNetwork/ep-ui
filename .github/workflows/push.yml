@@ -10,7 +10,7 @@ jobs:
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
-          node-version: 16
+          node-version: 18
 
       - name: Check out code
         uses: actions/checkout@v2

@@ -13,8 +13,8 @@ export const AboutHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -31,8 +31,8 @@ export const FaqSEO = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -50,8 +50,8 @@ export const PrivacyPolicySEO = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -59,18 +59,18 @@ export const PrivacyPolicySEO = () => (
 export const CareersHeader = () => (
   <NextSeo
     title="Jobs"
-    description="Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network"
+    description="Join us to spread the knowledge of blockchain | Search Job Openings across IQ.Wiki Network"
     titleTemplate="%s | IQ.Wiki"
     canonical="https://iq.wiki/careers"
     openGraph={{
       title: 'Jobs',
       description:
-        'Join us to spread the knowledge of blockchain | Search Job Openings across Everipedia Network',
+        'Join us to spread the knowledge of blockchain | Search Job Openings across IQ.Wiki Network',
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -87,8 +87,8 @@ export const CaPrivacyRightsHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -105,8 +105,8 @@ export const TermsHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
@@ -123,8 +123,8 @@ export const GuidelinesHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )

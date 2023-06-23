@@ -12,8 +12,8 @@ const ActivityHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWIKI',
+      site: 'IQWiki',
     }}
   />
 )
