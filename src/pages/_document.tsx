@@ -1,34 +1,34 @@
 import * as React from 'react'
 import type { DocumentContext } from 'next/document'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
-import { ColorModeScript, ColorMode } from '@chakra-ui/react'
+import { ColorModeScript } from '@chakra-ui/react'
 import chakraTheme from '@/theme'
+import emotionCache from '@/lib/emotion-cache'
+import createEmotionServer from '@emotion/server/create-instance'
 
-type MaybeColorMode = ColorMode | undefined
-
-function parseCookie(cookie: string, key: string): MaybeColorMode {
-  const match = cookie.match(new RegExp(`(^| )${key}=([^;]+)`))
-  return match?.[2] as MaybeColorMode
-}
-export default class Document extends NextDocument<{ colorMode: string }> {
+const { extractCritical } = createEmotionServer(emotionCache)
+export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await NextDocument.getInitialProps(ctx)
+    const styles = extractCritical(initialProps.html)
 
-    let colorMode: MaybeColorMode = chakraTheme.config.initialColorMode
-
-    if (ctx?.req?.headers?.cookie) {
-      colorMode =
-        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode') ||
-        chakraTheme.config.initialColorMode
+    return {
+      ...initialProps,
+      styles: [
+        initialProps.styles,
+        <style
+          key="emotion-css"
+          // rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          dangerouslySetInnerHTML={{ __html: styles.css }}
+          data-emotion-css={styles.ids.join(' ')}
+        />,
+      ],
     }
-
-    return { ...initialProps, colorMode }
   }
 
   render() {
-    const { colorMode } = this.props
     return (
-      <Html lang="en" data-theme={colorMode} style={{ colorScheme: colorMode }}>
+      <Html lang="en">
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -48,7 +48,7 @@ export default class Document extends NextDocument<{ colorMode: string }> {
           />
           <link rel="manifest" href="/manifest.json" />
         </Head>
-        <body className={`chakra-ui-${colorMode}`}>
+        <body>
           <ColorModeScript
             initialColorMode={chakraTheme.config.initialColorMode}
           />
