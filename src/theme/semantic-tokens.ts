@@ -229,6 +229,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'blackAlpha.500',
       _dark: 'whiteAlpha.700',
     },
+    modalIconBg: {
+      default: 'blackAlpha.200',
+      _dark: 'whiteAlpha.200',
+    },
     thirdRankColor: {
       default: 'gray.400',
       _dark: 'whiteAlpha.500',
@@ -320,6 +324,10 @@ export const semanticTokens: SemanticTokens = {
     paginationButtonDefault: {
       default: 'gray.500',
       _dark: 'whiteAlpha.700',
+    },
+    closeBtnModal: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.500',
     },
     paginationButtonActive: {
       default: 'brand.500',

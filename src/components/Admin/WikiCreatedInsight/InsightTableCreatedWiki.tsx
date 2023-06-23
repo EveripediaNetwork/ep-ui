@@ -7,6 +7,7 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogOverlay,
+  Circle,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { RiQuestionLine, RiCloseLine } from 'react-icons/ri'
@@ -88,24 +89,26 @@ export const InsightTableWikiCreated = (
 
         <AlertDialogContent>
           <Box p={8}>
-            <Flex>
-              <Icon
-                cursor="pointer"
-                fontSize="3xl"
-                fontWeight={600}
-                as={RiQuestionLine}
-                color="taupeGray"
-                mr={5}
-              />
+            <Flex alignItems="center">
+              <Circle
+                size="40px"
+                bg="modalIconBg"
+                mr={1}
+                color="wikiFlagTextColor"
+              >
+                <Icon cursor="pointer" fontSize="3xl" as={RiQuestionLine} />
+              </Circle>
+
               <Text flex="1" fontSize="xl" fontWeight="black">
                 Promotion Details
               </Text>
               <Icon
                 cursor="pointer"
-                fontSize="3xl"
-                fontWeight={600}
+                fontSize="2xl"
                 as={RiCloseLine}
+                color="closeBtnModal"
                 onClick={onClosePromotion}
+                mt={-4}
               />
             </Flex>
             <Text
