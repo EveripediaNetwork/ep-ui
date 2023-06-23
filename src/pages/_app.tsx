@@ -1,13 +1,8 @@
-import { GetServerSideProps } from 'next'
 import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import {
-  ChakraProvider,
-  createStandaloneToast,
-  cookieStorageManagerSSR,
-} from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -25,7 +20,7 @@ const { ToastContainer } = createStandaloneToast()
 
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
-} & { cookies: string }
+}
 
 const client = createConfig({
   autoConnect: true,
@@ -40,14 +35,12 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-const App = ({ Component, pageProps, router, cookies }: EpAppProps) => {
+const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
-
-  const colorModeManager = cookieStorageManagerSSR(cookies)
 
   return (
     <StrictMode>
@@ -59,11 +52,7 @@ const App = ({ Component, pageProps, router, cookies }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider
-          resetCSS
-          theme={chakraTheme}
-          colorModeManager={colorModeManager}
-        >
+        <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
@@ -77,13 +66,3 @@ const App = ({ Component, pageProps, router, cookies }: EpAppProps) => {
 }
 
 export default App
-
-export const getServerSideProps: GetServerSideProps<{
-  cookies: string
-}> = async ({ req }) => {
-  return {
-    props: {
-      cookies: req.headers.cookie ?? '',
-    },
-  }
-}
