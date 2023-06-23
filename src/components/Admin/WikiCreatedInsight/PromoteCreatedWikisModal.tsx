@@ -39,26 +39,27 @@ export const PromoteCreatedWikisModal = (
   const [value, setValue] = useState('1')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
   })
-
+  const [promoteWiki, { error: postPromoteWikiError }] =
+    usePostPromotedWikiMutation()
   const steps = [
     { label: 'STEP 1', description: 'Promote to Featured wiki section' },
     { label: 'STEP 2', description: 'Select promotion slot' },
     { label: 'STEP 3', description: 'Promotion confirmation' },
   ]
-  const [promoteWiki, { error: postPromoteWikiError }] =
-    usePostPromotedWikiMutation()
+
   const Close = () => {
     setbuttonOne('Cancel')
     setbuttonTwo('Continue')
     reset()
     onClose()
   }
+
   const handlePromoteWiki = async ({
     id,
     level,
@@ -98,7 +99,6 @@ export const PromoteCreatedWikisModal = (
         id: wikiChosenId,
         level: Number(value),
       })
-
       if (id) {
         await promoteWiki({
           id,
@@ -117,47 +117,45 @@ export const PromoteCreatedWikisModal = (
   if (!isOpen) return null
 
   return (
-    <>
-      <Modal
-        onClose={Close}
-        isOpen={isOpen}
-        isCentered
-        size={{ lg: '3xl', base: 'xl' }}
-        {...rest}
+    <Modal
+      onClose={Close}
+      isOpen={isOpen}
+      isCentered
+      size={{ lg: '3xl', base: 'xl' }}
+      {...rest}
+    >
+      <ModalOverlay />
+      <ModalContent
+        _dark={{
+          bg: 'gray.800',
+        }}
       >
-        <ModalOverlay />
-        <ModalContent
-          _dark={{
-            bg: 'gray.800',
-          }}
-        >
-          <ModalBody>
-            <Flex w="full" justify="flex-end" mt={2}>
-              <Icon
-                cursor="pointer"
-                fontSize="xl"
-                fontWeight={600}
-                as={RiCloseLine}
-                onClick={Close}
-                alignSelf="center"
-              />
-            </Flex>
-            <PromoteModalContent
-              activeStep={activeStep}
-              steps={steps}
-              Close={() => Close()}
-              buttonOne={buttonOne}
-              buttonTwo={buttonTwo}
-              promotedWikis={promotedWikis}
-              Data={Data}
-              value={value}
-              setValue={setValue}
-              promotion={promotion}
-              loading={loading}
+        <ModalBody pb="12">
+          <Flex w="full" justify="flex-end" mt={2}>
+            <Icon
+              cursor="pointer"
+              fontSize="xl"
+              fontWeight={600}
+              as={RiCloseLine}
+              onClick={Close}
+              alignSelf="center"
             />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+          </Flex>
+          <PromoteModalContent
+            activeStep={activeStep}
+            steps={steps}
+            Close={() => Close()}
+            buttonOne={buttonOne}
+            buttonTwo={buttonTwo}
+            promotedWikis={promotedWikis}
+            Data={Data}
+            value={value}
+            setValue={setValue}
+            promotion={promotion}
+            loading={loading}
+          />
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }

@@ -30,7 +30,7 @@ export const Content = (props: ContentProps) => {
             </Text>
             <Select
               cursor="pointer"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={e => setValue(e.target.value)}
               defaultValue={0}
               width="fit-content"
             >
@@ -79,7 +79,7 @@ export const PromoteModalContent = (props: ContentProps) => {
     loading,
   } = props
   return (
-    <VStack py="3" gap={4}>
+    <VStack py="3" px="2" gap={4}>
       <Text fontSize="xl" textAlign="start" w="100%" fontWeight="bold">
         Promote
       </Text>
@@ -97,7 +97,7 @@ export const PromoteModalContent = (props: ContentProps) => {
               key={label}
               description={description}
             >
-              <Box py="5">
+              <Box pt="10" pb="6">
                 <Content
                   activeStep={activeStep}
                   promotedWikis={promotedWikis}
