@@ -32,9 +32,9 @@ export const COMMONLY_SEARCHED_WIKIS = [
   'AltCoin',
   'Defi',
   'Coinbase',
-  'BitCoin',
+  'ColdWallet',
   'Hodl',
   'Collectibles',
-  'ColdWallet',
+  'BitCoin',
   'por que',
 ]
