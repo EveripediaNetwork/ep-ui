@@ -118,18 +118,23 @@ export const WikiInsightTable = () => {
     })
   }
 
-  const WikisSortByHighest = newWikis?.slice()
+  const WikisSortByHighest =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
+
   sortWikisByDate(WikisSortByHighest, true)
 
-  const WikisSortByLowest = newWikis?.slice()
+  const WikisSortByLowest =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   sortWikisByDate(WikisSortByLowest, false)
 
-  const WikisSortByAlpaUp = newWikis?.slice()
+  const WikisSortByAlpaUp =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   WikisSortByAlpaUp?.sort((a, b) => {
     const Data = a.title.trim().localeCompare(b.title.trim())
     return Data
   })
-  const WikisSortByAlpaDown = newWikis?.slice()
+  const WikisSortByAlpaDown =
+    searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
     const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
@@ -147,33 +152,41 @@ export const WikiInsightTable = () => {
     if (sortTableBy === 'AlpaDown') {
       return WikisSortByAlpaDown
     }
-    return newWikis
-  }, [
-    newWikis,
-    sortTableBy,
-    WikisSortByAlpaDown,
-    WikisSortByAlpaUp,
-    WikisSortByHighest,
-    WikisSortByLowest,
-  ])
+    return searchKeyWord.length > 2 ? SearchedWikis : newWikis
+  }, [newWikis, sortTableBy, searchKeyWord, SearchedWikis])
 
   const whichWiki = useCallback(() => {
     if (searchKeyWord.length < 2) {
+      setInitGetSearchedWikis(true)
       setWikis(wikiSorted)
     } else if (searchKeyWord.length > 2) {
       setInitGetSearchedWikis(false)
-      setWikis(SearchedWikis)
+      setWikis(wikiSorted)
     }
   }, [SearchedWikis, searchKeyWord.length, wikiSorted])
+
   const scrolltoTableTop = () => {
     insightTableRef?.current?.scrollIntoView({
       behavior: 'smooth',
     })
   }
 
+  const nextButtonIsValid = () => {
+    if (
+      filterItems?.includes(FilterTypes.promoted) ||
+      searchKeyWord.length > 2
+    ) {
+      // since the predefined total no of promoted is 10
+      return true
+    } else {
+      return !wiki || wiki.length < 10
+    }
+  }
+
   useEffect(() => {
     whichWiki()
     refetch()
+    nextButtonIsValid()
   }, [
     wiki,
     refetch,
@@ -232,7 +245,7 @@ export const WikiInsightTable = () => {
         paginateOffset={paginateOffset}
         setActivatePrevious={setActivatePrevious}
         wikis={wikis}
-        nextBtnDisabled={!wiki || wiki.length === 0}
+        nextBtnDisabled={nextButtonIsValid()}
       />
     </Flex>
   )

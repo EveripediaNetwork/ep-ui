@@ -27,6 +27,8 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
     )
   }
 
+  const _IsNextCanGo = () => {}
+
   return (
     <Flex justify="space-between" w="95%" m="0 auto">
       <Button
@@ -74,12 +76,8 @@ export const WikiTableCol = (props: WikiTableColProps) => {
       <HStack spacing={5}>
         {!item.promoted ? (
           <Text
-            color={item.hidden ? 'tetiaryGray' : 'brand.500'}
-            _dark={{
-              color: item.hidden ? 'davyGray' : 'brand.800',
-            }}
+            color={item.hidden ? 'divider' : 'brandAssetDownloadBttnColor'}
             cursor={item.hidden ? 'not-allowed' : 'pointer'}
-            fontWeight="semibold"
             onClick={PromoteClickOne}
           >
             Promote
@@ -103,27 +101,26 @@ export const WikiTableCol = (props: WikiTableColProps) => {
             />
           </HStack>
         )}
-        {!item.hidden ? (
+
+        <HStack spacing={2}>
           <Text
             cursor={item.hidden ? 'not-allowed' : 'pointer'}
-            fontWeight="medium"
+            fontWeight="normal"
             onClick={ArchiveClickOne}
+            color={item.hidden ? 'divider' : 'wikiFlagTextColor'}
           >
             Archive
           </Text>
-        ) : (
-          <HStack spacing={2} onClick={ArchiveClickTwo}>
-            <Text color="unArchiveWiki" cursor="pointer">
-              Unarchive
-            </Text>
+          {item.hidden && (
             <Icon
               fontSize="20px"
               cursor="pointer"
               color="electricPink"
               as={RiQuestionLine}
+              onClick={ArchiveClickTwo}
             />
-          </HStack>
-        )}
+          )}
+        </HStack>
       </HStack>
     </Flex>
   )
@@ -131,7 +128,7 @@ export const WikiTableCol = (props: WikiTableColProps) => {
 
 export const WikiColDate = ({ colDate }: { colDate: string | undefined }) => {
   return (
-    <HStack color="primaryGray" _dark={{ color: 'white' }}>
+    <HStack>
       <Text>
         {colDate
           ? new Date(colDate).toLocaleDateString('en-US', {
@@ -144,8 +141,6 @@ export const WikiColDate = ({ colDate }: { colDate: string | undefined }) => {
       <Icon
         fontSize="20px"
         cursor="pointer"
-        color="black"
-        _dark={{ color: 'white' }}
         alignSelf="center"
         as={BsDot}
         justifySelf="center"
