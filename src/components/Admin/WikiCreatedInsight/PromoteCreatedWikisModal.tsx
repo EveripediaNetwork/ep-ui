@@ -32,24 +32,12 @@ export const PromoteCreatedWikisModal = (
   } = props
   const [buttonOne, setbuttonOne] = useState('Cancel')
   const [buttonTwo, setbuttonTwo] = useState('Continue')
-  const [initGetSearchedWikis, setInitGetSearchedWikis] =
-    useState<boolean>(true)
   const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(0)
-  const arrs = () => {
-    const arr = []
-    const data = promotedWikis || []
-    for (let index = 1; index < data?.length; index += 1) {
-      arr.push(data[index].promoted)
-    }
-  }
-
-  const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle, {
-    skip: initGetSearchedWikis,
-  })
+  const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
   const [value, setValue] = useState('1')
   const toast = useToast()
   const ModalData = wiki?.filter(
-    (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
+    item => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
   const Data = ModalData?.[0]
   const { nextStep, reset, activeStep } = useSteps({
@@ -61,7 +49,7 @@ export const PromoteCreatedWikisModal = (
     { label: 'STEP 2', description: 'Select promotion slot' },
     { label: 'STEP 3', description: 'Promotion confirmation' },
   ]
-  const [promoteWiki, { error: posTPromoteWikiError }] =
+  const [promoteWiki, { error: postPromoteWikiError }] =
     usePostPromotedWikiMutation()
 
   const Close = () => {
@@ -88,8 +76,8 @@ export const PromoteCreatedWikisModal = (
       let toastMessage =
         'The selected wiki has been promoted to the trending wikis.'
       let toastType: 'success' | 'error' = 'success'
-      if (posTPromoteWikiError) {
-        toastTitle = 'Wiki Archive Failed'
+      if (postPromoteWikiError) {
+        toastTitle = 'Wiki Promotion Failed'
         toastMessage = "We couldn't save your wiki changes."
         toastType = 'error'
       }
@@ -105,26 +93,19 @@ export const PromoteCreatedWikisModal = (
 
   const TrendingwikiSelected = async () => {
     if (activeStep === 0) {
-      arrs()
       nextStep()
-      setInitGetSearchedWikis(false)
       setbuttonOne('Cancel')
       setbuttonTwo('Apply')
     } else if (activeStep === 1) {
       nextStep()
-      setbuttonOne('Cancel')
       setbuttonTwo('Promote')
     } else if (activeStep === 2) {
-      await promoteWiki({
-        id: wikiChosenId,
-        level: Number(value),
-      })
+      const id = getWikiIdUsingLevel(Number(value), promotedWikis)
       handlePromoteWiki({
         id: wikiChosenId,
         level: Number(value),
         isModal: true,
       })
-      const id = getWikiIdUsingLevel(Number(value), promotedWikis)
       if (id) {
         handlePromoteWiki({ id, level: 0, isModal: false })
       }
