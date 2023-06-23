@@ -41,8 +41,9 @@ import { useGetSubscriptionHistoryQuery } from '@/services/nftpass'
 import { NftPassType } from '@/types/nftPass'
 import { PASS_FEATURES } from '@/data/PassData'
 import config from '@/config'
+import { SubscriptionEmptyState } from '@/components/Elements/icons/SubscriptionEmptyState'
 
-const LIMIT = 5
+const LIMIT = 2
 
 const UserPass = () => {
   const router = useRouter()
@@ -153,7 +154,7 @@ const UserPass = () => {
                 </HStack>
               </Box>
               <List mt={7} spacing={7} textAlign="start">
-                {PASS_FEATURES.map((feature) => (
+                {PASS_FEATURES.map(feature => (
                   <ListItem key={feature.title}>
                     <ListIcon as={FaCheckCircle} color="green.500" />
                     {feature.title}
@@ -179,133 +180,154 @@ const UserPass = () => {
           </Center>
         </>
       )}
-      {subscriptionHistory && subscriptionHistory.length > 0 && (
-        <chakra.div
-          overflowX="auto"
-          border="solid 1px"
-          borderColor="walletDrawerBorderColor"
-          rounded="lg"
-          my="16"
-          fontSize="sm"
-          mb={{ base: '24', md: '0' }}
+      <chakra.div
+        overflowX="auto"
+        border="solid 1px"
+        borderColor="walletDrawerBorderColor"
+        rounded="lg"
+        my="16"
+        fontSize="sm"
+        mb={{ base: '24', md: '0' }}
+      >
+        <Flex
+          py={4}
+          justify="space-between"
+          display="flex"
+          direction={{ base: 'column', lg: 'row' }}
+          align={{ lg: 'center' }}
         >
-          <Flex
-            py={4}
-            justify="space-between"
-            display="flex"
-            direction={{ base: 'column', lg: 'row' }}
-            align={{ lg: 'center' }}
+          <Text
+            color="wikiSummaryLabel"
+            fontSize="lg"
+            px={4}
+            mb={{ base: 4, lg: 0 }}
+            fontWeight="medium"
           >
-            <Text
-              color="wikiSummaryLabel"
-              fontSize="lg"
-              px={4}
-              mb={{ base: 4, lg: 0 }}
-              fontWeight="medium"
-            >
-              Subscription History
-            </Text>
-          </Flex>
-          <Divider />
-          <Table fontWeight="semibold">
-            <Thead border="none" bg="aboutFeaturesCardBg">
-              <Tr>
-                {[
-                  'Date',
-                  'Details',
-                  'Amount paid',
-                  'Transaction Type',
-                  'View Trx on Polygonscan',
-                ].map((column) => (
-                  <Th
-                    border="none"
-                    whiteSpace="nowrap"
-                    py="5"
-                    textTransform="none"
-                    fontSize={{ base: 'xs', md: 'sx' }}
-                    color="tagColor"
-                    textAlign={column.includes('Date') ? 'left' : 'center'}
-                  >
-                    {column}
-                  </Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {subscriptionHistory?.map((history: NftPassType) => (
-                <Tr
-                  whiteSpace="nowrap"
-                  border="1px solid"
-                  borderColor="divider"
-                  borderBottom="none"
-                >
-                  <Td fontSize="sm" color="tagColor">
-                    {getFormattedDate(history.created)}
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    {history.passName || '-'}
-                  </Td>
-                  <Td fontSize="sm" textAlign="center" color="tagColor">
-                    {history.price}
-                  </Td>
-                  <Td fontSize="sm" textAlign="center" color="tagColor">
-                    {history.transactionType || '-'}
-                  </Td>
-                  <Td fontSize="sm" color="tagColor" textAlign="center">
-                    <Center>
-                      <Link
-                        href={`${config.blockExplorerUrl}/tx/${history.transactionHash}`}
-                        isExternal
-                        display="flex"
-                        gap={1}
-                        fontSize="sm"
-                        color="paginationButtonActive"
-                      >
-                        <chakra.span
-                          color="paginationButtonActive"
-                          fontSize="sm"
-                        >
-                          {' '}
-                          {shortenAccount(
-                            history.transactionHash?.toString() || '',
-                          )}{' '}
-                          <ExternalLinkIcon mx="2px" mt={-3} />
-                        </chakra.span>
-                      </Link>
-                    </Center>
-                  </Td>
+            Subscription History
+          </Text>
+        </Flex>
+        <Divider />
+        <Table fontWeight="semibold">
+          {subscriptionHistory && subscriptionHistory.length > 0 && (
+            <>
+              <Thead border="none" bg="aboutFeaturesCardBg">
+                <Tr>
+                  {[
+                    'Date',
+                    'Details',
+                    'Amount paid',
+                    'Transaction Type',
+                    'View Trx on Polygonscan',
+                  ].map(column => (
+                    <Th
+                      border="none"
+                      whiteSpace="nowrap"
+                      py="5"
+                      textTransform="none"
+                      fontSize={{ base: 'xs', md: 'sx' }}
+                      color="tagColor"
+                      textAlign={column.includes('Date') ? 'left' : 'center'}
+                    >
+                      {column}
+                    </Th>
+                  ))}
                 </Tr>
-              ))}
-            </Tbody>
-            <TableCaption mt={0}>
-              <Flex>
-                <Box>
-                  <Button
-                    variant="outline"
-                    leftIcon={<FaArrowLeft />}
-                    rounded="md"
-                    disabled={!offset}
+              </Thead>
+              <Tbody>
+                {subscriptionHistory?.map((history: NftPassType) => (
+                  <Tr
+                    whiteSpace="nowrap"
+                    border="1px solid"
+                    borderColor="divider"
+                    borderBottom="none"
                   >
-                    <Text fontSize="sm">Previous</Text>
-                  </Button>
-                </Box>
-                <Spacer />
-                <Box>
-                  <Button
-                    variant="outline"
-                    rightIcon={<FaArrowRight />}
-                    rounded="md"
-                    disabled={subscriptionHistory?.length < LIMIT}
-                    onClick={() => setOffset(offset + LIMIT)}
-                  >
-                    <Text fontSize="sm">Next</Text>
-                  </Button>
-                </Box>
-              </Flex>
-            </TableCaption>
-          </Table>
-        </chakra.div>
-      )}
+                    <Td fontSize="sm" color="tagColor">
+                      {getFormattedDate(history.created)}
+                    </Td>
+                    <Td fontSize="sm" color="tagColor" textAlign="center">
+                      {history.passName || '-'}
+                    </Td>
+                    <Td fontSize="sm" textAlign="center" color="tagColor">
+                      {history.price}
+                    </Td>
+                    <Td fontSize="sm" textAlign="center" color="tagColor">
+                      {history.transactionType || '-'}
+                    </Td>
+                    <Td fontSize="sm" color="tagColor" textAlign="center">
+                      <Center>
+                        <Link
+                          href={`${config.blockExplorerUrl}/tx/${history.transactionHash}`}
+                          isExternal
+                          display="flex"
+                          gap={1}
+                          fontSize="sm"
+                          color="paginationButtonActive"
+                        >
+                          <chakra.span
+                            color="paginationButtonActive"
+                            fontSize="sm"
+                          >
+                            {' '}
+                            {shortenAccount(
+                              history.transactionHash?.toString() || '',
+                            )}{' '}
+                            <ExternalLinkIcon mx="2px" mt={-3} />
+                          </chakra.span>
+                        </Link>
+                      </Center>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </>
+          )}
+          <TableCaption mt={0}>
+            {subscriptionHistory && subscriptionHistory?.length < 1 && (
+              <Box>
+                <Center>
+                  <SubscriptionEmptyState maxBlockSize="40vw" />
+                </Center>
+                <Text
+                  mb={6}
+                  ml={4}
+                  fontSize="xl"
+                  textAlign="center"
+                  color="insertMediaDialogText"
+                >
+                  No subscription history yet.
+                </Text>
+              </Box>
+            )}
+            <Flex>
+              <Box>
+                <Button
+                  variant="outline"
+                  leftIcon={<FaArrowLeft />}
+                  rounded="md"
+                  disabled={!offset}
+                  onClick={() => setOffset(offset - LIMIT)}
+                >
+                  <Text fontSize="sm">Previous</Text>
+                </Button>
+              </Box>
+              <Spacer />
+              <Box>
+                <Button
+                  variant="outline"
+                  rightIcon={<FaArrowRight />}
+                  rounded="md"
+                  disabled={
+                    subscriptionHistory && subscriptionHistory?.length < LIMIT
+                  }
+                  onClick={() => setOffset(offset + LIMIT)}
+                >
+                  <Text fontSize="sm">Next</Text>
+                </Button>
+              </Box>
+            </Flex>
+          </TableCaption>
+        </Table>
+      </chakra.div>
     </Container>
   )
 }
