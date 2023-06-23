@@ -240,6 +240,7 @@ export type ContentProps = {
   value: string
   setValue: (value: React.SetStateAction<string>) => void
   promotion?: () => Promise<void>
+  loading?: boolean
 }
 
 export type WikisTableProps = {

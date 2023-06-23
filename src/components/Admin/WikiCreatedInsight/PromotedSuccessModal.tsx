@@ -46,11 +46,13 @@ export const PromotedSuccessModal = ({
               onClick={onClose}
             />
           </Flex>
-          <Image src="/images/GIFs/checkmark.gif" alt="success" />
-          <Text mt="5" fontSize="xl" textAlign="center">
+          <Flex w="full" justifyContent="center">
+            <Image src="/images/GIFs/checkmark.gif" alt="success" w="50%" />
+          </Flex>
+          <Text mt="2" fontSize="xl" textAlign="center">
             Wiki promotion Successful.
           </Text>
-          <Text fontSize="sm" mt="5" textAlign="center">
+          <Text fontSize="sm" mt="2" textAlign="center">
             The wiki has been successfully promoted and is now displayed as one
             of the featured wikis on the homepage.
           </Text>

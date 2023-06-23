@@ -37,7 +37,6 @@ export const InsightTableWikiCreated = (
     onOpen: onOpenWikiHideNotification,
     onClose: onCloseWikiHideNotification,
   } = useDisclosure()
-  const { onClose: onClosePromotionModal } = useDisclosure()
   const cancelRef = React.useRef<FocusableElement>(null)
   const {
     isOpen: isOpenPromotion,
@@ -148,7 +147,8 @@ export const InsightTableWikiCreated = (
       />
       <PromotedSuccessModal
         isOpen={!isOpen && successModal}
-        onClose={onClosePromotionModal}
+        // isOpen={true}
+        onClose={() => setSuccessModal(false)}
       />
     </>
   )

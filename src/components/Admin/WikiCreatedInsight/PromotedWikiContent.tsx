@@ -76,6 +76,7 @@ export const PromoteModalContent = (props: ContentProps) => {
     value,
     setValue,
     promotion,
+    loading,
   } = props
   return (
     <VStack py="3" gap={4}>
@@ -122,7 +123,12 @@ export const PromoteModalContent = (props: ContentProps) => {
             >
               {buttonOne}
             </Button>
-            <Button size="sm" fontSize="xs" onClick={promotion}>
+            <Button
+              size="sm"
+              fontSize="xs"
+              onClick={promotion}
+              isLoading={loading}
+            >
               {buttonTwo}
             </Button>
           </HStack>

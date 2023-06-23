@@ -18,7 +18,6 @@ import {
 import { PromoteCreatedWikisModalProps } from '@/types/admin'
 import { getWikiIdUsingLevel } from '@/utils/AdminUtils/dataUpdate'
 import { PromoteModalContent } from './PromotedWikiContent'
-import { FocusableElement } from '@chakra-ui/utils'
 
 export const PromoteCreatedWikisModal = (
   props: PromoteCreatedWikisModalProps,
@@ -33,13 +32,12 @@ export const PromoteCreatedWikisModal = (
     ...rest
   } = props
   const [buttonOne, setbuttonOne] = useState('Cancel')
+  const [loading, setLoading] = useState(false)
   const [buttonTwo, setbuttonTwo] = useState('Continue')
   const { data: promotedWikis, refetch } = useGetAllPromotedWikiCountQuery(0)
   const { data: wiki } = useGetSearchedWikisByTitleQuery(wikiChosenTitle)
   const [value, setValue] = useState('1')
   const toast = useToast()
-
-  const _cancelRef = React.useRef<FocusableElement>(null)
   const ModalData = wiki?.filter(
     (item) => item.id === wikiChosenId && item.title === wikiChosenTitle,
   )
@@ -76,7 +74,6 @@ export const PromoteCreatedWikisModal = (
       const toastTitle = 'Wiki Promotion Failed'
       const toastMessage = "We couldn't save your wiki changes."
       const toastType: 'success' | 'error' = 'error'
-
       toast({
         title: toastTitle,
         description: toastMessage,
@@ -95,6 +92,7 @@ export const PromoteCreatedWikisModal = (
       nextStep()
       setbuttonTwo('Promote')
     } else if (activeStep === 2) {
+      setLoading(true)
       const id = getWikiIdUsingLevel(Number(value), promotedWikis)
       handlePromoteWiki({
         id: wikiChosenId,
@@ -155,6 +153,7 @@ export const PromoteCreatedWikisModal = (
               value={value}
               setValue={setValue}
               promotion={promotion}
+              loading={loading}
             />
           </ModalBody>
         </ModalContent>
