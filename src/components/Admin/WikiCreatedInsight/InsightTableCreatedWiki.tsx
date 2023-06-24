@@ -11,17 +11,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { RiQuestionLine, RiCloseLine } from 'react-icons/ri'
-import { Wikis } from '@/types/admin'
+import { InsightTableWikiCreatedProps } from '@/types/admin'
 import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
 import { WikisTable } from './WikisTable'
 import { PromotedSuccessModal } from './PromotedSuccessModal'
-
-type InsightTableWikiCreatedProps = {
-  wikiCreatedInsightData: Wikis[]
-  hideWikisFunc: () => void
-}
 
 export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
@@ -79,7 +74,6 @@ export const InsightTableWikiCreated = (
         shouldPromote={shouldPromote}
         shouldArchive={shouldArchive}
       />
-
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
@@ -88,7 +82,6 @@ export const InsightTableWikiCreated = (
         isCentered
       >
         <AlertDialogOverlay />
-
         <AlertDialogContent>
           <Box p={8}>
             <Flex alignItems="center">
@@ -100,7 +93,6 @@ export const InsightTableWikiCreated = (
               >
                 <Icon cursor="pointer" fontSize="3xl" as={RiQuestionLine} />
               </Circle>
-
               <Text flex="1" fontSize="xl" fontWeight="black">
                 Promotion Details
               </Text>
@@ -147,7 +139,6 @@ export const InsightTableWikiCreated = (
       />
       <PromotedSuccessModal
         isOpen={!isOpen && successModal}
-        // isOpen={true}
         onClose={() => setSuccessModal(false)}
       />
     </>
