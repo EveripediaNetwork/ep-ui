@@ -16,7 +16,7 @@ import React from 'react'
 import { useAppSelector } from '@/store/hook'
 
 const WikiScoreIndicator = () => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = ReauseState(false)
   const wiki = useAppSelector((state) => state.wiki)
   const score = calculateWikiScore(wiki)
   if (!score) return null
