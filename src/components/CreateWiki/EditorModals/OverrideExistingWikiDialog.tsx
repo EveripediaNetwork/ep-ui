@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
-import { Wiki } from '@everipedia/iq-utils'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -19,21 +18,10 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import LinkButton from '../../Elements/LinkElements/LinkButton'
+import { OverrideExistingWikiDialogType } from '@/types/CreateWikiType'
 
-interface OverrideExistingWikiDialogProps {
-  isOpen: boolean
-  onClose: () => void
-  publish: () => void
-  getSlug: () => Promise<string>
-  existingWikiData?: Wiki
-}
-const OverrideExistingWikiDialog = ({
-  isOpen,
-  onClose,
-  publish,
-  getSlug,
-  existingWikiData,
-}: OverrideExistingWikiDialogProps) => {
+const OverrideExistingWikiDialog = (props: OverrideExistingWikiDialogType) => {
+  const { isOpen, onClose, publish, getSlug, existingWikiData } = props
   const cancelRef = useRef<FocusableElement>(null)
   const [slug, setSlug] = useState('')
 
@@ -94,7 +82,6 @@ const OverrideExistingWikiDialog = ({
               fontSize={30}
             />
           </AlertDialogHeader>
-
           <Text align="center">
             This wiki is already in existence, creating a new wiki with the same
             id (Wiki title) will overwrite the existing one.
