@@ -12,12 +12,12 @@ import {
   Text,
   chakra,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useAppSelector } from '@/store/hook'
 
 const WikiScoreIndicator = () => {
-  const [isOpen, setIsOpen] = ReauseState(false)
-  const wiki = useAppSelector((state) => state.wiki)
+  const [isOpen, setIsOpen] = useState(false)
+  const wiki = useAppSelector(state => state.wiki)
   const score = calculateWikiScore(wiki)
   if (!score) return null
 
