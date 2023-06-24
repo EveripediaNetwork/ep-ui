@@ -1,19 +1,14 @@
 import React from 'react'
 import { Flex, LinkBox, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import { Blog } from '@/types/Blog'
+import { BlogPostType } from '@/types/Blog'
 import { Avatar } from '@/components/Elements'
 import { useENSData } from '@/hooks/useENSData'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 
-type BlogPostType = {
-  maxW?: string
-  post: Blog
-  key: number
-}
-
-export const BlogPost = ({ post, ...rest }: BlogPostType) => {
+export const BlogPost = (props: BlogPostType) => {
+  const { post, ...rest } = props
   const [, displayName] = useENSData(post.contributor)
 
   return (
