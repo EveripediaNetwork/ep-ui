@@ -6,8 +6,10 @@ import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
+import { EmblaOptionsType } from 'embla-carousel-react'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
+  const OPTIONS: EmblaOptionsType = { loop: true }
   return (
     <Flex pt="1" minH="500px">
       <Box
@@ -49,6 +51,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
                 </Box>
               )}
               plugins={[Autoplay()]}
+              options={OPTIONS}
             />
           </>
         ) : (

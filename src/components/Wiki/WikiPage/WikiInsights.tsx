@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, VStack } from '@chakra-ui/react'
-import {
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  MediaType,
-  Wiki,
-} from '@everipedia/iq-utils'
+import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
 import { TokenStats } from '@/services/token-stats'
 import { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
@@ -37,6 +32,10 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
 
+  const coinmarketcapLink = wiki.metadata.find(
+    (meta) => meta.id === CommonMetaIds.COIN_MARKET_CAP,
+  )?.value
+
   const twitterLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
@@ -54,7 +53,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {
-        await fetchTokenStats(coingeckoLink).then((res) => {
+        await fetchTokenStats(coingeckoLink, coinmarketcapLink).then((res) => {
           setTokenStats(res)
         })
       }
@@ -107,9 +106,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               {wikiIsNFT && <NFTStatistics nftStats={nftStats} />}
               {tokenStats && (
                 <CurrencyConverter
-                  tokenImage={
-                    wiki.media?.find((m) => m.type === MediaType.ICON)?.id
-                  }
+                  tokenImage={tokenStats.token_image_url}
                   token={getTokenFromURI(coingeckoLink)}
                   tokenStats={tokenStats}
                 />

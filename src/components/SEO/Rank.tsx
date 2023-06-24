@@ -12,8 +12,8 @@ const RankHeader = () => (
     }}
     twitter={{
       cardType: 'summary_large_image',
-      handle: '@Everipedia',
-      site: 'Everipedia',
+      handle: '@IQWiki',
+      site: 'IQWiki',
     }}
   />
 )
