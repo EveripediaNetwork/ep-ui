@@ -48,7 +48,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     setTimeout(() => {
       const popupBtn = document.querySelector('.wikiLink__popupBtn')
       popupBtn?.addEventListener('click', () => {
-        setTriggerCleanup(p => !p)
+        setTriggerCleanup((p) => !p)
       })
     }, 500)
   }, [])
@@ -62,7 +62,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     setSearch(windowSelection || '')
     if (windowSelection && windowSelection.length > 3) {
       setLoading(true)
-      debouncedFetchWikis(windowSelection, data => {
+      debouncedFetchWikis(windowSelection, (data) => {
         setResults(data)
         setOffset(0)
         setWikiList(data.slice(0, DISPLAY_LIMIT))
@@ -74,7 +74,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   useEffect(() => {
     if (search.length >= 3) {
       setLoading(true)
-      debouncedFetchWikis(search, data => {
+      debouncedFetchWikis(search, (data) => {
         setResults(data)
         setWikiList(data.slice(0, DISPLAY_LIMIT))
         setOffset(0)
@@ -108,7 +108,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
         <input
           className="wikiLink__input"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Search Wiki"
         />
@@ -119,7 +119,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             {shortenText(wikiSelected.title, 30)}
           </h3>
           <div className="wikiLink__previewTagsContainer">
-            {wikiSelected.tags?.map(tag => (
+            {wikiSelected.tags?.map((tag) => (
               <span
                 style={{
                   backgroundColor: `hsl(${Math.floor(
@@ -151,7 +151,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       )}
       {wikiList.length > 0 && (
         <div className="wikiLink__resultsContainer">
-          {wikiList.map(wiki => (
+          {wikiList.map((wiki) => (
             <button
               key={wiki.id}
               type="button"
@@ -163,7 +163,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           ))}
         </div>
       )}
-      {(results.length > 0 && !wikiSelected) && (
+      {results.length > 0 && !wikiSelected && (
         <Flex justifyContent="flex-end" gap={10}>
           <button
             type="button"
