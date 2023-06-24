@@ -12,7 +12,7 @@ import {
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
 
-const DISPLAY_LIMIT = 6
+const DISPLAY_LIMIT = 10
 
 const fetchWikisList = async (
   query: string,
