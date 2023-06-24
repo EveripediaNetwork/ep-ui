@@ -1,43 +1,29 @@
 import React from 'react'
 import { VStack, Flex, chakra } from '@chakra-ui/react'
-import { BaseCategory, BaseTag, Image, User } from '@everipedia/iq-utils'
 import ActivityCardTop from './ActivityCardTop'
 import ActivityCardBody from './ActivityCardBody'
 import ActivityCardBottom from './ActivityCardBottom'
 import ActivityCardImage from './ActivityCardImage'
+import { ActivityBodyCardProps } from '@/types/ActivityDataType'
 
-interface ActivityCardProps {
-  title: string
-  summary: string
-  editor: User
-  lastModTimeStamp?: string
-  activityId?: string
-  wikiId: string
-  type?: string
-  categories: BaseCategory[]
-  tags: BaseTag[]
-  wikiImgObj?: Image[]
-  ipfs?: string
-  isNotifSubCard?: boolean
-}
+const ActivityCard = (props: ActivityBodyCardProps) => {
+  const {
+    isNotifSubCard = false,
+    title,
+    summary,
+    editor,
+    categories,
+    tags,
+    lastModTimeStamp,
+    activityId,
+    wikiImgObj,
+    wikiId,
+    type,
+    ipfs,
+  } = props
 
-const ActivityCard = ({
-  isNotifSubCard = false,
-  title,
-  summary,
-  editor,
-  categories,
-  tags,
-  lastModTimeStamp,
-  activityId,
-  wikiImgObj,
-  wikiId,
-  type,
-  ipfs,
-}: ActivityCardProps) => {
   const link =
     ipfs !== undefined ? `/revision/${activityId}` : `/wiki/${wikiId}`
-
   const activity = type === 'CREATED' ? 'New' : 'Edited'
 
   return (
@@ -64,14 +50,12 @@ const ActivityCard = ({
             activity={activity}
             category={categories?.[0]}
           />
-
           <ActivityCardBody
             link={link}
             summary={summary}
             isNotifSubCard={isNotifSubCard}
             tags={tags}
           />
-
           <ActivityCardBottom
             activity={activity}
             editor={editor}
