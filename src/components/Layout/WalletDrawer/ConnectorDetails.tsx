@@ -3,18 +3,14 @@ import { Image, Spinner, Text } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
 import { logEvent } from '@/utils/googleAnalytics'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
+import { ConnectorDetailsType } from '@/types/WalletBalanceType'
 
 const ConnectorDetails = ({
   imageLink,
   connector,
   connect,
   loading,
-}: {
-  imageLink: string
-  connector: Connector
-  connect: (args: { connector: Connector }) => void
-  loading?: boolean
-}) => {
+}: ConnectorDetailsType) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const handleConnect = (selectedConnector: Connector) => {
     logEvent({

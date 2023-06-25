@@ -17,7 +17,6 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
       })
       setDetectedProvider(provider as ProviderDataType)
     }
-
     if (!detectedProvider) {
       getDetectedProvider()
     }

@@ -24,6 +24,13 @@ export interface Image {
   id: string
 }
 
+export type RankingListProps = {
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
+}
+
 export interface NftMarketData {
   hasWiki: boolean
   floor_price_eth: number

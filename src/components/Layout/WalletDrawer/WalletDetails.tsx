@@ -1,21 +1,13 @@
 import React from 'react'
 import { HStack, Image, Text, VStack } from '@chakra-ui/react'
-import { TokenDetailsType } from '@/types/WalletBalanceType'
 import { tokenDetails } from '@/data/WalletData'
 import { getTokenValue } from '@/utils/WalletUtils/getTokenValue'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import TokenDetailsMenu from '../Token/TokenDetailsMenu'
 import { shortenBalance } from '@/utils/textUtils'
+import { WalletDetailsType } from '@/types/WalletBalanceType'
 
-const WalletDetails = ({
-  symbol,
-  balance,
-  tokensArray,
-}: {
-  symbol: string | undefined
-  balance: string | null
-  tokensArray: TokenDetailsType[]
-}) => (
+const WalletDetails = ({ symbol, balance, tokensArray }: WalletDetailsType) => (
   <WalletDetailsWrapper hasHover={false}>
     <>
       <HStack flex="1">

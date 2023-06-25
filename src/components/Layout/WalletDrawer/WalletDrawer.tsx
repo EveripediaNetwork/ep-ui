@@ -28,7 +28,6 @@ import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useDispatch } from 'react-redux'
-
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
