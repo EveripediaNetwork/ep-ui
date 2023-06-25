@@ -6,18 +6,18 @@ import {
   GET_CATEGORIES_BY_ID,
   GET_CATEGORIES_LINKS,
 } from '@/services/categories/queries'
-import { Category, CategoryLink } from '@/types/CategoryDataTypes'
+import { CategoryDataType, CategoryLink } from '@/types/CategoryDataTypes'
 import config from '@/config'
 
 type GetCategoriesResponse = {
-  categories: Category[]
+  categories: CategoryDataType[]
 }
 type GetCategoriesLinksResponse = {
   categories: CategoryLink[]
 }
 
 type GetCategoryByIdResponse = {
-  categoryById: Category[]
+  categoryById: CategoryDataType[]
 }
 
 export const categoriesApi = createApi({
@@ -32,12 +32,12 @@ export const categoriesApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getCategories: builder.query<Category[], void>({
+    getCategories: builder.query<CategoryDataType[], void>({
       query: () => ({ document: GET_CATEGORIES }),
       transformResponse: (response: GetCategoriesResponse) =>
         response.categories,
     }),
-    getCategoriesById: builder.query<Category[], string>({
+    getCategoriesById: builder.query<CategoryDataType[], string>({
       query: (id: string) => ({
         document: GET_CATEGORIES_BY_ID,
         variables: { id },
