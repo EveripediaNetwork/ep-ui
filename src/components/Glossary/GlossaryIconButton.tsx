@@ -1,11 +1,7 @@
 import React from 'react'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { IconButton } from '@chakra-ui/react'
-
-export type GlosssaryIconButtonProps = {
-  isVisible: boolean
-  setIsVisible: (isVisible: boolean) => void
-}
+import { GlosssaryIconButtonProps } from '@/types/GlossaryType'
 
 const GlossaryIconButton = ({
   isVisible,
