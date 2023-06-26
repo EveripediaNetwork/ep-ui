@@ -27,13 +27,17 @@ import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'react-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
-import NewsletterSubscription from './NewsletterSubscription'
 
 const Footer = () => {
   const { t, i18n } = useTranslation()
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
   const thisYear = new Date().getFullYear()
+  const newsletterOptions = {
+    bg: '#fff',
+    color: 'gray.800',
+    _hover: { bg: '#fff', color: 'gray.800' },
+  }
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
@@ -64,10 +68,22 @@ const Footer = () => {
       >
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={spacing} py={10}>
           <GridItem mr={{ lg: 24 }}>
-            <Newsletter />
+            <Newsletter
+              buttonTitle="Join Now"
+              header={`${t('updatesFooterHeading')}`}
+              body={`${t('updatesFooterText')}`}
+              url="https://forms.gle/bmMce4r3JJckpSNJ7"
+            />
           </GridItem>
           <GridItem>
-            <NewsletterSubscription />
+            <Newsletter
+              buttonTitle="Subscribe"
+              header="Subscribe to our newsletter"
+              body="Never miss any of the most popular and trending articles on IQ.Social
+        when you sign up to our email newsletter."
+              url="https://www.getdrip.com/forms/505929689/submissions/new"
+              {...newsletterOptions}
+            />
           </GridItem>
         </SimpleGrid>
         <Divider orientation="horizontal" />
@@ -113,7 +129,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map((langObj) => (
+                      {languageData.map(langObj => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"
