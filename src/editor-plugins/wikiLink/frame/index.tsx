@@ -168,14 +168,14 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           <button
             type="button"
             onClick={() => setOffset(offset - DISPLAY_LIMIT)}
-            className="toastui-editor-ok-button wikiLink_linkButton"
+            className="toastui-editor-paginate-button wikiLink_linkButton"
             disabled={offset === 0 || results.length === 0}
           >
             Previous
           </button>
           <button
             type="button"
-            className="toastui-editor-ok-button wikiLink_linkButton"
+            className="toastui-editor-paginate-button wikiLink_linkButton"
             disabled={offset + DISPLAY_LIMIT >= results.length}
             onClick={() => setOffset(offset + DISPLAY_LIMIT)}
           >
