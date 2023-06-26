@@ -129,7 +129,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map(langObj => (
+                      {languageData.map((langObj) => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"
