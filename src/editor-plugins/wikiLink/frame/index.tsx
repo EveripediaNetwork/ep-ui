@@ -108,7 +108,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
         <input
           className="wikiLink__input"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="Search Wiki"
         />
@@ -119,7 +119,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             {shortenText(wikiSelected.title, 30)}
           </h3>
           <div className="wikiLink__previewTagsContainer">
-            {wikiSelected.tags?.map((tag) => (
+            {wikiSelected.tags?.map(tag => (
               <span
                 style={{
                   backgroundColor: `hsl(${Math.floor(
@@ -151,7 +151,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       )}
       {wikiList.length > 0 && (
         <div className="wikiLink__resultsContainer">
-          {wikiList.map((wiki) => (
+          {wikiList.map(wiki => (
             <button
               key={wiki.id}
               type="button"
@@ -168,14 +168,14 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
           <button
             type="button"
             onClick={() => setOffset(offset - DISPLAY_LIMIT)}
-            className="toastui-editor-ok-button wikiLink_linkButton"
+            className="toastui-editor-paginate-button wikiLink_linkButton"
             disabled={offset === 0 || results.length === 0}
           >
             Previous
           </button>
           <button
             type="button"
-            className="toastui-editor-ok-button wikiLink_linkButton"
+            className="toastui-editor-paginate-button wikiLink_linkButton"
             disabled={offset + DISPLAY_LIMIT >= results.length}
             onClick={() => setOffset(offset + DISPLAY_LIMIT)}
           >

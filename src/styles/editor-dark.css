@@ -176,8 +176,28 @@
 }
 
 .toastui-editor-dark.toastui-editor-defaultUI .toastui-editor-ok-button:hover {
-  color: #121212;
+  color: #eee;
   background-color: #32baff;
+}
+
+
+.toastui-editor-paginate-button{
+  border-radius: 2px !important;
+  border: 1px solid #CBD5E0 !important;
+}
+
+.toastui-editor-paginate-button[disabled] {
+  border: 1px solid #EAECF0 !important;
+  color: #EAECF0
+}
+
+.toastui-editor-dark.toastui-editor-defaultUI .toastui-editor-paginate-button{
+  color: #fff;
+}
+
+.toastui-editor-dark.toastui-editor-defaultUI .toastui-editor-paginate-button[disabled]{
+  color: rgba(255, 255, 255, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.36) !important;
 }
 
 .toastui-editor-dark
