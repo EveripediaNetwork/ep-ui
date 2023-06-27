@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { logEvent } from '@/utils/googleAnalytics';
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Newsletter = ({
   header,
@@ -9,7 +9,6 @@ const Newsletter = ({
   buttonTitle,
   ...rest
 }: { header: string; body: string; url: string; buttonTitle: string }) => {
-
   const buttonHandler = () => {
     logEvent({
       action: 'SUBSCRIBE_BUTTON',
