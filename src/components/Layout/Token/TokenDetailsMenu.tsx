@@ -23,14 +23,21 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
   }, [detectedProvider])
 
   const handleAddTokenToMetamask = async (tokenSymbol: string | undefined) => {
-    if (tokenSymbol === 'IQ') {
+    if (
+      tokenSymbol === 'IQ' ||
+      tokenSymbol === 'HiIQ' ||
+      tokenSymbol === 'TEST'
+    ) {
       detectedProvider?.sendAsync(
         {
           method: 'metamask_watchAsset',
           params: {
             type: 'ERC20',
             options: {
-              address: config.iqAddress ?? '',
+              address:
+                tokenSymbol === 'HiIQ'
+                  ? config.hiIqAddress ?? ''
+                  : config.iqAddress ?? '',
               symbol: tokenSymbol,
               decimals: 18,
               image:
@@ -45,19 +52,22 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
     }
   }
   return (
-    <Menu placement="left-start">
-      <MenuButton>
-        <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
-      </MenuButton>
+    <>
       {token && supportedTokens[token]?.isActive && (
-        <MenuList
-          onClick={() => handleAddTokenToMetamask(token)}
-          boxShadow="xl"
-        >
-          <MenuItem>Add {token} token to Metamask</MenuItem>
-        </MenuList>
+        <Menu placement="left-start">
+          <MenuButton>
+            <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
+          </MenuButton>
+
+          <MenuList
+            onClick={() => handleAddTokenToMetamask(token)}
+            boxShadow="xl"
+          >
+            <MenuItem>Add {token} token to Metamask</MenuItem>
+          </MenuList>
+        </Menu>
       )}
-    </Menu>
+    </>
   )
 }
 
