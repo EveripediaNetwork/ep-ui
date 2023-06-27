@@ -15,7 +15,7 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { Chakra } from './chakra'
+import Chakra from './Chakra'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -53,7 +53,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        {/* <ChakraProvider resetCSS theme={chakraTheme}> */}
         <Chakra theme={chakraTheme} resetCSS cookies={pageProps.cookies}>
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
@@ -61,7 +60,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
             </Layout>
           </WagmiConfig>
         </Chakra>
-        {/* </ChakraProvider> */}
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
