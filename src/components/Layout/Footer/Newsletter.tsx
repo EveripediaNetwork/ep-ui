@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { logEvent } from '@/utils/googleAnalytics';
 
 const Newsletter = ({
   header,
@@ -8,6 +9,15 @@ const Newsletter = ({
   buttonTitle,
   ...rest
 }: { header: string; body: string; url: string; buttonTitle: string }) => {
+
+  const buttonHandler = () => {
+    logEvent({
+      action: 'SUBSCRIBE_BUTTON',
+      label: buttonTitle,
+      category: 'newsletter',
+      value: 1,
+    })
+  }
   return (
     <Stack align={{ base: 'center', lg: 'flex-start' }} spacing={4}>
       <Text fontSize="xl" fontWeight="bold" py={2}>
@@ -23,6 +33,7 @@ const Newsletter = ({
         size="lg"
         variant="solid"
         {...rest}
+        onClick={buttonHandler}
       >
         {buttonTitle}
       </Button>
