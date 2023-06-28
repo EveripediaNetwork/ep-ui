@@ -5,24 +5,12 @@ import {
   IMAGE_BOX_SIZE,
   WIKI_IMAGE_ASPECT_RATIO,
 } from '@/data/Constants'
-import { IconType } from 'react-icons'
 import { Image } from '../Elements/Image/Image'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
-interface CategoryCardProps {
-  imageCard: string
-  coverIcon: IconType
-  title: string
-  brief: string
-  categoryId: string
-}
+import { CategoryCardProps } from '@/types/CategoryDataTypes'
 
-const CategoryCard = ({
-  imageCard,
-  coverIcon,
-  title,
-  brief,
-  categoryId,
-}: CategoryCardProps) => {
+const CategoryCard = (props: CategoryCardProps) => {
+  const { imageCard, coverIcon, title, brief, categoryId } = props
   return (
     <LinkBox
       bgColor="cardBg"

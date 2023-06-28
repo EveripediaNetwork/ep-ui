@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import router from 'next/router'
-import React from 'react'
+import React, { useRef } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
 
 export const PromotedSuccessModal = ({
@@ -22,7 +22,7 @@ export const PromotedSuccessModal = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  const cancelRef = React.useRef<FocusableElement>(null)
+  const cancelRef = useRef<FocusableElement>(null)
 
   return (
     <AlertDialog

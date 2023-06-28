@@ -33,7 +33,6 @@ const SingleSkeleton = () => {
           minW={0}
         >
           <Skeleton h="10" w="14" rounded="md" />
-
           <Skeleton h="10" w="14" rounded="md" />
         </HStack>
       </HStack>

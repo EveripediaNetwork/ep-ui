@@ -16,18 +16,11 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
     nextBtnDisabled,
   } = props
 
-  const increasePagination = () => {
-    return (
-      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset + 10)
-    )
+  const handlePagination = (increment: number) => {
+    if (wikis && wikis.length >= 10) {
+      setPaginateOffset((prevOffset) => prevOffset + 10 * increment)
+    }
   }
-  const decreasePagination = () => {
-    return (
-      wikis && wikis?.length >= 10 && setPaginateOffset(paginateOffset - 10)
-    )
-  }
-
-  const _IsNextCanGo = () => {}
 
   return (
     <Flex justify="space-between" w="95%" m="0 auto">
@@ -37,7 +30,7 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
         disabled={!activatePrevious}
         onClick={() => {
           scrolltoTableTop()
-          decreasePagination()
+          handlePagination(-1)
           if (paginateOffset === 0) {
             setActivatePrevious(false)
           }
@@ -50,7 +43,7 @@ export const WikiCreatedFooter = (props: WikiCreatedFooterProps) => {
         variant="outline"
         onClick={() => {
           scrolltoTableTop()
-          increasePagination()
+          handlePagination(1)
           if (wikis && wikis?.length >= 10) {
             setActivatePrevious(true)
           }

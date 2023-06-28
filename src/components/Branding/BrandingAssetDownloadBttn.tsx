@@ -1,15 +1,10 @@
+import { BrandingAssetBtnType } from '@/types/BrandingType'
 import { Flex, Text, Link } from '@chakra-ui/react'
 import React from 'react'
 
-const BrandingAssetDownloadBttn = ({
-  text,
-  href,
-  closeDownloadOptions,
-}: {
-  text: string
-  href: string
-  closeDownloadOptions: () => void
-}) => {
+const BrandingAssetDownloadBttn = (props: BrandingAssetBtnType) => {
+  const { text, href, closeDownloadOptions } = props
+
   return (
     <Flex
       p="8"
