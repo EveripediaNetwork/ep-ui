@@ -5,7 +5,7 @@ import '@/editor-plugins/pluginStyles.css'
 import {
   ChakraProvider,
   createStandaloneToast,
-  localStorageManager,
+  cookieStorageManager,
 } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -57,7 +57,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider
-          colorModeManager={localStorageManager}
+          colorModeManager={cookieStorageManager}
           resetCSS
           theme={chakraTheme}
         >

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import {
   Box,
   Collapse,
@@ -7,47 +7,47 @@ import {
   useDisclosure,
   HStack,
   Text,
-} from '@chakra-ui/react'
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { setDrawerOpen } from '@/store/slices/app-slice'
-import { store } from '@/store/store'
-import Link from 'next/link'
-import DesktopNav from './DesktopNav'
-import WalletNavMenu from './WalletNavMenu'
-import Logo from '@/components/Elements/Logo/Logo'
+} from "@chakra-ui/react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setDrawerOpen } from "@/store/slices/app-slice";
+import { store } from "@/store/store";
+import Link from "next/link";
+import DesktopNav from "./DesktopNav";
+import WalletNavMenu from "./WalletNavMenu";
+import Logo from "@/components/Elements/Logo/Logo";
 
-const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
-const NavSearch = dynamic(() => import('@/components/Layout/Navbar/NavSearch'))
-const MobileNav = dynamic(() => import('./MobileNav'))
-const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
+const ProfileNavMenu = dynamic(() => import("./ProfileNavItem"));
+const NavSearch = dynamic(() => import("@/components/Layout/Navbar/NavSearch"));
+const MobileNav = dynamic(() => import("./MobileNav"));
+const WalletDrawer = dynamic(() => import("../WalletDrawer/WalletDrawer"));
 
 const Navbar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const drawerOperations = useDisclosure({
     defaultIsOpen: store.getState().app.isDrawerOpen,
     onOpen: () => {
-      dispatch(setDrawerOpen(true))
+      dispatch(setDrawerOpen(true));
     },
     onClose: () => {
-      dispatch(setDrawerOpen(false))
+      dispatch(setDrawerOpen(false));
     },
-  })
-  const loginButtonRef = useRef<HTMLButtonElement>(null)
-  const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-  const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
-  const router = useRouter()
-  const { isOpen, onToggle } = drawerOperations
+  });
+  const loginButtonRef = useRef<HTMLButtonElement>(null);
+  const [visibleMenu, setVisibleMenu] = useState<number | null>(null);
+  const [isHamburgerOpen, setHamburger] = useState<boolean>(false);
+  const router = useRouter();
+  const { isOpen, onToggle } = drawerOperations;
 
   useEffect(() => {
-    const handleRouteChange = () => isOpen && onToggle()
-    router.events.on('routeChangeComplete', handleRouteChange)
+    const handleRouteChange = () => isOpen && onToggle();
+    router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events, isOpen, onToggle])
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events, isOpen, onToggle]);
 
   return (
     <Box
@@ -55,9 +55,10 @@ const Navbar = () => {
       position="fixed"
       zIndex="banner"
       w="full"
-      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
+      h={{ base: drawerOperations.isOpen ? "100%" : "unset", md: "unset" }}
       bg="subMenuBg"
       borderBottomWidth={1}
+      borderBottomColor="rankingListBorder"
     >
       <Flex
         gap={{ base: 8, lg: 40, xl: 8 }}
@@ -68,8 +69,8 @@ const Navbar = () => {
       >
         <Box
           cursor="pointer"
-          mr={{ base: 0, xl: '9vw' }}
-          _hover={{ textDecoration: 'none' }}
+          mr={{ base: 0, xl: "9vw" }}
+          _hover={{ textDecoration: "none" }}
         >
           <Link prefetch={false} href="/">
             <HStack width="150px">
@@ -78,7 +79,7 @@ const Navbar = () => {
                 fontWeight="bold"
                 fontSize="xl"
                 color="gray.900"
-                _dark={{ color: 'white' }}
+                _dark={{ color: "white" }}
               >
                 IQ.wiki
               </Text>
@@ -92,8 +93,8 @@ const Navbar = () => {
           ml={4}
           spacing={4}
           display={{
-            base: 'none',
-            xl: 'flex',
+            base: "none",
+            xl: "flex",
           }}
         >
           <DesktopNav />
@@ -109,8 +110,8 @@ const Navbar = () => {
         </HStack>
         <HStack
           display={{
-            base: 'flex',
-            xl: 'none',
+            base: "flex",
+            xl: "none",
           }}
         >
           <WalletNavMenu
@@ -142,7 +143,7 @@ const Navbar = () => {
       <Collapse
         in={isHamburgerOpen}
         animateOpacity
-        style={{ margin: '0 -15px' }}
+        style={{ margin: "0 -15px" }}
       >
         <MobileNav
           setHamburger={setHamburger}
@@ -150,7 +151,7 @@ const Navbar = () => {
         />
       </Collapse>
     </Box>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
