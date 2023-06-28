@@ -28,22 +28,7 @@ export default class Document extends NextDocument<{ colorMode: string }> {
 
     return { ...initialProps, colorMode }
   }
-  // static async getInitialProps(ctx: DocumentContext) {
-  //   const initialProps = await NextDocument.getInitialProps(ctx)
-  //   const styles = extractCritical(initialProps.html)
-  //   return {
-  //     ...initialProps,
-  //     styles: [
-  //       initialProps.styles,
-  //       <style
-  //         key="emotion-css"
-  //         // rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-  //         dangerouslySetInnerHTML={{ __html: styles.css }}
-  //         data-emotion-css={styles.ids.join(' ')}
-  //       />,
-  //     ],
-  //   }
-  // }
+
 
   render() {
     const { colorMode } = this.props
