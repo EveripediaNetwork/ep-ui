@@ -97,25 +97,23 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                 justifyContent="space-between"
                 w="full"
               >
-                <Box>
-                  <HStack flex="1">
-                    <DisplayAvatar
-                      address={Data.author?.id}
-                      avatarIPFS={Data.author.profile?.avatar}
-                      size={20}
-                      alt="user"
-                    />
-                    <Text fontSize="14px" color="linkColor">
-                      <Link
-                        href={`/account/${Data.author?.id}`}
-                        color="brand.500"
-                        fontWeight="bold"
-                      >
-                        {accountUsername(Data)}
-                      </Link>
-                    </Text>
-                  </HStack>
-                </Box>
+                <HStack flex="1">
+                  <DisplayAvatar
+                    address={Data.author?.id}
+                    avatarIPFS={Data.author.profile?.avatar}
+                    size={20}
+                    alt="user"
+                  />
+                  <Text fontSize="14px" color="linkColor">
+                    <Link
+                      href={`/account/${Data.author?.id}`}
+                      color="brand.500"
+                      fontWeight="bold"
+                    >
+                      {accountUsername(Data)}
+                    </Link>
+                  </Text>
+                </HStack>
                 <Box>
                   {Data.updated && (
                     <Text

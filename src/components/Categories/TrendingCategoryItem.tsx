@@ -10,30 +10,15 @@ import {
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
-import { Image as ImageType, User } from '@everipedia/iq-utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
+import { TrendingCategoryItemProps } from '@/types/CategoryDataTypes'
 
-interface TrendingCategoryItemProps {
-  title: string
-  brief: string
-  editor: User
-  lastModTimeStamp?: string
-  wikiId?: string
-  WikiImgObj?: ImageType[]
-}
-
-const TrendingCategoryItem = ({
-  wikiId,
-  title,
-  WikiImgObj,
-  brief,
-  editor,
-  lastModTimeStamp,
-}: TrendingCategoryItemProps) => {
+const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
+  const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>

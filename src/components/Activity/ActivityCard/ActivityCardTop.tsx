@@ -1,14 +1,7 @@
+import { ActivityCardTopProps } from '@/types/ActivityDataType'
 import { Flex, HStack, Heading, Text, Link } from '@chakra-ui/react'
-import { BaseCategory } from '@everipedia/iq-utils'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-
-interface ActivityCardTopProps {
-  title: string
-  activity: string
-  category?: BaseCategory
-  link: string
-}
 
 const getCategoryAbbr = (id: string) => {
   switch (id) {
@@ -31,14 +24,9 @@ const getCategoryAbbr = (id: string) => {
   }
 }
 
-const ActivityCardTop = ({
-  title,
-  activity,
-  category,
-  link,
-}: ActivityCardTopProps) => {
+const ActivityCardTop = (props: ActivityCardTopProps) => {
+  const { title, activity, category, link } = props
   const router = useRouter()
-
   return (
     <Flex
       justifyContent="space-between"
