@@ -29,7 +29,6 @@ export default class Document extends NextDocument<{ colorMode: string }> {
     return { ...initialProps, colorMode }
   }
 
-
   render() {
     const { colorMode } = this.props
     return (
