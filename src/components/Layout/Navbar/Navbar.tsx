@@ -58,6 +58,7 @@ const Navbar = () => {
       h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
       bg="subMenuBg"
       borderBottomWidth={1}
+      borderBottomColor="rankingListBorder"
     >
       <Flex
         gap={{ base: 8, lg: 40, xl: 8 }}
