@@ -1,7 +1,7 @@
 import { IconType } from 'react-icons'
 import { Image as ImageType, User } from '@everipedia/iq-utils'
 
-export type CategoryDataType = {
+export type Category = {
   id: string
   title: string
   icon: IconType
