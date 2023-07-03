@@ -23,13 +23,15 @@ export const WikiInsightTable = () => {
     useState<boolean>(true)
   const [toggler, setToggler] = useState<boolean>(false)
   const [sortTableBy, setSortTableBy] = useState<string>('default')
-  const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const [wikis, setWikis] = useState<CreatedWikisCount[]>()
   const [searchKeyWord, setsearchKeyWord] = useState<string>('')
   const [activatePrevious, setActivatePrevious] = useState<boolean>(false)
   const [filterItems, setFilterItems] = useState<Array<[] | unknown>>()
   const [checked, setChecked] = useState(0)
+
   const { isOpen, onToggle, onClose } = useDisclosure()
+
+  const { data: wiki, refetch } = useGetAllCreatedWikiCountQuery(paginateOffset)
   const { data: hidden } = useGetAllHiddenWikiCountQuery(paginateOffset, {
     skip: initGetHiddenWikis,
     refetchOnMountOrArgChange: true,
@@ -41,6 +43,14 @@ export const WikiInsightTable = () => {
       refetchOnMountOrArgChange: true,
     },
   )
+  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
+    paginateOffset,
+    {
+      skip: initGetPromotedWikis,
+      refetchOnMountOrArgChange: true,
+    },
+  )
+
   const sortIcon = useMemo(() => {
     if (sortTableBy === 'default') {
       return <RiArrowUpDownLine fontSize="1.3rem" />
@@ -74,13 +84,6 @@ export const WikiInsightTable = () => {
     }
   }
 
-  const { data: promotedWikis } = useGetAllPromotedWikiCountQuery(
-    paginateOffset,
-    {
-      skip: initGetPromotedWikis,
-      refetchOnMountOrArgChange: true,
-    },
-  )
   const newWikis = useMemo(() => {
     let filteredWikis = wiki
     if (filterItems?.includes(FilterTypes.promoted)) {
@@ -106,6 +109,7 @@ export const WikiInsightTable = () => {
     FilterTypes.promoted,
     FilterTypes.normal,
   ])
+
   const sortWikisByDate = (
     items: CreatedWikisCount[] | undefined,
     highestFirst: boolean,
@@ -120,7 +124,6 @@ export const WikiInsightTable = () => {
 
   const WikisSortByHighest =
     searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
-
   sortWikisByDate(WikisSortByHighest, true)
 
   const WikisSortByLowest =
@@ -133,12 +136,14 @@ export const WikiInsightTable = () => {
     const Data = a.title.trim().localeCompare(b.title.trim())
     return Data
   })
+
   const WikisSortByAlpaDown =
     searchKeyWord.length > 2 ? SearchedWikis?.slice() : newWikis?.slice()
   WikisSortByAlpaDown?.sort((a, b) => {
     const Data = b.title.trim().localeCompare(a.title.trim())
     return Data
   })
+
   const wikiSorted = useMemo(() => {
     if (sortTableBy === 'Newest') {
       return WikisSortByHighest
@@ -176,7 +181,6 @@ export const WikiInsightTable = () => {
       filterItems?.includes(FilterTypes.promoted) ||
       searchKeyWord.length > 2
     ) {
-      // since the predefined total no of promoted is 10
       return true
     } else {
       return !wiki || wiki.length < 10

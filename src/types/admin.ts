@@ -257,6 +257,11 @@ export type WikiTableColProps = {
   ArchiveClickTwo: () => void
 }
 
+export type InsightTableWikiCreatedProps = {
+  wikiCreatedInsightData: Wikis[]
+  hideWikisFunc: () => void
+}
+
 export type WikiCreatedFooterProps = {
   activatePrevious: boolean
   scrolltoTableTop: () => void

@@ -1,20 +1,10 @@
 import { Text, chakra } from '@chakra-ui/react'
-import { BaseTag } from '@everipedia/iq-utils'
 import { Fragment } from 'react'
 import ActivityCardTags from './ActivityCardTags'
+import { ActivityCardProps } from '@/types/ActivityDataType'
 
-interface ActivityCardProps {
-  tags: BaseTag[]
-  summary: string
-  isNotifSubCard?: boolean
-  link: string
-}
-
-const ActivityCardBody = ({
-  isNotifSubCard,
-  tags,
-  summary,
-}: ActivityCardProps) => {
+const ActivityCardBody = (props: ActivityCardProps) => {
+  const { isNotifSubCard, tags, summary } = props
   return (
     <Fragment>
       <Text

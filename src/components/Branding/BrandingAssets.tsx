@@ -2,20 +2,10 @@ import { Button, Flex, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { BiCloudDownload } from 'react-icons/bi'
 import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
+import { BrandingAssetsType } from '@/types/BrandingType'
 
-export const BrandingAssets = ({
-  bg,
-  updateSelectedAsset,
-  currentlyViewed,
-  dark,
-  isBraindoa,
-}: {
-  bg: { bg: string; download: string }
-  updateSelectedAsset: () => void
-  currentlyViewed: string
-  dark?: string
-  isBraindoa?: boolean
-}) => {
+export const BrandingAssets = (props: BrandingAssetsType) => {
+  const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindoa } = props
   const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
   useEffect(() => {
     if (currentlyViewed === bg.bg) {
@@ -58,7 +48,6 @@ export const BrandingAssets = ({
           }}
         />
       </Flex>
-
       <Flex
         gap="2"
         display={!showDownloadOptions ? 'flex' : 'none'}

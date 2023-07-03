@@ -52,3 +52,9 @@ export type RawTransactions = {
     }[]
   }
 }
+
+export type BlogPostType = {
+  maxW?: string
+  post: Blog
+  key: number
+}

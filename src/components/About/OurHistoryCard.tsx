@@ -36,11 +36,9 @@ const OurHistoryCard = ({ year, content }: OurHistoryType) => {
       mb={{ base: 8, md: '10' }}
       flexDirection={{ base: 'column', md: 'row' }}
     >
-      <Box>
-        <Heading fontSize={{ base: '30px', lg: '48px' }} color="brandLinkColor">
-          {year}
-        </Heading>
-      </Box>
+      <Heading fontSize={{ base: '30px', lg: '48px' }} color="brandLinkColor">
+        {year}
+      </Heading>
       <Box
         px="5"
         py="10"
