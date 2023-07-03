@@ -149,7 +149,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       {!loading && search.length >= 3 && results.length === 0 && (
         <div className="wikiLink__noResultsMsg">No results found</div>
       )}
-      {wikiList.length > 0 && (
+      {wikiList.length > 0 && !wikiSelected && (
         <div className="wikiLink__resultsContainer">
           {wikiList.map((wiki) => (
             <button
