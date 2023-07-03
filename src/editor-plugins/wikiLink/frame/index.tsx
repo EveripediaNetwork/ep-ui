@@ -108,7 +108,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
         <input
           className="wikiLink__input"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="Search Wiki"
         />
@@ -119,7 +119,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             {shortenText(wikiSelected.title, 30)}
           </h3>
           <div className="wikiLink__previewTagsContainer">
-            {wikiSelected.tags?.map((tag) => (
+            {wikiSelected.tags?.map(tag => (
               <span
                 style={{
                   backgroundColor: `hsl(${Math.floor(
@@ -149,9 +149,9 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       {!loading && search.length >= 3 && results.length === 0 && (
         <div className="wikiLink__noResultsMsg">No results found</div>
       )}
-      {wikiList.length > 0 && (
+      {wikiList.length > 0 && !wikiSelected && (
         <div className="wikiLink__resultsContainer">
-          {wikiList.map((wiki) => (
+          {wikiList.map(wiki => (
             <button
               key={wiki.id}
               type="button"
