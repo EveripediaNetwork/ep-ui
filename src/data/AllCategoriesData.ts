@@ -1,4 +1,4 @@
-import { CategoryDataType } from '@/types/CategoryDataTypes'
+import { Category } from '@/types/CategoryDataTypes'
 import {
   RiBitCoinFill,
   RiExchangeBoxFill,
@@ -10,7 +10,7 @@ import {
   RiOrganizationChart,
 } from 'react-icons/ri'
 
-export const AllCategoriesData: CategoryDataType[] = [
+export const AllCategoriesData: Category[] = [
   {
     id: 'nfts',
     title: 'NFTs',
