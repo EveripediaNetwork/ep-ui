@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
-import { CategoryDataType } from '@/types/CategoryDataTypes'
+import { Category } from '@/types/CategoryDataTypes'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '../Elements'
@@ -21,7 +21,7 @@ const NUM_OF_CATEGORIES = 6
 
 const CategoriesList = () => {
   const { t } = useTranslation()
-  const newCategoryList: CategoryDataType[] = []
+  const newCategoryList: Category[] = []
 
   while (newCategoryList.length < NUM_OF_CATEGORIES) {
     const randIndex = Math.floor(Math.random() * AllCategoriesData.length)
