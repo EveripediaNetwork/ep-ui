@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'react-i18next'
+import SocialFooter from './SocialFooter'
 
 const MenuFooter = () => {
   const { t } = useTranslation()
@@ -19,14 +20,14 @@ const MenuFooter = () => {
       spacing={12}
       display={{ base: 'initial', md: 'grid' }}
     >
-      <GridItem colSpan={{ base: 8, lg: 4 }}>
+      <GridItem mb={{ base: 6, md: 0 }} colSpan={{ base: 8, lg: 5 }}>
         <Stack align={{ base: 'center', lg: 'flex-start' }} spacing="1">
           <Logo />
           <Text fontSize="xl" fontWeight="bold">
             {`${t('everipedia')}`}
           </Text>
           <Text
-            w="100%"
+            w="80%"
             align={{ base: 'center', lg: 'start' }}
             fontWeight="medium"
             px={{ base: 0, lg: 0 }}
@@ -44,9 +45,10 @@ const MenuFooter = () => {
             </Link>{' '}
             Group.
           </Text>
+          <SocialFooter />
         </Stack>
       </GridItem>
-      <GridItem colSpan={8}>
+      <GridItem colSpan={7}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={12}>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
