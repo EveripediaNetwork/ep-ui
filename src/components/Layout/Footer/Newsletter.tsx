@@ -1,25 +1,40 @@
 import React from 'react'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { logEvent } from '@/utils/googleAnalytics'
 
-const Newsletter = () => {
-  const { t } = useTranslation()
+const Newsletter = ({
+  header,
+  body,
+  url,
+  buttonTitle,
+  ...rest
+}: { header: string; body: string; url: string; buttonTitle: string }) => {
+  const buttonHandler = () => {
+    logEvent({
+      action: 'SUBSCRIBE_BUTTON',
+      label: buttonTitle,
+      category: 'newsletter',
+      value: 1,
+    })
+  }
   return (
     <Stack align={{ base: 'center', lg: 'flex-start' }} spacing={4}>
       <Text fontSize="xl" fontWeight="bold" py={2}>
-        {`${t('updatesFooterHeading')}`}
+        {header}
       </Text>
       <Text align={{ base: 'center', lg: 'start' }} maxW="600px">
-        {`${t('updatesFooterText')}`}
+        {body}
       </Text>
       <Button
         as="a"
-        href="https://forms.gle/bmMce4r3JJckpSNJ7"
+        href={url}
         target="_blank"
         size="lg"
         variant="solid"
+        {...rest}
+        onClick={buttonHandler}
       >
-        {`${t('subScribeFooterBttn')}`}
+        {buttonTitle}
       </Button>
     </Stack>
   )
