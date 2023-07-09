@@ -5,9 +5,7 @@ import { polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
-import {
-  MagicAuthConnector,
-} from '@magiclabs/wagmi-connector'
+import { MagicAuthConnector } from '@magiclabs/wagmi-connector'
 import config from './index'
 
 const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
