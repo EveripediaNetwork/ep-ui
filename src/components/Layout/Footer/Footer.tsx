@@ -19,11 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { isString } from '@chakra-ui/utils'
 
-import {
-  MenuFooter,
-  Newsletter,
-  SocialFooter,
-} from '@/components/Layout/Footer'
+import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
@@ -37,6 +33,11 @@ const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
   const thisYear = new Date().getFullYear()
+  const newsletterOptions = {
+    bg: '#fff',
+    color: 'gray.800',
+    _hover: { bg: '#fff', color: 'gray.800' },
+  }
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
@@ -67,10 +68,22 @@ const Footer = () => {
       >
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={spacing} py={10}>
           <GridItem mr={{ lg: 24 }}>
-            <Newsletter />
+            <Newsletter
+              buttonTitle="Join Now"
+              header={`${t('updatesFooterHeading')}`}
+              body={`${t('updatesFooterText')}`}
+              url="https://forms.gle/bmMce4r3JJckpSNJ7"
+            />
           </GridItem>
           <GridItem>
-            <SocialFooter />
+            <Newsletter
+              buttonTitle="Subscribe"
+              header="Subscribe to our newsletter"
+              body="Never miss any of the most popular and trending articles on IQ.Wiki
+        when you sign up to our email newsletter."
+              url="https://www.getdrip.com/forms/505929689/submissions/new"
+              {...newsletterOptions}
+            />
           </GridItem>
         </SimpleGrid>
         <Divider orientation="horizontal" />
