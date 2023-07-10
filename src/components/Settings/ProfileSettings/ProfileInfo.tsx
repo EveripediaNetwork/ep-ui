@@ -18,17 +18,7 @@ import {
 } from '@/utils/ProfileUtils/Validations'
 import { StrEntry } from '@/types/ProfileType'
 import LensterIcon from '@/components/Icons/lensterIcon'
-
-interface ProfileLinksProps {
-  twitter: string
-  instagram: string
-  website: string
-  lens: string
-  setTwitter: (twitterLink: string) => void
-  setWebsite: (websiteLink: string) => void
-  setInstagram: (instagramLink: string) => void
-  setLens: (lensLink: string) => void
-}
+import { ProfileLinksProps } from '@/types/SettingsType'
 
 export const ProfileLinks = ({
   twitter,

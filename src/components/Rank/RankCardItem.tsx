@@ -9,7 +9,6 @@ const MAX_LINKED_WIKIS = 3
 
 const formatDate = (date: string) => {
   const eventDate = new Date(date)
-
   return eventDate.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',

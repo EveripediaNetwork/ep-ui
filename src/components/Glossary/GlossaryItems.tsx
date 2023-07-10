@@ -1,20 +1,14 @@
 import React from 'react'
 import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
-import { Wiki } from '@everipedia/iq-utils'
 import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
-
-interface GlossaryItemProps {
-  highlightText: string
-  glossary: Wiki[]
-  glossaryAlphabets: string[]
-}
+import { GlossaryItemType } from '@/types/GlossaryType'
 
 const GlossaryItem = ({
   highlightText,
   glossary,
   glossaryAlphabets,
-}: GlossaryItemProps) => {
+}: GlossaryItemType) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
   const cardOrder = (letter: string, alphabet: string) => {

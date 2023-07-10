@@ -9,13 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
-
-interface GlossaryWikiCardProps {
-  highlightText: string
-  wikiId: string
-  title: string
-  summary: string
-}
+import { GlossaryWikiCardProps } from '@/types/GlossaryType'
 
 const GlossaryWikiCard = ({
   highlightText,

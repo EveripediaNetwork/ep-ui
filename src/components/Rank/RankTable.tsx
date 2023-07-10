@@ -2,16 +2,7 @@ import React from 'react'
 import { Table, TableContainer, Th, Thead, Tr } from '@chakra-ui/react'
 import { RankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
-
-export interface RankTableProps {
-  children: React.ReactNode
-  hasPagination?: boolean
-  onPageChange?: (currentPage: number) => void
-  totalCount?: number
-  siblingCount?: number
-  currentPage?: number
-  pageSize?: number
-}
+import { RankTableProps } from '@/types/RankDataTypes'
 
 export const RankTable = ({
   children,

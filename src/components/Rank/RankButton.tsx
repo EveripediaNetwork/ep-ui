@@ -1,11 +1,6 @@
 import React from 'react'
-import { Tab, Icon, Text, BoxProps } from '@chakra-ui/react'
-import { IconType } from 'react-icons/lib'
-
-export type RankingListButtonProps = {
-  label: string
-  icon: IconType
-} & BoxProps
+import { Tab, Icon, Text } from '@chakra-ui/react'
+import { RankingListButtonProps } from '@/types/RankDataTypes'
 
 const RankingListButton = ({
   label,
