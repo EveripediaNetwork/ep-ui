@@ -1,15 +1,8 @@
 import usePagination, { DOTS } from '@/hooks/usePagination'
+import { RankpaginationProps } from '@/types/RankDataTypes'
 import { Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
-
-export type RankpaginationProps = {
-  onPageChange: (currentPage: number) => void
-  totalCount: number
-  siblingCount: number
-  currentPage: number
-  pageSize: number
-}
 
 const RankPagination = (props: RankpaginationProps) => {
   const {
@@ -31,12 +24,8 @@ const RankPagination = (props: RankpaginationProps) => {
     return null
   }
 
-  const onNext = () => {
-    onPageChange(currentPage + 1)
-  }
-
-  const onPrevious = () => {
-    onPageChange(currentPage - 1)
+  const handlePageChange = (direction: number) => {
+    onPageChange(currentPage + 1 * direction)
   }
 
   const lastPage = paginationRange[paginationRange.length - 1]
@@ -63,7 +52,7 @@ const RankPagination = (props: RankpaginationProps) => {
         _active={{ bg: 'transparent' }}
         color="rankPageButtonText"
         disabled={currentPage === 1}
-        onClick={onPrevious}
+        onClick={() => handlePageChange(-1)}
       >
         Prev
       </Button>
@@ -122,7 +111,7 @@ const RankPagination = (props: RankpaginationProps) => {
         color="rankPageButtonText"
         _active={{ bg: 'transparent' }}
         disabled={currentPage === lastPage}
-        onClick={onNext}
+        onClick={() => handlePageChange(1)}
       >
         Next
       </Button>

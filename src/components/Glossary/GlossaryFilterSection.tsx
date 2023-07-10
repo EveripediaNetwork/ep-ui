@@ -10,22 +10,17 @@ import {
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { COMMONLY_SEARCHED_WIKIS } from '@/data/GlossaryAlphabetsData'
+import { GlossaryFilterSectionProps } from '@/types/GlossaryType'
 
-const GlossaryFilterSection = ({
-  searchText,
-  searchPage,
-  shouldBeFixed,
-  setSearchText,
-  activeIndex,
-  setActiveIndex,
-}: {
-  searchText: string
-  searchPage: (value: string) => void
-  shouldBeFixed: boolean
-  setSearchText: (value: string) => void
-  activeIndex: number | undefined
-  setActiveIndex: (value: number) => void
-}) => {
+const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
+  const {
+    searchText,
+    searchPage,
+    shouldBeFixed,
+    setSearchText,
+    activeIndex,
+    setActiveIndex,
+  } = props
   return (
     <>
       <Box w="full" mb={shouldBeFixed ? 5 : 0}>

@@ -1,18 +1,13 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/react'
-import { Connector } from 'wagmi'
+import { WalletDetailsWrapperType } from '@/types/WalletBalanceType'
 
 const WalletDetailsWrapper = ({
   children,
   w,
   connect,
   hasHover,
-}: {
-  children: JSX.Element
-  connect?: (w: Connector) => void
-  w?: Connector
-  hasHover: boolean
-}) => {
+}: WalletDetailsWrapperType) => {
   const handleClick = () => {
     if (connect && w) {
       connect(w)

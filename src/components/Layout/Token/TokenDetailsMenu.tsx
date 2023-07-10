@@ -17,7 +17,6 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
       })
       setDetectedProvider(provider as ProviderDataType)
     }
-
     if (!detectedProvider) {
       getDetectedProvider()
     }
@@ -46,19 +45,21 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
     }
   }
   return (
-    <Menu placement="left-start">
-      <MenuButton>
-        <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
-      </MenuButton>
+    <>
       {token && supportedTokens[token]?.isActive && (
-        <MenuList
-          onClick={() => handleAddTokenToMetamask(token)}
-          boxShadow="xl"
-        >
-          <MenuItem>Add {token} token to Metamask</MenuItem>
-        </MenuList>
+        <Menu placement="left-start">
+          <MenuButton>
+            <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
+          </MenuButton>
+          <MenuList
+            onClick={() => handleAddTokenToMetamask(token)}
+            boxShadow="xl"
+          >
+            <MenuItem>Add {token} token to Metamask</MenuItem>
+          </MenuList>
+        </Menu>
       )}
-    </Menu>
+    </>
   )
 }
 

@@ -1,3 +1,5 @@
+import { Connector } from 'wagmi'
+
 export type BalanceType = {
   data?: {
     formatted: string
@@ -47,4 +49,24 @@ export type HiIQDetailsType = {
   iqPrice: number
   symbol: string
   totalUsdBalance: number
+}
+
+export type ConnectorDetailsType = {
+  imageLink: string
+  connector: Connector
+  connect: (args: { connector: Connector }) => void
+  loading?: boolean
+}
+
+export type WalletDetailsType = {
+  symbol: string | undefined
+  balance: string | null
+  tokensArray: TokenDetailsType[]
+}
+
+export type WalletDetailsWrapperType = {
+  children: JSX.Element
+  connect?: (w: Connector) => void
+  w?: Connector
+  hasHover: boolean
 }

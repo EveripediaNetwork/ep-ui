@@ -12,7 +12,7 @@ import {
 import { NextSeo } from 'next-seo'
 import { fetchCategoriesList, fetchWikisList } from '@/services/search/utils'
 import { SearchSkeleton } from '@/components/Search/SearchSkeleton'
-import { Category } from '@/services/search'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 import ActivityCard from '@/components/Activity/ActivityCard'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { Link } from '@/components/Elements'
@@ -27,7 +27,7 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<{
     wikis: WikiPreview[]
-    categories: Category[]
+    categories: CategoryDataType[]
   }>({
     wikis: [],
     categories: [],
