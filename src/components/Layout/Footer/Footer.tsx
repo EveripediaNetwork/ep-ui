@@ -18,9 +18,7 @@ import {
   Flex,
 } from '@chakra-ui/react'
 import { isString } from '@chakra-ui/utils'
-
 import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
-
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'

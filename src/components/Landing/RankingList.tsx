@@ -13,19 +13,12 @@ import {
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { RankCardType } from '@/types/RankDataTypes'
+import { RankingListProps } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
-
-export type RankingListProps = {
-  rankings: {
-    NFTsListing: RankCardType[]
-    TokensListing: RankCardType[]
-  }
-}
 
 const RankingList = ({ rankings }: RankingListProps) => {
   const { t } = useTranslation()

@@ -16,30 +16,20 @@ import { RiCloseLine } from 'react-icons/ri'
 import { Step, Steps } from 'chakra-ui-steps'
 import config from '@/config'
 import { useRouter } from 'next/router'
+import { WikiProcessType } from '@/types/CreateWikiType'
 
-type WikiProcessType = {
-  isOpen: boolean
-  onClose: () => void
-  activeStep: number
-  state: 'loading' | 'error' | undefined
-  wikiHash: string | undefined
-  txHash: string | undefined
-  msg: string
-  wikiId: string
-  isNewWiki: boolean
-}
-
-const WikiProcessModal = ({
-  onClose,
-  isOpen,
-  activeStep,
-  state,
-  wikiHash,
-  txHash,
-  msg,
-  wikiId,
-  isNewWiki,
-}: WikiProcessType) => {
+const WikiProcessModal = (props: WikiProcessType) => {
+  const {
+    onClose,
+    isOpen,
+    activeStep,
+    state,
+    wikiHash,
+    txHash,
+    msg,
+    wikiId,
+    isNewWiki,
+  } = props
   const cancelRef = React.useRef<FocusableElement>(null)
 
   const router = useRouter()

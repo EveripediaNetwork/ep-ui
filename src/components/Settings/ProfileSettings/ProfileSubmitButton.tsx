@@ -1,15 +1,12 @@
 import React from 'react'
 import { Button } from '@chakra-ui/react'
+import { ProfileSubmitButtonProps } from '@/types/SettingsType'
 
 export const ProfileSubmitButton = ({
   isLoading,
   isAvatarLoading,
   isBannerLoading,
-}: {
-  isLoading: boolean
-  isAvatarLoading: boolean
-  isBannerLoading: boolean
-}) => {
+}: ProfileSubmitButtonProps) => {
   return (
     <Button
       isLoading={isLoading}

@@ -4,6 +4,7 @@ import { updateHiIQDetails } from '@/store/slices/user-slice'
 import { formatEther } from 'viem'
 import { getIqTokenValue } from '../utils/WalletUtils/getTokenValue'
 import { provider } from '@/utils/WalletUtils/getProvider'
+import config from '@/config'
 
 const abi = [
   {
@@ -15,13 +16,11 @@ const abi = [
   },
 ] as const
 
-const HIIQ_CONTRACT_ADDRESS = '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba'
-
 export const useHiIQBalance = (address: string | undefined | null) => {
   const dispatch = useDispatch()
   const getContractDetails = async (functionName: string) => {
     const balance = await provider.readContract({
-      address: HIIQ_CONTRACT_ADDRESS,
+      address: config.hiIqAddress,
       abi,
       functionName: functionName,
       args: [address],

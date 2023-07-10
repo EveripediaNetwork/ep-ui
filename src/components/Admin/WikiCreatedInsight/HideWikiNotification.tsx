@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   Box,
   AlertDialog,
@@ -22,7 +22,7 @@ import { HideWikiNotificationProps } from '@/types/admin'
 
 export const HideWikiNotification = (props: HideWikiNotificationProps) => {
   const { onClose, isOpen, wikiChosenId, IsHide, hideFunc } = props
-  const cancelRef = React.useRef<FocusableElement>(null)
+  const cancelRef = useRef<FocusableElement>(null)
   const wikiId = wikiChosenId
   const toast = useToast()
   const [postHideWiki, { error: postHideWikiError }] = usePostHideWikiMutation()

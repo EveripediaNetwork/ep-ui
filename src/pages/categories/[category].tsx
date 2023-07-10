@@ -13,7 +13,7 @@ import {
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { getCategoriesById } from '@/services/categories'
 import { store } from '@/store/store'
-import { Category } from '@/types/CategoryDataTypes'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import {
   getTrendingCategoryWikis,
@@ -33,7 +33,7 @@ const CATEGORY_DATE_RANGE = 3
 const CATEGORY_AMOUNT = 5
 
 type CategoryPageProps = NextPage & {
-  categoryData: Category
+  categoryData: CategoryDataType
   wikis: Wiki[]
   trending: Wiki[]
   newWikis: Wiki[]
