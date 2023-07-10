@@ -2806,19 +2806,6 @@
   resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.4.tgz#186e7c43b0bf260914c56f8517c66d9e5359cc44"
   integrity sha512-UrEgexwKcLB/A1NJ4bn/nXcQXRXTm+IIPD0El3fw5k1ol2Pxx6TyP6LSgTopDbZUVBvBNAKpLu1ctAz5Hveozw==
 
-"@everipedia/wagmi-magic-connector@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@everipedia/wagmi-magic-connector/-/wagmi-magic-connector-1.0.2.tgz#75c06d0fb1dc07f45ee941447521188598691e6b"
-  integrity sha512-VvAvFFgGadtTJRE5v0VdLxDKPyDkwXLp8sd6YGsDky3d0gWwfiWyx6+Tz2U4TKJ1x5xU+mlxvpj3ExYi5BijvQ==
-  dependencies:
-    "@changesets/cli" "^2.24.0"
-    "@magic-ext/connect" "^9.1.0"
-    "@magic-ext/oauth" "^11.1.3"
-    "@magic-sdk/provider" "^17.1.2"
-    "@wagmi/core" "^1.0.1"
-    magic-sdk "^17.1.3"
-    tsc-esm-fix "^2.20.10"
-
 "@everipedia/web3-signer@^0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@everipedia/web3-signer/-/web3-signer-0.0.11.tgz#9a50e6f60565ca056012186c4f6cfcf9509edc89"
@@ -2962,6 +2949,19 @@
   version "15.1.2"
   resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-15.1.2.tgz#15107c29d44e99616c500bc86fb3be7a23987804"
   integrity sha512-CeNC7I9O5bTeObKXAuInMYDvAkxagiu+n0IcvTo23ZsmA9NZDqfmw2r5OhJTuW7XMyTt+VjH1CJORHraoC26qA==
+
+"@magiclabs/wagmi-connector@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@magiclabs/wagmi-connector/-/wagmi-connector-1.1.0.tgz#4e32aeb236b72d52e88f813458fc4343f67b25d5"
+  integrity sha512-fCI0Ks+dD5KXoCPFEsFdFnRRaTt+w6NxpwMLktI/Dqn56DJuOl/8lkeYgOFwDdTl9HE+4gFiWaHdc5MXmCGgUw==
+  dependencies:
+    "@changesets/cli" "^2.24.0"
+    "@magic-ext/connect" "^9.1.0"
+    "@magic-ext/oauth" "^11.1.3"
+    "@magic-sdk/provider" "^17.1.2"
+    "@wagmi/core" "^1.0.1"
+    magic-sdk "^17.1.3"
+    tsc-esm-fix "^2.20.10"
 
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
