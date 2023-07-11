@@ -27,9 +27,7 @@ export const EventsList = ({
       setFeedbackMessage('The Date Founded cannot be removed.')
       return
     }
-
     setFeedbackMessage('')
-
     dispatch({
       type: 'wiki/removeEvent',
       payload: {

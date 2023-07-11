@@ -1,17 +1,7 @@
 import React from 'react'
 import { FormControl, FormLabel, VStack } from '@chakra-ui/react'
 import ImageUpload from '../ImageUpload'
-
-interface ProfileMediaProps {
-  avatarIPFSHash: string
-  bannerIPFSHash: string
-  isAvatarLoading: boolean
-  isBannerLoading: boolean
-  setAvatarIPFSHash: (avatarIpfs: string) => void
-  setIsAvatarLoading: (avatarIsLoading: boolean) => void
-  setBannerIPFSHash: (bannerIpfs: string) => void
-  setIsBannerLoading: (bannerIsLoading: boolean) => void
-}
+import { ProfileMediaProps } from '@/types/SettingsType'
 
 export const ProfileMedia = ({
   setAvatarIPFSHash,

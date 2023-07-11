@@ -73,7 +73,6 @@ export const WikiCarousel = <T extends unknown>({
 
   const PrevButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
-
     return (
       <Button
         className="embla__button embla__button--prev"
@@ -87,7 +86,6 @@ export const WikiCarousel = <T extends unknown>({
 
   const NextButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
-
     return (
       <Button
         className="embla__button embla__button--next"

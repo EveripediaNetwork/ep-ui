@@ -1,4 +1,6 @@
+import { BoxProps } from '@chakra-ui/react'
 import { BaseEvents } from '@everipedia/iq-utils'
+import { IconType } from 'react-icons/lib'
 
 export interface RankCardType {
   hasWiki: any
@@ -24,6 +26,13 @@ export interface Image {
   id: string
 }
 
+export type RankingListProps = {
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
+}
+
 export interface NftMarketData {
   hasWiki: boolean
   floor_price_eth: number
@@ -33,6 +42,20 @@ export interface NftMarketData {
   alias: string
   image: string
 }
+
+export type RankingListButtonProps = {
+  label: string
+  icon: IconType
+} & BoxProps
+
+export type RankpaginationProps = {
+  onPageChange: (currentPage: number) => void
+  totalCount: number
+  siblingCount: number
+  currentPage: number
+  pageSize: number
+}
+
 export interface TokenMarketData {
   hasWiki: boolean
   floor_price_eth: number
@@ -44,4 +67,14 @@ export interface TokenMarketData {
   alias: string
   current_price: number
   image: string
+}
+
+export interface RankTableProps {
+  children: React.ReactNode
+  hasPagination?: boolean
+  onPageChange?: (currentPage: number) => void
+  totalCount?: number
+  siblingCount?: number
+  currentPage?: number
+  pageSize?: number
 }

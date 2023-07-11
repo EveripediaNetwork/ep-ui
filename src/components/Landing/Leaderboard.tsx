@@ -50,7 +50,7 @@ const LeaderBoardCard = ({
         >
           <LinkOverlay href={`/account/${editor.id}`}>
             <DisplayAvatar
-              alt="new life"
+              alt="user"
               overflow="hidden"
               borderWidth={2}
               borderColor="white"

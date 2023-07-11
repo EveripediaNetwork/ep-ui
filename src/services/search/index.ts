@@ -8,15 +8,8 @@ import {
 } from '@/services/search/queries'
 import config from '@/config'
 import { WikiPreview } from '@everipedia/iq-utils'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 
-export type Category = {
-  id: string
-  title: string
-  description: string
-  cardImage: string
-  heroImage: string
-  icon: string
-}
 export type Account = {
   id: string
   username: string
@@ -32,7 +25,7 @@ type GetWikisByTitleResponse = {
 }
 
 type GetCategoriesByTitleResponse = {
-  categoryByTitle: Category[]
+  categoryByTitle: CategoryDataType[]
 }
 
 type GetAccountsByTitleResponse = {
@@ -59,7 +52,7 @@ export const navSearchApi = createApi({
       transformResponse: (response: GetWikisByTitleResponse) =>
         response.wikisByTitle,
     }),
-    getCategoriesByTitle: builder.query<Category[], string>({
+    getCategoriesByTitle: builder.query<CategoryDataType[], string>({
       query: (title: string) => ({
         document: GET_CATEGORIES_BY_TITLE,
         variables: { title },

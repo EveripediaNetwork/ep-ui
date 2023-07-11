@@ -5,7 +5,7 @@ import {
 } from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
-import { Category } from '@/types/CategoryDataTypes'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { debounce } from 'debounce'
 
@@ -24,7 +24,7 @@ type AccountArgs = {
 }
 type Results = {
   wikis: WikiPreview[]
-  categories: Category[]
+  categories: CategoryDataType[]
   accounts: Account[]
 }
 
@@ -37,7 +37,7 @@ export const SEARCH_TYPES = {
 } as const
 
 export const fillType = (
-  item: WikiPreview | Category | Account,
+  item: WikiPreview | CategoryDataType | Account,
   type: SearchItem,
 ) => {
   return { ...item, type }
