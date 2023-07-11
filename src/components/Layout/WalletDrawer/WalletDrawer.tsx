@@ -18,10 +18,14 @@ import {
   MenuItem,
   Spinner,
   useToast,
+  Icon,
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
-import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
+import {
+  RiArrowLeftSLine,
+  RiRefreshLine,
+} from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
@@ -33,6 +37,7 @@ import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
+import CopyIcon from '@/components/Icons/CopyIcon'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -145,9 +150,12 @@ const WalletDrawer = ({
                   )}
                 </Menu>
                 {isUserConnected && (
-                  <Text color="fadedText2" pl={1} fontSize="sm">
-                    {username || (userAddress && shortenAccount(userAddress))}
-                  </Text>
+                  <HStack>
+                    <Text color="fadedText2" pl={1} fontSize="sm">
+                      {username || (userAddress && shortenAccount(userAddress))}
+                    </Text>
+                    <Icon as={CopyIcon} />
+                  </HStack>
                 )}
               </Box>
             </HStack>
