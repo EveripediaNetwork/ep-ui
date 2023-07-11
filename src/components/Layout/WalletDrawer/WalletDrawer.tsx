@@ -22,10 +22,7 @@ import {
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
-import {
-  RiArrowLeftSLine,
-  RiRefreshLine,
-} from 'react-icons/ri'
+import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
@@ -84,6 +81,18 @@ const WalletDrawer = ({
       })
     }
   }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(userAddress as string)
+    toast({
+      description: 'Address copied to clipboard',
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+      position: 'top-right',
+    })
+  }
+
 
   return toggleOperations.isOpen ? (
     <Drawer
@@ -154,7 +163,7 @@ const WalletDrawer = ({
                     <Text color="fadedText2" pl={1} fontSize="sm">
                       {username || (userAddress && shortenAccount(userAddress))}
                     </Text>
-                    <Icon as={CopyIcon} />
+                    <Icon cursor="pointer" as={CopyIcon} onClick={copyToClipboard} />
                   </HStack>
                 )}
               </Box>
