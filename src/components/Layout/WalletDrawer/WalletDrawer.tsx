@@ -35,6 +35,7 @@ import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import CopyIcon from '@/components/Icons/CopyIcon'
+import { Link } from '@/components/Elements'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -92,7 +93,6 @@ const WalletDrawer = ({
       position: 'top-right',
     })
   }
-
 
   return toggleOperations.isOpen ? (
     <Drawer
@@ -160,10 +160,19 @@ const WalletDrawer = ({
                 </Menu>
                 {isUserConnected && (
                   <HStack>
-                    <Text color="fadedText2" pl={1} fontSize="sm">
+                    <Link
+                      fontSize="sm"
+                      color="fadedText2"
+                      href={`/account/${userAddress}`}
+                      pl={1}
+                    >
                       {username || (userAddress && shortenAccount(userAddress))}
-                    </Text>
-                    <Icon cursor="pointer" as={CopyIcon} onClick={copyToClipboard} />
+                    </Link>
+                    <Icon
+                      cursor="pointer"
+                      as={CopyIcon}
+                      onClick={copyToClipboard}
+                    />
                   </HStack>
                 )}
               </Box>
