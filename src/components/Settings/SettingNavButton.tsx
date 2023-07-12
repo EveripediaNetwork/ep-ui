@@ -1,14 +1,7 @@
 import React from 'react'
 import { Text } from '@chakra-ui/react'
-import { IconType } from 'react-icons'
 import { Link } from '../Elements'
-
-interface SettingNavButtonProps {
-  text: string
-  Icon: IconType
-  tabName: string
-  isActive?: boolean
-}
+import { SettingNavButtonProps } from '@/types/SettingsType'
 
 const SettingNavButton = ({
   text,

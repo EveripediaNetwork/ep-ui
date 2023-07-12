@@ -1,18 +1,10 @@
 import config from '@/config'
 import { IMAGE_BOX_SIZE } from '@/data/Constants'
 import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
-
 import { Box, Spinner, useToast } from '@chakra-ui/react'
 import React, { memo, useRef } from 'react'
-import { Image, NextChakraImageProps } from '../Elements/Image/Image'
-
-interface ImageUploadProps extends NextChakraImageProps {
-  defaultImage: string
-  setImgIPFSHash: (id: string) => void
-  imgIPFSHash: string | null
-  isLoading: boolean
-  setIsLoading: (isLoading: boolean) => void
-}
+import { Image } from '../Elements/Image/Image'
+import { ImageUploadProps } from '@/types/SettingsType'
 
 const ImageUpload = ({
   defaultImage,

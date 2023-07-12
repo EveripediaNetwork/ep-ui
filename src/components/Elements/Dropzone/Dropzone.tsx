@@ -8,7 +8,6 @@ import {
 } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { useAccount } from 'wagmi'
-
 import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'

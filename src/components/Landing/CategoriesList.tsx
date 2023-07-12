@@ -3,8 +3,6 @@ import {
   LinkBox,
   Text,
   SimpleGrid,
-  Spinner,
-  Center,
   Heading,
   VStack,
   Flex,
@@ -12,34 +10,32 @@ import {
 } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { useTranslation } from 'react-i18next'
-import { Category } from '@/types/CategoryDataTypes'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '../Elements'
+import { AllCategoriesData } from '@/data/AllCategoriesData'
 
 const CATEGORY_IMAGE_BOX_SIZE = 300
 const NUM_OF_CATEGORIES = 6
 
-interface CategoriesListProps {
-  categories: Category[]
-}
-const CategoriesList = ({ categories }: CategoriesListProps) => {
+const CategoriesList = () => {
   const { t } = useTranslation()
-  const newCategoryList: Category[] = []
+  const newCategoryList: CategoryDataType[] = []
 
   while (newCategoryList.length < NUM_OF_CATEGORIES) {
-    const randIndex = Math.floor(Math.random() * categories.length)
-    const randCategory = categories[randIndex]
+    const randIndex = Math.floor(Math.random() * AllCategoriesData.length)
+    const randCategory = AllCategoriesData[randIndex]
 
     if (!newCategoryList.includes(randCategory)) {
       newCategoryList.push(randCategory)
     }
 
     if (
-      randIndex === categories.length - 1 &&
-      !newCategoryList.includes(categories[randIndex])
+      randIndex === AllCategoriesData.length - 1 &&
+      !newCategoryList.includes(AllCategoriesData[randIndex])
     ) {
-      newCategoryList.push(categories[randIndex])
+      newCategoryList.push(AllCategoriesData[randIndex])
     }
   }
 
@@ -86,7 +82,7 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
               <LinkOverlay href={`/categories/${category.id}`}>
                 <Image
                   bgColor="DimColor"
-                  src={new URL(category.cardImage).pathname}
+                  src={category.cardImage}
                   h="200px"
                   w="100%"
                   alt={category.title}
@@ -122,11 +118,6 @@ const CategoriesList = ({ categories }: CategoriesListProps) => {
           </LinkButton>
         </Flex>
       </Box>
-      {categories.length < 1 && (
-        <Center w="full" h="16">
-          <Spinner size="xl" />
-        </Center>
-      )}
     </VStack>
   )
 }
