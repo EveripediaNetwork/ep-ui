@@ -7,7 +7,7 @@ import { semanticTokens } from './semantic-tokens'
 
 const config: ThemeConfig = {
   useSystemColorMode: false,
-  initialColorMode: 'light',
+  initialColorMode: 'system',
   cssVarPrefix: 'chakra',
 }
 
