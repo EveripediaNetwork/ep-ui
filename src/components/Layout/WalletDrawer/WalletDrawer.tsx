@@ -13,11 +13,11 @@ import {
   MenuButton,
   Menu,
   HStack,
-  Image,
   MenuList,
   MenuItem,
   Spinner,
   useToast,
+  Icon,
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -25,7 +25,6 @@ import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
-import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useDispatch } from 'react-redux'
 import { updateWalletDetails } from '@/store/slices/user-slice'
@@ -33,6 +32,8 @@ import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
+import CopyIcon from '@/components/Icons/CopyIcon'
+import { Link } from '@/components/Elements'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -80,6 +81,17 @@ const WalletDrawer = ({
     }
   }
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(userAddress as string)
+    toast({
+      description: 'Address copied to clipboard',
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+      position: 'top-right',
+    })
+  }
+
   return toggleOperations.isOpen ? (
     <Drawer
       isOpen={toggleOperations.isOpen}
@@ -115,19 +127,6 @@ const WalletDrawer = ({
                   </MenuButton>
                   {isUserConnected && (
                     <MenuList py={0}>
-                      <MenuItem py={3}>
-                        <Image
-                          boxSize="24px"
-                          borderRadius="full"
-                          src={`/images/logos/${walletsLogos[0]}`}
-                          alt="MetaMask"
-                          mr={3}
-                        />
-                        <Text fontSize="small" fontWeight="bold">
-                          MetaMask
-                        </Text>
-                      </MenuItem>
-                      <Divider />
                       <MenuItem
                         onClick={handleAccountRefresh}
                         closeOnSelect={false}
@@ -145,9 +144,21 @@ const WalletDrawer = ({
                   )}
                 </Menu>
                 {isUserConnected && (
-                  <Text color="fadedText2" pl={1} fontSize="sm">
-                    {username || (userAddress && shortenAccount(userAddress))}
-                  </Text>
+                  <HStack>
+                    <Link
+                      fontSize="sm"
+                      color="fadedText2"
+                      href={`/account/${userAddress}`}
+                      pl={1}
+                    >
+                      {username || (userAddress && shortenAccount(userAddress))}
+                    </Link>
+                    <Icon
+                      cursor="pointer"
+                      as={CopyIcon}
+                      onClick={copyToClipboard}
+                    />
+                  </HStack>
                 )}
               </Box>
             </HStack>
