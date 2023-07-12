@@ -13,7 +13,6 @@ import {
   MenuButton,
   Menu,
   HStack,
-  Image,
   MenuList,
   MenuItem,
   Spinner,
@@ -26,7 +25,6 @@ import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
-import { walletsLogos } from '@/data/WalletData'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useDispatch } from 'react-redux'
 import { updateWalletDetails } from '@/store/slices/user-slice'
@@ -129,19 +127,6 @@ const WalletDrawer = ({
                   </MenuButton>
                   {isUserConnected && (
                     <MenuList py={0}>
-                      <MenuItem py={3}>
-                        <Image
-                          boxSize="24px"
-                          borderRadius="full"
-                          src={`/images/logos/${walletsLogos[0]}`}
-                          alt="MetaMask"
-                          mr={3}
-                        />
-                        <Text fontSize="small" fontWeight="bold">
-                          MetaMask
-                        </Text>
-                      </MenuItem>
-                      <Divider />
                       <MenuItem
                         onClick={handleAccountRefresh}
                         closeOnSelect={false}
