@@ -7,7 +7,6 @@ import { extendTheme, ThemeConfig } from '@chakra-ui/react'
 import { useTheme } from 'next-themes'
 import { UseThemeProps } from '@/pages/theme'
 
-
 export const { resolvedTheme } = useTheme() as UseThemeProps
 
 const colorModeConfig: ThemeConfig = {
