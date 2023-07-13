@@ -17,8 +17,8 @@ import { pageView } from '@/utils/googleAnalytics'
 import '../utils/i18n'
 import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
-import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
+import { ThemeProvider } from './theme'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -56,17 +56,13 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider
-          colorModeManager={cookieStorageManager}
-          resetCSS
-          theme={chakraTheme}
-        >
+        <ThemeProvider>
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </WagmiConfig>
-        </ChakraProvider>
+        </ThemeProvider>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
