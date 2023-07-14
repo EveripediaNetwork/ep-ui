@@ -22,8 +22,7 @@ export default class Document extends NextDocument<{ colorMode: string }> {
 
     if (ctx.req?.headers.cookie) {
       colorMode =
-        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode') ||
-        theme.config.initialColorMode
+        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode')
     }
 
     return { ...initialProps, colorMode }
