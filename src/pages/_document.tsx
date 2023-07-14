@@ -18,7 +18,7 @@ function parseCookie(cookie: string, key: string): MaybeColorMode {
 export default class Document extends NextDocument<{ colorMode: string }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await NextDocument.getInitialProps(ctx)
-    let colorMode: MaybeColorMode = theme.config.initialColorMode
+    let colorMode: MaybeColorMode
 
     if (ctx.req?.headers.cookie) {
       colorMode =
