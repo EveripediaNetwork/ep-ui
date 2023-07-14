@@ -1,8 +1,6 @@
 import * as React from 'react'
 import type { DocumentContext } from 'next/document'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
-import { ColorModeScript } from '@chakra-ui/react'
-// import { theme } from '@/theme'
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
@@ -33,10 +31,6 @@ export default class Document extends NextDocument {
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
-          {/* <ColorModeScript
-            type="cookie"
-            initialColorMode={theme.config.initialColorMode}
-          /> */}
           <Main />
           <NextScript />
         </body>
