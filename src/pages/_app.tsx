@@ -14,7 +14,7 @@ import '../utils/i18n'
 import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { Chakra, getServerSideProps } from './chakra'
+import Chakra, { getServerSideProps } from './chakra'
 
 const { ToastContainer } = createStandaloneToast()
 
