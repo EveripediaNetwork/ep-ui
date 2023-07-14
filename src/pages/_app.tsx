@@ -2,11 +2,7 @@ import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import {
-  ChakraProvider,
-  createStandaloneToast,
-  cookieStorageManager,
-} from '@chakra-ui/react'
+import { createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
