@@ -7,6 +7,7 @@ import NextDocument, {
   DocumentContext,
 } from 'next/document'
 import { ColorMode } from '@chakra-ui/react'
+import theme from '@/theme'
 
 type MaybeColorMode = ColorMode | undefined
 
@@ -14,14 +15,15 @@ function parseCookie(cookie: string, key: string): MaybeColorMode {
   const match = cookie.match(new RegExp(`(^| )${key}=([^;]+)`))
   return match?.[2] as MaybeColorMode
 }
-
 export default class Document extends NextDocument<{ colorMode: string }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await NextDocument.getInitialProps(ctx)
     let colorMode: MaybeColorMode
 
     if (ctx.req?.headers.cookie) {
-      colorMode = parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode')
+      colorMode =
+        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode') ??
+        theme.config.initialColorMode
     }
 
     return { ...initialProps, colorMode }
@@ -30,7 +32,7 @@ export default class Document extends NextDocument<{ colorMode: string }> {
   render() {
     const { colorMode } = this.props
     return (
-      <Html lang="en">
+      <Html lang="en" data-theme={colorMode} style={{ colorScheme: colorMode }}>
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -53,32 +55,6 @@ export default class Document extends NextDocument<{ colorMode: string }> {
         <body className={`chakra-ui-${colorMode}`}>
           <Main />
           <NextScript />
-          <script
-            // rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function() {
-                  function parseCookie(cookie, key) {
-                    const match = cookie.match(new RegExp('(^| )' + key + '=([^;]+)'));
-                    return match?.[2];
-                  }
-
-                  const storageKey = 'chakra-ui-color-mode';
-                  const colorModeInLocalStorage = localStorage.getItem(storageKey);
-
-                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const initialColorMode = colorModeInLocalStorage || (prefersDark ? 'dark' : 'light');
-
-                  const cookieColorMode = parseCookie(document.cookie, 'chakra-ui-color-mode');
-                  const colorMode = cookieColorMode || initialColorMode;
-
-                  document.documentElement.setAttribute('data-theme', colorMode);
-                  document.documentElement.style.colorScheme = colorMode;
-
-                  localStorage.setItem(storageKey, colorMode);
-                })();`,
-            }}
-          />
         </body>
       </Html>
     )
