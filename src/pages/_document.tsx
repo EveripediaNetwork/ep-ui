@@ -7,7 +7,6 @@ import NextDocument, {
   DocumentContext,
 } from 'next/document'
 import { ColorMode } from '@chakra-ui/react'
-import theme from '@/theme'
 
 type MaybeColorMode = ColorMode | undefined
 
@@ -21,8 +20,7 @@ export default class Document extends NextDocument<{ colorMode: string }> {
     let colorMode: MaybeColorMode
 
     if (ctx.req?.headers.cookie) {
-      colorMode =
-        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode')
+      colorMode = parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode')
     }
 
     return { ...initialProps, colorMode }
