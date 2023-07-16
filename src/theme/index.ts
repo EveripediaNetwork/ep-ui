@@ -14,7 +14,7 @@ const useSystemColorMode = !colorModeInLocalStorage
 
 const config: ThemeConfig = {
   useSystemColorMode,
-  initialColorMode: 'system',
+  initialColorMode: 'light',
   cssVarPrefix: 'chakra',
 }
 
