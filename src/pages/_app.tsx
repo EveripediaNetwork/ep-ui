@@ -1,12 +1,8 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode, useEffect, useState } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import {
-  ChakraProvider,
-  createStandaloneToast,
-  cookieStorageManager,
-} from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -40,11 +36,20 @@ export const montserrat = Montserrat({
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
+  const [mounted, setMounted] = useState(false)
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <StrictMode>
@@ -56,11 +61,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider
-          colorModeManager={cookieStorageManager}
-          resetCSS
-          theme={chakraTheme}
-        >
+        <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />

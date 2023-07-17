@@ -1,38 +1,18 @@
 import * as React from 'react'
-import NextDocument, {
-  Head,
-  Html,
-  Main,
-  NextScript,
-  DocumentContext,
-} from 'next/document'
-import { ColorMode } from '@chakra-ui/react'
-import theme from '@/theme'
+import type { DocumentContext } from 'next/document'
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
+import { ColorModeScript } from '@chakra-ui/react'
+import chakraTheme from '@/theme'
 
-type MaybeColorMode = ColorMode | undefined
-
-function parseCookie(cookie: string, key: string): MaybeColorMode {
-  const match = cookie.match(new RegExp(`(^| )${key}=([^;]+)`))
-  return match?.[2] as MaybeColorMode
-}
-export default class Document extends NextDocument<{ colorMode: string }> {
+export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await NextDocument.getInitialProps(ctx)
-    let colorMode: MaybeColorMode
-
-    if (ctx.req?.headers.cookie) {
-      colorMode =
-        parseCookie(ctx.req.headers.cookie, 'chakra-ui-color-mode') ??
-        theme.config.initialColorMode
-    }
-
-    return { ...initialProps, colorMode }
+    return { ...initialProps }
   }
 
   render() {
-    const { colorMode } = this.props
     return (
-      <Html lang="en" data-theme={colorMode} style={{ colorScheme: colorMode }}>
+      <Html lang="en">
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -52,7 +32,10 @@ export default class Document extends NextDocument<{ colorMode: string }> {
           />
           <link rel="manifest" href="/manifest.json" />
         </Head>
-        <body className={`chakra-ui-${colorMode}`}>
+        <body>
+          <ColorModeScript
+            initialColorMode={chakraTheme.config.initialColorMode}
+          />
           <Main />
           <NextScript />
         </body>
