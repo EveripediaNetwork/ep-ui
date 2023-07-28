@@ -51,7 +51,13 @@ export const WikiDetails = ({
   const [, username] = useENSData(createdBy?.id || '')
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   return (
-    <Box borderWidth="1px" p={4} borderRadius={8} w="full">
+    <Box
+      borderWidth="1px"
+      p={4}
+      borderRadius={8}
+      w="full"
+      borderColor="rankingListBorder"
+    >
       <Stack
         direction={{ base: 'column', lg: 'row', xl: 'column' }}
         alignItems="center"
