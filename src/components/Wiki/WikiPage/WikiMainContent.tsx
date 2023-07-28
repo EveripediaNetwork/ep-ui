@@ -77,8 +77,8 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
       maxW={{ base: '100%', xl: '900px' }}
       mx="auto"
       minH={{ base: 'unset', xl: 'calc(100vh - 70px)' }}
-      borderColor="borderColor"
       mb={{ xl: '3rem' }}
+      borderColor="rankingListBorder"
     >
       <Heading my={8}>{wiki?.title}</Heading>
       <Box

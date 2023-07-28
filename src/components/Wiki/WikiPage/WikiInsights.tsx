@@ -78,6 +78,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       p={{ base: 0, md: 2, xl: 4 }}
       pr={{ md: 11, xl: 4 }}
       pt={{ xl: '24', md: '8', base: '10' }}
+      borderColor="rankingListBorder"
     >
       <Box as="aside" ref={stickyRef} w="100%">
         <VStack
