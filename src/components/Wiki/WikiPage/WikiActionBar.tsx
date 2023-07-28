@@ -105,6 +105,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         px={6}
         py={4}
         maxW={{ base: 'unset', md: '120px' }}
+        borderColor="rankingListBorder"
       >
         {isShareBoxOpen && (
           <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
