@@ -46,7 +46,6 @@ const SingleSkeleton = () => {
         gap="16"
       >
         <Skeleton h="4" w="12" rounded="sm" ml="auto" />
-
         <Skeleton h="4" w="16" rounded="sm" mt="auto" ml="auto" />
       </Flex>
       <HStack

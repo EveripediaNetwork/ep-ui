@@ -6,6 +6,7 @@ export const GET_TOKEN_STATS = gql`
       id
       symbol
       name
+      token_image_url
       market_cap
       market_cap_percentage_change
       diluted_market_cap

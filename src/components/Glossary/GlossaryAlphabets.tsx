@@ -1,18 +1,10 @@
 import React from 'react'
 import { GridItem, Text } from '@chakra-ui/react'
 import { Link } from 'react-scroll'
+import { GlossaryAlphabetsProps } from '@/types/GlossaryType'
 
-export type GlossaryAlphabetsProps = {
-  shouldBeFixed: boolean
-  heightOfElement: number
-  item: string
-}
-
-const GlossaryAlphabets = ({
-  shouldBeFixed,
-  heightOfElement,
-  item,
-}: GlossaryAlphabetsProps) => {
+const GlossaryAlphabets = (props: GlossaryAlphabetsProps) => {
+  const { shouldBeFixed, heightOfElement, item } = props
   return (
     <GridItem w="100%" cursor="pointer" textAlign="center">
       <Link

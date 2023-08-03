@@ -328,6 +328,7 @@ const NavSearch = (props: NavSearchProps) => {
             }}
             fontSize="16"
             ref={inputRef}
+            borderColor="rankingListBorder"
             {...inputProps}
           />
         </InputGroup>

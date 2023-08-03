@@ -2,24 +2,11 @@ import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 import { HStack, Link, Text, chakra } from '@chakra-ui/react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { BaseTag, User } from '@everipedia/iq-utils'
 import ActivityCardTags from './ActivityCardTags'
+import { ActivityCardBottomProps } from '@/types/ActivityDataType'
 
-interface ActivityCardBottomProps {
-  editor: User
-  isNotifSubCard: boolean
-  lastModTimeStamp?: string
-  activity: 'New' | 'Edited'
-  tags: BaseTag[]
-}
-
-const ActivityCardBottom = ({
-  editor,
-  isNotifSubCard,
-  lastModTimeStamp,
-  activity,
-  tags,
-}: ActivityCardBottomProps) => {
+const ActivityCardBottom = (props: ActivityCardBottomProps) => {
+  const { editor, isNotifSubCard, lastModTimeStamp, activity, tags } = props
   return (
     <HStack w="full">
       <HStack flex="1">

@@ -8,6 +8,7 @@ export type TokenStats = {
   id: string
   symbol: string
   name: string
+  token_image_url: string
   market_cap: number
   market_cap_percentage_change: number
   diluted_market_cap: number

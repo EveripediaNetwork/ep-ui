@@ -23,6 +23,7 @@ export const GET_NFT_RANKINGS = gql`
           type
         }
         nftMarketData {
+          hasWiki
           floor_price_eth
           floor_price_usd
           market_cap_usd
@@ -58,6 +59,7 @@ export const GET_TOKEN_RANKINGS = gql`
           type
         }
         tokenMarketData {
+          hasWiki
           image
           name
           alias

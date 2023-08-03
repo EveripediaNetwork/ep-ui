@@ -29,7 +29,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
   const toc = useAppSelector((state) => state.toc)
   const [wikiData, setWikiData] = useState(wiki)
 
-  const wikiId = wikiData?.content[0].id
+  const wikiId = wikiData?.content[0]?.id
   const { data: latestIPFS } = useGetLatestIPFSByWikiQuery(
     typeof wikiId === 'string' ? wikiId : skipToken,
     {
@@ -73,7 +73,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
           getWikiCreatorAndEditorByActivityId.initiate(ActivityId),
         )
         setWikiData({ ...wiki, ...data })
-        if (wiki) incrementWikiViewCount(wiki.content[0].id)
+        if (wiki) incrementWikiViewCount(wiki.content[0]?.id)
       }
     }
     fetchUserDataAndIncView()
@@ -83,17 +83,17 @@ const Revision = ({ wiki }: RevisionPageProps) => {
     <>
       {wikiData && (
         <WikiHeader
-          slug={wikiData.content[0].id as string}
+          slug={wikiData?.content[0]?.id as string}
           author={
-            wikiData.content[0].author.profile?.username ||
-            wikiData.content[0].author.id ||
+            wikiData?.content[0]?.author?.profile?.username ||
+            wikiData?.content[0]?.author?.id ||
             ''
           }
-          dateModified={wikiData.content[0].updated}
-          datePublished={wikiData.content[0].created}
-          title={`${wikiData.content[0].title} - ${wikiData.content[0].categories[0]?.title}`}
-          description={wikiData.content[0].summary}
-          mainImage={getWikiImageUrl(wikiData.content[0].images)}
+          dateModified={wikiData?.content[0]?.updated}
+          datePublished={wikiData?.content[0]?.created}
+          title={`${wikiData?.content[0]?.title} - ${wikiData?.content[0]?.categories[0]?.title}`}
+          description={wikiData?.content[0]?.summary}
+          mainImage={getWikiImageUrl(wikiData?.content[0]?.images)}
           noindex
         />
       )}
@@ -114,7 +114,7 @@ const Revision = ({ wiki }: RevisionPageProps) => {
               You are seeing an older version of this wiki.
             </Text>
             <LinkButton
-              href={`/wiki/${wikiData?.content[0].id}`}
+              href={`/wiki/${wikiData?.content[0]?.id}`}
               maxW="120px"
               variant="solid"
               bgColor="dimColor"

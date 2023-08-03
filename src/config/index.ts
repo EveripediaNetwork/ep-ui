@@ -2,6 +2,7 @@ import { env } from '@/env.mjs'
 
 const config = {
   iqAddress: env.NEXT_PUBLIC_IQ_ADDRESS,
+  hiIqAddress: env.NEXT_PUBLIC_HIIQ_ADDRESS,
   editorAddress: env.NEXT_PUBLIC_EDITOR_CONTRACT_ADDRESS,
   wikiContractAddress: env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS,
   blockExplorerUrl: env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL,

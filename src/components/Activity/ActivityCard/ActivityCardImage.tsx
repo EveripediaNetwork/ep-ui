@@ -2,21 +2,10 @@ import { WIKI_IMAGE_ASPECT_RATIO, IMAGE_BOX_SIZE } from '@/data/Constants'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { AspectRatio, Link } from '@chakra-ui/react'
 import { Image as ActivityImage } from '@/components/Elements/Image/Image'
-import { Image } from '@everipedia/iq-utils'
+import { ActivityCardImageProps } from '@/types/ActivityDataType'
 
-interface ActivityCardImageProps {
-  title: string
-  link: string
-  isNotifSubCard: boolean
-  wikiImgObj?: Image[]
-}
-
-const ActivityCardImage = ({
-  title,
-  link,
-  isNotifSubCard,
-  wikiImgObj,
-}: ActivityCardImageProps) => {
+const ActivityCardImage = (props: ActivityCardImageProps) => {
+  const { title, link, isNotifSubCard, wikiImgObj } = props
   return (
     <Link href={link} mr={4} display={{ base: 'none', md: 'block' }}>
       <AspectRatio

@@ -101,7 +101,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
-
         setTotalBalanceIsLoading(false)
       })
     }

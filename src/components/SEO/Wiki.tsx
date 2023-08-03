@@ -31,7 +31,7 @@ export const WikiHeader = ({
       datePublished={datePublished || ''}
       dateModified={dateModified || ''}
       authorName={author}
-      publisherName="Everipedia"
+      publisherName="IQWiki"
       publisherLogo={`${env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
       description={description}
     />

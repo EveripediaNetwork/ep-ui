@@ -1,4 +1,4 @@
-import { IconType } from 'react-icons'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
 import {
   RiBitCoinFill,
   RiExchangeBoxFill,
@@ -9,15 +9,6 @@ import {
   RiCopperDiamondLine,
   RiOrganizationChart,
 } from 'react-icons/ri'
-
-export type CategoryDataType = {
-  id: string
-  title: string
-  icon: IconType
-  description: string
-  cardImage: string
-  heroImage: string
-}
 
 export const AllCategoriesData: CategoryDataType[] = [
   {

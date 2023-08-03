@@ -12,11 +12,14 @@ import { store } from '@/store/store'
 // eslint-disable-next-line import/no-cycle
 import media from '@/editor-plugins/media'
 import { PasteListener } from '@/utils/CreateWikiUtils/pasteListener'
-import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
+// import tableMergedCellPlugin from '@toast-ui/editor-plugin-table-merged-cell'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 // eslint-disable-next-line import/no-cycle
 import embed from '@/editor-plugins/embed'
 import { widgetRules } from '../Layout/Editor/widgetRules'
+// import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css'
+
+import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css'
 
 export const wikiEditorRef = {
   current: null as ToastUIEditor | null,
@@ -145,7 +148,7 @@ const Editor = ({ onChange, markdown = '' }: EditorType) => {
   return (
     <Box ref={containerRef} m={0} w="full" h="full">
       <ToastUIEditorJSX
-        plugins={[wikiLink, cite, media, embed, tableMergedCellPlugin]}
+        plugins={[wikiLink, cite, media, embed]}
         height="100%"
         theme={colorMode === 'dark' ? 'dark' : 'light'}
         ref={editorRef}

@@ -7,19 +7,16 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogOverlay,
+  Circle,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { RiQuestionLine, RiCloseLine } from 'react-icons/ri'
-import { Wikis } from '@/types/admin'
+import { InsightTableWikiCreatedProps } from '@/types/admin'
 import { FocusableElement } from '@chakra-ui/utils'
 import { PromoteCreatedWikisModal } from './PromoteCreatedWikisModal'
 import { HideWikiNotification } from './HideWikiNotification'
 import { WikisTable } from './WikisTable'
-
-type InsightTableWikiCreatedProps = {
-  wikiCreatedInsightData: Wikis[]
-  hideWikisFunc: () => void
-}
+import { PromotedSuccessModal } from './PromotedSuccessModal'
 
 export const InsightTableWikiCreated = (
   props: InsightTableWikiCreatedProps,
@@ -43,14 +40,10 @@ export const InsightTableWikiCreated = (
   } = useDisclosure()
   const [isHide, setIsHide] = useState(true)
   const [hideNotify, setHideNotify] = useState(false)
+  const [successModal, setSuccessModal] = useState(false)
 
   const findSection = (promotedNum: number) => {
-    const num = wikiCreatedInsightData?.[0].promoted
-    if (promotedNum === num) {
-      setsectionType('hero section')
-    } else {
-      setsectionType('trending wiki section')
-    }
+    setsectionType(`Slot ${promotedNum}`)
     onOpenPromotion()
   }
   const shouldArchive = (ishidden: boolean, wikiId: string) => {
@@ -81,7 +74,6 @@ export const InsightTableWikiCreated = (
         shouldPromote={shouldPromote}
         shouldArchive={shouldArchive}
       />
-
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
@@ -90,27 +82,27 @@ export const InsightTableWikiCreated = (
         isCentered
       >
         <AlertDialogOverlay />
-
         <AlertDialogContent>
           <Box p={8}>
-            <Flex>
-              <Icon
-                cursor="pointer"
-                fontSize="3xl"
-                fontWeight={600}
-                as={RiQuestionLine}
-                color="taupeGray"
-                mr={5}
-              />
+            <Flex alignItems="center">
+              <Circle
+                size="40px"
+                bg="modalIconBg"
+                mr={1}
+                color="wikiFlagTextColor"
+              >
+                <Icon cursor="pointer" fontSize="3xl" as={RiQuestionLine} />
+              </Circle>
               <Text flex="1" fontSize="xl" fontWeight="black">
                 Promotion Details
               </Text>
               <Icon
                 cursor="pointer"
-                fontSize="3xl"
-                fontWeight={600}
+                fontSize="2xl"
                 as={RiCloseLine}
+                color="closeBtnModal"
                 onClick={onClosePromotion}
+                mt={-4}
               />
             </Flex>
             <Text
@@ -120,8 +112,8 @@ export const InsightTableWikiCreated = (
               textAlign="center"
               fontWeight="normal"
             >
-              This wiki is currently promoted to the {sectionType} of the home
-              page
+              This wiki is currently promoted to {sectionType} of the featured
+              wikis
             </Text>
           </Box>
         </AlertDialogContent>
@@ -143,6 +135,11 @@ export const InsightTableWikiCreated = (
         hideFunc={() => {
           setHideNotify(!hideNotify)
         }}
+        setSuccessModal={setSuccessModal}
+      />
+      <PromotedSuccessModal
+        isOpen={!isOpen && successModal}
+        onClose={() => setSuccessModal(false)}
       />
     </>
   )

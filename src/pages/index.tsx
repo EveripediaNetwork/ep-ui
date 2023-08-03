@@ -11,9 +11,7 @@ import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 import CategoriesList from '@/components/Landing/CategoriesList'
-import { categoriesApi, getCategories } from '@/services/categories'
 import { getTags, tagsApi } from '@/services/tags'
-import { Category } from '@/types/CategoryDataTypes'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
 import LeaderBoard from '@/components/Landing/Leaderboard'
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
@@ -32,7 +30,6 @@ const TRENDING_WIKIS_AMOUNT = 5
 interface HomePageProps {
   promotedWikis: Wiki[]
   recentWikis: Wiki[]
-  categories: Category[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
   rankings: {
@@ -45,7 +42,6 @@ interface HomePageProps {
 export const Index = ({
   promotedWikis,
   recentWikis,
-  categories,
   popularTags,
   leaderboards,
   rankings,
@@ -66,7 +62,7 @@ export const Index = ({
           featuredWikis={promotedWikis && promotedWikis}
         />
         <RankingList rankings={rankings} />
-        <CategoriesList categories={categories} />
+        <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
@@ -90,10 +86,6 @@ export async function getStaticProps() {
     await store.dispatch(getPromotedWikis.initiate())
   const { data: recent, error: recentError } = await store.dispatch(
     getWikis.initiate(),
-  )
-
-  const { data: categories, error: categoriesError } = await store.dispatch(
-    getCategories.initiate(),
   )
   const { data: leaderboard } = await store.dispatch(getLeaderboard.initiate())
   const { data: tagsData, error: tagsDataError } = await store.dispatch(
@@ -145,7 +137,6 @@ export async function getStaticProps() {
 
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
-    store.dispatch(categoriesApi.util.getRunningQueriesThunk()),
     store.dispatch(tagsApi.util.getRunningQueriesThunk()),
     store.dispatch(editorApi.util.getRunningQueriesThunk()),
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
@@ -153,11 +144,10 @@ export async function getStaticProps() {
     store.dispatch(rankingAPI.util.getRunningQueriesThunk()),
   ])
 
-  if (promotedWikisError || categoriesError || tagsDataError || recentError) {
+  if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
       `Error fetching data. the error is: ${
         (JSON.stringify(tagsDataError?.message),
-        JSON.stringify(categoriesError?.message),
         JSON.stringify(promotedWikisError?.message),
         JSON.stringify(recentError?.message))
       }`,
@@ -172,18 +162,17 @@ export async function getStaticProps() {
   const sortedleaderboards = sortLeaderboards(leaderboard)
 
   const rankings = {
-    NFTsListing: NFTsList,
-    TokensListing: TokensList,
+    NFTsListing: NFTsList || [],
+    TokensListing: TokensList || [],
   }
 
   return {
     props: {
       promotedWikis: sortedPromotedWikis || [],
       recentWikis: recent || [],
-      categories: categories || [],
       popularTags: tagsData || [],
       leaderboards: sortedleaderboards || [],
-      rankings: rankings || [],
+      rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
     },
   }
