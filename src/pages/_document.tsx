@@ -18,7 +18,7 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
-        <ColorModeScript />
+        <ColorModeScript initialColorMode="system" />
         <Main />
         <NextScript />
       </body>
