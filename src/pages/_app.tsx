@@ -14,7 +14,7 @@ import '../utils/i18n'
 import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { ThemeProvider } from '@/theme'
+import ThemeProvider from '@/theme/ThemeProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
