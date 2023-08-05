@@ -2,7 +2,11 @@ import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import { createStandaloneToast } from '@chakra-ui/react'
+import {
+  ChakraProvider,
+  createStandaloneToast,
+  cookieStorageManager,
+} from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -13,8 +17,8 @@ import { pageView } from '@/utils/googleAnalytics'
 import '../utils/i18n'
 import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
+import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import ThemeProvider from '@/theme/ThemeProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -52,13 +56,17 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ThemeProvider>
+        <ChakraProvider
+          colorModeManager={cookieStorageManager}
+          resetCSS
+          theme={chakraTheme}
+        >
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </WagmiConfig>
-        </ThemeProvider>
+        </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
