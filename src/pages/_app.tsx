@@ -2,11 +2,7 @@ import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import {
-  ChakraProvider,
-  createStandaloneToast,
-  cookieStorageManager,
-} from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -19,6 +15,7 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
+import { cookieStorageManagerSSR } from '@chakra-ui/react'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -46,6 +43,8 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
+  const colorModeManager = cookieStorageManagerSSR(pageProps.cookies)
+
   return (
     <StrictMode>
       <style jsx global>{`
@@ -57,7 +56,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider
-          colorModeManager={cookieStorageManager}
+          colorModeManager={colorModeManager}
           resetCSS
           theme={chakraTheme}
         >
