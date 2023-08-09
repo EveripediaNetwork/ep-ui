@@ -1,4 +1,15 @@
+import { ColorMode, ColorModeScript } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
 import { Head, Html, Main, NextScript } from 'next/document'
+import { cookies } from 'next/headers'
+
+// export const getServerSideProps: GetServerSideProps<{
+//   colorMode: ColorMode
+// }> = async () => {
+//   const cookieStore = cookies()
+//   const colorMode = String(cookieStore.get('chakra-ui-color-mode')) as ColorMode
+//   return { props: { colorMode } }
+// }
 
 export default function Document() {
   return (
@@ -16,6 +27,7 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
+        {/* <ColorModeScript initialColorMode={colorMode} /> */}
         <Main />
         <NextScript />
       </body>
