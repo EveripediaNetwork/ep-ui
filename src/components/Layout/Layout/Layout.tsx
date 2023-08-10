@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Box, Center, Spinner, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import Navbar from '../Navbar/Navbar'
@@ -11,12 +11,16 @@ const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
 const Layout = ({
   children,
   noFooter,
-  hasMounted,
 }: {
   children: React.ReactNode
   noFooter?: boolean
-  hasMounted?: boolean
 }) => {
+  const [hasMounted, setHasMounted] = useState(false)
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
   return (
     <>
       {!hasMounted ? (

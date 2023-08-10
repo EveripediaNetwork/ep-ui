@@ -2,8 +2,6 @@ import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 
-const CACHE_AGE = 60 * 60 * 24 * 365
-
 export const ColorModeToggle = ({
   isInMobileMenu,
 }: {
@@ -14,7 +12,7 @@ export const ColorModeToggle = ({
 
   useEffect(() => {
     console.log(colorMode)
-    document.cookie = `theme-mode=${colorMode}; max-age=${CACHE_AGE}`
+    localStorage.setItem('color-mode', JSON.stringify(colorMode))
   }, [])
 
   return (

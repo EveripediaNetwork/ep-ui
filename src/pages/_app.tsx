@@ -1,15 +1,8 @@
-import React, { StrictMode, useEffect, useRef, useState } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import {
-  Box,
-  Center,
-  ChakraProvider,
-  Flex,
-  Spinner,
-  createStandaloneToast,
-} from '@chakra-ui/react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -22,8 +15,6 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { cookieStorageManagerSSR } from '@chakra-ui/react'
-import { cookies } from 'next/headers'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -45,44 +36,11 @@ export const montserrat = Montserrat({
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
-  const [hasMounted, setHasMounted] = useState(false)
-  const isInitialRender = useRef(true)
-
-  if (isInitialRender.current) {
-    isInitialRender.current = false
-  }
-
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
-
-  useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
-  // if (!hasMounted) {
-  //   return (
-  //     <ChakraProvider resetCSS theme={chakraTheme}>
-  //       <Box
-  //         bgColor="#1A202C"
-  //         minH={'100vh'}
-  //         bgImage="/images/backgrounds/homepage-bg-dark.png"
-  //       >
-  //         <Center w={'100%'} h={'100vh'}>
-  //           <Spinner
-  //             thickness="4px"
-  //             speed="0.65s"
-  //             emptyColor="gray.200"
-  //             color="#FF5CAA"
-  //             size="xl"
-  //           />
-  //         </Center>
-  //       </Box>
-  //     </ChakraProvider>
-  //   )
-  // }
 
   return (
     <StrictMode>
@@ -94,13 +52,9 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider
-          // colorModeManager={colorModeManager}
-          resetCSS
-          theme={chakraTheme}
-        >
+        <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiConfig config={client}>
-            <Layout hasMounted={hasMounted} noFooter={Component.noFooter}>
+            <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </WagmiConfig>
