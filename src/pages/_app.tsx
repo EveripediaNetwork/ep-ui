@@ -15,7 +15,6 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { cookieStorageManagerSSR } from '@chakra-ui/react'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -43,8 +42,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 
-  const colorModeManager = cookieStorageManagerSSR(pageProps.cookies)
-
   return (
     <StrictMode>
       <style jsx global>{`
@@ -55,11 +52,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
-        <ChakraProvider
-          colorModeManager={colorModeManager}
-          resetCSS
-          theme={chakraTheme}
-        >
+        <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiConfig config={client}>
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
