@@ -16,10 +16,27 @@ const Layout = ({
   noFooter?: boolean
 }) => {
   const [hasMounted, setHasMounted] = useState(false)
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem('color-mode')
+      return item ? JSON.parse(item) : ''
+    } catch (error) {
+      console.error(error)
+      return ''
+    }
+  })
 
   useEffect(() => {
     setHasMounted(true)
+    const storedValue = JSON.parse(
+      window.localStorage.getItem('color-mode') || '',
+    )
+    if (storedValue !== null) {
+      setStoredValue(storedValue)
+    }
   }, [])
+
+  console.log(storedValue)
 
   return (
     <>

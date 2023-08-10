@@ -13,7 +13,7 @@ export const ColorModeToggle = ({
   useEffect(() => {
     console.log(colorMode)
     localStorage.setItem('color-mode', JSON.stringify(colorMode))
-  }, [])
+  }, [colorMode])
 
   return (
     <>
