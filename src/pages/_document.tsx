@@ -8,10 +8,9 @@ const fixThemeGlitchScript = `
     const body = document.body;
     function applyColorMode(mode){
       if(!mode) return;
-
+      console.log("Found mode: ", mode)
       if(mode === 'light'){
         document.documentElement.setAttribute("data-theme", "light");
-
       } else {
         document.documentElement.setAttribute("data-theme", "dark");
       }
@@ -21,8 +20,10 @@ const fixThemeGlitchScript = `
 
     if(!colorMode){
       const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      console.log("No mode, preferred is dark?: ", prefersDarkMode )
       if(prefersDarkMode) { 
         document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem('chakra-ui-color-mode', 'dark')
       } 
     } else {
       applyColorMode(colorMode);
