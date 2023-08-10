@@ -1,18 +1,38 @@
-import { ColorMode, ColorModeScript } from '@chakra-ui/color-mode'
 import * as React from 'react'
 import { Head, Html, Main, NextScript } from 'next/document'
-import { GetServerSideProps } from 'next'
-import { cookies } from 'next/headers'
+import Script from 'next/script'
 
-export const getServerSideProps: GetServerSideProps<{
-  colorMode: ColorMode
-}> = async () => {
-  const cookieStore = cookies()
-  const colorMode = String(cookieStore.get('chakra-ui-color-mode')) as ColorMode
-  return { props: { colorMode } }
-}
+const fixThemeGlitchScript = `
+(
+  function(){
+    const body = document.body;
+    function applyColorMode(mode){
+      if(!mode) return;
+      console.log("Found mode: ", mode)
+      if(mode === 'light'){
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }
 
-export default function Document({ colorMode }: { colorMode: ColorMode }) {
+    const colorMode = localStorage.getItem('chakra-ui-color-mode');
+
+    if(!colorMode){
+      const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      console.log("No mode, preferred is dark?: ", prefersDarkMode )
+      if(prefersDarkMode) { 
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem('chakra-ui-color-mode', 'dark')
+      } 
+    } else {
+      applyColorMode(colorMode);
+    }
+  }
+)();
+`
+
+export default function Document() {
   return (
     <Html lang="en">
       <Head>
@@ -28,7 +48,11 @@ export default function Document({ colorMode }: { colorMode: ColorMode }) {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
-        <ColorModeScript type="cookie" initialColorMode={colorMode} />
+        <Script
+          strategy="beforeInteractive"
+          // rome-ignore lint/security/noDangerouslySetInnerHtml: We're setting at compile time so it's safe
+          dangerouslySetInnerHTML={{ __html: fixThemeGlitchScript }}
+        />
         <Main />
         <NextScript />
       </body>
