@@ -6,8 +6,7 @@ import { foundations } from './foundations'
 import { semanticTokens } from './semantic-tokens'
 
 const config: ThemeConfig = {
-  useSystemColorMode: true,
-  initialColorMode: 'system',
+  initialColorMode: 'light',
   cssVarPrefix: 'chakra',
 }
 
