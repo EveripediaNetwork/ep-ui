@@ -1,7 +1,6 @@
 import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
-import { setCookie } from 'cookies-next'
 
 export const ColorModeToggle = ({
   isInMobileMenu,
@@ -10,14 +9,6 @@ export const ColorModeToggle = ({
 }) => {
   const { colorMode, toggleColorMode } = useColorMode()
   const ColorModeIcon = colorMode === 'light' ? FaMoon : FaSun
-
-  useEffect(() => {
-    console.log(colorMode)
-    setCookie('color-mode', colorMode, {
-      maxAge: 60 * 60 * 24 * 7,
-    })
-    localStorage.setItem('color-mode', JSON.stringify(colorMode))
-  }, [colorMode])
 
   return (
     <>
