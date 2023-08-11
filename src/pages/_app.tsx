@@ -15,11 +15,13 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
+import { NextPageContext } from 'next'
 
 const { ToastContainer } = createStandaloneToast()
 
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
+  cookies: string
 }
 
 const client = createConfig({
@@ -63,6 +65,12 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ToastContainer />
     </StrictMode>
   )
+}
+
+App.getInitialProps = async (ctx: NextPageContext) => {
+  const { req } = ctx
+  console.log(req?.headers.cookies)
+  return { cookies: 'myCookieValue' }
 }
 
 export default App
