@@ -12,18 +12,16 @@ const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
 const Layout = ({
   children,
   noFooter,
-  colorMode,
 }: {
   children: React.ReactNode
   noFooter?: boolean
-  colorMode: string
 }) => {
   const isMounted = useIsMounted()
 
   return (
     <>
       <GoogleAnalyticsScripts />
-      {!isMounted && colorMode === 'dark' && (
+      {!isMounted && (
         <Box
           bgColor="#1A202C"
           w={'100%'}
