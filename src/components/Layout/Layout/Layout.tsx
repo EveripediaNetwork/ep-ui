@@ -1,8 +1,17 @@
 import React, { Suspense, useEffect, useState } from 'react'
-import { Box, Center, Spinner, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  Center,
+  HStack,
+  Spinner,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import Navbar from '../Navbar/Navbar'
 import GoogleAnalyticsScripts from '../GoogleAnalyticsScripts'
+import { Logo } from '@/components/Elements'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
@@ -24,20 +33,23 @@ const Layout = ({
 
   return (
     <>
-      {!hasMounted ? (
+      {true ? (
         <Box
           bgColor="#1A202C"
           minH={'100vh'}
-          bgImage="/images/backgrounds/homepage-bg-dark.png"
+          // bgImage="/images/backgrounds/homepage-bg-dark.png"
         >
           <Center w={'100%'} h={'100vh'}>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="#FF5CAA"
-              size="xl"
-            />
+            <VStack gap={'3rem'}>
+              <HStack>
+                <Logo w={'70px'} h={'70px'} />
+                <Text fontWeight="bold" fontSize="4xl" color="white">
+                  IQ.wiki
+                </Text>
+              </HStack>
+
+              <span className="loader" />
+            </VStack>
           </Center>
         </Box>
       ) : (
