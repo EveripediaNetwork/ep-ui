@@ -45,21 +45,14 @@ const TokenDetailsMenu = ({ token }: { token: string | undefined }) => {
     }
   }
   return (
-    <>
-      {token && supportedTokens[token]?.isActive && (
-        <Menu placement="left-start">
-          <MenuButton>
-            <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
-          </MenuButton>
-          <MenuList
-            onClick={() => handleAddTokenToMetamask(token)}
-            boxShadow="xl"
-          >
-            <MenuItem>Add {token} token to Metamask</MenuItem>
-          </MenuList>
-        </Menu>
-      )}
-    </>
+    <Menu placement="left-start">
+      <MenuButton disabled={!(token && supportedTokens[token]?.isActive)}>
+        <RiMore2Fill color="color" fontSize="20" fontWeight="bold" />
+      </MenuButton>
+      <MenuList onClick={() => handleAddTokenToMetamask(token)} boxShadow="xl">
+        <MenuItem>Add {token} token to Metamask</MenuItem>
+      </MenuList>
+    </Menu>
   )
 }
 
