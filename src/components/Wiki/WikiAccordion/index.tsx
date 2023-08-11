@@ -51,6 +51,7 @@ const WikiAccordion = ({
       }}
       p={3}
       borderRadius={8}
+      borderColor="rankingListBorder"
     >
       <HStack cursor="pointer" onClick={ChangeStyle} justify="start">
         <IconButton
