@@ -1,6 +1,7 @@
 import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
+import { setCookie } from 'cookies-next'
 
 export const ColorModeToggle = ({
   isInMobileMenu,
@@ -21,7 +22,10 @@ export const ColorModeToggle = ({
             bgColor: !isInMobileMenu ? 'subMenuHoverBg' : 'transparent',
           },
         }}
-        onClick={toggleColorMode}
+        onClick={() => {
+          toggleColorMode()
+          setCookie('colorMode', colorMode === 'light' ? 'dark' : 'light')
+        }}
       >
         <Icon
           cursor="pointer"

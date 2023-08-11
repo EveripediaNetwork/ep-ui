@@ -3,7 +3,7 @@ import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
-import type { AppProps } from 'next/app'
+import type { AppContext, AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
@@ -15,13 +15,13 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { NextPageContext } from 'next'
 
 const { ToastContainer } = createStandaloneToast()
 
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
   cookies: string
+  colorMode: string
 }
 
 const client = createConfig({
@@ -37,7 +37,7 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-const App = ({ Component, pageProps, router }: EpAppProps) => {
+const App = ({ Component, pageProps, router, colorMode }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
@@ -56,7 +56,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiConfig config={client}>
-            <Layout noFooter={Component.noFooter}>
+            <Layout colorMode={colorMode} noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
           </WagmiConfig>
@@ -67,10 +67,16 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
   )
 }
 
-App.getInitialProps = async (ctx: NextPageContext) => {
-  const { req } = ctx
-  console.log(req?.headers.cookies)
-  return { cookies: 'myCookieValue' }
+App.getInitialProps = async ({ ctx }: AppContext) => {
+  const { colorMode } = (ctx.req as any)?.cookies ?? {}
+
+  if (colorMode) {
+    return {
+      colorMode,
+    }
+  }
+
+  return { colorMode: undefined }
 }
 
 export default App
