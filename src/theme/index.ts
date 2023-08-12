@@ -6,9 +6,8 @@ import { foundations } from './foundations'
 import { semanticTokens } from './semantic-tokens'
 
 const config: ThemeConfig = {
-  initialColorMode: 'light',
+  initialColorMode: 'system',
   cssVarPrefix: 'chakra',
-  disableTransitionOnChange: true,
 }
 
 const theme: Dict = extendTheme({
