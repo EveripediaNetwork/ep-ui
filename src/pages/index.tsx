@@ -48,7 +48,15 @@ export const Index = ({
   trending,
 }: HomePageProps) => {
   return (
-    <Flex direction="column" mx="auto" w="full" pt={{ base: 6, lg: 12 }}>
+    <Flex
+      _dark={{
+        bgColor: '#1A202C',
+      }}
+      direction="column"
+      mx="auto"
+      w="full"
+      pt={{ base: 6, lg: 12 }}
+    >
       <Hero />
       <Box
         _dark={{
