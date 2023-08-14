@@ -12,7 +12,6 @@ const ConnectorDetails = ({
   loading,
 }: ConnectorDetailsType) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
-
   const handleConnect = (selectedConnector: Connector) => {
     logEvent({
       action: 'LOGIN_ATTEMPT',
@@ -23,7 +22,6 @@ const ConnectorDetails = ({
     setIsClicked(true)
     connect({ connector: selectedConnector })
   }
-
   useEffect(() => {
     if (!loading) setIsClicked(false)
   }, [loading])
