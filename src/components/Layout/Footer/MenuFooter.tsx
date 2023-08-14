@@ -126,16 +126,16 @@ const MenuFooter = () => {
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://iq.braindao.org"
+                href="https://iqgpt.com"
               >
-                IQ Dashboard
+                IQ GPT
               </Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
-                href="https://iqgpt.com"
+                href="https://iq.braindao.org"
               >
-                IQ GPT
+                IQ Dashboard
               </Link>
             </Stack>
           </GridItem>
