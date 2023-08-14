@@ -67,7 +67,7 @@ const WalletDrawer = ({
   const handleAccountRefresh = () => {
     if (typeof userAddress !== 'undefined') {
       setAccountRefreshLoader(true)
-      refreshBalance().then(response => {
+      refreshBalance().then((response) => {
         dispatch(updateWalletDetails(response))
         setAccountRefreshLoader(false)
         toast({
