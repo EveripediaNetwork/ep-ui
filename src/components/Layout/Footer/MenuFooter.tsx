@@ -87,7 +87,7 @@ const MenuFooter = () => {
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
-              <Heading size="sm">IQ.wiki</Heading>
+              <Heading size="sm">Company</Heading>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
@@ -129,6 +129,13 @@ const MenuFooter = () => {
                 href="https://iq.braindao.org"
               >
                 IQ Dashboard
+              </Link>
+              <Link
+                textAlign={{ base: 'center', md: 'left' }}
+                target="_blank"
+                href="https://iqgpt.com"
+              >
+                IQ GPT
               </Link>
             </Stack>
           </GridItem>
