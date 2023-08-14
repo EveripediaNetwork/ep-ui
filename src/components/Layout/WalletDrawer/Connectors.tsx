@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useConnect, useAccount, Connector } from 'wagmi'
+import { useConnect, useAccount } from 'wagmi'
 import {
   Box,
   Divider,
@@ -90,22 +90,13 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
       })
     }
   }, [walletDetails, dispatch])
-
-  const handleNetworkConnection = ({ connector }: { connector: Connector }) => {
-    // console.log(connector)
-    if (connector.ready) {
-      connect({ connector })
-      return
-    }
-    console.log('Connector is not active')
-  }
 
   const tooltipText =
     'A crypto wallet is an application or hardware device that allows individuals to store and retrieve digital items.'
@@ -200,19 +191,16 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
-                      <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
-                      />
-                      <Divider />
-                    </>
-                  )}
+                {hiiq && walletDetails && walletDetails.length > 0 && hiIQData && (
+                  <>
+                    <WalletDetails
+                      symbol={hiIQData?.symbol}
+                      tokensArray={[hiIQData?.tokensArray]}
+                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                    />
+                    <Divider />
+                  </>
+                )}
               </Box>
             )}
           </>
@@ -226,7 +214,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             {connectors.map((connector, index) => (
               <Box key={connector.name} w="full">
                 <ConnectorDetails
-                  connect={handleNetworkConnection}
+                  connect={connect}
                   connector={connector}
                   imageLink={`/images/logos/${walletsLogos[index]}`}
                   loading={isUserConnecting}
