@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+User-agent: GPTBot
+Disallow: /
+
 Sitemap: https://iq.wiki/api/sitemap
