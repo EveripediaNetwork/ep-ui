@@ -8,6 +8,7 @@ import {
   Center,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
@@ -30,6 +31,7 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
+import MetaMaskConnectionErrorModal from './MetaMaskConnectionErrorModal'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -47,6 +49,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { connectors, connect } = useConnect({
     onError(error) {
@@ -99,12 +102,11 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   }, [walletDetails, dispatch])
 
   const handleNetworkConnection = ({ connector }: { connector: Connector }) => {
-    // console.log(connector)
     if (connector.ready) {
       connect({ connector })
       return
     }
-    console.log('Connector is not active')
+    onOpen()
   }
 
   const tooltipText =
@@ -236,6 +238,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             ))}
           </Box>
         )}
+        <MetaMaskConnectionErrorModal isOpen={isOpen} onClose={onClose} />
       </Box>
     </>
   )
