@@ -28,6 +28,7 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
 
   return (
     <chakra.div
+      minWidth="90%"
       bg="cardBg"
       py={3}
       px={2}
@@ -36,7 +37,7 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
       borderWidth="0.5px"
       borderStyle="solid"
     >
-      <Flex>
+      <Flex flexGrow={1} mx="auto">
         <ActivityCardImage
           title={title}
           link={link}
