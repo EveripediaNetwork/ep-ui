@@ -31,7 +31,7 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
-import MetaMaskConnectionErrorModal from './MetaMaskConnectionErrorModal'
+import ConnectionErrorModal from './ConnectionErrorModal'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -50,7 +50,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   )
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const [connectorName, setConnectorName] = useState('')
   const { connectors, connect } = useConnect({
     onError(error) {
       logEvent({
@@ -106,6 +106,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       connect({ connector })
       return
     }
+    setConnectorName(connector.name)
     onOpen()
   }
 
@@ -238,7 +239,11 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             ))}
           </Box>
         )}
-        <MetaMaskConnectionErrorModal isOpen={isOpen} onClose={onClose} />
+        <ConnectionErrorModal
+          connector={connectorName}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
       </Box>
     </>
   )
