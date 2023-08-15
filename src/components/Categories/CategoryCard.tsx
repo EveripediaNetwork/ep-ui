@@ -31,6 +31,7 @@ const CategoryCard = (props: CategoryCardProps) => {
             loading="lazy"
             imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
             imgH={IMAGE_BOX_SIZE}
+            priority={true}
           />
           <Box position="absolute" bottom="0" left="50%">
             <Icon
