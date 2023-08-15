@@ -20,6 +20,7 @@ import {
   RiCopperDiamondLine,
   RiOrganizationChart,
   RiHashtag,
+  RiSearchEyeFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -124,20 +125,28 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 403,
+        label: 'IQ GPT',
+        icon: RiSearchEyeFill,
+        href: 'https://iqgpt.com',
+        hasImage: true,
+        target: '_blank',
+      },
+      {
+        id: 404,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
       {
-        id: 404,
+        id: 405,
         label: 'About Us',
         icon: RiUserSearchFill,
         href: '/about',
         hasImage: true,
       },
       {
-        id: 405,
+        id: 406,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
