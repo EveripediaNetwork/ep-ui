@@ -20,7 +20,7 @@ import { getUsername } from '@/utils/DataTransform/getUsername'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
-import { blurDataURL } from 'public/images/defaults/blurPlaceholder'
+import { blurDataURL } from '@/data/blurPlaceholder'
 
 const WikiPreviewCard = ({
   wiki,
