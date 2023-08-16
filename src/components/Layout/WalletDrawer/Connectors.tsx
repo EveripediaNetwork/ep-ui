@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useConnect, useAccount } from 'wagmi'
+import { useConnect, useAccount, Connector } from 'wagmi'
 import {
   Box,
   Divider,
@@ -8,6 +8,7 @@ import {
   Center,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { Link } from '@/components/Elements/'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
@@ -30,6 +31,7 @@ import {
 } from '@/utils/WalletUtils/fetchWalletBalance'
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
+import ConnectionErrorModal from './ConnectionErrorModal'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -47,7 +49,8 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [connectorName, setConnectorName] = useState('')
   const { connectors, connect } = useConnect({
     onError(error) {
       logEvent({
@@ -97,6 +100,15 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
       })
     }
   }, [walletDetails, dispatch])
+
+  const handleNetworkConnection = ({ connector }: { connector: Connector }) => {
+    if (connector.ready) {
+      connect({ connector })
+      return
+    }
+    setConnectorName(connector.name)
+    onOpen()
+  }
 
   const tooltipText =
     'A crypto wallet is an application or hardware device that allows individuals to store and retrieve digital items.'
@@ -217,7 +229,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             {connectors.map((connector, index) => (
               <Box key={connector.name} w="full">
                 <ConnectorDetails
-                  connect={connect}
+                  connect={handleNetworkConnection}
                   connector={connector}
                   imageLink={`/images/logos/${walletsLogos[index]}`}
                   loading={isUserConnecting}
@@ -227,6 +239,11 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             ))}
           </Box>
         )}
+        <ConnectionErrorModal
+          connector={connectorName}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
       </Box>
     </>
   )
