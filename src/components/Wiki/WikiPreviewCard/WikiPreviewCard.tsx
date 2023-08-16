@@ -20,6 +20,7 @@ import { getUsername } from '@/utils/DataTransform/getUsername'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
+import { blurDataURL } from 'public/images/defaults/blurPlaceholder'
 
 const WikiPreviewCard = ({
   wiki,
@@ -57,6 +58,8 @@ const WikiPreviewCard = ({
           alt={wiki.title}
           boxSize="100%"
           imgBoxSize={IMAGE_BOX_SIZE}
+          placeholder="blur"
+          blurDataURL={blurDataURL}
         />
       </AspectRatio>
       <Stack spacing={3} p={4}>
