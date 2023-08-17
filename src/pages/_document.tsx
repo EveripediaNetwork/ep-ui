@@ -20,7 +20,6 @@ const fixThemeGlitchScript = `
 
     if(!colorMode){
       const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      console.log("No mode, preferred is dark?: ", prefersDarkMode )
       if(prefersDarkMode) { 
         document.documentElement.setAttribute("data-theme", "dark");
         localStorage.setItem('chakra-ui-color-mode', 'dark')
