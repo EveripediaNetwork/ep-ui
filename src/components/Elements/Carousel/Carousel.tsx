@@ -144,10 +144,10 @@ const ArrowBtn = ({ ArrowIcon, onClick, top, isNext }: ArrowProps) => (
     zIndex={99}
     bgColor="carouselArrowBg"
     borderRadius="50%"
-    w="40px"
-    h="40px"
-    right={isNext ? '-20px' : 'unset'}
-    left={isNext ? 'unset' : '-20px'}
+    w={{ base: '35px', md: '40px' }}
+    h={{ base: '35px', md: '40px' }}
+    right={isNext ? '0px' : 'unset'}
+    left={isNext ? 'unset' : '0px'}
   >
     <Icon as={ArrowIcon} color="grey" />
   </Box>

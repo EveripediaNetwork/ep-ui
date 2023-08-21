@@ -21,6 +21,7 @@ const AboutIqgpt = () => {
       px={{ base: 3, md: 8 }}
       maxW={'1050px'}
       mt={{ md: '200px', lg: '300px' }}
+      mb={{ base: '100px' }}
       mx={'auto'}
     >
       <HStack
@@ -36,7 +37,7 @@ const AboutIqgpt = () => {
           <Text fontSize={'14px'}>New</Text>
         </Center>
         <HStack spacing={1}>
-          <Text>We built IQ GPT</Text>
+          <Text fontSize={{ base: '14px', md: '16px' }}>We built IQ GPT</Text>
           <ArrowForwardIcon />
         </HStack>
       </HStack>
@@ -62,10 +63,13 @@ const AboutIqgpt = () => {
           align={'self-start'}
         >
           <HStack>
-            <Logo w="85px" h="85px" />
+            <Logo
+              w={{ base: '60px', lg: '85px' }}
+              h={{ base: '60px', lg: '85px' }}
+            />
             <Text
               fontWeight="bold"
-              fontSize={{ base: '32px', lg: '48px' }}
+              fontSize={{ base: '28px', md: '36px', lg: '48px' }}
               color="wikiFlagTextColor"
               _dark={{ color: 'white' }}
             >
@@ -73,7 +77,7 @@ const AboutIqgpt = () => {
             </Text>
           </HStack>
           <Box color={'eventTextColor'} pb={'20px'}>
-            <Text>
+            <Text fontSize={{ base: '14px', md: '16px' }}>
               IQ GPT, is an extension of IQ Wiki’s decentralised foundation that
               incorporates A.I models specifically designed for the crypto
               domain. It leverages different data sources to enhance it’s
@@ -81,30 +85,30 @@ const AboutIqgpt = () => {
               terminologies, real-time market trends and breaking news from
               these platforms.
             </Text>
-            <Text>
+            <Text fontSize={{ base: '14px', md: '16px' }}>
               IQ GPT is powered by the IQ token, enabling IQ holders to
               participate in governance and get access to additional features.
             </Text>
           </Box>
-          <HStack gap={{ md: 2, xl: 6 }}>
+          <HStack gap={{ base: 2, xl: 6 }}>
             <Button
               as="a"
               href={'https://iqgpt.com/'}
               target="_blank"
               size="lg"
               variant="solid"
-              w={{ xl: '140px' }}
+              px={{ base: 5, md: 2 }}
               fontSize={'12px'}
             >
               Explore IQ GPT
             </Button>
             <Button
               as="a"
-              href={''}
+              href={'https://iqgpt.com/about'}
               target="_blank"
               size="lg"
               variant="outline"
-              w={{ xl: '140px' }}
+              px={{ base: 5, md: 2 }}
               fontSize={'12px'}
               color={'aboutIqTokenText'}
             >
