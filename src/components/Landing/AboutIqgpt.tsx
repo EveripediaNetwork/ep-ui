@@ -12,8 +12,21 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { Logo } from '../Elements'
+import { useTranslation } from 'react-i18next'
+
+const CustomListItem = ({ text }: { text: string }) => {
+  return (
+    <Flex gap={2} align={'flex-start'}>
+      <CheckCircleIcon color={'white'} />
+      <Text mt={-1} color={'white'}>
+        {text}
+      </Text>
+    </Flex>
+  )
+}
 
 const AboutIqgpt = () => {
+  const { t } = useTranslation()
   return (
     <VStack
       align={'self-start'}
@@ -78,16 +91,10 @@ const AboutIqgpt = () => {
           </HStack>
           <Box color={'eventTextColor'} pb={'20px'}>
             <Text fontSize={{ base: '14px', md: '16px' }}>
-              IQ GPT, is an extension of IQ Wiki’s decentralised foundation that
-              incorporates A.I models specifically designed for the crypto
-              domain. It leverages different data sources to enhance it’s
-              capabilities and summarizes information such as complex
-              terminologies, real-time market trends and breaking news from
-              these platforms.
+              {`${t('aboutIQGPTOneBody')}`}
             </Text>
             <Text fontSize={{ base: '14px', md: '16px' }}>
-              IQ GPT is powered by the IQ token, enabling IQ holders to
-              participate in governance and get access to additional features.
+              {`${t('aboutIQGPTTwoBody')}`}
             </Text>
           </Box>
           <HStack gap={{ base: 2, xl: 6 }}>
@@ -97,7 +104,7 @@ const AboutIqgpt = () => {
               target="_blank"
               size="lg"
               variant="solid"
-              px={{ base: 5, md: 2 }}
+              px={{ base: 3, md: 5 }}
               fontSize={'12px'}
             >
               Explore IQ GPT
@@ -108,7 +115,7 @@ const AboutIqgpt = () => {
               target="_blank"
               size="lg"
               variant="outline"
-              px={{ base: 5, md: 2 }}
+              px={{ base: 3, md: 5 }}
               fontSize={'12px'}
               color={'aboutIqTokenText'}
             >
@@ -148,9 +155,9 @@ const AboutIqgpt = () => {
             px={{ md: '10px', lg: '20px', xl: '28px' }}
             pb={'24px'}
           >
-            <CustomListItem text="Stay ahead of the competition with access to real-time price data, trading volumes, market capitalization and other key market data via convenient conversation-like prompting." />
-            <CustomListItem text="Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world's largest crypto encyclopedia, Flywheel, AP News, Coinness and others." />
-            <CustomListItem text="Equip yourself with AI powered market analysis from real time market data, news and trends." />
+            <CustomListItem text={`${t('benefitIQGPTOne')}`} />
+            <CustomListItem text={`${t('benefitIQGPTTwo')}`} />
+            <CustomListItem text={`${t('benefitIQGPTThree')}`} />
           </VStack>
         </Box>
       </SimpleGrid>
@@ -159,14 +166,3 @@ const AboutIqgpt = () => {
 }
 
 export default AboutIqgpt
-
-const CustomListItem = ({ text }: { text: string }) => {
-  return (
-    <Flex gap={2} align={'flex-start'}>
-      <CheckCircleIcon color={'white'} />
-      <Text mt={-1} color={'white'}>
-        {text}
-      </Text>
-    </Flex>
-  )
-}

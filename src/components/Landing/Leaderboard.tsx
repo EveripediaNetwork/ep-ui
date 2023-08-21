@@ -163,14 +163,6 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
                   infinite: true,
                 },
               },
-              {
-                breakpoint: 480,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  infinite: true,
-                },
-              },
             ],
           }}
         >

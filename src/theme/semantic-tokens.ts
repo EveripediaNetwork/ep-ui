@@ -83,7 +83,7 @@ export const semanticTokens: SemanticTokens = {
     },
     homeDescriptionColor: {
       default: 'gray.600',
-      _dark: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.800',
     },
     eventTextColor: {
       default: 'gray.600',

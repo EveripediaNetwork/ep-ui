@@ -50,7 +50,7 @@ const CategoriesList = () => {
       </Heading>
       <Text
         color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: 22 }}
+        fontSize={{ base: 'lg', lg: '20px' }}
         pb={9}
         px={4}
         textAlign="center"
