@@ -381,5 +381,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'gray.800',
     },
+    aboutIqgptInfoBg: {
+      default: 'brand.50',
+      _dark: 'brand.200',
+    },
+    aboutIqTokenText: {
+      default: 'gray.700',
+      _dark: 'white',
+    },
   },
 }
