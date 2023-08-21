@@ -20,7 +20,7 @@ const AboutIqgpt = () => {
       spacing={6}
       px={{ base: 3, md: 8 }}
       maxW={'1050px'}
-      mt={'300px'}
+      mt={{ md: '200px', lg: '300px' }}
       mx={'auto'}
     >
       <HStack
@@ -41,25 +41,31 @@ const AboutIqgpt = () => {
         </HStack>
       </HStack>
       <SimpleGrid
-        columns={2}
-        spacingX={4}
+        columns={{ base: 1, md: 2 }}
+        gap={{ base: '200px', md: 4 }}
         bgColor={'cardBg'}
         rounded={'20px'}
         border={'1px'}
         borderColor={'gray.100'}
-        px={'24px'}
-        pt={'62px'}
-        pb={'56px'}
+        px={{ md: '12px', xl: '24px' }}
+        pr={{ md: 0, lg: '12px' }}
+        pt={{ base: '18px', md: '32px', lg: '62px' }}
+        pb={{ md: '0', lg: '44px', xl: '56px' }}
         _dark={{
           borderColor: 'whiteAlpha.300',
         }}
       >
-        <VStack maxW={'500px'} align={'self-start'}>
+        <VStack
+          maxW={'500px'}
+          px={{ base: '8px', md: '0' }}
+          pb={{ md: '18px', lg: '0px' }}
+          align={'self-start'}
+        >
           <HStack>
             <Logo w="85px" h="85px" />
             <Text
               fontWeight="bold"
-              fontSize="48px"
+              fontSize={{ base: '32px', lg: '48px' }}
               color="wikiFlagTextColor"
               _dark={{ color: 'white' }}
             >
@@ -80,7 +86,7 @@ const AboutIqgpt = () => {
               participate in governance and get access to additional features.
             </Text>
           </Box>
-          <HStack gap={6}>
+          <HStack gap={{ md: 2, xl: 6 }}>
             <Button
               as="a"
               href={'https://iqgpt.com/'}
@@ -110,18 +116,18 @@ const AboutIqgpt = () => {
           pos={'relative'}
           bgColor={'brandLinkColor'}
           rounded={'20px'}
-          pt={'200px'}
-          pb={'100px'}
+          pt={{ base: '180px', md: '150px', lg: '200px' }}
+          pb={{ base: '30px', md: '0px', lg: '100px' }}
           px={'9px'}
-          mt={'-150px'}
+          mt={{ md: '-100px', lg: '-150px' }}
         >
           <Box
             pos={'absolute'}
             rounded={'100%'}
             bgColor={'aboutIqgptInfoBg'}
-            w={'350px'}
-            h={'350px'}
-            top={'-30%'}
+            w={{ base: '300px', md: '250px', lg: '350px' }}
+            h={{ base: '300px', md: '250px', lg: '350px' }}
+            top={{ base: '-30%', md: '-25%', lg: '-30%' }}
             left={'50%'}
             transform={'auto-gpu'}
             translateX={'-50%'}
@@ -129,11 +135,15 @@ const AboutIqgpt = () => {
             <Image
               src="/images/GIFs/intelligentRobot.gif"
               alt="IQ GPT AI robot"
-              width={350}
-              height={350}
+              width={{ base: '300px', md: 250, lg: 350 }}
+              height={{ base: '300px', md: 250, lg: 350 }}
             />
           </Box>
-          <VStack gap={5} px={'28px'} pb={'24px'}>
+          <VStack
+            gap={{ md: 2, lg: 5 }}
+            px={{ md: '10px', lg: '20px', xl: '28px' }}
+            pb={'24px'}
+          >
             <CustomListItem text="Stay ahead of the competition with access to real-time price data, trading volumes, market capitalization and other key market data via convenient conversation-like prompting." />
             <CustomListItem text="Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world's largest crypto encyclopedia, Flywheel, AP News, Coinness and others." />
             <CustomListItem text="Equip yourself with AI powered market analysis from real time market data, news and trends." />
