@@ -8,7 +8,7 @@ export const Hero = () => {
         w="full"
         textAlign="center"
         px={{ base: '5', md: '0' }}
-        fontSize={{ base: '35', md: '40' }}
+        fontSize={{ base: '24', md: '36' }}
       >
         The World&apos;s Largest
         <chakra.span color="brandLinkColor"> Blockchain & Crypto </chakra.span>
@@ -17,8 +17,11 @@ export const Hero = () => {
       <Text
         px={{ base: '5', md: '0' }}
         textAlign="center"
-        mt="5"
-        fontSize={{ base: 'md', lg: '2xl' }}
+        mt="3"
+        mx={'auto'}
+        maxW={'693px'}
+        color={'gray.600'}
+        fontSize={{ base: 'md', lg: 'xl' }}
       >
         Start your crypto journey with IQ Wiki! The compass for exploring your
         web3 curiosities.

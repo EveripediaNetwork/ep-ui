@@ -23,6 +23,7 @@ import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
+import AboutIqgpt from '@/components/Landing/AboutIqgpt'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -58,12 +59,7 @@ export const Index = ({
       pt={{ base: 6, lg: 12 }}
     >
       <Hero />
-      <Box
-        _dark={{
-          bgImage: '/images/backgrounds/homepage-bg-dark.png',
-        }}
-        bgImage="/images/backgrounds/homepage-bg-white.png"
-      >
+      <Box>
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
@@ -71,6 +67,7 @@ export const Index = ({
         />
         <RankingList rankings={rankings} />
         <CategoriesList />
+        <AboutIqgpt />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />

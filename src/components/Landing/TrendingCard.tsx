@@ -41,11 +41,12 @@ const TrendingCard = ({
       <Box
         w="full"
         rounded="lg"
-        shadow="lg"
+        border="1px solid"
+        borderColor={'gray.100'}
         minH="500px"
         py={5}
         bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white' }}
+        _dark={{ bgColor: 'gray.700', color: 'white', border: 'none' }}
       >
         <Flex
           w="full"
@@ -89,7 +90,19 @@ const TrendingCard = ({
         {wikis ? (
           <VStack w="full" pt="2" px="2" gap="2" overflow="hidden">
             {wikiData?.map((wiki, i) => (
-              <HStack w="full" key={i} px={1}>
+              <HStack
+                w="full"
+                _hover={{
+                  borderRadius: 'md',
+                  bgColor: 'gray.100',
+                  _dark: {
+                    bgColor: 'whiteAlpha.100',
+                  },
+                }}
+                cursor="pointer"
+                key={i}
+                px={1}
+              >
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
                     <AspectRatio
@@ -117,7 +130,6 @@ const TrendingCard = ({
                   >
                     <Text
                       fontWeight="thin"
-                      cursor="pointer"
                       color="black"
                       _dark={{ color: 'white' }}
                       fontSize="18px"

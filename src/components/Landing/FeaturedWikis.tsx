@@ -15,11 +15,12 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
       <Box
         maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         w="full"
-        shadow="lg"
+        border="1px solid"
+        borderColor={'gray.100'}
         rounded="lg"
         py={3}
         bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white' }}
+        _dark={{ bgColor: 'gray.700', color: 'white', border: 'none' }}
         color="black"
         textAlign="center"
         justifyContent="center"

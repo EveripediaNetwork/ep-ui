@@ -72,12 +72,19 @@ const CategoriesList = () => {
         {newCategoryList.map((category) => (
           <div key={category.id}>
             <LinkBox
-              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+              _hover={{
+                boxShadow: '0px 12px 50px -12px rgba(192, 195, 197, 0.25)',
+              }}
               cursor="pointer"
               bgColor="cardBg"
+              border={'1px'}
+              borderColor={'gray.100'}
               borderRadius="lg"
               overflow="hidden"
-              shadow="base"
+              _dark={{
+                borderColor: 'whiteAlpha.300',
+                boxShadow: '12px 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              }}
             >
               <LinkOverlay href={`/categories/${category.id}`}>
                 <Image
