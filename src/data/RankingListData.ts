@@ -2,6 +2,16 @@ export type RankinglistHeadProps = {
   label: string
 }
 
+export const CATEGORIES_WITH_INDEX = {
+  cryptocurrencies: 0,
+  nfts: 1,
+}
+
+export const CATEGORIES_INDEX = {
+  0: 'cryptocurrencies',
+  1: 'nfts',
+}
+
 export const RankingListHead: RankinglistHeadProps[] = [
   {
     label: '#',

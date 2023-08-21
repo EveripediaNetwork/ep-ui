@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import {
   Text,
   Box,
@@ -25,20 +25,40 @@ import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
+import { useRouter } from 'next/router'
+import { CATEGORIES_INDEX, CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 
 const LISTING_LIMITS = 20
 
 const Rank = ({
   totalTokens,
   totalNfts,
+  pagination,
 }: {
   totalNfts: number
   totalTokens: number
+  pagination: { category: string; page: number }
 }) => {
-  const [nftOffset, setNftOffset] = useState<number>(1)
-  const [tokensOffset, setTokensOffset] = useState<number>(1)
+  const router = useRouter()
+  const { pathname } = router
+  const [nftOffset, setNftOffset] = useState<number>(
+    pagination.category === 'nfts' ? pagination.page : 1,
+  )
+  const [tokensOffset, setTokensOffset] = useState<number>(
+    pagination.category === 'cryptocurrencies' ? pagination.page : 1,
+  )
   const [tokenCount, setTokenCount] = useState<number>(0)
   const [nftCount, setNftCount] = useState<number>(0)
+
+  const handleCategoryChange = (index: number) => {
+    router.push({
+      pathname,
+      query: {
+        categories: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
+        page: 1,
+      },
+    })
+  }
 
   useEffect(() => {
     setTokenCount(tokensOffset * LISTING_LIMITS - LISTING_LIMITS)
@@ -58,6 +78,7 @@ const Rank = ({
       limit: LISTING_LIMITS,
     },
   )
+
   return (
     <Box>
       <RankHeader />
@@ -81,7 +102,15 @@ const Rank = ({
         gap={{ base: 10, md: 0, lg: 4 }}
         justifyContent={{ lg: 'center', md: 'space-between' }}
       >
-        <Tabs w="full">
+        <Tabs
+          defaultIndex={
+            CATEGORIES_WITH_INDEX[
+              pagination.category as keyof typeof CATEGORIES_WITH_INDEX
+            ]
+          }
+          w="full"
+          onChange={handleCategoryChange}
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
@@ -190,10 +219,15 @@ const Rank = ({
 
 export default Rank
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
+
+  const { category, page } = ctx.query as {
+    category: string
+    page: string | null
+  }
 
   const { data: nftsData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'nfts' }),
@@ -206,6 +240,10 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       totalTokens,
       totalNfts,
+      pagination: {
+        category: category || 'cryptocurrencies',
+        page: Number(page) || 1,
+      },
     },
   }
 }

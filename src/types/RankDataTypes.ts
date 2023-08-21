@@ -31,7 +31,7 @@ export type RankingListProps = {
     NFTsListing: RankCardType[]
     TokensListing: RankCardType[]
   }
-  categories: string
+  category: string
 }
 
 export interface NftMarketData {

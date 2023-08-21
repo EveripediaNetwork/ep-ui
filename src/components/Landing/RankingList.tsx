@@ -20,18 +20,9 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { useRouter } from 'next/router'
+import { CATEGORIES_INDEX, CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 
-const CATEGORIES_WITH_INDEX = {
-  CRYPTOCURRENCIES: 0,
-  NFTS: 1,
-}
-
-const CATEGORIES_INDEX = {
-  0: 'CRYPTOCURRENCIES',
-  1: 'NFTS',
-}
-
-const RankingList = ({ rankings, categories }: RankingListProps) => {
+const RankingList = ({ rankings, category }: RankingListProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const { pathname } = router
@@ -40,13 +31,10 @@ const RankingList = ({ rankings, categories }: RankingListProps) => {
     router.push({
       pathname,
       query: {
-        categories: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
-        page: 1,
+        category: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
       },
     })
   }
-
-  console.log(categories)
 
   return (
     <Box
@@ -76,7 +64,7 @@ const RankingList = ({ rankings, categories }: RankingListProps) => {
           mt={10}
           defaultIndex={
             CATEGORIES_WITH_INDEX[
-              categories as keyof typeof CATEGORIES_WITH_INDEX
+              category as keyof typeof CATEGORIES_WITH_INDEX
             ]
           }
           p="0"

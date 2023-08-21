@@ -38,7 +38,7 @@ interface HomePageProps {
     TokensListing: RankCardType[]
   }
   trending: TrendingData
-  categories: string
+  category: string
 }
 
 export const Index = ({
@@ -48,7 +48,7 @@ export const Index = ({
   leaderboards,
   rankings,
   trending,
-  categories,
+  category,
 }: HomePageProps) => {
   return (
     <Flex
@@ -72,7 +72,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList rankings={rankings} categories={categories} />
+        <RankingList rankings={rankings} category={category} />
         <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     rangeType: DayRangeType.LAST_WEEK,
   })
 
-  const { categories } = ctx.query as { categories: string }
+  const { category } = ctx.query as { category: string }
 
   const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
     rangeType: DayRangeType.LAST_MONTH,
@@ -187,7 +187,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       leaderboards: sortedleaderboards || [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
-      categories: categories || 'cryptocurrencies',
+      category: category || 'cryptocurrencies',
     },
   }
 }
