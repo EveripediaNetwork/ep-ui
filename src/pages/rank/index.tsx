@@ -39,6 +39,7 @@ const Rank = ({
   totalTokens: number
   pagination: { category: string; page: number }
 }) => {
+  console.log(pagination.category)
   const router = useRouter()
   const { pathname } = router
   const [nftOffset, setNftOffset] = useState<number>(
@@ -54,7 +55,7 @@ const Rank = ({
     router.push({
       pathname,
       query: {
-        categories: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
+        category: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
         page: 1,
       },
     })
