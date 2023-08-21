@@ -17,6 +17,7 @@ const RankingListButton = ({
         color: 'brandLinkColor',
         borderBottom: '2px solid',
         borderBottomColor: 'brandLinkColor',
+        outline: 'none',
       }}
     >
       <Icon

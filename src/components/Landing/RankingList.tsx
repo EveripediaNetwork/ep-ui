@@ -19,9 +19,34 @@ import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
+import { useRouter } from 'next/router'
 
-const RankingList = ({ rankings }: RankingListProps) => {
+const CATEGORIES_WITH_INDEX = {
+  CRYPTOCURRENCIES: 0,
+  NFTS: 1,
+}
+
+const CATEGORIES_INDEX = {
+  0: 'CRYPTOCURRENCIES',
+  1: 'NFTS',
+}
+
+const RankingList = ({ rankings, categories }: RankingListProps) => {
   const { t } = useTranslation()
+  const router = useRouter()
+  const { pathname } = router
+
+  const handleCategoryChange = (index: number) => {
+    router.push({
+      pathname,
+      query: {
+        categories: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
+        page: 1,
+      },
+    })
+  }
+
+  console.log(categories)
 
   return (
     <Box
@@ -47,7 +72,16 @@ const RankingList = ({ rankings }: RankingListProps) => {
         maxW="800"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
-        <Tabs mt={10} defaultIndex={0} p="0">
+        <Tabs
+          mt={10}
+          defaultIndex={
+            CATEGORIES_WITH_INDEX[
+              categories as keyof typeof CATEGORIES_WITH_INDEX
+            ]
+          }
+          p="0"
+          onChange={handleCategoryChange}
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
