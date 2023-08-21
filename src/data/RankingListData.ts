@@ -7,11 +7,6 @@ export const CATEGORIES_WITH_INDEX = {
   nfts: 1,
 }
 
-export const CATEGORIES_INDEX = {
-  0: 'cryptocurrencies',
-  1: 'nfts',
-}
-
 export const RankingListHead: RankinglistHeadProps[] = [
   {
     label: '#',

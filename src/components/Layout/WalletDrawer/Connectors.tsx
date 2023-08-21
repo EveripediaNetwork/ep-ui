@@ -53,7 +53,6 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
   const [connectorName, setConnectorName] = useState('')
   const { connectors, connect } = useConnect({
     onError(error) {
-      console.log('errors')
       logEvent({
         action: 'LOGIN_ERROR',
         label: error.message,

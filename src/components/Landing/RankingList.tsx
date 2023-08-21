@@ -20,7 +20,11 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { useRouter } from 'next/router'
-import { CATEGORIES_INDEX, CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import {
+  getKeyByValue,
+  getValueByKey,
+} from '@/utils/DataTransform/getObjectValue'
 
 const RankingList = ({ rankings, category }: RankingListProps) => {
   const { t } = useTranslation()
@@ -31,7 +35,7 @@ const RankingList = ({ rankings, category }: RankingListProps) => {
     router.push({
       pathname,
       query: {
-        category: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
+        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
       },
     })
   }
@@ -62,11 +66,7 @@ const RankingList = ({ rankings, category }: RankingListProps) => {
       <Box maxW="1208px" mx="auto">
         <Tabs
           mt={10}
-          defaultIndex={
-            CATEGORIES_WITH_INDEX[
-              category as keyof typeof CATEGORIES_WITH_INDEX
-            ]
-          }
+          defaultIndex={getValueByKey(CATEGORIES_WITH_INDEX, category)}
           p="0"
           onChange={handleCategoryChange}
         >

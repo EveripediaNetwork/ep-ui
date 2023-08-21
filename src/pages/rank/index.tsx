@@ -26,7 +26,11 @@ import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkelet
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 import { useRouter } from 'next/router'
-import { CATEGORIES_INDEX, CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import {
+  getKeyByValue,
+  getValueByKey,
+} from '@/utils/DataTransform/getObjectValue'
 
 const LISTING_LIMITS = 20
 
@@ -39,7 +43,6 @@ const Rank = ({
   totalTokens: number
   pagination: { category: string; page: number }
 }) => {
-  console.log(pagination.category)
   const router = useRouter()
   const { pathname } = router
   const [nftOffset, setNftOffset] = useState<number>(
@@ -55,7 +58,7 @@ const Rank = ({
     router.push({
       pathname,
       query: {
-        category: CATEGORIES_INDEX[index as keyof typeof CATEGORIES_INDEX],
+        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
         page: 1,
       },
     })
@@ -104,11 +107,10 @@ const Rank = ({
         justifyContent={{ lg: 'center', md: 'space-between' }}
       >
         <Tabs
-          defaultIndex={
-            CATEGORIES_WITH_INDEX[
-              pagination.category as keyof typeof CATEGORIES_WITH_INDEX
-            ]
-          }
+          defaultIndex={getValueByKey(
+            CATEGORIES_WITH_INDEX,
+            pagination.category,
+          )}
           w="full"
           onChange={handleCategoryChange}
         >
