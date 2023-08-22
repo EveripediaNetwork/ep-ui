@@ -1,7 +1,6 @@
 import { ArrowForwardIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Box,
-  Button,
   Center,
   Flex,
   HStack,
@@ -11,7 +10,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { Logo } from '../Elements'
+import { LinkButton, Logo } from '../Elements'
 import { useTranslation } from 'react-i18next'
 
 const CustomListItem = ({ text }: { text: string }) => {
@@ -98,21 +97,17 @@ const AboutIqgpt = () => {
             </Text>
           </Box>
           <HStack gap={{ base: 2, xl: 6 }}>
-            <Button
-              as="a"
+            <LinkButton
               href={'https://iqgpt.com/'}
-              target="_blank"
               size="lg"
               variant="solid"
               px={{ base: 3, md: 5 }}
               fontSize={'12px'}
             >
               Explore IQ GPT
-            </Button>
-            <Button
-              as="a"
+            </LinkButton>
+            <LinkButton
               href={'https://iqgpt.com/about'}
-              target="_blank"
               size="lg"
               variant="outline"
               px={{ base: 3, md: 5 }}
@@ -120,7 +115,7 @@ const AboutIqgpt = () => {
               color={'aboutIqTokenText'}
             >
               About IQ Token
-            </Button>
+            </LinkButton>
           </HStack>
         </VStack>
         <Box
@@ -128,7 +123,7 @@ const AboutIqgpt = () => {
           bgColor={'brandLinkColor'}
           rounded={'20px'}
           pt={{ base: '180px', md: '150px', lg: '200px' }}
-          pb={{ base: '30px', md: '0px', lg: '100px' }}
+          pb={{ base: '30px', md: '0px', lg: '70px' }}
           px={'9px'}
           mt={{ md: '-100px', lg: '-150px' }}
         >
