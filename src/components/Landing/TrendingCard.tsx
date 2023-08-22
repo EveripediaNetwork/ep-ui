@@ -4,7 +4,6 @@ import {
   AspectRatio,
   Flex,
   HStack,
-  VStack,
   Icon,
   Select,
 } from '@chakra-ui/react'
@@ -88,7 +87,7 @@ const TrendingCard = ({
           )}
         </Flex>
         {wikis ? (
-          <VStack w="full" pt="2" px="2" gap="2" overflow="hidden">
+          <Flex direction={'column'} w="full" px="1" overflow="hidden">
             {wikiData?.map((wiki, i) => (
               <HStack
                 w="full"
@@ -100,8 +99,10 @@ const TrendingCard = ({
                   },
                 }}
                 cursor="pointer"
+                mt={0}
                 key={i}
-                px={1}
+                py={2}
+                px={2}
               >
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
@@ -153,7 +154,7 @@ const TrendingCard = ({
                 </HStack>
               </HStack>
             ))}
-          </VStack>
+          </Flex>
         ) : (
           <TrendingSkeleton />
         )}
