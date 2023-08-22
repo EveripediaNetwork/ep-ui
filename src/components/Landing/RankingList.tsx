@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { RankingListProps } from '@/types/RankDataTypes'
+import { ObjectKeyType, RankingListProps } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
@@ -21,10 +21,9 @@ import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
-import {
-  CategoryKeyType,
-  getKeyByValue,
-} from '@/utils/DataTransform/getObjectValue'
+import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
+
+export type CategoryKeyType = ObjectKeyType<typeof CATEGORIES_WITH_INDEX>
 
 const RankingList = ({ rankings, category }: RankingListProps) => {
   const { t } = useTranslation()

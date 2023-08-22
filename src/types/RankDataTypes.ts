@@ -79,3 +79,5 @@ export interface RankTableProps {
   currentPage?: number
   pageSize?: number
 }
+
+export type ObjectKeyType<T> = keyof T

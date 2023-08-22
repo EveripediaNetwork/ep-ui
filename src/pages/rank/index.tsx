@@ -27,10 +27,8 @@ import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
-import {
-  CategoryKeyType,
-  getKeyByValue,
-} from '@/utils/DataTransform/getObjectValue'
+import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
+import { CategoryKeyType } from '@/components/Landing/RankingList'
 
 const LISTING_LIMITS = 20
 
