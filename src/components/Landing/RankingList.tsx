@@ -22,8 +22,8 @@ import { LinkButton } from '../Elements'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import {
+  CategoryKeyType,
   getKeyByValue,
-  getValueByKey,
 } from '@/utils/DataTransform/getObjectValue'
 
 const RankingList = ({ rankings, category }: RankingListProps) => {
@@ -66,7 +66,7 @@ const RankingList = ({ rankings, category }: RankingListProps) => {
       <Box maxW="1208px" mx="auto">
         <Tabs
           mt={10}
-          defaultIndex={getValueByKey(CATEGORIES_WITH_INDEX, category)}
+          defaultIndex={CATEGORIES_WITH_INDEX[category as CategoryKeyType]}
           p="0"
           onChange={handleCategoryChange}
         >

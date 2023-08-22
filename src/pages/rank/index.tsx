@@ -28,8 +28,8 @@ import RankHero from './RankHero'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import {
+  CategoryKeyType,
   getKeyByValue,
-  getValueByKey,
 } from '@/utils/DataTransform/getObjectValue'
 
 const LISTING_LIMITS = 20
@@ -107,10 +107,9 @@ const Rank = ({
         justifyContent={{ lg: 'center', md: 'space-between' }}
       >
         <Tabs
-          defaultIndex={getValueByKey(
-            CATEGORIES_WITH_INDEX,
-            pagination.category,
-          )}
+          defaultIndex={
+            CATEGORIES_WITH_INDEX[pagination.category as CategoryKeyType]
+          }
           w="full"
           onChange={handleCategoryChange}
         >
