@@ -57,7 +57,7 @@ const CategoriesList = () => {
         maxW="800"
       >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
-        maxW="1050px"
+        maxW="1208px"
         w="100%"
         mx="auto"
         gridTemplateColumns={{
@@ -73,7 +73,7 @@ const CategoriesList = () => {
           <div key={category.id}>
             <LinkBox
               _hover={{
-                boxShadow: '0px 12px 50px -12px rgba(192, 195, 197, 0.25)',
+                boxShadow: '3xl',
               }}
               cursor="pointer"
               bgColor="cardBg"
@@ -83,14 +83,13 @@ const CategoriesList = () => {
               overflow="hidden"
               _dark={{
                 borderColor: 'whiteAlpha.300',
-                boxShadow: '12px 25px 50px -12px rgba(0, 0, 0, 0.25)',
               }}
             >
               <LinkOverlay href={`/categories/${category.id}`}>
                 <Image
                   bgColor="DimColor"
                   src={category.cardImage}
-                  h="200px"
+                  h="300px"
                   w="100%"
                   alt={category.title}
                   imgW={CATEGORY_IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}

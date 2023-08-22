@@ -44,10 +44,14 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           textAlign="left"
           bg="white"
           color="black"
-          _dark={{ bgColor: 'gray.700', color: 'white' }}
+          _dark={{
+            bgColor: 'gray.700',
+            color: 'white',
+            shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+          }}
           cursor="pointer"
           rounded="lg"
-          shadow="md"
+          shadow="3xl"
           mx="auto"
         >
           <AspectRatio

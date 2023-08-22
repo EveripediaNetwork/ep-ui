@@ -16,7 +16,7 @@ export const RankTable = ({
   return (
     <TableContainer
       w="full"
-      boxShadow="md"
+      boxShadow="3xl"
       borderRadius="8px"
       bg="rankingListTableBg"
       border="1px solid"

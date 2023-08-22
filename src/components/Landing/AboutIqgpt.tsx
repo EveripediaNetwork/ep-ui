@@ -139,7 +139,7 @@ const AboutIqgpt = () => {
             translateX={'-50%'}
           >
             <Image
-              src="/images/GIFs/intelligentRobot.gif"
+              src="/images/GIFs/intelligentRobotMin.gif"
               alt="IQ GPT AI robot"
               width={{ base: '300px', md: 250, lg: 350 }}
               height={{ base: '300px', md: 250, lg: 350 }}
