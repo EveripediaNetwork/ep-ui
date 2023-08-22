@@ -21,6 +21,7 @@ export const RankTable = ({
       bg="rankingListTableBg"
       border="1px solid"
       borderColor="rankingListBorder"
+      _dark={{ boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)' }}
     >
       <Table variant="simple">{children}</Table>
       {hasPagination && onPageChange && (
