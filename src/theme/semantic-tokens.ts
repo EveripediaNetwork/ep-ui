@@ -389,5 +389,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.700',
       _dark: 'white',
     },
+    cardBorderColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.300',
+    },
   },
 }

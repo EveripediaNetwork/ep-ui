@@ -18,7 +18,8 @@ const TrendingCategoryCard = ({
   return (
     <Box
       bgColor="cardBg"
-      boxShadow="md"
+      border={'1px'}
+      borderColor={'cardBorderColor'}
       p={{ base: '2.5', md: '5' }}
       borderRadius="12px"
       overflowX="hidden"

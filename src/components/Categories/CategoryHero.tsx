@@ -16,7 +16,7 @@ const CategoryHero = ({
       <Image
         priority
         src={`/images/categories/${id}.jpg`}
-        height="250px"
+        height="350px"
         alt={title}
       />
       <Flex
@@ -31,7 +31,7 @@ const CategoryHero = ({
         direction="column"
       >
         <Heading
-          fontSize={{ base: 25, lg: 36 }}
+          fontSize={{ base: 25, lg: 36, xl: 48 }}
           maxW="80%"
           mx="auto"
           textAlign="center"
