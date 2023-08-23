@@ -32,8 +32,8 @@ const AboutIqgpt = () => {
       spacing={6}
       px={{ base: 3, md: 8 }}
       maxW={'1050px'}
-      mt={{ md: '100px', lg: '300px' }}
-      mb={{ base: '200px', lg: 0 }}
+      mt={{ base: '50px', md: '40px', lg: '250px' }}
+      mb={{ base: 150, md: 250, lg: 30 }}
       mx={'auto'}
     >
       <HStack
@@ -55,7 +55,7 @@ const AboutIqgpt = () => {
       </HStack>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
-        gap={{ base: '150px', md: '250px', lg: 4 }}
+        gap={{ base: 170, md: '250px', lg: 4 }}
         bgColor={'cardBg'}
         rounded={{ base: '6px', md: '20px' }}
         border={'1px'}
@@ -129,7 +129,7 @@ const AboutIqgpt = () => {
           pb={{ base: '10px', md: '20px', lg: '70px' }}
           px={'9px'}
           mt={{ md: '-100px', lg: '-150px' }}
-          mb={{ base: '-200px', lg: 0 }}
+          mb={{ base: '-100px', lg: 0 }}
         >
           <Box
             pos={'absolute'}
