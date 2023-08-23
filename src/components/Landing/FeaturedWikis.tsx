@@ -20,8 +20,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         rounded="lg"
         py={3}
         bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white', border: 'none' }}
-        color="black"
+        _dark={{ bgColor: 'gray.700', border: 'none' }}
         textAlign="center"
         justifyContent="center"
       >
@@ -33,7 +32,12 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
             fontWeight={600}
             as={RiStarFill}
           />
-          <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+          <Text
+            color={'wikiFlagTextColor'}
+            fontSize={{ base: 'md', lg: '18px' }}
+            pl={2}
+            fontWeight="600"
+          >
             Featured wikis
           </Text>
         </chakra.div>

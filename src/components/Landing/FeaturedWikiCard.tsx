@@ -80,6 +80,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
+                color={'wikiFlagTextColor'}
                 fontSize={{
                   base: '14px',
                   md: '18px',

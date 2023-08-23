@@ -45,7 +45,7 @@ const TrendingCard = ({
         minH="500px"
         py={5}
         bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white', border: 'none' }}
+        _dark={{ bgColor: 'gray.700', border: 'none' }}
       >
         <Flex
           w="full"
@@ -62,7 +62,12 @@ const TrendingCard = ({
               color="brandLinkColor"
               as={icon}
             />
-            <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+            <Text
+              color={'wikiFlagTextColor'}
+              fontSize={{ base: 'md', lg: '18px' }}
+              pl={2}
+              fontWeight="600"
+            >
               {title}
             </Text>
           </Flex>
@@ -131,8 +136,7 @@ const TrendingCard = ({
                   >
                     <Text
                       fontWeight="thin"
-                      color="black"
-                      _dark={{ color: 'white' }}
+                      color="wikiFlagTextColor"
                       fontSize="18px"
                       overflow="hidden"
                       onClick={() => router.push(`wiki/${wiki.id}`)}
@@ -147,6 +151,7 @@ const TrendingCard = ({
                       overflow="hidden"
                       fontSize="12px"
                       fontWeight="thin"
+                      color="homeDescriptionColor"
                     >
                       {wiki.summary}
                     </Text>
