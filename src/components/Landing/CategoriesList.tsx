@@ -74,10 +74,12 @@ const CategoriesList = () => {
             <LinkBox
               _hover={{
                 boxShadow: '3xl',
+                transform: 'scale(1.02)',
                 _dark: {
                   boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
                 },
               }}
+              transition="all 0.3s"
               cursor="pointer"
               bgColor="cardBg"
               border={'1px'}

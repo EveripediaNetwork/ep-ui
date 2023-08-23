@@ -110,7 +110,7 @@ const AboutIqgpt = () => {
               Explore IQ GPT
             </LinkButton>
             <LinkButton
-              href={'/wiki/iq'}
+              href={'https://iq.wiki/wiki/iq'}
               size="lg"
               variant="outline"
               px={{ base: 5 }}
