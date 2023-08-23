@@ -40,7 +40,7 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             />
           </AspectRatio>
         </Box>
-        <Box flexGrow="1" alignSelf="center">
+        <Box overflow="hidden" flexGrow="1" alignSelf="center">
           <LinkOverlay href={`/wiki/${wikiId}`}>
             <Heading
               overflow="hidden"
@@ -62,7 +62,6 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             my={2}
             display="-webkit-box"
             textOverflow="ellipsis"
-            overflow="hidden"
             fontSize={{
               base: '12px',
               md: '14px',
