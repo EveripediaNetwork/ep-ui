@@ -102,7 +102,7 @@ export const WikiCarousel = <T extends unknown>({
       <chakra.div ref={emblaRef} overflow="hidden" w="full">
         <Flex w="full">
           {data?.map((e, i) => (
-            <Box key={i} flex="0 0 auto" minW="0" maxW="100%">
+            <Box key={i} flex="0 0 100%" minW="0" maxW="100%">
               {item(e)}
             </Box>
           ))}

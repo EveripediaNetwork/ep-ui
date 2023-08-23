@@ -42,6 +42,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           alignSelf="center"
           direction="column"
           textAlign="left"
+          bgColor={'red.400'}
           bg="white"
           color="black"
           _dark={{
