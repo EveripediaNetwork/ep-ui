@@ -69,7 +69,7 @@ const CategoriesList = () => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map((category) => (
+        {newCategoryList.map(category => (
           <div key={category.id}>
             <LinkBox
               _hover={{
@@ -92,7 +92,7 @@ const CategoriesList = () => {
                 <Image
                   bgColor="DimColor"
                   src={category.cardImage}
-                  h="300px"
+                  h={{ base: '200px', md: '225px', xl: '300px' }}
                   w="100%"
                   alt={category.title}
                   imgW={CATEGORY_IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
