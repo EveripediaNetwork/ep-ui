@@ -110,7 +110,7 @@ const AboutIqgpt = () => {
               Explore IQ GPT
             </LinkButton>
             <LinkButton
-              href={'https://iqgpt.com/about'}
+              href={'https://iq.wiki/wiki/iq'}
               size="lg"
               variant="outline"
               px={{ base: 5 }}
@@ -143,7 +143,7 @@ const AboutIqgpt = () => {
             translateX={'-50%'}
           >
             <Image
-              src="/images/GIFs/intelligentRobotMin.gif"
+              src="/images/GIFs/intelligent-robot.gif"
               alt="IQ GPT AI robot"
               width={{ base: 250, md: 300, lg: 350 }}
               height={{ base: 250, md: 300, lg: 350 }}
