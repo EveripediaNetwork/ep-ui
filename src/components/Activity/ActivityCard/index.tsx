@@ -31,7 +31,7 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
       minWidth="90%"
       bg="cardBg"
       py={3}
-      px={2}
+      px={4}
       borderRadius={8}
       borderColor="borderColor"
       borderWidth="0.5px"
