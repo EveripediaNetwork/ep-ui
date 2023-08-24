@@ -2,7 +2,7 @@ import { BoxProps } from '@chakra-ui/react'
 import { BaseEvents } from '@everipedia/iq-utils'
 import { IconType } from 'react-icons/lib'
 import { z } from 'zod'
-
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 export interface RankCardType {
   hasWiki: any
   id: string
@@ -93,3 +93,5 @@ export type RankinglistHeadProps = {
 }[]
 
 export type OnClickMap = { [key in RankListHeadLabel]?: () => void }
+export type ObjectKeyType<T> = keyof T
+export type CategoryKeyType = ObjectKeyType<typeof CATEGORIES_WITH_INDEX>

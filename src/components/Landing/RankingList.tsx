@@ -20,6 +20,10 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
+import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
+import { useRouter } from 'next/router'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { CategoryKeyType } from '@/types/RankDataTypes'
 
 type RankingListProps = {
   rankings: {
@@ -27,14 +31,21 @@ type RankingListProps = {
     TokensListing: RankCardType[]
   }
   listingLimit: number
+  category: string
 }
 
-const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
+const RankingList = ({
+  rankings,
+  listingLimit,
+  category,
+}: RankingListProps) => {
   const { t } = useTranslation()
   const { TokensListing, NFTsListing } = rankings
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
+  const router = useRouter()
+  const { pathname } = router
 
   if (
     TokensListing &&
@@ -43,6 +54,15 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing, setOrder))
     setNftItems(sortByMarketCap('descending', NFTsListing, setOrder))
+  }
+
+  const handleCategoryChange = (index: number) => {
+    router.push({
+      pathname,
+      query: {
+        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+      },
+    })
   }
 
   const onClickMap: OnClickMap = {
@@ -80,7 +100,12 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         maxW="800"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
-        <Tabs mt={10} defaultIndex={0} p="0">
+        <Tabs
+          mt={10}
+          defaultIndex={CATEGORIES_WITH_INDEX[category as CategoryKeyType]}
+          p="0"
+          onChange={handleCategoryChange}
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
@@ -148,7 +173,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         </Tabs>
         <Flex justifyContent="center" mt="10">
           <LinkButton
-            href="/rank"
+            href="/rank?category=cryptocurrencies&page=1"
             h="50px"
             w={{ base: 32, lg: 40 }}
             variant="outline"

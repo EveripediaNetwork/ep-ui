@@ -16,8 +16,14 @@ const formatDate = (date: string) => {
   })
 }
 
-const numFormatter = Intl.NumberFormat('en', {
+const marketCapFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
+}).format
+
+const priceFormatter = Intl.NumberFormat('en', {
+  notation: 'standard',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
 }).format
 
 const RankingItem = ({
@@ -34,13 +40,13 @@ const RankingItem = ({
   listingLimit: number
 }) => {
   const marketCap = item.nftMarketData
-    ? numFormatter(item.nftMarketData.market_cap_usd)
-    : numFormatter(item.tokenMarketData.market_cap)
+    ? marketCapFormatter(item.nftMarketData.market_cap_usd)
+    : marketCapFormatter(item.tokenMarketData.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? item.nftMarketData.floor_price_usd.toFixed(2).toLocaleString()
-      : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
+      ? priceFormatter(item.nftMarketData.floor_price_usd)
+      : priceFormatter(item.tokenMarketData.current_price)
   }`
 
   const dateFounded = item?.events?.find(

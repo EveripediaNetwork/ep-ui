@@ -1,10 +1,14 @@
 import usePagination, { DOTS } from '@/hooks/usePagination'
 import { RankpaginationProps } from '@/types/RankDataTypes'
 import { Button, Flex } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 
 const RankPagination = (props: RankpaginationProps) => {
+  const router = useRouter()
+  const { query, pathname } = router
+
   const {
     onPageChange,
     totalCount,
@@ -25,7 +29,28 @@ const RankPagination = (props: RankpaginationProps) => {
   }
 
   const handlePageChange = (direction: number) => {
-    onPageChange(currentPage + 1 * direction)
+    const pageNumber = currentPage + 1 * direction
+    const updatedQuery = {
+      pathname,
+      query: {
+        ...query,
+        page: pageNumber,
+      },
+    }
+    onPageChange(pageNumber)
+    router.push(updatedQuery)
+  }
+
+  const handlePaginationBtnClick = (pageNumber: number) => {
+    const updatedQuery = {
+      pathname,
+      query: {
+        ...query,
+        page: pageNumber,
+      },
+    }
+    onPageChange(pageNumber)
+    router.push(updatedQuery)
   }
 
   const lastPage = paginationRange[paginationRange.length - 1]
@@ -92,7 +117,7 @@ const RankPagination = (props: RankpaginationProps) => {
                   ? 'paginationButtonActive'
                   : 'paginationButtonDefault'
               }
-              onClick={() => onPageChange(pageNumber as number)}
+              onClick={() => handlePaginationBtnClick(pageNumber as number)}
             >
               {pageNumber}
             </Button>
