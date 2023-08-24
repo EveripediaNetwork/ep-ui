@@ -49,6 +49,10 @@ const WikiPreviewCard = ({
       bgColor="cardBg"
       border={'1px'}
       borderColor={'cardBorderColor'}
+      transition="all 0.3s"
+      _hover={{
+        transform: 'scale(1.02)',
+      }}
       rounded="lg"
       overflow="hidden"
       cursor="pointer"
