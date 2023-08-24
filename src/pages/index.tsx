@@ -66,8 +66,8 @@ export const Index = ({
           featuredWikis={promotedWikis && promotedWikis}
         />
         <RankingList rankings={rankings} />
-        <CategoriesList />
         <AboutIqgpt />
+        <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
