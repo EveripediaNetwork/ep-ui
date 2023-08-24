@@ -43,13 +43,11 @@ interface RankTableHeadProps {
 }
 
 export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
-  // console.log('OnClickMap: ', onClickMap)
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
         {RankingListHead.map((item, i) => {
           const onClick = onClickMap?.[item.label]
-          // console.log(`Label: ${item.label} OnClick: ${onClick}`)
           return (
             <Th
               key={i}
