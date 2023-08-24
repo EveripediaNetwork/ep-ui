@@ -130,7 +130,7 @@ const RankingList = ({ rankings, category }: RankingListProps) => {
         </Tabs>
         <Flex justifyContent="center" mt="10">
           <LinkButton
-            href="/rank"
+            href="/rank?category=cryptocurrencies&page=1"
             h="50px"
             w={{ base: 32, lg: 40 }}
             variant="outline"
