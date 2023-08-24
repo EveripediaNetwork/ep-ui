@@ -33,7 +33,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
       <Heading
         textAlign="center"
         mb={4}
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('rankingListHeading')}`}

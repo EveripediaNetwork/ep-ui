@@ -43,7 +43,7 @@ const CategoriesList = () => {
     <VStack mt={10} mb={20} spacing={2}>
       <Heading
         textAlign="center"
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('browseCategory')}`}
