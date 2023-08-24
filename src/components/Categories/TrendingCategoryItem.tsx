@@ -88,7 +88,7 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
           <Text
             mt="4px !important"
             fontSize={{ base: '10px', md: '14px' }}
-            opacity={0.6}
+            opacity={0.4}
             whiteSpace="nowrap"
           >
             Last Edited {getReadableDate(lastModTimeStamp as string)} ago

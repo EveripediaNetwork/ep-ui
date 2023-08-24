@@ -16,7 +16,7 @@ const CategoryHero = ({
       <Image
         priority
         src={`/images/categories/${id}.jpg`}
-        height="350px"
+        height="325px"
         alt={title}
       />
       <Flex
