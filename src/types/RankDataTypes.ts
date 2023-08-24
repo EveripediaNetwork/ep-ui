@@ -1,6 +1,7 @@
 import { BoxProps } from '@chakra-ui/react'
 import { BaseEvents } from '@everipedia/iq-utils'
 import { IconType } from 'react-icons/lib'
+import { z } from 'zod'
 
 export interface RankCardType {
   hasWiki: any
@@ -24,13 +25,6 @@ export interface Medum {
 
 export interface Image {
   id: string
-}
-
-export type RankingListProps = {
-  rankings: {
-    NFTsListing: RankCardType[]
-    TokensListing: RankCardType[]
-  }
 }
 
 export interface NftMarketData {
@@ -78,3 +72,24 @@ export interface RankTableProps {
   currentPage?: number
   pageSize?: number
 }
+
+export type SortOrder = 'ascending' | 'descending'
+
+const rankListHeadLabels = z.enum([
+  '#',
+  'Name',
+  'Price',
+  'Marketcap',
+  'Founders',
+  'Blockchain',
+  'Date Founded',
+])
+
+export type RankListHeadLabel = z.infer<typeof rankListHeadLabels>
+
+export type RankinglistHeadProps = {
+  label: RankListHeadLabel
+  Icon?: IconType
+}[]
+
+export type OnClickMap = { [key in RankListHeadLabel]?: () => void }

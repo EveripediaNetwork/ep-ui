@@ -69,7 +69,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList rankings={rankings} />
+        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -154,10 +154,12 @@ export async function getStaticProps() {
 
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
-      `Error fetching data. the error is: ${
-        (JSON.stringify(tagsDataError?.message),
+      `Error fetching data. the error is: ${[
+        JSON.stringify(tagsDataError?.message),
         JSON.stringify(promotedWikisError?.message),
-        JSON.stringify(recentError?.message))
+        JSON.stringify(tagsDataError?.message),
+        JSON.stringify(recentError?.message),
+      ].join(' ')}
       }`,
     )
   }

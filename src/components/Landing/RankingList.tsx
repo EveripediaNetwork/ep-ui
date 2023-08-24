@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Flex,
@@ -13,15 +13,48 @@ import {
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { RankingListProps } from '@/types/RankDataTypes'
+import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
+import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
 
-const RankingList = ({ rankings }: RankingListProps) => {
+type RankingListProps = {
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
+  listingLimit: number
+}
+
+const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
+  const { TokensListing, NFTsListing } = rankings
+  const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
+  const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [sortOrder, setOrder] = useState<SortOrder>('descending')
+
+  if (
+    TokensListing &&
+    NFTsListing &&
+    (!tokenItems.length || !nftItems.length)
+  ) {
+    setTokenItems(sortByMarketCap('descending', TokensListing, setOrder))
+    setNftItems(sortByMarketCap('descending', NFTsListing, setOrder))
+  }
+
+  const onClickMap: OnClickMap = {
+    Marketcap: function () {
+      if (tokenItems && nftItems) {
+        const newSortOrder =
+          sortOrder === 'ascending' ? 'descending' : 'ascending'
+        setTokenItems(sortByMarketCap(newSortOrder, TokensListing, setOrder))
+        setNftItems(sortByMarketCap(newSortOrder, NFTsListing, setOrder))
+      }
+    },
+  }
 
   return (
     <Box
@@ -68,11 +101,14 @@ const RankingList = ({ rankings }: RankingListProps) => {
               py={{ base: 0, md: 'initial' }}
             >
               <RankTable hasPagination={false}>
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {rankings.TokensListing.map((token, index) =>
+                  {tokenItems.map((token, index) =>
                     token ? (
                       <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
                         key={index + token.id}
                         index={index}
                         item={token}
@@ -89,11 +125,14 @@ const RankingList = ({ rankings }: RankingListProps) => {
               py={{ base: 0, md: 'initial' }}
             >
               <RankTable hasPagination={false}>
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {rankings.NFTsListing.map((nft, index) =>
+                  {nftItems.map((nft, index) =>
                     nft ? (
                       <RankingItem
+                        listingLimit={LISTING_LIMIT}
+                        offset={0}
+                        order={sortOrder}
                         key={index + nft.id}
                         index={index}
                         item={nft}
