@@ -86,13 +86,17 @@ const Rank = ({
   const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
 
   const handleCategoryChange = (index: number) => {
-    router.push({
-      pathname,
-      query: {
-        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
-        page: 1,
+    router.push(
+      {
+        pathname,
+        query: {
+          category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+          page: 1,
+        },
       },
-    })
+      undefined,
+      { shallow: true },
+    )
   }
 
   const { data: tokenData, isFetching } = useGetTokenRankingQuery({

@@ -57,12 +57,16 @@ const RankingList = ({
   }
 
   const handleCategoryChange = (index: number) => {
-    router.push({
-      pathname,
-      query: {
-        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+    router.push(
+      {
+        pathname,
+        query: {
+          category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+        },
       },
-    })
+      undefined,
+      { shallow: true },
+    )
   }
 
   const onClickMap: OnClickMap = {
