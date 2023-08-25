@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  useRef,
+} from 'react'
 import { GetServerSideProps } from 'next'
 import {
   Text,
@@ -70,6 +76,7 @@ const Rank = ({
   totalTokens: number
   pagination: { category: string; page: number }
 }) => {
+  const hasRenderedInitialItems = useRef(false)
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('ascending')
@@ -111,8 +118,21 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
+  /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
+  if (
+    tokenData &&
+    nftData &&
+    !nftItems.length &&
+    !tokenItems.length &&
+    !hasRenderedInitialItems.current
+  ) {
+    setTokenItems(sortByMarketCap('descending', tokenData, setOrder))
+    setNftItems(sortByMarketCap('descending', nftData, setOrder))
+    hasRenderedInitialItems.current = true
+  }
+
   useEffect(() => {
-    if (tokenData && nftData) {
+    if (tokenData && nftData && hasRenderedInitialItems.current) {
       setTokenItems(sortByMarketCap('descending', tokenData, setOrder))
       setNftItems(sortByMarketCap('descending', nftData, setOrder))
     }
@@ -191,7 +211,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setTokensOffset(page)}
+                onPageChange={page => setTokensOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -236,7 +256,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setNftOffset(page)}
+                onPageChange={page => setNftOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -273,7 +293,7 @@ const Rank = ({
 
 export default Rank
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
