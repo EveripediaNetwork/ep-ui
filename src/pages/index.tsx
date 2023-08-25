@@ -24,6 +24,7 @@ import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
 import AboutIqgpt from '@/components/Landing/AboutIqgpt'
+import { GetServerSideProps } from 'next'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -38,6 +39,7 @@ interface HomePageProps {
     TokensListing: RankCardType[]
   }
   trending: TrendingData
+  category: string
 }
 
 export const Index = ({
@@ -47,6 +49,7 @@ export const Index = ({
   leaderboards,
   rankings,
   trending,
+  category,
 }: HomePageProps) => {
   return (
     <Flex
@@ -65,7 +68,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList rankings={rankings} />
+        <RankingList rankings={rankings} category={category} />
         <AboutIqgpt />
         <CategoriesList />
       </Box>
@@ -75,13 +78,15 @@ export const Index = ({
   )
 }
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
   const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
     rangeType: DayRangeType.LAST_WEEK,
   })
+
+  const { category } = ctx.query as { category: string }
 
   const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
     rangeType: DayRangeType.LAST_MONTH,
@@ -179,6 +184,7 @@ export async function getStaticProps() {
       leaderboards: sortedleaderboards || [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
+      category: category || 'cryptocurrencies',
     },
   }
 }

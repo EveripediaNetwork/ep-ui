@@ -13,15 +13,31 @@ import {
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { RankingListProps } from '@/types/RankDataTypes'
+import { ObjectKeyType, RankingListProps } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
+import { useRouter } from 'next/router'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 
-const RankingList = ({ rankings }: RankingListProps) => {
+export type CategoryKeyType = ObjectKeyType<typeof CATEGORIES_WITH_INDEX>
+
+const RankingList = ({ rankings, category }: RankingListProps) => {
   const { t } = useTranslation()
+  const router = useRouter()
+  const { pathname } = router
+
+  const handleCategoryChange = (index: number) => {
+    router.push({
+      pathname,
+      query: {
+        category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+      },
+    })
+  }
 
   return (
     <Box
@@ -47,7 +63,12 @@ const RankingList = ({ rankings }: RankingListProps) => {
         maxW="768"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
-        <Tabs mt={10} defaultIndex={0} p="0">
+        <Tabs
+          mt={10}
+          defaultIndex={CATEGORIES_WITH_INDEX[category as CategoryKeyType]}
+          p="0"
+          onChange={handleCategoryChange}
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
@@ -109,7 +130,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
         </Tabs>
         <Flex justifyContent="center" mt="10">
           <LinkButton
-            href="/rank"
+            href="/rank?category=cryptocurrencies&page=1"
             h="50px"
             w={{ base: 32, lg: 40 }}
             variant="outline"

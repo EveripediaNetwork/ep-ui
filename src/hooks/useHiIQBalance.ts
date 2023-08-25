@@ -8,9 +8,12 @@ import config from '@/config'
 
 const abi = [
   {
-    name: 'balanceOf',
-    outputs: [{ type: 'uint256', name: '' }],
-    inputs: [{ type: 'address', name: 'addr' }],
+    name: 'locked',
+    outputs: [
+      { type: 'int128', name: 'amount' },
+      { type: 'uint256', name: 'end' },
+    ],
+    inputs: [{ type: 'address', name: 'arg0' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -31,8 +34,8 @@ export const useHiIQBalance = (address: string | undefined | null) => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getBalance = async () => {
-      const userBalance = await getContractDetails('balanceOf')
-      const fetchedBalance = userBalance ? BigInt(userBalance) : BigInt(0)
+      const userBalance = await getContractDetails('locked')
+      const fetchedBalance = userBalance ? BigInt(userBalance[0]) : BigInt(0)
       const hiiqBalance = Number(formatEther(fetchedBalance))
       const coinGeckoIqPrice = await getIqTokenValue()
       dispatch(
