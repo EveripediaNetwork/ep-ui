@@ -345,7 +345,7 @@ const BrandingPage = () => {
               </ListItem>
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                The IQ wiki brain logo shouldn’t be reperesented with any other
+                The IQ.wiki brain logo shouldn’t be reperesented with any other
                 kind of brain except as stated above.
               </ListItem>
               <ListItem>
