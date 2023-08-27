@@ -17,11 +17,11 @@ const Terms = () => (
       <Flex gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
         <Flex gap={5} flex="3" flexDirection="column">
           <Text>
-            Welcome to IQ.Wiki, the website and online service of Distributed
+            Welcome to IQ.wiki, the website and online service of Distributed
             Machines Inc. (&quot;IQ.wiki,&quot; &quot;we,&quot; &quot;us&quot;
             or &quot;our&quot;). This page explains the terms by which you may
             use our online and/or mobile services, website, and software
-            provided on or in connection with the IQ.Wiki service (collectively
+            provided on or in connection with the IQ.wiki service (collectively
             the &quot;Service&quot;). By accessing or using the Service, you
             (&quot;you&quot; or &quot;your&quot;), signify that you have read,
             understand and agree to be bound by the terms of service and

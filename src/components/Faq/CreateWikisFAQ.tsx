@@ -37,7 +37,7 @@ const CreateWikisFAQ = () => {
             comprehensive - the system will generate the unique URL from the
             title.{' '}
             <iframe
-              title="Getting Started with creating wikis on IQ.WIKI"
+              title="Getting Started with creating wikis on IQ.wiki"
               src="https://www.youtube.com/embed/Y4gWJUFchrc"
             />{' '}
           </>

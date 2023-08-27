@@ -24,7 +24,7 @@ const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
         my={14}
       >
         <Heading w="full" fontSize={{ base: '32', md: '42', lg: '4xl' }}>
-          <chakra.span color="brandLinkColor"> IQ.WIKI</chakra.span> Glossary
+          <chakra.span color="brandLinkColor"> IQ.wiki</chakra.span> Glossary
         </Heading>
         <Text
           w={{ base: '90%', md: '80%', xl: '90%' }}

@@ -129,7 +129,7 @@ export const BlogPostPage = ({
                 textAlign="center"
               >
                 Join thousands of others in receiving the most interesting wikis
-                on IQ.Wiki every week
+                on IQ.wiki every week
               </Text>
               <Button
                 as="a"

@@ -120,11 +120,11 @@ const BrandingPage = () => {
   return (
     <Box bg="brandHero" pb="28" mt="-3">
       <NextSeo
-        title="IQ.Wiki Branding kit & official logos"
-        description="IQ.Wiki Branding kit & official logos"
+        title="IQ.wiki Branding kit & official logos"
+        description="IQ.wiki Branding kit & official logos"
         openGraph={{
-          title: 'IQ.Wiki Branding kit & official logos',
-          description: 'IQ.Wiki Branding kit & official logos',
+          title: 'IQ.wiki Branding kit & official logos',
+          description: 'IQ.wiki Branding kit & official logos',
         }}
       />
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
@@ -139,7 +139,7 @@ const BrandingPage = () => {
               mb={{ base: 6, lg: 10 }}
               mt={{ base: 18 }}
             >
-              IQ.WIKI Branding kit
+              IQ.wiki Branding kit
             </Heading>
             <Text
               textAlign={{ base: 'center', lg: 'initial' }}
@@ -234,7 +234,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ.WIKI LOGO
+              IQ.wiki LOGO
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -340,7 +340,7 @@ const BrandingPage = () => {
             <List display="flex" flexDir="column" gap="10">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not use the IQ.Wiki logo in any way that suggests that we are
+                Do not use the IQ.wiki logo in any way that suggests that we are
                 sponsoring, endorsing or affliated to your project in any way.
               </ListItem>
               <ListItem>
