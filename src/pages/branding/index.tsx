@@ -180,7 +180,7 @@ const BrandingPage = () => {
               “
             </Text>
             The branding kit is to help provide proper guidelines for the usage
-            of the iq.wiki brand assests so as not to distort the representation
+            of the IQ.wiki brand assests so as not to distort the representation
             of IQ.wiki. <br /> <br /> We are honored to be mentioned in your
             content and would love to hear from you for any kind of partnership.
             <Text
@@ -198,7 +198,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ LOGO
+              IQ logo
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -224,7 +224,7 @@ const BrandingPage = () => {
                     setCurrentViewedAsset(item.bg)
                   }}
                   dark={item.dark}
-                  isBraindoa
+                  isBraindao
                 />
               )
             })}
@@ -234,7 +234,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ.wiki LOGO
+              IQ.wiki logo
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -269,7 +269,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO
+              BrainDAO
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -297,7 +297,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
-                  isBraindoa
+                  isBraindao
                 />
               )
             })}
@@ -307,7 +307,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO- ALTERNATE LOGO
+              BrainDao- Alternate logo
             </Heading>
           </Flex>
           <Flex
