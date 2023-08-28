@@ -58,15 +58,21 @@ const CategoryCard = (props: CategoryCardProps) => {
         </Box>
 
         <Box p={5}>
-          <Heading textAlign="center" size="sm" my="10px">
+          <Heading
+            textAlign="center"
+            fontSize={{ base: 14, xl: '20px' }}
+            fontWeight={'600'}
+            color={'careersHeadingColor'}
+            my="10px"
+          >
             {title}
           </Heading>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Text
               maxWidth="300px"
-              fontSize="xs"
+              fontSize={'xs'}
               textAlign="center"
-              opacity="0.6"
+              color={'homeDescriptionColor'}
             >
               {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
                 ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')

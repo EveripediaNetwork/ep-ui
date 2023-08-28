@@ -34,11 +34,12 @@ const Categories: NextPage = () => {
         >
           <Box width="full">
             <Heading
-              fontSize={{ base: 25, lg: 36 }}
+              fontSize={{ base: 25, md: 36, xl: 42 }}
+              color={'careersHeadingColor'}
               maxW="80%"
               mx="auto"
               textAlign="center"
-              pb={{ base: 2, md: 4, lg: 5 }}
+              pb={2}
               as="h1"
             >
               {`${t('wikiCategory')}`}
@@ -54,6 +55,7 @@ const Categories: NextPage = () => {
                 mb={7}
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
                 mx={{ base: '5', md: '8', lg: '14' }}
+                color={'heroHeaderDescription'}
               >
                 {CATEGORY_HEADER}
               </Text>
