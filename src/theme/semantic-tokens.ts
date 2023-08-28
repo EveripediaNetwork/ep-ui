@@ -102,7 +102,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'whiteAlpha.100',
     },
     pageBg: {
-      default: 'gray.100',
+      default: '#F9FAFB',
       _dark: 'gray.800',
     },
     blogPageBg: {
