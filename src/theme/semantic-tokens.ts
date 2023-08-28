@@ -393,5 +393,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'whiteAlpha.300',
     },
+    wikiCardBorderColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.400',
+    },
   },
 }
