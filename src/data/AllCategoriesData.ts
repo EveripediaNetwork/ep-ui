@@ -17,7 +17,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiImage2Fill,
     description:
       'The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.',
-    cardImage: '/images/categories/nft-card.png',
+    cardImage: '/images/categories/nfts-card.png',
     heroImage: '/images/categories/nfts.png',
   },
   {
@@ -26,7 +26,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiRecycleLine,
     description:
       'The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.',
-    cardImage: '/images/categories/defi-card-bg.png',
+    cardImage: '/images/categories/defi-card.png',
     heroImage: '/images/categories/defi.png',
   },
   {
@@ -35,7 +35,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiCoinsFill,
     description:
       'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
-    cardImage: '/images/categories/exchange-card.png',
+    cardImage: '/images/categories/exchanges-card.png',
     heroImage: '/images/categories/exchanges.png',
   },
   {
@@ -44,7 +44,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiBitCoinFill,
     description:
       'This cryptocurrencies category covers all cryptocurrencies from Bitcoin to IQ. ',
-    cardImage: '/images/categories/cryptocurrency-card.png',
+    cardImage: '/images/categories/cryptocurrencies-card.png',
     heroImage: '/images/categories/cryptocurrencies.jpg',
   },
   {
@@ -53,7 +53,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiTeamFill,
     description:
       'The DAOs category covers decentralized autonomous organizations of all kinds from DeFi DAOs like Olympus DAO to knowledge focused DAOs like BrainDAO.',
-    cardImage: '/images/categories/dao-card.png',
+    cardImage: '/images/categories/daos-card.png',
     heroImage: '/images/categories/daos.png',
   },
   {
@@ -62,7 +62,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiUser3Fill,
     description:
       'The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.',
-    cardImage: '/images/categories/people-crypto-card.png',
+    cardImage: '/images/categories/people-card.png',
     heroImage: '/images/categories/people.png',
   },
   {
@@ -71,7 +71,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiCopperDiamondLine,
     description:
       'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
-    cardImage: '/images/categories/dapp-card.png',
+    cardImage: '/images/categories/dapps-card.png',
     heroImage: '/images/categories/dapps.jpg',
   },
   {
@@ -80,7 +80,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiOrganizationChart,
     description:
       'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',
-    cardImage: '/images/categories/organization-card.png',
+    cardImage: '/images/categories/organizations-card.png',
     heroImage: '/images/categories/organizations.jpg',
   },
 ]
