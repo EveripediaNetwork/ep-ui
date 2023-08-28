@@ -20,9 +20,9 @@ const Categories: NextPage = () => {
           description: CATEGORY_HEADER,
         }}
       />
-      <Box mt="0" pb={12}>
+      <Box>
         <Flex
-          h={{ base: '223px', md: '270px', lg: '338px' }}
+          h={325}
           justify={'center'}
           align={'center'}
           objectFit="cover"
@@ -52,7 +52,6 @@ const Categories: NextPage = () => {
               maxW={{ base: '90%', md: '70%', lg: '730px' }}
             >
               <Text
-                mb={7}
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
                 mx={{ base: '5', md: '8', lg: '14' }}
                 color={'heroHeaderDescription'}
