@@ -42,7 +42,7 @@ const TrendingCategoryCard = ({
           <chakra.div
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '4' }}
-            py="2"
+            py="10px"
           >
             <TrendingCategoryItem
               title={wiki.title}

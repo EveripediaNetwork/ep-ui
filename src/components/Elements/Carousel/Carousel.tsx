@@ -99,7 +99,16 @@ export const WikiCarousel = <T extends unknown>({
 
   return (
     <>
-      <chakra.div ref={emblaRef} overflow="hidden" w="full">
+      <chakra.div
+        ref={emblaRef}
+        rounded={'12px'}
+        boxShadow="3xl"
+        _dark={{
+          shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+        }}
+        overflow="hidden"
+        w="full"
+      >
         <Flex w="full">
           {data?.map((e, i) => (
             <Box key={i} flex="0 0 100%" minW="0" maxW="100%">

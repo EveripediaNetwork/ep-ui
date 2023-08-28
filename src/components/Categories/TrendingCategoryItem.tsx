@@ -20,14 +20,7 @@ import { TrendingCategoryItemProps } from '@/types/CategoryDataTypes'
 const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
   const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
   return (
-    <LinkBox
-      boxShadow="3xl"
-      _dark={{
-        shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
-      }}
-      bgColor="cardBg"
-      borderRadius="12px"
-    >
+    <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
         <Box alignSelf={{ base: 'center', md: 'initial' }}>
           <AspectRatio
