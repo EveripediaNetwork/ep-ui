@@ -99,7 +99,17 @@ export const WikiCarousel = <T extends unknown>({
 
   return (
     <>
-      <chakra.div ref={emblaRef} bgColor={'red.400'} overflow="hidden" w="">
+      <chakra.div
+        ref={emblaRef}
+        bgColor={'red.400'}
+        rounded={'12px'}
+        boxShadow="3xl"
+        _dark={{
+          shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+        }}
+        overflow="hidden"
+        w="full"
+      >
         <Flex w="full">
           {data?.map((e, i) => (
             <Box key={i} flex="0 0 100%" minW="0" maxW="100%">
@@ -108,7 +118,7 @@ export const WikiCarousel = <T extends unknown>({
           ))}
         </Flex>
       </chakra.div>
-      <Flex w="full" alignItems="center" gap="3" pt="4" justifyContent="center">
+      <Flex w="full" alignItems="center" gap="3" pt="6" justifyContent="center">
         {scrollSnaps.map((_, index) => (
           <Icon
             key={index}

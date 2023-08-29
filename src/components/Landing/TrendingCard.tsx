@@ -50,7 +50,7 @@ const TrendingCard = ({
         <Flex
           w="full"
           alignItems="center"
-          pl="2"
+          px="4"
           mb="2"
           justifyContent="space-between"
         >
@@ -92,7 +92,7 @@ const TrendingCard = ({
           )}
         </Flex>
         {wikis ? (
-          <Flex direction={'column'} w="full" px="1" overflow="hidden">
+          <Flex direction={'column'} w="full" px="2" overflow="hidden">
             {wikiData?.map((wiki, i) => (
               <HStack
                 w="full"
@@ -107,7 +107,7 @@ const TrendingCard = ({
                 mt={0}
                 key={i}
                 py={2}
-                px={2}
+                px={4}
               >
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>

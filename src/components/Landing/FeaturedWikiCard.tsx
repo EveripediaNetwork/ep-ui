@@ -37,7 +37,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <LinkBox flex="none">
-      <chakra.div px={2} mx="auto">
+      <chakra.div mx="auto">
         <Flex
           alignSelf="center"
           direction="column"
@@ -47,11 +47,9 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           _dark={{
             bgColor: 'gray.700',
             color: 'white',
-            // shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
           }}
           cursor="pointer"
           rounded="lg"
-          // shadow="3xl"
           mx="auto"
         >
           <AspectRatio
