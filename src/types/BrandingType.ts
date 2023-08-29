@@ -3,7 +3,7 @@ export type BrandingAssetsType = {
   updateSelectedAsset: () => void
   currentlyViewed: string
   dark?: string
-  isBraindoa?: boolean
+  isBraindao?: boolean
 }
 
 export type BrandingAssetBtnType = {

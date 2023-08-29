@@ -20,7 +20,7 @@ export const Hero = () => {
         mt="5"
         fontSize={{ base: 'md', lg: '2xl' }}
       >
-        Start your crypto journey with IQ Wiki! The compass for exploring your
+        Start your crypto journey with IQ.wiki! The compass for exploring your
         web3 curiosities.
       </Text>
     </Box>
