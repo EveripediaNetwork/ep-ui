@@ -58,7 +58,7 @@ export const WikiViewsData = () => {
               Wiki Views
             </Heading>
             <Text fontSize="sm" w="full">
-              The no of views for wikis on iq wiki
+              The no of views for wikis on IQ.wiki
             </Text>
           </VStack>
         </Flex>

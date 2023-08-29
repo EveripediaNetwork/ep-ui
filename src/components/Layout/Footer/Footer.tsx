@@ -77,7 +77,7 @@ const Footer = () => {
             <Newsletter
               buttonTitle="Subscribe"
               header="Subscribe to our newsletter"
-              body="Never miss any of the most popular and trending articles on IQ.Wiki
+              body="Never miss any of the most popular and trending articles on IQ.wiki
         when you sign up to our email newsletter."
               url="https://www.getdrip.com/forms/505929689/submissions/new"
               {...newsletterOptions}

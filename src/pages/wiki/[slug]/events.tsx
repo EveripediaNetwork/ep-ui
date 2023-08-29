@@ -76,8 +76,8 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
     eventContent = <NotFound />
   }
 
-  const SEOTitle = `${wiki?.title} timeline of events - IQ Wiki`
-  const SEODescription = `Discover a comprehensive timeline of ${wiki?.title} events, milestones, and significant moments on IQ Wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki?.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki?.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`
+  const SEOTitle = `${wiki?.title} timeline of events - IQ.wiki`
+  const SEODescription = `Discover a comprehensive timeline of ${wiki?.title} events, milestones, and significant moments on IQ.wiki. Our meticulously curated timeline offers a chronological overview, providing valuable insights into the history and evolution of ${wiki?.title}. Explore key dates, noteworthy achievements, and impactful developments that have shaped ${wiki?.title}, allowing you to delve into its rich past and gain a deeper understanding of its significance.`
 
   return (
     <>
