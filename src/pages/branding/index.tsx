@@ -18,53 +18,53 @@ const BrandingPage = () => {
   const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
   const IQLogoAsset = [
     {
-      bg: '/branding/iqoriginal.png',
-      download: '/branding/downloadassets/logoiqoriginal',
-      dark: '/branding/iqoriginalB.png',
+      bg: '/branding/iq-original.png',
+      download: '/branding/downloadassets/logo-iq-original',
+      dark: '/branding/iq-original-dark.png',
     },
     {
-      bg: '/branding/iqwhite.png',
-      download: '/branding/downloadassets/logoiqwhite',
+      bg: '/branding/iq-white.png',
+      download: '/branding/downloadassets/logo-iqwhite',
     },
     {
-      bg: '/branding/iqblue.png',
-      download: '/branding/downloadassets/logoiqblue',
+      bg: '/branding/iq-blue.png',
+      download: '/branding/downloadassets/logo-iqblue',
     },
     {
-      bg: '/branding/iqpurple.png',
-      download: '/branding/downloadassets/logoiqpurple',
+      bg: '/branding/iq-purple.png',
+      download: '/branding/downloadassets/logo-iqpurple',
     },
     {
-      bg: '/branding/iqdeepblack.png',
-      download: '/branding/downloadassets/logoiqdeepblack',
+      bg: '/branding/iq-deep-black.png',
+      download: '/branding/downloadassets/logo-iqdeep-black',
     },
     {
-      bg: '/branding/iqnegativepink.png',
-      download: '/branding/downloadassets/logoiqnegativepink',
+      bg: '/branding/iq-negative-pink.png',
+      download: '/branding/downloadassets/logo-iqnegative-pink',
     },
     {
-      bg: '/branding/iqpink.png',
-      download: '/branding/downloadassets/logoiqpink',
+      bg: '/branding/iq-pink.png',
+      download: '/branding/downloadassets/logo-iqpink',
     },
     {
-      bg: '/branding/iqnegativewhite.png',
-      download: '/branding/downloadassets/logoiqnegativewhite',
+      bg: '/branding/iq-negative-white.png',
+      download: '/branding/downloadassets/logo-iqnegative-white',
     },
     {
-      bg: '/branding/iqBlack.png',
-      download: '/branding/downloadassets/logoiqblack',
+      bg: '/branding/iq-black.png',
+      download: '/branding/downloadassets/logo-iqblack',
     },
     {
-      bg: '/branding/iqred.png',
-      download: '/branding/downloadassets/logoiqred',
+      bg: '/branding/iq-red.png',
+      download: '/branding/downloadassets/logo-iqred',
     },
     {
-      bg: '/branding/iqgreen.png',
-      download: '/branding/downloadassets/logoiqgreen',
+      bg: '/branding/iq-green.png',
+      download: '/branding/downloadassets/logo-iqgreen',
     },
     {
-      bg: '/branding/iqorange.png',
-      download: '/branding/downloadassets/logoiqorange',
+      bg: '/branding/iq-orange.png',
+      download: '/branding/downloadassets/logo-iqorange',
     },
   ]
   const alternateLogoAssets = [
