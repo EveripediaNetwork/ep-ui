@@ -4,12 +4,12 @@ import React from 'react'
 const BlogHeader = () => (
   <NextSeo
     title="Blog"
-    description="Stay up to date with latest stories and gist brought to you by IQ.Wiki"
+    description="Stay up to date with latest stories and gist brought to you by IQ.wiki"
     canonical="https://iq.wiki/blog"
     openGraph={{
       title: 'Blog',
       description:
-        'Stay up to date with latest stories and gist brought to you by IQ.Wiki',
+        'Stay up to date with latest stories and gist brought to you by IQ.wiki',
     }}
     twitter={{
       cardType: 'summary_large_image',
