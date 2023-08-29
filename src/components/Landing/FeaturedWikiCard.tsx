@@ -42,17 +42,16 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           alignSelf="center"
           direction="column"
           textAlign="left"
-          bgColor={'red.400'}
           bg="white"
           color="black"
           _dark={{
             bgColor: 'gray.700',
             color: 'white',
-            shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+            // shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
           }}
           cursor="pointer"
           rounded="lg"
-          shadow="3xl"
+          // shadow="3xl"
           mx="auto"
         >
           <AspectRatio
