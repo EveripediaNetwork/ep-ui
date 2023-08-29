@@ -63,7 +63,7 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
                 onClick={onClick}
               >
                 {item.label}
-                {item.Icon && <item.Icon />}
+                {item.Icon && <item.Icon size={18} />}
               </Flex>
             </Th>
           )
