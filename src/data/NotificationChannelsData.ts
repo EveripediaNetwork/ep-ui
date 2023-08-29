@@ -8,8 +8,8 @@ export const NotificationChannelsData: {
 }[] = [
   {
     id: 'EVERIPEDIA_NOTIFICATIONS',
-    title: 'IQ.Wiki Notifications',
-    description: 'Occasional updates from the IQ.Wiki team',
+    title: 'IQ.wiki Notifications',
+    description: 'Occasional updates from the IQ.wiki team',
     isChecked: false,
   },
 ]

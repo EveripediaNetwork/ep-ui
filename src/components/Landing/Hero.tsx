@@ -23,7 +23,7 @@ export const Hero = () => {
         color={'eventTextColor'}
         fontSize={{ base: 'md', lg: '20px' }}
       >
-        Start your crypto journey with IQ Wiki! The compass for exploring your
+        Start your crypto journey with IQ.wiki! The compass for exploring your
         web3 curiosities.
       </Text>
     </Box>
