@@ -41,8 +41,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     NFTsListing &&
     (!tokenItems.length || !nftItems.length)
   ) {
-    setTokenItems(sortByMarketCap('descending', TokensListing, setOrder))
-    setNftItems(sortByMarketCap('descending', NFTsListing, setOrder))
+    setTokenItems(sortByMarketCap('descending', TokensListing))
+    setNftItems(sortByMarketCap('descending', NFTsListing))
   }
 
   const onClickMap: OnClickMap = {
@@ -50,8 +50,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       if (tokenItems && nftItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setTokenItems(sortByMarketCap(newSortOrder, TokensListing, setOrder))
-        setNftItems(sortByMarketCap(newSortOrder, NFTsListing, setOrder))
+        setOrder(newSortOrder)
+        setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
+        setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
       }
     },
   }
