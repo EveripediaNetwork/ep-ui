@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { GetServerSideProps } from 'next'
 import {
   Text,
@@ -39,25 +33,19 @@ import { CategoryKeyType } from '@/types/RankDataTypes'
 
 export const LISTING_LIMIT = 20
 
-export const sortByMarketCap = (
-  order: SortOrder,
-  items: RankCardType[],
-  setOrder: Dispatch<SetStateAction<SortOrder>>,
-) => {
+export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
   const innerItems = [...items]
 
   try {
     innerItems.sort((a, b) => {
-      const AMarketCap =
+      const MarketCapA =
         a?.nftMarketData?.market_cap_usd ?? a?.tokenMarketData?.market_cap ?? 0
-      const BMarketCap =
+      const MarketCapB =
         b?.nftMarketData?.market_cap_usd ?? b?.tokenMarketData?.market_cap ?? 0
       if (order === 'ascending') {
-        setOrder('ascending')
-        return AMarketCap - BMarketCap
+        return MarketCapA - MarketCapB
       } else {
-        setOrder('descending')
-        return BMarketCap - AMarketCap
+        return MarketCapB - MarketCapA
       }
     })
   } catch (e) {
@@ -79,7 +67,7 @@ const Rank = ({
   const hasRenderedInitialItems = useRef(false)
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
-  const [sortOrder, setOrder] = useState<SortOrder>('ascending')
+  const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const router = useRouter()
   const { pathname } = router
   const [nftOffset, setNftOffset] = useState<number>(
@@ -126,15 +114,15 @@ const Rank = ({
     !tokenItems.length &&
     !hasRenderedInitialItems.current
   ) {
-    setTokenItems(sortByMarketCap('descending', tokenData, setOrder))
-    setNftItems(sortByMarketCap('descending', nftData, setOrder))
+    setTokenItems(sortByMarketCap('descending', tokenData))
+    setNftItems(sortByMarketCap('descending', nftData))
     hasRenderedInitialItems.current = true
   }
 
   useEffect(() => {
     if (tokenData && nftData && hasRenderedInitialItems.current) {
-      setTokenItems(sortByMarketCap('descending', tokenData, setOrder))
-      setNftItems(sortByMarketCap('descending', nftData, setOrder))
+      setTokenItems(sortByMarketCap('descending', tokenData))
+      setNftItems(sortByMarketCap('descending', nftData))
     }
   }, [tokenData, nftData])
 
@@ -143,8 +131,9 @@ const Rank = ({
       if (nftData && tokenData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setTokenItems(sortByMarketCap(newSortOrder, tokenData, setOrder))
-        setNftItems(sortByMarketCap(newSortOrder, nftData, setOrder))
+        setOrder(newSortOrder)
+        setTokenItems(sortByMarketCap(newSortOrder, tokenData))
+        setNftItems(sortByMarketCap(newSortOrder, nftData))
       }
     },
   }
