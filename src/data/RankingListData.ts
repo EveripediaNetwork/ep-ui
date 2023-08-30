@@ -1,13 +1,12 @@
-export type RankinglistHeadProps = {
-  label: string
-}
+import { RankinglistHeadProps } from '@/types/RankDataTypes'
+import { RiArrowDownSFill } from 'react-icons/ri'
 
 export const CATEGORIES_WITH_INDEX = {
   cryptocurrencies: 0,
   nfts: 1,
 }
 
-export const RankingListHead: RankinglistHeadProps[] = [
+export const RankingListHead: RankinglistHeadProps = [
   {
     label: '#',
   },
@@ -19,6 +18,7 @@ export const RankingListHead: RankinglistHeadProps[] = [
   },
   {
     label: 'Marketcap',
+    Icon: RiArrowDownSFill,
   },
   {
     label: 'Founders',

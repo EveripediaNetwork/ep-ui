@@ -38,7 +38,6 @@ interface HomePageProps {
     TokensListing: RankCardType[]
   }
   trending: TrendingData
-  category: string
 }
 
 export const Index = ({
@@ -48,7 +47,6 @@ export const Index = ({
   leaderboards,
   rankings,
   trending,
-  category,
 }: HomePageProps) => {
   return (
     <Flex
@@ -72,7 +70,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList rankings={rankings} category={category} />
+        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -81,15 +79,13 @@ export const Index = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
   const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
     rangeType: DayRangeType.LAST_WEEK,
   })
-
-  const { category } = ctx.query as { category: string }
 
   const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
     rangeType: DayRangeType.LAST_MONTH,
@@ -159,10 +155,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
-      `Error fetching data. the error is: ${
-        (JSON.stringify(tagsDataError?.message),
+      `Error fetching data. the error is: ${[
+        JSON.stringify(tagsDataError?.message),
         JSON.stringify(promotedWikisError?.message),
-        JSON.stringify(recentError?.message))
+        JSON.stringify(tagsDataError?.message),
+        JSON.stringify(recentError?.message),
+      ].join(' ')}
       }`,
     )
   }
@@ -187,7 +185,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       leaderboards: sortedleaderboards || [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
-      category: category || 'cryptocurrencies',
     },
   }
 }
