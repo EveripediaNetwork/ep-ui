@@ -7,7 +7,7 @@ export const resources = {
     translation: {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
-      //--Copies for IQ.Wiki--
+      //--Copies for IQ.wiki--
 
       //Home page
       everipedia: 'IQ.wiki',
@@ -16,7 +16,7 @@ export const resources = {
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
-      trendingWikis: 'Latest from IQ.Wiki',
+      trendingWikis: 'Latest from IQ.wiki',
       rankingListHeading: 'Wiki Rank By MarketCap',
       rankingListDescription:
         'A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.',
@@ -51,7 +51,7 @@ export const resources = {
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of service',
       privacyRights: 'Your CA Privacy Rights',
-      copyRight: 'IQ.Wiki Powered By ',
+      copyRight: 'IQ.wiki Powered By ',
 
       //Desktop Nav
       Explore: 'Explore',
@@ -227,7 +227,7 @@ export const resources = {
 
       //Global text
       seenItAll: 'Yay! You have seen it all 🥳 ',
-      //---End of Copies for IQ.Wiki--
+      //---End of Copies for IQ.wiki--
 
       // ---------------------------------------------------------------
 

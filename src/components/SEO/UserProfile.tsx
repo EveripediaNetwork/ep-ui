@@ -33,11 +33,11 @@ export const UserProfileHeader = ({
         }
       />
       <NextSeo
-        title={`${username} · IQ.Wiki`}
+        title={`${username} · IQ.wiki`}
         description={`Blockchain wikis created by ${username}`}
         openGraph={{
-          title: `${username} · IQ.Wiki`,
-          description: bio || 'check out this user on IQ.Wiki',
+          title: `${username} · IQ.wiki`,
+          description: bio || 'check out this user on IQ.wiki',
           url: `${env.NEXT_PUBLIC_DOMAIN}/account/${username}`,
           type: 'profile',
           profile: {
