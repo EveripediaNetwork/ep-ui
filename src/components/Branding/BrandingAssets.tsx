@@ -5,7 +5,7 @@ import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
 import { BrandingAssetsType } from '@/types/BrandingType'
 
 export const BrandingAssets = (props: BrandingAssetsType) => {
-  const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindoa } = props
+  const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindao } = props
   const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
   useEffect(() => {
     if (currentlyViewed === bg.bg) {
@@ -59,8 +59,8 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
           bg={`url(${cardBG})`}
           w="100%"
           h={{
-            base: `${!isBraindoa ? '89px' : '143px'}`,
-            lg: `${!isBraindoa ? '190px' : '307px'}`,
+            base: `${!isBraindao ? '89px' : '143px'}`,
+            lg: `${!isBraindao ? '190px' : '307px'}`,
           }}
           backgroundPosition="center"
           backgroundSize="cover"

@@ -15,7 +15,7 @@ export const useWeb3Token = () => {
       (msg) => signer.signMessage({ message: msg }),
       {
         statement:
-          'Welcome to IQ.Wiki ! Click to sign in and accept the IQ.Wiki Terms of Service: https://everipedia.com/static/terms. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. ',
+          'Welcome to IQ.wiki ! Click to sign in and accept the IQ.wiki Terms of Service: https://everipedia.com/static/terms. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. ',
         expires_in: '1h',
       },
     )

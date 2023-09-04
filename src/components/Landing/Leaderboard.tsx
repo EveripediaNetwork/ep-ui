@@ -112,7 +112,7 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
         px={4}
       >
         An Highlight of exceptional editors who has contributed greatly to the
-        IQ wiki.
+        IQ.wiki.
       </Text>
 
       <Box maxW="1160px" mx="auto">

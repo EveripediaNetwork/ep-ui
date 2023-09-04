@@ -18,53 +18,53 @@ const BrandingPage = () => {
   const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
   const IQLogoAsset = [
     {
-      bg: '/branding/iqoriginal.png',
-      download: '/branding/downloadassets/logoiqoriginal',
-      dark: '/branding/iqoriginalB.png',
+      bg: '/branding/iq-original.png',
+      download: '/branding/downloadassets/logo-iq-original',
+      dark: '/branding/iq-original-dark.png',
     },
     {
-      bg: '/branding/iqwhite.png',
-      download: '/branding/downloadassets/logoiqwhite',
+      bg: '/branding/iq-white.png',
+      download: '/branding/downloadassets/logo-iqwhite',
     },
     {
-      bg: '/branding/iqblue.png',
-      download: '/branding/downloadassets/logoiqblue',
+      bg: '/branding/iq-blue.png',
+      download: '/branding/downloadassets/logo-iqblue',
     },
     {
-      bg: '/branding/iqpurple.png',
-      download: '/branding/downloadassets/logoiqpurple',
+      bg: '/branding/iq-purple.png',
+      download: '/branding/downloadassets/logo-iqpurple',
     },
     {
-      bg: '/branding/iqdeepblack.png',
-      download: '/branding/downloadassets/logoiqdeepblack',
+      bg: '/branding/iq-deep-black.png',
+      download: '/branding/downloadassets/logo-iqdeep-black',
     },
     {
-      bg: '/branding/iqnegativepink.png',
-      download: '/branding/downloadassets/logoiqnegativepink',
+      bg: '/branding/iq-negative-pink.png',
+      download: '/branding/downloadassets/logo-iqnegative-pink',
     },
     {
-      bg: '/branding/iqpink.png',
-      download: '/branding/downloadassets/logoiqpink',
+      bg: '/branding/iq-pink.png',
+      download: '/branding/downloadassets/logo-iqpink',
     },
     {
-      bg: '/branding/iqnegativewhite.png',
-      download: '/branding/downloadassets/logoiqnegativewhite',
+      bg: '/branding/iq-negative-white.png',
+      download: '/branding/downloadassets/logo-iqnegative-white',
     },
     {
-      bg: '/branding/iqBlack.png',
-      download: '/branding/downloadassets/logoiqblack',
+      bg: '/branding/iq-black.png',
+      download: '/branding/downloadassets/logo-iqblack',
     },
     {
-      bg: '/branding/iqred.png',
-      download: '/branding/downloadassets/logoiqred',
+      bg: '/branding/iq-red.png',
+      download: '/branding/downloadassets/logo-iqred',
     },
     {
-      bg: '/branding/iqgreen.png',
-      download: '/branding/downloadassets/logoiqgreen',
+      bg: '/branding/iq-green.png',
+      download: '/branding/downloadassets/logo-iqgreen',
     },
     {
-      bg: '/branding/iqorange.png',
-      download: '/branding/downloadassets/logoiqorange',
+      bg: '/branding/iq-orange.png',
+      download: '/branding/downloadassets/logo-iqorange',
     },
   ]
   const alternateLogoAssets = [
@@ -120,11 +120,11 @@ const BrandingPage = () => {
   return (
     <Box bg="brandHero" pb="28" mt="-3">
       <NextSeo
-        title="IQ.Wiki Branding kit & official logos"
-        description="IQ.Wiki Branding kit & official logos"
+        title="IQ.wiki Branding kit & official logos"
+        description="IQ.wiki Branding kit & official logos"
         openGraph={{
-          title: 'IQ.Wiki Branding kit & official logos',
-          description: 'IQ.Wiki Branding kit & official logos',
+          title: 'IQ.wiki Branding kit & official logos',
+          description: 'IQ.wiki Branding kit & official logos',
         }}
       />
       <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
@@ -139,7 +139,7 @@ const BrandingPage = () => {
               mb={{ base: 6, lg: 10 }}
               mt={{ base: 18 }}
             >
-              IQ.WIKI Branding kit
+              IQ.wiki Branding kit
             </Heading>
             <Text
               textAlign={{ base: 'center', lg: 'initial' }}
@@ -180,7 +180,7 @@ const BrandingPage = () => {
               “
             </Text>
             The branding kit is to help provide proper guidelines for the usage
-            of the iq.wiki brand assests so as not to distort the representation
+            of the IQ.wiki brand assests so as not to distort the representation
             of IQ.wiki. <br /> <br /> We are honored to be mentioned in your
             content and would love to hear from you for any kind of partnership.
             <Text
@@ -198,7 +198,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ LOGO
+              IQ logo
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -224,7 +224,7 @@ const BrandingPage = () => {
                     setCurrentViewedAsset(item.bg)
                   }}
                   dark={item.dark}
-                  isBraindoa
+                  isBraindao
                 />
               )
             })}
@@ -234,7 +234,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ.WIKI LOGO
+              IQ.wiki logo
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -269,7 +269,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO
+              BrainDAO
             </Heading>
             <Text
               fontSize={{ lg: '2xl', base: 'sm' }}
@@ -297,7 +297,7 @@ const BrandingPage = () => {
                   updateSelectedAsset={() => {
                     setCurrentViewedAsset(item.bg)
                   }}
-                  isBraindoa
+                  isBraindao
                 />
               )
             })}
@@ -307,7 +307,7 @@ const BrandingPage = () => {
         <Box mt={20}>
           <Flex flexDir="column" gap={5}>
             <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO- ALTERNATE LOGO
+              BrainDao- Alternate logo
             </Heading>
           </Flex>
           <Flex
@@ -340,12 +340,12 @@ const BrandingPage = () => {
             <List display="flex" flexDir="column" gap="10">
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not use the IQ.Wiki logo in any way that suggests that we are
+                Do not use the IQ.wiki logo in any way that suggests that we are
                 sponsoring, endorsing or affliated to your project in any way.
               </ListItem>
               <ListItem>
                 <ListIcon as={AiOutlineClose} color="primaryPink" />
-                The IQ wiki brain logo shouldn’t be reperesented with any other
+                The IQ.wiki brain logo shouldn’t be reperesented with any other
                 kind of brain except as stated above.
               </ListItem>
               <ListItem>
