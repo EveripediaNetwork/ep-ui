@@ -11,22 +11,22 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
-// import CategoriesList from '@/components/Landing/CategoriesList'
-const DynamicCategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'),
-  {
-    loading: () => <p>Loading...</p>,
-  },
-)
+import CategoriesList from '@/components/Landing/CategoriesList'
+// const DynamicCategoriesList = dynamic(
+//   () => import('@/components/Landing/CategoriesList'),
+//   {
+//     loading: () => <p>Loading...</p>,
+//   },
+// )
 import { getTags, tagsApi } from '@/services/tags'
 import DiscoverMore from '@/components/Landing/DiscoverMore'
-// import LeaderBoard from '@/components/Landing/Leaderboard'
-const DynamicLeaderBoard = dynamic(
-  () => import('@/components/Landing/Leaderboard'),
-  {
-    loading: () => <p>Loading...</p>,
-  },
-)
+import LeaderBoard from '@/components/Landing/Leaderboard'
+// const DynamicLeaderBoard = dynamic(
+//   () => import('@/components/Landing/Leaderboard'),
+//   {
+//     loading: () => <p>Loading...</p>,
+//   },
+// )
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
@@ -92,17 +92,15 @@ export const Index = ({
           featuredWikis={promotedWikis && promotedWikis}
         />
         <DynamicRankingList rankings={rankings} category={category} />
-        <DynamicCategoriesList />
+        <CategoriesList />
       </Box>
-      {leaderboards.length > 0 && (
-        <DynamicLeaderBoard leaderboards={leaderboards} />
-      )}
+      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
