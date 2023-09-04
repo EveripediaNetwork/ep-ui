@@ -40,7 +40,7 @@ const CategoriesList = () => {
   }
 
   return (
-    <VStack mt={10} mb={20} spacing={2}>
+    <VStack pt={{ base: '15', md: '90' }} mb={20} spacing={2}>
       <Heading
         textAlign="center"
         fontWeight="600"
@@ -69,7 +69,7 @@ const CategoriesList = () => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map((category) => (
+        {newCategoryList.map(category => (
           <div key={category.id}>
             <LinkBox
               _hover={{
