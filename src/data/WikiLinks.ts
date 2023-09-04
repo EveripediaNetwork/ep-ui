@@ -125,7 +125,9 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Medium',
     icon: RiMediumFill,
-    tests: [/^https:\/\/medium\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/],
+    tests: [
+      /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/,
+    ],
   },
   {
     id: CommonMetaIds.WEBSITE,
