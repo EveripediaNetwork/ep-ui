@@ -57,7 +57,7 @@ const CategoriesList = () => {
         maxW="800"
       >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
-        maxW="1208px"
+        maxW="1290px"
         w="100%"
         mx="auto"
         gridTemplateColumns={{
@@ -69,7 +69,7 @@ const CategoriesList = () => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map((category) => (
+        {newCategoryList.map(category => (
           <div key={category.id}>
             <LinkBox
               _hover={{

@@ -62,7 +62,7 @@ const RankingList = ({ rankings, category }: RankingListProps) => {
         px={4}
         maxW="768"
       >{`${t('rankingListDescription')}`}</Text>
-      <Box maxW="1208px" mx="auto">
+      <Box maxW="1290px" mx="auto">
         <Tabs
           mt={10}
           defaultIndex={CATEGORIES_WITH_INDEX[category as CategoryKeyType]}

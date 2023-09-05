@@ -14,7 +14,7 @@ const AboutIqgpt = () => {
         align={{ base: 'center' }}
         gap={{ base: 2, lg: 6 }}
         pt={{ base: 5 }}
-        maxW={'1200px'}
+        maxW={'1290px'}
         rounded={'12px'}
         bgColor={'aboutIqgptInfoBg'}
         mt={{ base: '50px', md: '40px' }}
