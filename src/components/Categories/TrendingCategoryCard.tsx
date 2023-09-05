@@ -38,7 +38,7 @@ const TrendingCategoryCard = ({
       </Flex>
       <WikiCarousel
         data={wikis}
-        item={wiki => (
+        item={(wiki) => (
           <chakra.div
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '4' }}
