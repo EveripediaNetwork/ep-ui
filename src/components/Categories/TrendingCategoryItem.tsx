@@ -51,7 +51,10 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
               fontSize={{
                 base: '16px',
                 md: '20px',
+                lg: '24px',
               }}
+              textTransform={'capitalize'}
+              fontWeight={'600'}
             >
               {title}
             </Heading>

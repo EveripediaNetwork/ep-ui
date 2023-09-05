@@ -32,13 +32,13 @@ const TrendingCategoryCard = ({
           color="brandLinkColor"
           as={icon}
         />
-        <Text fontSize={{ base: '14px', lg: '18px' }} pl={2} fontWeight="600">
+        <Text fontSize={{ base: '14px', lg: '20px' }} pl={2} fontWeight="600">
           {title}
         </Text>
       </Flex>
       <WikiCarousel
         data={wikis}
-        item={(wiki) => (
+        item={wiki => (
           <chakra.div
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '4' }}

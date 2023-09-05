@@ -71,7 +71,7 @@ const WikiPreviewCard = ({
         <LinkOverlay href={`/wiki/${id}`}>
           <Text
             fontSize="xl"
-            fontWeight="bold"
+            fontWeight="semibold"
             noOfLines={1}
             textOverflow="ellipsis"
             overflow="hidden"

@@ -101,7 +101,7 @@ const CategoryPage = ({
         )}
         <Divider
           opacity="1"
-          borderColor="gray.300"
+          borderColor="gray.200"
           _dark={{ borderColor: 'whiteAlpha.200' }}
         />
         <Box mt={10}>
@@ -151,7 +151,7 @@ const CategoryPage = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const categoryId: string = context.params?.category as string
   const { startDay, endDay } = getDateRange({ dayRange: CATEGORY_DATE_RANGE })
 
