@@ -79,7 +79,7 @@ const TrendingCard = ({
               icon={<ChevronDownIcon />}
               mr="2"
               borderColor="rankingListBorder"
-              onChange={(e) => {
+              onChange={e => {
                 setWikiData(
                   (wikis as TrendingData)[e.target.value as keyof TrendingData],
                 )
@@ -135,7 +135,7 @@ const TrendingCard = ({
                     textAlign="start"
                   >
                     <Text
-                      fontWeight="thin"
+                      fontWeight="semibold"
                       color="wikiFlagTextColor"
                       fontSize="18px"
                       overflow="hidden"
@@ -150,7 +150,7 @@ const TrendingCard = ({
                       textOverflow="ellipsis"
                       overflow="hidden"
                       fontSize="12px"
-                      fontWeight="thin"
+                      fontWeight="500"
                       color="homeDescriptionColor"
                     >
                       {wiki.summary}

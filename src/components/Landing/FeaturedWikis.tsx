@@ -19,8 +19,8 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         borderColor={'gray.100'}
         rounded="lg"
         py={3}
-        bg="white"
-        _dark={{ bgColor: 'gray.700', border: 'none' }}
+        bgColor="bodyBg"
+        _dark={{ border: 'none' }}
         textAlign="center"
         justifyContent="center"
       >
@@ -45,7 +45,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
           <chakra.div px={5}>
             <WikiCarousel
               data={featuredWikis}
-              item={(wiki) => (
+              item={wiki => (
                 <Box key={`wiki-${wiki.id}`}>
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>

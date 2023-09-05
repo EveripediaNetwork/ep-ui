@@ -42,12 +42,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           alignSelf="center"
           direction="column"
           textAlign="left"
-          bg="white"
-          color="black"
-          _dark={{
-            bgColor: 'gray.700',
-            color: 'white',
-          }}
+          bgColor="bodyBg"
           cursor="pointer"
           rounded="lg"
           mx="auto"
@@ -83,6 +78,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                   base: '14px',
                   md: '18px',
                 }}
+                fontWeight={'600'}
               >
                 {wiki?.title}
               </Heading>
@@ -93,6 +89,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
               minH={12}
               color="homeDescriptionColor"
               my={2}
+              fontWeight={'500'}
             >
               {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>
