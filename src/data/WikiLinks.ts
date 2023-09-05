@@ -128,6 +128,7 @@ export const LINK_OPTIONS = [
     tests: [
       /^https:\/\/medium\.com\/.*\/[^\/]+$/,
       /^https:\/\/[a-zA-Z0-9.-]+\.medium\.com\/.*$/,
+      /^https:\/\/medium\.com\/@[^/]+/,
     ],
   },
   {
