@@ -66,9 +66,9 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  const linksWithValue = LINK_OPTIONS.filter(
-    (med) => !!wiki.metadata.find((m: MData) => m.id === med.id)?.value,
-  )
+  const linksWithValue = LINK_OPTIONS.filter((med) => {
+    return !!wiki.metadata.find((m: MData) => m.id === med.id)?.value
+  })
 
   const removeLink = (network: string) => {
     dispatch({
@@ -147,7 +147,9 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           rounded="md"
           placeholder="Enter link"
           value={currentLinkValue}
-          onChange={(event) => setCurrentLinkValue(event.target.value)}
+          onChange={(event) => {
+            setCurrentLinkValue(event.target.value)
+          }}
           type="url"
         />
         <Button
