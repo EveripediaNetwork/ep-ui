@@ -49,7 +49,7 @@ const MenuFooter = () => {
         </Stack>
       </GridItem>
       <GridItem colSpan={7}>
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={12}>
+        <SimpleGrid columns={{ base: 2, md: 4 }} spacing={12}>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
               <Heading size="sm">{`${t('iq')}`}</Heading>

@@ -40,24 +40,24 @@ const CategoriesList = () => {
   }
 
   return (
-    <VStack mt={10} mb={20} spacing={2}>
+    <VStack pt={{ base: '15', md: '90' }} mb={20} spacing={2}>
       <Heading
         textAlign="center"
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('browseCategory')}`}
       </Heading>
       <Text
         color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: 22 }}
+        fontSize={{ base: 'lg', lg: '20px' }}
         pb={9}
         px={4}
         textAlign="center"
         maxW="800"
       >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
-        maxW="1050px"
+        maxW="1290px"
         w="100%"
         mx="auto"
         gridTemplateColumns={{
@@ -72,18 +72,29 @@ const CategoriesList = () => {
         {newCategoryList.map((category) => (
           <div key={category.id}>
             <LinkBox
-              _hover={{ boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 8px 0px' }}
+              _hover={{
+                boxShadow: '3xl',
+                transform: 'scale(1.02)',
+                _dark: {
+                  boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+                },
+              }}
+              transition="all 0.3s"
               cursor="pointer"
               bgColor="cardBg"
+              border={'1px'}
+              borderColor={'gray.100'}
               borderRadius="lg"
               overflow="hidden"
-              shadow="base"
+              _dark={{
+                borderColor: 'whiteAlpha.300',
+              }}
             >
               <LinkOverlay href={`/categories/${category.id}`}>
                 <Image
                   bgColor="DimColor"
                   src={category.cardImage}
-                  h="200px"
+                  h={{ base: '200px', md: '225px', xl: '300px' }}
                   w="100%"
                   alt={category.title}
                   imgW={CATEGORY_IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}

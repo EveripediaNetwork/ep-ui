@@ -54,7 +54,14 @@ const RankingItem = ({
   )?.date
 
   return (
-    <Tr>
+    <Tr
+      _hover={{
+        bgColor: 'gray.100',
+        _dark: {
+          bgColor: 'whiteAlpha.100',
+        },
+      }}
+    >
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
