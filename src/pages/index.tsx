@@ -43,6 +43,8 @@ import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
 import { GetServerSideProps } from 'next'
+import { useColorMode } from '@chakra-ui/react'
+import { Image } from '@/components/Elements/Image/Image'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -67,6 +69,7 @@ export const Index = ({
   rankings,
   trending,
 }: HomePageProps) => {
+  const { colorMode } = useColorMode()
   return (
     <Flex
       _dark={{
@@ -76,14 +79,28 @@ export const Index = ({
       mx="auto"
       w="full"
       pt={{ base: 6, lg: 12 }}
+      className="test"
     >
       <Hero />
+      <div>{`${colorMode}`}</div>
       <Box
-        _dark={{
-          bgImage: '/images/backgrounds/homepage-bg-dark.png',
-        }}
-        bgImage="/images/backgrounds/homepage-bg-white.png"
+        position="relative"
+        // _dark={{
+        //   bgImage: '/images/backgrounds/homepage-bg-dark.png',
+        // }}
+        // bgImage="/images/backgrounds/homepage-bg-white.png"
       >
+        <Image
+          //fix bg image not filling up container
+          src={
+            colorMode === 'light'
+              ? '/images/backgrounds/homepage-bg-white.png'
+              : '/images/backgrounds/homepage-bg-dark.png'
+          }
+          alt=""
+          priority={true}
+          objectFit="cover"
+        />
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
