@@ -30,7 +30,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
               href={`/tags/${tag.id}`}
               sx={{
                 '&:hover, &:focus, &:active': {
-                  bgColor: 'gray.100',
+                  bgColor: 'gray.200',
                   textDecoration: 'none',
                   boxShadow: 'none',
                   _dark: {
