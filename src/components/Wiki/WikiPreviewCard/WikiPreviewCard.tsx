@@ -55,10 +55,6 @@ const WikiPreviewCard = ({
       }}
       rounded="lg"
       overflow="hidden"
-      transition="all 0.3s"
-      _hover={{
-        transform: 'scale(1.02)',
-      }}
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
