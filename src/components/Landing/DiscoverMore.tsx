@@ -10,18 +10,18 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
 
   return (
     <Box bgColor="gray.100" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
-      <Box maxW="1020px" mx="auto" py={8} px={4}>
-        <Heading fontWeight="600" color={'rankPageButtonText'} fontSize={20}>
+      <Box maxW="1290px" mx="auto" py={8} px={4}>
+        <Heading fontWeight="700" color={'rankPageButtonText'} fontSize={24}>
           Discover More on IQ.wiki
         </Heading>
         <Wrap mt={8} spacing={4}>
-          {tagsData?.map((tag) => (
+          {tagsData?.map(tag => (
             <Link
               as="li"
               borderWidth="1px"
               px={4}
               py={1}
-              fontSize={18}
+              fontSize={24}
               rounded="full"
               borderColor="gray.300"
               color="gray.600"
