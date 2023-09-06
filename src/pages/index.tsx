@@ -42,9 +42,8 @@ import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
+import AboutIqgpt from '@/components/Landing/AboutIqgpt'
 import { GetServerSideProps } from 'next'
-import { useColorMode } from '@chakra-ui/react'
-import { Image } from '@/components/Elements/Image/Image'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -69,7 +68,6 @@ export const Index = ({
   rankings,
   trending,
 }: HomePageProps) => {
-  const { colorMode } = useColorMode()
   return (
     <Flex
       _dark={{
@@ -82,25 +80,7 @@ export const Index = ({
       className="test"
     >
       <Hero />
-      <div>{`${colorMode}`}</div>
-      <Box
-        position="relative"
-        // _dark={{
-        //   bgImage: '/images/backgrounds/homepage-bg-dark.png',
-        // }}
-        // bgImage="/images/backgrounds/homepage-bg-white.png"
-      >
-        <Image
-          //fix bg image not filling up container
-          src={
-            colorMode === 'light'
-              ? '/images/backgrounds/homepage-bg-white.png'
-              : '/images/backgrounds/homepage-bg-dark.png'
-          }
-          alt=""
-          priority={true}
-          objectFit="cover"
-        />
+      <Box>
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
@@ -110,6 +90,7 @@ export const Index = ({
           listingLimit={RANKING_LIST_LIMIT}
           rankings={rankings}
         />
+        <AboutIqgpt />
         <DynamicCategoriesList />
       </Box>
       {leaderboards.length > 0 && (

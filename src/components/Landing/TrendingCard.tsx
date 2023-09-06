@@ -4,7 +4,6 @@ import {
   AspectRatio,
   Flex,
   HStack,
-  VStack,
   Icon,
   Select,
 } from '@chakra-ui/react'
@@ -41,16 +40,17 @@ const TrendingCard = ({
       <Box
         w="full"
         rounded="lg"
-        shadow="lg"
+        border="1px solid"
+        borderColor={'gray.100'}
         minH="500px"
         py={5}
         bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white' }}
+        _dark={{ bgColor: 'gray.700', border: 'none' }}
       >
         <Flex
           w="full"
           alignItems="center"
-          pl="2"
+          px="4"
           mb="2"
           justifyContent="space-between"
         >
@@ -62,7 +62,12 @@ const TrendingCard = ({
               color="brandLinkColor"
               as={icon}
             />
-            <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+            <Text
+              color={'wikiFlagTextColor'}
+              fontSize={{ base: 'md', lg: '18px' }}
+              pl={2}
+              fontWeight="600"
+            >
               {title}
             </Text>
           </Flex>
@@ -87,9 +92,23 @@ const TrendingCard = ({
           )}
         </Flex>
         {wikis ? (
-          <VStack w="full" pt="2" px="2" gap="2" overflow="hidden">
+          <Flex direction={'column'} w="full" px="2" overflow="hidden">
             {wikiData?.map((wiki, i) => (
-              <HStack w="full" key={i} px={1}>
+              <HStack
+                w="full"
+                _hover={{
+                  borderRadius: 'md',
+                  bgColor: 'gray.100',
+                  _dark: {
+                    bgColor: 'whiteAlpha.100',
+                  },
+                }}
+                cursor="pointer"
+                mt={0}
+                key={i}
+                py={2}
+                px={4}
+              >
                 <HStack>
                   <Link href={`/wiki/${wiki.id}`}>
                     <AspectRatio
@@ -116,10 +135,8 @@ const TrendingCard = ({
                     textAlign="start"
                   >
                     <Text
-                      fontWeight="thin"
-                      cursor="pointer"
-                      color="black"
-                      _dark={{ color: 'white' }}
+                      fontWeight="semibold"
+                      color="wikiFlagTextColor"
                       fontSize="18px"
                       overflow="hidden"
                       onClick={() => router.push(`wiki/${wiki.id}`)}
@@ -133,7 +150,8 @@ const TrendingCard = ({
                       textOverflow="ellipsis"
                       overflow="hidden"
                       fontSize="12px"
-                      fontWeight="thin"
+                      fontWeight="500"
+                      color="homeDescriptionColor"
                     >
                       {wiki.summary}
                     </Text>
@@ -141,7 +159,7 @@ const TrendingCard = ({
                 </HStack>
               </HStack>
             ))}
-          </VStack>
+          </Flex>
         ) : (
           <TrendingSkeleton />
         )}
