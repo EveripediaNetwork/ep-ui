@@ -34,7 +34,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
                   textDecoration: 'none',
                   boxShadow: 'none',
                   _dark: {
-                    bgColor: 'whiteAlpha.100',
+                    bgColor: 'whiteAlpha.400',
                   },
                 },
               }}
