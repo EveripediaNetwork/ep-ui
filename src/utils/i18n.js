@@ -214,10 +214,8 @@ export const resources = {
       advancedFAQTenHead: 'Edit History',
       advancedFAQTenBody:
         'To see the past edits that have been made to an IQ.wiki article you can click on the History button which is located below the Edit button. The History feature allows users to examine the different versions of an article and the differences between them on a special timeline. The History page also links to the Polygon transaction and IPFS hash for each edit. https://www.youtube.com/watch?v=gjYErj7O-PQ',
-      aboutIQGPTOneBody:
-        'IQ GPT, is an extension of IQ Wiki’s decentralised foundation that incorporates A.I models specifically designed for the crypto domain. It leverages different data sources to enhance it’s capabilities and summarizes information such as complex terminologies, real-time market trends and breaking news from these platforms.',
-      aboutIQGPTTwoBody:
-        'IQ GPT is powered by the IQ token, enabling IQ holders to participate in governance and get access to additional features.',
+      aboutIQGPTBody:
+        'IQ GPT is a crypto-focused AI model that provides insights into intricate terms, live market trends, and breaking news. It is powered by the IQ token, which enables holders to participate in governance and get access to additional features.',
       benefitIQGPTOne:
         'Stay ahead of the competition with access to real-time price data, trading volumes, market capitalization and other key market data via convenient conversation-like prompting.',
       benefitIQGPTTwo:

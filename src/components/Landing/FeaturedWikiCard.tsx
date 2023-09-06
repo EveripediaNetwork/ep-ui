@@ -37,22 +37,14 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <LinkBox flex="none">
-      <chakra.div px={2} mx="auto">
+      <chakra.div mx="auto">
         <Flex
           alignSelf="center"
           direction="column"
           textAlign="left"
-          bgColor={'red.400'}
-          bg="white"
-          color="black"
-          _dark={{
-            bgColor: 'gray.700',
-            color: 'white',
-            shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
-          }}
+          bgColor="bodyBg"
           cursor="pointer"
           rounded="lg"
-          shadow="3xl"
           mx="auto"
         >
           <AspectRatio
@@ -86,6 +78,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                   base: '14px',
                   md: '18px',
                 }}
+                fontWeight={'600'}
               >
                 {wiki?.title}
               </Heading>
@@ -96,6 +89,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
               minH={12}
               color="homeDescriptionColor"
               my={2}
+              fontWeight={'500'}
             >
               {wiki && getWikiSummary(wiki, WikiSummarySize.Small)}
             </Text>

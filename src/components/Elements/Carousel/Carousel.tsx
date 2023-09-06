@@ -117,7 +117,7 @@ export const WikiCarousel = <T extends unknown>({
           ))}
         </Flex>
       </chakra.div>
-      <Flex w="full" alignItems="center" gap="3" pt="4" justifyContent="center">
+      <Flex w="full" alignItems="center" gap="3" pt="6" justifyContent="center">
         {scrollSnaps.map((_, index) => (
           <Icon
             key={index}

@@ -4,6 +4,7 @@ import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
+import { SortOrder } from '@/types/RankDataTypes'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -28,9 +29,15 @@ const priceFormatter = Intl.NumberFormat('en', {
 const RankingItem = ({
   index,
   item,
+  order,
+  offset,
+  listingLimit,
 }: {
   index: number
   item: RankCardType
+  order: SortOrder
+  offset: number
+  listingLimit: number
 }) => {
   const marketCap = item.nftMarketData
     ? marketCapFormatter(item.nftMarketData.market_cap_usd)
@@ -47,14 +54,25 @@ const RankingItem = ({
   )?.date
 
   return (
-    <Tr>
+    <Tr
+      _hover={{
+        bgColor: 'gray.100',
+        _dark: {
+          bgColor: 'whiteAlpha.100',
+        },
+      }}
+    >
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
         pr="1"
       >
-        <Text color="rankingListText">{index + 1}</Text>
+        <Text color="rankingListText">
+          {order === 'descending'
+            ? index + offset + 1
+            : listingLimit + offset - index}
+        </Text>
       </Td>
       <Td
         borderColor="rankingListBorder"

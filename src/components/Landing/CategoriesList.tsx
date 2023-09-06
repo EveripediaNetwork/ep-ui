@@ -40,10 +40,10 @@ const CategoriesList = () => {
   }
 
   return (
-    <VStack mt={10} mb={20} spacing={2}>
+    <VStack py={{ base: 16, md: 20, lg: 24 }} spacing={2}>
       <Heading
         textAlign="center"
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('browseCategory')}`}
@@ -57,7 +57,7 @@ const CategoriesList = () => {
         maxW="800"
       >{`${t('browseCategoryDescription')}`}</Text>
       <SimpleGrid
-        maxW="1208px"
+        maxW="1290px"
         w="100%"
         mx="auto"
         gridTemplateColumns={{
