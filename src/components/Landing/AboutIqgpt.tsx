@@ -17,8 +17,7 @@ const AboutIqgpt = () => {
         maxW={'1290px'}
         rounded={'12px'}
         bgColor={'aboutIqgptInfoBg'}
-        mt={{ base: '50px', md: '40px' }}
-        mb={{ base: 0, md: 240, lg: 350 }}
+        mb={{ base: 0, md: 255, lg: 375 }}
         mx={'auto'}
       >
         <HStack
