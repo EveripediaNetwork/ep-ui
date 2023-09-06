@@ -101,7 +101,7 @@ const CategoryPage = ({
         )}
         <Divider
           opacity="1"
-          borderColor="gray.300"
+          borderColor="gray.200"
           _dark={{ borderColor: 'whiteAlpha.200' }}
         />
         <Box mt={10}>
