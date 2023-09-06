@@ -2801,10 +2801,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@everipedia/iq-utils@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.4.tgz#186e7c43b0bf260914c56f8517c66d9e5359cc44"
-  integrity sha512-UrEgexwKcLB/A1NJ4bn/nXcQXRXTm+IIPD0El3fw5k1ol2Pxx6TyP6LSgTopDbZUVBvBNAKpLu1ctAz5Hveozw==
+"@everipedia/iq-utils@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.5.tgz#8323e64ceb50a485dee648bfd79dc638744c77f2"
+  integrity sha512-xa1+Ti8N6+W49RXUlskjEP2gG94jh0E1zxmmZC4bqRRKndZLD6550+/OPii7dMDhsEMQK8uPb8oXkdvcAzr2jg==
 
 "@everipedia/web3-signer@^0.0.11":
   version "0.0.11"
