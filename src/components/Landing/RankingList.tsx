@@ -67,18 +67,18 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       <Heading
         textAlign="center"
         mb={4}
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('rankingListHeading')}`}
       </Heading>
       <Text
         color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: 22 }}
+        fontSize={{ base: 'lg', lg: '20px' }}
         mx="auto"
         mb={9}
         px={4}
-        maxW="800"
+        maxW="768"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
         <Tabs mt={10} p="0">

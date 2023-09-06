@@ -83,7 +83,7 @@ export const semanticTokens: SemanticTokens = {
     },
     homeDescriptionColor: {
       default: 'gray.600',
-      _dark: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.800',
     },
     eventTextColor: {
       default: 'gray.600',
@@ -380,6 +380,18 @@ export const semanticTokens: SemanticTokens = {
     eventsToolTip: {
       default: 'gray.600',
       _dark: 'gray.800',
+    },
+    aboutIqgptDesc: {
+      default: 'gray.600',
+      _dark: 'gray.800',
+    },
+    aboutIqgptInfoBg: {
+      default: 'brand.50',
+      _dark: 'brand.200',
+    },
+    aboutIqTokenText: {
+      default: 'gray.700',
+      _dark: 'white',
     },
   },
 }
