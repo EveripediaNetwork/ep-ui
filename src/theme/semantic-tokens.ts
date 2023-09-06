@@ -102,7 +102,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'whiteAlpha.100',
     },
     pageBg: {
-      default: 'gray.100',
+      default: '#F9FAFB',
       _dark: 'gray.800',
     },
     blogPageBg: {
@@ -305,6 +305,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'whiteAlpha.700',
     },
+    heroHeaderDescription: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.700',
+    },
     rankingListText: {
       default: 'gray.600',
       _dark: 'whiteAlpha.900',
@@ -392,6 +396,14 @@ export const semanticTokens: SemanticTokens = {
     aboutIqTokenText: {
       default: 'gray.700',
       _dark: 'white',
+    },
+    cardBorderColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.300',
+    },
+    wikiCardBorderColor: {
+      default: 'gray.100',
+      _dark: 'whiteAlpha.400',
     },
   },
 }

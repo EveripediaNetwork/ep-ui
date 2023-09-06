@@ -15,8 +15,15 @@ const CategoryCard = (props: CategoryCardProps) => {
     <LinkBox
       bgColor="cardBg"
       borderWidth="1px"
-      borderColor="dimColor"
-      _hover={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}
+      borderColor="wikiCardBorderColor"
+      transition="all 0.3s"
+      _hover={{
+        boxShadow: '3xl',
+        transform: 'scale(1.02)',
+        _dark: {
+          boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+        },
+      }}
       overflow="hidden"
       borderRadius="12px"
       key={categoryId}
@@ -27,6 +34,7 @@ const CategoryCard = (props: CategoryCardProps) => {
             src={imageCard}
             width="full"
             height="150px"
+            objectPosition={'top'}
             alt={title}
             loading="lazy"
             imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
@@ -50,15 +58,21 @@ const CategoryCard = (props: CategoryCardProps) => {
         </Box>
 
         <Box p={5}>
-          <Heading textAlign="center" size="sm" my="10px">
+          <Heading
+            textAlign="center"
+            fontSize={{ base: 14, xl: '20px' }}
+            fontWeight={'600'}
+            color={'careersHeadingColor'}
+            my="10px"
+          >
             {title}
           </Heading>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Text
               maxWidth="300px"
-              fontSize="xs"
+              fontSize={'xs'}
               textAlign="center"
-              opacity="0.6"
+              color={'homeDescriptionColor'}
             >
               {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
                 ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')

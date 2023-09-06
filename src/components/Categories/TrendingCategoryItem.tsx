@@ -40,7 +40,7 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             />
           </AspectRatio>
         </Box>
-        <Box flexGrow="1" alignSelf="center">
+        <Box overflow="hidden" flexGrow="1" alignSelf="center">
           <LinkOverlay href={`/wiki/${wikiId}`}>
             <Heading
               overflow="hidden"
@@ -51,7 +51,10 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
               fontSize={{
                 base: '16px',
                 md: '20px',
+                lg: '24px',
               }}
+              textTransform={'capitalize'}
+              fontWeight={'600'}
             >
               {title}
             </Heading>
@@ -62,7 +65,6 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             my={2}
             display="-webkit-box"
             textOverflow="ellipsis"
-            overflow="hidden"
             fontSize={{
               base: '12px',
               md: '14px',
@@ -89,7 +91,7 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
           <Text
             mt="4px !important"
             fontSize={{ base: '10px', md: '14px' }}
-            opacity={0.6}
+            opacity={0.4}
             whiteSpace="nowrap"
           >
             Last Edited {getReadableDate(lastModTimeStamp as string)} ago

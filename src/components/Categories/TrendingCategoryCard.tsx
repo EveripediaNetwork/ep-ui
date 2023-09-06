@@ -18,7 +18,8 @@ const TrendingCategoryCard = ({
   return (
     <Box
       bgColor="cardBg"
-      boxShadow="md"
+      border={'1px'}
+      borderColor={'cardBorderColor'}
       p={{ base: '2.5', md: '5' }}
       borderRadius="12px"
       overflowX="hidden"
@@ -31,7 +32,7 @@ const TrendingCategoryCard = ({
           color="brandLinkColor"
           as={icon}
         />
-        <Text fontSize={{ base: '14px', lg: '18px' }} pl={2} fontWeight="600">
+        <Text fontSize={{ base: '14px', lg: '20px' }} pl={2} fontWeight="600">
           {title}
         </Text>
       </Flex>
@@ -41,7 +42,7 @@ const TrendingCategoryCard = ({
           <chakra.div
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '4' }}
-            py="2"
+            py="10px"
           >
             <TrendingCategoryItem
               title={wiki.title}
