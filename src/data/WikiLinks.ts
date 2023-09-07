@@ -126,7 +126,7 @@ export const LINK_OPTIONS = [
     label: 'Medium',
     icon: RiMediumFill,
     tests: [
-      /^https:\/\/medium\.com\/.*\/[^\/]+$/,
+      /^(https?:\/\/)?(www\.)?medium\.com\/[a-zA-Z0-9-]+(?:\/[a-zA-Z0-9-]+)*(?:\?[^\s]*)?$/,
       /^https:\/\/[a-zA-Z0-9.-]+\.medium\.com\/.*$/,
       /^https:\/\/medium\.com\/@[^/]+/,
     ],
