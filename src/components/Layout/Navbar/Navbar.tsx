@@ -15,8 +15,8 @@ import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
-import DesktopNav from './DesktopNav'
-import WalletNavMenu from './WalletNavMenu'
+const DesktopNav = dynamic(() => import('./DesktopNav'))
+const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
 import Logo from '@/components/Elements/Logo/Logo'
 
 const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
