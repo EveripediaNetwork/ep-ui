@@ -15,7 +15,7 @@ const DynamicCategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
 )
 import { getTags, tagsApi } from '@/services/tags'
-import DiscoverMore from '@/components/Landing/DiscoverMore'
+const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
 const DynamicLeaderBoard = dynamic(
   () => import('@/components/Landing/Leaderboard'),
 )
@@ -24,9 +24,6 @@ import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
 const DynamicRankingList = dynamic(
   () => import('@/components/Landing/RankingList'),
-  {
-    loading: () => <p>Loading...</p>,
-  },
 )
 import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
