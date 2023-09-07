@@ -47,13 +47,14 @@ const WikiPreviewCard = ({
       w="100%"
       h="100%"
       bgColor="cardBg"
-      boxShadow="xl"
-      rounded="lg"
-      overflow="hidden"
+      border={'1px'}
+      borderColor={'cardBorderColor'}
       transition="all 0.3s"
       _hover={{
         transform: 'scale(1.02)',
       }}
+      rounded="lg"
+      overflow="hidden"
       cursor="pointer"
     >
       <AspectRatio w="100%" ratio={WIKI_IMAGE_ASPECT_RATIO}>
@@ -70,7 +71,7 @@ const WikiPreviewCard = ({
         <LinkOverlay href={`/wiki/${id}`}>
           <Text
             fontSize="xl"
-            fontWeight="bold"
+            fontWeight="semibold"
             noOfLines={1}
             textOverflow="ellipsis"
             overflow="hidden"

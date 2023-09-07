@@ -20,11 +20,11 @@ const Categories: NextPage = () => {
           description: CATEGORY_HEADER,
         }}
       />
-      <Box mt="-12" pb={12}>
-        <Box
-          py={10}
-          pt={20}
-          width="full"
+      <Box>
+        <Flex
+          h={325}
+          justify={'center'}
+          align={'center'}
           objectFit="cover"
           bgColor="careersBackground"
           backgroundImage="/images/backgrounds/homepage-bg-white.png"
@@ -32,29 +32,35 @@ const Categories: NextPage = () => {
             backgroundImage: '/images/backgrounds/careers-background-dark.png',
           }}
         >
-          <Heading
-            fontSize={{ base: 25, lg: 36 }}
-            maxW="80%"
-            mx="auto"
-            textAlign="center"
-            p={10}
-            as="h1"
-          >
-            {`${t('wikiCategory')}`}
-          </Heading>
-          <Flex
-            textAlign="center"
-            justifyContent="center"
-            fontWeight="400"
-            mx="auto"
-            maxW={{ base: '90%', md: '70%', lg: '60%' }}
-            px={5}
-          >
-            <Text mb={7} mx={{ base: '5', md: '8', lg: '14' }}>
-              {CATEGORY_HEADER}
-            </Text>
-          </Flex>
-        </Box>
+          <Box width="full">
+            <Heading
+              fontSize={{ base: 25, md: 36, xl: 42 }}
+              color={'careersHeadingColor'}
+              maxW="80%"
+              mx="auto"
+              textAlign="center"
+              pb={2}
+              as="h1"
+            >
+              {`${t('wikiCategory')}`}
+            </Heading>
+            <Flex
+              textAlign="center"
+              justifyContent="center"
+              fontWeight="400"
+              mx="auto"
+              maxW={{ base: '90%', md: '70%', lg: '730px' }}
+            >
+              <Text
+                fontSize={{ base: '12px', md: '14px', lg: '16px' }}
+                mx={{ base: '5', md: '8', lg: '14' }}
+                color={'heroHeaderDescription'}
+              >
+                {CATEGORY_HEADER}
+              </Text>
+            </Flex>
+          </Box>
+        </Flex>
         <Divider />
         <Box mt={16}>
           <SimpleGrid

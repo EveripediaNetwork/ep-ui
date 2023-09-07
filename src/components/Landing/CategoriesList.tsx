@@ -40,7 +40,7 @@ const CategoriesList = () => {
   }
 
   return (
-    <VStack pt={{ base: '15', md: '90' }} mb={20} spacing={2}>
+    <VStack py={{ base: 16, md: 20, lg: 24 }} spacing={2}>
       <Heading
         textAlign="center"
         fontWeight="600"

@@ -95,7 +95,11 @@ const LeaderBoardCard = ({
 const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
   const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
-    <Box px={{ base: 1, md: 8 }} py={{ base: 5, md: 20 }} textAlign="center">
+    <Box
+      px={{ base: 1, md: 8 }}
+      pb={{ base: 16, md: 20, lg: 24 }}
+      textAlign="center"
+    >
       <Heading
         textAlign="center"
         mb={4}

@@ -1,9 +1,9 @@
 import { CategoryDataType } from '@/types/CategoryDataTypes'
 import {
   RiBitCoinFill,
-  RiExchangeBoxFill,
+  RiCoinsFill,
   RiImage2Fill,
-  RiMoneyCnyCircleFill,
+  RiRecycleLine,
   RiTeamFill,
   RiUser3Fill,
   RiCopperDiamondLine,
@@ -23,7 +23,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   {
     id: 'defi',
     title: 'Decentralized Finance',
-    icon: RiMoneyCnyCircleFill,
+    icon: RiRecycleLine,
     description:
       'The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.',
     cardImage: '/images/categories/defi-card.png',
@@ -32,7 +32,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   {
     id: 'exchanges',
     title: 'Exchanges',
-    icon: RiExchangeBoxFill,
+    icon: RiCoinsFill,
     description:
       'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
     cardImage: '/images/categories/exchanges-card.png',
