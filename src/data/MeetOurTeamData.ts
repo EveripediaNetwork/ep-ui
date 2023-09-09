@@ -116,7 +116,7 @@ export const TeamData: TeamDataType = [
     socials: {
       iqWiki: 'https://iq.wiki/wiki/cesar-rodriguez',
       twitter: 'https://twitter.com/kesarito',
-      linkedin: 'https://www.linkedin.com/in/cesarrodriguez2',
+      linkedin: 'https://www.linkedin.com/in/kesarito',
     },
   },
 ]
