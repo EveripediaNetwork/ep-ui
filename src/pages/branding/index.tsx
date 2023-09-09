@@ -5,9 +5,9 @@ import {
   Heading,
   Text,
   List,
-  ListIcon,
   ListItem,
   VStack,
+  Icon,
 } from '@chakra-ui/react'
 import { NextSeo } from 'next-seo'
 import React, { useState } from 'react'
@@ -288,23 +288,85 @@ const BrandingPage = () => {
             </Flex>
             <Flex mt={10}>
               <List display="flex" flexDir="column" gap="10">
-                <ListItem>
-                  <ListIcon as={AiOutlineClose} color="primaryPink" />
-                  Do not use the IQ.wiki logo in any way that suggests that we
-                  are sponsoring, endorsing or affliated to your project in any
-                  way.
+                <ListItem display={'flex'} alignItems={'center'} gap={3}>
+                  <Flex
+                    shrink={0}
+                    justify={'center'}
+                    justifyItems={'center'}
+                    align={'center'}
+                    bgColor={'brand.200'}
+                    w={'20px'}
+                    h={'20px'}
+                    rounded={'full'}
+                  >
+                    <Icon
+                      as={AiOutlineClose}
+                      fontSize={'12px'}
+                      color="primaryPink"
+                    />
+                  </Flex>
+                  <Text fontSize={{ lg: 20 }}>
+                    Do not use the IQ.wiki logo in any way that suggests that we
+                    are sponsoring, endorsing or affliated to your project in
+                    any way.
+                  </Text>
                 </ListItem>
-                <ListItem>
-                  <ListIcon as={AiOutlineClose} color="primaryPink" />
+                <ListItem display={'flex'} alignItems={'center'} gap={3}>
+                  <Flex
+                    shrink={0}
+                    justify={'center'}
+                    justifyItems={'center'}
+                    align={'center'}
+                    bgColor={'brand.200'}
+                    w={'20px'}
+                    h={'20px'}
+                    rounded={'full'}
+                  >
+                    <Icon
+                      as={AiOutlineClose}
+                      fontSize={'12px'}
+                      color="primaryPink"
+                    />
+                  </Flex>
                   The IQ.wiki brain logo shouldn’t be reperesented with any
                   other kind of brain except as stated above.
                 </ListItem>
-                <ListItem>
-                  <ListIcon as={AiOutlineClose} color="primaryPink" />
+                <ListItem display={'flex'} alignItems={'center'} gap={3}>
+                  <Flex
+                    shrink={0}
+                    justify={'center'}
+                    justifyItems={'center'}
+                    align={'center'}
+                    bgColor={'brand.200'}
+                    w={'20px'}
+                    h={'20px'}
+                    rounded={'full'}
+                  >
+                    <Icon
+                      as={AiOutlineClose}
+                      fontSize={'12px'}
+                      color="primaryPink"
+                    />
+                  </Flex>
                   Do not in any way stretch or manipulate the logo.
                 </ListItem>
-                <ListItem>
-                  <ListIcon as={AiOutlineClose} color="primaryPink" />
+                <ListItem display={'flex'} alignItems={'center'} gap={3}>
+                  <Flex
+                    shrink={0}
+                    justify={'center'}
+                    justifyItems={'center'}
+                    align={'center'}
+                    bgColor={'brand.200'}
+                    w={'20px'}
+                    h={'20px'}
+                    rounded={'full'}
+                  >
+                    <Icon
+                      as={AiOutlineClose}
+                      fontSize={'12px'}
+                      color="primaryPink"
+                    />
+                  </Flex>
                   Do not change the logo color asides the ones stated above.
                 </ListItem>
               </List>
