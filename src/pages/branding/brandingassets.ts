@@ -1,4 +1,4 @@
-export const IQLogoAsset = [
+export const iqLogoAsset = [
   {
     bg: '/branding/iq-original.png',
     download: '/branding/downloadassets/logo-iq-original',

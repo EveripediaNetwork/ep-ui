@@ -14,7 +14,7 @@ import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import {
   alternateLogoAssets,
-  IQLogoAsset,
+  iqLogoAsset,
   braindaoAltLogoAssets,
   braindaoLogoAssets,
   iqgptLogoAssets,
@@ -170,7 +170,7 @@ const BrandingPage = () => {
           </Flex>
         </Box>
 
-        <BrandWrapper title="IQ.wiki logo" brandAsset={IQLogoAsset} />
+        <BrandWrapper title="IQ.wiki logo" brandAsset={iqLogoAsset} />
         <BrandWrapper
           title="BrainDAO"
           brandAsset={braindaoAltLogoAssets}
