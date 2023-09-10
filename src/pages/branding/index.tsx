@@ -18,7 +18,7 @@ import {
   braindaoAltLogoAssets,
   braindaoLogoAssets,
   iqgptLogoAssets,
-} from './brandingassets'
+} from '../../components/Branding/brandassets'
 import BrandWrapper from '@/components/Branding/BrandWrapper'
 
 const CustomListItem = ({ content }: { content: string }) => {
