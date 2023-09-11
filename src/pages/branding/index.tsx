@@ -21,7 +21,7 @@ import {
 } from '../../components/Branding/brandassets'
 import BrandWrapper from '@/components/Branding/BrandWrapper'
 
-const CustomListItem = ({ content }: { content: string }) => {
+const BrandingListItem = ({ content }: { content: string }) => {
   return (
     <ListItem display={'flex'} alignItems={'center'} gap={3}>
       <Flex
@@ -64,7 +64,8 @@ const BrandingPage = () => {
           align={'center'}
           objectFit="cover"
           textAlign={'center'}
-          bgColor="careersBackground"
+          bgColor="careersBackground" 
+          px={5} 
           backgroundImage="/images/backgrounds/homepage-bg-white.png"
           _dark={{
             backgroundImage: '/images/backgrounds/careers-background-dark.png',
@@ -81,7 +82,7 @@ const BrandingPage = () => {
               IQ wiki Media Kit
             </Heading>
             <Text
-              maxW={{ sm: '70%', lg: '768px' }}
+              maxW={{ sm: '70%', xl: '828px' }}
               fontSize={{ lg: '20px', base: 'md', xl: 24 }}
               mt={'8px'}
               mb={'75px'}
@@ -189,19 +190,19 @@ const BrandingPage = () => {
             </Flex>
             <Flex mt={10}>
               <List display="flex" flexDir="column" gap="10">
-                <CustomListItem
+                <BrandingListItem
                   content="Do not use the IQ.wiki logo in any way that suggests that we
                     are sponsoring, endorsing or affliated to your project in
                     any way."
                 />
-                <CustomListItem
+                <BrandingListItem
                   content={`The IQ.wiki brain logo shouldn’t be reperesented with any
                   other kind of brain except as stated above.`}
                 />
-                <CustomListItem
+                <BrandingListItem
                   content={'Do not in any way stretch or manipulate the logo.'}
                 />
-                <CustomListItem
+                <BrandingListItem
                   content={
                     'Do not change the logo color asides the ones stated above.'
                   }
