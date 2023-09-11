@@ -29,9 +29,11 @@ const BrandWrapper = ({
         <Heading fontWeight={'600'} fontSize={{ base: '24px', lg: '36px' }}>
           {title}
         </Heading>
-        {description && <Text mt={4} fontSize={{ lg: '20px', base: 'sm' }}>
-          {description}
-        </Text>}
+        {description && (
+          <Text mt={4} fontSize={{ lg: '20px', base: 'sm' }}>
+            {description}
+          </Text>
+        )}
       </Flex>
       <Flex mt={10} flexWrap="wrap" gap="2rem" justifyContent="space-between">
         {brandAsset.map((item, index) => {

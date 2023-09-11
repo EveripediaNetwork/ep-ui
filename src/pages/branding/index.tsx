@@ -64,8 +64,8 @@ const BrandingPage = () => {
           align={'center'}
           objectFit="cover"
           textAlign={'center'}
-          bgColor="careersBackground" 
-          px={5} 
+          bgColor="careersBackground"
+          px={5}
           backgroundImage="/images/backgrounds/homepage-bg-white.png"
           _dark={{
             backgroundImage: '/images/backgrounds/careers-background-dark.png',
