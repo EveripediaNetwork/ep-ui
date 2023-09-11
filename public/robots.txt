@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+User-agent: *
+Disallow: /tags/*
+
 User-agent: GPTBot
 Disallow: /
 
