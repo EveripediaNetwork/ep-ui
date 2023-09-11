@@ -1,7 +1,7 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
-const MirrorIcon = () => {
+const MirrorIcon = (props: IconProps) => {
   return (
     <Flex
       justify={'center'}
@@ -11,12 +11,13 @@ const MirrorIcon = () => {
       rounded={'full'}
       bgColor={'white'}
     >
-      <svg
+      <Icon
         xmlns="http://www.w3.org/2000/svg"
         width="8"
         height="11"
         viewBox="0 0 8 11"
-        fill="none"
+        fill="currentcolor"
+        {...props}
       >
         <g clipPath="url(#clip0_26852_28745)">
           <path
@@ -51,7 +52,7 @@ const MirrorIcon = () => {
             />
           </clipPath>
         </defs>
-      </svg>
+      </Icon>
     </Flex>
   )
 }

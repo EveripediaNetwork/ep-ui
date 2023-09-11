@@ -49,7 +49,7 @@ export default function Document() {
       <body>
         <Script
           strategy="beforeInteractive"
-          // rome-ignore lint/security/noDangerouslySetInnerHtml: We're setting at compile time so it's safe
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: We're setting at compile time so it's safe
           dangerouslySetInnerHTML={{ __html: fixThemeGlitchScript }}
         />
         <Main />

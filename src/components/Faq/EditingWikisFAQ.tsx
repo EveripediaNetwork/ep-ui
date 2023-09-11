@@ -20,28 +20,24 @@ const EditingWikisFAQ = () => {
       </Flex>
       <AccordionFAQItem
         title="Getting Started"
-        content={
-          <>
+        content={`
             Before you can edit an IQ.wiki article you&apos;ll need to log in
             with your Brainlisted Polygon address using MetaMask or
             Walletconnect. Editing an article is quite similar to creating an
             article. The only difference is that you need to start with an
             existing IQ.wiki article and open the Edit Mode instead of starting
             with the Create Wiki button.
-          </>
-        }
+          `}
       />
       <AccordionFAQItem
         title="Editing Mode"
-        content={
-          <>
+        content={`
             To open the Editing Mode and start editing an IQ.wiki article click
             the Edit button. To learn the basics of editing on IQ.wiki, how to
             add a featured image, information, and citations as well as how to
             submit your page, first make sure to read the Creating an Article of
             this FAQ page.
-          </>
-        }
+          `}
       />
       <AccordionFAQItem
         title="Headers and Sections"
@@ -81,15 +77,13 @@ const EditingWikisFAQ = () => {
       />
       <AccordionFAQItem
         title="Adding Item to the Media Gallery"
-        content={
-          <>
+        content={`
             To add an image to the media gallery, navigate to the media gallery
             on the right side of the article (below the main image) and click
             new “Add images/video”. You can drag and drop an image or video or
             click to select it from your PC. You can paste a YouTube or image
             link as well as the system will automatically fetch the media.
-          </>
-        }
+          `}
       />
       <AccordionFAQItem
         title="Embedding Images & Videos"

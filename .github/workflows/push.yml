@@ -31,7 +31,7 @@ jobs:
 
       - name: Installing dependencies
         run: yarn install --frozen-lockfile
-      - name: Lint rome
-        run: yarn rome ci .
+      - name: Lint Biome
+        run: yarn biome ci .
       - name: Tests
         run: yarn test
