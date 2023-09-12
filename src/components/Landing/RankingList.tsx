@@ -60,7 +60,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   return (
     <Box
       px={{ base: 3, md: 8 }}
-      py={{ base: 16, md: 20, lg: 24 }}
+      pb={{ base: 16, md: 20, lg: 24 }}
+      pt={{ lg: 4 }}
       textAlign="center"
     >
       <Heading

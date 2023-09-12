@@ -66,8 +66,8 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <AboutIqgpt />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
+        <AboutIqgpt />
         <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
