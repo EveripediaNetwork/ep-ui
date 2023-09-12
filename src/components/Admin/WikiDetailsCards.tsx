@@ -39,7 +39,7 @@ export const WikiDetailsCards = ({
   weeklyValue,
   color,
 }: WikidetailsProps) => {
-  let percentage: number = 0
+  let percentage = 0
 
   if (currentValue < parseInt(weeklyValue, 10)) {
     percentage = Math.round((currentValue / parseInt(weeklyValue, 10)) * 100)
@@ -120,7 +120,7 @@ export const AllWikiDetailsCards = () => {
 
   const { data: wikiViews } = useGetWikisViewsCountQuery(0)
 
-  let wikiViewsWeekCount: number = 0
+  let wikiViewsWeekCount = 0
 
   wikiViews?.map((_item, index) => {
     if (index < 7) {

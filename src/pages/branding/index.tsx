@@ -5,207 +5,147 @@ import {
   Heading,
   Text,
   List,
-  ListIcon,
   ListItem,
-  useColorModeValue,
+  VStack,
+  Icon,
 } from '@chakra-ui/react'
 import { NextSeo } from 'next-seo'
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import { Image } from '../../components/Elements/Image/Image'
+import {
+  alternateLogoAssets,
+  iqLogoAsset,
+  braindaoAltLogoAssets,
+  braindaoLogoAssets,
+  iqgptLogoAssets,
+} from '../../components/Branding/brandassets'
+import BrandWrapper from '@/components/Branding/BrandWrapper'
+
+const BrandingListItem = ({ content }: { content: string }) => {
+  return (
+    <ListItem display={'flex'} alignItems={'center'} gap={3}>
+      <Flex
+        shrink={0}
+        justify={'center'}
+        justifyItems={'center'}
+        align={'center'}
+        bgColor={'brand.200'}
+        w={'24px'}
+        h={'24px'}
+        rounded={'full'}
+      >
+        <Icon as={AiOutlineClose} fontSize={'16px'} color="primaryPink" />
+      </Flex>
+      <Text fontSize={{ lg: 20 }}>{content}</Text>
+    </ListItem>
+  )
+}
 
 const BrandingPage = () => {
   const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
-  const IQLogoAsset = [
-    {
-      bg: '/branding/iqoriginal.png',
-      download: '/branding/downloadassets/logoiqoriginal',
-      dark: '/branding/iqoriginalB.png',
-    },
-    {
-      bg: '/branding/iqwhite.png',
-      download: '/branding/downloadassets/logoiqwhite',
-    },
-    {
-      bg: '/branding/iqblue.png',
-      download: '/branding/downloadassets/logoiqblue',
-    },
-    {
-      bg: '/branding/iqpurple.png',
-      download: '/branding/downloadassets/logoiqpurple',
-    },
-    {
-      bg: '/branding/iqdeepblack.png',
-      download: '/branding/downloadassets/logoiqdeepblack',
-    },
-    {
-      bg: '/branding/iqnegativepink.png',
-      download: '/branding/downloadassets/logoiqnegativepink',
-    },
-    {
-      bg: '/branding/iqpink.png',
-      download: '/branding/downloadassets/logoiqpink',
-    },
-    {
-      bg: '/branding/iqnegativewhite.png',
-      download: '/branding/downloadassets/logoiqnegativewhite',
-    },
-    {
-      bg: '/branding/iqBlack.png',
-      download: '/branding/downloadassets/logoiqblack',
-    },
-    {
-      bg: '/branding/iqred.png',
-      download: '/branding/downloadassets/logoiqred',
-    },
-    {
-      bg: '/branding/iqgreen.png',
-      download: '/branding/downloadassets/logoiqgreen',
-    },
-    {
-      bg: '/branding/iqorange.png',
-      download: '/branding/downloadassets/logoiqorange',
-    },
-  ]
-  const alternateLogoAssets = [
-    {
-      bg: '/branding/originalBraindao.png',
-      download: '/branding/downloadassets/logooriginalbrain',
-      dark: '/branding/logooriginalbrainB.png',
-    },
-    {
-      bg: '/branding/braindaowhiteNegative.png',
-      download: '/branding/downloadassets/logobrainwhitenegative',
-    },
-    {
-      bg: '/branding/braindaoBlackNegative.png',
-      download: '/branding/downloadassets/logobrainblacknegative',
-    },
-  ]
-  const braindaoLogoAssets = [
-    {
-      bg: '/branding/braindoawhiteW.png',
-      download: '/branding/downloadassets/logobraindoawhiteW',
-      dark: '/branding/braindoawhiteB.png',
-    },
-    {
-      bg: '/branding/braindaoblack.png',
-      download: '/branding/downloadassets/logobraindaoblack',
-    },
-    {
-      bg: '/branding/braindaodeepblack.png',
-      download: '/branding/downloadassets/logobraindaodeepblack',
-    },
-  ]
 
-  const braindaoAltLogoAssets = [
-    {
-      bg: '/branding/brainaltwhite.png',
-      download: '/branding/downloadassets/logobrainaltwhite',
-      dark: '/branding/brainaltwhiteB.png',
-    },
-    {
-      bg: '/branding/brainaltblack.png',
-      download: '/branding/downloadassets/logobraindaoaltblack',
-    },
-    {
-      bg: '/branding/braindaoaltdeepblack.png',
-      download: '/branding/downloadassets/logobraindoadeepblack',
-    },
-  ]
-  const heroImg = useColorModeValue(
-    'branding-brain-light.png',
-    'branding-brain-dark.png',
-  )
   return (
-    <Box bg="brandHero" pb="28" mt="-3">
+    <Box
+      _dark={{
+        bgColor: '#1A202C',
+      }}
+    >
       <NextSeo
-        title="IQ.Wiki Branding kit & official logos"
-        description="IQ.Wiki Branding kit & official logos"
+        title="IQ.wiki Branding kit & official logos"
+        description="IQ.wiki Branding kit & official logos"
         openGraph={{
-          title: 'IQ.Wiki Branding kit & official logos',
-          description: 'IQ.Wiki Branding kit & official logos',
+          title: 'IQ.wiki Branding kit & official logos',
+          description: 'IQ.wiki Branding kit & official logos',
         }}
       />
-      <Box maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
-        <Flex alignItems="center" flexDir={{ base: 'column', lg: 'row' }}>
-          <Box w={{ base: '100%', lg: '60%' }}>
+      <Box>
+        <Flex
+          justify={'center'}
+          align={'center'}
+          objectFit="cover"
+          textAlign={'center'}
+          bgColor="careersBackground"
+          px={5}
+          backgroundImage="/images/backgrounds/homepage-bg-white.png"
+          _dark={{
+            backgroundImage: '/images/backgrounds/careers-background-dark.png',
+          }}
+          pb={{ base: '50px', lg: '100px', xl: 180 }}
+        >
+          <Box pt={{ base: '40px', md: '60px', lg: '89px' }} mx={'auto'}>
+            <Text color="brandLinkColor">Branding</Text>
             <Heading
-              textAlign={{ base: 'center', lg: 'initial' }}
-              color="brand.500"
-              _dark={{ color: '#FF1A88' }}
-              fontSize={{ lg: '6xl', base: '3xl' }}
-              pt={{ lg: 0, base: 8 }}
-              mb={{ base: 6, lg: 10 }}
-              mt={{ base: 18 }}
+              color="careersTextColor"
+              fontWeight={'600'}
+              fontSize={{ base: '20px', md: '28px', lg: '36px', xl: '48px' }}
             >
-              IQ.WIKI Branding kit
+              IQ wiki Media Kit
             </Heading>
             <Text
-              textAlign={{ base: 'center', lg: 'initial' }}
-              w={{ lg: '90%', base: '100%', md: '60%' }}
-              fontSize={{ lg: '2xl', base: 'md' }}
-              mx={{ md: 'auto', lg: '0' }}
+              maxW={{ sm: '70%', xl: '828px' }}
+              fontSize={{ lg: '20px', base: 'md', xl: 24 }}
+              mt={'8px'}
+              mb={'75px'}
+              mx={'auto'}
             >
-              Get easy acess to our brand toolkits and assests for easy usage
-              across your site and other marketing purposes.
+              Gain convenient access to our brand toolkits and assets,
+              simplifying their utilization on your website and for other
+              marketing needs.
             </Text>
           </Box>
-          <Image
-            objectFit="contain"
-            imgBoxSize={500}
-            maxW="80vw"
-            src={`/images/backgrounds/${heroImg}`}
-            alt="Bringing knowledge to the blockchain."
-            priority
-            mt={10}
-          />
-        </Flex>
-        <Flex mt={{ base: '16', lg: '10' }} mx="auto" justifyContent="center">
-          <Text
-            position="relative"
-            w={{ base: '100%', lg: '80%' }}
-            fontSize={{ base: '2xl', md: '4xl' }}
-            textAlign="center"
-            lineHeight="1.5"
-            my={{ base: '2', lg: '24' }}
-          >
-            <Text
-              position="absolute"
-              top={{ base: '-10%', lg: '-20%' }}
-              left={{ base: '0%', lg: '-5%', md: '-3%' }}
-              fontSize={{ lg: '100px', base: '50px' }}
-              color="brand.600"
-            >
-              “
-            </Text>
-            The branding kit is to help provide proper guidelines for the usage
-            of the iq.wiki brand assests so as not to distort the representation
-            of IQ.wiki. <br /> <br /> We are honored to be mentioned in your
-            content and would love to hear from you for any kind of partnership.
-            <Text
-              position="absolute"
-              bottom={{ base: '-10%', lg: '-20%', md: '-5%' }}
-              right={{ base: '5%', md: '-4%', '2xl': '-5%' }}
-              fontSize={{ lg: '100px', base: '50px' }}
-              color="brand.600"
-            >
-              ”
-            </Text>
-          </Text>
         </Flex>
 
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ LOGO
+        <Box
+          position={'relative'}
+          maxW={{ base: '90%', sm: '70%', lg: '80%', xl: '1140px' }}
+          bgColor={'red.100'}
+          mx="auto"
+        >
+          <VStack
+            position={'absolute'}
+            top={{ base: '-100px', xl: '-150px', '2xl': '-180px' }}
+            justify={'center'}
+            align={'center'}
+            bgColor={'aboutIqgptInfoBg'}
+            rounded={'12px'}
+            textAlign={'center'}
+            h={{ xl: '356px' }}
+            py={{ base: 5, lg: '50px' }}
+            px={{ base: 5, xl: '80px' }}
+            mx={'auto'}
+          >
+            <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
+              The media kit serves as a valuable resource, offering clear
+              guidelines for the correct usage of IQ.wiki's brand assets to
+              maintain their accurate representation.
+            </Text>
+            <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
+              We deeply appreciate being featured in your content and are
+              enthusiastic about exploring potential partnership opportunities.
+              Please feel free to reach out to us for any collaboration ideas or
+              inquiries.
+            </Text>
+          </VStack>
+        </Box>
+
+        <Box
+          mt={{ base: '230px', sm: '150px', lg: '230px', xl: '266px' }}
+          mb={24}
+          maxW={{ base: '90%', '2xl': '1280px' }}
+          mx="auto"
+        >
+          <Flex flexDir="column">
+            <Heading fontWeight={'600'} fontSize={{ base: '24px', lg: '36px' }}>
+              IQ logo
             </Heading>
-            <Text
-              fontSize={{ lg: '2xl', base: 'sm' }}
-              textAlign={{ base: 'center', lg: 'initial' }}
-            >
-              The logo for the IQ token is based on the brain, the original
-              source of knowledge.
+            <Text mt={4} fontSize={{ lg: '20px', base: 'sm' }}>
+              The IQ.wiki logo draws inspiration from BrainDAO, a Web 3.0 DAO
+              driven by the IQ token, committed to forging a connection between
+              the physical world and the metaverse. This connection is achieved
+              by funding various forms of knowledge on the blockchain. <br />{' '}
+              The logo, symbolizing IQ and BrainDAO, takes the form of a brain—a
+              symbol of boundless knowledge and cognitive power, signifying the
+              fusion of these both entities.
             </Text>
           </Flex>
           <Flex
@@ -224,140 +164,52 @@ const BrandingPage = () => {
                     setCurrentViewedAsset(item.bg)
                   }}
                   dark={item.dark}
-                  isBraindoa
+                  isBraindao
                 />
               )
             })}
           </Flex>
         </Box>
 
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              IQ.WIKI LOGO
-            </Heading>
-            <Text
-              fontSize={{ lg: '2xl', base: 'sm' }}
-              textAlign={{ base: 'center', lg: 'initial' }}
-            >
-              The IQ.wiki logo was inspired from BrainDAO to represent The
-              World&#x27;s Largest Blockchain & Crypto Encyclopedia.
-            </Text>
-          </Flex>
-          <Flex
-            mt={10}
-            flexWrap="wrap"
-            gap="2rem"
-            justifyContent="space-between"
-          >
-            {IQLogoAsset.map((item, index) => {
-              return (
-                <BrandingAssets
-                  key={index}
-                  bg={item}
-                  currentlyViewed={currentViewedAsset}
-                  updateSelectedAsset={() => {
-                    setCurrentViewedAsset(item.bg)
-                  }}
-                  dark={item.dark}
-                />
-              )
-            })}
-          </Flex>
-        </Box>
+        <BrandWrapper title="IQ.wiki logo" brandAsset={iqLogoAsset} />
+        <BrandWrapper
+          title="BrainDAO"
+          brandAsset={braindaoAltLogoAssets}
+          isBrainDao
+        />
+        <BrandWrapper
+          title="BrainDao- Alternate logo"
+          brandAsset={braindaoLogoAssets}
+        />
+        <BrandWrapper title="IQGPT" brandAsset={iqgptLogoAssets} />
 
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO
-            </Heading>
-            <Text
-              fontSize={{ lg: '2xl', base: 'sm' }}
-              textAlign={{ base: 'center', lg: 'initial' }}
-            >
-              BrainDAO&#x27;s mission is to build a more intelligent future
-              through the IQ token. The logo represents a DAO that is
-              collectively made up of all IQ token stakers and governs the
-              token.
-            </Text>
-          </Flex>
-          <Flex
-            mt={10}
-            flexWrap="wrap"
-            gap="2rem"
-            justifyContent="space-between"
-          >
-            {braindaoAltLogoAssets.map((item, index) => {
-              return (
-                <BrandingAssets
-                  key={index}
-                  bg={item}
-                  currentlyViewed={currentViewedAsset}
-                  dark={item.dark}
-                  updateSelectedAsset={() => {
-                    setCurrentViewedAsset(item.bg)
-                  }}
-                  isBraindoa
+        <Box bgColor={'bodyBg'}>
+          <Box py={24} maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
+            <Flex flexDir="column" gap={5}>
+              <Heading fontSize="3xl">Please beware of these things.</Heading>
+            </Flex>
+            <Flex mt={10}>
+              <List display="flex" flexDir="column" gap="10">
+                <BrandingListItem
+                  content="Do not use the IQ.wiki logo in any way that suggests that we
+                    are sponsoring, endorsing or affliated to your project in
+                    any way."
                 />
-              )
-            })}
-          </Flex>
-        </Box>
-
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading textAlign={{ base: 'center', lg: 'initial' }}>
-              BRAINDAO- ALTERNATE LOGO
-            </Heading>
-          </Flex>
-          <Flex
-            mt={10}
-            flexWrap="wrap"
-            gap="2rem"
-            justifyContent="space-between"
-          >
-            {braindaoLogoAssets.map((item, index) => {
-              return (
-                <BrandingAssets
-                  key={index}
-                  bg={item}
-                  currentlyViewed={currentViewedAsset}
-                  dark={item.dark}
-                  updateSelectedAsset={() => {
-                    setCurrentViewedAsset(item.bg)
-                  }}
+                <BrandingListItem
+                  content={`The IQ.wiki brain logo shouldn’t be reperesented with any
+                  other kind of brain except as stated above.`}
                 />
-              )
-            })}
-          </Flex>
-        </Box>
-
-        <Box mt={20}>
-          <Flex flexDir="column" gap={5}>
-            <Heading fontSize="3xl">Please beware of these things.</Heading>
-          </Flex>
-          <Flex mt={10}>
-            <List display="flex" flexDir="column" gap="10">
-              <ListItem>
-                <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not use the IQ.Wiki logo in any way that suggests that we are
-                sponsoring, endorsing or affliated to your project in any way.
-              </ListItem>
-              <ListItem>
-                <ListIcon as={AiOutlineClose} color="primaryPink" />
-                The IQ wiki brain logo shouldn’t be reperesented with any other
-                kind of brain except as stated above.
-              </ListItem>
-              <ListItem>
-                <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not in any way stretch or manipulate the logo.
-              </ListItem>
-              <ListItem>
-                <ListIcon as={AiOutlineClose} color="primaryPink" />
-                Do not change the logo color asides the ones stated above.
-              </ListItem>
-            </List>
-          </Flex>
+                <BrandingListItem
+                  content={'Do not in any way stretch or manipulate the logo.'}
+                />
+                <BrandingListItem
+                  content={
+                    'Do not change the logo color asides the ones stated above.'
+                  }
+                />
+              </List>
+            </Flex>
+          </Box>
         </Box>
       </Box>
     </Box>

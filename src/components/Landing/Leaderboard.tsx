@@ -95,7 +95,11 @@ const LeaderBoardCard = ({
 const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
   const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
-    <Box px={{ base: 3, md: 8 }} py={{ base: 5, md: 20 }} textAlign="center">
+    <Box
+      px={{ base: 1, md: 8 }}
+      pb={{ base: 16, md: 20, lg: 24 }}
+      textAlign="center"
+    >
       <Heading
         textAlign="center"
         mb={4}
@@ -112,10 +116,10 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
         px={4}
       >
         An Highlight of exceptional editors who has contributed greatly to the
-        IQ wiki.
+        IQ.wiki.
       </Text>
 
-      <Box maxW="1160px" mx="auto">
+      <Box maxW="1160px" mx="auto" overflowX={'hidden'}>
         <Tabs defaultIndex={3} alignSelf="self-start" w="full" my="6">
           <TabList pl={5} border="none">
             {SECTIONS.map((section, sid) => (

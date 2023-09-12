@@ -1049,6 +1049,48 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@biomejs/biome@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/biome/-/biome-1.1.2.tgz#f747e0e5bf0a024e83fdd2ce9bab9c265e1634b6"
+  integrity sha512-JEVWchqo0Xhl86IJgOh0xESWnNRUXBUDByCBR8TA4lIPzm/6U6Tv77+MblNkZ8MvwCtP6PlBNGdQcGKKabtuHA==
+  optionalDependencies:
+    "@biomejs/cli-darwin-arm64" "1.1.2"
+    "@biomejs/cli-darwin-x64" "1.1.2"
+    "@biomejs/cli-linux-arm64" "1.1.2"
+    "@biomejs/cli-linux-x64" "1.1.2"
+    "@biomejs/cli-win32-arm64" "1.1.2"
+    "@biomejs/cli-win32-x64" "1.1.2"
+
+"@biomejs/cli-darwin-arm64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-darwin-arm64/-/cli-darwin-arm64-1.1.2.tgz#33107bf22ba4428a19d33b100bf63d58fdb17627"
+  integrity sha512-YyqWeNZchPxlvxtdo2vMBkzrwllaNS3+DZ6j01mUCVIZE9kAzF/edMV2O38L2AEtnRLU1TI1f71Jai3ThILClg==
+
+"@biomejs/cli-darwin-x64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-darwin-x64/-/cli-darwin-x64-1.1.2.tgz#a1556a2a8c7257afab15469036bfb77a64d2d8ac"
+  integrity sha512-Sofxcu50AHJyQS6Xx3OF2egQQ7Un5YFVF5/umNFa+kSNrrCu/ucmzrk8FcGS2dOSs4L2LqD6ZDWjvbcikjzLYQ==
+
+"@biomejs/cli-linux-arm64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-linux-arm64/-/cli-linux-arm64-1.1.2.tgz#4daf1ca573ad8a9747ef50f72542de46bded0a0a"
+  integrity sha512-wtaQgpoVMZEKf1GlDlFGAJP1j6gnh4L4kJN8PQPOBAdKIUZ/YSjqVp0z28vli5xCQ57xCn1gH4Xoqw2gVYu1tQ==
+
+"@biomejs/cli-linux-x64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-linux-x64/-/cli-linux-x64-1.1.2.tgz#25ed0d4720673848c829a50ad67538466364037c"
+  integrity sha512-TYIUjCXbY+kxnJgv8GESplMagB1GdOcMV21JGRATqnhUI4BvG6sjs3gfi+sdjLBQdbHhsISXW3yfUlv07HKqhg==
+
+"@biomejs/cli-win32-arm64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-win32-arm64/-/cli-win32-arm64-1.1.2.tgz#4246b96c53c7de5997f1a19dd3e0717355978db9"
+  integrity sha512-yApn85KuJ+Ty5zxbqWnaifX4ONtZG+snu12RNKi8fxSVVCXzQ/k2PfsWQbsyvCG05qshSvNKtM54cuf+vhUIsw==
+
+"@biomejs/cli-win32-x64@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@biomejs/cli-win32-x64/-/cli-win32-x64-1.1.2.tgz#2bd8d0c4ab6277baf3d4eedd5258caa972814152"
+  integrity sha512-qebNvIrFj2TJ+K0JVGo1HkgV2y5jis6aOZDC1SWuk53GnqjSLdR+p1v86ZByOjYr1v+tjc67EXmEepk06VVvpA==
+
 "@chakra-ui/accordion@2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@chakra-ui/accordion/-/accordion-2.1.2.tgz#f9d384b80f68a92689fa7ad4e43bd8944e6945c6"
@@ -2801,10 +2843,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@everipedia/iq-utils@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.4.tgz#186e7c43b0bf260914c56f8517c66d9e5359cc44"
-  integrity sha512-UrEgexwKcLB/A1NJ4bn/nXcQXRXTm+IIPD0El3fw5k1ol2Pxx6TyP6LSgTopDbZUVBvBNAKpLu1ctAz5Hveozw==
+"@everipedia/iq-utils@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.5.tgz#8323e64ceb50a485dee648bfd79dc638744c77f2"
+  integrity sha512-xa1+Ti8N6+W49RXUlskjEP2gG94jh0E1zxmmZC4bqRRKndZLD6550+/OPii7dMDhsEMQK8uPb8oXkdvcAzr2jg==
 
 "@everipedia/web3-signer@^0.0.11":
   version "0.0.11"

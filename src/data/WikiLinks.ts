@@ -13,6 +13,7 @@ import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
 import { RiGlobalFill, RiMediumFill } from 'react-icons/ri'
+import MirrorIcon from '@/components/Icons/mirrorIcon'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -113,12 +114,21 @@ export const LINK_OPTIONS = [
     tests: [/https:\/\/opensea\.io\/\w+/],
   },
   {
+    id: CommonMetaIds.MIRROR_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Mirror',
+    icon: MirrorIcon,
+    tests: [/https:\/\/mirror\.xyz\/\w+/],
+  },
+  {
     id: CommonMetaIds.MEDIUM_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Medium',
     icon: RiMediumFill,
     tests: [
-      /^https?:\/\/(([a-zA-Z0-9]+)\.(medium\.com)|medium\.com\/([a-zA-Z0-9-]+)|medium\.com\/@([A-Za-z0-9]+))\/?$/,
+      /^(https?:\/\/)?(www\.)?medium\.com\/[a-zA-Z0-9-]+(?:\/[a-zA-Z0-9-]+)*(?:\?[^\s]*)?$/,
+      /^https:\/\/[a-zA-Z0-9.-]+\.medium\.com\/.*$/,
+      /^https:\/\/medium\.com\/@[^/]+/,
     ],
   },
   {

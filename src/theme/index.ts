@@ -8,6 +8,7 @@ import { semanticTokens } from './semantic-tokens'
 const config: ThemeConfig = {
   initialColorMode: 'system',
   cssVarPrefix: 'chakra',
+  useSystemColorMode: false,
 }
 
 const theme: Dict = extendTheme({

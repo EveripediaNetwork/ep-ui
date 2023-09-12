@@ -9,9 +9,9 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
   if (!tagsData) return null
 
   return (
-    <Box bgColor="gray.50" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
-      <Box maxW="1020px" mx="auto" py={8} px={4}>
-        <Heading fontWeight="600" opacity={0.8} fontSize={20}>
+    <Box bgColor="gray.100" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
+      <Box maxW="1290px" mx="auto" py={8} px={4}>
+        <Heading fontWeight="700" color={'rankPageButtonText'} fontSize={24}>
           Discover More on IQ.wiki
         </Heading>
         <Wrap mt={8} spacing={4}>
@@ -21,7 +21,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
               borderWidth="1px"
               px={4}
               py={1}
-              fontSize={18}
+              fontSize={24}
               rounded="full"
               borderColor="gray.300"
               color="gray.600"
@@ -30,11 +30,11 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
               href={`/tags/${tag.id}`}
               sx={{
                 '&:hover, &:focus, &:active': {
-                  bgColor: 'gray.100',
+                  bgColor: 'gray.200',
                   textDecoration: 'none',
                   boxShadow: 'none',
                   _dark: {
-                    bgColor: 'whiteAlpha.100',
+                    bgColor: 'whiteAlpha.400',
                   },
                 },
               }}

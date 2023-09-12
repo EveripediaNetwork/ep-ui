@@ -4,6 +4,7 @@ import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
+import { SortOrder } from '@/types/RankDataTypes'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -15,25 +16,37 @@ const formatDate = (date: string) => {
   })
 }
 
-const numFormatter = Intl.NumberFormat('en', {
+const marketCapFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
+}).format
+
+const priceFormatter = Intl.NumberFormat('en', {
+  notation: 'standard',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
 }).format
 
 const RankingItem = ({
   index,
   item,
+  order,
+  offset,
+  listingLimit,
 }: {
   index: number
   item: RankCardType
+  order: SortOrder
+  offset: number
+  listingLimit: number
 }) => {
   const marketCap = item.nftMarketData
-    ? numFormatter(item.nftMarketData.market_cap_usd)
-    : numFormatter(item.tokenMarketData.market_cap)
+    ? marketCapFormatter(item.nftMarketData.market_cap_usd)
+    : marketCapFormatter(item.tokenMarketData.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? item.nftMarketData.floor_price_usd.toFixed(2).toLocaleString()
-      : item.tokenMarketData.current_price?.toFixed(2).toLocaleString()
+      ? priceFormatter(item.nftMarketData.floor_price_usd)
+      : priceFormatter(item.tokenMarketData.current_price)
   }`
 
   const dateFounded = item?.events?.find(
@@ -41,14 +54,25 @@ const RankingItem = ({
   )?.date
 
   return (
-    <Tr>
+    <Tr
+      _hover={{
+        bgColor: 'gray.100',
+        _dark: {
+          bgColor: 'whiteAlpha.100',
+        },
+      }}
+    >
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
         pr="1"
       >
-        <Text color="rankingListText">{index + 1}</Text>
+        <Text color="rankingListText">
+          {order === 'descending'
+            ? index + offset + 1
+            : listingLimit + offset - index}
+        </Text>
       </Td>
       <Td
         borderColor="rankingListBorder"

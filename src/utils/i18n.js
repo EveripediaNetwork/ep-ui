@@ -7,7 +7,7 @@ export const resources = {
     translation: {
       // |||||||||||||||||||| SECTIONS ||||||||||||||||||||
       // init
-      //--Copies for IQ.Wiki--
+      //--Copies for IQ.wiki--
 
       //Home page
       everipedia: 'IQ.wiki',
@@ -16,10 +16,10 @@ export const resources = {
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
-      trendingWikis: 'Latest from IQ.Wiki',
+      trendingWikis: 'Latest from IQ.wiki',
       rankingListHeading: 'Wiki Rank By MarketCap',
       rankingListDescription:
-        'A list of wikis in different categories, including DeFi, NFTs, DAOs and Cryptocurrencies, ranked based on marketcap.',
+        'A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.',
       trendingWikisDescription:
         'Top wikis, recent edits and popular wikis on IQ.wiki.',
       browseCategory: 'Wiki Categories',
@@ -51,7 +51,7 @@ export const resources = {
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of service',
       privacyRights: 'Your CA Privacy Rights',
-      copyRight: 'IQ.Wiki Powered By ',
+      copyRight: 'IQ.wiki Powered By ',
 
       //Desktop Nav
       Explore: 'Explore',
@@ -214,10 +214,18 @@ export const resources = {
       advancedFAQTenHead: 'Edit History',
       advancedFAQTenBody:
         'To see the past edits that have been made to an IQ.wiki article you can click on the History button which is located below the Edit button. The History feature allows users to examine the different versions of an article and the differences between them on a special timeline. The History page also links to the Polygon transaction and IPFS hash for each edit. https://www.youtube.com/watch?v=gjYErj7O-PQ',
+      aboutIQGPTBody:
+        'IQ GPT is a crypto-focused AI model that provides insights into intricate terms, live market trends, and breaking news. It is powered by the IQ token, which enables holders to participate in governance and get access to additional features.',
+      benefitIQGPTOne:
+        'Stay ahead of the competition with access to real-time price data, trading volumes, market capitalization and other key market data via convenient conversation-like prompting.',
+      benefitIQGPTTwo:
+        'Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world’s largest crypto encyclopedia, Flywheel, AP News, Coinness and others.',
+      benefitIQGPTThree:
+        'Equip yourself with AI powered market analysis from real time market data, news and trends.',
 
       //Global text
       seenItAll: 'Yay! You have seen it all 🥳 ',
-      //---End of Copies for IQ.Wiki--
+      //---End of Copies for IQ.wiki--
 
       // ---------------------------------------------------------------
 

@@ -34,7 +34,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
             minWidth={100}
           >
             <Heading as="h1" size="2xl" letterSpacing="wide">
-              IQ.Wiki Blog
+              IQ.wiki Blog
             </Heading>
             <Flex alignItems="center" mt={[5, 0]}>
               <Text mr={5}>More from us</Text>
@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       blogEntries,
     },
-    revalidate: 60 * 60 * 7, // 7 hours
+    revalidate: 60 * 5,
   }
 }
 

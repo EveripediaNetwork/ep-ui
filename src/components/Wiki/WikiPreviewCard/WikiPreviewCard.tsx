@@ -20,6 +20,7 @@ import { getUsername } from '@/utils/DataTransform/getUsername'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
+import { blurDataURL } from '@/data/blurPlaceholder'
 
 const WikiPreviewCard = ({
   wiki,
@@ -46,7 +47,12 @@ const WikiPreviewCard = ({
       w="100%"
       h="100%"
       bgColor="cardBg"
-      boxShadow="xl"
+      border={'1px'}
+      borderColor={'cardBorderColor'}
+      transition="all 0.3s"
+      _hover={{
+        transform: 'scale(1.02)',
+      }}
       rounded="lg"
       overflow="hidden"
       cursor="pointer"
@@ -57,13 +63,15 @@ const WikiPreviewCard = ({
           alt={wiki.title}
           boxSize="100%"
           imgBoxSize={IMAGE_BOX_SIZE}
+          placeholder="blur"
+          blurDataURL={blurDataURL}
         />
       </AspectRatio>
       <Stack spacing={3} p={4}>
         <LinkOverlay href={`/wiki/${id}`}>
           <Text
             fontSize="xl"
-            fontWeight="bold"
+            fontWeight="semibold"
             noOfLines={1}
             textOverflow="ellipsis"
             overflow="hidden"

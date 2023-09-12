@@ -23,6 +23,8 @@ import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
+import AboutIqgpt from '@/components/Landing/AboutIqgpt'
+import { GetServerSideProps } from 'next'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -58,18 +60,14 @@ export const Index = ({
       pt={{ base: 6, lg: 12 }}
     >
       <Hero />
-      <Box
-        _dark={{
-          bgImage: '/images/backgrounds/homepage-bg-dark.png',
-        }}
-        bgImage="/images/backgrounds/homepage-bg-white.png"
-      >
+      <Box>
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList rankings={rankings} />
+        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
+        <AboutIqgpt />
         <CategoriesList />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -78,7 +76,7 @@ export const Index = ({
   )
 }
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
@@ -154,10 +152,12 @@ export async function getStaticProps() {
 
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
-      `Error fetching data. the error is: ${
-        (JSON.stringify(tagsDataError?.message),
+      `Error fetching data. the error is: ${[
+        JSON.stringify(tagsDataError?.message),
         JSON.stringify(promotedWikisError?.message),
-        JSON.stringify(recentError?.message))
+        JSON.stringify(tagsDataError?.message),
+        JSON.stringify(recentError?.message),
+      ].join(' ')}
       }`,
     )
   }

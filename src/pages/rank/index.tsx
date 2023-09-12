@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { GetStaticProps } from 'next'
+import React, { useEffect, useState, useRef } from 'react'
+import { GetServerSideProps } from 'next'
 import {
   Text,
   Box,
@@ -25,39 +25,119 @@ import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
+import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import { useRouter } from 'next/router'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
+import { CategoryKeyType } from '@/types/RankDataTypes'
 
-const LISTING_LIMITS = 20
+export const LISTING_LIMIT = 20
+
+export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
+  const innerItems = [...items]
+
+  try {
+    innerItems.sort((a, b) => {
+      const MarketCapA =
+        a?.nftMarketData?.market_cap_usd ?? a?.tokenMarketData?.market_cap ?? 0
+      const MarketCapB =
+        b?.nftMarketData?.market_cap_usd ?? b?.tokenMarketData?.market_cap ?? 0
+      if (order === 'ascending') {
+        return MarketCapA - MarketCapB
+      } else {
+        return MarketCapB - MarketCapA
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  }
+
+  return innerItems
+}
 
 const Rank = ({
   totalTokens,
   totalNfts,
+  pagination,
 }: {
   totalNfts: number
   totalTokens: number
+  pagination: { category: string; page: number }
 }) => {
-  const [nftOffset, setNftOffset] = useState<number>(1)
-  const [tokensOffset, setTokensOffset] = useState<number>(1)
-  const [tokenCount, setTokenCount] = useState<number>(0)
-  const [nftCount, setNftCount] = useState<number>(0)
+  const hasRenderedInitialItems = useRef(false)
+  const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
+  const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [sortOrder, setOrder] = useState<SortOrder>('descending')
+  const router = useRouter()
+  const { pathname } = router
+  const [nftOffset, setNftOffset] = useState<number>(
+    pagination.category === 'nfts' ? pagination.page : 1,
+  )
+  const [tokensOffset, setTokensOffset] = useState<number>(
+    pagination.category === 'cryptocurrencies' ? pagination.page : 1,
+  )
 
-  useEffect(() => {
-    setTokenCount(tokensOffset * LISTING_LIMITS - LISTING_LIMITS)
-    setNftCount(nftOffset * LISTING_LIMITS - LISTING_LIMITS)
-  }, [nftOffset, tokensOffset])
+  const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
+  const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
 
-  const { data: tokensObject, isFetching } = useGetTokenRankingQuery({
+  const handleCategoryChange = (index: number) => {
+    router.push(
+      {
+        pathname,
+        query: {
+          category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
+          page: 1,
+        },
+      },
+      undefined,
+      { shallow: true },
+    )
+  }
+
+  const { data: tokenData, isFetching } = useGetTokenRankingQuery({
     kind: 'TOKEN',
     offset: tokensOffset,
-    limit: LISTING_LIMITS,
+    limit: LISTING_LIMIT,
   })
 
-  const { data: nftsObject, isFetching: NFTisFetching } = useGetNFTRankingQuery(
-    {
-      kind: 'NFT',
-      offset: nftOffset,
-      limit: LISTING_LIMITS,
+  const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
+    kind: 'NFT',
+    offset: nftOffset,
+    limit: LISTING_LIMIT,
+  })
+
+  /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
+  if (
+    tokenData &&
+    nftData &&
+    !nftItems.length &&
+    !tokenItems.length &&
+    !hasRenderedInitialItems.current
+  ) {
+    setTokenItems(sortByMarketCap('descending', tokenData))
+    setNftItems(sortByMarketCap('descending', nftData))
+    hasRenderedInitialItems.current = true
+  }
+
+  useEffect(() => {
+    if (tokenData && nftData && hasRenderedInitialItems.current) {
+      setTokenItems(sortByMarketCap('descending', tokenData))
+      setNftItems(sortByMarketCap('descending', nftData))
+    }
+  }, [tokenData, nftData])
+
+  const onClickMap: OnClickMap = {
+    Marketcap: function () {
+      if (nftData && tokenData) {
+        const newSortOrder =
+          sortOrder === 'ascending' ? 'descending' : 'ascending'
+        setOrder(newSortOrder)
+        setTokenItems(sortByMarketCap(newSortOrder, tokenData))
+        setNftItems(sortByMarketCap(newSortOrder, nftData))
+      }
     },
-  )
+  }
+
   return (
     <Box>
       <RankHeader />
@@ -81,7 +161,13 @@ const Rank = ({
         gap={{ base: 10, md: 0, lg: 4 }}
         justifyContent={{ lg: 'center', md: 'space-between' }}
       >
-        <Tabs w="full">
+        <Tabs
+          defaultIndex={
+            CATEGORIES_WITH_INDEX[pagination.category as CategoryKeyType]
+          }
+          w="full"
+          onChange={handleCategoryChange}
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
@@ -113,25 +199,28 @@ const Rank = ({
                 hasPagination
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
-                pageSize={LISTING_LIMITS}
+                pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setTokensOffset(page)}
               >
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {isFetching ? (
+                  {isFetching || !tokenItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    tokensObject?.map((token, index) =>
+                    tokenItems?.map((token, index) =>
                       token ? (
                         <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalTokenOffset}
+                          order={sortOrder}
                           key={token.id}
-                          index={tokenCount + index}
+                          index={index}
                           item={token}
                         />
                       ) : (
                         <InvalidRankCardItem
                           key={`invalid-token${index}`}
-                          index={tokenCount + index}
+                          index={totalTokenOffset + index}
                         />
                       ),
                     )
@@ -155,25 +244,28 @@ const Rank = ({
                 hasPagination
                 currentPage={nftOffset}
                 totalCount={totalNfts}
-                pageSize={LISTING_LIMITS}
+                pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setNftOffset(page)}
               >
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {NFTisFetching ? (
+                  {NFTisFetching || !nftItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    nftsObject?.map((nft, index) =>
+                    nftItems?.map((nft, index) =>
                       nft ? (
                         <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalNftCount}
+                          order={sortOrder}
                           key={nft.id}
-                          index={index + nftCount}
+                          index={index}
                           item={nft}
                         />
                       ) : (
                         <InvalidRankCardItem
                           key={`invalid-nft-${index}`}
-                          index={index + nftCount}
+                          index={index + totalNftCount}
                         />
                       ),
                     )
@@ -190,10 +282,15 @@ const Rank = ({
 
 export default Rank
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
+
+  const { category, page } = ctx.query as {
+    category: string
+    page: string | null
+  }
 
   const { data: nftsData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'nfts' }),
@@ -206,6 +303,10 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       totalTokens,
       totalNfts,
+      pagination: {
+        category: category || 'cryptocurrencies',
+        page: Number(page) || 1,
+      },
     },
   }
 }

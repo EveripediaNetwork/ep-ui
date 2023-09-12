@@ -99,16 +99,25 @@ export const WikiCarousel = <T extends unknown>({
 
   return (
     <>
-      <chakra.div ref={emblaRef} overflow="hidden" w="full">
+      <chakra.div
+        ref={emblaRef}
+        rounded={'12px'}
+        boxShadow="3xl"
+        _dark={{
+          shadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+        }}
+        overflow="hidden"
+        w="full"
+      >
         <Flex w="full">
           {data?.map((e, i) => (
-            <Box key={i} flex="0 0 auto" minW="0" maxW="100%">
+            <Box key={i} flex="0 0 100%" minW="0" maxW="100%">
               {item(e)}
             </Box>
           ))}
         </Flex>
       </chakra.div>
-      <Flex w="full" alignItems="center" gap="3" pt="4" justifyContent="center">
+      <Flex w="full" alignItems="center" gap="3" pt="6" justifyContent="center">
         {scrollSnaps.map((_, index) => (
           <Icon
             key={index}
@@ -144,10 +153,10 @@ const ArrowBtn = ({ ArrowIcon, onClick, top, isNext }: ArrowProps) => (
     zIndex={99}
     bgColor="carouselArrowBg"
     borderRadius="50%"
-    w="40px"
-    h="40px"
-    right={isNext ? '-20px' : 'unset'}
-    left={isNext ? 'unset' : '-20px'}
+    w={{ base: '35px', md: '40px' }}
+    h={{ base: '35px', md: '40px' }}
+    right={isNext ? '0px' : 'unset'}
+    left={isNext ? 'unset' : '0px'}
   >
     <Icon as={ArrowIcon} color="grey" />
   </Box>

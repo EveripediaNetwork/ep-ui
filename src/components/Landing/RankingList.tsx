@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Flex,
@@ -13,41 +13,75 @@ import {
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
 import { RiCoinsFill } from 'react-icons/ri'
-import { RankingListProps } from '@/types/RankDataTypes'
+import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
+import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
 
-const RankingList = ({ rankings }: RankingListProps) => {
+type RankingListProps = {
+  rankings: {
+    NFTsListing: RankCardType[]
+    TokensListing: RankCardType[]
+  }
+  listingLimit: number
+}
+
+const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
+  const { TokensListing, NFTsListing } = rankings
+  const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
+  const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [sortOrder, setOrder] = useState<SortOrder>('descending')
+
+  if (
+    TokensListing &&
+    NFTsListing &&
+    (!tokenItems.length || !nftItems.length)
+  ) {
+    setTokenItems(sortByMarketCap('descending', TokensListing))
+    setNftItems(sortByMarketCap('descending', NFTsListing))
+  }
+
+  const onClickMap: OnClickMap = {
+    Marketcap: function () {
+      if (tokenItems && nftItems) {
+        const newSortOrder =
+          sortOrder === 'ascending' ? 'descending' : 'ascending'
+        setOrder(newSortOrder)
+        setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
+        setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
+      }
+    },
+  }
 
   return (
     <Box
-      mt={10}
       px={{ base: 3, md: 8 }}
-      pb={{ base: 5, md: 20 }}
+      pb={{ base: 16, md: 20, lg: 24 }}
+      pt={{ lg: 4 }}
       textAlign="center"
     >
       <Heading
         textAlign="center"
         mb={4}
-        fontWeight="700"
+        fontWeight="600"
         fontSize={{ base: '3xl', lg: 46 }}
       >
         {`${t('rankingListHeading')}`}
       </Heading>
       <Text
         color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: 22 }}
+        fontSize={{ base: 'lg', lg: '20px' }}
         mx="auto"
         mb={9}
         px={4}
-        maxW="800"
+        maxW="768"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
-        <Tabs mt={10} defaultIndex={0} p="0">
+        <Tabs mt={10} p="0">
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
@@ -68,11 +102,14 @@ const RankingList = ({ rankings }: RankingListProps) => {
               py={{ base: 0, md: 'initial' }}
             >
               <RankTable hasPagination={false}>
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {rankings.TokensListing.map((token, index) =>
+                  {tokenItems.map((token, index) =>
                     token ? (
                       <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
                         key={index + token.id}
                         index={index}
                         item={token}
@@ -89,11 +126,14 @@ const RankingList = ({ rankings }: RankingListProps) => {
               py={{ base: 0, md: 'initial' }}
             >
               <RankTable hasPagination={false}>
-                <RankTableHead />
+                <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {rankings.NFTsListing.map((nft, index) =>
+                  {nftItems.map((nft, index) =>
                     nft ? (
                       <RankingItem
+                        listingLimit={LISTING_LIMIT}
+                        offset={0}
+                        order={sortOrder}
                         key={index + nft.id}
                         index={index}
                         item={nft}
@@ -109,7 +149,7 @@ const RankingList = ({ rankings }: RankingListProps) => {
         </Tabs>
         <Flex justifyContent="center" mt="10">
           <LinkButton
-            href="/rank"
+            href="/rank?category=cryptocurrencies&page=1"
             h="50px"
             w={{ base: 32, lg: 40 }}
             variant="outline"

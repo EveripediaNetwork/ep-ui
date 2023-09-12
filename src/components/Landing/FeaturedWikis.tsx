@@ -15,16 +15,16 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
       <Box
         maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         w="full"
-        shadow="lg"
+        border="1px solid"
+        borderColor={'gray.100'}
         rounded="lg"
         py={3}
-        bg="white"
-        _dark={{ bgColor: 'gray.700', color: 'white' }}
-        color="black"
+        bgColor="bodyBg"
+        _dark={{ border: 'none' }}
         textAlign="center"
         justifyContent="center"
       >
-        <chakra.div w="full" alignItems="center" display="flex" pl="2">
+        <chakra.div w="full" alignItems="center" display="flex" px="4" pb={3}>
           <Icon
             cursor="pointer"
             color="brandLinkColor"
@@ -32,28 +32,28 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
             fontWeight={600}
             as={RiStarFill}
           />
-          <Text fontSize={{ base: 'md', lg: '18px' }} pl={2} fontWeight="600">
+          <Text
+            color={'wikiFlagTextColor'}
+            fontSize={{ base: 'md', lg: '18px' }}
+            pl={2}
+            fontWeight="600"
+          >
             Featured wikis
           </Text>
         </chakra.div>
         {featuredWikis ? (
-          <>
+          <chakra.div px={5}>
             <WikiCarousel
               data={featuredWikis}
               item={(wiki) => (
-                <Box
-                  px="3"
-                  pt={{ base: '1', md: '3' }}
-                  pb={{ base: '6', md: '3' }}
-                  key={`wiki-${wiki.id}`}
-                >
+                <Box key={`wiki-${wiki.id}`}>
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>
               )}
               plugins={[Autoplay()]}
               options={OPTIONS}
             />
-          </>
+          </chakra.div>
         ) : (
           <LoadingFeaturedWikiCard />
         )}
