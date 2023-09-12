@@ -40,7 +40,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
         h4: addToTOC,
         h5: addToTOC,
         h6: addToTOC,
-        a: props =>
+        a: (props) =>
           customLinkRenderer({
             ...props,
             referencesString,
@@ -60,7 +60,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
   let content = wiki?.content.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
-  content.match(new RegExp(matchRegex, 'g'))?.forEach(match => {
+  content.match(new RegExp(matchRegex, 'g'))?.forEach((match) => {
     const widgetContent = match.match(matchRegex)?.[1]
     if (widgetContent) {
       content = content.replaceAll(match, widgetContent)
