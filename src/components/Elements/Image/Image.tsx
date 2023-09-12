@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, BoxProps } from '@chakra-ui/react'
-import NextImage, { ImageProps } from 'next/image'
-import type { ImageLoader } from 'next/dist/client/image'
+import NextImage, { ImageLoader, ImageProps } from 'next/image'
 
 interface CfLoaderArgs {
   src: string
