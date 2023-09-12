@@ -14,7 +14,7 @@ const WikiAdCard = () => {
       bgColor={'aboutIqgptInfoBg'}
     >
       <Text
-        fontSize={{ base: '12px' }}
+        fontSize={{ base: '12px', sm: '14px', xl: '12px' }}
         fontWeight={'500'}
         color={'brandLinkColor'}
       >
@@ -23,7 +23,10 @@ const WikiAdCard = () => {
       </Text>
 
       <HStack spacing={1} mt={'6px'} color={'brandLinkColor'}>
-        <Text fontSize={{ base: '14px' }} fontWeight={'600'}>
+        <Text
+          fontSize={{ base: '14px', sm: '16px', xl: '14px' }}
+          fontWeight={'600'}
+        >
           Check it out
         </Text>
         <LinkWrapper href={'https://iqgpt.com/'}>
