@@ -103,6 +103,13 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 4,
+    label: 'IQGPT',
+    href: 'https://iqgpt.com',
+    icon: RiSearchEyeFill,
+    target: '_blank',
+  },
+  {
+    id: 5,
     label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
