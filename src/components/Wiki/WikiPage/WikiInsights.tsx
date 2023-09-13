@@ -19,6 +19,7 @@ import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
 import ContentFeedback from './InsightComponents/ContentFeedback'
+import WikiAdCard from '../WikiCard/WikiAdCard'
 
 interface WikiInsightsProps {
   wiki: Wiki
@@ -77,63 +78,74 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       borderLeftWidth={{ base: 0, xl: '1px' }}
       p={{ base: 0, md: 2, xl: 4 }}
       pr={{ md: 11, xl: 4 }}
-      pt={{ xl: '24', md: '8', base: '10' }}
+      pt={{ xl: '9', md: '8', base: '10' }}
       borderColor="rankingListBorder"
     >
       <Box as="aside" ref={stickyRef} w="100%">
-        <VStack
+        <Flex
+          direction={{ base: 'column-reverse', xl: 'column' }}
           w={{ base: '90%', md: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
           mx={{ base: 'auto', xl: 0 }}
           px={{ base: '0', md: '4', xl: '0' }}
-          spacing={6}
+          gap={6}
         >
-          <WikiDetails
-            wikiTitle={wiki}
-            categories={wiki.categories}
-            createdTime={wiki?.created}
-            ipfsHash={ipfs || wiki.ipfs}
-            txHash={wiki.transactionHash}
-            createdBy={wiki.author}
-            imgSrc={getWikiImageUrl(wiki.images)}
-            views={wiki.views}
-          />
-          <ProfileSummary wiki={wiki} />
-          <Box w="full" display={{ base: 'none', xl: 'block' }}>
-            <ContentFeedback choice contentId={wiki.id} userId={userAddress} />
-          </Box>
-          {!!coingeckoLink && (
-            <>
-              <ProfileStatistics tokenStats={tokenStats} />
-              {wikiIsNFT && <NFTStatistics nftStats={nftStats} />}
-              {tokenStats && (
-                <CurrencyConverter
-                  tokenImage={tokenStats.token_image_url}
-                  token={getTokenFromURI(coingeckoLink)}
-                  tokenStats={tokenStats}
+          <WikiAdCard />
+          <VStack spacing={6}>
+            <WikiDetails
+              wikiTitle={wiki}
+              categories={wiki.categories}
+              createdTime={wiki?.created}
+              ipfsHash={ipfs || wiki.ipfs}
+              txHash={wiki.transactionHash}
+              createdBy={wiki.author}
+              imgSrc={getWikiImageUrl(wiki.images)}
+              views={wiki.views}
+            />
+            <ProfileSummary wiki={wiki} />
+            <Box w="full" display={{ base: 'none', xl: 'block' }}>
+              <ContentFeedback
+                choice
+                contentId={wiki.id}
+                userId={userAddress}
+              />
+            </Box>
+            {!!coingeckoLink && (
+              <>
+                <ProfileStatistics tokenStats={tokenStats} />
+                {wikiIsNFT && <NFTStatistics nftStats={nftStats} />}
+                {tokenStats && (
+                  <CurrencyConverter
+                    tokenImage={tokenStats.token_image_url}
+                    token={getTokenFromURI(coingeckoLink)}
+                    tokenStats={tokenStats}
+                  />
+                )}
+              </>
+            )}
+            <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
+            <WikiCommitMessage
+              commitMessage={commitMessage}
+              user={wiki.user}
+              lastUpdated={wiki.updated || dateTime}
+            />
+            <Flex
+              w="100%"
+              display={{ base: 'none', xl: 'block', md: 'none' }}
+              gap={6}
+            >
+              {!!twitterLink && <TwitterTimeline url={twitterLink} />}
+              {wiki.categories.length !== 0 && (
+                <RelatedWikis
+                  wikiId={wiki.id}
+                  category={wiki.categories[0].id}
                 />
               )}
-            </>
-          )}
-          <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
-          <WikiCommitMessage
-            commitMessage={commitMessage}
-            user={wiki.user}
-            lastUpdated={wiki.updated || dateTime}
-          />
-          <Flex
-            w="100%"
-            display={{ base: 'none', xl: 'block', md: 'none' }}
-            gap={6}
-          >
-            {!!twitterLink && <TwitterTimeline url={twitterLink} />}
-            {wiki.categories.length !== 0 && (
-              <RelatedWikis wikiId={wiki.id} category={wiki.categories[0].id} />
-            )}
-            {wiki.media && wiki.media.length > 0 && (
-              <RelatedMediaGrid media={wiki.media} />
-            )}
-          </Flex>
-        </VStack>
+              {wiki.media && wiki.media.length > 0 && (
+                <RelatedMediaGrid media={wiki.media} />
+              )}
+            </Flex>
+          </VStack>
+        </Flex>
       </Box>
     </VStack>
   )
