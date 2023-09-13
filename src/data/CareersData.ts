@@ -7,6 +7,12 @@ export type CareersDatatype = {
 
 export const AllCareers: CareersDatatype[] = [
   {
+    title: 'Product Owner',
+    description: `Tired of a job that's as exciting as watching paint dry? Ready to switch from snooze-fest to brainstorm fest? At BrainDAO, we’re on a quest to find a Product Owner who’s not just a pro at roadmaps but can navigate the highway of innovation with the top down and radio up. We're all about passion, flair, and a willingness to laugh at puns so bad they're good. \n\nIf you can juggle strategic insights and practical execution like a stand-up comedian handles punchlines, then you're our kind of Product Owner. Send over your application and prepare to become part of a team that’s as invested in top-quality banter as we are in top-quality work. Our virtual—or real-life—water cooler conversations are eagerly awaiting your comedic genius and strategic savvy.`,
+    location: 'Remote',
+    link: 'https://forms.gle/EYYt4JudkVtnxZgE7',
+  },
+  {
     title: 'Frontend developer',
     description: `Are you tired of working at a boring job that's sucking the life out of you? Do you want to work in a place where you can let your creativity run wild? If you answered "yes" to these questions, then we have the perfect job for you! \n\nWe are BrainDAO, and we're looking for a frontend developer to join our team. But we don't want just any ordinary developer, we want someone who's passionate, quirky, and isn't afraid to wear a tutu to work (we promise not to judge). \n\nAt BrainDAO, we work with the latest and greatest technologies, like chakraUI, nextJS, and redux. But don't worry if you're not familiar with these tools yet, we'll teach you everything you need to know (except how to ride a unicycle, you'll have to learn that on your own).\n\nWe want someone who's not afraid to speak their mind, and who's always up for a good laugh (or a bad pun). Bonus points if you can juggle while coding (just don't drop any balls on the CEO's head). \n\nSo if you're ready to join a team that's as fun as it is talented, then send us your application today! We can't wait to see what kind of weird and wonderful ideas you'll bring to the table.`,
     location: 'Remote',
