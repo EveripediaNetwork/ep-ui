@@ -94,10 +94,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               {MOBILE_NAV_ITEMS({
                 address: userAddress || undefined,
               })
-                .filter(i => i.label !== 'Account' || userAddress)
-                .map(navItem => (
+                .filter((i) => i.label !== 'Account' || userAddress)
+                .map((navItem) => (
                   <MobileNavItem
-                    handleClick={item => handleClick(item)}
+                    handleClick={(item) => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />
