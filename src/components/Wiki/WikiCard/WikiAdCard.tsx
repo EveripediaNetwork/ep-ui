@@ -10,7 +10,7 @@ const WikiAdCard = () => {
       w="full"
       border={'1px'}
       borderColor={'iqgptAdCardBorder'}
-      p={'12px'}
+      p={3}
       bgColor={'aboutIqgptInfoBg'}
     >
       <Text
