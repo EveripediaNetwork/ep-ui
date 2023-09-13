@@ -11,7 +11,8 @@ const WikiAdCard = () => {
       border={'1px'}
       borderColor={'iqgptAdCardBorder'}
       p={3}
-      bgColor={'aboutIqgptInfoBg'}
+      bgColor={'brand.50'}
+      _dark={{ bgColor: 'brand.100' }}
     >
       <Text
         fontSize={{ base: '12px', sm: '14px', xl: '12px' }}
