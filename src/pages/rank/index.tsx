@@ -142,14 +142,15 @@ const Rank = ({
     <Box>
       <RankHeader />
       <Box
-        bg="url(/images/backgrounds/ranking-bg-light.png)"
+        bg="url(/images/backgrounds/rank-bg-light.png)"
         _dark={{
           bg: 'url(/images/backgrounds/ranking-bg-dark.png)',
         }}
         bgPos="center"
         my={-2}
         bgSize="cover !important"
-        bgColor="#F7FAFC"
+        bgColor="gray.100"
+        pb={8}
       >
         <RankHero />
       </Box>
@@ -182,13 +183,13 @@ const Rank = ({
               />
             </TabList>
           </Flex>
-          <TabPanels mt="6">
+          <TabPanels mt="2">
             <TabPanel>
               <Text
                 color="homeDescriptionColor"
                 fontSize={{ base: 'lg', lg: 22 }}
                 mx="auto"
-                mb={9}
+                mb={12}
                 px={4}
                 textAlign="center"
                 maxW="750"
@@ -200,7 +201,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setTokensOffset(page)}
+                onPageChange={page => setTokensOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -233,7 +234,7 @@ const Rank = ({
                 color="homeDescriptionColor"
                 fontSize={{ base: 'lg', lg: 22 }}
                 mx="auto"
-                mb={9}
+                mb={12}
                 px={4}
                 textAlign="center"
                 maxW="750"
@@ -245,7 +246,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setNftOffset(page)}
+                onPageChange={page => setNftOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -282,7 +283,7 @@ const Rank = ({
 
 export default Rank
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
