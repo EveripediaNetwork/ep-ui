@@ -17,7 +17,7 @@ export const resources = {
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Latest from IQ.wiki',
-      rankingListHeading: 'Wiki Rank By MarketCap',
+      rankingListHeading: 'Wiki rank by MarketCap',
       rankingListDescription:
         'A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.',
       trendingWikisDescription:
