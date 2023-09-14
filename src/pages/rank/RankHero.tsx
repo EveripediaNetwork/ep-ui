@@ -11,15 +11,16 @@ const RankHero = () => {
       alignItems="center"
     >
       <Heading
-        fontSize={{ lg: '6xl', md: '4xl', base: '2xl', '2xl': '7xl' }}
-        mb={{ base: 6 }}
+        fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
+        mb={{ base: 4 }}
+        fontWeight={'600'}
       >
-        RANKING BY MARKETCAP
+        Wiki ranks by Marketcap
       </Heading>
       <Text
-        mt={{ md: 4 }}
-        fontSize={{ '2xl': '2xl', md: 'xl', base: 'md' }}
+        fontSize={{ xl: 'xl', md: 'lg', base: 'md' }}
         textAlign="center"
+        maxW={'743px'}
       >
         A list of wikis in different categories, including DeFi, NFTs, DAOs and
         Cryptocurrencies, ranked based on the global marketcap respectively.
