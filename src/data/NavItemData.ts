@@ -163,7 +163,7 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     label: 'Create Wiki',
     href: '/create-wiki',
     icon: RiAddBoxFill,
