@@ -23,19 +23,24 @@ const WikiAdCard = () => {
         insights into intricate terms, live market trends, and breaking news.
       </Text>
 
-      <HStack spacing={1} mt={'6px'} color={'brandLinkColor'}>
-        <Text
-          fontSize={{ base: '14px', sm: '16px', xl: '14px' }}
-          fontWeight={'600'}
+      <LinkWrapper href={'https://iqgpt.com/'}>
+        <HStack
+          spacing={1}
+          mt={'6px'}
+          color={'brandLinkColor'}
+          cursor={'pointer'}
         >
-          Check it out
-        </Text>
-        <LinkWrapper href={'https://iqgpt.com/'}>
+          <Text
+            fontSize={{ base: '14px', sm: '16px', xl: '14px' }}
+            fontWeight={'600'}
+          >
+            Check it out
+          </Text>
           <Box as="a" target="_blank">
             <ArrowForwardIcon />
           </Box>
-        </LinkWrapper>
-      </HStack>
+        </HStack>
+      </LinkWrapper>
     </Box>
   )
 }
