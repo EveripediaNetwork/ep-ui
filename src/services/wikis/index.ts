@@ -183,7 +183,7 @@ export const wikiApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getWikis: builder.query<RecentWikisBuilder[], void>({
       query: () => ({ document: GET_WIKIS }),
       transformResponse: (response: GetRecentWikisResponse) => response.wikis,
@@ -220,7 +220,7 @@ export const wikiApi = createApi({
         }
       },
       transformResponse: (response: GetUserWikiResponse) => {
-        if (response && response.userById && response.userById.wikisCreated) {
+        if (response?.userById?.wikisCreated) {
           return response.userById.wikisCreated
         }
         return []
@@ -317,7 +317,7 @@ export const wikiApi = createApi({
         variables: { limit, offset, type, category },
       }),
       transformResponse: (response: ActivitiesByCategoryData) =>
-        response.activitiesByCategory.map(activity => activity.content[0]),
+        response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => ({
@@ -330,7 +330,7 @@ export const wikiApi = createApi({
         response.pinJSON.IpfsHash,
     }),
     postWikiViewCount: builder.mutation<number, string>({
-      query: string => ({
+      query: (string) => ({
         document: POST_WIKI_VIEW_COUNT,
         variables: {
           id: string,

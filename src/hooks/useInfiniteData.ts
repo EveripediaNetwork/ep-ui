@@ -32,7 +32,7 @@ export const useInfiniteData = <T>(opts: Opts, initialData: T[] = []) => {
       const { data: resData } = result
 
       if (resData && resData.length > 0) {
-        setData(prevData => [...prevData, ...resData])
+        setData((prevData) => [...prevData, ...resData])
         setOffset(updatedOffset)
         if (resData.length < ITEM_PER_PAGE) setHasMore(false)
         else setHasMore(true)
