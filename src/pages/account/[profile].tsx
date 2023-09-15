@@ -74,7 +74,7 @@ const Profile = ({ profileData, createdWikis, editedWikis }: ProfileProps) => {
 
 Profile.footer = false
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const userIdentifier = context.params?.profile as string
 
   // Redirect if /accounts/settings is hit

@@ -10,7 +10,9 @@ type Opts = {
 }
 
 export const useInfiniteData = <T>(opts: Opts, initialData: T[] = []) => {
-  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [hasMore, setHasMore] = useState<boolean>(
+    true && initialData.length > 0,
+  )
   const [data, setData] = useState<T[]>(initialData)
   const [offset, setOffset] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(opts.defaultLoading || false)
@@ -30,7 +32,7 @@ export const useInfiniteData = <T>(opts: Opts, initialData: T[] = []) => {
       const { data: resData } = result
 
       if (resData && resData.length > 0) {
-        setData((prevData) => [...prevData, ...resData])
+        setData(prevData => [...prevData, ...resData])
         setOffset(updatedOffset)
         if (resData.length < ITEM_PER_PAGE) setHasMore(false)
         else setHasMore(true)
