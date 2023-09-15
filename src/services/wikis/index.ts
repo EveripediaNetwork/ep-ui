@@ -220,7 +220,10 @@ export const wikiApi = createApi({
         }
       },
       transformResponse: (response: GetUserWikiResponse) => {
-        return response.userById.wikisCreated
+        if (response?.userById?.wikisCreated) {
+          return response.userById.wikisCreated
+        }
+        return []
       },
     }),
     getUserEditedWikis: builder.query<UserActivity[], WikiArg>({
