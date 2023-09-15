@@ -43,16 +43,13 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         </chakra.div>
         {featuredWikis ? (
           <chakra.div px={5}>
-            <WikiCarousel
-              data={featuredWikis}
-              item={(wiki) => (
-                <Box key={`wiki-${wiki.id}`}>
+            <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
+              {featuredWikis.map((wiki) => (
+                <Box flex="0 0 100%" key={`wiki-${wiki.id}`}>
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>
-              )}
-              plugins={[Autoplay()]}
-              options={OPTIONS}
-            />
+              ))}
+            </WikiCarousel>
           </chakra.div>
         ) : (
           <LoadingFeaturedWikiCard />
