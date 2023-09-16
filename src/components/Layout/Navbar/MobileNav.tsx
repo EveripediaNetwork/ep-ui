@@ -20,11 +20,13 @@ import {
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
-import NavSearch from '@/components/Layout/Navbar/NavSearch'
+const NavSearch = dynamic(() => import('@/components/Layout/Navbar/NavSearch'))
+// import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 import { useAccount } from 'wagmi'
+import dynamic from 'next/dynamic'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
