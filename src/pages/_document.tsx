@@ -1,35 +1,5 @@
 import * as React from 'react'
 import { Head, Html, Main, NextScript } from 'next/document'
-import Script from 'next/script'
-
-const fixThemeGlitchScript = `
-(
-  function(){
-    const body = document.body;
-    function applyColorMode(mode){
-      if(!mode) return;
-      console.log("Found mode: ", mode)
-      if(mode === 'light'){
-        document.documentElement.setAttribute("data-theme", "light");
-      } else {
-        document.documentElement.setAttribute("data-theme", "dark");
-      }
-    }
-
-    const colorMode = localStorage.getItem('chakra-ui-color-mode');
-
-    if(!colorMode){
-      const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if(prefersDarkMode) { 
-        document.documentElement.setAttribute("data-theme", "dark");
-        localStorage.setItem('chakra-ui-color-mode', 'dark')
-      } 
-    } else {
-      applyColorMode(colorMode);
-    }
-  }
-)();
-`
 
 export default function Document() {
   return (
@@ -47,11 +17,6 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
-        <Script
-          strategy="beforeInteractive"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: We're setting at compile time so it's safe
-          dangerouslySetInnerHTML={{ __html: fixThemeGlitchScript }}
-        />
         <Main />
         <NextScript />
       </body>
