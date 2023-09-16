@@ -18,6 +18,7 @@ const moduleExports = {
     return config
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
     domains: [
       'everipedia.org',
