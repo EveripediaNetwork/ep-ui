@@ -1,30 +1,6 @@
 import React from 'react'
 import { Box, BoxProps } from '@chakra-ui/react'
 import NextImage, { ImageProps } from 'next/image'
-import type { ImageLoader } from 'next/dist/client/image'
-
-interface CfLoaderArgs {
-  src: string
-  width: number
-  quality?: number
-}
-
-const BASE_URL = 'https://iq.wiki'
-
-export const cfLoader: ImageLoader = ({
-  src,
-  width,
-  quality,
-}: CfLoaderArgs) => {
-  const params = [`width=${width}`]
-  if (quality) params.push(`quality=${quality}`)
-  const paramsString = params.join(',')
-  return `${BASE_URL}/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
-}
-
-const normalizeSrc = (src: string) => {
-  return src.startsWith('/') ? src.slice(1) : src
-}
 
 export type NextChakraImageProps = Omit<Omit<BoxProps, 'as'>, 'objectFit'> &
   Omit<Omit<ImageProps, 'width'>, 'height'> & {
@@ -64,9 +40,6 @@ export const Image = ({
         width: '100%',
         height: '100%',
       }}
-      loader={
-        typeof src === 'string' && src.startsWith('http') ? cfLoader : undefined
-      }
       fill={!(imgW && imgH) || !imgBoxSize}
       src={src}
       alt={alt}

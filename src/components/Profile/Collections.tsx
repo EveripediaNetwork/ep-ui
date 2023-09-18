@@ -51,7 +51,7 @@ export const Collections = ({
       </TabList>
       <TabPanels>
         {SECTIONS.map((section, sid) => (
-          <TabPanel key={sid} p="0">
+          <TabPanel key={sid} p={{ md: '8', xl: 0 }}>
             <section.Component />
           </TabPanel>
         ))}

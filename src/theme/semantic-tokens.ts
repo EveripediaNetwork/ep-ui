@@ -405,5 +405,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'whiteAlpha.400',
     },
+    iqgptAdCardBorder: {
+      default: 'brand.200',
+      _dark: 'brand.400',
+    },
   },
 }

@@ -63,12 +63,7 @@ const CreateWikisFAQ = () => {
       <AccordionFAQItem
         title="Filling in the article"
         content={
-          <>
-            This is your chance to start writing and explaining the topic of
-            your article. The intro should answer the basics and provide the
-            most important info while headers can be used to create sections
-            that provide additional details.
-          </>
+          'This is your chance to start writing and explaining the topic of your article. The intro should answer the basics and provide the most important info while headers can be used to create sections that provide additional details.'
         }
       />
       <AccordionFAQItem

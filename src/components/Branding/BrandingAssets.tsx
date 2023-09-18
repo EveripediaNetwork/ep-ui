@@ -65,6 +65,11 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
           backgroundPosition="center"
           backgroundSize="cover"
           borderRadius="xl"
+          border={'1px'}
+          borderColor={'gray.100'}
+          _dark={{
+            border: 'none',
+          }}
         >
           <Button
             onClick={() => {

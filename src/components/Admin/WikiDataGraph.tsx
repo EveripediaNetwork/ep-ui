@@ -90,7 +90,7 @@ export const WikiDataGraph = () => {
       { name: 'Visitors', value: wikiViews ? wikiViews[0].visits : 0 },
     ]
   } else if (pieFilter === 'week') {
-    let weeklyViews: number = 0
+    let weeklyViews = 0
     wikiViews?.map((views, item) => {
       if (item < 7) {
         weeklyViews = weeklyViews + views.visits
@@ -104,7 +104,7 @@ export const WikiDataGraph = () => {
       { name: 'Visitors', value: weeklyViews },
     ]
   } else if (pieFilter === 'month') {
-    let monthlyViews: number = 0
+    let monthlyViews = 0
     wikiViews?.map((views, item) => {
       if (item < 30) {
         monthlyViews = monthlyViews + views.visits
@@ -118,7 +118,7 @@ export const WikiDataGraph = () => {
       { name: 'Visitors', value: monthlyViews },
     ]
   } else if (pieFilter === 'year') {
-    let yearlyViews: number = 0
+    let yearlyViews = 0
     wikiViews?.map((views, _item) => {
       yearlyViews = yearlyViews + views.visits
     })
