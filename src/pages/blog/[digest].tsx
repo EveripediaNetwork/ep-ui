@@ -84,7 +84,7 @@ export const BlogPostPage = ({
                   my={4}
                   as="h1"
                   fontWeight={'600'}
-                  fontSize={{ base: '3xl', xl: '4xl' }}
+                  fontSize={{ base: '2xl', md: '3xl', xl: '4xl' }}
                   letterSpacing="wide"
                 >
                   {blog.title}
@@ -104,7 +104,11 @@ export const BlogPostPage = ({
                       size={20}
                       alt="unknown"
                     />
-                    <Text color="gray.600" _dark={{ color: 'whiteAlpha.800' }}>
+                    <Text
+                      color="gray.600"
+                      fontSize={{ base: 'sm', lg: 'md' }}
+                      _dark={{ color: 'whiteAlpha.800' }}
+                    >
                       {new Date((blog.timestamp || 0) * 1000).toDateString()}
                     </Text>
                   </Flex>
@@ -162,7 +166,7 @@ export const BlogPostPage = ({
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const digest: string = context.params?.digest as string
   const result = await store.dispatch(getEntry.initiate(digest))
   const blog = formatBlog(result.data?.entry as Blog, true)
