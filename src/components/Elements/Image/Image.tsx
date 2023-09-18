@@ -7,7 +7,6 @@ interface CfLoaderArgs {
   src: string
   width: number
   quality?: number
-  format: string
 }
 
 const BASE_URL = 'https://iq.wiki'
@@ -16,11 +15,10 @@ export const cfLoader: ImageLoader = ({
   src,
   width,
   quality,
-  format = 'auto',
 }: CfLoaderArgs) => {
   const params = [`width=${width}`]
   if (quality) params.push(`quality=${quality}`)
-  params.push(`format=${format}`)
+  params.push('format=auto')
   const paramsString = params.join(',')
   return `${BASE_URL}/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
 }
