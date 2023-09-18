@@ -11,7 +11,6 @@ import {
 } from '@/utils/WikiUtils/getWikiSummary'
 import { useGetWikiPreviewsByCategoryQuery } from '@/services/wikis'
 
-
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
   return (
@@ -59,41 +58,39 @@ export const RelatedWikis = ({
     limit: 6,
   })
   const [isVisible, setIsVisible] = useState(true)
-const relatedWikisRef = useRef<HTMLDivElement>(null)
+  const relatedWikisRef = useRef<HTMLDivElement>(null)
   const cbFunction = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries
     setIsVisible(entry.isIntersecting)
   }
   const options = {
     root: null,
-    rootMargin: "0px",
+    rootMargin: '0px',
     threshold: 1.0,
   }
-  useEffect(()=>{
+  useEffect(() => {
     const observer = new IntersectionObserver(cbFunction, options)
     if (relatedWikisRef.current) observer.observe(relatedWikisRef.current)
 
-    return()=>{
-      if(relatedWikisRef.current) observer.unobserve(relatedWikisRef.current)
+    return () => {
+      if (relatedWikisRef.current) observer.unobserve(relatedWikisRef.current)
     }
-  },[relatedWikisRef.current])
+  }, [relatedWikisRef.current])
   const relatedWikis = data?.filter((w) => w.id !== wikiId)?.slice(0, 4)
   if (!relatedWikis) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2} mb="5" ref={relatedWikisRef}>
-      {isVisible
-      ? (
+      {isVisible ? (
         <WikiAccordion mt="-3px" title="Related Articles">
-        <VStack align="start" w="100%">
-          {relatedWikis.map((wiki) => (
-            <RelatedWikiCard key={wiki.id} wiki={wiki} />
-          ))}
-        </VStack>
-      </WikiAccordion>
-      )
-      : (<span />)
-      }
-      
+          <VStack align="start" w="100%">
+            {relatedWikis.map((wiki) => (
+              <RelatedWikiCard key={wiki.id} wiki={wiki} />
+            ))}
+          </VStack>
+        </WikiAccordion>
+      ) : (
+        <span />
+      )}
     </VStack>
   )
 }
