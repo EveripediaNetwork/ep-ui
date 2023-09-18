@@ -1,18 +1,17 @@
 import React from 'react'
-import { Flex, LinkBox, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
 import { BlogPostType } from '@/types/Blog'
 import { Avatar } from '@/components/Elements'
-import { useENSData } from '@/hooks/useENSData'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
+import { TbArrowUpRight } from 'react-icons/tb'
+import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 
 export const BlogPost = (props: BlogPostType) => {
   const { post, ...rest } = props
-  const [, displayName] = useENSData(post.contributor)
 
   return (
-    <LinkBox
+    <Box
       display="flex"
       flexDir="column"
       rounded="lg"
@@ -33,35 +32,35 @@ export const BlogPost = (props: BlogPostType) => {
           imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
         />
       ) : null}
-      <Flex h="fit-content" p="4" flexDir="column" flex="auto">
-        <Flex flex="auto" align="center">
-          <LinkOverlay href={`/blog/${post.digest}`}>
-            <Text fontSize="lg" fontWeight="bold" noOfLines={3}>
-              {post.title}
-            </Text>
-          </LinkOverlay>
-        </Flex>
-        <Flex mt={3} justifyContent="space-between">
-          <Flex justifyContent="flex-start">
-            <Avatar address={post.contributor} size={20} alt="unknown" />
-            <Text
-              color="brand.500"
-              fontWeight="bold"
-              fontSize="sm"
-              marginLeft={2}
-            >
-              {displayName}
-            </Text>
-          </Flex>
+      <Flex h="fit-content" px="3" pt={4} pb={7} flexDir="column" flex="auto">
+        <Flex gap={3}>
+          <Avatar address={post.contributor} size={20} alt="unknown" />
           <Text
             fontSize="sm"
-            color="gray.400"
-            _dark={{ color: 'whiteAlpha.400' }}
+            color="gray.600"
+            _dark={{ color: 'whiteAlpha.800' }}
           >
             {new Date((post.timestamp || 0) * 1000).toDateString()}
           </Text>
         </Flex>
+        <Flex flex="auto" py={3} align="center">
+          <Text fontSize="lg" fontWeight="semibold" noOfLines={3}>
+            {post.title}
+          </Text>
+        </Flex>
+        <LinkWrapper href={`/blog/${post.digest}`}>
+          <Flex gap={2} align={'center'} cursor={'pointer'}>
+            <Text
+              fontSize={{ base: 'sm' }}
+              textAlign="center"
+              color={'brand.500'}
+            >
+              Read Post
+            </Text>
+            <TbArrowUpRight color="#FF5CAA" />
+          </Flex>
+        </LinkWrapper>
       </Flex>
-    </LinkBox>
+    </Box>
   )
 }

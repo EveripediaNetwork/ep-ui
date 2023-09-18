@@ -2,7 +2,6 @@ import React from 'react'
 import { MdKeyboardBackspace as LeftArrow } from 'react-icons/md'
 import {
   Box,
-  Button,
   chakra,
   Flex,
   Heading,
@@ -23,9 +22,9 @@ import { Blog } from '@/types/Blog'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { getEntry } from '@/services/blog/mirror'
-import { useENSData } from '@/hooks/useENSData'
 import { Avatar } from '@/components/Elements'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import BlogBanner from '@/components/Blog/BlogBanner'
 
 const BlogContentOverride =
   /!\[ \]\((https?:\/\/.*\.(?:png|jpg|svg|gif|jpeg))\?height=\d*\\&width=\d*\)/
@@ -38,7 +37,6 @@ export const BlogPostPage = ({
   blogEntries: Blog[]
 }) => {
   const router = useRouter()
-  const [, displayName] = useENSData(blog.contributor)
 
   return (
     <>
@@ -48,63 +46,78 @@ export const BlogPostPage = ({
           mx="auto"
           my={{ base: '10', lg: '16' }}
         >
-          {blog ? (
-            <>
-              <NextSeo
-                title={blog.title}
-                description={`${blog.title} - ${blog.body
-                  .replace(BlogContentOverride, '')
-                  .slice(0, 200)
-                  .trim()}...`}
-                openGraph={{
-                  title: blog.title,
-                  description: `${blog.title} - ${blog.body
+          <chakra.div w={'min(90%, 858px)'} mx={'auto'}>
+            {blog ? (
+              <>
+                <NextSeo
+                  title={blog.title}
+                  description={`${blog.title} - ${blog.body
                     .replace(BlogContentOverride, '')
                     .slice(0, 200)
-                    .trim()}...`,
-                  images: [{ url: String(blog.cover_image) }],
-                }}
-              />
-              <Box
-                onClick={() => router.push('/blog')}
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-              >
-                <LeftArrow style={{ marginRight: '5px', fontSize: '20px' }} />{' '}
-                <Text textColor="#718096" fontSize="md">
-                  Go Back to Blog Page
-                </Text>
-              </Box>
-              <Heading
-                my={4}
-                as="h1"
-                fontSize={{ base: '3xl', lg: '5xl' }}
-                letterSpacing="wide"
-              >
-                {blog.title}
-              </Heading>
-              <Link
-                target="_blank"
-                href={`https://mirror.xyz/${blog.contributor}`}
-              >
-                <Flex mb={4} justifyContent="flex-start">
-                  <Avatar address={blog.contributor} size={20} alt="unknown" />
-                  <Text marginLeft={5}>{displayName}</Text>
-                </Flex>
-              </Link>
-              <Text color="gray.600" mb={3} _dark={{ color: 'gray.400' }}>
-                {new Date((blog.timestamp || 0) * 1000).toDateString()}
-              </Text>
-
-              <ReactMarkdown
-                components={components}
-                transformLinkUri={uriTransformer}
-              >
-                {blog.body}
-              </ReactMarkdown>
-            </>
-          ) : null}
+                    .trim()}...`}
+                  openGraph={{
+                    title: blog.title,
+                    description: `${blog.title} - ${blog.body
+                      .replace(BlogContentOverride, '')
+                      .slice(0, 200)
+                      .trim()}...`,
+                    images: [{ url: String(blog.cover_image) }],
+                  }}
+                />
+                <Box
+                  onClick={() => router.push('/blog')}
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                  cursor={'pointer'}
+                >
+                  <LeftArrow style={{ marginRight: '5px', fontSize: '20px' }} />{' '}
+                  <Text
+                    color={'gray.600'}
+                    _dark={{ color: 'whiteAlpha.800' }}
+                    fontSize="md"
+                  >
+                    Blog
+                  </Text>
+                </Box>
+                <Heading
+                  my={4}
+                  as="h1"
+                  fontWeight={'600'}
+                  fontSize={{ base: '3xl', xl: '4xl' }}
+                  letterSpacing="wide"
+                >
+                  {blog.title}
+                </Heading>
+                <Link
+                  target="_blank"
+                  href={`https://mirror.xyz/${blog.contributor}`}
+                >
+                  <Flex
+                    mb={4}
+                    justifyContent="flex-start"
+                    gap={2}
+                    align={'center'}
+                  >
+                    <Avatar
+                      address={blog.contributor}
+                      size={20}
+                      alt="unknown"
+                    />
+                    <Text color="gray.600" _dark={{ color: 'whiteAlpha.800' }}>
+                      {new Date((blog.timestamp || 0) * 1000).toDateString()}
+                    </Text>
+                  </Flex>
+                </Link>
+                <ReactMarkdown
+                  components={components}
+                  transformLinkUri={uriTransformer}
+                >
+                  {blog.body}
+                </ReactMarkdown>
+              </>
+            ) : null}
+          </chakra.div>
           <Stack
             spacing="15"
             mt="12"
@@ -114,45 +127,22 @@ export const BlogPostPage = ({
               },
             }}
           >
-            <Stack
-              alignItems="center"
-              spacing={{ base: 2, md: 4, lg: 8 }}
-              px={{ base: 4, md: 14, lg: '24' }}
-              py="8"
-              bg="gray.100"
-              _dark={{ bg: 'gray.700' }}
-              rounded="lg"
-            >
-              <Text
-                fontWeight="bold"
-                fontSize={{ base: 'sm', md: 'md', lg: '3xl' }}
-                textAlign="center"
-              >
-                Join thousands of others in receiving the most interesting wikis
-                on IQ.wiki every week
-              </Text>
-              <Button
-                as="a"
-                fontSize={{ base: 'xs', md: 'md', lg: 'inherit' }}
-                px={{ base: '8', lg: 10 }}
-                href="https://www.getdrip.com/forms/505929689/submissions/new"
-                target="_blank"
-                w="fit-content"
-                maxW="fit-content"
-              >
-                Sign me up
-              </Button>
-            </Stack>
+            <BlogBanner />
             {blogEntries.length > 1 ? (
               <Stack spacing="8">
-                <Text as="span" fontSize="4xl" fontWeight="bold" noOfLines={3}>
-                  You might like
+                <Text
+                  as="span"
+                  fontSize="3xl"
+                  fontWeight="semibold"
+                  noOfLines={3}
+                >
+                  More from IQ wiki
                 </Text>
                 <SimpleGrid
                   alignSelf="center"
                   w="full"
                   mt={{ base: '15', md: '16' }}
-                  columns={{ base: 2, md: 3 }}
+                  columns={{ md: 2, lg: 3 }}
                   spacingX="5"
                   spacingY="14"
                 >
