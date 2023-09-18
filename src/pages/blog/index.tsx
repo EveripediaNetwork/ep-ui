@@ -18,24 +18,43 @@ import { store } from '@/store/store'
 import { ArweaveApi } from '@/services/blog'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
+  console.log(blogEntries)
   return (
     <>
       <BlogHeader />
       <chakra.div bgColor="pageBg" my={-8} py={4}>
-        <chakra.div
-          w="min(90%, 1100px)"
+        <Flex
+          py={{ md: 20, base: 24 }}
+          w={{ lg: '80%', md: '80%', base: '95%', '2xl': '80%' }}
           mx="auto"
-          my={{ base: '10', lg: '16' }}
+          flexDir="column"
+          alignItems="center"
         >
+          <Heading
+            fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
+            mb={{ base: 4 }}
+            fontWeight={'600'}
+          >
+            IQ.wiki Blog
+          </Heading>
+          <Text
+            fontSize={{ xl: 'xl', md: 'lg', base: 'md' }}
+            textAlign="center"
+            maxW={'743px'}
+          >
+            Bringing you all the latest from IQ.wiki, IQ token and BrainDAO.
+          </Text>
           <Flex
-            wrap="wrap"
             justifyContent={['center', 'space-between']}
             my={4}
             minWidth={100}
           >
-            <Heading as="h1" size="2xl" letterSpacing="wide">
-              IQ.wiki Blog
-            </Heading>
+            <Text
+              fontSize={{ xl: 'xl', md: 'lg', base: 'md' }}
+              letterSpacing="wide"
+            >
+              Our blog in KR and CHN:
+            </Text>
             <Flex alignItems="center" mt={[5, 0]}>
               <Text mr={5}>More from us</Text>
               <Link
@@ -53,7 +72,12 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
               </Link>
             </Flex>
           </Flex>
-          <hr />
+        </Flex>
+        <chakra.div
+          w="min(90%, 1100px)"
+          mx="auto"
+          my={{ base: '10', lg: '16' }}
+        >
           <SimpleGrid
             mt={{ base: '15', md: '16' }}
             columns={{ base: 1, md: 2, lg: 3 }}
