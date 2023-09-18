@@ -4,7 +4,7 @@ import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
-const RelatedWikis = dynamic(() =>
+const RelatedWikis = dynamic<{wikiId: string, category: string}>(() =>
   import('./InsightComponents/RelatedWikis').then((mod) => mod.RelatedWikis),
 )
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
