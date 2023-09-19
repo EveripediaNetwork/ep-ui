@@ -7,7 +7,6 @@ import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { TbArrowUpRight } from 'react-icons/tb'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 import ReactMarkdown from 'react-markdown'
-import { uriTransformer } from './BlogMdComponents'
 import { postComponent } from './BlogPostMdComponents'
 
 export const BlogPost = (props: BlogPostType) => {
@@ -67,10 +66,7 @@ export const BlogPost = (props: BlogPostType) => {
                 {post.title}
               </Text>
             </Flex>
-            <ReactMarkdown
-              components={postComponent}
-              transformLinkUri={uriTransformer}
-            >
+            <ReactMarkdown components={postComponent}>
               {post.body}
             </ReactMarkdown>
           </Box>
