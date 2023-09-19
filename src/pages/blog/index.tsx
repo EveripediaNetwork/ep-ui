@@ -10,6 +10,8 @@ import { ArweaveApi } from '@/services/blog'
 import BlogPageHeader from '@/components/Blog/BlogPageHeader'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
+  console.log(blogEntries)
+
   return (
     <>
       <BlogHeader />
