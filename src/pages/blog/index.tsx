@@ -22,12 +22,10 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
         <chakra.div
           w="min(90%, 1100px)"
           mx="auto"
-          // my={{ base: '10', lg: '16' }}
           position={'relative'}
-          top={{ lg: -140 }}
+          top={{ base: '-75px', lg: -140 }}
         >
           <SimpleGrid
-            // mt={{ base: '15', md: '16' }}
             columns={{ base: 1, md: 2, lg: 3 }}
             spacingX="5"
             spacingY="14"
