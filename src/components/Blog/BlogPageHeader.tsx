@@ -6,7 +6,7 @@ const BlogPageHeader = () => {
     <Flex
       pt={{ base: 8, md: 14, lg: 24 }}
       pb={{ base: 28, md: 32, lg: 48 }}
-      w={{ lg: '80%', md: '80%', base: '95%', '2xl': '80%' }}
+      w={{ md: '80%', base: '95%' }}
       mx="auto"
       flexDir="column"
       alignItems="center"
@@ -20,7 +20,7 @@ const BlogPageHeader = () => {
       </Text>
       <Heading
         fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
-        mb={{ base: 4 }}
+        mb={4}
         fontWeight={'600'}
         color={'gray.800'}
       >
@@ -34,13 +34,7 @@ const BlogPageHeader = () => {
       >
         Bringing you all the latest from IQ.wiki, IQ token and BrainDAO.
       </Text>
-      <Flex
-        justifyContent={['center', 'space-between']}
-        my={4}
-        minWidth={100}
-        gap={4}
-        alignItems={'center'}
-      >
+      <Flex my={4} minWidth={100} gap={4} alignItems={'center'}>
         <Text fontSize={{ xl: 'lg', base: 'md' }} color={'gray.600'}>
           Our blog in KR and CHN:
         </Text>
