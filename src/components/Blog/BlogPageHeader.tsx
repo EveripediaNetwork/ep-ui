@@ -22,6 +22,7 @@ const BlogPageHeader = () => {
         fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
         mb={{ base: 4 }}
         fontWeight={'600'}
+        color={'gray.800'}
       >
         The IQ.wiki Blog
       </Heading>
@@ -29,6 +30,7 @@ const BlogPageHeader = () => {
         fontSize={{ xl: 'lg', base: 'md' }}
         textAlign="center"
         maxW={'743px'}
+        color={'gray.600'}
       >
         Bringing you all the latest from IQ.wiki, IQ token and BrainDAO.
       </Text>
@@ -39,7 +41,9 @@ const BlogPageHeader = () => {
         gap={4}
         alignItems={'center'}
       >
-        <Text fontSize={{ xl: 'lg', base: 'md' }}>Our blog in KR and CHN:</Text>
+        <Text fontSize={{ xl: 'lg', base: 'md' }} color={'gray.600'}>
+          Our blog in KR and CHN:
+        </Text>
         <Flex alignItems="center">
           <Link
             href="https://mirror.xyz/0x3c1ccc207b3796D907B0024eD79fa2A11Af8D912"
