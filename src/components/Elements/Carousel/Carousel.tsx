@@ -10,12 +10,11 @@ import { IconType } from 'react-icons/lib'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-type WikiCarouselProps<T> = {
-  data: T[]
-  item: (item: T) => JSX.Element
+type WikiCarouselProps = {
   options?: EmblaOptionsType
   plugins?: any[]
   Buttons?: false
+  children: React.ReactNode
 }
 
 interface ArrowProps {
@@ -31,13 +30,12 @@ interface CarouselProps {
   topArrow: string
 }
 
-export const WikiCarousel = <T extends unknown>({
-  data,
-  item,
+export const WikiCarousel = ({
   options,
   plugins,
   Buttons,
-}: WikiCarouselProps<T>) => {
+  children,
+}: WikiCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ ...options }, plugins)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
@@ -109,13 +107,7 @@ export const WikiCarousel = <T extends unknown>({
         overflow="hidden"
         w="full"
       >
-        <Flex w="full">
-          {data?.map((e, i) => (
-            <Box key={i} flex="0 0 100%" minW="0" maxW="100%">
-              {item(e)}
-            </Box>
-          ))}
-        </Flex>
+        <Flex w="full">{children}</Flex>
       </chakra.div>
       <Flex w="full" alignItems="center" gap="3" pt="6" justifyContent="center">
         {scrollSnaps.map((_, index) => (
