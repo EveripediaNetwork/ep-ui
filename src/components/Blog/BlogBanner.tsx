@@ -16,11 +16,11 @@ const BlogBanner = () => {
         fontWeight={'semibold'}
         fontSize={{ xl: '3xl', md: '2xl', base: 'xl' }}
         textAlign="center"
-        color={'brand.500'}
+        color={'brandLinkColor'}
       >
         Stay up to date with IQ wiki
       </Text>
-      <Text textAlign="center">
+      <Text color={'gray.800'} textAlign="center">
         Join thousands of others in receiving the most interesting wikis on
         IQ.wiki every week
       </Text>

@@ -67,7 +67,7 @@ export const BlogPost = (props: BlogPostType) => {
               </Text>
             </Flex>
             <ReactMarkdown components={postComponent}>
-              {post.body}
+              {post.excerpt || ''}
             </ReactMarkdown>
           </Box>
           <LinkWrapper href={`/blog/${post.digest}`}>
