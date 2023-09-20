@@ -16,7 +16,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
     <>
       <BlogHeader />
       <chakra.div bgColor="pageBg" my={-4} py={4}>
-        <Box bgColor={'tagHoverColor'}>
+        <Box bgColor={'brand.50'} _dark={{ bgColor: 'brand.100' }}>
           <BlogPageHeader />
         </Box>
         <chakra.div
