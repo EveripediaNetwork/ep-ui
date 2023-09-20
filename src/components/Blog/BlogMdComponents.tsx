@@ -16,7 +16,13 @@ const h1 = ({ children }: { children: ReactNode[] }) => (
 )
 
 const h2 = ({ children }: { children: ReactNode[] }) => (
-  <Heading as="h2" mt={8} mb={4}>
+  <Heading
+    as="h2"
+    fontWeight={'semibold'}
+    fontSize={{ base: 'xl', md: '2xl', xl: '3xl' }}
+    mt={8}
+    mb={4}
+  >
     {children}
   </Heading>
 )
