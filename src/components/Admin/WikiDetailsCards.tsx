@@ -80,9 +80,9 @@ export const WikiDetailsCards = ({
               {weeklyValue} this week
             </Text>
           </VStack>
-          <CircularProgress value={percentage} color={color} size="45px">
+          <CircularProgress value={percentage || 0} color={color} size="45px">
             <CircularProgressLabel fontSize="xs">
-              {percentage}%
+              {percentage || 0}%
             </CircularProgressLabel>
           </CircularProgress>
         </Flex>
