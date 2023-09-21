@@ -28,28 +28,12 @@ function splitMarkdownSections(markdownString: string) {
   return filteredSections
 }
 
-const getSectionStop = (allSections: string[], lastStop: number) => {
-  /**
-   * If the content has 4 or less sections,
-   * we render the entire thing, else we
-   * render in chunks to improve performance
-   */
-  const noOfSections = allSections.length
-  console.log('length: ', noOfSections)
-  if (allSections.length <= 4) return noOfSections + 1
-
-  if (noOfSections - (lastStop - 1) > 4) return lastStop + 5
-  else return noOfSections + 1
-}
-
 const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   const contentSections = splitMarkdownSections(wiki.content)
-  const [sectionStop, setSectionStop] = useState(
-    getSectionStop(contentSections, 0),
-  )
-  console.log('First stop: ', sectionStop)
-  const renderedContent = contentSections.splice(0, sectionStop)
-  const hasMoreContent = sectionStop < contentSections.length + 1
+  const SECTION_THRESHOLD = 3
+  const [sectionsRendered, sectionsRenderedCount] = useState(SECTION_THRESHOLD)
+  const renderedContent = contentSections.slice(0, sectionsRendered)
+  const hasMoreContent = contentSections.length > sectionsRendered
 
   store.dispatch({
     type: 'citeMarks/reset',
@@ -66,8 +50,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   if (!wiki.content) return null
 
   const handleLoadContentBtnClick = () => {
-    console.log('Stop: ', getSectionStop)
-    setSectionStop(getSectionStop(contentSections, sectionStop))
+    sectionsRenderedCount(sectionsRendered + SECTION_THRESHOLD)
   }
 
   return (
