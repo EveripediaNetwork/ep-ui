@@ -35,8 +35,8 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiCoinsFill,
     description:
       'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
-    cardImage: '/images/categories/exchanges-card.png',
-    heroImage: '/images/categories/exchanges.png',
+    cardImage: '/images/categories/exchange-new-b.png',
+    heroImage: '/images/categories/exchange-new.png',
   },
   {
     id: 'cryptocurrencies',
