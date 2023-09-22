@@ -1,4 +1,3 @@
-// import { store } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Icon, UseDisclosureReturn } from '@chakra-ui/react'
 import React from 'react'

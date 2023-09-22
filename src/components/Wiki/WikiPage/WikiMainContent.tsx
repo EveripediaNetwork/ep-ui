@@ -49,10 +49,6 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
 
   if (!wiki.content) return null
 
-  const handleLoadContentBtnClick = () => {
-    sectionsRenderedCount(sectionsRendered + SECTION_THRESHOLD)
-  }
-
   return (
     <Flex direction="column" alignItems="center">
       <ReactMarkdown
@@ -78,7 +74,9 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
       </ReactMarkdown>
       {hasMoreContent && (
         <Button
-          onClick={() => handleLoadContentBtnClick()}
+          onClick={() =>
+            sectionsRenderedCount(sectionsRendered + SECTION_THRESHOLD)
+          }
           variant="outline"
           bgColor="btnBgColor"
           h="50px"
