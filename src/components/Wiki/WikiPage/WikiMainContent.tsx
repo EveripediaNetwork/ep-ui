@@ -1,5 +1,5 @@
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, useColorMode, Button } from '@chakra-ui/react'
+import { Box, Heading, useColorMode, Button, Flex } from '@chakra-ui/react'
 import React, { useMemo, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -54,7 +54,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   }
 
   return (
-    <>
+    <Flex direction="column" alignItems="center">
       <ReactMarkdown
         className="md-container"
         remarkPlugins={[remarkGfm]}
@@ -77,11 +77,17 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
         {renderedContent.join('')}
       </ReactMarkdown>
       {hasMoreContent && (
-        <Button onClick={() => handleLoadContentBtnClick()}>
-          Load more content
+        <Button
+          onClick={() => handleLoadContentBtnClick()}
+          variant="outline"
+          bgColor="btnBgColor"
+          h="50px"
+          w={{ base: 32, lg: 40 }}
+        >
+          View more
         </Button>
       )}
-    </>
+    </Flex>
   )
 })
 
