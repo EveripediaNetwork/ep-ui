@@ -23,7 +23,7 @@ type EpAppProps = Omit<AppProps, 'Component'> & {
 }
 
 const client = createConfig({
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   publicClient,
   webSocketPublicClient,
