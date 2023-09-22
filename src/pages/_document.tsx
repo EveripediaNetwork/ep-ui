@@ -15,7 +15,11 @@ export default function Document() {
           content="black-translucent"
         />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="dns-prefetch" href="https://i.ytimg.com" crossOrigin="true" />
+        <link
+          rel="dns-prefetch"
+          href="https://i.ytimg.com"
+          crossOrigin="true"
+        />
         <link
           rel="dns-prefetch"
           href="https://assets.auth.magic.link"
