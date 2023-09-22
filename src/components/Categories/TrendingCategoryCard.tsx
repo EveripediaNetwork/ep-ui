@@ -36,13 +36,13 @@ const TrendingCategoryCard = ({
           {title}
         </Text>
       </Flex>
-      <WikiCarousel
-        data={wikis}
-        item={(wiki) => (
+      <WikiCarousel plugins={[Autoplay()]}>
+        {wikis.map((wiki) => (
           <chakra.div
             key={`wiki-${wiki.id}`}
             px={{ base: '1', md: '4' }}
             py="10px"
+            flex="0 0 100%"
           >
             <TrendingCategoryItem
               title={wiki.title}
@@ -53,9 +53,8 @@ const TrendingCategoryCard = ({
               wikiId={wiki.id}
             />
           </chakra.div>
-        )}
-        plugins={[Autoplay()]}
-      />
+        ))}
+      </WikiCarousel>
     </Box>
   )
 }
