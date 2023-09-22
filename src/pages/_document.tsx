@@ -15,6 +15,7 @@ export default function Document() {
           content="black-translucent"
         />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin=''/>
       </Head>
       <body>
         <Main />
