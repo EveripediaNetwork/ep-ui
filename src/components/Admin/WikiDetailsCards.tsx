@@ -46,6 +46,8 @@ export const WikiDetailsCards = ({
   } else {
     percentage = Math.round((parseInt(weeklyValue, 10) / currentValue) * 100)
   }
+
+  const circularProgressValue = percentage || 0
   return (
     <Box
       w={{ lg: '90%', base: '100%' }}
@@ -80,9 +82,13 @@ export const WikiDetailsCards = ({
               {weeklyValue} this week
             </Text>
           </VStack>
-          <CircularProgress value={percentage} color={color} size="45px">
+          <CircularProgress
+            value={circularProgressValue}
+            color={color}
+            size="45px"
+          >
             <CircularProgressLabel fontSize="xs">
-              {percentage}%
+              {circularProgressValue}%
             </CircularProgressLabel>
           </CircularProgress>
         </Flex>
@@ -99,10 +105,6 @@ export const AllWikiDetailsCards = () => {
     endDate,
     interval: 'year',
   })
-
-  // const { data: weeklyWikiCreatedCountData } = useGetWikisCreatedCountQuery({
-  //   interval: 'year',
-  // })
 
   const { data: wikisCreatedThisWeek } = useGetWikisCreatedCountQuery({
     interval: 'week',
@@ -129,10 +131,6 @@ export const AllWikiDetailsCards = () => {
     }
     return null
   })
-  // const { data: weeklyWikiEditedCountData } = useGetWikisEditedCountQuery({
-  //   startDate: 0,
-  //   interval: 'week',
-  // })
 
   const { data: totalEditorsCountData } = useGetEditorsCountQuery({
     startDate: 0,
@@ -195,7 +193,7 @@ export const AllWikiDetailsCards = () => {
             detailHeader={item.detailHeader}
             icon={item.icon}
             key={i}
-            currentValue={item.value || 0}
+            currentValue={item.value}
             weeklyValue={item.weeklyValue ? item.weeklyValue.toString() : '0'}
             color={item.color}
           />
