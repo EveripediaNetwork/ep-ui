@@ -61,7 +61,7 @@ export interface TokenMarketData {
   alias: string
   current_price: number
   image: string
-  isAiToken: boolean
+  isAiToken?: boolean
 }
 
 export interface RankTableProps {

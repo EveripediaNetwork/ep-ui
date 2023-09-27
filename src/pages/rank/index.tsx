@@ -126,7 +126,7 @@ const Rank = ({
     setAiTokenItems(
       sortByMarketCap(
         'descending',
-        tokenData.filter((item) => item?.tokenMarketData?.isAiToken === true),
+        tokenData.filter((item) => item?.tokenMarketData.current_price > 100),
       ),
     )
     hasRenderedInitialItems.current = true
@@ -139,7 +139,9 @@ const Rank = ({
       setAiTokenItems(
         sortByMarketCap(
           'descending',
-          tokenData.filter((item) => item?.tokenMarketData?.isAiToken === true),
+          tokenData.filter(
+            (item) => item?.tokenMarketData?.current_price > 100,
+          ),
         ),
       )
     }
@@ -274,7 +276,7 @@ const Rank = ({
                 AI Token wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination
+                hasPagination={aiTokenItems.length >= LISTING_LIMIT}
                 currentPage={aiTokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
