@@ -39,7 +39,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>('cryptocurrencies')
+  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
+    'cryptocurrencies',
+  )
 
   if (
     TokensListing &&
@@ -50,7 +52,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     setAiTokenItems(
       sortByMarketCap(
         'descending',
-        TokensListing.filter((item) => item?.tokenMarketData?.isAiToken === true),
+        TokensListing.filter(
+          (item) => item?.tokenMarketData?.isAiToken === true,
+        ),
       ),
     )
     setNftItems(sortByMarketCap('descending', NFTsListing))
@@ -66,7 +70,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setAiTokenItems(
           sortByMarketCap(
             'descending',
-            TokensListing.filter((item) => item?.tokenMarketData?.isAiToken === true),
+            TokensListing.filter(
+              (item) => item?.tokenMarketData?.isAiToken === true,
+            ),
           ),
         )
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
@@ -98,7 +104,13 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         maxW="768"
       >{`${t('rankingListDescription')}`}</Text>
       <Box maxW="1208px" mx="auto">
-        <Tabs mt={10} p="0" onChange={(index)=>setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX,index))}>
+        <Tabs
+          mt={10}
+          p="0"
+          onChange={(index) =>
+            setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
+          }
+        >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
               <RankingListButton
