@@ -11,8 +11,7 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
-import { FaBrain } from 'react-icons/fa'
-import { RiCoinsFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
@@ -126,7 +125,7 @@ const Rank = ({
     setAiTokenItems(
       sortByMarketCap(
         'descending',
-        tokenData.filter((item) => item?.tokenMarketData.current_price > 100),
+        tokenData.filter((item) => item?.tokenMarketData.isAiToken === true),
       ),
     )
     hasRenderedInitialItems.current = true
@@ -139,9 +138,7 @@ const Rank = ({
       setAiTokenItems(
         sortByMarketCap(
           'descending',
-          tokenData.filter(
-            (item) => item?.tokenMarketData?.current_price > 100,
-          ),
+          tokenData.filter((item) => item?.tokenMarketData?.isAiToken === true),
         ),
       )
     }
@@ -207,7 +204,7 @@ const Rank = ({
               />
               <RankingListButton
                 label="AI Tokens"
-                icon={FaBrain}
+                icon={RiRobotFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton

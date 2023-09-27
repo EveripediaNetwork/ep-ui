@@ -12,8 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
-import { FaBrain } from 'react-icons/fa'
-import { RiCoinsFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
@@ -120,7 +119,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               />
               <RankingListButton
                 label="AI Tokens"
-                icon={FaBrain}
+                icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
