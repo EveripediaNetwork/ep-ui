@@ -4,7 +4,9 @@ import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
-import { RelatedWikis } from './InsightComponents/RelatedWikis'
+const RelatedWikis = dynamic<{ wikiId: string; category: string }>(() =>
+  import('./InsightComponents/RelatedWikis').then((mod) => mod.RelatedWikis),
+)
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import WikiActionBar from './WikiActionBar'
 import WikiInsights from './WikiInsights'
@@ -12,6 +14,7 @@ import WikiMainContent from './WikiMainContent'
 import WikiReferences from './WikiReferences'
 import WikiTableOfContents from './WikiTableOfContents'
 import ContentFeedback from './InsightComponents/ContentFeedback'
+import dynamic from 'next/dynamic'
 
 interface WikiLayoutProps {
   wiki: Wiki

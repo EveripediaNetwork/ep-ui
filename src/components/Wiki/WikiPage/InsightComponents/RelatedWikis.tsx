@@ -1,4 +1,3 @@
-import React from 'react'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { VStack, Text, HStack, Box, LinkBox } from '@chakra-ui/react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
@@ -45,7 +44,6 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
     </LinkBox>
   )
 }
-// TODO: even better load only when near viewport
 export const RelatedWikis = ({
   wikiId,
   category,
@@ -57,7 +55,6 @@ export const RelatedWikis = ({
     category: category,
     limit: 6,
   })
-
   const relatedWikis = data?.filter((w) => w.id !== wikiId)?.slice(0, 4)
   if (!relatedWikis) return null
   return (
