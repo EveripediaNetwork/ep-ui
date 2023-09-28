@@ -80,6 +80,7 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
           variant="outline"
           bgColor="btnBgColor"
           h="50px"
+          mt={8}
           w={{ base: 32, lg: 40 }}
         >
           View more
