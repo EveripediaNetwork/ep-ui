@@ -1,8 +1,8 @@
-import { store } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Icon, UseDisclosureReturn } from '@chakra-ui/react'
 import React from 'react'
 import { RiWalletLine } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 
 interface WalletNavMenuProps {
   setVisibleMenu: React.Dispatch<React.SetStateAction<number | null>>
@@ -19,7 +19,7 @@ const WalletNavMenu = ({
     logEvent({
       action: 'OPEN_DRAWER',
       value: 1,
-      label: store.getState().user.address || '',
+      label: getUserAddressFromCache() || '',
       category: 'open_drawer',
     })
     setHamburger(false)

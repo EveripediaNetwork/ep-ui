@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import {
   getPromotedWikis,
   getTrendingWikis,
@@ -10,20 +11,26 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
-import CategoriesList from '@/components/Landing/CategoriesList'
+const DynamicCategoriesList = dynamic(
+  () => import('@/components/Landing/CategoriesList'),
+)
 import { getTags, tagsApi } from '@/services/tags'
-import DiscoverMore from '@/components/Landing/DiscoverMore'
-import LeaderBoard from '@/components/Landing/Leaderboard'
+const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
+const DynamicLeaderBoard = dynamic(
+  () => import('@/components/Landing/Leaderboard'),
+)
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-import RankingList from '@/components/Landing/RankingList'
+const DynamicRankingList = dynamic(
+  () => import('@/components/Landing/RankingList'),
+)
 import { nftLisitngAPI } from '@/services/nftlisting'
 import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
-import AboutIqgpt from '@/components/Landing/AboutIqgpt'
+const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 
 const RANKING_LIST_LIMIT = 10
@@ -58,6 +65,7 @@ export const Index = ({
       mx="auto"
       w="full"
       pt={{ base: 6, lg: 12 }}
+      className="test"
     >
       <Hero />
       <Box>
@@ -66,11 +74,16 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis && promotedWikis}
         />
-        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
+        <DynamicRankingList
+          listingLimit={RANKING_LIST_LIMIT}
+          rankings={rankings}
+        />
         <AboutIqgpt />
-        <CategoriesList />
+        <DynamicCategoriesList />
       </Box>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {leaderboards.length > 0 && (
+        <DynamicLeaderBoard leaderboards={leaderboards} />
+      )}
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )
