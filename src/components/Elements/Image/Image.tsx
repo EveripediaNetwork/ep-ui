@@ -16,9 +16,8 @@ export const cfLoader: ImageLoader = ({
   width,
   quality,
 }: CfLoaderArgs) => {
-  const params = [`width=${width}`]
+  const params = [`width=${width}`, 'format=auto']
   if (quality) params.push(`quality=${quality}`)
-  params.push('format=auto')
   const paramsString = params.join(',')
   return `${BASE_URL}/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
 }
