@@ -16,11 +16,12 @@ import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
 import DesktopNav from './DesktopNav'
-const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
+import WalletNavMenu from './WalletNavMenu'
 import Logo from '@/components/Elements/Logo/Logo'
+
 const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
-import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import MobileNav from './MobileNav'
+const NavSearch = dynamic(() => import('@/components/Layout/Navbar/NavSearch'))
+const MobileNav = dynamic(() => import('./MobileNav'))
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
