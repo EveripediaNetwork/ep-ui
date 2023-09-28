@@ -1,6 +1,6 @@
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, useColorMode, Button, Flex } from '@chakra-ui/react'
-import React, { useMemo, useState } from 'react'
+import { Box, Heading, useColorMode } from '@chakra-ui/react'
+import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
@@ -15,26 +15,7 @@ import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 interface WikiMainContentProps {
   wiki: Wiki
 }
-
-function splitMarkdownSections(markdownString: string) {
-  const headingRegex = /^#{1,6}\s+.*/gm
-
-  const sections = markdownString.split(headingRegex)
-
-  const filteredSections = sections.filter(
-    (section: string) => section.trim() !== '',
-  )
-
-  return filteredSections
-}
-
 const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
-  const contentSections = splitMarkdownSections(wiki.content)
-  const SECTION_THRESHOLD = 3
-  const [sectionsRendered, sectionsRenderedCount] = useState(SECTION_THRESHOLD)
-  const renderedContent = contentSections.slice(0, sectionsRendered)
-  const hasMoreContent = contentSections.length > sectionsRendered
-
   store.dispatch({
     type: 'citeMarks/reset',
   })
@@ -50,43 +31,26 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   if (!wiki.content) return null
 
   return (
-    <Flex direction="column" alignItems="center">
-      <ReactMarkdown
-        className="md-container"
-        remarkPlugins={[remarkGfm]}
-        components={{
-          h1: addToTOC,
-          h2: addToTOC,
-          h3: addToTOC,
-          h4: addToTOC,
-          h5: addToTOC,
-          h6: addToTOC,
-          a: (props) =>
-            customLinkRenderer({
-              ...props,
-              referencesString,
-            }),
-          img: customImageRender,
-          table: customTableRenderer,
-        }}
-      >
-        {renderedContent.join('')}
-      </ReactMarkdown>
-      {hasMoreContent && (
-        <Button
-          onClick={() =>
-            sectionsRenderedCount(sectionsRendered + SECTION_THRESHOLD)
-          }
-          variant="outline"
-          bgColor="btnBgColor"
-          h="50px"
-          mt={8}
-          w={{ base: 32, lg: 40 }}
-        >
-          View more
-        </Button>
-      )}
-    </Flex>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        h1: addToTOC,
+        h2: addToTOC,
+        h3: addToTOC,
+        h4: addToTOC,
+        h5: addToTOC,
+        h6: addToTOC,
+        a: (props) =>
+          customLinkRenderer({
+            ...props,
+            referencesString,
+          }),
+        img: customImageRender,
+        table: customTableRenderer,
+      }}
+    >
+      {wiki.content}
+    </ReactMarkdown>
   )
 })
 
