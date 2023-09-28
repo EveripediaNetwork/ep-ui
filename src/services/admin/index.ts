@@ -139,7 +139,7 @@ export const adminApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getEditorsCount: builder.query<
       { amount: number },
       EditorsModifiedCountArgs
@@ -257,9 +257,9 @@ export const adminApi = createApi({
         response.unhideWiki.Wiki,
     }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
-      query: ({ id, username }: { id: string; username: string }) => ({
+      query: ({ username }: { username: string }) => ({
         document: SEARCHED_EDITORS,
-        variables: { id, username },
+        variables: { username },
       }),
       transformResponse: (response: SearchedEditorsRes) =>
         response.getProfileLikeUsername,

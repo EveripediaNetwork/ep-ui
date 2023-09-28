@@ -188,8 +188,8 @@ export const HIDDEN_EDITORS_TABLE = gql`
 `
 
 export const SEARCHED_EDITORS = gql`
-  query Editors($id: String, $username: String) {
-    getProfileLikeUsername(id: $id, username: $username) {
+  query Editors($username: String) {
+    getProfileLikeUsername(username: $username) {
       id
       active
       username

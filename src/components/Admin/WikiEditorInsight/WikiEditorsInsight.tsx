@@ -60,7 +60,6 @@ export const WikiEditorsInsightTable = () => {
 
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
-      id: searchKeyWord,
       username: searchKeyWord,
     },
     { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
@@ -108,7 +107,7 @@ export const WikiEditorsInsightTable = () => {
     )
     // get all the checked and unchecked checkboxes with their names
     const data: string[] = []
-    checkboxes.forEach((checkbox) => {
+    checkboxes.forEach(checkbox => {
       if (checkbox.checked) data.push(checkbox.value)
     })
 
