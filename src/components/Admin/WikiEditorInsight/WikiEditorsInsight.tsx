@@ -60,7 +60,6 @@ export const WikiEditorsInsightTable = () => {
 
   const { data: searchedEditors } = useGetSearchedEditorsQuery(
     {
-      id: searchKeyWord,
       username: searchKeyWord,
     },
     { skip: initiateFetchSearchEditors, refetchOnMountOrArgChange: true },
