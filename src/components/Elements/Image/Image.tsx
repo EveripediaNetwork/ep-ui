@@ -58,7 +58,7 @@ export const Image = ({
     position="relative"
   >
     <NextImage
-      quality={85}
+      quality={95}
       style={{
         objectFit,
         objectPosition: 'top',
