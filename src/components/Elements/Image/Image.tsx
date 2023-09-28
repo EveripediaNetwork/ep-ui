@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, BoxProps } from '@chakra-ui/react'
-import NextImage, { ImageProps } from 'next/image'
-import type { ImageLoader } from 'next/dist/client/image'
+import NextImage, { ImageLoader, ImageProps } from 'next/image'
 
 interface CfLoaderArgs {
   src: string
@@ -70,7 +69,7 @@ export const Image = ({
       fill={!(imgW && imgH) || !imgBoxSize}
       src={src}
       alt={alt}
-      onError={(e) => {
+      onError={e => {
         if (hideOnError) {
           e.currentTarget.style.visibility = 'hidden'
         }
