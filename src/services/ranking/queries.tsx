@@ -43,6 +43,9 @@ export const GET_TOKEN_RANKINGS = gql`
         id
         title
         ipfs
+        tags {
+          id
+        }
         created
         media {
           thumbnail

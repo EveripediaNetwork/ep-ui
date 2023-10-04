@@ -7,6 +7,7 @@ export interface RankCardType {
   hasWiki: any
   id: string
   title: string
+  tags: Tag[]
   ipfs: string
   media: Medum[]
   images: Image[]
@@ -17,6 +18,10 @@ export interface RankCardType {
     blockchains: string[]
   }
   events: BaseEvents[]
+}
+
+export type Tag = {
+  id: string
 }
 
 export interface Medum {
