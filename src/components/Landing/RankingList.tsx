@@ -51,8 +51,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     setAiTokenItems(
       sortByMarketCap(
         'descending',
-        TokensListing.filter(
-          (item) => item?.tokenMarketData?.isAiToken === true,
+        TokensListing.filter((item) =>
+          item.tags.some((tag) => tag.id === 'AI'),
         ),
       ),
     )
@@ -69,8 +69,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setAiTokenItems(
           sortByMarketCap(
             'descending',
-            TokensListing.filter(
-              (item) => item?.tokenMarketData?.isAiToken === true,
+            TokensListing.filter((item) =>
+              item.tags.some((tag) => tag.id === 'AI'),
             ),
           ),
         )

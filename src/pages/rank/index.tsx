@@ -125,7 +125,7 @@ const Rank = ({
     setAiTokenItems(
       sortByMarketCap(
         'descending',
-        tokenData.filter((item) => item?.tokenMarketData.isAiToken === true),
+        tokenData.filter((item) => item.tags.some((tag) => tag.id === 'AI')),
       ),
     )
     hasRenderedInitialItems.current = true
@@ -138,7 +138,7 @@ const Rank = ({
       setAiTokenItems(
         sortByMarketCap(
           'descending',
-          tokenData.filter((item) => item?.tokenMarketData?.isAiToken === true),
+          tokenData.filter((item) => item.tags.some((tag) => tag.id === 'AI')),
         ),
       )
     }
@@ -155,8 +155,8 @@ const Rank = ({
         setAiTokenItems(
           sortByMarketCap(
             newSortOrder,
-            tokenData.filter(
-              (item) => item?.tokenMarketData?.isAiToken === true,
+            tokenData.filter((item) =>
+              item.tags.some((tag) => tag.id === 'AI'),
             ),
           ),
         )
