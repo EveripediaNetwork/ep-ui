@@ -59,10 +59,12 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
 const Rank = ({
   totalTokens,
   totalNfts,
+  totalAiTokens,
   pagination,
 }: {
   totalNfts: number
   totalTokens: number
+  totalAiTokens: number
   pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
@@ -276,7 +278,7 @@ const Rank = ({
               <RankTable
                 hasPagination={aiTokenItems.length >= LISTING_LIMIT}
                 currentPage={aiTokensOffset}
-                totalCount={totalTokens}
+                totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setAiTokensOffset(page)}
               >
