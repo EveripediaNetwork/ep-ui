@@ -11,7 +11,7 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
@@ -19,6 +19,7 @@ import {
   getCategoryTotal,
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
+  useGetAiTokenRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -58,26 +59,34 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
 const Rank = ({
   totalTokens,
   totalNfts,
+  totalAiTokens,
   pagination,
 }: {
   totalNfts: number
   totalTokens: number
+  totalAiTokens: number
   pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
+  const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const router = useRouter()
   const { pathname } = router
+
   const [nftOffset, setNftOffset] = useState<number>(
     pagination.category === 'nfts' ? pagination.page : 1,
   )
   const [tokensOffset, setTokensOffset] = useState<number>(
     pagination.category === 'cryptocurrencies' ? pagination.page : 1,
   )
+  const [aiTokensOffset, setAiTokensOffset] = useState<number>(
+    pagination.category === 'aitokens' ? pagination.page : 1,
+  )
 
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
+  const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
   const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
 
   const handleCategoryChange = (index: number) => {
@@ -100,6 +109,16 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
+  const { data: aiTokenData, isFetching: aiTokenisFetching } =
+    useGetAiTokenRankingQuery({
+      kind: 'TOKEN',
+      offset: aiTokensOffset,
+      limit: LISTING_LIMIT,
+      category: 'AI',
+    })
+
+  console.log('rank page aiTokenData', aiTokenData)
+
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
     offset: nftOffset,
@@ -110,29 +129,39 @@ const Rank = ({
   if (
     tokenData &&
     nftData &&
+    aiTokenData &&
     !nftItems.length &&
     !tokenItems.length &&
+    !aiTokenItems.length &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
+    setAiTokenItems(sortByMarketCap('descending', aiTokenData))
     setNftItems(sortByMarketCap('descending', nftData))
     hasRenderedInitialItems.current = true
   }
 
   useEffect(() => {
-    if (tokenData && nftData && hasRenderedInitialItems.current) {
+    if (
+      tokenData &&
+      nftData &&
+      aiTokenData &&
+      hasRenderedInitialItems.current
+    ) {
       setTokenItems(sortByMarketCap('descending', tokenData))
+      setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setNftItems(sortByMarketCap('descending', nftData))
     }
-  }, [tokenData, nftData])
+  }, [tokenData, aiTokenData, nftData])
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (nftData && tokenData) {
+      if (nftData && aiTokenData && tokenData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, tokenData))
+        setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
       }
     },
@@ -157,6 +186,7 @@ const Rank = ({
       <Flex
         maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
         mx="auto"
+        pl={2}
         py={16}
         flexWrap="wrap"
         gap={{ base: 10, md: 0, lg: 4 }}
@@ -168,12 +198,18 @@ const Rank = ({
           }
           w="full"
           onChange={handleCategoryChange}
+          overflowX={'auto'}
         >
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
+            <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
+                fontSize={{ lg: '20px' }}
+              />
+              <RankingListButton
+                label="AI Tokens"
+                icon={RiRobotFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
@@ -222,6 +258,51 @@ const Rank = ({
                         <InvalidRankCardItem
                           key={`invalid-token${index}`}
                           index={totalTokenOffset + index}
+                        />
+                      ),
+                    )
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabPanel>
+            <TabPanel>
+              <Text
+                color="homeDescriptionColor"
+                fontSize={{ base: 'lg', lg: 22 }}
+                mx="auto"
+                mb={12}
+                px={4}
+                textAlign="center"
+                maxW="750"
+              >
+                AI Token wikis ranked by Market Cap Prices
+              </Text>
+              <RankTable
+                hasPagination={aiTokenItems.length >= LISTING_LIMIT}
+                currentPage={aiTokensOffset}
+                totalCount={totalAiTokens}
+                pageSize={LISTING_LIMIT}
+                onPageChange={(page) => setAiTokensOffset(page)}
+              >
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {aiTokenisFetching || !aiTokenItems ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    aiTokenItems?.map((token, index) =>
+                      token ? (
+                        <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalAiTokenOffset}
+                          order={sortOrder}
+                          key={token.id}
+                          index={index}
+                          item={token}
+                        />
+                      ) : (
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={totalAiTokenOffset + index}
                         />
                       ),
                     )
@@ -288,6 +369,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
 
+  const { data: aiTokensData } = await store.dispatch(
+    getCategoryTotal.initiate({ category: 'aitokens' }),
+  )
+
   const { category, page } = ctx.query as {
     category: string
     page: string | null
@@ -298,11 +383,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   )
 
   const totalTokens = tokensData?.categoryTotal.amount
+  const totalAiTokens = aiTokensData?.categoryTotal.amount
   const totalNfts = nftsData?.categoryTotal.amount
 
   return {
     props: {
       totalTokens,
+      totalAiTokens,
       totalNfts,
       pagination: {
         category: category || 'cryptocurrencies',
