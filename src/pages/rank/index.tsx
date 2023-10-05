@@ -19,7 +19,7 @@ import {
   getCategoryTotal,
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
-  useGetAiTokenRankingQuery
+  useGetAiTokenRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -107,12 +107,13 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
-  const { data: aiTokenData, isFetching: aiTokenisFetching } = useGetAiTokenRankingQuery({
-    kind: 'TOKEN',
-    offset: aiTokensOffset,
-    limit: LISTING_LIMIT,
-    category: 'AI',
-  })
+  const { data: aiTokenData, isFetching: aiTokenisFetching } =
+    useGetAiTokenRankingQuery({
+      kind: 'TOKEN',
+      offset: aiTokensOffset,
+      limit: LISTING_LIMIT,
+      category: 'AI',
+    })
 
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
@@ -137,7 +138,12 @@ const Rank = ({
   }
 
   useEffect(() => {
-    if (tokenData && nftData && aiTokenData && hasRenderedInitialItems.current) {
+    if (
+      tokenData &&
+      nftData &&
+      aiTokenData &&
+      hasRenderedInitialItems.current
+    ) {
       setTokenItems(sortByMarketCap('descending', tokenData))
       setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setNftItems(sortByMarketCap('descending', nftData))

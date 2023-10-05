@@ -4,7 +4,7 @@ import {
   GET_NFT_RANKINGS,
   GET_RANK_COUNT,
   GET_TOKEN_RANKINGS,
-  GET_AI_TOKEN_RANKINGS
+  GET_AI_TOKEN_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
 import { RankCardType } from '@/types/RankDataTypes'
@@ -108,5 +108,9 @@ export const {
   useGetCategoryTotalQuery,
 } = rankingAPI
 
-export const { getNFTRanking, getTokenRanking, getAiTokenRanking, getCategoryTotal } =
-  rankingAPI.endpoints
+export const {
+  getNFTRanking,
+  getTokenRanking,
+  getAiTokenRanking,
+  getCategoryTotal,
+} = rankingAPI.endpoints
