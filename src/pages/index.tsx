@@ -124,13 +124,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   )
   const { data: aiTokensList } = await store.dispatch(
     getAiTokenRanking.initiate({
-      kind: 'NFT',
+      kind: 'TOKEN',
       limit: RANKING_LIST_LIMIT,
       offset: 1,
       category: 'AI',
     }),
   )
-  console.log("after: ", aiTokensList)
+  console.log('after: ', aiTokensList)
 
   const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({
