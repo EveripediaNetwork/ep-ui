@@ -19,7 +19,12 @@ import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
 import RankingList from '@/components/Landing/RankingList'
 import { nftLisitngAPI } from '@/services/nftlisting'
-import { getNFTRanking, getTokenRanking, rankingAPI } from '@/services/ranking'
+import {
+  getAiTokenRanking,
+  getNFTRanking,
+  getTokenRanking,
+  rankingAPI,
+} from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
@@ -36,6 +41,7 @@ interface HomePageProps {
   leaderboards: LeaderBoardType[]
   rankings: {
     NFTsListing: RankCardType[]
+    aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
   }
   trending: TrendingData
@@ -116,6 +122,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
       offset: 1,
     }),
   )
+  const { data: aiTokensList } = await store.dispatch(
+    getAiTokenRanking.initiate({
+      kind: 'NFT',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      category: 'AI',
+    }),
+  )
+  console.log("after: ", aiTokensList)
 
   const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({
@@ -171,6 +186,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const rankings = {
     NFTsListing: NFTsList || [],
+    aiTokensListing: aiTokensList || [],
     TokensListing: TokensList || [],
   }
 

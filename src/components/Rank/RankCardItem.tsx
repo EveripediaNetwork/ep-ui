@@ -40,13 +40,13 @@ const RankingItem = ({
   listingLimit: number
 }) => {
   const marketCap = item.nftMarketData
-    ? marketCapFormatter(item.nftMarketData.market_cap_usd)
-    : marketCapFormatter(item.tokenMarketData.market_cap)
+    ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
+    : marketCapFormatter(item.tokenMarketData?.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? priceFormatter(item.nftMarketData.floor_price_usd)
-      : priceFormatter(item.tokenMarketData.current_price)
+      ? priceFormatter(item.nftMarketData?.floor_price_usd)
+      : priceFormatter(item.tokenMarketData?.current_price)
   }`
 
   const dateFounded = item?.events?.find(
@@ -85,8 +85,8 @@ const RankingItem = ({
             <Image
               src={
                 item.nftMarketData
-                  ? item.nftMarketData.image
-                  : item.tokenMarketData.image
+                  ? item.nftMarketData?.image
+                  : item.tokenMarketData?.image
               }
               alt={item.title}
               w="40px"
@@ -115,8 +115,8 @@ const RankingItem = ({
             </Box>
             <Text color="rankingListText">
               {item.nftMarketData
-                ? item.nftMarketData.alias
-                : item.tokenMarketData.alias}
+                ? item.nftMarketData?.alias
+                : item.tokenMarketData?.alias}
             </Text>
           </Box>
         </Flex>
@@ -133,13 +133,13 @@ const RankingItem = ({
               fontSize="10px"
               lineHeight="15px"
               color={
-                item.nftMarketData.floor_price_in_usd_24h_percentage_change < 0
+                item.nftMarketData?.floor_price_in_usd_24h_percentage_change < 0
                   ? 'red.500'
                   : 'green.500'
               }
             >
               {Math.abs(
-                item.nftMarketData.floor_price_in_usd_24h_percentage_change,
+                item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
               ).toFixed(2)}
               %
             </Text>
@@ -149,12 +149,12 @@ const RankingItem = ({
               fontSize="10px"
               lineHeight="15px"
               color={
-                item.tokenMarketData.price_change_24h < 0
+                item.tokenMarketData?.price_change_24h < 0
                   ? 'red.500'
                   : 'green.500'
               }
             >
-              {Math.abs(item.tokenMarketData.price_change_24h).toFixed(2)}%
+              {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
             </Text>
           )}
         </Flex>
@@ -162,10 +162,10 @@ const RankingItem = ({
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
-            {formatFoundersArray(item.linkedWikis.founders)
+            {formatFoundersArray(item.linkedWikis?.founders)
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
-                const founder = item.linkedWikis.founders[i]
+                const founder = item.linkedWikis?.founders[i]
                 return (
                   <Link
                     href={`wiki/${founder}`}

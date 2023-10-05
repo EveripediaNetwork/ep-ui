@@ -26,6 +26,7 @@ import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 type RankingListProps = {
   rankings: {
     NFTsListing: RankCardType[]
+    aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
   }
   listingLimit: number
@@ -33,7 +34,7 @@ type RankingListProps = {
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const { TokensListing, NFTsListing } = rankings
+  const { TokensListing, aiTokensListing, NFTsListing } = rankings
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
@@ -44,41 +45,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
 
   if (
     TokensListing &&
+    aiTokensListing &&
     NFTsListing &&
-    (!tokenItems.length || !nftItems.length)
+    (!tokenItems.length || !nftItems.length || !aiTokenItems.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
-    setAiTokenItems(
-      sortByMarketCap(
-        'descending',
-        TokensListing.filter((item) =>
-          item.tags.some((tag) => tag.id === 'AI'),
-        ),
-      ),
-    )
+    setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
     setNftItems(sortByMarketCap('descending', NFTsListing))
   }
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (tokenItems && nftItems) {
+      if (tokenItems && nftItems && aiTokenItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
-        setAiTokenItems(
-          sortByMarketCap(
-            'descending',
-            TokensListing.filter((item) =>
-              item.tags.some((tag) => tag.id === 'AI'),
-            ),
-          ),
-        )
+        setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
       }
     },
   }
-
   return (
     <Box
       px={{ base: 3, md: 8 }}
@@ -107,9 +94,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           mt={10}
           pl="4"
           overflowX={'auto'}
-          onChange={(index) =>
+          onChange={(index) => {
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
-          }
+          }}
         >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>

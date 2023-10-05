@@ -85,7 +85,7 @@ export const rankingAPI = createApi({
         kind: string
         limit?: number
         offset?: number
-        category?: string
+        category: string
       }) => ({
         document: GET_AI_TOKEN_RANKINGS,
         variables: { kind, limit, offset, category },
