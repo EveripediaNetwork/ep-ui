@@ -116,9 +116,11 @@ const Rank = ({
       limit: LISTING_LIMIT,
       category: 'AI',
     })
+
   console.log('rank page aiTokenData', aiTokenData)
+
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
-    kind: 'TOKEN',
+    kind: 'NFT',
     offset: nftOffset,
     limit: LISTING_LIMIT,
   })
