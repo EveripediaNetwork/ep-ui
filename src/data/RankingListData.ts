@@ -3,7 +3,8 @@ import { RiArrowDownSFill } from 'react-icons/ri'
 
 export const CATEGORIES_WITH_INDEX = {
   cryptocurrencies: 0,
-  nfts: 1,
+  aitokens: 1,
+  nfts: 2,
 }
 
 export const RankingListHead: RankinglistHeadProps = [
