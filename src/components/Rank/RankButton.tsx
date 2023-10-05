@@ -26,7 +26,7 @@ const RankingListButton = ({
         h={{ lg: '32px', md: '24px' }}
         color="primaryPinkIcon"
       />
-      <Text color="inherit" fontWeight={600} {...props} whiteSpace={"nowrap"} >
+      <Text color="inherit" fontWeight={600} {...props} whiteSpace={'nowrap'}>
         {label}
       </Text>
     </Tab>

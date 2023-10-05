@@ -195,7 +195,7 @@ const Rank = ({
           }
           w="full"
           onChange={handleCategoryChange}
-          overflowX={"auto"}
+          overflowX={'auto'}
         >
           <Flex justifyContent="center">
             <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>

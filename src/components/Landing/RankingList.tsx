@@ -106,7 +106,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         <Tabs
           mt={10}
           pl="4"
-          overflowX={"auto"}
+          overflowX={'auto'}
           onChange={(index) =>
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }
