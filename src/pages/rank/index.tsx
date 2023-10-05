@@ -183,6 +183,7 @@ const Rank = ({
       <Flex
         maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
         mx="auto"
+        pl={2}
         py={16}
         flexWrap="wrap"
         gap={{ base: 10, md: 0, lg: 4 }}
@@ -194,9 +195,10 @@ const Rank = ({
           }
           w="full"
           onChange={handleCategoryChange}
+          overflowX={"auto"}
         >
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
+            <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}

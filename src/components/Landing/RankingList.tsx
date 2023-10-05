@@ -105,13 +105,14 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       <Box maxW="1208px" mx="auto">
         <Tabs
           mt={10}
-          p="0"
+          pl="4"
+          overflowX={"auto"}
           onChange={(index) =>
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }
         >
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap={{ base: '5', md: '8' }}>
+            <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
