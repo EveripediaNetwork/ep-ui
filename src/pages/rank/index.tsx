@@ -19,6 +19,7 @@ import {
   getCategoryTotal,
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
+  useGetAiTokenRankingQuery
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -106,6 +107,13 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
+  const { data: aiTokenData, isFetching: aiTokenisFetching } = useGetAiTokenRankingQuery({
+    kind: 'TOKEN',
+    offset: aiTokensOffset,
+    limit: LISTING_LIMIT,
+    category: 'AI',
+  })
+
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
     offset: nftOffset,
@@ -116,50 +124,35 @@ const Rank = ({
   if (
     tokenData &&
     nftData &&
+    aiTokenData &&
     !nftItems.length &&
     !tokenItems.length &&
+    !aiTokenItems.length &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
+    setAiTokenItems(sortByMarketCap('descending', aiTokenData))
     setNftItems(sortByMarketCap('descending', nftData))
-    setAiTokenItems(
-      sortByMarketCap(
-        'descending',
-        tokenData.filter((item) => item.tags.some((tag) => tag.id === 'AI')),
-      ),
-    )
     hasRenderedInitialItems.current = true
   }
 
   useEffect(() => {
-    if (tokenData && nftData && hasRenderedInitialItems.current) {
+    if (tokenData && nftData && aiTokenData && hasRenderedInitialItems.current) {
       setTokenItems(sortByMarketCap('descending', tokenData))
+      setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setNftItems(sortByMarketCap('descending', nftData))
-      setAiTokenItems(
-        sortByMarketCap(
-          'descending',
-          tokenData.filter((item) => item.tags.some((tag) => tag.id === 'AI')),
-        ),
-      )
     }
-  }, [tokenData, nftData])
+  }, [tokenData, aiTokenData, nftData])
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (nftData && tokenData) {
+      if (nftData && aiTokenData && tokenData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, tokenData))
+        setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
-        setAiTokenItems(
-          sortByMarketCap(
-            newSortOrder,
-            tokenData.filter((item) =>
-              item.tags.some((tag) => tag.id === 'AI'),
-            ),
-          ),
-        )
       }
     },
   }
@@ -283,7 +276,7 @@ const Rank = ({
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {isFetching || !aiTokenItems ? (
+                  {aiTokenisFetching || !aiTokenItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
                     aiTokenItems?.map((token, index) =>
@@ -366,6 +359,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
 
+  const { data: aiTokensData } = await store.dispatch(
+    getCategoryTotal.initiate({ category: 'aitokens' }),
+  )
+
   const { category, page } = ctx.query as {
     category: string
     page: string | null
@@ -376,11 +373,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   )
 
   const totalTokens = tokensData?.categoryTotal.amount
+  const totalAiTokens = aiTokensData?.categoryTotal.amount
   const totalNfts = nftsData?.categoryTotal.amount
 
   return {
     props: {
       totalTokens,
+      totalAiTokens,
       totalNfts,
       pagination: {
         category: category || 'cryptocurrencies',
