@@ -130,7 +130,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       category: 'AI',
     }),
   )
-  console.log('after: ', aiTokensList)
 
   const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({

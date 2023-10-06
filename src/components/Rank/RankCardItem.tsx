@@ -23,7 +23,7 @@ const marketCapFormatter = Intl.NumberFormat('en', {
 const priceFormatter = Intl.NumberFormat('en', {
   notation: 'standard',
   minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  maximumFractionDigits: 4,
 }).format
 
 const RankingItem = ({
