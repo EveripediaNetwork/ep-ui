@@ -161,7 +161,7 @@ const RankingItem = ({
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item.linkedWikis?.founders ? (
-          <Flex flexWrap="wrap" maxW={150}>
+          <Flex flexWrap="wrap" maxW="275px">
             {formatFoundersArray(item.linkedWikis?.founders)
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
