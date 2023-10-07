@@ -149,7 +149,7 @@ export const WikiDataGraph = () => {
           <Select
             w={{ lg: '27%', md: '39%', base: '50%' }}
             icon={<MdArrowDropDown />}
-            onChange={(e) => {
+            onChange={e => {
               handleGraphFilterChange(e.target.value)
             }}
           >
@@ -228,17 +228,18 @@ export const WikiDataGraph = () => {
         <Flex
           px={3}
           py={1}
+          borderBottomWidth="1px"
           w="full"
           justifyContent="space-between"
           alignItems={'center'}
         >
-          <Text fontSize="18" fontWeight="normal" w="full">
+          <Text pl={2} fontSize="18" fontWeight="normal" w="full">
             Wiki visits
           </Text>
           <Select
             w={{ lg: '80%', md: '60%', base: '54%' }}
             icon={<MdArrowDropDown />}
-            onChange={(e) => {
+            onChange={e => {
               handleWikiVisitFilterChange(e.target.value)
             }}
           >
