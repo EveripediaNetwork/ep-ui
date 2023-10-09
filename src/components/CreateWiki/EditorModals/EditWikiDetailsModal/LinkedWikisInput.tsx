@@ -39,10 +39,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-    const filteredData = data?.filter((w) =>
+const    filteredData = data?.filter((w) =>
       w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
     )
-    cb(filteredData || [])
+    cb(filteredData ?? [])
   }
 
   const debouncedFetchWikis = debounce(
@@ -59,9 +59,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         setResults(data.slice(0, 6))
         setLoading(false)
       })
-    } else setResults([])
-    if (search !== '') setSelectedWiki('')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } 
+    // else setResults([])
+    // if (search !== '') setSelectedWiki('')
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
   const handleAddWiki = () => {
@@ -95,7 +96,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const containsLinkedWikis =
     wiki.linkedWikis &&
     Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
-
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
@@ -143,7 +143,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
               onChange={(e) => setSearch(e.target.value)}
-              type="url"
+              type="text"
             />
             {!loading && (
               <AutoCompleteList
