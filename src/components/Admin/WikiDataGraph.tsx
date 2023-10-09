@@ -10,39 +10,33 @@ import {
   HStack,
   Circle,
   useBreakpointValue,
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
 } from '@chakra-ui/react'
 import {
   ResponsiveContainer,
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
   Area,
   AreaChart,
   CartesianGrid,
 } from 'recharts'
 import { MdArrowDropDown } from 'react-icons/md'
 import {
-  useGetEditorsCountQuery,
+  useGetWikiVisitsQuery,
   useGetWikisCreatedCountQuery,
   useGetWikisEditedCountQuery,
-  useGetWikisViewsCountQuery,
 } from '@/services/admin'
 
 export const WikiDataGraph = () => {
-  const colors = ['#FF5DAA', '#FFB3D7']
   const [graphFilter, setGraphFilter] = useState<string>('day')
-  const dayVal = 24 * 60 * 60 * 1000
-  const [pieFilter, setPieFilter] = useState<string>('day')
-
-  const getStartDate = (daysBack: number) => {
-    const targetDay = new Date(new Date().getTime() - daysBack * dayVal)
-    const result = Math.floor(targetDay.getTime() / 1000)
-    return result
-  }
+  const [wikiVisitFilter, setWikiVisitFilter] = useState<string>('WEEK')
 
   const { data: GraphWikisCreatedCountData } = useGetWikisCreatedCountQuery({
     interval: graphFilter,
@@ -63,73 +57,10 @@ export const WikiDataGraph = () => {
       interval: graphFilter,
     })
 
-  const { data: weeklyEditorsCountData } = useGetEditorsCountQuery({})
-  const { data: yearlyEditorsCountData } = useGetEditorsCountQuery({
-    startDate: getStartDate(365),
+  const { data: wikisPerVisitData } = useGetWikiVisitsQuery({
+    amount: 20,
+    interval: wikiVisitFilter,
   })
-  const { data: monthlyEditorsCountData } = useGetEditorsCountQuery({
-    startDate: getStartDate(30),
-  })
-  const { data: editorsCountData } = useGetEditorsCountQuery({
-    startDate: getStartDate(1),
-  })
-
-  const { data: wikiViews } = useGetWikisViewsCountQuery(0)
-
-  let piedata: {
-    name: string
-    value: number
-  }[] = []
-
-  if (pieFilter === 'day') {
-    piedata = [
-      {
-        name: 'Editors',
-        value: editorsCountData ? editorsCountData.amount : 0,
-      },
-      { name: 'Visitors', value: wikiViews ? wikiViews[0].visits : 0 },
-    ]
-  } else if (pieFilter === 'week') {
-    let weeklyViews = 0
-    wikiViews?.map((views, item) => {
-      if (item < 7) {
-        weeklyViews = weeklyViews + views.visits
-      }
-    })
-    piedata = [
-      {
-        name: 'Editors',
-        value: weeklyEditorsCountData ? weeklyEditorsCountData.amount : 0,
-      },
-      { name: 'Visitors', value: weeklyViews },
-    ]
-  } else if (pieFilter === 'month') {
-    let monthlyViews = 0
-    wikiViews?.map((views, item) => {
-      if (item < 30) {
-        monthlyViews = monthlyViews + views.visits
-      }
-    })
-    piedata = [
-      {
-        name: 'Editors',
-        value: monthlyEditorsCountData ? monthlyEditorsCountData.amount : 0,
-      },
-      { name: 'Visitors', value: monthlyViews },
-    ]
-  } else if (pieFilter === 'year') {
-    let yearlyViews = 0
-    wikiViews?.map((views, _item) => {
-      yearlyViews = yearlyViews + views.visits
-    })
-    piedata = [
-      {
-        name: 'Editors',
-        value: yearlyEditorsCountData ? yearlyEditorsCountData.amount : 0,
-      },
-      { name: 'Visitors', value: yearlyViews },
-    ]
-  }
 
   const graphDataObj: {
     name: string | undefined
@@ -198,8 +129,9 @@ export const WikiDataGraph = () => {
     return setGraphFilter(e)
   }
 
-  const handlePieFilterChange = (e: string) => {
-    return setPieFilter(e)
+  const handleWikiVisitFilterChange = (e: string) => {
+    console.log(e)
+    return setWikiVisitFilter(e)
   }
 
   return (
@@ -292,62 +224,68 @@ export const WikiDataGraph = () => {
           </ResponsiveContainer>
         </Box>
       </Box>
-      <Box rounded="xl" borderWidth="1px" p={6} w={{ lg: '31%', base: '100%' }}>
-        <Flex w="full" justifyContent="space-between">
-          <Heading as="h2" fontSize="21" fontWeight="bold" w="full">
-            User Data
-          </Heading>
+      <Box rounded="xl" borderWidth="1px" w={{ lg: '31%', base: '100%' }}>
+        <Flex
+          px={3}
+          py={1}
+          borderBottomWidth="1px"
+          w="full"
+          justifyContent="space-between"
+          alignItems={'center'}
+        >
+          <Text pl={2} fontSize="18" fontWeight="normal" w="full">
+            Wiki visits
+          </Text>
           <Select
-            w={{ lg: '80%', md: '80%', base: '54%' }}
+            w={{ lg: '80%', md: '60%', base: '54%' }}
             icon={<MdArrowDropDown />}
             onChange={(e) => {
-              handlePieFilterChange(e.target.value)
+              handleWikiVisitFilterChange(e.target.value)
             }}
           >
-            <option value="day">{`Daily (${currentYear})`}</option>
-            <option value="week">{`Weekly (${currentYear})`}</option>
-            <option value="month">{`Monthly (${currentYear})`}</option>
-            <option value="year">{`Yearly (${currentYear})`}</option>
+            <option value="WEEK">{`Weekly (${currentYear})`}</option>
+            <option value="DAY">{`Daily (${currentYear})`}</option>
+            <option value="MONTH">{`Monthly (${currentYear})`}</option>
+            <option value="NINETY_DAYS">{`Quarterly (${currentYear})`}</option>
+            <option value="YEAR">{`Yearly (${currentYear})`}</option>
           </Select>
         </Flex>
-        <Flex alignItems="center" justifyContent="center" w="full">
-          <PieChart width={350} height={400}>
-            <Pie
-              data={piedata}
-              dataKey="value"
-              cx={170}
-              cy={200}
-              innerRadius={50}
-              outerRadius={130}
-              fill="#8884d8"
-              label
-            >
-              {piedata.map((_ent, index: number) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={colors[index % colors.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                borderRadius: '20px',
-                boxShadow: '0px 25px 50px -12px rgba(0, 0, 0, 0.25',
-              }}
-            />
-            <Legend
-              payload={piedata.map((item, index) => ({
-                id: item.name,
-                type: 'circle',
-                value: item.name,
-                color: colors[index % colors.length],
-              }))}
-              layout="horizontal"
-              verticalAlign="bottom"
-              align="center"
-            />
-          </PieChart>
-        </Flex>
+        <Box h="430px" overflowY="scroll">
+          <TableContainer w="100%">
+            <Table size="md">
+              <Thead bg="wikiTitleBg">
+                <Tr>
+                  <Th
+                    color="gray.500"
+                    _dark={{ color: 'white' }}
+                    textTransform="capitalize"
+                    fontWeight="semibold"
+                    fontSize={14}
+                  >
+                    Wiki Title
+                  </Th>
+                  <Th
+                    color="gray.500"
+                    _dark={{ color: 'white' }}
+                    textTransform="capitalize"
+                    fontWeight="semibold"
+                    fontSize={14}
+                  >
+                    No of visits
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {wikisPerVisitData?.map((element, i) => (
+                  <Tr key={i}>
+                    <Td>{element.title}</Td>
+                    <Td>{element.visits}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
     </Flex>
   )
