@@ -41,6 +41,35 @@ export const WIKIS_CREATED = gql`
   }
 `
 
+export const WIKIS_PER_VISIT = gql`
+  query WikisPerVisits(
+    $amount: Int!
+    $startDay: String
+    $endDay: String
+    $interval: IntervalByDays
+    $category: String
+  ) {
+    wikisPerVisits(
+      amount: $amount
+      interval: $interval
+      startDay: $startDay
+      endDay: $endDay
+      category: $category
+    ) {
+      id
+      title
+      views
+      visits(interval: $interval)
+      categories {
+        id
+      }
+      tags {
+        id
+      }
+    }
+  }
+`
+
 export const CREATED_WIKIS_TABLE = gql`
   query Wikis($offset: Int!) {
     wikis(limit: 10, offset: $offset) {
