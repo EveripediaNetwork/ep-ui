@@ -39,7 +39,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-const    filteredData = data?.filter((w) =>
+    const filteredData = data?.filter((w) =>
       w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
     )
     cb(filteredData ?? [])
@@ -59,7 +59,7 @@ const    filteredData = data?.filter((w) =>
         setResults(data.slice(0, 6))
         setLoading(false)
       })
-    } 
+    }
     // else setResults([])
     // if (search !== '') setSelectedWiki('')
     // // eslint-disable-next-line react-hooks/exhaustive-deps
