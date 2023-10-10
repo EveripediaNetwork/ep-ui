@@ -111,7 +111,7 @@ export const GET_AI_TOKEN_RANKINGS = gql`
           market_cap_rank
           price_change_24h
           market_cap_change_24h
-        }-
+        }
       }
     }
   }
