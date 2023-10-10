@@ -20,7 +20,7 @@ import {
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
   useGetAiTokenRankingQuery,
-  useGetStableCoinRankingQuery
+  useGetStableCoinRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -92,7 +92,6 @@ const Rank = ({
   const [stableCoinOffset, setStableCoinOffset] = useState<number>(
     pagination.category === 'stableCoins' ? pagination.page : 1,
   )
-  
 
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
@@ -457,7 +456,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     category: string
     page: string | null
   }
-
 
   const totalTokens = tokensData?.categoryTotal.amount
   const totalAiTokens = aiTokensData?.categoryTotal.amount

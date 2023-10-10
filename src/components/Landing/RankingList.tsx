@@ -35,7 +35,8 @@ type RankingListProps = {
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const { TokensListing, aiTokensListing, NFTsListing, stableCoinsListing } = rankings
+  const { TokensListing, aiTokensListing, NFTsListing, stableCoinsListing } =
+    rankings
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
@@ -50,7 +51,10 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     aiTokensListing &&
     NFTsListing &&
     stableCoinsListing &&
-    (!tokenItems.length || !nftItems.length || !aiTokenItems.length || !stableCoinItems.length)
+    (!tokenItems.length ||
+      !nftItems.length ||
+      !aiTokenItems.length ||
+      !stableCoinItems.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
     setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
