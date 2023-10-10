@@ -28,15 +28,17 @@ type RankingListProps = {
     NFTsListing: RankCardType[]
     aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
+    stableCoinsListing: RankCardType[]
   }
   listingLimit: number
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const { TokensListing, aiTokensListing, NFTsListing } = rankings
+  const { TokensListing, aiTokensListing, NFTsListing, stableCoinsListing } = rankings
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
+  const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
@@ -47,21 +49,24 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     TokensListing &&
     aiTokensListing &&
     NFTsListing &&
-    (!tokenItems.length || !nftItems.length || !aiTokenItems.length)
+    stableCoinsListing &&
+    (!tokenItems.length || !nftItems.length || !aiTokenItems.length || !stableCoinItems.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
     setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
     setNftItems(sortByMarketCap('descending', NFTsListing))
+    setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
   }
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (tokenItems && nftItems && aiTokenItems) {
+      if (tokenItems && nftItems && aiTokenItems && stableCoinItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
+        setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
       }
     },
@@ -111,6 +116,11 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
+                label="Stablecoins"
+                icon={RiCoinsFill}
+                fontSize={{ lg: 'md' }}
+              />
+              <RankingListButton
                 label="NFTs"
                 icon={BiImage}
                 fontSize={{ lg: 'md' }}
@@ -150,6 +160,30 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
                   {aiTokenItems.map((token, index) =>
+                    token ? (
+                      <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabPanel>
+            <TabPanel
+              px={{ base: 2, md: 'initial' }}
+              py={{ base: 0, md: 'initial' }}
+            >
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {stableCoinItems.map((token, index) =>
                     token ? (
                       <RankingItem
                         listingLimit={listingLimit}

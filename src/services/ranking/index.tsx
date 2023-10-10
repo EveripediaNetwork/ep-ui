@@ -139,6 +139,6 @@ export const {
   getNFTRanking,
   getTokenRanking,
   getAiTokenRanking,
-  getCategoryTotal,
   getStableCoinRanking,
+  getCategoryTotal,
 } = rankingAPI.endpoints

@@ -117,7 +117,7 @@ export const GET_AI_TOKEN_RANKINGS = gql`
   }
 `
 export const GET_STABLECOIN_RANKINGS = gql`
-  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $category: STABLE_COINS ) {
+  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $category: TokenCategory ) {
     rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
       ... on TokenRankListData {
         id

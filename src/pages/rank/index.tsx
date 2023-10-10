@@ -20,6 +20,7 @@ import {
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
   useGetAiTokenRankingQuery,
+  useGetStableCoinRankingQuery
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -60,16 +61,19 @@ const Rank = ({
   totalTokens,
   totalNfts,
   totalAiTokens,
+  totalStableCoins,
   pagination,
 }: {
   totalNfts: number
   totalTokens: number
   totalAiTokens: number
+  totalStableCoins: number
   pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
+  const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const router = useRouter()
@@ -85,8 +89,14 @@ const Rank = ({
     pagination.category === 'aitokens' ? pagination.page : 1,
   )
 
+  const [stableCoinOffset, setStableCoinOffset] = useState<number>(
+    pagination.category === 'stableCoins' ? pagination.page : 1,
+  )
+  
+
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
+  const totalStableCoinOffset = LISTING_LIMIT * (stableCoinOffset - 1)
   const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
 
   const handleCategoryChange = (index: number) => {
@@ -117,6 +127,14 @@ const Rank = ({
       category: 'AI',
     })
 
+  const { data: stableCoinData, isFetching: stableCoinisFetching } =
+    useGetStableCoinRankingQuery({
+      kind: 'TOKEN',
+      offset: stableCoinOffset,
+      limit: LISTING_LIMIT,
+      category: 'STABLE_COINS',
+    })
+
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
     offset: nftOffset,
@@ -128,13 +146,16 @@ const Rank = ({
     tokenData &&
     nftData &&
     aiTokenData &&
+    stableCoinData &&
     !nftItems.length &&
     !tokenItems.length &&
     !aiTokenItems.length &&
+    !stableCoinData &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
     setAiTokenItems(sortByMarketCap('descending', aiTokenData))
+    setStableCoinItems(sortByMarketCap('descending', stableCoinData))
     setNftItems(sortByMarketCap('descending', nftData))
     hasRenderedInitialItems.current = true
   }
@@ -144,22 +165,25 @@ const Rank = ({
       tokenData &&
       nftData &&
       aiTokenData &&
+      stableCoinData &&
       hasRenderedInitialItems.current
     ) {
       setTokenItems(sortByMarketCap('descending', tokenData))
       setAiTokenItems(sortByMarketCap('descending', aiTokenData))
+      setStableCoinItems(sortByMarketCap('descending', stableCoinData))
       setNftItems(sortByMarketCap('descending', nftData))
     }
-  }, [tokenData, aiTokenData, nftData])
+  }, [tokenData, aiTokenData, stableCoinData, nftData])
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (nftData && aiTokenData && tokenData) {
+      if (nftData && aiTokenData && tokenData && stableCoinData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, tokenData))
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
+        setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
       }
     },
@@ -208,6 +232,11 @@ const Rank = ({
               <RankingListButton
                 label="AI Tokens"
                 icon={RiRobotFill}
+                fontSize={{ lg: '20px' }}
+              />
+              <RankingListButton
+                label="Stablecoins"
+                icon={RiCoinsFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
@@ -318,6 +347,51 @@ const Rank = ({
                 textAlign="center"
                 maxW="750"
               >
+                Stablecoin wikis ranked by Market Cap Prices
+              </Text>
+              <RankTable
+                hasPagination={stableCoinItems.length >= LISTING_LIMIT}
+                currentPage={stableCoinOffset}
+                totalCount={totalStableCoins}
+                pageSize={LISTING_LIMIT}
+                onPageChange={(page) => setStableCoinOffset(page)}
+              >
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {stableCoinisFetching || !stableCoinItems ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    stableCoinItems?.map((token, index) =>
+                      token ? (
+                        <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalStableCoinOffset}
+                          order={sortOrder}
+                          key={token.id}
+                          index={index}
+                          item={token}
+                        />
+                      ) : (
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={totalStableCoinOffset + index}
+                        />
+                      ),
+                    )
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabPanel>
+            <TabPanel>
+              <Text
+                color="homeDescriptionColor"
+                fontSize={{ base: 'lg', lg: 22 }}
+                mx="auto"
+                mb={12}
+                px={4}
+                textAlign="center"
+                maxW="750"
+              >
                 NFT wikis ranked by Market Cap Prices
               </Text>
               <RankTable
@@ -371,23 +445,30 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCategoryTotal.initiate({ category: 'aitokens' }),
   )
 
-  const { category, page } = ctx.query as {
-    category: string
-    page: string | null
-  }
+  const { data: stableCoinData } = await store.dispatch(
+    getCategoryTotal.initiate({ category: 'stableCoins' }),
+  )
 
   const { data: nftsData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'nfts' }),
   )
 
+  const { category, page } = ctx.query as {
+    category: string
+    page: string | null
+  }
+
+
   const totalTokens = tokensData?.categoryTotal.amount
   const totalAiTokens = aiTokensData?.categoryTotal.amount
+  const totalStableCoins = stableCoinData?.categoryTotal.amount
   const totalNfts = nftsData?.categoryTotal.amount
 
   return {
     props: {
       totalTokens,
       totalAiTokens,
+      totalStableCoins,
       totalNfts,
       pagination: {
         category: category || 'cryptocurrencies',
