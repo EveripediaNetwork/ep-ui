@@ -111,6 +111,46 @@ export const GET_AI_TOKEN_RANKINGS = gql`
           market_cap_rank
           price_change_24h
           market_cap_change_24h
+        }-
+      }
+    }
+  }
+`
+export const GET_STABLECOIN_RANKINGS = gql`
+  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $category: STABLE_COINS ) {
+    rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
+      ... on TokenRankListData {
+        id
+        title
+        ipfs
+        tags {
+          id
+        }
+        created
+        media {
+          thumbnail
+        }
+        images {
+          id
+        }
+        linkedWikis {
+          founders
+          blockchains
+        }
+        events {
+          date
+          type
+        }
+        tokenMarketData {
+          hasWiki
+          image
+          name
+          alias
+          current_price
+          market_cap
+          market_cap_rank
+          price_change_24h
+          market_cap_change_24h
         }
       }
     }

@@ -5,6 +5,7 @@ import {
   GET_RANK_COUNT,
   GET_TOKEN_RANKINGS,
   GET_AI_TOKEN_RANKINGS,
+  GET_STABLECOIN_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
 import { RankCardType } from '@/types/RankDataTypes'
@@ -92,6 +93,31 @@ export const rankingAPI = createApi({
       }),
       transformResponse: (response: RankListResponse) => response.rankList,
     }),
+    getStableCoinRanking: builder.query<
+      RankCardType[],
+      {
+        kind: string
+        limit: number
+        offset: number
+        category: string
+      }
+    >({
+      query: ({
+        kind,
+        limit,
+        offset,
+        category,
+      }: {
+        kind: string
+        limit?: number
+        offset?: number
+        category: string
+      }) => ({
+        document: GET_STABLECOIN_RANKINGS,
+        variables: { kind, limit, offset, category },
+      }),
+      transformResponse: (response: RankListResponse) => response.rankList,
+    }),
     getCategoryTotal: builder.query<RankCount, { category: string }>({
       query: ({ category }: { category: string }) => ({
         document: GET_RANK_COUNT,
@@ -105,6 +131,7 @@ export const {
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
   useGetAiTokenRankingQuery,
+  useGetStableCoinRankingQuery,
   useGetCategoryTotalQuery,
 } = rankingAPI
 
@@ -113,4 +140,5 @@ export const {
   getTokenRanking,
   getAiTokenRanking,
   getCategoryTotal,
+  getStableCoinRanking,
 } = rankingAPI.endpoints
