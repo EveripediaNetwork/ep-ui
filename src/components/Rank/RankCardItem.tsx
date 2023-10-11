@@ -96,7 +96,7 @@ const RankingItem = ({
             />
           </Box>
           <Box>
-            <Box>
+            <Box maxW={'200px'} overflowX={'hidden'}>
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
                   <Link color="brandLinkColor" href={`wiki/${item.id}`}>
