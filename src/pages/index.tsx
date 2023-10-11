@@ -192,12 +192,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 
   const sortedleaderboards = sortLeaderboards(leaderboard)
-
   const rankings = {
     NFTsListing: NFTsList || [],
     aiTokensListing: aiTokensList || [],
     TokensListing: TokensList || [],
-    stablecoinsListing: stableCoinsList || [],
+    stableCoinsListing: stableCoinsList || [],
   }
 
   return {

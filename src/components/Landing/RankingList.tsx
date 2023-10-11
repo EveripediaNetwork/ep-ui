@@ -51,10 +51,10 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     aiTokensListing &&
     NFTsListing &&
     stableCoinsListing &&
-    (!tokenItems.length ||
-      !nftItems.length ||
-      !aiTokenItems.length ||
-      !stableCoinItems.length)
+    (!tokenItems?.length ||
+      !nftItems?.length ||
+      !aiTokenItems?.length ||
+      !stableCoinItems?.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
     setAiTokenItems(sortByMarketCap('descending', aiTokensListing))

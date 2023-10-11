@@ -149,7 +149,7 @@ const Rank = ({
     !nftItems.length &&
     !tokenItems.length &&
     !aiTokenItems.length &&
-    !stableCoinData &&
+    !stableCoinItems.length &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
@@ -187,7 +187,6 @@ const Rank = ({
       }
     },
   }
-
   return (
     <Box>
       <RankHeader />
@@ -259,7 +258,7 @@ const Rank = ({
                 Cryptocurrency wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination
+                hasPagination={tokenItems?.length >= LISTING_LIMIT}
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
@@ -270,7 +269,7 @@ const Rank = ({
                   {isFetching || !tokenItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    tokenItems?.map((token, index) =>
+                    tokenItems.map((token, index) =>
                       token ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
@@ -304,7 +303,7 @@ const Rank = ({
                 AI Token wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination={aiTokenItems.length >= LISTING_LIMIT}
+                hasPagination={aiTokenItems?.length >= LISTING_LIMIT}
                 currentPage={aiTokensOffset}
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
@@ -315,7 +314,7 @@ const Rank = ({
                   {aiTokenisFetching || !aiTokenItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    aiTokenItems?.map((token, index) =>
+                    aiTokenItems.map((token, index) =>
                       token ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
@@ -349,7 +348,7 @@ const Rank = ({
                 Stablecoin wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination={stableCoinItems.length >= LISTING_LIMIT}
+                hasPagination={stableCoinItems?.length >= LISTING_LIMIT}
                 currentPage={stableCoinOffset}
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
@@ -360,7 +359,7 @@ const Rank = ({
                   {stableCoinisFetching || !stableCoinItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    stableCoinItems?.map((token, index) =>
+                    stableCoinItems.map((token, index) =>
                       token ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
@@ -394,7 +393,7 @@ const Rank = ({
                 NFT wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination
+                hasPagination={nftItems?.length >= LISTING_LIMIT}
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
@@ -405,7 +404,7 @@ const Rank = ({
                   {NFTisFetching || !nftItems ? (
                     <LoadingRankCardSkeleton length={20} />
                   ) : (
-                    nftItems?.map((nft, index) =>
+                    nftItems.map((nft, index) =>
                       nft ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
