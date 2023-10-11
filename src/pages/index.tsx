@@ -23,6 +23,7 @@ import {
   getAiTokenRanking,
   getNFTRanking,
   getTokenRanking,
+  getStableCoinRanking,
   rankingAPI,
 } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
@@ -43,6 +44,7 @@ interface HomePageProps {
     NFTsListing: RankCardType[]
     aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
+    stableCoinsListing: RankCardType[]
   }
   trending: TrendingData
 }
@@ -130,6 +132,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
       category: 'AI',
     }),
   )
+  const { data: stableCoinsList } = await store.dispatch(
+    getStableCoinRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      category: 'STABLE_COINS',
+    }),
+  )
 
   const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({
@@ -182,11 +192,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 
   const sortedleaderboards = sortLeaderboards(leaderboard)
-
   const rankings = {
     NFTsListing: NFTsList || [],
     aiTokensListing: aiTokensList || [],
     TokensListing: TokensList || [],
+    stableCoinsListing: stableCoinsList || [],
   }
 
   return {

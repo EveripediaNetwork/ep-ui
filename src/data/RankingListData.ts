@@ -4,7 +4,8 @@ import { RiArrowDownSFill } from 'react-icons/ri'
 export const CATEGORIES_WITH_INDEX = {
   cryptocurrencies: 0,
   aitokens: 1,
-  nfts: 2,
+  stableCoins: 2,
+  nfts: 3,
 }
 
 export const RankingListHead: RankinglistHeadProps = [
@@ -31,3 +32,5 @@ export const RankingListHead: RankinglistHeadProps = [
     label: 'Date Founded',
   },
 ]
+
+export const EXCLUDED_COINS = ['BUSD']
