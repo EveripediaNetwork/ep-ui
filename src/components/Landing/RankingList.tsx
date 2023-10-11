@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
@@ -20,7 +20,7 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
-import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { CATEGORIES_WITH_INDEX, EXCLUDED_COINS } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 
 type RankingListProps = {
@@ -28,15 +28,25 @@ type RankingListProps = {
     NFTsListing: RankCardType[]
     aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
+    stableCoinsListing: RankCardType[]
   }
   listingLimit: number
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const { TokensListing, aiTokensListing, NFTsListing } = rankings
+  const {
+    TokensListing,
+    aiTokensListing,
+    NFTsListing,
+    stableCoinsListing: unfilteredStableCoinsListing,
+  } = rankings
+  const stableCoinsListing = unfilteredStableCoinsListing?.filter(
+    (item) => !EXCLUDED_COINS.includes(item.id),
+  )
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
+  const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
@@ -47,21 +57,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     TokensListing &&
     aiTokensListing &&
     NFTsListing &&
-    (!tokenItems.length || !nftItems.length || !aiTokenItems.length)
+    stableCoinsListing &&
+    (!tokenItems?.length ||
+      !nftItems?.length ||
+      !aiTokenItems?.length ||
+      !stableCoinItems?.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
     setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
     setNftItems(sortByMarketCap('descending', NFTsListing))
+    setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
   }
 
   const onClickMap: OnClickMap = {
     Marketcap: function () {
-      if (tokenItems && nftItems && aiTokenItems) {
+      if (tokenItems && nftItems && aiTokenItems && stableCoinItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
+        setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
       }
     },
@@ -92,14 +108,21 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       <Box maxW="1208px" mx="auto">
         <Tabs
           mt={10}
-          pl="4"
+          m={2}
+          pl={0}
           overflowX={'auto'}
           onChange={(index) => {
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }}
         >
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>
+            <TabList
+              border="none"
+              display="flex"
+              gap={{ base: '0', md: '4' }}
+              overflowX={'auto'}
+              overflowY={'hidden'}
+            >
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
@@ -108,6 +131,11 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               <RankingListButton
                 label="AI Tokens"
                 icon={RiRobotFill}
+                fontSize={{ lg: 'md' }}
+              />
+              <RankingListButton
+                label="Stablecoins"
+                icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
@@ -150,6 +178,30 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
                   {aiTokenItems.map((token, index) =>
+                    token ? (
+                      <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabPanel>
+            <TabPanel
+              px={{ base: 2, md: 'initial' }}
+              py={{ base: 0, md: 'initial' }}
+            >
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {stableCoinItems.map((token, index) =>
                     token ? (
                       <RankingItem
                         listingLimit={listingLimit}
