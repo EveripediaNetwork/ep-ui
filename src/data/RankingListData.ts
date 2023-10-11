@@ -32,3 +32,5 @@ export const RankingListHead: RankinglistHeadProps = [
     label: 'Date Founded',
   },
 ]
+
+export const EXCLUDED_COINS = ['BUSD']

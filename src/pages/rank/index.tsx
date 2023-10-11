@@ -29,7 +29,7 @@ import RankingItem from '@/components/Rank/RankCardItem'
 import RankHero from './RankHero'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { useRouter } from 'next/router'
-import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { CATEGORIES_WITH_INDEX, EXCLUDED_COINS } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 import { CategoryKeyType } from '@/types/RankDataTypes'
 
@@ -126,13 +126,17 @@ const Rank = ({
       category: 'AI',
     })
 
-  const { data: stableCoinData, isFetching: stableCoinisFetching } =
+  const { data: unfilteredStableCoinData, isFetching: stableCoinisFetching } =
     useGetStableCoinRankingQuery({
       kind: 'TOKEN',
       offset: stableCoinOffset,
       limit: LISTING_LIMIT,
       category: 'STABLE_COINS',
     })
+
+  const stableCoinData = unfilteredStableCoinData?.filter(
+    (item) => !EXCLUDED_COINS.includes(item.id),
+  )
 
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
