@@ -218,10 +218,15 @@ const Rank = ({
           }
           w="full"
           onChange={handleCategoryChange}
-          overflowX={'auto'}
         >
           <Flex justifyContent="center">
-            <TabList border="none" display="flex" gap={{ base: '2', md: '8' }}>
+            <TabList
+              border="none"
+              display="flex"
+              gap={{ base: '2', md: '8' }}
+              overflowX={'auto'}
+              overflowY={'hidden'}
+            >
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
