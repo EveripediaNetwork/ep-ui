@@ -11,7 +11,7 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
@@ -234,7 +234,7 @@ const Rank = ({
               />
               <RankingListButton
                 label="Stablecoins"
-                icon={RiCoinsFill}
+                icon={RiCoinFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton

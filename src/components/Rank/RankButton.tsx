@@ -12,6 +12,7 @@ const RankingListButton = ({
       display="flex"
       alignItems="center"
       color="homeDescriptionColor"
+      px={{ base: 2, md: 4 }}
       gap="2"
       _selected={{
         color: 'brandLinkColor',

@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill } from 'react-icons/ri'
+import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
@@ -121,7 +121,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               />
               <RankingListButton
                 label="Stablecoins"
-                icon={RiCoinsFill}
+                icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
