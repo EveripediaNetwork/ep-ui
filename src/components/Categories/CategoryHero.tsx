@@ -37,6 +37,7 @@ const CategoryHero = ({
           textAlign="center"
           as="h1"
           color="whiteAlpha.900"
+          textTransform={'capitalize'}
         >
           {title}
         </Heading>

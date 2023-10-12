@@ -85,7 +85,7 @@ const rankListHeadLabels = z.enum([
   '#',
   'Name',
   'Price',
-  'Marketcap',
+  'Market Cap',
   'Founders',
   'Blockchain',
   'Date Founded',

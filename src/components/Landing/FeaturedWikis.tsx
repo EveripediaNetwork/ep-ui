@@ -38,7 +38,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
             pl={2}
             fontWeight="600"
           >
-            Featured wikis
+            Featured Wikis
           </Text>
         </chakra.div>
         {featuredWikis ? (
