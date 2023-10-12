@@ -42,7 +42,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     const filteredData = data?.filter((w) =>
       w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
     )
-    cb(filteredData || [])
+    cb(filteredData ?? [])
   }
 
   const debouncedFetchWikis = debounce(
@@ -63,6 +63,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     if (search !== '') setSelectedWiki('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
+
+  console.log('search', search)
+  console.log('res: ', results)
 
   const handleAddWiki = () => {
     if (selectedWiki === '') return
@@ -142,8 +145,11 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={(e) => setSearch(e.target.value)}
-              type="url"
+              onChange={(e) => {
+                setSearch(e.target.value)
+              }}
+              type="text"
+              autoFocus
             />
             {!loading && (
               <AutoCompleteList
@@ -162,11 +168,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
-                    value={result}
+                    value={result.title}
                     textTransform="capitalize"
-                  >
-                    {result.title}
-                  </AutoCompleteItem>
+                  />
                 ))}
               </AutoCompleteList>
             )}
