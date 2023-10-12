@@ -25,6 +25,7 @@ import {
 import { store } from '@/store/store'
 import { RiArrowRightDownLine, RiCloseLine } from 'react-icons/ri'
 
+
 const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [search, setSearch] = React.useState('')
@@ -60,10 +61,13 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         setLoading(false)
       })
     }
-    // else setResults([])
-    // if (search !== '') setSelectedWiki('')
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search])
+    else setResults([])
+    if (search !== '') setSelectedWiki('')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [search])
+
+console.log("search", search)
+console.log("res: ", results)
 
   const handleAddWiki = () => {
     if (selectedWiki === '') return
@@ -96,6 +100,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const containsLinkedWikis =
     wiki.linkedWikis &&
     Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
+
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
@@ -142,8 +147,11 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) =>{
+                setSearch(e.target.value)}
+              }
               type="text"
+              autoFocus
             />
             {!loading && (
               <AutoCompleteList
@@ -162,7 +170,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
-                    value={result}
+                    value={result.title}
                     textTransform="capitalize"
                   >
                     {result.title}
