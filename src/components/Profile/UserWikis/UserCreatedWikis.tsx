@@ -8,6 +8,7 @@ import { useInfiniteData } from '@/hooks/useInfiniteData'
 import { useTranslation } from 'react-i18next'
 import Collected from '../Collected'
 import { Activity } from '@/types/ActivityDataType'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 
 const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
   const router = useRouter()
@@ -43,7 +44,7 @@ const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
         </Center>
       )}
       <Collected wikis={wikis} />
-      {loading || hasMore ? (
+      {(loading || hasMore) && wikis.length > ITEM_PER_PAGE ? (
         <Center mt={8} ref={createdWikisSentryRef} w="full" h="16">
           <Spinner size="xl" />
         </Center>

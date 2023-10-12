@@ -4,6 +4,7 @@ export type Blog = {
   cover_image?: string
   contributor: string
   body: string
+  excerpt?: string
   image_sizes: number
   title: string
   timestamp?: number
@@ -18,6 +19,7 @@ export type Blog = {
 export type FormatedBlogType = {
   title: string
   body?: string
+  excerpt?: string
   slug: string
   digest: string
   contributor: string

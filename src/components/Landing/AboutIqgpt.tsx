@@ -102,8 +102,8 @@ const AboutIqgpt = () => {
           >
             <AboutGPTMockup
               bg={{
-                light: '/images/mockups/mockup-xl.png',
-                dark: '/images/mockups/mockup-xl-dark.png',
+                light: '/images/mockups/iqgpt-mockup-xl.png',
+                dark: '/images/mockups/iqgpt-mockup-dark-xl.png',
               }}
               w={1020}
               h={708}

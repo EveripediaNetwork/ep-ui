@@ -20,6 +20,9 @@ export const TranformCategoryTitle = (categoryType: string) => {
     case 'Organizations':
       title = 'Organization'
       break
+    case 'People in crypto':
+      title = 'People in Crypto'
+      break
     default:
       title = categoryType
   }
