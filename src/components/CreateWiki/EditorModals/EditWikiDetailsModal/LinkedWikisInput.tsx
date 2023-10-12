@@ -25,7 +25,6 @@ import {
 import { store } from '@/store/store'
 import { RiArrowRightDownLine, RiCloseLine } from 'react-icons/ri'
 
-
 const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
   const [search, setSearch] = React.useState('')
@@ -60,14 +59,13 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         setResults(data.slice(0, 6))
         setLoading(false)
       })
-    }
-    else setResults([])
+    } else setResults([])
     if (search !== '') setSelectedWiki('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [search])
+  }, [search])
 
-console.log("search", search)
-console.log("res: ", results)
+  console.log('search', search)
+  console.log('res: ', results)
 
   const handleAddWiki = () => {
     if (selectedWiki === '') return
@@ -147,9 +145,9 @@ console.log("res: ", results)
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={(e) =>{
-                setSearch(e.target.value)}
-              }
+              onChange={(e) => {
+                setSearch(e.target.value)
+              }}
               type="text"
               autoFocus
             />
