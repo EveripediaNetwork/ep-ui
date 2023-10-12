@@ -68,7 +68,7 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 106,
-        label: 'People in crypto',
+        label: 'People in Crypto',
         icon: RiUser3Fill,
         href: '/categories/people',
         hasImage: true,
@@ -103,7 +103,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 4,
-    label: 'IQGPT',
+    label: 'IQ GPT',
     href: 'https://iqgpt.com',
     icon: RiSearchEyeFill,
     target: '_blank',

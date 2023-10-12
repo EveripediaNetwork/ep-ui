@@ -19,7 +19,7 @@ export const RankingListHead: RankinglistHeadProps = [
     label: 'Price',
   },
   {
-    label: 'Marketcap',
+    label: 'Market Cap',
     Icon: RiArrowDownSFill,
   },
   {

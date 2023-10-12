@@ -27,11 +27,11 @@ export const OurHistoryData: OurHistoryType[] = [
   {
     year: 2022,
     content:
-      'In 2022, Everipedia moved to the Polygon blockchain and <Link href="https://iq.wiki/blog/il83x1k4q5FdsuVJBCbAVjMlOytJ4Q5k8tsjSxG9ixg">rebranded as IQ.Wiki</Link>. Along with the rebrand, we added several new Web3 features and integrations to serve the crypto community better. Over the past few years NFTs, DeFi, and the pace of innovation in Web3 have exploded. We’ve always been passionate about building and seeing the growth of the space inspired us to build out IQ.wiki as a hub for crypto knowledge. We rebranded to IQ.wiki to emphasize how the IQ token and cryptocurrency are central to the encyclopedia.',
+      'In 2022, Everipedia moved to the Polygon blockchain and <Link href="https://iq.wiki/blog/il83x1k4q5FdsuVJBCbAVjMlOytJ4Q5k8tsjSxG9ixg">rebranded as IQ.wiki</Link>. Along with the rebrand, we added several new Web3 features and integrations to serve the crypto community better. Over the past few years NFTs, DeFi, and the pace of innovation in Web3 have exploded. We’ve always been passionate about building and seeing the growth of the space inspired us to build out IQ.wiki as a hub for crypto knowledge. We rebranded to IQ.wiki to emphasize how the IQ token and cryptocurrency are central to the encyclopedia.',
   },
   {
     year: 2023,
     content:
-      'In February 2023, IQ.wiki became one of the first encyclopedias and decentralized applications to <Link href="https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY">integrate artificial intelligence</Link>. IQ.wiki integrated OpenAI’s GPT-3 for tasks like summarizing articles and later upgraded to GPT-4.  In 2023, BrainDAO aims to further integrate AI within the platform, develop additional AI powered tools, and use the IQ token to incentivized the training of AI models. for the first part of the issue.',
+      'In February 2023, IQ.wiki became one of the first encyclopedias and decentralized applications to <Link href="https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY">integrate artificial intelligence</Link>. IQ.wiki integrated OpenAI’s GPT-3 for tasks like summarizing articles and later upgraded to GPT-4.  In 2023, BrainDAO aims to further integrate AI within the platform, develop additional AI powered tools, and use the IQ token to incentivized the training of AI models for the first part of the issue.',
   },
 ]

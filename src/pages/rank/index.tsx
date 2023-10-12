@@ -135,7 +135,7 @@ const Rank = ({
     })
 
   const stableCoinData = unfilteredStableCoinData?.filter(
-    (item) => !EXCLUDED_COINS.includes(item.id),
+    item => !EXCLUDED_COINS.includes(item.id),
   )
 
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
@@ -179,7 +179,7 @@ const Rank = ({
   }, [tokenData, aiTokenData, stableCoinData, nftData])
 
   const onClickMap: OnClickMap = {
-    Marketcap: function () {
+    'Market Cap': function () {
       if (nftData && aiTokenData && tokenData && stableCoinData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
@@ -271,7 +271,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setTokensOffset(page)}
+                onPageChange={page => setTokensOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -316,7 +316,7 @@ const Rank = ({
                 currentPage={aiTokensOffset}
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setAiTokensOffset(page)}
+                onPageChange={page => setAiTokensOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -361,7 +361,7 @@ const Rank = ({
                 currentPage={stableCoinOffset}
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setStableCoinOffset(page)}
+                onPageChange={page => setStableCoinOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -406,7 +406,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setNftOffset(page)}
+                onPageChange={page => setNftOffset(page)}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -443,7 +443,7 @@ const Rank = ({
 
 export default Rank
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
