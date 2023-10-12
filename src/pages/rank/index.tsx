@@ -179,7 +179,7 @@ const Rank = ({
   }, [tokenData, aiTokenData, stableCoinData, nftData])
 
   const onClickMap: OnClickMap = {
-    Marketcap: function () {
+    'Market Cap': function () {
       if (nftData && aiTokenData && tokenData && stableCoinData) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'

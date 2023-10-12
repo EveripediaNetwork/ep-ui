@@ -15,15 +15,15 @@ const RankHero = () => {
         mb={{ base: 4 }}
         fontWeight={'600'}
       >
-        Wiki ranks by Marketcap
+        Wiki Rank by Market Cap
       </Heading>
       <Text
         fontSize={{ xl: 'xl', md: 'lg', base: 'md' }}
         textAlign="center"
         maxW={'743px'}
       >
-        A list of wikis in different categories, including DeFi, NFTs, DAOs and
-        Cryptocurrencies, ranked based on the global marketcap respectively.
+        A list of wikis in different categories, including DeFi, NFTs, DAOs, and
+        Cryptocurrencies, ranked based on the global market cap respectively.
       </Text>
     </Flex>
   )

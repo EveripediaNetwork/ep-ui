@@ -66,7 +66,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    Marketcap: function () {
+    'Market Cap': function () {
       if (tokenItems && nftItems && aiTokenItems && stableCoinItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
