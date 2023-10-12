@@ -20,7 +20,7 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { LinkButton } from '../Elements'
 import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
-import { CATEGORIES_WITH_INDEX, EXCLUDED_COINS } from '@/data/RankingListData'
+import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 
 type RankingListProps = {
@@ -35,15 +35,11 @@ type RankingListProps = {
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const {
-    TokensListing,
-    aiTokensListing,
-    NFTsListing,
-    stableCoinsListing: unfilteredStableCoinsListing,
-  } = rankings
-  const stableCoinsListing = unfilteredStableCoinsListing?.filter(
-    (item) => !EXCLUDED_COINS.includes(item.id),
-  )
+  const { TokensListing, aiTokensListing, NFTsListing, stableCoinsListing } =
+    rankings
+  // const stableCoinsListing = unfilteredStableCoinsListing?.filter(
+  //   (item) => !EXCLUDED_COINS.includes(item.id),
+  // )
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
