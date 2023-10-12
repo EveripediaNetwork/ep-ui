@@ -42,7 +42,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     stableCoinsListing: unfilteredStableCoinsListing,
   } = rankings
   const stableCoinsListing = unfilteredStableCoinsListing?.filter(
-    (item) => !EXCLUDED_COINS.includes(item.id),
+    item => !EXCLUDED_COINS.includes(item.id),
   )
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
@@ -70,7 +70,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    Marketcap: function () {
+    'Market Cap': function () {
       if (tokenItems && nftItems && aiTokenItems && stableCoinItems) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
@@ -111,7 +111,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           m={2}
           pl={0}
           overflowX={'auto'}
-          onChange={(index) => {
+          onChange={index => {
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }}
         >
