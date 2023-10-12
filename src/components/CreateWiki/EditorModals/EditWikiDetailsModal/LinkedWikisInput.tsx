@@ -170,9 +170,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     key={`option-${result.id}`}
                     value={result.title}
                     textTransform="capitalize"
-                  >
-                    {result.title}
-                  </AutoCompleteItem>
+                  />
                 ))}
               </AutoCompleteList>
             )}
