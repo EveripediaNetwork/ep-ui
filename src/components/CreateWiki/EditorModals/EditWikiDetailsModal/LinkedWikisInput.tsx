@@ -64,9 +64,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
-  console.log('search', search)
-  console.log('res: ', results)
-
   const handleAddWiki = () => {
     if (selectedWiki === '') return
     dispatch({
@@ -98,6 +95,13 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const containsLinkedWikis =
     wiki.linkedWikis &&
     Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
+
+  function getWikiPreviewByTitle(
+    wikiPreviews: WikiPreview[],
+    wikiTitle: string,
+  ): WikiPreview | undefined {
+    return wikiPreviews.find((preview) => preview.title === wikiTitle)
+  }
 
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
@@ -134,7 +138,8 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               </Center>
             }
             onChange={(val) => {
-              setSelectedWiki(val)
+              const wikiPreview = getWikiPreviewByTitle(results, val)
+              setSelectedWiki(wikiPreview?.id ?? '')
               setSearch('')
             }}
           >
@@ -170,7 +175,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     key={`option-${result.id}`}
                     value={result.title}
                     textTransform="capitalize"
-                  />
+                  >
+                    {result.title}
+                  </AutoCompleteItem>
                 ))}
               </AutoCompleteList>
             )}
