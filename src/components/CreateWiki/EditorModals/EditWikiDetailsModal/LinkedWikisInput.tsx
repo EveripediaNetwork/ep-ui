@@ -127,7 +127,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            disableFilter
             suggestWhenEmpty
+            shouldRenderSuggestions={(q) => q.length >= 3}
+            openOnFocus={search.length >= 3}
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
@@ -136,8 +139,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 </Text>
               </Center>
             }
-            onChange={(val) => {
-              const wikiPreview = getWikiPreviewByTitle(results, val)
+            onSelectOption={(option) => {
+              const { title } = option.item.originalValue
+              const wikiPreview = getWikiPreviewByTitle(results, title)
               setSelectedWiki(wikiPreview?.id ?? '')
               setSearch('')
             }}
@@ -172,7 +176,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
-                    value={result.title}
+                    value={result}
                     textTransform="capitalize"
                   >
                     {result.title}
