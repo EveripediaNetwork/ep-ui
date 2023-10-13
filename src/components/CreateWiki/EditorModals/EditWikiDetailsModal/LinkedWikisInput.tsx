@@ -64,9 +64,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
-  console.log('search', search)
-  console.log('res: ', results)
-
   const handleAddWiki = () => {
     if (selectedWiki === '') return
     dispatch({
@@ -99,6 +96,12 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     wiki.linkedWikis &&
     Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
 
+  const getWikiPreviewByTitle = (
+    wikiPreviews: WikiPreview[],
+    wikiTitle: string,
+  ): WikiPreview | undefined =>
+    wikiPreviews.find((preview) => preview.title === wikiTitle)
+
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
@@ -124,7 +127,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            disableFilter
             suggestWhenEmpty
+            shouldRenderSuggestions={(q) => q.length >= 3}
+            openOnFocus={search.length >= 3}
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
@@ -133,8 +139,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 </Text>
               </Center>
             }
-            onChange={(val) => {
-              setSelectedWiki(val)
+            onSelectOption={(option) => {
+              const { title } = option.item.originalValue
+              const wikiPreview = getWikiPreviewByTitle(results, title)
+              setSelectedWiki(wikiPreview?.id ?? '')
               setSearch('')
             }}
           >
@@ -168,9 +176,11 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
-                    value={result.title}
+                    value={result}
                     textTransform="capitalize"
-                  />
+                  >
+                    {result.title}
+                  </AutoCompleteItem>
                 ))}
               </AutoCompleteList>
             )}
