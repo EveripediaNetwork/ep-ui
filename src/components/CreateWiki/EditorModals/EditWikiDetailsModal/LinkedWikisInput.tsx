@@ -39,8 +39,8 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     tag?: string,
   ) => {
     const { data } = await store.dispatch(getWikisByTitle.initiate(query))
-    const filteredData = data?.filter((w) =>
-      w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
+    const filteredData = data?.filter(w =>
+      w.tags.find(t => t.id.toLocaleLowerCase() === tag),
     )
     cb(filteredData ?? [])
   }
@@ -55,7 +55,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   useEffect(() => {
     if (search.length >= 3) {
       setLoading(true)
-      debouncedFetchWikis(search, (data) => {
+      debouncedFetchWikis(search, data => {
         setResults(data.slice(0, 6))
         setLoading(false)
       })
@@ -89,18 +89,18 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
 
   const onlyLastTypeHasWikis =
     wiki.linkedWikis &&
-    Object.values(wiki.linkedWikis).filter((w) => w.length > 0).length === 1 &&
+    Object.values(wiki.linkedWikis).filter(w => w.length > 0).length === 1 &&
     Object.values(wiki.linkedWikis).reverse()[0].length > 0
 
   const containsLinkedWikis =
     wiki.linkedWikis &&
-    Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
+    Object.values(wiki.linkedWikis).some(wikis => wikis.length > 0)
 
   function getWikiPreviewByTitle(
     wikiPreviews: WikiPreview[],
     wikiTitle: string,
   ): WikiPreview | undefined {
-    return wikiPreviews.find((preview) => preview.title === wikiTitle)
+    return wikiPreviews.find(preview => preview.title === wikiTitle)
   }
 
   return (
@@ -114,13 +114,13 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
       >
         <Select
           value={linkType}
-          onChange={(e) => setLinkType(e.target.value as LinkedWikiKey)}
+          onChange={e => setLinkType(e.target.value as LinkedWikiKey)}
           h="40px"
           rounded="md"
           flex="5"
           placeholder="Select option"
         >
-          {Object.values(LinkedWikiKey).map((key) => (
+          {Object.values(LinkedWikiKey).map(key => (
             <chakra.option key={key} value={key}>
               {key}
             </chakra.option>
@@ -128,7 +128,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            disableFilter
             suggestWhenEmpty
+            shouldRenderSuggestions={q => q.length >= 3}
+            openOnFocus={search.length >= 3}
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
@@ -137,8 +140,9 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 </Text>
               </Center>
             }
-            onChange={(val) => {
-              const wikiPreview = getWikiPreviewByTitle(results, val)
+            onSelectOption={option => {
+              const { title } = option.item.originalValue
+              const wikiPreview = getWikiPreviewByTitle(results, title)
               setSelectedWiki(wikiPreview?.id ?? '')
               setSearch('')
             }}
@@ -150,7 +154,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={(e) => {
+              onChange={e => {
                 setSearch(e.target.value)
               }}
               type="text"
@@ -165,7 +169,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 p={2}
                 px={0}
               >
-                {results.map((result) => (
+                {results.map(result => (
                   <AutoCompleteItem
                     px={4}
                     py={1}
@@ -173,7 +177,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                     m={0}
                     fontSize="xs"
                     key={`option-${result.id}`}
-                    value={result.title}
+                    value={result}
                     textTransform="capitalize"
                   >
                     {result.title}
@@ -215,7 +219,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                   <Text fontSize="sm">{key}</Text>
                 </HStack>
                 <Wrap>
-                  {value.map((wikiId) => (
+                  {value.map(wikiId => (
                     <Button
                       key={`${wikiId}-${key}`}
                       display="flex"
