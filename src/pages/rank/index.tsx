@@ -237,13 +237,13 @@ const Rank = ({
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
-                label="AI Tokens"
-                icon={RiRobotFill}
+                label="Stablecoins"
+                icon={RiCoinFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
-                label="Stablecoins"
-                icon={RiCoinFill}
+                label="AI Tokens"
+                icon={RiRobotFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
@@ -267,7 +267,7 @@ const Rank = ({
                 Cryptocurrency wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination={tokenItems?.length >= LISTING_LIMIT}
+                hasPagination
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
@@ -309,55 +309,10 @@ const Rank = ({
                 textAlign="center"
                 maxW="750"
               >
-                AI Token wikis ranked by Market Cap Prices
-              </Text>
-              <RankTable
-                hasPagination={aiTokenItems?.length >= LISTING_LIMIT}
-                currentPage={aiTokensOffset}
-                totalCount={totalAiTokens}
-                pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setAiTokensOffset(page)}
-              >
-                <RankTableHead onClickMap={onClickMap} />
-                <Tbody>
-                  {aiTokenisFetching || !aiTokenItems ? (
-                    <LoadingRankCardSkeleton length={20} />
-                  ) : (
-                    aiTokenItems.map((token, index) =>
-                      token ? (
-                        <RankingItem
-                          listingLimit={LISTING_LIMIT}
-                          offset={totalAiTokenOffset}
-                          order={sortOrder}
-                          key={token.id}
-                          index={index}
-                          item={token}
-                        />
-                      ) : (
-                        <InvalidRankCardItem
-                          key={`invalid-token${index}`}
-                          index={totalAiTokenOffset + index}
-                        />
-                      ),
-                    )
-                  )}
-                </Tbody>
-              </RankTable>
-            </TabPanel>
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
-                mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
-              >
                 Stablecoin wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination={stableCoinItems?.length >= LISTING_LIMIT}
+                hasPagination
                 currentPage={stableCoinOffset}
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
@@ -399,10 +354,55 @@ const Rank = ({
                 textAlign="center"
                 maxW="750"
               >
+                AI Token wikis ranked by Market Cap Prices
+              </Text>
+              <RankTable
+                hasPagination
+                currentPage={aiTokensOffset}
+                totalCount={totalAiTokens}
+                pageSize={LISTING_LIMIT}
+                onPageChange={(page) => setAiTokensOffset(page)}
+              >
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {aiTokenisFetching || !aiTokenItems ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    aiTokenItems.map((token, index) =>
+                      token ? (
+                        <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalAiTokenOffset}
+                          order={sortOrder}
+                          key={token.id}
+                          index={index}
+                          item={token}
+                        />
+                      ) : (
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={totalAiTokenOffset + index}
+                        />
+                      ),
+                    )
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabPanel>
+            <TabPanel>
+              <Text
+                color="homeDescriptionColor"
+                fontSize={{ base: 'lg', lg: 22 }}
+                mx="auto"
+                mb={12}
+                px={4}
+                textAlign="center"
+                maxW="750"
+              >
                 NFT wikis ranked by Market Cap Prices
               </Text>
               <RankTable
-                hasPagination={nftItems?.length >= LISTING_LIMIT}
+                hasPagination
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
