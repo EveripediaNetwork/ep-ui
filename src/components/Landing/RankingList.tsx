@@ -125,13 +125,13 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="AI Tokens"
-                icon={RiRobotFill}
+                label="Stablecoins"
+                icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Stablecoins"
-                icon={RiCoinFill}
+                label="AI Tokens"
+                icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
@@ -173,7 +173,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {aiTokenItems.map((token, index) =>
+                  {stableCoinItems.map((token, index) =>
                     token ? (
                       <RankingItem
                         listingLimit={listingLimit}
@@ -197,7 +197,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {stableCoinItems.map((token, index) =>
+                  {aiTokenItems.map((token, index) =>
                     token ? (
                       <RankingItem
                         listingLimit={listingLimit}
