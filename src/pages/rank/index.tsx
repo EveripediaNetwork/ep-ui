@@ -140,6 +140,13 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
+  function sortByMC(a:RankCardType, b:RankCardType) {
+    const marketCapA = a.tokenMarketData?.market_cap || a.nftMarketData?.market_cap_usd || 0
+    const marketCapB = b.tokenMarketData?.market_cap || b.nftMarketData?.market_cap_usd || 0
+
+    return marketCapB - marketCapA
+}
+  
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (
     tokenData &&
@@ -157,6 +164,8 @@ const Rank = ({
     setStableCoinItems(sortByMarketCap('descending', stableCoinData))
     setNftItems(sortByMarketCap('descending', nftData))
     hasRenderedInitialItems.current = true
+    console.log([...tokenData, ...nftData])
+    console.log("sorted", [...tokenData, ...nftData].sort(sortByMC))
   }
 
   useEffect(() => {
