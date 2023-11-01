@@ -134,10 +134,6 @@ const Rank = ({
       category: 'STABLE_COINS',
     })
 
-  // const stableCoinData = unfilteredStableCoinData?.filter(
-  //   (item) => !EXCLUDED_COINS.includes(item.id),
-  // )
-
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
     offset: nftOffset,
