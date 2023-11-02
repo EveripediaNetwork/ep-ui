@@ -11,10 +11,19 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
+import {
+  RiCoinsFill,
+  RiRobotFill,
+  RiCoinFill,
+  RiUserFill,
+} from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
+import {
+  FoundersRankTable,
+  FoundersRankTableHead,
+} from '@/components/Rank/FoundersRankTable'
 import {
   getCategoryTotal,
   useGetNFTRankingQuery,
@@ -57,6 +66,10 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
   return innerItems
 }
 
+// export const getFounderData = (tokenData: RankCardType[], nftData: RankCardType[], order: SortOrder) => {
+//   return sortByMarketCap(order, [...tokenData, ...nftData])
+// }
+
 const Rank = ({
   totalTokens,
   totalNfts,
@@ -75,6 +88,7 @@ const Rank = ({
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const router = useRouter()
   const { pathname } = router
@@ -92,11 +106,15 @@ const Rank = ({
   const [stableCoinOffset, setStableCoinOffset] = useState<number>(
     pagination.category === 'stableCoins' ? pagination.page : 1,
   )
+  const [foundersOffset, setFoundersOffset] = useState<number>(
+    pagination.category === 'founders' ? pagination.page : 1,
+  )
 
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
   const totalStableCoinOffset = LISTING_LIMIT * (stableCoinOffset - 1)
   const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
+  const totalFoundersCount = LISTING_LIMIT * (foundersOffset - 1)
 
   const handleCategoryChange = (index: number) => {
     router.push(
@@ -140,15 +158,6 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
-  function sortByMC(a: RankCardType, b: RankCardType) {
-    const marketCapA =
-      a.tokenMarketData?.market_cap || a.nftMarketData?.market_cap_usd || 0
-    const marketCapB =
-      b.tokenMarketData?.market_cap || b.nftMarketData?.market_cap_usd || 0
-
-    return marketCapB - marketCapA
-  }
-
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (
     tokenData &&
@@ -165,9 +174,8 @@ const Rank = ({
     setAiTokenItems(sortByMarketCap('descending', aiTokenData))
     setStableCoinItems(sortByMarketCap('descending', stableCoinData))
     setNftItems(sortByMarketCap('descending', nftData))
+    setFounderItems(sortByMarketCap('descending', [...tokenData, ...nftData]))
     hasRenderedInitialItems.current = true
-    console.log([...tokenData, ...nftData])
-    console.log('sorted', [...tokenData, ...nftData].sort(sortByMC))
   }
 
   useEffect(() => {
@@ -182,6 +190,7 @@ const Rank = ({
       setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setStableCoinItems(sortByMarketCap('descending', stableCoinData))
       setNftItems(sortByMarketCap('descending', nftData))
+      setFounderItems(sortByMarketCap('descending', [...tokenData, ...nftData]))
     }
   }, [tokenData, aiTokenData, stableCoinData, nftData])
 
@@ -195,6 +204,9 @@ const Rank = ({
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
+        setFounderItems(
+          sortByMarketCap(newSortOrder, [...tokenData, ...nftData]),
+        )
       }
     },
   }
@@ -249,8 +261,13 @@ const Rank = ({
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
-                label="AI Tokens"
+                label="AI"
                 icon={RiRobotFill}
+                fontSize={{ lg: '20px' }}
+              />
+              <RankingListButton
+                label="Founders"
+                icon={RiUserFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
@@ -395,6 +412,52 @@ const Rank = ({
                   )}
                 </Tbody>
               </RankTable>
+            </TabPanel>
+            <TabPanel>
+              <Text
+                color="homeDescriptionColor"
+                fontSize={{ base: 'lg', lg: 22 }}
+                mx="auto"
+                mb={12}
+                px={4}
+                textAlign="center"
+                maxW="750"
+              >
+                Founder wikis ranked by Market Cap Prices
+              </Text>
+              <FoundersRankTable
+                hasPagination
+                currentPage={foundersOffset}
+                totalCount={totalTokens + totalNfts}
+                pageSize={LISTING_LIMIT}
+                onPageChange={(page) => setFoundersOffset(page)}
+              >
+                <FoundersRankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {(isFetching && NFTisFetching) ||
+                  !(tokenItems && nftItems) ? (
+                    <LoadingRankCardSkeleton length={20} />
+                  ) : (
+                    founderItems.map((token, index) =>
+                      token ? (
+                        <RankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalFoundersCount}
+                          order={sortOrder}
+                          key={token.id}
+                          index={index}
+                          item={token}
+                        />
+                      ) : (
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={totalFoundersCount + index}
+                        />
+                      ),
+                    )
+                  )}
+                </Tbody>
+              </FoundersRankTable>
             </TabPanel>
             <TabPanel>
               <Text

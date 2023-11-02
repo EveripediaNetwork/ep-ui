@@ -91,13 +91,33 @@ const rankListHeadLabels = z.enum([
   'Date Founded',
 ])
 
+const foundersRankListHeadLabels = z.enum([
+  '#',
+  'Name',
+  'Project',
+  'Market Cap',
+  'Blockchain',
+  'Date Founded',
+])
+
 export type RankListHeadLabel = z.infer<typeof rankListHeadLabels>
+
+export type foundersRankListHeadLabel = z.infer<
+  typeof foundersRankListHeadLabels
+>
 
 export type RankinglistHeadProps = {
   label: RankListHeadLabel
   Icon?: IconType
 }[]
 
-export type OnClickMap = { [key in RankListHeadLabel]?: () => void }
+export type foundersRankinglistHeadProps = {
+  label: foundersRankListHeadLabel
+  Icon?: IconType
+}[]
+
+export type OnClickMap = {
+  [key in RankListHeadLabel | foundersRankListHeadLabel]?: () => void
+}
 export type ObjectKeyType<T> = keyof T
 export type CategoryKeyType = ObjectKeyType<typeof CATEGORIES_WITH_INDEX>
