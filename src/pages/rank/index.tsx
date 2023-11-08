@@ -41,6 +41,7 @@ import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 import { CategoryKeyType } from '@/types/RankDataTypes'
+import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
 
 export const LISTING_LIMIT = 20
 
@@ -440,7 +441,7 @@ const Rank = ({
                   ) : (
                     founderItems.map((token, index) =>
                       token ? (
-                        <RankingItem
+                        <FounderRankingItem
                           listingLimit={LISTING_LIMIT}
                           offset={totalFoundersCount}
                           order={sortOrder}
