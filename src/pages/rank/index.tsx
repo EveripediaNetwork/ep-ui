@@ -30,6 +30,7 @@ import {
   useGetTokenRankingQuery,
   useGetAiTokenRankingQuery,
   useGetStableCoinRankingQuery,
+  useGetFoundersRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -67,21 +68,19 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
   return innerItems
 }
 
-// export const getFounderData = (tokenData: RankCardType[], nftData: RankCardType[], order: SortOrder) => {
-//   return sortByMarketCap(order, [...tokenData, ...nftData])
-// }
-
 const Rank = ({
   totalTokens,
   totalNfts,
   totalAiTokens,
   totalStableCoins,
+  totalFoundersCount,
   pagination,
 }: {
   totalNfts: number
   totalTokens: number
   totalAiTokens: number
   totalStableCoins: number
+  totalFoundersCount: number
   pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
@@ -115,7 +114,7 @@ const Rank = ({
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
   const totalStableCoinOffset = LISTING_LIMIT * (stableCoinOffset - 1)
   const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
-  const totalFoundersCount = LISTING_LIMIT * (foundersOffset - 1)
+  const totalFoundersOffset = LISTING_LIMIT * (foundersOffset - 1)
 
   const handleCategoryChange = (index: number) => {
     router.push(
@@ -159,23 +158,33 @@ const Rank = ({
     limit: LISTING_LIMIT,
   })
 
+  const { data: foundersData, isFetching: foundersisFetching } =
+    useGetFoundersRankingQuery({
+      kind: 'TOKEN',
+      offset: foundersOffset,
+      limit: LISTING_LIMIT,
+      founders: true,
+    })
+
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (
     tokenData &&
     nftData &&
     aiTokenData &&
     stableCoinData &&
+    foundersData &&
     !nftItems.length &&
     !tokenItems.length &&
     !aiTokenItems.length &&
     !stableCoinItems.length &&
+    !founderItems.length &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
     setAiTokenItems(sortByMarketCap('descending', aiTokenData))
     setStableCoinItems(sortByMarketCap('descending', stableCoinData))
     setNftItems(sortByMarketCap('descending', nftData))
-    setFounderItems(sortByMarketCap('descending', [...tokenData, ...nftData]))
+    setFounderItems(sortByMarketCap('descending', foundersData))
     hasRenderedInitialItems.current = true
   }
 
@@ -185,19 +194,26 @@ const Rank = ({
       nftData &&
       aiTokenData &&
       stableCoinData &&
+      foundersData &&
       hasRenderedInitialItems.current
     ) {
       setTokenItems(sortByMarketCap('descending', tokenData))
       setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setStableCoinItems(sortByMarketCap('descending', stableCoinData))
       setNftItems(sortByMarketCap('descending', nftData))
-      setFounderItems(sortByMarketCap('descending', [...tokenData, ...nftData]))
+      setFounderItems(sortByMarketCap('descending', foundersData))
     }
-  }, [tokenData, aiTokenData, stableCoinData, nftData])
+  }, [tokenData, aiTokenData, stableCoinData, nftData, foundersData])
 
   const onClickMap: OnClickMap = {
     'Market Cap': function () {
-      if (nftData && aiTokenData && tokenData && stableCoinData) {
+      if (
+        nftData &&
+        aiTokenData &&
+        tokenData &&
+        stableCoinData &&
+        foundersData
+      ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
@@ -205,9 +221,7 @@ const Rank = ({
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
-        setFounderItems(
-          sortByMarketCap(newSortOrder, [...tokenData, ...nftData]),
-        )
+        setFounderItems(sortByMarketCap(newSortOrder, foundersData))
       }
     },
   }
@@ -429,21 +443,20 @@ const Rank = ({
               <FoundersRankTable
                 hasPagination
                 currentPage={foundersOffset}
-                totalCount={totalTokens + totalNfts}
+                totalCount={totalFoundersCount}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setFoundersOffset(page)}
               >
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
-                  {(isFetching && NFTisFetching) ||
-                  !(tokenItems && nftItems) ? (
-                    <LoadingRankCardSkeleton length={20} />
+                  {foundersisFetching || !founderItems ? (
+                    <LoadingRankCardSkeleton length={20} isFounders />
                   ) : (
                     founderItems.map((token, index) =>
                       token ? (
                         <FounderRankingItem
                           listingLimit={LISTING_LIMIT}
-                          offset={totalFoundersCount}
+                          offset={totalFoundersOffset}
                           order={sortOrder}
                           key={token.id}
                           index={index}
