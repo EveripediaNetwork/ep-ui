@@ -5,6 +5,7 @@ import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -62,26 +63,55 @@ const FounderRankingItem = ({
         </Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis?.founders ? (
-          <Flex flexWrap="wrap">
-            {formatFoundersArray(item.linkedWikis?.founders)
-              ?.slice(0, MAX_LINKED_WIKIS)
-              ?.map((founderName, i, arr) => {
-                const founder = item.linkedWikis?.founders[i]
-                return (
-                  <Link
-                    href={`wiki/${founder}`}
-                    key={`founder${i}`}
-                    color="brandLinkColor"
-                  >
-                    {founderName}
-                    {i !== arr.length - 1 && arr.length > 1 && ', '}
-                  </Link>
-                )
-              })}
-            {item.linkedWikis.founders.length > 3 && (
-              <Text color="brandLinkColor">...</Text>
-            )}
+        {item?.founderWikis ? (
+          <Flex alignItems={'center'}>
+            <Flex minW={'fit-content'} mr={4}>
+              {item.founderWikis
+                .slice(0, MAX_LINKED_WIKIS)
+                .map((founder, i) => {
+                  return (
+                    <React.Fragment key={`founder${i}`}>
+                      <div
+                        style={{
+                          display: 'inline-block',
+                          position: 'relative',
+                        }}
+                      >
+                        <Image
+                          src={getWikiImageUrl(founder.images)}
+                          alt={founder.title}
+                          width="40px"
+                          height="40px"
+                          borderRadius="50%"
+                          objectFit="cover"
+                        />
+                      </div>
+                    </React.Fragment>
+                  )
+                })}
+            </Flex>
+            <Flex flexWrap="wrap">
+              {formatFoundersArray(
+                item.founderWikis.map((founder) => founder.title),
+              )
+                ?.slice(0, MAX_LINKED_WIKIS)
+                ?.map((founderName, i, arr) => {
+                  const founder = item.linkedWikis?.founders[i]
+                  return (
+                    <Link
+                      href={`wiki/${founder}`}
+                      key={`founder${i}`}
+                      color="brandLinkColor"
+                    >
+                      {founderName}
+                      {i !== arr.length - 1 && arr.length > 1 && ', '}
+                    </Link>
+                  )
+                })}
+              {item.linkedWikis.founders.length > 3 && (
+                <Text color="brandLinkColor">...</Text>
+              )}
+            </Flex>
           </Flex>
         ) : (
           <Text>NA</Text>
@@ -94,20 +124,6 @@ const FounderRankingItem = ({
         pl="2"
       >
         <Flex gap="2.5" alignItems="center">
-          <Box flexShrink="0" w="50px" h="40px">
-            <Image
-              src={
-                item.nftMarketData
-                  ? item.nftMarketData?.image
-                  : item.tokenMarketData?.image
-              }
-              alt={item.title}
-              w="40px"
-              h="40px"
-              borderRadius="50%"
-              objectFit="cover"
-            />
-          </Box>
           <Box>
             <Box maxW={'250px'} overflowX={'hidden'}>
               {item.nftMarketData ? (
@@ -126,11 +142,6 @@ const FounderRankingItem = ({
                 <Text>{item.title}</Text>
               )}
             </Box>
-            <Text color="rankingListText">
-              {item.nftMarketData
-                ? item.nftMarketData?.alias
-                : item.tokenMarketData?.alias}
-            </Text>
           </Box>
         </Flex>
       </Td>

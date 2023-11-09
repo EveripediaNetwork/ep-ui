@@ -3,6 +3,8 @@ import { BaseEvents } from '@everipedia/iq-utils'
 import { IconType } from 'react-icons/lib'
 import { z } from 'zod'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { Image as ipfsImage } from '@everipedia/iq-utils'
+
 export interface RankCardType {
   hasWiki: any
   id: string
@@ -17,7 +19,7 @@ export interface RankCardType {
     founders: string[]
     blockchains: string[]
   }
-  foundersWikis: founderWikiData
+  founderWikis: founderWikiData[]
   events: BaseEvents[]
 }
 
@@ -73,7 +75,7 @@ export interface TokenMarketData {
 export interface founderWikiData {
   id: string
   title: string
-  images: Image[]
+  images: ipfsImage[]
 }
 
 export interface RankTableProps {

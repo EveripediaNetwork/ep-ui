@@ -73,14 +73,12 @@ const Rank = ({
   totalNfts,
   totalAiTokens,
   totalStableCoins,
-  totalFoundersCount,
   pagination,
 }: {
   totalNfts: number
   totalTokens: number
   totalAiTokens: number
   totalStableCoins: number
-  totalFoundersCount: number
   pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
@@ -113,7 +111,7 @@ const Rank = ({
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
   const totalStableCoinOffset = LISTING_LIMIT * (stableCoinOffset - 1)
-  const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
+  const totalNftOffset = LISTING_LIMIT * (nftOffset - 1)
   const totalFoundersOffset = LISTING_LIMIT * (foundersOffset - 1)
 
   const handleCategoryChange = (index: number) => {
@@ -165,7 +163,6 @@ const Rank = ({
       limit: LISTING_LIMIT,
       founders: true,
     })
-
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (
     tokenData &&
@@ -443,7 +440,7 @@ const Rank = ({
               <FoundersRankTable
                 hasPagination
                 currentPage={foundersOffset}
-                totalCount={totalFoundersCount}
+                totalCount={totalTokens + totalNfts}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setFoundersOffset(page)}
               >
@@ -465,7 +462,7 @@ const Rank = ({
                       ) : (
                         <InvalidRankCardItem
                           key={`invalid-token${index}`}
-                          index={totalFoundersCount + index}
+                          index={totalFoundersOffset + index}
                         />
                       ),
                     )
@@ -501,7 +498,7 @@ const Rank = ({
                       nft ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
-                          offset={totalNftCount}
+                          offset={totalNftOffset}
                           order={sortOrder}
                           key={nft.id}
                           index={index}
@@ -510,7 +507,7 @@ const Rank = ({
                       ) : (
                         <InvalidRankCardItem
                           key={`invalid-nft-${index}`}
-                          index={index + totalNftCount}
+                          index={index + totalNftOffset}
                         />
                       ),
                     )

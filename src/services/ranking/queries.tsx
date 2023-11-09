@@ -193,9 +193,11 @@ export const GET_FOUNDERS_RANKINGS = gql`
           market_cap_change_24h
         }
         founderWikis {
+        id
         title
         images {
           id
+          type
         }
       }
       }
