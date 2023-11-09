@@ -6,7 +6,7 @@ import {
   GET_TOKEN_RANKINGS,
   GET_AI_TOKEN_RANKINGS,
   GET_STABLECOIN_RANKINGS,
-  GET_FOUNDERS_RANKINGS
+  GET_FOUNDERS_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
 import { RankCardType } from '@/types/RankDataTypes'

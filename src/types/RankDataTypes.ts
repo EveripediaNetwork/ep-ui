@@ -17,7 +17,7 @@ export interface RankCardType {
     founders: string[]
     blockchains: string[]
   }
-  foundersWikis : founderWikiData
+  foundersWikis: founderWikiData
   events: BaseEvents[]
 }
 
