@@ -54,7 +54,7 @@ const FounderRankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        pr="1"
+        // pr="1"
       >
         <Text color="rankingListText">
           {order === 'descending'
@@ -62,10 +62,16 @@ const FounderRankingItem = ({
             : listingLimit + offset - index}
         </Text>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        maxW={'320px'}
+        minW={'280px'}
+      >
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
-            <Flex mr={4}>
+            <Flex mr={3}>
               {item.founderWikis
                 .slice(0, MAX_LINKED_WIKIS)
                 .map((founder, i) => {
@@ -89,7 +95,7 @@ const FounderRankingItem = ({
                   )
                 })}
             </Flex>
-            <Box as="div" flexWrap="wrap">
+            <Flex display={'inline-block'} flexWrap="wrap">
               {formatFoundersArray(
                 item.founderWikis.map((founder) => founder?.title),
               )
@@ -113,7 +119,7 @@ const FounderRankingItem = ({
                   ...
                 </Text>
               )}
-            </Box>
+            </Flex>
           </Flex>
         ) : (
           <Text>NA</Text>
