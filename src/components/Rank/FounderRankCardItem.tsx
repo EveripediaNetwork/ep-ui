@@ -72,9 +72,9 @@ const FounderRankingItem = ({
                   return (
                     <React.Fragment key={`founder${i}`}>
                       <Flex
-                      display={'inline-block'}
-                      minW={'40px'}
-                      marginLeft={i > 0 ? '-15px' : '0px'}
+                        display={'inline-block'}
+                        minW={'40px'}
+                        marginLeft={i > 0 ? '-15px' : '0px'}
                       >
                         <Image
                           src={getWikiImageUrl(founder?.images)}
@@ -89,7 +89,7 @@ const FounderRankingItem = ({
                   )
                 })}
             </Flex>
-            <Box as='div' flexWrap="wrap">
+            <Box as="div" flexWrap="wrap">
               {formatFoundersArray(
                 item.founderWikis.map((founder) => founder?.title),
               )
