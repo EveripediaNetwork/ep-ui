@@ -62,12 +62,7 @@ const FounderRankingItem = ({
             : listingLimit + offset - index}
         </Text>
       </Td>
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        fontSize="14px"
-        maxW={'300px'}
-      >
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
             <Flex mr={4}>
@@ -114,7 +109,9 @@ const FounderRankingItem = ({
                   )
                 })}
               {item.linkedWikis?.founders?.length > 3 && (
-                <Text color="brandLinkColor">...</Text>
+                <Text as={'span'} color="brandLinkColor">
+                  ...
+                </Text>
               )}
             </Box>
           </Flex>
