@@ -11,16 +11,26 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
+import {
+  RiCoinsFill,
+  RiRobotFill,
+  RiCoinFill,
+  RiUserFill,
+} from 'react-icons/ri'
 import RankHeader from '@/components/SEO/Rank'
 import RankingListButton from '@/components/Rank/RankButton'
 import { RankTable, RankTableHead } from '@/components/Rank/RankTable'
+import {
+  FoundersRankTable,
+  FoundersRankTableHead,
+} from '@/components/Rank/FoundersRankTable'
 import {
   getCategoryTotal,
   useGetNFTRankingQuery,
   useGetTokenRankingQuery,
   useGetAiTokenRankingQuery,
   useGetStableCoinRankingQuery,
+  useGetFoundersRankingQuery,
 } from '@/services/ranking'
 import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
@@ -32,6 +42,7 @@ import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 import { CategoryKeyType } from '@/types/RankDataTypes'
+import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
 
 export const LISTING_LIMIT = 20
 
@@ -75,6 +86,7 @@ const Rank = ({
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const router = useRouter()
   const { pathname } = router
@@ -92,11 +104,15 @@ const Rank = ({
   const [stableCoinOffset, setStableCoinOffset] = useState<number>(
     pagination.category === 'stableCoins' ? pagination.page : 1,
   )
+  const [foundersOffset, setFoundersOffset] = useState<number>(
+    pagination.category === 'founders' ? pagination.page : 1,
+  )
 
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
   const totalAiTokenOffset = LISTING_LIMIT * (aiTokensOffset - 1)
   const totalStableCoinOffset = LISTING_LIMIT * (stableCoinOffset - 1)
-  const totalNftCount = LISTING_LIMIT * (nftOffset - 1)
+  const totalNftOffset = LISTING_LIMIT * (nftOffset - 1)
+  const totalFoundersOffset = LISTING_LIMIT * (foundersOffset - 1)
 
   const handleCategoryChange = (index: number) => {
     router.push(
@@ -134,32 +150,38 @@ const Rank = ({
       category: 'STABLE_COINS',
     })
 
-  // const stableCoinData = unfilteredStableCoinData?.filter(
-  //   (item) => !EXCLUDED_COINS.includes(item.id),
-  // )
-
   const { data: nftData, isFetching: NFTisFetching } = useGetNFTRankingQuery({
     kind: 'NFT',
     offset: nftOffset,
     limit: LISTING_LIMIT,
   })
 
+  const { data: foundersData, isFetching: foundersisFetching } =
+    useGetFoundersRankingQuery({
+      kind: 'TOKEN',
+      offset: foundersOffset,
+      limit: LISTING_LIMIT,
+      founders: true,
+    })
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (
     tokenData &&
     nftData &&
     aiTokenData &&
     stableCoinData &&
+    foundersData &&
     !nftItems.length &&
     !tokenItems.length &&
     !aiTokenItems.length &&
     !stableCoinItems.length &&
+    !founderItems.length &&
     !hasRenderedInitialItems.current
   ) {
     setTokenItems(sortByMarketCap('descending', tokenData))
     setAiTokenItems(sortByMarketCap('descending', aiTokenData))
     setStableCoinItems(sortByMarketCap('descending', stableCoinData))
     setNftItems(sortByMarketCap('descending', nftData))
+    setFounderItems(sortByMarketCap('descending', foundersData))
     hasRenderedInitialItems.current = true
   }
 
@@ -169,18 +191,26 @@ const Rank = ({
       nftData &&
       aiTokenData &&
       stableCoinData &&
+      foundersData &&
       hasRenderedInitialItems.current
     ) {
       setTokenItems(sortByMarketCap('descending', tokenData))
       setAiTokenItems(sortByMarketCap('descending', aiTokenData))
       setStableCoinItems(sortByMarketCap('descending', stableCoinData))
       setNftItems(sortByMarketCap('descending', nftData))
+      setFounderItems(sortByMarketCap('descending', foundersData))
     }
-  }, [tokenData, aiTokenData, stableCoinData, nftData])
+  }, [tokenData, aiTokenData, stableCoinData, nftData, foundersData])
 
   const onClickMap: OnClickMap = {
     'Market Cap': function () {
-      if (nftData && aiTokenData && tokenData && stableCoinData) {
+      if (
+        nftData &&
+        aiTokenData &&
+        tokenData &&
+        stableCoinData &&
+        foundersData
+      ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
@@ -188,6 +218,7 @@ const Rank = ({
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokenData))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
+        setFounderItems(sortByMarketCap(newSortOrder, foundersData))
       }
     },
   }
@@ -242,8 +273,13 @@ const Rank = ({
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
-                label="AI Tokens"
+                label="AI"
                 icon={RiRobotFill}
+                fontSize={{ lg: '20px' }}
+              />
+              <RankingListButton
+                label="Founders"
+                icon={RiUserFill}
                 fontSize={{ lg: '20px' }}
               />
               <RankingListButton
@@ -399,6 +435,51 @@ const Rank = ({
                 textAlign="center"
                 maxW="750"
               >
+                Founder wikis ranked by Market Cap Prices
+              </Text>
+              <FoundersRankTable
+                hasPagination
+                currentPage={foundersOffset}
+                totalCount={totalTokens}
+                pageSize={LISTING_LIMIT}
+                onPageChange={(page) => setFoundersOffset(page)}
+              >
+                <FoundersRankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {foundersisFetching || !founderItems ? (
+                    <LoadingRankCardSkeleton length={20} isFounders />
+                  ) : (
+                    founderItems.map((token, index) =>
+                      token ? (
+                        <FounderRankingItem
+                          listingLimit={LISTING_LIMIT}
+                          offset={totalFoundersOffset}
+                          order={sortOrder}
+                          key={token.id}
+                          index={index}
+                          item={token}
+                        />
+                      ) : (
+                        <InvalidRankCardItem
+                          key={`invalid-token${index}`}
+                          index={totalFoundersOffset + index}
+                        />
+                      ),
+                    )
+                  )}
+                </Tbody>
+              </FoundersRankTable>
+            </TabPanel>
+            <TabPanel>
+              <Text
+                color="homeDescriptionColor"
+                fontSize={{ base: 'lg', lg: 22 }}
+                mx="auto"
+                mb={12}
+                px={4}
+                textAlign="center"
+                maxW="750"
+              >
                 NFT wikis ranked by Market Cap Prices
               </Text>
               <RankTable
@@ -417,7 +498,7 @@ const Rank = ({
                       nft ? (
                         <RankingItem
                           listingLimit={LISTING_LIMIT}
-                          offset={totalNftCount}
+                          offset={totalNftOffset}
                           order={sortOrder}
                           key={nft.id}
                           index={index}
@@ -426,7 +507,7 @@ const Rank = ({
                       ) : (
                         <InvalidRankCardItem
                           key={`invalid-nft-${index}`}
-                          index={index + totalNftCount}
+                          index={index + totalNftOffset}
                         />
                       ),
                     )

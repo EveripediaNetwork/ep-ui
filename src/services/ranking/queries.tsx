@@ -156,6 +156,54 @@ export const GET_STABLECOIN_RANKINGS = gql`
     }
   }
 `
+export const GET_FOUNDERS_RANKINGS = gql`
+  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $founders: Boolean) {
+    rankList(kind: $kind, limit: $limit, offset: $offset, founders: $founders) {
+      ... on TokenRankListData {
+        id
+        title
+        ipfs
+        tags {
+          id
+        }
+        created
+        media {
+          thumbnail
+        }
+        images {
+          id
+        }
+        linkedWikis {
+          founders
+          blockchains
+        }
+        events {
+          date
+          type
+        }
+        tokenMarketData {
+          hasWiki
+          image
+          name
+          alias
+          current_price
+          market_cap
+          market_cap_rank
+          price_change_24h
+          market_cap_change_24h
+        }
+        founderWikis {
+        id
+        title
+        images {
+          id
+          type
+        }
+      }
+      }
+    }
+  }
+`
 
 export const GET_RANK_COUNT = gql`
   query getRankingTotal($category: String!) {
