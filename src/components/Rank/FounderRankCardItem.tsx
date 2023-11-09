@@ -40,7 +40,6 @@ const FounderRankingItem = ({
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
   )?.date
-  console.log(item)
   return (
     <Tr
       _hover={{

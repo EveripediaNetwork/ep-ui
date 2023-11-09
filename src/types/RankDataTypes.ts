@@ -17,6 +17,7 @@ export interface RankCardType {
     founders: string[]
     blockchains: string[]
   }
+  foundersWikis : founderWikiData
   events: BaseEvents[]
 }
 
@@ -67,6 +68,12 @@ export interface TokenMarketData {
   current_price: number
   image: string
   isAiToken?: boolean
+}
+
+export interface founderWikiData {
+  id: string
+  title: string
+  images: Image[]
 }
 
 export interface RankTableProps {
