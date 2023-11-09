@@ -24,6 +24,7 @@ import {
   getNFTRanking,
   getTokenRanking,
   getStableCoinRanking,
+  getFoundersRanking,
   rankingAPI,
 } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
@@ -45,6 +46,7 @@ interface HomePageProps {
     aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
     stableCoinsListing: RankCardType[]
+    foundersListing: RankCardType[]
   }
   trending: TrendingData
 }
@@ -124,6 +126,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
       offset: 1,
     }),
   )
+  const { data: foundersData } = await store.dispatch(
+    getFoundersRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      founders: true,
+    }),
+  )
   const { data: aiTokensList } = await store.dispatch(
     getAiTokenRanking.initiate({
       kind: 'TOKEN',
@@ -197,6 +207,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     aiTokensListing: aiTokensList || [],
     TokensListing: TokensList || [],
     stableCoinsListing: stableCoinsList || [],
+    foundersListing: foundersData || [],
   }
 
   return {
