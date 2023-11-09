@@ -12,12 +12,22 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BiImage } from 'react-icons/bi'
-import { RiCoinsFill, RiRobotFill, RiCoinFill } from 'react-icons/ri'
+import {
+  RiCoinsFill,
+  RiRobotFill,
+  RiCoinFill,
+  RiUserFill,
+} from 'react-icons/ri'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
+import {
+  FoundersRankTable,
+  FoundersRankTableHead,
+} from '../Rank/FoundersRankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
+import FounderRankingItem from '../Rank/FounderRankCardItem'
 import { LinkButton } from '../Elements'
 import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
@@ -29,21 +39,25 @@ type RankingListProps = {
     aiTokensListing: RankCardType[]
     TokensListing: RankCardType[]
     stableCoinsListing: RankCardType[]
+    foundersListing: RankCardType[]
   }
   listingLimit: number
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const { t } = useTranslation()
-  const { TokensListing, aiTokensListing, NFTsListing, stableCoinsListing } =
-    rankings
-  // const stableCoinsListing = unfilteredStableCoinsListing?.filter(
-  //   (item) => !EXCLUDED_COINS.includes(item.id),
-  // )
+  const {
+    TokensListing,
+    aiTokensListing,
+    NFTsListing,
+    stableCoinsListing,
+    foundersListing,
+  } = rankings
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
+  const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
     'cryptocurrencies',
@@ -54,20 +68,29 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     aiTokensListing &&
     NFTsListing &&
     stableCoinsListing &&
+    foundersListing &&
     (!tokenItems?.length ||
       !nftItems?.length ||
       !aiTokenItems?.length ||
-      !stableCoinItems?.length)
+      !stableCoinItems?.length ||
+      !founderItems?.length)
   ) {
     setTokenItems(sortByMarketCap('descending', TokensListing))
     setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
     setNftItems(sortByMarketCap('descending', NFTsListing))
     setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
+    setFounderItems(sortByMarketCap('descending', foundersListing))
   }
 
   const onClickMap: OnClickMap = {
     'Market Cap': function () {
-      if (tokenItems && nftItems && aiTokenItems && stableCoinItems) {
+      if (
+        tokenItems &&
+        nftItems &&
+        aiTokenItems &&
+        stableCoinItems &&
+        founderItems
+      ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
         setOrder(newSortOrder)
@@ -75,6 +98,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
+        setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
   }
@@ -133,6 +157,11 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 label="AI Tokens"
                 icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
+              />
+              <RankingListButton
+                label="Founders"
+                icon={RiUserFill}
+                fontSize={{ lg: '20px' }}
               />
               <RankingListButton
                 label="NFTs"
@@ -213,6 +242,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </RankTable>
+            </TabPanel>
+            <TabPanel>
+              <FoundersRankTable hasPagination={false}>
+                <FoundersRankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {founderItems.map((token, index) =>
+                    token ? (
+                      <FounderRankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </FoundersRankTable>
             </TabPanel>
             <TabPanel
               px={{ base: 2, md: 'initial' }}
