@@ -119,12 +119,7 @@ const FounderRankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        fontSize="14px"
-        pl="2"
-      >
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="2.5" alignItems="center">
           <Box>
             <Box maxW={'250px'} overflowX={'hidden'}>
