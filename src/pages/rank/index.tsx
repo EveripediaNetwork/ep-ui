@@ -440,7 +440,7 @@ const Rank = ({
               <FoundersRankTable
                 hasPagination
                 currentPage={foundersOffset}
-                totalCount={totalTokens + totalNfts}
+                totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setFoundersOffset(page)}
               >

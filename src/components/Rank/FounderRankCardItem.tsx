@@ -65,34 +65,33 @@ const FounderRankingItem = ({
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
-            <Flex minW={'fit-content'} mr={4}>
+            <Flex mr={4}>
               {item.founderWikis
                 .slice(0, MAX_LINKED_WIKIS)
                 .map((founder, i) => {
                   return (
                     <React.Fragment key={`founder${i}`}>
-                      <div
-                        style={{
-                          display: 'inline-block',
-                          position: 'relative',
-                        }}
+                      <Flex
+                      display={'inline-block'}
+                      minW={'40px'}
+                      marginLeft={i > 0 ? '-15px' : '0px'}
                       >
                         <Image
-                          src={getWikiImageUrl(founder.images)}
-                          alt={founder.title}
+                          src={getWikiImageUrl(founder?.images)}
+                          alt={founder?.title}
                           width="40px"
                           height="40px"
                           borderRadius="50%"
                           objectFit="cover"
                         />
-                      </div>
+                      </Flex>
                     </React.Fragment>
                   )
                 })}
             </Flex>
-            <Flex flexWrap="wrap">
+            <Box as='div' flexWrap="wrap">
               {formatFoundersArray(
-                item.founderWikis.map((founder) => founder.title),
+                item.founderWikis.map((founder) => founder?.title),
               )
                 ?.slice(0, MAX_LINKED_WIKIS)
                 ?.map((founderName, i, arr) => {
@@ -104,14 +103,14 @@ const FounderRankingItem = ({
                       color="brandLinkColor"
                     >
                       {founderName}
-                      {i !== arr.length - 1 && arr.length > 1 && ', '}
+                      {i !== arr?.length - 1 && arr?.length > 1 && ', '}
                     </Link>
                   )
                 })}
-              {item.linkedWikis.founders.length > 3 && (
+              {item.linkedWikis?.founders?.length > 3 && (
                 <Text color="brandLinkColor">...</Text>
               )}
-            </Flex>
+            </Box>
           </Flex>
         ) : (
           <Text>NA</Text>
