@@ -85,10 +85,12 @@ const FounderRankingItem = ({
                         <Image
                           src={getWikiImageUrl(founder?.images)}
                           alt={founder?.title}
-                          width="40px"
-                          height="40px"
+                          width="36px"
+                          height="36px"
                           borderRadius="50%"
                           objectFit="cover"
+                          border="2px solid"
+                          borderColor="white"
                         />
                       </Flex>
                     </React.Fragment>
