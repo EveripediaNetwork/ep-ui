@@ -24,8 +24,10 @@ const RankingListButton = ({
     >
       <Icon
         as={icon}
-        w={{ lg: '32px', md: '24px' }}
-        h={{ lg: '32px', md: '24px' }}
+        // w={{ lg: '32px', md: '24px' }}
+        w={{ lg: '28px', md: '20px' }}
+        // h={{ lg: '32px', md: '24px' }}
+        h={{ lg: '28px', md: '20px' }}
         color="primaryPinkIcon"
       />
       <Text color="inherit" fontWeight={600} {...props} whiteSpace={'nowrap'}>

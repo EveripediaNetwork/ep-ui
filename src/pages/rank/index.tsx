@@ -265,27 +265,27 @@ const Rank = ({
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="Stablecoins"
                 icon={RiCoinFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="AI"
                 icon={RiRobotFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="Founders"
                 icon={RiUserFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="NFTs"
                 icon={BiImage}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
             </TabList>
           </Flex>
