@@ -36,7 +36,6 @@ import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
-import RankHero from './RankHero'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
@@ -225,19 +224,6 @@ const Rank = ({
   return (
     <Box>
       <RankHeader />
-      <Box
-        bg="url(/images/backgrounds/rank-bg-light.png)"
-        _dark={{
-          bg: 'url(/images/backgrounds/ranking-bg-dark.png)',
-        }}
-        bgPos="center"
-        my={-2}
-        bgSize="cover !important"
-        bgColor="gray.100"
-        pb={8}
-      >
-        <RankHero />
-      </Box>
       <Flex
         maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
         mx="auto"
