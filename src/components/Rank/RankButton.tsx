@@ -14,12 +14,20 @@ const RankingListButton = ({
       color="homeDescriptionColor"
       px={{ base: 1, md: 4 }}
       mx={{ base: 1, md: 4 }}
+      my={2}
       gap="2"
       _selected={{
         color: 'brandLinkColor',
         borderBottom: '2px solid',
-        borderBottomColor: 'brandLinkColor',
+        borderBottomColor: 'brandColor.500',
         outline: 'none',
+        backgroundColor: 'brand.50',
+      }}
+      _dark={{
+        _selected: {
+          backgroundColor: 'brand.200',
+          borderBottomColor: 'brandColor.800',
+        },
       }}
     >
       <Icon
