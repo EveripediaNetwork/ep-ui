@@ -232,7 +232,7 @@ const Rank = ({
         minW={'full'}
         // pl={2}
         pb={16}
-        pt={8}
+        pt={4}
         flexWrap="wrap"
         gap={{ base: 10, md: 0, lg: 4 }}
         justifyContent={{ lg: 'center', md: 'space-between' }}
@@ -248,7 +248,7 @@ const Rank = ({
             <TabList
               border="none"
               display="flex"
-              gap={{ base: '2', md: '8' }}
+              gap={2}
               overflowX={'auto'}
               overflowY={'hidden'}
             >
