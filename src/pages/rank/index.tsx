@@ -223,12 +223,13 @@ const Rank = ({
     },
   }
   return (
-    <Box w={'full'}>
+    <Box minW={'full'} w="100%">
       <RankHeader />
       <Flex
         // maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
         // mx="auto"
         w="100%"
+        minW={'full'}
         // pl={2}
         pb={16}
         pt={8}
@@ -280,7 +281,7 @@ const Rank = ({
           </Flex>
           <Divider mt={-2} />
           <TabPanels mt="2">
-            <TabPanel>
+            <TabPanel p={0}>
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -288,19 +289,22 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
+                className="testname"
+                px={4}
               >
                 <Text
                   color="homeDescriptionColor"
-                  fontSize={48}
-                  fontWeight={700}
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
                   textAlign="center"
                   textColor={'brand.500'}
+                  mb={6}
                 >
                   Cryptocurrencies
                 </Text>
                 <Text
                   textAlign={'center'}
-                  fontSize={20}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
@@ -350,24 +354,27 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
+                className="testname"
+                px={4}
               >
                 <Text
                   color="homeDescriptionColor"
-                  fontSize={48}
-                  fontWeight={700}
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
                   textAlign="center"
                   textColor={'brand.500'}
+                  mb={6}
                 >
                   Stablecoins
                 </Text>
                 <Text
                   textAlign={'center'}
-                  fontSize={20}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of Stablecoins wikis,
+                  Explore a curated compilation of Stablecoin wikis,
                   meticulously ranked by their individual market cap.
                 </Text>
               </Flex>
@@ -412,24 +419,27 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
+                className="testname"
+                px={4}
               >
                 <Text
                   color="homeDescriptionColor"
-                  fontSize={48}
-                  fontWeight={700}
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
                   textAlign="center"
                   textColor={'brand.500'}
+                  mb={6}
                 >
                   AI Tokens
                 </Text>
                 <Text
                   textAlign={'center'}
-                  fontSize={20}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of AI Tokens wikis, meticulously
+                  Explore a curated compilation of AI token wikis, meticulously
                   ranked by their individual market cap.
                 </Text>
               </Flex>
@@ -474,24 +484,27 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
+                className="testname"
+                px={4}
               >
                 <Text
                   color="homeDescriptionColor"
-                  fontSize={48}
-                  fontWeight={700}
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
                   textAlign="center"
                   textColor={'brand.500'}
+                  mb={6}
                 >
                   Founders
                 </Text>
                 <Text
                   textAlign={'center'}
-                  fontSize={20}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of Founders wikis, meticulously
+                  Explore a curated compilation of Founder wikis, meticulously
                   ranked by their individual market cap.
                 </Text>
               </Flex>
@@ -536,19 +549,22 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
+                className="testname"
+                px={4}
               >
                 <Text
                   color="homeDescriptionColor"
-                  fontSize={48}
-                  fontWeight={700}
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
                   textAlign="center"
                   textColor={'brand.500'}
+                  mb={6}
                 >
                   NFTs
                 </Text>
                 <Text
                   textAlign={'center'}
-                  fontSize={20}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
