@@ -346,7 +346,7 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p={0}>
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -411,7 +411,7 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p={0}>
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -476,7 +476,7 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p={0}>
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -541,7 +541,7 @@ const Rank = ({
                 </Tbody>
               </FoundersRankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel p={0}>
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
