@@ -1,6 +1,16 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Text,
+  Td,
+  Tr,
+  Image,
+  StatArrow,
+  Stat,
+  chakra,
+} from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
@@ -125,37 +135,55 @@ const RankingItem = ({
         <Text color="rankingListText">{price}</Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
+        <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>
           <Text color="rankingListText">{marketCap}</Text>
           {item.nftMarketData ? (
-            <Text
-              alignSelf="flex-start"
-              fontSize="10px"
-              lineHeight="15px"
-              color={
-                item.nftMarketData?.floor_price_in_usd_24h_percentage_change < 0
-                  ? 'red.500'
-                  : 'green.500'
-              }
-            >
-              {Math.abs(
-                item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
-              ).toFixed(2)}
-              %
-            </Text>
+            <Stat pb={4}>
+              <StatArrow
+                type={
+                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
+                  0
+                    ? 'decrease'
+                    : 'increase'
+                }
+              />
+              <chakra.span
+                fontSize="10px"
+                lineHeight="15px"
+                color={
+                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
+                  0
+                    ? 'red.500'
+                    : 'green.500'
+                }
+              >
+                {Math.abs(
+                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
+                ).toFixed(2)}
+                %
+              </chakra.span>
+            </Stat>
           ) : (
-            <Text
-              alignSelf="flex-start"
-              fontSize="10px"
-              lineHeight="15px"
-              color={
-                item.tokenMarketData?.price_change_24h < 0
-                  ? 'red.500'
-                  : 'green.500'
-              }
-            >
-              {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
-            </Text>
+            <Stat pb={4}>
+              <StatArrow
+                type={
+                  item.tokenMarketData?.price_change_24h < 0
+                    ? 'decrease'
+                    : 'increase'
+                }
+              />
+              <chakra.span
+                fontSize="10px"
+                lineHeight="15px"
+                color={
+                  item.tokenMarketData?.price_change_24h < 0
+                    ? 'red.500'
+                    : 'green.500'
+                }
+              >
+                {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
+              </chakra.span>
+            </Stat>
           )}
         </Flex>
       </Td>
