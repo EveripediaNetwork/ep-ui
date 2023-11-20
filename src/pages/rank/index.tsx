@@ -223,12 +223,13 @@ const Rank = ({
     },
   }
   return (
-    <Box>
+    <Box w={'full'}>
       <RankHeader />
       <Flex
-        maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
-        mx="auto"
-        pl={2}
+        // maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
+        // mx="auto"
+        w="100%"
+        // pl={2}
         pb={16}
         pt={8}
         flexWrap="wrap"
@@ -280,17 +281,34 @@ const Rank = ({
           <Divider mt={-2} />
           <TabPanels mt="2">
             <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
+                flexDirection={'column'}
               >
-                Cryptocurrency wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={48}
+                  fontWeight={700}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                >
+                  Cryptocurrencies
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={20}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of cryptocurrency wikis,
+                  meticulously ranked by their individual market cap.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={tokensOffset}
@@ -325,17 +343,34 @@ const Rank = ({
               </RankTable>
             </TabPanel>
             <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
+                flexDirection={'column'}
               >
-                Stablecoin wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={48}
+                  fontWeight={700}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                >
+                  Stablecoins
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={20}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of Stablecoins wikis,
+                  meticulously ranked by their individual market cap.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={stableCoinOffset}
@@ -370,17 +405,34 @@ const Rank = ({
               </RankTable>
             </TabPanel>
             <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
+                flexDirection={'column'}
               >
-                AI Token wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={48}
+                  fontWeight={700}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                >
+                  AI Tokens
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={20}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of AI Tokens wikis, meticulously
+                  ranked by their individual market cap.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={aiTokensOffset}
@@ -415,17 +467,34 @@ const Rank = ({
               </RankTable>
             </TabPanel>
             <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
+                flexDirection={'column'}
               >
-                Founder wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={48}
+                  fontWeight={700}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                >
+                  Founders
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={20}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of Founders wikis, meticulously
+                  ranked by their individual market cap.
+                </Text>
+              </Flex>
               <FoundersRankTable
                 hasPagination
                 currentPage={foundersOffset}
@@ -460,17 +529,34 @@ const Rank = ({
               </FoundersRankTable>
             </TabPanel>
             <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
-                px={4}
-                textAlign="center"
-                maxW="750"
+                flexDirection={'column'}
               >
-                NFT wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={48}
+                  fontWeight={700}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                >
+                  NFTs
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={20}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of NFT wikis, meticulously
+                  ranked by their individual market cap.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={nftOffset}
