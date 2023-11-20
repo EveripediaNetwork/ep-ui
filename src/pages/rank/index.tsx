@@ -287,7 +287,7 @@ const Rank = ({
                 backgroundColor={'#121212'}
                 justifyContent={'center'}
                 alignItems={'center'}
-                mb={12}
+                mb={8}
                 flexDirection={'column'}
                 className="testname"
                 px={4}
@@ -374,8 +374,9 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of Stablecoin wikis,
-                  meticulously ranked by their individual market cap.
+                  Dive into a well-structured compilation of stablecoin wikis,
+                  thoughtfully ordered based on their global market cap
+                  standings.
                 </Text>
               </Flex>
               <RankTable
@@ -439,8 +440,8 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of AI token wikis, meticulously
-                  ranked by their individual market cap.
+                  Explore a catalog of AI Tokens' wikis, meticulously arranged
+                  in order of their respective global market cap rankings.
                 </Text>
               </Flex>
               <RankTable
@@ -495,7 +496,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  Founders
+                  Crypto Founders Index
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -504,8 +505,15 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of Founder wikis, meticulously
-                  ranked by their individual market cap.
+                  Explore rankings of the{' '}
+                  <Text textColor={'brand.500'}>
+                    world’s top crypto founders
+                  </Text>{' '}
+                  based on market cap, co-founders profiles,{' '}
+                  <Text textColor={'brand.500'}>
+                    analyze and compare project
+                  </Text>
+                  performances.
                 </Text>
               </Flex>
               <FoundersRankTable
@@ -569,8 +577,8 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of NFT wikis, meticulously
-                  ranked by their individual market cap.
+                  A catalog of NFT wikis, systematically ordered based on their
+                  individual global market cap positions.
                 </Text>
               </Flex>
               <RankTable
