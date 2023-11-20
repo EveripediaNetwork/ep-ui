@@ -9,6 +9,7 @@ import {
   TabPanels,
   Tabs,
   Tbody,
+  Divider,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
 import {
@@ -276,6 +277,7 @@ const Rank = ({
               />
             </TabList>
           </Flex>
+          <Divider mt={-2} />
           <TabPanels mt="2">
             <TabPanel>
               <Text
