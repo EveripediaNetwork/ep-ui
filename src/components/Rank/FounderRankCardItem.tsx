@@ -7,7 +7,6 @@ import {
   Td,
   Tr,
   Image,
-  chakra,
   Stat,
   StatArrow,
 } from '@chakra-ui/react'
@@ -173,21 +172,6 @@ const FounderRankingItem = ({
                     : 'increase'
                 }
               />
-              <chakra.span
-                fontSize="10px"
-                lineHeight="15px"
-                color={
-                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
-                  0
-                    ? 'red.500'
-                    : 'green.500'
-                }
-              >
-                {Math.abs(
-                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
-                ).toFixed(2)}
-                %
-              </chakra.span>
             </Stat>
           ) : (
             <Stat pb={4}>
@@ -198,17 +182,6 @@ const FounderRankingItem = ({
                     : 'increase'
                 }
               />
-              <chakra.span
-                fontSize="10px"
-                lineHeight="15px"
-                color={
-                  item.tokenMarketData?.price_change_24h < 0
-                    ? 'red.500'
-                    : 'green.500'
-                }
-              >
-                {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
-              </chakra.span>
             </Stat>
           )}
         </Flex>
