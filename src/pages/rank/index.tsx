@@ -9,6 +9,8 @@ import {
   TabPanels,
   Tabs,
   Tbody,
+  Divider,
+  chakra,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
 import {
@@ -36,7 +38,6 @@ import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
-import RankHero from './RankHero'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
@@ -223,26 +224,16 @@ const Rank = ({
     },
   }
   return (
-    <Box>
+    <Box minW={'full'} w="100%">
       <RankHeader />
-      <Box
-        bg="url(/images/backgrounds/rank-bg-light.png)"
-        _dark={{
-          bg: 'url(/images/backgrounds/ranking-bg-dark.png)',
-        }}
-        bgPos="center"
-        my={-2}
-        bgSize="cover !important"
-        bgColor="gray.100"
-        pb={8}
-      >
-        <RankHero />
-      </Box>
       <Flex
-        maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
-        mx="auto"
-        pl={2}
-        py={16}
+        // maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
+        // mx="auto"
+        w="100%"
+        minW={'full'}
+        // pl={2}
+        pb={16}
+        pt={4}
         flexWrap="wrap"
         gap={{ base: 10, md: 0, lg: 4 }}
         justifyContent={{ lg: 'center', md: 'space-between' }}
@@ -258,50 +249,71 @@ const Rank = ({
             <TabList
               border="none"
               display="flex"
-              gap={{ base: '2', md: '8' }}
+              gap={2}
               overflowX={'auto'}
               overflowY={'hidden'}
             >
               <RankingListButton
                 label="Cryptocurrencies"
                 icon={RiCoinsFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="Stablecoins"
                 icon={RiCoinFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="AI"
                 icon={RiRobotFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="Founders"
                 icon={RiUserFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
               <RankingListButton
                 label="NFTs"
                 icon={BiImage}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: '18px' }}
               />
             </TabList>
           </Flex>
+          <Divider mt={-2} />
           <TabPanels mt="2">
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
-                mb={12}
+            <TabPanel p={0}>
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                mb={8}
+                flexDirection={'column'}
+                className="testname"
                 px={4}
-                textAlign="center"
-                maxW="750"
               >
-                Cryptocurrency wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                  mb={6}
+                >
+                  Cryptocurrencies
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a curated compilation of cryptocurrency wikis,
+                  meticulously ranked by their individual market cap.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={tokensOffset}
@@ -335,18 +347,39 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+            <TabPanel p={0}>
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
+                flexDirection={'column'}
+                className="testname"
                 px={4}
-                textAlign="center"
-                maxW="750"
               >
-                Stablecoin wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                  mb={6}
+                >
+                  Stablecoins
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Dive into a well-structured compilation of stablecoin wikis,
+                  thoughtfully ordered based on their global market cap
+                  standings.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={stableCoinOffset}
@@ -380,18 +413,38 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+            <TabPanel p={0}>
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
+                flexDirection={'column'}
+                className="testname"
                 px={4}
-                textAlign="center"
-                maxW="750"
               >
-                AI Token wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                  mb={6}
+                >
+                  AI Tokens
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  Explore a catalog of AI Tokens' wikis, meticulously arranged
+                  in order of their respective global market cap rankings.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={aiTokensOffset}
@@ -425,18 +478,45 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+            <TabPanel p={0}>
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
+                flexDirection={'column'}
                 px={4}
-                textAlign="center"
-                maxW="750"
               >
-                Founder wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                  mb={6}
+                >
+                  Crypto Founders Index
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  className="testname"
+                  maxW={'4xl'}
+                >
+                  Explore rankings of the{' '}
+                  <chakra.span textColor={'brand.500'}>
+                    world’s top crypto founders
+                  </chakra.span>{' '}
+                  based on market cap, co-founders profiles,{' '}
+                  <chakra.span textColor={'brand.500'}>
+                    analyze and compare project &nbsp;
+                  </chakra.span>
+                  performances.
+                </Text>
+              </Flex>
               <FoundersRankTable
                 hasPagination
                 currentPage={foundersOffset}
@@ -470,18 +550,38 @@ const Rank = ({
                 </Tbody>
               </FoundersRankTable>
             </TabPanel>
-            <TabPanel>
-              <Text
-                color="homeDescriptionColor"
-                fontSize={{ base: 'lg', lg: 22 }}
-                mx="auto"
+            <TabPanel p={0}>
+              <Flex
+                h={350}
+                backgroundColor={'#121212'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 mb={12}
+                flexDirection={'column'}
+                className="testname"
                 px={4}
-                textAlign="center"
-                maxW="750"
               >
-                NFT wikis ranked by Market Cap Prices
-              </Text>
+                <Text
+                  color="homeDescriptionColor"
+                  fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                  fontWeight={{ base: 600, md: 600, lg: 700 }}
+                  textAlign="center"
+                  textColor={'brand.500'}
+                  mb={6}
+                >
+                  NFTs
+                </Text>
+                <Text
+                  textAlign={'center'}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontWeight={500}
+                  textColor={'whiteAlpha.900'}
+                  maxW={'3xl'}
+                >
+                  A catalog of NFT wikis, systematically ordered based on their
+                  individual global market cap positions.
+                </Text>
+              </Flex>
               <RankTable
                 hasPagination
                 currentPage={nftOffset}
