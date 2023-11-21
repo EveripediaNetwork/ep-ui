@@ -10,6 +10,7 @@ import {
   Tabs,
   Tbody,
   Divider,
+  chakra,
 } from '@chakra-ui/react'
 import { BiImage } from 'react-icons/bi'
 import {
@@ -485,7 +486,6 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
-                className="testname"
                 px={4}
               >
                 <Text
@@ -503,16 +503,17 @@ const Rank = ({
                   fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight={500}
                   textColor={'whiteAlpha.900'}
-                  maxW={'3xl'}
+                  className="testname"
+                  maxW={'4xl'}
                 >
                   Explore rankings of the{' '}
-                  <Text textColor={'brand.500'}>
+                  <chakra.span textColor={'brand.500'}>
                     world’s top crypto founders
-                  </Text>{' '}
+                  </chakra.span>{' '}
                   based on market cap, co-founders profiles,{' '}
-                  <Text textColor={'brand.500'}>
-                    analyze and compare project
-                  </Text>
+                  <chakra.span textColor={'brand.500'}>
+                    analyze and compare project &nbsp;
+                  </chakra.span>
                   performances.
                 </Text>
               </Flex>
