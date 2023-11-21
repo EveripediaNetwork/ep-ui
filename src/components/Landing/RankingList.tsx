@@ -161,7 +161,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               <RankingListButton
                 label="Founders"
                 icon={RiUserFill}
-                fontSize={{ lg: '20px' }}
+                fontSize={{ lg: 'md' }}
               />
               <RankingListButton
                 label="NFTs"
@@ -243,7 +243,10 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel>
+            <TabPanel
+              px={{ base: 2, md: 'initial' }}
+              py={{ base: 0, md: 'initial' }}
+            >
               <FoundersRankTable hasPagination={false}>
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
