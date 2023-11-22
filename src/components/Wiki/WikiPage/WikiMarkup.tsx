@@ -1,10 +1,13 @@
+import dynamic from 'next/dynamic'
 import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
-import { RelatedWikis } from './InsightComponents/RelatedWikis'
+const RelatedWikis = dynamic<{ wikiId: string; category: string }>(() =>
+  import('./InsightComponents/RelatedWikis').then((mod) => mod.RelatedWikis),
+)
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import WikiActionBar from './WikiActionBar'
 import WikiInsights from './WikiInsights'

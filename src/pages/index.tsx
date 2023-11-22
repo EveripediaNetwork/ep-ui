@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import {
   getPromotedWikis,
   getTrendingWikis,
@@ -10,14 +11,16 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
-import CategoriesList from '@/components/Landing/CategoriesList'
+const CategoriesList = dynamic(
+  () => import('@/components/Landing/CategoriesList'),
+)
 import { getTags, tagsApi } from '@/services/tags'
-import DiscoverMore from '@/components/Landing/DiscoverMore'
-import LeaderBoard from '@/components/Landing/Leaderboard'
+const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
+const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-import RankingList from '@/components/Landing/RankingList'
+const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
   getAiTokenRanking,
@@ -30,7 +33,7 @@ import {
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
-import AboutIqgpt from '@/components/Landing/AboutIqgpt'
+const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 
 const RANKING_LIST_LIMIT = 10
