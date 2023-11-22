@@ -91,10 +91,6 @@ const Rank = ({
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
 
   const router = useRouter()
-  const { p: page, id } = router.query
-  //TODO: remove console.log
-  console.log('id', id)
-  console.log('pg', page)
 
   const [nftOffset, setNftOffset] = useState<number>(
     pagination.category === 'nfts' ? pagination.page : 1,
@@ -123,9 +119,6 @@ const Rank = ({
     router.push(
       {
         pathname: `/rank/${getKeyByValue(CATEGORIES_WITH_INDEX, index)}`,
-        // query: {
-        //   p: page,
-        // },
       },
       undefined,
       { shallow: true },
@@ -641,8 +634,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCategoryTotal.initiate({ category: 'nfts' }),
   )
 
-  const { p: page, id: category } = ctx.query as {
-    id: string
+  const { p: page, category } = ctx.query as {
+    category: string
     p: string | null
   }
 
