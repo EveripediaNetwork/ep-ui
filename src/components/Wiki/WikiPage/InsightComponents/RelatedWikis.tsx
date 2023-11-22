@@ -45,7 +45,6 @@ export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
     </LinkBox>
   )
 }
-// TODO: even better load only when near viewport
 export const RelatedWikis = ({
   wikiId,
   category,
