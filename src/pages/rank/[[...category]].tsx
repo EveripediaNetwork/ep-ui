@@ -545,7 +545,7 @@ const Rank = ({
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
                   {foundersisFetching || !founderItems ? (
-                    <LoadingRankCardSkeleton length={20} isFounders />
+                    <LoadingRankCardSkeleton length={20} />
                   ) : (
                     founderItems.map((token, index) =>
                       token ? (
