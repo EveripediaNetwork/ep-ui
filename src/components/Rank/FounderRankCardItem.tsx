@@ -78,10 +78,11 @@ const FounderRankingItem = ({
         fontSize="14px"
         maxW={'320px'}
         minW={'280px'}
+        px={2}
       >
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
-            <Flex mr={3}>
+            <Flex mr={2}>
               {item.founderWikis
                 .slice(0, MAX_LINKED_WIKIS)
                 .map((founder, i) => {
@@ -137,7 +138,12 @@ const FounderRankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        pr={2}
+      >
         <Flex gap="2.5" alignItems="center">
           <Box>
             <Box maxW={'250px'} overflowX={'hidden'}>
@@ -190,7 +196,12 @@ const FounderRankingItem = ({
           )}
         </Flex>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={2}
+      >
         {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
