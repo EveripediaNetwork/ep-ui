@@ -98,7 +98,7 @@ export const NAV_ITEMS: NavItem[] = [
   {
     id: 3,
     label: 'Rank',
-    href: '/rank?category=cryptocurrencies&page=1',
+    href: '/rank',
     icon: RiHashtag,
   },
   {
