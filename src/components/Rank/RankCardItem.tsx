@@ -99,14 +99,14 @@ const RankingItem = ({
             <Box maxW={'200px'} overflowX={'hidden'}>
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
-                  <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                  <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                     {item.title}
                   </Link>
                 ) : (
                   <Text>{item.title}</Text>
                 )
               ) : item.tokenMarketData?.hasWiki ? (
-                <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                   {item.title}
                 </Link>
               ) : (
@@ -168,7 +168,7 @@ const RankingItem = ({
                 const founder = item.linkedWikis?.founders[i]
                 return (
                   <Link
-                    href={`wiki/${founder}`}
+                    href={`/wiki/${founder}`}
                     key={`founder${i}`}
                     color="brandLinkColor"
                   >
@@ -198,7 +198,7 @@ const RankingItem = ({
                         ,
                       </Box>
                     )}
-                    <Link href={`wiki/${blockchain}`} color="brandLinkColor">
+                    <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
                         blockchain.slice(1).replace('-', ' ')}
                     </Link>
