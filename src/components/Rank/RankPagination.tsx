@@ -34,7 +34,7 @@ const RankPagination = (props: RankpaginationProps) => {
       pathname,
       query: {
         ...query,
-        page: pageNumber,
+        p: pageNumber,
       },
     }
     onPageChange(pageNumber)
@@ -46,7 +46,7 @@ const RankPagination = (props: RankpaginationProps) => {
       pathname,
       query: {
         ...query,
-        page: pageNumber,
+        p: pageNumber,
       },
     }
     onPageChange(pageNumber)

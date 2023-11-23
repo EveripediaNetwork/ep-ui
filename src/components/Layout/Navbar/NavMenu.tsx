@@ -36,7 +36,7 @@ const NavMenu = ({
     <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
       <MenuButton
         pr={4}
-        fontSize="lg"
+        fontSize="14px"
         fontWeight={600}
         height="70px"
         color="linkColor"
@@ -49,6 +49,8 @@ const NavMenu = ({
         onClick={() =>
           navItem.subItem
             ? setVisibleMenu(visibleMenu ? null : navItem.id)
+            : navItem.target
+            ? window.open(navItem.href, '_blank', 'noopener,noreferrer')
             : router.push(navItem.href)
         }
       >

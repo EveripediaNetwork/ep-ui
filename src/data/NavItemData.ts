@@ -68,7 +68,7 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 106,
-        label: 'People in crypto',
+        label: 'People in Crypto',
         icon: RiUser3Fill,
         href: '/categories/people',
         hasImage: true,
@@ -98,11 +98,18 @@ export const NAV_ITEMS: NavItem[] = [
   {
     id: 3,
     label: 'Rank',
-    href: '/rank?category=cryptocurrencies&page=1',
+    href: '/rank',
     icon: RiHashtag,
   },
   {
     id: 4,
+    label: 'IQ GPT',
+    href: 'https://iqgpt.com',
+    icon: RiSearchEyeFill,
+    target: '_blank',
+  },
+  {
+    id: 5,
     label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
@@ -156,7 +163,7 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     label: 'Create Wiki',
     href: '/create-wiki',
     icon: RiAddBoxFill,

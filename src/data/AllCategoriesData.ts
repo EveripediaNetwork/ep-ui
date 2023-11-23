@@ -35,15 +35,15 @@ export const AllCategoriesData: CategoryDataType[] = [
     icon: RiCoinsFill,
     description:
       'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
-    cardImage: '/images/categories/exchanges-card.png',
-    heroImage: '/images/categories/exchanges.png',
+    cardImage: '/images/categories/exchange-new-b.png',
+    heroImage: '/images/categories/exchange-new.png',
   },
   {
     id: 'cryptocurrencies',
     title: 'Cryptocurrencies',
     icon: RiBitCoinFill,
     description:
-      'This cryptocurrencies category covers all cryptocurrencies from Bitcoin to IQ. ',
+      'This Cryptocurrencies category covers all cryptocurrencies from Bitcoin to IQ. ',
     cardImage: '/images/categories/cryptocurrencies-card.png',
     heroImage: '/images/categories/cryptocurrencies.jpg',
   },
@@ -58,7 +58,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'people',
-    title: 'People in crypto',
+    title: 'People in Crypto',
     icon: RiUser3Fill,
     description:
       'The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.',

@@ -8,12 +8,12 @@ import {
   Flex,
   TableContainerProps,
 } from '@chakra-ui/react'
-import { RankingListHead } from '@/data/RankingListData'
+import { FoundersRankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
 import { RankTableProps } from '@/types/RankDataTypes'
 import { OnClickMap } from '@/types/RankDataTypes'
 
-export const RankTable = ({
+export const FoundersRankTable = ({
   children,
   hasPagination,
   onPageChange,
@@ -25,7 +25,7 @@ export const RankTable = ({
 }: RankTableProps & TableContainerProps) => {
   return (
     <TableContainer
-      w="full"
+      w="100%"
       boxShadow="3xl"
       borderRadius="8px"
       bg="rankingListTableBg"
@@ -49,15 +49,17 @@ export const RankTable = ({
   )
 }
 
-interface RankTableHeadProps {
+interface FoundersRankTableHeadProps {
   onClickMap: OnClickMap
 }
 
-export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
+export const FoundersRankTableHead = ({
+  onClickMap,
+}: FoundersRankTableHeadProps) => {
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
-        {RankingListHead.map((item, i) => {
+        {FoundersRankingListHead.map((item, i) => {
           const onClick = onClickMap?.[item.label]
           return (
             <Th

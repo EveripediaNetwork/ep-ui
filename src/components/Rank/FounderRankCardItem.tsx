@@ -1,10 +1,20 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Text,
+  Td,
+  Tr,
+  Image,
+  Stat,
+  StatArrow,
+} from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
+import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -20,13 +30,7 @@ const marketCapFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
 }).format
 
-const priceFormatter = Intl.NumberFormat('en', {
-  notation: 'standard',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 4,
-}).format
-
-const RankingItem = ({
+const FounderRankingItem = ({
   index,
   item,
   order,
@@ -43,16 +47,15 @@ const RankingItem = ({
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
-  const price = `$${
-    item.nftMarketData
-      ? priceFormatter(item.nftMarketData?.floor_price_usd)
-      : priceFormatter(item.tokenMarketData?.current_price)
-  }`
+  const marketCapChange = marketCapFormatter(
+    item?.tokenMarketData.market_cap_change_24h.toString()[0] === '-'
+      ? Math.abs(item?.tokenMarketData.market_cap_change_24h)
+      : item?.tokenMarketData.market_cap_change_24h,
+  )
 
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
   )?.date
-
   return (
     <Tr
       _hover={{
@@ -62,12 +65,7 @@ const RankingItem = ({
         },
       }}
     >
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        fontSize="14px"
-        pr="1"
-      >
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Text color="rankingListText">
           {order === 'descending'
             ? index + offset + 1
@@ -78,25 +76,71 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        pl="2"
+        maxW={'320px'}
+        minW={'280px'}
       >
+        {item?.founderWikis ? (
+          <Flex alignItems={'center'}>
+            <Flex mr={3}>
+              {item.founderWikis
+                .slice(0, MAX_LINKED_WIKIS)
+                .map((founder, i) => {
+                  return (
+                    <React.Fragment key={`founder${i}`}>
+                      <Flex
+                        display={'inline-block'}
+                        minW={'40px'}
+                        marginLeft={i > 0 ? '-15px' : '0px'}
+                      >
+                        <Image
+                          src={getWikiImageUrl(founder?.images)}
+                          alt={founder?.title}
+                          width="36px"
+                          height="36px"
+                          borderRadius="50%"
+                          objectFit="cover"
+                          border="2px solid"
+                          borderColor="white"
+                        />
+                      </Flex>
+                    </React.Fragment>
+                  )
+                })}
+            </Flex>
+            <Flex display={'inline-block'} flexWrap="wrap">
+              {formatFoundersArray(
+                item.founderWikis.map((founder) => founder?.title),
+              )
+                ?.slice(0, MAX_LINKED_WIKIS)
+                ?.map((founderName, i, arr) => {
+                  const founder = item.linkedWikis?.founders[i]
+                  return (
+                    <Link
+                      href={`/wiki/${founder}`}
+                      key={`founder${i}`}
+                      color="brandLinkColor"
+                    >
+                      {founderName}
+                      {i !== arr?.length - 1 && arr?.length > 1 && ', '}
+                      {i === 1 && <br />}
+                    </Link>
+                  )
+                })}
+              {item.linkedWikis?.founders?.length > 3 && (
+                <Text as={'span'} color="brandLinkColor">
+                  ...
+                </Text>
+              )}
+            </Flex>
+          </Flex>
+        ) : (
+          <Text>NA</Text>
+        )}
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="2.5" alignItems="center">
-          <Box flexShrink="0" w="40px" h="40px">
-            <Image
-              src={
-                item.nftMarketData
-                  ? item.nftMarketData?.image
-                  : item.tokenMarketData?.image
-              }
-              alt={item.title}
-              w="40px"
-              h="40px"
-              borderRadius="50%"
-              objectFit="cover"
-            />
-          </Box>
           <Box>
-            <Box maxW={'200px'} overflowX={'hidden'}>
+            <Box maxW={'250px'} overflowX={'hidden'}>
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
                   <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
@@ -113,77 +157,38 @@ const RankingItem = ({
                 <Text>{item.title}</Text>
               )}
             </Box>
-            <Text color="rankingListText">
-              {item.nftMarketData
-                ? item.nftMarketData?.alias
-                : item.tokenMarketData?.alias}
-            </Text>
           </Box>
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Text color="rankingListText">{price}</Text>
+        <Text color="rankingListText">{marketCap}</Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1">
-          <Text color="rankingListText">{marketCap}</Text>
+        <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>
+          <Text color="rankingListText">{marketCapChange}</Text>
           {item.nftMarketData ? (
-            <Text
-              alignSelf="flex-start"
-              fontSize="10px"
-              lineHeight="15px"
-              color={
-                item.nftMarketData?.floor_price_in_usd_24h_percentage_change < 0
-                  ? 'red.500'
-                  : 'green.500'
-              }
-            >
-              {Math.abs(
-                item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
-              ).toFixed(2)}
-              %
-            </Text>
+            <Stat pb={4}>
+              <StatArrow
+                type={
+                  item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
+                  0
+                    ? 'decrease'
+                    : 'increase'
+                }
+              />
+            </Stat>
           ) : (
-            <Text
-              alignSelf="flex-start"
-              fontSize="10px"
-              lineHeight="15px"
-              color={
-                item.tokenMarketData?.price_change_24h < 0
-                  ? 'red.500'
-                  : 'green.500'
-              }
-            >
-              {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
-            </Text>
+            <Stat pb={4}>
+              <StatArrow
+                type={
+                  item.tokenMarketData?.market_cap_change_24h < 0
+                    ? 'decrease'
+                    : 'increase'
+                }
+              />
+            </Stat>
           )}
         </Flex>
-      </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        {item.linkedWikis?.founders ? (
-          <Flex flexWrap="wrap">
-            {formatFoundersArray(item.linkedWikis?.founders)
-              ?.slice(0, MAX_LINKED_WIKIS)
-              ?.map((founderName, i, arr) => {
-                const founder = item.linkedWikis?.founders[i]
-                return (
-                  <Link
-                    href={`/wiki/${founder}`}
-                    key={`founder${i}`}
-                    color="brandLinkColor"
-                  >
-                    {founderName}
-                    {i !== arr.length - 1 && arr.length > 1 && ', '}
-                  </Link>
-                )
-              })}
-            {item.linkedWikis.founders.length > 3 && (
-              <Text color="brandLinkColor">...</Text>
-            )}
-          </Flex>
-        ) : (
-          <Text>NA</Text>
-        )}
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         {item.linkedWikis?.blockchains ? (
@@ -223,4 +228,4 @@ const RankingItem = ({
   )
 }
 
-export default RankingItem
+export default FounderRankingItem

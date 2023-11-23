@@ -3,10 +3,13 @@ import { BaseEvents } from '@everipedia/iq-utils'
 import { IconType } from 'react-icons/lib'
 import { z } from 'zod'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import { Image as ipfsImage } from '@everipedia/iq-utils'
+
 export interface RankCardType {
   hasWiki: any
   id: string
   title: string
+  tags: Tag[]
   ipfs: string
   media: Medum[]
   images: Image[]
@@ -16,7 +19,12 @@ export interface RankCardType {
     founders: string[]
     blockchains: string[]
   }
+  founderWikis: founderWikiData[]
   events: BaseEvents[]
+}
+
+export type Tag = {
+  id: string
 }
 
 export interface Medum {
@@ -61,6 +69,14 @@ export interface TokenMarketData {
   alias: string
   current_price: number
   image: string
+  isAiToken?: boolean
+  market_cap_change_24h: number
+}
+
+export interface founderWikiData {
+  id: string
+  title: string
+  images: ipfsImage[]
 }
 
 export interface RankTableProps {
@@ -79,19 +95,40 @@ const rankListHeadLabels = z.enum([
   '#',
   'Name',
   'Price',
-  'Marketcap',
+  'Market Cap',
   'Founders',
+  'Blockchain',
+  'Date Founded',
+])
+
+const foundersRankListHeadLabels = z.enum([
+  '#',
+  'Name',
+  'Project',
+  'Market Cap',
+  '24h Change',
   'Blockchain',
   'Date Founded',
 ])
 
 export type RankListHeadLabel = z.infer<typeof rankListHeadLabels>
 
+export type foundersRankListHeadLabel = z.infer<
+  typeof foundersRankListHeadLabels
+>
+
 export type RankinglistHeadProps = {
   label: RankListHeadLabel
   Icon?: IconType
 }[]
 
-export type OnClickMap = { [key in RankListHeadLabel]?: () => void }
+export type foundersRankinglistHeadProps = {
+  label: foundersRankListHeadLabel
+  Icon?: IconType
+}[]
+
+export type OnClickMap = {
+  [key in RankListHeadLabel | foundersRankListHeadLabel]?: () => void
+}
 export type ObjectKeyType<T> = keyof T
 export type CategoryKeyType = ObjectKeyType<typeof CATEGORIES_WITH_INDEX>

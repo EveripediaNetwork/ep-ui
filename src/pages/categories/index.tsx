@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
 
 const CATEGORY_HEADER =
-  'Explore your endless curiosities in different categories on IQ.Wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.'
+  'Explore your endless curiosities in different categories on IQ.wiki, ranging from NFTs, to DeFi, Cryptocurrencies and more.'
 const Categories: NextPage = () => {
   const { t } = useTranslation()
   return (
