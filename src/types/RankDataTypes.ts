@@ -70,7 +70,7 @@ export interface TokenMarketData {
   current_price: number
   image: string
   isAiToken?: boolean
-  market_cap_change_24h?: number
+  market_cap_change_24h: number
 }
 
 export interface founderWikiData {
