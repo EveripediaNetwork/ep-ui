@@ -69,6 +69,33 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
   return innerItems
 }
 
+//sortBy24hChange
+export const sortBy24hChange = (order: SortOrder, items: RankCardType[]) => {
+  const innerItems = [...items]
+
+  try {
+    innerItems.sort((a, b) => {
+      const MarketCapChangeA =
+        a?.nftMarketData?.market_cap_usd ??
+        a?.tokenMarketData?.market_cap_change_24h ??
+        0
+      const MarketCapChangeB =
+        b?.nftMarketData?.market_cap_usd ??
+        b?.tokenMarketData?.market_cap_change_24h ??
+        0
+      if (order === 'ascending') {
+        return MarketCapChangeA - MarketCapChangeB
+      } else {
+        return MarketCapChangeB - MarketCapChangeA
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  }
+
+  return innerItems
+}
+
 const Rank = ({
   totalTokens,
   totalNfts,
@@ -200,11 +227,11 @@ const Rank = ({
   }, [tokenData, aiTokenData, stableCoinData, nftData, foundersData])
 
   const onClickMap: OnClickMap = {
-    '24h Change': function () {
+    'Market Cap': function () {
       if (
+        tokenData &&
         nftData &&
         aiTokenData &&
-        tokenData &&
         stableCoinData &&
         foundersData
       ) {
@@ -216,6 +243,24 @@ const Rank = ({
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinData))
         setNftItems(sortByMarketCap(newSortOrder, nftData))
         setFounderItems(sortByMarketCap(newSortOrder, foundersData))
+      }
+    },
+    '24h Change': function () {
+      if (
+        tokenData &&
+        nftData &&
+        aiTokenData &&
+        stableCoinData &&
+        foundersData
+      ) {
+        const newSortOrder =
+          sortOrder === 'ascending' ? 'descending' : 'ascending'
+        setOrder(newSortOrder)
+        setTokenItems(sortBy24hChange(newSortOrder, tokenData))
+        setAiTokenItems(sortBy24hChange(newSortOrder, aiTokenData))
+        setStableCoinItems(sortBy24hChange(newSortOrder, stableCoinData))
+        setNftItems(sortBy24hChange(newSortOrder, nftData))
+        setFounderItems(sortBy24hChange(newSortOrder, foundersData))
       }
     },
   }

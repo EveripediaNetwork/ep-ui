@@ -29,7 +29,11 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import { LinkButton } from '../Elements'
-import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank/[[...category]]'
+import {
+  LISTING_LIMIT,
+  sortBy24hChange,
+  sortByMarketCap,
+} from '@/pages/rank/[[...category]]'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 
@@ -83,7 +87,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    '24h Change': function () {
+    'Market Cap': function () {
       if (
         tokenItems &&
         nftItems &&
@@ -99,6 +103,24 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
         setNftItems(sortByMarketCap(newSortOrder, NFTsListing))
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
+      }
+    },
+    '24h Change': function () {
+      if (
+        tokenItems &&
+        nftItems &&
+        aiTokenItems &&
+        stableCoinItems &&
+        founderItems
+      ) {
+        const newSortOrder =
+          sortOrder === 'ascending' ? 'descending' : 'ascending'
+        setOrder(newSortOrder)
+        setTokenItems(sortBy24hChange(newSortOrder, TokensListing))
+        setAiTokenItems(sortBy24hChange(newSortOrder, aiTokensListing))
+        setStableCoinItems(sortBy24hChange(newSortOrder, stableCoinsListing))
+        setNftItems(sortBy24hChange(newSortOrder, NFTsListing))
+        setFounderItems(sortBy24hChange(newSortOrder, foundersListing))
       }
     },
   }
