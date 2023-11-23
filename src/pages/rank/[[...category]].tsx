@@ -89,8 +89,8 @@ const Rank = ({
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
+
   const router = useRouter()
-  const { pathname } = router
 
   const [nftOffset, setNftOffset] = useState<number>(
     pagination.category === 'nfts' ? pagination.page : 1,
@@ -118,11 +118,7 @@ const Rank = ({
   const handleCategoryChange = (index: number) => {
     router.push(
       {
-        pathname,
-        query: {
-          category: getKeyByValue(CATEGORIES_WITH_INDEX, index),
-          page: 1,
-        },
+        pathname: `/rank/${getKeyByValue(CATEGORIES_WITH_INDEX, index)}`,
       },
       undefined,
       { shallow: true },
@@ -227,11 +223,8 @@ const Rank = ({
     <Box minW={'full'} w="100%">
       <RankHeader />
       <Flex
-        // maxW={{ base: '100%', '2xl': '1280px', md: '95%' }}
-        // mx="auto"
         w="100%"
         minW={'full'}
-        // pl={2}
         pb={16}
         pt={4}
         flexWrap="wrap"
@@ -641,9 +634,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCategoryTotal.initiate({ category: 'nfts' }),
   )
 
-  const { category, page } = ctx.query as {
+  const { p: page, category } = ctx.query as {
     category: string
-    page: string | null
+    p: string | null
   }
 
   const totalTokens = tokensData?.categoryTotal.amount
