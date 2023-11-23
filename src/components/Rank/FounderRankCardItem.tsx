@@ -47,6 +47,12 @@ const FounderRankingItem = ({
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
+  const marketCapChange = marketCapFormatter(
+    item?.tokenMarketData.market_cap_change_24h.toString()[0] === '-'
+      ? Math.abs(item?.tokenMarketData.market_cap_change_24h)
+      : item?.tokenMarketData.market_cap_change_24h,
+  )
+
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
   )?.date
@@ -59,12 +65,7 @@ const FounderRankingItem = ({
         },
       }}
     >
-      <Td
-        borderColor="rankingListBorder"
-        fontWeight={500}
-        fontSize="14px"
-        // pr="1"
-      >
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Text color="rankingListText">
           {order === 'descending'
             ? index + offset + 1
@@ -115,7 +116,7 @@ const FounderRankingItem = ({
                   const founder = item.linkedWikis?.founders[i]
                   return (
                     <Link
-                      href={`wiki/${founder}`}
+                      href={`/wiki/${founder}`}
                       key={`founder${i}`}
                       color="brandLinkColor"
                     >
@@ -142,14 +143,14 @@ const FounderRankingItem = ({
             <Box maxW={'250px'} overflowX={'hidden'}>
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
-                  <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                  <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                     {item.title}
                   </Link>
                 ) : (
                   <Text>{item.title}</Text>
                 )
               ) : item.tokenMarketData?.hasWiki ? (
-                <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                   {item.title}
                 </Link>
               ) : (
@@ -160,8 +161,11 @@ const FounderRankingItem = ({
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+        <Text color="rankingListText">{marketCap}</Text>
+      </Td>
+      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>
-          <Text color="rankingListText">{marketCap}</Text>
+          <Text color="rankingListText">{marketCapChange}</Text>
           {item.nftMarketData ? (
             <Stat pb={4}>
               <StatArrow
@@ -177,7 +181,7 @@ const FounderRankingItem = ({
             <Stat pb={4}>
               <StatArrow
                 type={
-                  item.tokenMarketData?.price_change_24h < 0
+                  item.tokenMarketData?.market_cap_change_24h < 0
                     ? 'decrease'
                     : 'increase'
                 }
@@ -199,7 +203,7 @@ const FounderRankingItem = ({
                         ,
                       </Box>
                     )}
-                    <Link href={`wiki/${blockchain}`} color="brandLinkColor">
+                    <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
                         blockchain.slice(1).replace('-', ' ')}
                     </Link>
