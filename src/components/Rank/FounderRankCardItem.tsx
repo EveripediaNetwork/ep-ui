@@ -161,9 +161,7 @@ const FounderRankingItem = ({
         </Flex>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
-        <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>
-          <Text color="rankingListText">{marketCap}</Text>
-        </Flex>
+        <Text color="rankingListText">{marketCap}</Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
         <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>

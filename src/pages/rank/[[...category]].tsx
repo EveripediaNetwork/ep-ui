@@ -275,7 +275,12 @@ const Rank = ({
           </Flex>
           <Divider mt={-2} />
           <TabPanels mt="2">
-            <TabPanel p={0}>
+            <TabPanel
+              p={0}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'center'}
+            >
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -283,8 +288,8 @@ const Rank = ({
                 alignItems={'center'}
                 mb={8}
                 flexDirection={'column'}
-                className="testname"
                 px={4}
+                minW={'full'}
               >
                 <Text
                   color="homeDescriptionColor"
@@ -313,6 +318,7 @@ const Rank = ({
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setTokensOffset(page)}
+                maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -340,7 +346,12 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel p={0}>
+            <TabPanel
+              p={0}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'center'}
+            >
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -348,8 +359,8 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
-                className="testname"
                 px={4}
+                minW={'full'}
               >
                 <Text
                   color="homeDescriptionColor"
@@ -379,6 +390,7 @@ const Rank = ({
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setStableCoinOffset(page)}
+                maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -406,7 +418,12 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel p={0}>
+            <TabPanel
+              p={0}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'center'}
+            >
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -414,8 +431,8 @@ const Rank = ({
                 alignItems={'center'}
                 mb={12}
                 flexDirection={'column'}
-                className="testname"
                 px={4}
+                minW={'full'}
               >
                 <Text
                   color="homeDescriptionColor"
@@ -444,6 +461,7 @@ const Rank = ({
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setAiTokensOffset(page)}
+                maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -471,7 +489,12 @@ const Rank = ({
                 </Tbody>
               </RankTable>
             </TabPanel>
-            <TabPanel p={0}>
+            <TabPanel
+              p={0}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'center'}
+            >
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -480,6 +503,7 @@ const Rank = ({
                 mb={12}
                 flexDirection={'column'}
                 px={4}
+                minW={'full'}
               >
                 <Text
                   color="homeDescriptionColor"
@@ -516,6 +540,7 @@ const Rank = ({
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setFoundersOffset(page)}
+                maxW={'90%'}
               >
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -543,7 +568,12 @@ const Rank = ({
                 </Tbody>
               </FoundersRankTable>
             </TabPanel>
-            <TabPanel p={0}>
+            <TabPanel
+              p={0}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'center'}
+            >
               <Flex
                 h={350}
                 backgroundColor={'#121212'}
@@ -553,6 +583,7 @@ const Rank = ({
                 flexDirection={'column'}
                 className="testname"
                 px={4}
+                minW={'full'}
               >
                 <Text
                   color="homeDescriptionColor"
@@ -581,6 +612,7 @@ const Rank = ({
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setNftOffset(page)}
+                maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>

@@ -1,5 +1,13 @@
 import React from 'react'
-import { Table, TableContainer, Th, Thead, Tr, Flex } from '@chakra-ui/react'
+import {
+  Table,
+  TableContainer,
+  Th,
+  Thead,
+  Tr,
+  Flex,
+  TableContainerProps,
+} from '@chakra-ui/react'
 import { RankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
 import { RankTableProps } from '@/types/RankDataTypes'
@@ -13,7 +21,8 @@ export const RankTable = ({
   siblingCount = 0,
   currentPage = 1,
   pageSize = 10,
-}: RankTableProps) => {
+  ...rest
+}: RankTableProps & TableContainerProps) => {
   return (
     <TableContainer
       w="full"
@@ -24,6 +33,7 @@ export const RankTable = ({
       borderColor="rankingListBorder"
       _dark={{ boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)' }}
       borderBottom="none"
+      {...rest}
     >
       <Table variant="simple">{children}</Table>
       {hasPagination && onPageChange && (
