@@ -105,6 +105,7 @@ const foundersRankListHeadLabels = z.enum([
   'Name',
   'Project',
   'Market Cap',
+  '24h Change',
   'Blockchain',
   'Date Founded',
 ])
