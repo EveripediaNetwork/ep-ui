@@ -45,7 +45,6 @@ export const FoundersRankingListHead: foundersRankinglistHeadProps = [
   },
   {
     label: 'Project',
-
   },
   {
     label: 'Market Cap',
