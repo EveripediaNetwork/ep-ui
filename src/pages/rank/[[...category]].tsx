@@ -200,7 +200,7 @@ const Rank = ({
   }, [tokenData, aiTokenData, stableCoinData, nftData, foundersData])
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    '24h Change': function () {
       if (
         nftData &&
         aiTokenData &&

@@ -83,7 +83,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    '24h Change': function () {
       if (
         tokenItems &&
         nftItems &&
