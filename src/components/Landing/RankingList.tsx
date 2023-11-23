@@ -29,7 +29,7 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import { LinkButton } from '../Elements'
-import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank/[category]'
+import { LISTING_LIMIT, sortByMarketCap } from '@/pages/rank/[[...category]]'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 
