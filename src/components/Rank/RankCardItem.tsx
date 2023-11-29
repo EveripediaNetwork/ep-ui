@@ -50,7 +50,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    event => event.type === EventType.CREATED,
+    (event) => event.type === EventType.CREATED,
   )?.date
 
   return (
