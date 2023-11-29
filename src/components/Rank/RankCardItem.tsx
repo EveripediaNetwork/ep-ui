@@ -50,7 +50,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
 
   return (
@@ -79,13 +79,13 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         pl={{ base: 0, md: '2' }}
-        pr={{ base: 0, md: 6 }}
+        pr={{ base: 2, md: 6 }}
       >
         <Flex gap="2.5" alignItems="center">
           <Box
             flexShrink="0"
-            w={{ base: '30px', md: '40px' }}
-            h={{ base: '30px', md: '40px' }}
+            w={{ base: '24px', md: '40px' }}
+            h={{ base: '24px', md: '40px' }}
           >
             <Image
               src={
@@ -94,14 +94,20 @@ const RankingItem = ({
                   : item.tokenMarketData?.image
               }
               alt={item.title}
-              w={{ base: '30px', md: '40px' }}
-              h={{ base: '30px', md: '40px' }}
+              w={{ base: '24px', md: '40px' }}
+              h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
               objectFit="cover"
             />
           </Box>
           <Box>
-            <Box maxW={{ base: '100px', md: '200px' }} overflowX={'hidden'}>
+            <Box
+              overflow={'hidden'}
+              textOverflow={'ellipsis'}
+              whiteSpace={'nowrap'}
+              maxW={{ base: '70px', md: '200px' }}
+              overflowX={'hidden'}
+            >
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
                   <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
@@ -124,7 +130,11 @@ const RankingItem = ({
                 </Text>
               )}
             </Box>
-            <Text color="rankingListText">
+            <Text
+              color={'gray.500'}
+              _dark={{ color: 'whiteAlpha.700' }}
+              textTransform={'uppercase'}
+            >
               {item.nftMarketData
                 ? item.nftMarketData?.alias
                 : item.tokenMarketData?.alias}
@@ -136,7 +146,7 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        px={{ base: 1, md: 6 }}
+        px={{ base: 2, md: 6 }}
       >
         <Text color="rankingListText">{price}</Text>
       </Td>
@@ -144,7 +154,7 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        px={{ base: 1, md: 6 }}
+        px={{ base: 2, md: 6 }}
       >
         <Flex gap="1">
           <Text color="rankingListText">{marketCap}</Text>
@@ -184,7 +194,7 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        px={{ base: 1, md: 6 }}
+        px={{ base: 2, md: 6 }}
       >
         {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
@@ -215,7 +225,7 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        px={{ base: 1, md: 6 }}
+        px={{ base: 2, md: 6 }}
       >
         {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
@@ -245,7 +255,7 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        px={{ base: 1, md: 6 }}
+        px={{ base: 2, md: 6 }}
       >
         {dateFounded ? (
           <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">

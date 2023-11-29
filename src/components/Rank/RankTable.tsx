@@ -66,7 +66,7 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
               fontSize="12px"
               textTransform="capitalize"
               color="rankingListTableHeading"
-              px={{ base: item.label === '#' ? 3 : 1, md: '6' }}
+              px={{ base: item.label === '#' ? 3 : 2, md: '6' }}
             >
               <Flex
                 alignItems="center"
