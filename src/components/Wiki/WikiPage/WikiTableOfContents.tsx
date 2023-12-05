@@ -23,7 +23,7 @@ interface WikiTableOfContentsProps {
 }
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
-  const toc = useAppSelector(state => state.toc)
+  const toc = useAppSelector((state) => state.toc)
   const { asPath, query, push } = useRouter()
 
   const { slug } = query
@@ -55,7 +55,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     // this function will be called when the heading element is in view
     // hence when the heading element is in view,
     // we will set the activeId to the id of the heading element
-    const callback: IntersectionObserverCallback = headings => {
+    const callback: IntersectionObserverCallback = (headings) => {
       headingElementsRef.current = headings.reduce((map, headingElement) => {
         map[headingElement.target.id] = headingElement
         return map
@@ -63,14 +63,14 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
       // get the id of the heading element that is in view
       const visibleHeadings: IntersectionObserverEntry[] = []
-      Object.keys(headingElementsRef.current).forEach(key => {
+      Object.keys(headingElementsRef.current).forEach((key) => {
         const headingElement: IntersectionObserverEntry =
           headingElementsRef.current[key]
         if (headingElement.isIntersecting) visibleHeadings.push(headingElement)
       })
 
       const getIndexFromId = (id: string) =>
-        headingElements.findIndex(heading => heading.id === id)
+        headingElements.findIndex((heading) => heading.id === id)
 
       // setting the activeId to the id of the heading element that is in view
       if (visibleHeadings.length === 1) {
@@ -78,7 +78,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
       } else if (visibleHeadings.length > 1) {
         // if there are multiple heading elements in view then set heading near to top as active
         let closestHeading: IntersectionObserverEntry = visibleHeadings[0]
-        visibleHeadings.forEach(headingElement => {
+        visibleHeadings.forEach((headingElement) => {
           if (
             closestHeading === undefined ||
             getIndexFromId(closestHeading.target.id) >
@@ -95,7 +95,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     const observer = new IntersectionObserver(callback, {
       rootMargin: '-100px 0px 0px 0px',
     })
-    headingElements.forEach(element => observer.observe(element))
+    headingElements.forEach((element) => observer.observe(element))
 
     return () => observer.disconnect()
   }, [setActiveId, toc])
