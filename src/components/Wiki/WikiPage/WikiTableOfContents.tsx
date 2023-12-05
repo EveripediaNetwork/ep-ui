@@ -9,18 +9,21 @@ import {
   Box,
   useColorMode,
   useBreakpointValue,
+  Icon,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
+import ArrowDown from '@/components/Icons/arrowDown'
+import SquareFill from '@/components/Icons/squareFill'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
 }
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
-  const toc = useAppSelector((state) => state.toc)
+  const toc = useAppSelector(state => state.toc)
   const { asPath, query, push } = useRouter()
 
   const { slug } = query
@@ -52,7 +55,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     // this function will be called when the heading element is in view
     // hence when the heading element is in view,
     // we will set the activeId to the id of the heading element
-    const callback: IntersectionObserverCallback = (headings) => {
+    const callback: IntersectionObserverCallback = headings => {
       headingElementsRef.current = headings.reduce((map, headingElement) => {
         map[headingElement.target.id] = headingElement
         return map
@@ -60,14 +63,14 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
       // get the id of the heading element that is in view
       const visibleHeadings: IntersectionObserverEntry[] = []
-      Object.keys(headingElementsRef.current).forEach((key) => {
+      Object.keys(headingElementsRef.current).forEach(key => {
         const headingElement: IntersectionObserverEntry =
           headingElementsRef.current[key]
         if (headingElement.isIntersecting) visibleHeadings.push(headingElement)
       })
 
       const getIndexFromId = (id: string) =>
-        headingElements.findIndex((heading) => heading.id === id)
+        headingElements.findIndex(heading => heading.id === id)
 
       // setting the activeId to the id of the heading element that is in view
       if (visibleHeadings.length === 1) {
@@ -75,7 +78,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
       } else if (visibleHeadings.length > 1) {
         // if there are multiple heading elements in view then set heading near to top as active
         let closestHeading: IntersectionObserverEntry = visibleHeadings[0]
-        visibleHeadings.forEach((headingElement) => {
+        visibleHeadings.forEach(headingElement => {
           if (
             closestHeading === undefined ||
             getIndexFromId(closestHeading.target.id) >
@@ -92,7 +95,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     const observer = new IntersectionObserver(callback, {
       rootMargin: '-100px 0px 0px 0px',
     })
-    headingElements.forEach((element) => observer.observe(element))
+    headingElements.forEach(element => observer.observe(element))
 
     return () => observer.disconnect()
   }, [setActiveId, toc])
@@ -100,6 +103,9 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   useEffect(() => {
     if (!activeId) setActiveId(toc[0]?.id)
   }, [activeId, toc])
+
+  console.log(toc)
+  const firstLevel = toc[0]?.level
 
   return (
     <>
@@ -147,15 +153,38 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {toc.map(({ level, id, title }) => (
-                  <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
+                {toc.map(({ level, id, title }, index) => (
+                  <Box
+                    key={id}
+                    pl={`${
+                      toc[index + 1]?.level - toc[index]?.level === 1 ||
+                      toc[index]?.level === firstLevel
+                        ? `calc(${(level - 1) * 20}px)`
+                        : `calc(${(level - 1) * 20 + 5}px)`
+                    }`}
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    gap={2}
+                  >
+                    {toc[index + 1]?.level - toc[index]?.level === 1 ? (
+                      <Icon
+                        as={ArrowDown}
+                        flexShrink={0}
+                        color={activeId === id ? 'brandLinkColor' : ''}
+                      />
+                    ) : toc[index]?.level === firstLevel ? (
+                      <Icon
+                        as={SquareFill}
+                        flexShrink={0}
+                        color={activeId === id ? 'brandLinkColor' : ''}
+                      />
+                    ) : (
+                      ''
+                    )}
                     <Text
                       color={activeId === id ? 'brandLinkColor' : 'unset'}
-                      boxShadow={
-                        activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
-                      }
                       outlineColor="brandLinkColor"
-                      pl={2}
                     >
                       <Link href={`#${id}`}>{title}</Link>
                     </Text>
