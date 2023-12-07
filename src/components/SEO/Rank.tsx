@@ -20,7 +20,7 @@ const RankHeader = () => (
       ],
     }}
     twitter={{
-      cardType: 'summary_large_image',
+      cardType: 'summary',
       handle: '@IQWiki',
       site: 'IQWiki',
     }}
