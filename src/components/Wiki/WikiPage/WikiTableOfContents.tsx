@@ -1,29 +1,61 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   VStack,
-  Text,
-  Link,
   useDisclosure,
   IconButton,
   Flex,
   Box,
   useColorMode,
   useBreakpointValue,
-  Icon,
 } from '@chakra-ui/react'
 import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
-import ArrowDown from '@/components/Icons/arrowDown'
-import SquareFill from '@/components/Icons/squareFill'
+import { WikiTableOfContentHeader } from './WikiTableOfContentHeader'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
 }
 
+interface Item {
+  level: number
+  id: string
+  title: string
+  subChildren?: Item[]
+}
+
+function groupArrayByLevel(inputArray: Item[]): Item[] {
+  const result: Item[] = []
+  const levelMap: Record<number, Item[]> = {}
+
+  inputArray.forEach(item => {
+    const { id, title, level } = item
+    const tocItem: Item = { level, id, title }
+
+    if (level === 1) {
+      result.push(tocItem)
+    } else {
+      const parentLevel = level - 1
+      const parentItems = levelMap[parentLevel]
+      const parentItem = parentItems[parentItems.length - 1]
+      if (!parentItem.subChildren) {
+        parentItem.subChildren = []
+      }
+      parentItem.subChildren.push(tocItem)
+    }
+
+    if (!levelMap[level]) {
+      levelMap[level] = []
+    }
+    levelMap[level].push(tocItem)
+  })
+
+  return result
+}
+
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
-  const toc = useAppSelector((state) => state.toc)
+  const toc = useAppSelector(state => state.toc)
   const { asPath, query, push } = useRouter()
 
   const { slug } = query
@@ -55,7 +87,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     // this function will be called when the heading element is in view
     // hence when the heading element is in view,
     // we will set the activeId to the id of the heading element
-    const callback: IntersectionObserverCallback = (headings) => {
+    const callback: IntersectionObserverCallback = headings => {
       headingElementsRef.current = headings.reduce((map, headingElement) => {
         map[headingElement.target.id] = headingElement
         return map
@@ -63,14 +95,14 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
       // get the id of the heading element that is in view
       const visibleHeadings: IntersectionObserverEntry[] = []
-      Object.keys(headingElementsRef.current).forEach((key) => {
+      Object.keys(headingElementsRef.current).forEach(key => {
         const headingElement: IntersectionObserverEntry =
           headingElementsRef.current[key]
         if (headingElement.isIntersecting) visibleHeadings.push(headingElement)
       })
 
       const getIndexFromId = (id: string) =>
-        headingElements.findIndex((heading) => heading.id === id)
+        headingElements.findIndex(heading => heading.id === id)
 
       // setting the activeId to the id of the heading element that is in view
       if (visibleHeadings.length === 1) {
@@ -78,7 +110,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
       } else if (visibleHeadings.length > 1) {
         // if there are multiple heading elements in view then set heading near to top as active
         let closestHeading: IntersectionObserverEntry = visibleHeadings[0]
-        visibleHeadings.forEach((headingElement) => {
+        visibleHeadings.forEach(headingElement => {
           if (
             closestHeading === undefined ||
             getIndexFromId(closestHeading.target.id) >
@@ -95,7 +127,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     const observer = new IntersectionObserver(callback, {
       rootMargin: '-100px 0px 0px 0px',
     })
-    headingElements.forEach((element) => observer.observe(element))
+    headingElements.forEach(element => observer.observe(element))
 
     return () => observer.disconnect()
   }, [setActiveId, toc])
@@ -103,10 +135,6 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   useEffect(() => {
     if (!activeId) setActiveId(toc[0]?.id)
   }, [activeId, toc])
-
-  console.log(toc)
-  const firstLevel = toc[0]?.level
-
   return (
     <>
       {isOpen === isDefaultOpen ? (
@@ -129,12 +157,18 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                 aria-label="Toggle Table of Contents"
                 icon={<RiMenu3Fill />}
                 onClick={onToggle}
+                backgroundColor={'gray.100'}
+                color={'gray.600'}
+                _dark={{
+                  backgroundColor: 'whiteAlpha.50',
+                  color: 'whiteAlpha.900',
+                }}
               />
             </Flex>
             <StaticContent>
               <VStack
                 as="nav"
-                spacing={4}
+                gap={4}
                 h="calc(100vh - (70px + 90px))"
                 overflowY="scroll"
                 pr={4}
@@ -153,42 +187,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {toc.map(({ level, id, title }, index) => (
-                  <Box
-                    key={id}
-                    pl={`${
-                      toc[index + 1]?.level - toc[index]?.level === 1 ||
-                      toc[index]?.level === firstLevel
-                        ? `calc(${(level - 1) * 20}px)`
-                        : `calc(${(level - 1) * 20 + 5}px)`
-                    }`}
-                    display={'flex'}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}
-                    gap={2}
-                  >
-                    {toc[index + 1]?.level - toc[index]?.level === 1 ? (
-                      <Icon
-                        as={ArrowDown}
-                        flexShrink={0}
-                        color={activeId === id ? 'brandLinkColor' : ''}
-                      />
-                    ) : toc[index]?.level === firstLevel ? (
-                      <Icon
-                        as={SquareFill}
-                        flexShrink={0}
-                        color={activeId === id ? 'brandLinkColor' : ''}
-                      />
-                    ) : (
-                      ''
-                    )}
-                    <Text
-                      color={activeId === id ? 'brandLinkColor' : 'unset'}
-                      outlineColor="brandLinkColor"
-                    >
-                      <Link href={`#${id}`}>{title}</Link>
-                    </Text>
-                  </Box>
+                {groupArrayByLevel(toc).map(item => (
+                  <WikiTableOfContentHeader
+                    toc={item}
+                    key={item.id}
+                    activeId={activeId}
+                  />
                 ))}
               </VStack>
             </StaticContent>
@@ -205,6 +209,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
             aria-label="Toggle Table of Contents"
             icon={<RiMenu3Fill />}
             onClick={onToggle}
+            backgroundColor={'gray.100'}
+            color={'gray.600'}
+            _dark={{
+              backgroundColor: 'whiteAlpha.50',
+              color: 'whiteAlpha.900',
+            }}
           />
         </Box>
       )}

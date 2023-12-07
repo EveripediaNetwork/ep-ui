@@ -29,6 +29,7 @@ const WikiAdCard = () => {
           mt={'6px'}
           color={'brandLinkColor'}
           cursor={'pointer'}
+          width={'fit-content'}
         >
           <Text
             fontSize={{ base: '14px', sm: '16px', xl: '14px' }}
