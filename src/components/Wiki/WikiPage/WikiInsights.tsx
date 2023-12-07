@@ -78,7 +78,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       borderLeftWidth={{ base: 0, xl: '1px' }}
       p={{ base: 0, md: 2, xl: 4 }}
       pr={{ md: 11, xl: 4 }}
-      pt={{ xl: '9', md: '8', base: '10' }}
+      pt={{ xl: '28', md: '8', base: '10' }}
       borderColor="rankingListBorder"
     >
       <Box as="aside" ref={stickyRef} w="100%">
