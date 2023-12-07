@@ -7,7 +7,7 @@ const RankHeader = () => (
     description="Live update for nft and tokens marketcap"
     canonical="https://iq.wiki/rank"
     openGraph={{
-      title: 'Rank- MarketCap',
+      title: 'Rank - MarketCap',
       description:
         'A list of cryptocurrencies, NFTs and crypto founders ranked by their individual market cap',
       images: [
