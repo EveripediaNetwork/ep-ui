@@ -20,6 +20,7 @@ import {
   REVALIDATE_URL,
   CONTENT_FEEDBACK,
   WIKIS_VIEWS,
+  WIKIS_PER_VISIT,
 } from '@/services/admin/queries'
 import config from '@/config'
 import {
@@ -42,6 +43,11 @@ type WikisModifiedCountArgs = {
 }
 type EditorsModifiedCountArgs = {
   startDate?: number
+}
+
+type WikiViewsModifiedArgs = {
+  amount: number
+  interval?: string
 }
 
 type PageViewCountArgs = {
@@ -74,6 +80,19 @@ type ContentFeedback = {
 
 type WikisEditorsCountResponse = {
   editorCount: { amount: number }
+}
+
+type TWikisViewPerVisit = {
+  id: string
+  title: string
+  views: number
+  visits: number
+  categories: { id: string }[]
+  tags: { id: string }[]
+}
+
+type WikisPerVisitResponse = {
+  wikisPerVisits: TWikisViewPerVisit[]
 }
 type WikisCreatedCountResponse = {
   wikisCreated: WikisModifiedCount[]
@@ -157,6 +176,14 @@ export const adminApi = createApi({
         variables: { limit, offset },
       }),
       transformResponse: (response: EditorsRes) => response.users,
+    }),
+    getWikiVisits: builder.query<TWikisViewPerVisit[], WikiViewsModifiedArgs>({
+      query: ({ amount, interval }: WikiViewsModifiedArgs) => ({
+        document: WIKIS_PER_VISIT,
+        variables: { amount, interval },
+      }),
+      transformResponse: (response: WikisPerVisitResponse) =>
+        response.wikisPerVisits,
     }),
     getPageViewCount: builder.query<{ amount: number }, PageViewCountArgs>({
       query: ({ startDate }: PageViewCountArgs) => ({
@@ -257,9 +284,9 @@ export const adminApi = createApi({
         response.unhideWiki.Wiki,
     }),
     getSearchedEditors: builder.query<Editors[], SearchedEditorQueryParams>({
-      query: ({ id, username }: { id: string; username: string }) => ({
+      query: ({ username }: { username: string }) => ({
         document: SEARCHED_EDITORS,
-        variables: { id, username },
+        variables: { username },
       }),
       transformResponse: (response: SearchedEditorsRes) =>
         response.getProfileLikeUsername,
@@ -322,6 +349,7 @@ export const {
   useRevalidateURLMutation,
   useContentFeedbackMutation,
   useGetWikisViewsCountQuery,
+  useGetWikiVisitsQuery,
 } = adminApi
 
 export const {
@@ -344,4 +372,5 @@ export const {
   postPromotedWiki,
   getSearchedEditors,
   getWikisViewsCount,
+  getWikiVisits,
 } = adminApi.endpoints

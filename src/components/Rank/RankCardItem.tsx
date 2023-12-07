@@ -23,7 +23,7 @@ const marketCapFormatter = Intl.NumberFormat('en', {
 const priceFormatter = Intl.NumberFormat('en', {
   notation: 'standard',
   minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  maximumFractionDigits: 4,
 }).format
 
 const RankingItem = ({
@@ -40,13 +40,13 @@ const RankingItem = ({
   listingLimit: number
 }) => {
   const marketCap = item.nftMarketData
-    ? marketCapFormatter(item.nftMarketData.market_cap_usd)
-    : marketCapFormatter(item.tokenMarketData.market_cap)
+    ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
+    : marketCapFormatter(item.tokenMarketData?.market_cap)
 
   const price = `$${
     item.nftMarketData
-      ? priceFormatter(item.nftMarketData.floor_price_usd)
-      : priceFormatter(item.tokenMarketData.current_price)
+      ? priceFormatter(item.nftMarketData?.floor_price_usd)
+      : priceFormatter(item.tokenMarketData?.current_price)
   }`
 
   const dateFounded = item?.events?.find(
@@ -66,9 +66,9 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        pr="1"
+        px={{ base: 3, md: '6' }}
       >
-        <Text color="rankingListText">
+        <Text color="rankingListText" width={'fit-content'}>
           {order === 'descending'
             ? index + offset + 1
             : listingLimit + offset - index}
@@ -78,53 +78,84 @@ const RankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        pl="2"
+        pl={{ base: 0, md: '2' }}
+        pr={{ base: 2, md: 6 }}
       >
         <Flex gap="2.5" alignItems="center">
-          <Box flexShrink="0" w="40px" h="40px">
+          <Box
+            flexShrink="0"
+            w={{ base: '24px', md: '40px' }}
+            h={{ base: '24px', md: '40px' }}
+          >
             <Image
               src={
                 item.nftMarketData
-                  ? item.nftMarketData.image
-                  : item.tokenMarketData.image
+                  ? item.nftMarketData?.image
+                  : item.tokenMarketData?.image
               }
               alt={item.title}
-              w="40px"
-              h="40px"
+              w={{ base: '24px', md: '40px' }}
+              h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
               objectFit="cover"
             />
           </Box>
           <Box>
-            <Box>
+            <Box
+              overflow={'hidden'}
+              textOverflow={'ellipsis'}
+              whiteSpace={'nowrap'}
+              maxW={{ base: '70px', md: '200px' }}
+              overflowX={'hidden'}
+            >
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
-                  <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                  <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                     {item.title}
                   </Link>
                 ) : (
                   <Text>{item.title}</Text>
                 )
               ) : item.tokenMarketData?.hasWiki ? (
-                <Link color="brandLinkColor" href={`wiki/${item.id}`}>
+                <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
                   {item.title}
                 </Link>
               ) : (
-                <Text>{item.title}</Text>
+                <Text
+                  overflow={'hidden'}
+                  textOverflow={'ellipsis'}
+                  whiteSpace={'nowrap'}
+                >
+                  {item.title}
+                </Text>
               )}
             </Box>
-            <Text color="rankingListText">
+            <Text
+              color={'gray.500'}
+              _dark={{ color: 'whiteAlpha.700' }}
+              textTransform={'uppercase'}
+            >
               {item.nftMarketData
-                ? item.nftMarketData.alias
-                : item.tokenMarketData.alias}
+                ? item.nftMarketData?.alias
+                : item.tokenMarketData?.alias}
             </Text>
           </Box>
         </Flex>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={{ base: 2, md: 6 }}
+      >
         <Text color="rankingListText">{price}</Text>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={{ base: 2, md: 6 }}
+      >
         <Flex gap="1">
           <Text color="rankingListText">{marketCap}</Text>
           {item.nftMarketData ? (
@@ -133,13 +164,13 @@ const RankingItem = ({
               fontSize="10px"
               lineHeight="15px"
               color={
-                item.nftMarketData.floor_price_in_usd_24h_percentage_change < 0
+                item.nftMarketData?.floor_price_in_usd_24h_percentage_change < 0
                   ? 'red.500'
                   : 'green.500'
               }
             >
               {Math.abs(
-                item.nftMarketData.floor_price_in_usd_24h_percentage_change,
+                item.nftMarketData?.floor_price_in_usd_24h_percentage_change,
               ).toFixed(2)}
               %
             </Text>
@@ -149,26 +180,31 @@ const RankingItem = ({
               fontSize="10px"
               lineHeight="15px"
               color={
-                item.tokenMarketData.price_change_24h < 0
+                item.tokenMarketData?.price_change_24h < 0
                   ? 'red.500'
                   : 'green.500'
               }
             >
-              {Math.abs(item.tokenMarketData.price_change_24h).toFixed(2)}%
+              {Math.abs(item.tokenMarketData?.price_change_24h).toFixed(2)}%
             </Text>
           )}
         </Flex>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={{ base: 2, md: 6 }}
+      >
         {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
-            {formatFoundersArray(item.linkedWikis.founders)
+            {formatFoundersArray(item.linkedWikis?.founders)
               ?.slice(0, MAX_LINKED_WIKIS)
               ?.map((founderName, i, arr) => {
-                const founder = item.linkedWikis.founders[i]
+                const founder = item.linkedWikis?.founders[i]
                 return (
                   <Link
-                    href={`wiki/${founder}`}
+                    href={`/wiki/${founder}`}
                     key={`founder${i}`}
                     color="brandLinkColor"
                   >
@@ -185,7 +221,12 @@ const RankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={{ base: 2, md: 6 }}
+      >
         {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
@@ -198,7 +239,7 @@ const RankingItem = ({
                         ,
                       </Box>
                     )}
-                    <Link href={`wiki/${blockchain}`} color="brandLinkColor">
+                    <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
                         blockchain.slice(1).replace('-', ' ')}
                     </Link>
@@ -210,7 +251,12 @@ const RankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={{ base: 2, md: 6 }}
+      >
         {dateFounded ? (
           <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
             <Text>{formatDate(dateFounded)}</Text>

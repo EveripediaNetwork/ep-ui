@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, BoxProps } from '@chakra-ui/react'
-import NextImage, { ImageProps } from 'next/image'
-import type { ImageLoader } from 'next/dist/client/image'
+import NextImage, { ImageLoader, ImageProps } from 'next/image'
 
 interface CfLoaderArgs {
   src: string
@@ -16,7 +15,7 @@ export const cfLoader: ImageLoader = ({
   width,
   quality,
 }: CfLoaderArgs) => {
-  const params = [`width=${width}`]
+  const params = [`width=${width}`, 'format=auto']
   if (quality) params.push(`quality=${quality}`)
   const paramsString = params.join(',')
   return `${BASE_URL}/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`

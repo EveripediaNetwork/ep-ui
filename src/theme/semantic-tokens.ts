@@ -170,7 +170,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'gray.700',
     },
     wikiTitleBg: {
-      default: '#0000000A',
+      default: 'gray.100',
       _dark: 'gray.700',
     },
     wikiAdminTableBg: {

@@ -79,7 +79,7 @@ const BrandingPage = () => {
               fontWeight={'600'}
               fontSize={{ base: '20px', md: '28px', lg: '36px', xl: '48px' }}
             >
-              IQ wiki Media Kit
+              IQ.wiki Media Kit
             </Heading>
             <Text
               maxW={{ sm: '70%', xl: '828px' }}
@@ -178,10 +178,10 @@ const BrandingPage = () => {
           isBrainDao
         />
         <BrandWrapper
-          title="BrainDao- Alternate logo"
+          title="BrainDAO - Alternate logo"
           brandAsset={braindaoLogoAssets}
         />
-        <BrandWrapper title="IQGPT" brandAsset={iqgptLogoAssets} />
+        <BrandWrapper title="IQ GPT" brandAsset={iqgptLogoAssets} />
 
         <Box bgColor={'bodyBg'}>
           <Box py={24} maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">

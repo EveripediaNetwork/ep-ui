@@ -83,7 +83,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Youtube',
     icon: AiFillYoutube,
-    tests: [/https:\/\/(www.)?youtube.com\/\w+/],
+    tests: [/https:\/\/(www.)?youtube.com\/[\w@]+/],
   },
   {
     id: CommonMetaIds.FACEBOOK_PROFILE,

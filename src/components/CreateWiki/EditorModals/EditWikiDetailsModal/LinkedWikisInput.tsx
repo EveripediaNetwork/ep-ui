@@ -42,7 +42,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     const filteredData = data?.filter((w) =>
       w.tags.find((t) => t.id.toLocaleLowerCase() === tag),
     )
-    cb(filteredData || [])
+    cb(filteredData ?? [])
   }
 
   const debouncedFetchWikis = debounce(
@@ -96,6 +96,12 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
     wiki.linkedWikis &&
     Object.values(wiki.linkedWikis).some((wikis) => wikis.length > 0)
 
+  const getWikiPreviewByTitle = (
+    wikiPreviews: WikiPreview[],
+    wikiTitle: string,
+  ): WikiPreview | undefined =>
+    wikiPreviews.find((preview) => preview.title === wikiTitle)
+
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">Link Wikis</Text>
@@ -121,7 +127,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         </Select>
         <Box flex="8">
           <AutoComplete
+            disableFilter
             suggestWhenEmpty
+            shouldRenderSuggestions={(q) => q.length >= 3}
+            openOnFocus={search.length >= 3}
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">
@@ -130,8 +139,10 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
                 </Text>
               </Center>
             }
-            onChange={(val) => {
-              setSelectedWiki(val)
+            onSelectOption={(option) => {
+              const { title } = option.item.originalValue
+              const wikiPreview = getWikiPreviewByTitle(results, title)
+              setSelectedWiki(wikiPreview?.id ?? '')
               setSearch('')
             }}
           >
@@ -142,8 +153,11 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               disabled={!linkType}
               placeholder="Search a wiki"
               value={(search || selectedWiki) ?? ''}
-              onChange={(e) => setSearch(e.target.value)}
-              type="url"
+              onChange={(e) => {
+                setSearch(e.target.value)
+              }}
+              type="text"
+              autoFocus
             />
             {!loading && (
               <AutoCompleteList
