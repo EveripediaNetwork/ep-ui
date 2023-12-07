@@ -2,6 +2,7 @@ import ArrowDown from '@/components/Icons/arrowDown'
 import SquareFill from '@/components/Icons/squareFill'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import * as Collapsible from '@radix-ui/react-collapsible'
+import { useState } from 'react'
 
 type TocData = Array<{
   id: string
@@ -17,6 +18,8 @@ export function WikiTableOfContentHeader({
   toc: TocData[0]
   activeId?: string | null
 }) {
+  const [open, setOpen] = useState(false)
+
   if (!toc.subChildren) {
     return (
       <Box
@@ -47,7 +50,7 @@ export function WikiTableOfContentHeader({
     )
   }
   return (
-    <Collapsible.Root defaultOpen>
+    <Collapsible.Root defaultOpen open={open} onOpenChange={setOpen}>
       <Box
         display={'flex'}
         alignItems={'center'}
@@ -59,7 +62,7 @@ export function WikiTableOfContentHeader({
             as={ArrowDown}
             flexShrink={0}
             color={activeId === toc.id ? 'brandLinkColor' : ''}
-            rotate={activeId === toc.id ? 180 : 0}
+            transform={open ? 'rotate(0deg)' : 'rotate(-90deg)'}
           />
         </Collapsible.Trigger>
         <Text
