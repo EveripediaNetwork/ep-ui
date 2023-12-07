@@ -25,7 +25,6 @@ export function WikiTableOfContentHeader({
       <Box
         display={'flex'}
         alignItems={'center'}
-        gap={2}
         pl={`${
           toc.level === 1
             ? `calc(${(toc.level - 1) * 20}px)`
@@ -42,7 +41,13 @@ export function WikiTableOfContentHeader({
         )}
         <Text
           color={activeId === toc.id ? 'brandLinkColor' : 'unset'}
+          boxShadow={
+            activeId === toc.id && toc.level !== 1
+              ? '-2px 0px 0px 0px #ff5caa'
+              : '0'
+          }
           outlineColor="brandLinkColor"
+          pl={2}
         >
           <Link href={`#${toc.id}`}>{toc.title}</Link>
         </Text>
