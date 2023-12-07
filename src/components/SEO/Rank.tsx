@@ -8,7 +8,15 @@ const RankHeader = () => (
     canonical="https://iq.wiki/rank"
     openGraph={{
       title: 'Rank- MarketCap',
-      description: 'Live update for nft and tokens marketcap',
+      description: 'A list of cryptocurrency wikis ranked by their individual market cap',
+      images: [
+        {
+          url: 'https://iq.wiki/images/defaults/og-image-default.png',
+          width: 1200,
+          height: 630,
+          alt: 'IQ.wiki | Crypto Encyclopedia',
+        },
+      ],
     }}
     twitter={{
       cardType: 'summary_large_image',
