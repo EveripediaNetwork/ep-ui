@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   VStack,
+  Text,
+  Link,
   useDisclosure,
   IconButton,
   Flex,
@@ -12,46 +14,9 @@ import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
-import { WikiTableOfContentHeader } from './WikiTableOfContentHeader'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
-}
-
-interface Item {
-  level: number
-  id: string
-  title: string
-  subChildren?: Item[]
-}
-
-function groupArrayByLevel(inputArray: Item[]): Item[] {
-  const result: Item[] = []
-  const levelMap: Record<number, Item[]> = {}
-
-  inputArray.forEach((item) => {
-    const { id, title, level } = item
-    const tocItem: Item = { level, id, title }
-
-    if (level === 1) {
-      result.push(tocItem)
-    } else {
-      const parentLevel = level - 1
-      const parentItems = levelMap[parentLevel]
-      const parentItem = parentItems[parentItems.length - 1]
-      if (!parentItem.subChildren) {
-        parentItem.subChildren = []
-      }
-      parentItem.subChildren.push(tocItem)
-    }
-
-    if (!levelMap[level]) {
-      levelMap[level] = []
-    }
-    levelMap[level].push(tocItem)
-  })
-
-  return result
 }
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
@@ -135,6 +100,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
   useEffect(() => {
     if (!activeId) setActiveId(toc[0]?.id)
   }, [activeId, toc])
+
   return (
     <>
       {isOpen === isDefaultOpen ? (
@@ -157,18 +123,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                 aria-label="Toggle Table of Contents"
                 icon={<RiMenu3Fill />}
                 onClick={onToggle}
-                backgroundColor={'gray.100'}
-                color={'gray.600'}
-                _dark={{
-                  backgroundColor: 'whiteAlpha.50',
-                  color: 'whiteAlpha.900',
-                }}
               />
             </Flex>
             <StaticContent>
               <VStack
                 as="nav"
-                gap={4}
+                spacing={4}
                 h="calc(100vh - (70px + 90px))"
                 overflowY="scroll"
                 pr={4}
@@ -187,12 +147,19 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {groupArrayByLevel(toc).map((item) => (
-                  <WikiTableOfContentHeader
-                    toc={item}
-                    key={item.id}
-                    activeId={activeId}
-                  />
+                {toc.map(({ level, id, title }) => (
+                  <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
+                    <Text
+                      color={activeId === id ? 'brandLinkColor' : 'unset'}
+                      boxShadow={
+                        activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
+                      }
+                      outlineColor="brandLinkColor"
+                      pl={2}
+                    >
+                      <Link href={`#${id}`}>{title}</Link>
+                    </Text>
+                  </Box>
                 ))}
               </VStack>
             </StaticContent>
@@ -209,12 +176,6 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
             aria-label="Toggle Table of Contents"
             icon={<RiMenu3Fill />}
             onClick={onToggle}
-            backgroundColor={'gray.100'}
-            color={'gray.600'}
-            _dark={{
-              backgroundColor: 'whiteAlpha.50',
-              color: 'whiteAlpha.900',
-            }}
           />
         </Box>
       )}
