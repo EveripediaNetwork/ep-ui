@@ -1,22 +1,11 @@
 import React from 'react'
-import {
-  LinkBox,
-  Text,
-  SimpleGrid,
-  Heading,
-  VStack,
-  Flex,
-  Box,
-} from '@chakra-ui/react'
-import { Image } from '@/components/Elements/Image/Image'
+import { Text, SimpleGrid, Heading, VStack, Flex, Box } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { CategoryDataType } from '@/types/CategoryDataTypes'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '../Elements'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
+import CategoryCard from '../Categories/CategoryCard'
 
-const CATEGORY_IMAGE_BOX_SIZE = 300
 const NUM_OF_CATEGORIES = 6
 
 const CategoriesList = () => {
@@ -69,51 +58,19 @@ const CategoriesList = () => {
         spacingY={12}
         px={6}
       >
-        {newCategoryList.map((category) => (
-          <div key={category.id}>
-            <LinkBox
-              _hover={{
-                boxShadow: '3xl',
-                transform: 'scale(1.02)',
-                _dark: {
-                  boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
-                },
-              }}
-              transition="all 0.3s"
-              cursor="pointer"
-              bgColor="cardBg"
-              border={'1px'}
-              borderColor={'gray.100'}
-              borderRadius="lg"
-              overflow="hidden"
-              _dark={{
-                borderColor: 'whiteAlpha.300',
-              }}
-            >
-              <LinkOverlay href={`/categories/${category.id}`}>
-                <Image
-                  bgColor="DimColor"
-                  src={category.cardImage}
-                  h={{ base: '200px', md: '225px', xl: '300px' }}
-                  w="100%"
-                  alt={category.title}
-                  imgW={CATEGORY_IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
-                  imgH={CATEGORY_IMAGE_BOX_SIZE}
-                />
-                <Text
-                  py="4"
-                  w="100%"
-                  textAlign="center"
-                  fontWeight="bold"
-                  fontSize="lg"
-                  size="md"
-                >
-                  {category.title}
-                </Text>
-              </LinkOverlay>
-            </LinkBox>
-          </div>
-        ))}
+        {newCategoryList?.map(
+          (category) =>
+            category.cardImage && (
+              <CategoryCard
+                key={category.id}
+                imageCard={category.cardImage}
+                title={category.title}
+                brief={category.description}
+                categoryId={category.id}
+                coverIcon={category.icon}
+              />
+            ),
+        )}
       </SimpleGrid>
       <Box mt="10 !important">
         <Flex justifyContent="center">
