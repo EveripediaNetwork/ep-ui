@@ -73,7 +73,7 @@ export function WikiTableOfContentHeader({
         </Text>
       </Box>
       <Collapsible.Content>
-        {toc.subChildren.map(toc => (
+        {toc.subChildren.map((toc) => (
           <WikiTableOfContentHeader
             key={toc.id}
             toc={toc}
