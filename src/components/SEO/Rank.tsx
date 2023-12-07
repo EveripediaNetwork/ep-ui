@@ -7,7 +7,7 @@ const RankHeader = () => (
     description="Live update for nft and tokens marketcap"
     canonical="https://iq.wiki/rank"
     openGraph={{
-      title: 'Rank- MarketCap',
+      title: 'Rank - MarketCap',
       description:
         'A list of cryptocurrencies, NFTs and crypto founders ranked by their individual market cap',
       images: [
@@ -20,7 +20,7 @@ const RankHeader = () => (
       ],
     }}
     twitter={{
-      cardType: 'summary_large_image',
+      cardType: 'summary',
       handle: '@IQWiki',
       site: 'IQWiki',
     }}
