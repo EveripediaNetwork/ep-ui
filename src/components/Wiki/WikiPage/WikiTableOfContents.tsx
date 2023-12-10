@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   VStack,
-  Text,
-  Link,
   useDisclosure,
   IconButton,
   Flex,
@@ -14,6 +12,7 @@ import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
+import { WikiTableOfContentHeader } from './WikiTableOfContentHeader'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
@@ -148,8 +147,6 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     if (!activeId) setActiveId(toc[0]?.id)
   }, [activeId, toc])
 
-  console.log({ toc })
-  console.log(groupArrayByLevel(toc))
   return (
     <>
       {isOpen === isDefaultOpen ? (
@@ -196,19 +193,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {toc.map(({ level, id, title }) => (
-                  <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
-                    <Text
-                      color={activeId === id ? 'brandLinkColor' : 'unset'}
-                      boxShadow={
-                        activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
-                      }
-                      outlineColor="brandLinkColor"
-                      pl={2}
-                    >
-                      <Link href={`#${id}`}>{title}</Link>
-                    </Text>
-                  </Box>
+                {groupArrayByLevel(toc).map(item => (
+                  <WikiTableOfContentHeader
+                    toc={item}
+                    key={item.id}
+                    activeId={activeId}
+                  />
                 ))}
               </VStack>
             </StaticContent>
