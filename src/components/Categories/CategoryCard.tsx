@@ -37,8 +37,8 @@ const CategoryCard = (props: CategoryCardProps) => {
             objectPosition={'top'}
             alt={title}
             loading="lazy"
-            imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
-            imgH={IMAGE_BOX_SIZE}
+            imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO * 2}
+            imgH={IMAGE_BOX_SIZE * 2}
           />
           <Box position="absolute" bottom="0" left="50%">
             <Icon

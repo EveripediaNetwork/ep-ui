@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   VStack,
+  Text,
+  Link,
   useDisclosure,
   IconButton,
   Flex,
@@ -12,7 +14,6 @@ import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
-import { WikiTableOfContentHeader } from './WikiTableOfContentHeader'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
@@ -29,7 +30,7 @@ function groupArrayByLevel(inputArray: TOCItem[]): TOCItem[] {
   const result: TOCItem[] = []
   const levelMap: Record<number, TOCItem[]> = {}
 
-  inputArray.forEach((item) => {
+  inputArray.forEach(item => {
     const { id, title, level } = item
     const tocItem: TOCItem = { level, id, title }
 
@@ -66,7 +67,7 @@ function groupArrayByLevel(inputArray: TOCItem[]): TOCItem[] {
 }
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
-  const toc = useAppSelector((state) => state.toc)
+  const toc = useAppSelector(state => state.toc)
   const { asPath, query, push } = useRouter()
 
   const { slug } = query
@@ -98,7 +99,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     // this function will be called when the heading element is in view
     // hence when the heading element is in view,
     // we will set the activeId to the id of the heading element
-    const callback: IntersectionObserverCallback = (headings) => {
+    const callback: IntersectionObserverCallback = headings => {
       headingElementsRef.current = headings.reduce((map, headingElement) => {
         map[headingElement.target.id] = headingElement
         return map
@@ -106,14 +107,14 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
 
       // get the id of the heading element that is in view
       const visibleHeadings: IntersectionObserverEntry[] = []
-      Object.keys(headingElementsRef.current).forEach((key) => {
+      Object.keys(headingElementsRef.current).forEach(key => {
         const headingElement: IntersectionObserverEntry =
           headingElementsRef.current[key]
         if (headingElement.isIntersecting) visibleHeadings.push(headingElement)
       })
 
       const getIndexFromId = (id: string) =>
-        headingElements.findIndex((heading) => heading.id === id)
+        headingElements.findIndex(heading => heading.id === id)
 
       // setting the activeId to the id of the heading element that is in view
       if (visibleHeadings.length === 1) {
@@ -121,7 +122,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
       } else if (visibleHeadings.length > 1) {
         // if there are multiple heading elements in view then set heading near to top as active
         let closestHeading: IntersectionObserverEntry = visibleHeadings[0]
-        visibleHeadings.forEach((headingElement) => {
+        visibleHeadings.forEach(headingElement => {
           if (
             closestHeading === undefined ||
             getIndexFromId(closestHeading.target.id) >
@@ -138,7 +139,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
     const observer = new IntersectionObserver(callback, {
       rootMargin: '-100px 0px 0px 0px',
     })
-    headingElements.forEach((element) => observer.observe(element))
+    headingElements.forEach(element => observer.observe(element))
 
     return () => observer.disconnect()
   }, [setActiveId, toc])
@@ -171,18 +172,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                 aria-label="Toggle Table of Contents"
                 icon={<RiMenu3Fill />}
                 onClick={onToggle}
-                backgroundColor={'gray.100'}
-                color={'gray.600'}
-                _dark={{
-                  backgroundColor: 'whiteAlpha.50',
-                  color: 'whiteAlpha.900',
-                }}
               />
             </Flex>
             <StaticContent>
               <VStack
                 as="nav"
-                gap={4}
+                spacing={4}
                 h="calc(100vh - (70px + 90px))"
                 overflowY="scroll"
                 pr={4}
@@ -201,12 +196,19 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {groupArrayByLevel(toc).map((item) => (
-                  <WikiTableOfContentHeader
-                    toc={item}
-                    key={item.id}
-                    activeId={activeId}
-                  />
+                {toc.map(({ level, id, title }) => (
+                  <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
+                    <Text
+                      color={activeId === id ? 'brandLinkColor' : 'unset'}
+                      boxShadow={
+                        activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
+                      }
+                      outlineColor="brandLinkColor"
+                      pl={2}
+                    >
+                      <Link href={`#${id}`}>{title}</Link>
+                    </Text>
+                  </Box>
                 ))}
               </VStack>
             </StaticContent>
@@ -223,12 +225,6 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
             aria-label="Toggle Table of Contents"
             icon={<RiMenu3Fill />}
             onClick={onToggle}
-            backgroundColor={'gray.100'}
-            color={'gray.600'}
-            _dark={{
-              backgroundColor: 'whiteAlpha.50',
-              color: 'whiteAlpha.900',
-            }}
           />
         </Box>
       )}
