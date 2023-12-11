@@ -2,7 +2,7 @@ import { TeamDataType } from '@/types/TeamDataType'
 
 export const TeamData: TeamDataType = [
   {
-    image: '/images/team/navin.png',
+    image: '/images/team/navin-new.png',
     name: 'Navin Vethanayagam',
     title: 'Chief Brain',
     about:
@@ -13,7 +13,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/ted.png',
+    image: '/images/team/ted-new.png',
     name: 'Theodor Forselius',
     title: 'Co-founder',
     about:
@@ -24,7 +24,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/travis.png',
+    image: '/images/team/travis-new.png',
     name: 'Travis Moore',
     title: 'Co-founder',
     about:
@@ -47,7 +47,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/violetta.png',
+    image: '/images/team/violetta-new.png',
     name: 'Violetta Ziborova',
     title: 'Content Manager',
     about:
@@ -57,7 +57,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/kevin.png',
+    image: '/images/team/kevin-new.png',
     name: 'Kevin Wang',
     title: 'Director Business of Development in China',
     about:
@@ -67,7 +67,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/cho-new.png',
+    image: '/images/team/cho.png',
     name: 'Andy Cho',
     title: 'Director of Business Development',
     about:
@@ -77,7 +77,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/robertto.png',
+    image: '/images/team/robertto-new.png',
     name: 'Roberto Dobrescu',
     title: 'Director of Operations',
     about:
@@ -87,7 +87,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/justin-moore.png',
+    image: '/images/team/justin-moore-new.png',
     name: 'Justin Moore',
     title: 'Senior Software Engineer',
     about:
@@ -98,7 +98,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/suchet.png',
+    image: '/images/team/suchet-new.png',
     name: 'Suchet Dhindsa',
     title: 'Chief Operating and Financial Officer',
     about:
@@ -108,7 +108,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/kesar.png',
+    image: '/images/team/kesar-new.png',
     name: 'César Rodríguez',
     title: 'Chief Technology Officer',
     about:
