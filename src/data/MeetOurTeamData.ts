@@ -67,7 +67,7 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/andy.png',
+    image: '/images/team/cho-new.png',
     name: 'Andy Cho',
     title: 'Director of Business Development',
     about:
