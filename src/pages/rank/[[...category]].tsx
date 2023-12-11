@@ -568,12 +568,12 @@ const Rank = ({
                   className="testname"
                   maxW={'4xl'}
                 >
-                  Verify the wikis of{' '}
+                  View the wikis for each of the{' '}
                   <chakra.span textColor={'brand.500'}>
-                    biggest movers
-                  </chakra.span>{' '}
-                  from the rank page and compare the performance of different
-                  protocols
+                    world's most prominent crypto founders
+                  </chakra.span>
+                  , see the biggest movers and compare the performance of
+                  different protocols.
                 </Text>
               </Flex>
               <FoundersRankTable
