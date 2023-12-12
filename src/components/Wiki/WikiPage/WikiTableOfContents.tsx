@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   VStack,
-  Text,
-  Link,
   useDisclosure,
   IconButton,
   Flex,
@@ -14,9 +12,57 @@ import { RiMenu3Fill } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { StaticContent } from '@/components/StaticElement'
 import { useRouter } from 'next/router'
+import { WikiTableOfContentHeader } from './WikiTableOfContentHeader'
 
 interface WikiTableOfContentsProps {
   isAlertAtTop?: boolean
+}
+
+interface TOCItem {
+  level: number
+  id: string
+  title: string
+  subChildren?: TOCItem[]
+}
+
+function groupArrayByLevel(inputArray: TOCItem[]): TOCItem[] {
+  const result: TOCItem[] = []
+  const levelMap: Record<number, TOCItem[]> = {}
+
+  inputArray.forEach((item) => {
+    const { id, title, level } = item
+    const tocItem: TOCItem = { level, id, title }
+
+    if (level === 1) {
+      result.push(tocItem)
+    } else {
+      // Find the correct parent level
+      let parentLevel = level - 1
+      while (!levelMap[parentLevel] && parentLevel > 1) {
+        parentLevel--
+      }
+
+      // If parent level found, add it to subChildren
+      if (levelMap[parentLevel]) {
+        const parentItems = levelMap[parentLevel]
+        const parentItem = parentItems[parentItems.length - 1]
+
+        if (!parentItem.subChildren) {
+          parentItem.subChildren = []
+        }
+
+        parentItem.subChildren.push(tocItem)
+      }
+    }
+
+    // Update the levelMap
+    if (!levelMap[level]) {
+      levelMap[level] = []
+    }
+    levelMap[level].push(tocItem)
+  })
+
+  return result
 }
 
 const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
@@ -147,19 +193,12 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
                   },
                 }}
               >
-                {toc.map(({ level, id, title }) => (
-                  <Box key={id} pl={`calc(${(level - 1) * 20}px)`}>
-                    <Text
-                      color={activeId === id ? 'brandLinkColor' : 'unset'}
-                      boxShadow={
-                        activeId === id ? '-2px 0px 0px 0px #ff5caa' : '0'
-                      }
-                      outlineColor="brandLinkColor"
-                      pl={2}
-                    >
-                      <Link href={`#${id}`}>{title}</Link>
-                    </Text>
-                  </Box>
+                {groupArrayByLevel(toc).map((item) => (
+                  <WikiTableOfContentHeader
+                    toc={item}
+                    key={item.id}
+                    activeId={activeId}
+                  />
                 ))}
               </VStack>
             </StaticContent>
