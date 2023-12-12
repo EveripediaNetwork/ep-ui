@@ -568,15 +568,12 @@ const Rank = ({
                   className="testname"
                   maxW={'4xl'}
                 >
-                  Explore rankings of the{' '}
+                  View the wikis for each of the{' '}
                   <chakra.span textColor={'brand.500'}>
-                    world’s top crypto founders
-                  </chakra.span>{' '}
-                  based on market cap, co-founders profiles,{' '}
-                  <chakra.span textColor={'brand.500'}>
-                    analyze and compare project &nbsp;
+                    world's most prominent crypto founders
                   </chakra.span>
-                  performances.
+                  , see the biggest movers and compare the performance of
+                  different protocols.
                 </Text>
               </Flex>
               <FoundersRankTable

@@ -45,3 +45,4 @@ lsp
 # Sentry
 .sentryclirc
 .vercel
+.env*.local

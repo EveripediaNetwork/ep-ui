@@ -150,7 +150,6 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       <Box maxW="1208px" mx="auto">
         <Tabs
           mt={10}
-          m={2}
           pl={0}
           overflowX={'auto'}
           onChange={(index) => {
@@ -194,7 +193,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           </Flex>
           <TabPanels mt={{ base: 8, md: '10' }}>
             <TabPanel
-              px={{ base: 2, md: 'initial' }}
+              px={{ base: 0, md: 'initial' }}
               py={{ base: 0, md: 'initial' }}
             >
               <RankTable hasPagination={false}>

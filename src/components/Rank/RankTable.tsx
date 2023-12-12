@@ -66,10 +66,11 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
               fontSize="12px"
               textTransform="capitalize"
               color="rankingListTableHeading"
+              px={{ base: item.label === '#' ? 3 : 2, md: '6' }}
             >
               <Flex
                 alignItems="center"
-                gap={2}
+                gap={{ base: 1, md: 2 }}
                 as={onClick ? 'button' : 'div'}
                 onClick={onClick}
               >

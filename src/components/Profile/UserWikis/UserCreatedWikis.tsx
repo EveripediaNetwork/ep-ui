@@ -44,7 +44,7 @@ const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
         </Center>
       )}
       <Collected wikis={wikis} />
-      {(loading || hasMore) && wikis.length > ITEM_PER_PAGE ? (
+      {(loading || hasMore) && wikis.length >= ITEM_PER_PAGE ? (
         <Center mt={8} ref={createdWikisSentryRef} w="full" h="16">
           <Spinner size="xl" />
         </Center>
