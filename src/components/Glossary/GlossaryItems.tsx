@@ -51,26 +51,39 @@ const GlossaryItem = ({
             direction="column"
             gap="14"
           >
-            {glossary?.map((ob) => (
-              <>
-                {cardOrder(ob.title, item) === 1 && (
-                  <GlossaryWikiCard
-                    highlightText={highlightText}
-                    title={ob.title}
-                    summary={ob.summary}
-                    wikiId={ob.id}
-                  />
-                )}
-                {cardOrder(ob.title, item) === 2 && (
-                  <GlossaryWikiCard
-                    highlightText={highlightText}
-                    title={ob.title}
-                    summary={ob.summary}
-                    wikiId={ob.id}
-                  />
-                )}
-              </>
-            ))}
+            {glossary
+              .sort((a, b) => {
+                const aTitle = a.title.toLowerCase()
+                const bTitle = b.title.toLowerCase()
+
+                if (aTitle < bTitle) {
+                  return -1
+                }
+                if (aTitle > bTitle) {
+                  return 1
+                }
+                return 0
+              })
+              ?.map((ob) => (
+                <>
+                  {cardOrder(ob.title, item) === 1 && (
+                    <GlossaryWikiCard
+                      highlightText={highlightText}
+                      title={ob.title}
+                      summary={ob.summary}
+                      wikiId={ob.id}
+                    />
+                  )}
+                  {cardOrder(ob.title, item) === 2 && (
+                    <GlossaryWikiCard
+                      highlightText={highlightText}
+                      title={ob.title}
+                      summary={ob.summary}
+                      wikiId={ob.id}
+                    />
+                  )}
+                </>
+              ))}
           </Flex>
         </chakra.div>
       ))}

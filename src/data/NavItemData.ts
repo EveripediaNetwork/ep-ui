@@ -21,6 +21,7 @@ import {
   RiOrganizationChart,
   RiHashtag,
   RiSearchEyeFill,
+  RiStarSFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -132,6 +133,13 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 403,
+        label: 'Glossary',
+        icon: RiStarSFill,
+        href: '/glossary',
+        hasImage: true,
+      },
+      {
+        id: 404,
         label: 'IQ GPT',
         icon: RiSearchEyeFill,
         href: 'https://iqgpt.com',
@@ -139,21 +147,21 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
       {
-        id: 404,
+        id: 405,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
       {
-        id: 405,
+        id: 406,
         label: 'About Us',
         icon: RiUserSearchFill,
         href: '/about',
         hasImage: true,
       },
       {
-        id: 406,
+        id: 407,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
