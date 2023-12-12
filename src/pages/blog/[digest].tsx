@@ -154,7 +154,7 @@ export const BlogPostPage = ({
                     .filter((bp: Blog) => bp.digest !== blog?.digest)
                     .slice(0, 3)
                     .map((b: Blog, i: number) => (
-                      <BlogPost maxW="420px" post={b} key={i} />
+                      <BlogPost maxW="700px" post={b} key={i} />
                     ))}
                 </SimpleGrid>
               </Stack>
