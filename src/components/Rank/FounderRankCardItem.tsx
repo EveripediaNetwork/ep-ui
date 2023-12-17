@@ -65,7 +65,13 @@ const FounderRankingItem = ({
         },
       }}
     >
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px" maxW={50} pr={0}>
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        maxW={50}
+        pr={0}
+      >
         <Text color="rankingListText">
           {order === 'descending'
             ? index + offset + 1
@@ -79,7 +85,7 @@ const FounderRankingItem = ({
         maxW={'300px'}
         minW={'280px'}
       >
-        {item?.founderWikis ? ( 
+        {item?.founderWikis ? (
           <Flex alignItems={'center'}>
             <Flex mr={3}>
               {item.founderWikis
@@ -137,27 +143,34 @@ const FounderRankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px" px={2}>
-        <Flex gap="2.5" alignItems="center" sx={{
-          wordBreak: 'break-word',
-          wordWrap: 'break-word',
-          whiteSpace: 'pre-wrap',
-        }} >
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        px={2}
+      >
+        <Flex
+          gap="2.5"
+          alignItems="center"
+          sx={{
+            wordBreak: 'break-word',
+            wordWrap: 'break-word',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
           <Box>
             <Box maxW={'100px'}>
               {item.nftMarketData ? (
                 item.nftMarketData?.hasWiki ? (
                   <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
-                    <Text>
-                      {item.title}
-                      </Text>
+                    <Text>{item.title}</Text>
                   </Link>
                 ) : (
                   <Text>{item.title}</Text>
                 )
               ) : item.tokenMarketData?.hasWiki ? (
                 <Link color="brandLinkColor" href={`/wiki/${item.id}`}>
-                    {item.title}
+                  {item.title}
                 </Link>
               ) : (
                 <Text>{item.title}</Text>
@@ -166,7 +179,12 @@ const FounderRankingItem = ({
           </Box>
         </Flex>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px" maxW={50}>
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        maxW={50}
+      >
         <Text color="rankingListText">{marketCap}</Text>
       </Td>
       <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
