@@ -84,6 +84,7 @@ const FounderRankingItem = ({
         fontSize="14px"
         maxW={'300px'}
         minW={'280px'}
+        px={0}
       >
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
