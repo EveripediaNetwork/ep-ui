@@ -22,6 +22,7 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { Image } from '../Elements/Image/Image'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
+import { shortenText } from '@/utils/textUtils'
 
 export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
@@ -69,7 +70,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
           >
             <LinkOverlay href={`/wiki/${wiki?.id}`}>
               <Heading
-                width="90%"
+                width="80%"
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
@@ -80,7 +81,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 }}
                 fontWeight={'600'}
               >
-                {wiki?.title}
+                {shortenText(wiki?.title, 30)}
               </Heading>
             </LinkOverlay>
             <Text
