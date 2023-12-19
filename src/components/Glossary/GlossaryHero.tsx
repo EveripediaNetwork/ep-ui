@@ -31,10 +31,10 @@ const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
           fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }}
           ref={ref}
         >
-          Crypto terminology can be difficult to figure out, especially if
-          you&lsquo;re new to the blockchain. <br />
-          Here&lsquo;s a guide to help you navigate the exciting frontier of
-          Web3.
+          Navigate the dynamic world of blockchain and cryptocurrency with our
+          comprehensive glossary. It&lsquo;s designed for everyone, whether
+          you&lsquo;re a beginner, trader, developer, or simply someone curious
+          about crypto.
         </Text>
       </VStack>
     </Flex>
