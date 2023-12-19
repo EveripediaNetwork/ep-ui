@@ -27,7 +27,7 @@ export const resources = {
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
       updatesFooterHeading: 'Join the IQ Brainlist',
       updatesFooterText:
-        'Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki beta site!',
+        'Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki site!',
       subScribeFooterBttn: 'Join Now',
       communityFooterHeading: 'Community Hub',
       visionFooterText:
