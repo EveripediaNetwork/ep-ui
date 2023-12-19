@@ -82,8 +82,8 @@ const FounderRankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        maxW={'300px'}
-        minW={'280px'}
+        maxW={'320px'}
+        minW={'300px'}
         px={0}
       >
         {item?.founderWikis ? (
