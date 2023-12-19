@@ -29,11 +29,11 @@ export const glossaryAlphabetsData = [
 ]
 
 export const COMMONLY_SEARCHED_WIKIS = [
-  'AltCoin',
-  'Defi',
+  'Altcoin',
+  'DeFi',
   'Coinbase',
-  'BitCoin',
-  'Hodl',
+  'Bitcoin',
+  'HODL',
   'Collectibles',
   'ColdWallet',
   'por que',
