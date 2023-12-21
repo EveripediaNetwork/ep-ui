@@ -69,8 +69,7 @@ const FounderRankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        maxW={50}
-        pr={0}
+        px={{ base: 3, md: '6' }}
       >
         <Text color="rankingListText">
           {order === 'descending'
@@ -82,9 +81,8 @@ const FounderRankingItem = ({
         borderColor="rankingListBorder"
         fontWeight={500}
         fontSize="14px"
-        maxW={'320px'}
+        maxW={'350px'}
         minW={'300px'}
-        px={0}
       >
         {item?.founderWikis ? (
           <Flex alignItems={'center'}>
