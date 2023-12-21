@@ -22,7 +22,7 @@ export const getTokenFromURI = (coingeckoUrl: string) =>
   coingeckoUrl
     .split('/')
     .reverse()
-    .find(c => /\w+/.test(c)) as string
+    .find((c) => /\w+/.test(c)) as string
 
 export const fetchTokenStats = async (
   coingeckoUrl?: string,
