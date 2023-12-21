@@ -51,6 +51,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   const [nftStats, setNftStats] = useState<NFTStats>()
+
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {
