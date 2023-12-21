@@ -47,7 +47,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 

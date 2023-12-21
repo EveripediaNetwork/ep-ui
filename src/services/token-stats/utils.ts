@@ -11,6 +11,8 @@ const remappingTokenIds = (token: string, cmcToken: string) => {
       return { tokenName: 'matic-network', cmcTokenName: 'polygon' }
     case 'bnb':
       return { tokenName: 'binancecoin', cmcTokenName: 'bnb' }
+    case 'ordi':
+      return { tokenName: 'ordinals', cmcTokenName: 'ordi' }
     default:
       return { tokenName: token }
   }
@@ -20,7 +22,7 @@ export const getTokenFromURI = (coingeckoUrl: string) =>
   coingeckoUrl
     .split('/')
     .reverse()
-    .find((c) => /\w+/.test(c)) as string
+    .find(c => /\w+/.test(c)) as string
 
 export const fetchTokenStats = async (
   coingeckoUrl?: string,
