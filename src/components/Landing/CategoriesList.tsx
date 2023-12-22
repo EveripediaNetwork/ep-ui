@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, SimpleGrid, Heading, VStack, Flex, Box } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { LinkButton } from '../Elements'
 import { AllCategoriesData } from '@/data/AllCategoriesData'

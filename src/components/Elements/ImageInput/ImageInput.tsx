@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, Image, Input, useToast } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch } from 'react-redux'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'

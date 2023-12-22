@@ -2,7 +2,7 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { LinkButton } from '../Elements'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import AboutGPTMockup from '../Elements/Image/AboutGPTMockup'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 

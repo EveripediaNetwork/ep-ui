@@ -35,6 +35,7 @@ import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -89,7 +90,7 @@ export const Index = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
@@ -215,6 +216,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
       promotedWikis: sortedPromotedWikis || [],
       recentWikis: recent || [],
       popularTags: tagsData || [],

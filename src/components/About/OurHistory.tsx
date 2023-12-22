@@ -1,7 +1,7 @@
 import { OurHistoryData } from '@/data/OurHistory'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import OurHistoryCard from './OurHistoryCard'
 
 const OurHistory = () => {

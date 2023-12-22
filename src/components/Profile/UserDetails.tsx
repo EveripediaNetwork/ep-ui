@@ -19,7 +19,7 @@ import { useRouter } from 'next/router'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { LoadingProfile } from '@/components/Profile/LoadingProfile'
 import { useENSData } from '@/hooks/useENSData'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { shortenAccount } from '@/utils/textUtils'
 import {
   UserProfileFetchOptions,

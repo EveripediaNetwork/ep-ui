@@ -23,7 +23,7 @@ import {
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import CategoryHero from '@/components/Categories/CategoryHero'
 import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'

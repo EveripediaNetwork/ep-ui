@@ -1,7 +1,9 @@
 import React from 'react'
 import { Box, Heading, Text, chakra } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 
 export const Hero = () => {
+  const { t } = useTranslation()
   return (
     <Box>
       <Heading
@@ -23,8 +25,7 @@ export const Hero = () => {
         color={'eventTextColor'}
         fontSize={{ base: 'md', lg: '20px' }}
       >
-        Start your crypto journey with IQ.wiki! The compass for exploring your
-        web3 curiosities.
+        {t('iq_description')}
       </Text>
     </Box>
   )

@@ -7,7 +7,7 @@ export const languageData = [
   {
     id: 2,
     language: 'Korean',
-    value: 'ko',
+    value: 'kr',
   },
   {
     id: 3,

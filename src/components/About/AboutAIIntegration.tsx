@@ -1,6 +1,6 @@
 import React from 'react'
 import { AspectRatio, Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '../Elements/Image/Image'
 

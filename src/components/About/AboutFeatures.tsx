@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, VStack, Text, SimpleGrid, Box } from '@chakra-ui/react'
 import { MdOutlinePeopleAlt, MdOutlinePublic } from 'react-icons/md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { OurMission } from '@/data/OurMissionData'
 import AboutFeaturesCard from './AboutFeaturesCard'
 import IQgreyLogo from './logos/iq.svg'

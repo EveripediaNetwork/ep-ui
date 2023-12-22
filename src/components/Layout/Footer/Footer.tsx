@@ -22,12 +22,14 @@ import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
+import { useRouter } from 'next/router'
 
 const Footer = () => {
-  const { t, i18n } = useTranslation()
+  const router = useRouter()
+  const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
   const thisYear = new Date().getFullYear()
@@ -41,6 +43,8 @@ const Footer = () => {
     if (isString(userLang)) {
       setLang(userLang)
       i18n.changeLanguage(userLang)
+      const { pathname, asPath, query } = router
+      router.push({ pathname, query }, asPath, { locale: userLang })
       logEvent({
         action: 'CHANGE_PLATFORM_LANGUAGE',
         category: 'language',
@@ -67,7 +71,7 @@ const Footer = () => {
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={spacing} py={10}>
           <GridItem mr={{ lg: 24 }}>
             <Newsletter
-              buttonTitle="Join Now"
+              buttonTitle={t('subscribeFooterBtn')}
               header={`${t('updatesFooterHeading')}`}
               body={`${t('updatesFooterText')}`}
               url="https://forms.gle/bmMce4r3JJckpSNJ7"

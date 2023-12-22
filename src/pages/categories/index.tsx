@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
 import CategoryCard from '@/components/Categories/CategoryCard'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
 
 const CATEGORY_HEADER =
