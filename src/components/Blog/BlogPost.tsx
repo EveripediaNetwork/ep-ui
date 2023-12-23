@@ -57,7 +57,7 @@ export const BlogPost = (props: BlogPostType) => {
               color="gray.600"
               _dark={{ color: 'whiteAlpha.800' }}
             >
-              {new Date((post.timestamp || 0) * 1000).toDateString()}
+              {new Date((post.timestamp ?? 0) * 1000).toDateString()}
             </Text>
           </Flex>
           <Box flexGrow={1}>
@@ -67,7 +67,7 @@ export const BlogPost = (props: BlogPostType) => {
               </Text>
             </Flex>
             <ReactMarkdown components={postComponent}>
-              {post.excerpt || ''}
+              {post.excerpt ?? ''}
             </ReactMarkdown>
           </Box>
           <LinkWrapper href={`/blog/${post.digest}`}>

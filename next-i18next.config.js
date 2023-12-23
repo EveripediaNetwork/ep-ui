@@ -4,8 +4,5 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en', 'kr', 'zh'],
     keySeparator: false,
-    interpolation: {
-      escapeValue: false,
-    },
   },
 }

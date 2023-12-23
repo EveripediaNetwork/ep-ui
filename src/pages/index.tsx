@@ -78,7 +78,7 @@ export const Index = ({
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
-          featuredWikis={promotedWikis && promotedWikis}
+          featuredWikis={promotedWikis}
         />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
@@ -207,20 +207,20 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   const sortedleaderboards = sortLeaderboards(leaderboard)
   const rankings = {
-    NFTsListing: NFTsList || [],
-    aiTokensListing: aiTokensList || [],
-    TokensListing: TokensList || [],
-    stableCoinsListing: stableCoinsList || [],
-    foundersListing: foundersData || [],
+    NFTsListing: NFTsList ?? [],
+    aiTokensListing: aiTokensList ?? [],
+    TokensListing: TokensList ?? [],
+    stableCoinsListing: stableCoinsList ?? [],
+    foundersListing: foundersData ?? [],
   }
 
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-      promotedWikis: sortedPromotedWikis || [],
-      recentWikis: recent || [],
-      popularTags: tagsData || [],
-      leaderboards: sortedleaderboards || [],
+      promotedWikis: sortedPromotedWikis ?? [],
+      recentWikis: recent ?? [],
+      popularTags: tagsData ?? [],
+      leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
     },

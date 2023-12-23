@@ -9,8 +9,6 @@ const moduleExports = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   webpack(config) {
-    config.mode =
-      process.env.VERCEL_ENV !== 'production' ? 'production' : 'production'
     config.optimization.moduleIds = 'named'
     config.optimization.runtimeChunk = 'single'
     config.module.rules.push({
