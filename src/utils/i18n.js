@@ -223,6 +223,9 @@ export const resources = {
       advancedFAQTenHead: 'Edit History',
       advancedFAQTenBody:
         'To see the past edits that have been made to an IQ.wiki article you can click on the History button which is located below the Edit button. The History feature allows users to examine the different versions of an article and the differences between them on a special timeline. The History page also links to the Polygon transaction and IPFS hash for each edit. https://www.youtube.com/watch?v=gjYErj7O-PQ',
+      IQGPTHeading1: 'New',
+      IQGPTHeading2: 'We built IQ GPT',
+      IQGPTHeading3: "IQ GPT - The World's First AI Crypto Search Engine",
       aboutIQGPTBody:
         'IQ GPT is a crypto-focused AI model that provides insights into intricate terms, live market trends, and breaking news. It is powered by the IQ token, which enables holders to participate in governance and get access to additional features.',
       benefitIQGPTOne:
@@ -231,6 +234,8 @@ export const resources = {
         'Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world’s largest crypto encyclopedia, Flywheel, AP News, Coinness and others.',
       benefitIQGPTThree:
         'Equip yourself with AI powered market analysis from real time market data, news and trends.',
+      IQGPTBtn1: 'Explore IQ GPT',
+      IQGPTBtn2: 'About IQ Token',
 
       //Rank page
       rankingListButtonCryptocurrencies: 'Cryptocurrencies',
