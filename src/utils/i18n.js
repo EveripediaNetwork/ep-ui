@@ -11,6 +11,9 @@ export const resources = {
 
       //Home page
       everipedia: 'IQ.wiki',
+      hero_heading1: 'The World&apos; Largest',
+      hero_heading2: ' Blockchain & Crypto ',
+      hero_heading3: ' Encyclopedia',
       iq_description:
         'Start your crypto journey with IQ.wiki! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
