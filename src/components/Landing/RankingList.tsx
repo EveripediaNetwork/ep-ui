@@ -170,12 +170,12 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label={t('rankingListButtonStableCoins')}
+                label={t('rankingListButtonStablecoins')}
                 icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label={t('rankingListButtonAiTokens')}
+                label={t('rankingListButtonAITokens')}
                 icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
@@ -185,7 +185,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label={t('rankingListButtonNFTs')}
+                label={t('rankingListButtonNfts')}
                 icon={BiImage}
                 fontSize={{ lg: 'md' }}
               />
