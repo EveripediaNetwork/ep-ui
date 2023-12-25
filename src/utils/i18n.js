@@ -18,9 +18,7 @@ export const resources = {
         'Start your crypto journey with IQ.wiki! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       trendingWikisTitle: 'Trending Wikis',
-      //recent edits
       recentEditsTitle: 'Recent Edits',
-      //featured wikis
       featuredWikisTitle: 'Featured Wikis',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
@@ -34,6 +32,23 @@ export const resources = {
       browseCategory: 'Wiki Categories',
       browseCategoryDescription:
         'Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.',
+      categoryViewMore: 'View more',
+      NftCategoryDesciption:
+        'The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.',
+      DeFiCategoryDesciption:
+        'The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.',
+      ExchangesCategoryDesciption:
+        'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
+      CryptoCategoryDesciption:
+        'This Cryptocurrencies category covers all cryptocurrencies from Bitcoin to IQ.',
+      daoCategoryDesciption:
+        'The DAOs category covers decentralized autonomous organizations of all kinds from DeFi DAOs like Olympus DAO to knowledge focused DAOs like BrainDAO.',
+      peopleCategoryDesciption:
+        'The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.',
+      dappsCategoryDesciption:
+        'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
+      organizationsCategoryDesciption:
+        'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',
       updatesFooterHeading: 'Join the IQ Brainlist',
       updatesFooterText:
         'Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki beta site!',
