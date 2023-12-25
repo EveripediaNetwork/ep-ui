@@ -120,5 +120,10 @@
   "benefitIQGPTOne": "편리한 대화 형태의 프롬프트를 통해 실시간 가격 데이터, 거래량, 시가 총액 및 기타 주요 시장 데이터에 액세스하여 경쟁을 앞서 나가세요.",
   "benefitIQGPTTwo": "IQ 위키, 플라이휠, AP 뉴스, Coinness 등의 데이터를 활용하여 모든 암호 화폐 질문에 대한 AI 생성 답변을 받아보세요.",
   "benefitIQGPTThree": "리얼타임 시장 데이터, 뉴스 및 트렌드로부터의 AI 파워드 마켓 분석으로 스스로를 갖추세요.",
-  "seenItAll": "야호! 당신은 모두를 보았습니다 🥳"
+  "seenItAll": "야호! 당신은 모두를 보았습니다 🥳",
+  "Newsletter": {
+    "buttonLabel": "Subscribe",
+    "title": "Subscribe to our newsletter",
+    "body": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
+  }
 }

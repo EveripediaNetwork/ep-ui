@@ -120,5 +120,10 @@
   "benefitIQGPTOne": "Stay ahead of the competition with access to real-time price data, trading volumes, market capitalization and other key market data via convenient conversation-like prompting.",
   "benefitIQGPTTwo": "Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world’s largest crypto encyclopedia, Flywheel, AP News, Coinness and others.",
   "benefitIQGPTThree": "Equip yourself with AI powered market analysis from real time market data, news and trends.",
-  "seenItAll": "Yay! You have seen it all 🥳 "
+  "seenItAll": "Yay! You have seen it all 🥳 ",
+  "newsletter": {
+    "buttonLabel": "Subscribe",
+    "title": "Subscribe to our newsletter",
+    "body": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
+  }
 }

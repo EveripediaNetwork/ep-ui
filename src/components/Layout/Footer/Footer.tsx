@@ -72,14 +72,14 @@ const Footer = () => {
           <GridItem mr={{ lg: 24 }}>
             <Newsletter
               buttonTitle={t('subscribeFooterBtn')}
-              header={`${t('updatesFooterHeading')}`}
-              body={`${t('updatesFooterText')}`}
+              header={t('updatesFooterHeading')}
+              body={t('updatesFooterText')}
               url="https://forms.gle/bmMce4r3JJckpSNJ7"
             />
           </GridItem>
           <GridItem>
             <Newsletter
-              buttonTitle="Subscribe"
+              buttonTitle={t('newsletter.buttonLabel')}
               header="Subscribe to our newsletter"
               body="Never miss any of the most popular and trending articles on IQ.wiki
         when you sign up to our email newsletter."
@@ -131,7 +131,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map((langObj) => (
+                      {languageData.map(langObj => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"

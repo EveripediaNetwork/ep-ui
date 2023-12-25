@@ -121,5 +121,10 @@
   "benefitIQGPTOne": "通过方便的对话式提示，访问实时价格数据、交易量、市场资本化和其他关键市场数据，领先于竞争对手。",
   "benefitIQGPTTwo": "获取由 IQ Wiki - 世界上最大的加密百科全书、Flywheel、AP新闻、Coinness 等数据驱动的所有加密问题的人工智能生成答案。",
   "benefitIQGPTThree": "利用人工智能对实时市场数据、新闻和趋势进行市场分析，为自己装备。",
-  "seenItAll": "耶！你已经看到了所有内容 🥳"
+  "seenItAll": "耶！你已经看到了所有内容 🥳",
+  "Newsletter": {
+    "buttonLabel": "Subscribe",
+    "title": "Subscribe to our newsletter",
+    "body": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
+  }
 }

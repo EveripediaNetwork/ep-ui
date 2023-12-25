@@ -66,10 +66,10 @@ export const Image = ({
       loader={
         typeof src === 'string' && src.startsWith('http') ? cfLoader : undefined
       }
-      fill={!(imgW && imgH) || !imgBoxSize}
+      fill={!imgBoxSize && !(imgW && imgH)}
       src={src}
       alt={alt}
-      onError={(e) => {
+      onError={e => {
         if (hideOnError) {
           e.currentTarget.style.visibility = 'hidden'
         }
