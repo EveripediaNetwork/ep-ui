@@ -10,8 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { FoundersRankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
-import { RankTableProps } from '@/types/RankDataTypes'
-import { OnClickMap } from '@/types/RankDataTypes'
+import { RankTableProps, OnClickMap } from '@/types/RankDataTypes'
 
 export const FoundersRankTable = ({
   children,
