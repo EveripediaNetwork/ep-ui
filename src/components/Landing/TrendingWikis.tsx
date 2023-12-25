@@ -40,7 +40,11 @@ const TrendingWikis = ({
           wikis={trending}
           isTrending
         />
-        <TrendingCard title={t('recentEditsTitle')} icon={RiTimeFill} wikis={recent} />
+        <TrendingCard
+          title={t('recentEditsTitle')}
+          icon={RiTimeFill}
+          wikis={recent}
+        />
         <FeaturedWikis featuredWikis={featuredWikis} />
       </Flex>
     </Box>
