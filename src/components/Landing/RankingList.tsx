@@ -323,7 +323,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             bgColor="btnBgColor"
             prefetch={false}
           >
-            View More
+            {t('rankingListViewMore')}
           </LinkButton>
         </Flex>
       </Box>
