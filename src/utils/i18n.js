@@ -11,7 +11,7 @@ export const resources = {
 
       //Home page
       everipedia: 'IQ.wiki',
-      hero_heading1: 'The World&apos; Largest',
+      hero_heading1: "The World's Largest",
       hero_heading2: ' Blockchain & Crypto ',
       hero_heading3: ' Encyclopedia',
       iq_description:
@@ -230,6 +230,13 @@ export const resources = {
         'Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world’s largest crypto encyclopedia, Flywheel, AP News, Coinness and others.',
       benefitIQGPTThree:
         'Equip yourself with AI powered market analysis from real time market data, news and trends.',
+
+      //Rank page
+      rankingListButtonCryptocurrencies: 'Cryptocurrencies',
+      rankingListButtonStablecoins: 'Stablecoins',
+      rankingListButtonAITokens: 'AI Tokens',
+      rankingListButtonFounders: 'Founders',
+      rankingListButtonNfts: 'NFTs',
 
       //Global text
       seenItAll: 'Yay! You have seen it all 🥳 ',

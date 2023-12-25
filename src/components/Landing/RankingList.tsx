@@ -165,27 +165,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               overflowY={'hidden'}
             >
               <RankingListButton
-                label="Cryptocurrencies"
+                label={t('rankingListButtonCryptocurrencies')}
                 icon={RiCoinsFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Stablecoins"
+                label={t('rankingListButtonStableCoins')}
                 icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="AI Tokens"
+                label={t('rankingListButtonAiTokens')}
                 icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Founders"
+                label={t('rankingListButtonFounders')}
                 icon={RiUserFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="NFTs"
+                label={t('rankingListButtonNFTs')}
                 icon={BiImage}
                 fontSize={{ lg: 'md' }}
               />
