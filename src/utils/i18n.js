@@ -237,6 +237,14 @@ export const resources = {
       rankingListButtonAITokens: 'AI Tokens',
       rankingListButtonFounders: 'Founders',
       rankingListButtonNfts: 'NFTs',
+      rankingListHeadingName: 'Name',
+      rankingListHeadingPrice: 'Price',
+      rankingListHeadingMarketCap: 'Market Cap',
+      rankingListHeadingFounders: 'Founders',
+      rankingListHeadingBlockchain: 'Blockchain',
+      rankingListHeadingDateFounded: 'Date Founded',
+      rankingListHeading24hrChange: '24hr Change',
+      rankingListHeadingProject: 'Project',
 
       //Global text
       seenItAll: 'Yay! You have seen it all 🥳 ',

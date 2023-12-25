@@ -3,6 +3,7 @@ import {
   foundersRankinglistHeadProps,
 } from '@/types/RankDataTypes'
 import { RiArrowDownSFill } from 'react-icons/ri'
+import i18n from '@/utils/i18n'
 
 export const CATEGORIES_WITH_INDEX = {
   cryptocurrencies: 0,
@@ -17,23 +18,23 @@ export const RankingListHead: RankinglistHeadProps = [
     label: '#',
   },
   {
-    label: 'Name',
+    label: i18n.t('rankingListHeadingName'),
   },
   {
-    label: 'Price',
+    label: i18n.t('rankingListHeadingPrice'),
   },
   {
-    label: 'Market Cap',
+    label: i18n.t('rankingListHeadingMarketCap'),
     Icon: RiArrowDownSFill,
   },
   {
-    label: 'Founders',
+    label: i18n.t('rankingListHeadingFounders'),
   },
   {
-    label: 'Blockchain',
+    label: i18n.t('rankingListHeadingBlockchain'),
   },
   {
-    label: 'Date Founded',
+    label: i18n.t('rankingListHeadingDateFounded'),
   },
 ]
 export const FoundersRankingListHead: foundersRankinglistHeadProps = [
@@ -41,22 +42,22 @@ export const FoundersRankingListHead: foundersRankinglistHeadProps = [
     label: '#',
   },
   {
-    label: 'Name',
+    label: i18n.t('rankingListHeadingName'),
   },
   {
-    label: 'Project',
+    label: i18n.t('rankingListHeadingProject'),
   },
   {
-    label: 'Market Cap',
+    label: i18n.t('rankingListHeadingMarketCap'),
   },
   {
-    label: '24h Change',
+    label: i18n.t('rankingListHeading24hrChange'),
     Icon: RiArrowDownSFill,
   },
   {
-    label: 'Blockchain',
+    label: i18n.t('rankingListHeadingBlockchain'),
   },
   {
-    label: 'Date Founded',
+    label: i18n.t('rankingListHeadingDateFounded'),
   },
 ]
