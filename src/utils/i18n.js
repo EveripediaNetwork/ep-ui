@@ -49,6 +49,7 @@ export const resources = {
         'The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.',
       organizationsCategoryDesciption:
         'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',
+      DiscoverMoreHeading: 'Discover More on IQ.wiki',
       updatesFooterHeading: 'Join the IQ Brainlist',
       updatesFooterText:
         'Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki beta site!',
