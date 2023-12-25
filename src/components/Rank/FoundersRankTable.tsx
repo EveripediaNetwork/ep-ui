@@ -60,7 +60,7 @@ export const FoundersRankTableHead = ({
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
         {FoundersRankingListHead.map((item, i) => {
-          const onClick = onClickMap?.[item.label]
+          const onClick = onClickMap?.[item.id]
           return (
             <Th
               key={i}
