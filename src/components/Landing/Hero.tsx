@@ -13,7 +13,7 @@ export const Hero = () => {
         fontSize={{ base: '24', md: '36' }}
       >
         {t('hero_heading1')}
-        <chakra.span color="brandLinkColor">{t('hero_heading2')}</chakra.span>
+        <chakra.span color="brandLinkColor"> {t('hero_heading2')}</chakra.span>
         {t('hero_heading3')}
       </Heading>
       <Text

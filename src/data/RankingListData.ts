@@ -3,7 +3,6 @@ import {
   foundersRankinglistHeadProps,
 } from '@/types/RankDataTypes'
 import { RiArrowDownSFill } from 'react-icons/ri'
-import i18n from '@/utils/i18n'
 
 export const CATEGORIES_WITH_INDEX = {
   cryptocurrencies: 0,
@@ -15,49 +14,64 @@ export const CATEGORIES_WITH_INDEX = {
 
 export const RankingListHead: RankinglistHeadProps = [
   {
+    id: '#',
     label: '#',
   },
   {
-    label: i18n.t('rankingListHeadingName'),
+    id: 'Name',
+    label: 'rankingListHeadingName',
   },
   {
-    label: i18n.t('rankingListHeadingPrice'),
+    id: 'Price',
+    label: 'rankingListHeadingPrice',
   },
   {
-    label: i18n.t('rankingListHeadingMarketCap'),
+    id: 'Market Cap',
     Icon: RiArrowDownSFill,
+    label: 'rankingListHeadingMarketCap',
   },
   {
-    label: i18n.t('rankingListHeadingFounders'),
+    id: 'Founders',
+    label: 'rankingListHeadingFounders',
   },
   {
-    label: i18n.t('rankingListHeadingBlockchain'),
+    id: 'Blockchain',
+    label: 'rankingListHeadingBlockchain',
   },
   {
-    label: i18n.t('rankingListHeadingDateFounded'),
+    id: 'Date Founded',
+    label: 'rankingListHeadingDateFounded',
   },
 ]
+
 export const FoundersRankingListHead: foundersRankinglistHeadProps = [
   {
     label: '#',
+    id: '#',
   },
   {
-    label: i18n.t('rankingListHeadingName'),
+    id: 'Name',
+    label: 'rankingListHeadingName',
   },
   {
-    label: i18n.t('rankingListHeadingProject'),
+    label: 'rankingListHeadingProject',
+    id: 'Project',
   },
   {
-    label: i18n.t('rankingListHeadingMarketCap'),
+    label: 'rankingListHeadingMarketCap',
+    id: 'Market Cap',
   },
   {
-    label: i18n.t('rankingListHeading24hrChange'),
+    label: 'rankingListHeading24hrChange',
+    id: '24h Change',
     Icon: RiArrowDownSFill,
   },
   {
-    label: i18n.t('rankingListHeadingBlockchain'),
+    id: 'Blockchain',
+    label: 'rankingListHeadingBlockchain',
   },
   {
-    label: i18n.t('rankingListHeadingDateFounded'),
+    id: 'Date Founded',
+    label: 'rankingListHeadingDateFounded',
   },
 ]
