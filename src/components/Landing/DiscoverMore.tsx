@@ -17,7 +17,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
           {t('DiscoverMoreHeading')}
         </Heading>
         <Wrap mt={8} spacing={4}>
-          {tagsData?.map(tag => (
+          {tagsData?.map((tag) => (
             <Link
               as="li"
               borderWidth="1px"
