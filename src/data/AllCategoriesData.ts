@@ -15,8 +15,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     id: 'nfts',
     title: 'NFTs',
     icon: RiImage2Fill,
-    description:
-      'The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.',
+    description: 'categoryNftDescription',
     cardImage: '/images/categories/nfts-card.png',
     heroImage: '/images/categories/nfts.png',
   },
@@ -24,8 +23,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     id: 'defi',
     title: 'Decentralized Finance',
     icon: RiRecycleLine,
-    description:
-      'The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.',
+    description: 'categoryDefiDescription',
     cardImage: '/images/categories/defi-card.png',
     heroImage: '/images/categories/defi.png',
   },
@@ -33,8 +31,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     id: 'exchanges',
     title: 'Exchanges',
     icon: RiCoinsFill,
-    description:
-      'The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.',
+    description: 'categoryExcDescription',
     cardImage: '/images/categories/exchange-new-b.png',
     heroImage: '/images/categories/exchange-new.png',
   },

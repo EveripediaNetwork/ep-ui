@@ -29,7 +29,7 @@ import { useRouter } from 'next/router'
 
 const Footer = () => {
   const router = useRouter()
-  const { t, i18n } = useTranslation('common')
+  const { t, i18n } = useTranslation('')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
   const thisYear = new Date().getFullYear()
@@ -78,11 +78,11 @@ const Footer = () => {
             />
           </GridItem>
           <GridItem>
+            {/* BUG - key.value access doesn't work on translate e.g newsletter.buttonLabel even when defined doesn't display value */}
             <Newsletter
-              buttonTitle={t('newsletter.buttonLabel')}
-              header="Subscribe to our newsletter"
-              body="Never miss any of the most popular and trending articles on IQ.wiki
-        when you sign up to our email newsletter."
+              buttonTitle={t('newsletterbuttonLabel')}
+              header={t('newsletterSubscribeTitle')}
+              body={t('newsletterSubscribeBody')}
               url="https://www.getdrip.com/forms/505929689/submissions/new"
               {...newsletterOptions}
             />
@@ -131,7 +131,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map((langObj) => (
+                      {languageData.map(langObj => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"

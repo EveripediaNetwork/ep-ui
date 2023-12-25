@@ -11,6 +11,7 @@ import { CategoryCardProps } from '@/types/CategoryDataTypes'
 
 const CategoryCard = (props: CategoryCardProps) => {
   const { imageCard, coverIcon, title, brief, categoryId } = props
+
   return (
     <LinkBox
       bgColor="cardBg"

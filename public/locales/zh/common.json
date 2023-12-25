@@ -122,9 +122,10 @@
   "benefitIQGPTTwo": "获取由 IQ Wiki - 世界上最大的加密百科全书、Flywheel、AP新闻、Coinness 等数据驱动的所有加密问题的人工智能生成答案。",
   "benefitIQGPTThree": "利用人工智能对实时市场数据、新闻和趋势进行市场分析，为自己装备。",
   "seenItAll": "耶！你已经看到了所有内容 🥳",
-  "Newsletter": {
-    "buttonLabel": "Subscribe",
-    "title": "Subscribe to our newsletter",
-    "body": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
-  }
+  "newsletterbuttonLabel": "订阅",
+  "newsletterSubscribeTitle": "订阅我们的新闻",
+  "newsletterSubscribeBody": "当您注册我们的电子邮件通讯时，绝不会错过 IQ.wiki 上任何最流行和最热门的文章。",
+  "categoryNftDescription": "NFT（不可替代代币）类别涵盖了 NFT 的所有内容，从 Bored Ape Yacht Club 等收藏品到 Axie Infinity 等游戏，再到 Beeple 等艺术家。",
+  "categoryDefiDescription": "去中心化金融 (DeFi) 类别涵盖了从 Frax Finance 等稳定币项目到 Yield Farming 等概念，再到 Chainlink 等为 DeFi 提供支持的预言机等一切内容。",
+  "categoryExcDescription": "交易所类别涵盖所有加密货币交易所，包括 Binance 或 Coinbase 等中心化交易所以及 Uniswap 或 Quickswap 等去中心化交易所。"
 }

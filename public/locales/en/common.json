@@ -121,9 +121,10 @@
   "benefitIQGPTTwo": "Get AI generated answers to all your crypto questions powered by data from IQ Wiki - the world’s largest crypto encyclopedia, Flywheel, AP News, Coinness and others.",
   "benefitIQGPTThree": "Equip yourself with AI powered market analysis from real time market data, news and trends.",
   "seenItAll": "Yay! You have seen it all 🥳 ",
-  "newsletter": {
-    "buttonLabel": "Subscribe",
-    "title": "Subscribe to our newsletter",
-    "body": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
-  }
+  "newsletterbuttonLabel": "Subscribe",
+  "newsletterSubscribeTitle": "Subscribe to our newsletter",
+  "newsletterSubscribeBody": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter.",
+  "categoryNftDescription": "The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.",
+  "categoryDefiDescription": "The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.",
+  "categoryExcDescription": "The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap."
 }

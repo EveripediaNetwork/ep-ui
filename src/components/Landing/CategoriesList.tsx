@@ -59,13 +59,13 @@ const CategoriesList = () => {
         px={6}
       >
         {newCategoryList?.map(
-          (category) =>
+          category =>
             category.cardImage && (
               <CategoryCard
                 key={category.id}
                 imageCard={category.cardImage}
                 title={category.title}
-                brief={category.description}
+                brief={t(category.description)}
                 categoryId={category.id}
                 coverIcon={category.icon}
               />
