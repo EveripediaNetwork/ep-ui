@@ -82,7 +82,7 @@ const CategoriesList = () => {
             bgColor="btnBgColor"
             prefetch={false}
           >
-            View More
+            {t('categoryViewMore')}
           </LinkButton>
         </Flex>
       </Box>

@@ -165,27 +165,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               overflowY={'hidden'}
             >
               <RankingListButton
-                label="Cryptocurrencies"
+                label={t('rankingListButtonCryptocurrencies')}
                 icon={RiCoinsFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Stablecoins"
+                label={t('rankingListButtonStablecoins')}
                 icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="AI Tokens"
+                label={t('rankingListButtonAITokens')}
                 icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Founders"
+                label={t('rankingListButtonFounders')}
                 icon={RiUserFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="NFTs"
+                label={t('rankingListButtonNfts')}
                 icon={BiImage}
                 fontSize={{ lg: 'md' }}
               />
@@ -323,7 +323,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             bgColor="btnBgColor"
             prefetch={false}
           >
-            View More
+            {t('rankingListViewMore')}
           </LinkButton>
         </Flex>
       </Box>
