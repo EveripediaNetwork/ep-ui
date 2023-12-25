@@ -18,6 +18,10 @@ export const resources = {
         'Start your crypto journey with IQ.wiki! The compass for exploring your web3 curiosities.',
       iq_descriptionShort: 'Start your crypto journey with IQ.wiki!',
       trendingWikisTitle: 'Trending Wikis',
+      //recent edits
+      recentEditsTitle: 'Recent Edits',
+      //featured wikis
+      featuredWikisTitle: 'Featured Wikis',
       exploreHeroBttn: 'Explore',
       learnMoreHeroBttn: 'Learn more',
       trendingWikis: 'Latest from IQ.wiki',
