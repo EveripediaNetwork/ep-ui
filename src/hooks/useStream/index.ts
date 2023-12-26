@@ -26,6 +26,8 @@ export interface LoadingMsgType {
   input?: string
 }
 
+const xAuthKey = '26b5fadc-20b2-4cfe-ac81-c957e8fd194c'
+
 enum generateEventsSchema {
   FINAL_OUTPUT = 'Final Output',
   ANSWER_CHUNK = 'Answer Chunk',
@@ -91,11 +93,15 @@ const useStream = () => {
     try {
       await fetchEventSource('https://iqgpt.com/api/generate', {
         method: 'POST',
+        headers: {
+          Cookie: `x-auth-key:${xAuthKey}`,
+        },
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
-        onmessage: async (msg) => {
+        onmessage: async msg => {
           handleMessage(msg)
         },
+        mode: 'no-cors',
       })
     } catch (e) {
       console.log(`Could not fetch data. Error: ${e}`)

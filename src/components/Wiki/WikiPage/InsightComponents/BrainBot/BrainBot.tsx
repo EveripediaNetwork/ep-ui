@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hook'
 import { setMessage } from '@/store/slices/chatbot-slice'
 import ChatCard from './ChatCard'
+import useStream from '@/hooks/useStream'
 
 export const BrainBotSuggestion = ({
   question,
@@ -21,6 +22,7 @@ export const BrainBotSuggestion = ({
   icon: ReactNode
 }) => {
   const dispatch = useDispatch()
+  const { fetchAnswer } = useStream()
   return (
     <HStack
       gap={'8px'}
@@ -32,7 +34,10 @@ export const BrainBotSuggestion = ({
       _dark={{
         borderColor: 'whiteAlpha.700',
       }}
-      onClick={() => dispatch(setMessage(question))}
+      onClick={() => {
+        dispatch(setMessage(question))
+        fetchAnswer({ search: question })
+      }}
     >
       <Text fontSize={'10px'}>{question}</Text>
       {icon}
@@ -42,7 +47,11 @@ export const BrainBotSuggestion = ({
 
 const BrainBot = () => {
   const [open, setOpen] = useState(false)
-  const { currentHumanMessage } = useAppSelector((state) => state.message)
+  const { currentHumanMessage, currentAiMessage } = useAppSelector(
+    state => state.message,
+  )
+
+  console.log(currentAiMessage)
   return (
     <>
       {open ? (
