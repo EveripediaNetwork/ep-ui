@@ -60,7 +60,7 @@ const AboutOurTeam = () => {
       </Text>
       <Box className="about__ourTeamSliderWrapper" w="100%">
         <AboutOurTeamSlider>
-          {TeamData.map(teamMember => (
+          {TeamData.map((teamMember) => (
             <VStack
               display="block !important"
               mx="auto"
