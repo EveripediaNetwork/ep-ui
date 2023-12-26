@@ -29,7 +29,7 @@ import { useRouter } from 'next/router'
 
 const Footer = () => {
   const router = useRouter()
-  const { t, i18n } = useTranslation('')
+  const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const [lang, setLang] = useState<string>(languageData[0].value)
   const thisYear = new Date().getFullYear()
