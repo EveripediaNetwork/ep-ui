@@ -98,7 +98,7 @@ const useStream = () => {
         },
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
-        onmessage: async msg => {
+        onmessage: async (msg) => {
           handleMessage(msg)
         },
         mode: 'no-cors',

@@ -48,7 +48,7 @@ export const BrainBotSuggestion = ({
 const BrainBot = () => {
   const [open, setOpen] = useState(false)
   const { currentHumanMessage, currentAiMessage } = useAppSelector(
-    state => state.message,
+    (state) => state.message,
   )
 
   console.log(currentAiMessage)
