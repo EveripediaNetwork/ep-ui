@@ -7,11 +7,11 @@ export const AboutHeader = () => {
 
   return (
     <NextSeo
-      title="About"
+      title={t('AboutSEOTitle')}
       description={t('AboutSEODescription')}
       canonical="https://iq.wiki/static/about"
       openGraph={{
-        title: 'About',
+        title: t('AboutSEOTitle'),
         description: t('AboutSEODescription'),
       }}
       twitter={{
