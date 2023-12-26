@@ -1,7 +1,5 @@
 import { Logo } from '@/components/Elements'
-import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
-import { Box, HStack, Input, Text, VStack, chakra } from '@chakra-ui/react'
-import Image from 'next/image'
+import { Box, HStack, Input, Text, chakra } from '@chakra-ui/react'
 import React, { ReactNode, useState } from 'react'
 import {
   RiArrowDownSLine,
@@ -9,6 +7,11 @@ import {
   RiSendPlaneFill,
   RiSubtractFill,
 } from 'react-icons/ri'
+import BotSuggestions from './BotSuggestions'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '@/store/hook'
+import { setMessage } from '@/store/slices/chatbot-slice'
+import ChatCard from './ChatCard'
 
 export const BrainBotSuggestion = ({
   question,
@@ -17,6 +20,7 @@ export const BrainBotSuggestion = ({
   question: string
   icon: ReactNode
 }) => {
+  const dispatch = useDispatch()
   return (
     <HStack
       gap={'8px'}
@@ -24,9 +28,11 @@ export const BrainBotSuggestion = ({
       borderColor={'black'}
       padding={'6px'}
       borderRadius={'4px'}
+      cursor={'pointer'}
       _dark={{
         borderColor: 'whiteAlpha.700',
       }}
+      onClick={() => dispatch(setMessage(question))}
     >
       <Text fontSize={'10px'}>{question}</Text>
       {icon}
@@ -36,6 +42,7 @@ export const BrainBotSuggestion = ({
 
 const BrainBot = () => {
   const [open, setOpen] = useState(false)
+  const { currentHumanMessage } = useAppSelector(state => state.message)
   return (
     <>
       {open ? (
@@ -79,59 +86,10 @@ const BrainBot = () => {
             display={'flex'}
             alignItems={'center'}
             flexDirection={'column'}
+            paddingBlock={'12px'}
+            paddingInline={'8px'}
           >
-            <Box paddingBlock={'14px'}>
-              <Text maxW={'255px'} fontSize={'12px'} textAlign={'center'}>
-                Hi There! I’m the BrainBot. Here are some cool stuff i can do
-                for you.
-              </Text>
-              <VStack marginTop={'12px'}>
-                <BrainBotSuggestion
-                  question={'Generate additional info for this page'}
-                  icon={
-                    <QuestionMarkIcon style={{ marginInlineStart: '0px' }} />
-                  }
-                />
-                <BrainBotSuggestion
-                  question={'Content/page summary.'}
-                  icon={
-                    <Image
-                      src={'/summary.svg'}
-                      alt="Sun icon"
-                      width={12}
-                      height={20}
-                      style={{ marginInlineStart: '0px' }}
-                    />
-                  }
-                />
-                <HStack gap={'8px'}>
-                  <BrainBotSuggestion
-                    question={'Ask me about crypto'}
-                    icon={
-                      <Image
-                        src={'/sun.svg'}
-                        alt="Sun icon"
-                        width={12}
-                        height={20}
-                        style={{ marginInlineStart: '0px' }}
-                      />
-                    }
-                  />
-                  <BrainBotSuggestion
-                    question={'ELI5'}
-                    icon={
-                      <Image
-                        src={'/eli.svg'}
-                        alt="eli icon"
-                        width={14}
-                        height={20}
-                        style={{ marginInlineStart: '0px' }}
-                      />
-                    }
-                  />
-                </HStack>
-              </VStack>
-            </Box>
+            {currentHumanMessage ? <ChatCard /> : <BotSuggestions />}
           </Box>
           <HStack
             bgColor={'white'}
