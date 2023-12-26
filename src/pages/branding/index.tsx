@@ -20,6 +20,9 @@ import {
   iqgptLogoAssets,
 } from '../../components/Branding/brandassets'
 import BrandWrapper from '@/components/Branding/BrandWrapper'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const BrandingListItem = ({ content }: { content: string }) => {
   return (
@@ -43,6 +46,7 @@ const BrandingListItem = ({ content }: { content: string }) => {
 
 const BrandingPage = () => {
   const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
+  const { t } = useTranslation()
 
   return (
     <Box
@@ -51,11 +55,11 @@ const BrandingPage = () => {
       }}
     >
       <NextSeo
-        title="IQ.wiki Branding kit & official logos"
-        description="IQ.wiki Branding kit & official logos"
+        title={t('brandingSEOTitle')}
+        description={t('brandingSEODescription')}
         openGraph={{
-          title: 'IQ.wiki Branding kit & official logos',
-          description: 'IQ.wiki Branding kit & official logos',
+          title: t('brandingSEOTitle'),
+          description: t('brandingSEODescription'),
         }}
       />
       <Box>
@@ -73,13 +77,13 @@ const BrandingPage = () => {
           pb={{ base: '50px', lg: '100px', xl: 180 }}
         >
           <Box pt={{ base: '40px', md: '60px', lg: '89px' }} mx={'auto'}>
-            <Text color="brandLinkColor">Branding</Text>
+            <Text color="brandLinkColor">{t('brandingText')}</Text>
             <Heading
               color="careersTextColor"
               fontWeight={'600'}
               fontSize={{ base: '20px', md: '28px', lg: '36px', xl: '48px' }}
             >
-              IQ.wiki Media Kit
+              {t('brandingHeading')}
             </Heading>
             <Text
               maxW={{ sm: '70%', xl: '828px' }}
@@ -88,9 +92,7 @@ const BrandingPage = () => {
               mb={'75px'}
               mx={'auto'}
             >
-              Gain convenient access to our brand toolkits and assets,
-              simplifying their utilization on your website and for other
-              marketing needs.
+              {t('brandingIntroduction')}
             </Text>
           </Box>
         </Flex>
@@ -214,6 +216,14 @@ const BrandingPage = () => {
       </Box>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['branding', 'common'])),
+    },
+  }
 }
 
 export default BrandingPage
