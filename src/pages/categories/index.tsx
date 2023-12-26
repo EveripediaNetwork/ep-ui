@@ -1,15 +1,16 @@
 import React from 'react'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Divider, Box, Heading, SimpleGrid, Flex, Text } from '@chakra-ui/react'
 import CategoryCard from '@/components/Categories/CategoryCard'
 import { useTranslation } from 'next-i18next'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const CATEGORY_HEADER =
   'Explore your endless curiosities in different categories on IQ.wiki, ranging from NFTs, to DeFi, Cryptocurrencies and more.'
 const Categories: NextPage = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('category')
   return (
     <>
       <NextSeo
@@ -42,7 +43,7 @@ const Categories: NextPage = () => {
               pb={2}
               as="h1"
             >
-              {`${t('wikiCategory')}`}
+              {t('wikiCategory')}
             </Heading>
             <Flex
               textAlign="center"
@@ -56,7 +57,7 @@ const Categories: NextPage = () => {
                 mx={{ base: '5', md: '8', lg: '14' }}
                 color={'heroHeaderDescription'}
               >
-                {CATEGORY_HEADER}
+                {t('categoryHeader')}
               </Text>
             </Flex>
           </Box>
@@ -88,6 +89,14 @@ const Categories: NextPage = () => {
       </Box>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['category'])),
+    },
+  }
 }
 
 export default Categories

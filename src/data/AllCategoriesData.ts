@@ -13,7 +13,7 @@ import {
 export const AllCategoriesData: CategoryDataType[] = [
   {
     id: 'nfts',
-    title: 'NFTs',
+    title: 'categoryNftTitle',
     icon: RiImage2Fill,
     description: 'categoryNftDescription',
     cardImage: '/images/categories/nfts-card.png',
@@ -21,7 +21,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'defi',
-    title: 'Decentralized Finance',
+    title: 'categoryDefiTitle',
     icon: RiRecycleLine,
     description: 'categoryDefiDescription',
     cardImage: '/images/categories/defi-card.png',
@@ -29,7 +29,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'exchanges',
-    title: 'Exchanges',
+    title: 'categoryExcTitle',
     icon: RiCoinsFill,
     description: 'categoryExcDescription',
     cardImage: '/images/categories/exchange-new-b.png',
@@ -37,7 +37,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'cryptocurrencies',
-    title: 'Cryptocurrencies',
+    title: 'categoryCryptoTitle',
     icon: RiBitCoinFill,
     description: 'categoryCryptoDescription',
     cardImage: '/images/categories/cryptocurrencies-card.png',
@@ -45,7 +45,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'daos',
-    title: 'DAOs',
+    title: 'categoryDaoTitle',
     icon: RiTeamFill,
     description: 'categoryDaoDescription',
     cardImage: '/images/categories/daos-card.png',
@@ -53,7 +53,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'people',
-    title: 'People in Crypto',
+    title: 'categoryPeopleInCryptoTitle',
     icon: RiUser3Fill,
     description: 'categoryPeopleInCryptoDescription',
     cardImage: '/images/categories/people-card.png',
@@ -61,7 +61,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'dapps',
-    title: 'Decentralized Applications',
+    title: 'categoryDaTitle',
     icon: RiCopperDiamondLine,
     description: 'categoryDAdescription',
     cardImage: '/images/categories/dapps-card.png',
@@ -69,7 +69,7 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'organizations',
-    title: 'Organizations',
+    title: 'categoryOrgTitle',
     icon: RiOrganizationChart,
     description:
       'The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.',

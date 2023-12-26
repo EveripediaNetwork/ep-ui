@@ -8,10 +8,11 @@ import {
 import { Image } from '../Elements/Image/Image'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { CategoryCardProps } from '@/types/CategoryDataTypes'
+import { useTranslation } from 'next-i18next'
 
 const CategoryCard = (props: CategoryCardProps) => {
   const { imageCard, coverIcon, title, brief, categoryId } = props
-
+  const { t } = useTranslation('category')
   return (
     <LinkBox
       bgColor="cardBg"
@@ -66,7 +67,7 @@ const CategoryCard = (props: CategoryCardProps) => {
             color={'careersHeadingColor'}
             my="10px"
           >
-            {title}
+            {t(title)}
           </Heading>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Text
@@ -75,9 +76,9 @@ const CategoryCard = (props: CategoryCardProps) => {
               textAlign="center"
               color={'homeDescriptionColor'}
             >
-              {brief.length > CATEGORY_DESCRIPTION_WORD_LIMIT
-                ? brief.slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
-                : brief}
+              {t(brief).length > CATEGORY_DESCRIPTION_WORD_LIMIT
+                ? t(brief).slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
+                : t(brief)}
             </Text>
           </LinkOverlay>
         </Box>
