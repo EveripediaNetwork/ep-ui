@@ -46,7 +46,7 @@ const BrandingListItem = ({ content }: { content: string }) => {
 
 const BrandingPage = () => {
   const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
-  const { t } = useTranslation()
+  const { t } = useTranslation('branding')
 
   return (
     <Box
@@ -117,15 +117,10 @@ const BrandingPage = () => {
             mx={'auto'}
           >
             <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
-              The media kit serves as a valuable resource, offering clear
-              guidelines for the correct usage of IQ.wiki's brand assets to
-              maintain their accurate representation.
+              {t('brandingParagraph1')}
             </Text>
             <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
-              We deeply appreciate being featured in your content and are
-              enthusiastic about exploring potential partnership opportunities.
-              Please feel free to reach out to us for any collaboration ideas or
-              inquiries.
+              {t('brandingParagraph2')}
             </Text>
           </VStack>
         </Box>
@@ -140,14 +135,12 @@ const BrandingPage = () => {
             <Heading fontWeight={'600'} fontSize={{ base: '24px', lg: '36px' }}>
               IQ logo
             </Heading>
-            <Text mt={4} fontSize={{ lg: '20px', base: 'sm' }}>
-              The IQ.wiki logo draws inspiration from BrainDAO, a Web 3.0 DAO
-              driven by the IQ token, committed to forging a connection between
-              the physical world and the metaverse. This connection is achieved
-              by funding various forms of knowledge on the blockchain. <br />{' '}
-              The logo, symbolizing IQ and BrainDAO, takes the form of a brain—a
-              symbol of boundless knowledge and cognitive power, signifying the
-              fusion of these both entities.
+            <Text
+              mt={4}
+              fontSize={{ lg: '20px', base: 'sm' }}
+              whiteSpace="pre-line"
+            >
+              {t('aboutIQLogoBranding')}
             </Text>
           </Flex>
           <Flex
@@ -188,15 +181,11 @@ const BrandingPage = () => {
         <Box bgColor={'bodyBg'}>
           <Box py={24} maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
             <Flex flexDir="column" gap={5}>
-              <Heading fontSize="3xl">Please beware of these things.</Heading>
+              <Heading fontSize="3xl">{t('brandingRulesHeading')}</Heading>
             </Flex>
             <Flex mt={10}>
               <List display="flex" flexDir="column" gap="10">
-                <BrandingListItem
-                  content="Do not use the IQ.wiki logo in any way that suggests that we
-                    are sponsoring, endorsing or affliated to your project in
-                    any way."
-                />
+                <BrandingListItem content={t('brandingRule1')} />
                 <BrandingListItem
                   content={`The IQ.wiki brain logo shouldn’t be reperesented with any
                   other kind of brain except as stated above.`}
