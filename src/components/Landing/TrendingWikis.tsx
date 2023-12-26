@@ -17,6 +17,7 @@ const TrendingWikis = ({
   featuredWikis?: Wiki[]
 }) => {
   const { t } = useTranslation()
+
   return (
     <Box
       mt={10}

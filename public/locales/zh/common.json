@@ -1,9 +1,5 @@
 {
   "everipedia": "IQ.wiki",
-  "hero_heading1": "世界上最大的",
-  "hero_heading2": "区块链和加密货币",
-  "hero_heading3": "百科全书",
-  "iq_description": "使用 IQ.wiki 开始您的加密之旅！ 探索 web3 好奇心的指南针。",
   "rankingListHeading": "Wiki 按 MarketCap 排名",
   "rankingListDescription": "不同类别的 wiki 列表，包括 Defi、NFT、DAO 和加密货币，分别根据全球市值排名。",
   "browseCategory": "维基分类",
@@ -49,8 +45,6 @@
   "pageTypeLabel": "页面类型",
   "categoryTypeLabel": "分类",
   "twitterProfileLabel": "Twitter 个人资料",
-  "aboutHeroHeading": "我们使用区块链技术和人工智能来扩展加密知识。",
-  "aboutHeroPhrase": "IQ.wiki 是世界上最大的区块链和加密货币百科全书，拥有数千个涉及加密领域所有主题和知识分支的维基百科。",
   "aboutSignUpBttn": "注册",
   "aboutgoTo": "前往 IQ 网站",
   "aboutFeatHeading": "我们的使命是教育世界关于区块链技术",
@@ -66,7 +60,7 @@
   "aboutAiHeading": "人工智能整合",
 
   "aboutAiParagraph": "IQ.wiki 整合人工智能以扩展我们的知识库。AI 让我们能够简化包括维基摘要在内的常规任务。",
-  "latestFromBlogHeading": "来自我们博客的最新内容",
+  " ": "来自我们博客的最新内容",
   "historyHeading": "关于我们的历史",
   "historyBrief": "世界上最大的区块链百科全书并非一夜之间诞生的。IQ.wiki 起初是 Everipedia，2014 年成立的“一切的百科全书”，并在 2018 年推出 IQ 代币后成为世界上第一个区块链百科全书。2022 年，Everipedia 扩展到 Polygon 区块链并更名为 IQ.wiki。",
   "wikiInCategory": "此分类下的维基",
@@ -150,13 +144,5 @@
   "rankingListHeading24hrChange": "24小时变化",
   "rankingListHeadingProject": "项目",
   "rankingListViewMore": "查看更多",
-  "trendingWikisTitle": "热门维基",
-  "recentEditsTitle": "最近编辑",
-  "featuredWikisTitle": "特色维基",
-  "IQGPTHeading1": "新",
-  "IQGPTHeading2": "我们建立了IQ GPT",
-  "IQGPTHeading3": "IQ GPT - 世界上第一个AI加密搜索引擎",
-  "IQGPTBtn1": "探索IQ GPT",
-  "IQGPTBtn2": "关于IQ代币",
   "categoryViewMore": "查看更多"
 }

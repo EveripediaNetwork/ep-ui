@@ -3,7 +3,7 @@ import { Box, Heading, Text, chakra } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 
 export const Hero = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   return (
     <Box>
       <Heading
