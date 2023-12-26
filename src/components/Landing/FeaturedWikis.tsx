@@ -7,7 +7,7 @@ import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
 import { EmblaOptionsType } from 'embla-carousel-react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const OPTIONS: EmblaOptionsType = { loop: true }
@@ -46,7 +46,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         {featuredWikis ? (
           <chakra.div px={5}>
             <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
-              {featuredWikis.map((wiki) => (
+              {featuredWikis.map(wiki => (
                 <Box flex="0 0 100%" key={`wiki-${wiki.id}`}>
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>

@@ -5,7 +5,7 @@ import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
 import { TrendingData } from '@/types/Home'
 import TrendingCard from './TrendingCard'
 import { FeaturedWikis } from './FeaturedWikis'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const TrendingWikis = ({
   trending,
@@ -17,6 +17,7 @@ const TrendingWikis = ({
   featuredWikis?: Wiki[]
 }) => {
   const { t } = useTranslation()
+
   return (
     <Box
       mt={10}
