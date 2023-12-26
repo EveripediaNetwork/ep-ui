@@ -11,7 +11,7 @@ import {
 } from '@/store/slices/stream-slice'
 import { addMessage, setAiMessage } from '@/store/slices/chatbot-slice'
 import { z } from 'zod'
-import logIntermediateSteps from '@/lib/logintermediateSteps'
+import logIntermediateSteps from '@/lib/logIntermediateSteps'
 import { randomUUID } from 'crypto'
 
 export const loadingMsgTypes = z.enum([
@@ -93,7 +93,7 @@ const useStream = () => {
         method: 'POST',
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
-        onmessage: async (msg) => {
+        onmessage: async msg => {
           handleMessage(msg)
         },
       })
