@@ -77,7 +77,9 @@ const CategoryCard = (props: CategoryCardProps) => {
               color={'homeDescriptionColor'}
             >
               {t(brief).length > CATEGORY_DESCRIPTION_WORD_LIMIT
-                ? t(brief).slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT).concat('...')
+                ? t(brief)
+                    .slice(0, CATEGORY_DESCRIPTION_WORD_LIMIT)
+                    .concat('...')
                 : t(brief)}
             </Text>
           </LinkOverlay>
