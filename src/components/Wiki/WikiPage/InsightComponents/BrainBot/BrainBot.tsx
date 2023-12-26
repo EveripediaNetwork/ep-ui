@@ -42,7 +42,7 @@ export const BrainBotSuggestion = ({
 
 const BrainBot = () => {
   const [open, setOpen] = useState(false)
-  const { currentHumanMessage } = useAppSelector(state => state.message)
+  const { currentHumanMessage } = useAppSelector((state) => state.message)
   return (
     <>
       {open ? (

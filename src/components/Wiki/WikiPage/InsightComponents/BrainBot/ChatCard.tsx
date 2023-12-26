@@ -6,7 +6,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 const ChatCard = () => {
-  const { currentHumanMessage } = useAppSelector(state => state.message)
+  const { currentHumanMessage } = useAppSelector((state) => state.message)
   const dispatch = useDispatch()
   return (
     <HStack

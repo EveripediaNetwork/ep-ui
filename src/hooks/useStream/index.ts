@@ -93,7 +93,7 @@ const useStream = () => {
         method: 'POST',
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
-        onmessage: async msg => {
+        onmessage: async (msg) => {
           handleMessage(msg)
         },
       })

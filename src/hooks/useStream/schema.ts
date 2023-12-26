@@ -33,8 +33,8 @@ export const generateOutputSchema = z.object({
     .object({
       title: z.string(),
       id: z.string(),
-      updatedAt: z.preprocess(v => new Date(v as string), z.date()),
-      createdAt: z.preprocess(v => new Date(v as string), z.date()),
+      updatedAt: z.preprocess((v) => new Date(v as string), z.date()),
+      createdAt: z.preprocess((v) => new Date(v as string), z.date()),
       userAddress: z.string().nullable(),
       deleted: z.boolean(),
       pinned: z.boolean(),
