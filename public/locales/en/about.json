@@ -16,5 +16,9 @@
   "aboutAiHeading": "Integration of Artificial Intelligence",
   "aboutAiParagraph": "IQ.wiki integrates artificial intelligence to scale our knowledge base. AI allows us to simplify routine tasks including summarizing wikis.",
   "historyHeading": "A little about our History",
-  "historyBrief": "The world’s largest blockchain encyclopedia wasn’t born overnight. IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014 and became the world’s first blockchain encyclopedia in 2018 after launching the IQ token. In 2022, Everipedia expanded to the Polygon blockchain and rebranded as IQ.wiki."
+  "historyBrief": "The world’s largest blockchain encyclopedia wasn’t born overnight. IQ.wiki began as Everipedia, the “encyclopedia of everything”, in 2014 and became the world’s first blockchain encyclopedia in 2018 after launching the IQ token. In 2022, Everipedia expanded to the Polygon blockchain and rebranded as IQ.wiki.",
+  "OurMission1": "We are the primary source of objective, high-quality knowledge on the Internet today for everything related to blockchain technology and cryptocurrencies. Our vision is to make blockchain more discoverable and accessible around the world and empower users with the information they can trust.",
+  "OurMission2": "For full transparency, every edit on IQ.wiki is recorded on the Polygon blockchain with the transaction hash stored on-chain. The data and images uploaded as part of each wiki are stored on the IPFS network and the hashes are included on each page for the users to verify.",
+  "OurMission3": "IQ.wiki also integrates artificial intelligence in our mission to educate the world on blockchain technology. We use AI to scale our content and make it easier for knowledge to be shared. IQ.wiki integrates OpenAI’s GPT-4 for tasks including summarizing wiki articles.",
+  "OurMission4": "Whether you’re new to the space, a shadowy super coder, a DeFi degen, ETH maxi, or an NFT flipper, IQ.wiki is the place to learn and share knowledge about the crypto space."
 }

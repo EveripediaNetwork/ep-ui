@@ -216,7 +216,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'home'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'common',
+        'home',
+        'category',
+      ])),
       promotedWikis: sortedPromotedWikis ?? [],
       recentWikis: recent ?? [],
       popularTags: tagsData ?? [],

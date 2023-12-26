@@ -13,6 +13,7 @@ import { useTranslation } from 'next-i18next'
 const CategoryCard = (props: CategoryCardProps) => {
   const { imageCard, coverIcon, title, brief, categoryId } = props
   const { t } = useTranslation('category')
+
   return (
     <LinkBox
       bgColor="cardBg"

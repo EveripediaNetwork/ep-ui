@@ -11,7 +11,7 @@ import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const OPTIONS: EmblaOptionsType = { loop: true }
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   return (
     <Flex pt="1" minH="500px">
       <Box
@@ -46,7 +46,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
         {featuredWikis ? (
           <chakra.div px={5}>
             <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
-              {featuredWikis.map((wiki) => (
+              {featuredWikis.map(wiki => (
                 <Box flex="0 0 100%" key={`wiki-${wiki.id}`}>
                   <FeaturedWikiCard wiki={wiki} />
                 </Box>

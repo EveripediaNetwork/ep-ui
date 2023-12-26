@@ -7,7 +7,7 @@ import AboutGPTMockup from '../Elements/Image/AboutGPTMockup'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 
 const AboutIqgpt = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   return (
     <Box px={{ base: 6, md: 8 }}>
       <VStack
