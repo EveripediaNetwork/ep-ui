@@ -11,6 +11,7 @@ import {
 import { FoundersRankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
 import { RankTableProps, OnClickMap } from '@/types/RankDataTypes'
+import { useTranslation } from 'next-i18next'
 
 export const FoundersRankTable = ({
   children,
@@ -55,6 +56,7 @@ interface FoundersRankTableHeadProps {
 export const FoundersRankTableHead = ({
   onClickMap,
 }: FoundersRankTableHeadProps) => {
+  const { t } = useTranslation()
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
@@ -74,7 +76,7 @@ export const FoundersRankTableHead = ({
                 as={onClick ? 'button' : 'div'}
                 onClick={onClick}
               >
-                {item.label}
+                {t(item.label)}
                 {item.Icon && <item.Icon size={18} />}
               </Flex>
             </Th>
