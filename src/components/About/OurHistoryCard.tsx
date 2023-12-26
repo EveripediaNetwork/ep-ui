@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Box, Heading, Link, Text } from '@chakra-ui/react'
 import { OurHistoryType } from '@/data/OurHistory'
+import { useTranslation } from 'next-i18next'
 
 const Paragraph = ({ text }: { text: string }) => {
   const parts = text.split(/(<Link.*?\/Link>)/)
@@ -30,6 +31,8 @@ const Paragraph = ({ text }: { text: string }) => {
 }
 
 const OurHistoryCard = ({ year, content }: OurHistoryType) => {
+  const { t } = useTranslation('about')
+
   return (
     <Flex
       gap={{ base: '4', lg: '12' }}
@@ -47,7 +50,7 @@ const OurHistoryCard = ({ year, content }: OurHistoryType) => {
         bgColor="aboutFeaturesCardBg"
         borderRadius="16px"
       >
-        <Paragraph text={content} />
+        <Paragraph text={t(content)} />
       </Box>
     </Flex>
   )

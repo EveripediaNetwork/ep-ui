@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import OurHistoryCard from './OurHistoryCard'
 
 const OurHistory = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
   return (
     <Box
       mt={{ base: 18, md: '24 !important' }}
