@@ -13,13 +13,13 @@ export type ChatMessage = {
   answerSources: AnswerSources[]
 }
 
-interface ICurrentChatState {
+export interface CurrentChatState {
   messages: ChatMessage[] | null
   currentAiMessage: string | null
   currentHumanMessage: string | null
 }
 
-const initialState: ICurrentChatState = {
+const initialState: CurrentChatState = {
   messages: [],
   currentAiMessage: null,
   currentHumanMessage: null,
