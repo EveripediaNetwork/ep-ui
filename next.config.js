@@ -9,8 +9,13 @@ const moduleExports = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   webpack(config) {
-    config.mode =
-      process.env.VERCEL_ENV !== 'production' ? 'production' : 'production'
+    config.resolve.fallback = {
+      fs: false,
+      net: false,
+      tls: false,
+      'react-native': false,
+    }
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
     config.optimization.moduleIds = 'named'
     config.optimization.runtimeChunk = 'single'
     config.module.rules.push({
