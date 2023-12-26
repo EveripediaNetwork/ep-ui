@@ -59,7 +59,7 @@ const CategoriesList = () => {
         px={6}
       >
         {newCategoryList?.map(
-          category =>
+          (category) =>
             category.cardImage && (
               <CategoryCard
                 key={category.id}
