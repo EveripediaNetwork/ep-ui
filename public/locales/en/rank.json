@@ -1,0 +1,23 @@
+{
+  "rankingListButtonCryptocurrencies": "Cryptocurrencies",
+  "rankingListButtonStablecoins": "Stablecoins",
+  "rankingListButtonAITokens": "AI Tokens",
+  "rankingListButtonFounders": "Founders",
+  "rankingListButtonNfts": "NFTs",
+  "rankingListHeadingName": "Name",
+  "rankingListHeadingPrice": "Price",
+  "rankingListHeadingMarketCap": "Market Cap",
+  "rankingListHeadingFounders": "Founders",
+  "rankingListHeadingBlockchain": "Blockchain",
+  "rankingListHeadingDateFounded": "Date Founded",
+  "rankingListHeading24hrChange": "24hr Change",
+  "rankingListHeadingProject": "Project",
+  "rankingListViewMore": "View More",
+  "rankingCryptocurrenciesDescription": "Explore a curated compilation of cryptocurrency wikis, meticulously ranked by their individual market cap.",
+  "rankingStablecoinsDescription": "Dive into a well-structured compilation of stablecoin wikis, thoughtfully ordered based on their global market cap standings.",
+  "rankingAITokensDescription": "Explore a catalog of AI Tokens' wikis, meticulously arranged in order of their respective global market cap rankings.",
+  "rankingFoundersDescription1": "View the wikis for each of the",
+  "rankingFoundersDescription2": "world's most prominent crypto founders",
+  "rankingFoundersDescription3": ", see the biggest movers and compare the performance of different protocols.",
+  "rankingNftsDescription": "A catalog of NFT wikis, systematically ordered based on their individual global market cap positions.A catalog of NFT wikis, systematically ordered based on their individual global market cap positions."
+}

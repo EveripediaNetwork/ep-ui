@@ -7,18 +7,16 @@ import { useTranslation } from 'next-i18next'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-const CATEGORY_HEADER =
-  'Explore your endless curiosities in different categories on IQ.wiki, ranging from NFTs, to DeFi, Cryptocurrencies and more.'
 const Categories: NextPage = () => {
   const { t } = useTranslation('category')
   return (
     <>
       <NextSeo
-        title="Wiki Category"
-        description={CATEGORY_HEADER}
+        title={t('wikiCategory')}
+        description={t('categoryHeader')}
         openGraph={{
-          title: 'Wiki Category',
-          description: CATEGORY_HEADER,
+          title: t('wikiCategory'),
+          description: t('categoryHeader'),
         }}
       />
       <Box>
