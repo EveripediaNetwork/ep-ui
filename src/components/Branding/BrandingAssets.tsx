@@ -7,7 +7,7 @@ import { useTranslation } from 'next-i18next'
 
 export const BrandingAssets = (props: BrandingAssetsType) => {
   const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindao } = props
-  const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false)
   useEffect(() => {
     if (currentlyViewed === bg.bg) {
       setShowDownloadOptions(true)
@@ -15,7 +15,7 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
       setShowDownloadOptions(false)
     }
   }, [currentlyViewed, bg.bg])
-  const cardBG = useColorModeValue(bg.bg, dark || bg.bg)
+  const cardBG = useColorModeValue(bg.bg, dark ?? bg.bg)
   const downloadIconColor = useColorModeValue('#FF5CAA', '#FF1A88')
   const { t } = useTranslation('branding')
 

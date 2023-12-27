@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -26,12 +26,16 @@ import { useTranslation } from 'next-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
 import { useRouter } from 'next/router'
+import { getCookie, setCookie } from 'cookies-next'
 
 const Footer = () => {
   const router = useRouter()
-  const { t, i18n } = useTranslation('')
+  const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
-  const [lang, setLang] = useState<string>(languageData[0].value)
+  const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
+  const [lang, setLang] = useState(
+    userSelectedLanguage ? userSelectedLanguage : languageData[0].value,
+  )
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
     bg: '#fff',
@@ -43,6 +47,9 @@ const Footer = () => {
     if (isString(userLang)) {
       setLang(userLang)
       i18n.changeLanguage(userLang)
+      setCookie('NEXT_LOCALE', userLang, {
+        maxAge: 60 * 60 * 24 * 365.25 * 100,
+      })
       const { pathname, asPath, query } = router
       router.push({ pathname, query }, asPath, { locale: userLang })
       logEvent({
@@ -53,13 +60,6 @@ const Footer = () => {
       })
     }
   }
-
-  const storedLang =
-    typeof window !== 'undefined' &&
-    JSON.stringify(window.localStorage.storeLang)
-  useEffect(() => {
-    if (storedLang) setLang(storedLang)
-  }, [storedLang])
 
   return (
     <Box bg="brandBackground" color="default" pos="relative" zIndex="2">
@@ -78,7 +78,6 @@ const Footer = () => {
             />
           </GridItem>
           <GridItem>
-            {/* BUG - key.value access doesn't work on translate e.g newsletter.buttonLabel even when defined doesn't display value */}
             <Newsletter
               buttonTitle={t('newsletterbuttonLabel')}
               header={t('newsletterSubscribeTitle')}
@@ -131,7 +130,7 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map((langObj) => (
+                      {languageData.map(langObj => (
                         <MenuItemOption
                           key={langObj.id}
                           fontSize="md"
