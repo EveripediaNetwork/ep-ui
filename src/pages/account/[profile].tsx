@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userIdentifier = context.params?.profile as string
   const locale = context.locale
   const props = {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['account', 'footer'])),
   }
 
   // Redirect if /accounts/settings is hit
