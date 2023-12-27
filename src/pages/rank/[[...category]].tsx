@@ -44,6 +44,8 @@ import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
 import { CategoryKeyType } from '@/types/RankDataTypes'
 import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const LISTING_LIMIT = 20
 
@@ -264,6 +266,7 @@ const Rank = ({
       }
     },
   }
+  const { t } = useTranslation()
   return (
     <Box minW={'full'} w="100%">
       <RankHeader />
@@ -292,27 +295,27 @@ const Rank = ({
               overflowY={'hidden'}
             >
               <RankingListButton
-                label="Cryptocurrencies"
+                label={t('rankingListButtonCryptocurrencies')}
                 icon={RiCoinsFill}
                 fontSize={{ lg: '18px' }}
               />
               <RankingListButton
-                label="Stablecoins"
+                label={t('rankingListButtonStablecoins')}
                 icon={RiCoinFill}
                 fontSize={{ lg: '18px' }}
               />
               <RankingListButton
-                label="AI"
+                label={t('rankingListButtonAITokens')}
                 icon={RiRobotFill}
                 fontSize={{ lg: '18px' }}
               />
               <RankingListButton
-                label="Founders"
+                label={t('rankingListButtonFounders')}
                 icon={RiUserFill}
                 fontSize={{ lg: '18px' }}
               />
               <RankingListButton
-                label="NFTs"
+                label={t('rankingListButtonNfts')}
                 icon={BiImage}
                 fontSize={{ lg: '18px' }}
               />
@@ -344,7 +347,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  Cryptocurrencies
+                  {t('rankingListButtonCryptocurrencies')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -353,8 +356,7 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a curated compilation of cryptocurrency wikis,
-                  meticulously ranked by their individual market cap.
+                  {t('rankingCryptocurrenciesDescription')}
                 </Text>
               </Flex>
               <RankTable
@@ -415,7 +417,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  Stablecoins
+                  {t('rankingListButtonStablecoins')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -424,9 +426,7 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Dive into a well-structured compilation of stablecoin wikis,
-                  thoughtfully ordered based on their global market cap
-                  standings.
+                  {t('rankingStablecoinsDescription')}
                 </Text>
               </Flex>
               <RankTable
@@ -487,7 +487,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  AI Tokens
+                  {t('rankingListButtonAITokens')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -496,8 +496,7 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  Explore a catalog of AI Tokens' wikis, meticulously arranged
-                  in order of their respective global market cap rankings.
+                  {t('rankingAITokensDescription')}
                 </Text>
               </Flex>
               <RankTable
@@ -558,7 +557,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  Crypto Founders Index
+                  {t('rankingListButtonFounders')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -568,12 +567,11 @@ const Rank = ({
                   className="testname"
                   maxW={'4xl'}
                 >
-                  View the wikis for each of the{' '}
+                  {`${t('rankingFoundersDescription1')}${' '}`}
                   <chakra.span textColor={'brand.500'}>
-                    world's most prominent crypto founders
+                    {t('rankingFoundersDescription2')}
                   </chakra.span>
-                  , see the biggest movers and compare the performance of
-                  different protocols.
+                  {` ${t('rankingFoundersDescription3')}`}
                 </Text>
               </Flex>
               <FoundersRankTable
@@ -635,7 +633,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  NFTs
+                  {t('rankingListButtonNfts')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -644,8 +642,7 @@ const Rank = ({
                   textColor={'whiteAlpha.900'}
                   maxW={'3xl'}
                 >
-                  A catalog of NFT wikis, systematically ordered based on their
-                  individual global market cap positions.
+                  {t('rankingNftsDescription')}
                 </Text>
               </Flex>
               <RankTable
@@ -728,6 +725,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         category: category || 'cryptocurrencies',
         page: Number(page) || 1,
       },
+      ...(await serverSideTranslations(ctx.locale ?? 'en', ['rank'])),
     },
   }
 }
