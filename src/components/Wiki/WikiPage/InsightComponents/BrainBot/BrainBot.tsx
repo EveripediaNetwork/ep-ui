@@ -23,6 +23,11 @@ export const BrainBotSuggestion = ({
 }) => {
   const dispatch = useDispatch()
   const { fetchAnswer } = useStream()
+
+  const askQuestion = async (question: string) => {
+    dispatch(setMessage(question))
+    await fetchAnswer({ search: 'What is verve?' })
+  }
   return (
     <HStack
       gap={'8px'}
@@ -35,8 +40,7 @@ export const BrainBotSuggestion = ({
         borderColor: 'whiteAlpha.700',
       }}
       onClick={() => {
-        dispatch(setMessage(question))
-        fetchAnswer({ search: question })
+        askQuestion(question)
       }}
     >
       <Text fontSize={'10px'}>{question}</Text>

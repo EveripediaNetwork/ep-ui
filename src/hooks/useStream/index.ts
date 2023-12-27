@@ -26,7 +26,10 @@ export interface LoadingMsgType {
   input?: string
 }
 
-const xAuthKey = '26b5fadc-20b2-4cfe-ac81-c957e8fd194c'
+class RetriableError extends Error {}
+class FatalError extends Error {}
+
+const xAuthKey = 'ecbaacd0-7699-4074-a6c5-510f04ed4c0b'
 
 enum generateEventsSchema {
   FINAL_OUTPUT = 'Final Output',
@@ -46,6 +49,16 @@ const useStream = () => {
         if (!parsedChunk[0] || parsedChunk[0] === '\\') return
         dispatch(setAiMessage(parsedChunk.join('\n\n')))
         dispatch(setIsGenerating(true))
+        break
+
+      case generateEventsSchema.ACTION:
+        const { input, type } = JSON.parse(msg.data) as LoadingMsgType
+        if (input === 'CoingeckoTool') {
+          console.log('Loading.QUERYING_COINGECKO')
+        } else {
+          console.log(`Loading.${type}`)
+        }
+        // setCurrentTool(input as Tool)
         break
 
       case generateEventsSchema.FINAL_OUTPUT:
@@ -90,16 +103,36 @@ const useStream = () => {
       isChat: true,
     }
 
+    console.log({ requestObject })
+
     try {
-      await fetchEventSource('https://iqgpt.com/api/generate', {
+      await fetchEventSource('http://localhost:3000/api/generate', {
         method: 'POST',
+        credentials: 'include',
         headers: {
-          Cookie: `x-auth-key:${xAuthKey}`,
+          Cookie: `x-auth-key=${xAuthKey}`,
         },
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
         onmessage: async (msg) => {
           handleMessage(msg)
+          // console.log(msg)
+          if (msg.event === 'FatalError') {
+            throw new FatalError(msg.data)
+          }
+        },
+        onclose: () => {
+          // if the server closes the connection unexpectedly, retry:
+          throw new RetriableError()
+        },
+        onerror: (err) => {
+          if (err instanceof FatalError) {
+            throw err // rethrow to stop the operation
+          } else {
+            // do nothing to automatically retry. You can also
+            // return a specific retry interval here.
+            throw err
+          }
         },
         mode: 'no-cors',
       })
