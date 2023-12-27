@@ -21,7 +21,7 @@ import {
   iqgptLogoAssets,
 } from '../../components/Branding/brandassets'
 import BrandWrapper from '@/components/Branding/BrandWrapper'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 
@@ -202,7 +202,7 @@ const BrandingPage = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['branding', 'common'])),

@@ -21,7 +21,7 @@ const BrandWrapper = ({
   brandAsset,
   isBrainDao,
 }: BrandWrapperType) => {
-  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
+  const [currentViewedAsset, setCurrentViewedAsset] = useState('')
 
   return (
     <Box pb={24} maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">

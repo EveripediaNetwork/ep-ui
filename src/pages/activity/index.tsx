@@ -12,6 +12,7 @@ import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
 import ActivityHeader from '@/components/SEO/Activity'
 import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -24,7 +25,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   const getUpdatedActivities = (data: ActivityType[]) => {
     const position: { [key: string]: number } = {}
-    data.map((item) => {
+    data.map(item => {
       if (!position[item.wikiId]) {
         position[item.wikiId] = 1
         item.ipfs = undefined
@@ -50,7 +51,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         )
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
-          const data: ActivityType[] = result.data.map((item) => ({
+          const data: ActivityType[] = result.data.map(item => ({
             content: item.content,
             datetime: item.datetime,
             id: item.id,
@@ -110,12 +111,12 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             size={{ base: 'lg', md: '2xl' }}
             letterSpacing="wide"
           >
-            Recent Activity
+            {t('recentActivity')}
           </Heading>
           <Box>
             <Box>
               <Flex flexDirection="column" overflow="hidden" gap={4}>
-                {LatestActivityData?.map((activity) =>
+                {LatestActivityData?.map(activity =>
                   renderActivityCard(activity),
                 )}
               </Flex>
@@ -136,7 +137,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { data: activities, error: activitiesError } = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
@@ -149,6 +150,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
       activities: activities || [],
     },
   }
