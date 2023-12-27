@@ -7,11 +7,11 @@ import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
 import { EmblaOptionsType } from 'embla-carousel-react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const OPTIONS: EmblaOptionsType = { loop: true }
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   return (
     <Flex pt="1" minH="500px">
       <Box

@@ -40,7 +40,8 @@ const IconButtonSocial = ({
   />
 )
 const AboutOurTeam = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
+
   return (
     <VStack
       spacing={8}
@@ -88,7 +89,7 @@ const AboutOurTeam = () => {
               </Text>
               <VStack spacing={4} className="teamMember__about" display="none">
                 <Text textAlign="center" mt={2}>
-                  {teamMember.about}
+                  {t(teamMember.about)}
                 </Text>
                 <HStack justify="center" spacing={4}>
                   {teamMember.socials.linkedin && (

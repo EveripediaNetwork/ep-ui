@@ -1,0 +1,22 @@
+{
+  "rankingListButtonCryptocurrencies": "암호화폐",
+  "rankingListButtonStablecoins": "스테이블코인",
+  "rankingListButtonAITokens": "AI 토큰",
+  "rankingListButtonFounders": "창립자",
+  "rankingListButtonNfts": "NFT",
+  "rankingListHeadingName": "이름",
+  "rankingListHeadingPrice": "가격",
+  "rankingListHeadingMarketCap": "시가 총액",
+  "rankingListHeadingFounders": "창립자",
+  "rankingListHeadingBlockchain": "블록체인",
+  "rankingListHeadingDateFounded": "설립일",
+  "rankingListHeading24hrChange": "24시간 변동",
+  "rankingListHeadingProject": "프로젝트",
+  "rankingListViewMore": "더 보기",
+  "rankingCryptocurrenciesDescription": "각 암호화폐 위키를 시가 총액별로 세심하게 분류된 컴파일을 탐색하세요.",
+  "rankingStablecoinsDescription": "글로벌 시장 총액 순위에 따라 신중하게 정리된 스테이블코인 위키 컴파일을 살펴보세요.",
+  "rankingAITokensDescription": "각 AI 토큰 위키를 전 세계 시장 총액 순위에 따라 정리된 목록을 탐색하세요.",
+  "rankingFoundersDescription1": "세계에서 가장 저명한 암호화폐 창립자들의",
+  "rankingFoundersDescription2": "위키를 보고",
+  "rankingFoundersDescription3": ", 가장 큰 이동을 확인하고 다양한 프로토콜의 성능을 비교하세요."
+}

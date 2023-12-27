@@ -22,10 +22,6 @@ class MyDocument extends Document<Props> {
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-          <meta
             name="apple-mobile-web-app-status-bar-style"
             content="black-translucent"
           />

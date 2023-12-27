@@ -1,23 +1,27 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 
-export const AboutHeader = () => (
-  <NextSeo
-    title="About"
-    description="World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token."
-    canonical="https://iq.wiki/static/about"
-    openGraph={{
-      title: 'About',
-      description:
-        "World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token.",
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+export const AboutHeader = () => {
+  const { t } = useTranslation('about')
+
+  return (
+    <NextSeo
+      title={t('AboutSEOTitle')}
+      description={t('AboutSEODescription')}
+      canonical="https://iq.wiki/static/about"
+      openGraph={{
+        title: t('AboutSEOTitle'),
+        description: t('AboutSEODescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}
 
 export const FaqSEO = () => (
   <NextSeo

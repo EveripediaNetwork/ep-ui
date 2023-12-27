@@ -1,0 +1,23 @@
+{
+  "wikiCategory": "Wiki Categories",
+  "categoryHeader": "Explore your endless curiosities in different categories on IQ.wiki, ranging from NFTs, to DeFi, Cryptocurrencies and more.",
+  "categorynftsDescription": "The NFTs (non-fungible tokens) category covers all things NFT from collections like the Bored Ape Yacht Club to games like Axie Infinity to artists like Beeple.",
+  "categorydefiDescription": "The Decentralized Finance (DeFi) category covers everything from stablecoin projects like Frax Finance to concepts like Yield Farming to the oracles which power DeFi like Chainlink.",
+  "categoryexchangesDescription": "The Exchanges category covers all crypto exchanges including both centralized exchanges like Binance or Coinbase and decentralized exchanges like Uniswap or Quickswap.",
+  "categorycryptocurrenciesDescription": "This cryptocurrency category covers all cryptocurrencies from Bitcoin to IQ.",
+  "categorydaosDescription": "The DAOs category covers decentralized autonomous organizations of all kinds from DeFi DAOs like Olympus DAO to knowledge focused DAOs like BrainDAO.",
+  "categorypeopleInCryptoDescription": "The People in Crypto category covers everyone working to grow the crypto space from developers to artists to marketers to policy makers and everyone in between.",
+  "categorydappsdescription": "The Decentralized Application (dapps) category covers everything from time-weighted average market maker (TWAMM) like Fraxswap to DeFi lending protocols like Aave.",
+  "categoryorganizationsDescription": "The Organizatons category covers companies and other organizations that develop, implement, or utilize blockchain technology.",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "Decentralized Finance",
+  "categoryexchangesTitle": "Exchanges",
+  "categorycryptocurrenciesTitle": "Cryptocurrencies",
+  "categorydaosTitle": "DAOs",
+  "categorypeopleInCryptoTitle": "People in Crypto",
+  "categorydappsTitle": "Decentralized Applications",
+  "categoryorganizationsTitle": "Organizations",
+  "categoryPopular": "Popular",
+  "categoryNew": "New",
+  "categoryWikis": "Wikis"
+}

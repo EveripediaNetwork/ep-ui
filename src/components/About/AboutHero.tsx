@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
 
 const AboutHero = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
   const aboutHeroSrc = useColorModeValue(
     'about-hero-light.svg',
     'about-hero-dark.svg',

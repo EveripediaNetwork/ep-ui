@@ -15,6 +15,7 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { appWithTranslation } from 'next-i18next'
+import Head from 'next/head'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -49,6 +50,9 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
           --montserrat-font: ${montserrat.style.fontFamily};
         }
       `}</style>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>

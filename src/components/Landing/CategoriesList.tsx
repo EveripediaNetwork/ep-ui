@@ -9,7 +9,7 @@ import CategoryCard from '../Categories/CategoryCard'
 const NUM_OF_CATEGORIES = 6
 
 const CategoriesList = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const newCategoryList: CategoryDataType[] = []
 
   while (newCategoryList.length < NUM_OF_CATEGORIES) {

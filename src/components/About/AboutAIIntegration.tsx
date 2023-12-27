@@ -5,7 +5,7 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '../Elements/Image/Image'
 
 const AboutAiIntegration = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
 
   return (
     <Box
