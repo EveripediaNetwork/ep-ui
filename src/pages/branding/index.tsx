@@ -186,18 +186,9 @@ const BrandingPage = () => {
             <Flex mt={10}>
               <List display="flex" flexDir="column" gap="10">
                 <BrandingListItem content={t('brandingRule1')} />
-                <BrandingListItem
-                  content={`The IQ.wiki brain logo shouldn’t be reperesented with any
-                  other kind of brain except as stated above.`}
-                />
-                <BrandingListItem
-                  content={'Do not in any way stretch or manipulate the logo.'}
-                />
-                <BrandingListItem
-                  content={
-                    'Do not change the logo color asides the ones stated above.'
-                  }
-                />
+                <BrandingListItem content={t('brandingRule2')} />
+                <BrandingListItem content={t('brandingRule3')} />
+                <BrandingListItem content={t('brandingRule4')} />
               </List>
             </Flex>
           </Box>

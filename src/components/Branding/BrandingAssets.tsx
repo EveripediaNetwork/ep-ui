@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BiCloudDownload } from 'react-icons/bi'
 import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
 import { BrandingAssetsType } from '@/types/BrandingType'
+import { useTranslation } from 'next-i18next'
 
 export const BrandingAssets = (props: BrandingAssetsType) => {
   const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindao } = props
@@ -16,6 +17,7 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
   }, [currentlyViewed, bg.bg])
   const cardBG = useColorModeValue(bg.bg, dark || bg.bg)
   const downloadIconColor = useColorModeValue('#FF5CAA', '#FF1A88')
+  const { t } = useTranslation('branding')
 
   return (
     <Flex
@@ -34,14 +36,14 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
         display={showDownloadOptions ? 'flex' : 'none'}
       >
         <BrandingAssetDownloadBttn
-          text="download as .SVG"
+          text={t('downloadAsSVG')}
           href={`${bg.download}.svg`}
           closeDownloadOptions={() => {
             setShowDownloadOptions(false)
           }}
         />
         <BrandingAssetDownloadBttn
-          text="download as .PNG"
+          text={t('downloadAsPNG')}
           href={`${bg.download}.png`}
           closeDownloadOptions={() => {
             setShowDownloadOptions(false)
