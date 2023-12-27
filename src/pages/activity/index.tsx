@@ -25,7 +25,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   const getUpdatedActivities = (data: ActivityType[]) => {
     const position: { [key: string]: number } = {}
-    data.map(item => {
+    data.map((item) => {
       if (!position[item.wikiId]) {
         position[item.wikiId] = 1
         item.ipfs = undefined
@@ -51,7 +51,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
         )
         if (result.data && result.data?.length > 0) {
           pageView(`${router.asPath}?page=${updatedOffset}`)
-          const data: ActivityType[] = result.data.map(item => ({
+          const data: ActivityType[] = result.data.map((item) => ({
             content: item.content,
             datetime: item.datetime,
             id: item.id,
@@ -116,7 +116,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
           <Box>
             <Box>
               <Flex flexDirection="column" overflow="hidden" gap={4}>
-                {LatestActivityData?.map(activity =>
+                {LatestActivityData?.map((activity) =>
                   renderActivityCard(activity),
                 )}
               </Flex>
