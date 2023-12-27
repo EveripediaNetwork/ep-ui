@@ -8,6 +8,7 @@ import {
   ListItem,
   VStack,
   Icon,
+  Grid,
 } from '@chakra-ui/react'
 import { NextSeo } from 'next-seo'
 import React, { useState } from 'react'
@@ -20,7 +21,7 @@ import {
   iqgptLogoAssets,
 } from '../../components/Branding/brandassets'
 import BrandWrapper from '@/components/Branding/BrandWrapper'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 
@@ -143,11 +144,14 @@ const BrandingPage = () => {
               {t('aboutIQLogoBranding')}
             </Text>
           </Flex>
-          <Flex
+          <Grid
             mt={10}
-            flexWrap="wrap"
+            gridTemplateColumns={{
+              base: '1fr',
+              md: 'repeat(2, 1fr)',
+              xl: 'repeat(3, 1fr)',
+            }}
             gap="2rem"
-            justifyContent="space-between"
           >
             {alternateLogoAssets.map((item, index) => {
               return (
@@ -163,7 +167,7 @@ const BrandingPage = () => {
                 />
               )
             })}
-          </Flex>
+          </Grid>
         </Box>
 
         <BrandWrapper title="IQ.wiki logo" brandAsset={iqLogoAsset} />
@@ -198,7 +202,7 @@ const BrandingPage = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['branding', 'common'])),

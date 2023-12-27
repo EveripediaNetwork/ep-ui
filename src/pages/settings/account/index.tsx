@@ -94,14 +94,14 @@ const Settings = () => {
           align="left"
         >
           <Heading textTransform="capitalize">
-            {tab || 'Profile'} Settings
+            {tab ?? 'Profile'} Settings
           </Heading>
           {(tab === 'profile' || !tab) && (
             <ProfileSettings settingsData={profileData} />
           )}
           {tab === 'notifications' && (
             <NotificationSettings
-              address={userAddress || (getUserAddressFromCache() as string)}
+              address={userAddress ?? (getUserAddressFromCache() as string)}
             />
           )}
           {tab === 'advanced' && <AdvancedSettings />}

@@ -6,7 +6,7 @@ import { BrandingAssetsType } from '@/types/BrandingType'
 import { useTranslation } from 'next-i18next'
 
 export const BrandingAssets = (props: BrandingAssetsType) => {
-  const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindao } = props
+  const { bg, updateSelectedAsset, currentlyViewed, dark } = props
   const [showDownloadOptions, setShowDownloadOptions] = useState(false)
   useEffect(() => {
     if (currentlyViewed === bg.bg) {
@@ -21,7 +21,6 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
 
   return (
     <Flex
-      w={{ base: '45%', md: '30%' }}
       flexDirection="column"
       gap={2}
       onClick={() => {
@@ -60,10 +59,7 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
           justifyContent="end"
           bg={`url(${cardBG})`}
           w="100%"
-          h={{
-            base: `${!isBraindao ? '89px' : '143px'}`,
-            lg: `${!isBraindao ? '190px' : '307px'}`,
-          }}
+          minH={{ base: '200px', md: '222px' }}
           backgroundPosition="center"
           backgroundSize="cover"
           borderRadius="xl"

@@ -34,7 +34,7 @@ const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
   const [lang, setLang] = useState(
-    userSelectedLanguage ? userSelectedLanguage : languageData[0].value,
+    userSelectedLanguage ?? languageData[0].value,
   )
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {

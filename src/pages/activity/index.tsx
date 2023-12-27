@@ -12,6 +12,7 @@ import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
 import ActivityHeader from '@/components/SEO/Activity'
 import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -110,7 +111,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             size={{ base: 'lg', md: '2xl' }}
             letterSpacing="wide"
           >
-            Recent Activity
+            {t('recentActivity')}
           </Heading>
           <Box>
             <Box>
@@ -136,7 +137,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { data: activities, error: activitiesError } = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
@@ -149,6 +150,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
       activities: activities || [],
     },
   }
