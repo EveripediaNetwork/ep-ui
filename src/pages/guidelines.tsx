@@ -10,6 +10,8 @@ import {
 import React from 'react'
 import RelatedTopics from '@/components/Elements/RelatedTopics/RelatedTopics'
 import { GuidelinesHeader } from '@/components/SEO/Static'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Privacy = () => (
   <>
@@ -203,5 +205,16 @@ const Privacy = () => (
     </Container>
   </>
 )
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'guidelines',
+        'common',
+      ])),
+    },
+  }
+}
 
 export default Privacy
