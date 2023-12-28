@@ -71,7 +71,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
     px: 3,
     py: 2,
   }
-  const { t } = useTranslation()
+  const { t } = useTranslation('account')
   // TODO: change
   useEffect(() => {
     if (leaderboard.length < 1 && !isFetched.current) {
@@ -171,7 +171,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
         </Flex>
         <chakra.span display="flex" flex="1">
           <ButtonGroup isAttached variant="outline" ml="auto" my={4}>
-            <Tooltip label={t('shareBttnText')} {...tooltipProps}>
+            <Tooltip label={t('shareBtnText')} {...tooltipProps}>
               <IconButton
                 mr="-px"
                 boxSize="12"
@@ -190,7 +190,7 @@ export const UserDetails = ({ hide }: UserDetailsProps) => {
                 {...(isSticky && { boxSize: 8, rounded: '4' })}
               />
             </Tooltip>
-            <Tooltip label={t('settingBttnText')} {...tooltipProps}>
+            <Tooltip label={t('settingBtnText')} {...tooltipProps}>
               <IconButton
                 cursor="pointer"
                 boxSize="12"
