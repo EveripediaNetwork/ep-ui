@@ -32,14 +32,14 @@ import {
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
 import ConnectionErrorModal from './ConnectionErrorModal'
-import { TFunction } from 'i18next'
+import { useTranslation } from 'next-i18next'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
-  t: TFunction<'login', undefined>
 }
 
-const Connectors = ({ openWalletDrawer, t }: ConnectorsProps) => {
+const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
+  const { t } = useTranslation('login')
   const router = useRouter()
   const {
     address: userAddress,

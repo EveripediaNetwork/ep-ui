@@ -36,7 +36,7 @@ const Login = () => {
         <Heading mb={4} fontSize={23}>
           {t('loginConnectWallet')}
         </Heading>
-        <Connectors t={t} />
+        <Connectors />
       </Box>
     </Container>
   )
