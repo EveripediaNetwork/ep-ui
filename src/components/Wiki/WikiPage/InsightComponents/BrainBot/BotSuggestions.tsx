@@ -9,10 +9,12 @@ export const BrainBotSuggestion = ({
   question,
   icon,
   wiki,
+  setOpen,
 }: {
   question: string
   icon: ReactNode
   wiki: Wiki
+  setOpen?: (state: boolean) => void
 }) => {
   const { askQuestion } = useStream()
 
@@ -24,11 +26,18 @@ export const BrainBotSuggestion = ({
       padding={'6px'}
       borderRadius={'4px'}
       cursor={'pointer'}
+      bgColor={setOpen ? 'white' : ''}
       onClick={() => {
+        if (setOpen) {
+          setOpen(true)
+        }
         askQuestion({ question, wiki })
       }}
     >
-      <Text color={'emptyNotificationText'} fontSize={'10px'}>
+      <Text
+        color={setOpen ? 'gray.600' : 'emptyNotificationText'}
+        fontSize={'10px'}
+      >
         {question}
       </Text>
       {icon}

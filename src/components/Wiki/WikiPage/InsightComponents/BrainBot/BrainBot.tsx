@@ -1,13 +1,14 @@
 import { Logo } from '@/components/Elements'
-import { Box, Text, chakra } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
-import { RiArrowDownSLine, RiChat3Fill, RiSubtractFill } from 'react-icons/ri'
-import BotSuggestions from './BotSuggestions'
+import { RiArrowDownSLine } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
-import BotMessages from './BotMessages'
 import { WikiInsightsProps } from '../../WikiInsights'
 import { Wiki } from '@everipedia/iq-utils'
-import BotChatBox from './BotChatBox'
+import ChatBot from './ChatBot'
+import { BrainBotSuggestion } from './BotSuggestions'
+import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
+import Image from 'next/image'
 
 export const queryMapper = (query: string, wiki: Wiki) => {
   let newQuery = ''
@@ -40,8 +41,8 @@ export const queryMapper = (query: string, wiki: Wiki) => {
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
   const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    (state) => state.message,
+  const { currentHumanMessage, messages } = useAppSelector(
+    state => state.message,
   )
 
   useEffect(() => {
@@ -57,107 +58,69 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
   return (
     <>
       {open ? (
-        <Box
-          w={'full'}
-          borderRadius={'8px'}
-          overflow={'hidden'}
-          border={'1px'}
-          borderColor={'brainBotBorder'}
-          backgroundColor={'brainBotMainBg'}
-          boxShadow={'10px 10px 10px -5px rgba(0, 0, 0, 0.04)'}
-        >
-          <Box
-            display={'flex'}
-            backgroundColor={'brainBotBg'}
-            paddingInline={'8px'}
-            justifyContent={'space-between'}
-            paddingBlock={'4px'}
-            w={'full'}
-            borderBottom={'1px'}
-            borderColor={'brainBotBorder'}
-          >
-            <Box display={'flex'} gap={'8px'} alignItems={'center'}>
-              <Box
-                borderRadius={'4px'}
-                w={'20px'}
-                h={'20px'}
-                display={'flex'}
-                justifyContent={'center'}
-                alignItems={'center'}
-                flexShrink={0}
-                border={'1px'}
-                borderColor={'brand.500'}
-              >
-                <Logo width={'13px'} height={'13px'} />
-              </Box>
-              <Text>IQ GPT Chatbot</Text>
-            </Box>
-            <RiSubtractFill
-              size={'24px'}
-              onClick={() => setOpen(false)}
-              style={{ flexShrink: 0, cursor: 'pointer' }}
-            />
-          </Box>
-          <Box
-            h={'250px'}
-            overflowY={'auto'}
-            display={'flex'}
-            alignItems={'center'}
-            flexDirection={'column'}
-            paddingBlock={'12px'}
-            paddingInline={'8px'}
-            ref={chatsRef}
-          >
-            {currentHumanMessage || currentChatId ? (
-              <BotMessages />
-            ) : (
-              <BotSuggestions wiki={wiki} />
-            )}
-          </Box>
-          <BotChatBox wiki={wiki} />
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            gap={'4px'}
-            paddingBlock={'6px'}
-            alignItems={'center'}
-            h="full"
-          >
-            <Logo width={'14px'} height={'14px'} />
-            <Text fontSize={'6px'}>Powered by IQ & BrainDAO</Text>
-          </Box>
-        </Box>
+        <ChatBot wiki={wiki} setOpen={setOpen} />
       ) : (
         <Box
           display={'flex'}
           justifyContent={'center'}
+          flexDirection={'column'}
           alignItems={'center'}
           w={'full'}
           p={'10px'}
           borderRadius={8}
           borderColor="rankingListBorder"
-          backgroundColor={'bodyBg'}
+          backgroundColor={'brainBotCard'}
           borderWidth={1}
         >
-          <Box display={'flex'} gap={'10px'} alignItems={'center'}>
+          <Box display={'flex'} alignItems={'center'}>
             <Box
-              backgroundColor={'divider'}
+              border={'1px'}
+              borderColor={'brandLinkColor'}
+              bgColor={'white'}
               borderRadius={'8px'}
-              w={'32px'}
-              h={'32px'}
+              w={'29px'}
+              h={'29px'}
               display={'flex'}
               justifyContent={'center'}
               alignItems={'center'}
               flexShrink={0}
             >
-              <RiChat3Fill size={'22px'} />
+              <Logo width={'18px'} height={'18px'} />
             </Box>
-            <Text color={'fadedText'}>
-              Get more insights on the article content with{' '}
-              <chakra.span>
-                <Logo width={'18px'} height={'18px'} marginRight={'8px'} />
-                IQ brainbot
-              </chakra.span>{' '}
+            <Text color={'brandLinkColor'} textAlign={'center'}>
+              Get more insights on the article content with IQ brainbot
+            </Text>
+          </Box>
+
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'8px'}
+            marginTop={'14px'}
+            alignItems={'center'}
+          >
+            <BrainBotSuggestion
+              question={'Generate additional info for this page'}
+              icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
+              wiki={wiki}
+              setOpen={setOpen}
+            />
+            <BrainBotSuggestion
+              question={'Content/page summary.'}
+              icon={
+                <Image
+                  src={'/summary.svg'}
+                  alt="Sun icon"
+                  width={12}
+                  height={20}
+                  style={{ marginInlineStart: '0px' }}
+                />
+              }
+              wiki={wiki}
+              setOpen={setOpen}
+            />
+            <Text color={'gray.600'} fontSize={'10px'}>
+              And more...
             </Text>
             <RiArrowDownSLine
               size={'28px'}

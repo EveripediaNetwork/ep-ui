@@ -405,9 +405,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'whiteAlpha.400',
     },
-    iqgptAdCardBorder: {
-      default: 'brand.200',
-      _dark: 'brand.400',
+    brainBotCard: {
+      default: '#FFE5F1',
+      _dark: 'brand.100',
     },
     brainBotBg: {
       default: '#F9FAFB',
@@ -420,6 +420,10 @@ export const semanticTokens: SemanticTokens = {
     brainBotBorder: {
       default: 'gray.100',
       _dark: 'whiteAlpha.200',
+    },
+    iqgptAdCardBorder: {
+      default: 'brand.200',
+      _dark: 'brand.400',
     },
   },
 }
