@@ -10,7 +10,7 @@ const EditingIQWiki = () => {
 
   return (
     <AccordionFAQItem
-      title="How do I join Brainlist and start editing IQ.wiki?"
+      title={t('faqEditingWiki')}
       content={transformedContent}
     />
   )
