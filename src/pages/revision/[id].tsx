@@ -16,6 +16,7 @@ import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { Activity } from '@/types/ActivityDataType'
 import { LinkButton } from '@/components/Elements'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface RevisionPageProps {
   wiki: Activity
@@ -138,10 +139,19 @@ const Revision = ({ wiki }: RevisionPageProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const props = {
+    ...(await serverSideTranslations(context.locale ?? 'en', [
+      'revision',
+      'common',
+      'footer',
+    ])),
+  }
+
   const id = context.params?.id
   if (typeof id !== 'string') {
     return {
       notFound: true,
+      props,
     }
   }
 
@@ -153,6 +163,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
       props: {
         wiki: activityData,
+        ...props,
       },
     }
 
@@ -162,6 +173,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     notFound: true,
+    props,
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {

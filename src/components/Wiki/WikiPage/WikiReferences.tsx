@@ -12,12 +12,14 @@ import {
 } from '@chakra-ui/react'
 import { useAppSelector } from '@/store/hook'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import { useTranslation } from 'next-i18next'
 
 interface WikiReferencesProps {
   references: CiteReference[]
 }
 const WikiReferences = ({ references }: WikiReferencesProps) => {
   const [currentLocationHash, setCurrentLocationHash] = useState('')
+  const { t } = useTranslation('revision')
 
   useEffect(() => {
     const onHashChanged = () => {
@@ -35,7 +37,7 @@ const WikiReferences = ({ references }: WikiReferencesProps) => {
   return (
     <Box borderTopWidth="1px" p={4}>
       <Heading my={4} p={2} fontWeight="medium">
-        REFERENCES
+        {t('references')}
       </Heading>
       <SimpleGrid mb={8} columns={[1, 2, 2, 3]} spacing={4}>
         {references.map((ref, index) => (
