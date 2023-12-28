@@ -3,7 +3,7 @@
   "faqPhrase": "질문이 있으신가요? 도와드릴 수 있습니다.",
   "faqGettingStarted": "시작하기",
   "faqWhatIsIQWiki": "IQ.wiki란 무엇인가요?",
-  "faqWhatIsIQWikiContent": "IQ.wiki 이전 Everipedia는 가장 큰 #link href=\"https://iq.wiki/wiki/blockchain\" title=\"blockchain\" ##link 및 #link href=\"https://iq입니다. wiki/wiki/cryptocurrency\" title=\"cryptocurrency\" ##link 수천 페이지에 달하는 세계의 백과사전. IQ.wiki는 검색 엔진용 위키 기사 요약을 포함하여 사용 사례를 위해 인공 지능을 통합합니다. #link href=\"https://iq.wiki/wiki/iq\" title=\"IQ 토큰\" ##link는 IQ.wiki를 지원하며 플랫폼의 모든 편집 내용은 다음을 통해 온체인에 기록됩니다.{' ' } #link href=\"https://iq.wiki/wiki/polygon\" title=\"다각형\" ##link 및 IPFS(InterPlanetary File System). 백과사전은 IQ 토큰 스테이커에 의해 관리됩니다.",
+  "faqWhatIsIQWikiContent": "IQ.wiki 이전 Everipedia는 가장 큰 #link href=\"https://iq.wiki/wiki/blockchain\" title=\"blockchain\" ##link 및 #link href=\"https://iq입니다. wiki/wiki/cryptocurrency\" title=\"cryptocurrency\" ##link 수천 페이지에 달하는 세계의 백과사전. IQ.wiki는 검색 엔진용 위키 기사 요약을 포함하여 사용 사례를 위해 인공 지능을 통합합니다. #link href=\"https://iq.wiki/wiki/iq\" title=\"IQ 토큰\" ##link는 IQ.wiki를 지원하며 플랫폼의 모든 편집 내용은 다음을 통해 온체인에 기록됩니다. #link href=\"https://iq.wiki/wiki/polygon\" title=\"다각형\" ##link 및 IPFS(InterPlanetary File System). 백과사전은 IQ 토큰 스테이커에 의해 관리됩니다.",
   "faqEditingWiki": "Brainlist에 가입하고 IQ.wiki 편집을 시작하려면 어떻게 해야 합니까?",
   "faqEditingWikiContent": "虽然该网站处于测试阶段，要开始编辑，您需要 #link href=\"https://forms.gle/bmMce4r3JJckpSNJ7\" title=\"使用此表单注册 Brainlist\" ##link 。\\n\\n作为注册的一部分，您需要创建一个 Polygon 地址以及 #link href=\"https://metamask.io/\" title=\"MetaMask\" ##link 或 #link href=\"https://walletconnect.com/\" title=\"WalletConnect\" ##link 钱包。 有关如何使用 MetaMask 钱包设置 Polygon 地址的更多信息，请查看 #link href=\"https://www.coindesk.com/learn/how-to-connect-metamask-to-the-polygon-network/\" title=\"Coindesk 指南\" ##link 。\\n\\n提交 Brainlist 申请后，您将收到一封初始确认电子邮件。 然后，如果您被批准加入 Brainlist，您将收到一封批准电子邮件。\\n\\n我们将滚动批准 Brainlist 的人员，所以如果您已经申请但尚未获得批准，请不要担心。\\n\\n测试期结束后，IQ.wiki 计划停止 Brainlist 并引入 HiIQ Brain Pass NFT，这将提供多种好处，包括在 IQ.wiki 上进行编辑的能力。 用户可以通过用 HiIQ 质押 IQ 来获得 HiIQ Brain Pass NFT，也可以通过使用 IQ 代币购买 NFT 来获得 NFT。",
   "faqWhatIsIQToken": "IQ 토큰이란 무엇입니까?",
@@ -24,5 +24,16 @@
   "faqDonts": "하지 마십시오:",
   "faqRules10": "자신의 것이 아닌 내용을 표절하여 자신의 작품으로 표현합니다. 이는 일반적으로 원래 출처를 인용하지 않고 내용을 복사/붙여넣기하는 것을 포함하며, 창작자에게 적절한 크레딧을 주지 않는 것도 포함됩니다. 저작권 침해도 포함됩니다.",
   "faqRules11": "반달리즘: 위키를 훼손하기 위해 고의적으로 내용을 추가, 변경 또는 삭제하려고 시도합니다.",
-  "faqRules12": "스팸: 페이지에 관련 없거나 부적절한 제품을 홍보하려는 시도의 내용을 참조합니다. 이러한 편집 제안은 일반적으로 광고의 형태를 취하며 IQ.wiki의 중립적인 문체로 작성하는 정책을 위반합니다."
+  "faqRules12": "스팸: 페이지에 관련 없거나 부적절한 제품을 홍보하려는 시도의 내용을 참조합니다. 이러한 편집 제안은 일반적으로 광고의 형태를 취하며 IQ.wiki의 중립적인 문체로 작성하는 정책을 위반합니다.",
+  "faqCreatingWikisIntro": "IQ.wiki에서 위키 만들기",
+  "faqCreateWikiGettingStarted": "시작하기",
+  "faqCreateWikiGettingStartedContent": "IQ.wiki 기사를 생성하거나 편집하기 전에 지갑 아이콘을 클릭하고 MetaMask 또는 WalletConnect를 사용하여 Brainlisted Polygon 주소로 로그인해야 합니다. <br /> <br /> 새 위키를 만들기 전에 위키가 아직 존재하지 않는지 확인하세요. 검색창으로 이동하여 제목을 입력하세요. 사이트는 동일한 주제에 관한 기사가 이미 존재하는지 확인하기 위해 기존 데이터베이스를 검색합니다. 그렇다면 기존 기사를 편집하세요. 시스템에서 제안 사항이 없으면 자유롭게 새 기사를 작성할 수 있습니다. <br /> <br /> 헤더 탐색에서 위키 만들기 버튼을 클릭하세요. 원하는 기사 제목을 추가하세요. 짧고 포괄적인지 확인하세요. 시스템이 제목에서 고유한 URL을 생성합니다. <iframe title='IQ.wiki에서 위키 만들기 시작하기' src='https://www.youtube.com/embed/Y4gWJUFchrc' />",
+  "faqAddingFeaturedImage": "피처 이미지 추가하기",
+  "faqAddingFeaturedImageContent": "피처 이미지를 추가하거나 업데이트하려면, 이미지 자리에 있는 이미지를 클릭하세요. 사진을 드래그 앤 드롭하거나 클릭하여 PC에서 이미지를 선택하여 쉽게 추가할 수 있습니다. 또는 '이미지 URL'을 클릭하고 이미지 링크를 붙여넣으면 시스템이 자동으로 가져옵니다.\\n<iframe title=\"피처 이미지 추가하기\" src=\"https://www.youtube.com/embed/3DFzzleCCNo\"/>",
+  "faqFillingArticles": "기사 작성",
+  "faqFillingArticlesContent": "이것은 기사의 주제를 작성하고 설명하기 시작할 기회입니다. 소개는 기본 사항에 답하고 가장 중요한 정보를 제공해야 하며, 헤더를 사용하여 추가 세부 정보를 제공하는 섹션을 만들 수 있습니다.",
+  "faqAddingCitation": "인용 추가하기",
+  "faqAddingCitationContent": "기사 본문에 참조 또는 인용을 추가하려면, 먼저 인용을 추가하고자 하는 위치를 클릭하여 선택하세요(첫 번째 단락의 끝에 인용을 추가하기 시작할 수 있습니다).\\n\\n실제로 인용을 추가하려면 '인용' 버튼을 클릭하고 URL을 입력한 후 선택하려는 링크의 간단한 설명을 입력하세요(예를 들어, 기사의 제목, 저자, 출판 날짜 등을 설명에 입력할 수 있습니다). 참조를 실제로 삽입하려면 분홍색 '인용' 버튼을 클릭하세요.\\n\\n<iframe title=\"인용 추가하기\" src=\"https://www.youtube.com/embed/NrAUvtOpY0E\"/>",
+  "faqSubmittingWiki": "위키 제출",
+  "faqSubmittingWikiContent": "IQ.wiki 기사 편집을 마쳤으면 기본 이미지 위의 Wiki 요약 섹션을 작성하여 독자에게 기사의 전반적인 아이디어를 제공하세요. 또한 위키 세부 정보 편집 섹션에서 카테고리, 태그를 선택하고 소셜 미디어 링크를 추가해야 합니다. 이 모든 단계가 완료되면 게시 버튼을 눌러 페이지를 저장할 수 있습니다. 게시하는 동안 설명을 추가할 수 있는 옵션이 있습니다.\\n\\n설명은 편집자에게 편집 내용에 대한 추가 컨텍스트나 근거를 제공할 수 있는 기회를 제공합니다. 이는 커뮤니티 내에서 더 많은 투명성을 제공합니다.\\n\\n게시 버튼을 누른 후 시스템은 가스 없는 거래를 시작하며 지갑으로 서명해야 합니다. 지갑 팝업창에서 로그인을 누르세요. 잠시 후 귀하의 페이지가 블록체인에 기록되어야 합니다. 지갑에서 변경 사항이 승인되면 읽기 모드에서 위키를 볼 수 있습니다. 제출 후에는 블록 탐색기 및 IPFS에서 거래를 볼 수도 있습니다. 변경 사항이 표시되지 않으면 페이지를 강제로 새로 고치십시오. 대부분의 편집은 1분 이내에 완료되지만 Polygon 네트워크가 혼잡한 경우 몇 분 정도 걸릴 수 있습니다.\\n\\n<iframe title=\"wiki 제출\" src=\"https://www.youtube .com/embed/8ml3S6KUX3U\"/>\\n\\n편집 기술을 향상시키고 Twitter 피드, 헤더, 다른 IQ.wiki 페이지에 대한 링크, 인용문, 카테고리를 사용하여 페이지를 돋보이게 만드는 방법을 찾고 있다면 , 정보 상자는 아래의 편집 가이드를 확인하세요."
 }
