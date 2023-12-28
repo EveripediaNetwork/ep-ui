@@ -24,5 +24,16 @@
   "faqDonts": "别：",
   "faqRules10": "抄袭不是你自己的内容并将其作为你的作品表示；这通常包括复制/粘贴内容而不引用其原始来源并给予创作者适当的信用。这也包括侵犯版权。",
   "faqRules11": "破坏：故意尝试添加、更改或删除内容，以玷污wiki。",
-  "faqRules12": "垃圾邮件：引用尝试在页面上推广无关或不适当产品的内容；这些编辑提议往往以广告的形式出现，违反了IQ.wiki写作中立语气的政策。"
+  "faqRules12": "垃圾邮件：引用尝试在页面上推广无关或不适当产品的内容；这些编辑提议往往以广告的形式出现，违反了IQ.wiki写作中立语气的政策。",
+  "faqCreatingWikisIntro": "在 IQ.wiki 上创建 Wiki",
+  "faqCreateWikiGettingStarted": "入门",
+  "faqCreateWikiGettingStartedContent": "在创建或编辑 IQ.wiki 文章之前，您需要单击钱包图标并使用 MetaMask 或 WalletConnect 使用您的 Brainlisted Polygon 地址登录。 <br /> <br /> 在创建新的 wiki 之前，检查它是否尚不存在。 转到搜索栏并插入标题。 该网站将搜索我们现有的数据库，以查看是否已存在有关同一主题的文章。 如果是，请编辑现有文章。 如果系统没有建议，您可以随意创建新文章。 <br /> <br /> 单击标题导航中的“创建 Wiki”按钮。 添加您想要的文章标题。 确保它简短而全面 - 系统将从标题生成唯一的 URL。 <iframe title='开始在 IQ.wiki 上创建 wiki' src='https://www.youtube.com/embed/Y4gWJUFchrc' />",
+  "faqAddingFeaturedImage": "添加特色图片",
+  "faqAddingFeaturedImageContent": "要添加或更新特色图片，请点击占位图片。您可以通过拖放或点击选择您电脑中的图片来轻松添加照片。您也可以点击“图片URL”并粘贴图片链接，系统将自动获取图片。\\n<iframe title=\"添加特色图片\" src=\"https://www.youtube.com/embed/3DFzzleCCNo\"/>",
+  "faqFillingArticles": "填写文章",
+  "faqFillingArticlesContent": "这是您开始撰写和解释文章主题的机会。 简介应回答基础知识并提供最重要的信息，而标题可用于创建提供其他详细信息的部分。",
+  "faqAddingCitation": "添加引用",
+  "faqAddingCitationContent": "要在文章正文中添加参考文献或引用，首先点击您想添加引用的文章位置（您可以从第一段的末尾开始添加引用）。\\n\\n实际添加引用时，点击“引用”按钮，输入URL，并添加您选择添加的链接的简短描述（例如，您可以在描述中输入文章的标题、作者和/或发布日期）。要实际插入引用，请点击粉红色的“引用”按钮。\\n\\n<iframe title=\"添加引用\" src=\"https://www.youtube.com/embed/NrAUvtOpY0E\"/>",
+  "faqSubmittingWiki": "提交维基",
+  "faqSubmittingWikiContent": "当您完成 IQ.wiki 文章的编辑后，请填写主图像上方的 Wiki 摘要部分，以便读者了解文章的总体思路。 您还需要在编辑 Wiki 详细信息部分选择类别、标签并添加社交媒体链接。 完成所有这些步骤后，您可以点击“发布”按钮来保存页面。 您可以选择在发布时添加评论。\\n\\n评论使编辑者有机会为其编辑提供额外的上下文或理由。 这在社区内创造了更大的透明度。\\n\\n按下“发布”按钮后，系统将启动无气体交易，您应该用钱包签署该交易。 在钱包弹出窗口中按登录。 过一会儿你的页面就会被记录在区块链上。 一旦您的钱包授权您的更改，您就可以在阅读模式下查看您的维基。 提交后，您还可以在区块浏览器和IPFS上查看交易。 如果更改不可见，请确保硬刷新页面。 大多数编辑都会在一分钟内完成，但如果 Polygon 网络拥塞，则可能需要几分钟。\\n\\n<iframe title=\"提交 wiki\" src=\"https://www.youtube .com/embed/8ml3S6KUX3U\"/>\\n\\n如果您正在寻找提高编辑技能并使您的页面通过 Twitter 源、标题、其他 IQ.wiki 页面的链接、引言、类别脱颖而出的方法 和信息框请查看下面的编辑指南。"
 }
