@@ -55,7 +55,7 @@ interface RankTableHeadProps {
 }
 
 export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
-  const { t } = useTranslation("rank")
+  const { t } = useTranslation('rank')
 
   return (
     <Thead h="45px" bg="rankingListTableHead">
