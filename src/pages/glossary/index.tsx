@@ -1,5 +1,5 @@
 import { Stack, Box, VStack, Grid } from '@chakra-ui/react'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
@@ -10,6 +10,8 @@ import GlossaryHero from '@/components/Glossary/GlossaryHero'
 import GlossaryAlphabets from '@/components/Glossary/GlossaryAlphabets'
 import GlossaryIconButton from '@/components/Glossary/GlossaryIconButton'
 import GlossaryFilterSection from '@/components/Glossary/GlossaryFilterSection'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface GlossaryData {
   offset: number
@@ -58,12 +60,14 @@ const Glossary: NextPage = () => {
     if (!searchResult) return []
     const filteredAlphabet = glossaryAlphabetsData.filter((currentAlphabet) =>
       searchResult.some((result) =>
-        currentAlphabet === '#'
+        currentAlphabet.id === '#'
           ? /^\d/.test(result.title)
           : result.title.charAt(0).toLowerCase() ===
-            currentAlphabet.toLowerCase(),
+            currentAlphabet.id.toLowerCase(),
       ),
     )
+    //log
+    // console.log('filteredAlphabet filtGlosfn', filteredAlphabet)
     return filteredAlphabet
   }
 
@@ -77,18 +81,24 @@ const Glossary: NextPage = () => {
       searchResult,
       text,
     )
+    //log
+    // console.log('searchResult filtAlphafn', searchResult)
+    // console.log('filteredAlphabet filtAlphafn', filteredAlphabet)
     setAlphabet(filteredAlphabet)
     setQueryResult(searchResult)
   }
 
   const searchPage = (input: string) => {
+    //log
+    // console.log('input searchPagefn', input)
     setSearchText(input)
     filterGlossaryBySearchQuery(input)
   }
+  const { t } = useTranslation('glossary')
 
   return (
     <Stack direction="column" w="full" pb="56">
-      <GlossaryHero ref={ref} />
+      <GlossaryHero ref={ref} t={t} />
       <VStack
         w="full"
         ref={newRef}
@@ -115,9 +125,10 @@ const Glossary: NextPage = () => {
             {glossaryAlphabetsData.map((item, i) => (
               <GlossaryAlphabets
                 key={i}
-                item={item}
+                item={item.label}
                 heightOfElement={heightOfElement}
                 shouldBeFixed={shouldBeFixed}
+                t={t}
               />
             ))}
           </Grid>
@@ -129,6 +140,7 @@ const Glossary: NextPage = () => {
               searchPage={searchPage}
               activeIndex={searchText === '' ? undefined : activeIndex}
               setActiveIndex={setActiveIndex}
+              t={t}
             />
           ) : (
             <>
@@ -140,6 +152,7 @@ const Glossary: NextPage = () => {
                   searchPage={searchPage}
                   activeIndex={searchText === '' ? undefined : activeIndex}
                   setActiveIndex={setActiveIndex}
+                  t={t}
                 />
               )}
               <GlossaryIconButton
@@ -154,9 +167,18 @@ const Glossary: NextPage = () => {
         highlightText={searchText}
         glossary={queryResult ?? glossaryData?.wikis ?? []}
         glossaryAlphabets={alphabet}
+        t={t}
       />
     </Stack>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['glossary'])),
+    },
+  }
 }
 
 export default Glossary
