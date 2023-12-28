@@ -32,12 +32,14 @@ import {
 import { shortenBalance } from '@/utils/textUtils'
 import { env } from '@/env.mjs'
 import ConnectionErrorModal from './ConnectionErrorModal'
+import { TFunction } from 'i18next'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
+  t: TFunction<'login', undefined>
 }
 
-const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
+const Connectors = ({ openWalletDrawer, t }: ConnectorsProps) => {
   const router = useRouter()
   const {
     address: userAddress,
@@ -110,14 +112,13 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
     onOpen()
   }
 
-  const tooltipText =
-    'A crypto wallet is an application or hardware device that allows individuals to store and retrieve digital items.'
+  const tooltipText = t('loginToolTip')
 
   return (
     <>
       {!isUserConnected && (
         <Text mb="4" mt={2} color="fadedText2" fontWeight="bold" fontSize="sm">
-          Connect with one of our available&nbsp;
+          {t('loginConnectorText1')}
           <Tooltip
             hasArrow
             borderRadius={8}
@@ -135,10 +136,10 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
               fontWeight="bold"
               color="brandLinkColor"
             >
-              Wallet&nbsp;
+              {t('loginConnectorText2')}
             </Text>
           </Tooltip>
-          providers or create a new one.
+          {t('loginConnectorText3')}
         </Text>
       )}
       <Box justifyContent="center" alignItems="center">
@@ -156,7 +157,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
             >
               <Flex direction="column" align="center" py={4}>
                 <Text fontWeight="bold" color="fadedText2" fontSize="small">
-                  Total balance
+                  {t('loginConnectorTotalBal')}
                 </Text>
                 {totalBalanceIsLoading ? (
                   <Spinner color="color" mt="1" />
@@ -185,7 +186,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 >
                   <Center height="16">
                     <Text fontWeight="bold" fontSize="medium">
-                      IQ Dashboard
+                      {t('loginIQDashboard')}
                     </Text>
                   </Center>
                 </Link>

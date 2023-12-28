@@ -4,8 +4,12 @@ import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
 import dynamic from 'next/dynamic'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const Login = () => {
+  const { t } = useTranslation('login')
   const [isMounted, setIsMounted] = useState(false)
 
   const { address: userAddress } = useAccount()
@@ -30,12 +34,20 @@ const Login = () => {
     <Container centerContent mt="8" mb="24">
       <Box minW="min(90%, 300px)">
         <Heading mb={4} fontSize={23}>
-          Connect your wallet
+          {t('loginConnectWallet')}
         </Heading>
-        <Connectors />
+        <Connectors t={t} />
       </Box>
     </Container>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['login'])),
+    },
+  }
 }
 
 export default dynamic(() => Promise.resolve(Login), {
