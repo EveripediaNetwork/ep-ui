@@ -50,7 +50,7 @@ export const transformFAQContent = (text: string) => {
     } else if (part.match(iframePattern)) {
       // Handle iframes
       const iframeParts = part.split(iframePattern)
-      iframeParts.forEach((iframePart, iframeIndex) => {
+      iframeParts.forEach((_, iframeIndex) => {
         if (iframeIndex % 3 === 1) {
           const title = iframeParts[iframeIndex]
           const src = iframeParts[iframeIndex + 1]
@@ -61,8 +61,6 @@ export const transformFAQContent = (text: string) => {
               src={src}
             />,
           )
-        } else {
-          texts.push(iframePart)
         }
       })
     } else if (part === '<br />') {
