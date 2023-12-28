@@ -266,7 +266,7 @@ const Rank = ({
       }
     },
   }
-  const { t } = useTranslation()
+  const { t } = useTranslation('rank')
   return (
     <Box minW={'full'} w="100%">
       <RankHeader />
