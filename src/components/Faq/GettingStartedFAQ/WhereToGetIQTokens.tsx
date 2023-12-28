@@ -1,22 +1,17 @@
 import React from 'react'
-import { SingleLink } from '../SingleLink'
 import AccordionFAQItem from '../AccordionFAQItem'
+import { useTranslation } from 'react-i18next'
+import { transformFAQContent } from '@/utils/transformFAQContent'
 
 const WhereToGetIQTokens = () => {
+  const { t } = useTranslation('faq')
+  const content = t('faqWhereToGetIQTokensContent')
+  const transformedContent = transformFAQContent(content)
+
   return (
     <AccordionFAQItem
-      title="Where do I get IQ tokens?"
-      content={
-        <>
-          You can get IQ tokens from a variety of centralized and decentralized
-          exchanges including Binance, Crypto.com, Fraxswap, and more. See the{' '}
-          <SingleLink
-            title="Exchanges"
-            href="https://learn.everipedia.org/iq/iq/exchanges"
-          />{' '}
-          section of our Learn site for the full list.
-        </>
-      }
+      title={t('faqWhereToGetIQTokens')}
+      content={transformedContent}
     />
   )
 }
