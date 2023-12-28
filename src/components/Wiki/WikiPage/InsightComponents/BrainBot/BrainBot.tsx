@@ -1,6 +1,6 @@
 import { Logo } from '@/components/Elements'
 import { Box, Text, chakra } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RiArrowDownSLine, RiChat3Fill, RiSubtractFill } from 'react-icons/ri'
 import BotSuggestions from './BotSuggestions'
 import { useAppSelector } from '@/store/hook'
@@ -39,9 +39,20 @@ export const queryMapper = (query: string, wiki: Wiki) => {
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
-  const { currentHumanMessage, currentChatId } = useAppSelector(
+  const chatsRef = useRef<HTMLDivElement | null>(null)
+  const { currentHumanMessage, currentChatId, messages } = useAppSelector(
     state => state.message,
   )
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, currentHumanMessage])
+
+  const scrollToBottom = () => {
+    if (chatsRef.current) {
+      chatsRef.current.scrollTop = chatsRef.current?.scrollHeight
+    }
+  }
 
   return (
     <>
@@ -95,6 +106,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             flexDirection={'column'}
             paddingBlock={'12px'}
             paddingInline={'8px'}
+            ref={chatsRef}
           >
             {currentHumanMessage || currentChatId ? (
               <BotMessages />

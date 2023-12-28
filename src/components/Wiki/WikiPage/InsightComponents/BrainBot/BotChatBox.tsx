@@ -1,6 +1,6 @@
 import useStream from '@/hooks/useStream'
 import { setCurrentMessage } from '@/store/slices/chatbot-slice'
-import { Box, HStack, Input } from '@chakra-ui/react'
+import { chakra, HStack, Input } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
 import React, { ChangeEvent, useState } from 'react'
 import { RiSendPlaneFill } from 'react-icons/ri'
@@ -20,7 +20,6 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
     const message = (
       new FormData(e.currentTarget).get('message') as string
     ).trim()
-    console.log(message)
     if (message.length === 0) return
     dispatch(setCurrentMessage(message))
     askQuestion({ question: message, wiki: wiki })
@@ -51,7 +50,9 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           }}
           onChange={handleChange}
         />
-        <Box
+        <chakra.button
+          type="submit"
+          flexShrink={'0'}
           bgColor={'brand.600'}
           display={'flex'}
           justifyContent={'center'}
@@ -68,7 +69,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           }}
         >
           <RiSendPlaneFill size={'13px'} />
-        </Box>
+        </chakra.button>
       </HStack>
     </form>
   )

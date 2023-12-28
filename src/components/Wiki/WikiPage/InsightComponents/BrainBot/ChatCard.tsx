@@ -43,7 +43,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
       />
       <HStack
         border={'1px'}
-        borderColor={'whiteAlpha.200'}
+        borderColor={'divider'}
         bgColor={alias === 'AI' ? 'gray.700' : ''}
         borderRadius={'4px'}
         padding={'8px'}
@@ -63,7 +63,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             <Logo width={'9px'} h={'8px'} />
           </Box>
         )}
-        <VStack>
+        <VStack alignItems={'flex-start'}>
           <Box fontSize={'12px'} color={'heroHeaderDescription'}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </Box>
