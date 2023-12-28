@@ -1,0 +1,20 @@
+{
+  "settingSettings": "Settings",
+  "settingProfile": "Profile",
+  "settingNotifications": "Notifications",
+  "settingAdvancedSettings": "Advanced Settings",
+  "settingUsername": "Username",
+  "settingClickToUseYourENS": "Click to use your ENS",
+  "settingBio": "Bio",
+  "settingBioPlaceholder": "Tell the world your story",
+  "settingEmailAddress": "Email Address",
+  "settingEmailAddressPlaceholder": "Enter Email Address",
+  "settingLinks": "Links",
+  "settingYourTwitterHandle": "Your Twitter Handle",
+  "settingYourInstagramHandle": "Your Instagram Handle",
+  "settingYourLensHandle": "Your Lens Handle",
+  "settingWalletAddress": "Wallet Address",
+  "settingProfileImage": "Profile Image",
+  "settingProfileBanner": "Profile Banner",
+  "settingSave": "Save"
+}
