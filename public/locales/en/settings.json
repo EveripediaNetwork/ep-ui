@@ -6,5 +6,11 @@
   "settingUsername": "Username",
   "settingClickToUseYourENS": "Click to use your ENS",
   "settingBio": "Bio",
-  "settingBioPlaceholder": "Tell the world your story"
+  "settingBioPlaceholder": "Tell the world your story",
+  "settingEmailAddress": "Email Address",
+  "settingEmailAddressPlaceholder": "Enter Email Address",
+  "settingLinks": "Links",
+  "settingYourTwitterHandle": "Your Twitter Handle",
+  "settingYourInstagramHandle": "Your Instagram Handle",
+  "settingYourLensHandle": "Your Lens Handle"
 }

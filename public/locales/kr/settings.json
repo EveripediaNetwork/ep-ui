@@ -6,5 +6,11 @@
   "settingUsername": "사용자 이름",
   "settingClickToUseYourENS": "ENS 사용하려면 클릭",
   "settingBio": "소개",
-  "settingBioPlaceholder": "세상에 당신의 이야기를 들려주세요"
+  "settingBioPlaceholder": "세상에 당신의 이야기를 들려주세요",
+  "settingEmailAddress": "이메일 주소",
+  "settingEmailAddressPlaceholder": "이메일 주소 입력",
+  "settingLinks": "링크",
+  "settingYourTwitterHandle": "당신의 트위터 핸들",
+  "settingYourInstagramHandle": "당신의 인스타그램 핸들",
+  "settingYourLensHandle": "당신의 렌즈 핸들"
 }
