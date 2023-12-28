@@ -15,34 +15,36 @@ export type ChatMessage = {
 
 export interface CurrentChatState {
   messages: ChatMessage[] | null
-  currentAiMessage: string | null
   currentHumanMessage: string | null
+  currentChatId: string | null
 }
 
 const initialState: CurrentChatState = {
   messages: [],
-  currentAiMessage: null,
+  currentChatId: null,
   currentHumanMessage: null,
 }
 const botSlice = createSlice({
   name: 'chatMessages',
   initialState,
   reducers: {
-    setMessage(state, action) {
+    setCurrentMessage(state, action) {
       state.currentHumanMessage = action.payload
-      state.currentAiMessage = null
     },
     addMessage(state, action) {
-      state.currentAiMessage = null
       state.currentHumanMessage = null
       state.messages?.push(action.payload)
     },
-    setAiMessage(state, action) {
-      state.currentAiMessage?.concat(action.payload)
+    setMessages(state, action) {
+      state.messages = action.payload
+    },
+    setCurrentChatId(state, action) {
+      state.currentChatId = action.payload
     },
   },
 })
 
-export const { setMessage, setAiMessage, addMessage } = botSlice.actions
+export const { setCurrentMessage, setMessages, addMessage, setCurrentChatId } =
+  botSlice.actions
 
 export default botSlice.reducer

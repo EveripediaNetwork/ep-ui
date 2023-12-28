@@ -22,6 +22,12 @@ export const intermediateStepSchema = z.object({
   observation: z.string(),
 })
 
+export const generateEventsSchema = z.enum([
+  'FINAL_OUTPUT',
+  'ANSWER_CHUNK',
+  'ACTION',
+])
+
 export const generateOutputSchema = z.object({
   search: z.string(),
   answer: z.string().optional(),
@@ -43,3 +49,5 @@ export const generateOutputSchema = z.object({
 })
 
 export type IntermediateStep = z.infer<typeof intermediateStepSchema>
+export type GenerateOutput = z.infer<typeof generateOutputSchema>
+export type AnswerSources = z.infer<typeof answerSourcesSchema>

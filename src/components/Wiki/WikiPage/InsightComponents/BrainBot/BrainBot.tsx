@@ -1,33 +1,54 @@
 import { Logo } from '@/components/Elements'
-import { Box, HStack, Input, Text, chakra } from '@chakra-ui/react'
+import { Box, HStack, Text, chakra } from '@chakra-ui/react'
 import React, { ReactNode, useState } from 'react'
-import {
-  RiArrowDownSLine,
-  RiChat3Fill,
-  RiSendPlaneFill,
-  RiSubtractFill,
-} from 'react-icons/ri'
+import { RiArrowDownSLine, RiChat3Fill, RiSubtractFill } from 'react-icons/ri'
 import BotSuggestions from './BotSuggestions'
-import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hook'
-import { setMessage } from '@/store/slices/chatbot-slice'
-import ChatCard from './ChatCard'
+import BotMessages from './BotMessages'
+import { WikiInsightsProps } from '../../WikiInsights'
+import { Wiki } from '@everipedia/iq-utils'
+import BotChatBox from './BotChatBox'
 import useStream from '@/hooks/useStream'
+
+export const queryMapper = (query: string, wiki: Wiki) => {
+  let newQuery = ''
+
+  switch (query) {
+    case 'Generate additional info for this page':
+      newQuery = `${wiki.content} 
+          Generate an additional information for the content above?        
+        `
+      break
+    case 'Content/page summary.':
+      newQuery = `${wiki.content} 
+          Summarize the content above?        
+        `
+      break
+    case 'ELI5':
+      newQuery = `${wiki.content} 
+          Explain the content above like I am a 5yr old?        
+        `
+      break
+
+    default:
+      newQuery = query
+      break
+  }
+
+  return newQuery
+}
 
 export const BrainBotSuggestion = ({
   question,
   icon,
+  wiki,
 }: {
   question: string
   icon: ReactNode
+  wiki: Wiki
 }) => {
-  const dispatch = useDispatch()
-  const { fetchAnswer } = useStream()
+  const { askQuestion } = useStream()
 
-  const askQuestion = async (question: string) => {
-    dispatch(setMessage(question))
-    await fetchAnswer({ search: 'What is verve?' })
-  }
   return (
     <HStack
       gap={'8px'}
@@ -40,7 +61,7 @@ export const BrainBotSuggestion = ({
         borderColor: 'whiteAlpha.700',
       }}
       onClick={() => {
-        askQuestion(question)
+        askQuestion({ question, wiki })
       }}
     >
       <Text fontSize={'10px'}>{question}</Text>
@@ -49,13 +70,12 @@ export const BrainBotSuggestion = ({
   )
 }
 
-const BrainBot = () => {
+const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
-  const { currentHumanMessage, currentAiMessage } = useAppSelector(
+  const { currentHumanMessage, currentChatId } = useAppSelector(
     (state) => state.message,
   )
 
-  console.log(currentAiMessage)
   return (
     <>
       {open ? (
@@ -96,56 +116,20 @@ const BrainBot = () => {
           </Box>
           <Box
             h={'250px'}
+            overflowY={'auto'}
             display={'flex'}
             alignItems={'center'}
             flexDirection={'column'}
             paddingBlock={'12px'}
             paddingInline={'8px'}
           >
-            {currentHumanMessage ? <ChatCard /> : <BotSuggestions />}
+            {currentHumanMessage || currentChatId ? (
+              <BotMessages />
+            ) : (
+              <BotSuggestions wiki={wiki} />
+            )}
           </Box>
-          <HStack
-            bgColor={'white'}
-            paddingBlock={'4px'}
-            boxShadow={'0px 1px 2px 0px rgba(0, 0, 0, 0.05)'}
-            paddingInline={'12px'}
-            borderBottom={'1px'}
-            borderColor={'divider'}
-            _dark={{
-              bgColor: 'blackAlpha.800',
-            }}
-          >
-            <Input
-              variant={'unstyled'}
-              fontSize={'14px'}
-              placeholder="Ask the brainbot anything"
-              borderRadius={'0'}
-              paddingInline={'4px'}
-              color={'gray.500'}
-              _dark={{
-                color: 'gray.600',
-              }}
-            />
-            <Box
-              bgColor={'black'}
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              h="20px"
-              w={'20px'}
-              borderRadius={'4px'}
-              style={{
-                marginInlineStart: '0px',
-              }}
-              color={'white'}
-              _dark={{
-                color: 'gray.800',
-                bgColor: 'white',
-              }}
-            >
-              <RiSendPlaneFill size={'13px'} />
-            </Box>
-          </HStack>
+          <BotChatBox wiki={wiki} />
           <Box
             display={'flex'}
             justifyContent={'center'}

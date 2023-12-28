@@ -22,7 +22,7 @@ import ContentFeedback from './InsightComponents/ContentFeedback'
 import WikiAdCard from '../WikiCard/WikiAdCard'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
 
-interface WikiInsightsProps {
+export interface WikiInsightsProps {
   wiki: Wiki
   ipfs?: string
   dateTime?: string | undefined
@@ -103,7 +103,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               imgSrc={getWikiImageUrl(wiki.images)}
               views={wiki.views}
             />
-            <BrainBot />
+            <BrainBot wiki={wiki} />
             <ProfileSummary wiki={wiki} />
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <ContentFeedback

@@ -3,8 +3,9 @@ import React from 'react'
 import { BrainBotSuggestion } from './BrainBot'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
+import { Wiki } from '@everipedia/iq-utils'
 
-const BotSuggestions = () => {
+const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Box paddingBlock={'14px'}>
       <Text maxW={'255px'} fontSize={'12px'} textAlign={'center'}>
@@ -14,6 +15,7 @@ const BotSuggestions = () => {
         <BrainBotSuggestion
           question={'Generate additional info for this page'}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
+          wiki={wiki}
         />
         <BrainBotSuggestion
           question={'Content/page summary.'}
@@ -26,10 +28,12 @@ const BotSuggestions = () => {
               style={{ marginInlineStart: '0px' }}
             />
           }
+          wiki={wiki}
         />
         <HStack gap={'8px'}>
           <BrainBotSuggestion
             question={'Ask me about crypto'}
+            // href={'https://iqgpt.com/'}
             icon={
               <Image
                 src={'/sun.svg'}
@@ -39,6 +43,7 @@ const BotSuggestions = () => {
                 style={{ marginInlineStart: '0px' }}
               />
             }
+            wiki={wiki}
           />
           <BrainBotSuggestion
             question={'ELI5'}
@@ -51,6 +56,7 @@ const BotSuggestions = () => {
                 style={{ marginInlineStart: '0px' }}
               />
             }
+            wiki={wiki}
           />
         </HStack>
       </VStack>
