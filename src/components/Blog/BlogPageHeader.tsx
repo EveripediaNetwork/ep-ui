@@ -1,7 +1,9 @@
 import React from 'react'
 import { Flex, Heading, Link, Text, Image } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 
 const BlogPageHeader = () => {
+  const { t } = useTranslation('blog')
   return (
     <Flex
       pt={{ base: 8, md: 14, lg: 24 }}
@@ -16,7 +18,7 @@ const BlogPageHeader = () => {
         textAlign="center"
         color={'brand.500'}
       >
-        Blog
+        {t('blog')}
       </Text>
       <Heading
         fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
@@ -24,7 +26,7 @@ const BlogPageHeader = () => {
         fontWeight={'600'}
         color={'gray.800'}
       >
-        The IQ.wiki Blog
+        {t('blogHeading')}
       </Heading>
       <Text
         fontSize={{ xl: 'lg', base: 'md' }}
@@ -32,11 +34,11 @@ const BlogPageHeader = () => {
         maxW={'743px'}
         color={'gray.600'}
       >
-        Bringing you all the latest from IQ.wiki, IQ token and BrainDAO.
+        {t('blogDescription')}
       </Text>
       <Flex my={4} minWidth={100} gap={4} alignItems={'center'}>
         <Text fontSize={{ xl: 'lg', base: 'md' }} color={'gray.600'}>
-          Our blog in KR and CHN:
+          {t('blogDescription2')}
         </Text>
         <Flex alignItems="center">
           <Link
