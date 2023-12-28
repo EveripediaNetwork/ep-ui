@@ -25,17 +25,16 @@ export const glossaryAlphabetsData = [
   { id: 'W', label: 'glossaryAlphabetW' },
   { id: 'X', label: 'glossaryAlphabetX' },
   { id: 'Y', label: 'glossaryAlphabetY' },
-  { id: 'Z', label: 'glossaryAlphabetZ' }
+  { id: 'Z', label: 'glossaryAlphabetZ' },
 ]
 
-export const COMMONLY_SEARCHED_WIKIS =
-[
-  {id: 'altcoin', label: 'glossaryAltcoin'},
-  {id: 'defi', label: 'glossaryDeFi'},
-  {id: 'coinbase', label: 'glossaryCoinbase'},
-  {id: 'bitcoin', label: 'glossaryBitcoin'},
-  {id: 'hodl', label: 'glossaryHODL'},
-  {id: 'collectibles', label: 'glossaryCollectibles'},
-  {id: 'coldwallet', label: 'glossaryColdWallet'},
-  {id: 'porque', label: 'glossaryPorQue'}
+export const COMMONLY_SEARCHED_WIKIS = [
+  { id: 'altcoin', label: 'glossaryAltcoin' },
+  { id: 'defi', label: 'glossaryDeFi' },
+  { id: 'coinbase', label: 'glossaryCoinbase' },
+  { id: 'bitcoin', label: 'glossaryBitcoin' },
+  { id: 'hodl', label: 'glossaryHODL' },
+  { id: 'collectibles', label: 'glossaryCollectibles' },
+  { id: 'coldwallet', label: 'glossaryColdWallet' },
+  { id: 'porque', label: 'glossaryPorQue' },
 ]

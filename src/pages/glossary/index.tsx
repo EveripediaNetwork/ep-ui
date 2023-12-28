@@ -1,5 +1,5 @@
 import { Stack, Box, VStack, Grid } from '@chakra-ui/react'
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
 import GlossaryItem from '@/components/Glossary/GlossaryItems'
@@ -176,7 +176,7 @@ const Glossary: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...await serverSideTranslations(locale ?? 'en', ['glossary'])
+      ...(await serverSideTranslations(locale ?? 'en', ['glossary'])),
     },
   }
 }

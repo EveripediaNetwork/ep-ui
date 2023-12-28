@@ -7,14 +7,14 @@ import {
   ChakraProps,
 } from '@chakra-ui/react'
 import React from 'react'
-import { TFunction } from 'i18next';
+import { TFunction } from 'i18next'
 
 interface GlossaryHeroProps extends ChakraProps {
-  t: TFunction<"glossary", undefined>;
+  t: TFunction<'glossary', undefined>
 }
 
 const GlossaryHero = React.forwardRef<HTMLParagraphElement, GlossaryHeroProps>(
-  ({t, ...props}, ref) => (
+  ({ t, ...props }, ref) => (
     <Flex
       direction={{ base: 'column', lg: 'row' }}
       justify="space-between"

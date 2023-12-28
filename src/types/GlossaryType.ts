@@ -5,7 +5,7 @@ export type GlossaryAlphabetsProps = {
   shouldBeFixed: boolean
   heightOfElement: number
   item: string
-  t: TFunction<"glossary", undefined>
+  t: TFunction<'glossary', undefined>
 }
 
 export type GlossaryFilterSectionProps = {
@@ -15,7 +15,7 @@ export type GlossaryFilterSectionProps = {
   setSearchText: (value: string) => void
   activeIndex: number | undefined
   setActiveIndex: (value: number) => void
-  t: TFunction<"glossary", undefined>
+  t: TFunction<'glossary', undefined>
 }
 
 export type GlosssaryIconButtonProps = {
@@ -26,8 +26,8 @@ export type GlosssaryIconButtonProps = {
 export type GlossaryItemType = {
   highlightText: string
   glossary: Wiki[]
-  glossaryAlphabets: { id: string; label: string; }[]
-  t: TFunction<"glossary", undefined>
+  glossaryAlphabets: { id: string; label: string }[]
+  t: TFunction<'glossary', undefined>
 }
 
 export type GlossaryWikiCardProps = {

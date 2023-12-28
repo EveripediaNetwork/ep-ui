@@ -20,7 +20,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
     setSearchText,
     activeIndex,
     setActiveIndex,
-    t
+    t,
   } = props
   return (
     <>

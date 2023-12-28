@@ -8,7 +8,7 @@ const GlossaryItem = ({
   highlightText,
   glossary,
   glossaryAlphabets,
-  t
+  t,
 }: GlossaryItemType) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
