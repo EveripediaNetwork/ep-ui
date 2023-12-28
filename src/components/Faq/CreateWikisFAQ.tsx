@@ -3,9 +3,15 @@ import { Text, Flex, Icon } from '@chakra-ui/react'
 import { RiSettings3Fill } from 'react-icons/ri'
 import AccordionFAQItem from './AccordionFAQItem'
 import { useTranslation } from 'next-i18next'
+import { transformFAQContent } from '@/utils/transformFAQContent'
 
 const CreateWikisFAQ = () => {
   const { t } = useTranslation('faq')
+
+  const getTransformedContent = (contentKey: string) => {
+    const content = t(contentKey)
+    return transformFAQContent(content)
+  }
 
   return (
     <Flex direction="column" mt={10}>
@@ -23,23 +29,23 @@ const CreateWikisFAQ = () => {
       </Flex>
       <AccordionFAQItem
         title={t('faqCreateWikiGettingStarted')}
-        content={t('faqCreateWikiGettingStartedContent')}
+        content={getTransformedContent('faqCreateWikiGettingStartedContent')}
       />
       <AccordionFAQItem
         title={t('faqAddingFeaturedImage')}
-        content={t('faqAddingFeaturedImageContent')}
+        content={getTransformedContent('faqAddingFeaturedImageContent')}
       />
       <AccordionFAQItem
         title={t('faqFillingArticles')}
-        content={t('faqFillingArticlesContent')}
+        content={getTransformedContent('faqFillingArticlesContent')}
       />
       <AccordionFAQItem
         title={t('faqAddingCitation')}
-        content={t('faqAddingCitationContent')}
+        content={getTransformedContent('faqAddingCitationContent')}
       />
       <AccordionFAQItem
         title={t('faqSubmittingWiki')}
-        content={t('faqSubmittingWikiContent')}
+        content={getTransformedContent('faqSubmittingWikiContent')}
       />
     </Flex>
   )

@@ -21,48 +21,56 @@ export const transformFAQContent = (text: string) => {
   const linkPattern = /#link\s+href="([^"]+)"\s+title="([^"]+)"\s*##link/g
   const iframePattern = /<iframe\s+title="([^"]+)"\s+src="([^"]+)"\s*\/>/g
 
-  // Replace double and single newline characters with <br /> tags
   const updatedText = text
     .replace(/\\n\\n/g, '<br /><br />')
     .replace(/\\n/g, '<br />')
 
-  const parts = updatedText.split(linkPattern)
-  const texts = []
+  const parts = updatedText.split(/(<br \/>)/g) // Splitting by <br /> tags
+  const texts: any[] = []
 
-  for (let i = 0; i < parts.length; i++) {
-    // Handle links
-    if (parts[i].match(iframePattern)) {
-      const iframeParts = parts[i].split(iframePattern)
-      for (let j = 0; j < iframeParts.length; j++) {
-        if (j % 3 === 1) {
-          const title = iframeParts[j]
-          const src = iframeParts[j + 1]
+  parts.forEach((part, index) => {
+    if (part.match(linkPattern)) {
+      // Handle links
+      const linkParts = part.split(linkPattern)
+      linkParts.forEach((linkPart, linkIndex) => {
+        if (linkIndex % 3 === 1) {
+          const href = linkParts[linkIndex]
+          const title = linkParts[linkIndex + 1]
           texts.push(
-            <iframe key={`iframe-${i}-${j}`} title={title} src={src} />,
+            <SingleLink
+              key={`link-${index}-${linkIndex}`}
+              href={href}
+              title={title}
+            />,
           )
-          j++
         } else {
-          texts.push(iframeParts[j])
+          texts.push(linkPart)
         }
-      }
-    } else if (i % 3 === 1) {
-      const href = parts[i]
-      const title = parts[i + 1]
-      texts.push(<SingleLink key={`link-${i}`} href={href} title={title} />)
-      i++
+      })
+    } else if (part.match(iframePattern)) {
+      // Handle iframes
+      const iframeParts = part.split(iframePattern)
+      iframeParts.forEach((iframePart, iframeIndex) => {
+        if (iframeIndex % 3 === 1) {
+          const title = iframeParts[iframeIndex]
+          const src = iframeParts[iframeIndex + 1]
+          texts.push(
+            <iframe
+              key={`iframe-${index}-${iframeIndex}`}
+              title={title}
+              src={src}
+            />,
+          )
+        } else {
+          texts.push(iframePart)
+        }
+      })
+    } else if (part === '<br />') {
+      texts.push(<br key={`br-${index}`} />)
     } else {
-      // Parts that are not links or iframes will be processed here
-      const partWithBreaks = parts[i]
-        .split('<br />')
-        .map((part, index, array) => (
-          <>
-            {part}
-            {index < array.length - 1 && <br />}
-          </>
-        ))
-      texts.push(...partWithBreaks)
+      texts.push(part)
     }
-  }
+  })
 
   return texts
 }
