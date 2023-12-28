@@ -8,6 +8,7 @@ import BlogHeader from '@/components/SEO/Blog'
 import { store } from '@/store/store'
 import { ArweaveApi } from '@/services/blog'
 import BlogPageHeader from '@/components/Blog/BlogPageHeader'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   return (
@@ -44,7 +45,7 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const blogEntries = await getBlogsFromAllAccounts()
   await Promise.all(store.dispatch(ArweaveApi.util.getRunningQueriesThunk()))
 
@@ -57,6 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['blog', 'footer'])),
       blogEntries,
     },
     revalidate: 60 * 5,
