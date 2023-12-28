@@ -34,7 +34,7 @@ const Footer = () => {
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
   const [lang, setLang] = useState(
-    userSelectedLanguage ?? languageData[0].value,
+    userSelectedLanguage ?? languageData[0].locale,
   )
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
@@ -130,13 +130,13 @@ const Footer = () => {
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                      {languageData.map((langObj) => (
+                      {languageData.map(langObj => (
                         <MenuItemOption
-                          key={langObj.id}
+                          key={langObj.locale}
                           fontSize="md"
-                          value={langObj.value}
+                          value={langObj.locale}
                         >
-                          {langObj.language}
+                          {langObj.name}
                         </MenuItemOption>
                       ))}
                     </MenuOptionGroup>
