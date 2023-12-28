@@ -13,7 +13,7 @@ import { ITEM_PER_PAGE } from '@/data/Constants'
 const UserEditedWikis = ({ editedWikis }: { editedWikis: Activity[] }) => {
   const router = useRouter()
   const address = router.query.profile as string
-  const { t } = useTranslation()
+  const { t } = useTranslation('account')
 
   const {
     data: wikis,
@@ -39,8 +39,8 @@ const UserEditedWikis = ({ editedWikis }: { editedWikis: Activity[] }) => {
       {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState
-            title="Edit your first Wiki"
-            body="You are yet to make any edits, once you edit a wiki, they will appear here."
+            title={t('editEmptyStateTitle')}
+            body={t('editEmptyStateDescription')}
           />
         </Center>
       )}
