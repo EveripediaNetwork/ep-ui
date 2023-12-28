@@ -27,7 +27,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   }
 
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <HStack
         bgColor={'brainBotBg'}
         paddingBlock={'4px'}

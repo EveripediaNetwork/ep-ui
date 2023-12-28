@@ -9,7 +9,6 @@ const BotMessages = () => {
     state => state.message,
   )
   const { isLoading } = useAppSelector(state => state.stream)
-  // console.log(isLoading)
 
   return (
     <Box
@@ -18,7 +17,6 @@ const BotMessages = () => {
       position={'relative'}
       gap={'10px'}
       width={'100%'}
-      // height={'100%'}
     >
       {messages?.map(message => {
         return (

@@ -41,7 +41,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    state => state.message,
+    (state) => state.message,
   )
 
   useEffect(() => {
