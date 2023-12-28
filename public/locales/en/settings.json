@@ -12,5 +12,9 @@
   "settingLinks": "Links",
   "settingYourTwitterHandle": "Your Twitter Handle",
   "settingYourInstagramHandle": "Your Instagram Handle",
-  "settingYourLensHandle": "Your Lens Handle"
+  "settingYourLensHandle": "Your Lens Handle",
+  "settingWalletAddress": "Wallet Address",
+  "settingProfileImage": "Profile Image",
+  "settingProfileBanner": "Profile Banner",
+  "settingSave": "Save"
 }

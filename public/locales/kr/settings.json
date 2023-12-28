@@ -12,5 +12,9 @@
   "settingLinks": "링크",
   "settingYourTwitterHandle": "당신의 트위터 핸들",
   "settingYourInstagramHandle": "당신의 인스타그램 핸들",
-  "settingYourLensHandle": "당신의 렌즈 핸들"
+  "settingYourLensHandle": "당신의 렌즈 핸들",
+  "settingWalletAddress": "지갑 주소",
+  "settingProfileImage": "프로필 이미지",
+  "settingProfileBanner": "프로필 배너",
+  "settingSave": "저장"
 }
