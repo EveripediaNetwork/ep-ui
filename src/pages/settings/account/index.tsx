@@ -15,6 +15,9 @@ import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import SignTokenMessage from './SignTokenMessage'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { useTranslation } from 'next-i18next'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const NotificationSettings = dynamic(
   () => import('@/components/Settings/NotificationSettings'),
@@ -34,6 +37,7 @@ const Settings = () => {
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
   )
+  const { t } = useTranslation('settings')
 
   useEffect(() => {
     if (userAddress && token) {
@@ -44,7 +48,6 @@ const Settings = () => {
 
   if (!token)
     return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
-
   return (
     <>
       <SettingsPageHeader username={userAddress} />
@@ -62,23 +65,23 @@ const Settings = () => {
             fontWeight="bold"
             mb={5}
           >
-            SETTINGS
+            {t('settingSettings')}
           </Text>
           <VStack spacing={4}>
             <SettingNavButton
-              text="Profile"
+              text={t('settingProfile')}
               Icon={FaUserCircle}
               tabName="profile"
               isActive={tab === 'profile' || !tab}
             />
             <SettingNavButton
-              text="Notifications"
+              text={t('settingNotifications')}
               Icon={FaBell}
               tabName="notifications"
               isActive={tab === 'notifications'}
             />
             <SettingNavButton
-              text="Advanced Settings"
+              text={t('settingAdvancedSettings')}
               Icon={FaPlusSquare}
               tabName="advanced"
               isActive={tab === 'advanced'}
@@ -94,7 +97,7 @@ const Settings = () => {
           align="left"
         >
           <Heading textTransform="capitalize">
-            {tab ?? 'Profile'} Settings
+            {tab ?? t('settingProfile')} {t('settingSettings')}
           </Heading>
           {(tab === 'profile' || !tab) && (
             <ProfileSettings settingsData={profileData} />
@@ -109,6 +112,14 @@ const Settings = () => {
       </HStack>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['settings'])),
+    },
+  }
 }
 
 export default dynamic(() => Promise.resolve(authenticatedRoute(Settings)), {

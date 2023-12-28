@@ -1,0 +1,10 @@
+{
+  "settingSettings": "설정",
+  "settingProfile": "프로필",
+  "settingNotifications": "알림",
+  "settingAdvancedSettings": "고급 설정",
+  "settingUsername": "사용자 이름",
+  "settingClickToUseYourENS": "ENS 사용하려면 클릭",
+  "settingBio": "소개",
+  "settingBioPlaceholder": "세상에 당신의 이야기를 들려주세요"
+}
