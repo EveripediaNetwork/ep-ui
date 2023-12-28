@@ -9,6 +9,7 @@ import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface WikiProps {
   wiki: WikiType
@@ -48,6 +49,15 @@ const Wiki = ({ wiki }: WikiProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const props = {
+    ...(await serverSideTranslations(context.locale ?? 'en', [
+      'revision',
+      'wiki',
+      'common',
+      'footer',
+    ])),
+  }
+
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
@@ -64,6 +74,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         destination: `/404/?wiki=${wiki.title}`,
         permanent: false,
       },
+      props,
     }
   }
 
@@ -75,10 +86,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         destination: `/NotFound/?wiki=${slug}`,
         permanent: false,
       },
+      props,
     }
   }
   return {
-    props: { wiki: { ...wiki, ...data } },
+    props: { wiki: { ...wiki, ...data }, ...props },
   }
 }
 
