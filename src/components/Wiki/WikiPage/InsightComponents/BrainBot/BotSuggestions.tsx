@@ -1,14 +1,50 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
-import { BrainBotSuggestion } from './BrainBot'
+import React, { ReactNode } from 'react'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import { Wiki } from '@everipedia/iq-utils'
+import useStream from '@/hooks/useStream'
+
+export const BrainBotSuggestion = ({
+  question,
+  icon,
+  wiki,
+}: {
+  question: string
+  icon: ReactNode
+  wiki: Wiki
+}) => {
+  const { askQuestion } = useStream()
+
+  return (
+    <HStack
+      gap={'8px'}
+      border={'1px'}
+      borderColor={'iqgptAdCardBorder'}
+      padding={'6px'}
+      borderRadius={'4px'}
+      cursor={'pointer'}
+      onClick={() => {
+        askQuestion({ question, wiki })
+      }}
+    >
+      <Text color={'emptyNotificationText'} fontSize={'10px'}>
+        {question}
+      </Text>
+      {icon}
+    </HStack>
+  )
+}
 
 const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Box paddingBlock={'14px'}>
-      <Text maxW={'255px'} fontSize={'12px'} textAlign={'center'}>
+      <Text
+        color={'fadedText'}
+        maxW={'255px'}
+        fontSize={'12px'}
+        textAlign={'center'}
+      >
         Hi There! I’m the BrainBot. Here are some cool stuff i can do for you.
       </Text>
       <VStack marginTop={'12px'}>
@@ -33,7 +69,6 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
         <HStack gap={'8px'}>
           <BrainBotSuggestion
             question={'Ask me about crypto'}
-            // href={'https://iqgpt.com/'}
             icon={
               <Image
                 src={'/sun.svg'}

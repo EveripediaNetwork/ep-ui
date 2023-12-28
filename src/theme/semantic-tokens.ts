@@ -410,12 +410,12 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'brand.400',
     },
     brainBotBg: {
-      default: 'white',
-      _dark: 'blackAlpha.800',
+      default: '#F9FAFB',
+      _dark: 'gray.700',
     },
     brainBotMainBg: {
-      default: 'white',
-      _dark: 'blackAlpha.700',
+      default: '#F9FAFB',
+      _dark: 'gray.800',
     },
     brainBotBorder: {
       default: 'gray.100',

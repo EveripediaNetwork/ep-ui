@@ -12,7 +12,6 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useDispatch()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // const inputLength = e.target.value.trim().length
     setChatInput(e.target.value)
   }
 
@@ -29,17 +28,14 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form onSubmit={e => handleSubmit(e)}>
       <HStack
-        bgColor={'white'}
+        bgColor={'brainBotBg'}
         paddingBlock={'4px'}
         boxShadow={'0px 1px 2px 0px rgba(0, 0, 0, 0.05)'}
         paddingInline={'12px'}
         borderBottom={'1px'}
         borderColor={'divider'}
-        _dark={{
-          bgColor: 'blackAlpha.800',
-        }}
       >
         <Input
           value={chatInput}
@@ -51,12 +47,12 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           paddingInline={'4px'}
           color={'gray.500'}
           _dark={{
-            color: 'gray.600',
+            color: 'whiteAlpha.600',
           }}
           onChange={handleChange}
         />
         <Box
-          bgColor={'black'}
+          bgColor={'brand.600'}
           display={'flex'}
           justifyContent={'center'}
           alignItems={'center'}
@@ -68,8 +64,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           }}
           color={'white'}
           _dark={{
-            color: 'gray.800',
-            bgColor: 'white',
+            bgColor: 'brand.800',
           }}
         >
           <RiSendPlaneFill size={'13px'} />

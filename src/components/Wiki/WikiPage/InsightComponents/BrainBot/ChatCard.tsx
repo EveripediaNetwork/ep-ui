@@ -6,20 +6,24 @@ import {
   setCurrentMessage,
   setMessages,
 } from '@/store/slices/chatbot-slice'
-import { Box, HStack } from '@chakra-ui/react'
+import { Box, HStack, VStack } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
+import ChatSources from './ChatSources'
 
 type ChartProps = {
   content: string
   alias: 'AI' | 'HUMAN'
   avatar?: ReactNode
-  answerSource?: AnswerSources
+  answerSources?: AnswerSources[]
 }
-const ChatCard = ({ content, alias }: ChartProps) => {
+const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
   const dispatch = useDispatch()
+
+  const [answerSource] = answerSources || []
+
   return (
     <HStack
       width={'100%'}
@@ -40,7 +44,7 @@ const ChatCard = ({ content, alias }: ChartProps) => {
       <HStack
         border={'1px'}
         borderColor={'whiteAlpha.200'}
-        bgColor={'gray.700'}
+        bgColor={alias === 'AI' ? 'gray.700' : ''}
         borderRadius={'4px'}
         padding={'8px'}
         alignItems={'flex-start'}
@@ -59,9 +63,12 @@ const ChatCard = ({ content, alias }: ChartProps) => {
             <Logo width={'9px'} h={'8px'} />
           </Box>
         )}
-        <Box fontSize={'12px'} color={'heroHeaderDescription'}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-        </Box>
+        <VStack>
+          <Box fontSize={'12px'} color={'heroHeaderDescription'}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          </Box>
+          {alias === 'AI' && <ChatSources answerSource={answerSource} />}
+        </VStack>
       </HStack>
     </HStack>
   )

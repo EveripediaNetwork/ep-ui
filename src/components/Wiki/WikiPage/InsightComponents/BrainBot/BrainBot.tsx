@@ -1,6 +1,6 @@
 import { Logo } from '@/components/Elements'
-import { Box, HStack, Text, chakra } from '@chakra-ui/react'
-import React, { ReactNode, useState } from 'react'
+import { Box, Text, chakra } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import { RiArrowDownSLine, RiChat3Fill, RiSubtractFill } from 'react-icons/ri'
 import BotSuggestions from './BotSuggestions'
 import { useAppSelector } from '@/store/hook'
@@ -8,7 +8,6 @@ import BotMessages from './BotMessages'
 import { WikiInsightsProps } from '../../WikiInsights'
 import { Wiki } from '@everipedia/iq-utils'
 import BotChatBox from './BotChatBox'
-import useStream from '@/hooks/useStream'
 
 export const queryMapper = (query: string, wiki: Wiki) => {
   let newQuery = ''
@@ -38,48 +37,24 @@ export const queryMapper = (query: string, wiki: Wiki) => {
   return newQuery
 }
 
-export const BrainBotSuggestion = ({
-  question,
-  icon,
-  wiki,
-}: {
-  question: string
-  icon: ReactNode
-  wiki: Wiki
-}) => {
-  const { askQuestion } = useStream()
-
-  return (
-    <HStack
-      gap={'8px'}
-      border={'1px'}
-      borderColor={'black'}
-      padding={'6px'}
-      borderRadius={'4px'}
-      cursor={'pointer'}
-      _dark={{
-        borderColor: 'whiteAlpha.700',
-      }}
-      onClick={() => {
-        askQuestion({ question, wiki })
-      }}
-    >
-      <Text fontSize={'10px'}>{question}</Text>
-      {icon}
-    </HStack>
-  )
-}
-
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
   const { currentHumanMessage, currentChatId } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   return (
     <>
       {open ? (
-        <Box w={'full'} backgroundColor={'brainBotMainBg'}>
+        <Box
+          w={'full'}
+          borderRadius={'8px'}
+          overflow={'hidden'}
+          border={'1px'}
+          borderColor={'brainBotBorder'}
+          backgroundColor={'brainBotMainBg'}
+          boxShadow={'10px 10px 10px -5px rgba(0, 0, 0, 0.04)'}
+        >
           <Box
             display={'flex'}
             backgroundColor={'brainBotBg'}
@@ -92,10 +67,6 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
           >
             <Box display={'flex'} gap={'8px'} alignItems={'center'}>
               <Box
-                backgroundColor={'gray.200'}
-                _dark={{
-                  backgroundColor: 'whiteAlpha.400',
-                }}
                 borderRadius={'4px'}
                 w={'20px'}
                 h={'20px'}
@@ -103,10 +74,12 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
                 justifyContent={'center'}
                 alignItems={'center'}
                 flexShrink={0}
+                border={'1px'}
+                borderColor={'brand.500'}
               >
-                <RiChat3Fill size={'13px'} />
+                <Logo width={'13px'} height={'13px'} />
               </Box>
-              <Text>BrainBot</Text>
+              <Text>IQ GPT Chatbot</Text>
             </Box>
             <RiSubtractFill
               size={'24px'}

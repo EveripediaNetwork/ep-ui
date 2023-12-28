@@ -13,9 +13,8 @@ import { queryMapper } from '@/components/Wiki/WikiPage/InsightComponents/BrainB
 import { useAppSelector } from '@/store/hook'
 
 const useStream = () => {
-  // const { isLoading } = useAppSelector(state => state.stream)
   const dispatch = useDispatch()
-  const { currentChatId } = useAppSelector((state) => state.message)
+  const { currentChatId } = useAppSelector(state => state.message)
 
   const askQuestion = async ({
     question,
@@ -32,7 +31,7 @@ const useStream = () => {
       .post('/api/fetch-answer', {
         question: wiki ? queryMapper(question, wiki) : question,
       })
-      .then((res) => {
+      .then(res => {
         // console.log(res.data)
         const { chat, answer, answerSources, messageId } =
           generateOutputSchema.parse(res.data)
@@ -51,7 +50,7 @@ const useStream = () => {
           }),
         )
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(JSON.parse(err))
       })
       .finally(() => {
