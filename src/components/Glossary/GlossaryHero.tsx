@@ -7,9 +7,14 @@ import {
   ChakraProps,
 } from '@chakra-ui/react'
 import React from 'react'
+import { TFunction } from 'i18next';
 
-const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
-  (props, ref) => (
+interface GlossaryHeroProps extends ChakraProps {
+  t: TFunction<"glossary", undefined>;
+}
+
+const GlossaryHero = React.forwardRef<HTMLParagraphElement, GlossaryHeroProps>(
+  ({t, ...props}, ref) => (
     <Flex
       direction={{ base: 'column', lg: 'row' }}
       justify="space-between"
@@ -31,10 +36,7 @@ const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
           fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }}
           ref={ref}
         >
-          Navigate the dynamic world of blockchain and cryptocurrency with our
-          comprehensive glossary. It&lsquo;s designed for everyone, whether
-          you&lsquo;re a beginner, trader, developer, or simply someone curious
-          about crypto.
+          {t('glossaryHero')}
         </Text>
       </VStack>
     </Flex>

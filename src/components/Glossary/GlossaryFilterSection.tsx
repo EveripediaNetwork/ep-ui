@@ -20,6 +20,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
     setSearchText,
     activeIndex,
     setActiveIndex,
+    t
   } = props
   return (
     <>
@@ -57,7 +58,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
           return (
             <Tag
               size="lg"
-              key={word}
+              key={word.id}
               bg={i === activeIndex ? 'tagActiveBgColor' : 'transparent'}
               color={i === activeIndex ? 'tagActiveColor' : 'tagColor'}
               cursor="pointer"
@@ -70,11 +71,11 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
               }}
               onClick={() => {
                 setActiveIndex(i)
-                setSearchText(word)
-                searchPage(word)
+                setSearchText(word.id)
+                searchPage(word.id)
               }}
             >
-              <TagLabel>{word}</TagLabel>
+              <TagLabel>{t(word.label)}</TagLabel>
             </Tag>
           )
         })}
