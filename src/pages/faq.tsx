@@ -5,6 +5,8 @@ import GettingStartedAccordion from '@/components/Faq/GettingStartedAccordion'
 import CreateWikisFAQ from '@/components/Faq/CreateWikisFAQ'
 import EditingWikisFAQ from '@/components/Faq/EditingWikisFAQ'
 import { FaqSEO } from '@/components/SEO/Static'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const FAQ = () => {
   return (
@@ -28,6 +30,18 @@ const FAQ = () => {
       </Flex>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'faq',
+        'common',
+        'footer',
+      ])),
+    },
+  }
 }
 
 export default FAQ

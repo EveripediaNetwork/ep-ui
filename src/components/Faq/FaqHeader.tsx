@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'next-i18next'
 
 const FaqHeader = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('faq')
   return (
     <Flex direction="column">
       <Heading

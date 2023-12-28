@@ -1,4 +1,5 @@
 {
+  "everipedia": "IQ.wiki",
   "updatesFooterHeading": "Join the IQ Brainlist",
   "updatesFooterText": "Sign up for the IQ Brainlist to get early access to editing on the IQ.wiki site!",
   "subscribeFooterBtn": "Join Now",
@@ -22,5 +23,8 @@
   "privacyPolicy": "Privacy Policy",
   "termsOfService": "Terms of service",
   "privacyRights": "Your CA Privacy Rights",
-  "copyRight": "IQ.wiki Powered By"
+  "copyRight": "IQ.wiki Powered By",
+  "newsletterbuttonLabel": "Subscribe",
+  "newsletterSubscribeTitle": "Subscribe to our newsletter",
+  "newsletterSubscribeBody": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter."
 }

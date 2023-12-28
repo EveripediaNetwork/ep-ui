@@ -24,12 +24,7 @@
   "wikiInCategory": "此分类下的维基",
   "careerHeading": "职业生涯",
   "noOpeningsHeading": "目前没有空缺职位",
-  "faqHeader": "常见问题解答",
-  "faqPhrase": "有问题？我们在这里帮助您。",
   "seenItAll": "耶！你已经看到了所有内容 🥳",
-  "newsletterbuttonLabel": "订阅",
-  "newsletterSubscribeTitle": "订阅我们的新闻",
-  "newsletterSubscribeBody": "当您注册我们的电子邮件通讯时，绝不会错过 IQ.wiki 上任何最流行和最热门的文章。",
   "rankingListButtonCryptocurrencies": "加密货币",
   "rankingListButtonStablecoins": "稳定币",
   "rankingListButtonAITokens": "AI 代币",
@@ -45,5 +40,9 @@
   "rankingListHeadingProject": "项目",
   "rankingListViewMore": "查看更多",
   "categoryViewMore": "查看更多",
-  "recentActivity": "近期活动"
+  "recentActivity": "近期活动",
+  "checkOutRecentActivity": "查看最近的 wiki 活动",
+  "termsOfService": "服务条款",
+  "privacyPolicy": "隐私政策",
+  "relatedTopics": "관련 항목"
 }

@@ -1,5 +1,4 @@
 {
-  "everipedia": "IQ.wiki",
   "rankingListHeading": "Wiki rank by MarketCap",
   "rankingListDescription": "A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.",
   "browseCategory": "Wiki Categories",
@@ -22,12 +21,7 @@
   "wikiInCategory": "Wikis in this category",
   "careerHeading": "Careers",
   "noOpeningsHeading": "There are currently no open positions at this time",
-  "faqHeader": "Frequently Asked Questions",
-  "faqPhrase": "Have questions? We are here to help you.",
   "seenItAll": "Yay! You have seen it all 🥳 ",
-  "newsletterbuttonLabel": "Subscribe",
-  "newsletterSubscribeTitle": "Subscribe to our newsletter",
-  "newsletterSubscribeBody": "Never miss any of the most popular and trending articles on IQ.wiki when you sign up to our email newsletter.",
   "rankingListButtonCryptocurrencies": "Cryptocurrencies",
   "rankingListButtonStablecoins": "Stablecoins",
   "rankingListButtonAITokens": "AI Tokens",
@@ -43,5 +37,9 @@
   "rankingListHeadingProject": "Project",
   "rankingListViewMore": "View More",
   "categoryViewMore": "View More",
-  "recentActivity": "Recent Activity"
+  "recentActivity": "Recent Activity",
+  "checkOutRecentActivity": "Check out recent wiki activities",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+  "relatedTopics": "Related Topics"
 }

@@ -12,7 +12,8 @@ import { useTranslation } from 'next-i18next'
 import SocialFooter from './SocialFooter'
 
 const MenuFooter = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('footer')
+
   return (
     <SimpleGrid
       columns={{ base: 1, lg: 12 }}
