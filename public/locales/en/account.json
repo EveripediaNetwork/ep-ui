@@ -1,4 +1,11 @@
 {
   "wikis": "Wikis",
-  "edits": "Edits"
+  "edits": "Edits",
+  "CreateEmptyStateTitle": "Create your first Wiki",
+  "createEmptyStateDescription": "Start creating your own wiki . When you do, they will appear here!",
+  "editEmptyStateTitle": "Edit your first Wiki",
+  "editEmptyStateDescription": "You are yet to make any edits, once you edit a wiki, they will appear here.",
+  "createWikiBtn": "Create Wiki",
+  "settingBtnText": "Settings",
+  "shareBtnText": "Share"
 }

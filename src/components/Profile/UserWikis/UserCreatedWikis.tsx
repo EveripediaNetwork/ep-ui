@@ -13,7 +13,7 @@ import { ITEM_PER_PAGE } from '@/data/Constants'
 const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
   const router = useRouter()
   const address = router.query.profile as string
-  const { t } = useTranslation()
+  const { t } = useTranslation('account')
   const {
     data: wikis,
     fetcher: fetchMoreWikis,
@@ -38,8 +38,8 @@ const UserCreatedWikis = ({ createdWikis }: { createdWikis: Activity[] }) => {
       {wikis.length < 1 && !hasMore && (
         <Center>
           <EmptyState
-            title="Create your first Wiki"
-            body="Start creating your own wiki . When you do, they will appear here!"
+            title={t('CreateEmptyStateTitle')}
+            body={t('createEmptyStateDescription')}
           />
         </Center>
       )}
