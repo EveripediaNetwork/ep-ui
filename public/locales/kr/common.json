@@ -31,9 +31,6 @@
   "faqHeader": "자주 묻는 질문",
   "faqPhrase": "질문이 있으신가요? 도와드릴 수 있습니다.",
   "seenItAll": "야호! 당신은 모두를 보았습니다 🥳",
-  "newsletterbuttonLabel": "구독하다",
-  "newsletterSubscribeTitle": "뉴스레터를 구독하세요",
-  "newsletterSubscribeBody": "이메일 뉴스레터에 가입하시면 IQ.wiki에서 가장 인기 있고 트렌드가 되는 기사를 놓치지 마세요.",
   "rankingListButtonCryptocurrencies": "암호화폐",
   "rankingListButtonStablecoins": "스테이블 코인",
   "rankingListButtonAITokens": "AI 토큰",
@@ -50,5 +47,8 @@
   "rankingListViewMore": "더 보기",
   "categoryViewMore": "더 보기",
   "recentActivity": "최근 활동",
-  "checkOutRecentActivity": "최근 위키 활동을 확인해 보세요."
+  "checkOutRecentActivity": "최근 위키 활동을 확인해 보세요.",
+  "termsOfService": "서비스 약관",
+  "privacyPolicy": "개인 정보 정책",
+  "relatedTopics": "관련 항목"
 }

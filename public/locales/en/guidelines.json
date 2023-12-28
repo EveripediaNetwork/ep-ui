@@ -1,4 +1,6 @@
 {
+  "guidelinesSEOTitle": "Our Guidelines",
+  "guidelinesSEODescription": "IQ.wiki guidelines for the community and network",
   "guidelinesTitle": "Guidelines",
   "guidelinesIntro": "IQ.wiki takes pride in being an inclusive platform for the cryptocurrency community. That said, there are a few editorial-related policies / do's and don't's we believe everyone should follow.",
   "guidelinesByIQ": "Guidelines on IQ.wiki",
@@ -27,5 +29,9 @@
   "guidelinesOthers6": "<bold>No threats/predatory harassment</bold>",
   "guidelinesOthers7": "<bold>Respect everyone’s privacy</bold>",
   "guidelinesConversationHeading": "Ideal Discussion in Community-Oriented Groups:",
-  "guidelinesConversation1": "Questions about IQ.wiki : e.g. tokenomics, backstory, etc."
+  "guidelinesConversation1": "Questions about IQ.wiki : e.g. tokenomics, backstory, etc.",
+  "guidelinesConversation2": "Updates (for transparency purposes): new tech developments, projects that our community is working on, etc.",
+  "guidelinesConversation3": "Customer service: how IQ.wiki works, guidance for editing, how to find more information about other dapps, etc.",
+  "guidelinesConversation4": "A place where people can give us feedback on our progress, how to improve, etc.",
+  "guidelinesConversation5": "Sharing IQ.wiki pages for insights, conversation, and support."
 }

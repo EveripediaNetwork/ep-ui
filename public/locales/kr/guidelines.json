@@ -1,4 +1,6 @@
 {
+  "guidelinesSEOTitle": "우리의 지침",
+  "guidelinesSEODescription": "커뮤니티와 네트워크를 위한 IQ.wiki 지침",
   "guidelinesTitle": "지침",
   "guidelinesIntro": "IQ.wiki는 암호화폐 커뮤니티를 위한 포괄적인 플랫폼이라는 점에 자부심을 갖고 있습니다. 즉, 몇 가지 편집 관련 정책/해야 할 일과 하지 말아야 할 일이 있으며 모든 사람이 따라야 한다고 믿습니다.",
   "guidelinesByIQ": "IQ.wiki 가이드라인",
@@ -27,5 +29,9 @@
   "guidelinesOthers6": "<bold>협박/약탈적 괴롭힘 금지</bold>",
   "guidelinesOthers7": "<bold>모든 사람의 개인정보를 존중하세요</bold>",
   "guidelinesConversationHeading": "커뮤니티 중심 그룹의 이상적인 토론:",
-  "guidelinesConversation1": "IQ.wiki에 관한 질문: 예: 토큰경제학, 배경 이야기 등"
+  "guidelinesConversation1": "IQ.wiki에 관한 질문: 예: 토큰경제학, 배경 이야기 등",
+  "guidelinesConversation2": "업데이트(투명성 목적): 새로운 기술 개발, 커뮤니티가 진행 중인 프로젝트 등",
+  "guidelinesConversation3": "고객 서비스: IQ.wiki 작동 방식, 편집 지침, 다른 dapp에 대한 추가 정보를 찾는 방법 등",
+  "guidelinesConversation4": "사람들이 우리의 진행 상황, 개선 방법 등에 대한 피드백을 제공할 수 있는 곳입니다.",
+  "guidelinesConversation5": "통찰력, 대화 및 지원을 위해 IQ.wiki 페이지를 공유합니다."
 }

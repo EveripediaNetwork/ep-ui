@@ -115,20 +115,24 @@ export const TermsHeader = () => (
   />
 )
 
-export const GuidelinesHeader = () => (
-  <NextSeo
-    title="Our Guidelines"
-    description="IQ.wiki guidelines for the community and network"
-    titleTemplate="%s | IQ.wiki"
-    canonical="https://iq.wiki/static/guidelines"
-    openGraph={{
-      title: 'Our Guidelines',
-      description: 'IQ.wiki guidelines for the community and network',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+export const GuidelinesHeader = () => {
+  const { t } = useTranslation('guidelines')
+
+  return (
+    <NextSeo
+      title={t('guidelinesSEOTitle')}
+      description={t('guidelinesSEODescription')}
+      titleTemplate="%s | IQ.wiki"
+      canonical="https://iq.wiki/static/guidelines"
+      openGraph={{
+        title: t('guidelinesSEOTitle'),
+        description: t('guidelinesSEODescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}

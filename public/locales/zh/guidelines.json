@@ -1,4 +1,6 @@
 {
+  "guidelinesSEOTitle": "我们的指导方针",
+  "guidelinesSEODescription": "IQ.wiki 社区和网络指南",
   "guidelinesTitle": "指导方针",
   "guidelinesIntro": "IQ.wiki 为成为加密货币社区的包容性平台而感到自豪。 也就是说，我们认为每个人都应该遵循一些与编辑相关的政策/该做和不该做的事情。",
   "guidelinesByIQ": "IQ.wiki 上的准则",
@@ -27,5 +29,9 @@
   "guidelinesOthers6": "<bold>没有威胁/掠夺性骚扰</bold>",
   "guidelinesOthers7": "<bold>尊重每个人的隐私</bold>",
   "guidelinesConversationHeading": "以社区为导向的小组中的理想讨论：",
-  "guidelinesConversation1": "关于 IQ.wiki 的问题：例如 代币经济学、背景故事等"
+  "guidelinesConversation1": "关于 IQ.wiki 的问题：例如 代币经济学、背景故事等",
+  "guidelinesConversation2": "更新（出于透明度目的）：新技术的发展、我们社区正在开展的项目等。",
+  "guidelinesConversation3": "客户服务：IQ.wiki 的工作原理、编辑指导、如何查找有关其他 dapp 的更多信息等。",
+  "guidelinesConversation4": "人们可以在这里向我们提供关于我们的进展、如何改进等的反馈。",
+  "guidelinesConversation5": "共享 IQ.wiki 页面以获取见解、对话和支持。"
 }

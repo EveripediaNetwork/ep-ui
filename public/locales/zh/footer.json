@@ -1,4 +1,5 @@
 {
+  "everipedia": "IQ.wiki",
   "updatesFooterHeading": "加入 IQ Brainlist",
   "updatesFooterText": "注册 IQ Brainlist 即可抢先在 IQ.wiki 网站上进行编辑！",
   "subscribeFooterBtn": "立即加入",
@@ -22,5 +23,8 @@
   "privacyPolicy": "隐私政策",
   "termsOfService": "服务条款",
   "privacyRights": "您的加州隐私权利",
-  "copyRight": "IQ.wiki 由 提供支持"
+  "copyRight": "IQ.wiki 由 提供支持",
+  "newsletterbuttonLabel": "订阅",
+  "newsletterSubscribeTitle": "订阅我们的新闻",
+  "newsletterSubscribeBody": "当您注册我们的电子邮件通讯时，绝不会错过 IQ.wiki 上任何最流行和最热门的文章。"
 }

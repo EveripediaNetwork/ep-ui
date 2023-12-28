@@ -147,22 +147,19 @@ const Privacy = () => {
             <Text ml="6">
               <UnorderedList>
                 <ListItem>
-                  Questions about IQ.wiki : e.g. tokenomics, backstory, etc.
+                  <GuideLinesText text={t('guidelinesConversation1')} />
                 </ListItem>
                 <ListItem>
-                  Updates (for transparency purposes): new tech developments,
-                  projects that our community is working on, etc.
+                  <GuideLinesText text={t('guidelinesConversation2')} />
                 </ListItem>
                 <ListItem>
-                  Customer service: how IQ.wiki works, guidance for editing, how
-                  to find more information about other dapps, etc.
+                  <GuideLinesText text={t('guidelinesConversation3')} />
                 </ListItem>
                 <ListItem>
-                  A place where people can give us feedback on our progress, how
-                  to improve, etc.
+                  <GuideLinesText text={t('guidelinesConversation4')} />
                 </ListItem>
                 <ListItem>
-                  Sharing IQ.wiki pages for insights, conversation, and support.
+                  <GuideLinesText text={t('guidelinesConversation5')} />
                 </ListItem>
               </UnorderedList>
             </Text>
@@ -170,8 +167,8 @@ const Privacy = () => {
           <Box>
             <RelatedTopics
               topics={[
-                { name: 'Terms of Service', url: '/terms' },
-                { name: 'Privacy Policy', url: '/privacy' },
+                { name: 'termsOfService', url: '/terms' },
+                { name: 'privacyPolicy', url: '/privacy' },
               ]}
             />
           </Box>
@@ -187,6 +184,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       ...(await serverSideTranslations(locale ?? 'en', [
         'guidelines',
         'common',
+        'footer',
       ])),
     },
   }
