@@ -55,7 +55,6 @@ const AccordionFAQItem = ({
                 <Text
                   fontSize={{ base: 'sm', md: 'sm', lg: 'sm' }}
                   lineHeight={2}
-                  whiteSpace="pre-line"
                 >
                   {content}
                 </Text>
