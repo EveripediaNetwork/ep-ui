@@ -15,23 +15,21 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
-  // Extract the locale from the URL
-  const pathSegments = req.nextUrl.pathname.split('/')
-  const urlLocale = pathSegments[1] // Assuming locale is the first segment after the first slash
-
-  // Check if the URL locale is supported
+  // Check user locale
+  const userLocale = req.headers
+    .get('accept-language')
+    ?.split(',')[0]
+    .split('-')[0]
   const isLocaleSupported = languageData.some(
-    (lang) => lang.locale === urlLocale,
+    (lang) => lang.locale === userLocale,
   )
 
-  // Redirect to default locale if URL locale is not supported
+  // Redirect to default locale if user locale is not supported
   if (!isLocaleSupported) {
     const defaultLocale =
       languageData.find((lang) => lang.default)?.locale || 'en'
     const url = req.nextUrl.clone()
-    // Remove the unsupported locale and prepend the default locale
-    pathSegments[1] = defaultLocale
-    url.pathname = pathSegments.join('/')
+    url.pathname = `/${defaultLocale}${req.nextUrl.pathname}`
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
