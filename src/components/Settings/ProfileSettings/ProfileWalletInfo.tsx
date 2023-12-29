@@ -9,6 +9,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { FaCopy } from 'react-icons/fa'
+import { useTranslation } from 'next-i18next'
 
 export const ProfileWalletInfo = ({
   userAddress,
@@ -17,10 +18,11 @@ export const ProfileWalletInfo = ({
 }) => {
   const toast = useToast()
   const clipboard = useClipboard(userAddress || '')
+  const { t } = useTranslation('settings')
 
   return (
     <FormControl>
-      <FormLabel htmlFor="username">Wallet Address</FormLabel>
+      <FormLabel htmlFor="username">{t('settingWalletAddress')}</FormLabel>
       <InputGroup>
         <Input
           cursor="pointer"
