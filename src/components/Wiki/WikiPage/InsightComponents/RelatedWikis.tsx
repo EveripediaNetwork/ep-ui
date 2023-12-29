@@ -10,9 +10,11 @@ import {
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
 import { useGetWikiPreviewsByCategoryQuery } from '@/services/wikis'
+import { useTranslation } from 'next-i18next'
 
 export const RelatedWikiCard = ({ wiki }: { wiki: WikiPreview }) => {
   const { id, title } = wiki
+
   return (
     <LinkBox w="100%">
       <HStack
@@ -52,6 +54,7 @@ export const RelatedWikis = ({
   wikiId: string
   category: string
 }) => {
+  const { t } = useTranslation('wiki')
   const { data } = useGetWikiPreviewsByCategoryQuery({
     category: category,
     limit: 6,
@@ -61,7 +64,7 @@ export const RelatedWikis = ({
   if (!relatedWikis) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2} mb="5">
-      <WikiAccordion mt="-3px" title="Related Articles">
+      <WikiAccordion mt="-3px" title={t('relatedArticles')}>
         <VStack align="start" w="100%">
           {relatedWikis.map((wiki) => (
             <RelatedWikiCard key={wiki.id} wiki={wiki} />

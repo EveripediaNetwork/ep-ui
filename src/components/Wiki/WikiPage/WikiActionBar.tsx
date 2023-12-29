@@ -20,12 +20,14 @@ import { useRouter } from 'next/router'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 import SubscribeModal from './CustomModals/SubscribeModal'
+import { useTranslation } from 'next-i18next'
 
 interface WikiActionBarProps {
   wiki?: Wiki | null
 }
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
+  const { t } = useTranslation('wiki')
   const {
     isOpen: isShareBoxOpen,
     onOpen: onShareBoxOpen,
@@ -49,7 +51,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
 
   const actionBarItems: ActionBarItem[] = [
     {
-      label: 'Read',
+      label: t('read'),
       icon: RiBookOpenFill,
       isDisabled: !wiki,
       disabledTooltip: 'Wiki not found',
@@ -57,7 +59,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       handleClick: () => {},
     },
     {
-      label: 'Edit',
+      label: t('edit'),
       icon: RiEdit2Line,
       isDisabled: typeof getUserAddressFromCache() !== 'string',
       disabledTooltip: 'Please login to edit',
@@ -67,7 +69,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       },
     },
     {
-      label: 'History',
+      label: t('history'),
       icon: RiHistoryLine,
       isDisabled: false,
       handleClick: () => {
@@ -75,14 +77,14 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       },
     },
     {
-      label: 'Notify',
+      label: t('notify'),
       icon: RiNotificationLine,
       disabledTooltip: 'Please login to subscribe',
       isDisabled: typeof getUserAddressFromCache() !== 'string',
       handleClick: onSubscribeBoxOpen,
     },
     {
-      label: 'Share',
+      label: t('share'),
       icon: BiShareAlt,
       isDisabled: !wiki,
       isActive: router.asPath === '',
@@ -132,6 +134,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
               key={index}
             >
               <VStack
+                minW="28px"
                 cursor={
                   item.isDisabled || wiki === undefined
                     ? 'not-allowed'
