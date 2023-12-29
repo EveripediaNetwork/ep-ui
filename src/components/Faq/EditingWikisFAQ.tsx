@@ -3,9 +3,15 @@ import { Text, Flex, Icon } from '@chakra-ui/react'
 import { RiEdit2Fill } from 'react-icons/ri'
 import AccordionFAQItem from './AccordionFAQItem'
 import { useTranslation } from 'next-i18next'
+import { transformFAQContent } from '@/utils/transformFAQContent'
 
 const EditingWikisFAQ = () => {
   const { t } = useTranslation('faq')
+
+  const getTransformedContent = (contentKey: string) => {
+    const content = t(contentKey)
+    return transformFAQContent(content)
+  }
 
   return (
     <Flex direction="column" mt={10}>
@@ -18,44 +24,44 @@ const EditingWikisFAQ = () => {
           fontSize={{ base: 'md', md: 'md', lg: 'xl' }}
           mb={4}
         >
-          Editing Wikis on IQ.wiki
+          {t('faqEditingWikis')}
         </Text>
       </Flex>
       <AccordionFAQItem
         title={t('faqGettingStarted')}
-        content={t('faqEditingGettingStartedContent')}
+        content={getTransformedContent('faqEditingGettingStartedContent')}
       />
       <AccordionFAQItem
         title={t('faqEditingMode')}
-        content={t('faqEditingModeContent')}
+        content={getTransformedContent('faqEditingModeContent')}
       />
       <AccordionFAQItem
         title={t('faqHeaderSection')}
-        content={t('faqHeaderSectionContent')}
+        content={getTransformedContent('faqHeaderSectionContent')}
       />
       <AccordionFAQItem
         title={t('faqEditingQuotes')}
-        content={t('faqEditingQuotesContent')}
+        content={getTransformedContent('faqEditingQuotesContent')}
       />
       <AccordionFAQItem
         title={t('faqAddingMedia')}
-        content={t('faqAddingMediaContent')}
+        content={getTransformedContent('faqAddingMediaContent')}
       />
       <AccordionFAQItem
         title={t('faqEmbeddingVideos')}
-        content={t('faqEmbeddingVideosContent')}
+        content={getTransformedContent('faqEmbeddingVideosContent')}
       />
       <AccordionFAQItem
         title={t('faqCategoriesAndTags')}
-        content={t('faqCategoriesAndTagsContent')}
+        content={getTransformedContent('faqCategoriesAndTagsContent')}
       />
       <AccordionFAQItem
         title={t('faqInternalLinks')}
-        content={t('faqInternalLinksContent')}
+        content={getTransformedContent('faqInternalLinksContent')}
       />
       <AccordionFAQItem
         title={t('faqEditHistory')}
-        content={t('faqEditHistoryContent')}
+        content={getTransformedContent('faqEditHistoryContent')}
       />
     </Flex>
   )

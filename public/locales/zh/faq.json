@@ -36,6 +36,7 @@
   "faqAddingCitationContent": "要在文章正文中添加参考文献或引用，首先点击您想添加引用的文章位置（您可以从第一段的末尾开始添加引用）。\\n\\n实际添加引用时，点击“引用”按钮，输入URL，并添加您选择添加的链接的简短描述（例如，您可以在描述中输入文章的标题、作者和/或发布日期）。要实际插入引用，请点击粉红色的“引用”按钮。\\n\\n  <iframe title=\"添加引用\" src=\"https://www.youtube.com/embed/NrAUvtOpY0E\"/>",
   "faqSubmittingWiki": "提交维基",
   "faqSubmittingWikiContent": "当您完成 IQ.wiki 文章的编辑后，请填写主图像上方的 Wiki 摘要部分，以便读者了解文章的总体思路。 您还需要在编辑 Wiki 详细信息部分选择类别、标签并添加社交媒体链接。 完成所有这些步骤后，您可以点击“发布”按钮来保存页面。 您可以选择在发布时添加评论。\\n\\n评论使编辑者有机会为其编辑提供额外的上下文或理由。 这在社区内创造了更大的透明度。\\n\\n按下“发布”按钮后，系统将启动无气体交易，您应该用钱包签署该交易。 在钱包弹出窗口中按登录。 过一会儿你的页面就会被记录在区块链上。 一旦您的钱包授权您的更改，您就可以在阅读模式下查看您的维基。 提交后，您还可以在区块浏览器和IPFS上查看交易。 如果更改不可见，请确保硬刷新页面。 大多数编辑都会在一分钟内完成，但如果 Polygon 网络拥塞，则可能需要几分钟。\\n\\n <iframe title=\"提交 wiki\" src=\"https://www.youtube .com/embed/8ml3S6KUX3U\"/> \\n\\n如果您正在寻找提高编辑技能并使您的页面通过 Twitter 源、标题、其他 IQ.wiki 页面的链接、引言、类别脱颖而出的方法 和信息框请查看下面的编辑指南。",
+  "faqEditingWikis": "在 IQ.wiki 上编辑 Wiki",
   "faqEditingGettingStartedContent": "在编辑 IQ.wiki 文章之前，您需要使用 MetaMask 或 Walletconnect 使用您的 Brainlisted Polygon 地址登录。 编辑文章与创建文章非常相似。 唯一的区别是您需要从现有的 IQ.wiki 文章开始并打开编辑模式，而不是从创建 Wiki 按钮开始。",
   "faqEditingMode": "编辑模式",
   "faqEditingModeContent": "要打开编辑模式并开始编辑 IQ.wiki 文章，请单击编辑按钮。 要了解在 IQ.wiki 上编辑的基础知识、如何添加特色图像、信息和引文以及如何提交页面，首先请务必阅读此常见问题解答页面的创建文章。",
