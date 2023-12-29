@@ -1,3 +1,4 @@
+import { env } from '@/env.mjs'
 import {
   GenerateOutput,
   generateEventsSchema,
@@ -13,7 +14,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const xAuthKey = '26b5fadc-20b2-4cfe-ac81-c957e8fd194c'
   const { question } = req.body
 
   const handleMessage = async (
@@ -37,14 +37,16 @@ export default async function handler(
     isChat: true,
   }
 
-  const result = await new Promise<GenerateOutput>((resolve) => {
+  console.log(env.BOT_AUTH_KEY)
+
+  const result = await new Promise<GenerateOutput>(resolve => {
     fetchEventSource('https://iqgpt.com/api/generate', {
       method: 'POST',
       body: JSON.stringify(requestObject),
       headers: {
-        Cookie: `x-auth-key=${xAuthKey}`,
+        Cookie: `x-auth-key=${env.BOT_AUTH_KEY}`,
       },
-      onmessage: async (msg) => {
+      onmessage: async msg => {
         handleMessage(msg, resolve)
       },
     })

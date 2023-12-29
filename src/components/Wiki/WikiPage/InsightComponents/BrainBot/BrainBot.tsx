@@ -42,7 +42,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(false)
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   useEffect(() => {
@@ -122,11 +122,13 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             <Text color={'gray.600'} fontSize={'10px'}>
               And more...
             </Text>
-            <RiArrowDownSLine
-              size={'28px'}
-              onClick={() => setOpen(true)}
-              style={{ flexShrink: 0, cursor: 'pointer' }}
-            />
+            <Box color={'brandLinkColor'}>
+              <RiArrowDownSLine
+                size={'28px'}
+                onClick={() => setOpen(true)}
+                style={{ flexShrink: 0, cursor: 'pointer' }}
+              />
+            </Box>
           </Box>
         </Box>
       )}

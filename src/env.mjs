@@ -6,6 +6,7 @@ const server = z.object({
   OPENAI_API_KEY: z.string().optional(),
   PINATA_KEY: z.string().optional(),
   PINATA_SECRET: z.string().optional(),
+  BOT_AUTH_KEY: z.string(),
 })
 
 const client = z.object({
@@ -70,6 +71,7 @@ const processEnv = {
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+  BOT_AUTH_KEY: process.env.BOT_AUTH_KEY,
 }
 
 // Don't touch the part below

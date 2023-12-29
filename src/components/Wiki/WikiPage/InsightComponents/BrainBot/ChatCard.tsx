@@ -12,6 +12,8 @@ import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import ChatSources from './ChatSources'
+import { customTableRenderer } from '../../CustomRenderers/customTableRender'
+import styles from '../../../../../styles/markdown.module.css'
 
 type ChartProps = {
   content: string
@@ -23,7 +25,6 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
   const dispatch = useDispatch()
 
   const [answerSource] = answerSources || []
-
   return (
     <HStack
       width={'100%'}
@@ -43,8 +44,8 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
       />
       <HStack
         border={'1px'}
-        borderColor={'divider'}
-        bgColor={alias === 'AI' ? 'gray.700' : ''}
+        borderColor={'brainBotBorder'}
+        bgColor={alias === 'AI' ? 'bodyBg' : ''}
         borderRadius={'4px'}
         padding={'8px'}
         alignItems={'flex-start'}
@@ -64,8 +65,18 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
           </Box>
         )}
         <VStack alignItems={'flex-start'}>
-          <Box fontSize={'12px'} color={'heroHeaderDescription'}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          <Box
+            fontSize={'12px'}
+            color={'heroHeaderDescription'}
+            className={`${styles.markdownBody}`}
+          >
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{ table: customTableRenderer }}
+            >
+              {content}
+            </ReactMarkdown>
+            {/* {content} */}
           </Box>
           {alias === 'AI' && <ChatSources answerSource={answerSource} />}
         </VStack>
