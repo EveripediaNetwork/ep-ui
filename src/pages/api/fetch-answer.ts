@@ -39,14 +39,14 @@ export default async function handler(
 
   console.log(env.BOT_AUTH_KEY)
 
-  const result = await new Promise<GenerateOutput>(resolve => {
+  const result = await new Promise<GenerateOutput>((resolve) => {
     fetchEventSource('https://iqgpt.com/api/generate', {
       method: 'POST',
       body: JSON.stringify(requestObject),
       headers: {
         Cookie: `x-auth-key=${env.BOT_AUTH_KEY}`,
       },
-      onmessage: async msg => {
+      onmessage: async (msg) => {
         handleMessage(msg, resolve)
       },
     })

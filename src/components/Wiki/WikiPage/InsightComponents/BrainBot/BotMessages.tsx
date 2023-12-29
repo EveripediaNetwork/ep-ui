@@ -6,9 +6,9 @@ import { Logo } from '@/components/Elements'
 
 const BotMessages = () => {
   const { currentHumanMessage, messages } = useAppSelector(
-    state => state.message,
+    (state) => state.message,
   )
-  const { isLoading } = useAppSelector(state => state.stream)
+  const { isLoading } = useAppSelector((state) => state.stream)
 
   return (
     <Box
@@ -18,7 +18,7 @@ const BotMessages = () => {
       gap={'10px'}
       width={'100%'}
     >
-      {messages?.map(message => {
+      {messages?.map((message) => {
         return (
           <React.Fragment key={message.id}>
             <ChatCard content={message.search} alias={'HUMAN'} />
