@@ -1,4 +1,6 @@
 {
+  "FAQSeoTitle": "常问问题",
+  "FAQSeodescription": "关于 IQ.wiki 的常见问题",
   "faqHeader": "常见问题解答",
   "faqPhrase": "有问题？我们在这里帮助您。",
   "faqGettingStarted": "入门",
@@ -47,6 +49,7 @@
   "faqEmbeddingVideosContent": "要在IQ.wiki文章正文中添加图片或视频，首先通过点击文章中您想要添加媒体的位置来选择它（您可以通过将光标放在文章的第一个单词之前开始添加介绍中的媒体）。 \n\n要实际添加媒体，请点击编辑器工具栏中的“媒体”按钮，选择照片或视频，然后按下您要添加的那个。\n\n<iframe title=\"编辑wiki时添加视频\" src=\"https://www.youtube.com/embed/_54xE_e5BiQ\" />",
   "faqAddingMedia": "将项目添加到媒体库",
   "faqAddingMediaContent": "要将图像添加到媒体库，请导航到文章右侧的媒体库（主图像下方），然后单击新的“添加图像/视频”。 您可以拖放图像或视频，或单击以从 PC 中选择它。 您可以粘贴 YouTube 或图像链接，系统将自动获取媒体。",
+  "faqCategoriesAndTags": "类别和标签",
   "faqCategoriesAndTagsContent": "类别允许用户按主题将 wiki 分组在一起，并使读者更容易发现相关的 wiki。 要添加类别，请单击“编辑类别”部分，然后输入要添加的类别。 IQ.wiki 上的六个初始类别是：NFT、去中心化金融、交易所、加密货币、加密货币和 DAO。 \\n\\n标签允许用户在相关特定主题内从一个页面转到另一页面。 例如，按下某些特定标签，“游戏”将引导用户访问 IQ.wiki 上有关基于加密货币的游戏的所有 wiki 的列表。 \\n\\n这两个功能都可以从主图像下的“编辑 Wiki 详细信息”面板访问。 \\n\\n<iframe title=\"编辑 wiki 的引用\" src=\"https://www.youtube.com/embed/XWFeUeEVW0c\" />",
   "faqInternalLinks": "添加内部链接",
   "faqInternalLinksContent": "添加另一篇 IQ.wiki 文章的链接是向人们推荐与您正在编辑的文章相关的信息的好方法。 要添加内部链接，请单击文章中要添加内部链接的位置，按“插入 Wiki 链接”并输入您要包含的文章。 然后按“链接”插入它。\\n\\n*有一个“覆盖文本”选项，它允许您使链接的可点击文本与 IQ.wiki 文章的标题不同 。 通过使用覆盖文本功能，您可以让 BAYC 显示为可见文本，而不是 Bored Ape Yacht Club。 \\n\\n<iframe title=\"编辑 wiki 的引用\" src=\"https://www.youtube.com/embed/WyLVpULmyP4\" />",

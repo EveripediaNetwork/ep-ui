@@ -23,23 +23,27 @@ export const AboutHeader = () => {
   )
 }
 
-export const FaqSEO = () => (
-  <NextSeo
-    title="FAQ"
-    description="Frequently Asked Questions about IQ.wiki"
-    titleTemplate="%s | IQ.wiki"
-    canonical="https://iq.wiki/static/faq"
-    openGraph={{
-      title: 'FAQ',
-      description: 'Frequently Asked Questions about IQ.wiki',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+export const FaqSEO = () => {
+  const { t } = useTranslation('faq')
+
+  return (
+    <NextSeo
+      title={t('FAQSeoTitle')}
+      description={t('FAQSeodescription')}
+      titleTemplate="%s | IQ.wiki"
+      canonical="https://iq.wiki/static/faq"
+      openGraph={{
+        title: t('FAQSeoTitle'),
+        description: t('FAQSeodescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}
 
 export const PrivacyPolicySEO = () => (
   <NextSeo
