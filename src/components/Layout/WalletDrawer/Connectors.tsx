@@ -39,7 +39,7 @@ interface ConnectorsProps {
 }
 
 const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const router = useRouter()
   const {
     address: userAddress,

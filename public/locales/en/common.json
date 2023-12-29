@@ -52,5 +52,6 @@
   "loginConnectorText2": "wallets ",
   "loginConnectorText3": "providers or create a new one.",
   "loginConnectorTotalBal": "Total balance",
-  "loginIQDashboard": "IQ Dashboard"
+  "loginIQDashboard": "IQ Dashboard",
+  "myWallet": "My Wallet"
 }
