@@ -1,9 +1,0 @@
-{
-  "loginConnectWallet": "Connect your wallet",
-  "loginToolTip": "A crypto wallet is an application or hardware device that allows individuals to store and retrieve digital items.",
-  "loginConnectorText1": "Connect with one of our available ",
-  "loginConnectorText2": "wallets ",
-  "loginConnectorText3": "providers or create a new one.",
-  "loginConnectorTotalBal": "Total balance",
-  "loginIQDashboard": "IQ Dashboard"
-}

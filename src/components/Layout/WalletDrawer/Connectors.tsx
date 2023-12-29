@@ -39,7 +39,7 @@ interface ConnectorsProps {
 }
 
 const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
-  const { t } = useTranslation('login')
+  const { t } = useTranslation()
   const router = useRouter()
   const {
     address: userAddress,
@@ -186,7 +186,7 @@ const Connectors = ({ openWalletDrawer }: ConnectorsProps) => {
                 >
                   <Center height="16">
                     <Text fontWeight="bold" fontSize="medium">
-                      {t('loginIQDashboard')}
+                      IQ Dashboard
                     </Text>
                   </Center>
                 </Link>
