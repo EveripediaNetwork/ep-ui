@@ -134,6 +134,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
               key={index}
             >
               <VStack
+                minW="28px"
                 cursor={
                   item.isDisabled || wiki === undefined
                     ? 'not-allowed'
