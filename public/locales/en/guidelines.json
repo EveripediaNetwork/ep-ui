@@ -26,5 +26,12 @@
   "guidelinesOthers3": "**No content that incites hatred based on protected groups **bold(race/ethnic origin, sexual orientation/gender identity, disability, religion, nationality, age, gender, etc.)",
   "guidelinesOthers4": "**No violence/graphic content **bold",
   "guidelinesOthers5": "**No malicious attacks **bold(if someone is mildly annoying/petty, this should be ignored)",
-  "guidelinesOthers6": "**No threats/predatory harassment **bold"
+  "guidelinesOthers6": "**No threats/predatory harassment **bold",
+  "guidelinesOthers7": "**Respect everyone’s privacy **bold",
+  "guidelinesConversationHeading": "Ideal Discussion in Community-Oriented Groups:",
+  "guidelinesConversation1": "Questions about IQ.wiki : e.g. tokenomics, backstory, etc.",
+  "guidelinesConversation2": "Updates (for transparency purposes): new tech developments, projects that our community is working on, etc.",
+  "guidelinesConversation3": "Customer service: how IQ.wiki works, guidance for editing, how to find more information about other dapps, etc.",
+  "guidelinesConversation4": "A place where people can give us feedback on our progress, how to improve, etc.",
+  "guidelinesConversation5": "Sharing IQ.wiki pages for insights, conversation, and support."
 }
