@@ -87,7 +87,7 @@ const MenuFooter = () => {
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
-              <Heading size="sm">Company</Heading>
+              <Heading size="sm">{t('company')}</Heading>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
@@ -122,7 +122,7 @@ const MenuFooter = () => {
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
                 href="/branding"
-              >{`${t('Branding')}`}</Link>
+              >{`${t('branding')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
