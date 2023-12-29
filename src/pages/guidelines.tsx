@@ -13,26 +13,7 @@ import { GuidelinesHeader } from '@/components/SEO/Static'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-
-const GuideLinesText = ({ text }: { text: string }) => {
-  const parts = text.split(/(<bold.*?\/bold>)/)
-
-  return (
-    <Text
-      fontSize={{ base: '14px', md: '16px' }}
-      whiteSpace="pre-line"
-      fontWeight={500}
-    >
-      {parts.map((part, index) =>
-        part.startsWith('<bold') ? (
-          <b>{part?.match(/>(.*?)</)?.[1]}</b>
-        ) : (
-          <React.Fragment key={index}>{part}</React.Fragment>
-        ),
-      )}
-    </Text>
-  )
-}
+import { transformTextContent } from '@/utils/transformTextContent'
 
 const Privacy = () => {
   const { t } = useTranslation('guidelines')
@@ -59,15 +40,9 @@ const Privacy = () => {
             </Text>
             <Text ml="6">
               <UnorderedList>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines1')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines2')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines3')} />
-                </ListItem>
+                <ListItem>{transformTextContent(t('guidelines1'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines2'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines3'))}</ListItem>
               </UnorderedList>
             </Text>
             <Text>
@@ -75,24 +50,12 @@ const Privacy = () => {
             </Text>
             <Text ml="6">
               <UnorderedList>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines4')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines5')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines6')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines7')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines8')} />
-                </ListItem>
-                <ListItem>
-                  <GuideLinesText text={t('guidelines9')} />
-                </ListItem>
+                <ListItem>{transformTextContent(t('guidelines4'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines5'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines6'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines7'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines8'))}</ListItem>
+                <ListItem>{transformTextContent(t('guidelines9'))}</ListItem>
               </UnorderedList>
             </Text>
 
@@ -103,13 +66,13 @@ const Privacy = () => {
             <Text ml="6">
               <UnorderedList>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesSocialMedia1')} />
+                  {transformTextContent(t('guidelinesSocialMedia1'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesSocialMedia2')} />
+                  {transformTextContent(t('guidelinesSocialMedia2'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesSocialMedia3')} />
+                  {transformTextContent(t('guidelinesSocialMedia3'))}
                 </ListItem>
               </UnorderedList>
             </Text>
@@ -119,25 +82,25 @@ const Privacy = () => {
             <Text ml="6">
               <UnorderedList>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers1')} />
+                  {transformTextContent(t('guidelinesOthers1'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers2')} />
+                  {transformTextContent(t('guidelinesOthers2'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers3')} />
+                  {transformTextContent(t('guidelinesOthers3'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers4')} />
+                  {transformTextContent(t('guidelinesOthers4'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers5')} />
+                  {transformTextContent(t('guidelinesOthers5'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers6')} />
+                  {transformTextContent(t('guidelinesOthers6'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesOthers7')} />
+                  {transformTextContent(t('guidelinesOthers7'))}
                 </ListItem>
               </UnorderedList>
             </Text>
@@ -147,19 +110,19 @@ const Privacy = () => {
             <Text ml="6">
               <UnorderedList>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesConversation1')} />
+                  {transformTextContent(t('guidelinesConversation1'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesConversation2')} />
+                  {transformTextContent(t('guidelinesConversation2'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesConversation3')} />
+                  {transformTextContent(t('guidelinesConversation3'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesConversation4')} />
+                  {transformTextContent(t('guidelinesConversation4'))}
                 </ListItem>
                 <ListItem>
-                  <GuideLinesText text={t('guidelinesConversation5')} />
+                  {transformTextContent(t('guidelinesConversation5'))}
                 </ListItem>
               </UnorderedList>
             </Text>

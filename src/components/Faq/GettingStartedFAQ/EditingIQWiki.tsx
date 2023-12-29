@@ -1,12 +1,12 @@
 import React from 'react'
 import AccordionFAQItem from '../AccordionFAQItem'
-import { transformFAQContent } from '@/utils/transformFAQContent'
+import { transformTextContent } from '@/utils/transformTextContent'
 import { useTranslation } from 'next-i18next'
 
 const EditingIQWiki = () => {
   const { t } = useTranslation('faq')
   const content = t('faqEditingWikiContent')
-  const transformedContent = transformFAQContent(content)
+  const transformedContent = transformTextContent(content)
 
   return (
     <AccordionFAQItem

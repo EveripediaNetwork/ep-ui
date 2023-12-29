@@ -3,14 +3,14 @@ import { Text, Flex, Icon } from '@chakra-ui/react'
 import { RiSettings3Fill } from 'react-icons/ri'
 import AccordionFAQItem from './AccordionFAQItem'
 import { useTranslation } from 'next-i18next'
-import { transformFAQContent } from '@/utils/transformFAQContent'
+import { transformTextContent } from '@/utils/transformTextContent'
 
 const CreateWikisFAQ = () => {
   const { t } = useTranslation('faq')
 
   const getTransformedContent = (contentKey: string) => {
     const content = t(contentKey)
-    return transformFAQContent(content)
+    return transformTextContent(content)
   }
 
   return (
