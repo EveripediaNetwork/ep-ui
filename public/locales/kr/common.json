@@ -48,5 +48,16 @@
   "checkOutRecentActivity": "최근 위키 활동을 확인해 보세요.",
   "termsOfService": "서비스 약관",
   "privacyPolicy": "개인 정보 정책",
-  "relatedTopics": "관련 항목"
+  "relatedTopics": "관련 항목",
+  "Categories": "카테고리",
+  "Rank": "순위",
+  "Learn": "배우다",
+  "Create Wiki": "위키 생성",
+  "loginConnectWallet": "지갑 연결",
+  "loginToolTip": "암호화폐 지갑은 개인이 디지털 항목을 저장하고 검색할 수 있게 해주는 애플리케이션 또는 하드웨어 장치입니다.",
+  "loginConnectorText1": "저희가 제공하는 ",
+  "loginConnectorText2": "지갑",
+  "loginConnectorText3": " 공급자 중 하나와 연결하거나 새로운 것을 만드십시오.",
+  "loginConnectorTotalBal": "총 잔액",
+  "loginIQDashboard": "IQ 대시보드"
 }

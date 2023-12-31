@@ -23,6 +23,7 @@ import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { LinkButton } from '@/components/Elements'
 import { RiHistoryLine } from 'react-icons/ri'
 import { getUsername } from '@/utils/DataTransform/getUsername'
+import { useTranslation } from 'next-i18next'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -100,6 +101,7 @@ export const HistoryCard = ({
   blocksChanged = '',
 }: HistoryCardProps) => {
   const [, userENSDomain] = useENSData(lastEditor.id)
+  const { t } = useTranslation('history')
 
   // validate wordsChanged, percentChanged
   let checkedWordsChanged = '0'
@@ -266,7 +268,7 @@ export const HistoryCard = ({
             color="linkColor"
             href={`/create-wiki?revision=${activityId}`}
           >
-            Restore
+            {t('restore')}
           </LinkButton>
         )}
       </HStack>
