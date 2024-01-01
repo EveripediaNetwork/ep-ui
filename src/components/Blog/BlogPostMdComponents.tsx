@@ -1,5 +1,10 @@
 import { Text } from '@chakra-ui/react'
+import { ReactNode } from 'react'
 
-export const CustomTextRender: React.FC = (props) => (
-  <Text noOfLines={3} {...props} />
+const p = ({ children }: { children: ReactNode[] }) => (
+  <Text noOfLines={3}>{children}</Text>
 )
+
+export const postComponent = {
+  p,
+}

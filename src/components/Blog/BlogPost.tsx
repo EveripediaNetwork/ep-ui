@@ -7,7 +7,7 @@ import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { TbArrowUpRight } from 'react-icons/tb'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 import ReactMarkdown from 'react-markdown'
-import { CustomTextRender } from './BlogPostMdComponents'
+import { postComponent } from './BlogPostMdComponents'
 
 export const BlogPost = (props: BlogPostType) => {
   const { post, ...rest } = props
@@ -66,8 +66,8 @@ export const BlogPost = (props: BlogPostType) => {
                 {post.title}
               </Text>
             </Flex>
-            <ReactMarkdown components={{ p: CustomTextRender }}>
-              {post.excerpt}
+            <ReactMarkdown components={postComponent}>
+              {post.excerpt || ''}
             </ReactMarkdown>
           </Box>
           <LinkWrapper href={`/blog/${post.digest}`}>
