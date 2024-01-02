@@ -8,11 +8,12 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 
 const AdvancedSettings = () => {
   const [isSigningOptionRelayer, setIsSigningOptionRelayer] =
     useState<boolean>(true)
-
+  const { t } = useTranslation('settings')
   const toast = useToast()
 
   useEffect(() => {
@@ -64,17 +65,18 @@ const AdvancedSettings = () => {
               onChange={(e) => setIsSigningOptionRelayer(e.target.checked)}
             >
               <VStack align="left" spacing={2} ml={4}>
-                <Heading fontSize="md">Sign Edits with Relayer</Heading>
+                <Heading fontSize="md">
+                  {t('settingSignEditsWithRelayer')}
+                </Heading>
                 <Text opacity={0.8} fontSize="md">
-                  By default your edits will be signed with relayer. If you want
-                  to sign edits with your own wallet, uncheck this option.
+                  {t('settingDefaultEdit')}
                 </Text>
               </VStack>
             </Checkbox>
           </Box>
         </VStack>
         <Button type="submit" mt={8} size="lg">
-          Save
+          {t('settingsSave')}
         </Button>
       </form>
     </>

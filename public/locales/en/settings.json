@@ -16,5 +16,12 @@
   "settingWalletAddress": "Wallet Address",
   "settingProfileImage": "Profile Image",
   "settingProfileBanner": "Profile Banner",
-  "settingSave": "Save"
+  "settingSave": "Save",
+  "settingGetStartedWithYourNotificationList": "Get started with your notification list",
+  "settingSearchForWikis": "Search for wikis you would love to get updates on and add them to your list.",
+  "settingsTabProfile": "Profile",
+  "settingsTabNotifications": "Notifications",
+  "settingsTabAdvancedSettings": "Advanced Settings",
+  "settingSignEditsWithRelayer": "Sign edits with relayer",
+  "settingDefaultEdit": "Edits are signed with a relayer by default. If you would like to sign edits with your own wallet, uncheck this option."
 }

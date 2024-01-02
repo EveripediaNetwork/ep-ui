@@ -8,7 +8,7 @@ interface DiscoverMoreProps {
 }
 const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
   if (!tagsData) return null
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
 
   return (
     <Box bgColor="gray.100" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>

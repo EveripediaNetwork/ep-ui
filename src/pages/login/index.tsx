@@ -9,7 +9,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 
 const Login = () => {
-  const { t } = useTranslation('login')
+  const { t } = useTranslation('common')
   const [isMounted, setIsMounted] = useState(false)
 
   const { address: userAddress } = useAccount()
@@ -45,7 +45,7 @@ const Login = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'en', ['login'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   }
 }
