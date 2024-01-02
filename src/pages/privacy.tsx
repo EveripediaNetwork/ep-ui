@@ -44,7 +44,7 @@ const Privacy = () => {
               {t('privacyInformationCollect')}
             </Heading>
             <Text>
-              <b>The categories of information we collect can include:</b>
+              <b>{t('privacyInformationCollectionInclusion')}</b>
             </Text>
             <Text>
               <UnorderedList>
