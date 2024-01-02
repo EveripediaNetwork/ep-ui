@@ -103,10 +103,10 @@ const WikiDetailsSidebar = ({
           <Box mt={1}>
             <RiFilmLine size="16" />
           </Box>
-          <Text>Media</Text>
+          <Text>{t('Media')}</Text>
         </Flex>
         <Button maxW="190px" onClick={mediaOpen} px={3} size="sm">
-          <Text fontSize="sm">Add images/videos</Text>
+          <Text fontSize="sm">{t('addImagesVideos')}</Text>
         </Button>
       </HStack>
       <Flex direction="column" justifyContent="center" alignItems="center">
@@ -117,7 +117,7 @@ const WikiDetailsSidebar = ({
           alignItems="center"
         >
           <Button w="full" variant="outline" color="linkColor" onClick={onOpen}>
-            Edit Wiki Details
+            {t('editWikiDetails')}
           </Button>
         </Flex>
       </Flex>
