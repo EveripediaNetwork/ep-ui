@@ -24,7 +24,7 @@ const GlossaryAlphabets = (props: GlossaryAlphabetsProps) => {
           fontSize={{ base: 'md', xl: 'lg' }}
           _hover={{ color: 'brandLinkColor' }}
         >
-          {props.t(item)}
+          {item}
         </Text>
       </Link>
     </GridItem>
