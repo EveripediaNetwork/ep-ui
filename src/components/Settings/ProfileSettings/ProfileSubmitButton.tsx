@@ -9,6 +9,7 @@ export const ProfileSubmitButton = ({
   isBannerLoading,
 }: ProfileSubmitButtonProps) => {
   const { t } = useTranslation('settings')
+
   return (
     <Button
       isLoading={isLoading}

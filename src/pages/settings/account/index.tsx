@@ -16,7 +16,7 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import SignTokenMessage from './SignTokenMessage'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useTranslation } from 'next-i18next'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const NotificationSettings = dynamic(
@@ -121,7 +121,7 @@ const Settings = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['settings', 'common'])),
