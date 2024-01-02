@@ -49,6 +49,7 @@ import {
 } from '@/utils/WikiUtils/getWikiSummary'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -123,7 +124,7 @@ const WikiSubscriptionButton = ({
 
 const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
-
+  const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement | null>(null)
   const { profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
@@ -331,7 +332,7 @@ const SearchWikiNotifications = () => {
               borderLeftRadius="0"
               borderRightRadius="8"
             >
-              Search
+              {t('search')}
             </Button>
           </InputGroup>
         </form>
@@ -343,7 +344,7 @@ const SearchWikiNotifications = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'settings'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   }
 }

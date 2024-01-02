@@ -97,7 +97,14 @@ const Settings = () => {
           align="left"
         >
           <Heading textTransform="capitalize">
-            {tab ?? t('settingProfile')} {t('settingSettings')}
+            {tab === 'profile'
+              ? t('settingProfile')
+              : tab === 'notifications'
+              ? t('settingNotifications')
+              : tab === 'advanced'
+              ? t('settingAdvancedSettings')
+              : ''}{' '}
+            {t('settingSettings')}
           </Heading>
           {(tab === 'profile' || !tab) && (
             <ProfileSettings settingsData={profileData} />

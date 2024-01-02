@@ -18,5 +18,7 @@
   "settingProfileBanner": "프로필 배너",
   "settingSave": "저장",
   "settingGetStartedWithYourNotificationList": "알림 목록 시작하기",
-  "settingSearchForWikis": "업데이트를 받고 싶은 위키를 검색하고 목록에 추가하세요."
+  "settingSearchForWikis": "업데이트를 받고 싶은 위키를 검색하고 목록에 추가하세요.",
+  "settingSignEditsWithRelayer": "릴레이어로 편집 서명하기",
+  "settingDefaultEdit": "기본적으로 편집은 릴레이어를 사용하여 서명됩니다. 만약 자신의 지갑을 사용하여 편집에 서명하고 싶다면, 이 옵션을 해제하세요."
 }

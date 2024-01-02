@@ -59,5 +59,6 @@
   "loginConnectorText2": "지갑",
   "loginConnectorText3": " 공급자 중 하나와 연결하거나 새로운 것을 만드십시오.",
   "loginConnectorTotalBal": "총 잔액",
-  "loginIQDashboard": "IQ 대시보드"
+  "loginIQDashboard": "IQ 대시보드",
+  "search": "검색"
 }
