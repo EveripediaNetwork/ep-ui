@@ -60,5 +60,8 @@
   "loginConnectorText3": " 공급자 중 하나와 연결하거나 새로운 것을 만드십시오.",
   "loginConnectorTotalBal": "총 잔액",
   "loginIQDashboard": "IQ 대시보드",
-  "myWallet": "내 지갑"
+  "myWallet": "내 지갑",
+  "defaultSeoTitle": "아이큐 위키 | 최대 블록체인 및 암호화폐 백과사전",
+  "defaultSeoTitleTemplate": "%s | 아이큐 위키",
+  "defaultSeoDescription": "세계 최대 블록체인 및 암호화폐 백과사전"
 }
