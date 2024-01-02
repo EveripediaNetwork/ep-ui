@@ -16,5 +16,7 @@
   "settingWalletAddress": "지갑 주소",
   "settingProfileImage": "프로필 이미지",
   "settingProfileBanner": "프로필 배너",
-  "settingSave": "저장"
+  "settingSave": "저장",
+  "settingGetStartedWithYourNotificationList": "알림 목록 시작하기",
+  "settingSearchForWikis": "업데이트를 받고 싶은 위키를 검색하고 목록에 추가하세요."
 }

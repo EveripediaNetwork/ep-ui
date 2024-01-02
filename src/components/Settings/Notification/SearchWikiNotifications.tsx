@@ -47,6 +47,8 @@ import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -336,6 +338,14 @@ const SearchWikiNotifications = () => {
       </AutoComplete>
     </Flex>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'settings'])),
+    },
+  }
 }
 
 export default SearchWikiNotifications
