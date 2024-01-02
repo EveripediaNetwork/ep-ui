@@ -44,7 +44,7 @@ const Privacy = () => {
               {t('privacyInformationCollect')}
             </Heading>
             <Text>
-              <b>The categories of information we collect can include:</b>
+              <b>{t('privacyInformationCollectionInclusion')}</b>
             </Text>
             <Text>
               <UnorderedList>
@@ -136,7 +136,9 @@ const Privacy = () => {
             <Heading as="h2" size="md">
               YOUR CHOICES REGARDING YOUR INFORMATION
             </Heading>
-            {transformTextContent(t('privacyConcerningYourChoice'))}
+            <Text>
+              {transformTextContent(t('privacyConcerningYourChoice'))}
+            </Text>
             <Heading as="h2" size="md">
               SECURITY AND STORAGE OF INFORMATION
             </Heading>
@@ -161,7 +163,7 @@ const Privacy = () => {
               applicable laws and regulations.
             </Text>
             <Heading as="h2" size="md">
-              CHILDREN&apos;S PRIVACY
+              CHILDREN'S PRIVACY
             </Heading>
             <Text>
               This Website is not intended for children under the age of 13 and
@@ -170,7 +172,7 @@ const Privacy = () => {
               collected personal information from children under 13, we will
               delete or anonymize such information. Please contact us at
               webmaster@everipedia.com if you have any questions about
-              children&apos;s privacy.
+              children's privacy.
             </Text>
             <Divider />
             <Heading as="h2" size="md">

@@ -27,7 +27,7 @@ export function middleware(req: NextRequest) {
   // Redirect to default locale if user locale is not supported
   if (!isLocaleSupported) {
     const defaultLocale =
-      languageData.find((lang) => lang.default)?.locale || 'en'
+      languageData.find((lang) => lang.default)?.locale ?? 'en'
     const url = req.nextUrl.clone()
     url.pathname = `/${defaultLocale}${req.nextUrl.pathname}`
     return NextResponse.redirect(url.toString(), { status: 302 })

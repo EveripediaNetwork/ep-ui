@@ -49,7 +49,7 @@ export const WikiDetails = ({
   views: number | undefined
 }) => {
   const { title, tags, id: wikiId } = wikiTitle
-  const [, username] = useENSData(createdBy?.id || '')
+  const [, username] = useENSData(createdBy?.id ?? '')
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   const { t } = useTranslation('wiki')
   return (
@@ -156,7 +156,7 @@ export const WikiDetails = ({
                         href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
                         color="brandLinkColor"
                       >
-                        <Text>{shortenAccount(ipfsHash || '')}</Text>
+                        <Text>{shortenAccount(ipfsHash ?? '')}</Text>
                       </Link>
                     </HStack>
                   </Td>
@@ -174,7 +174,7 @@ export const WikiDetails = ({
                       href={`${config.blockExplorerUrl}/tx/${txHash}`}
                       color="brandLinkColor"
                     >
-                      <Text>{shortenAccount(txHash || '')}</Text>
+                      <Text>{shortenAccount(txHash ?? '')}</Text>
                     </Link>
                   </Td>
                 </Tr>
@@ -201,6 +201,7 @@ export const WikiDetails = ({
                   </Td>
                   <Td>
                     <Text>
+                      {/* TODO -  fix date translation - ko-KR */}
                       {createdTime
                         ? new Date(createdTime).toLocaleDateString('en-US', {
                             year: 'numeric',
