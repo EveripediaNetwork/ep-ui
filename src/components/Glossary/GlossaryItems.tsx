@@ -8,16 +8,14 @@ const GlossaryItem = ({
   highlightText,
   glossary,
   glossaryAlphabets,
-  t,
 }: GlossaryItemType) => {
   const lettersIdentifier = /^[a-zA-Z]+$/
 
   const cardOrder = (letter: string, alphabet: string) => {
-    console.log(letter, alphabet)
     const trimmedLetter = letter.trim()
     if (
       lettersIdentifier.test(trimmedLetter[0]) &&
-      trimmedLetter[0].toLocaleLowerCase() === alphabet?.toLocaleLowerCase()
+      trimmedLetter[0].toLocaleLowerCase() === alphabet.toLocaleLowerCase()
     ) {
       return 1
     }
@@ -30,8 +28,8 @@ const GlossaryItem = ({
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
-        <chakra.div key={i} id={item.id} pt="50px" mt="-20px">
-          <Element name={item.id}>
+        <chakra.div key={i} id={item} pt="50px" mt="-20px">
+          <Element name={item}>
             <Box
               w="full"
               py="1"
@@ -40,7 +38,7 @@ const GlossaryItem = ({
               px={{ base: 8, md: 10, lg: '32' }}
             >
               <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
-                {t(item.label)}
+                {item}
               </Text>
             </Box>
           </Element>
@@ -68,7 +66,7 @@ const GlossaryItem = ({
               })
               ?.map((ob) => (
                 <>
-                  {cardOrder(ob.title, item.id) === 1 && (
+                  {cardOrder(ob.title, item) === 1 && (
                     <GlossaryWikiCard
                       highlightText={highlightText}
                       title={ob.title}
@@ -76,7 +74,7 @@ const GlossaryItem = ({
                       wikiId={ob.id}
                     />
                   )}
-                  {cardOrder(ob.title, item.id) === 2 && (
+                  {cardOrder(ob.title, item) === 2 && (
                     <GlossaryWikiCard
                       highlightText={highlightText}
                       title={ob.title}
