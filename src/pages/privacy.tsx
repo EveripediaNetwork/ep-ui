@@ -4,7 +4,6 @@ import {
   Text,
   Flex,
   Divider,
-  Link,
   Table,
   Thead,
   Tr,
@@ -301,64 +300,7 @@ const Privacy = () => {
             >
               CALIFORNIA RESIDENTS (California Consumer Privacy Act of 2018)
             </Heading>
-            <Text>
-              The California Constitution grants a right of privacy. Existing
-              law provides for the confidentiality of personal information in
-              various contexts and requires a business or person that suffers a
-              breach of security of computerized data that includes personal
-              information, as defined, to disclose that breach, as specified.
-              California Consumer Privacy Act of 2018. Beginning January 1,
-              2020, the act will grant a consumer a right to request a business
-              to disclose the categories and specific pieces of personal
-              information that it collects about the consumer, the categories of
-              sources from which that information is collected, the business
-              purposes for collecting or selling the information, and the
-              categories of 3rd parties with which the information is shared.
-              The act will require a business to make disclosures about the
-              information and the purposes for which it is used. The act will
-              grant a consumer the right to request deletion of personal
-              information and would require the business to delete upon receipt
-              of a verified request, as specified. The act will grant a consumer
-              a right to request that a business that sells the consumer&rsquo;s
-              personal information, or discloses it for a business purpose,
-              disclose the categories of information that it collects and
-              categories of information and the identity of 3rd parties to which
-              the information was sold or disclosed. The act will require a
-              business to provide this information in response to a verifiable
-              consumer request. The act will authorize a consumer to opt out of
-              the sale of personal information by a business and would prohibit
-              the business from discriminating against the consumer for
-              exercising this right, including by charging the consumer who opts
-              out a different price or providing the consumer a different
-              quality of goods or services, except if the difference is
-              reasonably related to value provided by the consumer&rsquo;s data.
-              The act will authorize businesses to offer financial incentives
-              for collection of personal information. The act will prohibit a
-              business from selling the personal information of a consumer under
-              16 years of age, unless affirmatively authorized, as specified, to
-              be referred to as the right to opt in. The act will prescribe
-              requirements for receiving, processing, and satisfying these
-              requests from consumers. The act will prescribe various
-              definitions for its purposes and would define &ldquo;personal
-              information&rdquo; with reference to a broad list of
-              characteristics and behaviors, personal and commercial, as well as
-              inferences drawn from this information. The act will prohibit the
-              provisions described above from restricting the ability of the
-              business to comply with federal, state, or local laws, among other
-              things.
-              <br /> Bill text:{' '}
-              <Link
-                color="brandLinkColor"
-                href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375"
-              >
-                https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375
-              </Link>
-              <br />
-              More info:{' '}
-              <Link color="brandLinkColor" href="https://www.caprivacy.org/">
-                https://www.caprivacy.org/
-              </Link>
-            </Text>
+            <Text>{transformTextContent(t('privacyCaliforniaResidents'))}</Text>
             <Heading as="h2" size="md">
               UPDATES TO THIS POLICY
             </Heading>
