@@ -162,7 +162,11 @@ const Glossary: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['faq', 'common'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'faq',
+        'common',
+        'glossary',
+      ])),
     },
   }
 }
