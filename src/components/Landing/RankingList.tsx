@@ -49,7 +49,6 @@ type RankingListProps = {
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
-  const { t } = useTranslation()
   const {
     TokensListing,
     aiTokensListing,
@@ -66,6 +65,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
     'cryptocurrencies',
   )
+  const { t } = useTranslation()
 
   if (
     TokensListing &&
