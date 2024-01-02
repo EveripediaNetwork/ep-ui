@@ -15,6 +15,7 @@ import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
 import HighlightsModal from '../EditorModals/EditWikiDetailsModal'
 import MediaModal from '../EditorModals/MediaModal'
 import SummaryInput from './SummaryInput'
+import { useTranslation } from 'next-i18next'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -36,6 +37,7 @@ const WikiDetailsSidebar = ({
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
   const [wikiImageUploading, setWikiImageUploading] = useState(false)
+  const { t } = useTranslation('wiki')
 
   const handleSetImage = async (_: string, value: ArrayBuffer) => {
     setWikiImageUploading(true)
@@ -82,6 +84,7 @@ const WikiDetailsSidebar = ({
       <SummaryInput />
       {!hideDropzone && (
         <Dropzone
+          dropzonePlaceHolderTitle={t('imagePlaceholder')}
           imageUploading={wikiImageUploading}
           dropZoneActions={dropZoneActions}
         />

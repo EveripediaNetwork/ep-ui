@@ -26,5 +26,7 @@
   "relatedArticles": "Related Articles",
   "media": "Media",
   "viewTimelineOfEvents": "View Timeline of Events",
-  "feedbackThanks": "Thank you for the honest Feedback!"
+  "feedbackThanks": "Thank you for the honest Feedback!",
+  "imagePlaceholder": "Drag and drop a main image, or click to select.",
+  "publish": "Publish"
 }
