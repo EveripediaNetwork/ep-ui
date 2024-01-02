@@ -48,7 +48,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const props = {
     ...(await serverSideTranslations(context.locale ?? 'en', [
       'revision',

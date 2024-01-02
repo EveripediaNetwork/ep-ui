@@ -6,7 +6,7 @@ import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 const RelatedWikis = dynamic<{ wikiId: string; category: string }>(() =>
-  import('./InsightComponents/RelatedWikis').then(mod => mod.RelatedWikis),
+  import('./InsightComponents/RelatedWikis').then((mod) => mod.RelatedWikis),
 )
 import TwitterTimeline from './InsightComponents/TwitterTimeline'
 import WikiActionBar from './WikiActionBar'
@@ -30,7 +30,7 @@ const MobileMeta = (wiki: {
 }) => {
   const { metadata, media, id, categories } = wiki
   const twitterLink = metadata.find(
-    meta => meta.id === CommonMetaIds.TWITTER_PROFILE,
+    (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
 
   const userAddress = getUserAddressFromCache()
