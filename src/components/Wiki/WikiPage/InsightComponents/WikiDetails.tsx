@@ -239,7 +239,7 @@ export const WikiDetails = ({
                 {wikiViews && (
                   <Tr>
                     <Td whiteSpace="nowrap">
-                      <Text py="2">Views</Text>
+                      <Text py="2">{t('views')}</Text>
                     </Td>
                     <Td>
                       <Text py="2">{views?.toLocaleString('en-US')}</Text>
