@@ -725,7 +725,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         category: category || 'cryptocurrencies',
         page: Number(page) || 1,
       },
-      ...(await serverSideTranslations(ctx.locale ?? 'en', ['rank'])),
+      ...(await serverSideTranslations(ctx.locale ?? 'en', ['rank', 'common'])),
     },
   }
 }

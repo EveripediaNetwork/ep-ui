@@ -220,7 +220,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
         'common',
         'home',
         'category',
-        'footer',
       ])),
       promotedWikis: sortedPromotedWikis ?? [],
       recentWikis: recent ?? [],

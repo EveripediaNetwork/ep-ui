@@ -92,7 +92,7 @@ const Categories: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['category'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['category', 'common'])),
     },
   }
 }

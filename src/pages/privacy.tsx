@@ -386,11 +386,7 @@ const Privacy = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', [
-        'policy',
-        'common',
-        'footer',
-      ])),
+      ...(await serverSideTranslations(locale ?? 'en', ['policy', 'common'])),
     },
   }
 }
