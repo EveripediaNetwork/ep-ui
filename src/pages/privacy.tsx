@@ -34,7 +34,7 @@ const Privacy = () => {
         my={{ base: '10', lg: '16' }}
       >
         <Heading my={8} as="h1" size="3xl" letterSpacing="wide">
-          Privacy Policy
+          {t('privacyPolicy')}
         </Heading>
         <Flex gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
           <Flex gap={5} flex="3" flexDirection="column">
@@ -60,14 +60,14 @@ const Privacy = () => {
             </Text>
             <Text>{t('privacyReasonForInfo')}</Text>
             <Heading as="h2" size="md">
-              Information Automatically Collected.
+              {t('privacyCollectedAutomatically')}
             </Heading>
             <Text>{t('privacyAutomaticallyCollected')}</Text>
             <Heading as="h2" size="md">
-              SHARING PERSONAL INFORMATION WITH THIRD PARTIES
+              {t('privacySharingWithOthers')}
             </Heading>
             <Text>{t('privacySharingInfoWithThirdPartiesContent')}</Text>
-            <Text>We may also share your personal information with:</Text>
+            <Text>{t('privacyAlsoWith')}</Text>
             <Text>
               <UnorderedList>
                 <ListItem>{t('privacyWeMayAlsoShareWithCompanies')}</ListItem>
@@ -90,145 +90,69 @@ const Privacy = () => {
               </UnorderedList>
             </Text>
             <Heading as="h2" size="md">
-              YOUR CHOICES REGARDING YOUR INFORMATION
+              {t('privacyChoiceRegardingInfo')}
             </Heading>
             <Text>
               {transformTextContent(t('privacyConcerningYourChoice'))}
             </Text>
             <Heading as="h2" size="md">
-              SECURITY AND STORAGE OF INFORMATION
+              {t('privacySecurityInfo')}
             </Heading>
             <Text>{t('privacySecurityOfInfoStorage')}</Text>
             <Heading as="h2" size="md">
-              CHILDREN'S PRIVACY
+              {t('privacyChildren')}
             </Heading>
-            <Text>
-              This Website is not intended for children under the age of 13 and
-              we do not knowingly collect any personal information from children
-              under 13. In the event that we learn that we have inadvertently
-              collected personal information from children under 13, we will
-              delete or anonymize such information. Please contact us at
-              webmaster@everipedia.com if you have any questions about
-              children's privacy.
-            </Text>
+            <Text>{t('privacyAgeLimit')}</Text>
             <Divider />
             <Heading as="h2" size="md">
-              COOKIES
+              {t('privacyCookies')}
             </Heading>
-            <Text>
-              A browser cookie is a small piece of data that is stored on your
-              device to help websites and mobile apps remember things about you.
-              Other technologies, including Web storage and identifiers
-              associated with your device, may be used for similar purposes. In
-              this policy, we say “cookies” to refer to all of these
-              technologies.
-            </Text>
+            <Text>{t('privacyBrowserCookie')}</Text>
             <Heading as="h3" size="sm">
-              How We Use Cookies
+              {t('privacyWeUseCookies')}
             </Heading>
-            <Text>
-              Like most providers of online services, our site uses cookies,
-              including third-party cookies, for a number of reasons, like
-              protecting your data and account, helping us see which features
-              are most popular, counting visitors to a page, improving our
-              users’ experience, keeping our services secure, providing relevant
-              advertising, and just generally providing you with a better, more
-              intuitive, and satisfying experience. The cookies we use generally
-              fall into one of the following categories.
-            </Text>
+            <Text>{t('privacyReasonForCookies')}</Text>
             <Table>
               <Thead>
                 <Tr>
-                  <Th>Category of cookies</Th>
-                  <Th>Why we use these cookies</Th>
+                  <Th>{t('privacyCookieCategory')}</Th>
+                  <Th>{t('privacyWhyWeUseCookies')}</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 <Tr>
-                  <Td>Necessary</Td>
-                  <Td>
-                    We use these cookies to run our site, and to identify and
-                    prevent security risks. For example, we may use these
-                    cookies to store your session information to prevent others
-                    from changing your password without your username and
-                    password.
-                  </Td>
+                  <Td>{t('privacyNecessaryCookie')}</Td>
+                  <Td>{t('privacyNecessaryCookieUse')}</Td>
                 </Tr>
                 <Tr>
-                  <Td>Preferences</Td>
-                  <Td>
-                    We use these cookies to remember your settings and
-                    preferences, and to improve your experience on our site. For
-                    example, we may use these cookies to remember your language
-                    preferences.
-                  </Td>
+                  <Td>{t('privacyNecessaryPreferences')}</Td>
+                  <Td>{t('privacyNecessaryPreferencesUse')}</Td>
                 </Tr>
                 <Tr>
-                  <Td>Performance</Td>
-                  <Td>
-                    We use these cookies to collect information about how you
-                    use our site, monitor site performance, and improve our site
-                    performance, our services, and your experience. For example,
-                    we can use these cookies to learn more about which features
-                    are the most popular with our users and which ones might
-                    need some tweaks.
-                  </Td>
+                  <Td>{t('privacyPerformance')}</Td>
+                  <Td>{t('privacyPerformanceUse')}</Td>
                 </Tr>
                 <Tr>
-                  <Td>Marketing</Td>
-                  <Td>
-                    We use these cookies to deliver advertisements, to make them
-                    more relevant and meaningful to consumers, and to track the
-                    efficiency of our advertising campaigns, both on our
-                    services and on other sites or mobile apps.may use these
-                    cookies to build a profile of your interests and deliver
-                    relevant advertising on other sites.
-                  </Td>
+                  <Td>{t('privacyNecessarymarketing')}</Td>
+                  <Td>{t('privacyNecessarymarketingUse')}</Td>
                 </Tr>
               </Tbody>
             </Table>
             <Heading as="h2" size="md">
-              Analytics and Advertising Services
+              {t('privacyAnalytics')}
             </Heading>
             <Heading as="h3" size="sm">
-              Provided by Others
+              {t('privacyProvidedByOthers')}
             </Heading>
-            <Text>
-              We may let other companies use cookies on our services. These
-              companies may collect information about how you use our services
-              over time and combine it with similar information from other
-              services and companies. This information may be used to, among
-              other things, analyze and track data, determine the popularity of
-              certain content, and better understand your online activity.
-            </Text>
-            <Text>
-              Additionally, some companies, including our affiliates, may use
-              information collected on our services to prevent fraud or other
-              unauthorized or illegal activity and to measure and optimize the
-              performance of ads and deliver more relevant ads on behalf of us
-              or other companies, including on third-party websites and apps.
-            </Text>
+            {transformTextContent(t('privacyWhatWeMayDoWithCookies'))}
             <Heading as="h3" size="sm">
-              Provided by Us
+              {t('privacyProvidedByUs')}
             </Heading>
-            <Text>
-              We may collect information about your activity on third-party
-              services that use cookies provided by us. We use this information
-              to improve our advertising services, including measuring the
-              performance of ads and showing you more relevant ads.{' '}
-            </Text>
+            <Text>{t('privacyProvidedByUsContent')}</Text>
             <Heading as="h3" size="sm">
-              LINKS TO THIRD PARTY WEBSITES
+              {t('privacyLinkToThirdParty')}
             </Heading>
-            <Text>
-              The Services may, from time to time, contain links to and from
-              third party websites of our partner networks, advertisers, partner
-              merchants, retailers and affiliates. If you follow a link to any
-              of these websites, please note that these websites have their own
-              privacy policies and that we do not accept any responsibility or
-              liability for their policies. Please check the individual policies
-              before you submit any information to those websites.
-            </Text>
+            <Text>{t('privacyServicesContent')}</Text>
             <Divider />
             <Heading
               as="h2"
@@ -236,24 +160,19 @@ const Privacy = () => {
               id="california"
               style={{ scrollMarginTop: '100px' }}
             >
-              CALIFORNIA RESIDENTS (California Consumer Privacy Act of 2018)
+              {t('privacyCaliforniaResidentsAct')}
             </Heading>
             <Text>{transformTextContent(t('privacyCaliforniaResidents'))}</Text>
             <Heading as="h2" size="md">
-              UPDATES TO THIS POLICY
+              {t('privacyUpdate')}
             </Heading>
-            <Text>
-              We reserve the right to modify this Policy from time to time. If
-              we make any changes to this Policy, we will change the &quot;Last
-              Revision&quot; date below and will post the updated Policy on this
-              page.
-            </Text>
+            <Text>{t('privacyUpdatePolicy')}</Text>
           </Flex>
           <Box>
             <RelatedTopics
               topics={[
-                { name: 'Terms of Service', url: '/terms' },
-                { name: 'Guidelines', url: '/guidelines' },
+                { name: t('termsOfService'), url: '/terms' },
+                { name: t('guideLines'), url: '/guidelines' },
               ]}
             />
           </Box>

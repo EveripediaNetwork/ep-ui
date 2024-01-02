@@ -5,8 +5,6 @@ import { TranformCategoryTitle } from '@/utils/DataTransform/changeCategoryTitle
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingCategoryCard from './TrendingCategoryCard'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetServerSideProps } from 'next'
 
 const TrendingCategoriesWiki = ({
   categoryType,
@@ -42,14 +40,6 @@ const TrendingCategoriesWiki = ({
       />
     </SimpleGrid>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['category'])),
-    },
-  }
 }
 
 export default TrendingCategoriesWiki
