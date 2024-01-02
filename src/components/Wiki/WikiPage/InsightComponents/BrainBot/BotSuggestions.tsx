@@ -26,7 +26,6 @@ export const BrainBotSuggestion = ({
       padding={'6px'}
       borderRadius={'4px'}
       cursor={'pointer'}
-      bgColor={setOpen ? 'white' : ''}
       onClick={() => {
         if (setOpen) {
           setOpen(true)
@@ -34,10 +33,7 @@ export const BrainBotSuggestion = ({
         askQuestion({ question, wiki })
       }}
     >
-      <Text
-        color={setOpen ? 'gray.600' : 'emptyNotificationText'}
-        fontSize={'10px'}
-      >
+      <Text color={'emptyNotificationText'} fontSize={'10px'}>
         {question}
       </Text>
       {icon}

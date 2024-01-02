@@ -14,13 +14,14 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
       gap={'8px'}
     >
       <Flex direction={'column'} fontSize={'10px'} alignItems={'flex-start'}>
-        <Text>Source: {answerSource.title}</Text>
+        <Text style={{ marginBottom: '0px', color: 'white' }}>
+          Source: {answerSource.title}
+        </Text>
         {answerSource.url && (
           <Link
             href={answerSource.url}
             target="_blank"
             style={{
-              marginTop: '2px',
               color: '#FF5CAA',
               textDecoration: 'underline',
             }}

@@ -39,10 +39,10 @@ export const queryMapper = (query: string, wiki: Wiki) => {
 }
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   useEffect(() => {
@@ -69,14 +69,12 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
           p={'10px'}
           borderRadius={8}
           borderColor="rankingListBorder"
-          backgroundColor={'brainBotCard'}
+          backgroundColor={'btnBgColor'}
           borderWidth={1}
         >
           <Box display={'flex'} alignItems={'center'}>
             <Box
-              border={'1px'}
-              borderColor={'brandLinkColor'}
-              bgColor={'white'}
+              bgColor={'brainBotBorder'}
               borderRadius={'8px'}
               w={'29px'}
               h={'29px'}
@@ -87,7 +85,12 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             >
               <Logo width={'18px'} height={'18px'} />
             </Box>
-            <Text color={'brandLinkColor'} textAlign={'center'}>
+            <Text
+              color={'fadedText'}
+              fontSize={'12px'}
+              fontWeight={'500'}
+              textAlign={'center'}
+            >
               Get more insights on the article content with IQ brainbot
             </Text>
           </Box>
@@ -119,7 +122,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               wiki={wiki}
               setOpen={setOpen}
             />
-            <Text color={'gray.600'} fontSize={'10px'}>
+            <Text color={'homeDescriptionColor'} fontSize={'10px'}>
               And more...
             </Text>
             <Box color={'brandLinkColor'}>

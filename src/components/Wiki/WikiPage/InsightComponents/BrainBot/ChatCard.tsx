@@ -5,15 +5,15 @@ import {
   setCurrentMessage,
   setMessages,
 } from '@/store/slices/chatbot-slice'
-import { Box, Flex } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import { Box, Flex, Text, chakra } from '@chakra-ui/react'
+import React, { ReactNode, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import ChatSources from './ChatSources'
 import { customTableRenderer } from '../../CustomRenderers/customTableRender'
 import styles from '../../../../../styles/markdown.module.css'
-import { RiArrowLeftDoubleFill } from 'react-icons/ri'
+import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
 
 type ChartProps = {
   content: string
@@ -21,10 +21,92 @@ type ChartProps = {
   avatar?: ReactNode
   answerSources?: AnswerSources[]
 }
-const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
-  const dispatch = useDispatch()
+
+const paginateContent = (text: string, charsPerPage: number) => {
+  const words = text.split(' ')
+  const pages = []
+  let currentPage = ''
+
+  words.forEach(word => {
+    if ((currentPage + word).length > charsPerPage) {
+      pages.push(currentPage.trim())
+      currentPage = `${word} `
+    } else {
+      currentPage += `${word} `
+    }
+  })
+
+  if (currentPage.trim()) {
+    pages.push(currentPage.trim())
+  }
+
+  return pages
+}
+
+const CustomTextRenderer = ({ children }: { children: ReactNode[] }) => (
+  <Text style={{ marginBottom: '4px' }}>{children}</Text>
+)
+
+const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
+  const charsPerPage = 280
+  const [currentPageIndex, setCurrentPageIndex] = useState(0)
+  const pages = paginateContent(content, charsPerPage)
 
   const [answerSource] = answerSources || []
+
+  const goToNextPage = () => {
+    setCurrentPageIndex(currentPageIndex + 1)
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPageIndex(currentPageIndex - 1)
+  }
+
+  return (
+    <div>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{ table: customTableRenderer, p: CustomTextRenderer }}
+      >
+        {pages[currentPageIndex]}
+      </ReactMarkdown>
+      {alias === 'AI' && currentPageIndex === pages.length - 1 && (
+        <ChatSources answerSource={answerSource} />
+      )}
+      <Box display={'flex'} gap={'8px'} justifyContent={'flex-end'}>
+        {currentPageIndex > 0 && (
+          <chakra.button
+            bgColor={'gray.100'}
+            borderRadius={'2px'}
+            _dark={{ bgColor: 'whiteAlpha.200' }}
+            type="button"
+            onClick={goToPreviousPage}
+            disabled={currentPageIndex === 0}
+            transform="scaleX(-1)"
+          >
+            <RiPlayFill size={16} />
+          </chakra.button>
+        )}
+
+        {currentPageIndex < pages.length - 1 && (
+          <chakra.button
+            bgColor={'gray.100'}
+            borderRadius={'2px'}
+            _dark={{ bgColor: 'whiteAlpha.200' }}
+            type="button"
+            onClick={goToNextPage}
+            disabled={currentPageIndex === pages.length - 1}
+          >
+            <RiPlayFill size={16} />
+          </chakra.button>
+        )}
+      </Box>
+    </div>
+  )
+}
+
+const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
+  const dispatch = useDispatch()
   return (
     <Flex
       width={'100%'}
@@ -52,7 +134,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
       </Box>
       <Flex
         border={'1px'}
-        borderColor={'brainBotBorder'}
+        borderColor={alias === 'HUMAN' ? 'brainBotBorder' : 'brainBotAIBorder'}
         bgColor={alias === 'AI' ? 'bodyBg' : ''}
         borderRadius={'4px'}
         padding={'8px'}
@@ -85,14 +167,18 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             color={'heroHeaderDescription'}
             className={`${styles.markdownBody}`}
           >
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{ table: customTableRenderer }}
-            >
-              {content}
-            </ReactMarkdown>
+            {alias === 'HUMAN' ? (
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {content}
+              </ReactMarkdown>
+            ) : (
+              <ContentPagination
+                content={content}
+                alias={alias}
+                answerSources={answerSources}
+              />
+            )}
           </Box>
-          {alias === 'AI' && <ChatSources answerSource={answerSource} />}
         </Flex>
       </Flex>
     </Flex>

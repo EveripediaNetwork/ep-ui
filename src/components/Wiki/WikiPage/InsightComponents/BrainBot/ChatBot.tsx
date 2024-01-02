@@ -17,7 +17,7 @@ const ChatBot = ({
 }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   useEffect(() => {
@@ -35,9 +35,8 @@ const ChatBot = ({
       borderRadius={'8px'}
       overflow={'hidden'}
       border={'1px'}
-      borderColor={'brainBotBorder'}
+      borderColor={'rankingListBorder'}
       backgroundColor={'brainBotMainBg'}
-      boxShadow={'10px 10px 10px -5px rgba(0, 0, 0, 0.04)'}
     >
       <Box
         display={'flex'}
@@ -97,7 +96,7 @@ const ChatBot = ({
         h="full"
       >
         <Logo width={'14px'} height={'14px'} />
-        <Text fontSize={'6px'}>Powered by IQ & BrainDAO</Text>
+        <Text fontSize={'8px'}>Powered by IQ & BrainDAO</Text>
       </Box>
     </Box>
   )
