@@ -173,7 +173,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {explorerLinksData.length > 0 && (
-          <ProfileListItem title="Explorers">
+          <ProfileListItem title={t('Explorers')}>
             {explorerLinksData.map((item) => (
               <HStack>
                 <Link
