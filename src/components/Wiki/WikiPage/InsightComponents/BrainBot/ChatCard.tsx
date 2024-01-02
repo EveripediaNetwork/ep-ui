@@ -27,7 +27,7 @@ const paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
-  words.forEach(word => {
+  words.forEach((word) => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
