@@ -4,6 +4,7 @@ import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { VStack } from '@chakra-ui/react'
 import { TokenStats } from '@/services/token-stats'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
+import { useTranslation } from 'next-i18next'
 
 type ProfileStatisticsProps = {
   tokenStats?: TokenStats
@@ -11,6 +12,7 @@ type ProfileStatisticsProps = {
 
 const ProfileStatistics = (props: ProfileStatisticsProps) => {
   const { tokenStats } = props
+  const { t } = useTranslation('wiki')
 
   if (!tokenStats) return null
 
@@ -34,7 +36,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
   const profileStatistics: WikiInsights[] = [
     {
       type: 'statistic',
-      title: 'Market Cap',
+      title: t('Market Cap'),
       content: {
         value: statWithCommas(tokenStats.market_cap),
         change: statChange(tokenStats.market_cap_percentage_change),
@@ -46,7 +48,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
 
     {
       type: 'statistic',
-      title: 'Diluted Market Cap',
+      title: t('Diluted Market Cap'),
       content: {
         value: statWithCommas(tokenStats.diluted_market_cap),
         change: statChange(tokenStats.diluted_market_cap_percentage_change),
@@ -58,7 +60,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
 
     {
       type: 'statistic',
-      title: 'Volume',
+      title: t('Volume'),
       titleTag: '24h',
       content: {
         value: statWithCommas(tokenStats.volume),
@@ -75,7 +77,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
         display="flex"
         flexDir="column"
         gap={2}
-        title="Statistics"
+        title={t('Statistics')}
       >
         {profileStatistics.map((item, index) => (
           <AccordionWidget key={index} {...item} />

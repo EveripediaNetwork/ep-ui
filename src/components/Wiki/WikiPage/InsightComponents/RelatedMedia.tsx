@@ -5,14 +5,16 @@ import { Media } from '@everipedia/iq-utils'
 import { constructMediaUrl } from '@/utils/DataTransform/mediaUtils'
 import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
+import { useTranslation } from 'next-i18next'
 
 const RELATED_MEDIA_IMAGE_BOX_SIZE = 150
 
 const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
+  const { t } = useTranslation('wiki')
   if (!media || media.length === 0) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
-      <WikiAccordion title="Media">
+      <WikiAccordion title={t('Media')}>
         <SimpleGrid
           columns={{ base: 3, xl: 3, sm: 4, md: 6, '2xl': 4 }}
           spacing={3}

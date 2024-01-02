@@ -4,7 +4,6 @@ import {
   Text,
   Flex,
   Divider,
-  Link,
   Table,
   Thead,
   Tr,
@@ -71,66 +70,23 @@ const Privacy = () => {
             <Text>We may also share your personal information with:</Text>
             <Text>
               <UnorderedList>
+                <ListItem>{t('privacyWeMayAlsoShareWithCompanies')}</ListItem>
                 <ListItem>
-                  Other companies owned by or under common ownership as IQ.wiki
-                  , Inc., which also includes our subsidiaries (i.e., any
-                  organization we own or control) or our ultimate holding
-                  company (i.e., any organization that owns or controls us) and
-                  any subsidiaries it owns. These companies will use your
-                  personal information in the same way as we can under this
-                  Policy;
+                  {t('privacyWeMayAlsoShareWithThirdVendors')}
                 </ListItem>
                 <ListItem>
-                  Third party vendors, consultants and other service providers
-                  that perform services on our behalf, in order to carry out
-                  their work for us, which may include providing cloud storage
-                  or hosting services, marketing assistance, email delivery,
-                  content or service fulfillment, or providing analytics
-                  services. We share personal information with these third
-                  parties as needed to perform services for us and under
-                  reasonable confidentiality terms;
+                  {t('privacyWeMayAlsoShareWithBusinessPartners')}
                 </ListItem>
                 <ListItem>
-                  Our business partners who offer a service to you jointly with
-                  us, for example, when running a co-sponsored contest or
-                  promotion;
+                  {t('privacyWeMayAlsoShareWithExtraThirdParties')}
                 </ListItem>
                 <ListItem>
-                  Third parties who we think may offer you products or services
-                  you may enjoy. We reserve the right to share your personal
-                  information, such as email address and user name, with third
-                  parties for their marketing purposes in the future if we
-                  determine that there may be additional products or services
-                  which may be of interest to you. See &quot;Your Choices&quot;
-                  below for details on how to opt-out of this sharing;
+                  {t('privacyWeMayAlsoShareWithThirdPartiesAtYourRequest')}
                 </ListItem>
                 <ListItem>
-                  Third parties at your request. For example, you may have the
-                  option to share your activities on our Services with your
-                  friends through social media;
+                  {t('privacyWeMayAlsoShareWithOtherConnectedParties')}
                 </ListItem>
-                <ListItem>
-                  Other parties in connection with any company transaction, such
-                  as a merger, sale of company assets or shares, reorganization,
-                  financing, change of control or acquisition of all or a
-                  portion of our business by another company or third party or
-                  in the event of bankruptcy or related or similar proceedings;
-                  and
-                </ListItem>
-                <ListItem>
-                  Third parties as required to (i) satisfy any applicable law,
-                  regulation, subpoena/court order, legal process or other
-                  government request, (ii) enforce our Terms of Use Agreement,
-                  including the investigation of potential violations thereof,
-                  (iii) investigate and defend ourselves against any third party
-                  claims or allegations, (iv) protect against harm to the
-                  rights, property or safety of IQ.wiki , its users or the
-                  public as required or permitted by law and (v) detect, prevent
-                  or otherwise address criminal (including fraud or stalking),
-                  security or technical issues. We may also share information
-                  with others in an aggregated and anonymous form that does not
-                  reasonably identify you directly as an individual.
-                </ListItem>
+                <ListItem>{t('privacyWeMayAlsoShareWithAsRequired')}</ListItem>
               </UnorderedList>
             </Text>
             <Heading as="h2" size="md">
@@ -142,26 +98,7 @@ const Privacy = () => {
             <Heading as="h2" size="md">
               SECURITY AND STORAGE OF INFORMATION
             </Heading>
-            <Text>
-              IQ.wiki cares about the security of your information and uses
-              commercially reasonable physical, administrative, and
-              technological safeguards to preserve the integrity and security of
-              all information we collect and that we share with our service
-              providers. Because of the nature of our website, WE DO NOT
-              CURRENTLY ENCRYPT ANY TRANSMISSIONS TO OR FROM THE WEBSITE IN ANY
-              MANNER. IF YOU ARE UNCOMFORTABLE WITH THE UNENCRYPTED TRANSMISSION
-              OF THE PERSONAL INFORMATION DESCRIBED HEREIN, PLEASE DO NOT SUBMIT
-              INFORMATION TO US THROUGH THE WEBSITE. While we take reasonable
-              precautions against possible security breaches, no website or
-              internet transmission is completely secure and we cannot guarantee
-              that unauthorized access, hacking, data loss or other breach will
-              never occur. In the event that any information under our control
-              is compromised as a result of a breach of security, we will take
-              reasonable steps to investigate the situation and where
-              appropriate, notify those individuals whose information may have
-              been compromised and take other steps, in accordance with any
-              applicable laws and regulations.
-            </Text>
+            <Text>{t('privacySecurityOfInfoStorage')}</Text>
             <Heading as="h2" size="md">
               CHILDREN'S PRIVACY
             </Heading>
@@ -301,64 +238,7 @@ const Privacy = () => {
             >
               CALIFORNIA RESIDENTS (California Consumer Privacy Act of 2018)
             </Heading>
-            <Text>
-              The California Constitution grants a right of privacy. Existing
-              law provides for the confidentiality of personal information in
-              various contexts and requires a business or person that suffers a
-              breach of security of computerized data that includes personal
-              information, as defined, to disclose that breach, as specified.
-              California Consumer Privacy Act of 2018. Beginning January 1,
-              2020, the act will grant a consumer a right to request a business
-              to disclose the categories and specific pieces of personal
-              information that it collects about the consumer, the categories of
-              sources from which that information is collected, the business
-              purposes for collecting or selling the information, and the
-              categories of 3rd parties with which the information is shared.
-              The act will require a business to make disclosures about the
-              information and the purposes for which it is used. The act will
-              grant a consumer the right to request deletion of personal
-              information and would require the business to delete upon receipt
-              of a verified request, as specified. The act will grant a consumer
-              a right to request that a business that sells the consumer&rsquo;s
-              personal information, or discloses it for a business purpose,
-              disclose the categories of information that it collects and
-              categories of information and the identity of 3rd parties to which
-              the information was sold or disclosed. The act will require a
-              business to provide this information in response to a verifiable
-              consumer request. The act will authorize a consumer to opt out of
-              the sale of personal information by a business and would prohibit
-              the business from discriminating against the consumer for
-              exercising this right, including by charging the consumer who opts
-              out a different price or providing the consumer a different
-              quality of goods or services, except if the difference is
-              reasonably related to value provided by the consumer&rsquo;s data.
-              The act will authorize businesses to offer financial incentives
-              for collection of personal information. The act will prohibit a
-              business from selling the personal information of a consumer under
-              16 years of age, unless affirmatively authorized, as specified, to
-              be referred to as the right to opt in. The act will prescribe
-              requirements for receiving, processing, and satisfying these
-              requests from consumers. The act will prescribe various
-              definitions for its purposes and would define &ldquo;personal
-              information&rdquo; with reference to a broad list of
-              characteristics and behaviors, personal and commercial, as well as
-              inferences drawn from this information. The act will prohibit the
-              provisions described above from restricting the ability of the
-              business to comply with federal, state, or local laws, among other
-              things.
-              <br /> Bill text:{' '}
-              <Link
-                color="brandLinkColor"
-                href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375"
-              >
-                https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180AB375
-              </Link>
-              <br />
-              More info:{' '}
-              <Link color="brandLinkColor" href="https://www.caprivacy.org/">
-                https://www.caprivacy.org/
-              </Link>
-            </Text>
+            <Text>{transformTextContent(t('privacyCaliforniaResidents'))}</Text>
             <Heading as="h2" size="md">
               UPDATES TO THIS POLICY
             </Heading>

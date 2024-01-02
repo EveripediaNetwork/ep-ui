@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Box, Spinner, Text, useColorMode, VStack } from '@chakra-ui/react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import WikiAccordion from '../../WikiAccordion'
+import { useTranslation } from 'next-i18next'
 
 const TwitterTimeline = ({ url }: { url: string }) => {
   const { colorMode } = useColorMode()
+  const { t } = useTranslation('wiki')
   const twitterTimelineRef = useRef<HTMLDivElement>(null)
   const [snapOpen, setSnapOpen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -42,7 +44,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
       borderRadius={2}
       mb="5"
     >
-      <WikiAccordion title="Twitter Timeline">
+      <WikiAccordion title={t('Twitter Timeline')}>
         <Box
           h="400px"
           bgColor="white"
@@ -86,7 +88,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
             h="full"
           >
             <Spinner />
-            <Text fontSize="sm">Loading</Text>
+            <Text fontSize="sm">{t('Loading')}</Text>
           </VStack>
         </Box>
       </WikiAccordion>

@@ -12,6 +12,7 @@ import { nftListing } from '@/services/nftlisting/index'
 import { store } from '@/store/store'
 import WikiAccordion from '../../WikiAccordion'
 import { NFTImgFallback } from './NFTImageFallBack'
+import { t } from 'i18next'
 
 const NFTWidget = ({
   categories,
@@ -71,7 +72,7 @@ const NFTWidget = ({
         withNoDarkBg
         flexDir="column"
         gap={2}
-        title="Search NFT Collection"
+        title={t('Search NFT Collection')}
       >
         {isLoading ? (
           <Flex flexDirection="column">
@@ -120,7 +121,7 @@ const NFTWidget = ({
               p="1"
               border="none"
               type="number"
-              placeholder="Input NFT ID"
+              placeholder={t('Input NFT ID')}
               onChange={(e) => {
                 const value = Number(e.target.value)
                 if (!Number.isNaN(value)) {
@@ -140,7 +141,7 @@ const NFTWidget = ({
               fetchNFT()
             }}
           >
-            Search
+            {t('Search')}
           </Button>
         </Flex>
       </WikiAccordion>

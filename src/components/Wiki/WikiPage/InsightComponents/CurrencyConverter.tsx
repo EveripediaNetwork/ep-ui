@@ -3,6 +3,7 @@ import { Box, HStack, IconButton, Input, Text, VStack } from '@chakra-ui/react'
 import { RiArrowLeftRightLine } from 'react-icons/ri'
 import { TokenStats } from '@/services/token-stats'
 import { Image } from '@/components/Elements/Image/Image'
+import { useTranslation } from 'next-i18next'
 
 const CURRENCY_BOX_SIZE = 18
 
@@ -77,7 +78,7 @@ const CurrencyConverter = ({
   const [fromCurrency, setFromCurrency] = useState<number>(0)
   const [toCurrency, setToCurrency] = useState<number>(0)
   const [isTokenLeft, setIsTokenLeft] = useState(true)
-
+  const { t } = useTranslation('wiki')
   // function for updating the from currency
   const updateValues = useCallback(
     (value: string, isEditedFrom: boolean) => {
@@ -115,7 +116,7 @@ const CurrencyConverter = ({
           fontSize="14px"
           color="linkColor"
         >
-          Converter
+          {t('Converter')}
         </Text>
         <Box p={2} mt={1}>
           <HStack

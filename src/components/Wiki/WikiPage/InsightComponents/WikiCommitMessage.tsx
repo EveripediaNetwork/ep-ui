@@ -46,7 +46,7 @@ const WikiCommitMessage = ({
             spacing={2}
           >
             <Text fontSize="sm" fontWeight="bold" color="linkColor">
-              Reason for edit:
+              {t('Reason for edit:')}
             </Text>
             <Text fontSize="xs" color="linkColor">
               {commitMessage}
