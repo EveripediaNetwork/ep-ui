@@ -104,7 +104,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
           </chakra.div>
           <WikiReferences
             references={JSON.parse(
-              getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ||
+              getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ??
                 '[]',
             )}
           />

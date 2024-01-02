@@ -32,8 +32,8 @@ const Wiki = ({ wiki }: WikiProps) => {
     <>
       {wiki && (
         <WikiHeader
-          slug={slug as string}
-          author={wiki.author.profile?.username || wiki.author.id || ''}
+          slug={slug}
+          author={wiki.author.profile?.username ?? wiki.author.id ?? ''}
           dateModified={wiki.updated}
           datePublished={wiki.created}
           title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
@@ -66,7 +66,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   )
 
   if (wikiError)
-    throw new Error(`There was an error fetching the wiki: ${wikiError}`)
+    throw new Error(
+      `There was an error fetching the wiki: ${wikiError.message}`,
+    )
 
   if (wiki?.hidden) {
     return {
@@ -80,6 +82,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
+
   if (!wiki) {
     return {
       redirect: {

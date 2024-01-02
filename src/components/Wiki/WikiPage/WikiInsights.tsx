@@ -19,12 +19,11 @@ import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
 import ContentFeedback from './InsightComponents/ContentFeedback'
-import WikiAdCard from '../WikiCard/WikiAdCard'
 
 interface WikiInsightsProps {
   wiki: Wiki
   ipfs?: string
-  dateTime?: string | undefined
+  dateTime?: string
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
@@ -46,7 +45,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   )?.value
 
   const wikiIsNFT = /https:\/\/(www.)?coingecko.com\/en\/nft\/(.+)/.test(
-    coingeckoLink || '',
+    coingeckoLink ?? '',
   )
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
@@ -90,13 +89,12 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
           px={{ base: '0', md: '4', xl: '0' }}
           gap={6}
         >
-          <WikiAdCard />
           <VStack spacing={6}>
             <WikiDetails
               wikiTitle={wiki}
               categories={wiki.categories}
               createdTime={wiki?.created}
-              ipfsHash={ipfs || wiki.ipfs}
+              ipfsHash={ipfs ?? wiki.ipfs}
               txHash={wiki.transactionHash}
               createdBy={wiki.author}
               imgSrc={getWikiImageUrl(wiki.images)}
@@ -127,7 +125,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             <WikiCommitMessage
               commitMessage={commitMessage}
               user={wiki.user}
-              lastUpdated={wiki.updated || dateTime}
+              lastUpdated={wiki.updated ?? dateTime}
             />
             <Flex
               w="100%"
