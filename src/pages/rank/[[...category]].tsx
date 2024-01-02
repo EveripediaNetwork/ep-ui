@@ -364,7 +364,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setTokensOffset(page)}
+                onPageChange={page => setTokensOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -434,7 +434,7 @@ const Rank = ({
                 currentPage={stableCoinOffset}
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setStableCoinOffset(page)}
+                onPageChange={page => setStableCoinOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -504,7 +504,7 @@ const Rank = ({
                 currentPage={aiTokensOffset}
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setAiTokensOffset(page)}
+                onPageChange={page => setAiTokensOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -579,7 +579,7 @@ const Rank = ({
                 currentPage={foundersOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setFoundersOffset(page)}
+                onPageChange={page => setFoundersOffset(page)}
                 maxW={'90%'}
               >
                 <FoundersRankTableHead onClickMap={onClickMap} />
@@ -650,7 +650,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setNftOffset(page)}
+                onPageChange={page => setNftOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -688,7 +688,7 @@ const Rank = ({
 
 export default Rank
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )
@@ -725,11 +725,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         category: category || 'cryptocurrencies',
         page: Number(page) || 1,
       },
-      ...(await serverSideTranslations(ctx.locale ?? 'en', [
-        'rank',
-        'footer',
-        'common',
-      ])),
+      ...(await serverSideTranslations(ctx.locale ?? 'en', ['rank', 'common'])),
     },
   }
 }

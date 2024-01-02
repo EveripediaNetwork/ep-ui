@@ -54,7 +54,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       'revision',
       'wiki',
       'common',
-      'footer',
     ])),
   }
 

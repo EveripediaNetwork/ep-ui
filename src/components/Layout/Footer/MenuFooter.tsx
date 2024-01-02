@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next'
 import SocialFooter from './SocialFooter'
 
 const MenuFooter = () => {
-  const { t } = useTranslation('footer')
+  const { t } = useTranslation('common')
 
   return (
     <SimpleGrid

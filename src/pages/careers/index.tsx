@@ -47,11 +47,7 @@ const Careers = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', [
-        'careers',
-        'common',
-        'footer',
-      ])),
+      ...(await serverSideTranslations(locale ?? 'en', ['careers', 'common'])),
     },
   }
 }

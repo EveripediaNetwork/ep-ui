@@ -56,7 +56,7 @@ interface FoundersRankTableHeadProps {
 export const FoundersRankTableHead = ({
   onClickMap,
 }: FoundersRankTableHeadProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation(['rank', 'common'])
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>

@@ -30,7 +30,7 @@ import { getCookie, setCookie } from 'cookies-next'
 
 const Footer = () => {
   const router = useRouter()
-  const { t, i18n } = useTranslation('footer')
+  const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
   const [lang, setLang] = useState(
