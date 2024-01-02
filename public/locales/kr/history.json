@@ -1,5 +1,7 @@
 {
   "wikiHistory": "위키 역사",
   "wikiHistoryDescription": "이 위키의 변경 내역 타임라인",
-  "restore": "복원"
+  "restore": "복원",
+  "New": "신규",
+  "Edited": "편집됨"
 }
