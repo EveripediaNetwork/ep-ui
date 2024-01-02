@@ -24,6 +24,8 @@ import { LinkButton } from '@/components/Elements'
 import { RiHistoryLine } from 'react-icons/ri'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
+import { enIN, ko } from 'date-fns/locale'
 
 interface HistoryCardArrowProps {
   isRightAligned?: boolean
@@ -102,6 +104,8 @@ export const HistoryCard = ({
 }: HistoryCardProps) => {
   const [, userENSDomain] = useENSData(lastEditor.id)
   const { t } = useTranslation('history')
+  const router = useRouter()
+  const locale = router.locale ?? 'en'
 
   // validate wordsChanged, percentChanged
   let checkedWordsChanged = '0'
@@ -153,8 +157,12 @@ export const HistoryCard = ({
         <LinkOverlay href={`/revision/${activityId}`}>
           {lastEditedTime && (
             <Text fontSize={{ base: 'xs', md: 'sm' }} color="fadedText2">
-              {format(new Date(lastEditedTime), 'MMMM d, yyyy')}{' '}
-              {format(new Date(lastEditedTime), 'h:mm a')}
+              {format(new Date(lastEditedTime), 'MMMM d, yyyy', {
+                locale: String(locale) === 'en' ? enIN : ko,
+              })}{' '}
+              {format(new Date(lastEditedTime), 'h:mm a', {
+                locale: String(locale) === 'en' ? enIN : ko,
+              })}
             </Text>
           )}
         </LinkOverlay>
