@@ -27,7 +27,7 @@ const paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
-  words.forEach((word) => {
+  words.forEach(word => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
@@ -49,8 +49,11 @@ const CustomTextRenderer = ({ children }: { children: ReactNode[] }) => (
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
   const charsPerPage = 280
+  const markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  const pages = paginateContent(content, charsPerPage)
+  const pages = markdownTableRegex.test(content)
+    ? content.split('\n\n')
+    : paginateContent(content, charsPerPage)
 
   const [answerSource] = answerSources || []
 
@@ -73,7 +76,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
       {alias === 'AI' && currentPageIndex === pages.length - 1 && (
         <ChatSources answerSource={answerSource} />
       )}
-      <Box display={'flex'} gap={'8px'} justifyContent={'flex-end'}>
+      <Box display={'flex'} gap={'8px'} mt={'8px'} justifyContent={'flex-end'}>
         {currentPageIndex > 0 && (
           <chakra.button
             bgColor={'gray.100'}
