@@ -27,6 +27,8 @@
   "media": "Media",
   "viewTimelineOfEvents": "View Timeline of Events",
   "feedbackThanks": "Thank you for the honest Feedback!",
+  "imagePlaceholder": "Drag and drop a main image, or click to select.",
+  "publish": "Publish",
   "views": "Views",
   "FloorPrice": "Floor Price",
   "Market Cap": "Market Cap",
@@ -50,5 +52,8 @@
   "Contract": "Contract",
   "Converter": "Converter",
   "Explorers": "Explorers",
-  "Reason for edit:": "Reason for edit:"
+  "Reason for edit:": "Reason for edit:",
+  "editWikiDetails": "Edit Wiki Details",
+  "addImagesVideos": "Add images/videos",
+  "aiGenerate": "AI Generate"
 }

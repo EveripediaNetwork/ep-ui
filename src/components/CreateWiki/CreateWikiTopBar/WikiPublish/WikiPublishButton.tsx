@@ -35,6 +35,7 @@ import config from '@/config'
 import networkMap from '@/data/NetworkMap'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import detectEthereumProvider from '@metamask/detect-provider'
+import { useTranslation } from 'next-i18next'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -63,6 +64,8 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
+
+  const { t } = useTranslation('wiki')
 
   const {
     dispatch,
@@ -296,7 +299,7 @@ export const WikiPublishButton = () => {
               _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
             }}
           >
-            Publish
+            {t('publish')}
           </Button>
         )}
       </Tooltip>
