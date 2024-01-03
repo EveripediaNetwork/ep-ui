@@ -4,39 +4,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import { useAppSelector } from '@/store/hook'
 import { WikiInsightsProps } from '../../WikiInsights'
-import { Wiki } from '@everipedia/iq-utils'
 import ChatBot from './ChatBot'
 import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
-
-export const queryMapper = (query: string, wiki: Wiki) => {
-  let newQuery = ''
-
-  switch (query) {
-    case 'Generate additional info for this page':
-      newQuery = `${wiki.content} 
-          Generate an additional information for the content above?        
-        `
-      break
-    case 'Content/page summary.':
-      newQuery = `${wiki.content} 
-          Summarize the content above?        
-        `
-      break
-    case 'ELI5':
-      newQuery = `${wiki.content} 
-          Explain the content above like I am a 5yr old?        
-        `
-      break
-
-    default:
-      newQuery = query
-      break
-  }
-
-  return newQuery
-}
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(true)

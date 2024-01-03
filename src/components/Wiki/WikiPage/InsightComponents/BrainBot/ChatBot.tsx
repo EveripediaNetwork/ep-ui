@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { RiSubtractFill } from 'react-icons/ri'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
@@ -7,6 +7,7 @@ import BotSuggestions from './BotSuggestions'
 import { Logo } from '@/components/Elements'
 import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
+import { useScrollToBottom } from '@/hooks/useScrollToBottom'
 
 const ChatBot = ({
   wiki,
@@ -17,18 +18,11 @@ const ChatBot = ({
 }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, currentHumanMessage])
+  useScrollToBottom(chatsRef, [messages, currentHumanMessage])
 
-  const scrollToBottom = () => {
-    if (chatsRef.current) {
-      chatsRef.current.scrollTop = chatsRef.current?.scrollHeight
-    }
-  }
   return (
     <Box
       w={'full'}

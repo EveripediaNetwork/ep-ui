@@ -9,8 +9,8 @@ import {
 import { randomUUID } from 'crypto'
 import axios from 'axios'
 import { Wiki } from '@everipedia/iq-utils'
-import { queryMapper } from '@/components/Wiki/WikiPage/InsightComponents/BrainBot/BrainBot'
 import { useAppSelector } from '@/store/hook'
+import { queryMapper } from '@/utils/BotUtils'
 
 const useStream = () => {
   const dispatch = useDispatch()
