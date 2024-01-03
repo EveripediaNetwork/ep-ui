@@ -86,5 +86,8 @@
   "Profile": "profile",
   "Settings": "Settings",
   "Logout": "Logout",
-  "SearchWikiPlaceholder": "Search wikis, categories, tags and users"
+  "SearchWikiPlaceholder": "Search wikis, categories, tags and users",
+  "Edited": "Edited",
+  "Created": "Created",
+  "ago": "ago"
 }
