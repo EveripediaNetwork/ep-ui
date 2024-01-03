@@ -1,4 +1,3 @@
-import { Logo } from '@/components/Elements'
 import { AnswerSources } from '@/hooks/useStream/schema'
 import {
   setCurrentChatId,
@@ -14,6 +13,7 @@ import ChatSources from './ChatSources'
 import { customTableRenderer } from '../../CustomRenderers/customTableRender'
 import styles from '../../../../../styles/markdown.module.css'
 import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
+import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
 type ChartProps = {
   content: string
@@ -156,7 +156,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             alignItems={'center'}
             flexShrink={0}
           >
-            <Logo width={'9px'} h={'8px'} />
+            <IQGPTIcon width={'9px'} h={'8px'} />
           </Box>
         )}
         <Flex

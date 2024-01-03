@@ -1,13 +1,13 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Link, Text } from '@chakra-ui/react'
 import React, { useRef } from 'react'
 import { RiSubtractFill } from 'react-icons/ri'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
-import { Logo } from '@/components/Elements'
 import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import { useScrollToBottom } from '@/hooks/useScrollToBottom'
+import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
 const ChatBot = ({
   wiki,
@@ -53,7 +53,7 @@ const ChatBot = ({
             alignItems={'center'}
             flexShrink={0}
           >
-            <Logo width={'14px'} height={'14px'} />
+            <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
           <Text>IQ GPT Chatbot</Text>
         </Box>
@@ -80,7 +80,9 @@ const ChatBot = ({
         )}
       </Box>
       <BotChatBox wiki={wiki} />
-      <Box
+      <Link
+        target="_blank"
+        href="https://www.iqgpt.com/"
         display={'flex'}
         justifyContent={'center'}
         gap={'4px'}
@@ -88,9 +90,9 @@ const ChatBot = ({
         alignItems={'center'}
         h="full"
       >
-        <Logo width={'14px'} height={'14px'} />
+        <IQGPTIcon width={'14px'} height={'14px'} />
         <Text fontSize={'8px'}>Powered by IQ & BrainDAO</Text>
-      </Box>
+      </Link>
     </Box>
   )
 }

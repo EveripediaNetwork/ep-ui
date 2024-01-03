@@ -1,30 +1,15 @@
-import { Logo } from '@/components/Elements'
 import { Box, Text } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { useAppSelector } from '@/store/hook'
 import { WikiInsightsProps } from '../../WikiInsights'
 import ChatBot from './ChatBot'
 import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
+import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(true)
-  const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, messages } = useAppSelector(
-    (state) => state.message,
-  )
-
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, currentHumanMessage])
-
-  const scrollToBottom = () => {
-    if (chatsRef.current) {
-      chatsRef.current.scrollTop = chatsRef.current?.scrollHeight
-    }
-  }
 
   return (
     <>
@@ -37,13 +22,19 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
           flexDirection={'column'}
           alignItems={'center'}
           w={'full'}
-          p={'10px'}
+          paddingBlock={'20px'}
+          paddingInline={'10px'}
           borderRadius={8}
           borderColor="rankingListBorder"
           backgroundColor={'btnBgColor'}
           borderWidth={1}
         >
-          <Box display={'flex'} alignItems={'center'} gap={'4px'}>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            gap={'4px'}
+          >
             <Box
               bgColor={'brainBotAIBorder'}
               borderRadius={'4px'}
@@ -54,13 +45,14 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               alignItems={'center'}
               flexShrink={0}
             >
-              <Logo width={'18px'} height={'18px'} />
+              <IQGPTIcon width={'18px'} height={'18px'} />
             </Box>
             <Text
               color={'fadedText'}
               fontSize={'14px'}
               fontWeight={'500'}
               textAlign={'center'}
+              maxW={'300px'}
             >
               Get more insights on the article content with IQ brainbot
             </Text>

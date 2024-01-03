@@ -32,6 +32,14 @@ export const BrainBotSuggestion = ({
         }
         askQuestion({ question, wiki })
       }}
+      _hover={{
+        bgColor: 'brand.50',
+      }}
+      _dark={{
+        _hover: {
+          bgColor: 'gray.700',
+        },
+      }}
     >
       <Text color={'emptyNotificationText'} fontSize={'12px'}>
         {question}
