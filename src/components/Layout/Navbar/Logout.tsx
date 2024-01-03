@@ -5,12 +5,14 @@ import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useDisconnect, useAccount } from 'wagmi'
+import { useTranslation } from 'next-i18next'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
   const { disconnect } = useDisconnect()
   const router = useRouter()
+  const { t } = useTranslation('common')
   const handleLogOut = () => {
     disconnect()
     dispatch(setStateToDefault())
@@ -44,7 +46,9 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
             color="linkColor"
             flex="auto"
           >
-            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Log out</span>
+            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
+              {t('Logout')}
+            </span>
           </Flex>
         </MenuItem>
       </Flex>

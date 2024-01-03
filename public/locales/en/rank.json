@@ -1,4 +1,6 @@
 {
+  "rankingListHeading": "Wiki rank by MarketCap",
+  "rankingListDescription": "A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.",
   "rankingListButtonCryptocurrencies": "Cryptocurrencies",
   "rankingListButtonStablecoins": "Stablecoins",
   "rankingListButtonAITokens": "AI Tokens",
@@ -23,5 +25,7 @@
   "rankingSeoTitle": "Ranking by Market Capital for NFT and TOKENS",
   "rankingSeoDescription": "Live update for nft and tokens marketcap",
   "rankingOGTitle": "Rank - MarketCap",
-  "rankingOGDescription": "A list of cryptocurrencies, NFTs and crypto founders ranked by their individual market cap"
+  "rankingOGDescription": "A list of cryptocurrencies, NFTs and crypto founders ranked by their individual market cap",
+  "Previous": "Prev",
+  "Next": "Next"
 }
