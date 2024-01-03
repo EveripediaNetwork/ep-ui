@@ -23,9 +23,11 @@ import { Image } from '../Elements/Image/Image'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
 import { shortenText } from '@/utils/textUtils'
+import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
+  const { t } = useTranslation('wiki')
   const getLatestEdited = () => {
     let lastEditedTime = null
     if (wiki.updated) {
@@ -128,7 +130,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 fontSize="sm"
                 textAlign="right"
               >
-                Last Edited {getLatestEdited()}
+                {t('LastEdited')} {getLatestEdited()}
               </Text>
             </HStack>
           </Flex>
