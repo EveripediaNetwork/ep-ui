@@ -162,7 +162,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           h="40px"
           gridColumn={{ base: 'span 2', md: 'unset' }}
         >
-          {atttributeExists(currentLink) ? 'Update' : 'Add'}
+          {atttributeExists(currentLink) ? t('update') : t('add')}
         </Button>
       </SimpleGrid>
       <chakra.span color="red.300">{error}</chakra.span>

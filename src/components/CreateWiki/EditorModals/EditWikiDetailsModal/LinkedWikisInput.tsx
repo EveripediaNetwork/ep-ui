@@ -196,7 +196,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
           rounded="md"
           onClick={handleAddWiki}
         >
-          Add
+          {t('add')}
         </Button>
       </SimpleGrid>
       <Box

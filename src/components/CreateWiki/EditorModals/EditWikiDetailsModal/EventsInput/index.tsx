@@ -194,7 +194,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               mt="3"
               name="link"
               type="url"
-              placeholder="Link"
+              placeholder={t('link')}
               fontSize={{ base: '12px', md: '14px' }}
             />
           </Box>
@@ -210,7 +210,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               fontSize={{ base: '12px', md: '14px' }}
             />
             <Button type="submit" w="full" rounded="md" h="40px">
-              {isUpdate ? 'Update' : 'Add '}
+              {isUpdate ? t('update') : t('add')}
             </Button>
           </SimpleGrid>
         </form>
