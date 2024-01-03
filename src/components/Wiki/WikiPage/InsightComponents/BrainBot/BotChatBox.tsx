@@ -1,4 +1,5 @@
 import useStream from '@/hooks/useStream'
+import { useAppSelector } from '@/store/hook'
 import { setCurrentMessage } from '@/store/slices/chatbot-slice'
 import { chakra, HStack, Input } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
@@ -10,6 +11,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   const [chatInput, setChatInput] = useState('')
   const { askQuestion } = useStream()
   const dispatch = useDispatch()
+  const { isLoading } = useAppSelector((state) => state.stream)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChatInput(e.target.value)
@@ -49,6 +51,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
             color: 'whiteAlpha.600',
           }}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <chakra.button
           type="submit"
@@ -67,6 +70,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           _dark={{
             bgColor: 'brand.800',
           }}
+          disabled={isLoading}
         >
           <RiSendPlaneFill size={'13px'} />
         </chakra.button>

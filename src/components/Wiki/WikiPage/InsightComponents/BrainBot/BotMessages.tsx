@@ -64,7 +64,7 @@ const BotMessages = () => {
             <Logo width={'9px'} h={'8px'} />
           </Box>
           <Flex gap={'4px'} alignItems={'flex-end'}>
-            <Text fontSize={'14px'} style={{ lineHeight: 0.8 }}>
+            <Text fontSize={'12px'} style={{ lineHeight: 0.8 }}>
               Presenting Data
             </Text>
             <LoadingDots />

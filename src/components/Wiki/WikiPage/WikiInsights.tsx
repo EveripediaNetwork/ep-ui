@@ -74,8 +74,6 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
     }
   }, [coingeckoLink, wikiIsNFT])
   const userAddress = getUserAddressFromCache()
-
-  console.log({ content: wiki.content })
   return (
     <VStack
       borderLeftWidth={{ base: 0, xl: '1px' }}
