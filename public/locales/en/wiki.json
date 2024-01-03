@@ -66,5 +66,13 @@
   "selectOption": "Select option",
   "links": "Links",
   "searchWiki": "Search a wiki",
-  "enterLink": "Enter Link"
+  "enterLink": "Enter Link",
+  "addTagsPlaceholder": "Add tags...",
+  "eventDates": "Event Dates",
+  "title": "Title",
+  "eventType": "Event Type",
+  "link": "Link",
+  "shortDescription": "Write a short description for the event date",
+  "add": "Add",
+  "update": "Update"
 }

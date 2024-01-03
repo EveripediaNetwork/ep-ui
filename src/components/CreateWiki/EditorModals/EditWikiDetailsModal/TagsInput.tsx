@@ -42,7 +42,7 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
       >
         <Select
           isOptionDisabled={() => value.length >= 5}
-          placeholder="Add tags..."
+          placeholder={t('addTagsPlaceholder')}
           variant="unstyled"
           isMulti
           size="sm"

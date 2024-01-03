@@ -147,7 +147,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           disabled={!currentLink}
           h="40px"
           rounded="md"
-          placeholder="Enter link"
+          placeholder={t('enterLink')}
           value={currentLinkValue}
           onChange={(event) => {
             setCurrentLinkValue(event.target.value)

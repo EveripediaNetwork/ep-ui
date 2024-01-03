@@ -12,6 +12,7 @@ import { useAppDispatch } from '@/store/hook'
 import { isValidUrl } from '@/utils/textUtils'
 import { BaseEvents, EventType, Wiki } from '@everipedia/iq-utils'
 import { EventsList } from './EventsList'
+import { useTranslation } from 'next-i18next'
 
 const validateForm = (
   date: string,
@@ -42,6 +43,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
   const formRef = React.useRef<HTMLFormElement>(null)
+  const { t } = useTranslation('wiki')
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -142,7 +144,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <>
       <Box>
-        <Text fontWeight="semibold">Event Dates</Text>
+        <Text fontWeight="semibold">{t('eventDates')}</Text>
         <form
           ref={formRef}
           onChange={() => setErrMsg(null)}
@@ -167,11 +169,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 name="title"
                 fontSize={{ base: '12px', md: '14px' }}
                 type="text"
-                placeholder="Title"
+                placeholder={t('title')}
               />
               <Select
                 name="type"
-                placeholder="Event Type"
+                placeholder={t('eventType')}
                 fontSize={{ base: '12px', md: '14px' }}
               >
                 <option
@@ -203,7 +205,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           >
             <Textarea
               name="description"
-              placeholder="Write a short description for the event date"
+              placeholder={t('shortDescription')}
               h={{ base: '80px', md: 'initial' }}
               fontSize={{ base: '12px', md: '14px' }}
             />

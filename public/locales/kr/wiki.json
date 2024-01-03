@@ -66,5 +66,13 @@
   "selectOption": "옵션 선택",
   "links": "링크",
   "searchWiki": "위키 검색",
-  "enterLink": "링크 입력"
+  "enterLink": "링크 입력",
+  "addTagsPlaceholder": "태그 추가...",
+  "eventDates": "이벤트 날짜",
+  "title": "제목",
+  "eventType": "이벤트 유형",
+  "link": "링크",
+  "shortDescription": "이벤트 날짜에 대한 간단한 설명 작성",
+  "add": "추가",
+  "update": "업데이트"
 }
