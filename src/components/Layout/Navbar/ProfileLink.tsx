@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
+import { useTranslation } from 'next-i18next'
 
 export const ProfileLink = () => {
   const userAddress = getUserAddressFromCache()
@@ -10,6 +11,7 @@ export const ProfileLink = () => {
   const [link, setLink] = useState(
     userAddress ? `/account/${userAddress}` : '/login',
   )
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     setLink(userAddress ? `/account/${userAddress}` : '/login')
@@ -31,7 +33,7 @@ export const ProfileLink = () => {
         pr={3}
       />
       <Box fontSize="md" fontWeight={600} color="linkColor">
-        Profile
+        {t('Profile')}
       </Box>
     </MenuItem>
   )
