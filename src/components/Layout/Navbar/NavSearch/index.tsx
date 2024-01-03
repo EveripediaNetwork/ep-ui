@@ -40,6 +40,7 @@ import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
+import { useTranslation } from 'next-i18next'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -62,6 +63,7 @@ const NavSearch = (props: NavSearchProps) => {
   const { inputGroupProps, inputProps, listProps, setHamburger } = props
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
+  const { t } = useTranslation('common')
 
   const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
@@ -322,7 +324,7 @@ const NavSearch = (props: NavSearchProps) => {
             ml={{ base: '15px', xl: 'unset' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search wikis, categories, tags and users"
+            placeholder={t('SearchWikiPlaceholder')}
             _placeholderShown={{
               textOverflow: 'ellipsis',
             }}

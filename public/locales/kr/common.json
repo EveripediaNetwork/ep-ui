@@ -4,8 +4,6 @@
   "hero_heading2": "블록체인 & 크립토",
   "hero_heading3": "백과사전",
   "iq_description": "IQ.wiki와 함께 암호화폐 여행을 시작해보세요! Web3의 호기심을 탐구하기 위한 나침반입니다.",
-  "rankingListHeading": "시가총액별 위키 순위",
-  "rankingListDescription": "디파이, NFT, DAO 및 암호화폐와 같은 다양한 카테고리의 위키 목록. 글로벌 시가총액을 기반으로 순위 매김됨.",
   "browseCategory": "위키 카테고리",
   "browseCategoryDescription": "아이큐 위키에서 다양한 카테고리에서 끝없는 호기심을 탐험하세요. NFT부터 DeFi, 암호화폐 등 다양한 주제가 있습니다.",
   "Explore": "탐험",
@@ -93,5 +91,6 @@
   "branding": "브랜딩",
   "NightMode": "야간 모드",
   "Profile": "프로필",
-  "Settings": "설정"
+  "Settings": "설정",
+  "SearchWikiPlaceholder": "위키, 카테고리, 태그 및 사용자 검색"
 }

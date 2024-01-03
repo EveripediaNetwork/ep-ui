@@ -1,6 +1,4 @@
 {
-  "rankingListHeading": "Wiki rank by MarketCap",
-  "rankingListDescription": "A list of wikis in different categories, including Defi, NFTs, DAOs and Cryptocurrencies, ranked based on the global marketcap respectively.",
   "browseCategory": "Wiki Categories",
   "browseCategoryDescription": "Explore your endless curiosities in different categories on IQ.wiki, Ranging from NFTs, to DeFi, Cryptocurrencies and more.",
   "Explore": "Explore",
@@ -52,20 +50,6 @@
   "loginConnectorTotalBal": "Total balance",
   "loginIQDashboard": "IQ Dashboard",
   "search": "Search",
-  "rankingListButtonCryptocurrencies": "Cryptocurrencies",
-  "rankingListButtonStablecoins": "Stablecoins",
-  "rankingListButtonAITokens": "AI Tokens",
-  "rankingListButtonFounders": "Founders",
-  "rankingListButtonNfts": "NFTs",
-  "rankingListHeadingName": "Name",
-  "rankingListHeadingPrice": "Price",
-  "rankingListHeadingMarketCap": "Market Cap",
-  "rankingListHeadingFounders": "Founders",
-  "rankingListHeadingBlockchain": "Blockchain",
-  "rankingListHeadingDateFounded": "Date Founded",
-  "rankingListHeading24hrChange": "24hr Change",
-  "rankingListHeadingProject": "Project",
-  "rankingListViewMore": "View More",
   "myWallet": "My Wallet",
   "defaultSeoTitle": "IQ.wiki | Largest Blockchain & Crypto Encyclopedia",
   "defaultSeoTitleTemplate": "%s | IQ.wiki",
@@ -100,5 +84,6 @@
   "branding": "Branding",
   "NightMode": "Night Mode",
   "Profile": "profile",
-  "Settings": "Settings"
+  "Settings": "Settings",
+  "SearchWikiPlaceholder": "Search wikis, categories, tags and users"
 }
