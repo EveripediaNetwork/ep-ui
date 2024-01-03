@@ -34,7 +34,7 @@ const WikiPreviewCard = ({
 }) => {
   const { updated, title, id } = wiki
   const [, userENSDomain] = useENSData(wiki.user?.id || '')
-  const { t } = useTranslation('wiki')
+  const { t } = useTranslation('common')
   const getLatestEdited = () => {
     let lastEditedTime = null
     if (updated) {

@@ -68,7 +68,7 @@ const CategoryPage = ({
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-  const { t } = useTranslation('category')
+  const { t } = useTranslation(['category', 'common'])
   return (
     <>
       {categoryData && (

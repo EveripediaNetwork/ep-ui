@@ -20,7 +20,7 @@ import { useTranslation } from 'next-i18next'
 
 const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
   const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
-  const { t } = useTranslation('wiki')
+  const { t } = useTranslation('common')
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
@@ -96,7 +96,8 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             opacity={0.4}
             whiteSpace="nowrap"
           >
-            {t('LastEdited')} {getReadableDate(lastModTimeStamp as string)} ago
+            {t('LastEdited')} {getReadableDate(lastModTimeStamp as string)}{' '}
+            {t('ago')}
           </Text>
         </Box>
       </Flex>
