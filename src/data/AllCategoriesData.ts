@@ -63,7 +63,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     id: 'dapps',
     title: 'categorydappsTitle',
     icon: RiCopperDiamondLine,
-    description: 'categorydappsdescription',
+    description: 'categorydappsDescription',
     cardImage: '/images/categories/dapps-card.png',
     heroImage: '/images/categories/dapps.jpg',
   },
