@@ -24,5 +24,7 @@
   "settingsSeoTitlePart": "설정 -",
   "settingsSeoDescriptionPart": "프로필 및 알림 설정을 업데이트하세요 -",
   "settingsSeoTitle": "설정",
-  "settingsSeoDescription": "프로필 및 알림 설정을 업데이트하세요"
+  "settingsSeoDescription": "프로필 및 알림 설정을 업데이트하세요",
+  "addNotificationBtnLabel": "추가",
+  "removeNotificationBtnLabel": "제거"
 }

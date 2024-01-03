@@ -27,5 +27,7 @@
   "settingsSeoTitlePart": "Settings -",
   "settingsSeoDescriptionPart": "Update your profile and notification settings -",
   "settingsSeoTitle": "Settings",
-  "settingsSeoDescription": "Update your profile and notification settings"
+  "settingsSeoDescription": "Update your profile and notification settings",
+  "addNotificationBtnLabel": "Add",
+  "removeNotificationBtnLabel": "Remove"
 }

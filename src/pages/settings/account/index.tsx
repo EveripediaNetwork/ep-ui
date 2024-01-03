@@ -124,7 +124,11 @@ const Settings = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['settings', 'common'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'settings',
+        'common',
+        'history',
+      ])),
     },
   }
 }
