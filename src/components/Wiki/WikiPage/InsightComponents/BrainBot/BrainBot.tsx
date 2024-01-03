@@ -42,7 +42,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(true)
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   useEffect(() => {
@@ -72,12 +72,12 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
           backgroundColor={'btnBgColor'}
           borderWidth={1}
         >
-          <Box display={'flex'} alignItems={'center'}>
+          <Box display={'flex'} alignItems={'center'} gap={'4px'}>
             <Box
-              bgColor={'brainBotBorder'}
-              borderRadius={'8px'}
-              w={'29px'}
-              h={'29px'}
+              bgColor={'brainBotAIBorder'}
+              borderRadius={'4px'}
+              w={'30px'}
+              h={'30px'}
               display={'flex'}
               justifyContent={'center'}
               alignItems={'center'}
@@ -87,7 +87,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             </Box>
             <Text
               color={'fadedText'}
-              fontSize={'12px'}
+              fontSize={'14px'}
               fontWeight={'500'}
               textAlign={'center'}
             >
@@ -122,7 +122,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               wiki={wiki}
               setOpen={setOpen}
             />
-            <Text color={'homeDescriptionColor'} fontSize={'10px'}>
+            <Text color={'homeDescriptionColor'} fontSize={'12px'}>
               And more...
             </Text>
             <Box color={'brandLinkColor'}>

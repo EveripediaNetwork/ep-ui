@@ -1,14 +1,15 @@
 import { useAppSelector } from '@/store/hook'
 import React from 'react'
 import ChatCard from './ChatCard'
-import { Box, HStack, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, Text } from '@chakra-ui/react'
 import { Logo } from '@/components/Elements'
+import LoadingDots from './LoadingDots'
 
 const BotMessages = () => {
   const { currentHumanMessage, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
-  const { isLoading } = useAppSelector((state) => state.stream)
+  const { isLoading } = useAppSelector(state => state.stream)
 
   return (
     <Box
@@ -18,8 +19,7 @@ const BotMessages = () => {
       gap={'10px'}
       width={'100%'}
     >
-      {messages?.map((message) => {
-        console.log(message.answer)
+      {messages?.map(message => {
         return (
           <React.Fragment key={message.id}>
             <ChatCard content={message.search} alias={'HUMAN'} />
@@ -42,7 +42,7 @@ const BotMessages = () => {
           borderColor={'brainBotBorder'}
           bgColor={'white'}
           alignItems={'center'}
-          paddingBlock={'4px'}
+          paddingBlock={'8px'}
           paddingInline={'8px'}
           width={'60%'}
           justifyContent={'flex-start'}
@@ -63,7 +63,12 @@ const BotMessages = () => {
           >
             <Logo width={'9px'} h={'8px'} />
           </Box>
-          <Text fontSize={'12px'}>Presenting Data...</Text>
+          <Flex gap={'4px'} alignItems={'flex-end'}>
+            <Text fontSize={'14px'} style={{ lineHeight: 0.8 }}>
+              Presenting Data
+            </Text>
+            <LoadingDots />
+          </Flex>
         </HStack>
       )}
     </Box>

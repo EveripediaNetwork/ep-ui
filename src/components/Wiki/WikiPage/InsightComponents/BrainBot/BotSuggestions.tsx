@@ -33,7 +33,7 @@ export const BrainBotSuggestion = ({
         askQuestion({ question, wiki })
       }}
     >
-      <Text color={'emptyNotificationText'} fontSize={'10px'}>
+      <Text color={'emptyNotificationText'} fontSize={'12px'}>
         {question}
       </Text>
       {icon}
@@ -46,8 +46,8 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
     <Box paddingBlock={'14px'}>
       <Text
         color={'fadedText'}
-        maxW={'255px'}
-        fontSize={'12px'}
+        maxW={'295px'}
+        fontSize={'14px'}
         textAlign={'center'}
       >
         Hi There! I’m the BrainBot. Here are some cool stuff i can do for you.

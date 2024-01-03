@@ -17,7 +17,7 @@ const ChatBot = ({
 }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    (state) => state.message,
+    state => state.message,
   )
 
   useEffect(() => {
@@ -50,6 +50,7 @@ const ChatBot = ({
       >
         <Box display={'flex'} gap={'8px'} alignItems={'center'}>
           <Box
+            bgColor={'brainBotAIBorder'}
             borderRadius={'4px'}
             w={'20px'}
             h={'20px'}
@@ -57,10 +58,8 @@ const ChatBot = ({
             justifyContent={'center'}
             alignItems={'center'}
             flexShrink={0}
-            border={'1px'}
-            borderColor={'brand.500'}
           >
-            <Logo width={'13px'} height={'13px'} />
+            <Logo width={'14px'} height={'14px'} />
           </Box>
           <Text>IQ GPT Chatbot</Text>
         </Box>
