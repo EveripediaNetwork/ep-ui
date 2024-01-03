@@ -56,5 +56,15 @@
   "editWikiDetails": "위키 세부 정보 편집",
   "addImagesVideos": "이미지/동영상 추가",
   "aiGenerate": "인공 지능 생성",
-  "LastEdited": "마지막 편집"
+  "LastEdited": "마지막 편집",
+  "editDetails": "세부 정보 편집",
+  "close": "닫기",
+  "category": "카테고리",
+  "selectCategory": "카테고리 선택",
+  "tagLimit": "최대 5개 추가",
+  "linkWikis": "위키 연결",
+  "selectOption": "옵션 선택",
+  "links": "링크",
+  "searchWiki": "위키 검색",
+  "enterLink": "링크 입력"
 }

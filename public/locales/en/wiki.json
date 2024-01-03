@@ -56,5 +56,15 @@
   "editWikiDetails": "Edit Wiki Details",
   "addImagesVideos": "Add images/videos",
   "aiGenerate": "AI Generate",
-  "LastEdited": "Last Edited"
+  "LastEdited": "Last Edited",
+  "editDetails": "Edit Details",
+  "close": "Close",
+  "category": "Category",
+  "selectCategory": "Select Category",
+  "tagLimit": "Add  up to 5",
+  "linkWikis": "Link Wikis",
+  "selectOption": "Select option",
+  "links": "Links",
+  "searchWiki": "Search a wiki",
+  "enterLink": "Enter Link"
 }

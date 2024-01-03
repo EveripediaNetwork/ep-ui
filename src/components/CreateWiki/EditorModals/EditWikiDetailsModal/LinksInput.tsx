@@ -17,12 +17,14 @@ import {
 import { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
+import { useTranslation } from 'next-i18next'
 
 const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const [currentLink, setCurrentLink] = useState<string>()
   const [currentLinkValue, setCurrentLinkValue] = useState<string>()
   const [error, setError] = useState<string>('')
   const dispatch = useAppDispatch()
+  const { t } = useTranslation('wiki')
 
   const getWikiAttribute = (attr: string) => {
     const attribute = wiki.metadata.find((att) => att.id === attr)?.value
@@ -93,7 +95,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
-      <Text fontWeight="semibold">Links</Text>
+      <Text fontWeight="semibold">{t('links')}</Text>
       <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
@@ -109,7 +111,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
             const attr = event.target.value
             setCurrentLink(attr)
           }}
-          placeholder="Select option"
+          placeholder={t('selectOption')}
         >
           <optgroup label="Socials">
             {LINK_OPTIONS.filter(

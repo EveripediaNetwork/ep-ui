@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/store/hook'
 import { TagsSuggestions } from '@/data/TagsSuggestions'
 import { Select, MultiValue } from 'chakra-react-select'
 import { Wiki } from '@everipedia/iq-utils'
+import { useTranslation } from 'next-i18next'
 
 type TagValue = MultiValue<{
   label: string
@@ -12,6 +13,7 @@ type TagValue = MultiValue<{
 }>
 
 const TagsInput = ({ wiki }: { wiki: Wiki }) => {
+  const { t } = useTranslation('wiki')
   const dispatch = useAppDispatch()
   const [value, setValue] = useState<TagValue>(
     wiki.tags.map((ta) => ({ label: ta.id, value: ta.id })),
@@ -27,7 +29,8 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Stack spacing="4">
       <Text fontWeight="semibold">
-        Tags <chakra.span opacity={0.4}>(Add up to 5)</chakra.span>
+        {t('tags')}{' '}
+        <chakra.span opacity={0.4}>{`(${t('tagLimit')})`}</chakra.span>
       </Text>
       <chakra.div
         zIndex="999"
