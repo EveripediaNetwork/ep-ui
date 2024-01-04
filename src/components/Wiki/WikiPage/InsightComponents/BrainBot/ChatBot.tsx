@@ -17,9 +17,8 @@ const ChatBot = ({
   setOpen: (state: boolean) => void
 }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, currentChatId, messages } = useAppSelector(
-    (state) => state.message,
-  )
+  const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
+    useAppSelector((state) => state.message)
 
   useScrollToBottom(chatsRef, [messages, currentHumanMessage])
 
@@ -73,7 +72,7 @@ const ChatBot = ({
         paddingInline={'8px'}
         ref={chatsRef}
       >
-        {currentHumanMessage || currentChatId ? (
+        {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />
         ) : (
           <BotSuggestions wiki={wiki} />

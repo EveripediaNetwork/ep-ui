@@ -15,7 +15,7 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
     >
       <Flex direction={'column'} fontSize={'10px'} alignItems={'flex-start'}>
         <Text style={{ marginBottom: '0px', color: 'white' }}>
-          Source: {answerSource.title}
+          Source: {answerSource?.title}
         </Text>
         {answerSource.url && (
           <Link

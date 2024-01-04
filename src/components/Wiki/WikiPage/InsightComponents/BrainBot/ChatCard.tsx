@@ -1,5 +1,6 @@
 import { AnswerSources } from '@/hooks/useStream/schema'
 import {
+  setCurrentAIMessage,
   setCurrentChatId,
   setCurrentMessage,
   setMessages,
@@ -14,6 +15,7 @@ import { customTableRenderer } from '../../CustomRenderers/customTableRender'
 import styles from '../../../../../styles/markdown.module.css'
 import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
+import { useAppSelector } from '@/store/hook'
 
 type ChartProps = {
   content: string
@@ -48,6 +50,7 @@ const CustomTextRenderer = ({ children }: { children: ReactNode[] }) => (
 )
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
+  const { currentAIMessage } = useAppSelector((state) => state.message)
   const charsPerPage = 280
   const markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
@@ -73,9 +76,9 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
       >
         {pages[currentPageIndex]}
       </ReactMarkdown>
-      {alias === 'AI' && currentPageIndex === pages.length - 1 && (
-        <ChatSources answerSource={answerSource} />
-      )}
+      {alias === 'AI' &&
+        currentPageIndex === pages.length - 1 &&
+        !currentAIMessage && <ChatSources answerSource={answerSource} />}
       <Box display={'flex'} gap={'8px'} mt={'8px'} justifyContent={'flex-end'}>
         {currentPageIndex > 0 && (
           <chakra.button
@@ -110,6 +113,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
 
 const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
   const dispatch = useDispatch()
+
   return (
     <Flex
       width={'100%'}
@@ -129,6 +133,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
         left={0}
         onClick={() => {
           dispatch(setCurrentMessage(''))
+          dispatch(setCurrentAIMessage(''))
           dispatch(setCurrentChatId(null))
           dispatch(setMessages([]))
         }}
@@ -143,6 +148,12 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
         padding={'8px'}
         alignItems={'flex-start'}
         gap={'4px'}
+        mt={
+          content ===
+          'I Can assist you with any questions about crypto. What would you like to ask?'
+            ? '24px'
+            : '0px'
+        }
       >
         {alias === 'AI' && (
           <Box

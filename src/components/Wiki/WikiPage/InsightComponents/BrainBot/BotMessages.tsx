@@ -6,10 +6,12 @@ import { Logo } from '@/components/Elements'
 import LoadingDots from './LoadingDots'
 
 const BotMessages = () => {
-  const { currentHumanMessage, messages } = useAppSelector(
+  const { currentHumanMessage, messages, currentAIMessage } = useAppSelector(
     (state) => state.message,
   )
   const { isLoading } = useAppSelector((state) => state.stream)
+
+  console.log({ currentAIMessage })
 
   return (
     <Box
@@ -19,6 +21,16 @@ const BotMessages = () => {
       gap={'10px'}
       width={'100%'}
     >
+      {currentAIMessage && (
+        <ChatCard
+          alias="AI"
+          content={currentAIMessage}
+          key={'intermediate-ai'}
+        />
+      )}
+      {currentHumanMessage && (
+        <ChatCard alias="HUMAN" content={currentHumanMessage} />
+      )}
       {messages?.map((message) => {
         return (
           <React.Fragment key={message.id}>
@@ -31,9 +43,6 @@ const BotMessages = () => {
           </React.Fragment>
         )
       })}
-      {currentHumanMessage && (
-        <ChatCard alias="HUMAN" content={currentHumanMessage} />
-      )}
 
       {isLoading && (
         <HStack
