@@ -4,6 +4,7 @@ import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import { Wiki } from '@everipedia/iq-utils'
 import useStream from '@/hooks/useStream'
+import { QueryType } from '@/utils/BotUtils'
 
 export const BrainBotSuggestion = ({
   question,
@@ -62,12 +63,12 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
       </Text>
       <VStack marginTop={'12px'}>
         <BrainBotSuggestion
-          question={'Generate additional info for this page'}
+          question={QueryType.AdditionalInfo}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
           wiki={wiki}
         />
         <BrainBotSuggestion
-          question={'Content/page summary.'}
+          question={QueryType.ContentPageSummary}
           icon={
             <Image
               src={'/summary.svg'}

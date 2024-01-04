@@ -7,6 +7,7 @@ import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
+import { QueryType } from '@/utils/BotUtils'
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const [open, setOpen] = useState(true)
@@ -66,13 +67,13 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             alignItems={'center'}
           >
             <BrainBotSuggestion
-              question={'Generate additional info for this page'}
+              question={QueryType.AdditionalInfo}
               icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
               wiki={wiki}
               setOpen={setOpen}
             />
             <BrainBotSuggestion
-              question={'Content/page summary.'}
+              question={QueryType.ContentPageSummary}
               icon={
                 <Image
                   src={'/summary.svg'}
