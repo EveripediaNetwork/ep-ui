@@ -8,6 +8,8 @@ import {
   tocReducer,
   blogReducer,
   leaderboardReducer,
+  botReducer,
+  streamReducer,
 } from '@/store/slices'
 import { wikiApi } from '@/services/wikis'
 import { categoriesApi } from '@/services/categories'
@@ -36,6 +38,8 @@ export const store = configureStore({
     citeMarks: citeMarksReducer,
     toc: tocReducer,
     blog: blogReducer,
+    message: botReducer,
+    stream: streamReducer,
     leaderboard: leaderboardReducer,
     [ArweaveApi.reducerPath]: ArweaveApi.reducer,
     [rankingAPI.reducerPath]: rankingAPI.reducer,
