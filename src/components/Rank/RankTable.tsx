@@ -19,7 +19,7 @@ export const RankTable = ({
   hasPagination,
   onPageChange,
   totalCount = 0,
-  siblingCount = 0,
+  siblingCount = 2,
   currentPage = 1,
   pageSize = 10,
   ...rest
