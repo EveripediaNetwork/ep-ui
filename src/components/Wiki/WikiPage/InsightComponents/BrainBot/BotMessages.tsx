@@ -11,8 +11,6 @@ const BotMessages = () => {
   )
   const { isLoading } = useAppSelector((state) => state.stream)
 
-  console.log({ currentAIMessage })
-
   return (
     <Box
       display={'flex'}

@@ -40,10 +40,8 @@ const useStream = () => {
           question: wiki ? queryMapper(question, wiki) : question,
         })
         .then((res) => {
-          // console.log(res.data)
           const { chat, answer, answerSources, messageId } =
             generateOutputSchema.parse(res.data)
-          // console.log(answer)
 
           if (chat && !currentChatId) {
             dispatch(setCurrentChatId(chat.id))
