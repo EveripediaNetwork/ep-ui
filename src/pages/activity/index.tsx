@@ -98,7 +98,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     />
   )
 
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <>
@@ -150,7 +150,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'history'])),
       activities: activities || [],
     },
   }
