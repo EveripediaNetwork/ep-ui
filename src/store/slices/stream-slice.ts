@@ -12,12 +12,9 @@ const streamSlice = createSlice({
     setIsLoading(state, action) {
       state.isLoading = action.payload
     },
-    setIsError(state, action) {
-      state.isError = action.payload
-    },
   },
 })
 
-export const { setIsLoading, setIsError } = streamSlice.actions
+export const { setIsLoading } = streamSlice.actions
 
 export default streamSlice.reducer

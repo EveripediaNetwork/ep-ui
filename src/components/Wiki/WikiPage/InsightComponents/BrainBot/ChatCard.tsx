@@ -16,6 +16,7 @@ import styles from '../../../../../styles/markdown.module.css'
 import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useAppSelector } from '@/store/hook'
+import { setIsLoading } from '@/store/slices/stream-slice'
 
 type ChartProps = {
   content: string
@@ -136,6 +137,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
           dispatch(setCurrentAIMessage(''))
           dispatch(setCurrentChatId(null))
           dispatch(setMessages([]))
+          dispatch(setIsLoading(false))
         }}
       >
         <RiArrowLeftDoubleFill size={'16px'} />

@@ -26,9 +26,6 @@ const BotMessages = () => {
           key={'intermediate-ai'}
         />
       )}
-      {currentHumanMessage && (
-        <ChatCard alias="HUMAN" content={currentHumanMessage} />
-      )}
       {messages?.map((message) => {
         return (
           <React.Fragment key={message.id}>
@@ -41,6 +38,9 @@ const BotMessages = () => {
           </React.Fragment>
         )
       })}
+      {currentHumanMessage && (
+        <ChatCard alias="HUMAN" content={currentHumanMessage} />
+      )}
 
       {isLoading && (
         <HStack
