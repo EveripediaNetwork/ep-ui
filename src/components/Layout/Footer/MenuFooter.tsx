@@ -8,11 +8,12 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import SocialFooter from './SocialFooter'
 
 const MenuFooter = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
+
   return (
     <SimpleGrid
       columns={{ base: 1, lg: 12 }}
@@ -33,8 +34,7 @@ const MenuFooter = () => {
             px={{ base: 0, lg: 0 }}
             pb={{ base: '6', md: '0' }}
           >
-            IQ.wiki&apos;s vision is to bring blockchain knowledge to the world
-            and knowledge onto the blockchain. A part of{' '}
+            {`${t('visionFooterText')} `}
             <Link
               href="https://www.brainfund.com/"
               opacity="0.8"
@@ -43,7 +43,7 @@ const MenuFooter = () => {
             >
               Brainfund
             </Link>{' '}
-            Group.
+            {t('group')}
           </Text>
           <SocialFooter />
         </Stack>
@@ -87,7 +87,7 @@ const MenuFooter = () => {
           </GridItem>
           <GridItem colSpan={1}>
             <Stack align={{ base: 'center', md: 'flex-start' }}>
-              <Heading size="sm">Company</Heading>
+              <Heading size="sm">{t('company')}</Heading>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
@@ -122,7 +122,7 @@ const MenuFooter = () => {
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}
                 href="/branding"
-              >{`${t('Branding')}`}</Link>
+              >{`${t('branding')}`}</Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box, Heading, HStack, Text, useColorModeValue } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
 
 const AboutHero = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
   const aboutHeroSrc = useColorModeValue(
     'about-hero-light.svg',
     'about-hero-dark.svg',

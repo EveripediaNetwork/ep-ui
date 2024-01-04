@@ -1,22 +1,26 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 
-const BlogHeader = () => (
-  <NextSeo
-    title="Blog"
-    description="Stay up to date with latest stories and gist brought to you by IQ.wiki"
-    canonical="https://iq.wiki/blog"
-    openGraph={{
-      title: 'Blog',
-      description:
-        'Stay up to date with latest stories and gist brought to you by IQ.wiki',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWIKI',
-      site: 'IQWiki',
-    }}
-  />
-)
+const BlogHeader = () => {
+  const { t } = useTranslation('blog')
+
+  return (
+    <NextSeo
+      title={t('blog')}
+      description={t('blogSEODescription')}
+      canonical="https://iq.wiki/blog"
+      openGraph={{
+        title: t('blog'),
+        description: t('blogSEODescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWIKI',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}
 
 export default BlogHeader

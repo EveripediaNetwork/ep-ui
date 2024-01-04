@@ -1,6 +1,6 @@
 import { Flex, Heading, Image } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const NoOpenings = () => {
   const { t } = useTranslation()

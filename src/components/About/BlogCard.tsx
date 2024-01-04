@@ -30,8 +30,8 @@ const BlogCard = ({
             w="full"
             src={image}
             alt={title}
-            layout="fill"
             imgH={IMAGE_BOX_SIZE}
+            layout="fill"
             imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
           />
         </Box>

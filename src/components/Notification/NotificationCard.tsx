@@ -24,6 +24,7 @@ import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
+import { useTranslation } from 'next-i18next'
 
 interface NotificationCardProps {
   title: string
@@ -111,6 +112,7 @@ const NotificationCard = ({
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
   )
   const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
+  const { t } = useTranslation('settings')
 
   const toast = useToast()
 
@@ -121,7 +123,7 @@ const NotificationCard = ({
   }, [userAddress, setAccount])
 
   return (
-    <HStack gap={{ base: 2, lg: 10 }} w="full" justifyContent="space-between">
+    <HStack gap={{ base: 2, lg: 6 }} w="full" justifyContent="space-between">
       <ActivityCard
         isNotifSubCard
         title={title}
@@ -136,13 +138,10 @@ const NotificationCard = ({
       />
       {defaultSubscribed || isWikiSubscribed ? (
         <Button
-          w={{ base: 8, md: 'initial' }}
-          h={{ base: 10 }}
           display={{ base: 'flex', md: 'inline-flex' }}
           alignItems={{ base: 'center' }}
           justifyContent={{ base: 'center' }}
           variant="outline"
-          px={{ base: 0, md: 7 }}
           fontSize={{ base: 'xs', md: 'sm' }}
           onClick={() =>
             RemoveWikiSubscriptionHandler(
@@ -152,8 +151,12 @@ const NotificationCard = ({
               toast,
             )
           }
+          py={{ base: 4 }}
+          px={{ base: 10 }}
         >
-          <Text display={{ base: 'none', md: 'block' }}>Remove</Text>
+          <Text display={{ base: 'none', md: 'block' }}>
+            {t('removeNotificationBtnLabel')}
+          </Text>
           <Icon
             as={RiSubtractLine}
             w={6}
@@ -189,7 +192,9 @@ const NotificationCard = ({
             )
           }
         >
-          <Text display={{ base: 'none', md: 'block' }}>Add</Text>
+          <Text display={{ base: 'none', md: 'block' }}>
+            {t('addNotificationBtnLabel')}
+          </Text>
           <Icon
             as={RiAddLine}
             w={6}

@@ -24,6 +24,7 @@ import {
 } from '@choc-ui/chakra-autocomplete'
 import { store } from '@/store/store'
 import { RiArrowRightDownLine, RiCloseLine } from 'react-icons/ri'
+import { useTranslation } from 'next-i18next'
 
 const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
@@ -32,6 +33,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const [loading, setLoading] = React.useState(false)
   const [selectedWiki, setSelectedWiki] = React.useState('')
   const [linkType, setLinkType] = React.useState<LinkedWikiKey>()
+  const { t } = useTranslation('wiki')
 
   const fetchWikisList = async (
     query: string,
@@ -104,7 +106,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
 
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
-      <Text fontWeight="semibold">Link Wikis</Text>
+      <Text fontWeight="semibold">{t('linkWikis')}</Text>
       <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
@@ -117,7 +119,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
           h="40px"
           rounded="md"
           flex="5"
-          placeholder="Select option"
+          placeholder={t('selectOption')}
         >
           {Object.values(LinkedWikiKey).map((key) => (
             <chakra.option key={key} value={key}>
@@ -151,7 +153,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
               flex="8"
               rounded="md"
               disabled={!linkType}
-              placeholder="Search a wiki"
+              placeholder={t('searchWiki')}
               value={(search || selectedWiki) ?? ''}
               onChange={(e) => {
                 setSearch(e.target.value)
@@ -194,7 +196,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
           rounded="md"
           onClick={handleAddWiki}
         >
-          Add
+          {t('add')}
         </Button>
       </SimpleGrid>
       <Box

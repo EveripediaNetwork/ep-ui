@@ -118,13 +118,15 @@ export type foundersRankListHeadLabel = z.infer<
 >
 
 export type RankinglistHeadProps = {
-  label: RankListHeadLabel
+  label: string
   Icon?: IconType
+  id: RankListHeadLabel
 }[]
 
 export type foundersRankinglistHeadProps = {
-  label: foundersRankListHeadLabel
+  label: string
   Icon?: IconType
+  id: foundersRankListHeadLabel
 }[]
 
 export type OnClickMap = {

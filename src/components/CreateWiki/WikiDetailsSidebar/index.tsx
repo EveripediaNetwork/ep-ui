@@ -15,6 +15,7 @@ import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
 import HighlightsModal from '../EditorModals/EditWikiDetailsModal'
 import MediaModal from '../EditorModals/MediaModal'
 import SummaryInput from './SummaryInput'
+import { useTranslation } from 'next-i18next'
 
 type HightLightsType = {
   initialImage: string | undefined
@@ -36,6 +37,7 @@ const WikiDetailsSidebar = ({
   const [hideDropzone, setHideDropzone] = useState(false)
   const [hideImageInput, setHideImageInput] = useState(false)
   const [wikiImageUploading, setWikiImageUploading] = useState(false)
+  const { t } = useTranslation('wiki')
 
   const handleSetImage = async (_: string, value: ArrayBuffer) => {
     setWikiImageUploading(true)
@@ -82,6 +84,7 @@ const WikiDetailsSidebar = ({
       <SummaryInput />
       {!hideDropzone && (
         <Dropzone
+          dropzonePlaceHolderTitle={t('imagePlaceholder')}
           imageUploading={wikiImageUploading}
           dropZoneActions={dropZoneActions}
         />
@@ -100,10 +103,10 @@ const WikiDetailsSidebar = ({
           <Box mt={1}>
             <RiFilmLine size="16" />
           </Box>
-          <Text>Media</Text>
+          <Text>{t('Media')}</Text>
         </Flex>
         <Button maxW="190px" onClick={mediaOpen} px={3} size="sm">
-          <Text fontSize="sm">Add images/videos</Text>
+          <Text fontSize="sm">{t('addImagesVideos')}</Text>
         </Button>
       </HStack>
       <Flex direction="column" justifyContent="center" alignItems="center">
@@ -114,7 +117,7 @@ const WikiDetailsSidebar = ({
           alignItems="center"
         >
           <Button w="full" variant="outline" color="linkColor" onClick={onOpen}>
-            Edit Wiki Details
+            {t('editWikiDetails')}
           </Button>
         </Flex>
       </Flex>

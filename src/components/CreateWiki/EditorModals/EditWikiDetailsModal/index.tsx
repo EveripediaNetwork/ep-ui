@@ -17,6 +17,7 @@ import LinksInput from './LinksInput'
 import CategoryInput from './CategoryInput'
 import LinkedWikisInput from './LinkedWikisInput'
 import EventsInput from './EventsInput'
+import { useTranslation } from 'next-i18next'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -24,6 +25,7 @@ const HighlightsModal = ({
   ...rest
 }: Partial<ModalProps>) => {
   const currentWiki = useAppSelector((state) => state.wiki)
+  const { t } = useTranslation('wiki')
 
   if (!isOpen) return null
 
@@ -37,7 +39,7 @@ const HighlightsModal = ({
         }}
       >
         <ModalHeader fontSize="lg" display="flex" alignItems="center">
-          Edit Details
+          {t('editDetails')}
           <ModalCloseButton size="sm" my="auto" position="unset" ml="auto" />
         </ModalHeader>
         <ModalBody>
@@ -67,7 +69,7 @@ const HighlightsModal = ({
             w={{ base: 'full', md: 'initial' }}
             onClick={onClose}
           >
-            Close
+            {t('close')}
           </Button>
         </ModalFooter>
       </ModalContent>

@@ -1,18 +1,20 @@
 import { Box, Heading, Wrap } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from '../Elements'
+import { useTranslation } from 'next-i18next'
 
 interface DiscoverMoreProps {
   tagsData: { id: string }[]
 }
 const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
   if (!tagsData) return null
+  const { t } = useTranslation('home')
 
   return (
     <Box bgColor="gray.100" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
       <Box maxW="1290px" mx="auto" py={8} px={4}>
         <Heading fontWeight="700" color={'rankPageButtonText'} fontSize={24}>
-          Discover More on IQ.wiki
+          {t('DiscoverMoreHeading')}
         </Heading>
         <Wrap mt={8} spacing={4}>
           {tagsData?.map((tag) => (

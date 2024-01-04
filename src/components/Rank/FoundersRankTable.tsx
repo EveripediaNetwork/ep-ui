@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react'
 import { FoundersRankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
-import { RankTableProps } from '@/types/RankDataTypes'
-import { OnClickMap } from '@/types/RankDataTypes'
+import { RankTableProps, OnClickMap } from '@/types/RankDataTypes'
+import { useTranslation } from 'next-i18next'
 
 export const FoundersRankTable = ({
   children,
@@ -56,11 +56,12 @@ interface FoundersRankTableHeadProps {
 export const FoundersRankTableHead = ({
   onClickMap,
 }: FoundersRankTableHeadProps) => {
+  const { t } = useTranslation(['rank', 'common'])
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
         {FoundersRankingListHead.map((item, i) => {
-          const onClick = onClickMap?.[item.label]
+          const onClick = onClickMap?.[item.id]
           return (
             <Th
               key={i}
@@ -75,7 +76,7 @@ export const FoundersRankTableHead = ({
                 as={onClick ? 'button' : 'div'}
                 onClick={onClick}
               >
-                {item.label}
+                {t(item.label)}
                 {item.Icon && <item.Icon size={18} />}
               </Flex>
             </Th>

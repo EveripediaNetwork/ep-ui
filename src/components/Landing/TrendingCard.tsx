@@ -19,6 +19,7 @@ import { TrendingData } from '@/types/Home'
 import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
 import { Image } from '../Elements/Image/Image'
+import { useTranslation } from 'next-i18next'
 
 const TrendingCard = ({
   wikis = [],
@@ -34,6 +35,7 @@ const TrendingCard = ({
   const [wikiData, setWikiData] = React.useState<Wiki[] | undefined>(
     isTrending ? (wikis as TrendingData).todayTrending : (wikis as Wiki[]),
   )
+  const { t } = useTranslation('home')
 
   return (
     <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
@@ -85,9 +87,9 @@ const TrendingCard = ({
                 )
               }}
             >
-              <option value="todayTrending">Today</option>
-              <option value="weekTrending">Last Week</option>
-              <option value="monthTrending">Last Month</option>
+              <option value="todayTrending">{t('Today')}</option>
+              <option value="weekTrending">{t('Last Week')}</option>
+              <option value="monthTrending">{t('Last Month')}</option>
             </Select>
           )}
         </Flex>

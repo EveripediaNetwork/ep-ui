@@ -4,7 +4,7 @@ import { NAV_ITEMS } from '@/data/NavItemData'
 import { NavMenu } from '@/components/Layout/Navbar'
 import { useRouter } from 'next/router'
 import { NavItem } from '@/types/NavItemType'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const DesktopNav = () => {
   const router = useRouter()

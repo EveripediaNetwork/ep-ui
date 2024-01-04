@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -22,14 +22,20 @@ import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
+import { useRouter } from 'next/router'
+import { getCookie, setCookie } from 'cookies-next'
 
 const Footer = () => {
-  const { t, i18n } = useTranslation()
+  const router = useRouter()
+  const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
-  const [lang, setLang] = useState<string>(languageData[0].value)
+  const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
+  const [lang, setLang] = useState(
+    userSelectedLanguage ?? languageData[0].locale,
+  )
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
     bg: '#fff',
@@ -41,6 +47,11 @@ const Footer = () => {
     if (isString(userLang)) {
       setLang(userLang)
       i18n.changeLanguage(userLang)
+      setCookie('NEXT_LOCALE', userLang, {
+        maxAge: 60 * 60 * 24 * 365.25 * 100,
+      })
+      const { pathname, asPath, query } = router
+      router.push({ pathname, query }, asPath, { locale: userLang })
       logEvent({
         action: 'CHANGE_PLATFORM_LANGUAGE',
         category: 'language',
@@ -49,13 +60,6 @@ const Footer = () => {
       })
     }
   }
-
-  const storedLang =
-    typeof window !== 'undefined' &&
-    JSON.stringify(window.localStorage.storeLang)
-  useEffect(() => {
-    if (storedLang) setLang(storedLang)
-  }, [storedLang])
 
   return (
     <Box bg="brandBackground" color="default" pos="relative" zIndex="2">
@@ -67,18 +71,17 @@ const Footer = () => {
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={spacing} py={10}>
           <GridItem mr={{ lg: 24 }}>
             <Newsletter
-              buttonTitle="Join Now"
-              header={`${t('updatesFooterHeading')}`}
-              body={`${t('updatesFooterText')}`}
+              buttonTitle={t('subscribeFooterBtn')}
+              header={t('updatesFooterHeading')}
+              body={t('updatesFooterText')}
               url="https://forms.gle/bmMce4r3JJckpSNJ7"
             />
           </GridItem>
           <GridItem>
             <Newsletter
-              buttonTitle="Subscribe"
-              header="Subscribe to our newsletter"
-              body="Never miss any of the most popular and trending articles on IQ.wiki
-        when you sign up to our email newsletter."
+              buttonTitle={t('newsletterbuttonLabel')}
+              header={t('newsletterSubscribeTitle')}
+              body={t('newsletterSubscribeBody')}
               url="https://www.getdrip.com/forms/505929689/submissions/new"
               {...newsletterOptions}
             />
@@ -129,11 +132,11 @@ const Footer = () => {
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
                       {languageData.map((langObj) => (
                         <MenuItemOption
-                          key={langObj.id}
+                          key={langObj.locale}
                           fontSize="md"
-                          value={langObj.value}
+                          value={langObj.locale}
                         >
-                          {langObj.language}
+                          {langObj.name}
                         </MenuItemOption>
                       ))}
                     </MenuOptionGroup>

@@ -18,7 +18,7 @@ import Link from '@/components/Elements/LinkElements/Link'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 
 interface TagPageProps {

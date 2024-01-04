@@ -4,7 +4,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Image } from '@/components/Elements/Image/Image'
 import AIGenerateButton from './AIGenerateButton'
 

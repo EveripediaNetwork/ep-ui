@@ -2,12 +2,12 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { LinkButton } from '../Elements'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import AboutGPTMockup from '../Elements/Image/AboutGPTMockup'
 import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
 
 const AboutIqgpt = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   return (
     <Box px={{ base: 6, md: 8 }}>
       <VStack
@@ -31,10 +31,12 @@ const AboutIqgpt = () => {
           mixBlendMode={'multiply'}
         >
           <Center py={'2px'} px={'10px'} bgColor={'white'} rounded={'3xl'}>
-            <Text fontSize={'14px'}>New</Text>
+            <Text fontSize={'14px'}>{t('IQGPTHeading1')}</Text>
           </Center>
           <HStack spacing={1}>
-            <Text fontSize={{ base: '14px', md: '16px' }}>We built IQ GPT</Text>
+            <Text fontSize={{ base: '14px', md: '16px' }}>
+              {t('IQGPTHeading2')}
+            </Text>
             <LinkWrapper href={'https://iqgpt.com/'}>
               <Box as="a" target="_blank">
                 <ArrowForwardIcon />
@@ -57,7 +59,7 @@ const AboutIqgpt = () => {
               fontSize={{ base: '24px', md: '30px', lg: '36px' }}
               color="gray.800"
             >
-              IQ GPT - The World's First AI Crypto Search Engine
+              {t('IQGPTHeading3')}
             </Text>
           </HStack>
           <Box pb={{ base: '10px', lg: '40px' }} px={{ base: 3 }}>
@@ -78,7 +80,7 @@ const AboutIqgpt = () => {
               fontSize={'12px'}
               fontWeight={'semibold'}
             >
-              Explore IQ GPT
+              {t('IQGPTBtn1')}
             </LinkButton>
             <LinkButton
               href={'https://iq.wiki/wiki/iq'}
@@ -92,7 +94,7 @@ const AboutIqgpt = () => {
               }}
               fontWeight={'semibold'}
             >
-              About IQ Token
+              {t('IQGPTBtn2')}
             </LinkButton>
           </HStack>
           <Box

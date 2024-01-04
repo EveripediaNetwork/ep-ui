@@ -1,12 +1,15 @@
 import React from 'react'
 import { Button } from '@chakra-ui/react'
 import { ProfileSubmitButtonProps } from '@/types/SettingsType'
+import { useTranslation } from 'next-i18next'
 
 export const ProfileSubmitButton = ({
   isLoading,
   isAvatarLoading,
   isBannerLoading,
 }: ProfileSubmitButtonProps) => {
+  const { t } = useTranslation('settings')
+
   return (
     <Button
       isLoading={isLoading}
@@ -24,7 +27,7 @@ export const ProfileSubmitButton = ({
       mt={8}
       w={{ base: '100%', md: '200px' }}
     >
-      Save
+      {t('settingSave')}
     </Button>
   )
 }

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Flex, Box, Heading, Text } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 
 const EmptyNotification = () => {
+  const { t } = useTranslation('settings')
   return (
     <Flex
       maxW={{ base: 'full', md: '4xl', '2xl': 'calc(100% - 160px)' }}
@@ -25,7 +27,7 @@ const EmptyNotification = () => {
           color="emptyNotificationHeading"
           textAlign="center"
         >
-          Get started with your Notification list
+          {t('settingGetStartedWithYourNotificationList')}
         </Heading>
         <Text
           maxW={{ base: 'full', md: '75%' }}
@@ -36,8 +38,7 @@ const EmptyNotification = () => {
           color="emptyNotificationText"
           textAlign="center"
         >
-          Search for wikis you would love to get updates on and add them to your
-          list.
+          {t('settingSearchForWikis')}
         </Text>
       </Flex>
     </Flex>

@@ -3,6 +3,7 @@ import { VStack } from '@chakra-ui/react'
 import { NFTStats } from '@/services/nft-stats'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
+import { useTranslation } from 'next-i18next'
 
 type NFTStatisticsProps = {
   nftStats?: NFTStats
@@ -30,7 +31,7 @@ type NFTStatsData =
 
 const NFTStatistics = (props: NFTStatisticsProps) => {
   const { nftStats } = props
-
+  const { t } = useTranslation('wiki')
   if (!nftStats) return null
 
   const getStatDirection = (stat: number) => {
@@ -56,21 +57,21 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
   const NFTStatisticsData: NFTStatsData[] = [
     {
       type: 'market-statistics',
-      title: 'Floor Price',
+      title: t('FloorPrice'),
       content: {
         value: statWithCommas(nftStats.floor_price.usd, 'currency'),
       },
     },
     {
       type: 'market-statistics',
-      title: 'Market Cap',
+      title: t('Market Cap'),
       content: {
         value: statWithCommas(nftStats.market_cap.usd, 'currency'),
       },
     },
     {
       type: 'market-statistics',
-      title: 'Volume',
+      title: t('Volume'),
       titleTag: '24h',
       content: {
         value: statWithCommas(nftStats.volume_24h.usd, 'currency'),
@@ -78,7 +79,7 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
     },
     {
       type: 'statistic',
-      title: 'Owners',
+      title: t('Owners'),
       content: {
         value: statWithCommas(nftStats.number_of_unique_addresses),
         change: statChange(
@@ -91,7 +92,7 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
     },
     {
       type: 'market-statistics',
-      title: 'Total Assets',
+      title: t('Total Assets'),
       content: {
         value: statWithCommas(nftStats.total_supply),
       },
@@ -105,7 +106,7 @@ const NFTStatistics = (props: NFTStatisticsProps) => {
         display="flex"
         flexDir="column"
         gap={2}
-        title="NFT Market Statistics"
+        title={t('NFT Market Statistics')}
       >
         {NFTStatisticsData.map((item, index) => (
           <AccordionWidget key={index} {...item} />

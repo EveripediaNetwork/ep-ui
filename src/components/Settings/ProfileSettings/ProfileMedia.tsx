@@ -2,6 +2,7 @@ import React from 'react'
 import { FormControl, FormLabel, VStack } from '@chakra-ui/react'
 import ImageUpload from '../ImageUpload'
 import { ProfileMediaProps } from '@/types/SettingsType'
+import { useTranslation } from 'next-i18next'
 
 export const ProfileMedia = ({
   setAvatarIPFSHash,
@@ -13,6 +14,7 @@ export const ProfileMedia = ({
   setBannerIPFSHash,
   setIsBannerLoading,
 }: ProfileMediaProps) => {
+  const { t } = useTranslation('settings')
   return (
     <>
       <VStack flex="1" align={{ base: 'center', lg: 'left' }} spacing={8}>
@@ -21,7 +23,7 @@ export const ProfileMedia = ({
             htmlFor="profile-image"
             textAlign={{ base: 'center', md: 'left' }}
           >
-            Profile Image
+            {t('settingProfileImage')}
           </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
@@ -40,7 +42,7 @@ export const ProfileMedia = ({
             htmlFor="profile-banner"
             textAlign={{ base: 'center', md: 'left' }}
           >
-            Profile Banner
+            {t('settingProfileBanner')}
           </FormLabel>
           <ImageUpload
             defaultImage="/images/defaults/default-user-avatar.png"
