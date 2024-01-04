@@ -66,7 +66,7 @@ export const Image = ({
       loader={
         typeof src === 'string' && src.startsWith('http') ? cfLoader : undefined
       }
-      fill={!(imgW && imgH) || !imgBoxSize}
+      fill={!imgBoxSize && !(imgW && imgH)}
       src={src}
       alt={alt}
       onError={(e) => {

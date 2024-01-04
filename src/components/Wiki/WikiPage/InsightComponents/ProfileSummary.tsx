@@ -22,6 +22,7 @@ import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import { getFounderName } from '@/utils/DataTransform/getFounderName'
+import { useTranslation } from 'next-i18next'
 
 const MAX_FOUNDERS_LIST = 3
 
@@ -68,7 +69,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
   const socialMetaData = wiki.metadata.filter((meta) =>
     WikiPossibleSocialsList.includes(meta.id as CommonMetaIds),
   )
-
+  const { t } = useTranslation('wiki')
   if (!socialMetaData.length) return null
 
   const socialLinksData = socialMetaData.filter(
@@ -97,10 +98,10 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         withNoDarkBg
         flexDir="column"
         gap={2}
-        title="Profile Summary"
+        title={t('Profile Summary')}
       >
         {contractURL && (
-          <ProfileListItem title="Contract">
+          <ProfileListItem title={t('Contract')}>
             <Link
               isExternal
               rel="noopener nofollow"
@@ -115,7 +116,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {websiteLink && (
-          <ProfileListItem title="Official Website">
+          <ProfileListItem title={t('Official Website')}>
             <Link
               isExternal
               rel="noopener nofollow"
@@ -130,7 +131,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {socialLinksData.length > 0 && (
-          <ProfileListItem title="Social Profiles">
+          <ProfileListItem title={t('Social Profiles')}>
             <Wrap spacing={2}>
               {socialLinksData
                 .filter(
@@ -172,7 +173,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
           </ProfileListItem>
         )}
         {explorerLinksData.length > 0 && (
-          <ProfileListItem title="Explorers">
+          <ProfileListItem title={t('Explorers')}>
             {explorerLinksData.map((item) => (
               <HStack>
                 <Link
@@ -196,7 +197,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         )}
         {wiki.linkedWikis?.founders && (
           <ProfileListItem
-            title="Founders"
+            title={t('Founders')}
             lengthyArr={wiki.linkedWikis?.founders}
           >
             <Flex alignItems="start" flexWrap="wrap" gap="1">
@@ -217,7 +218,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         )}
         {wiki.linkedWikis?.blockchains && (
           <ProfileListItem
-            title="Blockchains"
+            title={t('Blockchains')}
             lengthyArr={wiki.linkedWikis?.blockchains}
           >
             <Flex alignItems="start" flexWrap="wrap" gap="1">

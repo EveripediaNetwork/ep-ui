@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import { TeamData } from '@/data/MeetOurTeamData'
 import { IconType } from 'react-icons/lib'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { RiLinkedinFill, RiTwitterFill } from 'react-icons/ri'
 import IQLogo from './logos/iq-grey.svg'
 import { Image } from '../Elements/Image/Image'
@@ -40,7 +40,8 @@ const IconButtonSocial = ({
   />
 )
 const AboutOurTeam = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
+
   return (
     <VStack
       spacing={8}
@@ -88,7 +89,7 @@ const AboutOurTeam = () => {
               </Text>
               <VStack spacing={4} className="teamMember__about" display="none">
                 <Text textAlign="center" mt={2}>
-                  {teamMember.about}
+                  {t(teamMember.about)}
                 </Text>
                 <HStack justify="center" spacing={4}>
                   {teamMember.socials.linkedin && (

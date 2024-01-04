@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { BiCloudDownload } from 'react-icons/bi'
 import BrandingAssetDownloadBttn from './BrandingAssetDownloadBttn'
 import { BrandingAssetsType } from '@/types/BrandingType'
+import { useTranslation } from 'next-i18next'
 
 export const BrandingAssets = (props: BrandingAssetsType) => {
-  const { bg, updateSelectedAsset, currentlyViewed, dark, isBraindao } = props
-  const [showDownloadOptions, setShowDownloadOptions] = useState<boolean>(false)
+  const { bg, updateSelectedAsset, currentlyViewed, dark } = props
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false)
   useEffect(() => {
     if (currentlyViewed === bg.bg) {
       setShowDownloadOptions(true)
@@ -14,12 +15,12 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
       setShowDownloadOptions(false)
     }
   }, [currentlyViewed, bg.bg])
-  const cardBG = useColorModeValue(bg.bg, dark || bg.bg)
+  const cardBG = useColorModeValue(bg.bg, dark ?? bg.bg)
   const downloadIconColor = useColorModeValue('#FF5CAA', '#FF1A88')
+  const { t } = useTranslation('branding')
 
   return (
     <Flex
-      w={{ base: '45%', md: '30%' }}
       flexDirection="column"
       gap={2}
       onClick={() => {
@@ -34,14 +35,14 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
         display={showDownloadOptions ? 'flex' : 'none'}
       >
         <BrandingAssetDownloadBttn
-          text="download as .SVG"
+          text={t('downloadAsSVG')}
           href={`${bg.download}.svg`}
           closeDownloadOptions={() => {
             setShowDownloadOptions(false)
           }}
         />
         <BrandingAssetDownloadBttn
-          text="download as .PNG"
+          text={t('downloadAsPNG')}
           href={`${bg.download}.png`}
           closeDownloadOptions={() => {
             setShowDownloadOptions(false)
@@ -58,10 +59,7 @@ export const BrandingAssets = (props: BrandingAssetsType) => {
           justifyContent="end"
           bg={`url(${cardBG})`}
           w="100%"
-          h={{
-            base: `${!isBraindao ? '89px' : '143px'}`,
-            lg: `${!isBraindao ? '190px' : '307px'}`,
-          }}
+          minH={{ base: '200px', md: '222px' }}
           backgroundPosition="center"
           backgroundSize="cover"
           borderRadius="xl"

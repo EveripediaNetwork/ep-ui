@@ -2,7 +2,7 @@ import NoOpenings from '@/components/Careers/NoOpeningsCard'
 import { CareersHeader } from '@/components/SEO/Static'
 import { Flex, Heading } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const NoCareersPage = () => {
   const { t } = useTranslation()

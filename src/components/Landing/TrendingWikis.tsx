@@ -5,6 +5,7 @@ import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
 import { TrendingData } from '@/types/Home'
 import TrendingCard from './TrendingCard'
 import { FeaturedWikis } from './FeaturedWikis'
+import { useTranslation } from 'next-i18next'
 
 const TrendingWikis = ({
   trending,
@@ -15,6 +16,8 @@ const TrendingWikis = ({
   recent?: Wiki[]
   featuredWikis?: Wiki[]
 }) => {
+  const { t } = useTranslation('home')
+
   return (
     <Box
       mt={10}
@@ -33,12 +36,16 @@ const TrendingWikis = ({
         minH="500px"
       >
         <TrendingCard
-          title="Trending Wikis"
+          title={t('trendingWikisTitle')}
           icon={RiBarChartFill}
           wikis={trending}
           isTrending
         />
-        <TrendingCard title="Recent Edits" icon={RiTimeFill} wikis={recent} />
+        <TrendingCard
+          title={t('recentEditsTitle')}
+          icon={RiTimeFill}
+          wikis={recent}
+        />
         <FeaturedWikis featuredWikis={featuredWikis} />
       </Flex>
     </Box>

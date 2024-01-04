@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, SimpleGrid, Heading, VStack, Flex, Box } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { LinkButton } from '../Elements'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
@@ -9,7 +9,7 @@ import CategoryCard from '../Categories/CategoryCard'
 const NUM_OF_CATEGORIES = 6
 
 const CategoriesList = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const newCategoryList: CategoryDataType[] = []
 
   while (newCategoryList.length < NUM_OF_CATEGORIES) {
@@ -65,7 +65,7 @@ const CategoriesList = () => {
                 key={category.id}
                 imageCard={category.cardImage}
                 title={category.title}
-                brief={category.description}
+                brief={t(category.description)}
                 categoryId={category.id}
                 coverIcon={category.icon}
               />
@@ -82,7 +82,7 @@ const CategoriesList = () => {
             bgColor="btnBgColor"
             prefetch={false}
           >
-            View More
+            {t('categoryViewMore')}
           </LinkButton>
         </Flex>
       </Box>

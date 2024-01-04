@@ -7,11 +7,12 @@ import { GetStaticProps } from 'next'
 import { store } from '@/store/store'
 import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
 import { Activity as ActivityType } from '@/types/ActivityDataType'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { pageView } from '@/utils/googleAnalytics'
 import { useRouter } from 'next/router'
 import ActivityHeader from '@/components/SEO/Activity'
 import { getWikiSummary } from '@/utils/WikiUtils/getWikiSummary'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Activity = ({ activities }: { activities: ActivityType[] }) => {
   const [LatestActivityData, setLatestActivityData] = useState<
@@ -97,7 +98,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     />
   )
 
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <>
@@ -110,7 +111,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
             size={{ base: 'lg', md: '2xl' }}
             letterSpacing="wide"
           >
-            Recent Activity
+            {t('recentActivity')}
           </Heading>
           <Box>
             <Box>
@@ -136,7 +137,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { data: activities, error: activitiesError } = await store.dispatch(
     getLatestActivities.initiate({ offset: 0, limit: ITEM_PER_PAGE }),
   )
@@ -149,6 +150,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'history'])),
       activities: activities || [],
     },
   }

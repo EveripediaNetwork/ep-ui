@@ -12,6 +12,7 @@ import { RankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
 import { RankTableProps } from '@/types/RankDataTypes'
 import { OnClickMap } from '@/types/RankDataTypes'
+import { useTranslation } from 'next-i18next'
 
 export const RankTable = ({
   children,
@@ -54,11 +55,13 @@ interface RankTableHeadProps {
 }
 
 export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
+  const { t } = useTranslation(['rank', 'common'])
+
   return (
     <Thead h="45px" bg="rankingListTableHead">
       <Tr>
         {RankingListHead.map((item, i) => {
-          const onClick = onClickMap?.[item.label]
+          const onClick = onClickMap?.[item.id]
           return (
             <Th
               key={i}
@@ -74,7 +77,7 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
                 as={onClick ? 'button' : 'div'}
                 onClick={onClick}
               >
-                {item.label}
+                {t(item.label)}
                 {item.Icon && <item.Icon size={18} />}
               </Flex>
             </Th>

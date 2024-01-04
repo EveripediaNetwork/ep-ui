@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { BrandingAssets } from './BrandingAssets'
 
@@ -21,7 +21,7 @@ const BrandWrapper = ({
   brandAsset,
   isBrainDao,
 }: BrandWrapperType) => {
-  const [currentViewedAsset, setCurrentViewedAsset] = useState<string>('')
+  const [currentViewedAsset, setCurrentViewedAsset] = useState('')
 
   return (
     <Box pb={24} maxW={{ base: '90%', '2xl': '1280px' }} mx="auto">
@@ -35,7 +35,16 @@ const BrandWrapper = ({
           </Text>
         )}
       </Flex>
-      <Flex mt={10} flexWrap="wrap" gap="2rem" justifyContent="space-between">
+      <Grid
+        mt={10}
+        gap="2rem"
+        gridTemplateColumns={{
+          base: '1fr',
+          md: 'repeat(2, 1fr)',
+          xl: 'repeat(3, 1fr)',
+        }}
+        justifyContent="space-between"
+      >
         {brandAsset.map((item, index) => {
           return (
             <BrandingAssets
@@ -50,7 +59,7 @@ const BrandWrapper = ({
             />
           )
         })}
-      </Flex>
+      </Grid>
     </Box>
   )
 }

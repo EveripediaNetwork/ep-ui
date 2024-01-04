@@ -9,6 +9,7 @@ import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface WikiProps {
   wiki: WikiType
@@ -31,8 +32,8 @@ const Wiki = ({ wiki }: WikiProps) => {
     <>
       {wiki && (
         <WikiHeader
-          slug={slug as string}
-          author={wiki.author.profile?.username || wiki.author.id || ''}
+          slug={slug}
+          author={wiki.author.profile?.username ?? wiki.author.id ?? ''}
           dateModified={wiki.updated}
           datePublished={wiki.created}
           title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
@@ -48,6 +49,14 @@ const Wiki = ({ wiki }: WikiProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const props = {
+    ...(await serverSideTranslations(context.locale ?? 'en', [
+      'revision',
+      'wiki',
+      'common',
+    ])),
+  }
+
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
@@ -56,7 +65,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   )
 
   if (wikiError)
-    throw new Error(`There was an error fetching the wiki: ${wikiError}`)
+    throw new Error(
+      `There was an error fetching the wiki: ${wikiError.message}`,
+    )
 
   if (wiki?.hidden) {
     return {
@@ -64,21 +75,24 @@ export const getStaticProps: GetStaticProps = async (context) => {
         destination: `/404/?wiki=${wiki.title}`,
         permanent: false,
       },
+      props,
     }
   }
 
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
+
   if (!wiki) {
     return {
       redirect: {
         destination: `/NotFound/?wiki=${slug}`,
         permanent: false,
       },
+      props,
     }
   }
   return {
-    props: { wiki: { ...wiki, ...data } },
+    props: { wiki: { ...wiki, ...data }, ...props },
   }
 }
 

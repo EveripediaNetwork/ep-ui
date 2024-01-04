@@ -3,6 +3,7 @@ import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { Button, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import { useAccount } from 'wagmi'
+import { useTranslation } from 'next-i18next'
 
 const AIGenerateButton = ({
   isGenerating,
@@ -15,6 +16,7 @@ const AIGenerateButton = ({
   const [timeLeft, setTimeLeft] = React.useState(0)
   const { address: userAddress } = useAccount()
   const { userCanEdit } = useWhiteListValidator(userAddress)
+  const { t } = useTranslation('wiki')
 
   React.useEffect(() => {
     const timeCounter = setInterval(() => {
@@ -70,7 +72,7 @@ const AIGenerateButton = ({
         isLoading={isGenerating}
         onClick={handleAIGenerate}
       >
-        AI Generate
+        {t('aiGenerate')}
       </Button>
     </Tooltip>
   )

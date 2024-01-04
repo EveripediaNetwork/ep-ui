@@ -19,6 +19,7 @@ import {
 import { StrEntry } from '@/types/ProfileType'
 import LensterIcon from '@/components/Icons/lensterIcon'
 import { ProfileLinksProps } from '@/types/SettingsType'
+import { useTranslation } from 'next-i18next'
 
 export const ProfileLinks = ({
   twitter,
@@ -30,11 +31,12 @@ export const ProfileLinks = ({
   setTwitter,
   setLens,
 }: ProfileLinksProps) => {
+  const { t } = useTranslation('settings')
   return (
     <>
       {/* PROFILE: LINKS */}
       <FormControl>
-        <FormLabel htmlFor="links">Links</FormLabel>
+        <FormLabel htmlFor="links">{t('settingLinks')}</FormLabel>
         <Box overflow="hidden" borderWidth="1px" borderRadius="md">
           {/* LINKS: Twitter */}
           <InputGroup>
@@ -46,7 +48,7 @@ export const ProfileLinks = ({
               value={twitter}
               onChange={(e) => setTwitter(e.target.value)}
               _focus={{ borderBottomColor: 'inherit' }}
-              placeholder="Your Twitter Handle"
+              placeholder={t('settingYourTwitterHandle')}
             />
           </InputGroup>
           {/* LINKS: Instagram */}
@@ -59,7 +61,7 @@ export const ProfileLinks = ({
               value={instagram}
               onChange={(e) => setInstagram(e.target.value)}
               variant="flushed"
-              placeholder="Your Instagram Handle"
+              placeholder={t('settingYourInstagramHandle')}
             />
           </InputGroup>
           {/* LINKS: Lenster */}
@@ -72,7 +74,7 @@ export const ProfileLinks = ({
               value={lens}
               onChange={(e) => setLens(e.target.value)}
               variant="flushed"
-              placeholder="Your Lens Handle"
+              placeholder={t('settingYourLensHandle')}
             />
           </InputGroup>
           {/* LINKS: Website */}
@@ -113,11 +115,12 @@ export const ProfileEmail = forwardRef(
     { inputEmail, setInputEmail }: ProfileEmailProps,
     ref: Ref<HTMLInputElement>,
   ) => {
+    const { t } = useTranslation('settings')
     return (
       <>
         {/* PROFILE: EMAIL */}
         <FormControl isRequired isInvalid={inputEmail.error !== ''}>
-          <FormLabel htmlFor="email">Email Address</FormLabel>
+          <FormLabel htmlFor="email">{t('settingEmailAddress')}</FormLabel>
           <Input
             ref={ref}
             value={inputEmail.value}
@@ -127,7 +130,7 @@ export const ProfileEmail = forwardRef(
                 error: validateEmail(e.target.value),
               })
             }}
-            placeholder="Enter email"
+            placeholder={t('settingEmailAddressPlaceholder')}
           />
           <FormErrorMessage>{inputEmail.error}</FormErrorMessage>
         </FormControl>
@@ -146,12 +149,12 @@ interface ProfileUsernameProps {
 export const ProfileUsername = forwardRef(
   (props: ProfileUsernameProps, ref: Ref<HTMLInputElement>) => {
     const { userENSAddr, inputUsername, setInputUsername, userAddress } = props
-
+    const { t } = useTranslation('settings')
     return (
       <>
         {/* PROFILE: USER NAME */}
         <FormControl isRequired isInvalid={inputUsername.error !== ''}>
-          <FormLabel htmlFor="username">Username</FormLabel>
+          <FormLabel htmlFor="username">{t('settingUsername')}</FormLabel>
           {userENSAddr && userENSAddr !== inputUsername.value && (
             <Button
               variant="unstyled"
@@ -168,7 +171,7 @@ export const ProfileUsername = forwardRef(
                 })
               }}
             >
-              (Click to use your ENS {userENSAddr})
+              {`${t('settingClickToUseYourENS')} ${userENSAddr}`}
             </Button>
           )}
           <Input
@@ -180,7 +183,7 @@ export const ProfileUsername = forwardRef(
                 error: validateUsername(e.target.value, userAddress),
               })
             }}
-            placeholder="Enter username"
+            placeholder={t('settingUsername')}
           />
           <FormErrorMessage>{inputUsername.error}</FormErrorMessage>
         </FormControl>
@@ -197,11 +200,12 @@ interface ProfileBioProps {
 export const ProfileBio = forwardRef(
   (props: ProfileBioProps, ref: Ref<HTMLTextAreaElement>) => {
     const { inputBio, setInputBio } = props
+    const { t } = useTranslation('settings')
     return (
       <>
         {/* PROFILE: BIO */}
         <FormControl isInvalid={inputBio.error !== ''}>
-          <FormLabel htmlFor="bio">Bio</FormLabel>
+          <FormLabel htmlFor="bio">{t('settingBio')}</FormLabel>
           <Textarea
             ref={ref}
             value={inputBio.value}
@@ -211,7 +215,7 @@ export const ProfileBio = forwardRef(
                 error: validateBio(e.target.value),
               })
             }}
-            placeholder="Tell the world your story"
+            placeholder=""
           />
           <FormErrorMessage>{inputBio.error}</FormErrorMessage>
         </FormControl>

@@ -5,16 +5,15 @@ import { AllCareers } from '@/data/CareersData'
 import NoCareersPage from '@/components/Careers/NoCareersHero'
 import { SimpleGrid } from '@chakra-ui/react'
 import CareerCard from '@/components/Careers/CareersCard'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const OurCareers = () => {
+  const { t } = useTranslation('careers')
   return (
     <main>
-      <CareersHero
-        title="IQ.wiki Careers"
-        description="Do you wish to join our great team? we're looking for
-          Intellectual Individuals who are committed to doing well by doing
-          good. here is the list of our open positions."
-      />
+      <CareersHero title={t('heroTitle')} description={t('heroDescription')} />
       <SimpleGrid
         maxW={{ base: '100%', md: '95%', '2xl': '1280px' }}
         py={{ base: 8, lg: 16 }}
@@ -43,6 +42,14 @@ const Careers = () => {
       {AllCareers.length !== 0 ? <OurCareers /> : <NoCareersPage />}
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['careers', 'common'])),
+    },
+  }
 }
 
 export default Careers

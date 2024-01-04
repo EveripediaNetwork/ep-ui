@@ -13,7 +13,7 @@ import {
 import Link from '@/components/Elements/LinkElements/Link'
 import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
 interface NavMenuType {

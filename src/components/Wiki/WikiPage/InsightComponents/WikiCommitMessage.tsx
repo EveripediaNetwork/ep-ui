@@ -3,6 +3,7 @@ import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import AccordionWidget from '@/components/Wiki/WikiAccordion/AccordionWidget'
 import { Text, VStack } from '@chakra-ui/react'
 import { User } from '@everipedia/iq-utils'
+import { useTranslation } from 'next-i18next'
 
 const WikiCommitMessage = ({
   user,
@@ -13,6 +14,7 @@ const WikiCommitMessage = ({
   lastUpdated: string | undefined
   commitMessage: string | undefined
 }) => {
+  const { t } = useTranslation('wiki')
   const lastEdited = lastUpdated
     ? new Date(lastUpdated).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -27,10 +29,14 @@ const WikiCommitMessage = ({
         withNoDarkBg
         flexDir="column"
         gap={2}
-        title="Commit Info"
+        title={t('commitInfo')}
       >
-        <AccordionWidget title="Edited by:" type="account" content={user} />
-        <AccordionWidget title="Edited in:" type="text" content={lastEdited} />
+        <AccordionWidget title={t('editedBy')} type="account" content={user} />
+        <AccordionWidget
+          title={t('editedIn')}
+          type="text"
+          content={lastEdited}
+        />
         {commitMessage && (
           <VStack
             bgColor="wikiCardItemBg"
@@ -40,7 +46,7 @@ const WikiCommitMessage = ({
             spacing={2}
           >
             <Text fontSize="sm" fontWeight="bold" color="linkColor">
-              Reason for edit:
+              {t('Reason for edit:')}
             </Text>
             <Text fontSize="xs" color="linkColor">
               {commitMessage}

@@ -10,7 +10,7 @@ import {
   Tbody,
   Text,
 } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { BiImage } from 'react-icons/bi'
 import {
   RiCoinsFill,
@@ -49,7 +49,6 @@ type RankingListProps = {
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
-  const { t } = useTranslation()
   const {
     TokensListing,
     aiTokensListing,
@@ -66,6 +65,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
     'cryptocurrencies',
   )
+  const { t } = useTranslation(['rank', 'common'])
 
   if (
     TokensListing &&
@@ -165,27 +165,27 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               overflowY={'hidden'}
             >
               <RankingListButton
-                label="Cryptocurrencies"
+                label={t('rankingListButtonCryptocurrencies')}
                 icon={RiCoinsFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Stablecoins"
+                label={t('rankingListButtonStablecoins')}
                 icon={RiCoinFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="AI Tokens"
+                label={t('rankingListButtonAITokens')}
                 icon={RiRobotFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="Founders"
+                label={t('rankingListButtonFounders')}
                 icon={RiUserFill}
                 fontSize={{ lg: 'md' }}
               />
               <RankingListButton
-                label="NFTs"
+                label={t('rankingListButtonNfts')}
                 icon={BiImage}
                 fontSize={{ lg: 'md' }}
               />
@@ -323,7 +323,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             bgColor="btnBgColor"
             prefetch={false}
           >
-            View More
+            {t('rankingListViewMore')}
           </LinkButton>
         </Flex>
       </Box>

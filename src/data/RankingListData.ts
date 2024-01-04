@@ -14,49 +14,64 @@ export const CATEGORIES_WITH_INDEX = {
 
 export const RankingListHead: RankinglistHeadProps = [
   {
+    id: '#',
     label: '#',
   },
   {
-    label: 'Name',
+    id: 'Name',
+    label: 'rankingListHeadingName',
   },
   {
-    label: 'Price',
+    id: 'Price',
+    label: 'rankingListHeadingPrice',
   },
   {
-    label: 'Market Cap',
+    id: 'Market Cap',
     Icon: RiArrowDownSFill,
+    label: 'rankingListHeadingMarketCap',
   },
   {
-    label: 'Founders',
+    id: 'Founders',
+    label: 'rankingListHeadingFounders',
   },
   {
-    label: 'Blockchain',
+    id: 'Blockchain',
+    label: 'rankingListHeadingBlockchain',
   },
   {
-    label: 'Date Founded',
+    id: 'Date Founded',
+    label: 'rankingListHeadingDateFounded',
   },
 ]
+
 export const FoundersRankingListHead: foundersRankinglistHeadProps = [
   {
     label: '#',
+    id: '#',
   },
   {
-    label: 'Name',
+    id: 'Name',
+    label: 'rankingListHeadingName',
   },
   {
-    label: 'Project',
+    label: 'rankingListHeadingProject',
+    id: 'Project',
   },
   {
-    label: 'Market Cap',
+    label: 'rankingListHeadingMarketCap',
+    id: 'Market Cap',
   },
   {
-    label: '24h Change',
+    label: 'rankingListHeading24hrChange',
+    id: '24h Change',
     Icon: RiArrowDownSFill,
   },
   {
-    label: 'Blockchain',
+    id: 'Blockchain',
+    label: 'rankingListHeadingBlockchain',
   },
   {
-    label: 'Date Founded',
+    id: 'Date Founded',
+    label: 'rankingListHeadingDateFounded',
   },
 ]

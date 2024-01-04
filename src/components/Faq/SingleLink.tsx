@@ -13,8 +13,7 @@ export const SingleLink = ({
       href={href}
       target="_blank"
       textDecoration="underline"
-      color="#FF5CAA
-"
+      color="#FF5CAA"
     >
       {title}{' '}
     </Link>

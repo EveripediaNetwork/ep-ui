@@ -6,6 +6,7 @@ import { CustomTab } from './CustomTab'
 import UserCreatedWikis from './UserWikis/UserCreatedWikis'
 import UserEditedWikis from './UserWikis/UserEditedWikis'
 import { Activity } from '@/types/ActivityDataType'
+import { useTranslation } from 'next-i18next'
 
 interface CollectionsProps {
   createdWikis: Activity[]
@@ -16,14 +17,15 @@ export const Collections = ({
   createdWikis,
   editedWikis,
 }: CollectionsProps) => {
+  const { t } = useTranslation('account')
   const SECTIONS = [
     {
-      label: 'Wikis',
+      labelKey: 'wikis',
       icon: TiDocumentAdd,
       Component: () => <UserCreatedWikis createdWikis={createdWikis} />,
     },
     {
-      label: 'Edits',
+      labelKey: 'edits',
       icon: RiEdit2Line,
       Component: () => <UserEditedWikis editedWikis={editedWikis} />,
     },
@@ -43,9 +45,8 @@ export const Collections = ({
             key={sid}
             fontWeight="semibold"
           >
-            <Icon fontSize="2xl" as={section.icon} mr="3" /> {
-              section.label
-            }{' '}
+            <Icon fontSize="2xl" as={section.icon} mr="3" />
+            {t(section.labelKey)}
           </CustomTab>
         ))}
       </TabList>

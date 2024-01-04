@@ -5,6 +5,7 @@ import { VscSmiley } from 'react-icons/vsc'
 import { useContentFeedbackMutation } from '@/services/admin'
 import { ContentFeedbackType } from '@/types/admin'
 import WikiAccordion from '../../WikiAccordion'
+import { useTranslation } from 'next-i18next'
 
 const ContentFeedback = ({
   choice,
@@ -21,6 +22,8 @@ const ContentFeedback = ({
     setFeedbackVal(false)
     await contentFeedback({ contentId, userId, feedback })
   }
+  const { t } = useTranslation('wiki')
+
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
       <WikiAccordion
@@ -28,15 +31,13 @@ const ContentFeedback = ({
         withNoDarkBg
         flexDir="column"
         gap={2}
-        title="Feedback"
+        title={t('feedback')}
         defaultOpen
       >
         <VStack bgColor="wikiCardItemBg" borderRadius={4} gap="2" p={3}>
           {feedbackVal ? (
             <Box w="full" alignItems="start" px={1}>
-              <Text fontSize="14px">
-                Did you find this article interesting?
-              </Text>
+              <Text fontSize="14px">{t('didYouFindThisInteresting')}</Text>
               <Flex
                 mt="3"
                 w="full"
@@ -52,7 +53,7 @@ const ContentFeedback = ({
                   leftIcon={<FiThumbsUp fontSize="20px" />}
                   onClick={() => sendFeedback(ContentFeedbackType.positive)}
                 >
-                  Yes
+                  {t('yes')}
                 </Button>
                 <Button
                   w="48%"
@@ -63,14 +64,14 @@ const ContentFeedback = ({
                   leftIcon={<FiThumbsDown fontSize="20px" />}
                   onClick={() => sendFeedback(ContentFeedbackType.negative)}
                 >
-                  No
+                  {t('no')}
                 </Button>
               </Flex>
             </Box>
           ) : (
             <Flex alignItems="center" gap={1} w="full">
               <Text fontWeight="light" fontSize="14px">
-                Thank you for the honest Feedback!
+                {t('feedbackThanks')}
               </Text>
               <VscSmiley color="#ff1a88" />
             </Flex>

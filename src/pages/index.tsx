@@ -35,6 +35,7 @@ import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -77,7 +78,7 @@ export const Index = ({
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
-          featuredWikis={promotedWikis && promotedWikis}
+          featuredWikis={promotedWikis}
         />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
@@ -89,7 +90,7 @@ export const Index = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
     rangeType: DayRangeType.TODAY,
   })
@@ -206,19 +207,26 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const sortedleaderboards = sortLeaderboards(leaderboard)
   const rankings = {
-    NFTsListing: NFTsList || [],
-    aiTokensListing: aiTokensList || [],
-    TokensListing: TokensList || [],
-    stableCoinsListing: stableCoinsList || [],
-    foundersListing: foundersData || [],
+    NFTsListing: NFTsList ?? [],
+    aiTokensListing: aiTokensList ?? [],
+    TokensListing: TokensList ?? [],
+    stableCoinsListing: stableCoinsList ?? [],
+    foundersListing: foundersData ?? [],
   }
 
   return {
     props: {
-      promotedWikis: sortedPromotedWikis || [],
-      recentWikis: recent || [],
-      popularTags: tagsData || [],
-      leaderboards: sortedleaderboards || [],
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'common',
+        'home',
+        'category',
+        'rank',
+        'wiki',
+      ])),
+      promotedWikis: sortedPromotedWikis ?? [],
+      recentWikis: recent ?? [],
+      popularTags: tagsData ?? [],
+      leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
     },

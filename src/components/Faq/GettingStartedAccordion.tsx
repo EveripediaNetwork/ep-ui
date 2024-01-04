@@ -6,8 +6,11 @@ import EditingIQWiki from './GettingStartedFAQ/EditingIQWiki'
 import WhatIsIQToken from './GettingStartedFAQ/WhatIsIQToken'
 import WhereToGetIQTokens from './GettingStartedFAQ/WhereToGetIQTokens'
 import IQRules from './GettingStartedFAQ/IQRules'
+import { useTranslation } from 'next-i18next'
 
 const GettingStartedAccordion = () => {
+  const { t } = useTranslation('faq')
+
   return (
     <Flex direction="column" mt={10}>
       <Flex gap={2} align="center" justify="center" w="fit-content">
@@ -19,7 +22,7 @@ const GettingStartedAccordion = () => {
           fontSize={{ base: 'md', lg: 'xl' }}
           mb={4}
         >
-          Getting Started
+          {t('faqGettingStarted')}
         </Text>
       </Flex>
       <Accordion defaultIndex={[1]} allowMultiple my={{ base: 1 }}>

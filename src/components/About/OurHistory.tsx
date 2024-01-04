@@ -1,11 +1,11 @@
 import { OurHistoryData } from '@/data/OurHistory'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import OurHistoryCard from './OurHistoryCard'
 
 const OurHistory = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
   return (
     <Box
       mt={{ base: 18, md: '24 !important' }}
