@@ -34,6 +34,7 @@ import { useHiIQBalance } from '@/hooks/useHiIQBalance'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import CopyIcon from '@/components/Icons/CopyIcon'
 import { Link } from '@/components/Elements'
+import { useTranslation } from 'next-i18next'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -58,6 +59,7 @@ const WalletDrawer = ({
   const toast = useToast()
   const { refreshBalance } = useFetchWalletBalance(userAddress)
   const dispatch = useDispatch()
+  const { t } = useTranslation('common')
 
   const handleNavigation = () => {
     toggleOperations.onClose()
@@ -123,7 +125,7 @@ const WalletDrawer = ({
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                    My Wallet {isUserConnected && <ChevronDownIcon />}
+                    {t('myWallet')} {isUserConnected && <ChevronDownIcon />}
                   </MenuButton>
                   {isUserConnected && (
                     <MenuList py={0}>

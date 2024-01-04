@@ -1,6 +1,7 @@
 import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
+import { useTranslation } from 'next-i18next'
 
 export const ColorModeToggle = ({
   isInMobileMenu,
@@ -9,7 +10,7 @@ export const ColorModeToggle = ({
 }) => {
   const { colorMode, toggleColorMode } = useColorMode()
   const ColorModeIcon = colorMode === 'light' ? FaMoon : FaSun
-
+  const { t } = useTranslation('common')
   return (
     <>
       <MenuItem
@@ -38,7 +39,9 @@ export const ColorModeToggle = ({
           color="linkColor"
           flex="auto"
         >
-          <span style={isInMobileMenu ? { fontSize: 18 } : {}}>Night Mode</span>
+          <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
+            {t('NightMode')}
+          </span>
           <Switch
             ml="auto"
             isChecked={colorMode === 'dark'}

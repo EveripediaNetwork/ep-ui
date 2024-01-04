@@ -1,41 +1,49 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 
-export const AboutHeader = () => (
-  <NextSeo
-    title="About"
-    description="World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token."
-    canonical="https://iq.wiki/static/about"
-    openGraph={{
-      title: 'About',
-      description:
-        "World's largest crypto knowledge base whose mission is to bring the world's knowledge on-chain through the IQ token.",
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+export const AboutHeader = () => {
+  const { t } = useTranslation('about')
 
-export const FaqSEO = () => (
-  <NextSeo
-    title="FAQ"
-    description="Frequently Asked Questions about IQ.wiki"
-    titleTemplate="%s | IQ.wiki"
-    canonical="https://iq.wiki/static/faq"
-    openGraph={{
-      title: 'FAQ',
-      description: 'Frequently Asked Questions about IQ.wiki',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+  return (
+    <NextSeo
+      title={t('AboutSEOTitle')}
+      description={t('AboutSEODescription')}
+      canonical="https://iq.wiki/static/about"
+      openGraph={{
+        title: t('AboutSEOTitle'),
+        description: t('AboutSEODescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}
+
+export const FaqSEO = () => {
+  const { t } = useTranslation('faq')
+
+  return (
+    <NextSeo
+      title={t('FAQSeoTitle')}
+      description={t('FAQSeodescription')}
+      titleTemplate="%s | IQ.wiki"
+      canonical="https://iq.wiki/static/faq"
+      openGraph={{
+        title: t('FAQSeoTitle'),
+        description: t('FAQSeodescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}
 
 export const PrivacyPolicySEO = () => (
   <NextSeo
@@ -111,20 +119,24 @@ export const TermsHeader = () => (
   />
 )
 
-export const GuidelinesHeader = () => (
-  <NextSeo
-    title="Our Guidelines"
-    description="IQ.wiki guidelines for the community and network"
-    titleTemplate="%s | IQ.wiki"
-    canonical="https://iq.wiki/static/guidelines"
-    openGraph={{
-      title: 'Our Guidelines',
-      description: 'IQ.wiki guidelines for the community and network',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
+export const GuidelinesHeader = () => {
+  const { t } = useTranslation('guidelines')
+
+  return (
+    <NextSeo
+      title={t('guidelinesSEOTitle')}
+      description={t('guidelinesSEODescription')}
+      titleTemplate="%s | IQ.wiki"
+      canonical="https://iq.wiki/static/guidelines"
+      openGraph={{
+        title: t('guidelinesSEOTitle'),
+        description: t('guidelinesSEODescription'),
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        handle: '@IQWiki',
+        site: 'IQWiki',
+      }}
+    />
+  )
+}

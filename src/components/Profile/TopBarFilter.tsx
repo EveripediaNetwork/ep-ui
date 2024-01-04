@@ -17,7 +17,7 @@ import {
   MenuList,
 } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { BsFillGrid3X3GapFill, BsFillGridFill } from 'react-icons/bs'
 import { FaSearch } from 'react-icons/fa'
 

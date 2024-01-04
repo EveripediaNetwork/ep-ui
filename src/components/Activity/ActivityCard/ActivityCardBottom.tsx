@@ -4,9 +4,11 @@ import { HStack, Link, Text, chakra } from '@chakra-ui/react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import ActivityCardTags from './ActivityCardTags'
 import { ActivityCardBottomProps } from '@/types/ActivityDataType'
+import { useTranslation } from 'next-i18next'
 
 const ActivityCardBottom = (props: ActivityCardBottomProps) => {
   const { editor, isNotifSubCard, lastModTimeStamp, activity, tags } = props
+  const { t } = useTranslation('common')
   return (
     <HStack w="full">
       <HStack flex="1">
@@ -44,9 +46,9 @@ const ActivityCardBottom = (props: ActivityCardBottomProps) => {
         opacity={0.6}
         whiteSpace="nowrap"
       >
-        {`${activity === 'Edited' ? activity : 'Created'} ${getReadableDate(
-          lastModTimeStamp ?? '',
-        )} ago`}
+        {`${
+          activity === 'Edited' ? t('Edited') : t('Created')
+        } ${getReadableDate(lastModTimeStamp ?? '')} ${t('ago')}`}
       </Text>
     </HStack>
   )

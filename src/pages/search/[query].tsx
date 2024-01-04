@@ -69,9 +69,8 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
   })
   const categoryList = categories.map((category) => {
     return (
-      <Link href={`/categories/${category.id}`}>
+      <Link href={`/categories/${category.id}`} key={category.id}>
         <Flex
-          key={category.id}
           bgColor="cardBg"
           justifyContent="flex-start"
           borderWidth="1px"

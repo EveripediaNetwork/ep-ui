@@ -2,6 +2,7 @@ import { ActivityCardTopProps } from '@/types/ActivityDataType'
 import { Flex, HStack, Heading, Text, Link } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const getCategoryAbbr = (id: string) => {
   switch (id) {
@@ -25,6 +26,7 @@ const getCategoryAbbr = (id: string) => {
 }
 
 const ActivityCardTop = (props: ActivityCardTopProps) => {
+  const { t } = useTranslation('history')
   const { title, activity, category, link } = props
   const router = useRouter()
   return (
@@ -57,7 +59,7 @@ const ActivityCardTop = (props: ActivityCardTopProps) => {
           {title}
         </Heading>
         <Text fontSize="xs" color="brandLinkColor" fontWeight="medium">
-          {activity}
+          {t(activity)}
         </Text>
       </HStack>
       {/* We need to show category abbreviations on mobile,

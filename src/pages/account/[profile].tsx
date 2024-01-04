@@ -18,6 +18,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { Activity } from '@/types/ActivityDataType'
 import { ITEM_PER_PAGE } from '@/data/Constants'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface ProfileProps {
   profileData: ProfileData
@@ -76,6 +77,10 @@ Profile.footer = false
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const userIdentifier = context.params?.profile as string
+  const locale = context.locale
+  const props = {
+    ...(await serverSideTranslations(locale ?? 'en', ['account', 'common'])),
+  }
 
   // Redirect if /accounts/settings is hit
   if (userIdentifier === 'settings') {
@@ -84,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: '/settings/account',
         permanent: false,
       },
+      props,
     }
   }
 
@@ -112,6 +118,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         profileData: profileData.data || null,
         createdWikis: createdWikiData.data || [],
         editedWikis: editedWikiData.data || [],
+        ...props,
       },
     }
   }
@@ -127,6 +134,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           destination: `/account/${resolvedAddress}`,
           permanent: false,
         },
+        props,
       }
     }
   }
@@ -142,6 +150,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: `/account/${address}`,
         permanent: false,
       },
+      props,
     }
   }
 
@@ -151,6 +160,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       destination: '/404',
       permanent: false,
     },
+    props,
   }
 }
 

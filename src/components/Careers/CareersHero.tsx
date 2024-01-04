@@ -38,9 +38,7 @@ const CareersHero = ({
             fontSize={{ '2xl': '2xl', md: 'xl', base: 'md' }}
             px={{ base: '3', md: 0 }}
           >
-            Do you wish to join our great team? we&apos;re looking for
-            Intellectual Individuals who are committed to doing well by doing
-            good. here is the list of our open positions.
+            {description}
           </Text>
         )}
       </Flex>

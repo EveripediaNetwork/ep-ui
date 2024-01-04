@@ -11,6 +11,8 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 import { getActivityMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 interface HistoryPageProps {
   wikiHistory: Activity[]
@@ -18,15 +20,16 @@ interface HistoryPageProps {
 }
 
 const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
+  const { t } = useTranslation('history')
   const isConnected = typeof getUserAddressFromCache() === 'string'
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (
     <Box bgColor="pageBg" mt={-3} pt={8}>
       <Box w="min(90%, 1100px)" mx="auto" mt={{ base: '10', lg: '16' }}>
-        <Heading textAlign="center">Wiki History</Heading>
+        <Heading textAlign="center">{t('wikiHistory')}</Heading>
         <Text textAlign="center" mt={4} mb={8} color="linkColor">
-          A timeline of changes for this wiki
+          {t('wikiHistoryDescription')}
         </Text>
         {wikiHistory && wikiHistory?.length <= 1 && (
           <NoHistoryView wiki={wiki} />
@@ -135,6 +138,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       wikiHistory,
       wiki,
+      ...(await serverSideTranslations(context.locale ?? 'en', [
+        'common',
+        'history',
+        'footer',
+      ])),
     },
   }
 }

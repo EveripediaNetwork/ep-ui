@@ -1,13 +1,19 @@
 import React from 'react'
 import { Heading, VStack, Text, SimpleGrid, Box } from '@chakra-ui/react'
 import { MdOutlinePeopleAlt, MdOutlinePublic } from 'react-icons/md'
-import { useTranslation } from 'react-i18next'
-import { OurMission } from '@/data/OurMissionData'
+import { useTranslation } from 'next-i18next'
 import AboutFeaturesCard from './AboutFeaturesCard'
 import IQgreyLogo from './logos/iq.svg'
 
 const AboutFeatures = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
+  const OurMission = [
+    t('OurMission1'),
+    t('OurMission2'),
+    t('OurMission3'),
+    t('OurMission4'),
+  ]
+
   return (
     <VStack
       spacing={8}

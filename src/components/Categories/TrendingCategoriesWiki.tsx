@@ -4,6 +4,7 @@ import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
 import { TranformCategoryTitle } from '@/utils/DataTransform/changeCategoryTitle'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingCategoryCard from './TrendingCategoryCard'
+import { useTranslation } from 'next-i18next'
 
 const TrendingCategoriesWiki = ({
   categoryType,
@@ -14,6 +15,7 @@ const TrendingCategoriesWiki = ({
   trending: Wiki[]
   newWikis: Wiki[]
 }) => {
+  const { t } = useTranslation('category')
   return (
     <SimpleGrid
       width={{ base: '90%', lg: 'min(80%, 1300px)' }}
@@ -24,12 +26,16 @@ const TrendingCategoriesWiki = ({
     >
       <TrendingCategoryCard
         icon={RiBarChartFill}
-        title={`Popular ${TranformCategoryTitle(categoryType)} Wikis`}
+        title={`${t('categoryPopular')} ${TranformCategoryTitle(
+          categoryType,
+        )} ${t('categoryWikis')}`}
         wikis={trending}
       />
       <TrendingCategoryCard
         icon={RiTimeFill}
-        title={`New ${TranformCategoryTitle(categoryType)} Wikis`}
+        title={`${t('categoryNew')} ${TranformCategoryTitle(categoryType)} ${t(
+          'categoryWikis',
+        )}`}
         wikis={newWikis}
       />
     </SimpleGrid>

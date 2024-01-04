@@ -23,11 +23,12 @@ import {
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import CategoryHero from '@/components/Categories/CategoryHero'
 import TrendingCategoriesWiki from '@/components/Categories/TrendingCategoriesWiki'
 import { getDateRange } from '@/utils/HomepageUtils/getDate'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const CATEGORY_DATE_RANGE = 3
 const CATEGORY_AMOUNT = 5
@@ -67,17 +68,16 @@ const CategoryPage = ({
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-  const { t } = useTranslation()
-
+  const { t } = useTranslation(['category', 'common'])
   return (
     <>
       {categoryData && (
         <NextSeo
-          title={categoryData.title}
-          description={categoryData.description}
+          title={t(`category${categoryData.id}Title`)}
+          description={t(`category${categoryData.id}Description`)}
           openGraph={{
-            title: categoryData.title,
-            description: categoryData.description,
+            title: t(`category${categoryData.id}Title`),
+            description: t(`category${categoryData.id}Description`),
             images: [
               {
                 url: `/images/categories/${categoryData.id}.jpg`,
@@ -89,12 +89,12 @@ const CategoryPage = ({
       <Box mt="-3" bgColor="pageBg" pb={12}>
         <CategoryHero
           id={categoryData?.id}
-          description={categoryData?.description}
-          title={categoryData?.title}
+          description={t(`category${categoryData.id}Description`)}
+          title={t(`category${categoryData.id}Title`)}
         />
         {(trending.length > 0 || newWikis.length > 0) && (
           <TrendingCategoriesWiki
-            categoryType={categoryData?.title}
+            categoryType={t(`category${categoryData.id}Title`)}
             trending={trending}
             newWikis={newWikis}
           />
@@ -151,8 +151,11 @@ const CategoryPage = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const categoryId: string = context.params?.category as string
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  locale,
+}) => {
+  const categoryId: string = params?.category as string
   const { startDay, endDay } = getDateRange({ dayRange: CATEGORY_DATE_RANGE })
 
   const [
@@ -189,6 +192,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['category', 'common'])),
       categoryData: categoryData.data || [],
       wikis: wikisByCategory.data || [],
       trending: trendingWikisInCategory.data?.wikisPerVisits || [],

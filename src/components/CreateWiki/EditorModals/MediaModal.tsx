@@ -32,6 +32,7 @@ import {
 import { ImageInput, Dropzone } from '@/components/Elements'
 import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
+import { useTranslation } from 'next-i18next'
 
 const MAX_MEDIA = 12
 
@@ -40,6 +41,7 @@ const MediaModal = ({
   isOpen = false,
   ...rest
 }: Partial<ModalProps>) => {
+  const { t } = useTranslation('wiki')
   const wiki = useAppSelector((state) => state.wiki)
   const dispatch = useAppDispatch()
   const toast = useToast()
@@ -240,7 +242,9 @@ const MediaModal = ({
             <Flex direction="column" gap={5} w="full" borderRadius="7px" py={3}>
               <Dropzone
                 dropZoneActions={dropZoneActions}
-                dropzonePlaceHolderTitle={`Drag and drop an ${dropZoneActions.textType} or click to select.`}
+                dropzonePlaceHolderTitle={t(
+                  `${dropZoneActions.textType}Placeholder`,
+                )}
                 dropzonePlaceHolderSize="(10mb max)"
                 aspectRatio={11 / 3}
                 mediaModal

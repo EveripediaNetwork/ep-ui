@@ -37,6 +37,7 @@ import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -234,7 +235,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     await Promise.all(store.dispatch(wikiApi.util.getRunningQueriesThunk()))
   }
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(context.locale ?? 'en', [
+        'common',
+        'wiki',
+      ])),
+    },
   }
 }
 

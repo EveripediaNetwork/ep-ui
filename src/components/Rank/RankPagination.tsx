@@ -4,10 +4,12 @@ import { Button, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
+import { useTranslation } from 'next-i18next'
 
 const RankPagination = (props: RankpaginationProps) => {
   const router = useRouter()
   const { query, pathname } = router
+  const { t } = useTranslation('rank')
 
   const {
     onPageChange,
@@ -79,7 +81,7 @@ const RankPagination = (props: RankpaginationProps) => {
         disabled={currentPage === 1}
         onClick={() => handlePageChange(-1)}
       >
-        Prev
+        {t('Previous')}
       </Button>
       <Flex gap="3">
         {paginationRange.map((pageNumber, index) =>
@@ -138,7 +140,7 @@ const RankPagination = (props: RankpaginationProps) => {
         disabled={currentPage === lastPage}
         onClick={() => handlePageChange(1)}
       >
-        Next
+        {t('Next')}
       </Button>
     </Flex>
   )
