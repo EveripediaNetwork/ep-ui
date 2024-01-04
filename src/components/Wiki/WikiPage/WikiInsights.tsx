@@ -19,8 +19,9 @@ import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
 import ContentFeedback from './InsightComponents/ContentFeedback'
+import BrainBot from './InsightComponents/BrainBot/BrainBot'
 
-interface WikiInsightsProps {
+export interface WikiInsightsProps {
   wiki: Wiki
   ipfs?: string
   dateTime?: string
@@ -100,6 +101,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               imgSrc={getWikiImageUrl(wiki.images)}
               views={wiki.views}
             />
+            <BrainBot wiki={wiki} />
             <ProfileSummary wiki={wiki} />
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <ContentFeedback
