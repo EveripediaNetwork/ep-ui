@@ -18,7 +18,7 @@ const ChatBot = ({
 }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
-    useAppSelector((state) => state.message)
+    useAppSelector(state => state.message)
 
   useScrollToBottom(chatsRef, [messages, currentHumanMessage])
 
@@ -90,7 +90,7 @@ const ChatBot = ({
         h="full"
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
-        <Text fontSize={'8px'}>Powered by IQ & BrainDAO</Text>
+        <Text fontSize={'8px'}>Powered by IQ GPT</Text>
       </Link>
     </Box>
   )

@@ -14,7 +14,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
 
   return (
     <>
-      {open ? (
+      {open || true ? (
         <ChatBot wiki={wiki} setOpen={setOpen} />
       ) : (
         <Box
@@ -55,7 +55,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               textAlign={'center'}
               maxW={'300px'}
             >
-              Get more insights on the article content with IQ brainbot
+              Get more insights on the article content with IQ Chatbot
             </Text>
           </Box>
 
