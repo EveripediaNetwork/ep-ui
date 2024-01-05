@@ -59,7 +59,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
         fontSize={'14px'}
         textAlign={'center'}
       >
-        Hi There! I’m the BrainBot. Here are some cool stuff i can do for you.
+        Hi There! Here are some cool stuff i can do for you.
       </Text>
       <VStack marginTop={'12px'}>
         <BrainBotSuggestion
