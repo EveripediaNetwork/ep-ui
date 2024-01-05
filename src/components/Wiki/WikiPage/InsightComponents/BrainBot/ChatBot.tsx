@@ -54,7 +54,7 @@ const ChatBot = ({
           >
             <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
-          <Text>IQ GPT Chatbot</Text>
+          <Text>IQ GPT Chat</Text>
         </Box>
         <RiSubtractFill
           size={'24px'}
@@ -90,7 +90,7 @@ const ChatBot = ({
         h="full"
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
-        <Text fontSize={'8px'}>Powered by IQ & BrainDAO</Text>
+        <Text fontSize={'8px'}>Powered by IQGPT.com</Text>
       </Link>
     </Box>
   )
