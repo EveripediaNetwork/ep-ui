@@ -66,8 +66,6 @@ export function middleware(req: NextRequest) {
         (language) => language.locale === transformedLocale,
       )
 
-      console.log(isLocaleSupported)
-
       if (!isLocaleSupported) {
         const defaultLocale =
           languageData.find((lang) => lang.default)?.locale || 'en'
