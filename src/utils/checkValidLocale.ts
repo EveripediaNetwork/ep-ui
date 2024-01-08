@@ -13,3 +13,7 @@ export const isValidLocale = (locale: string) => {
     return false
   }
 }
+
+export const revertToKr = (locale: string) => {
+  return locale === 'ko' ? 'kr' : locale
+}

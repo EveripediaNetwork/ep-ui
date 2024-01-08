@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isValidLocale } from './utils/checkValidLocale'
+import { isValidLocale, revertToKr } from './utils/checkValidLocale'
 import { languageData } from './data/LanguageData'
 
 export function middleware(req: NextRequest) {
@@ -16,15 +16,42 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
+  const preferredLanguage = req.headers
+    .get('accept-language')
+    ?.split(',')[0]
+    .split('-')[0]
+
   const pathname = req.nextUrl.pathname
   const segments = pathname.split('/').filter(Boolean)
   const potentialLocale = segments[0]
-
   const isLocaleValid = isValidLocale(potentialLocale)
 
-  if (isLocaleValid) {
+  if (!potentialLocale) {
+    if (isLocaleValid) {
+      const isLocaleSupported = languageData.find(
+        (language) => language.locale === potentialLocale,
+      )
+
+      if (!isLocaleSupported) {
+        const defaultLocale =
+          languageData.find((lang) => lang.default)?.locale || 'en'
+
+        const updatedPathname = pathname.replace(
+          `/${potentialLocale}`,
+          `/${defaultLocale}`,
+        )
+
+        const urlWithLocale = req.nextUrl.clone()
+        urlWithLocale.pathname = updatedPathname
+
+        return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+      }
+    }
+  } else {
+    const transformedLocale = revertToKr(preferredLanguage as string)
+
     const isLocaleSupported = languageData.find(
-      (language) => language.locale === potentialLocale,
+      (language) => language.locale === transformedLocale,
     )
 
     if (!isLocaleSupported) {
@@ -36,6 +63,12 @@ export function middleware(req: NextRequest) {
         `/${defaultLocale}`,
       )
 
+      const urlWithLocale = req.nextUrl.clone()
+      urlWithLocale.pathname = updatedPathname
+
+      return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+    } else {
+      const updatedPathname = `/${transformedLocale}`
       const urlWithLocale = req.nextUrl.clone()
       urlWithLocale.pathname = updatedPathname
 
