@@ -16,17 +16,26 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
+  if (
+    req.nextUrl.pathname.startsWith('/api/') ||
+    req.nextUrl.pathname.startsWith('/_next/') ||
+    req.nextUrl.pathname.startsWith('/images/') ||
+    req.nextUrl.pathname.endsWith('.json')
+  ) {
+    return NextResponse.next()
+  }
+
   const preferredLanguage = req.headers
     .get('accept-language')
     ?.split(',')[0]
-    .split('-')[0]
+    .split('-')[0] as string
 
   const pathname = req.nextUrl.pathname
   const segments = pathname.split('/').filter(Boolean)
   const potentialLocale = segments[0]
   const isLocaleValid = isValidLocale(potentialLocale)
 
-  if (!potentialLocale) {
+  if (potentialLocale) {
     if (isLocaleValid) {
       const isLocaleSupported = languageData.find(
         (language) => language.locale === potentialLocale,
@@ -48,31 +57,37 @@ export function middleware(req: NextRequest) {
       }
     }
   } else {
-    const transformedLocale = revertToKr(preferredLanguage as string)
+    const isValidPreferedLocale = isValidLocale(preferredLanguage)
 
-    const isLocaleSupported = languageData.find(
-      (language) => language.locale === transformedLocale,
-    )
+    if (isValidPreferedLocale) {
+      const transformedLocale = revertToKr(preferredLanguage)
 
-    if (!isLocaleSupported) {
-      const defaultLocale =
-        languageData.find((lang) => lang.default)?.locale || 'en'
-
-      const updatedPathname = pathname.replace(
-        `/${potentialLocale}`,
-        `/${defaultLocale}`,
+      const isLocaleSupported = languageData.find(
+        (language) => language.locale === transformedLocale,
       )
 
-      const urlWithLocale = req.nextUrl.clone()
-      urlWithLocale.pathname = updatedPathname
+      console.log(isLocaleSupported)
 
-      return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
-    } else {
-      const updatedPathname = `/${transformedLocale}`
-      const urlWithLocale = req.nextUrl.clone()
-      urlWithLocale.pathname = updatedPathname
+      if (!isLocaleSupported) {
+        const defaultLocale =
+          languageData.find((lang) => lang.default)?.locale || 'en'
 
-      return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+        const updatedPathname = pathname.replace(
+          `/${potentialLocale}`,
+          `/${defaultLocale}`,
+        )
+
+        const urlWithLocale = req.nextUrl.clone()
+        urlWithLocale.pathname = updatedPathname
+
+        return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+      } else {
+        const updatedPathname = `/${transformedLocale}`
+        const urlWithLocale = req.nextUrl.clone()
+        urlWithLocale.pathname = updatedPathname
+
+        return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+      }
     }
   }
 
