@@ -80,5 +80,6 @@
   "chatBotIntroMessage": "안녕하세요! 여러분을 위해 할 수 있는 멋진 일이 있어요.",
   "chatBotSuggestion1": "암호화폐에 대해 물어봐주세요",
   "queryAdditionalInfo": "이 페이지에 대한 추가 정보 생성",
-  "queryContentPageSummary": "콘텐츠/페이지 요약."
+  "queryContentPageSummary": "콘텐츠/페이지 요약.",
+  "chatBotInputPlaceholder": "아무거나 물어봐주세요"
 }

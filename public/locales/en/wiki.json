@@ -80,5 +80,6 @@
   "chatBotIntroMessage": "Hi There! Here are some cool stuff i can do for you.",
   "chatBotSuggestion1": "Ask me about crypto",
   "queryAdditionalInfo": "Generate additional info for this page",
-  "queryContentPageSummary": "Content/page summary."
+  "queryContentPageSummary": "Content/page summary.",
+  "chatBotInputPlaceholder": "Ask me anything"
 }
