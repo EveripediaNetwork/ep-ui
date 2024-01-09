@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { isValidLocale, revertToKr } from './utils/checkValidLocale'
 import {
   getPreferredLanguage,
-  isLocaleSupported,
-  redirectStaticFiles,
-  redirectToDefaultLocale,
+  shouldNotRedirect,
 } from './utils/localeHelperFunctions'
 
 export function middleware(req: NextRequest) {
   const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true'
+  const defaultLocale = 'en' // Set default locale
 
   // Check for maintenance mode first
   if (
@@ -21,49 +20,46 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
-  // redirect for static files
-  redirectStaticFiles(req)
+  // Skip redirection for static assets and API routes
+  if (shouldNotRedirect(req.nextUrl.pathname)) {
+    return NextResponse.next()
+  }
 
-  //TODO - checks
-  /**
-   * 1) Check if a locale exists in the url, if the locale is not valid redirect to default (en) language
-   * 2) If locale is valid and supported, do nothing return the next response without redirecting
-   * 3) If there's no locale in url, get preferred locale, if there's none redirect to default locale
-   * 4) If there's a preferred locale and it's not supported in language file, redirect to default
-   * 5) If there's a preferred locale and it's supported, redirect to it ensure to update NEXT_LOCALE cookie with the preferred cookie
-   * 6) if there's no preferred and locale in url, redirect to default
-   */
+  // Extract locale from URL
+  const pathnameParts = req.nextUrl.pathname.split('/')
+  let urlLocale = pathnameParts[1]
 
-  const pathname = req.nextUrl.pathname.split('/').filter(Boolean)
-  const potentialLocale = pathname[0]
+  // Check if locale is in URL and valid
+  if (urlLocale && isValidLocale(urlLocale)) {
+    // If 'ko', revert to 'kr'
+    urlLocale = revertToKr(urlLocale)
+    // Set NEXT_LOCALE cookie and return next response
+    const response = NextResponse.next()
+    response.cookies.set('NEXT_LOCALE', urlLocale)
+    return response
+  }
 
-  if (potentialLocale) {
-    const isLocaleValid = isValidLocale(potentialLocale)
-    if (isLocaleValid && !isLocaleSupported(potentialLocale)) {
-      redirectToDefaultLocale(req)
-      return
-    }
-  } else {
-    const preferredLanguage = getPreferredLanguage(req)
+  // Get preferred locale from cookie or headers
+  const preferredLocale = getPreferredLanguage(req)
 
-    if (!preferredLanguage) {
-      redirectToDefaultLocale(req)
-      return
-    }
+  // Check if preferred locale is valid and different from current URL locale
+  if (
+    preferredLocale &&
+    isValidLocale(preferredLocale) &&
+    preferredLocale !== urlLocale
+  ) {
+    const url = req.nextUrl.clone()
+    url.pathname = `/${revertToKr(preferredLocale)}${url.pathname.substring(
+      urlLocale ? urlLocale.length + 1 : 0,
+    )}`
+    return NextResponse.redirect(url.toString(), { status: 302 })
+  }
 
-    const isValidPreferedLocale = isValidLocale(preferredLanguage)
-    const transformedLocale = revertToKr(preferredLanguage)
-
-    if (isValidPreferedLocale && !isLocaleSupported(transformedLocale)) {
-      redirectToDefaultLocale(req)
-      return
-    } else {
-      const updatedPathname = `/${transformedLocale}`
-      const urlWithLocale = req.nextUrl.clone()
-      urlWithLocale.pathname = updatedPathname
-
-      return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
-    }
+  // Redirect to default locale if no valid locale in URL
+  if (!urlLocale || !isValidLocale(urlLocale)) {
+    const url = req.nextUrl.clone()
+    url.pathname = `/${defaultLocale}${req.nextUrl.pathname}`
+    return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
   return NextResponse.next()

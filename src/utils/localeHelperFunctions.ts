@@ -1,24 +1,12 @@
-import { languageData } from '@/data/LanguageData'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
-export const redirectStaticFiles = (req: NextRequest) => {
-  if (
-    req.nextUrl.pathname.startsWith('/api/') ||
-    req.nextUrl.pathname.startsWith('/_next/') ||
-    req.nextUrl.pathname.startsWith('/images/') ||
-    req.nextUrl.pathname.endsWith('.json')
-  ) {
-    return NextResponse.next()
-  }
-}
-
-export const redirectToDefaultLocale = (req: NextRequest) => {
-  const defaultLocale =
-    languageData.find((lang) => lang.default)?.locale ?? 'en'
-  const pathname = req.nextUrl.pathname.replace(/^\/[^/]+/, `/${defaultLocale}`)
-  const urlWithLocale = req.nextUrl.clone()
-  urlWithLocale.pathname = pathname
-  return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+export const shouldNotRedirect = (pathname: string) => {
+  return (
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/images/') ||
+    pathname.endsWith('.json')
+  )
 }
 
 export const getPreferredLanguage = (req: NextRequest) => {
@@ -36,6 +24,3 @@ export const getPreferredLanguage = (req: NextRequest) => {
   languages.sort((a, b) => b.priority - a.priority)
   return languages.length > 0 ? languages[0].locale : null
 }
-
-export const isLocaleSupported = (locale: string) =>
-  languageData.find((language) => language.locale === locale)
