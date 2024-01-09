@@ -43,7 +43,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           name="message"
           variant={'unstyled'}
           fontSize={'14px'}
-          placeholder="Ask the brainbot anything"
+          placeholder="Ask me anything"
           borderRadius={'0'}
           paddingInline={'4px'}
           color={'gray.500'}
