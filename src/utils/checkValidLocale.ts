@@ -1,4 +1,4 @@
-export const isValidLocale = (locale?: string) => {
+export const isValidLocale = (locale: string) => {
   if (!locale) return false
 
   // Create a new Intl.DateTimeFormat object with the given locale
@@ -14,8 +14,4 @@ export const isValidLocale = (locale?: string) => {
 
 export const revertToKr = (locale: string) => {
   return locale === 'ko' ? 'kr' : locale
-}
-
-export const revertToKo = (locale: string) => {
-  return locale === 'kr' ? 'ko' : locale
 }
