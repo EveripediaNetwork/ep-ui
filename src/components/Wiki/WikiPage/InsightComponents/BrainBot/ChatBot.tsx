@@ -8,6 +8,7 @@ import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import { useScrollToBottom } from '@/hooks/useScrollToBottom'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
+import { useTranslation } from 'next-i18next'
 
 const ChatBot = ({
   wiki,
@@ -16,6 +17,7 @@ const ChatBot = ({
   wiki: Wiki
   setOpen: (state: boolean) => void
 }) => {
+  const { t } = useTranslation('wiki')
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
     useAppSelector((state) => state.message)
@@ -54,7 +56,7 @@ const ChatBot = ({
           >
             <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
-          <Text>IQ GPT Chat</Text>
+          <Text>{t('chatBotTitle')}</Text>
         </Box>
         <RiSubtractFill
           size={'24px'}
@@ -90,7 +92,7 @@ const ChatBot = ({
         h="full"
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
-        <Text fontSize={'8px'}>Powered by IQGPT.com</Text>
+        <Text fontSize={'8px'}>{t('chatBotFooter')}</Text>
       </Link>
     </Box>
   )
