@@ -1,6 +1,5 @@
 import { Box, Link, Text } from '@chakra-ui/react'
 import React, { useRef } from 'react'
-import { RiSubtractFill } from 'react-icons/ri'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
@@ -9,13 +8,7 @@ import { useAppSelector } from '@/store/hook'
 import { useScrollToBottom } from '@/hooks/useScrollToBottom'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
-const ChatBot = ({
-  wiki,
-  setOpen,
-}: {
-  wiki: Wiki
-  setOpen: (state: boolean) => void
-}) => {
+const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
     useAppSelector(state => state.message)
@@ -54,13 +47,8 @@ const ChatBot = ({
           >
             <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
-          <Text>IQ GPT Chatbot</Text>
+          <Text>IQ GPT Chat</Text>
         </Box>
-        <RiSubtractFill
-          size={'24px'}
-          onClick={() => setOpen(false)}
-          style={{ flexShrink: 0, cursor: 'pointer' }}
-        />
       </Box>
       <Box
         h={'250px'}
