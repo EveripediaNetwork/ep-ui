@@ -55,7 +55,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               textAlign={'center'}
               maxW={'300px'}
             >
-              Get more insights on the article content with IQ Chatbot
+              Get more insights on the article content with IQ GPT Chat
             </Text>
           </Box>
 
