@@ -11,7 +11,7 @@ import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const chatsRef = useRef<HTMLDivElement | null>(null)
   const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
-    useAppSelector(state => state.message)
+    useAppSelector((state) => state.message)
 
   useScrollToBottom(chatsRef, [messages, currentHumanMessage])
 
