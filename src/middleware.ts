@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isValidLocale, revertToKr, revertToKo } from './utils/checkValidLocale'
+import { isValidLocale, revertToKr } from './utils/checkValidLocale'
 import { languageData } from './data/LanguageData'
 
 export function middleware(req: NextRequest) {
@@ -25,47 +25,61 @@ export function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const preferredLocale = req.headers
+  const preferredLanguage = req.headers
     .get('accept-language')
     ?.split(',')[0]
     .split('-')[0] as string
 
-  const localeRegex = /\/(\w{2})\/|\/(\w{2})$/
-  const match = req.nextUrl.href.match(localeRegex)
-  console.log('match: ', match)
-  const potentialLocale = match ? match[1] ?? match[2] : undefined
-  console.log('Potential locale: ', potentialLocale)
-  const currentLocale = req.nextUrl.locale
-  console.log('Locale: ', currentLocale)
+  const pathname = req.nextUrl.pathname
+  const segments = pathname.split('/').filter(Boolean)
+  const potentialLocale = segments[0]
+  const isLocaleValid = isValidLocale(potentialLocale)
 
-  if (
-    !isValidLocale(revertToKo(potentialLocale ?? '')) &&
-    currentLocale !== preferredLocale
-  ) {
-    const updatedPathname =
-      `/${revertToKr(preferredLocale)}` + req.nextUrl.pathname
-    const newUrl = req.nextUrl.clone()
-
-    newUrl.pathname = updatedPathname
-    console.log('New url: ', newUrl)
-    return NextResponse.redirect(newUrl.toString(), { status: 302 })
-  } else {
-    const isLocaleSupported = languageData.find(
-      (language) => language.locale === potentialLocale,
-    )
-
-    if (!isLocaleSupported) {
-      const defaultLocalePathname = req.nextUrl.pathname.replace(
-        potentialLocale ?? '',
-        '',
+  if (potentialLocale) {
+    if (isLocaleValid) {
+      const isLocaleSupported = languageData.find(
+        (language) => language.locale === potentialLocale,
       )
-      const urlWithDefaultLocale = req.nextUrl.clone()
 
-      urlWithDefaultLocale.pathname = defaultLocalePathname
-      console.log('New url: ', urlWithDefaultLocale)
-      return NextResponse.redirect(urlWithDefaultLocale.toString(), {
-        status: 302,
-      })
+      if (!isLocaleSupported) {
+        const defaultLocale =
+          languageData.find((lang) => lang.default)?.locale ?? 'en'
+
+        const updatedPathname = pathname.replace(
+          `/${potentialLocale}`,
+          `/${defaultLocale}`,
+        )
+
+        const urlWithLocale = req.nextUrl.clone()
+        urlWithLocale.pathname = updatedPathname
+
+        return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+      }
+    }
+  } else {
+    const isValidPreferedLocale = isValidLocale(preferredLanguage)
+
+    if (isValidPreferedLocale) {
+      const transformedLocale = revertToKr(preferredLanguage)
+
+      const isLocaleSupported = languageData.find(
+        (language) => language.locale === transformedLocale,
+      )
+
+      if (!isLocaleSupported) {
+        const defaultLocale =
+          languageData.find((lang) => lang.default)?.locale ?? 'en'
+
+        const updatedPathname = pathname.replace(
+          `/${potentialLocale}`,
+          `/${defaultLocale}`,
+        )
+
+        const urlWithLocale = req.nextUrl.clone()
+        urlWithLocale.pathname = updatedPathname
+
+        return NextResponse.redirect(urlWithLocale.toString(), { status: 302 })
+      }
     }
   }
 
