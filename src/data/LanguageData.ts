@@ -7,7 +7,7 @@ export const languageData = [
   },
   {
     name: 'Korean',
-    locale: 'kr',
+    locale: 'ko',
     currency: 'krw',
   },
 ]
