@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
 
-const revertToKr = (locale: string) => (locale === 'ko' ? 'kr' : locale)
-
 export function middleware(request: NextRequest) {
   const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true'
 
@@ -17,7 +15,7 @@ export function middleware(request: NextRequest) {
 
   // List of accepted locales
   const defaultAcceptedLocale = 'en'
-  const acceptedLocales = ['en', 'kr']
+  const acceptedLocales = ['en', 'ko']
   const userAcceptedLocales =
     request.headers
       .get('Accept-Language')
@@ -26,7 +24,7 @@ export function middleware(request: NextRequest) {
 
   // Find the first locale that matches the user's accepted locales
   const matchedLocale = userAcceptedLocales.find((lang) =>
-    acceptedLocales.includes(revertToKr(lang)),
+    acceptedLocales.includes(lang),
   )
 
   // Detect if the current path already has a locale prefix
@@ -37,7 +35,11 @@ export function middleware(request: NextRequest) {
   )
 
   // Detect if the current path is an asset since they are not dependent on locale.
-  const isAsset = currentPath.startsWith('/_next')
+  const isAsset =
+    currentPath.startsWith('/_next') ||
+    currentPath.startsWith('/images') ||
+    currentPath.startsWith('/api') ||
+    currentPath.endsWith('.json')
 
   // Detect if the userAcceptedLocale is already defaultAcceptedLocale
   const userPreferDefault = matchedLocale === defaultAcceptedLocale
