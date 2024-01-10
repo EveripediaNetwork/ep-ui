@@ -9,9 +9,9 @@ import { setMessages } from '@/store/slices/chatbot-slice'
 
 const BotMessages = () => {
   const { currentHumanMessage, messages, currentAIMessage } = useAppSelector(
-    state => state.message,
+    (state) => state.message,
   )
-  const { isLoading, isError } = useAppSelector(state => state.stream)
+  const { isLoading, isError } = useAppSelector((state) => state.stream)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const BotMessages = () => {
           key={'intermediate-ai'}
         />
       )}
-      {messages?.map(message => {
+      {messages?.map((message) => {
         return (
           <React.Fragment key={message.id}>
             <ChatCard content={message.search} alias={'HUMAN'} />
