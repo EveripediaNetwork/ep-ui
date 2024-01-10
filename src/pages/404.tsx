@@ -9,6 +9,8 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const ErrorPage = () => {
   const router = useRouter()
@@ -60,6 +62,14 @@ const ErrorPage = () => {
       </Stack>
     </Container>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  }
 }
 
 export default ErrorPage
