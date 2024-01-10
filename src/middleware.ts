@@ -1,12 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
 
-const revertToKr = (locale: string) => {
-  const revertedLocale = locale === 'ko' ? 'kr' : locale
-
-  console.log(revertedLocale) // it reverts successfully
-
-  return revertedLocale
-}
+const revertToKr = (locale: string) => (locale === 'ko' ? 'kr' : locale)
 
 export function middleware(request: NextRequest) {
   const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true'
