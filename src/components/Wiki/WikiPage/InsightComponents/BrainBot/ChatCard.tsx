@@ -29,7 +29,7 @@ const _paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
-  words.forEach((word) => {
+  words.forEach(word => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
@@ -45,7 +45,7 @@ const _paginateContent = (text: string, charsPerPage: number) => {
   return pages
 }
 
-const usePaginateContent = (content: string) => {
+const _usePaginateContent = (content: string) => {
   const [pages, setPages] = useState<string[]>([])
 
   useEffect(() => {
@@ -102,12 +102,13 @@ const usePaginateContent = (content: string) => {
 }
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
-  const { currentAIMessage } = useAppSelector((state) => state.message)
-  const markdownTableRegex = /\|.*\|.*\|/
+  const { currentAIMessage } = useAppSelector(state => state.message)
+  const _markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  const pages = markdownTableRegex.test(content)
-    ? content.split('\n\n')
-    : usePaginateContent(content)
+  // const pages = markdownTableRegex.test(content)
+  //   ? content.split('\n\n')
+  //   : paginateContent(content, 350)
+  const pages = content.split('\n\n')
 
   const [answerSource] = answerSources || []
 
@@ -124,7 +125,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
       <div className="mkd-wrapper">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          children={content}
+          children={pages[currentPageIndex]}
           components={{
             p(props) {
               const { children, ...rest } = props
@@ -143,11 +144,13 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
           }}
         />
       </div>
-      {alias === 'AI' && !currentAIMessage && (
-        <ChatSources answerSource={answerSource} />
-      )}
+      {alias === 'AI' &&
+        !currentAIMessage &&
+        currentPageIndex === pages.length - 1 && (
+          <ChatSources answerSource={answerSource} />
+        )}
       <Box display={'flex'} gap={'8px'} mt={'8px'} justifyContent={'flex-end'}>
-        {currentPageIndex > 0 && false && (
+        {currentPageIndex > 0 && (
           <chakra.button
             bgColor={'gray.100'}
             borderRadius={'2px'}
@@ -161,7 +164,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
           </chakra.button>
         )}
 
-        {currentPageIndex < pages.length - 1 && false && (
+        {currentPageIndex < pages.length - 1 && (
           <chakra.button
             bgColor={'gray.100'}
             borderRadius={'2px'}
@@ -218,8 +221,8 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
         gap={'4px'}
         mt={
           content ===
-          'I Can assist you with any questions about crypto. What would you like to ask?'
-            ? '24px'
+          'I can assist you with any questions about crypto. What would you like to ask?'
+            ? '36px'
             : '0px'
         }
         width={alias === 'AI' ? 'full' : ''}

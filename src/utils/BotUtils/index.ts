@@ -11,21 +11,22 @@ export const queryMapper = (query: string, wiki: Wiki) => {
 
   switch (query) {
     case QueryType.AdditionalInfo:
-      newQuery = `${wiki.content} 
+      newQuery = `
+      Generate an additional information for the content below?  
 
-          Generate an additional information for the content above?        
+      ${wiki.content}       
         `
       break
     case QueryType.ContentPageSummary:
-      newQuery = `${wiki.content} 
+      newQuery = ` Summarize the content below 
 
-          Summarize the content above?        
+         ${wiki.content}        
         `
       break
     case QueryType.ExplainLikeFive:
-      newQuery = `${wiki.content} 
+      newQuery = `Explain the content below to me like I am a 5yr old?  
 
-          Explain the content above to me like I am a 5yr old?        
+            ${wiki.content}     
         `
       break
 
