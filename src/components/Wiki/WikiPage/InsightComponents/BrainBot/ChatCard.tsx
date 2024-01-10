@@ -29,7 +29,7 @@ const _paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
-  words.forEach((word) => {
+  words.forEach(word => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
@@ -102,7 +102,8 @@ const _usePaginateContent = (content: string) => {
 }
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
-  const { currentAIMessage } = useAppSelector((state) => state.message)
+  const { currentAIMessage } = useAppSelector(state => state.message)
+  const { isError } = useAppSelector(state => state.stream)
   const _markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   // const pages = markdownTableRegex.test(content)
@@ -146,6 +147,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
       </div>
       {alias === 'AI' &&
         !currentAIMessage &&
+        !isError &&
         currentPageIndex === pages.length - 1 && (
           <ChatSources answerSource={answerSource} />
         )}
