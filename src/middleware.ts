@@ -35,8 +35,6 @@ export function middleware(request: NextRequest) {
     currentPath.startsWith(`/${locale}`),
   )
 
-  console.log(currentUrl.toString())
-
   // Detect if the current path is an asset since they are not dependent on locale.
   const isAsset = currentPath.startsWith('/_next')
 
