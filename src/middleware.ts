@@ -1,9 +1,4 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { isValidLocale, revertToKr } from './utils/checkValidLocale'
-import {
-  getPreferredLanguage,
-  shouldNotRedirect,
-} from './utils/localeHelperFunctions'
 
 export function middleware(req: NextRequest) {
   const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true'
@@ -20,47 +15,36 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url.toString(), { status: 302 })
   }
 
-  // Skip redirection for static assets and API routes
-  if (shouldNotRedirect(req.nextUrl.pathname)) {
-    return NextResponse.next()
-  }
+// List of accepted locales
+	const acceptedLocales = ["en", "ko"];
+	const userAcceptedLocales =
+		request.headers
+			.get("Accept-Language")
+			?.split(",")
+			.map((lang) => lang.split(";")[0].trim()) ?? [];
 
-  // Extract locale from URL
-  const pathnameParts = req.nextUrl.pathname.split('/')
-  let urlLocale = pathnameParts[1]
+	// Find the first locale that matches the user's accepted locales
+	const matchedLocale = userAcceptedLocales.find((lang) =>
+		acceptedLocales.includes(lang),
+	);
 
-  // Check if locale is in URL and valid
-  if (urlLocale && isValidLocale(urlLocale)) {
-    // If 'ko', revert to 'kr'
-    urlLocale = revertToKr(urlLocale)
-    // Set NEXT_LOCALE cookie and return next response
-    const response = NextResponse.next()
-    response.cookies.set('NEXT_LOCALE', urlLocale)
-    return response
-  }
+	// Detect if the current path already has a locale prefix
+	const currentUrl = new URL(request.url);
+	const currentPath = currentUrl.pathname;
+	const currentPathHasLocale = acceptedLocales.some((locale) =>
+		currentPath.startsWith(`/${locale}`),
+	);
 
-  // Get preferred locale from cookie or headers
-  const preferredLocale = getPreferredLanguage(req)
+	// Detect if the current path is an asset since they are not dependent on locale.
+	const isAsset = currentPath.startsWith("/_next");
 
-  // Check if preferred locale is valid and different from current URL locale
-  if (
-    preferredLocale &&
-    isValidLocale(preferredLocale) &&
-    preferredLocale !== urlLocale
-  ) {
-    const url = req.nextUrl.clone()
-    url.pathname = `/${revertToKr(preferredLocale)}${url.pathname.substring(
-      urlLocale ? urlLocale.length + 1 : 0,
-    )}`
-    return NextResponse.redirect(url.toString(), { status: 302 })
-  }
+	// Redirect
+	if (matchedLocale && !currentPathHasLocale && !isAsset) {
+		const url = new URL(request.nextUrl.href);
+		url.pathname = `/${matchedLocale}${url.pathname}`;
+		return NextResponse.redirect(url);
+	}
 
-  // Redirect to default locale if no valid locale in URL
-  if (!urlLocale || !isValidLocale(urlLocale)) {
-    const url = req.nextUrl.clone()
-    url.pathname = `/${defaultLocale}${req.nextUrl.pathname}`
-    return NextResponse.redirect(url.toString(), { status: 302 })
-  }
-
-  return NextResponse.next()
+	// Continue if no redirect
+	return NextResponse.next();
 }
