@@ -1,5 +1,13 @@
 import { NextResponse, NextRequest } from 'next/server'
 
+const revertToKr = (locale: string) => {
+  const revertedLocale = locale === 'ko' ? 'kr' : locale
+
+  console.log(revertedLocale) // it reverts successfully
+
+  return revertedLocale
+}
+
 export function middleware(request: NextRequest) {
   const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true'
 
@@ -15,7 +23,7 @@ export function middleware(request: NextRequest) {
 
   // List of accepted locales
   const defaultAcceptedLocale = 'en'
-  const acceptedLocales = ['en', 'ko']
+  const acceptedLocales = ['en', 'kr']
   const userAcceptedLocales =
     request.headers
       .get('Accept-Language')
@@ -24,7 +32,7 @@ export function middleware(request: NextRequest) {
 
   // Find the first locale that matches the user's accepted locales
   const matchedLocale = userAcceptedLocales.find((lang) =>
-    acceptedLocales.includes(lang),
+    acceptedLocales.includes(revertToKr(lang)),
   )
 
   // Detect if the current path already has a locale prefix
