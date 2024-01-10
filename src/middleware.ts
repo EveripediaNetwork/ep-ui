@@ -15,6 +15,7 @@ export function middleware(request: NextRequest) {
   }
 
   // List of accepted locales
+  const defaultAcceptedLocale = 'en'
   const acceptedLocales = ['en', 'ko']
   const userAcceptedLocales =
     request.headers
@@ -34,11 +35,21 @@ export function middleware(request: NextRequest) {
     currentPath.startsWith(`/${locale}`),
   )
 
+  console.log(currentUrl.toString())
+
   // Detect if the current path is an asset since they are not dependent on locale.
   const isAsset = currentPath.startsWith('/_next')
 
+  // Detect if the userAcceptedLocale is already defaultAcceptedLocale
+  const userPreferDefault = matchedLocale === defaultAcceptedLocale
+
   // Redirect
-  if (matchedLocale && !currentPathHasLocale && !isAsset) {
+  if (
+    matchedLocale &&
+    !currentPathHasLocale &&
+    !isAsset &&
+    !userPreferDefault
+  ) {
     const url = new URL(request.nextUrl.href)
     url.pathname = `/${matchedLocale}${url.pathname}`
     return NextResponse.redirect(url)
