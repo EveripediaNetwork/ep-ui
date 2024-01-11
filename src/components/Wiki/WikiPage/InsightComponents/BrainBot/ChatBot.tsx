@@ -1,19 +1,15 @@
 import { Box, Link, Text } from '@chakra-ui/react'
-import React, { useRef } from 'react'
+import React from 'react'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
 import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
-import { useScrollToBottom } from '@/hooks/useScrollToBottom'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
 const ChatBot = ({ wiki }: { wiki: Wiki }) => {
-  const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
-    useAppSelector((state) => state.message)
-
-  useScrollToBottom(chatsRef, [messages, currentHumanMessage])
+  const { currentHumanMessage, currentChatId, currentAIMessage } =
+    useAppSelector(state => state.message)
 
   return (
     <Box
@@ -58,7 +54,6 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
         flexDirection={'column'}
         paddingBlock={'12px'}
         paddingInline={'8px'}
-        ref={chatsRef}
       >
         {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />

@@ -24,12 +24,15 @@ type ChartProps = {
   answerSources?: AnswerSources[]
 }
 
+const DEFAULT_RESPONSE =
+  'I can assist you with any questions about crypto. What would you like to ask?'
+
 const _paginateContent = (text: string, charsPerPage: number) => {
   const words = text.split(' ')
   const pages = []
   let currentPage = ''
 
-  words.forEach((word) => {
+  words.forEach(word => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
@@ -102,13 +105,9 @@ const _usePaginateContent = (content: string) => {
 }
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
-  const { currentAIMessage } = useAppSelector((state) => state.message)
-  const { isError } = useAppSelector((state) => state.stream)
+  const { isError } = useAppSelector(state => state.stream)
   const _markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  // const pages = markdownTableRegex.test(content)
-  //   ? content.split('\n\n')
-  //   : paginateContent(content, 350)
   const pages = content.split('\n\n')
 
   const [answerSource] = answerSources || []
@@ -146,7 +145,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
         />
       </div>
       {alias === 'AI' &&
-        !currentAIMessage &&
+        content !== DEFAULT_RESPONSE &&
         !isError &&
         currentPageIndex === pages.length - 1 && (
           <ChatSources answerSource={answerSource} />
@@ -218,16 +217,12 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
         borderColor={alias === 'HUMAN' ? 'brainBotBorder' : 'brainBotAIBorder'}
         bgColor={alias === 'AI' ? 'bodyBg' : ''}
         borderRadius={'4px'}
-        padding={alias === 'AI' ? '8px' : '8px 20px'}
+        padding={alias === 'AI' ? '8px' : '0px 6px'}
         alignItems={'flex-start'}
         gap={'4px'}
-        mt={
-          content ===
-          'I can assist you with any questions about crypto. What would you like to ask?'
-            ? '36px'
-            : '0px'
-        }
+        mt={content === DEFAULT_RESPONSE ? '36px' : '0px'}
         width={alias === 'AI' ? '95%' : ''}
+        height={alias === 'HUMAN' ? '24px' : 'auto'}
       >
         {alias === 'AI' && (
           <Box
