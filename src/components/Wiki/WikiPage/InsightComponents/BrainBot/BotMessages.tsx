@@ -1,22 +1,15 @@
 import { useAppSelector } from '@/store/hook'
-import React, { useEffect } from 'react'
+import React from 'react'
 import ChatCard from './ChatCard'
 import { Box, Flex, HStack, Text } from '@chakra-ui/react'
 import { Logo } from '@/components/Elements'
 import LoadingDots from './LoadingDots'
-import { useDispatch } from 'react-redux'
-import { setMessages } from '@/store/slices/chatbot-slice'
 
 const BotMessages = () => {
   const { currentHumanMessage, messages, currentAIMessage } = useAppSelector(
     (state) => state.message,
   )
   const { isLoading, isError } = useAppSelector((state) => state.stream)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(setMessages([]))
-  }, [])
 
   return (
     <Box
