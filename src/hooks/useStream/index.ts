@@ -1,6 +1,6 @@
 import { generateOutputSchema } from './schema'
 import { useDispatch } from 'react-redux'
-import { setIsLoading } from '@/store/slices/stream-slice'
+import { setIsError, setIsLoading } from '@/store/slices/stream-slice'
 import {
   addMessage,
   setCurrentAIMessage,
@@ -29,12 +29,13 @@ const useStream = () => {
     if (question === 'Ask me about crypto') {
       dispatch(
         setCurrentAIMessage(
-          'I Can assist you with any questions about crypto. What would you like to ask?',
+          'I can assist you with any questions about crypto. What would you like to ask?',
         ),
       )
     } else {
       dispatch(setCurrentMessage(question))
       dispatch(setIsLoading(true))
+      dispatch(setIsError(false))
       await axios
         .post('/api/fetch-answer', {
           question: wiki ? queryMapper(question, wiki) : question,
@@ -57,7 +58,8 @@ const useStream = () => {
           )
         })
         .catch((err) => {
-          console.log(JSON.parse(err))
+          console.log(err)
+          dispatch(setIsError(true))
         })
         .finally(() => {
           dispatch(setIsLoading(false))

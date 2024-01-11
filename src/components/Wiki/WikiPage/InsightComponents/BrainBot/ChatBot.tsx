@@ -1,28 +1,17 @@
 import { Box, Link, Text } from '@chakra-ui/react'
-import React, { useRef } from 'react'
-import { RiSubtractFill } from 'react-icons/ri'
+import React from 'react'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
 import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
-import { useScrollToBottom } from '@/hooks/useScrollToBottom'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
 
-const ChatBot = ({
-  wiki,
-  setOpen,
-}: {
-  wiki: Wiki
-  setOpen: (state: boolean) => void
-}) => {
+const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const { t } = useTranslation('wiki')
-  const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
+  const { currentHumanMessage, currentChatId, currentAIMessage } =
     useAppSelector((state) => state.message)
-
-  useScrollToBottom(chatsRef, [messages, currentHumanMessage])
 
   return (
     <Box
@@ -58,11 +47,6 @@ const ChatBot = ({
           </Box>
           <Text>{t('chatBotTitle')}</Text>
         </Box>
-        <RiSubtractFill
-          size={'24px'}
-          onClick={() => setOpen(false)}
-          style={{ flexShrink: 0, cursor: 'pointer' }}
-        />
       </Box>
       <Box
         h={'250px'}
@@ -72,7 +56,6 @@ const ChatBot = ({
         flexDirection={'column'}
         paddingBlock={'12px'}
         paddingInline={'8px'}
-        ref={chatsRef}
       >
         {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />

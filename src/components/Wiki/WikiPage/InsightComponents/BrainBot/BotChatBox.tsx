@@ -37,7 +37,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
         paddingBlock={'4px'}
         boxShadow={'0px 1px 2px 0px rgba(0, 0, 0, 0.05)'}
         paddingInline={'12px'}
-        borderBottom={'1px'}
+        borderY={'1px'}
         borderColor={'divider'}
       >
         <Input
