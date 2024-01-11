@@ -29,7 +29,7 @@ const _paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
-  words.forEach((word) => {
+  words.forEach(word => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
       currentPage = `${word} `
@@ -102,8 +102,8 @@ const _usePaginateContent = (content: string) => {
 }
 
 const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
-  const { currentAIMessage } = useAppSelector((state) => state.message)
-  const { isError } = useAppSelector((state) => state.stream)
+  const { currentAIMessage } = useAppSelector(state => state.message)
+  const { isError } = useAppSelector(state => state.stream)
   const _markdownTableRegex = /\|.*\|.*\|/
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   // const pages = markdownTableRegex.test(content)
@@ -227,7 +227,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             ? '36px'
             : '0px'
         }
-        width={alias === 'AI' ? 'full' : ''}
+        width={alias === 'AI' ? '95%' : ''}
       >
         {alias === 'AI' && (
           <Box
@@ -254,7 +254,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             color={'heroHeaderDescription'}
             className={`${styles.markdownBody}`}
             width={'full'}
-            style={{ fontSize: '12px' }}
+            style={{ fontSize: '14px' }}
           >
             {alias === 'HUMAN' ? (
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
