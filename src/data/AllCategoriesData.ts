@@ -53,9 +53,9 @@ export const AllCategoriesData: CategoryDataType[] = [
   },
   {
     id: 'peopleInCrypto',
-    title: 'categorypeopleInCryptoTitle',
+    title: 'categorypeopleTitle',
     icon: RiUser3Fill,
-    description: 'categorypeopleInCryptoDescription',
+    description: 'categorypeopleDescription',
     cardImage: '/images/categories/people-card.png',
     heroImage: '/images/categories/people.png',
   },
