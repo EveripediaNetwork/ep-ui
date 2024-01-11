@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Wiki } from '@everipedia/iq-utils'
 import useStream from '@/hooks/useStream'
 import { QueryType } from '@/utils/BotUtils'
+import { useTranslation } from 'next-i18next'
 
 export const BrainBotSuggestion = ({
   question,
@@ -51,24 +52,25 @@ export const BrainBotSuggestion = ({
 }
 
 const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
+  const { t } = useTranslation('wiki')
   return (
     <Box paddingBlock={'14px'}>
       <Text
         color={'fadedText'}
-        maxW={'295px'}
+        maxW={'350px'}
         fontSize={'14px'}
         textAlign={'center'}
       >
-        Hi There! Here are some cool stuff i can do for you.
+        {t('chatBotIntroMessage')}
       </Text>
       <VStack marginTop={'12px'}>
         <BrainBotSuggestion
-          question={QueryType.AdditionalInfo}
+          question={t(QueryType.AdditionalInfo)}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
           wiki={wiki}
         />
         <BrainBotSuggestion
-          question={QueryType.ContentPageSummary}
+          question={t(QueryType.ContentPageSummary)}
           icon={
             <Image
               src={'/summary.svg'}
@@ -82,7 +84,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
         />
         <HStack gap={'8px'}>
           <BrainBotSuggestion
-            question={'Ask me about crypto'}
+            question={t('chatBotSuggestion1')}
             icon={
               <Image
                 src={'/sun.svg'}
