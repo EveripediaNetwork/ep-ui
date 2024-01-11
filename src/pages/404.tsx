@@ -11,9 +11,11 @@ import {
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const ErrorPage = () => {
   const router = useRouter()
+  const { t } = useTranslation('404')
   return (
     <Container maxW="6xl">
       <Stack
@@ -33,17 +35,16 @@ const ErrorPage = () => {
             fontWeight="bold"
             fontSize={{ base: 'xl', md: '4xl' }}
           >
-            OPPS! LOST IN SPACE?
+            {t('404Title')}
           </Heading>
           <Text
             textAlign={{ base: 'center', lg: 'left' }}
             fontSize={{ base: 'md', md: '2xl', lg: 'xl' }}
           >
-            Seems like you’ve landed in the wrong space. Don’t worry, We’ve got
-            you. Let’s take you back to where it’s safe.
+            {t('404Description')}
           </Text>
           <Button onClick={() => router.push('/')} variant="solid">
-            Take me back Home
+            {t('404CTA')}
           </Button>
         </Stack>
         <Box
@@ -67,7 +68,7 @@ const ErrorPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['404', 'common'])),
     },
   }
 }

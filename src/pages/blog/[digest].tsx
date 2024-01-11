@@ -25,6 +25,7 @@ import { getEntry } from '@/services/blog/mirror'
 import { Avatar } from '@/components/Elements'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import BlogBanner from '@/components/Blog/BlogBanner'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const BlogContentOverride =
   /!\[ \]\((https?:\/\/.*\.(?:png|jpg|svg|gif|jpeg))\?height=\d*\\&width=\d*\)/
@@ -184,12 +185,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       blog,
       blogEntries,
+      ...(await serverSideTranslations(context.locale ?? 'en', [
+        'blog',
+        'common',
+      ])),
     },
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: 'blocking' }
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
 }
 
 export default BlogPostPage
