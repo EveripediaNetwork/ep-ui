@@ -18,6 +18,8 @@ import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
 import SignTokenMessage from '../settings/account/SignTokenMessage'
 import { WikiViewsData } from '@/components/Admin/WikiViewsData'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Admin = () => {
   const router = useRouter()
@@ -98,3 +100,11 @@ const Admin = () => {
 export default dynamic(() => Promise.resolve(authenticatedRoute(Admin)), {
   ssr: false,
 })
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  }
+}
