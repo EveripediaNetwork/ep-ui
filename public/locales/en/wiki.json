@@ -81,5 +81,7 @@
   "chatBotSuggestion1": "Ask me about crypto",
   "queryAdditionalInfo": "Generate additional info for this page",
   "queryContentPageSummary": "Content/page summary.",
-  "chatBotInputPlaceholder": "Ask me anything"
+  "chatBotInputPlaceholder": "Ask me anything",
+  "brainBotTitle": "Get more insights on the article content with IQ GPT Chat",
+  "more": "And more..."
 }

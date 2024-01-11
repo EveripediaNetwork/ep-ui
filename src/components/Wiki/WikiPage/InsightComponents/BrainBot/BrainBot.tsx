@@ -8,8 +8,10 @@ import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { QueryType } from '@/utils/BotUtils'
+import { useTranslation } from 'next-i18next'
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
+  const { t } = useTranslation('wiki')
   const [open, setOpen] = useState(true)
 
   return (
@@ -55,7 +57,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               textAlign={'center'}
               maxW={'300px'}
             >
-              Get more insights on the article content with IQ GPT Chat
+              {t('brainBotTitle')}
             </Text>
           </Box>
 
@@ -67,13 +69,13 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             alignItems={'center'}
           >
             <BrainBotSuggestion
-              question={QueryType.AdditionalInfo}
+              question={t(QueryType.AdditionalInfo)}
               icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
               wiki={wiki}
               setOpen={setOpen}
             />
             <BrainBotSuggestion
-              question={QueryType.ContentPageSummary}
+              question={t(QueryType.ContentPageSummary)}
               icon={
                 <Image
                   src={'/summary.svg'}
@@ -87,7 +89,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               setOpen={setOpen}
             />
             <Text color={'homeDescriptionColor'} fontSize={'12px'}>
-              And more...
+              {t('more')}
             </Text>
             <Box color={'brandLinkColor'}>
               <RiArrowDownSLine
