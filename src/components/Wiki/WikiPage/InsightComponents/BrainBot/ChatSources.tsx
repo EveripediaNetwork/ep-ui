@@ -29,7 +29,7 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
   const lastMessage = messages?.[messages?.length - 1]
   const handleRating = async (feedbackType: FeedbackType) => {
     if (lastMessage) {
-      const response = await fetch('https://www.iqgpt.com/api/feedback', {
+      const response = await fetch('/api/chat-feedback', {
         method: 'POST',
         body: JSON.stringify({
           feedbackType,
@@ -38,7 +38,12 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
         mode: 'no-cors',
       })
 
-      await response.json()
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+      } else {
+        console.error(`HTTP error! Status: ${response.status}`)
+      }
     }
   }
 
@@ -59,6 +64,7 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
       width={'100%'}
       flexWrap={'wrap'}
       gap={'8px'}
+      mt={'8px'}
     >
       <Flex direction={'column'} fontSize={'10px'} alignItems={'flex-start'}>
         <Text style={{ marginBottom: '0px', color: 'white' }}>
