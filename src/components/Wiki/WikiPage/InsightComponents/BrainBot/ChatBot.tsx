@@ -1,5 +1,5 @@
 import { Box, Link, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
@@ -7,11 +7,27 @@ import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
+import { useDispatch } from 'react-redux'
+import {
+  setCurrentAIMessage,
+  setCurrentChatId,
+  setCurrentMessage,
+  setMessages,
+} from '@/store/slices/chatbot-slice'
 
 const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const { t } = useTranslation('wiki')
   const { currentHumanMessage, currentChatId, currentAIMessage } =
     useAppSelector((state) => state.message)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setCurrentMessage(''))
+    dispatch(setCurrentAIMessage(''))
+    dispatch(setCurrentChatId(null))
+    dispatch(setMessages([]))
+  }, [])
 
   return (
     <Box
