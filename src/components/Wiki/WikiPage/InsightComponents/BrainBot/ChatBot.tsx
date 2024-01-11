@@ -8,12 +8,7 @@ import { useAppSelector } from '@/store/hook'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
 
-const ChatBot = ({
-  wiki,
-}: {
-  wiki: Wiki
-  setOpen: (state: boolean) => void
-}) => {
+const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const { t } = useTranslation('wiki')
   const { currentHumanMessage, currentChatId, currentAIMessage } =
     useAppSelector((state) => state.message)
