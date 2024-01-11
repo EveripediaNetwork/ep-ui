@@ -24,7 +24,7 @@ const CustomIconWrapper = React.forwardRef<HTMLButtonElement, CustomCardProps>(
 )
 
 const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
-  const { messages } = useAppSelector(state => state.message)
+  const { messages } = useAppSelector((state) => state.message)
   const [feedbackAction, setFeedbackAction] = useState<FeedbackType>()
   const lastMessage = messages?.[messages?.length - 1]
   const handleRating = async (feedbackType: FeedbackType) => {
