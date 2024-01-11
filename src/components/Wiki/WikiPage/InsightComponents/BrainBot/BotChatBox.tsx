@@ -6,12 +6,14 @@ import { Wiki } from '@everipedia/iq-utils'
 import React, { ChangeEvent, useState } from 'react'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'next-i18next'
 
 const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   const [chatInput, setChatInput] = useState('')
   const { askQuestion } = useStream()
   const dispatch = useDispatch()
   const { isLoading } = useAppSelector((state) => state.stream)
+  const { t } = useTranslation('wiki')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChatInput(e.target.value)
@@ -43,7 +45,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           name="message"
           variant={'unstyled'}
           fontSize={'14px'}
-          placeholder="Ask me anything"
+          placeholder={t('chatBotInputPlaceholder')}
           borderRadius={'0'}
           paddingInline={'4px'}
           color={'gray.500'}

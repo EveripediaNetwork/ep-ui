@@ -1,8 +1,8 @@
 import { Wiki } from '@everipedia/iq-utils'
 
 export enum QueryType {
-  AdditionalInfo = 'Generate additional info for this page',
-  ContentPageSummary = 'Content/page summary.',
+  AdditionalInfo = 'queryAdditionalInfo',
+  ContentPageSummary = 'queryContentPageSummary',
   ExplainLikeFive = 'ELI5',
 }
 

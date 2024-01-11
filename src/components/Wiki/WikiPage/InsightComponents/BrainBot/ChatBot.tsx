@@ -6,10 +6,19 @@ import BotSuggestions from './BotSuggestions'
 import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
+import { useTranslation } from 'next-i18next'
 
-const ChatBot = ({ wiki }: { wiki: Wiki }) => {
-  const { currentHumanMessage, currentChatId, currentAIMessage } =
-    useAppSelector((state) => state.message)
+const ChatBot = ({
+  wiki,
+  setOpen,
+}: {
+  wiki: Wiki
+  setOpen: (state: boolean) => void
+}) => {
+  const { t } = useTranslation('wiki')
+  const chatsRef = useRef<HTMLDivElement | null>(null)
+  const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
+    useAppSelector(state => state.message)
 
   return (
     <Box
@@ -43,7 +52,7 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
           >
             <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
-          <Text>IQ GPT Chat</Text>
+          <Text>{t('chatBotTitle')}</Text>
         </Box>
       </Box>
       <Box
@@ -73,7 +82,7 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
         h="full"
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
-        <Text fontSize={'8px'}>Powered by IQGPT.com</Text>
+        <Text fontSize={'8px'}>{t('chatBotFooter')}</Text>
       </Link>
     </Box>
   )

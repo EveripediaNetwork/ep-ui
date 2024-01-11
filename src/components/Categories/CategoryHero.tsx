@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Heading, Flex, Text } from '@chakra-ui/react'
 import { Image } from '@/components/Elements/Image/Image'
-import { useTranslation } from 'next-i18next'
 
 const CategoryHero = ({
   id,
@@ -12,7 +11,7 @@ const CategoryHero = ({
   title: string
   description: string
 }) => {
-  const { t } = useTranslation('categories')
+  // const { t } = useTranslation('categories')
   return (
     <Box pos="relative">
       <Image
@@ -41,7 +40,7 @@ const CategoryHero = ({
           color="whiteAlpha.900"
           textTransform={'capitalize'}
         >
-          {t(title)}
+          {title}
         </Heading>
         <Flex
           textAlign="center"
@@ -56,7 +55,7 @@ const CategoryHero = ({
             mx={{ base: '1', md: '8', lg: '14' }}
             color="whiteAlpha.900"
           >
-            {t(description) || ''}
+            {description || ''}
           </Text>
         </Flex>
       </Flex>
