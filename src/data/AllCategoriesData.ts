@@ -52,7 +52,7 @@ export const AllCategoriesData: CategoryDataType[] = [
     heroImage: '/images/categories/daos.png',
   },
   {
-    id: 'peopleInCrypto',
+    id: 'people',
     title: 'categorypeopleTitle',
     icon: RiUser3Fill,
     description: 'categorypeopleDescription',
