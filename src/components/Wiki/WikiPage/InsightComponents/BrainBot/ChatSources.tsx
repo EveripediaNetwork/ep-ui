@@ -24,20 +24,26 @@ const CustomIconWrapper = React.forwardRef<HTMLButtonElement, CustomCardProps>(
 )
 
 const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
-  const { messages } = useAppSelector((state) => state.message)
+  const { messages } = useAppSelector(state => state.message)
   const [feedbackAction, setFeedbackAction] = useState<FeedbackType>()
   const lastMessage = messages?.[messages?.length - 1]
   const handleRating = async (feedbackType: FeedbackType) => {
     if (lastMessage) {
-      const response = await fetch('/api/chat-feedback', {
+      const response = await fetch('https://www.iqgpt.com/api/feedback', {
         method: 'POST',
         body: JSON.stringify({
           feedbackType,
           messageId: Number(lastMessage.id),
         }),
+        mode: 'no-cors',
       })
 
-      await response.json()
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+      } else {
+        console.error(`HTTP error! Status: ${response.status}`)
+      }
     }
   }
 

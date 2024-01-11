@@ -4,18 +4,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { feedbackType, messageId } = JSON.parse(req.body)
+  // const { _feedbackType, _messageId } = JSON.parse(req.body)
+  console.log(req.body)
   try {
-    const result = await fetch('http://localhost:3000/api/feedback', {
+    const result = await fetch('https://www.iqgpt.com/api/feedback', {
       method: 'POST',
-      body: JSON.stringify({
-        feedbackType: feedbackType,
-        messageId: messageId,
-      }),
+      body: req.body,
     })
 
     if (result) return res.status(200).json(result.json())
-  } catch (_err) {
+  } catch (err) {
+    console.log(err)
     return res.status(500).json({ error: 'Something went wrong' })
   }
 }
