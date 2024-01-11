@@ -1,18 +1,18 @@
+import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  // const { _feedbackType, _messageId } = JSON.parse(req.body)
-  console.log(req.body)
+  const { feedbackType, messageId } = JSON.parse(req.body)
   try {
-    const result = await fetch('https://www.iqgpt.com/api/feedback', {
-      method: 'POST',
-      body: req.body,
+    const result = await axios.post('https://www.iqgpt.com/api/feedback', {
+      messageId,
+      feedbackType,
     })
 
-    if (result) return res.status(200).json(result.json())
+    return res.status(result.status).json(result.data)
   } catch (err) {
     console.log(err)
     return res.status(500).json({ error: 'Something went wrong' })

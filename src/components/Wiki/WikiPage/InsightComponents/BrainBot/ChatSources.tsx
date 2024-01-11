@@ -24,12 +24,12 @@ const CustomIconWrapper = React.forwardRef<HTMLButtonElement, CustomCardProps>(
 )
 
 const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
-  const { messages } = useAppSelector((state) => state.message)
+  const { messages } = useAppSelector(state => state.message)
   const [feedbackAction, setFeedbackAction] = useState<FeedbackType>()
   const lastMessage = messages?.[messages?.length - 1]
   const handleRating = async (feedbackType: FeedbackType) => {
     if (lastMessage) {
-      const response = await fetch('https://www.iqgpt.com/api/feedback', {
+      const response = await fetch('/api/chat-feedback', {
         method: 'POST',
         body: JSON.stringify({
           feedbackType,
@@ -64,6 +64,7 @@ const ChatSources = ({ answerSource }: { answerSource: AnswerSources }) => {
       width={'100%'}
       flexWrap={'wrap'}
       gap={'8px'}
+      mt={'8px'}
     >
       <Flex direction={'column'} fontSize={'10px'} alignItems={'flex-start'}>
         <Text style={{ marginBottom: '0px', color: 'white' }}>
