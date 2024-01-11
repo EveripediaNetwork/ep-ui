@@ -10,15 +10,13 @@ import { useTranslation } from 'next-i18next'
 
 const ChatBot = ({
   wiki,
-  setOpen,
 }: {
   wiki: Wiki
   setOpen: (state: boolean) => void
 }) => {
   const { t } = useTranslation('wiki')
-  const chatsRef = useRef<HTMLDivElement | null>(null)
-  const { currentHumanMessage, currentChatId, messages, currentAIMessage } =
-    useAppSelector(state => state.message)
+  const { currentHumanMessage, currentChatId, currentAIMessage } =
+    useAppSelector((state) => state.message)
 
   return (
     <Box
