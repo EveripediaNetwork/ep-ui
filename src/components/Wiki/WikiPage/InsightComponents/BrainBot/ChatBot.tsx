@@ -9,7 +9,7 @@ import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 
 const ChatBot = ({ wiki }: { wiki: Wiki }) => {
   const { currentHumanMessage, currentChatId, currentAIMessage } =
-    useAppSelector(state => state.message)
+    useAppSelector((state) => state.message)
 
   return (
     <Box
