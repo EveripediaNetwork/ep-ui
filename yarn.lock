@@ -2850,10 +2850,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@everipedia/iq-utils@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.1.5.tgz#8323e64ceb50a485dee648bfd79dc638744c77f2"
-  integrity sha512-xa1+Ti8N6+W49RXUlskjEP2gG94jh0E1zxmmZC4bqRRKndZLD6550+/OPii7dMDhsEMQK8uPb8oXkdvcAzr2jg==
+"@everipedia/iq-utils@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.2.0.tgz#a7dd755d20a2b210b99cc01f20bb03bd716981af"
+  integrity sha512-6B+oHm8l0pruXpRUQLo1GnQyJboX6vtkjFBmkSheTK2Ojr1cVL1JJ6Y41S7dQR8EZiXWocKYq89XLLr8mWbh1A==
 
 "@everipedia/web3-signer@^0.0.11":
   version "0.0.11"
