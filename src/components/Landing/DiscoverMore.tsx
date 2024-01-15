@@ -45,7 +45,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
                 borderColor: 'whiteAlpha.700',
               }}
             >
-              {tag.id}
+              {t(tag.id)}
             </Link>
           ))}
         </Wrap>
