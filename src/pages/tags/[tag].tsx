@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface TagPageProps {
   tagId: string
@@ -58,31 +59,29 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-  const { t } = useTranslation()
+  const { t } = useTranslation('tag')
   return (
     <>
       <NextSeo
-        title={`result for ${tagId}`}
-        description={`Wikis with ${tagId} tag`}
+        title={t('seoTitle') + tagId}
+        description={t('seoTitle') + tagId}
         openGraph={{
-          title: `result for ${tagId}`,
-          description: `Wikis with ${tagId} tag`,
+          title: t('seoTitle') + tagId,
+          description: t('seoTitle') + tagId,
         }}
       />
       <Box bgColor="pageBg" mt={-2} border="solid 1px transparent" pb={12}>
         <Heading fontSize={40} width="min(90%, 1200px)" mx="auto" mt={12}>
-          Wikis with this tag
+          {t('title')}
         </Heading>
-
         <Divider />
         <Box mt={7}>
           <Text fontSize={17} width="min(90%, 1200px)" mx="auto">
-            You are seeing the wikis that are tagged with
+            {t('description')}
             <Link mx={1} href={`/tags/${tagId}`} color="brandLinkColor">
               {tagId}
             </Link>
-            . If you are interested in seeing other topics in common, you can
-            click on other tags.
+            .{t('description2')}
           </Text>
 
           <SimpleGrid
@@ -115,6 +114,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale
   const tagId: string = context.params?.tag as string
   const tagWikis = await store.dispatch(
     getTagWikis.initiate({ id: tagId, offset: 0, limit: ITEM_PER_PAGE }),
@@ -130,6 +130,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'tag'])),
       tagId,
       wikis: tagWikis.data || [],
     },
