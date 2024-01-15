@@ -21,6 +21,7 @@ import { CustomTab } from '../Profile/CustomTab'
 import LinkOverlay from '../Elements/LinkElements/LinkOverlay'
 import RankIcon from '../Elements/EditorRank/EditorRank'
 import { Carousel } from '../Elements/Carousel/Carousel'
+import { useTranslation } from 'next-i18next'
 
 const SECTIONS = [
   { period: 'Day', disabled: true },
@@ -93,6 +94,7 @@ const LeaderBoardCard = ({
 }
 
 const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
+  const { t } = useTranslation('home')
   const tabPadding = useBreakpointValue({ base: '3', md: '5' })
   return (
     <Box
@@ -106,7 +108,7 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
         fontWeight="700"
         fontSize={{ base: '3xl', lg: 46 }}
       >
-        Leaderboard
+        {t('leaderboard')}
       </Heading>
       <Text
         color="homeDescriptionColor"
@@ -115,8 +117,7 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
         mb={9}
         px={4}
       >
-        An Highlight of exceptional editors who has contributed greatly to the
-        IQ.wiki.
+        {t('leaderboardDescription')}
       </Text>
 
       <Box maxW="1160px" mx="auto" overflowX={'hidden'}>
@@ -137,7 +138,7 @@ const LeaderBoard = ({ leaderboards }: { leaderboards: LeaderBoardType[] }) => {
                 fontWeight="semibold"
                 p={tabPadding}
               >
-                {section.period}{' '}
+                {t(section.period)}
               </CustomTab>
             ))}
           </TabList>

@@ -39,5 +39,11 @@
   "Protocols": "Protocols",
   "Solana": "Solana",
   "Stablecoins": "Stablecoins",
-  "Venture": "Venture"
+  "Venture": "Venture",
+  "leaderboard": "Leaderboard",
+  "leaderboardDescription": "An Highlight of exceptional editors who has contributed greatly to IQ.wiki.",
+  "Day": "Day",
+  "Month": "Month",
+  "Year": "Year",
+  "All time": "All Time"
 }

@@ -39,5 +39,11 @@
   "Protocols": "协议",
   "Solana": "索拉纳",
   "Stablecoins": "稳定币",
-  "Venture": "创业"
+  "Venture": "创业",
+  "leaderboard": "리더보드",
+  "leaderboardDescription": "IQ.wiki에 크게 기여한 우수 편집자를 강조하는 것",
+  "Day": "일",
+  "Month": "월",
+  "Year": "년",
+  "All time": "전체 기간"
 }
