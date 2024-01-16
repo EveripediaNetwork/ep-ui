@@ -66,19 +66,6 @@ export const WikiDetails = ({
         spacing={4}
         w="full"
       >
-        {/* <Heading
-          bgColor="wikiTitleBg"
-          as="h3"
-          fontSize="18px"
-          p={3}
-          borderRadius={6}
-          fontWeight="600"
-          w="100%"
-          textAlign="center"
-          display={{ base: 'none', xl: 'block' }}
-        >
-          {title}
-        </Heading> */}
         <AspectRatio
           mx="auto"
           w="100%"
@@ -143,40 +130,34 @@ export const WikiDetails = ({
                 )}
                 <Tr>
                   <Td>
-                    <HStack spacing={3} py="2">
-                      <Text>IPFS</Text>
-                    </HStack>
+                    <Text>Hash</Text>
                   </Td>
                   <Td display="flex" align="center">
-                    <HStack gap={1} py="2">
-                      <SiIpfs />
-                      <Link
-                        target="_blank"
-                        href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                        color="brandLinkColor"
-                      >
-                        <Text>{shortenAccount(ipfsHash ?? '')}</Text>
-                      </Link>
+                    <HStack spacing={4}>
+                      <HStack spacing={2}>
+                        <SiIpfs />
+                        <Link
+                          target="_blank"
+                          href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
+                          color="brandLinkColor"
+                        >
+                          <Text>{shortenAccount(ipfsHash ?? '')}</Text>
+                        </Link>
+                      </HStack>
+                      <HStack spacing={2}>
+                        <GoLink />
+                        <Link
+                          target="_blank"
+                          href={`${config.blockExplorerUrl}/tx/${txHash}`}
+                          color="brandLinkColor"
+                        >
+                          <Text>{shortenAccount(txHash ?? '')}</Text>
+                        </Link>
+                      </HStack>
                     </HStack>
                   </Td>
                 </Tr>
-                <Tr>
-                  <Td>
-                    <HStack spacing={3}>
-                      <Text>TX Hash</Text>
-                    </HStack>
-                  </Td>
-                  <Td display="flex" align="center" gap={3}>
-                    <GoLink />
-                    <Link
-                      target="_blank"
-                      href={`${config.blockExplorerUrl}/tx/${txHash}`}
-                      color="brandLinkColor"
-                    >
-                      <Text>{shortenAccount(txHash ?? '')}</Text>
-                    </Link>
-                  </Td>
-                </Tr>
+
                 <Tr>
                   <Td>
                     <HStack spacing={3} py="2">
