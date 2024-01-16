@@ -38,6 +38,7 @@ const LeaderBoardCard = ({
   index: number
 }) => {
   const [, ensUserName] = useENSData(editor.id)
+  const { t } = useTranslation('home')
   return (
     <LinkBox flex="none">
       <chakra.div p={2} mx="auto">
@@ -82,7 +83,7 @@ const LeaderBoardCard = ({
                 </Center>
               )}
               <Text fontSize="sm" textAlign="center">
-                {Humanize.intComma(editor.totalRewards)} IQ Earned
+                {Humanize.intComma(editor.totalRewards)} {t('iqEarned')}
               </Text>
             </VStack>
             <RankIcon size="30" rank={index} />
