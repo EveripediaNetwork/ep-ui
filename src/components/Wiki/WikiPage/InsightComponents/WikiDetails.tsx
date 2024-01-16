@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Heading,
   HStack,
   Table,
   Tag,
@@ -67,7 +66,7 @@ export const WikiDetails = ({
         spacing={4}
         w="full"
       >
-        <Heading
+        {/* <Heading
           bgColor="wikiTitleBg"
           as="h3"
           fontSize="18px"
@@ -79,7 +78,7 @@ export const WikiDetails = ({
           display={{ base: 'none', xl: 'block' }}
         >
           {title}
-        </Heading>
+        </Heading> */}
         <AspectRatio
           mx="auto"
           w="100%"
