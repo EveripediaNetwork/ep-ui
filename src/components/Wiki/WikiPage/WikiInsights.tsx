@@ -94,15 +94,13 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             <WikiDetails
               wikiTitle={wiki}
               categories={wiki.categories}
-              createdTime={wiki?.created}
               ipfsHash={ipfs ?? wiki.ipfs}
               txHash={wiki.transactionHash}
-              createdBy={wiki.author}
               imgSrc={getWikiImageUrl(wiki.images)}
               views={wiki.views}
             />
-            <BrainBot wiki={wiki} />
             <ProfileSummary wiki={wiki} />
+            <BrainBot wiki={wiki} />
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <ContentFeedback
                 choice
