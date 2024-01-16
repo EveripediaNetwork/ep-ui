@@ -18,37 +18,29 @@ import { shortenAccount } from '@/utils/textUtils'
 import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
-import { Author, BaseCategory, WikiPreview } from '@everipedia/iq-utils'
+import { BaseCategory, WikiPreview } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
-import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { getUsername } from '@/utils/DataTransform/getUsername'
 import { useTranslation } from 'next-i18next'
 
 export const WikiDetails = ({
   wikiTitle,
   categories,
-  createdTime,
   ipfsHash,
   txHash,
-  createdBy,
   imgSrc,
   views,
 }: {
   wikiTitle: WikiPreview
   categories: BaseCategory[]
-  createdTime?: string
   ipfsHash?: string
   txHash?: string
-  createdBy?: Author
   imgSrc?: string
   views: number | undefined
 }) => {
   const { title, tags, id: wikiId } = wikiTitle
-  const [, username] = useENSData(createdBy?.id ?? '')
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   const { t } = useTranslation('wiki')
   return (
@@ -175,47 +167,6 @@ export const WikiDetails = ({
                     </HStack>
                   </Td>
                 </Tr>
-                <Tr>
-                  <Td whiteSpace="nowrap">
-                    <Text py="2">{t('created')}</Text>
-                  </Td>
-                  <Td>
-                    <Text>
-                      {/* TODO -  fix date translation - ko-KR */}
-                      {createdTime
-                        ? new Date(createdTime).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                        : '-'}
-                    </Text>
-                  </Td>
-                </Tr>
-                {createdBy && (
-                  <Tr>
-                    <Td whiteSpace="nowrap">
-                      <Text py="2">{t('createdBy')}</Text>
-                    </Td>
-                    <Td>
-                      <HStack py="2">
-                        <DisplayAvatar
-                          alt={createdBy.profile?.username}
-                          address={createdBy.id}
-                          avatarIPFS={createdBy.profile?.avatar}
-                          size={24}
-                        />
-                        <Link
-                          href={`/account/${createdBy.id}`}
-                          color="brandLinkColor"
-                          prefetch={false}
-                        >
-                          {getUsername(createdBy, username)}
-                        </Link>
-                      </HStack>
-                    </Td>
-                  </Tr>
-                )}
                 {wikiViews && (
                   <Tr>
                     <Td whiteSpace="nowrap">
