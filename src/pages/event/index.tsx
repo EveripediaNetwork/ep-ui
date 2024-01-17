@@ -72,7 +72,7 @@ const EventPage = () => {
             </Text>
           </Box>
           <chakra.ul display={'flex'} flexWrap={'wrap'} gap={'12px'}>
-            {EventInterestData.map(interest => {
+            {EventInterestData.map((interest) => {
               return (
                 <chakra.li
                   key={interest}
