@@ -28,7 +28,7 @@ export interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
-  const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
+  const stickyRef = useStickyBox({ offsetTop: 50, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
@@ -79,7 +79,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       borderLeftWidth={{ base: 0, xl: '1px' }}
       p={{ base: 0, md: 2, xl: 4 }}
       pr={{ md: 11, xl: 4 }}
-      pt={{ xl: '3', md: '8', base: '10' }}
+      pt={{ xl: '4', md: '8', base: '10' }}
       borderColor="rankingListBorder"
     >
       <Box as="aside" ref={stickyRef} w="100%">
