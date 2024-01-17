@@ -72,10 +72,9 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
           base: 'column',
           md: 'row',
         }}
-        ref={scrollRef}
       >
         <WikiActionBar wiki={wiki} />
-        <Box w="100%">
+        <Box w="100%" ref={scrollRef}>
           <Flex
             w="100%"
             justify="space-between"

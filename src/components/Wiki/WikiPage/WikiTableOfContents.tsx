@@ -155,14 +155,14 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
           borderLeftWidth="1px"
           w="20vw"
           px={6}
-          py="30px"
+          py="35px"
           ml="0 !important"
         >
           <VStack
             spacing={4}
             align="start"
             position="sticky"
-            top="calc(70px + 30px + 2px)"
+            // top="calc(70px + 30px + 2px)"
           >
             <Flex w="100%" justify="end">
               <IconButton
