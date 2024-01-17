@@ -1,0 +1,17 @@
+export const EventInterestData = [
+  'Blockchain',
+  'crypto',
+  'protocols',
+  'Nfts',
+  'Ethereum',
+  'Technology',
+  'Metaverse',
+  'Games',
+  'collectibles',
+  'Bitcoin',
+  'AI',
+  'DEXes',
+  'Artist',
+  'Non-fungible',
+  'Solana',
+]
