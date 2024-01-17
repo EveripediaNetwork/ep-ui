@@ -46,7 +46,7 @@ export const WikiDetails = ({
   return (
     <Box
       borderWidth="1px"
-      p={4}
+      p={2}
       borderRadius={8}
       w="full"
       borderColor="rankingListBorder"
