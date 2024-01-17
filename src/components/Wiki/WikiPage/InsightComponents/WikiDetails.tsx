@@ -13,6 +13,7 @@ import {
   Wrap,
   Box,
   Stack,
+  Tooltip,
 } from '@chakra-ui/react'
 import { shortenAccount } from '@/utils/textUtils'
 import { SiIpfs } from 'react-icons/si'
@@ -127,7 +128,11 @@ export const WikiDetails = ({
                   <Td display="flex" align="center">
                     <HStack spacing={4}>
                       <HStack spacing={2}>
-                        <SiIpfs />
+                        <Tooltip label="IPFS" fontSize="xs">
+                          <span>
+                            <SiIpfs />
+                          </span>
+                        </Tooltip>
                         <Link
                           target="_blank"
                           href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
@@ -137,7 +142,11 @@ export const WikiDetails = ({
                         </Link>
                       </HStack>
                       <HStack spacing={2}>
-                        <GoLink />
+                        <Tooltip label="Txn" fontSize="xs">
+                          <span>
+                            <GoLink />
+                          </span>
+                        </Tooltip>
                         <Link
                           target="_blank"
                           href={`${config.blockExplorerUrl}/tx/${txHash}`}
