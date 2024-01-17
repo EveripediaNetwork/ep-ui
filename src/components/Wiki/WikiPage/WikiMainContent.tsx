@@ -80,7 +80,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
       mb={{ xl: '3rem' }}
       borderColor="rankingListBorder"
     >
-      <Heading my={8}>{wiki?.title}</Heading>
+      <Heading my={3}>{wiki?.title}</Heading>
       <Box
         className={`${styles.markdownBody} ${
           colorMode === 'dark' && styles.markdownBodyDark
