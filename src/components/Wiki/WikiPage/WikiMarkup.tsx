@@ -58,7 +58,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({
-        behavior: 'instant',
+        behavior: 'smooth',
         block: 'start',
       })
     }
