@@ -99,6 +99,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
         flexDir="column"
         gap={2}
         title={t('Profile Summary')}
+        defaultOpen
       >
         {contractURL && (
           <ProfileListItem title={t('Contract')}>
