@@ -13,7 +13,7 @@ export const lettersToNum = (str: string): number => {
 
 export const shortenAccount = (
   account: string,
-  firstTakeLength = 6,
+  firstTakeLength = 4,
   secondTakeLength = 4,
 ) => {
   const firstChunk = account.substring(0, firstTakeLength)
