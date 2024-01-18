@@ -78,7 +78,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
             <Text
               fontSize="4xl"
               fontWeight="bold"
-              mt={8}
+              mt={2}
               mb={-4}
               display={{
                 xl: 'none',
