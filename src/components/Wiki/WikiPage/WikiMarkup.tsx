@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
@@ -53,16 +53,6 @@ const MobileMeta = (wiki: {
 }
 
 export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
-  const scrollRef = React.useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
-  }, [])
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -74,7 +64,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
         }}
       >
         <WikiActionBar wiki={wiki} />
-        <Box w="100%" ref={scrollRef}>
+        <Box w="100%">
           <Flex
             w="100%"
             justify="space-between"
