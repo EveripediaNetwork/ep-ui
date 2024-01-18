@@ -42,7 +42,7 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
     >
       <Box
         display={'flex'}
-        backgroundColor={'wikiCardBg'}
+        backgroundColor={open ? 'brainBotBg' : 'wikiCardBg'}
         paddingInline={'8px'}
         justifyContent={'space-between'}
         paddingBlock={'4px'}
