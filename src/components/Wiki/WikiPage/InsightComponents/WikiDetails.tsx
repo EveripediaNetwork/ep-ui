@@ -123,7 +123,7 @@ export const WikiDetails = ({
                 )}
                 <Tr>
                   <Td>
-                    <Text>Hash</Text>
+                    <Text>Network</Text>
                   </Td>
                   <Td display="flex" align="center">
                     <HStack spacing={4}>
