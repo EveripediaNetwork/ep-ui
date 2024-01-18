@@ -71,7 +71,15 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
           >
             <IQGPTIcon width={'14px'} height={'14px'} />
           </Box>
-          <Text fontSize={'sm'} color="linkColor" maxW={'300px'}>
+          <Text
+            fontSize={'sm'}
+            color="linkColor"
+            p={3}
+            maxW={{
+              base: '300px',
+              md: 'full',
+            }}
+          >
             {open
               ? 'IQ GPT Chat'
               : 'Get more insights on the article content with IQ GPT chat bot'}
