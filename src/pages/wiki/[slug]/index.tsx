@@ -29,7 +29,7 @@ const Wiki = ({ wiki }: WikiProps) => {
   useEffect(() => {
     if (scrollRef.current && breakpoint === 'base') {
       scrollRef.current.scrollIntoView({
-        behavior: 'instant',
+        behavior: 'smooth',
         block: 'start',
       })
     }
