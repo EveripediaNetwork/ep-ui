@@ -20,6 +20,7 @@ import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
 import ContentFeedback from './InsightComponents/ContentFeedback'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
+import BrainBotMobile from './InsightComponents/BrainBot/BrainBotMobile'
 
 export interface WikiInsightsProps {
   wiki: Wiki
@@ -100,7 +101,24 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               views={wiki.views}
             />
             <ProfileSummary wiki={wiki} />
-            <BrainBot wiki={wiki} />
+            <Box
+              display={{
+                base: 'none',
+                xl: 'block',
+              }}
+              minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
+            >
+              <BrainBot wiki={wiki} />
+            </Box>
+            <Box
+              display={{
+                base: 'block',
+                xl: 'none',
+              }}
+              minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
+            >
+              {<BrainBotMobile wiki={wiki} />}
+            </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <ContentFeedback
                 choice
