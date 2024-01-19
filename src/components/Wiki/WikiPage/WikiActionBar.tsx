@@ -105,7 +105,8 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
         borderRightWidth={{ base: 0, md: '1px' }}
         borderBottomWidth={{ base: '1px', md: '0' }}
         px={6}
-        py={4}
+        pt={4}
+        pb={1}
         maxW={{ base: 'unset', md: '120px' }}
         borderColor="rankingListBorder"
       >
@@ -125,6 +126,8 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
           position="sticky"
           top="calc(50vh - 150px + 70px + 2px)"
           transform={{ base: 'unset', md: 'translateY(-50px)' }}
+          justifyContent="center"
+          alignItems="center"
         >
           {actionBarItems.map((item, index) => (
             <Tooltip
