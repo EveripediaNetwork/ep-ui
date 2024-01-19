@@ -33,7 +33,7 @@ const WikiCommitMessage = ({
       >
         <AccordionWidget title={t('editedBy')} type="account" content={user} />
         <AccordionWidget
-          title={t('editedIn')}
+          title={t('editedOn')}
           type="text"
           content={lastEdited}
         />
