@@ -68,7 +68,7 @@ const Footer = () => {
   }
 
   React.useEffect(() => {
-    if (locale) handleLangChange(locale)
+    if (locale) dispatch(setLanguage(lang))
   }, [])
 
   return (
