@@ -10,9 +10,12 @@ import {
 import { Logo, Link } from '@/components/Elements'
 import { useTranslation } from 'next-i18next'
 import SocialFooter from './SocialFooter'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const MenuFooter = () => {
   const { t } = useTranslation('common')
+  const lang = useSelector((state: RootState) => state.app.language)
 
   return (
     <SimpleGrid
@@ -35,15 +38,31 @@ const MenuFooter = () => {
             pb={{ base: '6', md: '0' }}
           >
             {`${t('visionFooterText')} `}
-            <Link
-              href="https://www.brainfund.com/"
-              opacity="0.8"
-              _hover={{ opacity: '1', textDecoration: 'underline' }}
-              target="_blank"
-            >
-              Brainfund
-            </Link>{' '}
-            {t('group')}
+            {lang === 'en' ? (
+              <span>
+                {t('visionFooterText2')}
+                <Link
+                  href="https://www.brainfund.com/"
+                  opacity="0.8"
+                  _hover={{ opacity: '1', textDecoration: 'underline' }}
+                  target="_blank"
+                >
+                  {t('brainfundGroup')}
+                </Link>
+              </span>
+            ) : (
+              <span>
+                <Link
+                  href="https://www.brainfund.com/"
+                  opacity="0.8"
+                  _hover={{ opacity: '1', textDecoration: 'underline' }}
+                  target="_blank"
+                >
+                  {t('brainfundGroup')}
+                </Link>
+                {t('visionFooterText2')}
+              </span>
+            )}
           </Text>
           <SocialFooter />
         </Stack>
