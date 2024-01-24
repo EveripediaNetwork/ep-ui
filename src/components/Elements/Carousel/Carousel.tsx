@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Icon, chakra } from '@chakra-ui/react'
-import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback, useEffect, useState } from 'react'
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
@@ -9,6 +9,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { IconType } from 'react-icons/lib'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { EmblaOptionsType } from 'embla-carousel'
 
 type WikiCarouselProps = {
   options?: EmblaOptionsType
@@ -69,7 +70,7 @@ export const WikiCarousel = ({
     onClick: () => void
   }
 
-  const PrevButton: React.FC<PrevNextButtonPropType> = (props) => {
+  const PrevButton: React.FC<PrevNextButtonPropType> = props => {
     const { enabled, onClick } = props
     return (
       <Button
@@ -82,7 +83,7 @@ export const WikiCarousel = ({
     )
   }
 
-  const NextButton: React.FC<PrevNextButtonPropType> = (props) => {
+  const NextButton: React.FC<PrevNextButtonPropType> = props => {
     const { enabled, onClick } = props
     return (
       <Button
