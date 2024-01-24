@@ -62,7 +62,7 @@ export const WikiDetails = ({
         <AspectRatio
           mx="auto"
           w="100%"
-          ml="0 !important"
+          // ml="0 !important"
           maxW="400"
           ratio={WIKI_IMAGE_ASPECT_RATIO}
         >
