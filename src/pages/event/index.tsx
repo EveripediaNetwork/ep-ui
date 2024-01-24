@@ -1,9 +1,82 @@
 import EventHeader from '@/components/SEO/Event'
-import { Box, Flex, Heading, Text, chakra } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+  chakra,
+} from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { EventInterestData } from './event.data'
-
+import { Search2Icon } from '@chakra-ui/icons'
+import { DatePickerDemo } from '@/components/ui/DatePicker'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+interface IEventData {
+  id: number
+  location: string
+  title: string
+  date: string
+}
+const eventMockData: IEventData[] = [
+  {
+    id: 1,
+    location: 'Le Carrousel du Louvre (Paris, France)',
+    title: '5th Edition Paris Blockchain Week',
+    date: 'April 8-12, 2024',
+  },
+  {
+    id: 2,
+    location: 'Rai, Amsterdam.',
+    title: 'Blockchain Expo Europe',
+    date: 'October 1-02, 2024',
+  },
+  {
+    id: 3,
+    location: 'AsiaWorld Expo, Airport Expo Blvd...',
+    title: 'Wow summit in Hong Kong',
+    date: 'march, 26-27,2024',
+  },
+  {
+    id: 4,
+    location: 'Dubai, Festival Arena',
+    title: 'Blockchain Life 2024',
+    date: 'April 15-16, 2024',
+  },
+  {
+    id: 5,
+    location: 'Le Carrousel du Louvre (Paris, France)',
+    title: '5th Edition Paris Blockchain Week',
+    date: 'April 8-12, 2024',
+  },
+  {
+    id: 6,
+    location: 'Rai, Amsterdam.',
+    title: 'Blockchain Expo Europe',
+    date: 'October 1-02, 2024',
+  },
+  {
+    id: 7,
+    location: 'AsiaWorld Expo, Airport Expo Blvd...',
+    title: 'Wow summit in Hong Kong',
+    date: 'march, 26-27,2024',
+  },
+  {
+    id: 8,
+    location: 'Dubai, Festival Arena',
+    title: 'Blockchain Life 2024',
+    date: 'April 15-16, 2024',
+  },
+]
 const EventPage = () => {
   return (
     <Box>
@@ -50,6 +123,66 @@ const EventPage = () => {
         borderColor={'archivedTextColor'}
         mb={'120px'}
       >
+        <Flex
+          maxW={'1100px'}
+          mt={'-20px'}
+          rounded={'8px'}
+          overflow={'hidden'}
+          mx={'auto'}
+        >
+          <Flex flex={1}>
+            <InputGroup
+              size="lg"
+              maxW="523px"
+              display={{ base: 'none', md: 'block' }}
+              borderRight={'2px'}
+              borderColor={'archivedTextColor'}
+              bgColor={'rankingListTableBg'}
+              outline={'0'}
+            >
+              <InputLeftElement
+                ml={{ base: '15px', xl: 'unset' }}
+                pointerEvents="none"
+                h="full"
+              >
+                <Search2Icon color="gray.300" />
+              </InputLeftElement>
+              <Input
+                placeholder="Enter amount"
+                rounded={'none'}
+                border={'none'}
+              />
+            </InputGroup>
+            <DatePickerDemo />
+          </Flex>
+          <button
+            type="button"
+            className="w-[150px] h-auto bg-[#FF5CAA] dark:bg-[#FF1A88]"
+          >
+            Search
+          </button>
+        </Flex>
+        <div className="mt-20 max-w-[1296px] mx-auto">
+          <h4 className="font-semibold text-xl">Trending Events</h4>
+          <div>
+            <Carousel>
+              <CarouselContent className="">
+                {eventMockData.map((event) => (
+                  <CarouselItem
+                    className="h-[350px] basis-1/4 w-full bg-orange-100 flex flex-col justify-end px-2 py-5 ml-4"
+                    key={event.id}
+                  >
+                    <h5 className="text-sm">{event.location}</h5>
+                    <h5 className="text-xl">{event.title}</h5>
+                    <h5 className="">{event.date}</h5>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </div>
         <Flex
           maxW={'1296px'}
           mx={'auto'}

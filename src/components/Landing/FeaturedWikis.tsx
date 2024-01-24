@@ -6,7 +6,7 @@ import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
-import { EmblaOptionsType } from 'embla-carousel-react'
+import { EmblaOptionsType } from 'embla-carousel'
 import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
