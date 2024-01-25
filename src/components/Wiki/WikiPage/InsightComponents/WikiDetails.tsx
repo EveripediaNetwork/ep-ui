@@ -62,20 +62,20 @@ export const WikiDetails = ({
         <AspectRatio
           mx="auto"
           w="100%"
-          ml="0 !important"
-          maxW="400"
+          // ml="0 !important"
+          maxW="700"
           ratio={WIKI_IMAGE_ASPECT_RATIO}
         >
           <WikiImage
             bgColor="dimColor"
             priority
             imageURL={imgSrc}
-            sizes="(max-width: 400px) 100vw, 400px"
+            sizes="(max-width: 600px) 100vw, 400px"
             alt={title}
           />
         </AspectRatio>
         <VStack
-          maxW={{ base: 'unset', sm: '400px', lg: 'unset' }}
+          maxW={{ base: 'unset', md: 'unset', lg: 'unset' }}
           w="100%"
           spacing={4}
           mx="auto"
