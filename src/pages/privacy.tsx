@@ -21,9 +21,74 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { transformTextContent } from '@/utils/transformTextContent'
+import { useRouter } from 'next/router'
 
 const Privacy = () => {
   const { t } = useTranslation('policy')
+  const router = useRouter()
+  const locale = router.locale
+
+  const cookieCategoryTableEn = (
+    <Table>
+      <Thead>
+        <Tr>
+          <Th>{t('privacyCookieCategory')}</Th>
+          <Th>{t('privacyWhyWeUseCookies')}</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>{t('privacyNecessaryCookie')}</Td>
+          <Td>{t('privacyNecessaryCookieUse')}</Td>
+        </Tr>
+        <Tr>
+          <Td>{t('privacyNecessaryPreferences')}</Td>
+          <Td>{t('privacyNecessaryPreferencesUse')}</Td>
+        </Tr>
+        <Tr>
+          <Td>{t('privacyPerformance')}</Td>
+          <Td>{t('privacyPerformanceUse')}</Td>
+        </Tr>
+        <Tr>
+          <Td>{t('privacyNecessarymarketing')}</Td>
+          <Td>{t('privacyNecessarymarketingUse')}</Td>
+        </Tr>
+      </Tbody>
+    </Table>
+  )
+
+  const cookiesExplanationKo = (
+    <>
+      <Heading as="h2" size="md">
+        쿠키 카테고리
+      </Heading>
+      <Text>
+        우리가 이 쿠키를 사용하는 이유는 당사의 사이트를 운영하고 보안 위험의
+        식별 및 예방하기 위해 이러한 쿠키를 사용합니다. 예를 들어, 당사는 다른
+        사람이 귀하의 사용자 이름과 비밀번호 없이 귀하의 비밀번호를 변경하는
+        것을 방지하기 위해 이러한 쿠키를 사용하여 귀하의 세션 정보를 저장할 수
+        있습니다.
+      </Text>
+      <Heading as="h3" size="sm">
+        설정
+      </Heading>
+      <Text>
+        우리는 귀하의 설정과 선호도를 기억하고, 사이트에서의 경험을 향상시키기
+        위해 이 쿠키를 사용합니다. 예를 들어, 우리는 귀하의 언어 선호도를
+        기억하기 위해 이 쿠키를 사용할 수 있습니다.
+      </Text>
+      <Heading as="h3" size="sm">
+        성능
+      </Heading>
+      <Text>
+        우리는 이 쿠키를 사용하여 광고를 전달하고, 소비자에게 더 관련성 있고
+        의미 있는 광고를 제공하며, 우리 서비스와 다른 사이트나 모바일 앱에서의
+        광고 캠페인의 효율성을 추적합니다. 우리는 이 쿠키를 사용하여 귀하의
+        관심사 프로필을 구축하고 다른 사이트에서 관련된 광고를 제공할 수
+        있습니다.
+      </Text>
+    </>
+  )
 
   return (
     <>
@@ -112,32 +177,8 @@ const Privacy = () => {
               {t('privacyWeUseCookies')}
             </Heading>
             <Text>{t('privacyReasonForCookies')}</Text>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>{t('privacyCookieCategory')}</Th>
-                  <Th>{t('privacyWhyWeUseCookies')}</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>{t('privacyNecessaryCookie')}</Td>
-                  <Td>{t('privacyNecessaryCookieUse')}</Td>
-                </Tr>
-                <Tr>
-                  <Td>{t('privacyNecessaryPreferences')}</Td>
-                  <Td>{t('privacyNecessaryPreferencesUse')}</Td>
-                </Tr>
-                <Tr>
-                  <Td>{t('privacyPerformance')}</Td>
-                  <Td>{t('privacyPerformanceUse')}</Td>
-                </Tr>
-                <Tr>
-                  <Td>{t('privacyNecessarymarketing')}</Td>
-                  <Td>{t('privacyNecessarymarketingUse')}</Td>
-                </Tr>
-              </Tbody>
-            </Table>
+            {locale === 'en' && cookieCategoryTableEn}
+            {locale === 'ko' && cookiesExplanationKo}
             <Heading as="h2" size="md">
               {t('privacyAnalytics')}
             </Heading>

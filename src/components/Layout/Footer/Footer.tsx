@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
   Container,
@@ -27,15 +27,21 @@ import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
 import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'cookies-next'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { setLanguage } from '@/store/slices/app-slice'
+import { useDispatch } from 'react-redux'
 
 const Footer = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
+  const locale = router.locale
   const { t, i18n } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
-  const [lang, setLang] = useState(
-    userSelectedLanguage ?? languageData[0].locale,
-  )
+  const lang =
+    userSelectedLanguage ??
+    useSelector((state: RootState) => state.app.language)
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
     bg: '#fff',
@@ -45,7 +51,7 @@ const Footer = () => {
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
-      setLang(userLang)
+      dispatch(setLanguage(userLang))
       i18n.changeLanguage(userLang)
       setCookie('NEXT_LOCALE', userLang, {
         maxAge: 60 * 60 * 24 * 365.25 * 100,
@@ -60,6 +66,10 @@ const Footer = () => {
       })
     }
   }
+
+  React.useEffect(() => {
+    if (locale) dispatch(setLanguage(lang))
+  }, [])
 
   return (
     <Box bg="brandBackground" color="default" pos="relative" zIndex="2">

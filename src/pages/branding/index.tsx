@@ -134,7 +134,7 @@ const BrandingPage = () => {
         >
           <Flex flexDir="column">
             <Heading fontWeight={'600'} fontSize={{ base: '24px', lg: '36px' }}>
-              IQ logo
+              {t('iqLogo')}
             </Heading>
             <Text
               mt={4}
@@ -170,14 +170,14 @@ const BrandingPage = () => {
           </Grid>
         </Box>
 
-        <BrandWrapper title="IQ.wiki logo" brandAsset={iqLogoAsset} />
+        <BrandWrapper title={t('iqWikiLogo')} brandAsset={iqLogoAsset} />
         <BrandWrapper
           title="BrainDAO"
           brandAsset={braindaoAltLogoAssets}
           isBrainDao
         />
         <BrandWrapper
-          title="BrainDAO - Alternate logo"
+          title={t('braindaoAlternate')}
           brandAsset={braindaoLogoAssets}
         />
         <BrandWrapper title="IQ GPT" brandAsset={iqgptLogoAssets} />

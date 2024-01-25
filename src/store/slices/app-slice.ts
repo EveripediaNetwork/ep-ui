@@ -19,17 +19,18 @@ export const loadAppDetails = createAsyncThunk(
     marketPrice: marketcap,
   }),
 )
-
 export interface IAppSlice {
   loading: boolean
   marketPrice: number
   isDrawerOpen: boolean
+  language: 'en' | 'ko'
 }
 
 const initialState: IAppSlice = {
   loading: true,
   marketPrice: 0,
   isDrawerOpen: false,
+  language: 'en',
 }
 
 const appSlice = createSlice({
@@ -41,6 +42,9 @@ const appSlice = createSlice({
     },
     setDrawerOpen(state, action) {
       state.isDrawerOpen = action.payload
+    },
+    setLanguage(state, action) {
+      state.language = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -62,4 +66,4 @@ const appSlice = createSlice({
 
 export default appSlice.reducer
 
-export const { fetchAppSuccess, setDrawerOpen } = appSlice.actions
+export const { fetchAppSuccess, setDrawerOpen, setLanguage } = appSlice.actions
