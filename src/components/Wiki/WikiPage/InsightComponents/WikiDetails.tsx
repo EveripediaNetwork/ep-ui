@@ -70,7 +70,7 @@ export const WikiDetails = ({
             bgColor="dimColor"
             priority
             imageURL={imgSrc}
-            // sizes="(max-width: 600px) 100vw, 400px"
+            sizes="(max-width: 600px) 100vw, 400px"
             alt={title}
           />
         </AspectRatio>
