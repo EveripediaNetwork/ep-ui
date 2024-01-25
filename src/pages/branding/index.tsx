@@ -134,7 +134,7 @@ const BrandingPage = () => {
         >
           <Flex flexDir="column">
             <Heading fontWeight={'600'} fontSize={{ base: '24px', lg: '36px' }}>
-            {t('iqLogo')}
+              {t('iqLogo')}
             </Heading>
             <Text
               mt={4}
