@@ -3,8 +3,39 @@ import { Flex, Box, Heading, Link, Text } from '@chakra-ui/react'
 import { OurHistoryType } from '@/data/OurHistory'
 import { useTranslation } from 'next-i18next'
 
-const Paragraph = ({ text }: { text: string }) => {
-  const parts = text.split(/(<Link.*?\/Link>)/)
+interface ParagraphProps {
+  text: string
+}
+
+const Paragraph: React.FC<ParagraphProps> = ({ text }) => {
+  const processText = (inputText: string): React.ReactNode[] => {
+    const linkRegex = /<Link href='([^']*)'>(.*?)<\/Link>/g
+    const elements: React.ReactNode[] = []
+    let lastIndex = 0
+
+    inputText.replace(linkRegex, (match, href, linkText, index) => {
+      elements.push(inputText.substring(lastIndex, index))
+      lastIndex = index + match.length
+
+      elements.push(
+        <Link
+          color="brandLinkColor"
+          key={index}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {linkText}
+        </Link>,
+      )
+
+      return match
+    })
+
+    elements.push(inputText.substring(lastIndex))
+
+    return elements
+  }
 
   return (
     <Text
@@ -12,20 +43,7 @@ const Paragraph = ({ text }: { text: string }) => {
       whiteSpace="pre-line"
       fontWeight={500}
     >
-      {parts.map((part, index) =>
-        part.startsWith('<Link') ? (
-          <Link
-            color="brandLinkColor"
-            key={index}
-            href={part?.match(/href="(.*?)"/)?.[1]}
-            target="_blank"
-          >
-            {part?.match(/>(.*?)</)?.[1]}
-          </Link>
-        ) : (
-          <React.Fragment key={index}>{part}</React.Fragment>
-        ),
-      )}
+      {processText(text)}
     </Text>
   )
 }

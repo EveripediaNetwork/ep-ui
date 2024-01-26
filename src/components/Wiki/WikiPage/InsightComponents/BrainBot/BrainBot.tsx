@@ -16,7 +16,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
 
   return (
     <>
-      {open || true ? (
+      {open ? (
         <ChatBot wiki={wiki} />
       ) : (
         <Box
