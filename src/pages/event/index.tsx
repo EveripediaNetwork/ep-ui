@@ -17,10 +17,12 @@ import { DatePickerDemo } from '@/components/ui/DatePicker'
 import {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import Image from 'next/image'
 interface IEventData {
   id: number
   location: string
@@ -169,17 +171,33 @@ const EventPage = () => {
               <CarouselContent className="">
                 {eventMockData.map((event) => (
                   <CarouselItem
-                    className="h-[350px] basis-1/4 w-full bg-orange-100 flex flex-col justify-end px-2 py-5 ml-4"
+                    className="h-[350px] basis-1/3 xl:basis-1/4 rounded-xl relative w-full ml-4"
                     key={event.id}
                   >
-                    <h5 className="text-sm">{event.location}</h5>
-                    <h5 className="text-xl">{event.title}</h5>
-                    <h5 className="">{event.date}</h5>
+                    <Image
+                      src={'/images/blockchain-expo.png'}
+                      alt="blockchain-expo"
+                      fill
+                    />
+                    <div className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5">
+                      <div>
+                        <h5 className="text-sm">{event.location}</h5>
+                        <h5 className="text-xl font-semibold">{event.title}</h5>
+                        <h5 className="">{event.date}</h5>
+                      </div>
+                      <button
+                        type="button"
+                        className="px-2 py-[10px] rounded-[6px] font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
+                      >
+                        View event details
+                      </button>
+                    </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
               <CarouselPrevious />
               <CarouselNext />
+              <CarouselDots />
             </Carousel>
           </div>
         </div>

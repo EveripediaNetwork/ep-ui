@@ -2,7 +2,7 @@ import * as React from 'react'
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { cn } from '@lib/utils'
 import { Button } from '@/components/ui/button'
@@ -204,9 +204,9 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute  h-8 w-8 rounded-full',
+        'absolute dark:bg-[#4A5568] backdrop-blur-[10px] h-10 w-10 rounded-full',
         orientation === 'horizontal'
-          ? '-left-12 top-1/2 -translate-y-1/2'
+          ? '-left-6 top-1/2 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
       )}
@@ -214,7 +214,7 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ChevronLeft className="h-6 w-6" />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -233,9 +233,9 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute h-8 w-8 rounded-full',
+        'absolute h-10 dark:bg-[#4A5568] backdrop-blur-[10px] w-10 p-2 rounded-full',
         orientation === 'horizontal'
-          ? '-right-12 top-1/2 -translate-y-1/2'
+          ? '-right-6 top-1/2 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
       )}
@@ -243,7 +243,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <ChevronRight className="h-6 w-6" />
       <span className="sr-only">Next slide</span>
     </Button>
   )
@@ -286,7 +286,9 @@ const CarouselDots: React.FC = () => {
           type="button"
           key={index}
           className={`h-2 w-2 mx-1 rounded-full ${
-            selectedIndex === index ? 'bg-black' : 'bg-gray-300'
+            selectedIndex === index
+              ? 'bg-[#FF5CAA] dark:bg-[#FF1A88]'
+              : 'bg-brand-100'
           } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
           onClick={() => scrollTo(index)}
           aria-label={`Go to slide ${index + 1}`}
@@ -305,4 +307,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselDots,
 }
