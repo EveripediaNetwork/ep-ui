@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import {
-  Button,
   Flex,
   FormControl,
   Heading,
@@ -12,7 +11,7 @@ import { nftListing } from '@/services/nftlisting/index'
 import { store } from '@/store/store'
 import WikiAccordion from '../../WikiAccordion'
 import { NFTImgFallback } from './NFTImageFallBack'
-import { t } from 'i18next'
+import { useTranslation } from 'next-i18next'
 
 const NFTWidget = ({
   categories,
@@ -21,6 +20,7 @@ const NFTWidget = ({
   categories: { id: string; title: string }[]
   metaData: { id: string; value: string }[]
 }) => {
+  const { t } = useTranslation('wiki')
   const isNFTWiki = categories.find((item: { id: string; title: string }) => {
     return item.id === 'nfts'
   })
@@ -76,7 +76,7 @@ const NFTWidget = ({
       >
         {isLoading ? (
           <Flex flexDirection="column">
-            <Skeleton height="305px" />
+            <Skeleton height="318px" />
             <Flex justifyContent="center" my="4">
               <Skeleton w="70px" height="20px" borderRadius="30px" />
             </Flex>
@@ -130,19 +130,6 @@ const NFTWidget = ({
               }}
             />
           </FormControl>
-          <Button
-            cursor="pointer"
-            as="a"
-            target="_blank"
-            size="md"
-            variant="solid"
-            disabled={!currentNFTHash}
-            onClick={() => {
-              fetchNFT()
-            }}
-          >
-            {t('Search')}
-          </Button>
         </Flex>
       </WikiAccordion>
     )
