@@ -117,7 +117,7 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { notFound: true }
   const { data: wikiHistory, error: wikiHistoryError } = await store.dispatch(
@@ -125,14 +125,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
   )
 
   if (wikiHistoryError)
-    throw new Error(`Error fetching wiki history: ${wikiHistoryError}`)
+    throw new Error(`Error fetching wiki history: ${wikiHistoryError.message}`)
 
   const { data: wiki, error: wikiError } = await store.dispatch(
     getWiki.initiate(slug),
   )
 
   if (wikiError)
-    throw new Error(`Error fetching latest wiki for history: ${wikiError}`)
+    throw new Error(
+      `Error fetching latest wiki for history: ${wikiError.message}`,
+    )
 
   return {
     props: {
