@@ -285,7 +285,7 @@ const CarouselDots: React.FC = () => {
         <button
           type="button"
           key={index}
-          className={`h-2 w-2 mx-1 rounded-full ${
+          className={`h-[6px] w-[6px] mx-1 rounded-full ${
             selectedIndex === index
               ? 'bg-[#FF5CAA] dark:bg-[#FF1A88]'
               : 'bg-brand-100'

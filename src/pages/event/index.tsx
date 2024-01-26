@@ -2,123 +2,24 @@ import EventHeader from '@/components/SEO/Event'
 import {
   Box,
   Flex,
-  Heading,
   Input,
   InputGroup,
   InputLeftElement,
-  Text,
-  chakra,
 } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { EventInterestData } from './event.data'
 import { Search2Icon } from '@chakra-ui/icons'
 import { DatePickerDemo } from '@/components/ui/DatePicker'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselDots,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
-import Image from 'next/image'
-interface IEventData {
-  id: number
-  location: string
-  title: string
-  date: string
-}
-const eventMockData: IEventData[] = [
-  {
-    id: 1,
-    location: 'Le Carrousel du Louvre (Paris, France)',
-    title: '5th Edition Paris Blockchain Week',
-    date: 'April 8-12, 2024',
-  },
-  {
-    id: 2,
-    location: 'Rai, Amsterdam.',
-    title: 'Blockchain Expo Europe',
-    date: 'October 1-02, 2024',
-  },
-  {
-    id: 3,
-    location: 'AsiaWorld Expo, Airport Expo Blvd...',
-    title: 'Wow summit in Hong Kong',
-    date: 'march, 26-27,2024',
-  },
-  {
-    id: 4,
-    location: 'Dubai, Festival Arena',
-    title: 'Blockchain Life 2024',
-    date: 'April 15-16, 2024',
-  },
-  {
-    id: 5,
-    location: 'Le Carrousel du Louvre (Paris, France)',
-    title: '5th Edition Paris Blockchain Week',
-    date: 'April 8-12, 2024',
-  },
-  {
-    id: 6,
-    location: 'Rai, Amsterdam.',
-    title: 'Blockchain Expo Europe',
-    date: 'October 1-02, 2024',
-  },
-  {
-    id: 7,
-    location: 'AsiaWorld Expo, Airport Expo Blvd...',
-    title: 'Wow summit in Hong Kong',
-    date: 'march, 26-27,2024',
-  },
-  {
-    id: 8,
-    location: 'Dubai, Festival Arena',
-    title: 'Blockchain Life 2024',
-    date: 'April 15-16, 2024',
-  },
-]
+import TrendingEvent from '@/components/Event/TrendingEvent'
+import EventBanner from '@/components/Event/EventBanner'
+import EventInterest from '@/components/Event/EventInterest'
+import { RiArrowRightUpLine } from 'react-icons/ri'
+
 const EventPage = () => {
   return (
     <Box>
       <EventHeader />
-      <Flex
-        flexDirection={'column'}
-        w={{ md: '80%', base: '95%' }}
-        mx="auto"
-        py={'24'}
-        alignItems="center"
-      >
-        <Text
-          fontSize={{ xl: 'md', base: 'sm' }}
-          textAlign="center"
-          color={'brand.500'}
-        >
-          Events
-        </Text>
-        <Heading
-          fontSize={{ md: '4xl', base: '2xl', xl: '5xl' }}
-          mb={4}
-          fontWeight={'600'}
-          color={'wikiFlagTextColor'}
-          textAlign={'center'}
-          maxW={'1050px'}
-        >
-          Blockchain and cryptocurrency conferences around the world
-        </Heading>
-        <Text
-          fontSize={{ xl: 'lg', base: 'md' }}
-          textAlign="center"
-          maxW={'986px'}
-          color={'homeDescriptionColor'}
-        >
-          Learn from the industry experts on crypto trends, explore investment
-          opportunities, network with potential partners, connect with
-          like-minded individuals, and cultivate relationships for future
-          collaborations at global blockchain and crypto events and conferences.
-        </Text>
-      </Flex>
+      <EventBanner />
       <Box
         bgColor={'pageBg'}
         borderTop={'1px'}
@@ -164,89 +65,65 @@ const EventPage = () => {
             Search
           </button>
         </Flex>
-        <div className="mt-20 max-w-[1296px] mx-auto">
-          <h4 className="font-semibold text-xl">Trending Events</h4>
-          <div>
-            <Carousel>
-              <CarouselContent className="">
-                {eventMockData.map((event) => (
-                  <CarouselItem
-                    className="h-[350px] basis-1/3 xl:basis-1/4 rounded-xl relative w-full ml-4"
-                    key={event.id}
-                  >
-                    <Image
-                      src={'/images/blockchain-expo.png'}
-                      alt="blockchain-expo"
-                      fill
-                    />
-                    <div className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5">
-                      <div>
-                        <h5 className="text-sm">{event.location}</h5>
-                        <h5 className="text-xl font-semibold">{event.title}</h5>
-                        <h5 className="">{event.date}</h5>
+        <TrendingEvent />
+        <EventInterest />
+        <div className="flex gap-x-8 max-w-[1296px] mx-auto mt-24">
+          <div className="flex-1 h-[800px]">
+            <div className="flex justify-between items-end">
+              <div className="flex flex-col">
+                <h1 className="font-semibold text-xl">January</h1>
+                <span className="text-xs">Tuesday, 10 January 2024</span>
+              </div>
+              <span className="text-xs">
+                know any events not listed?{' '}
+                <span className="text-brand-800">Suggest events</span>
+              </span>
+            </div>
+            <div className="grid gap-5 mt-6 h-fit relative">
+              <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
+              <div className="flex gap-6">
+                <span className="rounded-full z-10 w-6 h-6 bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
+                  <RiArrowRightUpLine />
+                </span>
+                <div className="border bg-[#2D3748] rounded-xl px-3 h-fit py-[14px] w-full flex gap-9">
+                  <div className="flex flex-col">
+                    <div className="flex flex-col">
+                      <h3 className="font-semibold text-sm text-alpha-900">
+                        Crypto Finance Conference
+                      </h3>
+                      <p className="text-xs text-alpha-800 mt-1">
+                        CFC St. Moritz is a curated, application-only event
+                        designed for NFT investors and decision-makers. It
+                        admits only 250 international UHNWI, institutional
+                        investors, funds, and family offices.
+                      </p>
+                      <div className="flex items-center">
+                        <span>10th-13th, January 2024</span>
+                        <span>St. Moritz, Switzerland</span>
                       </div>
-                      <button
-                        type="button"
-                        className="px-2 py-[10px] rounded-[6px] font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
-                      >
-                        View event details
-                      </button>
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-              <CarouselDots />
-            </Carousel>
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 border border-gray300 rounded-[100px]">
+                        Crypto
+                      </div>
+                      <div className="p-3 border border-gray300 rounded-[100px]">
+                        Crypto
+                      </div>
+                      <div className="p-3 border border-gray300 rounded-[100px]">
+                        Crypto
+                      </div>
+                      <div className="p-3 border border-gray300 rounded-[100px]">
+                        Crypto
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-[140px] h-full" />
+                </div>
+              </div>
+            </div>
           </div>
+          <div className="flex-1 max-w-[419px] bg-alpha-500 h-[800px]" />
         </div>
-        <Flex
-          maxW={'1296px'}
-          mx={'auto'}
-          mt={'96px'}
-          borderRadius={'12px'}
-          border={'1px'}
-          borderColor={'archivedTextColor'}
-          bgColor={'#FFF'}
-          _dark={{
-            bgColor: '#2D3748',
-          }}
-          padding={'39px 31px'}
-          justifyContent={'space-between'}
-          gap={'127px'}
-        >
-          <Box maxW={'250px'} w={'full'}>
-            <Heading fontSize={'20px'}>Interests</Heading>
-            <Text fontSize={'14px'} mt={'12px'}>
-              Get event suggestion based on your interests.
-            </Text>
-          </Box>
-          <chakra.ul display={'flex'} flexWrap={'wrap'} gap={'12px'}>
-            {EventInterestData.map((interest) => {
-              return (
-                <chakra.li
-                  key={interest}
-                  borderRadius={'100000px'}
-                  border={'1px'}
-                  borderColor={'gray.200'}
-                  padding={'12px 20px'}
-                  fontSize={'14px'}
-                  listStyleType={'none'}
-                  cursor={'pointer'}
-                  _active={{
-                    bgColor: 'divider',
-                  }}
-                  _hover={{
-                    bgColor: 'divider',
-                  }}
-                >
-                  {interest}
-                </chakra.li>
-              )
-            })}
-          </chakra.ul>
-        </Flex>
       </Box>
     </Box>
   )
