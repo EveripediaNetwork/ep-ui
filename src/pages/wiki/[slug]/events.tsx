@@ -10,6 +10,7 @@ import NoEventView from '@/components/Wiki/Event/NoEventView'
 import NotFound from '@/pages/NotFound'
 import { Link } from '@/components/Elements'
 import { NextSeo } from 'next-seo'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Events = ({ wiki }: { wiki: Wiki }) => {
   let eventContent
@@ -107,7 +108,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context?.params?.slug
 
   if (typeof slug !== 'string') return { notFound: true }
@@ -123,6 +124,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       wiki,
+      ...(await serverSideTranslations(context.locale ?? 'en', [
+        'common',
+        'footer',
+      ])),
     },
   }
 }
