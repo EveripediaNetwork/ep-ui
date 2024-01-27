@@ -108,7 +108,7 @@ const Events = ({ wiki }: { wiki: Wiki }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug
 
   if (typeof slug !== 'string') return { notFound: true }
