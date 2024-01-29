@@ -1,6 +1,6 @@
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, useColorMode } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
+import React, { useMemo, useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
@@ -15,6 +15,7 @@ import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 interface WikiMainContentProps {
   wiki: Wiki
 }
+
 const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
@@ -54,10 +55,19 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   )
 })
 
-const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
+const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
+  const [isTranslating, setIsTranslating] = useState(false)
+  const [contentLang, setContentLang] = useState<'en' | 'ko'>('en')
+  const [wikiState, setWikiState] = useState({
+    title: wikiData.title,
+    content: wikiData.content,
+  })
   const { colorMode } = useColorMode()
 
-  let content = wiki?.content.replace(/<br( )*\/?>/g, '\n') || ''
+  const wikiTitle = wikiState.title ?? wikiData.title
+  const wikiContent = wikiState.content ?? wikiData.content
+
+  let content = wikiContent.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
   content.match(new RegExp(matchRegex, 'g'))?.forEach((match) => {
@@ -67,7 +77,61 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     }
   })
 
-  const modifiedContentWiki = { ...wiki, content }
+  const modifiedContentWiki = { ...wikiData, content }
+
+  useEffect(() => {
+    setWikiState({ title: wikiData.title, content: wikiData.content })
+  }, [])
+
+  const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' }) => {
+    const commonStyles = {
+      paddingX: 3,
+      fontWeight: 'medium',
+      fontSize: '14px',
+    }
+
+    const activeBtnStyle = {
+      color: 'brand.500',
+      bg: 'gray.700',
+      _hover: {
+        bgcolor: 'gray.700',
+      },
+      _active: {
+        bgcolor: 'gray.700',
+      },
+    }
+
+    const unactiveBtnStyle = {
+      bgColor: 'transparent',
+      _hover: {
+        color: 'brand.500',
+      },
+      _active: {
+        color: 'brand.100',
+      },
+    }
+
+    const styles = Object.assign(
+      commonStyles,
+      btnLocale === contentLang ? activeBtnStyle : unactiveBtnStyle,
+    )
+
+    const handleClick = () => {
+      setIsTranslating(true)
+
+      // setContentLang(btnLocale)
+    }
+
+    return (
+      <Button onClick={handleClick} sx={styles}>
+        {isTranslating && btnLocale !== contentLang ? (
+          <Spinner size="sm" color="white" />
+        ) : (
+          btnLocale.toUpperCase()
+        )}
+      </Button>
+    )
+  }
 
   return (
     <Box
@@ -79,6 +143,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
       minH={{ base: 'unset', xl: 'calc(100vh - 70px)' }}
       mb={{ xl: '3rem' }}
       borderColor="rankingListBorder"
+      position="relative"
     >
       <Heading
         mb={8}
@@ -88,7 +153,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           xl: 'block',
         }}
       >
-        {wiki?.title}
+        {wikiTitle}
       </Heading>
       <Box
         className={`${styles.markdownBody} ${
@@ -96,7 +161,20 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
         }`}
       >
         <MarkdownRender wiki={modifiedContentWiki} />
-        <WikiFlaggingSystem id={wiki.id} />
+        <WikiFlaggingSystem id={wikiData.id} />
+      </Box>
+      <Box
+        position="absolute"
+        right={-12}
+        top={6}
+        borderColor={'cardBorderColor'}
+        borderWidth={'1px'}
+        borderRadius={'lg'}
+        bgColor="transparent"
+        p={1.5}
+      >
+        <SwitchBtn btnLocale="en" />
+        <SwitchBtn btnLocale="ko" />
       </Box>
     </Box>
   )
