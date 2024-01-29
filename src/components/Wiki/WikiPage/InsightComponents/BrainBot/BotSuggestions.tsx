@@ -4,9 +4,10 @@ import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import { Wiki } from '@everipedia/iq-utils'
 import useStream from '@/hooks/useStream'
-import { QueryType } from '@/utils/BotUtils'
 import { useTranslation } from 'next-i18next'
-import useQueryTranslation from '@/hooks/useStream/useQueryTranslation'
+import useQueryTranslation, {
+  QueryType,
+} from '@/hooks/useStream/useQueryTranslation'
 
 export const BrainBotSuggestion = ({
   question,

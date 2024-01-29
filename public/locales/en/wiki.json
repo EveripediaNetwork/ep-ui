@@ -85,6 +85,9 @@
   "summarizeContentPrompt": "Summarize the wiki with the title,",
   "explainLikeFivePrompt": "Explain like I am a 5yr old the wiki with the title,",
   "chatBotInputPlaceholder": "Ask me anything",
+  "defaultQuery1": "You will be given question:",
+  "defaultQuery2": "answer with tools provided to you. you will also be given",
+  "defaultQuery3": "from where the user asked the question from",
   "brainBotTitle": "Get more insights on the article content with IQ GPT Chat",
   "more": "And more..."
 }

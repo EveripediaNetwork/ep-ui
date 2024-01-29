@@ -7,8 +7,8 @@ import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
-import { QueryType } from '@/utils/BotUtils'
 import { useTranslation } from 'next-i18next'
+import { QueryType } from '@/hooks/useStream/useQueryTranslation'
 
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const { t } = useTranslation('wiki')
