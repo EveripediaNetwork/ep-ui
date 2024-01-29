@@ -13,7 +13,6 @@ import { useTranslation } from 'next-i18next'
 const BrainBot = ({ wiki }: WikiInsightsProps) => {
   const { t } = useTranslation('wiki')
   const [open, setOpen] = useState(true)
-
   return (
     <>
       {open ? (

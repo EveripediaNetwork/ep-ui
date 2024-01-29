@@ -80,7 +80,10 @@
   "chatBotIntroMessage": "Hi There! Here are some cool stuff i can do for you.",
   "chatBotSuggestion1": "Ask me about crypto",
   "queryAdditionalInfo": "Generate additional info for this page",
+  "additionalInfoPrompt": "Generate additional information for the wiki with the title,",
   "queryContentPageSummary": "Content/page summary.",
+  "summarizeContentPrompt": "Summarize the wiki with the title,",
+  "explainLikeFivePrompt": "Explain like I am a 5yr old the wiki with the title,",
   "chatBotInputPlaceholder": "Ask me anything",
   "brainBotTitle": "Get more insights on the article content with IQ GPT Chat",
   "more": "And more..."

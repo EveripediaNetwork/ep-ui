@@ -6,6 +6,7 @@ import { Wiki } from '@everipedia/iq-utils'
 import useStream from '@/hooks/useStream'
 import { QueryType } from '@/utils/BotUtils'
 import { useTranslation } from 'next-i18next'
+import useQueryTranslation from '@/hooks/useStream/useQueryTranslation'
 
 export const BrainBotSuggestion = ({
   question,
@@ -19,6 +20,7 @@ export const BrainBotSuggestion = ({
   setOpen?: (state: boolean) => void
 }) => {
   const { askQuestion } = useStream()
+  const translatedQuery = useQueryTranslation(question, wiki)
 
   return (
     <HStack
@@ -32,7 +34,7 @@ export const BrainBotSuggestion = ({
         if (setOpen) {
           setOpen(true)
         }
-        askQuestion({ question, wiki })
+        askQuestion({ question, query: translatedQuery })
       }}
       _hover={{
         bgColor: 'brand.50',
