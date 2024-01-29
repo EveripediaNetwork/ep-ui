@@ -12,7 +12,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   const [chatInput, setChatInput] = useState('')
   const { askQuestion } = useStream()
   const dispatch = useDispatch()
-  const { isLoading } = useAppSelector(state => state.stream)
+  const { isLoading } = useAppSelector((state) => state.stream)
   const { t } = useTranslation('wiki')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
   }
 
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <HStack
         bgColor={'brainBotBg'}
         paddingBlock={'4px'}
