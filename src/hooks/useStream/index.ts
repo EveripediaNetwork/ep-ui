@@ -13,7 +13,7 @@ import { useAppSelector } from '@/store/hook'
 
 const useStream = () => {
   const dispatch = useDispatch()
-  const { currentChatId } = useAppSelector(state => state.message)
+  const { currentChatId } = useAppSelector((state) => state.message)
 
   const askQuestion = async ({
     question,
@@ -38,7 +38,7 @@ const useStream = () => {
         .post('/api/fetch-answer', {
           question: query,
         })
-        .then(res => {
+        .then((res) => {
           const { chat, answer, answerSources, messageId } =
             generateOutputSchema.parse(res.data)
 
@@ -55,7 +55,7 @@ const useStream = () => {
             }),
           )
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err)
           dispatch(setIsError(true))
         })
