@@ -29,9 +29,6 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
     askQuestion({
       question: message,
       query: `You will be given question: ${message}. answer with tools provided to you. you will also be given  ${wiki.title} from where the user asked the question from`,
-      // query: `${t('defaultQuery1')} ${message}. ${t('defaultQuery2')}  ${
-      //   wiki.title
-      // } ${t('defaultQuery3')}`,
     })
     setChatInput('')
   }
