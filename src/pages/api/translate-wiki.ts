@@ -19,7 +19,7 @@ export default async function handler(
           {
             role: 'system',
             content:
-              'You will be provided with a peice of markdown text in English, and your task is to translate it into Korean.',
+              'You will be provided with a peice of markdown text in English, and your task is to translate it into Korean. If the name of an individual is provided, return the name as is',
           },
           {
             role: 'user',
