@@ -116,10 +116,24 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
       btnLocale === contentLang ? activeBtnStyle : unactiveBtnStyle,
     )
 
-    const handleClick = () => {
+    const handleClick = async () => {
       setIsTranslating(true)
 
-      // setContentLang(btnLocale)
+      const response = await fetch('/api/translate-wiki', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: wikiData.title,
+          content: wikiData.content,
+        }),
+      })
+
+      const data = await response.json()
+      setWikiState({ title: data.title, content: data.content.join('\n\n') })
+      setContentLang(btnLocale)
+      setIsTranslating(false)
     }
 
     return (
