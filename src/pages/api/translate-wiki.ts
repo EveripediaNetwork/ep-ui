@@ -9,8 +9,7 @@ export default async function handler(
   const { content, title } = req.body
   if (!content || !title)
     return res.status(400).json({ msg: 'Title or content is missing ' })
-  let chunks = getWikiChunks(content)
-  chunks = [title, ...chunks]
+  const chunks = getWikiChunks(content)
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
   const [translatedTitle, ...translatedTexts] = await Promise.all(
@@ -35,10 +34,9 @@ export default async function handler(
     }),
   )
 
-  const [koreanTitle, ...koreanTexts] = [
-    translatedTitle,
-    ...translatedTexts,
-  ].map((result) => result.choices[0].message.content)
+  const translatedContent = [translatedTitle, ...translatedTexts].map(
+    (result) => result.choices[0].message.content,
+  )
 
-  return res.json({ title: koreanTitle, content: koreanTexts })
+  return res.json({ content: translatedContent })
 }

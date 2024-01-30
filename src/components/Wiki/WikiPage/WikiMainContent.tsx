@@ -55,23 +55,14 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   )
 })
 
-interface WikiState {
-  title: string
-  content: string
-}
-
 const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [isTranslating, setIsTranslating] = useState(false)
   const [contentLang, setContentLang] = useState<'en' | 'ko'>('en')
-  const [wikiState, setWikiState] = useState({
-    title: wikiData.title,
-    content: wikiData.content,
-  })
-  const cachedWikiTranslation = useRef<WikiState | null>(null)
+  const [wikiContentState, setWikiContentState] = useState(wikiData.content)
+  const cachedWikiTranslation = useRef<string | null>(null)
   const { colorMode } = useColorMode()
 
-  const wikiTitle = wikiState.title ?? wikiData.title
-  const wikiContent = wikiState.content ?? wikiData.content
+  const wikiContent = wikiContentState ?? wikiData.content
 
   let content = wikiContent.replace(/<br( )*\/?>/g, '\n') || ''
 
@@ -86,7 +77,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const modifiedContentWiki = { ...wikiData, content }
 
   useEffect(() => {
-    setWikiState({ title: wikiData.title, content: wikiData.content })
+    setWikiContentState(wikiData.content)
   }, [])
 
   const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' }) => {
@@ -126,7 +117,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
       if (btnLocale !== contentLang) {
         if (contentLang === 'en') {
           if (cachedWikiTranslation.current) {
-            setWikiState(cachedWikiTranslation.current)
+            setWikiContentState(cachedWikiTranslation.current)
             setContentLang(btnLocale)
             return
           }
@@ -144,20 +135,14 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
             }),
           })
 
-          const data = await response.json()
-          const wikiState = {
-            title: data.title,
-            content: data.content.join('\n\n'),
-          }
-          setWikiState(wikiState)
-          cachedWikiTranslation.current = wikiState
+          const result = await response.json()
+          const translatedContent = result.content.join('\n\n')
+          setWikiContentState(translatedContent)
+          cachedWikiTranslation.current = translatedContent
           setContentLang(btnLocale)
           setIsTranslating(false)
         } else {
-          setWikiState({
-            title: wikiData.title,
-            content: wikiData.content,
-          })
+          setWikiContentState(wikiData.content)
           setContentLang(btnLocale)
         }
       }
@@ -194,7 +179,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
           xl: 'block',
         }}
       >
-        {wikiTitle}
+        {wikiData.title}
       </Heading>
       <Box
         className={`${styles.markdownBody} ${
