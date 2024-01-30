@@ -1,6 +1,6 @@
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
@@ -55,6 +55,11 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   )
 })
 
+interface WikiState {
+  title: string
+  content: string
+}
+
 const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [isTranslating, setIsTranslating] = useState(false)
   const [contentLang, setContentLang] = useState<'en' | 'ko'>('en')
@@ -62,6 +67,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     title: wikiData.title,
     content: wikiData.content,
   })
+  const cachedWikiTranslation = useRef<WikiState | null>(null)
   const { colorMode } = useColorMode()
 
   const wikiTitle = wikiState.title ?? wikiData.title
@@ -117,23 +123,44 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     )
 
     const handleClick = async () => {
-      setIsTranslating(true)
+      if (btnLocale !== contentLang) {
+        if (contentLang === 'en') {
+          if (cachedWikiTranslation.current) {
+            setWikiState(cachedWikiTranslation.current)
+            setContentLang(btnLocale)
+            return
+          }
 
-      const response = await fetch('/api/translate-wiki', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: wikiData.title,
-          content: wikiData.content,
-        }),
-      })
+          setIsTranslating(true)
 
-      const data = await response.json()
-      setWikiState({ title: data.title, content: data.content.join('\n\n') })
-      setContentLang(btnLocale)
-      setIsTranslating(false)
+          const response = await fetch('/api/translate-wiki', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: wikiData.title,
+              content: wikiData.content,
+            }),
+          })
+
+          const data = await response.json()
+          const wikiState = {
+            title: data.title,
+            content: data.content.join('\n\n'),
+          }
+          setWikiState(wikiState)
+          cachedWikiTranslation.current = wikiState
+          setContentLang(btnLocale)
+          setIsTranslating(false)
+        } else {
+          setWikiState({
+            title: wikiData.title,
+            content: wikiData.content,
+          })
+          setContentLang(btnLocale)
+        }
+      }
     }
 
     return (
