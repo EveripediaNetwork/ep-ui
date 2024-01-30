@@ -11,6 +11,8 @@ import { customImageRender } from './CustomRenderers/customImageRender'
 import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 interface WikiMainContentProps {
   wiki: Wiki
@@ -61,6 +63,8 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [wikiContentState, setWikiContentState] = useState(wikiData.content)
   const cachedWikiTranslation = useRef<string | null>(null)
   const { colorMode } = useColorMode()
+  const locale = useSelector((state: RootState) => state.app.language)
+  const isLocaleKorean = locale === 'ko'
 
   const wikiContent = wikiContentState ?? wikiData.content
 
@@ -189,19 +193,21 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
         <MarkdownRender wiki={modifiedContentWiki} />
         <WikiFlaggingSystem id={wikiData.id} />
       </Box>
-      <Box
-        position="absolute"
-        right={-12}
-        top={6}
-        borderColor={'cardBorderColor'}
-        borderWidth={'1px'}
-        borderRadius={'lg'}
-        bgColor="transparent"
-        p={1.5}
-      >
-        <SwitchBtn btnLocale="en" />
-        <SwitchBtn btnLocale="ko" />
-      </Box>
+      {isLocaleKorean && (
+        <Box
+          position="absolute"
+          right={-12}
+          top={6}
+          borderColor={'cardBorderColor'}
+          borderWidth={'1px'}
+          borderRadius={'lg'}
+          bgColor="transparent"
+          p={1.5}
+        >
+          <SwitchBtn btnLocale="en" />
+          <SwitchBtn btnLocale="ko" />
+        </Box>
+      )}
     </Box>
   )
 }
