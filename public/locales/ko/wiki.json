@@ -80,8 +80,14 @@
   "chatBotIntroMessage": "안녕하세요! 여러분을 위해 할 수 있는 멋진 일이 있어요.",
   "chatBotSuggestion1": "암호화폐에 대해 물어봐주세요",
   "queryAdditionalInfo": "이 페이지에 대한 추가 정보 생성",
+  "additionalInfoPrompt": "제목이 있는 위키에 대한 추가 정보를 생성합니다.",
   "queryContentPageSummary": "콘텐츠/페이지 요약.",
+  "summarizeContentPrompt": "위키를 제목으로 요약하면,",
+  "explainLikeFivePrompt": "제목이 있는 위키를 제가 5살 된 것처럼 설명하고,",
   "chatBotInputPlaceholder": "아무거나 물어봐주세요",
+  "defaultQuery1": "다음과 같은 질문이 주어집니다:",
+  "defaultQuery2": "귀하에게 제공된 도구를 사용하여 답변하십시오. 사용자가 질문을 한 곳에서",
+  "defaultQuery3": "도 제공됩니다",
   "brainBotTitle": "기사 내용을 더 깊이 이해하세요 - IQ GPT 채팅",
   "more": "그리고 더 많이..."
 }
