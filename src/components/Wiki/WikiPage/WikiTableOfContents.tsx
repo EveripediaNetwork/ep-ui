@@ -162,7 +162,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
             spacing={4}
             align="start"
             position="sticky"
-            // top="calc(70px + 30px + 2px)"
+            top="calc(70px + 30px + 2px)"
           >
             <Flex w="100%" justify="end">
               <IconButton
