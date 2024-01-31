@@ -92,10 +92,16 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     }
 
     const activeBtnStyle = {
+      bg: 'white',
       color: 'brand.500',
-      bg: 'gray.700',
+      boxShadow: 'sm',
+      _dark: {
+        color: 'brand.500',
+        bg: 'gray.700',
+      },
       _hover: {
         bgcolor: 'gray.700',
+        color: 'brand.500',
       },
       _active: {
         bgcolor: 'gray.700',
@@ -103,12 +109,16 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     }
 
     const unactiveBtnStyle = {
+      color: 'gray.500',
       bgColor: 'transparent',
+      _dark: {
+        color: 'white',
+      },
       _hover: {
-        color: 'brand.500',
+        bgColor: 'transparent',
       },
       _active: {
-        color: 'brand.100',
+        bgcolor: 'transparent',
       },
     }
 
@@ -155,7 +165,10 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     return (
       <Button onClick={handleClick} sx={styles}>
         {isTranslating && btnLocale !== contentLang ? (
-          <Spinner size="sm" color="white" />
+          <Spinner
+            size="sm"
+            sx={{ color: 'brand.500', _dark: { color: 'white' } }}
+          />
         ) : (
           btnLocale.toUpperCase()
         )}
@@ -182,9 +195,34 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
           md: 'none',
           xl: 'block',
         }}
+        width="75%"
       >
         {wikiData.title}
       </Heading>
+      {isLocaleKorean && (
+        <Box
+          sx={{
+            position: { base: 'unset', xl: 'absolute' },
+            right: { base: 'unset', xl: 12 },
+            top: { base: 'unset', xl: 6 },
+            width: '105px',
+            marginX: 'auto',
+            marginBottom: '26px',
+            textAlign: 'center',
+            borderColor: 'gray.200',
+            borderWidth: '1px',
+            borderRadius: 'lg',
+            bgColor: 'transparent',
+            p: 1.5,
+            _dark: {
+              borderColor: 'cardBorderColor',
+            },
+          }}
+        >
+          <SwitchBtn btnLocale="en" />
+          <SwitchBtn btnLocale="ko" />
+        </Box>
+      )}
       <Box
         className={`${styles.markdownBody} ${
           colorMode === 'dark' && styles.markdownBodyDark
@@ -193,21 +231,6 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
         <MarkdownRender wiki={modifiedContentWiki} />
         <WikiFlaggingSystem id={wikiData.id} />
       </Box>
-      {isLocaleKorean && (
-        <Box
-          position="absolute"
-          right={-12}
-          top={6}
-          borderColor={'cardBorderColor'}
-          borderWidth={'1px'}
-          borderRadius={'lg'}
-          bgColor="transparent"
-          p={1.5}
-        >
-          <SwitchBtn btnLocale="en" />
-          <SwitchBtn btnLocale="ko" />
-        </Box>
-      )}
     </Box>
   )
 }
