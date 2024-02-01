@@ -8,4 +8,6 @@ export interface NavItem {
   icon?: IconType
   subItem?: NavItem[]
   target?: string
+  onClick?: () => void
+  isLocale?: boolean
 }

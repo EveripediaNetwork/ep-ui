@@ -8,48 +8,62 @@ import {
   Box,
   LinkBox,
   FlexProps,
+  Button,
 } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import useLanguageChange from '@/hooks/useLanguageChange'
+import { useTranslation } from 'next-i18next'
 
-const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
-  <LinkBox
-    display="flex"
-    py={3}
-    justifyContent="space-between"
-    alignItems="center"
-    _hover={{
-      textDecoration: 'none',
-    }}
-    fontSize="lg"
-    px={6}
-    {...rest}
-  >
-    <HStack>
-      {item.hasImage && (
-        <Icon
-          cursor="pointer"
-          fontSize="3xl"
-          color="linkColor"
-          fontWeight={600}
-          as={item.icon}
-          pr={3}
-        />
-      )}
+const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => {
+  const { t } = useTranslation('common')
+  const { handleLangChange } = useLanguageChange()
+  return (
+    <LinkBox
+      display="flex"
+      py={3}
+      justifyContent="space-between"
+      alignItems="center"
+      _hover={{
+        textDecoration: 'none',
+      }}
+      fontSize="lg"
+      px={6}
+      {...rest}
+    >
+      <HStack>
+        {item.hasImage && (
+          <Icon
+            cursor="pointer"
+            fontSize="3xl"
+            color="linkColor"
+            fontWeight={600}
+            as={item.icon}
+            pr={3}
+          />
+        )}
 
-      <LinkOverlay
-        href={item.href}
-        fontWeight={600}
-        target={item.target}
-        color="linkColor"
-      >
-        {item.label}
-      </LinkOverlay>
-    </HStack>
-    {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
-  </LinkBox>
-)
+        {item.isLocale ? (
+          <Button
+            bg="transparent"
+            w="full"
+            fontWeight={600}
+            color="linkColor"
+            textAlign="left"
+            paddingLeft={2}
+            onClick={() => handleLangChange(item.href)}
+          >
+            {t(item.label)}
+          </Button>
+        ) : (
+          <LinkOverlay href={item.href}>{t(item.label)}</LinkOverlay>
+        )}
+      </HStack>
+      {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
+    </LinkBox>
+  )
+}
 
 const MobileSubNav = ({
   activeMenu,
@@ -61,53 +75,56 @@ const MobileSubNav = ({
   setShowSubNav: (status: boolean) => void
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
   setActiveMenu: (menu: NavItem | null) => void
-}) => (
-  <Stack
-    direction="column"
-    pb={6}
-    display={{ lg: 'flex', xl: 'none' }}
-    bg="subMenuBg"
-    spacing={4}
-    height="xl"
-  >
-    <Flex
-      justify="flex-start"
-      align="center"
-      _hover={{
-        textDecoration: 'none',
-      }}
-      fontSize="lg"
-      cursor="pointer"
-      onClick={() => setShowSubNav(false)}
-      bg="pageBg"
-      p={4}
-      borderBottomColor="gray.200"
-      borderBottomWidth="thin"
+}) => {
+  const { t } = useTranslation('common')
+  return (
+    <Stack
+      direction="column"
+      pb={6}
+      display={{ lg: 'flex', xl: 'none' }}
+      bg="subMenuBg"
+      spacing={4}
+      height="xl"
     >
-      <RiArrowLeftSLine size="30" />
-      <Text fontWeight={600} color="color">
-        {activeMenu?.label}
-      </Text>
-    </Flex>
-    <Box h="calc(100vh - 300px)" px={4} overflowY="scroll">
-      {activeMenu?.subItem?.map((item, key) => {
-        if (item.subItem) {
+      <Flex
+        justify="flex-start"
+        align="center"
+        _hover={{
+          textDecoration: 'none',
+        }}
+        fontSize="lg"
+        cursor="pointer"
+        onClick={() => setShowSubNav(false)}
+        bg="pageBg"
+        p={4}
+        borderBottomColor="gray.200"
+        borderBottomWidth="thin"
+      >
+        <RiArrowLeftSLine size="30" />
+        <Text fontWeight={600} color="color">
+          {t(activeMenu?.label ?? '')}
+        </Text>
+      </Flex>
+      <Box h="calc(100vh - 300px)" px={4} overflowY="scroll">
+        {activeMenu?.subItem?.map((item, key) => {
+          if (item.subItem) {
+            return (
+              <Box onClick={() => setActiveMenu(item)}>
+                <MobileSubNavItem key={key} item={item} />
+              </Box>
+            )
+          }
           return (
-            <Box onClick={() => setActiveMenu(item)}>
-              <MobileSubNavItem key={key} item={item} />
-            </Box>
+            <MobileSubNavItem
+              key={key}
+              item={item}
+              onClick={() => setHamburger(false)}
+            />
           )
-        }
-        return (
-          <MobileSubNavItem
-            key={key}
-            item={item}
-            onClick={() => setHamburger(false)}
-          />
-        )
-      })}
-    </Box>
-  </Stack>
-)
+        })}
+      </Box>
+    </Stack>
+  )
+}
 
 export default MobileSubNav
