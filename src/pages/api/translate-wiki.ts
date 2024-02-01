@@ -38,6 +38,5 @@ export default async function handler(
     (result) => result.choices[0].message.content,
   )
 
-  console.log('Content: ', translatedContent.join('\n\n'))
   return res.json({ content: translatedContent })
 }
