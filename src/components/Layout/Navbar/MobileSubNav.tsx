@@ -8,48 +8,60 @@ import {
   Box,
   LinkBox,
   FlexProps,
+  Button,
 } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import useLanguageChange from '@/hooks/useLanguageChange'
 
-const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => (
-  <LinkBox
-    display="flex"
-    py={3}
-    justifyContent="space-between"
-    alignItems="center"
-    _hover={{
-      textDecoration: 'none',
-    }}
-    fontSize="lg"
-    px={6}
-    {...rest}
-  >
-    <HStack>
-      {item.hasImage && (
-        <Icon
-          cursor="pointer"
-          fontSize="3xl"
-          color="linkColor"
-          fontWeight={600}
-          as={item.icon}
-          pr={3}
-        />
-      )}
+const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => {
+  const { handleLangChange } = useLanguageChange()
+  return (
+    <LinkBox
+      display="flex"
+      py={3}
+      justifyContent="space-between"
+      alignItems="center"
+      _hover={{
+        textDecoration: 'none',
+      }}
+      fontSize="lg"
+      px={6}
+      {...rest}
+    >
+      <HStack>
+        {item.hasImage && (
+          <Icon
+            cursor="pointer"
+            fontSize="3xl"
+            color="linkColor"
+            fontWeight={600}
+            as={item.icon}
+            pr={3}
+          />
+        )}
 
-      <LinkOverlay
-        href={item.href}
-        fontWeight={600}
-        target={item.target}
-        color="linkColor"
-      >
-        {item.label}
-      </LinkOverlay>
-    </HStack>
-    {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
-  </LinkBox>
-)
+        {item.isLocale ? (
+          <Button
+            bg="transparent"
+            w="full"
+            fontWeight={600}
+            color="linkColor"
+            textAlign="left"
+            paddingLeft={2}
+            onClick={() => handleLangChange(item.href)}
+          >
+            {item.label}
+          </Button>
+        ) : (
+          <LinkOverlay href={item.href}>{item.label}</LinkOverlay>
+        )}
+      </HStack>
+      {item.subItem && <Icon as={RiArrowRightSLine} fontSize={24} />}
+    </LinkBox>
+  )
+}
 
 const MobileSubNav = ({
   activeMenu,
