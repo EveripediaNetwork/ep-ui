@@ -19,12 +19,11 @@ export default async function handler(
         messages: [
           {
             role: 'system',
-            content: `You will be provided with a peice of markdown text in English, and your task is to translate it into Korean using the following rules:
-               1. Leave markdown formatting exactly as is, only change parts of the text that can be translated to korean
-               2. If the name of an individual is provided, return the name as is, don't translate the 
-               3. If the name of a token or organization is provided, return the name as is, don't translate it
-               4. Verify that the markdown produced is correct
-               `,
+            content: `You will be provided with a peice of markdown text in English. Your task is to translate it into Korean, preserving the formatting. Note the following:
+              1. Any peice of text surrounded by double asterisks should be immediately fellowed by a space. 
+              For example: **ABC**D becomes **ABC** D .Where A, B, C are letters in Korean.
+              Example 2: **리플 (Ripple)**은 becomes **리플 (Ripple)** 은 
+              `,
           },
           {
             role: 'user',
@@ -39,5 +38,6 @@ export default async function handler(
     (result) => result.choices[0].message.content,
   )
 
+  console.log('Content: ', translatedContent.join('\n\n'))
   return res.json({ content: translatedContent })
 }
