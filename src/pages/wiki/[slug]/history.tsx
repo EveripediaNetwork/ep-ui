@@ -125,14 +125,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
   )
 
   if (wikiHistoryError)
-    throw new Error(`Error fetching wiki history: ${wikiHistoryError}`)
+    throw new Error(`Error fetching wiki history: ${wikiHistoryError.message}`)
 
   const { data: wiki, error: wikiError } = await store.dispatch(
     getWiki.initiate(slug),
   )
 
   if (wikiError)
-    throw new Error(`Error fetching latest wiki for history: ${wikiError}`)
+    throw new Error(
+      `Error fetching latest wiki for history: ${wikiError.message}`,
+    )
 
   return {
     props: {

@@ -24,7 +24,6 @@ const Wiki = ({ wiki }: WikiProps) => {
     { base: 'base', md: 'md', xl: 'xl', '2xl': '2xl' },
     { fallback: '2xl' },
   )
-
   useEffect(() => {
     if (scrollRef.current && breakpoint === 'base') {
       scrollRef.current.scrollIntoView({
