@@ -59,7 +59,7 @@ const DesktopNav = () => {
               bg: 'transparent',
             },
           }}
-          rightIcon={<ChevronDownIcon />}
+          rightIcon={<ChevronDownIcon color="linkColor" />}
         >
           {langFlagMap[lang]}
         </MenuButton>
