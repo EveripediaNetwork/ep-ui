@@ -34,14 +34,13 @@ import useLanguageChange from '@/hooks/useLanguageChange'
 const Footer = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const locale = router.locale
   const { t } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
-  const { handleLangChange } = useLanguageChange()
-  const locale = router.locale
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
-  const lang =
-    userSelectedLanguage ??
-    useSelector((state: RootState) => state.app.language)
+  const langState = useSelector((state: RootState) => state.app.language)
+  const lang = userSelectedLanguage ?? langState
+  const { handleLangChange } = useLanguageChange()
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
     bg: '#fff',
