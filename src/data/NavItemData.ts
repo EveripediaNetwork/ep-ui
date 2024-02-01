@@ -23,7 +23,9 @@ import {
   RiSearchEyeFill,
   RiStarSFill,
 } from 'react-icons/ri'
+import { IoGlobeOutline } from 'react-icons/io5'
 import { NavItem } from '@/types/NavItemType'
+import { Icons } from '@/components/Layout/Navbar/Icons'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -205,6 +207,30 @@ export const MOBILE_NAV_ITEMS = ({
 }: {
   address: string | undefined
 }): NavItem[] => [
+  {
+    id: -1,
+    label: 'Language',
+    href: '#',
+    icon: IoGlobeOutline,
+    subItem: [
+      {
+        id: 101,
+        label: 'English',
+        icon: Icons.en,
+        href: 'en',
+        isLocale: true,
+        hasImage: true,
+      },
+      {
+        id: 102,
+        label: 'Korean',
+        icon: Icons.ko,
+        href: 'ko',
+        isLocale: true,
+        hasImage: true,
+      },
+    ],
+  },
   ...NAV_ITEMS,
   {
     id: 7,

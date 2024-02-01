@@ -4,6 +4,7 @@ import { RiArrowRightSLine } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import { StaticContent } from '@/components/StaticElement'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
+import { useTranslation } from 'next-i18next'
 
 interface MobileNavItemProps {
   navItem: NavItem
@@ -12,6 +13,7 @@ interface MobileNavItemProps {
 
 const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
   const { onToggle } = useDisclosure()
+  const { t } = useTranslation('common')
   return (
     <StaticContent>
       <LinkBox
@@ -37,7 +39,7 @@ const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
         />
         {navItem.href === '#' ? (
           <Text fontWeight="semibold" color="linkColor" cursor="pointer">
-            {navItem.label}
+            {t(navItem.label)}
           </Text>
         ) : (
           <LinkOverlay
@@ -46,7 +48,7 @@ const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
             color="linkColor"
             mr="auto"
           >
-            {navItem.label}
+            {t(navItem.label)}
           </LinkOverlay>
         )}
         <Text color="linkColor" cursor="pointer" ml="auto">

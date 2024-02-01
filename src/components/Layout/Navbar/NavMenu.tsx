@@ -38,7 +38,7 @@ const NavMenu = ({
         pr={4}
         fontSize="14px"
         fontWeight={600}
-        height="70px"
+        height="24px"
         color="linkColor"
         _hover={{
           textDecoration: 'none',

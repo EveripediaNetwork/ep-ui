@@ -1,6 +1,6 @@
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, useColorMode } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
@@ -11,10 +11,13 @@ import { customImageRender } from './CustomRenderers/customImageRender'
 import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 interface WikiMainContentProps {
   wiki: Wiki
 }
+
 const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
@@ -54,10 +57,18 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   )
 })
 
-const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
+const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
+  const [isTranslating, setIsTranslating] = useState(false)
+  const [contentLang, setContentLang] = useState<'en' | 'ko'>('en')
+  const [wikiContentState, setWikiContentState] = useState(wikiData.content)
+  const cachedWikiTranslation = useRef<string | null>(null)
   const { colorMode } = useColorMode()
+  const locale = useSelector((state: RootState) => state.app.language)
+  const isLocaleKorean = locale === 'ko'
 
-  let content = wiki?.content.replace(/<br( )*\/?>/g, '\n') || ''
+  const wikiContent = wikiContentState ?? wikiData.content
+
+  let content = wikiContent.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
   content.match(new RegExp(matchRegex, 'g'))?.forEach((match) => {
@@ -67,7 +78,103 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
     }
   })
 
-  const modifiedContentWiki = { ...wiki, content }
+  const modifiedContentWiki = { ...wikiData, content }
+
+  useEffect(() => {
+    setWikiContentState(wikiData.content)
+  }, [])
+
+  const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' }) => {
+    const commonStyles = {
+      paddingX: 3,
+      fontWeight: 'medium',
+      fontSize: '14px',
+    }
+
+    const activeBtnStyle = {
+      bg: 'white',
+      color: 'brand.500',
+      boxShadow: 'sm',
+      _dark: {
+        color: 'brand.500',
+        bg: 'gray.700',
+      },
+      _hover: {
+        bgcolor: 'gray.700',
+        color: 'brand.500',
+      },
+      _active: {
+        bgcolor: 'gray.700',
+      },
+    }
+
+    const unactiveBtnStyle = {
+      color: 'gray.500',
+      bgColor: 'transparent',
+      _dark: {
+        color: 'white',
+      },
+      _hover: {
+        bgColor: 'transparent',
+      },
+      _active: {
+        bgcolor: 'transparent',
+      },
+    }
+
+    const styles = Object.assign(
+      commonStyles,
+      btnLocale === contentLang ? activeBtnStyle : unactiveBtnStyle,
+    )
+
+    const handleClick = async () => {
+      if (btnLocale !== contentLang) {
+        if (contentLang === 'en') {
+          if (cachedWikiTranslation.current) {
+            setWikiContentState(cachedWikiTranslation.current)
+            setContentLang(btnLocale)
+            return
+          }
+
+          setIsTranslating(true)
+
+          const response = await fetch('/api/translate-wiki', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: wikiData.title,
+              content: wikiData.content,
+            }),
+          })
+
+          const result = await response.json()
+          const translatedContent = result.content.join('\n\n')
+          setWikiContentState(translatedContent)
+          cachedWikiTranslation.current = translatedContent
+          setContentLang(btnLocale)
+          setIsTranslating(false)
+        } else {
+          setWikiContentState(wikiData.content)
+          setContentLang(btnLocale)
+        }
+      }
+    }
+
+    return (
+      <Button onClick={handleClick} sx={styles}>
+        {isTranslating && btnLocale !== contentLang ? (
+          <Spinner
+            size="sm"
+            sx={{ color: 'brand.500', _dark: { color: 'white' } }}
+          />
+        ) : (
+          btnLocale.toUpperCase()
+        )}
+      </Button>
+    )
+  }
 
   return (
     <Box
@@ -79,6 +186,7 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
       minH={{ base: 'unset', xl: 'calc(100vh - 70px)' }}
       mb={{ xl: '3rem' }}
       borderColor="rankingListBorder"
+      position="relative"
     >
       <Heading
         mb={8}
@@ -87,16 +195,41 @@ const WikiMainContent = ({ wiki }: WikiMainContentProps) => {
           md: 'none',
           xl: 'block',
         }}
+        width="75%"
       >
-        {wiki?.title}
+        {wikiData.title}
       </Heading>
+      {isLocaleKorean && (
+        <Box
+          sx={{
+            position: { base: 'unset', xl: 'absolute' },
+            right: { base: 'unset', xl: 12 },
+            top: { base: 'unset', xl: 6 },
+            width: '105px',
+            marginX: 'auto',
+            marginBottom: '26px',
+            textAlign: 'center',
+            borderColor: 'gray.200',
+            borderWidth: '1px',
+            borderRadius: 'lg',
+            bgColor: 'transparent',
+            p: 1.5,
+            _dark: {
+              borderColor: 'cardBorderColor',
+            },
+          }}
+        >
+          <SwitchBtn btnLocale="en" />
+          <SwitchBtn btnLocale="ko" />
+        </Box>
+      )}
       <Box
         className={`${styles.markdownBody} ${
           colorMode === 'dark' && styles.markdownBodyDark
         }`}
       >
         <MarkdownRender wiki={modifiedContentWiki} />
-        <WikiFlaggingSystem id={wiki.id} />
+        <WikiFlaggingSystem id={wikiData.id} />
       </Box>
     </Box>
   )
