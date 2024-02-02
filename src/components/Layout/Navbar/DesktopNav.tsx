@@ -58,6 +58,7 @@ const DesktopNav = () => {
           }}
           rightIcon={<ChevronDownIcon color="linkColor" />}
           iconSpacing={1}
+          defaultValue={lang}
         >
           {lang.toUpperCase()}
         </MenuButton>
