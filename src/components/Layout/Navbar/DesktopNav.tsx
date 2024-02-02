@@ -17,13 +17,7 @@ import { languageData } from '@/data/LanguageData'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { Icons } from './Icons'
 import useLanguageChange from '@/hooks/useLanguageChange'
-
-const langFlagMap: Record<'en' | 'ko', JSX.Element> = {
-  en: <Icons.en />,
-  ko: <Icons.ko />,
-}
 
 const DesktopNav = () => {
   const router = useRouter()
@@ -52,6 +46,9 @@ const DesktopNav = () => {
           bg="transparent"
           sx={{
             marginRight: 4,
+            fontWeight: 600,
+            fontSize: 'sm',
+            color: 'linkColor',
             _active: {
               bg: 'transparent',
             },
@@ -60,8 +57,9 @@ const DesktopNav = () => {
             },
           }}
           rightIcon={<ChevronDownIcon color="linkColor" />}
+          iconSpacing={1}
         >
-          {langFlagMap[lang]}
+          {lang.toUpperCase()}
         </MenuButton>
         <MenuList color="linkColor">
           <MenuOptionGroup type="radio" onChange={handleLangChange}>
