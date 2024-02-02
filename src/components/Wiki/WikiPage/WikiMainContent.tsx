@@ -128,6 +128,13 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     )
 
     const handleClick = async () => {
+      gtag('event', 'translate_btn_click', {
+        event_category: 'Wiki Translation',
+        event_label: 'Translate Button Click',
+        'wiki-id': wikiData.id,
+        lang: btnLocale,
+      })
+
       if (btnLocale !== contentLang) {
         if (contentLang === 'en') {
           if (cachedWikiTranslation.current) {
