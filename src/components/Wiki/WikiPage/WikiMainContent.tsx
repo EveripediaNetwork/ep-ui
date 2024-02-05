@@ -82,7 +82,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
 
   useEffect(() => {
     setWikiContentState(wikiData.content)
-  }, [])
+  }, [wikiData.content])
 
   const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' }) => {
     const commonStyles = {
