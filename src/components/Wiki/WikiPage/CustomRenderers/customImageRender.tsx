@@ -12,9 +12,7 @@ export const customImageRender = ({
   return (
     <Image
       quality={95}
-      loader={
-        typeof src === 'string' && src.startsWith('http') ? cfLoader : undefined
-      }
+      loader={cfLoader}
       src={src || ''}
       alt="wiki"
       width={900}
