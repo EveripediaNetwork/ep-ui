@@ -20,7 +20,7 @@ export default async function handler(
         messages: [
           {
             role: 'system',
-            content: `You will be provided with a peice of markdown text in English. Your task is to output the text in Korean, preserving the formatting. While outputing the translation, make sure to do the following:
+            content: `You will be provided with a piece of markdown text in English. Your task is to output the text in Korean, preserving the formatting. While outputing the translation, make sure to do the following:
               1. Do not translate names to Korean, output names the way they are in the original english text
               1. Any peice of characters that start and end with double asterisks(**) should be immediately fellowed by an empty space( ). 
               For example, **리플 (Ripple)**은 should be replaced with **리플 (Ripple)** 은

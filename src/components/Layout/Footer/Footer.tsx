@@ -116,8 +116,8 @@ const Footer = () => {
               />
               <Box>
                 <Menu>
-                  <MenuButton fontSize="sm">
-                    {lang.toUpperCase()} <ChevronDownIcon />
+                  <MenuButton fontSize="sm" textTransform={'uppercase'}>
+                    {lang} <ChevronDownIcon />
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>

@@ -7,6 +7,7 @@ import {
   MenuList,
   MenuOptionGroup,
   Button,
+  chakra,
 } from '@chakra-ui/react'
 import { NAV_ITEMS } from '@/data/NavItemData'
 import { NavMenu } from '@/components/Layout/Navbar'
@@ -60,7 +61,7 @@ const DesktopNav = () => {
           iconSpacing={1}
           defaultValue={lang}
         >
-          {lang.toUpperCase()}
+          <chakra.span textTransform={'uppercase'}>{lang}</chakra.span>
         </MenuButton>
         <MenuList color="linkColor">
           <MenuOptionGroup type="radio" onChange={handleLangChange}>
