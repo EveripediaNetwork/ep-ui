@@ -18,9 +18,9 @@ import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
-import ContentFeedback from './InsightComponents/ContentFeedback'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
 import BrainBotMobile from './InsightComponents/BrainBot/BrainBotMobile'
+import WikiRating from './InsightComponents/WikiRating'
 
 export interface WikiInsightsProps {
   wiki: Wiki
@@ -120,11 +120,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               {<BrainBotMobile wiki={wiki} />}
             </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
-              <ContentFeedback
-                choice
-                contentId={wiki.id}
-                userId={userAddress}
-              />
+              <WikiRating contentId={wiki.id} userId={userAddress} />
             </Box>
             {!!coingeckoLink && (
               <>
