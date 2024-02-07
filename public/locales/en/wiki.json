@@ -89,5 +89,11 @@
   "defaultQuery2": "answer with tools provided to you. you will also be given",
   "defaultQuery3": "from where the user asked the question from",
   "brainBotTitle": "Get more insights on the article content with IQ GPT Chat",
-  "more": "And more..."
+  "more": "And more...",
+  "NFTs": "NFTs",
+  "Decentralized Finance": "Decentralized Finance",
+  "Exchanges": "Exchanges",
+  "Cryptocurrencies": "Cryptocurrencies",
+  "People in crypto": "People in crypto",
+  "DAOs": "DAOs"
 }

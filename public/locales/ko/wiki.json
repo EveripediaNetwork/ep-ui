@@ -89,5 +89,13 @@
   "defaultQuery2": "귀하에게 제공된 도구를 사용하여 답변하십시오. 사용자가 질문을 한 곳에서",
   "defaultQuery3": "도 제공됩니다",
   "brainBotTitle": "기사 내용을 더 깊이 이해하세요 - IQ GPT 채팅",
-  "more": "그리고 더 많이..."
+  "more": "그리고 더 많이...",
+  "Organizations": "기관",
+  "Dapps": "디앱",
+  "NFTs": "NFTs",
+  "Decentralized Finance": "디파이",
+  "Exchanges": "거래소",
+  "Cryptocurrencies": "암호화폐",
+  "People in crypto": "암호화폐 인물",
+  "DAOs": "DAOs"
 }
