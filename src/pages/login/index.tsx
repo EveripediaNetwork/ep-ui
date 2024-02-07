@@ -9,7 +9,7 @@ import { useTranslation } from 'next-i18next'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { extractAuthToken } from '@/utils/extractAuthToken'
 
-const client = createConfig({
+export const client = createConfig({
   autoConnect: true,
   connectors,
   publicClient,

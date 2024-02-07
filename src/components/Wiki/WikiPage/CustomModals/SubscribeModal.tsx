@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { Modal } from '@/components/Elements'
-import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { useAccount } from 'wagmi'
 import { useToast } from '@chakra-ui/toast'
 import { profileApiClient } from '@/services/profile'
 import {
@@ -14,8 +12,10 @@ import {
   useUserProfileData,
 } from '@/services/profile/utils'
 import { Button, Text } from '@chakra-ui/react'
-import { store } from '@/store/store'
+import { RootState, store } from '@/store/store'
 import { getAllWikiSubscription } from '@/services/notification'
+import { useAddress } from '@/hooks/useAddress'
+import { useSelector } from 'react-redux'
 
 interface SubscribeModalProps {
   isOpen: boolean
@@ -31,8 +31,8 @@ const UNSUBSCRIBE_MESSAGE =
   'You subscribed to this wiki already ! Click on the button below to stop getting notifications on changes to this wiki.'
 
 const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
-  const { token } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const token = useSelector((state: RootState) => state.user.token)
+  const { address: userAddress } = useAddress()
   const { profileData, setAccount, loading } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL,
   )
@@ -51,7 +51,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
       SubscribeWikiHandler(email, wiki, userAddress, toast)
     }
 
-    setIsSubscribed((p) => !p)
+    setIsSubscribed(p => !p)
   }
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
           getAllWikiSubscription.initiate(userAddress),
         )
         const isWikiSubscribed = data
-          ? data.some((w) => w.auxiliaryId === wiki.id)
+          ? data.some(w => w.auxiliaryId === wiki.id)
           : false
         setIsSubscribed(isWikiSubscribed)
       }

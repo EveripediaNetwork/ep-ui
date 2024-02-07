@@ -12,11 +12,11 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import { ProviderDataType } from '@/types/ProviderDataType'
-import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useDispatch } from 'react-redux'
 import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
+import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -29,7 +29,7 @@ const NetworkErrorNotification = ({
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { isConnected: isUserConnected } = useAccount()
+  const { isConnected: isUserConnected } = useAddress()
   const dispatch = useDispatch()
 
   const { chainId, chainName, rpcUrls } =

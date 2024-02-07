@@ -3,21 +3,21 @@ import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
-import { useWeb3Token } from '@/hooks/useWeb3Token'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
-import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
-import SignTokenMessage from './SignTokenMessage'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useTranslation } from 'next-i18next'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useAddress } from '@/hooks/useAddress'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const NotificationSettings = dynamic(
   () => import('@/components/Settings/NotificationSettings'),
@@ -32,8 +32,8 @@ const AdvancedSettings = dynamic(
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
-  const { token, generateNewToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const { address: userAddress } = useAddress()
+  const token = useSelector((state: RootState) => state.user.token)
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
   )
@@ -46,13 +46,9 @@ const Settings = () => {
     }
   }, [userAddress, setAccount, token])
 
-  if (!token)
-    return (
-      <SignTokenMessage reopenSigningDialog={generateNewToken} error={error} />
-    )
   return (
     <>
-      <SettingsPageHeader username={userAddress} />
+      <SettingsPageHeader username={userAddress!} />
       <HStack alignItems="stretch" pb={8} my={-8}>
         <Box
           display={{ base: 'none', xl: 'block' }}

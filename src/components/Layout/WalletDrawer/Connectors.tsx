@@ -36,13 +36,12 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const { fetchStoredToken } = useWeb3Token()
 
   // TODO replace all useAccount instace in project
-  // Add a hook to get cookie value and use it in stead of useAccount.
 
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
     if (storedToken) {
       closeSignTokenModal()
-      handleRedirect()
+      // handleRedirect()
       return
     }
     openSignTokenModal()
@@ -57,7 +56,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       // Added async keyword here
       logEvent({
         action: 'LOGIN_SUCCESS',

@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import { useAccount, useWalletClient } from 'wagmi'
+import { useWalletClient } from 'wagmi'
 import { sign, verify } from '@everipedia/web3-signer'
 import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setToken } from '@/store/slices/user-slice'
+import { useAddress } from './useAddress'
 
 export const useWeb3Token = () => {
   const { data: walletClient } = useWalletClient()
-  const { isConnected, address: userAddress } = useAccount()
+  const { isConnected, address: userAddress } = useAddress()
   const dispatch = useDispatch()
   const token = useSelector((state: RootState) => state.user.token)
   const [loading, setLoading] = useState(false)

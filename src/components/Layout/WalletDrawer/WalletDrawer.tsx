@@ -19,12 +19,10 @@ import {
   useToast,
   Icon,
 } from '@chakra-ui/react'
-import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
-import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useDispatch } from 'react-redux'
 import { updateWalletDetails } from '@/store/slices/user-slice'
@@ -35,6 +33,7 @@ import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import CopyIcon from '@/components/Icons/CopyIcon'
 import { Link } from '@/components/Elements'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -51,13 +50,13 @@ const WalletDrawer = ({
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const [, username] = useENSData(userAddress)
   useHiIQBalance(userAddress)
   const [accountRefreshLoading, setAccountRefreshLoader] =
     useState<boolean>(false)
   const toast = useToast()
-  const { refreshBalance } = useFetchWalletBalance(userAddress)
+  const { refreshBalance } = useFetchWalletBalance(userAddress!)
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
 
@@ -69,7 +68,7 @@ const WalletDrawer = ({
   const handleAccountRefresh = () => {
     if (typeof userAddress !== 'undefined') {
       setAccountRefreshLoader(true)
-      refreshBalance().then((response) => {
+      refreshBalance().then(response => {
         dispatch(updateWalletDetails(response))
         setAccountRefreshLoader(false)
         toast({
@@ -121,7 +120,7 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={userAddress} alt={userAddress} />
+              <DisplayAvatar address={userAddress} alt={userAddress!} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
@@ -168,9 +167,7 @@ const WalletDrawer = ({
           </Flex>
         </DrawerHeader>
         <Divider />
-        <DrawerBody shadow="sm">
-          <Connectors openWalletDrawer={toggleOperations.onOpen} />
-        </DrawerBody>
+        <DrawerBody shadow="sm">&nbsp;</DrawerBody>
       </DrawerContent>
     </Drawer>
   ) : null
