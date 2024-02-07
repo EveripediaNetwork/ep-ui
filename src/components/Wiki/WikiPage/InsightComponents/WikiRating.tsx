@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { VStack, Text, Flex, Box, Divider } from '@chakra-ui/react'
+import { VStack, Text, Box, Divider } from '@chakra-ui/react'
 import { VscSmiley } from 'react-icons/vsc'
 import WikiAccordion from '../../WikiAccordion'
 import { useTranslation } from 'next-i18next'
@@ -30,36 +30,32 @@ const WikiRating = ({
         defaultOpen
       >
         <VStack bgColor="wikiCardItemBg" borderRadius={4} gap="2" p={3}>
+          <VStack alignItems="center">
+            //TODO: translate
+            <Text fontWeight={'semibold'} fontSize="lg" textColor="fadedText">
+              Average Rating
+            </Text>
+            //TODO: add average rating
+            <Box
+              fontSize="xs"
+              rounded="2xl"
+              bgColor="brand.50"
+              _dark={{ bgColor: 'brand.200', textColor: 'brand.800' }}
+              textColor="brand.500"
+              px="3"
+            >
+              {`Based on over ${totalRatings} ratings`}
+            </Box>
+            <WikiStarRating
+              contentId={contentId}
+              userId={userId}
+              setIsRated={setIsRated}
+              avgRating={avgRating}
+            />
+          </VStack>
+          <Divider />
           {!isRated ? (
-            <VStack alignItems="center">
-              <VStack alignItems="center">
-                //TODO: translate
-                <Text
-                  fontWeight={'semibold'}
-                  fontSize="lg"
-                  textColor="fadedText"
-                >
-                  Average Rating
-                </Text>
-                //TODO: add average rating
-                <Box
-                  fontSize="xs"
-                  rounded="2xl"
-                  bgColor="brand.50"
-                  _dark={{ bgColor: 'brand.200', textColor: 'brand.800' }}
-                  textColor="brand.500"
-                  px="3"
-                >
-                  {`Based on over ${totalRatings} ratings`}
-                </Box>
-                <WikiStarRating
-                  contentId={contentId}
-                  userId={userId}
-                  setIsRated={setIsRated}
-                  avgRating={avgRating}
-                />
-              </VStack>
-              <Divider />
+            <VStack>
               <Text fontWeight={'semibold'} fontSize="lg" textColor="fadedText">
                 How was your experience?
               </Text>
@@ -73,12 +69,12 @@ const WikiRating = ({
               />
             </VStack>
           ) : (
-            <Flex alignItems="center" gap={1} w="full">
+            <VStack alignItems="center" gap={1} w="full">
               <Text fontWeight="light" fontSize="14px">
                 {t('feedbackThanks')}
               </Text>
               <VscSmiley color="#ff1a88" />
-            </Flex>
+            </VStack>
           )}
         </VStack>
       </WikiAccordion>
