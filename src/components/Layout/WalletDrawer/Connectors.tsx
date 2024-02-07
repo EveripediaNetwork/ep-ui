@@ -4,7 +4,6 @@ import { Box, Divider, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
 import { logEvent } from '@/utils/googleAnalytics'
-
 import { env } from '@/env.mjs'
 import ConnectionErrorModal from './ConnectionErrorModal'
 import { useTranslation } from 'next-i18next'
@@ -35,8 +34,6 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const [connectorName, setConnectorName] = useState('')
   const { fetchStoredToken } = useWeb3Token()
 
-  // TODO replace all useAccount instace in project
-
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
     if (storedToken) {
@@ -56,7 +53,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       // Added async keyword here
       logEvent({
         action: 'LOGIN_SUCCESS',

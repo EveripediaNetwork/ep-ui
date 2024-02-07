@@ -16,6 +16,14 @@ export const client = createConfig({
   webSocketPublicClient,
 })
 
+export const WalletConnectWrapper = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  return <WagmiConfig config={client}>{children}</WagmiConfig>
+}
+
 const Login = ({ address }: { address: string | null }) => {
   const { t } = useTranslation('common')
   const router = useRouter()
@@ -30,12 +38,12 @@ const Login = ({ address }: { address: string | null }) => {
 
   useEffect(() => {
     if (address) {
-      handleRedirect()
+      // handleRedirect()
     }
   }, [address, router])
 
   return (
-    <WagmiConfig config={client}>
+    <WalletConnectWrapper>
       <Container centerContent mt="8" mb="24">
         <Box w="full">
           <Heading mb={4} fontSize={23}>
@@ -44,7 +52,7 @@ const Login = ({ address }: { address: string | null }) => {
           <Connectors handleRedirect={handleRedirect} />
         </Box>
       </Container>
-    </WagmiConfig>
+    </WalletConnectWrapper>
   )
 }
 

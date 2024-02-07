@@ -24,8 +24,6 @@ import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { useDispatch } from 'react-redux'
-import { updateWalletDetails } from '@/store/slices/user-slice'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
@@ -34,6 +32,7 @@ import CopyIcon from '@/components/Icons/CopyIcon'
 import { Link } from '@/components/Elements'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
+import { WalletDrawerBody } from './WalletDrawerBody'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -57,7 +56,6 @@ const WalletDrawer = ({
     useState<boolean>(false)
   const toast = useToast()
   const { refreshBalance } = useFetchWalletBalance(userAddress!)
-  const dispatch = useDispatch()
   const { t } = useTranslation('common')
 
   const handleNavigation = () => {
@@ -65,20 +63,18 @@ const WalletDrawer = ({
     setHamburger(true)
   }
 
-  const handleAccountRefresh = () => {
+  const handleAccountRefresh = async () => {
     if (typeof userAddress !== 'undefined') {
       setAccountRefreshLoader(true)
-      refreshBalance().then((response) => {
-        dispatch(updateWalletDetails(response))
-        setAccountRefreshLoader(false)
-        toast({
-          description: 'Account successfully refreshed',
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-          position: 'bottom-right',
-        })
+      await refreshBalance()
+      toast({
+        description: 'Account successfully refreshed',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom-right',
       })
+      setAccountRefreshLoader(false)
     }
   }
 
@@ -167,7 +163,9 @@ const WalletDrawer = ({
           </Flex>
         </DrawerHeader>
         <Divider />
-        <DrawerBody shadow="sm">&nbsp;</DrawerBody>
+        <DrawerBody shadow="sm">
+          <WalletDrawerBody />
+        </DrawerBody>
       </DrawerContent>
     </Drawer>
   ) : null
