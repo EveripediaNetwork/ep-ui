@@ -58,7 +58,7 @@ const Dropzone = ({
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      setPaths(acceptedFiles.map(file => URL.createObjectURL(file)))
+      setPaths(acceptedFiles.map((file) => URL.createObjectURL(file)))
 
       acceptedFiles.forEach((f: File) => {
         const reader = new FileReader()
@@ -136,7 +136,7 @@ const Dropzone = ({
           imageToCrop={toCropImg}
           onClose={() => setToCropImg(null)}
           setImage={setImage}
-          setDisplayImage={img => setPaths([img])}
+          setDisplayImage={(img) => setPaths([img])}
         />
       )}
       <Box>

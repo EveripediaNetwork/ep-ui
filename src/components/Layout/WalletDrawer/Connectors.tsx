@@ -56,7 +56,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: data => {
+    onSuccess: (data) => {
       // Added async keyword here
       logEvent({
         action: 'LOGIN_SUCCESS',
