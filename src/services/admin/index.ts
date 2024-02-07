@@ -267,9 +267,9 @@ export const adminApi = createApi({
       },
     }),
     contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
-      query: ({ contentId, userId, feedback }: ContentFeedbackArgs) => ({
+      query: ({ contentId, userId, rating }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { contentId, userId, feedback },
+        variables: { contentId, userId, rating },
       }),
       transformResponse: (response: ContentFeedback) => {
         return response.contentFeedback
