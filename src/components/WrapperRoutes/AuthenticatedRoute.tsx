@@ -1,6 +1,6 @@
+import { useAddress } from '@/hooks/useAddress'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { useAccount } from 'wagmi'
 
 const WagmiLoadedAuthenticatedRoute = ({
   WrappedComponent,
@@ -8,7 +8,7 @@ const WagmiLoadedAuthenticatedRoute = ({
 }: {
   WrappedComponent: React.FC
 }) => {
-  const { address: userAddress } = useAccount()
+  const { address: userAddress } = useAddress()
   const router = useRouter()
 
   useEffect(() => {
@@ -31,12 +31,10 @@ export const authenticatedRoute = <P extends object>(
 ) => {
   const AuthenticatedRoute = (props: P) => {
     return (
-      <>
-        <WagmiLoadedAuthenticatedRoute
-          WrappedComponent={WrappedComponent}
-          {...props}
-        />
-      </>
+      <WagmiLoadedAuthenticatedRoute
+        WrappedComponent={WrappedComponent}
+        {...props}
+      />
     )
   }
   return AuthenticatedRoute

@@ -32,7 +32,7 @@ const AdvancedSettings = dynamic(
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
-  const { token, reSignToken, error } = useWeb3Token()
+  const { token, generateNewToken, error } = useWeb3Token()
   const { address: userAddress } = useAccount()
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
@@ -47,7 +47,9 @@ const Settings = () => {
   }, [userAddress, setAccount, token])
 
   if (!token)
-    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
+    return (
+      <SignTokenMessage reopenSigningDialog={generateNewToken} error={error} />
+    )
   return (
     <>
       <SettingsPageHeader username={userAddress} />
