@@ -102,14 +102,11 @@
   "AI": "인공지능",
   "BinanceSmartChain": "BinanceSmartChain",
   "CEXes": "CEXes",
-  "Collections": "Collections",
-  "Collectors": "Collectors",
   "DEXes": "덱스",
   "Developers": "개발자",
   "Entertainment": "엔터테인먼트",
   "Ethereum": "이더리움",
   "Games": "게임",
-  "Marketplaces": "Marketplaces",
   "Memecoins": "밈코인",
   "PeopleInDeFi": "디파이인물",
   "Polkadot": "Polkadot",
@@ -117,6 +114,9 @@
   "Protocols": "프로토콜",
   "Solana": "솔라나",
   "Stablecoins": "스테이블코인",
-  "Venture": "Venture",
-  "Glossary": "용어집"
+  "Glossary": "용어집",
+  "Collections": "컬렉션",
+  "Collectors": "수집가들",
+  "Marketplaces": "마켓플레이스",
+  "Venture": "벤처"
 }
