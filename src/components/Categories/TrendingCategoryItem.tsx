@@ -9,18 +9,24 @@ import {
 } from '@chakra-ui/react'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { getUsername } from '@/utils/DataTransform/getUsername'
-import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Image } from '../Elements/Image/Image'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
 import { TrendingCategoryItemProps } from '@/types/CategoryDataTypes'
-import { useTranslation } from 'next-i18next'
+import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
+import { RootState } from '@/store/store'
+import { useSelector } from 'react-redux'
 
 const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
   const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
-  const { t } = useTranslation('common')
+  const lang = useSelector((state: RootState) => state.app.language)
+  const translatedTimestamp = useTranslatedTimetamps(
+    'Edited',
+    lang,
+    lastModTimeStamp ?? '',
+  )
   return (
     <LinkBox bgColor="cardBg" borderRadius="12px">
       <Flex gap={{ base: 2, md: '5' }}>
@@ -96,8 +102,7 @@ const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
             opacity={0.4}
             whiteSpace="nowrap"
           >
-            {t('LastEdited')} {getReadableDate(lastModTimeStamp as string)}{' '}
-            {t('ago')}
+            {translatedTimestamp}
           </Text>
         </Box>
       </Flex>
