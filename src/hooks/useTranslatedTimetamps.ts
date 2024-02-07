@@ -9,7 +9,6 @@ export const useTranslatedTimetamps = (
   const isCreated = activity === 'New'
   const { t } = useTranslation('common')
   const readAbleTimeStamp = getReadableDate(timeStamp)
-  console.log('Readable time: ', readAbleTimeStamp)
 
   const handleEditedCase = (unit: string, duration: string) => {
     if (unit.includes('second')) return `${duration}${t('editedSecs')}`
@@ -61,9 +60,5 @@ export const useTranslatedTimetamps = (
     }
   }
 
-  const result = handleLocale()
-  console.log(
-    `Result: ${result}, ReadableTime: ${readAbleTimeStamp},  Activity: ${activity}, Loacle: ${locale}, timeStamp: ${timeStamp}`,
-  )
-  return result
+  return handleLocale()
 }
