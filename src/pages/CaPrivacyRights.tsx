@@ -18,6 +18,8 @@ import {
 import React from 'react'
 import RelatedTopics from '@/components/Elements/RelatedTopics/RelatedTopics'
 import { TermsHeader } from '@/components/SEO/Static'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const CaPrivacyRights = () => (
   <>
@@ -248,5 +250,13 @@ const CaPrivacyRights = () => (
     </Container>
   </>
 )
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'terms'])),
+    },
+  }
+}
 
 export default CaPrivacyRights
