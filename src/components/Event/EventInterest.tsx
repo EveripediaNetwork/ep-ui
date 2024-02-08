@@ -1,4 +1,4 @@
-import { EventInterestData } from '@/pages/event/event.data'
+import { EventInterestData } from '@/components/Event/event.data'
 import { Box, Flex, Heading, Text, chakra } from '@chakra-ui/react'
 import React from 'react'
 

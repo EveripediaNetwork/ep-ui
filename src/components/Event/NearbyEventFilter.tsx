@@ -1,4 +1,4 @@
-import { nearByEventData } from '@/pages/event/event.data'
+import { nearByEventData } from '@/components/Event/event.data'
 import Image from 'next/image'
 import React from 'react'
 import { RiCalendar2Line, RiMapPinRangeLine } from 'react-icons/ri'

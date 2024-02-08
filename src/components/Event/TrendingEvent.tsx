@@ -8,7 +8,7 @@ import {
   CarouselDots,
 } from '../ui/carousel'
 import Image from 'next/image'
-import { eventMockData } from '@/pages/event/event.data'
+import { eventMockData } from '@/components/Event/event.data'
 
 const TrendingEvent = () => {
   return (
