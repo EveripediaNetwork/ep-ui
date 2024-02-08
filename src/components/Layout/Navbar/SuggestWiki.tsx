@@ -81,7 +81,7 @@ const SuggestWikiModal = ({
       }
       size={{
         base: 'md',
-        md: '3xl',
+        md: `${isSubmitted ? 'md' : 'lg'}`,
       }}
     >
       {!isSubmitted ? (
@@ -106,8 +106,10 @@ const SuggestWikiModal = ({
       ) : (
         <VStack>
           <Image src="/tick.svg" alt="suggest-wiki" width={64} height={64} />
-          <Text fontSize="lg">Wiki Suggestion successfully submitted!</Text>
-          <Text fontSize="sm">
+          <Text fontSize="lg" textAlign="center">
+            Wiki Suggestion successfully submitted!
+          </Text>
+          <Text fontSize="sm" textAlign="center">
             Thank you for your wiki suggestion! Your contribution is appreciated
             and will be reviewed promptly
           </Text>
