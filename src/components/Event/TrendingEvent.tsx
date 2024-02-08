@@ -17,7 +17,7 @@ const TrendingEvent = () => {
       <div className="mt-8">
         <Carousel>
           <CarouselContent className="">
-            {eventMockData.map(event => (
+            {eventMockData.map((event) => (
               <CarouselItem
                 className="h-[350px] basis-1/2 xl:basis-1/4 rounded-xl relative w-full ml-4"
                 key={event.id}
