@@ -14,7 +14,7 @@ const EventInterest = () => {
         </span>
       </div>
       <ul className="flex flex-wrap gap-3 mt-5">
-        {EventInterestData.map(interest => {
+        {EventInterestData.map((interest) => {
           return (
             <li
               className="cursor-pointer border border-gray200 list-none rounded-full px-3 md:px-5 py-1 md:py-2 text-sm hover:bg-gray200 dark:hover:bg-alpha-300"
