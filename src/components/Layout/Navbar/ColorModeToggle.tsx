@@ -13,7 +13,6 @@ export const ColorModeToggle = ({
   const { t } = useTranslation('common')
 
   useEffect(() => {
-    console.log({ colorMode })
     if (colorMode === 'dark') {
       document.documentElement.classList.add('dark')
       document.documentElement.classList.remove('light')

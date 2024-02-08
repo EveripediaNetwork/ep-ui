@@ -13,14 +13,14 @@ import { RiMapPinRangeLine } from 'react-icons/ri'
 
 const TrendingEvent = () => {
   return (
-    <div className="mt-20 max-w-[1296px] mx-auto px-10 xl:px-0">
+    <div className="mt-20 max-w-[1296px] mx-auto ">
       <h4 className="font-semibold text-xl">Trending Events</h4>
       <div className="mt-8">
         <Carousel>
           <CarouselContent className="">
-            {eventMockData.map((event) => (
+            {eventMockData.map(event => (
               <CarouselItem
-                className="h-[350px] basis-1/2 xl:basis-1/4 rounded-xl relative w-full ml-4"
+                className="h-[350px] basis-[100%] md:basis-1/2 xl:basis-1/4 rounded-xl relative w-[309px] ml-4"
                 key={event.id}
               >
                 <Image src={event.src} alt="blockchain-expo" fill />

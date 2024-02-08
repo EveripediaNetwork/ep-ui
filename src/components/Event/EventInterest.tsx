@@ -1,55 +1,31 @@
 import { EventInterestData } from '@/components/Event/event.data'
-import { Box, Flex, Heading, Text, chakra } from '@chakra-ui/react'
+
 import React from 'react'
 
 const EventInterest = () => {
   return (
-    <Flex
-      maxW={'1296px'}
-      mx={'auto'}
-      mt={'96px'}
-      borderRadius={'12px'}
-      border={'1px'}
-      borderColor={'archivedTextColor'}
-      bgColor={'#FFF'}
-      _dark={{
-        bgColor: '#2D3748',
-      }}
-      padding={'39px 31px'}
-      justifyContent={'space-between'}
-      gap={'127px'}
-    >
-      <Box maxW={'250px'} w={'full'}>
-        <Heading fontSize={'20px'}>Interests</Heading>
-        <Text fontSize={'14px'} mt={'12px'}>
+    <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-24 rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-5 xl:py-[40px] px-4 xl:px-[32px] xl:gap-32">
+      <div className="xl:max-w-[250px] w-full">
+        <h3 className="text-xl font-semibold text-gray800 dark:text-alpha-900">
+          Interests
+        </h3>
+        <span className="text-sm mt-3">
           Get event suggestion based on your interests.
-        </Text>
-      </Box>
-      <chakra.ul display={'flex'} flexWrap={'wrap'} gap={'12px'}>
-        {EventInterestData.map((interest) => {
+        </span>
+      </div>
+      <ul className="flex flex-wrap gap-3 mt-5">
+        {EventInterestData.map(interest => {
           return (
-            <chakra.li
+            <li
+              className="cursor-pointer border border-gray200 list-none rounded-full px-3 md:px-5 py-1 md:py-2 text-sm hover:bg-gray200 dark:hover:bg-alpha-300"
               key={interest}
-              borderRadius={'100000px'}
-              border={'1px'}
-              borderColor={'gray.200'}
-              padding={'12px 20px'}
-              fontSize={'14px'}
-              listStyleType={'none'}
-              cursor={'pointer'}
-              _active={{
-                bgColor: 'divider',
-              }}
-              _hover={{
-                bgColor: 'divider',
-              }}
             >
               {interest}
-            </chakra.li>
+            </li>
           )
         })}
-      </chakra.ul>
-    </Flex>
+      </ul>
+    </div>
   )
 }
 

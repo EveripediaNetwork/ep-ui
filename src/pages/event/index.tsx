@@ -13,20 +13,22 @@ const EventPage = () => {
     <div>
       <EventHeader />
       <EventBanner />
-      <div className="mb-[120px] dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
+      <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar />
         <TrendingEvent />
         <EventInterest />
-        <div className="flex flex-col-reverse lg:flex-row gap-x-8 max-w-[1296px] mx-auto mt-24">
+        <div className="flex flex-col-reverse lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-24">
           <div className="flex flex-col flex-1 items-center">
             <div className="flex flex-col gap-10">
               <div className="">
                 <div className="flex justify-between items-end">
                   <div className="flex flex-col">
-                    <h1 className="font-semibold text-xl">January</h1>
-                    <span className="text-xs">Tuesday, 10 January 2024</span>
+                    <h1 className="font-semibold md:text-xl">January</h1>
+                    <span className="text-[10px] md:text-xs">
+                      Tuesday, 10 January 2024
+                    </span>
                   </div>
-                  <span className="text-xs">
+                  <span className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
                     know any events not listed?{' '}
                     <span className="text-brand-800">Suggest events</span>
                   </span>
@@ -63,7 +65,7 @@ const EventPage = () => {
               View more
             </button>
           </div>
-          <div className="flex-1 flex flex-col gap-10 max-w-[419px]">
+          <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <EventFilter />
             <NearbyEventFilter />
             <PopularEventFilter />
