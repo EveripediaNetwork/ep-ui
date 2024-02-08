@@ -7,6 +7,7 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import React, { ChangeEventHandler } from 'react'
 
@@ -26,6 +27,7 @@ const SuggestWikiModal = ({
   onClose = () => {},
   isOpen = true,
 }: Partial<ModalProps>) => {
+  const { t } = useTranslation('common')
   const [input, setInput] = React.useState('')
   const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -78,11 +80,7 @@ const SuggestWikiModal = ({
     >
       {!isSubmitted ? (
         <Box mt={-2}>
-          <Text fontSize="sm">
-            Our wiki database is growing to cater to diverse interests in the
-            crypto-space. Have a topic or area that you'd like us to cover? Feel
-            free to suggest wikis!
-          </Text>
+          <Text fontSize="sm">{t('SuggestWiki')}</Text>
           <Textarea
             value={input}
             onChange={handleInputChange}
