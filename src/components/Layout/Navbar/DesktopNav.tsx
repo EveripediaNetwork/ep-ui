@@ -19,12 +19,14 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import useLanguageChange from '@/hooks/useLanguageChange'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 
 const DesktopNav = () => {
   const router = useRouter()
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
+  const userAddress = getUserAddressFromCache()
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -78,17 +80,33 @@ const DesktopNav = () => {
           </MenuOptionGroup>
         </MenuList>
       </Menu>
-      {NAV_ITEMS.map((navItem: NavItem) => {
-        return (
-          <NavMenu
-            key={navItem.id}
-            navItem={navItem}
-            setVisibleMenu={setVisibleMenu}
-            visibleMenu={visibleMenu}
-            label={t(navItem.label)}
-          />
-        )
-      })}
+      {userAddress
+        ? NAV_ITEMS.filter((i) => i.label !== 'Suggest Wiki').map(
+            (navItem: NavItem) => {
+              return (
+                <NavMenu
+                  key={navItem.id}
+                  navItem={navItem}
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  label={t(navItem.label)}
+                />
+              )
+            },
+          )
+        : NAV_ITEMS.filter((i) => i.label !== 'Create Wiki').map(
+            (navItem: NavItem) => {
+              return (
+                <NavMenu
+                  key={navItem.id}
+                  navItem={navItem}
+                  setVisibleMenu={setVisibleMenu}
+                  visibleMenu={visibleMenu}
+                  label={t(navItem.label)}
+                />
+              )
+            },
+          )}
     </HStack>
   )
 }
