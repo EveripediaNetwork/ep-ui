@@ -13,6 +13,7 @@ import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { logEvent } from '@/utils/googleAnalytics'
 
 interface WikiMainContentProps {
   wiki: Wiki
@@ -128,6 +129,13 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     )
 
     const handleClick = async () => {
+      logEvent({
+        action: 'TRANSLATE_WIKI',
+        category: btnLocale,
+        label: wikiData.id,
+        value: 1,
+      })
+
       if (btnLocale !== contentLang) {
         if (contentLang === 'en') {
           if (cachedWikiTranslation.current) {
