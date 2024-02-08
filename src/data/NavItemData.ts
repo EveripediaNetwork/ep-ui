@@ -22,6 +22,7 @@ import {
   RiHashtag,
   RiSearchEyeFill,
   RiStarSFill,
+  RiLightbulbFlashFill,
 } from 'react-icons/ri'
 import { IoGlobeOutline } from 'react-icons/io5'
 import { NavItem } from '@/types/NavItemType'
@@ -176,6 +177,12 @@ export const NAV_ITEMS: NavItem[] = [
     label: 'Create Wiki',
     href: '/create-wiki',
     icon: RiAddBoxFill,
+  },
+  {
+    id: 7,
+    label: 'Suggest Wiki',
+    href: '#',
+    icon: RiLightbulbFlashFill,
   },
 ]
 
