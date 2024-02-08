@@ -71,6 +71,10 @@ const SuggestWikiModal = ({
       SecondaryButton={
         isSubmitted ? undefined : sumbitButton(sumbitWiki, loading, input)
       }
+      size={{
+        base: 'md',
+        md: '3xl',
+      }}
     >
       {!isSubmitted ? (
         <Box>
@@ -83,6 +87,14 @@ const SuggestWikiModal = ({
             value={input}
             onChange={handleInputChange}
             placeholder="details"
+            minH={{
+              base: '100px',
+              md: '200px',
+            }}
+            mt={{
+              base: 2,
+              md: 4,
+            }}
           />
         </Box>
       ) : error ? (
