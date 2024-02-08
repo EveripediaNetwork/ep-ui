@@ -123,7 +123,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         >
           {Object.values(LinkedWikiKey).map((key) => (
             <chakra.option key={key} value={key}>
-              {key}
+              {t(key)}
             </chakra.option>
           ))}
         </Select>

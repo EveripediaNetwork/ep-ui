@@ -103,7 +103,7 @@ export const CaPrivacyRightsHeader = () => (
 
 export const TermsHeader = () => (
   <NextSeo
-    title="Terms of Service  "
+    title="Terms of Service"
     description="Get Started, Explore and make the most of IQ.wiki"
     titleTemplate="%s | IQ.wiki"
     canonical="https://iq.wiki/static/terms"

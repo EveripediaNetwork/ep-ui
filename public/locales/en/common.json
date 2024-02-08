@@ -90,9 +90,9 @@
   "Settings": "Settings",
   "Logout": "Logout",
   "SearchWikiPlaceholder": "Search wikis, categories, tags and users",
+  "LastEdited": "Last Edited",
+  "seenItAll": "Yay! You have seen it all 🥳 ",
   "Edited": "Edited",
   "Created": "Created",
-  "ago": "ago",
-  "LastEdited": "Last Edited",
-  "seenItAll": "Yay! You have seen it all 🥳 "
+  "ago": "ago"
 }
