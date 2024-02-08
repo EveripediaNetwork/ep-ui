@@ -22,8 +22,13 @@ export default async function handler(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: 'IQ.Wiki Suggestions',
-        content: `Wiki Suggestion: ${feedback}`,
+        username: 'IQ.Wiki',
+        embeds: [
+          {
+            title: 'New Wiki Suggestion',
+            description: feedback,
+          },
+        ],
       }),
     })
 
