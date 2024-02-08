@@ -77,7 +77,7 @@ const SuggestWikiModal = ({
       }}
     >
       {!isSubmitted ? (
-        <Box>
+        <Box mt={-2}>
           <Text fontSize="sm">
             Our wiki database is growing to cater to diverse interests in the
             crypto-space. Have a topic or area that you'd like us to cover? Feel
