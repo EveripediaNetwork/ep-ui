@@ -51,7 +51,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
@@ -179,9 +179,9 @@ export const WalletDrawerBody = () => {
             </Tooltip>
             {t('loginConnectorText3')}
           </Text>
-          <Box height="16" bg="brandLinkColor" mt={2} rounded="md">
+          <Box height="10" bg="brandLinkColor" mt={2} rounded="md">
             <Link
-              h="100%"
+              h="full"
               w="full"
               textDecoration="none"
               _hover={{ textDecoration: 'none' }}
@@ -190,8 +190,9 @@ export const WalletDrawerBody = () => {
                 router.asPath === '/login' ? '/' : router.asPath
               }`}
               variant="unstyled"
+              display="block"
             >
-              <Center height="16">
+              <Center h="full">
                 <Text fontWeight="bold" textColor="white" fontSize="medium">
                   Login
                 </Text>
