@@ -5,6 +5,7 @@ export const getReadableDate = (dateToFormat: string) => {
   if (isNaN(parsedDate.getTime())) {
     return ''
   }
+
   return formatDistanceToNowStrict(parsedDate, {
     addSuffix: false,
   })

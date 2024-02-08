@@ -15,7 +15,7 @@ export const SingleLink = ({
       textDecoration="underline"
       color="#FF5CAA"
     >
-      {title}{' '}
+      {title}
     </Link>
   )
 }

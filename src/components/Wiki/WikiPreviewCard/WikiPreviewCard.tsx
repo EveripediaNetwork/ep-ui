@@ -10,7 +10,6 @@ import {
   AspectRatio,
 } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/textUtils'
@@ -21,7 +20,9 @@ import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
 import { blurDataURL } from '@/data/blurPlaceholder'
-import { useTranslation } from 'next-i18next'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
 
 const WikiPreviewCard = ({
   wiki,
@@ -34,16 +35,13 @@ const WikiPreviewCard = ({
 }) => {
   const { updated, title, id } = wiki
   const [, userENSDomain] = useENSData(wiki.user?.id || '')
-  const { t } = useTranslation('common')
-  const getLatestEdited = () => {
-    let lastEditedTime = null
-    if (updated) {
-      lastEditedTime = getReadableDate(updated)
-    } else if (lastUpdated) {
-      lastEditedTime = getReadableDate(lastUpdated)
-    }
-    return lastEditedTime
-  }
+  const lang = useSelector((state: RootState) => state.app.language)
+  const translatedTimestamp = useTranslatedTimetamps(
+    'Edited',
+    lang,
+    updated ?? lastUpdated ?? '',
+  )
+
   return (
     <LinkBox
       w="100%"
@@ -111,7 +109,7 @@ const WikiPreviewCard = ({
                 </HStack>
               )}
               <Text py={2} m="0px !important" color="gray.400" fontSize="sm">
-                {t('LastEdited')} {getLatestEdited()}
+                {translatedTimestamp}
               </Text>
             </HStack>
           </Box>
