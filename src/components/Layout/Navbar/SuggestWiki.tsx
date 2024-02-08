@@ -11,14 +11,19 @@ import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import React, { ChangeEventHandler } from 'react'
 
-const sumbitButton = (onClick: () => void, loading: boolean, input: string) => {
+const sumbitButton = (
+  onClick: () => void,
+  loading: boolean,
+  input: string,
+  t: any,
+) => {
   return (
     <Button
       isLoading={loading}
       onClick={onClick}
       isDisabled={input.trim().length < 1}
     >
-      Submit
+      {t('Submit')}
     </Button>
   )
 }
@@ -36,6 +41,7 @@ const SuggestWikiModal = ({
     const inputValue = e.target.value
     setInput(inputValue)
   }
+  const sumbitText = t('SuggestWiki')
   const sumbitWiki = async () => {
     setLoading(true)
     const response = await fetch('/api/wiki-suggestion', {
@@ -68,10 +74,10 @@ const SuggestWikiModal = ({
       enableBottomCloseButton={false}
       isOpen={isOpen}
       onClose={onCloseModal}
-      title={isSubmitted ? '' : 'Suggest Wiki'}
+      title={isSubmitted ? '' : sumbitText}
       isCentered
       SecondaryButton={
-        isSubmitted ? undefined : sumbitButton(sumbitWiki, loading, input)
+        isSubmitted ? undefined : sumbitButton(sumbitWiki, loading, input, t)
       }
       size={{
         base: 'md',
@@ -80,11 +86,11 @@ const SuggestWikiModal = ({
     >
       {!isSubmitted ? (
         <Box mt={-2}>
-          <Text fontSize="sm">{t('SuggestWiki')}</Text>
+          <Text fontSize="sm">{t('SuggestWikiText')}</Text>
           <Textarea
             value={input}
             onChange={handleInputChange}
-            placeholder="details"
+            placeholder={t('details')}
             minH={{
               base: '100px',
               md: '200px',
