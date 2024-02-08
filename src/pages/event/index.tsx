@@ -13,7 +13,7 @@ const EventPage = () => {
     <div>
       <EventHeader />
       <EventBanner />
-      <div className="mb-[120px] dark:bg-gray800 border-t-2 dark:border-alpha-300">
+      <div className="mb-[120px] dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar />
         <TrendingEvent />
         <EventInterest />
@@ -57,7 +57,7 @@ const EventPage = () => {
               </div>
             </div>
             <button
-              className="px-5 py-2 mt-10 rounded-md border cursor-pointer border-alpha-400"
+              className="px-10 py-2 mt-10 rounded-md border cursor-pointer border-gray200 dark:border-alpha-400"
               type="button"
             >
               View more

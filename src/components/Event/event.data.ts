@@ -67,20 +67,6 @@ export const eventMockData: IEventData[] = [
     date: 'October 1-02, 2024',
     src: '/images/blockchain-expo.png',
   },
-  {
-    id: 7,
-    location: 'AsiaWorld Expo, Airport Expo Blvd...',
-    title: 'Wow summit in Hong Kong',
-    date: 'march, 26-27,2024',
-    src: '/images/blockchain-3.png',
-  },
-  {
-    id: 8,
-    location: 'Dubai, Festival Arena',
-    title: 'Blockchain Life 2024',
-    date: 'April 15-16, 2024',
-    src: '/images/blockchain-life.png',
-  },
 ]
 
 export const nearByEventData = [

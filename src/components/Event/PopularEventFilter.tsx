@@ -12,7 +12,7 @@ const PopularEventFilter = () => {
           The most popular crypto events around the world.
         </span>
       </div>
-      <div className="border flex flex-col gap-8 border-alpha-300 bg-gray-700 px-3 py-5 mt-6 rounded-xl">
+      <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray-700 px-3 py-5 mt-6 rounded-xl">
         {popularEventData.map((event) => (
           <div key={event.title} className="flex gap-2">
             <span>
@@ -24,19 +24,25 @@ const PopularEventFilter = () => {
               />
             </span>
             <div className="flex-1">
-              <span className="font-semibold text-sm">{event.title}</span>
+              <span className="font-semibold text-sm text-gray800 dark:text-alpha-900">
+                {event.title}
+              </span>
               <div className="flex text-xs my-2 text-alpha-900 divide-x divide-alpha-700 items-center">
                 <span className="pr-2 flex gap-1 items-center">
                   <span className="text-brand-800 text-base">
                     <RiCalendar2Line />
                   </span>
-                  <span>7th Jan - 7th Apr, 2024</span>
+                  <span className="text-gray800 dark:text-alpha-900">
+                    7th Jan - 7th Apr, 2024
+                  </span>
                 </span>
                 <span className="pl-2 flex gap-1 items-center">
                   <span className="text-brand-800 text-base">
                     <RiMapPinRangeLine />
                   </span>
-                  <span>Shangai, china</span>
+                  <span className="text-gray800 dark:text-alpha-900">
+                    Shangai, china
+                  </span>
                 </span>
               </div>
             </div>

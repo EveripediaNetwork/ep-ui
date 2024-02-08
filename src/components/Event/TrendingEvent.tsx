@@ -9,6 +9,7 @@ import {
 } from '../ui/carousel'
 import Image from 'next/image'
 import { eventMockData } from '@/components/Event/event.data'
+import { RiMapPinRangeLine } from 'react-icons/ri'
 
 const TrendingEvent = () => {
   return (
@@ -24,14 +25,17 @@ const TrendingEvent = () => {
               >
                 <Image src={event.src} alt="blockchain-expo" fill />
                 <div className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5">
-                  <div>
-                    <h5 className="text-sm">{event.location}</h5>
+                  <div className="text-alpha-900">
+                    <span className="flex items-center gap-1">
+                      <RiMapPinRangeLine />
+                      <h5 className="text-sm">{event.location}</h5>
+                    </span>
                     <h5 className="text-xl font-semibold">{event.title}</h5>
                     <h5 className="">{event.date}</h5>
                   </div>
                   <button
                     type="button"
-                    className="px-2 py-[10px] rounded-[6px] font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
+                    className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
                   >
                     View event details
                   </button>
@@ -39,8 +43,8 @@ const TrendingEvent = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="backdrop-blur-[30px] bg-alpha-300" />
+          <CarouselNext className="backdrop-blur-[30px] bg-alpha-300" />
           <CarouselDots />
         </Carousel>
       </div>

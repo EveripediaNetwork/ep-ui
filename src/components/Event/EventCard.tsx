@@ -9,16 +9,16 @@ import {
 const EventCard = () => {
   return (
     <div className="flex gap-6">
-      <span className="rounded-full z-10 w-6 h-6 bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
+      <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
         <RiArrowRightUpLine />
       </span>
-      <div className="border bg-[#2D3748] rounded-xl px-3 h-fit py-[14px] w-full flex gap-9">
+      <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 h-fit py-[14px] w-full flex gap-9">
         <div className="flex flex-col">
           <div className="flex flex-col">
-            <h3 className="font-semibold text-sm text-alpha-900">
+            <h3 className="font-semibold text-sm dark:text-alpha-900 text-gray800">
               Crypto Finance Conference
             </h3>
-            <p className="text-xs text-alpha-800 mt-1">
+            <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
               CFC St. Moritz is a curated, application-only event designed for
               NFT investors and decision-makers. It admits only 250
               international UHNWI, institutional investors, funds, and family

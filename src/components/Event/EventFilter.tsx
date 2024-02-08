@@ -49,7 +49,7 @@ const EventFilter = () => {
         </span>
         <span className="text-xs">Filter according to preference</span>
       </div>
-      <div className="border flex flex-col gap-8 border-alpha-300 bg-gray-700 px-3 pt-5 pb-20 mt-6 rounded-xl">
+      <div className="border flex flex-col gap-8 border-gray200 dark:border-alpha-300 bg-white dark:bg-gray-700 px-3 pt-5 pb-20 mt-6 rounded-xl">
         {eventFilterData.map((eventFilter) => (
           <div>
             <div className="flex items-center gap-1">
@@ -58,7 +58,7 @@ const EventFilter = () => {
             </div>
             <div className="flex gap-2 mt-3 flex-wrap">
               {eventFilter.filter.map((filter) => (
-                <span className="px-3 text-xs border hover:bg-brand-800 active:bg-brand-800 cursor-pointer border-alpha-300 py-1 rounded-full">
+                <span className="px-3 text-xs border bg-gray50 dark:bg-transparent border-gray200 dark:border-alpha-300 hover:bg-brand-800 active:bg-brand-800 cursor-pointer py-1 rounded-full">
                   {filter}
                 </span>
               ))}
