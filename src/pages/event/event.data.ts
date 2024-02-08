@@ -1,10 +1,3 @@
-import {
-  RiBankFill,
-  RiCalendarEventFill,
-  RiMapPinRangeFill,
-  RiScan2Fill,
-} from 'react-icons/ri'
-
 interface IEventData {
   id: number
   location: string
@@ -87,36 +80,6 @@ export const eventMockData: IEventData[] = [
     title: 'Blockchain Life 2024',
     date: 'April 15-16, 2024',
     src: '/images/blockchain-life.png',
-  },
-]
-
-export const eventFilterData = [
-  {
-    icon: <RiCalendarEventFill />,
-    title: 'Date',
-    filter: ['Next Week', 'Next Month', 'Custom Range'],
-  },
-  {
-    icon: <RiMapPinRangeFill />,
-    title: 'Location',
-    filter: [
-      'Asia',
-      'Africa',
-      'Europe',
-      'North America',
-      'South America',
-      'Austria/Ocenia',
-    ],
-  },
-  {
-    icon: <RiScan2Fill />,
-    title: 'Event Type',
-    filter: ['Conference', 'Hackathon', 'Forum', 'Festival', 'Online'],
-  },
-  {
-    icon: <RiBankFill />,
-    title: 'Blockchain',
-    filter: ['Bitcoin', 'Ethereum', 'Polygon', 'Solana', 'Cardano'],
   },
 ]
 

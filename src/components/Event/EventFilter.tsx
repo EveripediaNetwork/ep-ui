@@ -1,6 +1,41 @@
-import { eventFilterData } from '@/pages/event/event.data'
 import React from 'react'
-import { RiFilter3Line } from 'react-icons/ri'
+import {
+  RiBankFill,
+  RiCalendarEventFill,
+  RiFilter3Line,
+  RiMapPinRangeFill,
+  RiScan2Fill,
+} from 'react-icons/ri'
+
+export const eventFilterData = [
+  {
+    icon: <RiCalendarEventFill />,
+    title: 'Date',
+    filter: ['Next Week', 'Next Month', 'Custom Range'],
+  },
+  {
+    icon: <RiMapPinRangeFill />,
+    title: 'Location',
+    filter: [
+      'Asia',
+      'Africa',
+      'Europe',
+      'North America',
+      'South America',
+      'Austria/Ocenia',
+    ],
+  },
+  {
+    icon: <RiScan2Fill />,
+    title: 'Event Type',
+    filter: ['Conference', 'Hackathon', 'Forum', 'Festival', 'Online'],
+  },
+  {
+    icon: <RiBankFill />,
+    title: 'Blockchain',
+    filter: ['Bitcoin', 'Ethereum', 'Polygon', 'Solana', 'Cardano'],
+  },
+]
 
 const EventFilter = () => {
   return (
