@@ -212,66 +212,90 @@ export const MOBILE_NAV_ITEMS = ({
   address,
 }: {
   address: string | undefined
-}): NavItem[] => [
-  {
-    id: -1,
-    label: 'Language',
-    href: '#',
-    icon: IoGlobeOutline,
-    subItem: [
-      {
-        id: 101,
-        label: 'English',
-        href: 'en',
-        isLocale: true,
-      },
-      {
-        id: 102,
-        label: 'Korean',
-        href: 'ko',
-        isLocale: true,
-      },
-    ],
-  },
-  ...NAV_ITEMS,
-  {
-    id: 7,
-    label: 'Account',
-    icon: RiUserFill,
-    href: '#',
-    subItem: [
-      {
-        id: 701,
-        label: 'Profile',
-        href: `/account/${address}`,
-        hasImage: false,
-      },
-      {
-        id: 703,
-        label: 'Settings',
-        href: '#',
-        hasImage: false,
-        subItem: [
-          {
-            id: 7003,
-            label: 'Profile Settings',
-            href: '/settings/account?tab=profile',
-            hasImage: false,
-          },
-          {
-            id: 7004,
-            label: 'Notification Settings',
-            href: '/settings/account?tab=notifications',
-            hasImage: false,
-          },
-          {
-            id: 7006,
-            label: 'Advanced Settings',
-            href: '/settings/account?tab=advanced',
-            hasImage: false,
-          },
-        ],
-      },
-    ],
-  },
-]
+}): NavItem[] => {
+  const filteredNavItems = NAV_ITEMS.filter(
+    (item) => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
+  )
+
+  if (address) {
+    filteredNavItems.push({
+      id: 6,
+      label: 'Create Wiki',
+      href: '/create-wiki',
+      icon: RiAddBoxFill,
+    })
+  } else {
+    filteredNavItems.push({
+      id: 7,
+      label: 'Suggest Wiki',
+      href: '#',
+      icon: RiLightbulbFlashFill,
+    })
+  }
+  const accountAndLanguageItems = [
+    {
+      id: -1,
+      label: 'Language',
+      href: '#',
+      icon: IoGlobeOutline,
+      subItem: [
+        {
+          id: 101,
+          label: 'English',
+          href: 'en',
+          isLocale: true,
+        },
+        {
+          id: 102,
+          label: 'Korean',
+          href: 'ko',
+          isLocale: true,
+        },
+      ],
+    },
+    {
+      id: 7,
+      label: 'Account',
+      icon: RiUserFill,
+      href: '#',
+      subItem: address
+        ? [
+            {
+              id: 701,
+              label: 'Profile',
+              href: `/account/${address}`,
+              hasImage: false,
+            },
+            {
+              id: 703,
+              label: 'Settings',
+              href: '#',
+              hasImage: false,
+              subItem: [
+                {
+                  id: 7003,
+                  label: 'Profile Settings',
+                  href: '/settings/account?tab=profile',
+                  hasImage: false,
+                },
+                {
+                  id: 7004,
+                  label: 'Notification Settings',
+                  href: '/settings/account?tab=notifications',
+                  hasImage: false,
+                },
+                {
+                  id: 7006,
+                  label: 'Advanced Settings',
+                  href: '/settings/account?tab=advanced',
+                  hasImage: false,
+                },
+              ],
+            },
+          ]
+        : [],
+    },
+  ]
+
+  return [...filteredNavItems, ...accountAndLanguageItems]
+}
