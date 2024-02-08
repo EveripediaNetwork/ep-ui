@@ -51,7 +51,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
@@ -181,7 +181,6 @@ export const WalletDrawerBody = () => {
           </Text>
           <Box height="16" bg="brandLinkColor" mt={2} rounded="md">
             <Link
-              target="_blank"
               h="100%"
               w="full"
               textDecoration="none"

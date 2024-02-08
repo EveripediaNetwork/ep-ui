@@ -37,6 +37,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
     if (storedToken) {
+      console.error('Token already exists')
       closeSignTokenModal()
       handleRedirect()
       return
@@ -53,7 +54,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       // Added async keyword here
       logEvent({
         action: 'LOGIN_SUCCESS',
@@ -77,6 +78,14 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   }: {
     connector: Connector
   }) => {
+    const isWalletConnected = await connector.isAuthorized()
+
+    console.log('isWalletConnected', isWalletConnected)
+    if (isWalletConnected) {
+      triggerSignToken()
+      return
+    }
+
     if (connector.ready) {
       connect({ connector })
       return
