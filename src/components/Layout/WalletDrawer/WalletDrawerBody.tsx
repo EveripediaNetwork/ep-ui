@@ -30,13 +30,12 @@ import { useRouter } from 'next/router'
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
   const { address } = useAddress()
-  const { userBalance } = useFetchWalletBalance(address)
+  const { userBalance, isLoading } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
   const dispatch = useDispatch()
   const router = useRouter()
-
   const [totalBalanceIsLoading, setTotalBalanceIsLoading] = useState(true)
   const hiIQData = {
     formatted: `${hiiq?.hiiqBalance}`,
@@ -52,7 +51,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
@@ -111,33 +110,42 @@ export const WalletDrawerBody = () => {
               </Link>
             </Center>
           </Flex>
-          {balanceBreakdown && walletDetails && walletDetails.length > 0 && (
-            <Box borderWidth="1px" borderRadius="md">
-              {walletDetails.map((details, key) => (
-                <React.Fragment key={key}>
-                  <WalletDetails
-                    symbol={details?.data?.symbol}
-                    balance={shortenBalance(Number(details?.data?.formatted))}
-                    tokensArray={balanceBreakdown}
-                  />
-                  <Divider />
-                </React.Fragment>
-              ))}
-              {hiiq &&
-                walletDetails &&
-                walletDetails.length > 0 &&
-                hiIQData && (
-                  <>
+          {isLoading && (
+            <Flex justifyContent="center">
+              <Spinner color="color" mt="4" />
+            </Flex>
+          )}
+          {!isLoading &&
+            balanceBreakdown &&
+            walletDetails &&
+            walletDetails.length > 0 && (
+              <Box borderWidth="1px" borderRadius="md">
+                {walletDetails.map((details, key) => (
+                  <React.Fragment key={key}>
                     <WalletDetails
-                      symbol={hiIQData?.symbol}
-                      tokensArray={[hiIQData?.tokensArray]}
-                      balance={shortenBalance(hiiq?.hiiqBalance)}
+                      symbol={details?.data?.symbol}
+                      balance={shortenBalance(Number(details?.data?.formatted))}
+                      tokensArray={balanceBreakdown}
                     />
                     <Divider />
-                  </>
-                )}
-            </Box>
-          )}
+                  </React.Fragment>
+                ))}
+                {!isLoading &&
+                  hiiq &&
+                  walletDetails &&
+                  walletDetails.length > 0 &&
+                  hiIQData && (
+                    <>
+                      <WalletDetails
+                        symbol={hiIQData?.symbol}
+                        tokensArray={[hiIQData?.tokensArray]}
+                        balance={shortenBalance(hiiq?.hiiqBalance)}
+                      />
+                      <Divider />
+                    </>
+                  )}
+              </Box>
+            )}
         </>
       ) : (
         <Box>
@@ -185,7 +193,7 @@ export const WalletDrawerBody = () => {
               variant="unstyled"
             >
               <Center height="16">
-                <Text fontWeight="bold" fontSize="medium">
+                <Text fontWeight="bold" textColor="white" fontSize="medium">
                   Login
                 </Text>
               </Center>

@@ -17,8 +17,8 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const handleLogOut = () => {
     window.localStorage.removeItem('wagmi.metaMask.shimDisconnect')
     window.localStorage.removeItem('wagmi.connected')
-    dispatch(setStateToDefault())
     deleteCookie(cookieNames.Enum['x-auth-token'])
+    dispatch(setStateToDefault())
     router.push(router.asPath)
   }
 

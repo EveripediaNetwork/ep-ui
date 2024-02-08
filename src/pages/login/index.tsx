@@ -38,7 +38,7 @@ const Login = ({ address }: { address: string | null }) => {
 
   useEffect(() => {
     if (address) {
-      // handleRedirect()
+      handleRedirect()
     }
   }, [address, router])
 

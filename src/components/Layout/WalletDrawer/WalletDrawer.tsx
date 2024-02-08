@@ -52,10 +52,10 @@ const WalletDrawer = ({
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const [, username] = useENSData(userAddress)
   useHiIQBalance(userAddress)
-  const [accountRefreshLoading, setAccountRefreshLoader] =
+  const [accountRefreshLoading, setAccountRefreshLoading] =
     useState<boolean>(false)
   const toast = useToast()
-  const { refreshBalance } = useFetchWalletBalance(userAddress!)
+  const { refreshBalance } = useFetchWalletBalance(userAddress)
   const { t } = useTranslation('common')
 
   const handleNavigation = () => {
@@ -65,7 +65,7 @@ const WalletDrawer = ({
 
   const handleAccountRefresh = async () => {
     if (typeof userAddress !== 'undefined') {
-      setAccountRefreshLoader(true)
+      setAccountRefreshLoading(true)
       await refreshBalance()
       toast({
         description: 'Account successfully refreshed',
@@ -74,7 +74,7 @@ const WalletDrawer = ({
         isClosable: true,
         position: 'bottom-right',
       })
-      setAccountRefreshLoader(false)
+      setAccountRefreshLoading(false)
     }
   }
 

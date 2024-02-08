@@ -46,12 +46,15 @@ export const getUserIQBalance = async (userAddress: string) => {
 export const useFetchWalletBalance = (address: string | null) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>([])
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
 
   const refreshBalance = async () => {
     if (!address) {
       console.log('Address is undefined')
       return
     }
+
+    setIsLoading(true)
 
     try {
       const maticBalanceBigNumber = await maticProvider.getBalance({ address })
@@ -79,11 +82,13 @@ export const useFetchWalletBalance = (address: string | null) => {
     } catch (error) {
       console.error('Error fetching balances:', error)
     }
+
+    setIsLoading(false)
   }
 
   useEffect(() => {
     refreshBalance()
   }, [])
 
-  return { userBalance, refreshBalance }
+  return { userBalance, refreshBalance, isLoading }
 }
