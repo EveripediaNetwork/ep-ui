@@ -53,7 +53,7 @@ const EventFilter = () => {
       </div>
       <div className="border flex flex-col border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 md:px-6 xl:px-3 py-6 xl:pt-5 xl:pb-20 mt-3 md:mt-6 rounded-xl">
         <div className="flex md:justify-between flex-wrap xl:flex-col gap-x-8 gap-y-6 md:gap-8">
-          {eventFilterData.map(eventFilter => (
+          {eventFilterData.map((eventFilter) => (
             <div>
               <button
                 type="button"
@@ -78,7 +78,7 @@ const EventFilter = () => {
                 </span>
               </button>
               <div className="xl:flex gap-2 mt-3 flex-wrap hidden">
-                {eventFilter.filter.map(filter => (
+                {eventFilter.filter.map((filter) => (
                   <span
                     key={filter}
                     className={
@@ -94,10 +94,10 @@ const EventFilter = () => {
         </div>
         <div className="xl:hidden">
           {eventFilterData
-            .filter(item => item.title === selectedFilter)
-            .map(eventFilter => (
+            .filter((item) => item.title === selectedFilter)
+            .map((eventFilter) => (
               <div className="flex gap-2 mt-5 md:mt-3 flex-wrap">
-                {eventFilter.filter.map(filter => {
+                {eventFilter.filter.map((filter) => {
                   return (
                     <span
                       key={filter}
