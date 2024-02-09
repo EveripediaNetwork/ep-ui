@@ -57,9 +57,9 @@ const EventSummary = () => {
           ))}
         </span>
       </span>
-      <span className="flex justify-between text-xs md:text-[8px] font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 md:px-2 xl:px-4 py-3">
+      <span className="flex justify-between text-xs md:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 md:px-2 xl:px-4 py-3">
         <span>Tags</span>
-        <span className="flex flex-1 max-w-[209px] md:max-w-[150px] xl:max-w-[199px] gap-1 xl:gap-2 flex-wrap">
+        <span className="flex flex-1 max-w-[209px] md:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
           {tags.map((tag) => (
             <span
               key={tag}

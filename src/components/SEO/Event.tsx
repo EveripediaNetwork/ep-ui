@@ -5,12 +5,20 @@ const EventHeader = () => {
   const { t } = useTranslation('event')
   return (
     <NextSeo
-      title={t('event')}
-      description={t('eventSEODescription')}
+      title={t('eventSeoTitle')}
+      description={t('eventSeoDescription')}
       canonical="https://iq.wiki/event"
       openGraph={{
-        title: t('event'),
+        title: t('eventSeoTitle'),
         description: t('eventSEODescription'),
+        images: [
+          {
+            url: 'https://iq.wiki/images/defaults/og-image-default.png',
+            width: 1200,
+            height: 630,
+            alt: 'IQ.wiki | Crypto Encyclopedia',
+          },
+        ],
       }}
       twitter={{
         cardType: 'summary_large_image',

@@ -7,6 +7,8 @@ import EventSearchBar from '@/components/Event/EventSearchBar'
 import EventFilter from '@/components/Event/EventFilter'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
+import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EventPage = () => {
   return (
@@ -33,7 +35,9 @@ const EventPage = () => {
                   </div>
                   <span className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
                     know any events not listed?{' '}
-                    <span className="text-brand-800">Suggest events</span>
+                    <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
+                      Suggest events
+                    </span>
                   </span>
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
@@ -62,7 +66,7 @@ const EventPage = () => {
               </div>
             </div>
             <button
-              className="px-10 py-2 mt-10 rounded-md border cursor-pointer border-gray200 dark:border-alpha-400"
+              className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
               type="button"
             >
               View more
@@ -82,3 +86,14 @@ const EventPage = () => {
 }
 
 export default EventPage
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale ?? 'en', [
+        'event',
+        'common',
+      ])),
+    },
+  }
+}

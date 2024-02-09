@@ -76,8 +76,22 @@ const EventCard = () => {
                 />
               </div>
             </div>
-            <span className="text-brand-800 text-[10px] md:text-xs">
-              Jaynti Kanani, Anurag Arjun, Sandeep Nailwal, Mihailo Bjelic
+            <span className="text-brand-500 dark:text-brand-800 text-[10px] md:text-xs">
+              <Link href={'/event'} className="hover:underline">
+                Jaynti Kanani
+              </Link>
+              ,{' '}
+              <Link href={'/event'} className="hover:underline">
+                Anurag Arjun
+              </Link>
+              ,{' '}
+              <Link href={'/event'} className="hover:underline">
+                Sandeep Nailwal
+              </Link>
+              ,{' '}
+              <Link href={'/event'} className="hover:underline">
+                Mihailo Bjelic
+              </Link>
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-3">

@@ -9,7 +9,7 @@ const EventDetails = () => {
       <h3 className="font-semibold text-xl md:text-2xl xl:text-4xl">
         Event Details
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 xl:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 mt-1 md:mt-2 gap-2 xl:gap-4">
         {eventDetailsData.map((details) => (
           <div
             key={details.title}
@@ -25,7 +25,7 @@ const EventDetails = () => {
       <div className="flex justify-center mt-4">
         <Link
           href={'/event/event-details'}
-          className="flex items-center text-sm md:text-base text-brand-500 dark:text-brand-800 gap-2"
+          className="flex items-center hover:underline text-xs md:text-sm text-brand-500 dark:text-brand-800 gap-2"
         >
           <span>See Agenda</span>
           <RiArrowRightLine />

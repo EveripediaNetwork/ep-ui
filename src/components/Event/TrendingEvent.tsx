@@ -11,13 +11,14 @@ import Image from 'next/image'
 import { eventMockData } from '@/components/Event/event.data'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
+import Autoplay from 'embla-carousel-autoplay'
 
 const TrendingEvent = () => {
   return (
     <div className="mt-10 md:mt-20 max-w-[1296px] mx-auto ">
       <h4 className="font-semibold text-xl">Trending Events</h4>
       <div className="mt-8">
-        <Carousel>
+        <Carousel plugins={[Autoplay()]} opts={{ loop: true }}>
           <CarouselContent className="">
             {eventMockData.map((event) => (
               <CarouselItem

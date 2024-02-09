@@ -1,5 +1,6 @@
 import { nearByEventData } from '@/components/Event/event.data'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { RiCalendar2Line, RiMapPinRangeLine } from 'react-icons/ri'
 
@@ -24,9 +25,12 @@ const NearbyEventFilter = () => {
               />
             </span>
             <div className="flex-1">
-              <span className="font-semibold text-gray800 dark:text-alpha-900 text-sm">
+              <Link
+                href={'/event/event-details'}
+                className="font-semibold hover:underline text-gray800 dark:text-alpha-900 text-sm"
+              >
                 {event.title}
-              </span>
+              </Link>
               <div className="flex text-xs my-2 text-alpha-900 divide-x divide-alpha-700 items-center">
                 <span className="pr-2 flex gap-1 items-center">
                   <span className="text-brand-800 text-base">
