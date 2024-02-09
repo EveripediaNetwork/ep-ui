@@ -9,6 +9,7 @@ import {
   Menu,
   Text,
   UseDisclosureReturn,
+  useDisclosure,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -25,6 +26,7 @@ import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromC
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 import { useAccount } from 'wagmi'
+import SuggestWikiModal from './SuggestWiki'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -36,10 +38,16 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const { isConnected } = useAccount()
+  const {
+    isOpen: isSuggestWikiOpen,
+    onOpen: onSuggestWikiOpen,
+    onClose: onSuggestWikiClose,
+  } = useDisclosure()
 
   const iconSize = 20
 
   const handleClick = (currentNav: NavItem | null) => {
+    currentNav?.label === 'Suggest Wiki' ? onSuggestWikiOpen() : null
     if (currentNav?.subItem) {
       setCurrentMenu(currentNav)
       setShowSubNav(true)
@@ -145,6 +153,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
           borderTopColor="borderColor"
           color="homeDescriptionColor"
         >
+          <SuggestWikiModal
+            isOpen={isSuggestWikiOpen}
+            onClose={onSuggestWikiClose}
+          />
           <Flex gap={8}>
             <RiInstagramFill size={iconSize} />
             <RiLinkedinFill size={iconSize} />

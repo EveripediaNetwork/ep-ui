@@ -124,8 +124,8 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
           direction={{ base: 'row', md: 'column' }}
           gap={{ base: 6, sm: 8 }}
           position="sticky"
-          top="calc(60vh)"
-          transform={{ base: 'unset', md: 'translateY(-50px)' }}
+          top="50%"
+          transform={{ base: 'unset', md: 'translateY(-50%)' }}
           justifyContent="center"
           alignItems="center"
         >

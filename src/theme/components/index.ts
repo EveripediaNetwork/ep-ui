@@ -5,6 +5,8 @@ import { Avatar } from './Avatar'
 import { Button } from './Button'
 import { Input } from './Input'
 import { Link } from './Link'
+import { Text } from './Text'
+import { Heading } from './Heading'
 
 const CustomSteps = {
   ...StepsStyleConfig,
@@ -27,5 +29,7 @@ export const components: ChakraTheme['components'] = {
   Button,
   Input,
   Link,
+  Text,
+  Heading,
   Steps: CustomSteps,
 }
