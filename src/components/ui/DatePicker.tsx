@@ -21,7 +21,7 @@ export function DatePickerDemo() {
       <PopoverTrigger asChild>
         <Button
           className={cn(
-            'max-w-[183px] hidden xl:max-w-[428px] w-full justify-start text-left font-normal h-auto hover:bg-transparent rounded-none',
+            'max-w-[183px] hidden md:flex xl:max-w-[428px] w-full justify-start text-left font-normal h-auto hover:bg-transparent rounded-none',
             !date && 'text-muted-foreground',
           )}
         >
