@@ -5,16 +5,14 @@ import { RiArrowDownSLine } from 'react-icons/ri'
 const EventMedia = () => {
   const [open, setOpen] = useState(true)
   return (
-    <div className="flex flex-col gap-4 border text-gray600 border-gray200 rounded-xl py-4 px-3">
+    <div className="flex flex-col gap-4 border text-gray600 border-gray200 dark:border-alpha-300 rounded-xl py-4 px-3">
       <button
         type="button"
         onClick={() => setOpen((prevState) => !prevState)}
-        className="flex items-center gap-2 text-xl"
+        className="flex items-center text-gray600 dark:text-alpha-900  gap-2 text-xl"
       >
         <RiArrowDownSLine />
-        <span className="text-gray600 font-semibold text-xs uppercase">
-          Media
-        </span>
+        <span className="font-semibold text-xs uppercase">Media</span>
       </button>
       {open && (
         <div className="grid transition-all grid-cols-3 gap-2">

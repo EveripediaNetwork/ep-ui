@@ -17,10 +17,12 @@ const SpeakerDetails = () => {
               height={80}
             />
             <div>
-              <h4 className="text-lg text-brand-500 font-semibold capitalize">
+              <h4 className="text-lg text-brand-500 dark:text-brand-800 font-semibold capitalize">
                 {details.name}
               </h4>
-              <p className="font-medium text-sm">{details.position}</p>
+              <p className="font-medium dark:text-alpha-800 text-sm">
+                {details.position}
+              </p>
             </div>
           </div>
         ))}
@@ -28,7 +30,7 @@ const SpeakerDetails = () => {
       <div className="flex justify-center mt-4">
         <Link
           href={'/event/event-details'}
-          className="flex items-center text-brand-500 gap-2"
+          className="flex items-center text-brand-500 dark:text-brand-800 gap-2"
         >
           And more...
         </Link>

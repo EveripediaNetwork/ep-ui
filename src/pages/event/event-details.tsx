@@ -30,29 +30,29 @@ const EventDetailsPage = () => {
           <SponsorDetails />
         </div>
         <div className="flex-1 flex flex-col gap-10 xl:max-w-[422px]">
-          <div className="flex flex-col gap-4 border text-gray600 border-gray200 rounded-xl py-4 px-3">
+          <div className="flex flex-col gap-4 border text-gray600 dark:text-alpha-900 border-gray200 dark:border-alpha-300 rounded-xl py-4 px-3">
             <div className="relative w-full h-[305px]">
               <Image src={'/images/details-2.png'} fill alt="details" />
             </div>
             <button
               type="button"
-              className="bg-brand-500 font-semibold text-xs rounded-md text-white flex justify-center py-2 w-full"
+              className="bg-brand-500 dark:bg-brand-800 font-semibold text-xs rounded-md text-white flex justify-center py-2 w-full"
             >
               Register/Get Tickets
             </button>
-            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Location</span>
               <span>Le Carrousel du Louvre (Paris, France)</span>
             </span>
-            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Date</span>
               <span>April 8-12, 2024</span>
             </span>
-            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Time</span>
               <span>12:00PM - 7:00PM GMT</span>
             </span>
-            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Social profiles</span>
               <span className="flex text-2xl items-center gap-1">
                 <RiTwitterFill />
@@ -61,7 +61,7 @@ const EventDetailsPage = () => {
                 <RiLinkedinBoxFill />
               </span>
             </span>
-            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Event type</span>
               <span className="flex gap-2 flex-wrap">
                 {eventType.map((type) => (
@@ -74,7 +74,7 @@ const EventDetailsPage = () => {
                 ))}
               </span>
             </span>
-            <span className="flex justify-between text-[10px] font-medium rounded-lg bg-gray100 items-center px-4 py-3">
+            <span className="flex justify-between text-[10px] font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 py-3">
               <span>Tags</span>
               <span className="flex flex-1 max-w-[199px] gap-2 flex-wrap">
                 {tags.map((tag) => (

@@ -10,7 +10,7 @@ const SponsorDetails = () => {
         {sponsorData.map((sponsor, index) => (
           <div
             key={index}
-            className="flex justify-center h-[88px] items-center border py-2 px-2 border-gray200 rounded-md gap-3"
+            className="flex justify-center h-[88px] items-center border py-2 px-2 border-gray200 dark:border-alpha-300 rounded-md gap-3"
           >
             <Image
               src={sponsor.src}

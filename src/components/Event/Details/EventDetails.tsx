@@ -11,7 +11,7 @@ const EventDetails = () => {
         {eventDetailsData.map((details) => (
           <div
             key={details.title}
-            className="bg-white p-2 rounded-lg border border-gray200 flex flex-col gap-3"
+            className="bg-white dark:bg-gray700 p-2 rounded-lg border border-gray200 dark:border-alpha-300 flex flex-col gap-3"
           >
             <h4 className="text-sm uppercase font-medium">{details.title}</h4>
             <p className="text-xs">{details.content}</p>
@@ -21,7 +21,7 @@ const EventDetails = () => {
       <div className="flex justify-center mt-4">
         <Link
           href={'/event/event-details'}
-          className="flex items-center text-brand-500 gap-2"
+          className="flex items-center text-brand-500 dark:text-brand-800 gap-2"
         >
           <span>See Agenda</span>
           <RiArrowRightLine />
