@@ -10,7 +10,6 @@ export default async function handler(
   if (!content || !title)
     return res.status(400).json({ msg: 'Title or content is missing ' })
   const chunks = getWikiChunks(content)
-  console.log('Chunks: ', chunks)
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
   const [translatedTitle, ...translatedTexts] = await Promise.all(
