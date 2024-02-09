@@ -176,61 +176,73 @@ export const speakerData = [
 export const sponsorData = [
   {
     src: '/images/svg-images/sponsor-1.svg',
+    srcDark: '/images/svg-images/sponsor-1-dark.svg',
     width: 181,
     height: 45,
   },
   {
     src: '/images/svg-images/sponsor-2.svg',
+    srcDark: '/images/svg-images/sponsor-2-dark.svg',
     width: 181,
     height: 56,
   },
   {
     src: '/images/svg-images/sponsor-3.svg',
+    srcDark: '/images/svg-images/sponsor-3.svg',
     width: 91,
     height: 77,
   },
   {
     src: '/images/svg-images/sponsor-4.svg',
+    srcDark: '/images/svg-images/sponsor-4.svg',
     width: 181,
     height: 70,
   },
   {
     src: '/images/svg-images/sponsor-5.svg',
+    srcDark: '/images/svg-images/sponsor-5.svg',
     width: 181,
     height: 34,
   },
   {
     src: '/images/svg-images/sponsor-6.svg',
+    srcDark: '/images/svg-images/sponsor-6-dark.svg',
     width: 181,
     height: 48,
   },
   {
     src: '/images/svg-images/sponsor-7.svg',
+    srcDark: '/images/svg-images/sponsor-7-dark.svg',
     width: 181,
     height: 59,
   },
   {
     src: '/images/svg-images/sponsor-8.svg',
+    srcDark: '/images/svg-images/sponsor-8-dark.svg',
     width: 82,
     height: 78,
   },
   {
     src: '/images/svg-images/sponsor-9.svg',
+    srcDark: '/images/svg-images/sponsor-9.svg',
     width: 162,
     height: 78,
   },
   {
     src: '/images/svg-images/sponsor-10.svg',
+    srcDark: '/images/svg-images/sponsor-10.svg',
     width: 186,
     height: 54,
   },
   {
     src: '/images/svg-images/sponsor-11.svg',
+    srcDark: '/images/svg-images/sponsor-11.svg',
     width: 181,
     height: 80,
   },
   {
     src: '/images/svg-images/sponsor-12.svg',
+    srcDark: '/images/svg-images/sponsor-12.svg',
     width: 181,
     height: 47,
   },

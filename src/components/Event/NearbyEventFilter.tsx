@@ -5,7 +5,7 @@ import { RiCalendar2Line, RiMapPinRangeLine } from 'react-icons/ri'
 
 const NearbyEventFilter = () => {
   return (
-    <div className="hidden xl:block">
+    <div className="">
       <div className="flex flex-col gap-1">
         <h2 className="font-semibold text-xl leading-none">Nearby Events</h2>
         <span className="text-xs">

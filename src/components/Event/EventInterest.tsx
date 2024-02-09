@@ -17,7 +17,7 @@ const EventInterest = () => {
         {EventInterestData.map((interest) => {
           return (
             <li
-              className="cursor-pointer border border-gray200 list-none rounded-full px-3 md:px-5 py-1 md:py-2 text-sm hover:bg-gray200 dark:hover:bg-alpha-300"
+              className="cursor-pointer border border-gray200 dark:border-alpha-300 list-none rounded-full px-3 md:px-5 py-1 md:py-2 text-sm hover:bg-gray200 dark:hover:bg-alpha-300"
               key={interest}
             >
               {interest}

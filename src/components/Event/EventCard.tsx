@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import {
   RiArrowRightUpLine,
@@ -15,9 +16,12 @@ const EventCard = () => {
       <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
         <div className="flex flex-col">
           <div className="flex flex-col">
-            <h3 className="font-semibold text-sm dark:text-alpha-900 text-gray800">
+            <Link
+              href={'/event/event-details'}
+              className="font-semibold text-sm dark:text-alpha-900 hover:underline text-gray800"
+            >
               Crypto Finance Conference
-            </h3>
+            </Link>
             <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
               CFC St. Moritz is a curated, application-only event designed for
               NFT investors and decision-makers. It admits only 250
@@ -77,28 +81,28 @@ const EventCard = () => {
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-3">
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               Crypto
             </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               BTC
             </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               NFTs
             </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               Blockchain
             </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               Ethereum
             </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border border-gray300 rounded-[100px]">
+            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
               Finance
             </div>
           </div>
         </div>
-        <div className="w-full md:w-[140px] h-full">
-          <div className="relative rounded-md w-full md:w-[140px] h-[153px] md:h-[117px]">
+        <div className="w-full md:w-[140px] xl:h-[117px] h-full">
+          <div className="relative rounded-lg overflow-hidden w-full md:w-[140px] h-[153px] md:h-[97px]">
             <Image src={'/images/crypto-new.png'} alt="" fill />
           </div>
         </div>
