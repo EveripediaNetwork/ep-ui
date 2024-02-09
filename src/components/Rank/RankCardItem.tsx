@@ -1,10 +1,11 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
+import { Image } from '../Elements/Image/Image'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -50,7 +51,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
 
   return (
