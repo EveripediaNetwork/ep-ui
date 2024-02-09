@@ -127,7 +127,9 @@ const Privacy = () => {
             <Heading as="h2" size="md">
               {t('privacyCollectedAutomatically')}
             </Heading>
-            <Text>{t('privacyAutomaticallyCollected')}</Text>
+            <Text>
+              {transformTextContent(t('privacyAutomaticallyCollected'))}
+            </Text>
             <Heading as="h2" size="md">
               {t('privacySharingWithOthers')}
             </Heading>

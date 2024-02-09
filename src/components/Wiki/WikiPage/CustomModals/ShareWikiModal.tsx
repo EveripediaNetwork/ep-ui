@@ -33,6 +33,7 @@ import config from '@/config'
 import { Modal } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
+import { useTranslation } from 'next-i18next'
 
 const SHARING_OPTIONS = [
   {
@@ -72,6 +73,7 @@ const ShareWikiModal = ({
   onClose = () => {},
   isOpen = true,
 }: Partial<ModalProps>) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
@@ -89,7 +91,7 @@ const ShareWikiModal = ({
       enableBottomCloseButton={false}
       isOpen={isOpen}
       onClose={onClose}
-      title="Share"
+      title={t('share')}
       isCentered
     >
       <InputGroup>
@@ -108,7 +110,7 @@ const ShareWikiModal = ({
               color="brand.600"
               cursor="pointer"
             >
-              {hasCopied ? 'Copied!' : 'Copy'}
+              {hasCopied ? t('copied') : t('copy')}
             </Text>
           </Center>
         </InputRightAddon>
@@ -116,7 +118,7 @@ const ShareWikiModal = ({
 
       <Flex fontWeight="bold" mt="2rem" flexDirection="column">
         <Text color="#1A202C" fontSize="sm" _dark={{ color: 'white' }}>
-          Or share via:
+          {t('orShare')}
         </Text>
         <Wrap mt="1rem" spacing="3">
           {SHARING_OPTIONS.map((item) => {

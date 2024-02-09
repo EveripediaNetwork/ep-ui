@@ -9,6 +9,7 @@ import {
   Menu,
   Text,
   UseDisclosureReturn,
+  useDisclosure,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -24,6 +25,7 @@ import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
+import SuggestWikiModal from './SuggestWiki'
 import { useAddress } from '@/hooks/useAddress'
 
 type MobileNavType = {
@@ -36,10 +38,16 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const { isConnected } = useAddress()
+  const {
+    isOpen: isSuggestWikiOpen,
+    onOpen: onSuggestWikiOpen,
+    onClose: onSuggestWikiClose,
+  } = useDisclosure()
 
   const iconSize = 20
 
   const handleClick = (currentNav: NavItem | null) => {
+    currentNav?.label === 'Suggest Wiki' ? onSuggestWikiOpen() : null
     if (currentNav?.subItem) {
       setCurrentMenu(currentNav)
       setShowSubNav(true)
@@ -92,10 +100,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               {MOBILE_NAV_ITEMS({
                 address: userAddress || undefined,
               })
-                .filter((i) => i.label !== 'Account' || userAddress)
-                .map((navItem) => (
+                .filter(i => i.label !== 'Account' || userAddress)
+                .map(navItem => (
                   <MobileNavItem
-                    handleClick={(item) => handleClick(item)}
+                    handleClick={item => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />
@@ -145,6 +153,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
           borderTopColor="borderColor"
           color="homeDescriptionColor"
         >
+          <SuggestWikiModal
+            isOpen={isSuggestWikiOpen}
+            onClose={onSuggestWikiClose}
+          />
           <Flex gap={8}>
             <RiInstagramFill size={iconSize} />
             <RiLinkedinFill size={iconSize} />
