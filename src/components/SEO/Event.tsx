@@ -9,8 +9,8 @@ const EventHeader = () => {
       description={t('eventSeoDescription')}
       canonical="https://iq.wiki/event"
       openGraph={{
-        title: t('eventSeoTitle'),
-        description: t('eventSEODescription'),
+        title: t('eventOGTitle'),
+        description: t('eventOGDescription'),
         images: [
           {
             url: 'https://iq.wiki/images/defaults/og-image-default.png',
