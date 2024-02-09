@@ -67,7 +67,7 @@ const DesktopNav = () => {
         </MenuButton>
         <MenuList color="linkColor">
           <MenuOptionGroup type="radio" onChange={handleLangChange}>
-            {languageData.map(langObj => (
+            {languageData.map((langObj) => (
               <MenuItemOption
                 key={langObj.locale}
                 fontSize="md"
@@ -81,7 +81,7 @@ const DesktopNav = () => {
         </MenuList>
       </Menu>
       {isConnected
-        ? NAV_ITEMS.filter(i => i.label !== 'Suggest Wiki').map(
+        ? NAV_ITEMS.filter((i) => i.label !== 'Suggest Wiki').map(
             (navItem: NavItem) => {
               return (
                 <NavMenu
@@ -94,7 +94,7 @@ const DesktopNav = () => {
               )
             },
           )
-        : NAV_ITEMS.filter(i => i.label !== 'Create Wiki').map(
+        : NAV_ITEMS.filter((i) => i.label !== 'Create Wiki').map(
             (navItem: NavItem) => {
               return (
                 <NavMenu
