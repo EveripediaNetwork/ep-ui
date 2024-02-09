@@ -4,10 +4,10 @@ import React from 'react'
 const EventDetailsBanner = () => {
   return (
     <div className="">
-      <div className="relative w-full h-[400px] rounded-lg">
+      <div className="relative w-full h-[212px] xl:h-[400px] rounded-lg">
         <Image src={'/images/event-details.png'} alt="" fill />
       </div>
-      <div className="mt-5">
+      <div className="mt-2 xl:mt-5 text-sm md:text-xs xl:text-lg">
         <p>
           The 5th edition of the Paris Blockchain Week will feature five program
           tracks covering various topics in the following subjects: Open
@@ -20,7 +20,7 @@ const EventDetailsBanner = () => {
           CEO and Executive Director Denelle Dixon, and Polygon Co-Founder
           Mihailo Bjelic.
         </p>
-        <p className="mt-5">
+        <p className="mt-2 xl:mt-5">
           2023 highlights include discussions focused on digital finance,
           digital finance strategies, tokenization, and infrastructure.
           Prominent individuals and companies, such as Messari Founder and CEO

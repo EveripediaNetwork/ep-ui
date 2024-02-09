@@ -6,8 +6,10 @@ import Link from 'next/link'
 const SpeakerDetails = () => {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-semibold text-4xl">Speakers</h3>
-      <div className="grid grid-cols-4 gap-4">
+      <h3 className="font-semibold text-xl md:text-2xl xl:text-4xl">
+        Speakers
+      </h3>
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {speakerData.map((details) => (
           <div key={details.name} className="flex flex-col gap-3">
             <Image
@@ -17,10 +19,10 @@ const SpeakerDetails = () => {
               height={80}
             />
             <div>
-              <h4 className="text-lg text-brand-500 dark:text-brand-800 font-semibold capitalize">
+              <h4 className="text-sm xl:text-lg text-brand-500 dark:text-brand-800 font-semibold capitalize">
                 {details.name}
               </h4>
-              <p className="font-medium dark:text-alpha-800 text-sm">
+              <p className="font-medium dark:text-alpha-800 text-xs xl:text-sm">
                 {details.position}
               </p>
             </div>
@@ -30,7 +32,7 @@ const SpeakerDetails = () => {
       <div className="flex justify-center mt-4">
         <Link
           href={'/event/event-details'}
-          className="flex items-center text-brand-500 dark:text-brand-800 gap-2"
+          className="flex items-center text-sm md:text-base text-brand-500 dark:text-brand-800 gap-2"
         >
           And more...
         </Link>
