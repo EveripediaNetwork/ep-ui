@@ -10,6 +10,7 @@ import {
 import Image from 'next/image'
 import { eventMockData } from '@/components/Event/event.data'
 import { RiMapPinRangeLine } from 'react-icons/ri'
+import Link from 'next/link'
 
 const TrendingEvent = () => {
   return (
@@ -24,7 +25,10 @@ const TrendingEvent = () => {
                 key={event.id}
               >
                 <Image src={event.src} alt="blockchain-expo" fill />
-                <div className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5">
+                <Link
+                  href={'/event/event-details'}
+                  className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5"
+                >
                   <div className="text-alpha-900">
                     <span className="flex items-center gap-1">
                       <RiMapPinRangeLine />
@@ -39,7 +43,7 @@ const TrendingEvent = () => {
                   >
                     View event details
                   </button>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
