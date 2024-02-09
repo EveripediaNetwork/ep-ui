@@ -17,7 +17,10 @@ const EventPage = () => {
         <EventSearchBar />
         <TrendingEvent />
         <EventInterest />
-        <div className="flex flex-col-reverse lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
+        <div className="mt-10 lg:hidden">
+          <EventFilter />
+        </div>
+        <div className="flex flex-col lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <div className="flex flex-col flex-1 items-center">
             <div className="flex flex-col gap-10">
               <div className="">
@@ -66,7 +69,9 @@ const EventPage = () => {
             </button>
           </div>
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
-            <EventFilter />
+            <div className="hidden lg:block">
+              <EventFilter />
+            </div>
             <NearbyEventFilter />
             <PopularEventFilter />
           </div>
