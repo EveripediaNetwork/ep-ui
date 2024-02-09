@@ -21,7 +21,7 @@ const EventHeader = () => {
         ],
       }}
       twitter={{
-        cardType: 'summary_large_image',
+        cardType: 'summary',
         handle: '@IQWIKI',
         site: 'IQWiki',
       }}
