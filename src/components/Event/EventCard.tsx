@@ -12,7 +12,7 @@ const EventCard = () => {
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
         <RiArrowRightUpLine />
       </span>
-      <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-4 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
+      <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
         <div className="flex flex-col">
           <div className="flex flex-col">
             <h3 className="font-semibold text-sm dark:text-alpha-900 text-gray800">

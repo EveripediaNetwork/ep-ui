@@ -17,7 +17,7 @@ const EventPage = () => {
         <EventSearchBar />
         <TrendingEvent />
         <EventInterest />
-        <div className="flex flex-col-reverse lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-24">
+        <div className="flex flex-col-reverse lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <div className="flex flex-col flex-1 items-center">
             <div className="flex flex-col gap-10">
               <div className="">
@@ -33,7 +33,7 @@ const EventPage = () => {
                     <span className="text-brand-800">Suggest events</span>
                   </span>
                 </div>
-                <div className="grid gap-5 mt-6 h-fit relative">
+                <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
                   <EventCard />
                   <EventCard />
@@ -43,10 +43,10 @@ const EventPage = () => {
               <div className="">
                 <div className="flex justify-between items-end">
                   <div className="flex flex-col">
-                    <h1 className="font-semibold text-xl">February</h1>
+                    <h1 className="font-semibold md:text-xl">February</h1>
                   </div>
                 </div>
-                <div className="grid gap-5 mt-6 h-fit relative">
+                <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
                   <EventCard />
                   <EventCard />

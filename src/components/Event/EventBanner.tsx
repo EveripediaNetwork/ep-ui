@@ -3,7 +3,7 @@ import React from 'react'
 const EventBanner = () => {
   return (
     <div className="bg-alpha-50">
-      <div className="flex flex-col w-[95%] xl:w-4/5 mx-auto py-24 items-center">
+      <div className="flex flex-col w-[95%] xl:w-4/5 mx-auto py-10 md:py-24 items-center">
         <h5 className="text-center text-brand-500 dark:text-brand-800 xl:text-base">
           Events
         </h5>
