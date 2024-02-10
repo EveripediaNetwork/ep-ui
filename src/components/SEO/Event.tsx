@@ -1,5 +1,5 @@
 import { NextSeo } from 'next-seo'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const EventHeader = () => {
   const { t } = useTranslation('event')
@@ -9,8 +9,8 @@ const EventHeader = () => {
       description={t('eventSeoDescription')}
       canonical="https://iq.wiki/event"
       openGraph={{
-        title: t('rankingOGTitle'),
-        description: t('rankingOGDescription'),
+        title: t('eventOGTitle'),
+        description: t('eventOGDescription'),
         images: [
           {
             url: 'https://iq.wiki/images/defaults/og-image-default.png',
