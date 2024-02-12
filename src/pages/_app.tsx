@@ -14,6 +14,7 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
+import { ThemeProviderWrapper } from '@/components/Layout/Theme/ThemeProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -36,24 +37,31 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
 
   return (
     <StrictMode>
-      <style jsx global>{`
-        :root {
-          --montserrat-font: ${montserrat.style.fontFamily};
-        }
-      `}</style>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <NextNProgress color="#FF5CAA" />
-      <SEOHeader router={router} />
-      <ReduxProvider store={store}>
-        <ChakraProvider resetCSS theme={chakraTheme}>
-          <Layout noFooter={Component.noFooter}>
-            <Component {...pageProps} />
-          </Layout>
-        </ChakraProvider>
-      </ReduxProvider>
-      <ToastContainer />
+      <div className="" suppressHydrationWarning={true}>
+        <style jsx global>{`
+          :root {
+            --montserrat-font: ${montserrat.style.fontFamily};
+          }
+        `}</style>
+        <Head>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        <NextNProgress color="#FF5CAA" />
+        <SEOHeader router={router} />
+        <ThemeProviderWrapper>
+          <ReduxProvider store={store}>
+            <ChakraProvider resetCSS theme={chakraTheme}>
+              <Layout noFooter={Component.noFooter}>
+                <Component {...pageProps} />
+              </Layout>
+            </ChakraProvider>
+          </ReduxProvider>
+        </ThemeProviderWrapper>
+        <ToastContainer />
+      </div>
     </StrictMode>
   )
 }

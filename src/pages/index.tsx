@@ -1,17 +1,17 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
-import dynamic from 'next/dynamic'
+// import { Box, Flex } from '@chakra-ui/react'
+// import dynamic from 'next/dynamic'
 import { getPromotedWikis, getTrendingWikis, getWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
-import TrendingWikis from '@/components/Landing/TrendingWikis'
+// import TrendingWikis from '@/components/Landing/TrendingWikis'
 import { getTags } from '@/services/tags'
-const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
-const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
+// const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
+// const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
+// const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import {
   getAiTokenRanking,
   getNFTRanking,
@@ -19,13 +19,13 @@ import {
   getStableCoinRanking,
   getFoundersRanking,
 } from '@/services/ranking'
-import { Hero } from '@/components/Landing/Hero'
-import { getDateRange } from '@/utils/HomepageUtils/getDate'
+// import { Hero } from '@/components/Landing/Hero'
+import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
-const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
+// const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import CategoriesList from '@/components/Landing/CategoriesList'
+// import CategoriesList from '@/components/Landing/CategoriesList'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -53,35 +53,45 @@ export const Index = ({
   rankings,
   trending,
 }: HomePageProps) => {
+  console.log({
+    promotedWikis,
+    recentWikis,
+    popularTags,
+    leaderboards,
+    rankings,
+    trending,
+  })
+
   return (
-    <Flex
-      _dark={{
-        bgColor: '#1A202C',
-      }}
-      direction="column"
-      mx="auto"
-      w="full"
-      pt={{ base: 6, lg: 12 }}
-    >
-      <Hero />
-      <Box>
-        <TrendingWikis
-          trending={trending}
-          recent={recentWikis?.slice(0, 5)}
-          featuredWikis={promotedWikis}
-        />
-        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
-        <AboutIqgpt />
-        <CategoriesList />
-      </Box>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
-      <DiscoverMore tagsData={popularTags} />
-    </Flex>
+    <div className="bg-white dark:bg-[#1A202C]">&nbsp;</div>
+    // <Flex
+    //   _dark={{
+    //     bgColor: '#1A202C',
+    //   }}
+    //   direction="column"
+    //   mx="auto"
+    //   w="full"
+    //   pt={{ base: 6, lg: 12 }}
+    // >
+    //   {/* <Hero />
+    //   <Box>
+    //     <TrendingWikis
+    //       trending={trending}
+    //       recent={recentWikis?.slice(0, 5)}
+    //       featuredWikis={promotedWikis}
+    //     />
+    //     <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
+    //     <AboutIqgpt />
+    //     <CategoriesList />
+    //   </Box>
+    //   {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+    //   <DiscoverMore tagsData={popularTags} /> */}
+    // </Flex>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const dateRanges = ['today', 'lastWeek', 'lastMonth'].map((rangeType) =>
+  const dateRanges = Object.values(DayRangeType).map(rangeType =>
     getDateRange({ rangeType }),
   )
 
@@ -172,7 +182,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
       `Error fetching data: ${[promotedWikisError, tagsDataError, recentError]
-        .map((error) => error?.message)
+        .map(error => error?.message)
         .filter(Boolean)
         .join(', ')}`,
     )

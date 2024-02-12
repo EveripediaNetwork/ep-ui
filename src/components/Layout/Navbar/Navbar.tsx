@@ -37,7 +37,7 @@ const Navbar = () => {
   })
   const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-  const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
 
@@ -87,7 +87,7 @@ const Navbar = () => {
           </Link>
         </Box>
         <Suspense>
-          <NavSearch setHamburger={setHamburger} />
+          <NavSearch setHamburger={setIsHamburgerOpen} />
         </Suspense>
         <HStack
           ml={4}
@@ -104,7 +104,7 @@ const Navbar = () => {
           />
           <WalletNavMenu
             drawerOperations={drawerOperations}
-            setHamburger={setHamburger}
+            setHamburger={setIsHamburgerOpen}
             setVisibleMenu={setVisibleMenu}
           />
         </HStack>
@@ -116,11 +116,11 @@ const Navbar = () => {
         >
           <WalletNavMenu
             drawerOperations={drawerOperations}
-            setHamburger={setHamburger}
+            setHamburger={setIsHamburgerOpen}
             setVisibleMenu={setVisibleMenu}
           />
           <IconButton
-            onClick={() => setHamburger(!isHamburgerOpen)}
+            onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={
               isHamburgerOpen ? (
                 <CloseIcon w={4} h={4} />
@@ -136,7 +136,7 @@ const Navbar = () => {
       {drawerOperations.isOpen && (
         <WalletDrawer
           finalFocusRef={loginButtonRef}
-          setHamburger={setHamburger}
+          setHamburger={setIsHamburgerOpen}
           toggleOperations={drawerOperations}
         />
       )}
@@ -146,7 +146,7 @@ const Navbar = () => {
         style={{ margin: '0 -15px' }}
       >
         <MobileNav
-          setHamburger={setHamburger}
+          setHamburger={setIsHamburgerOpen}
           drawerOperations={drawerOperations}
         />
       </Collapse>
