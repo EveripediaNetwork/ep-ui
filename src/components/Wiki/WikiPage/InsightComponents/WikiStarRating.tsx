@@ -34,10 +34,10 @@ const wikiStarRating = ({
             key={i}
             cursor={'default'}
             fontSize={{ base: 'md', md: 'xl' }}
-            size="xs"
+            size="2xs"
             icon={<RiStarSFill />}
             variant="unstyled"
-            color={ratingValue <= (avgRating || 0) ? 'brand.500' : ''}
+            color={ratingValue <= (avgRating || 0) ? '#FEC84B' : ''}
             aria-label={`Average rating-${ratingValue}`}
           />
         )
@@ -54,7 +54,7 @@ const wikiStarRating = ({
             key={i}
             icon={<RiStarSFill />}
             variant="unstyled"
-            color={ratingValue <= (currHoverRating || 0) ? '#FEC84B' : ''}
+            color={ratingValue <= (currHoverRating || 0) ? 'brand.500' : ''}
             aria-label={`rating-${ratingValue}`}
             onMouseOver={() => setCurrHoverRating(i + 1)}
             onClick={() => {

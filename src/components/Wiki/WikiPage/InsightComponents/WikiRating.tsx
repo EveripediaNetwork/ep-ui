@@ -18,8 +18,8 @@ const WikiRating = ({
 
   const { t } = useTranslation('wiki')
   //TODO: get rating from backend
-  const [avgRating, _setAvgRating] = useState<wikiRatingType | undefined>(1)
-  const [totalRatings, _setTotalRatings] = useState<number | undefined>(2)
+  const [avgRating, _setAvgRating] = useState<wikiRatingType | undefined>(4)
+  const [totalRatings, _setTotalRatings] = useState<number | undefined>(200)
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
