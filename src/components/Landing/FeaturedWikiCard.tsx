@@ -62,6 +62,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
               objectFit="cover"
               imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
               imgH={IMAGE_BOX_SIZE}
+              sizes="(max-width: 767px) 250px, 100vw"
             />
           </AspectRatio>
           <Flex

@@ -51,7 +51,7 @@ const RankingItem = ({
   }`
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
 
   return (
@@ -99,6 +99,7 @@ const RankingItem = ({
               h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
               objectFit="cover"
+              sizes="(max-width: 767px) 24px, 40px"
             />
           </Box>
           <Box>

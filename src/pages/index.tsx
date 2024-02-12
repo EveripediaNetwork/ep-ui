@@ -1,41 +1,31 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import {
-  getPromotedWikis,
-  getTrendingWikis,
-  getWikis,
-  wikiApi,
-  PromotedWikisBuilder,
-} from '@/services/wikis'
+import { getPromotedWikis, getTrendingWikis, getWikis } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
-const CategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'),
-)
-import { getTags, tagsApi } from '@/services/tags'
+import { getTags } from '@/services/tags'
 const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
 const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
-import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
+import { getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
 const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
-import { nftLisitngAPI } from '@/services/nftlisting'
 import {
   getAiTokenRanking,
   getNFTRanking,
   getTokenRanking,
   getStableCoinRanking,
   getFoundersRanking,
-  rankingAPI,
 } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
-import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
+import { getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import CategoriesList from '@/components/Landing/CategoriesList'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -91,121 +81,108 @@ export const Index = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
-    rangeType: DayRangeType.TODAY,
-  })
-  const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
-    rangeType: DayRangeType.LAST_WEEK,
-  })
-
-  const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
-    rangeType: DayRangeType.LAST_MONTH,
-  })
-
-  const { data: promotedWikis, error: promotedWikisError } =
-    await store.dispatch(getPromotedWikis.initiate())
-  const { data: recent, error: recentError } = await store.dispatch(
-    getWikis.initiate(),
-  )
-  const { data: leaderboard } = await store.dispatch(getLeaderboard.initiate())
-  const { data: tagsData, error: tagsDataError } = await store.dispatch(
-    getTags.initiate({
-      startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
-      endDate: Math.floor(Date.now() / 1000),
-    }),
+  const dateRanges = ['today', 'lastWeek', 'lastMonth'].map(rangeType =>
+    getDateRange({ rangeType }),
   )
 
-  const { data: NFTsList } = await store.dispatch(
-    getNFTRanking.initiate({
-      kind: 'NFT',
-      limit: RANKING_LIST_LIMIT,
-      offset: 1,
-    }),
-  )
-
-  const { data: TokensList } = await store.dispatch(
-    getTokenRanking.initiate({
-      kind: 'TOKEN',
-      limit: RANKING_LIST_LIMIT,
-      offset: 1,
-    }),
-  )
-  const { data: foundersData } = await store.dispatch(
-    getFoundersRanking.initiate({
-      kind: 'TOKEN',
-      limit: RANKING_LIST_LIMIT,
-      offset: 1,
-      founders: true,
-    }),
-  )
-  const { data: aiTokensList } = await store.dispatch(
-    getAiTokenRanking.initiate({
-      kind: 'TOKEN',
-      limit: RANKING_LIST_LIMIT,
-      offset: 1,
-      category: 'AI',
-    }),
-  )
-  const { data: stableCoinsList } = await store.dispatch(
-    getStableCoinRanking.initiate({
-      kind: 'TOKEN',
-      limit: RANKING_LIST_LIMIT,
-      offset: 1,
-      category: 'STABLE_COINS',
-    }),
-  )
-
-  const { data: todayTrending } = await store.dispatch(
-    getTrendingWikis.initiate({
-      amount: TRENDING_WIKIS_AMOUNT,
-      startDay: todayStartDay,
-      endDay: todayEndDay,
-    }),
-  )
-
-  const { data: weekTrending } = await store.dispatch(
-    getTrendingWikis.initiate({
-      amount: TRENDING_WIKIS_AMOUNT,
-      startDay: weekStartDay,
-      endDay: weekEndDay,
-    }),
-  )
-
-  const { data: monthTrending } = await store.dispatch(
-    getTrendingWikis.initiate({
-      amount: TRENDING_WIKIS_AMOUNT,
-      startDay: monthStartDay,
-      endDay: monthEndDay,
-    }),
-  )
-
-  await Promise.all([
-    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
-    store.dispatch(tagsApi.util.getRunningQueriesThunk()),
-    store.dispatch(editorApi.util.getRunningQueriesThunk()),
-    store.dispatch(wikiApi.util.getRunningQueriesThunk()),
-    store.dispatch(nftLisitngAPI.util.getRunningQueriesThunk()),
-    store.dispatch(rankingAPI.util.getRunningQueriesThunk()),
+  const [
+    { data: promotedWikis, error: promotedWikisError },
+    { data: recent, error: recentError },
+    { data: leaderboard },
+    { data: tagsData, error: tagsDataError },
+    { data: NFTsList },
+    { data: TokensList },
+    { data: foundersData },
+    { data: aiTokensList },
+    { data: stableCoinsList },
+    { data: todayTrending },
+    { data: weekTrending },
+    { data: monthTrending },
+  ] = await Promise.all([
+    store.dispatch(getPromotedWikis.initiate()),
+    store.dispatch(getWikis.initiate()),
+    store.dispatch(getLeaderboard.initiate()),
+    store.dispatch(
+      getTags.initiate({
+        startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
+        endDate: Math.floor(Date.now() / 1000),
+      }),
+    ),
+    store.dispatch(
+      getNFTRanking.initiate({
+        kind: 'NFT',
+        limit: RANKING_LIST_LIMIT,
+        offset: 1,
+      }),
+    ),
+    store.dispatch(
+      getTokenRanking.initiate({
+        kind: 'TOKEN',
+        limit: RANKING_LIST_LIMIT,
+        offset: 1,
+      }),
+    ),
+    store.dispatch(
+      getFoundersRanking.initiate({
+        kind: 'TOKEN',
+        limit: RANKING_LIST_LIMIT,
+        offset: 1,
+        founders: true,
+      }),
+    ),
+    store.dispatch(
+      getAiTokenRanking.initiate({
+        kind: 'TOKEN',
+        limit: RANKING_LIST_LIMIT,
+        offset: 1,
+        category: 'AI',
+      }),
+    ),
+    store.dispatch(
+      getStableCoinRanking.initiate({
+        kind: 'TOKEN',
+        limit: RANKING_LIST_LIMIT,
+        offset: 1,
+        category: 'STABLE_COINS',
+      }),
+    ),
+    store.dispatch(
+      getTrendingWikis.initiate({
+        amount: TRENDING_WIKIS_AMOUNT,
+        startDay: dateRanges[0].startDay,
+        endDay: dateRanges[0].endDay,
+      }),
+    ),
+    store.dispatch(
+      getTrendingWikis.initiate({
+        amount: TRENDING_WIKIS_AMOUNT,
+        startDay: dateRanges[1].startDay,
+        endDay: dateRanges[1].endDay,
+      }),
+    ),
+    store.dispatch(
+      getTrendingWikis.initiate({
+        amount: TRENDING_WIKIS_AMOUNT,
+        startDay: dateRanges[2].startDay,
+        endDay: dateRanges[2].endDay,
+      }),
+    ),
   ])
 
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
-      `Error fetching data. the error is: ${[
-        JSON.stringify(tagsDataError?.message),
-        JSON.stringify(promotedWikisError?.message),
-        JSON.stringify(tagsDataError?.message),
-        JSON.stringify(recentError?.message),
-      ].join(' ')}
-      }`,
+      `Error fetching data: ${[promotedWikisError, tagsDataError, recentError]
+        .map(error => error?.message)
+        .filter(Boolean)
+        .join(', ')}`,
     )
   }
-  let sortedPromotedWikis: PromotedWikisBuilder[] = []
-  if (promotedWikis?.length) {
-    sortedPromotedWikis = [...promotedWikis]
-    sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)
-  }
 
-  const sortedleaderboards = sortLeaderboards(leaderboard)
+  const sortedPromotedWikis = promotedWikis
+    ? [...promotedWikis].sort((a, b) => a.promoted - b.promoted)
+    : []
+
+  const sortedleaderboards = leaderboard ? sortLeaderboards(leaderboard) : []
   const rankings = {
     NFTsListing: NFTsList ?? [],
     aiTokensListing: aiTokensList ?? [],
@@ -223,11 +200,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
         'rank',
         'wiki',
       ])),
-      promotedWikis: sortedPromotedWikis ?? [],
+      promotedWikis: sortedPromotedWikis,
       recentWikis: recent ?? [],
       popularTags: tagsData ?? [],
-      leaderboards: sortedleaderboards ?? [],
-      rankings: rankings,
+      leaderboards: sortedleaderboards,
+      rankings,
       trending: { todayTrending, weekTrending, monthTrending },
     },
   }

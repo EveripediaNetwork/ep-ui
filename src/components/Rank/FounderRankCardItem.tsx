@@ -45,7 +45,7 @@ const FounderRankingItem = ({
   )
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
   return (
     <Tr
@@ -97,6 +97,7 @@ const FounderRankingItem = ({
                           objectFit="cover"
                           border="2px solid"
                           borderColor="white"
+                          sizes="(max-width: 767px) 32px, 100vw"
                         />
                       </Flex>
                     </React.Fragment>
@@ -105,7 +106,7 @@ const FounderRankingItem = ({
             </Flex>
             <Flex display={'inline-block'} flexWrap="wrap">
               {formatFoundersArray(
-                item.founderWikis.map((founder) => founder?.title),
+                item.founderWikis.map(founder => founder?.title),
               )
                 ?.slice(0, MAX_LINKED_WIKIS)
                 ?.map((founderName, i, arr) => {
@@ -113,7 +114,7 @@ const FounderRankingItem = ({
                   return (
                     <Link
                       href={`/wiki/${founder}`}
-                      key={`founder${i}`}
+                      key={founder}
                       color="brandLinkColor"
                     >
                       {founderName}

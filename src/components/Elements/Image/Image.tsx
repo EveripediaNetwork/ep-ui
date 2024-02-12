@@ -69,7 +69,7 @@ export const Image = ({
       fill={!imgBoxSize && !(imgW && imgH)}
       src={src}
       alt={alt}
-      onError={(e) => {
+      onError={e => {
         if (hideOnError) {
           e.currentTarget.style.visibility = 'hidden'
         }

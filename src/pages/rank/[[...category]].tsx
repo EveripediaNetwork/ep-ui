@@ -38,65 +38,20 @@ import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import {
+  OnClickMap,
+  RankCardType,
+  SortOrder,
+  CategoryKeyType,
+} from '@/types/RankDataTypes'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
-import { CategoryKeyType } from '@/types/RankDataTypes'
 import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-export const LISTING_LIMIT = 20
-
-export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
-  const innerItems = [...items]
-
-  try {
-    innerItems.sort((a, b) => {
-      const MarketCapA =
-        a?.nftMarketData?.market_cap_usd ?? a?.tokenMarketData?.market_cap ?? 0
-      const MarketCapB =
-        b?.nftMarketData?.market_cap_usd ?? b?.tokenMarketData?.market_cap ?? 0
-      if (order === 'ascending') {
-        return MarketCapA - MarketCapB
-      } else {
-        return MarketCapB - MarketCapA
-      }
-    })
-  } catch (e) {
-    console.log(e)
-  }
-
-  return innerItems
-}
-
-//sortBy24hChange
-export const sortBy24hChange = (order: SortOrder, items: RankCardType[]) => {
-  const innerItems = [...items]
-
-  try {
-    innerItems.sort((a, b) => {
-      const MarketCapChangeA =
-        a?.nftMarketData?.market_cap_usd ??
-        a?.tokenMarketData?.market_cap_change_24h ??
-        0
-      const MarketCapChangeB =
-        b?.nftMarketData?.market_cap_usd ??
-        b?.tokenMarketData?.market_cap_change_24h ??
-        0
-      if (order === 'ascending') {
-        return MarketCapChangeA - MarketCapChangeB
-      } else {
-        return MarketCapChangeB - MarketCapChangeA
-      }
-    })
-  } catch (e) {
-    console.log(e)
-  }
-
-  return innerItems
-}
+import { sortBy24hChange, sortByMarketCap } from '@/utils/rank.util'
+import { LISTING_LIMIT } from '@/data/Constants'
 
 const Rank = ({
   totalTokens,
@@ -364,7 +319,7 @@ const Rank = ({
                 currentPage={tokensOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setTokensOffset(page)}
+                onPageChange={page => setTokensOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -434,7 +389,7 @@ const Rank = ({
                 currentPage={stableCoinOffset}
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setStableCoinOffset(page)}
+                onPageChange={page => setStableCoinOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -504,7 +459,7 @@ const Rank = ({
                 currentPage={aiTokensOffset}
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setAiTokensOffset(page)}
+                onPageChange={page => setAiTokensOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -579,7 +534,7 @@ const Rank = ({
                 currentPage={foundersOffset}
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setFoundersOffset(page)}
+                onPageChange={page => setFoundersOffset(page)}
                 maxW={'90%'}
               >
                 <FoundersRankTableHead onClickMap={onClickMap} />
@@ -650,7 +605,7 @@ const Rank = ({
                 currentPage={nftOffset}
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
-                onPageChange={(page) => setNftOffset(page)}
+                onPageChange={page => setNftOffset(page)}
                 maxW={'90%'}
               >
                 <RankTableHead onClickMap={onClickMap} />
@@ -688,7 +643,7 @@ const Rank = ({
 
 export default Rank
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data: tokensData } = await store.dispatch(
     getCategoryTotal.initiate({ category: 'cryptocurrencies' }),
   )

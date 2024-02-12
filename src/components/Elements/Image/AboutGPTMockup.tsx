@@ -18,7 +18,13 @@ const AboutGPTMockup = ({ bg, w, h }: AboutGPTMockupType) => {
       w={{ base: '85vw', md: '570px', lg: '800px', xl: '1020px' }}
       h={{ base: '375px', md: '550px', lg: '600px', xl: '708px' }}
     >
-      <Image src={mockup} alt="iqgpt-mockup" width={w} height={h} />
+      <Image
+        src={mockup}
+        alt="iqgpt-mockup"
+        width={w}
+        height={h}
+        sizes="(max-width: 639px) 85vw, (min-width: 640px) and (max-width: 767px) 570px, (min-width: 768px) and (max-width: 1023px) 800px, (min-width: 1024px) 1020px"
+      />
     </AspectRatio>
   )
 }

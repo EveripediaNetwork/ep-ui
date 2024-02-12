@@ -81,7 +81,7 @@ const TrendingCard = ({
               icon={<ChevronDownIcon />}
               mr="2"
               borderColor="rankingListBorder"
-              onChange={(e) => {
+              onChange={e => {
                 setWikiData(
                   (wikis as TrendingData)[e.target.value as keyof TrendingData],
                 )
@@ -95,7 +95,7 @@ const TrendingCard = ({
         </Flex>
         {wikis ? (
           <Flex direction={'column'} w="full" px="2" overflow="hidden">
-            {wikiData?.map((wiki, i) => (
+            {wikiData?.map(wiki => (
               <HStack
                 w="full"
                 _hover={{
@@ -107,7 +107,7 @@ const TrendingCard = ({
                 }}
                 cursor="pointer"
                 mt={0}
-                key={i}
+                key={`trending-wiki-${wiki.id}`}
                 py={2}
                 px={4}
               >
@@ -128,6 +128,7 @@ const TrendingCard = ({
                         overflow="hidden"
                         imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
                         imgH={IMAGE_BOX_SIZE}
+                        sizes={`(max-width: 767px) ${IMAGE_BOX_SIZE}px, ${IMAGE_BOX_SIZE}px`}
                       />
                     </AspectRatio>
                   </Link>
