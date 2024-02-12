@@ -1,20 +1,11 @@
 import React from 'react'
-import { RankCardType } from '@/types/RankDataTypes'
-import {
-  Box,
-  Flex,
-  Text,
-  Td,
-  Tr,
-  Image,
-  Stat,
-  StatArrow,
-} from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr, Stat, StatArrow } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
-import { SortOrder } from '@/types/RankDataTypes'
+import { SortOrder, RankCardType } from '@/types/RankDataTypes'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import { Image } from '../Elements/Image/Image'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -54,7 +45,7 @@ const FounderRankingItem = ({
   )
 
   const dateFounded = item?.events?.find(
-    (event) => event.type === EventType.CREATED,
+    event => event.type === EventType.CREATED,
   )?.date
   return (
     <Tr
@@ -114,7 +105,7 @@ const FounderRankingItem = ({
             </Flex>
             <Flex display={'inline-block'} flexWrap="wrap">
               {formatFoundersArray(
-                item.founderWikis.map((founder) => founder?.title),
+                item.founderWikis.map(founder => founder?.title),
               )
                 ?.slice(0, MAX_LINKED_WIKIS)
                 ?.map((founderName, i, arr) => {

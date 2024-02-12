@@ -49,8 +49,8 @@ export const Image = ({
   ...rest
 }: NextChakraImageProps) => (
   <Box
-    h={`${imgBoxSize || imgH}px`}
-    w={`${imgBoxSize || imgW}px`}
+    h={`${imgBoxSize ?? imgH}px`}
+    w={`${imgBoxSize ?? imgW}px`}
     {...rest}
     overflow="hidden"
     position="relative"
@@ -69,7 +69,7 @@ export const Image = ({
       fill={!imgBoxSize && !(imgW && imgH)}
       src={src}
       alt={alt}
-      onError={(e) => {
+      onError={e => {
         if (hideOnError) {
           e.currentTarget.style.visibility = 'hidden'
         }
@@ -79,8 +79,8 @@ export const Image = ({
       placeholder={placeholder}
       blurDataURL={blurDataURL}
       loading={priority ? 'eager' : 'lazy'}
-      width={imgBoxSize || imgW}
-      height={imgBoxSize || imgH}
+      width={imgBoxSize ?? imgW}
+      height={imgBoxSize ?? imgH}
     />
   </Box>
 )

@@ -15,8 +15,8 @@ const AboutGPTMockup = ({ bg, w, h }: AboutGPTMockupType) => {
   return (
     <AspectRatio
       ratio={WIKI_IMAGE_ASPECT_RATIO}
-      w={{ base: '85vw', md: '570px', xl: '1020px' }}
-      h={{ base: '375px', md: '550px', xl: '708px' }}
+      w={{ base: '85vw', md: '570px', lg: '800px', xl: '1020px' }}
+      h={{ base: '375px', md: '550px', lg: '600px', xl: '708px' }}
     >
       <Image src={mockup} alt="iqgpt-mockup" width={w} height={h} />
     </AspectRatio>
