@@ -81,7 +81,7 @@ export const Index = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const dateRanges = ['today', 'lastWeek', 'lastMonth'].map(rangeType =>
+  const dateRanges = ['today', 'lastWeek', 'lastMonth'].map((rangeType) =>
     getDateRange({ rangeType }),
   )
 
@@ -172,7 +172,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
       `Error fetching data: ${[promotedWikisError, tagsDataError, recentError]
-        .map(error => error?.message)
+        .map((error) => error?.message)
         .filter(Boolean)
         .join(', ')}`,
     )

@@ -149,7 +149,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           mt={10}
           pl={0}
           overflowX={'auto'}
-          onChange={index => {
+          onChange={(index) => {
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }}
         >

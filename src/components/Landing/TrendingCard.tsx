@@ -81,7 +81,7 @@ const TrendingCard = ({
               icon={<ChevronDownIcon />}
               mr="2"
               borderColor="rankingListBorder"
-              onChange={e => {
+              onChange={(e) => {
                 setWikiData(
                   (wikis as TrendingData)[e.target.value as keyof TrendingData],
                 )
@@ -95,7 +95,7 @@ const TrendingCard = ({
         </Flex>
         {wikis ? (
           <Flex direction={'column'} w="full" px="2" overflow="hidden">
-            {wikiData?.map(wiki => (
+            {wikiData?.map((wiki) => (
               <HStack
                 w="full"
                 _hover={{
