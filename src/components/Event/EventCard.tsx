@@ -6,8 +6,17 @@ import {
   RiCalendar2Line,
   RiMapPinRangeLine,
 } from 'react-icons/ri'
+import { IEventData } from './event.data'
+import { parseDateRange } from '@/lib/utils'
 
-const EventCard = () => {
+const EventCard = ({
+  title,
+  location,
+  date,
+  tags,
+  excerpt,
+  speakers,
+}: Omit<IEventData, 'id' | 'src'>) => {
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -20,99 +29,58 @@ const EventCard = () => {
               href={'/event/event-details'}
               className="font-semibold text-sm dark:text-alpha-900 hover:underline text-gray800"
             >
-              Crypto Finance Conference
+              {title}
             </Link>
             <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
-              CFC St. Moritz is a curated, application-only event designed for
-              NFT investors and decision-makers. It admits only 250
-              international UHNWI, institutional investors, funds, and family
-              offices.
+              {excerpt}
             </p>
             <div className="flex text-[10px] md:text-xs my-2 divide-x items-center">
               <span className="pr-2 flex gap-1 items-center">
                 <span className="text-brand-800 ">
                   <RiCalendar2Line />
                 </span>
-                <span>10th-13th, January 2024</span>
+                <span>{parseDateRange(date)}</span>
               </span>
               <span className="pl-2 flex gap-1 items-center">
                 <span className="text-brand-800 ">
                   <RiMapPinRangeLine />
                 </span>
-                <span>St. Moritz, Switzerland</span>
+                <span>{location}</span>
               </span>
             </div>
           </div>
           <div className="flex gap-3 mb-2 leading-none">
             <div className="flex">
-              <div className="relative w-5 h-5 shrink-0 rounded-full border border-white dark:border-gray700">
-                <Image
-                  src={'/images/svg-images/user-2.png'}
-                  alt="user-icon"
-                  fill
-                />
-              </div>
-              <div className="relative w-5 h-5 rounded-full -mx-1 border border-white dark:border-gray700">
-                <Image
-                  src={'/images/svg-images/user-1.png'}
-                  alt="user-icon"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="relative w-5 h-5 rounded-full border border-white dark:border-gray700">
-                <Image
-                  src={'/images/svg-images/user-3.png'}
-                  alt="user-icon"
-                  fill
-                />
-              </div>
-              <div className="relative w-5 h-5 rounded-full -mx-1 border border-white dark:border-gray700">
-                <Image
-                  src={'/images/svg-images/user-4.png'}
-                  alt="user-icon"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              {speakers?.map((speaker) => (
+                <div
+                  key={speaker.name}
+                  className="relative w-5 h-5 shrink-0 rounded-full border border-white dark:border-gray700"
+                >
+                  <Image src={speaker.imageSrc} alt="user-icon" fill />
+                </div>
+              ))}
             </div>
             <span className="text-brand-500 dark:text-brand-800 text-[10px] md:text-xs">
-              <Link href={'/event'} className="hover:underline">
-                Jaynti Kanani
-              </Link>
-              ,{' '}
-              <Link href={'/event'} className="hover:underline">
-                Anurag Arjun
-              </Link>
-              ,{' '}
-              <Link href={'/event'} className="hover:underline">
-                Sandeep Nailwal
-              </Link>
-              ,{' '}
-              <Link href={'/event'} className="hover:underline">
-                Mihailo Bjelic
-              </Link>
+              {speakers?.map((speaker) => (
+                <Link
+                  href={'/event'}
+                  key={speaker.name}
+                  className="hover:underline"
+                >
+                  {speaker.name},
+                </Link>
+              ))}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-3">
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              Crypto
-            </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              BTC
-            </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              NFTs
-            </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              Blockchain
-            </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              Ethereum
-            </div>
-            <div className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]">
-              Finance
-            </div>
+            {tags?.map((tag) => (
+              <div
+                key={tag}
+                className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"
+              >
+                {tag}
+              </div>
+            ))}
           </div>
         </div>
         <div className="w-full md:w-[140px] xl:h-[117px] h-full">

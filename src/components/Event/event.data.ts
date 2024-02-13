@@ -1,9 +1,12 @@
-interface IEventData {
+export interface IEventData {
   id: number
   location: string
   title: string
   date: string
-  src: string
+  src?: string
+  tags?: string[]
+  excerpt?: string
+  speakers?: { name: string; imageSrc: string }[]
 }
 
 export const EventInterestData = [
@@ -25,6 +28,167 @@ export const EventInterestData = [
 ]
 
 export const eventMockData: IEventData[] = [
+  {
+    id: 1,
+    title: 'Crypto Finance Conference',
+    excerpt:
+      'CFC St. Moritz is a curated, application-only event designed for NFT investors and decision-makers. It admits only 250 international UHNWI, institutional investors, funds, and family offices.',
+    tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum', 'Finance'],
+    location: 'St. Moritz, Switzerland',
+    date: '2024-01-10/2024-01-13',
+    speakers: [
+      {
+        name: 'Jaynti Kanani',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Anurag Arjun',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+      {
+        name: 'Sandeep Nailwal',
+        imageSrc: '/images/svg-images/user-3.png',
+      },
+      {
+        name: 'Mihailo Bjelic',
+        imageSrc: '/images/svg-images/user-4.png',
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: 'Quantum Miami 2024',
+    excerpt:
+      'Past Quantum Miami editions have brought together some of the world’s top crypto figures such as Mark Cuban and Ethereum co-founder Vitalik Buterin to share their insights. In 2024, the event’s theme is “Bridging Blockchain to Mainstream Industries”.',
+    tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
+    location: 'James L. Knight Center (Miami, Florida)',
+    date: '2024-01-10/2024-01-13',
+    speakers: [
+      {
+        name: 'Emin Gun',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Kevin Sekniqi',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+      {
+        name: 'Maofan Ted',
+        imageSrc: '/images/svg-images/user-3.png',
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: 'The Blockchain Event',
+    excerpt:
+      'The Blockchain Event serves as a platform for leaders and technologists where they can create and implement real-time solutions to disrupt industries and help businesses adapt to evolving market demands.',
+    tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
+    location:
+      'Greater Broward County Convention Center (Fort Lauderdale, Florida)',
+    date: '2024-01-10',
+    speakers: [
+      {
+        name: 'Reeve Collins',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Brock Pierce',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+      {
+        name: 'Craig Sellars',
+        imageSrc: '/images/svg-images/user-3.png',
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: 'METAVSUMMIT',
+    excerpt:
+      'METAVSUMMIT is an event that specializes in helping Web 3.0 Companies (Blockchain, Metaverse and NFTs) and Investors meet under one roof for them to be able to create long-term business relationships.',
+    tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
+    location: 'Dubai, UAE',
+    date: '2024-02-11',
+    speakers: [
+      {
+        name: 'Jed McCaleb',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Arthur Britto',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+      {
+        name: 'David Schwar',
+        imageSrc: '/images/svg-images/user-3.png',
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: 'WEB3 Revolution Cyprus Blockchain EXPO 2024',
+    excerpt:
+      'This groundbreaking event will bring together the brightest minds and industry leaders in the digital realm, providing a platform for collaboration, inspiration, and the exploration of new possibilities in the web3 space.',
+    tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
+    location: 'Limassol, Cyprus',
+    date: '2024-02-11',
+    speakers: [
+      {
+        name: 'Jeremy Allaire',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Sean Neville',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: '13th Annual London Finance and Capital Markets Conference',
+    excerpt:
+      'This groundbreaking event will bring together the brightest minds and industry leaders in the digital realm, providing a platform for collaboration, inspiration, and the exploration of new possibilities in the web3 space.',
+    tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
+    location: 'One Great George Street, London, England',
+    date: '2024-02-16',
+    speakers: [
+      {
+        name: 'Gavin Wood',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Robert Habermeier',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: 'ETHDenver Innovation Festival',
+    excerpt:
+      'ETHDenver is considered the largest Web3 #BUIDLathon in the US. The 2024 blockchain event will bring together Ethereum protocol enthusiasts, designers, and developers from all over the world.',
+    tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
+    location: 'National Western Complex (aka Spork Castle), Denver Colorado',
+    date: '2024-02-16',
+    speakers: [
+      {
+        name: 'Emin Gun',
+        imageSrc: '/images/svg-images/user-1.png',
+      },
+      {
+        name: 'Kevin Sekniqi',
+        imageSrc: '/images/svg-images/user-2.png',
+      },
+      {
+        name: ' Maofan Ted',
+        imageSrc: '/images/svg-images/user-3.png',
+      },
+    ],
+  },
+]
+
+export const trendingEventData: IEventData[] = [
   {
     id: 1,
     location: 'Le Carrousel du Louvre (Paris, France)',

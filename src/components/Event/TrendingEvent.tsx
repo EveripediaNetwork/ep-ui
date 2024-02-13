@@ -8,7 +8,7 @@ import {
   CarouselDots,
 } from '../ui/carousel'
 import Image from 'next/image'
-import { eventMockData } from '@/components/Event/event.data'
+import { trendingEventData } from '@/components/Event/event.data'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
 import Autoplay from 'embla-carousel-autoplay'
@@ -20,12 +20,12 @@ const TrendingEvent = () => {
       <div className="mt-8">
         <Carousel plugins={[Autoplay()]} opts={{ loop: true }}>
           <CarouselContent className="">
-            {eventMockData.map((event) => (
+            {trendingEventData.map((event) => (
               <CarouselItem
                 className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-1/4 rounded-xl relative w-[309px] ml-4"
                 key={event.id}
               >
-                <Image src={event.src} alt="blockchain-expo" fill />
+                <Image src={event.src || ''} alt="blockchain-expo" fill />
                 <Link
                   href={'/event/event-details'}
                   className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5"

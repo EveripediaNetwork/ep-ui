@@ -40,7 +40,7 @@ export default async function handler(
   console.log(requestObject)
 
   const result = await new Promise<GenerateOutput>((resolve) => {
-    fetchEventSource('http://localhost:3000/api/generate', {
+    fetchEventSource('https://www.iqgpt.com/api/generate', {
       method: 'POST',
       body: JSON.stringify(requestObject),
       headers: {

@@ -9,14 +9,18 @@ import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useState } from 'react'
+import { IEventData, eventMockData } from '@/components/Event/event.data'
 
 const EventPage = () => {
+  const [eventData, setEventData] = useState<IEventData[]>(eventMockData)
+
   return (
     <div>
       <EventHeader />
       <EventBanner />
       <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
-        <EventSearchBar />
+        <EventSearchBar eventData={eventData} setEventData={setEventData} />
         <TrendingEvent />
         <EventInterest />
         <div className="mt-10 lg:hidden">
@@ -42,12 +46,20 @@ const EventPage = () => {
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  <EventCard />
-                  <EventCard />
-                  <EventCard />
+                  {eventData.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      title={event.title}
+                      excerpt={event.excerpt}
+                      location={event.location}
+                      date={event.date}
+                      tags={event.tags}
+                      speakers={event.speakers}
+                    />
+                  ))}
                 </div>
               </div>
-              <div className="">
+              {/* <div className="">
                 <div className="flex justify-between items-end">
                   <div className="flex flex-col">
                     <h1 className="font-semibold md:text-xl">February</h1>
@@ -56,14 +68,8 @@ const EventPage = () => {
                 <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
                   <EventCard />
-                  <EventCard />
-                  <EventCard />
-                  <EventCard />
-                  <EventCard />
-                  <EventCard />
-                  <EventCard />
                 </div>
-              </div>
+              </div> */}
             </div>
             <button
               className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
