@@ -2,7 +2,6 @@ import EventHeader from '@/components/SEO/Event'
 import TrendingEvent from '@/components/Event/TrendingEvent'
 import EventBanner from '@/components/Event/EventBanner'
 import EventInterest from '@/components/Event/EventInterest'
-import EventCard from '@/components/Event/EventCard'
 import EventSearchBar from '@/components/Event/EventSearchBar'
 import EventFilter from '@/components/Event/EventFilter'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
@@ -11,10 +10,33 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { IEventData, eventMockData } from '@/components/Event/event.data'
+import EventList from '@/components/Event/EventList'
+
+export const groupEventsByMonth = (events: IEventData[]) => {
+  const eventsByMonth: { [key: string]: IEventData[] } = {}
+
+  events.forEach((event) => {
+    const dateParts = event.date.split('-')
+    const monthNumeric = parseInt(dateParts[1], 10)
+    const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
+      'en-us',
+      { month: 'long' },
+    )
+
+    const key = `${monthWord} ${dateParts[0]}`
+
+    if (!eventsByMonth[key]) {
+      eventsByMonth[key] = []
+    }
+
+    eventsByMonth[key].push(event)
+  })
+
+  return eventsByMonth
+}
 
 const EventPage = () => {
   const [eventData, setEventData] = useState<IEventData[]>(eventMockData)
-
   return (
     <div>
       <EventHeader />
@@ -27,57 +49,7 @@ const EventPage = () => {
           <EventFilter />
         </div>
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
-          <div className="flex flex-col flex-1 items-center">
-            <div className="flex flex-col gap-10">
-              <div className="">
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col">
-                    <h1 className="font-semibold md:text-xl">January</h1>
-                    <span className="text-[10px] md:text-xs">
-                      Tuesday, 10 January 2024
-                    </span>
-                  </div>
-                  <span className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
-                    know any events not listed?{' '}
-                    <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
-                      Suggest events
-                    </span>
-                  </span>
-                </div>
-                <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
-                  <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  {eventData.map((event) => (
-                    <EventCard
-                      key={event.id}
-                      title={event.title}
-                      excerpt={event.excerpt}
-                      location={event.location}
-                      date={event.date}
-                      tags={event.tags}
-                      speakers={event.speakers}
-                    />
-                  ))}
-                </div>
-              </div>
-              {/* <div className="">
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col">
-                    <h1 className="font-semibold md:text-xl">February</h1>
-                  </div>
-                </div>
-                <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
-                  <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  <EventCard />
-                </div>
-              </div> */}
-            </div>
-            <button
-              className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
-              type="button"
-            >
-              View more
-            </button>
-          </div>
+          <EventList eventData={eventData} setEventData={setEventData} />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <div className="hidden lg:block">
               <EventFilter />

@@ -3,12 +3,33 @@ import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
 import { IEventData } from './event.data'
 
-const filterEventsByDate = (
-  date: Date,
+const filterEvents = (
+  searchKey: string,
+  date: Date | undefined,
   eventData: IEventData[],
 ): IEventData[] => {
   const filteredEvents = eventData.filter((event) => {
-    const [startDateStr, endDateStr] = event.date.split('/')
+    const { title, location, speakers, tags, date: eventDateStr } = event
+
+    // Filter by search key
+    const matchesSearchKey =
+      searchKey !== '' &&
+      (title.toLowerCase().includes(searchKey.toLowerCase()) ||
+        location.toLowerCase().includes(searchKey.toLowerCase()) ||
+        speakers?.some((speaker) =>
+          speaker.name.toLowerCase().includes(searchKey.toLowerCase()),
+        ) ||
+        tags?.some((tag) =>
+          tag.toLowerCase().includes(searchKey.toLowerCase()),
+        ))
+
+    // If date is undefined, consider it as not applying date filtering
+    if (date === undefined) {
+      return matchesSearchKey
+    }
+
+    // Filter by date
+    const [startDateStr, endDateStr] = eventDateStr.split('/')
     const startDate = new Date(startDateStr)
     const endDate = endDateStr ? new Date(endDateStr) : new Date(startDateStr)
 
@@ -16,8 +37,12 @@ const filterEventsByDate = (
     compareDate.setDate(compareDate.getDate() + 1)
     compareDate.setUTCHours(0, 0, 0, 0)
 
-    // Check if the provided date falls within the date range
-    return compareDate >= startDate && compareDate <= endDate
+    const isDateInRange = compareDate >= startDate && compareDate <= endDate
+
+    console.log({ matchesSearchKey })
+    console.log({ isDateInRange })
+    // Return true if the event matches search key and (optionally) date criteria
+    return matchesSearchKey || isDateInRange
   })
 
   return filteredEvents
@@ -43,27 +68,10 @@ const EventSearchBar = ({
     const searchInput = messageInput.value.trim()
 
     const searchKey = searchInput.toLowerCase().trim()
-    console.log({ searchKeyValid: searchKey !== '' })
-    const keySearchResult = eventData.filter((event) => {
-      const { title, location, speakers, tags } = event
-      const matchesSearchKey =
-        searchKey !== ''
-          ? title.toLowerCase().includes(searchKey) ||
-            location.toLowerCase().includes(searchKey.toLowerCase()) ||
-            speakers?.some((speaker) =>
-              speaker.name.toLowerCase().includes(searchKey),
-            ) ||
-            tags?.some((tag) => tag.toLowerCase().includes(searchKey))
-          : eventData
 
-      return matchesSearchKey
-    })
+    const dateSearchResult = filterEvents(searchKey, searchDate, eventData)
 
-    const dateSearchResult = searchDate
-      ? filterEventsByDate(searchDate, eventData)
-      : eventData
-
-    const results = keySearchResult && dateSearchResult
+    const results = dateSearchResult
     console.log(results)
 
     setEventData(results)
