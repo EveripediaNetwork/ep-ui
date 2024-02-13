@@ -2,11 +2,11 @@ import { Box, MenuItem, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 export const ProfileLink = () => {
-  const userAddress = getUserAddressFromCache()
+  const { address: userAddress } = useAddress()
   const router = useRouter()
   const [link, setLink] = useState(
     userAddress ? `/account/${userAddress}` : '/login',
