@@ -205,6 +205,7 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
+    console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
     if (connectedChainId !== chainId) {
       setShowNetworkModal(true)
       return
