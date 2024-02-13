@@ -57,7 +57,6 @@ const EventInterest = ({
     if (selectedTags.length > 0) {
       const filteredEvents = filterEventsByTags(eventData, selectedTags)
       setEventData(filteredEvents)
-      console.log({ filteredEvents })
     } else {
       setEventData(eventMockData)
     }

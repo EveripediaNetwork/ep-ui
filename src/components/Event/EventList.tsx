@@ -10,7 +10,6 @@ const EventList = ({
   eventData: IEventData[]
   setEventData: Function
 }) => {
-  console.log({ eventList: eventData })
   const eventsByMonth = groupEventsByMonth(eventData)
 
   return (
