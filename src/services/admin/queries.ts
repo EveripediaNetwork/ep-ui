@@ -275,19 +275,27 @@ export const REVALIDATE_URL = gql`
 `
 
 export const CONTENT_FEEDBACK = gql`
-  mutation ContentFeedback(
+  mutation contentFeedback(
     $contentId: String!
-    $userId: String
-    $feedback: ContentFeedbackType
+    $rating: Int!
   ) {
     contentFeedback(
       site: IQWIKI
       contentId: $contentId
-      userId: $userId
-      feedback: $feedback
+      rating: $rating
     )
   }
 `
+export const RATINGS_COUNT = gql`
+query ratingsCount($contentId: String) {
+  ratingsCount(contentId: $contentId) {  
+    contentId
+    rating
+    count
+  }
+}
+`
+
 export const CHECK_ADMIN = gql`
   query isAdmin {
     isAdmin
