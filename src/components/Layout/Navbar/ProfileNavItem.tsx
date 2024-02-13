@@ -2,11 +2,11 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { NAV_ICON } from '@/data/NavItemData'
 import { Box, Divider } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import NavMenu from './NavMenu'
 import { ProfileLink } from './ProfileLink'
 import { LogOutBtn } from './Logout'
+import { useAddress } from '@/hooks/useAddress'
 
 interface ProfileNavMenuProps {
   setVisibleMenu: Dispatch<SetStateAction<number | null>>
@@ -17,7 +17,7 @@ const ProfileNavMenu = ({
   setVisibleMenu,
   visibleMenu,
 }: ProfileNavMenuProps) => {
-  const userAddress = getUserAddressFromCache()
+  const { address: userAddress } = useAddress()
   return (
     <Box onMouseLeave={() => setVisibleMenu(null)}>
       <NavMenu
@@ -29,7 +29,7 @@ const ProfileNavMenu = ({
             key={userAddress}
             address={userAddress}
             size={25}
-            alt={userAddress}
+            alt={userAddress ? userAddress : ''}
           />
         }
       >
