@@ -19,6 +19,7 @@ import {
   CHECK_ADMIN,
   REVALIDATE_URL,
   CONTENT_FEEDBACK,
+  RATINGS_COUNT,
   WIKIS_VIEWS,
   WIKIS_PER_VISIT,
 } from '@/services/admin/queries'
@@ -27,8 +28,8 @@ import {
   WikisModifiedCount,
   CreatedWikisCount,
   Editors,
-  ToggleUser,
   ContentFeedbackArgs,
+  ToggleUser,
 } from '@/types/admin'
 import { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
@@ -75,7 +76,7 @@ type RevalidateURL = {
 }
 
 type ContentFeedback = {
-  contentFeedback: boolean
+  rating: number
 }
 
 type WikisEditorsCountResponse = {
@@ -145,6 +146,12 @@ type WikiViewsResult = {
 
 type WikiViewsResponse = {
   wikiViews: WikiViewsResult[]
+}
+
+type ratingsCountRes = {
+  contentId: string
+  rating: number
+  count: number
 }
 
 export const adminApi = createApi({
@@ -266,13 +273,22 @@ export const adminApi = createApi({
         return response.revalidatePage
       },
     }),
-    contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
-      query: ({ contentId, userId, rating }: ContentFeedbackArgs) => ({
+    contentFeedback: builder.mutation<number, ContentFeedbackArgs>({
+      query: ({ contentId, rating }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { contentId, userId, rating },
+        variables: { contentId, rating },
       }),
       transformResponse: (response: ContentFeedback) => {
-        return response.contentFeedback
+        return response.rating
+      },
+    }),
+    ratingsCount: builder.query<ratingsCountRes, string>({
+      query: (contentId: string) => ({
+        document: RATINGS_COUNT,
+        variables: { contentId },
+      }),
+      transformResponse: (response: ratingsCountRes) => {
+        return response
       },
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
