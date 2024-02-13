@@ -2,7 +2,7 @@ import React, { StrictMode, useEffect } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
+// import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import Layout from '@/components/Layout/Layout/Layout'
@@ -11,12 +11,13 @@ import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
 import { Montserrat } from '@next/font/google'
-import chakraTheme from '../theme'
+// import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { ThemeProviderWrapper } from '@/components/Layout/Theme/ThemeProvider'
+import GoogleAnalyticsScripts from '@/components/Layout/GoogleAnalyticsScripts'
 
-const { ToastContainer } = createStandaloneToast()
+// const { ToastContainer } = createStandaloneToast()
 
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
@@ -37,7 +38,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
 
   return (
     <StrictMode>
-      <div className="" suppressHydrationWarning={true}>
+      <div suppressHydrationWarning={true}>
         <style jsx global>{`
           :root {
             --montserrat-font: ${montserrat.style.fontFamily};
@@ -53,14 +54,15 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
         <SEOHeader router={router} />
         <ThemeProviderWrapper>
           <ReduxProvider store={store}>
-            <ChakraProvider resetCSS theme={chakraTheme}>
-              <Layout noFooter={Component.noFooter}>
-                <Component {...pageProps} />
-              </Layout>
-            </ChakraProvider>
+            {/* <ChakraProvider resetCSS theme={chakraTheme}> */}
+            <Layout noFooter={Component.noFooter}>
+              <Component {...pageProps} />
+            </Layout>
+            {/* </ChakraProvider> */}
           </ReduxProvider>
         </ThemeProviderWrapper>
-        <ToastContainer />
+        <GoogleAnalyticsScripts />
+        {/* <ToastContainer /> */}
       </div>
     </StrictMode>
   )

@@ -10,7 +10,18 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        subMenuBg: {
+          DEFAULT: 'white',
+          dark: 'gray.800',
+        },
+        rankingListBorder: {
+          DEFAULT: 'gray.200',
+          dark: 'whiteAlpha.300',
+        },
+      },
+    },
   },
   plugins: [],
 }

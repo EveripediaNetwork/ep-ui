@@ -1,31 +1,22 @@
-import React, { Suspense } from 'react'
-import { Box, Stack } from '@chakra-ui/react'
-import dynamic from 'next/dynamic'
-import Navbar from '../Navbar/Navbar'
-import GoogleAnalyticsScripts from '../GoogleAnalyticsScripts'
-
-const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
-  suspense: true,
-})
+import React from 'react'
+// import { Box, Stack } from '@chakra-ui/react'
+// import dynamic from 'next/dynamic'
+// import Navbar from '../Navbar/Navbar'
+// const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
+//   suspense: true,
+// })
 
 const Layout = ({
   children,
-  noFooter,
-}: {
+}: // noFooter,
+{
   children: React.ReactNode
   noFooter?: boolean
 }) => {
   return (
-    <>
-      <GoogleAnalyticsScripts />
-      <Stack justify="space-between" minH="100vh" spacing={0}>
-        <Navbar />
-        <Box as="main" pt={'70px'}>
-          {children}
-        </Box>
-        <Suspense>{!noFooter && <Footer />}</Suspense>
-      </Stack>
-    </>
+    <div className="min-h-[100dvh] justify-between flex-col bg-white dark:bg-[#1A202C]">
+      <main className="pt-[70px]">{children}</main>
+    </div>
   )
 }
 

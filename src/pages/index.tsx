@@ -63,7 +63,9 @@ export const Index = ({
   })
 
   return (
-    <div className="bg-white dark:bg-[#1A202C]">&nbsp;</div>
+    <div>
+      <p className="">Helloß</p>
+    </div>
     // <Flex
     //   _dark={{
     //     bgColor: '#1A202C',
@@ -91,7 +93,7 @@ export const Index = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const dateRanges = Object.values(DayRangeType).map((rangeType) =>
+  const dateRanges = Object.values(DayRangeType).map(rangeType =>
     getDateRange({ rangeType }),
   )
 
@@ -182,7 +184,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
       `Error fetching data: ${[promotedWikisError, tagsDataError, recentError]
-        .map((error) => error?.message)
+        .map(error => error?.message)
         .filter(Boolean)
         .join(', ')}`,
     )
