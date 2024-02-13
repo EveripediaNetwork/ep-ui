@@ -1,6 +1,5 @@
 import React from 'react'
 import { useContentFeedbackMutation } from '@/services/admin'
-import { wikiRatingType } from '@/types/admin'
 import { RiStarSFill } from 'react-icons/ri'
 import { HStack, IconButton } from '@chakra-ui/react'
 
@@ -14,16 +13,15 @@ type WikiStarRatingProps = {
 
 const wikiStarRating = ({
   contentId,
-  userId,
   setIsRated,
   avgRating,
   isAvgRating = false,
 }: WikiStarRatingProps) => {
   const [currHoverRating, setCurrHoverRating] = React.useState(0)
   const [contentFeedback] = useContentFeedbackMutation()
-  const sendFeedback = async (rating: wikiRatingType) => {
+  const sendFeedback = async (rating: number) => {
     setIsRated(true)
-    await contentFeedback({ contentId, userId, rating })
+    await contentFeedback({ contentId, rating })
   }
   return isAvgRating ? (
     <HStack>
