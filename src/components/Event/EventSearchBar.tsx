@@ -7,7 +7,7 @@ const filterEventsByDate = (
   date: Date,
   eventData: IEventData[],
 ): IEventData[] => {
-  const filteredEvents = eventData.filter(event => {
+  const filteredEvents = eventData.filter((event) => {
     const [startDateStr, endDateStr] = event.date.split('/')
     const startDate = new Date(startDateStr)
     const endDate = endDateStr ? new Date(endDateStr) : new Date(startDateStr)
@@ -44,16 +44,16 @@ const EventSearchBar = ({
 
     const searchKey = searchInput.toLowerCase().trim()
     console.log({ searchKeyValid: searchKey !== '' })
-    const keySearchResult = eventData.filter(event => {
+    const keySearchResult = eventData.filter((event) => {
       const { title, location, speakers, tags } = event
       const matchesSearchKey =
         searchKey !== ''
           ? title.toLowerCase().includes(searchKey) ||
             location.toLowerCase().includes(searchKey.toLowerCase()) ||
-            speakers?.some(speaker =>
+            speakers?.some((speaker) =>
               speaker.name.toLowerCase().includes(searchKey),
             ) ||
-            tags?.some(tag => tag.toLowerCase().includes(searchKey))
+            tags?.some((tag) => tag.toLowerCase().includes(searchKey))
           : eventData
 
       return matchesSearchKey
