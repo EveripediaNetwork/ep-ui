@@ -38,7 +38,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
 
   return (
     <StrictMode>
-      <div suppressHydrationWarning={true}>
+      <div suppressHydrationWarning={true} className="font-montserrat">
         <style jsx global>{`
           :root {
             --montserrat-font: ${montserrat.style.fontFamily};
@@ -54,15 +54,12 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
         <SEOHeader router={router} />
         <ThemeProviderWrapper>
           <ReduxProvider store={store}>
-            {/* <ChakraProvider resetCSS theme={chakraTheme}> */}
             <Layout noFooter={Component.noFooter}>
               <Component {...pageProps} />
             </Layout>
-            {/* </ChakraProvider> */}
           </ReduxProvider>
         </ThemeProviderWrapper>
         <GoogleAnalyticsScripts />
-        {/* <ToastContainer /> */}
       </div>
     </StrictMode>
   )

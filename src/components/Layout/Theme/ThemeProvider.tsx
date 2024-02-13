@@ -6,7 +6,7 @@ export const ThemeProviderWrapper = ({
   children: React.ReactNode
 }) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       {children}
     </ThemeProvider>
   )
