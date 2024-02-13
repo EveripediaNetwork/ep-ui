@@ -12,16 +12,7 @@ export type EditorsType = {
 
 export type ContentFeedbackArgs = {
   contentId: string
-  userId?: string
-  rating: wikiRatingType | undefined
-}
-
-export enum wikiRatingType {
-  ONE = 1,
-  TWO = 2,
-  THREE = 3,
-  FOUR = 4,
-  FIVE = 5,
+  rating: number
 }
 
 export type WikisModifiedCount = {
