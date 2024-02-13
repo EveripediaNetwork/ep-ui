@@ -54,7 +54,7 @@ const EventFilter = () => {
       <div className="border flex flex-col border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 md:px-6 xl:px-3 py-6 xl:pt-5 xl:pb-20 mt-3 md:mt-6 rounded-xl">
         <div className="flex md:justify-between flex-wrap xl:flex-col gap-x-8 gap-y-6 md:gap-8">
           {eventFilterData.map((eventFilter) => (
-            <div>
+            <div key={eventFilter.title}>
               <button
                 type="button"
                 onClick={() => setSelectedFilter(eventFilter.title)}
@@ -96,7 +96,10 @@ const EventFilter = () => {
           {eventFilterData
             .filter((item) => item.title === selectedFilter)
             .map((eventFilter) => (
-              <div className="flex gap-2 mt-5 md:mt-3 flex-wrap">
+              <div
+                key={eventFilter.title}
+                className="flex gap-2 mt-5 md:mt-3 flex-wrap"
+              >
                 {eventFilter.filter.map((filter) => {
                   return (
                     <span

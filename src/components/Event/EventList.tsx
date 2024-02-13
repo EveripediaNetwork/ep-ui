@@ -1,7 +1,7 @@
 import React from 'react'
 import EventCard from './EventCard'
 import { IEventData, eventMockData } from './event.data'
-import { groupEventsByMonth } from '@/pages/event'
+import { groupEventsByMonth } from '@/lib/utils'
 
 const EventList = ({
   eventData,
@@ -10,6 +10,7 @@ const EventList = ({
   eventData: IEventData[]
   setEventData: Function
 }) => {
+  console.log({ eventList: eventData })
   const eventsByMonth = groupEventsByMonth(eventData)
 
   return (
@@ -27,7 +28,7 @@ const EventList = ({
         </span>
       )}
       <div className="flex flex-col flex-1 gap-10 xl:gap-20">
-        {Object.entries(eventsByMonth).length > 1 ? (
+        {eventData.length > 1 ? (
           Object.entries(eventsByMonth).map(([monthYear, events]) => (
             <div key={monthYear} className="flex flex-col gap-10">
               <div className="">

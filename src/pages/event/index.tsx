@@ -12,31 +12,9 @@ import { useState } from 'react'
 import { IEventData, eventMockData } from '@/components/Event/event.data'
 import EventList from '@/components/Event/EventList'
 
-export const groupEventsByMonth = (events: IEventData[]) => {
-  const eventsByMonth: { [key: string]: IEventData[] } = {}
-
-  events.forEach((event) => {
-    const dateParts = event.date.split('-')
-    const monthNumeric = parseInt(dateParts[1], 10)
-    const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
-      'en-us',
-      { month: 'long' },
-    )
-
-    const key = `${monthWord} ${dateParts[0]}`
-
-    if (!eventsByMonth[key]) {
-      eventsByMonth[key] = []
-    }
-
-    eventsByMonth[key].push(event)
-  })
-
-  return eventsByMonth
-}
-
 const EventPage = () => {
   const [eventData, setEventData] = useState<IEventData[]>(eventMockData)
+
   return (
     <div>
       <EventHeader />
@@ -44,7 +22,7 @@ const EventPage = () => {
       <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar eventData={eventData} setEventData={setEventData} />
         <TrendingEvent />
-        <EventInterest />
+        <EventInterest eventData={eventData} setEventData={setEventData} />
         <div className="mt-10 lg:hidden">
           <EventFilter />
         </div>
