@@ -364,6 +364,7 @@ export const {
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
   useContentFeedbackMutation,
+  useRatingsCountQuery,
   useGetWikisViewsCountQuery,
   useGetWikiVisitsQuery,
 } = adminApi
@@ -372,6 +373,7 @@ export const {
   checkIsAdmin,
   revalidateURL,
   contentFeedback,
+  ratingsCount,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,
