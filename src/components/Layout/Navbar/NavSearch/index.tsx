@@ -309,7 +309,7 @@ const NavSearch = (props: NavSearchProps) => {
       >
         <InputGroup
           size="lg"
-          maxW="800px"
+          maxW="600px"
           display={{ base: 'none', md: 'block' }}
           {...inputGroupProps}
         >
