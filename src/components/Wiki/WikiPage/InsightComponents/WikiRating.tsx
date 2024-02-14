@@ -5,7 +5,6 @@ import { RiStarSmileFill } from 'react-icons/ri'
 import WikiAccordion from '../../WikiAccordion'
 import { useTranslation } from 'next-i18next'
 import WikiStarRating from './WikiStarRating'
-// import {  } from '@/types/admin'
 import { useAverageRatingQuery } from '@/services/admin'
 
 const WikiRating = ({
@@ -16,17 +15,13 @@ const WikiRating = ({
   userId?: string
 }) => {
   const [isRated, setIsRated] = useState<boolean>(false)
-  console.log('contentId', contentId)
   const { t } = useTranslation('wiki')
-  let avgRating
-  let error = false
-  if (contentId) {
-    const { data, isError } = useAverageRatingQuery(contentId)
-    avgRating = data?.average
-    error = isError
-  }
-
-  const [totalRatings, _setTotalRatings] = useState<number | undefined>(200)
+  const { data, isError } = useAverageRatingQuery(contentId)
+  const average = data?.average
+  const totalRatings = data?.votes
+  console.log('WikiRating -> data', data)
+  console.log('WikiRating -> totalRatings', totalRatings)
+  console.log('WikiRating -> average', average)
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -39,7 +34,7 @@ const WikiRating = ({
         defaultOpen
       >
         <VStack bgColor="wikiCardItemBg" borderRadius={4} gap="2" p={3}>
-          {error ? (
+          {isError ? (
             <Text>error</Text>
           ) : (
             <VStack>
@@ -71,7 +66,7 @@ const WikiRating = ({
                     contentId={contentId}
                     userId={userId}
                     setIsRated={setIsRated}
-                    avgRating={avgRating}
+                    avgRating={average}
                     isAvgRating
                   />
                 </VStack>
