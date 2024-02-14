@@ -19,10 +19,13 @@ const wikiStarRating = ({
 }: WikiStarRatingProps) => {
   const [currHoverRating, setCurrHoverRating] = React.useState(0)
   const [contentFeedback] = useContentFeedbackMutation()
+
   const sendFeedback = async (rating: number) => {
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     setIsRated(true)
     await contentFeedback({ contentId, rating })
   }
+
   return isAvgRating ? (
     <HStack>
       {[...Array(5)].map((_, i) => {
