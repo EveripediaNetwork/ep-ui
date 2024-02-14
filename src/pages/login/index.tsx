@@ -24,6 +24,9 @@ export const WalletConnectWrapper = ({
   return <WagmiConfig config={client}>{children}</WagmiConfig>
 }
 
+//TODO:
+// Wrap in rainbow config and ensure it works by morning before 10am
+
 const Login = ({ address }: { address: string | null }) => {
   const { t } = useTranslation('common')
   const router = useRouter()

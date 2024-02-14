@@ -41,6 +41,7 @@
     "@metamask/detect-provider": "^1.2.0",
     "@next/font": "^13.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
+    "@rainbow-me/rainbowkit": "^1.0.5",
     "@reduxjs/toolkit": "^1.9.0",
     "@rtk-query/graphql-request-base-query": "^1.0.3",
     "@svgr/webpack": "^6.2.1",
