@@ -46,7 +46,7 @@ const EventDetailsPage = ({ event }: { event: string }) => {
 
 export default EventDetailsPage
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { event } = ctx.query as {
     event: string
   }

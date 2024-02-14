@@ -14,7 +14,7 @@ const NearbyEventFilter = () => {
         </span>
       </div>
       <div className="border flex flex-col gap-8 border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 py-5 mt-6 rounded-xl">
-        {nearByEventData.map(event => (
+        {nearByEventData.map((event) => (
           <div key={event.title} className="flex gap-2">
             <span>
               <Image

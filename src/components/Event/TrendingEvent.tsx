@@ -20,7 +20,7 @@ const TrendingEvent = () => {
       <div className="mt-8">
         <Carousel plugins={[Autoplay()]} opts={{ loop: true }}>
           <CarouselContent className="">
-            {trendingEventData.map(event => (
+            {trendingEventData.map((event) => (
               <CarouselItem
                 className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-1/4 rounded-xl relative w-[309px] ml-4"
                 key={event.id}

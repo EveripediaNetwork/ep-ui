@@ -14,7 +14,7 @@ const PopularEventFilter = () => {
         </span>
       </div>
       <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-3 py-5 mt-6 rounded-xl">
-        {popularEventData.map(event => (
+        {popularEventData.map((event) => (
           <div key={event.title} className="flex gap-2">
             <span>
               <Image
