@@ -19,9 +19,6 @@ const WikiRating = ({
   const { data, isError } = useAverageRatingQuery(contentId)
   const average = data?.average
   const totalRatings = data?.votes
-  console.log('WikiRating -> data', data)
-  console.log('WikiRating -> totalRatings', totalRatings)
-  console.log('WikiRating -> average', average)
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
