@@ -78,7 +78,7 @@ const WikiRating = ({
               <Text fontWeight={'semibold'} fontSize="lg" textColor="fadedText">
                 How was your experience?
               </Text>
-              <Text fontSize="sm" textColor="fadedText">
+              <Text fontSize="sm" textColor="fadedText" textAlign="center">
                 Give this wiki a quick rating to let us know!
               </Text>
               <WikiStarRating
