@@ -291,6 +291,7 @@ query averageRating($contendId: String!) {
   averageRating(contendId: $contendId) {  
     contentId
     average
+    votes
   }
 }
 `

@@ -148,9 +148,14 @@ type WikiViewsResponse = {
   wikiViews: WikiViewsResult[]
 }
 
-type ratingsCountRes = {
+type ratingsCountResult = {
   contentId: string
   average: number
+  votes: number
+}
+
+type ratingsCountRes = {
+  averageRating: ratingsCountResult
 }
 
 export const adminApi = createApi({
@@ -281,13 +286,13 @@ export const adminApi = createApi({
         return response.rating
       },
     }),
-    averageRating: builder.query<ratingsCountRes, string>({
+    averageRating: builder.query<ratingsCountResult, string>({
       query: (contendId: string) => ({
         document: AVERAGE_RATING,
         variables: { contendId },
       }),
       transformResponse: (response: ratingsCountRes) => {
-        return response
+        return response.averageRating
       },
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
