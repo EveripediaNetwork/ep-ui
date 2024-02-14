@@ -189,10 +189,10 @@ const Navbar = () => {
                       <Image
                         src={langObj.icon}
                         alt={langObj.name}
-                        width={25}
-                        height={25}
+                        width={24}
+                        height={24}
                       />
-                      {langObj.name}
+                      <Text>{langObj.name}</Text>
                     </HStack>
                   </MenuItemOption>
                 ))}
