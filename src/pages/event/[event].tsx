@@ -11,13 +11,13 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 
-const EventDetailsPage = () => {
+const EventDetailsPage = ({ event }: { event: string }) => {
   return (
     <>
       <EventHeader />
       <div className="mt-10 md:mt-16 mb-48 px-4 md:px-10 max-w-[1296px] mx-auto ">
-        <h1 className="font-semibold text-2xl xl:text-4xl text-gray900 dark:text-alpha-900">
-          Paris Blockchain Week, 5th Edition
+        <h1 className="font-semibold capitalize text-2xl xl:text-4xl text-gray900 dark:text-alpha-900">
+          {event.replace(/-/g, ' ')}
         </h1>
         <div className="flex flex-col md:flex-row max-w-[1296px] gap-10 md:gap-6 mx-auto mt-5">
           <div className="flex-1 flex flex-col gap-10 md:gap-5 xl:gap-10">
@@ -46,9 +46,13 @@ const EventDetailsPage = () => {
 
 export default EventDetailsPage
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { event } = ctx.query as {
+    event: string
+  }
   return {
     props: {
+      event,
       ...(await serverSideTranslations(ctx.locale ?? 'en', [
         'event',
         'common',

@@ -26,7 +26,7 @@ const EventCard = ({
         <div className="flex flex-col">
           <div className="flex flex-col">
             <Link
-              href={'/event/event-details'}
+              href={`/event/${title.toLowerCase().replace(/ /g, '-')}`}
               className="font-semibold text-sm dark:text-alpha-900 hover:underline text-gray800"
             >
               {title}
@@ -51,7 +51,7 @@ const EventCard = ({
           </div>
           <div className="flex gap-3 mb-2 leading-none">
             <div className="flex">
-              {speakers?.map((speaker) => (
+              {speakers?.map(speaker => (
                 <div
                   key={speaker.name}
                   className="relative w-5 h-5 shrink-0 rounded-full border border-white dark:border-gray700"
@@ -61,7 +61,7 @@ const EventCard = ({
               ))}
             </div>
             <span className="text-brand-500 dark:text-brand-800 text-[10px] md:text-xs">
-              {speakers?.map((speaker) => (
+              {speakers?.map(speaker => (
                 <Link
                   href={'/event'}
                   key={speaker.name}
@@ -73,7 +73,7 @@ const EventCard = ({
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-3">
-            {tags?.map((tag) => (
+            {tags?.map(tag => (
               <div
                 key={tag}
                 className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"

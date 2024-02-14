@@ -14,7 +14,7 @@ const NearbyEventFilter = () => {
         </span>
       </div>
       <div className="border flex flex-col gap-8 border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 py-5 mt-6 rounded-xl">
-        {nearByEventData.map((event) => (
+        {nearByEventData.map(event => (
           <div key={event.title} className="flex gap-2">
             <span>
               <Image
@@ -26,7 +26,7 @@ const NearbyEventFilter = () => {
             </span>
             <div className="flex-1">
               <Link
-                href={'/event/event-details'}
+                href={`/event/${event.title.toLowerCase().replace(/ /g, '-')}`}
                 className="font-semibold hover:underline text-gray800 dark:text-alpha-900 text-sm"
               >
                 {event.title}

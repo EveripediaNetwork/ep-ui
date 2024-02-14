@@ -14,7 +14,7 @@ const PopularEventFilter = () => {
         </span>
       </div>
       <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-3 py-5 mt-6 rounded-xl">
-        {popularEventData.map((event) => (
+        {popularEventData.map(event => (
           <div key={event.title} className="flex gap-2">
             <span>
               <Image
@@ -26,7 +26,7 @@ const PopularEventFilter = () => {
             </span>
             <div className="flex-1">
               <Link
-                href={'/event/event-details'}
+                href={`/event/${event.title.toLowerCase().replace(/ /g, '-')}`}
                 className="font-semibold hover:underline text-sm text-gray800 dark:text-alpha-900"
               >
                 {event.title}

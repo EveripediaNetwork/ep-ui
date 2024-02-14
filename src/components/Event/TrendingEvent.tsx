@@ -20,14 +20,16 @@ const TrendingEvent = () => {
       <div className="mt-8">
         <Carousel plugins={[Autoplay()]} opts={{ loop: true }}>
           <CarouselContent className="">
-            {trendingEventData.map((event) => (
+            {trendingEventData.map(event => (
               <CarouselItem
                 className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-1/4 rounded-xl relative w-[309px] ml-4"
                 key={event.id}
               >
                 <Image src={event.src || ''} alt="blockchain-expo" fill />
                 <Link
-                  href={'/event/event-details'}
+                  href={`/event/${event.title
+                    .toLowerCase()
+                    .replace(/ /g, '-')}`}
                   className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5"
                 >
                   <div className="text-alpha-900">
