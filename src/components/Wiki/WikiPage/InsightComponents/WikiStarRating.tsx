@@ -19,8 +19,10 @@ const wikiStarRating = ({
 }: WikiStarRatingProps) => {
   const [currHoverRating, setCurrHoverRating] = React.useState(0)
   const [contentFeedback] = useContentFeedbackMutation()
+  const [hasSelectedRating, setHasSelectedRating] = React.useState(false)
 
   const sendFeedback = async (rating: number) => {
+    setHasSelectedRating(true)
     await new Promise((resolve) => setTimeout(resolve, 3000))
     setIsRated(true)
     await contentFeedback({ contentId, rating })
@@ -45,7 +47,13 @@ const wikiStarRating = ({
       })}
     </HStack>
   ) : (
-    <HStack onMouseLeave={() => setCurrHoverRating(0)}>
+    <HStack
+      onMouseLeave={() => {
+        if (!hasSelectedRating) {
+          setCurrHoverRating(0)
+        }
+      }}
+    >
       {[...Array(5)].map((_, i) => {
         const ratingValue = i + 1
         return (
