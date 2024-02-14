@@ -19,7 +19,7 @@ import {
   CHECK_ADMIN,
   REVALIDATE_URL,
   CONTENT_FEEDBACK,
-  RATINGS_COUNT,
+  AVERAGE_RATING,
   WIKIS_VIEWS,
   WIKIS_PER_VISIT,
 } from '@/services/admin/queries'
@@ -150,8 +150,7 @@ type WikiViewsResponse = {
 
 type ratingsCountRes = {
   contentId: string
-  rating: number
-  count: number
+  average: number
 }
 
 export const adminApi = createApi({
@@ -282,10 +281,10 @@ export const adminApi = createApi({
         return response.rating
       },
     }),
-    ratingsCount: builder.query<ratingsCountRes, string>({
-      query: (contentId: string) => ({
-        document: RATINGS_COUNT,
-        variables: { contentId },
+    averageRating: builder.query<ratingsCountRes, string>({
+      query: (contendId: string) => ({
+        document: AVERAGE_RATING,
+        variables: { contendId },
       }),
       transformResponse: (response: ratingsCountRes) => {
         return response
@@ -364,7 +363,7 @@ export const {
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
   useContentFeedbackMutation,
-  useRatingsCountQuery,
+  useAverageRatingQuery,
   useGetWikisViewsCountQuery,
   useGetWikiVisitsQuery,
 } = adminApi
@@ -373,7 +372,7 @@ export const {
   checkIsAdmin,
   revalidateURL,
   contentFeedback,
-  ratingsCount,
+  averageRating,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,

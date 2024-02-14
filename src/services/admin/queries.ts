@@ -286,12 +286,11 @@ export const CONTENT_FEEDBACK = gql`
     )
   }
 `
-export const RATINGS_COUNT = gql`
-query ratingsCount($contentId: String) {
-  ratingsCount(contentId: $contentId) {  
+export const AVERAGE_RATING = gql`
+query averageRating($contendId: String!) {
+  averageRating(contendId: $contendId) {  
     contentId
-    rating
-    count
+    average
   }
 }
 `
