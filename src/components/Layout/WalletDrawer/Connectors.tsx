@@ -9,6 +9,7 @@ import ConnectionErrorModal from './ConnectionErrorModal'
 import { useTranslation } from 'next-i18next'
 import { ConnectorSignTokenModal } from './ConnectorSignTokenModal'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
+import { useAddress } from '@/hooks/useAddress'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -17,10 +18,9 @@ interface ConnectorsProps {
 
 const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const { t } = useTranslation('common')
-  const { isConnected: isUserConnected, isConnecting: isUserConnecting } =
-    useAccount({
-      onConnect: triggerSignToken,
-    })
+  const { isConnecting: isUserConnecting } = useAccount({
+    onConnect: triggerSignToken,
+  })
   const {
     isOpen: isErrorModalOpen,
     onOpen: openErrorModal,
@@ -33,6 +33,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   } = useDisclosure()
   const [connectorName, setConnectorName] = useState('')
   const { fetchStoredToken } = useWeb3Token()
+  const { isConnected: isUserConnected } = useAddress()
 
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
@@ -54,7 +55,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       // Added async keyword here
       logEvent({
         action: 'LOGIN_SUCCESS',
