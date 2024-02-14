@@ -2,6 +2,7 @@ import React from 'react'
 import EventCard from './EventCard'
 import { IEventData, eventMockData } from './event.data'
 import { groupEventsByMonth } from '@/lib/utils'
+import EventEmptyState from './EventEmptyState'
 
 const EventList = ({
   eventData,
@@ -13,7 +14,7 @@ const EventList = ({
   const eventsByMonth = groupEventsByMonth(eventData)
 
   return (
-    <div className="flex flex-col flex-1 items-start gap-5">
+    <div className="flex flex-col flex-1 gap-5">
       {eventData !== eventMockData && (
         <span className="flex flex-col items-start">
           <h1 className="font-semibold">Search Results</h1>
@@ -27,7 +28,7 @@ const EventList = ({
         </span>
       )}
       <div className="flex flex-col flex-1 gap-10 xl:gap-20">
-        {eventData.length > 1 ? (
+        {eventData.length > 0 ? (
           Object.entries(eventsByMonth).map(([monthYear, events]) => (
             <div key={monthYear} className="flex flex-col gap-10">
               <div className="">
@@ -64,7 +65,7 @@ const EventList = ({
             </div>
           ))
         ) : (
-          <span>No Available Data For this search</span>
+          <EventEmptyState />
         )}
       </div>
       {/* <button

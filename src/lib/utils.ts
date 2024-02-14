@@ -40,22 +40,25 @@ export function parseDateRange(isoString: string) {
 export const groupEventsByMonth = (events: IEventData[]) => {
   const eventsByMonth: { [key: string]: IEventData[] } = {}
 
-  events.forEach((event) => {
-    const dateParts = event.date.split('-')
-    const monthNumeric = parseInt(dateParts[1], 10)
-    const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
-      'en-us',
-      { month: 'long' },
-    )
+  // console.log(events)
+  if (events) {
+    events.forEach((event) => {
+      const dateParts = event.date.split('-')
+      const monthNumeric = parseInt(dateParts[1], 10)
+      const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
+        'en-us',
+        { month: 'long' },
+      )
 
-    const key = `${monthWord} ${dateParts[0]}`
+      const key = `${monthWord} ${dateParts[0]}`
 
-    if (!eventsByMonth[key]) {
-      eventsByMonth[key] = []
-    }
+      if (!eventsByMonth[key]) {
+        eventsByMonth[key] = []
+      }
 
-    eventsByMonth[key].push(event)
-  })
+      eventsByMonth[key].push(event)
+    })
+  }
 
   return eventsByMonth
 }

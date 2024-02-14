@@ -1,9 +1,17 @@
+import {
+  RiBankFill,
+  RiCalendarEventFill,
+  RiMapPinRangeFill,
+  RiScan2Fill,
+} from 'react-icons/ri'
+
 export interface IEventData {
   id: number
   location: string
   title: string
   date: string
   src?: string
+  type?: string
   tags?: string[]
   excerpt?: string
   speakers?: { name: string; imageSrc: string }[]
@@ -34,7 +42,8 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'CFC St. Moritz is a curated, application-only event designed for NFT investors and decision-makers. It admits only 250 international UHNWI, institutional investors, funds, and family offices.',
     tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum', 'Finance'],
-    location: 'St. Moritz, Switzerland',
+    location: 'St. Moritz, Switzerland, Europe',
+    type: 'Conference',
     date: '2024-01-10/2024-01-13',
     speakers: [
       {
@@ -61,7 +70,8 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'Past Quantum Miami editions have brought together some of the world’s top crypto figures such as Mark Cuban and Ethereum co-founder Vitalik Buterin to share their insights. In 2024, the event’s theme is “Bridging Blockchain to Mainstream Industries”.',
     tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
-    location: 'James L. Knight Center (Miami, Florida)',
+    location: 'James L. Knight Center (Miami, Florida), North America',
+    type: 'Conference',
     date: '2024-01-10/2024-01-13',
     speakers: [
       {
@@ -84,8 +94,9 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'The Blockchain Event serves as a platform for leaders and technologists where they can create and implement real-time solutions to disrupt industries and help businesses adapt to evolving market demands.',
     tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
+    type: 'Conference',
     location:
-      'Greater Broward County Convention Center (Fort Lauderdale, Florida)',
+      'Greater Broward County Convention Center (Fort Lauderdale, Florida), North America',
     date: '2024-01-10',
     speakers: [
       {
@@ -108,7 +119,8 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'METAVSUMMIT is an event that specializes in helping Web 3.0 Companies (Blockchain, Metaverse and NFTs) and Investors meet under one roof for them to be able to create long-term business relationships.',
     tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
-    location: 'Dubai, UAE',
+    location: 'Dubai, UAE, Asia',
+    type: 'Conference',
     date: '2024-02-11',
     speakers: [
       {
@@ -131,7 +143,8 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'This groundbreaking event will bring together the brightest minds and industry leaders in the digital realm, providing a platform for collaboration, inspiration, and the exploration of new possibilities in the web3 space.',
     tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
-    location: 'Limassol, Cyprus',
+    location: 'Limassol, Cyprus, Europe',
+    type: 'Hackathon',
     date: '2024-02-11',
     speakers: [
       {
@@ -150,7 +163,8 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'This groundbreaking event will bring together the brightest minds and industry leaders in the digital realm, providing a platform for collaboration, inspiration, and the exploration of new possibilities in the web3 space.',
     tags: ['Metaverse', 'Crypto', 'Web 3.0', 'NFTs', 'Blockchain', 'Ethereum'],
-    location: 'One Great George Street, London, England',
+    location: 'One Great George Street, London, England, Europe',
+    type: 'Conference',
     date: '2024-02-16',
     speakers: [
       {
@@ -169,7 +183,9 @@ export const eventMockData: IEventData[] = [
     excerpt:
       'ETHDenver is considered the largest Web3 #BUIDLathon in the US. The 2024 blockchain event will bring together Ethereum protocol enthusiasts, designers, and developers from all over the world.',
     tags: ['Crypto', 'BTC', 'NFTs', 'Blockchain', 'Ethereum'],
-    location: 'National Western Complex (aka Spork Castle), Denver Colorado',
+    type: 'Festival',
+    location:
+      'National Western Complex (aka Spork Castle), Denver Colorado, North America',
     date: '2024-02-16',
     speakers: [
       {
@@ -409,5 +425,35 @@ export const sponsorData = [
     srcDark: '/images/svg-images/sponsor-12.svg',
     width: 181,
     height: 47,
+  },
+]
+
+export const eventFilterData = [
+  {
+    icon: <RiCalendarEventFill />,
+    title: 'Date',
+    filter: ['Next Week', 'Next Month', 'Custom Range'],
+  },
+  {
+    icon: <RiMapPinRangeFill />,
+    title: 'Location',
+    filter: [
+      'Asia',
+      'Africa',
+      'Europe',
+      'North America',
+      'South America',
+      'Austria/Ocenia',
+    ],
+  },
+  {
+    icon: <RiScan2Fill />,
+    title: 'Event Type',
+    filter: ['Conference', 'Hackathon', 'Forum', 'Festival', 'Online'],
+  },
+  {
+    icon: <RiBankFill />,
+    title: 'Blockchain',
+    filter: ['Bitcoin', 'Ethereum', 'Polygon', 'Solana', 'Cardano'],
   },
 ]
