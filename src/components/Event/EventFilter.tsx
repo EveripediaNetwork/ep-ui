@@ -1,12 +1,32 @@
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import {
   RiArrowLeftSLine,
+  RiArrowUpDownLine,
   RiBankFill,
   RiCalendarEventFill,
   RiFilter3Line,
   RiMapPinRangeFill,
   RiScan2Fill,
 } from 'react-icons/ri'
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
+import { IEventData, eventMockData } from './event.data'
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
+import { addDays, format } from 'date-fns'
+import { DateRange } from 'react-day-picker'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+
+interface Filters {
+  date: string[]
+  location: string[]
+  eventType: string[]
+  blockchain: string[]
+}
 
 export const eventFilterData = [
   {
@@ -38,8 +58,46 @@ export const eventFilterData = [
   },
 ]
 
-const EventFilter = () => {
+const EventFilter = ({
+  // biome-ignore lint/correctness/noUnusedVariables: <explanation>
+  eventData,
+  // biome-ignore lint/correctness/noUnusedVariables: <explanation>
+  setEventData,
+}: {
+  eventData: IEventData[]
+  setEventData: Function
+}) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
+  const [date, setDate] = React.useState<DateRange | undefined>()
+  const router = useRouter()
+  const [filters, setFilters] = useState<Filters>({
+    date: [],
+    location: [],
+    eventType: [],
+    blockchain: [],
+  })
+
+  const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
+    setFilters((prevFilters) => {
+      const isActive = prevFilters[filterCategory].includes(value)
+      const newFilters = isActive
+        ? prevFilters[filterCategory].filter((item) => item !== value) // Remove the filter
+        : [...prevFilters[filterCategory], value] // Add the filter
+
+      // Update the URL query parameters
+      const query = {
+        ...router.query,
+        [filterCategory]: newFilters,
+      }
+      // console.log({ query })
+      router.push({ pathname: router.pathname, query }, undefined, {
+        shallow: true,
+      })
+
+      return { ...prevFilters, [filterCategory]: newFilters }
+    })
+  }
+
   return (
     <div>
       <div className="flex flex-col">
@@ -78,16 +136,55 @@ const EventFilter = () => {
                 </span>
               </button>
               <div className="xl:flex gap-2 mt-3 flex-wrap hidden">
-                {eventFilter.filter.map((filter) => (
-                  <span
-                    key={filter}
-                    className={
-                      'px-3 text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full'
-                    }
-                  >
-                    {filter}
-                  </span>
-                ))}
+                {eventFilter.filter.map((filter) => {
+                  const category =
+                    eventFilter.title === 'Event Type'
+                      ? 'eventType'
+                      : eventFilter.title.toLowerCase()
+                  if (filter === 'Custom Range') {
+                    return (
+                      <div className="grid grid-2">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="px-3 flex gap-2 items-center text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full"
+                            >
+                              <span>{filter}</span>
+                              <RiArrowUpDownLine />
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              initialFocus
+                              mode="range"
+                              defaultMonth={date?.from}
+                              selected={date}
+                              onSelect={setDate}
+                              numberOfMonths={2}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    )
+                  }
+                  return (
+                    <button
+                      onClick={() =>
+                        handleFilterChange(category as keyof Filters, filter)
+                      }
+                      key={filter}
+                      type="button"
+                      className={`px-3 text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full ${
+                        filters[category as keyof Filters].includes(filter)
+                          ? 'bg-brand-500 dark:bg-brand-800'
+                          : ''
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  )
+                })}
               </div>
             </div>
           ))}

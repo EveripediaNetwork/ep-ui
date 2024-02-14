@@ -24,13 +24,13 @@ const EventPage = () => {
         <TrendingEvent />
         <EventInterest eventData={eventData} setEventData={setEventData} />
         <div className="mt-10 lg:hidden">
-          <EventFilter />
+          <EventFilter eventData={eventData} setEventData={setEventData} />
         </div>
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <EventList eventData={eventData} setEventData={setEventData} />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <div className="hidden lg:block">
-              <EventFilter />
+              <EventFilter eventData={eventData} setEventData={setEventData} />
             </div>
             <NearbyEventFilter />
             <PopularEventFilter />
