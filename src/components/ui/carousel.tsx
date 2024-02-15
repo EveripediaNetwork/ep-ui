@@ -204,7 +204,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute hidden md:block disabled:hidden backdrop-blur-[10px] h-10 w-10 rounded-full',
+        'absolute hidden md:flex justify-center items-center disabled:hidden backdrop-blur-[10px] h-10 w-10 rounded-full',
         orientation === 'horizontal'
           ? '-left-6 top-1/2 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -289,7 +289,7 @@ const CarouselDots: React.FC = () => {
             selectedIndex === index
               ? 'bg-[#FF5CAA] dark:bg-[#FF1A88]'
               : 'bg-brand-100'
-          } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
+          }`}
           onClick={() => scrollTo(index)}
           aria-label={`Go to slide ${index + 1}`}
         />

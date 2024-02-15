@@ -30,11 +30,11 @@ export function DatePickerDemo({
             !date && 'text-muted-foreground',
           )}
         >
-          <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-900" />
+          <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-700" />
           {date ? (
             format(date, 'PPP')
           ) : (
-            <span className="text-gray500 dark:text-alpha-900">
+            <span className="text-gray500 dark:text-alpha-700">
               Select date
             </span>
           )}

@@ -117,7 +117,6 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
         ...router.query,
         [filterCategory]: newFilters,
       }
-      // console.log({ query })
       router.push({ pathname: router.pathname, query }, undefined, {
         shallow: true,
       })
@@ -129,7 +128,6 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
   useEffect(() => {
     const filteredEvents = filterEvents(eventMockData, filters)
     setEventData(filteredEvents)
-    // console.log({ filteredEvents })
   }, [filters, dateRange])
 
   return (

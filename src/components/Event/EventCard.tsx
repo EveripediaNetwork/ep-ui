@@ -57,20 +57,21 @@ const EventCard = ({
               {speakers?.map((speaker) => (
                 <div
                   key={speaker.name}
-                  className="relative w-5 h-5 shrink-0 rounded-full border border-white dark:border-gray700"
+                  className="relative w-5 h-5 shrink-0 -mx-[2px] rounded-full border border-white dark:border-gray700"
                 >
                   <Image src={speaker.imageSrc} alt="user-icon" fill />
                 </div>
               ))}
             </div>
-            <span className="text-brand-500 dark:text-brand-800 text-[10px] md:text-xs">
-              {speakers?.map((speaker) => (
+            <span className="text-brand-500 dark:text-brand-800 flex gap-1 flex-wrap text-[10px] md:text-xs">
+              {speakers?.map((speaker, index) => (
                 <Link
                   href={'/event'}
                   key={speaker.name}
                   className="hover:underline"
                 >
-                  {speaker.name},
+                  {speaker.name}
+                  {speakers.length !== index + 1 && ','}
                 </Link>
               ))}
             </span>

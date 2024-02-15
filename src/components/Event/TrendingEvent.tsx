@@ -42,7 +42,7 @@ const TrendingEvent = () => {
                   </div>
                   <button
                     type="button"
-                    className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
+                    className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] text-xs font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
                   >
                     View event details
                   </button>
