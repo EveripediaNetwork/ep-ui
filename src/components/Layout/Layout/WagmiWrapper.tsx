@@ -25,6 +25,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
+    // @ts-ignore
     wallets: [rainbowMagicConnector({ chains })],
   },
   ...getDefaultWallets({
