@@ -79,6 +79,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
         <Divider />
         {!showSubNav ? (
           <Box
+            overflowY="scroll"
             px={{ base: 4, md: 8 }}
             h={{
               base: !userAddress
@@ -86,11 +87,16 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 : 'max(calc(100vh - 240px), 350px)',
               md: 'calc(100vh - 180px)',
             }}
+            maxH={{
+              base: '400px',
+              md: '500px',
+            }}
           >
             <Box
               display={{ base: 'flex', xl: 'none' }}
               flexDirection="column"
               justifyContent="space-between"
+              gap={4}
               mt={5}
               h={!userAddress ? 'min(100%, 400px)' : 'min(100%, 500px)'}
               bg="subMenuBg"
