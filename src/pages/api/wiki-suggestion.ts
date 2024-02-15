@@ -26,7 +26,8 @@ export default async function handler(
         embeds: [
           {
             title: 'New Wiki Suggestion',
-            description: feedback,
+            description: `Checkout the latest Wiki suggestions @vzbrv 
+            ${feedback}`,
           },
         ],
       }),
