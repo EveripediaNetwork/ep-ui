@@ -142,7 +142,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
         {!showSubNav && !userAddress && (
           <Box mb={3} px={6} display={{ sm: 'flex', md: 'none' }}>
             <Button onClick={handleWalletButtonClick} size="lg" w="full">
-              <Text>Connect wallet</Text>
+              <Text>Login</Text>
             </Button>
           </Box>
         )}
