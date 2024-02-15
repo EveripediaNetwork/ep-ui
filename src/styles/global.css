@@ -1,6 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* =========================== */
 /* GLOBAL STYLES */
 /* =========================== */
+
+* {
+  margin: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
