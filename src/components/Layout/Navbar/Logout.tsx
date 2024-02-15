@@ -1,5 +1,5 @@
 import { setStateToDefault } from '@/store/slices/user-slice'
-import { Flex, Icon, MenuItem } from '@chakra-ui/react'
+import { Button, Flex, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
@@ -21,37 +21,35 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   }
   return (
     <>
-      <Flex>
-        <MenuItem
-          minH="48px"
-          borderTopWidth={isInMobileMenu ? 0 : '1px'}
-          px={isInMobileMenu ? 0 : 3}
-          bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
-          sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
-          onClick={isUserConnected ? handleLogOut : undefined}
-          cursor={isUserConnected ? 'pointer' : 'not-allowed'}
-          display={isUserConnected ? 'flex' : 'none'}
+      <Button
+        minH="48px"
+        px={isInMobileMenu ? 0 : 3}
+        bgColor="transparent"
+        sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
+        onClick={isUserConnected ? handleLogOut : undefined}
+        cursor={isUserConnected ? 'pointer' : 'not-allowed'}
+        display={isUserConnected ? 'flex' : 'none'}
+        w="full"
+      >
+        <Icon
+          fontSize="4xl"
+          color="linkColor"
+          fontWeight={600}
+          as={RiLogoutBoxRFill}
+          pr={3}
+        />
+        <Flex
+          ml={isInMobileMenu ? 2 : 'unset'}
+          fontSize="md"
+          fontWeight="semibold"
+          color="linkColor"
+          flex="auto"
         >
-          <Icon
-            fontSize="4xl"
-            color="linkColor"
-            fontWeight={600}
-            as={RiLogoutBoxRFill}
-            pr={3}
-          />
-          <Flex
-            ml={isInMobileMenu ? 2 : 'unset'}
-            fontSize="md"
-            fontWeight="semibold"
-            color="linkColor"
-            flex="auto"
-          >
-            <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
-              {t('Logout')}
-            </span>
-          </Flex>
-        </MenuItem>
-      </Flex>
+          <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
+            {t('Logout')}
+          </span>
+        </Flex>
+      </Button>
     </>
   )
 }

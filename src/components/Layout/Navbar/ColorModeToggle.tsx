@@ -1,4 +1,4 @@
-import { Flex, Icon, MenuItem, Switch, useColorMode } from '@chakra-ui/react'
+import { Button, Flex, Icon, Switch, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import { useTranslation } from 'next-i18next'
@@ -13,10 +13,11 @@ export const ColorModeToggle = ({
   const { t } = useTranslation('common')
   return (
     <>
-      <MenuItem
+      <Button
         minH="48px"
         px={isInMobileMenu ? 0 : 3}
-        bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
+        w="full"
+        bgColor="transparent"
         sx={{
           '&:hover, &:active, &:focus': {
             bgColor: !isInMobileMenu ? 'subMenuHoverBg' : 'transparent',
@@ -48,7 +49,7 @@ export const ColorModeToggle = ({
             pointerEvents="none"
           />
         </Flex>
-      </MenuItem>
+      </Button>
     </>
   )
 }

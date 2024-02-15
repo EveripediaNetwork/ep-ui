@@ -18,6 +18,7 @@ import {
   Spinner,
   useToast,
   Icon,
+  VStack,
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
@@ -35,6 +36,9 @@ import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import CopyIcon from '@/components/Icons/CopyIcon'
 import { Link } from '@/components/Elements'
 import { useTranslation } from 'next-i18next'
+import { ColorModeToggle } from '../Navbar/ColorModeToggle'
+import { LogOutBtn } from '../Navbar/Logout'
+import { ProfileLink } from '../Navbar/ProfileLink'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -170,6 +174,16 @@ const WalletDrawer = ({
         <Divider />
         <DrawerBody shadow="sm">
           <Connectors openWalletDrawer={toggleOperations.onOpen} />
+          {isUserConnected && (
+            <>
+              <Divider py={2} />
+              <VStack alignItems="flex-start">
+                <ProfileLink />
+                <ColorModeToggle isInMobileMenu={false} />
+                {userAddress && <LogOutBtn isInMobileMenu={false} />}
+              </VStack>
+            </>
+          )}
         </DrawerBody>
       </DrawerContent>
     </Drawer>
