@@ -91,7 +91,7 @@ const Navbar = () => {
       >
         <Box
           cursor="pointer"
-          mr={{ base: 0, xl: '1vw' }}
+          mr={{ base: 0, xl: '0.1vw' }}
           _hover={{ textDecoration: 'none' }}
         >
           <Link prefetch={false} href="/">
@@ -202,7 +202,6 @@ const Navbar = () => {
           <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setHamburger}
-            // setVisibleMenu={setVisibleMenu}
           />
         </HStack>
         <HStack
