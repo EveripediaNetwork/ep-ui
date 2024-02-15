@@ -172,11 +172,11 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  {
-    id: 6,
-    label: 'Events',
-    href: '/events',
-  },
+  // {
+  //   id: 6,
+  //   label: 'Events',
+  //   href: '/events',
+  // },
 ]
 
 export const NAV_ICON = {
