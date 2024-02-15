@@ -37,8 +37,10 @@ export default async function handler(
     isChat: true,
   }
 
+  console.log(requestObject)
+
   const result = await new Promise<GenerateOutput>((resolve) => {
-    fetchEventSource('https://iqgpt.com/api/generate', {
+    fetchEventSource('https://www.iqgpt.com/api/generate', {
       method: 'POST',
       body: JSON.stringify(requestObject),
       headers: {
