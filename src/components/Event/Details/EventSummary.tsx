@@ -38,10 +38,10 @@ const EventSummary = () => {
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
         <span className="col-span-1">Social profiles</span>
         <span className="flex text-2xl md:text-xl xl:text-2xl items-center gap-1">
-          <RiTwitterFill />
-          <RiFacebookBoxFill />
-          <RiInstagramFill />
-          <RiLinkedinBoxFill />
+          <RiTwitterFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
+          <RiFacebookBoxFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
+          <RiInstagramFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
+          <RiLinkedinBoxFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
         </span>
       </span>
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 text-xs lg:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
