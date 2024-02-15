@@ -26,7 +26,7 @@ const EventList = ({
 
   return (
     <div className="flex flex-col flex-1 gap-5">
-      {eventData !== eventMockData && (
+      {eventData.length !== eventMockData.length && (
         <span className="flex flex-col items-start">
           <h1 className="font-semibold">Search Results</h1>
           <button
