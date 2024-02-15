@@ -1,4 +1,4 @@
-import { Box, MenuItem, Icon } from '@chakra-ui/react'
+import { Button, Flex, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
@@ -18,23 +18,33 @@ export const ProfileLink = () => {
   }, [userAddress])
 
   return (
-    <MenuItem
-      order={-1}
-      onClick={() => router.push(link)}
-      minH="48px"
-      bg="subMenuBg"
-    >
-      <Icon
-        cursor="pointer"
-        fontSize="4xl"
-        fontWeight={600}
-        as={RiAccountCircleFill}
-        color="linkColor"
-        pr={3}
-      />
-      <Box fontSize="md" fontWeight={600} color="linkColor">
-        {t('Profile')}
-      </Box>
-    </MenuItem>
+    <>
+      <Button
+        minH="48px"
+        borderTopWidth="1px"
+        px={3}
+        bgColor={'transparent'}
+        sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
+        onClick={() => router.push(link)}
+        w="full"
+      >
+        <Icon
+          fontSize="4xl"
+          color="linkColor"
+          fontWeight={600}
+          as={RiAccountCircleFill}
+          pr={3}
+        />
+        <Flex
+          // ml={isInMobileMenu ? 2 : 'unset'}
+          fontSize="md"
+          fontWeight="semibold"
+          color="linkColor"
+          flex="auto"
+        >
+          <span>{t('Profile')}</span>
+        </Flex>
+      </Button>
+    </>
   )
 }
