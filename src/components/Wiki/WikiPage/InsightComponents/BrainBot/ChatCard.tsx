@@ -221,8 +221,8 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
         alignItems={'flex-start'}
         gap={'4px'}
         mt={content === DEFAULT_RESPONSE ? '36px' : '0px'}
-        width={alias === 'AI' ? '95%' : ''}
-        height={alias === 'HUMAN' ? '24px' : 'auto'}
+        maxWidth={alias === 'AI' ? '95%' : '90%'}
+        minHeight={alias === 'HUMAN' ? '24px' : 'auto'}
       >
         {alias === 'AI' && (
           <Box

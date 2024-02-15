@@ -18,8 +18,9 @@ import CurrencyConverter from './InsightComponents/CurrencyConverter'
 import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 import NFTWidget from './InsightComponents/NFTWidget'
 import NFTStatistics from './InsightComponents/NFTStatistics'
-import ContentFeedback from './InsightComponents/ContentFeedback'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
+import BrainBotMobile from './InsightComponents/BrainBot/BrainBotMobile'
+import WikiRating from './InsightComponents/WikiRating'
 
 export interface WikiInsightsProps {
   wiki: Wiki
@@ -28,7 +29,7 @@ export interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
-  const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 })
+  const stickyRef = useStickyBox({ offsetTop: 50, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
   )?.value
@@ -79,7 +80,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       borderLeftWidth={{ base: 0, xl: '1px' }}
       p={{ base: 0, md: 2, xl: 4 }}
       pr={{ md: 11, xl: 4 }}
-      pt={{ xl: '9', md: '8', base: '10' }}
+      pt={{ xl: '8', md: '4', base: '6' }}
       borderColor="rankingListBorder"
     >
       <Box as="aside" ref={stickyRef} w="100%">
@@ -94,21 +95,32 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
             <WikiDetails
               wikiTitle={wiki}
               categories={wiki.categories}
-              createdTime={wiki?.created}
               ipfsHash={ipfs ?? wiki.ipfs}
               txHash={wiki.transactionHash}
-              createdBy={wiki.author}
               imgSrc={getWikiImageUrl(wiki.images)}
               views={wiki.views}
             />
-            <BrainBot wiki={wiki} />
             <ProfileSummary wiki={wiki} />
+            <Box
+              display={{
+                base: 'none',
+                xl: 'block',
+              }}
+              minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
+            >
+              <BrainBot wiki={wiki} />
+            </Box>
+            <Box
+              display={{
+                base: 'block',
+                xl: 'none',
+              }}
+              minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
+            >
+              {<BrainBotMobile wiki={wiki} />}
+            </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
-              <ContentFeedback
-                choice
-                contentId={wiki.id}
-                userId={userAddress}
-              />
+              <WikiRating contentId={wiki.id} userId={userAddress} />
             </Box>
             {!!coingeckoLink && (
               <>

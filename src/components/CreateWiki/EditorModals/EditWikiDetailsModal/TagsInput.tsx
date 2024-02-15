@@ -46,7 +46,9 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
           variant="unstyled"
           isMulti
           size="sm"
-          options={TagsSuggestions}
+          options={TagsSuggestions.map((suggestion) => {
+            return { value: suggestion.value, label: t(suggestion.label) }
+          })}
           onChange={(item) => handleOnchange(item)}
           defaultValue={wiki.tags.map((ta) => ({
             label: ta.id,

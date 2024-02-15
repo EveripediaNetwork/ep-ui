@@ -14,7 +14,7 @@ import WikiInsights from './WikiInsights'
 import WikiMainContent from './WikiMainContent'
 import WikiReferences from './WikiReferences'
 import WikiTableOfContents from './WikiTableOfContents'
-import ContentFeedback from './InsightComponents/ContentFeedback'
+import WikiRating from './InsightComponents/WikiRating'
 
 interface WikiLayoutProps {
   wiki: Wiki
@@ -44,7 +44,7 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', xl: 'none' }}
       spacing={6}
     >
-      <ContentFeedback choice contentId={id} userId={userAddress} />
+      <WikiRating contentId={id} userId={userAddress} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis wikiId={id} category={categories[0].id} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
@@ -78,7 +78,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
             <Text
               fontSize="4xl"
               fontWeight="bold"
-              mt={8}
+              mt={2}
               mb={-4}
               display={{
                 xl: 'none',

@@ -41,7 +41,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
       >
         {categoryOptions?.map((o) => (
           <option key={o.id} value={o.id}>
-            {o.title}
+            {t(o.title)}
           </option>
         ))}
       </Select>

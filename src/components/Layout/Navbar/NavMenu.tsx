@@ -15,6 +15,8 @@ import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { RiArrowDownSLine } from 'react-icons/ri'
+import { useDisclosure } from '@chakra-ui/react'
+import SuggestWikiModal from './SuggestWiki'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -32,13 +34,26 @@ const NavMenu = ({
 }: NavMenuType) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const {
+    isOpen: isSuggestWikiOpen,
+    onOpen: onSuggestWikiOpen,
+    onClose: onSuggestWikiClose,
+  } = useDisclosure()
+  const handleClick = (navItem: NavItem) => {
+    navItem.label === 'Suggest Wiki' ? onSuggestWikiOpen() : null
+    navItem.subItem
+      ? setVisibleMenu(visibleMenu ? null : navItem.id)
+      : navItem.target
+      ? window.open(navItem.href, '_blank', 'noopener,noreferrer')
+      : router.push(navItem.href)
+  }
   return (
     <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
       <MenuButton
         pr={4}
         fontSize="14px"
         fontWeight={600}
-        height="70px"
+        height="24px"
         color="linkColor"
         _hover={{
           textDecoration: 'none',
@@ -46,13 +61,7 @@ const NavMenu = ({
         }}
         whiteSpace="nowrap"
         onMouseEnter={() => setVisibleMenu(navItem.id)}
-        onClick={() =>
-          navItem.subItem
-            ? setVisibleMenu(visibleMenu ? null : navItem.id)
-            : navItem.target
-            ? window.open(navItem.href, '_blank', 'noopener,noreferrer')
-            : router.push(navItem.href)
-        }
+        onClick={handleClick.bind(null, navItem)}
       >
         <HStack spacing={1}>
           <Text as="div">{label}</Text>{' '}
@@ -102,6 +111,10 @@ const NavMenu = ({
           {children}
         </MenuList>
       )}
+      <SuggestWikiModal
+        isOpen={isSuggestWikiOpen}
+        onClose={onSuggestWikiClose}
+      />
     </Menu>
   )
 }

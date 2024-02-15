@@ -9,9 +9,7 @@ import {
 } from '@/store/slices/chatbot-slice'
 import { randomUUID } from 'crypto'
 import axios from 'axios'
-import { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
-import { queryMapper } from '@/utils/BotUtils'
 
 const useStream = () => {
   const dispatch = useDispatch()
@@ -19,10 +17,10 @@ const useStream = () => {
 
   const askQuestion = async ({
     question,
-    wiki,
+    query,
   }: {
     question: string
-    wiki?: Wiki
+    query?: string
   }) => {
     if (!question) return
 
@@ -38,7 +36,7 @@ const useStream = () => {
       dispatch(setIsError(false))
       await axios
         .post('/api/fetch-answer', {
-          question: wiki ? queryMapper(question, wiki) : question,
+          question: query ? query : question,
         })
         .then((res) => {
           const { chat, answer, answerSources, messageId } =

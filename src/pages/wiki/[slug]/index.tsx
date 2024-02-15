@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { getWiki, getWikiCreatorAndEditor } from '@/services/wikis'
 import { store } from '@/store/store'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { Box } from '@chakra-ui/react'
+import { Box, useBreakpointValue } from '@chakra-ui/react'
 import { WikiHeader } from '@/components/SEO/Wiki'
 import { WikiMarkup } from '@/components/Wiki/WikiPage/WikiMarkup'
 import { Wiki as WikiType } from '@everipedia/iq-utils'
@@ -16,8 +16,22 @@ interface WikiProps {
 }
 
 const Wiki = ({ wiki }: WikiProps) => {
+  const scrollRef = React.useRef<HTMLDivElement>(null)
+
   const router = useRouter()
   const { slug } = router.query as { slug: string }
+  const breakpoint = useBreakpointValue(
+    { base: 'base', md: 'md', xl: 'xl', '2xl': '2xl' },
+    { fallback: '2xl' },
+  )
+  useEffect(() => {
+    if (scrollRef.current && breakpoint === 'base') {
+      scrollRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }, [breakpoint])
 
   useEffect(() => {
     const fetchUserDataAndIncView = async () => {
@@ -41,7 +55,7 @@ const Wiki = ({ wiki }: WikiProps) => {
           mainImage={getWikiImageUrl(wiki.images)}
         />
       )}
-      <Box as="main" mt={-2}>
+      <Box as="main" mt={-2} ref={scrollRef}>
         <WikiMarkup wiki={wiki} />
       </Box>
     </>

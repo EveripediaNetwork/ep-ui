@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
   Container,
@@ -17,25 +17,30 @@ import {
   MenuList,
   Flex,
 } from '@chakra-ui/react'
-import { isString } from '@chakra-ui/utils'
 import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'next-i18next'
-import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
 import { useRouter } from 'next/router'
-import { getCookie, setCookie } from 'cookies-next'
+import { getCookie } from 'cookies-next'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { setLanguage } from '@/store/slices/app-slice'
+import { useDispatch } from 'react-redux'
+import useLanguageChange from '@/hooks/useLanguageChange'
 
 const Footer = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
-  const { t, i18n } = useTranslation('common')
+  const locale = router.locale
+  const { t } = useTranslation('common')
   const spacing = useBreakpointValue({ base: 8, lg: 24 })
   const userSelectedLanguage = getCookie('NEXT_LOCALE') as string
-  const [lang, setLang] = useState(
-    userSelectedLanguage ?? languageData[0].locale,
-  )
+  const langState = useSelector((state: RootState) => state.app.language)
+  const lang = userSelectedLanguage ?? langState
+  const { handleLangChange } = useLanguageChange()
   const thisYear = new Date().getFullYear()
   const newsletterOptions = {
     bg: '#fff',
@@ -43,23 +48,9 @@ const Footer = () => {
     _hover: { bg: '#fff', color: 'gray.800' },
   }
 
-  const handleLangChange = (userLang: string | string[]) => {
-    if (isString(userLang)) {
-      setLang(userLang)
-      i18n.changeLanguage(userLang)
-      setCookie('NEXT_LOCALE', userLang, {
-        maxAge: 60 * 60 * 24 * 365.25 * 100,
-      })
-      const { pathname, asPath, query } = router
-      router.push({ pathname, query }, asPath, { locale: userLang })
-      logEvent({
-        action: 'CHANGE_PLATFORM_LANGUAGE',
-        category: 'language',
-        label: userLang,
-        value: 1,
-      })
-    }
-  }
+  React.useEffect(() => {
+    if (locale) dispatch(setLanguage(lang))
+  }, [])
 
   return (
     <Box bg="brandBackground" color="default" pos="relative" zIndex="2">
@@ -125,8 +116,8 @@ const Footer = () => {
               />
               <Box>
                 <Menu>
-                  <MenuButton fontSize="sm">
-                    {lang.toUpperCase()} <ChevronDownIcon />
+                  <MenuButton fontSize="sm" textTransform={'uppercase'}>
+                    {lang} <ChevronDownIcon />
                   </MenuButton>
                   <MenuList color="linkColor">
                     <MenuOptionGroup type="radio" onChange={handleLangChange}>
@@ -135,6 +126,7 @@ const Footer = () => {
                           key={langObj.locale}
                           fontSize="md"
                           value={langObj.locale}
+                          isChecked={langObj.locale === lang}
                         >
                           {langObj.name}
                         </MenuItemOption>

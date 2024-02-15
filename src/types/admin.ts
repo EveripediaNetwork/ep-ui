@@ -12,14 +12,7 @@ export type EditorsType = {
 
 export type ContentFeedbackArgs = {
   contentId: string
-  userId?: string
-  feedback: ContentFeedbackType
-}
-
-export enum ContentFeedbackType {
-  positive = 'POSITIVE',
-  negative = 'NEGATIVE',
-  neutral = 'NEUTRAL',
+  rating: number
 }
 
 export type WikisModifiedCount = {

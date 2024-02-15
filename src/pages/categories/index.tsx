@@ -8,15 +8,15 @@ import { AllCategoriesData } from '@/data/AllCategoriesData'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Categories: NextPage = () => {
-  const { t } = useTranslation('category')
+  const { t } = useTranslation('common')
   return (
     <>
       <NextSeo
-        title={t('wikiCategory')}
-        description={t('categoryHeader')}
+        title={t('browseCategory')}
+        description={t('browseCategoryDescription')}
         openGraph={{
-          title: t('wikiCategory'),
-          description: t('categoryHeader'),
+          title: t('browseCategory'),
+          description: t('browseCategoryDescription'),
         }}
       />
       <Box>
@@ -41,7 +41,7 @@ const Categories: NextPage = () => {
               pb={2}
               as="h1"
             >
-              {t('wikiCategory')}
+              {t('browseCategory')}
             </Heading>
             <Flex
               textAlign="center"
@@ -55,7 +55,7 @@ const Categories: NextPage = () => {
                 mx={{ base: '5', md: '8', lg: '14' }}
                 color={'heroHeaderDescription'}
               >
-                {t('categoryHeader')}
+                {t('browseCategoryDescription')}
               </Text>
             </Flex>
           </Box>
@@ -92,7 +92,11 @@ const Categories: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['category', 'common'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'category',
+        'common',
+        'activity',
+      ])),
     },
   }
 }

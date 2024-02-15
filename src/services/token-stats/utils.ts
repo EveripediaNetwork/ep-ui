@@ -24,13 +24,20 @@ export const getTokenFromURI = (coingeckoUrl: string) =>
     .reverse()
     .find((c) => /\w+/.test(c)) as string
 
+const getCmcTokenFromUri = (coinMarketCapUrl: string) => {
+  const pattern = /\/currencies\/([^\/]+)/
+  const match = coinMarketCapUrl.match(pattern)
+  return match ? match[1] : null
+}
+
+//TODO: make cmc url test more robust
 export const fetchTokenStats = async (
   coingeckoUrl?: string,
   coinMarketCap?: string,
 ) => {
   if (!coingeckoUrl || !coinMarketCap) return undefined
   const token = getTokenFromURI(coingeckoUrl)
-  const cmcToken = getTokenFromURI(coinMarketCap)
+  const cmcToken = getCmcTokenFromUri(coinMarketCap)
   if (!token || !cmcToken) return undefined
   const tokenDetails = remappingTokenIds(token, cmcToken)
   const { data } = await store.dispatch(getTokenStats.initiate(tokenDetails))

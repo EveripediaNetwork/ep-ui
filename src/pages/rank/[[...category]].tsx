@@ -557,7 +557,7 @@ const Rank = ({
                   textColor={'brand.500'}
                   mb={6}
                 >
-                  {t('rankingListButtonFounders')}
+                  {t('rankingListHeadingFounders')}
                 </Text>
                 <Text
                   textAlign={'center'}

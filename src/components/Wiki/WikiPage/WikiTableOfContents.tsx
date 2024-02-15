@@ -155,7 +155,7 @@ const WikiTableOfContents = ({ isAlertAtTop }: WikiTableOfContentsProps) => {
           borderLeftWidth="1px"
           w="20vw"
           px={6}
-          py="30px"
+          py="35px"
           ml="0 !important"
         >
           <VStack

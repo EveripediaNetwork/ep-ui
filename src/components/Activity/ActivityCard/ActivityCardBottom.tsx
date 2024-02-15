@@ -1,14 +1,21 @@
-import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 import { HStack, Link, Text, chakra } from '@chakra-ui/react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import ActivityCardTags from './ActivityCardTags'
 import { ActivityCardBottomProps } from '@/types/ActivityDataType'
-import { useTranslation } from 'next-i18next'
+import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const ActivityCardBottom = (props: ActivityCardBottomProps) => {
   const { editor, isNotifSubCard, lastModTimeStamp, activity, tags } = props
-  const { t } = useTranslation('common')
+  const lang = useSelector((state: RootState) => state.app.language)
+  const translatedTimestamp = useTranslatedTimetamps(
+    activity,
+    lang,
+    lastModTimeStamp ?? '',
+  )
+
   return (
     <HStack w="full">
       <HStack flex="1">
@@ -46,9 +53,7 @@ const ActivityCardBottom = (props: ActivityCardBottomProps) => {
         opacity={0.6}
         whiteSpace="nowrap"
       >
-        {`${
-          activity === 'Edited' ? t('Edited') : t('Created')
-        } ${getReadableDate(lastModTimeStamp ?? '')} ${t('ago')}`}
+        {translatedTimestamp}
       </Text>
     </HStack>
   )

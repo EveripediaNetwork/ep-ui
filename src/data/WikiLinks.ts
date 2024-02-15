@@ -180,4 +180,18 @@ export const LINK_OPTIONS = [
     icon: FaFileContract,
     tests: [/https:\/\/(www.)?optimistic.etherscan.io\/\w+/],
   },
+  {
+    id: CommonMetaIds.BASESCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'BaseScan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?basescan.org\/\w+/],
+  },
+  {
+    id: CommonMetaIds.FTMSCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'FTMScan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?ftmscan.com\/\w+/],
+  },
 ]

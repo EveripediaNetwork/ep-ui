@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Heading,
   HStack,
   Table,
   Tag,
@@ -14,48 +13,41 @@ import {
   Wrap,
   Box,
   Stack,
+  Tooltip,
 } from '@chakra-ui/react'
 import { shortenAccount } from '@/utils/textUtils'
 import { SiIpfs } from 'react-icons/si'
 import { GoLink } from 'react-icons/go'
 import { WikiImage } from '@/components/WikiImage'
-import { Author, BaseCategory, WikiPreview } from '@everipedia/iq-utils'
+import { BaseCategory, WikiPreview } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
-import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { useENSData } from '@/hooks/useENSData'
 import config from '@/config'
 
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
-import { getUsername } from '@/utils/DataTransform/getUsername'
 import { useTranslation } from 'next-i18next'
 
 export const WikiDetails = ({
   wikiTitle,
   categories,
-  createdTime,
   ipfsHash,
   txHash,
-  createdBy,
   imgSrc,
   views,
 }: {
   wikiTitle: WikiPreview
   categories: BaseCategory[]
-  createdTime?: string
   ipfsHash?: string
   txHash?: string
-  createdBy?: Author
   imgSrc?: string
   views: number | undefined
 }) => {
   const { title, tags, id: wikiId } = wikiTitle
-  const [, username] = useENSData(createdBy?.id ?? '')
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   const { t } = useTranslation('wiki')
   return (
     <Box
       borderWidth="1px"
-      p={4}
+      p={2}
       borderRadius={8}
       w="full"
       borderColor="rankingListBorder"
@@ -67,36 +59,23 @@ export const WikiDetails = ({
         spacing={4}
         w="full"
       >
-        <Heading
-          bgColor="wikiTitleBg"
-          as="h3"
-          fontSize="18px"
-          p={3}
-          borderRadius={6}
-          fontWeight="600"
-          w="100%"
-          textAlign="center"
-          display={{ base: 'none', xl: 'block' }}
-        >
-          {title}
-        </Heading>
         <AspectRatio
           mx="auto"
           w="100%"
-          ml="0 !important"
-          maxW="400"
+          // ml="0 !important"
+          maxW="700"
           ratio={WIKI_IMAGE_ASPECT_RATIO}
         >
           <WikiImage
             bgColor="dimColor"
             priority
             imageURL={imgSrc}
-            sizes="(max-width: 400px) 100vw, 400px"
+            sizes="(max-width: 600px) 100vw, 400px"
             alt={title}
           />
         </AspectRatio>
         <VStack
-          maxW={{ base: 'unset', sm: '400px', lg: 'unset' }}
+          maxW={{ base: 'unset', md: 'unset', lg: 'unset' }}
           w="100%"
           spacing={4}
           mx="auto"
@@ -144,40 +123,42 @@ export const WikiDetails = ({
                 )}
                 <Tr>
                   <Td>
-                    <HStack spacing={3} py="2">
-                      <Text>IPFS</Text>
-                    </HStack>
+                    <Text>Network</Text>
                   </Td>
                   <Td display="flex" align="center">
-                    <HStack gap={1} py="2">
-                      <SiIpfs />
-                      <Link
-                        target="_blank"
-                        href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
-                        color="brandLinkColor"
-                      >
-                        <Text>{shortenAccount(ipfsHash ?? '')}</Text>
-                      </Link>
+                    <HStack spacing={4}>
+                      <HStack spacing={2}>
+                        <Tooltip label="IPFS" fontSize="xs">
+                          <span>
+                            <SiIpfs />
+                          </span>
+                        </Tooltip>
+                        <Link
+                          target="_blank"
+                          href={`https://ipfs.everipedia.org/ipfs/${ipfsHash}`}
+                          color="brandLinkColor"
+                        >
+                          <Text>{shortenAccount(ipfsHash ?? '')}</Text>
+                        </Link>
+                      </HStack>
+                      <HStack spacing={2}>
+                        <Tooltip label="Txn" fontSize="xs">
+                          <span>
+                            <GoLink />
+                          </span>
+                        </Tooltip>
+                        <Link
+                          target="_blank"
+                          href={`${config.blockExplorerUrl}/tx/${txHash}`}
+                          color="brandLinkColor"
+                        >
+                          <Text>{shortenAccount(txHash ?? '')}</Text>
+                        </Link>
+                      </HStack>
                     </HStack>
                   </Td>
                 </Tr>
-                <Tr>
-                  <Td>
-                    <HStack spacing={3}>
-                      <Text>TX Hash</Text>
-                    </HStack>
-                  </Td>
-                  <Td display="flex" align="center" gap={3}>
-                    <GoLink />
-                    <Link
-                      target="_blank"
-                      href={`${config.blockExplorerUrl}/tx/${txHash}`}
-                      color="brandLinkColor"
-                    >
-                      <Text>{shortenAccount(txHash ?? '')}</Text>
-                    </Link>
-                  </Td>
-                </Tr>
+
                 <Tr>
                   <Td>
                     <HStack spacing={3} py="2">
@@ -195,47 +176,6 @@ export const WikiDetails = ({
                     </HStack>
                   </Td>
                 </Tr>
-                <Tr>
-                  <Td whiteSpace="nowrap">
-                    <Text py="2">{t('created')}</Text>
-                  </Td>
-                  <Td>
-                    <Text>
-                      {/* TODO -  fix date translation - ko-KR */}
-                      {createdTime
-                        ? new Date(createdTime).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                        : '-'}
-                    </Text>
-                  </Td>
-                </Tr>
-                {createdBy && (
-                  <Tr>
-                    <Td whiteSpace="nowrap">
-                      <Text py="2">{t('createdBy')}</Text>
-                    </Td>
-                    <Td>
-                      <HStack py="2">
-                        <DisplayAvatar
-                          alt={createdBy.profile?.username}
-                          address={createdBy.id}
-                          avatarIPFS={createdBy.profile?.avatar}
-                          size={24}
-                        />
-                        <Link
-                          href={`/account/${createdBy.id}`}
-                          color="brandLinkColor"
-                          prefetch={false}
-                        >
-                          {getUsername(createdBy, username)}
-                        </Link>
-                      </HStack>
-                    </Td>
-                  </Tr>
-                )}
                 {wikiViews && (
                   <Tr>
                     <Td whiteSpace="nowrap">

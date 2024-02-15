@@ -26,7 +26,10 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
     ).trim()
     if (message.length === 0) return
     dispatch(setCurrentMessage(message))
-    askQuestion({ question: message, wiki: wiki })
+    askQuestion({
+      question: message,
+      query: `You will be given question: ${message}. answer with tools provided to you. you will also be given  ${wiki.title} from where the user asked the question from`,
+    })
     setChatInput('')
   }
 
