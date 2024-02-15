@@ -18,7 +18,10 @@ const EventCard = ({
   speakers,
 }: Omit<IEventData, 'id' | 'src'>) => {
   return (
-    <div className="flex gap-2 md:gap-6">
+    <Link
+      href={`/event/${title.toLowerCase().replace(/ /g, '-')}`}
+      className="flex gap-2 md:gap-6"
+    >
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
         <RiArrowRightUpLine />
       </span>
@@ -89,7 +92,7 @@ const EventCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

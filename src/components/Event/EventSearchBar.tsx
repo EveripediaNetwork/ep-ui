@@ -51,9 +51,11 @@ const filterEvents = (
 const EventSearchBar = ({
   eventData,
   setEventData,
+  setSearchActive,
 }: {
   eventData: IEventData[]
   setEventData: Function
+  setSearchActive: Function
 }) => {
   const [searchDate, setSearchDate] = useState<Date>()
 
@@ -76,6 +78,7 @@ const EventSearchBar = ({
 
     setEventData(results)
     setSearchDate(undefined)
+    setSearchActive(true)
     form.reset()
   }
   return (

@@ -3,24 +3,18 @@ import EventCard from './EventCard'
 import { IEventData, eventMockData } from './event.data'
 import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '../ui/dialog'
-import { Button } from '../ui/button'
-import { Textarea } from '../ui/textarea'
+import { Dialog, DialogTrigger } from '../ui/dialog'
+import SuggestEventModal from './SuggestEventModal'
+import { RiArrowLeftLine } from 'react-icons/ri'
 
 const EventList = ({
   eventData,
   setEventData,
+  setSearchActive,
 }: {
   eventData: IEventData[]
   setEventData: Function
+  setSearchActive: Function
 }) => {
   const eventsByMonth = groupEventsByMonth(eventData)
 
@@ -31,9 +25,15 @@ const EventList = ({
           <h1 className="font-semibold">Search Results</h1>
           <button
             type="button"
-            onClick={() => setEventData(eventMockData)}
-            className="text-sm text-brand-500 cursor-pointer dark:text-brand-800 md:text-base"
+            onClick={() => {
+              setEventData(eventMockData)
+              setSearchActive(false)
+            }}
+            className="text-sm text-brand-500 flex gap-3 hover:underline items-center cursor-pointer dark:text-brand-800 md:text-base"
           >
+            <span>
+              <RiArrowLeftLine />
+            </span>
             Go Back
           </button>
         </span>
@@ -58,31 +58,7 @@ const EventList = ({
                             Suggest events
                           </span>
                         </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle className="text-base">
-                              Suggest Event
-                            </DialogTitle>
-                            <DialogDescription className="text-xs">
-                              Didn’t find your event of interest? Suggest an
-                              event you would be excited to attend and we’ll
-                              provide you with the rest of the details.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <Textarea
-                            placeholder="Details"
-                            className="resize-none outline-none border border-gray300 dark:border-alpha-300"
-                            rows={8}
-                          />
-                          <DialogFooter>
-                            <Button
-                              type="submit"
-                              className="bg-brand-500 dark:bg-brand-800 px-10"
-                            >
-                              Submit
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
+                        <SuggestEventModal />
                       </Dialog>
                     </span>
                   )}
@@ -108,12 +84,14 @@ const EventList = ({
           <EventEmptyState />
         )}
       </div>
-      {/* <button
-              className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
-              type="button"
-            >
-              View more
-            </button> */}
+      {eventData.length > 20 && (
+        <button
+          className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
+          type="button"
+        >
+          View more
+        </button>
+      )}
     </div>
   )
 }

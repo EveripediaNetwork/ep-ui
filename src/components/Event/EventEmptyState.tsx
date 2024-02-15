@@ -1,6 +1,8 @@
 import { useColorMode } from '@chakra-ui/react'
 import Image from 'next/image'
 import React from 'react'
+import { Dialog, DialogTrigger } from '../ui/dialog'
+import SuggestEventModal from './SuggestEventModal'
 
 const EventEmptyState = () => {
   const { colorMode } = useColorMode()
@@ -25,12 +27,17 @@ const EventEmptyState = () => {
         Stay tuned for exciting updates and upcoming events.
       </span>
       <div className="mt-10">
-        <button
-          type="button"
-          className="bg-brand-500 text-sm font-medium dark:bg-brand-800 rounded-md py-2 px-4"
-        >
-          Suggest event
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              className="bg-brand-500 text-sm text-white font-medium dark:bg-brand-800 rounded-md py-2 px-4"
+            >
+              Suggest event
+            </button>
+          </DialogTrigger>
+          <SuggestEventModal />
+        </Dialog>
       </div>
     </div>
   )

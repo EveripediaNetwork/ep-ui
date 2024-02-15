@@ -18,11 +18,11 @@ const TrendingEvent = () => {
     <div className="mt-10 md:mt-20 max-w-[1296px] mx-auto ">
       <h4 className="font-semibold text-xl">Trending Events</h4>
       <div className="mt-8">
-        <Carousel plugins={[Autoplay()]} opts={{ loop: true }}>
+        <Carousel plugins={[Autoplay()]} opts={{ align: 'start', loop: true }}>
           <CarouselContent className="">
             {trendingEventData.map((event) => (
               <CarouselItem
-                className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-1/4 rounded-xl relative w-[309px] ml-4"
+                className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-[309px] rounded-xl relative ml-4"
                 key={event.id}
               >
                 <Image src={event.src || ''} alt="blockchain-expo" fill />
