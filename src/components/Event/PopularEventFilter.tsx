@@ -8,40 +8,40 @@ const PopularEventFilter = () => {
   return (
     <div className="">
       <div className="flex flex-col gap-1">
-        <h2 className="font-semibold text-xl leading-none">Popular Events</h2>
-        <span className="text-xs">
+        <h2 className="font-semibold md:text-2xl lg:text-base xl:text-xl leading-none">
+          Popular Events
+        </h2>
+        <p
+          style={{ lineHeight: '14px' }}
+          className="text-sm md:text-base lg:text-[10px] xl:text-xs"
+        >
           The most popular crypto events around the world.
-        </span>
+        </p>
       </div>
-      <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-3 py-5 mt-6 rounded-xl">
+      <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-[14px] py-[10px] md:px-5 md:py-[18px] lg:px-2 xl:px-3 lg:py-3 xl:py-5 mt-6 rounded-xl">
         {popularEventData.map((event) => (
           <div key={event.title} className="flex gap-2">
-            <span>
-              <Image
-                src={'/images/event-1.png'}
-                alt="event image"
-                width={93}
-                height={69}
-              />
+            <span className="relative shrink-0 w-[84px] h-[58px] md:w-[113px] md:h-[79px] lg:w-[52px] lg:h-[40px] xl:w-[93px] xl:h-[69px]">
+              <Image src={'/images/event-1.png'} alt="event image" fill />
             </span>
-            <div className="flex-1">
+            <div className="flex flex-col gap-2 lg:gap-0 xl:gap-2">
               <Link
                 href={`/event/${event.title.toLowerCase().replace(/ /g, '-')}`}
-                className="font-semibold hover:underline text-sm text-gray800 dark:text-alpha-900"
+                className="font-semibold hover:underline text-gray800 dark:text-alpha-900 text-sm lg:text-[9px] leading-none xl:text-sm"
               >
                 {event.title}
               </Link>
-              <div className="flex text-xs my-2 text-alpha-900 divide-x divide-alpha-700 items-center">
-                <span className="pr-2 flex gap-1 items-center">
-                  <span className="text-brand-800 text-base">
+              <div className="flex text-xs lg:text-[8px] xl:text-xs my-2 text-alpha-900 divide-x divide-alpha-700 items-center">
+                <span className="pr-1 xl:pr-2 flex gap-1 items-center">
+                  <span className="text-brand-800 lg:text-[9px] xl:text-base">
                     <RiCalendar2Line />
                   </span>
                   <span className="text-gray800 dark:text-alpha-900">
                     7th Jan - 7th Apr, 2024
                   </span>
                 </span>
-                <span className="pl-2 flex gap-1 items-center">
-                  <span className="text-brand-800 text-base">
+                <span className="pl-1 xl:pr-2 flex gap-1 items-center">
+                  <span className="text-brand-800 lg:text-[9px] xl:text-base">
                     <RiMapPinRangeLine />
                   </span>
                   <span className="text-gray800 dark:text-alpha-900">

@@ -19,10 +19,10 @@ const EventDetailsPage = ({ event }: { event: string }) => {
         <h1 className="font-semibold capitalize text-2xl xl:text-4xl text-gray900 dark:text-alpha-900">
           {event.replace(/-/g, ' ')}
         </h1>
-        <div className="flex flex-col md:flex-row max-w-[1296px] gap-10 md:gap-6 mx-auto mt-5">
+        <div className="flex flex-col lg:flex-row max-w-[1296px] gap-10 md:gap-6 mx-auto mt-5">
           <div className="flex-1 flex flex-col gap-10 md:gap-5 xl:gap-10">
             <EventDetailsBanner />
-            <div className="md:hidden flex flex-col gap-6 xl:gap-10">
+            <div className="xl:hidden flex flex-col gap-6 mt-10 xl:gap-10">
               <EventSummary />
               <EventMedia />
             </div>
@@ -30,8 +30,8 @@ const EventDetailsPage = ({ event }: { event: string }) => {
             <SpeakerDetails />
             <SponsorDetails />
           </div>
-          <div className="flex-1 flex flex-col gap-10 md:gap-6 xl:gap-10 md:max-w-[240px] xl:max-w-[422px]">
-            <div className="hidden md:flex flex-col gap-6 xl:gap-10">
+          <div className="flex-1 flex flex-col gap-10 md:gap-6 xl:gap-10 lg:max-w-[240px] xl:max-w-[422px]">
+            <div className="hidden xl:flex flex-col gap-6 xl:gap-10">
               <EventSummary />
               <EventMedia />
             </div>
