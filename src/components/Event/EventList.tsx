@@ -3,6 +3,17 @@ import EventCard from './EventCard'
 import { IEventData, eventMockData } from './event.data'
 import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Textarea } from '../ui/textarea'
 
 const EventList = ({
   eventData,
@@ -41,9 +52,38 @@ const EventList = ({
                   {events[0].id === 1 && (
                     <span className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
                       know any events not listed?{' '}
-                      <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
-                        Suggest events
-                      </span>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
+                            Suggest events
+                          </span>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle className="text-base">
+                              Suggest Event
+                            </DialogTitle>
+                            <DialogDescription className="text-xs">
+                              Didn’t find your event of interest? Suggest an
+                              event you would be excited to attend and we’ll
+                              provide you with the rest of the details.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <Textarea
+                            placeholder="Details"
+                            className="resize-none outline-none border border-gray300 dark:border-alpha-300"
+                            rows={8}
+                          />
+                          <DialogFooter>
+                            <Button
+                              type="submit"
+                              className="bg-brand-500 dark:bg-brand-800 px-10"
+                            >
+                              Submit
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </span>
                   )}
                 </div>
