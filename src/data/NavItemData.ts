@@ -172,22 +172,15 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  {
-    id: 6,
-    label: 'Create Wiki',
-    href: '/create-wiki',
-    icon: RiAddBoxFill,
-  },
-  {
-    id: 7,
-    label: 'Suggest Wiki',
-    href: '#',
-    icon: RiLightbulbFlashFill,
-  },
+  // {
+  //   id: 6,
+  //   label: 'Events',
+  //   href: '/events',
+  // },
 ]
 
 export const NAV_ICON = {
-  label: 'Account',
+  label: 'Accounts',
   id: 5,
   href: '#',
   subItem: [

@@ -6,8 +6,8 @@ import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
-import { useTranslation } from 'next-i18next'
 import { EmblaOptionsType } from 'embla-carousel'
+import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const OPTIONS: EmblaOptionsType = { loop: true }

@@ -15,8 +15,6 @@ import { NavItem } from '@/types/NavItemType'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { useDisclosure } from '@chakra-ui/react'
-import SuggestWikiModal from './SuggestWiki'
 
 interface NavMenuType {
   visibleMenu: number | null
@@ -34,13 +32,7 @@ const NavMenu = ({
 }: NavMenuType) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const {
-    isOpen: isSuggestWikiOpen,
-    onOpen: onSuggestWikiOpen,
-    onClose: onSuggestWikiClose,
-  } = useDisclosure()
   const handleClick = (navItem: NavItem) => {
-    navItem.label === 'Suggest Wiki' ? onSuggestWikiOpen() : null
     navItem.subItem
       ? setVisibleMenu(visibleMenu ? null : navItem.id)
       : navItem.target
@@ -111,10 +103,6 @@ const NavMenu = ({
           {children}
         </MenuList>
       )}
-      <SuggestWikiModal
-        isOpen={isSuggestWikiOpen}
-        onClose={onSuggestWikiClose}
-      />
     </Menu>
   )
 }

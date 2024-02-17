@@ -31,6 +31,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)
+
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 

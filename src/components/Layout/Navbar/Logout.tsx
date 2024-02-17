@@ -1,12 +1,12 @@
 import { setStateToDefault } from '@/store/slices/user-slice'
-import { cookieNames } from '@/types/cookies'
-import { Flex, Icon, MenuItem } from '@chakra-ui/react'
-import { deleteCookie } from 'cookies-next'
+import { Button, Flex, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
+import { deleteCookie } from 'cookies-next'
+import { cookieNames } from '@/types/cookies'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
@@ -23,16 +23,16 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   }
 
   return (
-    <Flex>
-      <MenuItem
+    <>
+      <Button
         minH="48px"
-        borderTopWidth={isInMobileMenu ? 0 : '1px'}
         px={isInMobileMenu ? 0 : 3}
-        bgColor={!isInMobileMenu ? 'subMenuBg' : 'transparent'}
+        bgColor="transparent"
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
         onClick={isUserConnected ? handleLogOut : undefined}
         cursor={isUserConnected ? 'pointer' : 'not-allowed'}
         display={isUserConnected ? 'flex' : 'none'}
+        w="full"
       >
         <Icon
           fontSize="4xl"
@@ -52,7 +52,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
             {t('Logout')}
           </span>
         </Flex>
-      </MenuItem>
-    </Flex>
+      </Button>
+    </>
   )
 }

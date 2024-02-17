@@ -309,7 +309,7 @@ const NavSearch = (props: NavSearchProps) => {
       >
         <InputGroup
           size="lg"
-          maxW="800px"
+          maxW="600px"
           display={{ base: 'none', md: 'block' }}
           {...inputGroupProps}
         >
@@ -321,6 +321,7 @@ const NavSearch = (props: NavSearchProps) => {
             <Search2Icon color="gray.300" />
           </InputLeftElement>
           <AutoCompleteInput
+            maxW={{ base: 'unset', md: '600px' }}
             ml={{ base: '15px', xl: 'unset' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}

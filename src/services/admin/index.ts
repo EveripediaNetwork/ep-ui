@@ -19,6 +19,7 @@ import {
   CHECK_ADMIN,
   REVALIDATE_URL,
   CONTENT_FEEDBACK,
+  AVERAGE_RATING,
   WIKIS_VIEWS,
   WIKIS_PER_VISIT,
 } from '@/services/admin/queries'
@@ -27,8 +28,8 @@ import {
   WikisModifiedCount,
   CreatedWikisCount,
   Editors,
-  ToggleUser,
   ContentFeedbackArgs,
+  ToggleUser,
 } from '@/types/admin'
 import { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
@@ -75,7 +76,7 @@ type RevalidateURL = {
 }
 
 type ContentFeedback = {
-  contentFeedback: boolean
+  rating: number
 }
 
 type WikisEditorsCountResponse = {
@@ -145,6 +146,16 @@ type WikiViewsResult = {
 
 type WikiViewsResponse = {
   wikiViews: WikiViewsResult[]
+}
+
+type ratingsCountResult = {
+  contentId: string
+  average: number
+  votes: number
+}
+
+type ratingsCountRes = {
+  averageRating: ratingsCountResult
 }
 
 export const adminApi = createApi({
@@ -266,13 +277,22 @@ export const adminApi = createApi({
         return response.revalidatePage
       },
     }),
-    contentFeedback: builder.mutation<boolean, ContentFeedbackArgs>({
-      query: ({ contentId, userId, feedback }: ContentFeedbackArgs) => ({
+    contentFeedback: builder.mutation<number, ContentFeedbackArgs>({
+      query: ({ contentId, rating }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { contentId, userId, feedback },
+        variables: { contentId, rating },
       }),
       transformResponse: (response: ContentFeedback) => {
-        return response.contentFeedback
+        return response.rating
+      },
+    }),
+    averageRating: builder.query<ratingsCountResult, string>({
+      query: (contendId: string) => ({
+        document: AVERAGE_RATING,
+        variables: { contendId },
+      }),
+      transformResponse: (response: ratingsCountRes) => {
+        return response.averageRating
       },
     }),
     postUnHideWiki: builder.mutation<Wiki, string>({
@@ -348,6 +368,7 @@ export const {
   useCheckIsAdminQuery,
   useRevalidateURLMutation,
   useContentFeedbackMutation,
+  useAverageRatingQuery,
   useGetWikisViewsCountQuery,
   useGetWikiVisitsQuery,
 } = adminApi
@@ -356,6 +377,7 @@ export const {
   checkIsAdmin,
   revalidateURL,
   contentFeedback,
+  averageRating,
   getAllCreatedWikiCount,
   getAllHiddenWikiCount,
   getAllPromotedWikiCount,
