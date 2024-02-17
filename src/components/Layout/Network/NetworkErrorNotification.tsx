@@ -87,7 +87,7 @@ const NetworkErrorNotification = ({
       onClose={() => setModalState(false)}
       isOpen={modalState}
       isCentered
-      size="lg"
+      size={{ base: 'md', md: 'lg' }}
     >
       <AlertDialogOverlay />
       <AlertDialogContent width={{ base: '90%', lg: '100%' }}>
