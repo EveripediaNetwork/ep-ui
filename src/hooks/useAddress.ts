@@ -21,9 +21,16 @@ export const useAddress = () => {
   }
 
   const decodedToken = decodeURI(encodedToken)
-  dispatch(setToken(decodedToken))
 
-  const { address } = verify(decodedToken)
+  try {
+    const { address } = verify(decodedToken)
 
-  return { address, isConnected }
+    dispatch(setToken(decodedToken))
+
+    return { address, isConnected }
+  } catch (error) {
+    console.error('Error verifying token:', error)
+
+    return { address: null, isConnected }
+  }
 }

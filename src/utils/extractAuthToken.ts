@@ -16,7 +16,19 @@ export const extractAuthToken = (req: RequestWithCookies) => {
 
   const decodedToken = decodeURI(authToken)
 
-  const { address } = verify(decodedToken)
+  try {
+    const { address, body } = verify(decodedToken)
 
-  return { address }
+    const expirationTime = new Date(body['expiration-time']).getTime()
+    const currentTime = Date.now()
+
+    if (currentTime > expirationTime) {
+      return { address: null }
+    }
+
+    return { address }
+  } catch (error) {
+    console.error('Error verifying token:', error)
+    return { address: null }
+  }
 }
