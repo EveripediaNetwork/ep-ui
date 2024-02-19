@@ -44,9 +44,9 @@ const WikiRating = ({
                 <Box
                   fontSize="xs"
                   rounded="2xl"
-                  bgColor="brand.50"
-                  _dark={{ bgColor: 'brand.200', textColor: 'brand.800' }}
-                  textColor="brand.500"
+                  bgColor="gray.200"
+                  _dark={{ bgColor: '#ffffff14', textColor: '#FFFFFFEB' }}
+                  textColor="gray.800"
                   px="3"
                 >
                   {totalRatings
