@@ -23,8 +23,10 @@ const TrendingEvent = () => {
           opts={{
             align: 'start',
             loop: true,
-            slidesToScroll: 'auto',
-            containScroll: 'trimSnaps',
+            dragFree: true,
+            watchSlides: false,
+            watchResize: false,
+            containScroll: 'keepSnaps',
           }}
         >
           <CarouselContent className="">

@@ -179,9 +179,9 @@ const Navbar = () => {
             variant="unstyled"
             pr={4}
             pl={4}
+            size={'sm'}
             fontSize="14px"
             fontWeight={600}
-            height="30px"
             color="linkColor"
             onClick={isConnected ? () => {} : onSuggestWikiOpen}
             _hover={{
