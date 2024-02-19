@@ -10,17 +10,18 @@ import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useAverageRatingQuery } from '@/services/admin'
+import { averageRating } from '@/services/admin'
 
 interface WikiProps {
   wiki: WikiType
+  average?: number
+  totalRatings?: number
 }
 
-const Wiki = ({ wiki }: WikiProps) => {
+const Wiki = ({ wiki, average, totalRatings }: WikiProps) => {
+  console.log('average', average)
+  console.log('totalRatings', totalRatings)
   const scrollRef = React.useRef<HTMLDivElement>(null)
-  const { data } = useAverageRatingQuery(wiki.id)
-  const average = data?.average
-  const totalRatings = data?.votes
   const router = useRouter()
   const { slug } = router.query as { slug: string }
   const breakpoint = useBreakpointValue(
@@ -98,6 +99,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
+  const { data: ratingData } = await store.dispatch(
+    averageRating.initiate(slug),
+  )
+  const average = ratingData?.average
+  const totalRatings = ratingData?.votes
+
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
 
@@ -111,7 +118,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
   return {
-    props: { wiki: { ...wiki, ...data }, ...props },
+    props: {
+      wiki: { ...wiki, ...data },
+      average,
+      totalRatings,
+      ...props,
+    },
   }
 }
 
