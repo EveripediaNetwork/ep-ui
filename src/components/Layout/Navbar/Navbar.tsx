@@ -128,30 +128,6 @@ const Navbar = () => {
             xl: 'flex',
           }}
         >
-          <Button
-            variant="unstyled"
-            pr={4}
-            fontSize="14px"
-            fontWeight={600}
-            height="24px"
-            color="linkColor"
-            onClick={isConnected ? () => {} : onSuggestWikiOpen}
-            _hover={{
-              textDecoration: 'none',
-              color: 'linkHoverColor',
-            }}
-            whiteSpace="nowrap"
-          >
-            {isConnected ? (
-              <Link href="/create-wiki">Create Wiki</Link>
-            ) : (
-              'Suggest Wiki'
-            )}
-          </Button>
-          <SuggestWikiModal
-            isOpen={isSuggestWikiOpen}
-            onClose={onSuggestWikiClose}
-          />
           <Menu placement={'bottom-end'}>
             <MenuButton
               as={Button}
@@ -178,7 +154,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
+                {languageData.map(langObj => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"
@@ -199,6 +175,35 @@ const Navbar = () => {
               </MenuOptionGroup>
             </MenuList>
           </Menu>
+          <Button
+            variant="unstyled"
+            pr={4}
+            pl={4}
+            fontSize="14px"
+            fontWeight={600}
+            height="30px"
+            color="linkColor"
+            onClick={isConnected ? () => {} : onSuggestWikiOpen}
+            _hover={{
+              textDecoration: 'none',
+              color: 'linkHoverColor',
+            }}
+            whiteSpace="nowrap"
+            bgColor={'gray.100'}
+            _dark={{
+              bgColor: 'whiteAlpha.300',
+            }}
+          >
+            {isConnected ? (
+              <Link href="/create-wiki">Create Wiki</Link>
+            ) : (
+              'Suggest Wiki'
+            )}
+          </Button>
+          <SuggestWikiModal
+            isOpen={isSuggestWikiOpen}
+            onClose={onSuggestWikiClose}
+          />
           <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setHamburger}

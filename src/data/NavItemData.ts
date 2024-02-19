@@ -94,25 +94,19 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 2,
-    label: 'Activity',
-    href: '/activity',
-    icon: RiBarChartFill,
-  },
-  {
-    id: 3,
     label: 'Rank',
     href: '/rank',
     icon: RiHashtag,
   },
   {
-    id: 4,
+    id: 3,
     label: 'IQ GPT',
     href: 'https://iqgpt.com',
     icon: RiSearchEyeFill,
     target: '_blank',
   },
   {
-    id: 5,
+    id: 4,
     label: 'Learn',
     href: '#',
     icon: RiFoldersFill,
@@ -172,6 +166,12 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
+  {
+    id: 5,
+    label: 'Activity',
+    href: '/activity',
+    icon: RiBarChartFill,
+  },
   // {
   //   id: 6,
   //   label: 'Events',
@@ -207,7 +207,7 @@ export const MOBILE_NAV_ITEMS = ({
   address: string | undefined
 }): NavItem[] => {
   const filteredNavItems = NAV_ITEMS.filter(
-    (item) => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
+    item => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
   )
 
   if (address) {
