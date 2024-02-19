@@ -19,8 +19,6 @@ interface WikiProps {
 }
 
 const Wiki = ({ wiki, average, totalRatings }: WikiProps) => {
-  console.log('average', average)
-  console.log('totalRatings', totalRatings)
   const scrollRef = React.useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { slug } = router.query as { slug: string }
