@@ -9,14 +9,12 @@ import { useAverageRatingQuery } from '@/services/admin'
 
 const WikiRating = ({
   contentId,
-  userId,
 }: {
   contentId: string
-  userId?: string
 }) => {
   const [isRated, setIsRated] = useState<boolean>(false)
   const { t } = useTranslation('wiki')
-  const { data, isError } = useAverageRatingQuery(contentId)
+  const { data, isError, refetch } = useAverageRatingQuery(contentId)
   const average = data?.average
   const totalRatings = data?.votes
 
@@ -61,10 +59,10 @@ const WikiRating = ({
                   //TODO: translate //TODO: add average rating
                   <WikiStarRating
                     contentId={contentId}
-                    userId={userId}
                     setIsRated={setIsRated}
                     avgRating={average}
                     isAvgRating
+                    refetch={refetch}
                   />
                 </VStack>
               ) : (
@@ -83,8 +81,8 @@ const WikiRating = ({
               </Text>
               <WikiStarRating
                 contentId={contentId}
-                userId={userId}
                 setIsRated={setIsRated}
+                refetch={refetch}
               />
             </VStack>
           ) : (
