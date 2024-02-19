@@ -11,7 +11,6 @@ import Image from 'next/image'
 import { trendingEventData } from '@/components/Event/event.data'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
-import Autoplay from 'embla-carousel-autoplay'
 
 const TrendingEvent = () => {
   return (
@@ -19,7 +18,7 @@ const TrendingEvent = () => {
       <h4 className="font-semibold text-xl">Trending Events</h4>
       <div className="mt-8">
         <Carousel
-          plugins={[Autoplay()]}
+          // plugins={[Autoplay()]}
           opts={{
             align: 'start',
             loop: true,
