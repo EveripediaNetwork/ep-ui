@@ -207,7 +207,7 @@ export const MOBILE_NAV_ITEMS = ({
   address: string | undefined
 }): NavItem[] => {
   const filteredNavItems = NAV_ITEMS.filter(
-    item => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
+    (item) => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
   )
 
   if (address) {
