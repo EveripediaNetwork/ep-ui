@@ -18,7 +18,15 @@ const TrendingEvent = () => {
     <div className="mt-10 md:mt-20 max-w-[1296px] mx-auto ">
       <h4 className="font-semibold text-xl">Trending Events</h4>
       <div className="mt-8">
-        <Carousel plugins={[Autoplay()]} opts={{ align: 'start', loop: true }}>
+        <Carousel
+          plugins={[Autoplay()]}
+          opts={{
+            align: 'start',
+            loop: true,
+            slidesToScroll: 'auto',
+            containScroll: 'trimSnaps',
+          }}
+        >
           <CarouselContent className="">
             {trendingEventData.map((event) => (
               <CarouselItem
