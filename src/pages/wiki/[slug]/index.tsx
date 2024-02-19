@@ -10,6 +10,7 @@ import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useAverageRatingQuery } from '@/services/admin'
 
 interface WikiProps {
   wiki: WikiType
@@ -17,7 +18,9 @@ interface WikiProps {
 
 const Wiki = ({ wiki }: WikiProps) => {
   const scrollRef = React.useRef<HTMLDivElement>(null)
-
+  const { data } = useAverageRatingQuery(wiki.id)
+  const average = data?.average
+  const totalRatings = data?.votes
   const router = useRouter()
   const { slug } = router.query as { slug: string }
   const breakpoint = useBreakpointValue(
@@ -53,6 +56,8 @@ const Wiki = ({ wiki }: WikiProps) => {
           title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
           description={wiki.summary}
           mainImage={getWikiImageUrl(wiki.images)}
+          avgRating={average}
+          totalRatings={totalRatings}
         />
       )}
       <Box as="main" mt={-2} ref={scrollRef}>
