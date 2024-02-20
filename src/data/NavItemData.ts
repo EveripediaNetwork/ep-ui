@@ -1,5 +1,4 @@
 import {
-  RiSettings5Fill,
   RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
@@ -172,27 +171,7 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  // {
-  //   id: 6,
-  //   label: 'Events',
-  //   href: '/events',
-  // },
 ]
-
-export const NAV_ICON = {
-  label: 'Accounts',
-  id: 5,
-  href: '#',
-  subItem: [
-    {
-      id: 503,
-      label: 'Settings',
-      href: '/settings/account',
-      hasImage: true,
-      icon: RiSettings5Fill,
-    },
-  ],
-}
 
 export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
