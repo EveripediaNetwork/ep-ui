@@ -21,12 +21,12 @@ export const ProfileLink = () => {
     <>
       <Button
         minH="48px"
-        borderTopWidth="1px"
         px={3}
         bgColor={'transparent'}
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
         onClick={() => router.push(link)}
         w="full"
+        mt={3}
       >
         <Icon
           fontSize="4xl"
