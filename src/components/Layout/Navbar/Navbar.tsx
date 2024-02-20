@@ -29,7 +29,6 @@ import Logo from '@/components/Elements/Logo/Logo'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import useLanguageChange from '@/hooks/useLanguageChange'
-import { useAccount } from 'wagmi'
 
 // const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
@@ -157,7 +156,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
+                {languageData.map(langObj => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"

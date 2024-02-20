@@ -2,7 +2,13 @@ import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 import { useContractRead } from 'wagmi'
 
-export const useWhiteListValidator = (address: string | undefined | null) => {
+export const useWhiteListValidator = (address: string | null) => {
+  if (config.isProduction !== 'true') {
+    return {
+      userCanEdit: true,
+    }
+  }
+
   const { data: isEditorWhiteListed } = useContractRead({
     address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
@@ -11,7 +17,7 @@ export const useWhiteListValidator = (address: string | undefined | null) => {
   })
 
   return {
-    userCanEdit: config.isProduction === 'true' ? isEditorWhiteListed : true,
+    userCanEdit: !!isEditorWhiteListed,
   }
 }
 
