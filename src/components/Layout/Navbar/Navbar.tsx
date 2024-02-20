@@ -37,6 +37,7 @@ import MobileNav from './MobileNav'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -56,7 +57,9 @@ const Navbar = () => {
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
-  const { isConnected } = useAccount()
+
+  const { address } = useAccount()
+  const { userCanEdit } = useWhiteListValidator(address)
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
@@ -121,8 +124,8 @@ const Navbar = () => {
           <NavSearch setHamburger={setHamburger} />
         </Suspense>
         <HStack
-          ml={4}
-          spacing={4}
+          ml={2}
+          spacing={3}
           display={{
             base: 'none',
             xl: 'flex',
@@ -135,7 +138,7 @@ const Navbar = () => {
               paddingX={0}
               bg="transparent"
               sx={{
-                marginRight: 4,
+                marginRight: 0,
                 fontWeight: 600,
                 fontSize: 'sm',
                 color: 'linkColor',
@@ -176,25 +179,28 @@ const Navbar = () => {
             </MenuList>
           </Menu>
           <Button
-            variant="unstyled"
-            pr={4}
-            pl={4}
+            variant="outline"
+            paddingInline={4}
             size={'sm'}
+            borderRadius={'6px'}
             fontSize="14px"
             fontWeight={600}
             color="linkColor"
-            onClick={isConnected ? () => {} : onSuggestWikiOpen}
+            onClick={!userCanEdit ? () => {} : onSuggestWikiOpen}
             _hover={{
               textDecoration: 'none',
-              color: 'linkHoverColor',
+              bgColor: 'gray.200',
             }}
             whiteSpace="nowrap"
-            bgColor={'gray.100'}
+            borderColor={'gray.200'}
             _dark={{
-              bgColor: 'whiteAlpha.300',
+              borderColor: 'whiteAlpha.300',
+              _hover: {
+                bgColor: 'whiteAlpha.300',
+              },
             }}
           >
-            {isConnected ? (
+            {userCanEdit ? (
               <Link href="/create-wiki">Create Wiki</Link>
             ) : (
               'Suggest Wiki'

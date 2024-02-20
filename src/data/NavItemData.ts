@@ -24,7 +24,6 @@ import {
   RiStarSFill,
   RiLightbulbFlashFill,
 } from 'react-icons/ri'
-import { IoGlobeOutline } from 'react-icons/io5'
 import { NavItem } from '@/types/NavItemType'
 
 export const NAV_ITEMS: NavItem[] = [
@@ -100,14 +99,27 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 3,
-    label: 'IQ GPT',
-    href: 'https://iqgpt.com',
-    icon: RiSearchEyeFill,
-    target: '_blank',
+    label: 'Activity',
+    href: '/activity',
+    icon: RiBarChartFill,
   },
   {
     id: 4,
-    label: 'Learn',
+    label: 'About',
+    href: '/about',
+    icon: RiUserSearchFill,
+    target: '_blank',
+  },
+  // {
+  //   id: 5,
+  //   label: 'IQ GPT',
+  //   href: 'https://iqgpt.com',
+  //   icon: RiSearchEyeFill,
+  //   target: '_blank',
+  // },
+  {
+    id: 6,
+    label: 'More',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
@@ -151,13 +163,6 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 406,
-        label: 'About Us',
-        icon: RiUserSearchFill,
-        href: '/about',
-        hasImage: true,
-      },
-      {
-        id: 407,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
@@ -165,12 +170,6 @@ export const NAV_ITEMS: NavItem[] = [
         target: '_blank',
       },
     ],
-  },
-  {
-    id: 5,
-    label: 'Activity',
-    href: '/activity',
-    icon: RiBarChartFill,
   },
   // {
   //   id: 6,
@@ -226,26 +225,6 @@ export const MOBILE_NAV_ITEMS = ({
     })
   }
   const accountAndLanguageItems = [
-    {
-      id: -1,
-      label: 'Language',
-      href: '#',
-      icon: IoGlobeOutline,
-      subItem: [
-        {
-          id: 101,
-          label: 'English',
-          href: 'en',
-          isLocale: true,
-        },
-        {
-          id: 102,
-          label: 'Korean',
-          href: 'ko',
-          isLocale: true,
-        },
-      ],
-    },
     {
       id: 7,
       label: 'Account',
