@@ -20,11 +20,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
-import {
-  RiArrowLeftSLine,
-  RiRefreshLine,
-  RiSettings5Fill,
-} from 'react-icons/ri'
+import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'

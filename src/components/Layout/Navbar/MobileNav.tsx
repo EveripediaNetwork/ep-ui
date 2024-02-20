@@ -33,6 +33,8 @@ import { RootState } from '@/store/store'
 import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import { useAddress } from '@/hooks/useAddress'
+import { ProfileLink } from './ProfileLink'
+import SettingsLink from './SettingsLink'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -137,10 +139,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               {MOBILE_NAV_ITEMS({
                 address: userAddress || undefined,
               })
-                .filter(i => i.label !== 'Account' || userAddress)
-                .map(navItem => (
+                .filter((i) => i.label !== 'Account' || userAddress)
+                .map((navItem) => (
                   <MobileNavItem
-                    handleClick={item => handleClick(item)}
+                    handleClick={(item) => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />
@@ -186,9 +188,11 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 </Box>
               )}
               <Menu>
-                <Flex gap="4" direction="column">
+                <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
                   {isConnected && <LogOutBtn isInMobileMenu />}
+                  <ProfileLink isInMobileMenu />
+                  <SettingsLink isInMobileMenu />
                 </Flex>
               </Menu>
             </Box>

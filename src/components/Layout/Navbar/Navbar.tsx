@@ -37,6 +37,7 @@ const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { useAddress } from '@/hooks/useAddress'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -57,7 +58,7 @@ const Navbar = () => {
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
 
-  const { address } = useAccount()
+  const { address } = useAddress()
   const { userCanEdit } = useWhiteListValidator(address)
   const {
     isOpen: isSuggestWikiOpen,
@@ -156,7 +157,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map(langObj => (
+                {languageData.map((langObj) => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"

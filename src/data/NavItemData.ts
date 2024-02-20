@@ -1,6 +1,5 @@
 import {
   RiSettings5Fill,
-  RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
@@ -224,50 +223,6 @@ export const MOBILE_NAV_ITEMS = ({
       icon: RiLightbulbFlashFill,
     })
   }
-  const accountAndLanguageItems = [
-    {
-      id: 7,
-      label: 'Account',
-      icon: RiUserFill,
-      href: '#',
-      subItem: address
-        ? [
-            {
-              id: 701,
-              label: 'Profile',
-              href: `/account/${address}`,
-              hasImage: false,
-            },
-            {
-              id: 703,
-              label: 'Settings',
-              href: '#',
-              hasImage: false,
-              subItem: [
-                {
-                  id: 7003,
-                  label: 'Profile Settings',
-                  href: '/settings/account?tab=profile',
-                  hasImage: false,
-                },
-                {
-                  id: 7004,
-                  label: 'Notification Settings',
-                  href: '/settings/account?tab=notifications',
-                  hasImage: false,
-                },
-                {
-                  id: 7006,
-                  label: 'Advanced Settings',
-                  href: '/settings/account?tab=advanced',
-                  hasImage: false,
-                },
-              ],
-            },
-          ]
-        : [],
-    },
-  ]
 
-  return [...filteredNavItems, ...accountAndLanguageItems]
+  return [...filteredNavItems]
 }
