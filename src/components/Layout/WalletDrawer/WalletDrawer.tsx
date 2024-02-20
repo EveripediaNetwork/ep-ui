@@ -22,7 +22,11 @@ import {
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
-import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
+import {
+  RiArrowLeftSLine,
+  RiRefreshLine,
+  RiSettings5Fill,
+} from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
@@ -178,6 +182,30 @@ const WalletDrawer = ({
             <>
               <Divider py={2} />
               <VStack alignItems="flex-start">
+                <HStack
+                  px={3}
+                  minH={'48px'}
+                  sx={{
+                    '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' },
+                  }}
+                  width={'full'}
+                >
+                  <Icon
+                    fontSize={24}
+                    color="linkColor"
+                    fontWeight={600}
+                    as={RiSettings5Fill}
+                  />
+                  <Link
+                    fontSize="md"
+                    fontWeight={'semibold'}
+                    href={'/settings/account'}
+                    color="linkColor"
+                    pl={1}
+                  >
+                    {t('Settings')}
+                  </Link>
+                </HStack>
                 <ProfileLink />
                 <ColorModeToggle isInMobileMenu={false} />
                 {userAddress && <LogOutBtn isInMobileMenu={false} />}

@@ -21,7 +21,6 @@ export const ProfileLink = () => {
     <>
       <Button
         minH="48px"
-        borderTopWidth="1px"
         px={3}
         bgColor={'transparent'}
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
