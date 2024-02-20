@@ -50,7 +50,6 @@ export const useFetchWalletBalance = (address: string | null) => {
 
   const refreshBalance = async () => {
     if (!address) {
-      console.log('Address is undefined')
       return
     }
 
