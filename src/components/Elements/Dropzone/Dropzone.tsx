@@ -7,6 +7,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
+import { useAccount } from 'wagmi'
 import config from '@/config'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useDispatch } from 'react-redux'
@@ -14,7 +15,6 @@ import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import { Image } from '../Image/Image'
 import ImageCrop from '../Image/ImageCrop'
-import { useAddress } from '@/hooks/useAddress'
 
 type DropzoneType = {
   imageUploading?: boolean
@@ -45,7 +45,7 @@ const Dropzone = ({
   const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>(null)
   const toast = useToast()
   const dispatch = useDispatch()
-  const { address: userAddress } = useAddress()
+  const { address: userAddress } = useAccount()
   const {
     setHideImageInput,
     isToResetImage,
