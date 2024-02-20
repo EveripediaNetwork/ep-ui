@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
   Tooltip,
+  VStack,
 } from '@chakra-ui/react'
 import { Link } from '@/components/Elements/'
 import React, { useEffect, useState } from 'react'
@@ -26,6 +27,9 @@ import {
   updateWalletDetails,
 } from '@/store/slices/user-slice'
 import { useRouter } from 'next/router'
+import { ProfileLink } from '../Navbar/ProfileLink'
+import { ColorModeToggle } from '../Navbar/ColorModeToggle'
+import { LogOutBtn } from '../Navbar/Logout'
 
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
@@ -51,7 +55,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
@@ -146,6 +150,11 @@ export const WalletDrawerBody = () => {
                   )}
               </Box>
             )}
+          <VStack alignItems="flex-start">
+            <ProfileLink />
+            <ColorModeToggle isInMobileMenu={false} />
+            {address && <LogOutBtn isInMobileMenu={false} />}
+          </VStack>
         </>
       ) : (
         <Box>
