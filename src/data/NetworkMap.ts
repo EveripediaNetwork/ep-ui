@@ -12,7 +12,7 @@ const networkMap = {
     chainId: toHex(80001), // '0x13881'
     chainName: 'Matic(Polygon) Mumbai Testnet',
     nativeCurrency: { name: 'tMATIC', symbol: 'tMATIC', decimals: 18 },
-    rpcUrls: ['https://matic-mumbai.chainstacklabs.com/'],
+    rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
 }
