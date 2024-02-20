@@ -3,7 +3,6 @@ import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import RelatedMediaGrid from './InsightComponents/RelatedMedia'
 const RelatedWikis = dynamic<{ wikiId: string; category: string }>(() =>
   import('./InsightComponents/RelatedWikis').then((mod) => mod.RelatedWikis),
@@ -33,8 +32,6 @@ const MobileMeta = (wiki: {
     (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
   )?.value
 
-  const userAddress = getUserAddressFromCache()
-
   return (
     <VStack
       p={{ base: 4, md: 6 }}
@@ -44,7 +41,7 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', xl: 'none' }}
       spacing={6}
     >
-      <WikiRating contentId={id} userId={userAddress} />
+      <WikiRating contentId={id} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis wikiId={id} category={categories[0].id} />
       {media && media.length > 0 && <RelatedMediaGrid media={media} />}
