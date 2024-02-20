@@ -11,6 +11,8 @@ interface WikiHeaderProps {
   dateModified?: string
   author: string
   noindex?: boolean
+  avgRating?: number
+  totalRatings?: number
 }
 
 export const WikiHeader = ({
@@ -22,6 +24,8 @@ export const WikiHeader = ({
   dateModified,
   author,
   noindex = false,
+  avgRating,
+  totalRatings,
 }: WikiHeaderProps) => (
   <>
     <ArticleJsonLd
@@ -34,6 +38,10 @@ export const WikiHeader = ({
       publisherName="IQWiki"
       publisherLogo={`${env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
       description={description}
+      aggregateRating={{
+        ratingValue: avgRating?.toString() || '0',
+        reviewCount: totalRatings?.toString() || '0',
+      }}
     />
     <NextSeo
       title={title}
