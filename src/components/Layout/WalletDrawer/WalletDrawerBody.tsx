@@ -1,4 +1,3 @@
-import { useAddress } from '@/hooks/useAddress'
 import { shortenBalance } from '@/utils/textUtils'
 import {
   Box,
@@ -30,11 +29,12 @@ import { useRouter } from 'next/router'
 import { ProfileLink } from '../Navbar/ProfileLink'
 import { ColorModeToggle } from '../Navbar/ColorModeToggle'
 import { LogOutBtn } from '../Navbar/Logout'
+import { useAccount } from 'wagmi'
 
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
-  const { address } = useAddress()
-  const { userBalance, isLoading } = useFetchWalletBalance(address)
+  const { address } = useAccount()
+  const { userBalance } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
@@ -55,7 +55,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
@@ -114,12 +114,12 @@ export const WalletDrawerBody = () => {
               </Link>
             </Center>
           </Flex>
-          {isLoading && (
+          {totalBalanceIsLoading && (
             <Flex justifyContent="center">
               <Spinner color="color" mt="4" />
             </Flex>
           )}
-          {!isLoading &&
+          {!totalBalanceIsLoading &&
             balanceBreakdown &&
             walletDetails &&
             walletDetails.length > 0 && (
@@ -134,7 +134,7 @@ export const WalletDrawerBody = () => {
                     <Divider />
                   </React.Fragment>
                 ))}
-                {!isLoading &&
+                {!totalBalanceIsLoading &&
                   hiiq &&
                   walletDetails &&
                   walletDetails.length > 0 &&
