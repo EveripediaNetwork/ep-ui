@@ -224,7 +224,6 @@ const Navbar = () => {
           <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setHamburger}
-            // setVisibleMenu={setVisibleMenu}
           />
           <IconButton
             onClick={() => setHamburger(!isHamburgerOpen)}
