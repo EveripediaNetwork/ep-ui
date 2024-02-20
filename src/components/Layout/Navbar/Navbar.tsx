@@ -186,7 +186,7 @@ const Navbar = () => {
             fontSize="14px"
             fontWeight={600}
             color="linkColor"
-            onClick={!userCanEdit ? () => {} : onSuggestWikiOpen}
+            onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
             _hover={{
               textDecoration: 'none',
               bgColor: 'gray.200',
@@ -200,7 +200,7 @@ const Navbar = () => {
               },
             }}
           >
-            {userCanEdit ? (
+            {userCanEdit && address ? (
               <Link href="/create-wiki">Create Wiki</Link>
             ) : (
               'Suggest Wiki'
