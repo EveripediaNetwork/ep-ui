@@ -19,7 +19,7 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains(
   ],
 )
 
-export const rpcs: {
+const rpcs: {
   [key: string]: string
 } = {
   maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,

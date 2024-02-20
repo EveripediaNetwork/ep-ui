@@ -1,4 +1,9 @@
-import { useFeeData, useSignTypedData, useWaitForTransaction } from 'wagmi'
+import {
+  useAccount,
+  useFeeData,
+  useSignTypedData,
+  useWaitForTransaction,
+} from 'wagmi'
 import { submitVerifiableSignature } from '@/utils/WalletUtils/postSignature'
 import { removeDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -13,7 +18,6 @@ import { Dict } from '@chakra-ui/utils'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
-import { useAddress } from './useAddress'
 
 export const useGetSignedHash = () => {
   const {
@@ -29,7 +33,7 @@ export const useGetSignedHash = () => {
     dispatch,
   } = useCreateWikiContext()
 
-  const { address: userAddress, isConnected: isUserConnected } = useAddress()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const deadline = useRef(0)
 
   const {
