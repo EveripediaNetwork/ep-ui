@@ -25,8 +25,8 @@ import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
+import { useAccount } from 'wagmi'
 import SuggestWikiModal from './SuggestWiki'
-import { useAddress } from '@/hooks/useAddress'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -37,7 +37,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { isConnected } = useAddress()
+  const { isConnected } = useAccount()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,

@@ -1,8 +1,6 @@
-import { useAddress } from '@/hooks/useAddress'
-import { RootState } from '@/store/store'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useAccount } from 'wagmi'
 
 const WagmiLoadedAuthenticatedRoute = ({
   WrappedComponent,
@@ -10,12 +8,11 @@ const WagmiLoadedAuthenticatedRoute = ({
 }: {
   WrappedComponent: React.FC
 }) => {
-  const { address: userAddress } = useAddress()
-  const token = useSelector((state: RootState) => state.user.token)
+  const { address: userAddress } = useAccount()
   const router = useRouter()
 
   useEffect(() => {
-    if (!userAddress || !token) {
+    if (!userAddress) {
       router.push({
         pathname: '/login',
         query: { from: router.asPath },
@@ -34,10 +31,12 @@ export const authenticatedRoute = <P extends object>(
 ) => {
   const AuthenticatedRoute = (props: P) => {
     return (
-      <WagmiLoadedAuthenticatedRoute
-        WrappedComponent={WrappedComponent}
-        {...props}
-      />
+      <>
+        <WagmiLoadedAuthenticatedRoute
+          WrappedComponent={WrappedComponent}
+          {...props}
+        />
+      </>
     )
   }
   return AuthenticatedRoute

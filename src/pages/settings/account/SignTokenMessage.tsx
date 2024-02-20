@@ -14,12 +14,12 @@ import {
   ModalCloseButton,
   ModalBody,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import { RiErrorWarningFill, RiSettings4Line } from 'react-icons/ri'
 
 interface SignTokenMessageProps {
   error?: string
-  reopenSigningDialog: () => Promise<string | null>
+  reopenSigningDialog: Dispatch<SetStateAction<boolean>>
   message?: string
 }
 
@@ -71,7 +71,7 @@ const SignTokenMessage = ({
                 </Text>
                 <Button
                   variant="outline"
-                  onClick={async () => await reopenSigningDialog()}
+                  onClick={() => reopenSigningDialog(true)}
                 >
                   Try again
                 </Button>
