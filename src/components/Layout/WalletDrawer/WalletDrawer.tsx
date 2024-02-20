@@ -18,17 +18,12 @@ import {
   Spinner,
   useToast,
   Icon,
-  VStack,
 } from '@chakra-ui/react'
-import { useAccount } from 'wagmi'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { shortenAccount } from '@/utils/textUtils'
-import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { useDispatch } from 'react-redux'
-import { updateWalletDetails } from '@/store/slices/user-slice'
 import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
 import { useENSData } from '@/hooks/useENSData'
 import { useHiIQBalance } from '@/hooks/useHiIQBalance'
@@ -36,9 +31,8 @@ import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import CopyIcon from '@/components/Icons/CopyIcon'
 import { Link } from '@/components/Elements'
 import { useTranslation } from 'next-i18next'
-import { ColorModeToggle } from '../Navbar/ColorModeToggle'
-import { LogOutBtn } from '../Navbar/Logout'
-import { ProfileLink } from '../Navbar/ProfileLink'
+import { useAddress } from '@/hooks/useAddress'
+import { WalletDrawerBody } from './WalletDrawerBody'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -55,14 +49,13 @@ const WalletDrawer = ({
   finalFocusRef,
   setHamburger,
 }: WalletDrawerType) => {
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const [, username] = useENSData(userAddress)
   useHiIQBalance(userAddress)
-  const [accountRefreshLoading, setAccountRefreshLoader] =
+  const [accountRefreshLoading, setAccountRefreshLoading] =
     useState<boolean>(false)
   const toast = useToast()
   const { refreshBalance } = useFetchWalletBalance(userAddress)
-  const dispatch = useDispatch()
   const { t } = useTranslation('common')
 
   const handleNavigation = () => {
@@ -70,20 +63,18 @@ const WalletDrawer = ({
     setHamburger(true)
   }
 
-  const handleAccountRefresh = () => {
+  const handleAccountRefresh = async () => {
     if (typeof userAddress !== 'undefined') {
-      setAccountRefreshLoader(true)
-      refreshBalance().then((response) => {
-        dispatch(updateWalletDetails(response))
-        setAccountRefreshLoader(false)
-        toast({
-          description: 'Account successfully refreshed',
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-          position: 'bottom-right',
-        })
+      setAccountRefreshLoading(true)
+      await refreshBalance()
+      toast({
+        description: 'Account successfully refreshed',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom-right',
       })
+      setAccountRefreshLoading(false)
     }
   }
 
@@ -125,7 +116,7 @@ const WalletDrawer = ({
               >
                 <RiArrowLeftSLine size="30" />
               </Box>
-              <DisplayAvatar address={userAddress} alt={userAddress} />
+              <DisplayAvatar address={userAddress} alt={userAddress!} />
               <Box>
                 <Menu>
                   <MenuButton pl={1} fontSize="md" fontWeight={600}>
@@ -173,17 +164,7 @@ const WalletDrawer = ({
         </DrawerHeader>
         <Divider />
         <DrawerBody shadow="sm">
-          <Connectors openWalletDrawer={toggleOperations.onOpen} />
-          {isUserConnected && (
-            <>
-              <Divider py={2} />
-              <VStack alignItems="flex-start">
-                <ProfileLink />
-                <ColorModeToggle isInMobileMenu={false} />
-                {userAddress && <LogOutBtn isInMobileMenu={false} />}
-              </VStack>
-            </>
-          )}
+          <WalletDrawerBody />
         </DrawerBody>
       </DrawerContent>
     </Drawer>

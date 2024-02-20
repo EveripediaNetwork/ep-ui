@@ -38,6 +38,7 @@ import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { RainbowConfigWrapper } from '@/components/Layout/Layout/WagmiWrapper'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -173,7 +174,7 @@ const CreateWikiContent = () => {
   }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
   return (
-    <>
+    <RainbowConfigWrapper>
       <CreateWikiPageHeader />
       <Box scrollBehavior="auto" maxW="1900px" mx="auto">
         <CreateWikiTopBar />
@@ -207,7 +208,7 @@ const CreateWikiContent = () => {
           <TxErrorAlert txError={txError} setTxError={setTxError} />
         </Skeleton>
       </Box>
-    </>
+    </RainbowConfigWrapper>
   )
 }
 

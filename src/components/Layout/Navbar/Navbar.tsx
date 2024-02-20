@@ -29,7 +29,6 @@ import Logo from '@/components/Elements/Logo/Logo'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import useLanguageChange from '@/hooks/useLanguageChange'
-import { useAccount } from 'wagmi'
 
 // const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
@@ -37,6 +36,7 @@ import MobileNav from './MobileNav'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
+import { useAddress } from '@/hooks/useAddress'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -56,7 +56,7 @@ const Navbar = () => {
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
-  const { isConnected } = useAccount()
+  const { isConnected } = useAddress()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
