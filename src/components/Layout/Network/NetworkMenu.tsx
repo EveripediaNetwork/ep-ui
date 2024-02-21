@@ -24,7 +24,7 @@ const NetworkMenu = () => {
       : networkMap.POLYGON_MAINNET
 
   const handleNetworkSwitch = (newNetwork: Network) => {
-    if (newNetwork.chainId === chainId) {
+    if (newNetwork.chainId === String(chainId)) {
       setCurrentNetwork(newNetwork)
     }
   }
