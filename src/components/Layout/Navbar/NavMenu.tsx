@@ -42,7 +42,7 @@ const NavMenu = ({
   return (
     <Menu placement="bottom" isOpen={visibleMenu === navItem.id}>
       <MenuButton
-        pr={4}
+        pr={{ base: 2, '2xl': 4 }}
         fontSize="14px"
         fontWeight={600}
         height="24px"

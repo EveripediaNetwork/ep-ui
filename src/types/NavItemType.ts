@@ -10,4 +10,5 @@ export interface NavItem {
   target?: string
   onClick?: () => void
   isLocale?: boolean
+  src?: string
 }

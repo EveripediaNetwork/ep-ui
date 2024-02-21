@@ -37,6 +37,7 @@ import MobileNav from './MobileNav'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -56,7 +57,9 @@ const Navbar = () => {
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
-  const { isConnected } = useAccount()
+
+  const { address } = useAccount()
+  const { userCanEdit } = useWhiteListValidator(address)
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
@@ -121,37 +124,13 @@ const Navbar = () => {
           <NavSearch setHamburger={setHamburger} />
         </Suspense>
         <HStack
-          ml={4}
-          spacing={4}
+          ml={2}
+          spacing={3}
           display={{
             base: 'none',
             xl: 'flex',
           }}
         >
-          <Button
-            variant="unstyled"
-            pr={4}
-            fontSize="14px"
-            fontWeight={600}
-            height="24px"
-            color="linkColor"
-            onClick={isConnected ? () => {} : onSuggestWikiOpen}
-            _hover={{
-              textDecoration: 'none',
-              color: 'linkHoverColor',
-            }}
-            whiteSpace="nowrap"
-          >
-            {isConnected ? (
-              <Link href="/create-wiki">Create Wiki</Link>
-            ) : (
-              'Suggest Wiki'
-            )}
-          </Button>
-          <SuggestWikiModal
-            isOpen={isSuggestWikiOpen}
-            onClose={onSuggestWikiClose}
-          />
           <Menu placement={'bottom-end'}>
             <MenuButton
               as={Button}
@@ -159,7 +138,7 @@ const Navbar = () => {
               paddingX={0}
               bg="transparent"
               sx={{
-                marginRight: 4,
+                marginRight: 0,
                 fontWeight: 600,
                 fontSize: 'sm',
                 color: 'linkColor',
@@ -199,6 +178,38 @@ const Navbar = () => {
               </MenuOptionGroup>
             </MenuList>
           </Menu>
+          <Button
+            variant="outline"
+            paddingInline={4}
+            size={'sm'}
+            borderRadius={'6px'}
+            fontSize="14px"
+            fontWeight={600}
+            color="linkColor"
+            onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
+            _hover={{
+              textDecoration: 'none',
+              bgColor: 'gray.200',
+            }}
+            whiteSpace="nowrap"
+            borderColor={'gray.200'}
+            _dark={{
+              borderColor: 'whiteAlpha.300',
+              _hover: {
+                bgColor: 'whiteAlpha.300',
+              },
+            }}
+          >
+            {userCanEdit && address ? (
+              <Link href="/create-wiki">Create Wiki</Link>
+            ) : (
+              'Suggest Wiki'
+            )}
+          </Button>
+          <SuggestWikiModal
+            isOpen={isSuggestWikiOpen}
+            onClose={onSuggestWikiClose}
+          />
           <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setHamburger}
@@ -213,7 +224,6 @@ const Navbar = () => {
           <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setHamburger}
-            // setVisibleMenu={setVisibleMenu}
           />
           <IconButton
             onClick={() => setHamburger(!isHamburgerOpen)}

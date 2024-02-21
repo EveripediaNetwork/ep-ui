@@ -15,10 +15,12 @@ import { NavItem } from '@/types/NavItemType'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import useLanguageChange from '@/hooks/useLanguageChange'
 import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
 
 const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => {
   const { t } = useTranslation('common')
   const { handleLangChange } = useLanguageChange()
+
   return (
     <LinkBox
       display="flex"
@@ -45,17 +47,31 @@ const MobileSubNavItem = ({ item, ...rest }: { item: NavItem } & FlexProps) => {
         )}
 
         {item.isLocale ? (
-          <Button
-            bg="transparent"
-            w="full"
-            fontWeight={600}
-            color="linkColor"
-            textAlign="left"
-            paddingLeft={2}
-            onClick={() => handleLangChange(item.href)}
-          >
-            {t(item.label)}
-          </Button>
+          <HStack>
+            {item?.src && (
+              <Image
+                src={item.src}
+                alt={item.label}
+                width={24}
+                height={24}
+                style={{
+                  flexShrink: 0,
+                  marginInlineStart: 8,
+                }}
+              />
+            )}
+            <Button
+              bg="transparent"
+              w="full"
+              fontWeight={600}
+              color="linkColor"
+              textAlign="left"
+              paddingLeft={2}
+              onClick={() => handleLangChange(item.href)}
+            >
+              {t(item.label)}
+            </Button>
+          </HStack>
         ) : (
           <LinkOverlay href={item.href}>{t(item.label)}</LinkOverlay>
         )}
@@ -77,13 +93,14 @@ const MobileSubNav = ({
   setActiveMenu: (menu: NavItem | null) => void
 }) => {
   const { t } = useTranslation('common')
+
   return (
     <Stack
       direction="column"
       pb={6}
       display={{ lg: 'flex', xl: 'none' }}
       bg="subMenuBg"
-      spacing={4}
+      spacing={0}
       height="xl"
     >
       <Flex
@@ -102,7 +119,9 @@ const MobileSubNav = ({
       >
         <RiArrowLeftSLine size="30" />
         <Text fontWeight={600} color="color">
-          {t(activeMenu?.label ?? '')}
+          {activeMenu?.label === ('ENG' || 'KOR')
+            ? 'Language'
+            : t(activeMenu?.label ?? '')}
         </Text>
       </Flex>
       <Box h="calc(100vh - 300px)" px={4} overflowY="scroll">
