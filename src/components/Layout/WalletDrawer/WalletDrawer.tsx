@@ -39,6 +39,7 @@ import { useTranslation } from 'next-i18next'
 import { ColorModeToggle } from '../Navbar/ColorModeToggle'
 import { LogOutBtn } from '../Navbar/Logout'
 import { ProfileLink } from '../Navbar/ProfileLink'
+import SettingsLink from '../Navbar/SettingsLink'
 
 type WalletDrawerType = {
   toggleOperations: {
@@ -179,6 +180,7 @@ const WalletDrawer = ({
               <Divider py={2} />
               <VStack alignItems="flex-start">
                 <ProfileLink />
+                <SettingsLink />
                 <ColorModeToggle isInMobileMenu={false} />
                 {userAddress && <LogOutBtn isInMobileMenu={false} />}
               </VStack>
