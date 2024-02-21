@@ -44,6 +44,10 @@ export const TagsSuggestions = [
     value: 'Ethereum',
   },
   {
+    label: 'Events',
+    value: 'Events',
+  },
+  {
     label: 'Founders',
     value: 'Founders',
   },
@@ -86,6 +90,10 @@ export const TagsSuggestions = [
   {
     label: 'Solana',
     value: 'Solana',
+  },
+  {
+    label: 'Speakers',
+    value: 'Speakers',
   },
   {
     label: 'Stablecoins',
