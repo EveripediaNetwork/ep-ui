@@ -8,7 +8,7 @@ const SettingsLink = ({ isInMobileMenu }: { isInMobileMenu?: boolean }) => {
   return (
     <HStack
       px={isInMobileMenu ? 0 : 3}
-      minH={{ base: '48px', md: '48px' }}
+      minH={'48px'}
       sx={{
         '&:hover, &:focus, &:active': {
           bgColor: 'subMenuHoverBg',
