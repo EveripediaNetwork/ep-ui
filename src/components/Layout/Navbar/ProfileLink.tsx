@@ -30,7 +30,7 @@ export const ProfileLink = ({
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
         onClick={() => router.push(link)}
         w="full"
-        mt={3}
+        mt={{ md: 3 }}
       >
         <Icon
           fontSize={{ base: 40, md: '4xl' }}

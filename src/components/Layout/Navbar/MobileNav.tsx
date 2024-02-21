@@ -191,8 +191,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
                   {isConnected && <LogOutBtn isInMobileMenu />}
-                  <ProfileLink isInMobileMenu />
-                  <SettingsLink isInMobileMenu />
+                  <VStack display={{ md: 'none' }}>
+                    <ProfileLink isInMobileMenu />
+                    <SettingsLink isInMobileMenu />
+                  </VStack>
                 </Flex>
               </Menu>
             </Box>
