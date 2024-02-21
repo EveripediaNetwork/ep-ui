@@ -7,12 +7,14 @@ import Image from 'next/image'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Autoplay from 'embla-carousel-autoplay'
 import { LinkButton } from '../Elements'
+import { useTranslation } from 'react-i18next'
 
 const EventOverview = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: 'start' },
     [Autoplay()],
   )
+  const { t } = useTranslation('event')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
@@ -41,17 +43,13 @@ const EventOverview = () => {
   return (
     <div className="max-w-[1296px] mx-auto py-14 md:py-20 xl:py-24 px-4">
       <h2 className="text-2xl max-w-[350px] mx-auto md:max-w-full md:text-4xl font-semibold text-center">
-        Blockchain and Cryptocurrency Events
+        {t('homePageHeading')}
       </h2>
       <div className="grid md:grid-cols-2 gap-14 mt-10">
         <div className="flex items-center">
           <div className="flex flex-col gap-10">
             <p className="text-center md:text-start text-sm md:text-base">
-              Learn from the industry experts on crypto trends, explore
-              investment opportunities, network with potential partners, connect
-              with like-minded individuals, and cultivate relationships for
-              future collaborations at global blockchain and crypto events and
-              conferences.
+              {t('eventDescription')}
             </p>
             <LinkButton
               href="/event"
@@ -62,7 +60,7 @@ const EventOverview = () => {
               bgColor="btnBgColor"
               prefetch={false}
             >
-              View Events
+              {t('homePageAction')}
             </LinkButton>
           </div>
         </div>
