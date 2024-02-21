@@ -4,26 +4,25 @@ import { WikiDataGraph } from '@/components/Admin/WikiDataGraph'
 import { AllWikiDetailsCards } from '@/components/Admin/WikiDetailsCards'
 import { WikiEditorsInsightTable } from '@/components/Admin/WikiEditorInsight/WikiEditorsInsight'
 import { WikiInsightTable } from '@/components/Admin/WikiCreatedInsight/WikiInsightTable'
-import { useWeb3Token } from '@/hooks/useWeb3Token'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
-import { useAddress } from 'wagmi'
 import { adminApiClient, checkIsAdmin } from '@/services/admin'
 import dynamic from 'next/dynamic'
-import { store } from '@/store/store'
+import { RootState, store } from '@/store/store'
 import { useRouter } from 'next/router'
 import { WikiRevalidateURL } from '@/components/Admin/WikiRevalidateURL'
-import SignTokenMessage from '../settings/account/SignTokenMessage'
 import { WikiViewsData } from '@/components/Admin/WikiViewsData'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import { useAddress } from '@/hooks/useAddress'
+import { useSelector } from 'react-redux'
 
 const Admin = () => {
   const router = useRouter()
-  const { token, reSignToken, error } = useWeb3Token()
+  const token = useSelector((state: RootState) => state.user.token)
   const { address: userAddress } = useAddress()
   const [isAdmin, setIsAdmin] = React.useState(false)
   const { setAccount } = useUserProfileData(
@@ -43,15 +42,6 @@ const Admin = () => {
     }
     fetchAuth()
   }, [userAddress, setAccount, token, router])
-
-  if (!token)
-    return (
-      <SignTokenMessage
-        message="To make changes to the admin panel, authenticate your wallet to continue"
-        reopenSigningDialog={reSignToken}
-        error={error}
-      />
-    )
 
   if (!isAdmin) {
     return null
