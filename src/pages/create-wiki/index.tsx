@@ -49,7 +49,7 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 })
 
 const CreateWikiContent = () => {
-  const wiki = useAppSelector(state => state.wiki)
+  const wiki = useAppSelector((state) => state.wiki)
 
   const {
     isLoadingWiki,
@@ -146,11 +146,11 @@ const CreateWikiContent = () => {
       // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
       const wikiDt = initWikiData
       metadata = [
-        ...Object.values(CommonMetaIds).map(mId => {
+        ...Object.values(CommonMetaIds).map((mId) => {
           const meta = getWikiMetadataById(wikiDt, mId)
           return { id: mId, value: meta?.value || '' }
         }),
-        ...Object.values(EditSpecificMetaIds).map(mId => ({
+        ...Object.values(EditSpecificMetaIds).map((mId) => ({
           id: mId,
           value: '',
         })),
@@ -231,7 +231,7 @@ const Page: PageWithoutFooter = authenticatedRoute(
 
 Page.noFooter = true
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
     store.dispatch(getWiki.initiate(slug))

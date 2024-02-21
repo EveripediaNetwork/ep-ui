@@ -35,7 +35,7 @@ const NetworkErrorNotification = ({
   const dispatch = useDispatch()
   const toast = useToast()
   const { switchNetwork } = useSwitchNetwork({
-    onError: err => {
+    onError: (err) => {
       toast({
         title: 'Error switching network',
         description: `There was an error switching the network: ${
