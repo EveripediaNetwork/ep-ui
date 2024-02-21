@@ -6,6 +6,7 @@ import { trendingEventData } from '../Event/event.data'
 import Image from 'next/image'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Autoplay from 'embla-carousel-autoplay'
+import { LinkButton } from '../Elements'
 
 const EventOverview = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -52,12 +53,17 @@ const EventOverview = () => {
               future collaborations at global blockchain and crypto events and
               conferences.
             </p>
-            <Link
-              href={'/event'}
-              className="border hidden border-gray300 dark:border-alpha-300 text-center font-semibold w-32 lg:w-40 h-[50px] rounded-md md:flex justify-center items-center"
+            <LinkButton
+              href="/event"
+              h="50px"
+              display={{ base: 'none', md: 'flex' }}
+              w={{ base: 32, lg: 40 }}
+              variant="outline"
+              bgColor="btnBgColor"
+              prefetch={false}
             >
               View Events
-            </Link>
+            </LinkButton>
           </div>
         </div>
         <div>
@@ -108,12 +114,19 @@ const EventOverview = () => {
                 />
               ))}
             </div>
-            <Link
-              href={'/event'}
-              className="border md:hidden flex justify-center items-center mt-8 border-gray300 dark:border-alpha-300 w-32 lg:w-40 h-[50px] mx-auto font-semibold rounded-md"
+            <LinkButton
+              href="/event"
+              h="50px"
+              mx={'auto'}
+              mt={8}
+              display={{ base: 'flex', md: 'none' }}
+              w={{ base: 32, lg: 40 }}
+              variant="outline"
+              bgColor="btnBgColor"
+              prefetch={false}
             >
               View Events
-            </Link>
+            </LinkButton>
           </div>
         </div>
       </div>
