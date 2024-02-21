@@ -11,10 +11,15 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { IEventData, eventMockData } from '@/components/Event/event.data'
 import EventList from '@/components/Event/EventList'
+import { useGetEventsQuery } from '@/services/event'
 
 const EventPage = () => {
-  const [eventData, setEventData] = useState<IEventData[]>(eventMockData)
+  const { isLoading, data } = useGetEventsQuery()
+  const [_eventData, setEventData] = useState<IEventData[]>(eventMockData)
   const [searchActive, setSearchActive] = useState(false)
+
+  console.log({ data })
+  console.log(isLoading)
 
   return (
     <div>
@@ -41,7 +46,7 @@ const EventPage = () => {
         <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <EventList
             setSearchActive={setSearchActive}
-            eventData={eventData}
+            eventData={data}
             setEventData={setEventData}
           />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">

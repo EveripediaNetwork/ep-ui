@@ -1,4 +1,4 @@
-import { IEventData } from '@/components/Event/event.data'
+import { TEvents } from '@/services/event'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -37,13 +37,13 @@ export function parseDateRange(isoString: string) {
   }
 }
 
-export const groupEventsByMonth = (events: IEventData[]) => {
-  const eventsByMonth: { [key: string]: IEventData[] } = {}
+export const groupEventsByMonth = (events: TEvents[]) => {
+  const eventsByMonth: { [key: string]: TEvents[] } = {}
 
   // console.log(events)
   if (events) {
     events.forEach((event) => {
-      const dateParts = event.date.split('-')
+      const dateParts = event.events[0].date.split('-')
       const monthNumeric = parseInt(dateParts[1], 10)
       const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
         'en-us',
