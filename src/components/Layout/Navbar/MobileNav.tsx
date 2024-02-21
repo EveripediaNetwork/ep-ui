@@ -10,6 +10,7 @@ import {
   Text,
   UseDisclosureReturn,
   useDisclosure,
+  LinkBox,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -17,6 +18,7 @@ import {
   RiFacebookFill,
   RiTelegramFill,
   RiTwitterFill,
+  RiArrowRightSLine,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
@@ -27,6 +29,12 @@ import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
 import { useAccount } from 'wagmi'
 import SuggestWikiModal from './SuggestWiki'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { useTranslation } from 'react-i18next'
+import Image from 'next/image'
+import { ProfileLink } from './ProfileLink'
+import SettingsLink from './SettingsLink'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -43,6 +51,8 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
     onOpen: onSuggestWikiOpen,
     onClose: onSuggestWikiClose,
   } = useDisclosure()
+  const lang = useSelector((state: RootState) => state.app.language)
+  const { t } = useTranslation('common')
 
   const iconSize = 20
 
@@ -58,6 +68,29 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   const handleWalletButtonClick = () => {
     setHamburger(false)
     drawerOperations.onToggle()
+  }
+
+  const langItem = {
+    id: -1,
+    label: lang === 'en' ? 'ENG' : 'KOR',
+    src: lang === 'en' ? '/US.svg' : '/KR.svg',
+    href: '#',
+    subItem: [
+      {
+        id: 101,
+        label: 'ENG',
+        href: 'en',
+        src: '/US.svg',
+        isLocale: true,
+      },
+      {
+        id: 102,
+        label: 'KOR',
+        href: 'ko',
+        src: '/KR.svg',
+        isLocale: true,
+      },
+    ],
   }
 
   return (
@@ -115,6 +148,36 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                   />
                 ))}
 
+              <LinkBox
+                onClick={() => {
+                  handleClick(langItem)
+                }}
+                display="flex"
+                alignItems="center"
+                _hover={{
+                  textDecoration: 'none',
+                }}
+                fontSize="lg"
+                gap="4"
+                paddingY={1}
+              >
+                <Image
+                  src={langItem.src}
+                  alt={langItem.label}
+                  width={24}
+                  height={24}
+                  style={{
+                    marginRight: 12,
+                  }}
+                />
+                <Text fontWeight="semibold" color="linkColor" cursor="pointer">
+                  {t(langItem.label)}
+                </Text>
+                <Text color="linkColor" cursor="pointer" ml="auto">
+                  {langItem.subItem && <RiArrowRightSLine />}
+                </Text>
+              </LinkBox>
+
               {userAddress && (
                 <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
                   <MobileNavItem
@@ -125,8 +188,12 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 </Box>
               )}
               <Menu>
-                <Flex gap="4" direction="column">
+                <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
+                  <VStack display={{ md: 'none' }}>
+                    <ProfileLink isInMobileMenu />
+                    <SettingsLink isInMobileMenu />
+                  </VStack>
                   {isConnected && <LogOutBtn isInMobileMenu />}
                 </Flex>
               </Menu>

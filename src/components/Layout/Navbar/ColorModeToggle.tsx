@@ -25,7 +25,7 @@ export const ColorModeToggle = ({
   return (
     <>
       <Button
-        minH="48px"
+        minH={{ base: '35px', md: '48px' }}
         px={isInMobileMenu ? 0 : 3}
         w="full"
         bgColor="transparent"

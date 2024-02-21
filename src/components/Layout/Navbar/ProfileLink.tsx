@@ -5,7 +5,11 @@ import { RiAccountCircleFill } from 'react-icons/ri'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { useTranslation } from 'next-i18next'
 
-export const ProfileLink = () => {
+export const ProfileLink = ({
+  isInMobileMenu,
+}: {
+  isInMobileMenu?: boolean
+}) => {
   const userAddress = getUserAddressFromCache()
   const router = useRouter()
   const [link, setLink] = useState(
@@ -20,24 +24,25 @@ export const ProfileLink = () => {
   return (
     <>
       <Button
-        minH="48px"
-        px={3}
+        minH={{ base: '35px', md: '48px' }}
+        px={isInMobileMenu ? 0 : 3}
         bgColor={'transparent'}
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
         onClick={() => router.push(link)}
         w="full"
-        mt={3}
+        mt={{ md: 3 }}
       >
         <Icon
-          fontSize="4xl"
+          fontSize={{ base: 40, md: '4xl' }}
           color="linkColor"
           fontWeight={600}
           as={RiAccountCircleFill}
           pr={3}
+          flexShrink={0}
         />
         <Flex
-          // ml={isInMobileMenu ? 2 : 'unset'}
-          fontSize="md"
+          ml={isInMobileMenu ? 2 : 0}
+          fontSize={{ base: 'lg', md: 'md' }}
           fontWeight="semibold"
           color="linkColor"
           flex="auto"
