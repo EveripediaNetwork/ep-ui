@@ -54,7 +54,7 @@ const EventOverview = () => {
             </p>
             <Link
               href={'/event'}
-              className="border hidden md:block border-gray300 w-fit text-xs font-semibold rounded-md py-3 px-5"
+              className="border hidden border-gray300 dark:border-alpha-300 text-center font-semibold w-32 lg:w-40 h-[50px] rounded-md md:flex justify-center items-center"
             >
               View Events
             </Link>
@@ -110,7 +110,7 @@ const EventOverview = () => {
             </div>
             <Link
               href={'/event'}
-              className="border md:hidden block mt-8 border-gray300 w-fit mx-auto text-xs font-semibold rounded-md py-3 px-5"
+              className="border md:hidden flex justify-center items-center mt-8 border-gray300 dark:border-alpha-300 w-32 lg:w-40 h-[50px] mx-auto font-semibold rounded-md"
             >
               View Events
             </Link>
