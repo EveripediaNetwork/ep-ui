@@ -9,6 +9,7 @@ import {
   EditSpecificMetaIds,
   Wiki,
 } from '@everipedia/iq-utils'
+import { useAccount } from 'wagmi'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { store } from '@/store/store'
@@ -35,7 +36,6 @@ import networkMap from '@/data/NetworkMap'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import detectEthereumProvider from '@metamask/detect-provider'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -44,7 +44,7 @@ const NetworkErrorNotification = dynamic(
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAddress()
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)

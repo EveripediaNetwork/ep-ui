@@ -30,7 +30,7 @@ const ConnectorDetails = ({
     <WalletDetailsWrapper hasHover w={connector} connect={handleConnect}>
       <>
         <Image boxSize="24px" src={imageLink} />
-        <Text flex="1" as="strong" ml={{ md: '15', base: 4 }}>
+        <Text flex="1" as="strong" ml="15">
           {connector.name === 'Magic' ? 'Email / Social Media' : connector.name}
         </Text>
         {connector.name === 'MetaMask' && !isClicked && (

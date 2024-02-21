@@ -1,27 +1,24 @@
 import { setStateToDefault } from '@/store/slices/user-slice'
 import { Button, Flex, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
+import { useDispatch } from 'react-redux'
+import { useDisconnect, useAccount } from 'wagmi'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
-import { deleteCookie } from 'cookies-next'
-import { cookieNames } from '@/types/cookies'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
-  const { address: isUserConnected } = useAddress()
+  const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
+  const { disconnect } = useDisconnect()
   const router = useRouter()
   const { t } = useTranslation('common')
-
   const handleLogOut = () => {
-    window.localStorage.removeItem('wagmi.metaMask.shimDisconnect')
-    window.localStorage.removeItem('wagmi.connected')
-    deleteCookie(cookieNames.Enum['x-auth-token'])
+    disconnect()
     dispatch(setStateToDefault())
+    window.localStorage.removeItem('USER_TOKEN')
     router.push(router.asPath)
   }
-
   return (
     <>
       <Button

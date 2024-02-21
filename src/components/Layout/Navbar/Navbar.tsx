@@ -29,6 +29,7 @@ import Logo from '@/components/Elements/Logo/Logo'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import useLanguageChange from '@/hooks/useLanguageChange'
+import { useAccount } from 'wagmi'
 
 // const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
@@ -37,7 +38,6 @@ const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
-import { useAddress } from '@/hooks/useAddress'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -58,7 +58,7 @@ const Navbar = () => {
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
 
-  const { address } = useAddress()
+  const { address } = useAccount()
   const { userCanEdit } = useWhiteListValidator(address)
   const {
     isOpen: isSuggestWikiOpen,

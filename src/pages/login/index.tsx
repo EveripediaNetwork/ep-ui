@@ -1,89 +1,55 @@
-import React, { useEffect } from 'react'
-import {
-  Box,
-  Container,
-  Divider,
-  Heading,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Box, Container, Heading } from '@chakra-ui/react'
+import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
-import { GetServerSideProps } from 'next'
+import { useAccount } from 'wagmi'
+import dynamic from 'next/dynamic'
+import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-import { extractAuthToken } from '@/utils/extractAuthToken'
-import { RainbowConfigWrapper } from '@/components/Layout/Layout/WagmiWrapper'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { SignTokenButton } from '@/components/Layout/WalletDrawer/SignTokenButton'
 
-const Login = ({ address }: { address: string | null }) => {
+const Login = () => {
   const { t } = useTranslation('common')
+  const [isMounted, setIsMounted] = useState(false)
+
+  const { address: userAddress } = useAccount()
   const router = useRouter()
 
-  const handleRedirect = () => {
-    if (router.query.from) {
-      router.push(`${router.query.from}`)
-    } else {
-      router.push('/')
+  useEffect(() => {
+    if (userAddress) {
+      if (router.query.from) {
+        router.push(`${router.query.from}`)
+      } else {
+        router.push('/')
+      }
     }
-  }
+  }, [userAddress, router])
 
   useEffect(() => {
-    if (address) {
-      handleRedirect()
-    }
-  }, [address, router])
+    setIsMounted(true)
+  }, [])
 
+  if (!isMounted) return null
   return (
-    <RainbowConfigWrapper>
-      <Container centerContent mt="8" mb="24">
-        <Box w="full">
-          <Heading mb={4} fontSize={23} textAlign="center">
-            {t('loginConnectWallet')}
-          </Heading>
-          <Box
-            mt="8"
-            rounded="md"
-            border="1px"
-            borderColor="gray.200"
-            bg="gray.100"
-            _dark={{ borderColor: 'gray.500', bg: 'gray.700' }}
-          >
-            <VStack spacing="4" p="4" alignItems="center">
-              <Text mb="4" fontSize="xl">
-                Step 1: Connect your wallet
-              </Text>
-              <ConnectButton />
-            </VStack>
-            <Divider
-              borderColor="gray.200"
-              _dark={{ borderColor: 'gray.500' }}
-            />
-            <VStack spacing="4" p="4" alignItems="center">
-              <Text mb="4" fontSize="xl">
-                Step 2: Authenticate your wallet
-              </Text>
-              <SignTokenButton handleRedirect={handleRedirect} />
-            </VStack>
-          </Box>
-        </Box>
-      </Container>
-    </RainbowConfigWrapper>
+    <Container centerContent mt="8" mb="24">
+      <Box minW="min(90%, 300px)">
+        <Heading mb={4} fontSize={23}>
+          {t('loginConnectWallet')}
+        </Heading>
+        <Connectors />
+      </Box>
+    </Container>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  locale,
-}) => {
-  const { address } = extractAuthToken(req)
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      address,
       ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   }
 }
 
-export default Login
+export default dynamic(() => Promise.resolve(Login), {
+  ssr: false,
+})

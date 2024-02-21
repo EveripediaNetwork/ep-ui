@@ -10,8 +10,10 @@ import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
 import { pageView } from '@/utils/googleAnalytics'
+import { WagmiConfig, createConfig } from 'wagmi'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
+import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 
@@ -20,6 +22,13 @@ const { ToastContainer } = createStandaloneToast()
 type EpAppProps = Omit<AppProps, 'Component'> & {
   Component: AppProps['Component'] & { noFooter?: boolean }
 }
+
+const client = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
+})
 
 export const montserrat = Montserrat({
   subsets: ['latin'],
@@ -49,9 +58,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
-          <Layout noFooter={Component.noFooter}>
-            <Component {...pageProps} />
-          </Layout>
+          <WagmiConfig config={client}>
+            <Layout noFooter={Component.noFooter}>
+              <Component {...pageProps} />
+            </Layout>
+          </WagmiConfig>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />
