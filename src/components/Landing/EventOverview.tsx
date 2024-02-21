@@ -45,7 +45,7 @@ const EventOverview = () => {
       <div className="grid md:grid-cols-2 gap-14 mt-10">
         <div className="flex items-center">
           <div className="flex flex-col gap-10">
-            <p className="text-center text-sm md:text-base">
+            <p className="text-center md:text-start text-sm md:text-base">
               Learn from the industry experts on crypto trends, explore
               investment opportunities, network with potential partners, connect
               with like-minded individuals, and cultivate relationships for
@@ -61,7 +61,7 @@ const EventOverview = () => {
           </div>
         </div>
         <div>
-          <div className="overflow-hidden" ref={emblaRef}>
+          <div className="overflow-hidden px-4 md:px-0" ref={emblaRef}>
             <div className="flex touch-pan-y">
               {trendingEventData.map((event) => (
                 <div
