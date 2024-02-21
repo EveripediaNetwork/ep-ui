@@ -8,16 +8,15 @@ import {
   Text,
   Icon,
   Button,
-  useToast,
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import { ProviderDataType } from '@/types/ProviderDataType'
+import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useDispatch } from 'react-redux'
 import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
-import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -30,9 +29,8 @@ const NetworkErrorNotification = ({
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { isConnected: isUserConnected } = useAddress()
+  const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
-  const toast = useToast()
 
   const { chainId, chainName, rpcUrls } =
     config.alchemyChain === 'maticmum'
@@ -59,16 +57,8 @@ const NetworkErrorNotification = ({
         params: [{ chainId }],
       })
       setModalState(false)
-
-      toast({
-        title: 'Network switched',
-        description: 'You have successfully switched to the new network.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      })
     } catch (switchError) {
-      const err = switchError as Record<string, any>
+      const err = switchError as Record<string, number>
       if (err.code === 4902) {
         try {
           await detectedProvider?.request({
@@ -82,37 +72,12 @@ const NetworkErrorNotification = ({
             ],
           })
           setModalState(false)
-
-          toast({
-            title: 'Network added and switched',
-            description:
-              'You have successfully added and switched to the new network.',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          })
         } catch (_addError) {
-          toast({
-            title: 'Error adding network',
-            description:
-              'There was an error adding the new network. Please try again.',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          })
+          return null
         }
-      } else {
-        toast({
-          title: 'Error switching network',
-          description: `There was an error switching the network: ${
-            err.message || 'Unknown error'
-          }. Please try again.`,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
       }
     }
+    return null
   }
 
   return (
@@ -122,7 +87,7 @@ const NetworkErrorNotification = ({
       onClose={() => setModalState(false)}
       isOpen={modalState}
       isCentered
-      size={{ base: 'md', md: 'lg' }}
+      size="lg"
     >
       <AlertDialogOverlay />
       <AlertDialogContent width={{ base: '90%', lg: '100%' }}>

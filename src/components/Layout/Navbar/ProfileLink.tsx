@@ -2,11 +2,11 @@ import { Button, Flex, Icon } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiAccountCircleFill } from 'react-icons/ri'
+import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
 
 export const ProfileLink = () => {
-  const { address: userAddress } = useAddress()
+  const userAddress = getUserAddressFromCache()
   const router = useRouter()
   const [link, setLink] = useState(
     userAddress ? `/account/${userAddress}` : '/login',
@@ -21,12 +21,12 @@ export const ProfileLink = () => {
     <>
       <Button
         minH="48px"
-        borderTopWidth="1px"
         px={3}
         bgColor={'transparent'}
         sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
         onClick={() => router.push(link)}
         w="full"
+        mt={3}
       >
         <Icon
           fontSize="4xl"
