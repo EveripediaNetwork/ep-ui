@@ -29,11 +29,11 @@ import { useRouter } from 'next/router'
 import { ProfileLink } from '../Navbar/ProfileLink'
 import { ColorModeToggle } from '../Navbar/ColorModeToggle'
 import { LogOutBtn } from '../Navbar/Logout'
-import { useAccount } from 'wagmi'
+import { useAddress } from '@/hooks/useAddress'
 
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
-  const { address } = useAccount()
+  const { address } = useAddress()
   const { userBalance } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
@@ -55,7 +55,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)

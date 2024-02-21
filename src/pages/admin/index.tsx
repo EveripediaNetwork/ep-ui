@@ -9,7 +9,7 @@ import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
-import { useAccount } from 'wagmi'
+import { useAddress } from 'wagmi'
 import { adminApiClient, checkIsAdmin } from '@/services/admin'
 import dynamic from 'next/dynamic'
 import { store } from '@/store/store'
@@ -24,7 +24,7 @@ import { GetStaticProps } from 'next'
 const Admin = () => {
   const router = useRouter()
   const { token, reSignToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const { address: userAddress } = useAddress()
   const [isAdmin, setIsAdmin] = React.useState(false)
   const { setAccount } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,

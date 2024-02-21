@@ -9,7 +9,6 @@ import {
   EditSpecificMetaIds,
   Wiki,
 } from '@everipedia/iq-utils'
-import { useAccount } from 'wagmi'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { store } from '@/store/store'
@@ -36,19 +35,20 @@ import networkMap from '@/data/NetworkMap'
 import { ProviderDataType } from '@/types/ProviderDataType'
 import detectEthereumProvider from '@metamask/detect-provider'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)
-  const { chainId } =
+  const { hexChainID } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
@@ -120,16 +120,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -205,8 +204,7 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
-    console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
-    if (connectedChainId !== chainId) {
+    if (connectedChainId !== hexChainID) {
       setShowNetworkModal(true)
       return
     }
@@ -240,7 +238,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)
