@@ -1,5 +1,6 @@
 import { env } from '@/env.mjs'
 import { NextSeo } from 'next-seo'
+import * as DOMPurify from 'dompurify'
 import React from 'react'
 import Head from 'next/head'
 interface WikiHeaderProps {
@@ -80,7 +81,9 @@ export const WikiHeader = ({
         <script
           type="application/ld+json"
           // biome-ignore lint: reason=nextjs-no-xss
-          dangerouslySetInnerHTML={{ __html: combinedStructuredData }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(combinedStructuredData),
+          }}
         />
       </Head>
     </>
