@@ -42,12 +42,24 @@ const NetworkErrorNotification = ({
       : networkMap.POLYGON_MAINNET
 
   const { switchNetwork } = useSwitchNetwork({
-    onError: async (err) => {
+    onError: async err => {
       if (err) {
         if (err.message.includes('4902')) {
-          await provider.addChain({
-            chain: { chainId: hexChainID, chainName, rpcUrls },
-          })
+          try {
+            await provider.addChain({
+              chain: { chainId: hexChainID, chainName, rpcUrls },
+            })
+          } catch (addChainErr) {
+            console.error('Error adding chain:', addChainErr)
+            toast({
+              title: 'Error adding chain',
+              description:
+                'There was an error adding the chain. Please try again.',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+            })
+          }
           return
         }
         toast({
@@ -61,6 +73,7 @@ const NetworkErrorNotification = ({
         })
       }
     },
+
     onSuccess: () => {
       toast({
         title: 'Network switched',
