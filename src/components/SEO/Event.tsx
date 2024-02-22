@@ -1,7 +1,55 @@
-import { NextSeo } from 'next-seo'
+import { ArticleJsonLd, NextSeo } from 'next-seo'
+import { WikiHeaderProps } from './Wiki'
+import { env } from '@/env.mjs'
 import { useTranslation } from 'next-i18next'
 
-const EventHeader = () => {
+export const EventHeader = ({
+  slug,
+  title,
+  description,
+  mainImage,
+  datePublished,
+  dateModified,
+  author,
+  noindex = false,
+}: WikiHeaderProps) => {
+  return (
+    <>
+      <ArticleJsonLd
+        url={`${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`}
+        title={title}
+        images={[mainImage]}
+        datePublished={datePublished || ''}
+        dateModified={dateModified || ''}
+        authorName={author}
+        publisherName="IQWiki"
+        publisherLogo={`${env.NEXT_PUBLIC_DOMAIN}/images/icons/favicon.ico`}
+        description={description}
+      />
+      <NextSeo
+        title={title}
+        description={description}
+        noindex={noindex}
+        openGraph={{
+          title,
+          description,
+          images: [
+            {
+              url: `${env.NEXT_PUBLIC_DOMAIN}/_next/image?url=${mainImage}&w=1200&q=95`,
+            },
+          ],
+        }}
+        twitter={{
+          cardType: 'summary',
+          handle: '@IQWIKI',
+          site: 'IQWiki',
+        }}
+      />
+    </>
+  )
+}
+
+export const MainEventHeader = () => {
   const { t } = useTranslation('event')
   return (
     <NextSeo
@@ -28,5 +76,3 @@ const EventHeader = () => {
     />
   )
 }
-
-export default EventHeader

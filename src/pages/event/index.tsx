@@ -1,4 +1,4 @@
-import EventHeader from '@/components/SEO/Event'
+import { MainEventHeader } from '@/components/SEO/Event'
 import TrendingEvent from '@/components/Event/TrendingEvent'
 import EventBanner from '@/components/Event/EventBanner'
 import EventInterest from '@/components/Event/EventInterest'
@@ -19,7 +19,7 @@ const EventPage = ({ events }: { events: TEvents[] }) => {
 
   return (
     <div>
-      <EventHeader />
+      <MainEventHeader />
       <EventBanner />
       <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar

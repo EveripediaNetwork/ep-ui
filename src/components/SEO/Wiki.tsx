@@ -2,7 +2,7 @@ import { env } from '@/env.mjs'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
 import React from 'react'
 
-interface WikiHeaderProps {
+export interface WikiHeaderProps {
   slug: string
   title: string
   description: string
