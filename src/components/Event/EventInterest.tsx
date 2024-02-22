@@ -17,9 +17,9 @@ const EventInterest = ({
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   const toggleTag = (tag: string) => {
-    setSelectedTags(prevSelected => {
+    setSelectedTags((prevSelected) => {
       if (prevSelected.includes(tag)) {
-        return prevSelected.filter(t => t !== tag)
+        return prevSelected.filter((t) => t !== tag)
       } else {
         return [...prevSelected, tag].slice(0, 4) // Limit to 4 tags
       }
@@ -30,9 +30,9 @@ const EventInterest = ({
     events: TEvents[],
     filterTags: string[],
   ): TEvents[] {
-    return events.filter(event =>
-      event.tags?.some(tag =>
-        filterTags.map(t => t.toLowerCase()).includes(tag.id.toLowerCase()),
+    return events.filter((event) =>
+      event.tags?.some((tag) =>
+        filterTags.map((t) => t.toLowerCase()).includes(tag.id.toLowerCase()),
       ),
     )
   }
@@ -71,7 +71,7 @@ const EventInterest = ({
         </span>
       </div>
       <div className="flex flex-wrap gap-3 mt-5">
-        {EventInterestData.map(interest => {
+        {EventInterestData.map((interest) => {
           return (
             <button
               type="button"

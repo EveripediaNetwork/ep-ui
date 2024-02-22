@@ -8,7 +8,7 @@ const filterEvents = (
   date: Date | undefined,
   eventData: TEvents[],
 ): TEvents[] => {
-  const filteredEvents = eventData.filter(event => {
+  const filteredEvents = eventData.filter((event) => {
     const { title, location, linkedWikis, tags, events: dateObj } = event
 
     // Filter by search key
@@ -16,10 +16,10 @@ const filterEvents = (
       searchKey !== '' &&
       (title.toLowerCase().includes(searchKey.toLowerCase()) ||
         location?.toLowerCase().includes(searchKey.toLowerCase()) ||
-        linkedWikis.speakers?.some(speaker =>
+        linkedWikis.speakers?.some((speaker) =>
           speaker.toLowerCase().includes(searchKey.toLowerCase()),
         ) ||
-        tags?.some(tag =>
+        tags?.some((tag) =>
           tag.id.toLowerCase().includes(searchKey.toLowerCase()),
         ))
 

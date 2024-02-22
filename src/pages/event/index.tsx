@@ -64,7 +64,7 @@ const EventPage = () => {
 
 export default EventPage
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale ?? 'en', [

@@ -40,7 +40,7 @@ export function parseDateRange(isoString: string) {
 export const groupEventsByMonth = (events: TEvents[]) => {
   const eventsByMonth: { [key: string]: TEvents[] } = {}
 
-  events.forEach(event => {
+  events.forEach((event) => {
     const date = event?.events?.[0]?.date
     if (date) {
       const dateParts = date.split('-')

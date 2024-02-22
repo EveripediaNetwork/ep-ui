@@ -97,7 +97,7 @@ const EventCard = ({
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-2 md:gap-3">
-              {tags?.map(tag => (
+              {tags?.map((tag) => (
                 <div
                   key={tag.id}
                   className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"

@@ -83,7 +83,7 @@ const EventList = ({
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  {events.map(event => (
+                  {events.map((event) => (
                     <EventCard
                       isLoading={isLoading}
                       id={event.id}

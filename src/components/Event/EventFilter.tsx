@@ -40,13 +40,13 @@ const EventFilter = ({
   })
 
   const filterEvents = (events: TEvents[], filters: Filters): TEvents[] => {
-    return events.filter(event => {
+    return events.filter((event) => {
       const dateArr = event?.events
       if (dateArr.length > 0) {
         // Date filter - assuming the dates are in ISO format for simplicity
         const dateFilter =
           filters.date.length === 0 ||
-          filters.date.some(date => {
+          filters.date.some((date) => {
             const eventStartDate = new Date(dateArr[0].date)
             const eventEndDate = new Date(dateArr[1].date || dateArr[0].date)
             if (date === 'Next Week') {
@@ -91,20 +91,22 @@ const EventFilter = ({
         // Location filter
         const locationFilter =
           filters.location.length === 0 ||
-          filters.location.some(location => event.location?.includes(location))
+          filters.location.some((location) =>
+            event.location?.includes(location),
+          )
 
         // Event type filter
         const eventTypeFilter =
           filters.eventType.length === 0 ||
-          filters.eventType.some(eventType =>
-            event.tags?.some(tag => tag.id === eventType),
+          filters.eventType.some((eventType) =>
+            event.tags?.some((tag) => tag.id === eventType),
           )
 
         // Blockchain filter
         const blockchainFilter =
           filters.blockchain.length === 0 ||
-          filters.blockchain.some(blockchain =>
-            event.tags?.some(tag => tag.id === blockchain),
+          filters.blockchain.some((blockchain) =>
+            event.tags?.some((tag) => tag.id === blockchain),
           )
 
         return (
@@ -115,10 +117,10 @@ const EventFilter = ({
   }
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
-    setFilters(prevFilters => {
+    setFilters((prevFilters) => {
       const isActive = prevFilters[filterCategory].includes(value)
       const newFilters = isActive
-        ? prevFilters[filterCategory].filter(item => item !== value) // Remove the filter
+        ? prevFilters[filterCategory].filter((item) => item !== value) // Remove the filter
         : [...prevFilters[filterCategory], value] // Add the filter
 
       // Update the URL query parameters
@@ -152,7 +154,7 @@ const EventFilter = ({
       </div>
       <div className="border flex flex-col border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 md:px-6 xl:px-3 py-6 xl:pt-5 xl:pb-20 mt-3 md:mt-6 rounded-xl">
         <div className="flex md:justify-between flex-wrap xl:flex-col gap-x-8 gap-y-6 md:gap-8">
-          {eventFilterData.map(eventFilter => (
+          {eventFilterData.map((eventFilter) => (
             <div key={eventFilter.title}>
               <button
                 type="button"
@@ -177,7 +179,7 @@ const EventFilter = ({
                 </span>
               </button>
               <div className="xl:flex gap-2 mt-3 flex-wrap hidden">
-                {eventFilter.filter.map(filter => {
+                {eventFilter.filter.map((filter) => {
                   const category =
                     eventFilter.title === 'Event Type'
                       ? 'eventType'
@@ -244,13 +246,13 @@ const EventFilter = ({
         </div>
         <div className="xl:hidden">
           {eventFilterData
-            .filter(item => item.title === selectedFilter)
-            .map(eventFilter => (
+            .filter((item) => item.title === selectedFilter)
+            .map((eventFilter) => (
               <div
                 key={eventFilter.title}
                 className="flex gap-2 mt-5 md:mt-3 flex-wrap"
               >
-                {eventFilter.filter.map(filter => {
+                {eventFilter.filter.map((filter) => {
                   return (
                     <span
                       key={filter}
