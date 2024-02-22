@@ -29,7 +29,7 @@ import { LogOutBtn } from './Logout'
 import SuggestWikiModal from './SuggestWiki'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import { ProfileLink } from './ProfileLink'
 import SettingsLink from './SettingsLink'
@@ -137,10 +137,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               {MOBILE_NAV_ITEMS({
                 address: userAddress || undefined,
               })
-                .filter((i) => i.label !== 'Account' || userAddress)
-                .map((navItem) => (
+                .filter(i => i.label !== 'Account' || userAddress)
+                .map(navItem => (
                   <MobileNavItem
-                    handleClick={(item) => handleClick(item)}
+                    handleClick={item => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />

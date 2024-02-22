@@ -15,7 +15,7 @@ import WalletDetails from './WalletDetails'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import {
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
@@ -56,7 +56,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
