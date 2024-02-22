@@ -17,6 +17,7 @@ import {
   Stack,
   useToast,
   Select,
+  Tooltip,
 } from '@chakra-ui/react'
 import { RiCloseLine, RiImageLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
@@ -258,9 +259,26 @@ const MediaModal = ({
             {wiki.media !== undefined && wiki.media?.length > 0 && (
               <Box mb={4} justifyContent="center" display="flex">
                 <Stack spacing={4} direction="row" align="center">
-                  <Button size="md" onClick={onClose}>
-                    <Text fontSize="xs">Save</Text>
-                  </Button>
+                  <Tooltip
+                    isDisabled={
+                      wiki.media !== undefined &&
+                      wiki.media?.length > 0 &&
+                      wiki.media?.length <= MAX_MEDIA
+                    }
+                    label="Media items limited to 12"
+                  >
+                    <Button
+                      size="md"
+                      onClick={onClose}
+                      isDisabled={
+                        wiki.media === undefined ||
+                        wiki.media?.length <= 0 ||
+                        wiki.media?.length > MAX_MEDIA
+                      }
+                    >
+                      <Text fontSize="xs">Save {wiki.media.length}</Text>
+                    </Button>
+                  </Tooltip>
                   <Button onClick={onClose} variant="outline" size="md">
                     <Text fontSize="xs">Cancel</Text>
                   </Button>
