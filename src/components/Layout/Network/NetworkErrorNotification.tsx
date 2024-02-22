@@ -43,7 +43,7 @@ const NetworkErrorNotification = ({
 
   const { switchNetwork } = useSwitchNetwork({
     throwForSwitchChainNotSupported: true,
-    onError: err => {
+    onError: (err) => {
       toast({
         title: 'Error switching network',
         description: `There was an error switching the network: ${

@@ -56,7 +56,7 @@ export const WalletDrawerBody = () => {
 
   useEffect(() => {
     if (walletDetails) {
-      fetchRateAndCalculateTotalBalance(walletDetails).then(result => {
+      fetchRateAndCalculateTotalBalance(walletDetails).then((result) => {
         dispatch(updateTotalBalance(calculateTotalBalance(result)))
         dispatch(updateBalanceBreakdown(result))
         setTotalBalanceIsLoading(false)
