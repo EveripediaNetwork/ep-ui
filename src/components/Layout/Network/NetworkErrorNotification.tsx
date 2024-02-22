@@ -42,7 +42,7 @@ const NetworkErrorNotification = ({
       : networkMap.POLYGON_MAINNET
 
   const { switchNetwork } = useSwitchNetwork({
-    onError: async err => {
+    onError: async (err) => {
       if (err) {
         if (err.message.includes('4902')) {
           await provider.addChain({
