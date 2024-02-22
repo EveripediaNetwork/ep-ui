@@ -100,8 +100,8 @@ const ImageInput = ({
   ) => {
     const url = event.target.value
     const urlType = linkRecognizer(url)
-
-    if (!urlType.type) {
+    const isVideoUnavailable = await fetch(`/api/checkVideo?url=${url}`)
+    if (!urlType.type || isVideoUnavailable) {
       setImageSrc(undefined)
       toast({
         title: 'Paste a valid image URL',
@@ -111,7 +111,7 @@ const ImageInput = ({
       return
     }
 
-    if (urlType.type === 'youtube') {
+    if (urlType.type === 'youtube' && !isVideoUnavailable) {
       const videoID = urlType?.value
       dispatch({
         type: 'wiki/addMedia',
