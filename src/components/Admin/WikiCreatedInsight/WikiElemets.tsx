@@ -97,12 +97,12 @@ export const WikiTableCol = (props: WikiTableColProps) => {
 
         <HStack spacing={2}>
           <Text
-            cursor={item.hidden ? 'not-allowed' : 'pointer'}
+            cursor={'pointer'}
             fontWeight="normal"
-            onClick={ArchiveClickOne}
-            color={item.hidden ? 'divider' : 'wikiFlagTextColor'}
+            onClick={item.hidden ? ArchiveClickTwo : ArchiveClickOne}
+            color={'wikiFlagTextColor'}
           >
-            Archive
+            {item.hidden ? 'Unarchive' : 'Archive'}
           </Text>
           {item.hidden && (
             <Icon
