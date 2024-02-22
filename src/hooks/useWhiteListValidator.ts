@@ -9,13 +9,18 @@ const useWhiteListValidator = (address: string | null) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await provider.readContract({
-          address: config.editorAddress as `0x${string}`,
-          abi: EditorABI,
-          functionName: 'isEditorWhitelisted',
-          args: [address],
-        })
-        setUserCanEdit(config.isProduction === 'true' ? data : true)
+        let data
+        if (config.isProduction === 'true') {
+          data = await provider.readContract({
+            address: config.editorAddress as `0x${string}`,
+            abi: EditorABI,
+            functionName: 'isEditorWhitelisted',
+            args: [address],
+          })
+        } else {
+          data = true
+        }
+        setUserCanEdit(data)
       } catch (error) {
         console.error('Error fetching whitelist data:', error)
       }
