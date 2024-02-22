@@ -8,6 +8,7 @@ import { Image } from '@everipedia/iq-utils'
 export type TEvents = {
   id: string
   title: string
+  location?: string
   summary: string
   events: { type: string; date: string }[]
   tags: { id: string }[]
@@ -31,7 +32,7 @@ export const eventApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getEvents: builder.query<TEvents[], void>({
       query: () => ({ document: GET_EVENTS }),
       transformResponse: (response: TGetEventResponse) => response.events,

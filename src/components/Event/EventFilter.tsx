@@ -5,7 +5,7 @@ import {
   RiArrowUpDownLine,
   RiFilter3Line,
 } from 'react-icons/ri'
-import { IEventData, eventFilterData, eventMockData } from './event.data'
+import { eventFilterData } from './event.data'
 import { DateRange } from 'react-day-picker'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { TEvents } from '@/services/event'
 
 interface Filters {
   date: string[]
@@ -21,7 +22,13 @@ interface Filters {
   blockchain: string[]
 }
 
-const EventFilter = ({ setEventData }: { setEventData: Function }) => {
+const EventFilter = ({
+  fetchedData,
+  setEventData,
+}: {
+  fetchedData: TEvents[]
+  setEventData: Function
+}) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const router = useRouter()
@@ -32,84 +39,86 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
     blockchain: [],
   })
 
-  const filterEvents = (
-    events: IEventData[],
-    filters: Filters,
-  ): IEventData[] => {
-    return events.filter((event) => {
-      // Date filter - assuming the dates are in ISO format for simplicity
-      const dateFilter =
-        filters.date.length === 0 ||
-        filters.date.some((date) => {
-          const eventStartDate = new Date(event.date.split('/')[0])
-          const eventEndDate = new Date(
-            event.date.split('/')[1] || event.date.split('/')[0],
+  const filterEvents = (events: TEvents[], filters: Filters): TEvents[] => {
+    return events.filter(event => {
+      const dateArr = event?.events
+      if (dateArr.length > 0) {
+        // Date filter - assuming the dates are in ISO format for simplicity
+        const dateFilter =
+          filters.date.length === 0 ||
+          filters.date.some(date => {
+            const eventStartDate = new Date(dateArr[0].date)
+            const eventEndDate = new Date(dateArr[1].date || dateArr[0].date)
+            if (date === 'Next Week') {
+              const nextWeek = new Date()
+              nextWeek.setDate(nextWeek.getDate() + 7)
+              return eventStartDate <= nextWeek && eventEndDate >= new Date()
+            } else if (date === 'Next Month') {
+              const nextMonth = new Date()
+              nextMonth.setMonth(nextMonth.getMonth() + 1)
+              return eventStartDate <= nextMonth && eventEndDate >= new Date()
+            } else {
+              // Custom Range
+              const startDate = dateRange?.from
+              const endDate = dateRange?.to
+
+              // Handle undefined or invalid custom range dates
+              if (!startDate || !endDate) {
+                console.error('Invalid custom range: missing start or end date')
+                return true // Indicate error (or handle differently)
+              }
+
+              // Convert strings to Date objects (if necessary)
+              const parsedStartDate = new Date(startDate)
+              const parsedEndDate = new Date(endDate)
+
+              // Ensure start date is before end date
+              if (parsedStartDate >= parsedEndDate) {
+                console.error('Invalid custom range: start date after end date')
+                return false // Indicate error (or handle differently)
+              }
+
+              // Compare event dates with custom range
+              return (
+                eventStartDate >= parsedStartDate &&
+                eventStartDate <= parsedEndDate &&
+                eventEndDate >= parsedStartDate &&
+                eventEndDate <= parsedEndDate
+              )
+            }
+          })
+
+        // Location filter
+        const locationFilter =
+          filters.location.length === 0 ||
+          filters.location.some(location => event.location?.includes(location))
+
+        // Event type filter
+        const eventTypeFilter =
+          filters.eventType.length === 0 ||
+          filters.eventType.some(eventType =>
+            event.tags?.some(tag => tag.id === eventType),
           )
-          if (date === 'Next Week') {
-            const nextWeek = new Date()
-            nextWeek.setDate(nextWeek.getDate() + 7)
-            return eventStartDate <= nextWeek && eventEndDate >= new Date()
-          } else if (date === 'Next Month') {
-            const nextMonth = new Date()
-            nextMonth.setMonth(nextMonth.getMonth() + 1)
-            return eventStartDate <= nextMonth && eventEndDate >= new Date()
-          } else {
-            // Custom Range
-            const startDate = dateRange?.from
-            const endDate = dateRange?.to
 
-            // Handle undefined or invalid custom range dates
-            if (!startDate || !endDate) {
-              console.error('Invalid custom range: missing start or end date')
-              return true // Indicate error (or handle differently)
-            }
+        // Blockchain filter
+        const blockchainFilter =
+          filters.blockchain.length === 0 ||
+          filters.blockchain.some(blockchain =>
+            event.tags?.some(tag => tag.id === blockchain),
+          )
 
-            // Convert strings to Date objects (if necessary)
-            const parsedStartDate = new Date(startDate)
-            const parsedEndDate = new Date(endDate)
-
-            // Ensure start date is before end date
-            if (parsedStartDate >= parsedEndDate) {
-              console.error('Invalid custom range: start date after end date')
-              return false // Indicate error (or handle differently)
-            }
-
-            // Compare event dates with custom range
-            return (
-              eventStartDate >= parsedStartDate &&
-              eventStartDate <= parsedEndDate &&
-              eventEndDate >= parsedStartDate &&
-              eventEndDate <= parsedEndDate
-            )
-          }
-        })
-
-      // Location filter
-      const locationFilter =
-        filters.location.length === 0 ||
-        filters.location.some((location) => event.location.includes(location))
-
-      // Event type filter
-      const eventTypeFilter =
-        filters.eventType.length === 0 ||
-        filters.eventType.includes(event.type || '')
-
-      // Blockchain filter
-      const blockchainFilter =
-        filters.blockchain.length === 0 ||
-        filters.blockchain.some((blockchain) =>
-          event.tags?.includes(blockchain),
+        return (
+          dateFilter && locationFilter && eventTypeFilter && blockchainFilter
         )
-
-      return dateFilter && locationFilter && eventTypeFilter && blockchainFilter
+      }
     })
   }
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
-    setFilters((prevFilters) => {
+    setFilters(prevFilters => {
       const isActive = prevFilters[filterCategory].includes(value)
       const newFilters = isActive
-        ? prevFilters[filterCategory].filter((item) => item !== value) // Remove the filter
+        ? prevFilters[filterCategory].filter(item => item !== value) // Remove the filter
         : [...prevFilters[filterCategory], value] // Add the filter
 
       // Update the URL query parameters
@@ -126,9 +135,9 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
   }
 
   useEffect(() => {
-    const filteredEvents = filterEvents(eventMockData, filters)
+    const filteredEvents = filterEvents(fetchedData, filters)
     setEventData(filteredEvents)
-  }, [filters, dateRange])
+  }, [filters, dateRange, fetchedData])
 
   return (
     <div>
@@ -143,7 +152,7 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
       </div>
       <div className="border flex flex-col border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 md:px-6 xl:px-3 py-6 xl:pt-5 xl:pb-20 mt-3 md:mt-6 rounded-xl">
         <div className="flex md:justify-between flex-wrap xl:flex-col gap-x-8 gap-y-6 md:gap-8">
-          {eventFilterData.map((eventFilter) => (
+          {eventFilterData.map(eventFilter => (
             <div key={eventFilter.title}>
               <button
                 type="button"
@@ -168,14 +177,14 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
                 </span>
               </button>
               <div className="xl:flex gap-2 mt-3 flex-wrap hidden">
-                {eventFilter.filter.map((filter) => {
+                {eventFilter.filter.map(filter => {
                   const category =
                     eventFilter.title === 'Event Type'
                       ? 'eventType'
                       : eventFilter.title.toLowerCase()
                   if (filter === 'Custom Range') {
                     return (
-                      <div className="grid grid-2">
+                      <div key={filter} className="grid grid-2">
                         <Popover>
                           <PopoverTrigger asChild>
                             <button
@@ -235,13 +244,13 @@ const EventFilter = ({ setEventData }: { setEventData: Function }) => {
         </div>
         <div className="xl:hidden">
           {eventFilterData
-            .filter((item) => item.title === selectedFilter)
-            .map((eventFilter) => (
+            .filter(item => item.title === selectedFilter)
+            .map(eventFilter => (
               <div
                 key={eventFilter.title}
                 className="flex gap-2 mt-5 md:mt-3 flex-wrap"
               >
-                {eventFilter.filter.map((filter) => {
+                {eventFilter.filter.map(filter => {
                   return (
                     <span
                       key={filter}

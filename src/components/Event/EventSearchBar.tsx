@@ -1,26 +1,26 @@
 import React, { useState } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { IEventData } from './event.data'
+import { TEvents } from '@/services/event'
 
 const filterEvents = (
   searchKey: string,
   date: Date | undefined,
-  eventData: IEventData[],
-): IEventData[] => {
-  const filteredEvents = eventData.filter((event) => {
-    const { title, location, speakers, tags, date: eventDateStr } = event
+  eventData: TEvents[],
+): TEvents[] => {
+  const filteredEvents = eventData.filter(event => {
+    const { title, location, linkedWikis, tags, events: dateObj } = event
 
     // Filter by search key
     const matchesSearchKey =
       searchKey !== '' &&
       (title.toLowerCase().includes(searchKey.toLowerCase()) ||
-        location.toLowerCase().includes(searchKey.toLowerCase()) ||
-        speakers?.some((speaker) =>
-          speaker.name.toLowerCase().includes(searchKey.toLowerCase()),
+        location?.toLowerCase().includes(searchKey.toLowerCase()) ||
+        linkedWikis.speakers?.some(speaker =>
+          speaker.toLowerCase().includes(searchKey.toLowerCase()),
         ) ||
-        tags?.some((tag) =>
-          tag.toLowerCase().includes(searchKey.toLowerCase()),
+        tags?.some(tag =>
+          tag.id.toLowerCase().includes(searchKey.toLowerCase()),
         ))
 
     // If date is undefined, consider it as not applying date filtering
@@ -29,9 +29,11 @@ const filterEvents = (
     }
 
     // Filter by date
-    const [startDateStr, endDateStr] = eventDateStr.split('/')
-    const startDate = new Date(startDateStr)
-    const endDate = endDateStr ? new Date(endDateStr) : new Date(startDateStr)
+    const [startDateStr, endDateStr] = dateObj
+    const startDate = new Date(startDateStr.date)
+    const endDate = endDateStr.date
+      ? new Date(endDateStr.date)
+      : new Date(startDateStr.date)
 
     const compareDate = new Date(date)
     compareDate.setDate(compareDate.getDate() + 1)
@@ -53,7 +55,7 @@ const EventSearchBar = ({
   setEventData,
   setSearchActive,
 }: {
-  eventData: IEventData[]
+  eventData: TEvents[]
   setEventData: Function
   setSearchActive: Function
 }) => {

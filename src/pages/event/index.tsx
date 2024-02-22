@@ -9,17 +9,13 @@ import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
-import { IEventData, eventMockData } from '@/components/Event/event.data'
 import EventList from '@/components/Event/EventList'
-import { useGetEventsQuery } from '@/services/event'
+import { TEvents, useGetEventsQuery } from '@/services/event'
 
 const EventPage = () => {
-  const { isLoading, data } = useGetEventsQuery()
-  const [_eventData, setEventData] = useState<IEventData[]>(eventMockData)
+  const { data, isLoading } = useGetEventsQuery()
+  const [eventData, setEventData] = useState<TEvents[]>(data || [])
   const [searchActive, setSearchActive] = useState(false)
-
-  console.log({ data })
-  console.log(isLoading)
 
   return (
     <div>
@@ -27,31 +23,33 @@ const EventPage = () => {
       <EventBanner />
       <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar
-          eventData={eventMockData}
+          eventData={data || []}
           setSearchActive={setSearchActive}
           setEventData={setEventData}
         />
         {!searchActive && (
           <>
             <TrendingEvent />
-            <EventInterest
-              eventData={eventMockData}
-              setEventData={setEventData}
-            />
+            <EventInterest eventData={data || []} setEventData={setEventData} />
           </>
         )}
         <div className="mt-10 xl:hidden">
-          <EventFilter setEventData={setEventData} />
+          <EventFilter fetchedData={data || []} setEventData={setEventData} />
         </div>
         <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <EventList
+            fetchedData={data || []}
+            isLoading={isLoading}
             setSearchActive={setSearchActive}
-            eventData={data}
+            eventData={eventData}
             setEventData={setEventData}
           />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <div className="hidden xl:block">
-              <EventFilter setEventData={setEventData} />
+              <EventFilter
+                fetchedData={data || []}
+                setEventData={setEventData}
+              />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
               <NearbyEventFilter />
@@ -66,7 +64,7 @@ const EventPage = () => {
 
 export default EventPage
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale ?? 'en', [
