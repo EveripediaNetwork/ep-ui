@@ -1,6 +1,6 @@
 import { env } from '@/env.mjs'
 import { NextSeo } from 'next-seo'
-import * as DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import React from 'react'
 import Head from 'next/head'
 interface WikiHeaderProps {
