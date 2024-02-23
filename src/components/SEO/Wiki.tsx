@@ -15,7 +15,6 @@ interface WikiHeaderProps {
   avgRating?: number
   totalRatings?: number
 }
-
 export const WikiHeader = ({
   slug,
   title,
