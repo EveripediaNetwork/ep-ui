@@ -1,12 +1,9 @@
-import EventDetails from '@/components/Event/Details/EventDetails'
 import EventDetailsContent from '@/components/Event/Details/EventDetailsContent'
-import EventMedia from '@/components/Event/Details/EventMedia'
 import EventSummary from '@/components/Event/Details/EventSummary'
-import SpeakerDetails from '@/components/Event/Details/SpeakerDetails'
-import SponsorDetails from '@/components/Event/Details/SponsorDetails'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
+import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
@@ -35,17 +32,18 @@ const EventDetailsPage = ({ event, slug }: { event: Wiki; slug: string }) => {
           <div className="flex-1 flex flex-col gap-10 md:gap-5 xl:gap-10">
             <EventDetailsContent event={event} />
             <div className="xl:hidden flex flex-col gap-6 mt-10 xl:gap-10">
-              <EventSummary />
-              <EventMedia />
+              <EventSummary event={event} />
+              {event.media && event.media.length > 0 && (
+                <RelatedMediaGrid media={event.media} />
+              )}
             </div>
-            <EventDetails />
-            <SpeakerDetails />
-            <SponsorDetails />
           </div>
           <div className="flex-1 flex flex-col gap-10 md:gap-6 xl:gap-10 lg:max-w-[240px] xl:max-w-[422px]">
             <div className="hidden xl:flex flex-col gap-6 xl:gap-10">
-              <EventSummary />
-              <EventMedia />
+              <EventSummary event={event} />
+              {event.media && event.media.length > 0 && (
+                <RelatedMediaGrid media={event.media} />
+              )}
             </div>
             <NearbyEventFilter />
             <PopularEventFilter />
@@ -56,7 +54,7 @@ const EventDetailsPage = ({ event, slug }: { event: Wiki; slug: string }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps: GetStaticProps = async ctx => {
   const props = {
     ...(await serverSideTranslations(ctx.locale ?? 'en', ['event', 'common'])),
   }

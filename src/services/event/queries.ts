@@ -23,3 +23,22 @@ export const GET_EVENTS = gql`
     }
   }
 `
+
+export const GET_POPULAR_EVENTS = gql`
+  query GetPopularEvents {
+    popularEvents {
+      id
+      events {
+        type
+        date
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
