@@ -54,7 +54,7 @@ const EventDetailsPage = ({ event, slug }: { event: Wiki; slug: string }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ctx => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
   const props = {
     ...(await serverSideTranslations(ctx.locale ?? 'en', ['event', 'common'])),
   }

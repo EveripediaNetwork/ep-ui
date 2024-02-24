@@ -8,7 +8,7 @@ const EventMedia = () => {
     <div className="flex flex-col gap-2 xl:gap-4 border bg-white dark:bg-gray700 text-gray600 border-gray200 dark:border-alpha-300 rounded p-3 md:p-5 lg:py-2 xl:py-4 lg:px-2 xl:px-3">
       <button
         type="button"
-        onClick={() => setOpen(prevState => !prevState)}
+        onClick={() => setOpen((prevState) => !prevState)}
         className="flex items-center text-gray600 dark:text-alpha-900  gap-2 text-xl"
       >
         <RiArrowDownSLine />

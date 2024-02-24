@@ -20,11 +20,13 @@ const EventSummary = ({ event }: { event: Wiki }) => {
 
   const metadata = event.metadata
 
-  const social_profiles = metadata.filter(item =>
+  const social_profiles = metadata.filter((item) =>
     selected_profiles.includes(item.id),
   )
 
-  const referenceElement = metadata.find(element => element.id === 'references')
+  const referenceElement = metadata.find(
+    (element) => element.id === 'references',
+  )
   let url
   if (referenceElement) url = JSON.parse(referenceElement.value)[0].url
 
@@ -63,7 +65,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
           <span className="col-span-1">Social profiles</span>
           <span className="flex text-2xl md:text-xl xl:text-2xl items-center gap-1">
-            {social_profiles.map(socials => (
+            {social_profiles.map((socials) => (
               <Link key={socials.id} href={`${socials.value}`} target="_blank">
                 {socials.id === 'twitter_profile' ? (
                   <RiTwitterFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
@@ -82,7 +84,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 text-xs lg:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
         <span className="col-span-1">Tags</span>
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
-          {event.tags.map(tag => (
+          {event.tags.map((tag) => (
             <span
               key={tag.id}
               className="rounded-full px-2 py-1 border border-gray300 dark:border-alpha-300"
