@@ -400,6 +400,10 @@ html[data-theme='dark'] .markdownBody a {
   margin-bottom: 16px;
 }
 
+.markdownBody ol {
+  list-style: decimal;
+}
+
 .markdownBody blockquote > :first-child {
   margin-top: 0;
 }
@@ -508,7 +512,7 @@ html[data-theme='dark'] .markdownBody a {
   /* width:50%; */
 }
 
-.markdownBody table td  {
+.markdownBody table td {
   vertical-align: top;
 }
 
