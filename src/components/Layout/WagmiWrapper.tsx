@@ -1,13 +1,13 @@
-import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { WagmiConfig, createConfig } from 'wagmi'
+import { wagmiConfig } from '@/config/wagmi'
+import { WagmiProvider } from 'wagmi'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-const client = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-  webSocketPublicClient,
-})
+const queryClient = new QueryClient()
 
 export const WagmiWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <WagmiConfig config={client}>{children}</WagmiConfig>
+  return (
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>{' '}
+    </WagmiProvider>
+  )
 }

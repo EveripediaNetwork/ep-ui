@@ -18,8 +18,7 @@ import { useDispatch } from 'react-redux'
 import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
 import { useAddress } from '@/hooks/useAddress'
-import { useSwitchNetwork } from 'wagmi'
-import { walletClient } from '@/utils/WalletUtils/getProvider'
+import { useSwitchChain } from 'wagmi'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -41,29 +40,30 @@ const NetworkErrorNotification = ({
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
 
-  const { switchNetwork } = useSwitchNetwork({
-    throwForSwitchChainNotSupported: true,
-    onError: (err) => {
-      toast({
-        title: 'Error switching network',
-        description: `There was an error switching the network: ${
-          err.message ?? 'Unknown error'
-        }. Please try again.`,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-      setModalState(false)
-    },
-    onSuccess: () => {
-      toast({
-        title: 'Network switched',
-        description: 'You have successfully switched to the new network.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      })
-      setModalState(false)
+  const { switchChainAsync } = useSwitchChain({
+    mutation: {
+      onError: err => {
+        toast({
+          title: 'Error switching network',
+          description: `There was an error switching the network: ${
+            err.message ?? 'Unknown error'
+          }. Please try again.`,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        })
+        setModalState(false)
+      },
+      onSuccess: () => {
+        toast({
+          title: 'Network switched',
+          description: 'You have successfully switched to the new network.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+        setModalState(false)
+      },
     },
   })
 
@@ -81,34 +81,7 @@ const NetworkErrorNotification = ({
   }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
-    const chain =
-      config.alchemyChain === 'maticmum'
-        ? networkMap.MUMBAI_TESTNET
-        : networkMap.POLYGON_MAINNET
-
-    try {
-      await walletClient.addChain({
-        chain,
-      })
-
-      if (switchNetwork) {
-        switchNetwork(chainId)
-      }
-    } catch (error: any) {
-      console.error('Error while adding chain:', error)
-
-      toast({
-        title: 'Error switching network',
-        description: `There was an error switching the network: ${
-          error.message || 'Unknown error'
-        }. Please try again.`,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-    }
-
-    setModalState(false)
+    await switchChainAsync({ chainId })
   }
 
   return (

@@ -1,23 +1,11 @@
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { configureChains, Connector } from 'wagmi'
+import { createConfig, http } from 'wagmi'
 import { polygon, polygonMumbai } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
-import { MagicAuthConnector } from '@magiclabs/wagmi-connector'
-import config from './index'
+import { walletConnect } from 'wagmi/connectors'
+import { DedicatedWalletConnector } from '@magiclabs/wagmi-connector'
+import config from '.'
+import { createConnector } from '@wagmi/core'
 
-const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
-
-export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [chainArray],
-  [
-    alchemyProvider({ apiKey: config.alchemyApiKey }),
-    infuraProvider({ apiKey: config.infuraId }),
-    publicProvider(),
-  ],
-)
+export type InjectedParameters = {}
 
 export const rpcs: {
   [key: string]: string
@@ -26,29 +14,37 @@ export const rpcs: {
   matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
 }
 
-export const connectors = [
-  new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
-  new WalletConnectConnector({
-    chains,
-    options: {
-      projectId: config.walletConnectProjectId,
-    },
-  }),
-  new MagicAuthConnector({
-    chains,
-    options: {
-      apiKey: config.magicLinkApiKey,
-      oauthOptions: {
-        providers: ['google', 'discord', 'facebook', 'twitter'],
-      },
-      customLogo: '/images/logos/braindao-logo.svg',
-      accentColor: '#ea3b87',
-      magicSdkConfiguration: {
-        network: {
-          rpcUrl: rpcs[config.alchemyChain],
-          chainId: Number(config.chainId),
+function injected(_parameters = {}) {
+  //@ts-ignore
+  return createConnector((_) => {
+    return new DedicatedWalletConnector({
+      options: {
+        apiKey: config.magicLinkApiKey,
+        oauthOptions: {
+          providers: ['google', 'discord', 'facebook', 'twitter'],
+        },
+        customLogo: '/images/logos/braindao-logo.svg',
+        accentColor: '#ea3b87',
+        magicSdkConfiguration: {
+          network: {
+            rpcUrl: rpcs[config.alchemyChain], // Assuming rpcs is a property of config
+            chainId: Number(config.chainId),
+          },
         },
       },
-    },
-  }) as unknown as Connector,
-]
+    })
+  })
+}
+
+export const wagmiConfig = createConfig({
+  chains: [polygon, polygonMumbai],
+  multiInjectedProviderDiscovery: true,
+  transports: {
+    [polygon.id]: http(),
+    [polygonMumbai.id]: http(),
+  },
+  connectors: [
+    walletConnect({ projectId: config.walletConnectProjectId }),
+    injected(),
+  ],
+})
