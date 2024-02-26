@@ -400,10 +400,6 @@ html[data-theme='dark'] .markdownBody a {
   margin-bottom: 16px;
 }
 
-.markdownBody ol {
-  list-style: decimal;
-}
-
 .markdownBody blockquote > :first-child {
   margin-top: 0;
 }
@@ -461,6 +457,14 @@ html[data-theme='dark'] .markdownBody a {
 
 .markdownBody ol[type='i'] {
   list-style-type: lower-roman;
+}
+
+.markdownBody ol {
+  list-style: decimal;
+}
+
+.markdownBody ul {
+  list-style: disc;
 }
 
 .markdownBody div > ol:not([type]) {
