@@ -89,11 +89,11 @@ const EventList = ({
                       id={event.id}
                       key={event.id}
                       title={event.title}
-                      excerpt={event.summary}
+                      excerpt={event.summary || ''}
                       location={'St. Moritz, Switzerland'}
                       date={event.events[0].date}
                       tags={event.tags}
-                      speakers={event.linkedWikis.speakers}
+                      speakers={event?.linkedWikis?.speakers || []}
                       images={event.images}
                     />
                   ))}

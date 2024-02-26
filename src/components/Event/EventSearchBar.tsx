@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { TEvents } from '@/services/event'
+import { TEvents, getEventByTitle } from '@/services/event'
+import { store } from '@/store/store'
 
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const filterEvents = (
   searchKey: string,
   date: Date | undefined,
@@ -16,7 +18,7 @@ const filterEvents = (
       searchKey !== '' &&
       (title.toLowerCase().includes(searchKey.toLowerCase()) ||
         location?.toLowerCase().includes(searchKey.toLowerCase()) ||
-        linkedWikis.speakers?.some((speaker) =>
+        linkedWikis?.speakers?.some((speaker) =>
           speaker.toLowerCase().includes(searchKey.toLowerCase()),
         ) ||
         tags?.some((tag) =>
@@ -51,18 +53,19 @@ const filterEvents = (
 }
 
 const EventSearchBar = ({
-  eventData,
   setEventData,
   setSearchActive,
+  setIsLoading,
 }: {
-  eventData: TEvents[]
   setEventData: Function
   setSearchActive: Function
+  setIsLoading: Function
 }) => {
   const [searchDate, setSearchDate] = useState<Date>()
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSearchActive(true)
 
     const form = e.currentTarget
     const messageInput = form.elements.namedItem(
@@ -73,14 +76,19 @@ const EventSearchBar = ({
 
     const searchKey = searchInput.toLowerCase().trim()
 
-    const dateSearchResult = filterEvents(searchKey, searchDate, eventData)
+    // const dateSearchResult = filterEvents(searchKey, searchDate, eventData)
+    setIsLoading(true)
+    store
+      .dispatch(getEventByTitle.initiate({ title: searchKey }))
+      .then((response) => {
+        if (response.data) {
+          setEventData(response.data)
+        } else if (response.error) console.error(response.error)
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false))
 
-    const results = dateSearchResult
-    console.log(results)
-
-    setEventData(results)
-    setSearchDate(undefined)
-    setSearchActive(true)
+    // setSearchDate(undefined)
     form.reset()
   }
   return (

@@ -10,12 +10,19 @@ import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import EventList from '@/components/Event/EventList'
-import { TEvents, getEvents } from '@/services/event'
+import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 
-const EventPage = ({ events }: { events: TEvents[] }) => {
+const EventPage = ({
+  events,
+  popularEvents,
+}: {
+  events: TEvents[]
+  popularEvents: TEvents[]
+}) => {
   const [eventData, setEventData] = useState<TEvents[]>(events)
   const [searchActive, setSearchActive] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <div>
@@ -23,9 +30,9 @@ const EventPage = ({ events }: { events: TEvents[] }) => {
       <EventBanner />
       <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
         <EventSearchBar
-          eventData={events}
           setSearchActive={setSearchActive}
           setEventData={setEventData}
+          setIsLoading={setIsLoading}
         />
         {!searchActive && (
           <>
@@ -39,7 +46,7 @@ const EventPage = ({ events }: { events: TEvents[] }) => {
         <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <EventList
             fetchedData={events}
-            isLoading={false}
+            isLoading={isLoading}
             setSearchActive={setSearchActive}
             eventData={eventData}
             setEventData={setEventData}
@@ -50,7 +57,7 @@ const EventPage = ({ events }: { events: TEvents[] }) => {
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
               <NearbyEventFilter />
-              <PopularEventFilter />
+              <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
         </div>
@@ -63,10 +70,14 @@ export default EventPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { data: events } = await store.dispatch(getEvents.initiate())
+  const { data: popularEvents } = await store.dispatch(
+    getPopularEvents.initiate(),
+  )
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events || [],
+      popularEvents: popularEvents || [],
     },
   }
 }

@@ -2,7 +2,7 @@ import config from '@/config'
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import { HYDRATE } from 'next-redux-wrapper'
-import { GET_EVENTS, GET_POPULAR_EVENTS } from './queries'
+import { GET_EVENTS, GET_EVENT_BY_TITLE, GET_POPULAR_EVENTS } from './queries'
 import { Image } from '@everipedia/iq-utils'
 
 export type TEvents = {
@@ -22,7 +22,15 @@ type TGetEventResponse = {
 }
 
 type TGetPopularEventResponse = {
-  events: TEvents[]
+  popularEvents: TEvents[]
+}
+
+type TGetWikiByEventResponse = {
+  wikiEventsByTitle: TEvents[]
+}
+
+type TEventSearch = {
+  title: string
 }
 
 export const eventApi = createApi({
@@ -41,14 +49,29 @@ export const eventApi = createApi({
       query: () => ({ document: GET_EVENTS }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
-    getPopularEvents: builder.query({
+    getPopularEvents: builder.query<TEvents[], void>({
       query: () => ({ document: GET_POPULAR_EVENTS }),
       transformResponse: (response: TGetPopularEventResponse) =>
-        response.events,
+        response.popularEvents,
+    }),
+    getEventByTitle: builder.query<TEvents[], TEventSearch>({
+      query: ({ title }: TEventSearch) => {
+        return {
+          document: GET_EVENT_BY_TITLE,
+          variables: { title },
+        }
+      },
+      transformResponse: (response: TGetWikiByEventResponse) =>
+        response.wikiEventsByTitle,
     }),
   }),
 })
 
-export const { useGetEventsQuery, useGetPopularEventsQuery } = eventApi
+export const {
+  useGetEventsQuery,
+  useGetPopularEventsQuery,
+  useGetEventByTitleQuery,
+} = eventApi
 
-export const { getEvents, getPopularEvents } = eventApi.endpoints
+export const { getEvents, getPopularEvents, getEventByTitle } =
+  eventApi.endpoints
