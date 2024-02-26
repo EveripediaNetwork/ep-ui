@@ -7,6 +7,7 @@ import {
   Text,
   VStack,
   chakra,
+  useColorMode,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import Logo from '@/components/Elements/Logo/Logo'
@@ -17,6 +18,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 
 export const Hero = () => {
   const { t } = useTranslation('home')
+  const { colorMode } = useColorMode()
   return (
     <VStack>
       <Heading
@@ -35,7 +37,7 @@ export const Hero = () => {
         {t('hero_heading3')}
       </Heading>
       <VStack>
-        <HStack my={3} px={{ base: '5', md: '0' }} mx={'auto'} maxW={'590px'}>
+        <HStack my={2} px={{ base: '5', md: '0' }} mx={'auto'} maxW={'590px'}>
           <Text
             textAlign="center"
             color={'eventTextColor'}
@@ -44,13 +46,15 @@ export const Hero = () => {
             {t('iq_description')}
           </Text>
           <Link
-            border="1px"
+            border={colorMode === 'light' ? '1px' : '0'}
             rounded="md"
             borderColor="gray.200"
-            _hover={{ bgColor: 'gray.100' }}
-            _dark={{
-              bgColor: 'rgba(255, 255, 255, 0.08)',
-              border: '0',
+            bg={colorMode === 'light' ? 'unset' : 'rgba(255, 255, 255, 0.08)'}
+            _hover={{
+              bgColor:
+                colorMode === 'light'
+                  ? 'gray.100'
+                  : 'rgba(255, 255, 255, 0.12)',
             }}
             onClick={() =>
               logEvent({
