@@ -1,22 +1,20 @@
 import { logEvent } from '@/utils/googleAnalytics'
 import { Button, UseDisclosureReturn } from '@chakra-ui/react'
 import React from 'react'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useRouter } from 'next/router'
+import { useAddress } from '@/hooks/useAddress'
 
 export interface WalletNavMenuProps {
-  // setVisibleMenu: React.Dispatch<React.SetStateAction<number | null>>
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
   drawerOperations: UseDisclosureReturn
 }
 
 const WalletNavMenu = ({
-  // setVisibleMenu,
   setHamburger,
   drawerOperations,
 }: WalletNavMenuProps) => {
-  const userAddress = getUserAddressFromCache()
+  const { address: userAddress } = useAddress()
   const router = useRouter()
   const handleWalletIconAction = () => {
     logEvent({

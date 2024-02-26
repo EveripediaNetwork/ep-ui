@@ -29,7 +29,7 @@ const Login = () => {
   return (
     <WagmiWrapper>
       <Container centerContent mt="8" mb="24">
-        <Box minW="min(90%, 300px)">
+        <Box minW="min(90%, 300px)" w="full">
           <Heading mb={4} fontSize={23}>
             {t('loginConnectWallet')}
           </Heading>
