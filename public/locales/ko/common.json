@@ -8,7 +8,7 @@
   "browseCategoryDescription": "IQ.wiki에서 대체 불가능 토큰(NFT)부터 디파이(DeFi), 암호화폐 등 서로 다른 주제에 대한 끝없는 호기심을 탐구하세요",
   "Explore": "탐험",
   "Language": "언어",
-  "Activity": "활동",
+  "Activity": "소개",
   "Resources": "자료",
   "Aboutus": "우리에 대해",
   "CreateWiki": "위키 생성",
@@ -35,7 +35,7 @@
   "relatedTopics": "관련 항목",
   "Categories": "카테고리",
   "Rank": "순위",
-  "More": "더 ",
+  "More": "더 보기",
   "Create Wiki": "위키 만들기",
   "Decentralized Finance": "탈중앙화 금융",
   "Exchanges": "거래소",
@@ -127,5 +127,6 @@
   "SuggestWikiText": "우리의 위키 데이터베이스는 암호화폐 공간에서 다양한 관심사를 수용하기 위해 성장하고 있습니다. 커버하길 원하는 주제나 분야가 있으신가요? 위키를 제안해 주세요!",
   "Submit": "제출",
   "details": "세부 정보",
-  "Suggest Wiki": "위키 제안"
+  "Suggest Wiki": "위키 제안",
+  "signIn": "로그인"
 }

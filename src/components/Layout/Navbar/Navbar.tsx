@@ -38,9 +38,11 @@ const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { useTranslation } from 'next-i18next'
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation('common')
   const drawerOperations = useDisclosure({
     defaultIsOpen: store.getState().app.isDrawerOpen,
     onOpen: () => {
@@ -157,7 +159,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
+                {languageData.map(langObj => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"
@@ -201,9 +203,9 @@ const Navbar = () => {
             }}
           >
             {userCanEdit && address ? (
-              <Link href="/create-wiki">Create Wiki</Link>
+              <Link href="/create-wiki">{t('Create Wiki')}</Link>
             ) : (
-              'Suggest Wiki'
+              t('Suggest Wiki')
             )}
           </Button>
           <SuggestWikiModal
