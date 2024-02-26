@@ -42,7 +42,7 @@ const NetworkErrorNotification = ({
 
   const { switchChainAsync } = useSwitchChain({
     mutation: {
-      onError: err => {
+      onError: (err) => {
         toast({
           title: 'Error switching network',
           description: `There was an error switching the network: ${
