@@ -1,6 +1,5 @@
 import {
   RiSettings5Fill,
-  RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
@@ -24,7 +23,6 @@ import {
   RiStarSFill,
   RiLightbulbFlashFill,
 } from 'react-icons/ri'
-import { IoGlobeOutline } from 'react-icons/io5'
 import { NavItem } from '@/types/NavItemType'
 
 export const NAV_ITEMS: NavItem[] = [
@@ -94,26 +92,33 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 2,
-    label: 'Activity',
-    href: '/activity',
-    icon: RiBarChartFill,
-  },
-  {
-    id: 3,
     label: 'Rank',
     href: '/rank',
     icon: RiHashtag,
   },
   {
-    id: 4,
-    label: 'IQ GPT',
-    href: 'https://iqgpt.com',
-    icon: RiSearchEyeFill,
-    target: '_blank',
+    id: 3,
+    label: 'Activity',
+    href: '/activity',
+    icon: RiBarChartFill,
   },
   {
-    id: 5,
-    label: 'Learn',
+    id: 4,
+    label: 'About',
+    href: '/about',
+    icon: RiUserSearchFill,
+    target: '_blank',
+  },
+  // {
+  //   id: 5,
+  //   label: 'IQ GPT',
+  //   href: 'https://iqgpt.com',
+  //   icon: RiSearchEyeFill,
+  //   target: '_blank',
+  // },
+  {
+    id: 6,
+    label: 'More',
     href: '#',
     icon: RiFoldersFill,
     subItem: [
@@ -157,13 +162,6 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 406,
-        label: 'About Us',
-        icon: RiUserSearchFill,
-        href: '/about',
-        hasImage: true,
-      },
-      {
-        id: 407,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
@@ -225,70 +223,6 @@ export const MOBILE_NAV_ITEMS = ({
       icon: RiLightbulbFlashFill,
     })
   }
-  const accountAndLanguageItems = [
-    {
-      id: -1,
-      label: 'Language',
-      href: '#',
-      icon: IoGlobeOutline,
-      subItem: [
-        {
-          id: 101,
-          label: 'English',
-          href: 'en',
-          isLocale: true,
-        },
-        {
-          id: 102,
-          label: 'Korean',
-          href: 'ko',
-          isLocale: true,
-        },
-      ],
-    },
-    {
-      id: 7,
-      label: 'Account',
-      icon: RiUserFill,
-      href: '#',
-      subItem: address
-        ? [
-            {
-              id: 701,
-              label: 'Profile',
-              href: `/account/${address}`,
-              hasImage: false,
-            },
-            {
-              id: 703,
-              label: 'Settings',
-              href: '#',
-              hasImage: false,
-              subItem: [
-                {
-                  id: 7003,
-                  label: 'Profile Settings',
-                  href: '/settings/account?tab=profile',
-                  hasImage: false,
-                },
-                {
-                  id: 7004,
-                  label: 'Notification Settings',
-                  href: '/settings/account?tab=notifications',
-                  hasImage: false,
-                },
-                {
-                  id: 7006,
-                  label: 'Advanced Settings',
-                  href: '/settings/account?tab=advanced',
-                  hasImage: false,
-                },
-              ],
-            },
-          ]
-        : [],
-    },
-  ]
 
-  return [...filteredNavItems, ...accountAndLanguageItems]
+  return [...filteredNavItems]
 }

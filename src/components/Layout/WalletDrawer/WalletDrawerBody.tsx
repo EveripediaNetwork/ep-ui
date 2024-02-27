@@ -26,9 +26,10 @@ import {
   updateWalletDetails,
 } from '@/store/slices/user-slice'
 import { useRouter } from 'next/router'
-import { ProfileLink } from '../Navbar/ProfileLink'
 import { ColorModeToggle } from '../Navbar/ColorModeToggle'
 import { LogOutBtn } from '../Navbar/Logout'
+import { ProfileLink } from '../Navbar/ProfileLink'
+import SettingsLink from '../Navbar/SettingsLink'
 import { useAccount } from 'wagmi'
 
 export const WalletDrawerBody = () => {
@@ -123,38 +124,50 @@ export const WalletDrawerBody = () => {
             balanceBreakdown &&
             walletDetails &&
             walletDetails.length > 0 && (
-              <Box borderWidth="1px" borderRadius="md">
-                {walletDetails.map((details, key) => (
-                  <React.Fragment key={key}>
-                    <WalletDetails
-                      symbol={details?.data?.symbol}
-                      balance={shortenBalance(Number(details?.data?.formatted))}
-                      tokensArray={balanceBreakdown}
-                    />
-                    <Divider />
-                  </React.Fragment>
-                ))}
-                {!totalBalanceIsLoading &&
-                  hiiq &&
-                  walletDetails &&
-                  walletDetails.length > 0 &&
-                  hiIQData && (
-                    <>
+              <>
+                <Box borderWidth="1px" borderRadius="md">
+                  {walletDetails.map((details, key) => (
+                    <React.Fragment key={key}>
                       <WalletDetails
-                        symbol={hiIQData?.symbol}
-                        tokensArray={[hiIQData?.tokensArray]}
-                        balance={shortenBalance(hiiq?.hiiqBalance)}
+                        symbol={details?.data?.symbol}
+                        balance={shortenBalance(
+                          Number(details?.data?.formatted),
+                        )}
+                        tokensArray={balanceBreakdown}
                       />
                       <Divider />
-                    </>
-                  )}
-              </Box>
+                    </React.Fragment>
+                  ))}
+                  {!totalBalanceIsLoading &&
+                    hiiq &&
+                    walletDetails &&
+                    walletDetails.length > 0 &&
+                    hiIQData && (
+                      <>
+                        <WalletDetails
+                          symbol={hiIQData?.symbol}
+                          tokensArray={[hiIQData?.tokensArray]}
+                          balance={shortenBalance(hiiq?.hiiqBalance)}
+                        />
+                        <Divider />
+                      </>
+                    )}
+                </Box>
+              </>
             )}
-          <VStack alignItems="flex-start">
-            <ProfileLink />
-            <ColorModeToggle isInMobileMenu={false} />
-            {address && <LogOutBtn isInMobileMenu={false} />}
-          </VStack>
+          <>
+            {' '}
+            <Divider py={2} />
+            <VStack
+              alignItems="flex-start"
+              display={{ base: 'none', md: 'block' }}
+            >
+              <ProfileLink />
+              <SettingsLink />
+              <ColorModeToggle isInMobileMenu={false} />
+              {address && <LogOutBtn isInMobileMenu={false} />}
+            </VStack>
+          </>
         </>
       ) : (
         <Box>

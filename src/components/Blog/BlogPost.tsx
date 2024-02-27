@@ -33,7 +33,7 @@ export const BlogPost = (props: BlogPostType) => {
         {post.cover_image ? (
           <Image
             h="52"
-            src={post.cover_image}
+            src={post.cover_image.replace('\\_', '_')}
             loading="lazy"
             alt={post.title}
             width="full"
