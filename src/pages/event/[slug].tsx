@@ -4,6 +4,7 @@ import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
 import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
+import { TEvents, getPopularEvents } from '@/services/event'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
@@ -12,7 +13,15 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 
-const EventDetailsPage = ({ event, slug }: { event: Wiki; slug: string }) => {
+const EventDetailsPage = ({
+  event,
+  slug,
+  popularEvents,
+}: {
+  event: Wiki
+  slug: string
+  popularEvents: TEvents[]
+}) => {
   return (
     <>
       <EventHeader
@@ -46,7 +55,7 @@ const EventDetailsPage = ({ event, slug }: { event: Wiki; slug: string }) => {
               )}
             </div>
             <NearbyEventFilter />
-            <PopularEventFilter />
+            <PopularEventFilter popularEvents={popularEvents} />
           </div>
         </div>
       </div>
@@ -64,6 +73,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const { data: eventDetails, error: eventError } = await store.dispatch(
     getWiki.initiate(slug),
+  )
+  const { data: popularEvents } = await store.dispatch(
+    getPopularEvents.initiate(),
   )
 
   if (eventError)
@@ -93,6 +105,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       event: eventDetails,
+      popularEvents,
       slug,
       ...props,
     },
