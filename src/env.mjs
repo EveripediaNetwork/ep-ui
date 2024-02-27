@@ -8,6 +8,7 @@ const server = z.object({
   PINATA_SECRET: z.string().optional(),
   DISCORD_WEBHOOK_ID: z.string(),
   DISCORD_WEBHOOK_TOKEN: z.string(),
+  BOT_AUTH_KEY: z.string(),
 })
 
 const client = z.object({
@@ -76,6 +77,7 @@ const processEnv = {
   NEXT_PUBLIC_BOT_API_KEY: process.env.NEXT_PUBLIC_BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
+  BOT_AUTH_KEY: process.env.NEXT_PUBLIC_BOT_API_KEY,
 }
 
 // Don't touch the part below
