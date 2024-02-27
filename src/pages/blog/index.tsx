@@ -11,6 +11,7 @@ import BlogPageHeader from '@/components/Blog/BlogPageHeader'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
+  console.log({ blogEntries })
   return (
     <>
       <BlogHeader />
