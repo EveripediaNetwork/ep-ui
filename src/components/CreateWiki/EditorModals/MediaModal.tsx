@@ -35,7 +35,7 @@ import { WikiImageObjectProps } from '@/types/CreateWikiType'
 import { saveImage } from '@/utils/CreateWikiUtils/saveImage'
 import { useTranslation } from 'next-i18next'
 
-const MAX_MEDIA = 12
+const MAX_MEDIA = 25
 
 const MediaModal = ({
   onClose = () => {},
@@ -254,6 +254,7 @@ const MediaModal = ({
                 setImage={handleSetImage}
                 showFetchedImage={false}
                 modalUpload
+                media={wiki.media}
               />
             </Flex>
             {wiki.media !== undefined && wiki.media?.length > 0 && (
@@ -276,7 +277,7 @@ const MediaModal = ({
                         wiki.media?.length > MAX_MEDIA
                       }
                     >
-                      <Text fontSize="xs">Save {wiki.media.length}</Text>
+                      <Text fontSize="xs">Save</Text>
                     </Button>
                   </Tooltip>
                   <Button onClick={onClose} variant="outline" size="md">
