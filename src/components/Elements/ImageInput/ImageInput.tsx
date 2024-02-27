@@ -130,7 +130,7 @@ const ImageInput = ({
       if (isVideoUnavailable) {
         setImageSrc(undefined)
         toast({
-          title: 'Video is unavailable',
+          title: 'Video is unavailable, please check url and try again',
           status: 'error',
           duration: 3000,
         })
