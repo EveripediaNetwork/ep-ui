@@ -5,6 +5,9 @@ import { useTranslation } from 'next-i18next'
 import { useDispatch } from 'react-redux'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'
+import { Media } from '@everipedia/iq-utils'
+
+const MAX_MEDIA = 25
 
 type ImageInputType = {
   imageUploading?: boolean
@@ -13,6 +16,7 @@ type ImageInputType = {
   deleteImage?: () => void
   showFetchedImage: boolean
   modalUpload?: boolean
+  media?: Media[]
 }
 
 const ImageInput = ({
@@ -22,6 +26,7 @@ const ImageInput = ({
   deleteImage,
   showFetchedImage,
   modalUpload,
+  media,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
   const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>()
@@ -98,10 +103,17 @@ const ImageInput = ({
   const handleOnImageInputChanges = async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
+    if (media && media.length >= MAX_MEDIA) {
+      toast({
+        title: `You cannot upload more than ${MAX_MEDIA} media. You can delete some existing media to create more spaces`,
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
     const url = event.target.value
     const urlType = linkRecognizer(url)
-    const isVideoUnavailable = await fetch(`/api/checkVideo?url=${url}`)
-    if (!urlType.type || isVideoUnavailable) {
+    if (!urlType.type) {
       setImageSrc(undefined)
       toast({
         title: 'Paste a valid image URL',
@@ -111,7 +123,19 @@ const ImageInput = ({
       return
     }
 
-    if (urlType.type === 'youtube' && !isVideoUnavailable) {
+    if (urlType.type === 'youtube') {
+      const isVideoUnavailable = await fetch(`/api/checkVideo?url=${url}`)
+        .then((res) => res.json())
+        .then((data) => data.isUnavailable)
+      if (isVideoUnavailable) {
+        setImageSrc(undefined)
+        toast({
+          title: 'Video is unavailable',
+          status: 'error',
+          duration: 3000,
+        })
+        return
+      }
       const videoID = urlType?.value
       dispatch({
         type: 'wiki/addMedia',
