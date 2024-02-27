@@ -25,7 +25,15 @@ const TrendingEvent = () => {
                 className="h-[350px] basis-[80%] md:basis-1/2 xl:basis-[309px] rounded-xl relative ml-4"
                 key={event.id}
               >
-                <Image src={event.src || ''} alt="blockchain-expo" fill />
+                <Image
+                  src={event.src || ''}
+                  alt="blockchain-expo"
+                  fill
+                  priority={
+                    event.src === '/images/blockchain-2.png' ? true : false
+                  }
+                  sizes="80%, (min-width: 768px) 50%, 309px"
+                />
                 <Link
                   href={`/event/${event.title
                     .toLowerCase()

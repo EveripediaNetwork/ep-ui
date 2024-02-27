@@ -109,7 +109,12 @@ const EventCard = ({
           </div>
           <div className="w-full md:w-[140px] xl:h-[117px] h-full">
             <div className="relative rounded-lg overflow-hidden w-full md:w-[140px] h-[153px] md:h-[97px]">
-              <Image src={getWikiImageUrl(images)} alt="" fill />
+              <Image
+                src={getWikiImageUrl(images)}
+                alt=""
+                fill
+                sizes="100%, (min-width: 768px) 140px"
+              />
             </div>
           </div>
         </div>
