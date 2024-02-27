@@ -48,7 +48,7 @@ const EventFilter = ({
           filters.date.length === 0 ||
           filters.date.some((date) => {
             const eventStartDate = new Date(dateArr[0].date)
-            const eventEndDate = new Date(dateArr[1].date || dateArr[0].date)
+            const eventEndDate = new Date(dateArr[1]?.date || dateArr[0].date)
             if (date === 'Next Week') {
               const nextWeek = new Date()
               nextWeek.setDate(nextWeek.getDate() + 7)

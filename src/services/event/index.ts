@@ -2,7 +2,12 @@ import config from '@/config'
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import { HYDRATE } from 'next-redux-wrapper'
-import { GET_EVENTS, GET_EVENT_BY_TITLE, GET_POPULAR_EVENTS } from './queries'
+import {
+  GET_EVENTS,
+  GET_EVENT_BY_CATEGORY_ID,
+  GET_EVENT_BY_TITLE,
+  GET_POPULAR_EVENTS,
+} from './queries'
 import { Image } from '@everipedia/iq-utils'
 
 export type TEvents = {
@@ -28,9 +33,16 @@ type TGetPopularEventResponse = {
 type TGetWikiByEventResponse = {
   wikiEventsByTitle: TEvents[]
 }
+type TGetEventByCategoryIdResponse = {
+  wikiEventsByCategory: TEvents[]
+}
 
 type TEventSearch = {
   title: string
+}
+
+type TEventCategorySearchById = {
+  categoryId: string
 }
 
 export const eventApi = createApi({
@@ -64,6 +76,16 @@ export const eventApi = createApi({
       transformResponse: (response: TGetWikiByEventResponse) =>
         response.wikiEventsByTitle,
     }),
+    getEventByCategoryId: builder.query<TEvents[], TEventCategorySearchById>({
+      query: ({ categoryId }: TEventCategorySearchById) => {
+        return {
+          document: GET_EVENT_BY_CATEGORY_ID,
+          variables: { categoryId },
+        }
+      },
+      transformResponse: (response: TGetEventByCategoryIdResponse) =>
+        response.wikiEventsByCategory,
+    }),
   }),
 })
 
@@ -71,7 +93,12 @@ export const {
   useGetEventsQuery,
   useGetPopularEventsQuery,
   useGetEventByTitleQuery,
+  useGetEventByCategoryIdQuery,
 } = eventApi
 
-export const { getEvents, getPopularEvents, getEventByTitle } =
-  eventApi.endpoints
+export const {
+  getEvents,
+  getPopularEvents,
+  getEventByTitle,
+  getEventByCategoryId,
+} = eventApi.endpoints

@@ -67,3 +67,27 @@ export const GET_EVENT_BY_TITLE = gql`
     }
   }
 `
+
+export const GET_EVENT_BY_CATEGORY_ID = gql`
+  query GetWikiByCategoryId($categoryId: String) {
+    wikiEventsByCategory(categoryId: $categoryId) {
+      id
+      title
+      summary
+      events {
+        type
+        date
+      }
+      tags {
+        id
+      }
+      linkedWikis {
+        speakers
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
