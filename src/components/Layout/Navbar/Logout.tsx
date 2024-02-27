@@ -10,15 +10,15 @@ import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
-  const { isConnected: isUserConnected } = useAddress()
+  const { address: isUserConnected } = useAddress()
   const dispatch = useDispatch()
   const router = useRouter()
   const { t } = useTranslation('common')
 
   const handleLogOut = () => {
     dispatch(setStateToDefault())
-    window.localStorage.removeItem('wagmi.metaMask.shimDisconnect')
-    window.localStorage.removeItem('wagmi.connected')
+    window.localStorage.removeItem('wagmi.store')
+    window.localStorage.removeItem('wagmi.recentConnectorId')
     deleteCookie(cookieNames.Enum['x-auth-token'])
     router.push(router.asPath)
   }
