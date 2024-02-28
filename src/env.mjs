@@ -33,7 +33,6 @@ const client = z.object({
   NEXT_PUBLIC_DOMAIN: z.string().url(),
   NEXT_PUBLIC_EP_API: z.string().url(),
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string(),
-  NEXT_PUBLIC_BOT_API_KEY: z.string(),
 })
 
 /**
@@ -74,10 +73,9 @@ const processEnv = {
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-  NEXT_PUBLIC_BOT_API_KEY: process.env.NEXT_PUBLIC_BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
-  BOT_AUTH_KEY: process.env.NEXT_PUBLIC_BOT_API_KEY,
+  BOT_AUTH_KEY: process.env.BOT_API_KEY,
 }
 
 // Don't touch the part below
