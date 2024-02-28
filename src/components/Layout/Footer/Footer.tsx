@@ -68,7 +68,7 @@ const Footer = () => {
               url="https://forms.gle/bmMce4r3JJckpSNJ7"
             />
           </GridItem>
-          <GridItem mr={{ lg: 16, xl: 24, '2xl': '10px' }}>
+          <GridItem mr={{ lg: 16, xl: 24 }}>
             <Newsletter
               buttonTitle={t('newsletterbuttonLabel')}
               header={t('newsletterSubscribeTitle')}
