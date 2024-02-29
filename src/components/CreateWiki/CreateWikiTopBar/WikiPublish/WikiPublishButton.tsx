@@ -9,7 +9,7 @@ import {
   EditSpecificMetaIds,
   Wiki,
 } from '@everipedia/iq-utils'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
 import { store } from '@/store/store'
@@ -45,6 +45,7 @@ export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { data } = useConnect()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)
@@ -206,10 +207,12 @@ export const WikiPublishButton = () => {
 
   const handleWikiPublish = async (override?: boolean) => {
     console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
-    if (connectedChainId !== chainId) {
+
+    if (connectedChainId !== chainId && data?.connector?.id !== 'magic') {
       setShowNetworkModal(true)
       return
     }
+
     if (!isValidWiki(toast, wiki)) return
 
     logEvent({
