@@ -207,12 +207,12 @@ export const WikiPublishButton = () => {
   const handleWikiPublish = async (override?: boolean) => {
     console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
 
+    if (!isValidWiki(toast, wiki)) return
+
     // if (connectedChainId !== chainId) {
     //   setShowNetworkModal(true)
     //   return
     // }
-
-    if (!isValidWiki(toast, wiki)) return
 
     logEvent({
       action: 'SUBMIT_WIKI',
