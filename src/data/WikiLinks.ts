@@ -14,6 +14,7 @@ import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
 import { RiGlobalFill, RiMediumFill } from 'react-icons/ri'
 import MirrorIcon from '@/components/Icons/mirrorIcon'
+import TiktokIcon from '@/components/Icons/tiktokicon'
 
 export const LinkType = {
   WEBSITE: 'website',
@@ -72,6 +73,13 @@ export const LINK_OPTIONS = [
     tests: [/https:\/\/(www.)?twitter.com\/\w+/],
   },
   {
+    id: CommonMetaIds.TIKTOK_PROFILE,
+    type: LinkType.SOCIAL,
+    label: 'Tiktok',
+    icon: TiktokIcon,
+    tests: [/https?:\/\/(www\.)?tiktok\.com\/@\w+/],
+  },
+  {
     id: CommonMetaIds.LINKEDIN_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Linkedin',
@@ -92,6 +100,7 @@ export const LINK_OPTIONS = [
     icon: FacebookIcon,
     tests: [/https:\/\/(www.)?((web|m).)?facebook.com\/\w+/],
   },
+
   {
     id: CommonMetaIds.COINGECKO_PROFILE,
     type: LinkType.SOCIAL,
