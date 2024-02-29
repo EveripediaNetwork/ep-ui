@@ -10,8 +10,10 @@ export const useAddress = () => {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    const wagmiConnected = localStorage.getItem('wagmi.recentConnectorId')
-    setIsConnected(wagmiConnected ? true : false)
+    const isWalletConnected = !!localStorage.getItem('wagmi.wallet')
+    const isConnectorConnected = !!localStorage.getItem('wagmi.connected')
+
+    setIsConnected(isWalletConnected && isConnectorConnected)
   }, [])
 
   const encodedToken = getCookie(cookieNames.Enum['x-auth-token']) as string

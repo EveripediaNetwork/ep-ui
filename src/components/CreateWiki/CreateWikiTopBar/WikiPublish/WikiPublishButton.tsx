@@ -1,40 +1,40 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
-import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
-import { useAppSelector } from '@/store/hook'
-import { logEvent } from '@/utils/googleAnalytics'
-import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import {
-  CreateNewWikiSlug,
-  EditSpecificMetaIds,
-  Wiki,
-} from '@everipedia/iq-utils'
-import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
+import config from '@/config'
+import networkMap from '@/data/NetworkMap'
+import useConfetti from '@/hooks/useConfetti'
+import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
+import { useGetSignedHash } from '@/hooks/useGetSignedHash'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
-import { store } from '@/store/store'
 import { postWiki } from '@/services/wikis'
-import { ClientError } from 'graphql-request'
-import { SerializedError } from '@reduxjs/toolkit'
-import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
+import { useAppSelector } from '@/store/hook'
+import { store } from '@/store/store'
+import { ProviderDataType } from '@/types/ProviderDataType'
 import {
   ValidationErrorMessage,
   defaultErrorMessage,
   initialMsg,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
-import ReactCanvasConfetti from 'react-canvas-confetti'
-import useConfetti from '@/hooks/useConfetti'
+import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
+import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
-import { useGetSignedHash } from '@/hooks/useGetSignedHash'
-import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
+import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { logEvent } from '@/utils/googleAnalytics'
+import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
+import {
+  CreateNewWikiSlug,
+  EditSpecificMetaIds,
+  Wiki,
+} from '@everipedia/iq-utils'
+import detectEthereumProvider from '@metamask/detect-provider'
+import { SerializedError } from '@reduxjs/toolkit'
+import { ClientError } from 'graphql-request'
+import { useTranslation } from 'next-i18next'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
+import ReactCanvasConfetti from 'react-canvas-confetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
-import dynamic from 'next/dynamic'
-import config from '@/config'
-import networkMap from '@/data/NetworkMap'
-import { ProviderDataType } from '@/types/ProviderDataType'
-import detectEthereumProvider from '@metamask/detect-provider'
-import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = dynamic(
@@ -42,13 +42,13 @@ const NetworkErrorNotification = dynamic(
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)
-  const { hexChainID } =
+  const { chainId } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
@@ -112,7 +112,7 @@ export const WikiPublishButton = () => {
       const provider = (await detectEthereumProvider({
         silent: true,
       })) as ProviderDataType
-      setDetectedProvider(provider)
+      setDetectedProvider(provider as ProviderDataType)
       if (provider) getConnectedChain(provider)
     }
 
@@ -120,16 +120,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -205,11 +204,14 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
-    if (connectedChainId !== hexChainID) {
-      setShowNetworkModal(true)
-      return
-    }
+    console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
+
     if (!isValidWiki(toast, wiki)) return
+
+    // if (connectedChainId !== chainId) {
+    //   setShowNetworkModal(true)
+    //   return
+    // }
 
     logEvent({
       action: 'SUBMIT_WIKI',
@@ -239,7 +241,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)

@@ -8,17 +8,15 @@ import {
   Text,
   Icon,
   Button,
-  useToast,
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import { ProviderDataType } from '@/types/ProviderDataType'
+import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useDispatch } from 'react-redux'
 import networkMap from '@/data/NetworkMap'
 import detectEthereumProvider from '@metamask/detect-provider'
-import { useAddress } from '@/hooks/useAddress'
-import { useSwitchChain } from 'wagmi'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -31,41 +29,13 @@ const NetworkErrorNotification = ({
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
-  const { isConnected: isUserConnected } = useAddress()
+  const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
-  const toast = useToast()
 
-  const { id: chainId } =
+  const { chainId, chainName, rpcUrls } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
       : networkMap.POLYGON_MAINNET
-
-  const { switchChainAsync } = useSwitchChain({
-    mutation: {
-      onError: (err) => {
-        toast({
-          title: 'Error switching network',
-          description: `There was an error switching the network: ${
-            err.message ?? 'Unknown error'
-          }. Please try again.`,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-        setModalState(false)
-      },
-      onSuccess: () => {
-        toast({
-          title: 'Network switched',
-          description: 'You have successfully switched to the new network.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        })
-        setModalState(false)
-      },
-    },
-  })
 
   useEffect(() => {
     const getDetectedProvider = async () => {
@@ -81,7 +51,33 @@ const NetworkErrorNotification = ({
   }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
-    await switchChainAsync({ chainId })
+    try {
+      await detectedProvider?.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }],
+      })
+      setModalState(false)
+    } catch (switchError) {
+      const err = switchError as Record<string, number>
+      if (err.code === 4902) {
+        try {
+          await detectedProvider?.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId,
+                chainName,
+                rpcUrls,
+              },
+            ],
+          })
+          setModalState(false)
+        } catch (_addError) {
+          return null
+        }
+      }
+    }
+    return null
   }
 
   return (
