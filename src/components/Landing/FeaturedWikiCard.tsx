@@ -35,9 +35,8 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
     } else if (wiki.created) {
       lastEditedTime = getReadableDate(wiki.created)
     }
-    return lastEditedTime
+    return lastEditedTime?.split(' ')[0]
   }
-
   return (
     <LinkBox flex="none">
       <chakra.div mx="auto">
@@ -130,7 +129,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 fontSize="sm"
                 textAlign="right"
               >
-                {t('LastEdited')} {getLatestEdited()}
+                {t('LastEdited')} {getLatestEdited()} {t('days')}
               </Text>
             </HStack>
           </Flex>

@@ -100,8 +100,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { data: ratingData } = await store.dispatch(
     averageRating.initiate(slug),
   )
-  const average = ratingData?.average || null
-  const totalRatings = ratingData?.votes || null
+  const average = ratingData?.average ?? null
+  const totalRatings = ratingData?.votes ?? null
 
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
