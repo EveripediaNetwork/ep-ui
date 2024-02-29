@@ -39,6 +39,21 @@ const EventFilter = ({
     blockchain: '',
   })
 
+  const aggregateResults = (filters: Filters) => {
+    const filterKeys = Object.keys(filters) as (keyof Filters)[]
+    const requests = filterKeys
+      .filter((key) => filters[key] !== '')
+      .map((key) => console.log([key], { [key]: filters[key] }))
+
+    // if (requests.length === 0) {
+    //   console.log('Empt')
+    // }
+
+    console.log({ requests })
+    // const results = await Promise.all(requests)
+    // return results.flat() // Assuming each request returns an array of items
+  }
+
   const filterEvents = (events: TEvents[], filters: Filters): TEvents[] => {
     let dateFilter = true
     let eventTypeFilter = true
@@ -134,7 +149,7 @@ const EventFilter = ({
 
   useEffect(() => {
     const filteredEvents = filterEvents(fetchedData, filters)
-    // console.log({ filteredEvents, fetchedData })
+    aggregateResults(filters)
     setEventData(filteredEvents)
   }, [filters, dateRange, fetchedData])
 
