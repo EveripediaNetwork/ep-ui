@@ -1,7 +1,7 @@
 import { ArticleJsonLd, NextSeo } from 'next-seo'
-import { WikiHeaderProps } from './Wiki'
 import { env } from '@/env.mjs'
 import { useTranslation } from 'next-i18next'
+import { WikiHeaderProps } from './Wiki'
 
 export const EventHeader = ({
   slug,
