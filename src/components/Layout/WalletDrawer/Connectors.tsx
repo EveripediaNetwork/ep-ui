@@ -35,7 +35,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const [connectorName, setConnectorName] = useState('')
 
   const { connect, connectors } = useConnect({
-    onError: error => {
+    onError: (error) => {
       logEvent({
         action: 'LOGIN_ERROR',
         label: error.message,
@@ -43,7 +43,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
         category: 'login_status',
       })
     },
-    onSuccess: data => {
+    onSuccess: (data) => {
       logEvent({
         action: 'LOGIN_SUCCESS',
         label: data.account,
