@@ -107,15 +107,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: 'About',
     href: '/about',
     icon: RiUserSearchFill,
-    target: '_blank',
   },
-  // {
-  //   id: 5,
-  //   label: 'IQ GPT',
-  //   href: 'https://iqgpt.com',
-  //   icon: RiSearchEyeFill,
-  //   target: '_blank',
-  // },
   {
     id: 6,
     label: 'More',
@@ -170,11 +162,6 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  // {
-  //   id: 6,
-  //   label: 'Events',
-  //   href: '/events',
-  // },
 ]
 
 export const NAV_ICON = {

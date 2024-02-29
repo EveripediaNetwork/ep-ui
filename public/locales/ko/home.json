@@ -20,9 +20,9 @@
   "AI": "인공지능",
   "BinanceSmartChain": "币安智能链",
   "Blockchains": "블록체인",
-  "CEXes": "中心化交易所",
+  "CEXes": "세스",
   "Collections": "收藏品",
-  "Collectors": "收藏家",
+  "Collectors": "수집가",
   "DEXes": "덱스",
   "Developers": "개발자",
   "Entertainment": "엔터테인먼트",
@@ -46,5 +46,7 @@
   "Month": "월",
   "Year": "년",
   "All time": "전체 기간",
-  "iqEarned": "IQ 획득함"
+  "iqEarned": "IQ 획득함",
+  "Events": "이벤트",
+  "Speakers": "스피커"
 }
