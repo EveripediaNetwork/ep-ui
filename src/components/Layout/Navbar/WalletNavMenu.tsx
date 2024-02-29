@@ -4,6 +4,7 @@ import React from 'react'
 import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 export interface WalletNavMenuProps {
   // setVisibleMenu: React.Dispatch<React.SetStateAction<number | null>>
@@ -17,6 +18,7 @@ const WalletNavMenu = ({
   drawerOperations,
 }: WalletNavMenuProps) => {
   const userAddress = getUserAddressFromCache()
+  const { t } = useTranslation('common')
   const router = useRouter()
   const handleWalletIconAction = () => {
     logEvent({
@@ -40,7 +42,7 @@ const WalletNavMenu = ({
         }}
         onClick={() => router.push('/login')}
       >
-        Sign In
+        {t('signIn')}
       </Button>
     )
   }

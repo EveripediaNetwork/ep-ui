@@ -459,6 +459,14 @@ html[data-theme='dark'] .markdownBody a {
   list-style-type: lower-roman;
 }
 
+.markdownBody ol {
+  list-style: decimal;
+}
+
+.markdownBody ul {
+  list-style: disc;
+}
+
 .markdownBody div > ol:not([type]) {
   list-style-type: decimal;
 }
@@ -508,7 +516,7 @@ html[data-theme='dark'] .markdownBody a {
   /* width:50%; */
 }
 
-.markdownBody table td  {
+.markdownBody table td {
   vertical-align: top;
 }
 
