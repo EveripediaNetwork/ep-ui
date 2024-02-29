@@ -1,4 +1,4 @@
-import { generateOutputSchema } from './schema'
+import { generateEventsSchema, generateOutputSchema } from './schema'
 import { useDispatch } from 'react-redux'
 import { setIsError, setIsLoading } from '@/store/slices/stream-slice'
 import {
@@ -8,8 +8,12 @@ import {
   setCurrentMessage,
 } from '@/store/slices/chatbot-slice'
 import { randomUUID } from 'crypto'
-import axios from 'axios'
 import { useAppSelector } from '@/store/hook'
+import {
+  EventStreamContentType,
+  fetchEventSource,
+} from '@fortaine/fetch-event-source'
+import { env } from '@/env.mjs'
 
 const useStream = () => {
   const dispatch = useDispatch()
@@ -22,6 +26,7 @@ const useStream = () => {
     question: string
     query?: string
   }) => {
+    const ctrl = new AbortController()
     if (!question) return
 
     if (question === 'Ask me about crypto') {
@@ -31,37 +36,71 @@ const useStream = () => {
         ),
       )
     } else {
-      dispatch(setCurrentMessage(question))
-      dispatch(setIsLoading(true))
-      dispatch(setIsError(false))
-      await axios
-        .post('/api/fetch-answer', {
-          question: query ? query : question,
-        })
-        .then((res) => {
-          const { chat, answer, answerSources, messageId } =
-            generateOutputSchema.parse(res.data)
+      try {
+        const requestObject = {
+          enableStream: true,
+          search: query ? query : question,
+          language: 'en',
+          isChat: true,
+        }
+        dispatch(setCurrentMessage(question))
+        dispatch(setIsLoading(true))
+        dispatch(setIsError(false))
+        await fetchEventSource('https://iqgpt.com/api/generate', {
+          method: 'POST',
+          signal: ctrl.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-key': `${env.NEXT_PUBLIC_BOT_API_KEY}`,
+          },
+          body: JSON.stringify(requestObject),
+          openWhenHidden: true,
+          async onopen(response) {
+            if (response.status === 500) {
+              throw new Error('Something Went Wrong')
+            }
+            if (
+              response.ok &&
+              response.headers.get('content-type') === EventStreamContentType
+            ) {
+              return
+            }
+          },
+          onmessage: (event) => {
+            if (event.event === generateEventsSchema.Enum.FINAL_OUTPUT) {
+              const { chat, answer, answerSources, messageId } =
+                generateOutputSchema.parse(JSON.parse(event.data))
 
-          if (chat && !currentChatId) {
-            dispatch(setCurrentChatId(chat.id))
-          }
+              if (chat && !currentChatId) {
+                dispatch(setCurrentChatId(chat.id))
+              }
 
-          dispatch(
-            addMessage({
-              id: String(messageId) || randomUUID(),
-              answer: answer ?? 'Sorry, I could not find an answer to that.',
-              search: question,
-              answerSources,
-            }),
-          )
+              dispatch(
+                addMessage({
+                  id: String(messageId) || randomUUID(),
+                  answer:
+                    answer ?? 'Sorry, I could not find an answer to that.',
+                  search: question,
+                  answerSources,
+                }),
+              )
+            }
+          },
+          onclose() {
+            ctrl.abort()
+          },
+          onerror(err) {
+            setIsError(true)
+            console.log(err)
+            throw new Error(err)
+          },
         })
-        .catch((err) => {
-          console.log(err)
-          dispatch(setIsError(true))
-        })
-        .finally(() => {
-          dispatch(setIsLoading(false))
-        })
+      } catch (err) {
+        console.log(err)
+        dispatch(setIsError(true))
+      } finally {
+        dispatch(setIsLoading(false))
+      }
     }
   }
 
