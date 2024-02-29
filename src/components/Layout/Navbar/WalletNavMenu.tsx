@@ -4,6 +4,7 @@ import React from 'react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useRouter } from 'next/router'
 import { useAddress } from '@/hooks/useAddress'
+import { useTranslation } from 'next-i18next'
 
 export interface WalletNavMenuProps {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -15,12 +16,13 @@ const WalletNavMenu = ({
   drawerOperations,
 }: WalletNavMenuProps) => {
   const { address: userAddress } = useAddress()
+  const { t } = useTranslation('common')
   const router = useRouter()
   const handleWalletIconAction = () => {
     logEvent({
       action: 'OPEN_WALLET',
       value: 1,
-      label: userAddress || '',
+      label: userAddress ?? '',
       category: 'open_drawer',
     })
     setHamburger(false)
@@ -38,7 +40,7 @@ const WalletNavMenu = ({
         }}
         onClick={() => router.push('/login')}
       >
-        Sign In
+        {t('signIn')}
       </Button>
     )
   }
