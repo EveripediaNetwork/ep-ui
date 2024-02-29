@@ -1,5 +1,6 @@
 import { EventInterestData } from '@/components/Event/event.data'
-import { TEvents, useGetEventsQuery } from '@/services/event'
+import { TEvents, getEvents } from '@/services/event'
+import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 
 import React, { useEffect, useState } from 'react'
@@ -7,11 +8,12 @@ import React, { useEffect, useState } from 'react'
 const EventInterest = ({
   eventData,
   setEventData,
+  setIsLoading,
 }: {
   eventData: TEvents[]
   setEventData: Function
+  setIsLoading: Function
 }) => {
-  const { data } = useGetEventsQuery()
   const router = useRouter()
   const { query, pathname } = router
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -26,15 +28,11 @@ const EventInterest = ({
     })
   }
 
-  function filterEventsByTags(
-    events: TEvents[],
-    filterTags: string[],
-  ): TEvents[] {
-    return events.filter((event) =>
-      event.tags?.some((tag) =>
-        filterTags.map((t) => t.toLowerCase()).includes(tag.id.toLowerCase()),
-      ),
+  async function filterEventsByTags(filterTags: string[]) {
+    const { data } = await store.dispatch(
+      getEvents.initiate({ ids: filterTags }),
     )
+    return data
   }
 
   useEffect(() => {
@@ -53,10 +51,13 @@ const EventInterest = ({
       { shallow: true },
     )
     if (selectedTags.length > 0) {
-      const filteredEvents = filterEventsByTags(eventData, selectedTags)
-      setEventData(filteredEvents)
+      setIsLoading(true)
+      filterEventsByTags(selectedTags)
+        .then((res) => setEventData(res))
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoading(false))
     } else {
-      setEventData(data)
+      setEventData(eventData)
     }
   }, [selectedTags])
 

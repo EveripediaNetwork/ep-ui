@@ -16,10 +16,10 @@ import {
 import { TEvents } from '@/services/event'
 
 interface Filters {
-  date: string[]
-  location: string[]
-  eventType: string[]
-  blockchain: string[]
+  date: string
+  location: string
+  eventType: string
+  blockchain: string
 }
 
 const EventFilter = ({
@@ -33,111 +33,108 @@ const EventFilter = ({
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const router = useRouter()
   const [filters, setFilters] = useState<Filters>({
-    date: [],
-    location: [],
-    eventType: [],
-    blockchain: [],
+    date: '',
+    location: '',
+    eventType: '',
+    blockchain: '',
   })
 
   const filterEvents = (events: TEvents[], filters: Filters): TEvents[] => {
+    let dateFilter = true
+    let eventTypeFilter = true
+    let blockchainFilter = false
+
     return events.filter((event) => {
       const dateArr = event?.events
       if (dateArr.length > 0) {
         // Date filter - assuming the dates are in ISO format for simplicity
-        const dateFilter =
-          filters.date.length === 0 ||
-          filters.date.some((date) => {
-            const eventStartDate = new Date(dateArr[0].date)
-            const eventEndDate = new Date(dateArr[1]?.date || dateArr[0].date)
-            if (date === 'Next Week') {
-              const nextWeek = new Date()
-              nextWeek.setDate(nextWeek.getDate() + 7)
-              return eventStartDate <= nextWeek && eventEndDate >= new Date()
-            } else if (date === 'Next Month') {
-              const nextMonth = new Date()
-              nextMonth.setMonth(nextMonth.getMonth() + 1)
-              return eventStartDate <= nextMonth && eventEndDate >= new Date()
-            } else {
-              // Custom Range
-              const startDate = dateRange?.from
-              const endDate = dateRange?.to
+        const eventStartDate = new Date(dateArr[0].date)
+        const eventEndDate = new Date(dateArr[1]?.date || dateArr[0].date)
+        if (filters.date === 'Next Week') {
+          const nextWeek = new Date()
+          nextWeek.setDate(nextWeek.getDate() + 7)
+          dateFilter =
+            filters.date.length === 0 ||
+            (eventStartDate <= nextWeek && eventEndDate >= new Date())
+        } else if (filters.date === 'Next Month') {
+          const nextMonth = new Date()
+          nextMonth.setMonth(nextMonth.getMonth() + 1)
+          dateFilter =
+            filters.date.length === 0 ||
+            (eventStartDate <= nextMonth && eventEndDate >= new Date())
+        } else {
+          // Custom Range
+          const startDate = dateRange?.from || ''
+          const endDate = dateRange?.to || ''
 
-              // Handle undefined or invalid custom range dates
-              if (!startDate || !endDate) {
-                console.error('Invalid custom range: missing start or end date')
-                return true // Indicate error (or handle differently)
-              }
+          // Handle undefined or invalid custom range dates
+          if (!startDate || !endDate) {
+            console.error('Invalid custom range: missing start or end date')
+            dateFilter = filters.date.length === 0 || true // Indicate error (or handle differently)
+          }
 
-              // Convert strings to Date objects (if necessary)
-              const parsedStartDate = new Date(startDate)
-              const parsedEndDate = new Date(endDate)
+          // Convert strings to Date objects (if necessary)
+          const parsedStartDate = new Date(startDate)
+          const parsedEndDate = new Date(endDate)
 
-              // Ensure start date is before end date
-              if (parsedStartDate >= parsedEndDate) {
-                console.error('Invalid custom range: start date after end date')
-                return false // Indicate error (or handle differently)
-              }
+          // Ensure start date is before end date
+          if (parsedStartDate >= parsedEndDate) {
+            console.error('Invalid custom range: start date after end date')
+            dateFilter = filters.date.length === 0 || false // Indicate error (or handle differently)
+          }
 
-              // Compare event dates with custom range
-              return (
-                eventStartDate >= parsedStartDate &&
-                eventStartDate <= parsedEndDate &&
-                eventEndDate >= parsedStartDate &&
-                eventEndDate <= parsedEndDate
-              )
-            }
-          })
-
-        // Location filter
-        const locationFilter =
-          filters.location.length === 0 ||
-          filters.location.some((location) =>
-            event.location?.includes(location),
-          )
+          // Compare event dates with custom range
+          dateFilter =
+            filters.date.length === 0 ||
+            (eventStartDate >= parsedStartDate &&
+              eventStartDate <= parsedEndDate &&
+              eventEndDate >= parsedStartDate &&
+              eventEndDate <= parsedEndDate)
+        }
 
         // Event type filter
-        const eventTypeFilter =
+        eventTypeFilter =
           filters.eventType.length === 0 ||
-          filters.eventType.some((eventType) =>
-            event.tags?.some((tag) => tag.id === eventType),
-          )
+          event.tags?.some((tag) => tag.id === filters.eventType)
 
         // Blockchain filter
-        const blockchainFilter =
+        blockchainFilter =
           filters.blockchain.length === 0 ||
-          filters.blockchain.some((blockchain) =>
-            event.tags?.some((tag) => tag.id === blockchain),
-          )
+          event.tags?.some((tag) => tag.id === filters.blockchain)
 
-        return (
-          dateFilter && locationFilter && eventTypeFilter && blockchainFilter
-        )
+        return eventTypeFilter && blockchainFilter
       }
     })
   }
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
     setFilters((prevFilters) => {
-      const isActive = prevFilters[filterCategory].includes(value)
-      const newFilters = isActive
-        ? prevFilters[filterCategory].filter((item) => item !== value) // Remove the filter
-        : [...prevFilters[filterCategory], value] // Add the filter
+      // Check if the current filter value is the same as the passed value
+      const isRemovingFilter = prevFilters[filterCategory] === value
+
+      // If removing the filter, set it to an empty string, otherwise update it with the new value
+      const newFilterValue = isRemovingFilter ? '' : value
+
+      // Update the state with the new filter value
+      const newFilters = { ...prevFilters, [filterCategory]: newFilterValue }
 
       // Update the URL query parameters
-      const query = {
-        ...router.query,
-        [filterCategory]: newFilters,
+      // If removing the filter, omit it from the query, otherwise set it to the new value
+      const query = { ...router.query, [filterCategory]: newFilterValue }
+      if (isRemovingFilter) {
+        delete query[filterCategory] // Remove the filter from the query if it's being "removed"
       }
       router.push({ pathname: router.pathname, query }, undefined, {
         shallow: true,
       })
 
-      return { ...prevFilters, [filterCategory]: newFilters }
+      return newFilters
     })
   }
 
   useEffect(() => {
     const filteredEvents = filterEvents(fetchedData, filters)
+    // console.log({ filteredEvents, fetchedData })
     setEventData(filteredEvents)
   }, [filters, dateRange, fetchedData])
 

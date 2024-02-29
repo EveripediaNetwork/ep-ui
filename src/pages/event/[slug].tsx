@@ -105,7 +105,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       event: eventDetails,
-      popularEvents,
+      popularEvents: popularEvents?.slice(0, 5) || [],
       slug,
       ...props,
     },

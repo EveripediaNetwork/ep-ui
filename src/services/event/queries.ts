@@ -1,8 +1,32 @@
 import { gql } from 'graphql-request'
 
 export const GET_EVENTS = gql`
-  query GetEvents {
-    events {
+  query GetEvents($offset: Int, $limit: Int, $ids: [String!]) {
+    events(offset: $offset, limit: $limit, ids: $ids) {
+      id
+      title
+      summary
+      events {
+        type
+        date
+      }
+      tags {
+        id
+      }
+      linkedWikis {
+        speakers
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
+
+export const GET_EVENTS_BY_BLOCKCHAIN = gql`
+  query GetEvents($blockchain: String) {
+    eventsByBlockchain(blockchain: $blockchain) {
       id
       title
       summary

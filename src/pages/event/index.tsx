@@ -37,7 +37,11 @@ const EventPage = ({
         {!searchActive && (
           <>
             <TrendingEvent />
-            <EventInterest eventData={events} setEventData={setEventData} />
+            <EventInterest
+              setIsLoading={setIsLoading}
+              eventData={events}
+              setEventData={setEventData}
+            />
           </>
         )}
         <div className="mt-10 xl:hidden">
@@ -69,7 +73,7 @@ const EventPage = ({
 export default EventPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const { data: events } = await store.dispatch(getEvents.initiate())
+  const { data: events } = await store.dispatch(getEvents.initiate({}))
   const { data: popularEvents } = await store.dispatch(
     getPopularEvents.initiate(),
   )
@@ -77,7 +81,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events || [],
-      popularEvents: popularEvents || [],
+      popularEvents: popularEvents?.slice(0, 5) || [],
     },
   }
 }

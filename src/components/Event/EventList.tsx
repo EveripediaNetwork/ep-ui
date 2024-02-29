@@ -17,12 +17,12 @@ const EventList = ({
 }: {
   isLoading: boolean
   fetchedData: TEvents[]
-  eventData?: TEvents[]
+  eventData: TEvents[]
   setEventData: Function
   setSearchActive: Function
 }) => {
   const eventsByMonth =
-    eventData && eventData?.length > 0 ? groupEventsByMonth(eventData) : []
+    eventData && eventData.length > 0 ? groupEventsByMonth(eventData) : []
 
   return (
     <div className="flex flex-col flex-1 gap-5">
@@ -46,7 +46,7 @@ const EventList = ({
       )}
       <div className="flex flex-col flex-1 gap-10 xl:gap-20">
         {eventData && eventData.length > 0 ? (
-          Object.entries(eventsByMonth).map(([monthYear, events]) => (
+          Object.entries(eventsByMonth).map(([monthYear, events], index) => (
             <div key={monthYear} className="flex flex-col gap-10">
               <div className="">
                 <div className="flex justify-between items-end">
@@ -61,7 +61,7 @@ const EventList = ({
                       )}
                     </span>
                   </div>
-                  {events[0] && (
+                  {index === 0 && (
                     <>
                       {isLoading ? (
                         <LoadingState classNames="w-[285px] h-4" />
@@ -105,12 +105,12 @@ const EventList = ({
           <EventEmptyState />
         )}
       </div>
-      {eventData && eventData.length > 20 && (
+      {eventData.length > 20 && (
         <button
-          className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
           type="button"
+          className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
         >
-          View more
+          {false ? 'Loading more...' : 'View more'}
         </button>
       )}
     </div>

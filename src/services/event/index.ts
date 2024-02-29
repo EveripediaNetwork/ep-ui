@@ -4,7 +4,7 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import { HYDRATE } from 'next-redux-wrapper'
 import {
   GET_EVENTS,
-  GET_EVENT_BY_CATEGORY_ID,
+  GET_EVENTS_BY_BLOCKCHAIN,
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
 } from './queries'
@@ -22,6 +22,13 @@ export type TEvents = {
   }
   images: Image[]
 }
+
+type TEventArg = {
+  limit?: number
+  offset?: number
+  ids?: string[]
+}
+
 type TGetEventResponse = {
   events: TEvents[]
 }
@@ -41,8 +48,8 @@ type TEventSearch = {
   title: string
 }
 
-type TEventCategorySearchById = {
-  categoryId: string
+type TEventByBlockchain = {
+  blockchain: string
 }
 
 export const eventApi = createApi({
@@ -57,8 +64,11 @@ export const eventApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getEvents: builder.query<TEvents[], void>({
-      query: () => ({ document: GET_EVENTS }),
+    getEvents: builder.query<TEvents[], TEventArg>({
+      query: ({ offset, limit, ids }: TEventArg) => ({
+        document: GET_EVENTS,
+        variables: { offset, limit, ids },
+      }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
     getPopularEvents: builder.query<TEvents[], void>({
@@ -76,11 +86,11 @@ export const eventApi = createApi({
       transformResponse: (response: TGetWikiByEventResponse) =>
         response.wikiEventsByTitle,
     }),
-    getEventByCategoryId: builder.query<TEvents[], TEventCategorySearchById>({
-      query: ({ categoryId }: TEventCategorySearchById) => {
+    getEventByBlockchain: builder.query<TEvents[], TEventByBlockchain>({
+      query: ({ blockchain }: TEventByBlockchain) => {
         return {
-          document: GET_EVENT_BY_CATEGORY_ID,
-          variables: { categoryId },
+          document: GET_EVENTS_BY_BLOCKCHAIN,
+          variables: { blockchain },
         }
       },
       transformResponse: (response: TGetEventByCategoryIdResponse) =>
@@ -93,12 +103,12 @@ export const {
   useGetEventsQuery,
   useGetPopularEventsQuery,
   useGetEventByTitleQuery,
-  useGetEventByCategoryIdQuery,
+  useGetEventByBlockchainQuery,
 } = eventApi
 
 export const {
   getEvents,
   getPopularEvents,
   getEventByTitle,
-  getEventByCategoryId,
+  getEventByBlockchain,
 } = eventApi.endpoints
