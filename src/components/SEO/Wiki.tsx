@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 import DOMPurify from 'isomorphic-dompurify'
 import React from 'react'
 import Head from 'next/head'
-interface WikiHeaderProps {
+export interface WikiHeaderProps {
   slug: string
   title: string
   description: string
