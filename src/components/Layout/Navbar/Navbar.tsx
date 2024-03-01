@@ -18,9 +18,8 @@ import {
 import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setDrawerOpen } from '@/store/slices/app-slice'
+import { setDrawerOpen, setLanguage } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
 import DesktopNav from './DesktopNav'
@@ -39,6 +38,7 @@ import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -59,6 +59,7 @@ const Navbar = () => {
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
+  const locale = router.locale
 
   const { address } = useAccount()
   const { userCanEdit } = useWhiteListValidator(address)
@@ -67,6 +68,10 @@ const Navbar = () => {
     onOpen: onSuggestWikiOpen,
     onClose: onSuggestWikiClose,
   } = useDisclosure()
+
+  useEffect(() => {
+    dispatch(setLanguage(locale))
+  }, [])
 
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
