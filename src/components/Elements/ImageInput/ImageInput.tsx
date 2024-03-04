@@ -51,7 +51,7 @@ const ImageInput = ({
     if (!validLinkReg.test(url)) {
       return { type: null }
     }
-    if (/(https?:\/\/)?(www.)?youtu(be\.com|.be)\//.test(url)) {
+    if (/(https?:\/\/)?(www.)?youtu(be\.com|.be)\/?/.test(url)) {
       const videoCode = url.match(validYTLinkReg)
       return { type: 'youtube', value: videoCode?.[1] }
     }
@@ -124,6 +124,7 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'youtube') {
+      console.log('youtube url', urlType.value)
       if (!urlType.value) {
         setImageSrc(undefined)
         toast({
@@ -164,6 +165,7 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'imageURL') {
+      console.log('image url', url)
       try {
         tryUploadImg(url)
       } catch (_error) {
