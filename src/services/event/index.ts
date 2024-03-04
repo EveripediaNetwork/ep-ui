@@ -5,6 +5,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import {
   GET_EVENTS,
   GET_EVENTS_BY_BLOCKCHAIN,
+  GET_EVENTS_BY_TAGS,
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
 } from './queries'
@@ -26,7 +27,9 @@ export type TEvents = {
 type TEventArg = {
   limit?: number
   offset?: number
-  ids?: string[]
+  tagIds?: string[]
+  startDate?: string
+  endDate?: string
 }
 
 type TGetEventResponse = {
@@ -40,16 +43,12 @@ type TGetPopularEventResponse = {
 type TGetWikiByEventResponse = {
   wikiEventsByTitle: TEvents[]
 }
-type TGetEventByCategoryIdResponse = {
-  wikiEventsByCategory: TEvents[]
+type TEventByBlockchain = {
+  eventsByBlockchain: TEvents[]
 }
 
 type TEventSearch = {
   title: string
-}
-
-type TEventByBlockchain = {
-  blockchain: string
 }
 
 export const eventApi = createApi({
@@ -65,9 +64,18 @@ export const eventApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getEvents: builder.query<TEvents[], TEventArg>({
-      query: ({ offset, limit, ids }: TEventArg) => ({
-        document: GET_EVENTS,
-        variables: { offset, limit, ids },
+      query: ({ offset, limit }: TEventArg) => {
+        return {
+          document: GET_EVENTS,
+          variables: { offset, limit },
+        }
+      },
+      transformResponse: (response: TGetEventResponse) => response.events,
+    }),
+    getEventsByTags: builder.query<TEvents[], TEventArg>({
+      query: ({ tagIds, startDate, endDate }: TEventArg) => ({
+        document: GET_EVENTS_BY_TAGS,
+        variables: { tagIds, startDate, endDate },
       }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
@@ -86,15 +94,15 @@ export const eventApi = createApi({
       transformResponse: (response: TGetWikiByEventResponse) =>
         response.wikiEventsByTitle,
     }),
-    getEventByBlockchain: builder.query<TEvents[], TEventByBlockchain>({
-      query: ({ blockchain }: TEventByBlockchain) => {
+    getEventByBlockchain: builder.query<TEvents[], string>({
+      query: (blockchain: string) => {
         return {
           document: GET_EVENTS_BY_BLOCKCHAIN,
           variables: { blockchain },
         }
       },
-      transformResponse: (response: TGetEventByCategoryIdResponse) =>
-        response.wikiEventsByCategory,
+      transformResponse: (response: TEventByBlockchain) =>
+        response.eventsByBlockchain,
     }),
   }),
 })
@@ -104,6 +112,7 @@ export const {
   useGetPopularEventsQuery,
   useGetEventByTitleQuery,
   useGetEventByBlockchainQuery,
+  useGetEventsByTagsQuery,
 } = eventApi
 
 export const {
@@ -111,4 +120,5 @@ export const {
   getPopularEvents,
   getEventByTitle,
   getEventByBlockchain,
+  getEventsByTags,
 } = eventApi.endpoints

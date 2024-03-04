@@ -449,6 +449,13 @@ export const eventFilterData = [
   {
     icon: <RiBankFill />,
     title: 'Blockchain',
-    filter: ['Bitcoin', 'Ethereum', 'Polygon', 'Solana', 'Cardano'],
+    filter: [
+      'Bitcoin',
+      'Ethereum',
+      'Polygon',
+      'Solana',
+      'Cardano',
+      'Binance-coin',
+    ],
   },
 ]

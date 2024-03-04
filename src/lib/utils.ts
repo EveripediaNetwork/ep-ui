@@ -37,6 +37,14 @@ export function parseDateRange(isoString: string) {
   }
 }
 
+export const dateFormater = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Add 1 because months are 0-indexed, and pad with leading zero if necessary
+  const day = String(date.getDate()).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
 export const groupEventsByMonth = (events: TEvents[]) => {
   const eventsByMonth: { [key: string]: TEvents[] } = {}
 

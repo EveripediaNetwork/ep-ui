@@ -105,7 +105,7 @@ const EventList = ({
           <EventEmptyState />
         )}
       </div>
-      {eventData.length > 20 && (
+      {eventData?.length > 20 && (
         <button
           type="button"
           className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"

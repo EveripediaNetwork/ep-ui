@@ -14,6 +14,11 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { TEvents } from '@/services/event'
+import {
+  fetchEventByBlockchain,
+  fetchFilteredEventList,
+} from '@/services/search/utils'
+import { dateFormater } from '@/lib/utils'
 
 interface Filters {
   date: string
@@ -25,9 +30,11 @@ interface Filters {
 const EventFilter = ({
   fetchedData,
   setEventData,
+  setIsLoading,
 }: {
   fetchedData: TEvents[]
   setEventData: Function
+  setIsLoading: Function
 }) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
@@ -41,42 +48,26 @@ const EventFilter = ({
 
   const aggregateResults = (filters: Filters) => {
     const filterKeys = Object.keys(filters) as (keyof Filters)[]
-    const requests = filterKeys
-      .filter((key) => filters[key] !== '')
-      .map((key) => console.log([key], { [key]: filters[key] }))
+    const selectedFilters = filterKeys.filter((key) => filters[key] !== '')
+    const today = dateFormater(new Date())
 
-    // if (requests.length === 0) {
-    //   console.log('Empt')
-    // }
-
-    console.log({ requests })
-    // const results = await Promise.all(requests)
-    // return results.flat() // Assuming each request returns an array of items
-  }
-
-  const filterEvents = (events: TEvents[], filters: Filters): TEvents[] => {
-    let dateFilter = true
-    let eventTypeFilter = true
-    let blockchainFilter = false
-
-    return events.filter((event) => {
-      const dateArr = event?.events
-      if (dateArr.length > 0) {
-        // Date filter - assuming the dates are in ISO format for simplicity
-        const eventStartDate = new Date(dateArr[0].date)
-        const eventEndDate = new Date(dateArr[1]?.date || dateArr[0].date)
-        if (filters.date === 'Next Week') {
+    if (selectedFilters.length > 0) {
+      setIsLoading(true)
+      const requests = selectedFilters.map((key) => {
+        if (key === 'eventType') {
+          return fetchFilteredEventList([filters[key]])
+        }
+        if (key === 'blockchain') {
+          return fetchEventByBlockchain(filters[key])
+        }
+        if (filters[key] === 'Next Week') {
           const nextWeek = new Date()
           nextWeek.setDate(nextWeek.getDate() + 7)
-          dateFilter =
-            filters.date.length === 0 ||
-            (eventStartDate <= nextWeek && eventEndDate >= new Date())
-        } else if (filters.date === 'Next Month') {
+          return fetchFilteredEventList([], today, dateFormater(nextWeek))
+        } else if (filters[key] === 'Next Month') {
           const nextMonth = new Date()
           nextMonth.setMonth(nextMonth.getMonth() + 1)
-          dateFilter =
-            filters.date.length === 0 ||
-            (eventStartDate <= nextMonth && eventEndDate >= new Date())
+          return fetchFilteredEventList([], today, dateFormater(nextMonth))
         } else {
           // Custom Range
           const startDate = dateRange?.from || ''
@@ -85,7 +76,7 @@ const EventFilter = ({
           // Handle undefined or invalid custom range dates
           if (!startDate || !endDate) {
             console.error('Invalid custom range: missing start or end date')
-            dateFilter = filters.date.length === 0 || true // Indicate error (or handle differently)
+            return
           }
 
           // Convert strings to Date objects (if necessary)
@@ -95,49 +86,45 @@ const EventFilter = ({
           // Ensure start date is before end date
           if (parsedStartDate >= parsedEndDate) {
             console.error('Invalid custom range: start date after end date')
-            dateFilter = filters.date.length === 0 || false // Indicate error (or handle differently)
+            return
           }
 
-          // Compare event dates with custom range
-          dateFilter =
-            filters.date.length === 0 ||
-            (eventStartDate >= parsedStartDate &&
-              eventStartDate <= parsedEndDate &&
-              eventEndDate >= parsedStartDate &&
-              eventEndDate <= parsedEndDate)
+          return fetchFilteredEventList(
+            [],
+            dateFormater(parsedStartDate),
+            dateFormater(parsedEndDate),
+          )
         }
+      })
 
-        // Event type filter
-        eventTypeFilter =
-          filters.eventType.length === 0 ||
-          event.tags?.some((tag) => tag.id === filters.eventType)
+      Promise.all(requests)
+        .then((res) => {
+          const [fetch1 = [], fetch2 = [], fetch3 = []] = res
 
-        // Blockchain filter
-        blockchainFilter =
-          filters.blockchain.length === 0 ||
-          event.tags?.some((tag) => tag.id === filters.blockchain)
+          const result = [...fetch1, ...fetch2, ...fetch3]
 
-        return eventTypeFilter && blockchainFilter
-      }
-    })
+          const uniqueArr = result.filter(
+            (obj, index, self) =>
+              index === self.findIndex((t) => t.id === obj.id),
+          )
+          setEventData(uniqueArr)
+        })
+        .catch((err) => console.error(err))
+        .finally(() => setIsLoading(false))
+    } else {
+      setEventData(fetchedData)
+    }
   }
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
     setFilters((prevFilters) => {
-      // Check if the current filter value is the same as the passed value
       const isRemovingFilter = prevFilters[filterCategory] === value
-
-      // If removing the filter, set it to an empty string, otherwise update it with the new value
       const newFilterValue = isRemovingFilter ? '' : value
-
-      // Update the state with the new filter value
       const newFilters = { ...prevFilters, [filterCategory]: newFilterValue }
 
-      // Update the URL query parameters
-      // If removing the filter, omit it from the query, otherwise set it to the new value
       const query = { ...router.query, [filterCategory]: newFilterValue }
       if (isRemovingFilter) {
-        delete query[filterCategory] // Remove the filter from the query if it's being "removed"
+        delete query[filterCategory]
       }
       router.push({ pathname: router.pathname, query }, undefined, {
         shallow: true,
@@ -148,9 +135,9 @@ const EventFilter = ({
   }
 
   useEffect(() => {
-    const filteredEvents = filterEvents(fetchedData, filters)
+    // const filteredEvents = filterEvents(fetchedData, filters)
     aggregateResults(filters)
-    setEventData(filteredEvents)
+    // setEventData(filteredEvents)
   }, [filters, dateRange, fetchedData])
 
   return (

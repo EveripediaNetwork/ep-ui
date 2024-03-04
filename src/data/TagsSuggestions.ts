@@ -28,6 +28,10 @@ export const TagsSuggestions = [
     value: 'Collectors',
   },
   {
+    label: 'Conference',
+    value: 'Conference',
+  },
+  {
     label: 'DEXes',
     value: 'DEXes',
   },
@@ -52,6 +56,10 @@ export const TagsSuggestions = [
     value: 'Founders',
   },
   {
+    label: 'Festivals',
+    value: 'Festivals',
+  },
+  {
     label: 'Games',
     value: 'Games',
   },
@@ -70,6 +78,10 @@ export const TagsSuggestions = [
   {
     label: 'Organizations',
     value: 'Organizations',
+  },
+  {
+    label: 'Online',
+    value: 'Online',
   },
   {
     label: 'PeopleInDeFi',

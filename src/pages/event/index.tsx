@@ -45,7 +45,11 @@ const EventPage = ({
           </>
         )}
         <div className="mt-10 xl:hidden">
-          <EventFilter fetchedData={events} setEventData={setEventData} />
+          <EventFilter
+            fetchedData={events}
+            setIsLoading={setIsLoading}
+            setEventData={setEventData}
+          />
         </div>
         <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
           <EventList
@@ -57,7 +61,11 @@ const EventPage = ({
           />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <div className="hidden xl:block">
-              <EventFilter fetchedData={events} setEventData={setEventData} />
+              <EventFilter
+                setIsLoading={setIsLoading}
+                fetchedData={events}
+                setEventData={setEventData}
+              />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
               <NearbyEventFilter />
@@ -80,7 +88,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
-      events: events || [],
+      events: events ?? [],
       popularEvents: popularEvents?.slice(0, 5) || [],
     },
   }

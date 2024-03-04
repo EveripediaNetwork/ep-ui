@@ -1,8 +1,32 @@
 import { gql } from 'graphql-request'
 
 export const GET_EVENTS = gql`
-  query GetEvents($offset: Int, $limit: Int, $ids: [String!]) {
-    events(offset: $offset, limit: $limit, ids: $ids) {
+  query GetEvents($offset: Int, $limit: Int) {
+    events(offset: $offset, limit: $limit) {
+      id
+      title
+      summary
+      events {
+        type
+        date
+      }
+      tags {
+        id
+      }
+      linkedWikis {
+        speakers
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
+
+export const GET_EVENTS_BY_TAGS = gql`
+  query GetEvents($tagIds: [String!], $startDate: String, $endDate: String) {
+    events(tagIds: $tagIds, startDate: $startDate, endDate: $endDate) {
       id
       title
       summary
@@ -25,7 +49,7 @@ export const GET_EVENTS = gql`
 `
 
 export const GET_EVENTS_BY_BLOCKCHAIN = gql`
-  query GetEvents($blockchain: String) {
+  query GetEventsByBlockchain($blockchain: String) {
     eventsByBlockchain(blockchain: $blockchain) {
       id
       title
@@ -33,9 +57,6 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
       events {
         type
         date
-      }
-      tags {
-        id
       }
       linkedWikis {
         speakers
@@ -71,30 +92,6 @@ export const GET_POPULAR_EVENTS = gql`
 export const GET_EVENT_BY_TITLE = gql`
   query GetWikiByTitle($title: String!) {
     wikiEventsByTitle(title: $title) {
-      id
-      title
-      summary
-      events {
-        type
-        date
-      }
-      tags {
-        id
-      }
-      linkedWikis {
-        speakers
-      }
-      images {
-        id
-        type
-      }
-    }
-  }
-`
-
-export const GET_EVENT_BY_CATEGORY_ID = gql`
-  query GetWikiByCategoryId($categoryId: String) {
-    wikiEventsByCategory(categoryId: $categoryId) {
       id
       title
       summary
