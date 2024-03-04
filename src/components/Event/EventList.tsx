@@ -1,39 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EventCard from './EventCard'
 import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
 import { Dialog, DialogTrigger } from '../ui/dialog'
 import SuggestEventModal from './SuggestEventModal'
-import { TEvents } from '@/services/event'
+import { TEvents, getEvents } from '@/services/event'
 import { RiArrowLeftLine } from 'react-icons/ri'
 import { LoadingState } from './LoadingState'
+import { store } from '@/store/store'
+import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
+import { useRouter } from 'next/router'
 
 const EventList = ({
   fetchedData,
   eventData,
   setEventData,
+  searchActive,
   setSearchActive,
   isLoading,
 }: {
   isLoading: boolean
+  searchActive: boolean
   fetchedData: TEvents[]
   eventData: TEvents[]
   setEventData: Function
   setSearchActive: Function
 }) => {
+  const router = useRouter()
+  const hasQueryParams = Object.keys(router.query).length > 0
+  const limit = EVENT_TEST_ITEM_PER_PAGE
+  const [offset, setOffset] = useState(eventData?.length || 0)
+  const [isFetching, setIsFetching] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+
+  const handleViewMore = async () => {
+    setIsFetching(true)
+    setOffset((prevOffset) => prevOffset + limit) // Increase offset to fetch next set of events
+    store
+      .dispatch(getEvents.initiate({ offset: offset, limit }))
+      .then(({ data }) => {
+        if (data) {
+          if (data.length > 0) {
+            setHasMore(true)
+            setEventData((prevEvents: TEvents[]) => [...prevEvents, ...data])
+          } else {
+            setHasMore(false)
+          }
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsFetching(false)
+      })
+  }
+
   const eventsByMonth =
     eventData && eventData.length > 0 ? groupEventsByMonth(eventData) : []
 
   return (
     <div className="flex flex-col flex-1 gap-5">
-      {eventData?.length !== fetchedData?.length && (
+      {searchActive && (
         <span className="flex flex-col items-start">
           <h1 className="font-semibold">Search Results</h1>
           <button
             type="button"
             onClick={() => {
               setEventData(fetchedData)
+              setOffset(fetchedData.length)
               setSearchActive(false)
+              setHasMore(true)
             }}
             className="text-sm text-brand-500 flex gap-3 hover:underline items-center cursor-pointer dark:text-brand-800 md:text-base"
           >
@@ -44,7 +79,7 @@ const EventList = ({
           </button>
         </span>
       )}
-      <div className="flex flex-col flex-1 gap-10 xl:gap-20">
+      <div className="flex flex-col gap-10 xl:gap-20">
         {eventData && eventData.length > 0 ? (
           Object.entries(eventsByMonth).map(([monthYear, events], index) => (
             <div key={monthYear} className="flex flex-col gap-10">
@@ -105,14 +140,20 @@ const EventList = ({
           <EventEmptyState />
         )}
       </div>
-      {eventData?.length > 20 && (
-        <button
-          type="button"
-          className="px-10 py-2 mt-10 rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400"
-        >
-          {false ? 'Loading more...' : 'View more'}
-        </button>
-      )}
+      {!hasQueryParams &&
+        !searchActive &&
+        (hasMore ? (
+          <button
+            type="button"
+            onClick={handleViewMore}
+            disabled={isFetching}
+            className="px-10 py-2 w-fit mx-auto rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400 disabled:cursor-not-allowed"
+          >
+            {isFetching ? 'Loading more...' : 'View more'}
+          </button>
+        ) : (
+          <span className="text-center">No More Data</span>
+        ))}
     </div>
   )
 }

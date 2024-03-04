@@ -12,6 +12,7 @@ import { useState } from 'react'
 import EventList from '@/components/Event/EventList'
 import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
+import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 
 const EventPage = ({
   events,
@@ -56,6 +57,7 @@ const EventPage = ({
             fetchedData={events}
             isLoading={isLoading}
             setSearchActive={setSearchActive}
+            searchActive={searchActive}
             eventData={eventData}
             setEventData={setEventData}
           />
@@ -81,7 +83,9 @@ const EventPage = ({
 export default EventPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const { data: events } = await store.dispatch(getEvents.initiate({}))
+  const { data: events } = await store.dispatch(
+    getEvents.initiate({ offset: 0, limit: EVENT_TEST_ITEM_PER_PAGE }),
+  )
   const { data: popularEvents } = await store.dispatch(
     getPopularEvents.initiate(),
   )
