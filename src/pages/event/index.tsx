@@ -36,7 +36,7 @@ const EventPage = ({
         />
         {!searchActive && (
           <>
-            <TrendingEvent />
+            <TrendingEvent events={events.slice(0, 6)} />
             <EventInterest
               setIsLoading={setIsLoading}
               eventData={events}
