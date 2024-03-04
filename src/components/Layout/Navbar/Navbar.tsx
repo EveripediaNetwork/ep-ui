@@ -70,6 +70,10 @@ const Navbar = () => {
   } = useDisclosure()
 
   useEffect(() => {
+    if (locale && lang !== locale) handleLangChange(locale)
+  }, [router.locale])
+
+  useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
