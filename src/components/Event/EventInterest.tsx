@@ -30,7 +30,7 @@ const EventInterest = ({
 
   async function filterEventsByTags(filterTags: string[]) {
     const { data } = await store.dispatch(
-      getEvents.initiate({ ids: filterTags }),
+      getEvents.initiate({ tagIds: filterTags }),
     )
     return data
   }
