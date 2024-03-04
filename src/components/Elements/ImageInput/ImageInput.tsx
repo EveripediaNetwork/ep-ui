@@ -124,6 +124,15 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'youtube') {
+      if (!urlType.value) {
+        setImageSrc(undefined)
+        toast({
+          title: 'Invalid Youtube URL',
+          status: 'error',
+          duration: 3000,
+        })
+        return
+      }
       const isVideoUnavailable = await fetch(`/api/checkVideo?url=${url}`)
         .then((res) => res.json())
         .then((data) => data.isUnavailable)
