@@ -1,5 +1,5 @@
 import { EventInterestData } from '@/components/Event/event.data'
-import { TEvents, getEvents } from '@/services/event'
+import { TEvents, getEventsByTags } from '@/services/event'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
 
@@ -30,7 +30,7 @@ const EventInterest = ({
 
   async function filterEventsByTags(filterTags: string[]) {
     const { data } = await store.dispatch(
-      getEvents.initiate({ tagIds: filterTags }),
+      getEventsByTags.initiate({ tagIds: filterTags }),
     )
     return data
   }
