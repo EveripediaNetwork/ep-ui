@@ -42,7 +42,7 @@ const NetworkErrorNotification = dynamic(
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
@@ -64,6 +64,14 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
+
+  const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
+
+  useEffect(() => {
+    if (connectedChainId !== chainId && !networkSwitchAttempted) {
+      setShowNetworkModal(true)
+    }
+  }, [connectedChainId, chainId, networkSwitchAttempted])
 
   const { t } = useTranslation('wiki')
 
@@ -120,16 +128,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -209,11 +216,6 @@ export const WikiPublishButton = () => {
 
     if (!isValidWiki(toast, wiki)) return
 
-    // if (connectedChainId !== chainId) {
-    //   setShowNetworkModal(true)
-    //   return
-    // }
-
     logEvent({
       action: 'SUBMIT_WIKI',
       label: await getWikiSlug(wiki),
@@ -242,7 +244,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)
@@ -331,6 +333,7 @@ export const WikiPublishButton = () => {
       <NetworkErrorNotification
         modalState={showNetworkModal}
         setModalState={(state: boolean) => setShowNetworkModal(state)}
+        setNetworkSwitchAttempted={setNetworkSwitchAttempted}
       />
     </>
   )
