@@ -19,7 +19,7 @@ import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import dynamic from 'next/dynamic'
 import { useDispatch } from 'react-redux'
-import { setDrawerOpen, setLanguage } from '@/store/slices/app-slice'
+import { setDrawerOpen } from '@/store/slices/app-slice'
 import { store } from '@/store/store'
 import Link from 'next/link'
 import DesktopNav from './DesktopNav'
@@ -70,8 +70,8 @@ const Navbar = () => {
   } = useDisclosure()
 
   useEffect(() => {
-    dispatch(setLanguage(locale))
-  }, [])
+    if (locale && lang !== locale) handleLangChange(locale)
+  }, [locale])
 
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
