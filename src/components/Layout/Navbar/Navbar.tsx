@@ -70,10 +70,6 @@ const Navbar = () => {
   } = useDisclosure()
 
   useEffect(() => {
-    if (locale && lang !== locale) handleLangChange(locale)
-  }, [locale])
-
-  useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
@@ -158,9 +154,9 @@ const Navbar = () => {
               }}
               rightIcon={<ChevronDownIcon color="linkColor" />}
               iconSpacing={1}
-              defaultValue={lang}
+              defaultValue={locale}
             >
-              <chakra.span textTransform={'uppercase'}>{lang}</chakra.span>
+              <chakra.span textTransform={'uppercase'}>{locale}</chakra.span>
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
