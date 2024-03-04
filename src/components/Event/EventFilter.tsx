@@ -23,7 +23,7 @@ import { dateFormater } from '@/lib/utils'
 interface Filters {
   date: string
   location: string
-  eventType: string
+  eventType: string[]
   blockchain: string
 }
 
@@ -42,20 +42,22 @@ const EventFilter = ({
   const [filters, setFilters] = useState<Filters>({
     date: '',
     location: '',
-    eventType: '',
+    eventType: [],
     blockchain: '',
   })
 
   const aggregateResults = (filters: Filters) => {
     const filterKeys = Object.keys(filters) as (keyof Filters)[]
-    const selectedFilters = filterKeys.filter((key) => filters[key] !== '')
+    const selectedFilters = filterKeys.filter((key) =>
+      key === 'eventType' ? filters[key].length > 0 : filters[key] !== '',
+    )
     const today = dateFormater(new Date())
 
     if (selectedFilters.length > 0) {
       setIsLoading(true)
       const requests = selectedFilters.map((key) => {
-        if (key === 'eventType') {
-          return fetchFilteredEventList([filters[key]])
+        if (key === 'eventType' && filters.eventType.length > 0) {
+          return fetchFilteredEventList(filters.eventType)
         }
         if (key === 'blockchain') {
           return fetchEventByBlockchain(filters[key])
@@ -118,6 +120,15 @@ const EventFilter = ({
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
     setFilters((prevFilters) => {
+      if (filterCategory === 'eventType') {
+        const isAlreadySelected = prevFilters.eventType.includes(value)
+        const newEventTypeFilters = isAlreadySelected
+          ? prevFilters.eventType.filter((f) => f !== value)
+          : [...prevFilters.eventType, value]
+
+        return { ...prevFilters, eventType: newEventTypeFilters }
+      }
+
       const isRemovingFilter = prevFilters[filterCategory] === value
       const newFilterValue = isRemovingFilter ? '' : value
       const newFilters = { ...prevFilters, [filterCategory]: newFilterValue }
@@ -135,9 +146,7 @@ const EventFilter = ({
   }
 
   useEffect(() => {
-    // const filteredEvents = filterEvents(fetchedData, filters)
     aggregateResults(filters)
-    // setEventData(filteredEvents)
   }, [filters, dateRange, fetchedData])
 
   return (
