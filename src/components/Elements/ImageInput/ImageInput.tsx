@@ -51,7 +51,8 @@ const ImageInput = ({
     if (!validLinkReg.test(url)) {
       return { type: null }
     }
-    if (/(https?:\/\/)?(www.)?youtu(be\.com|.be)\/?/.test(url)) {
+    // accomodate for typos in youtube links
+    if (/(https?:\/\/)?(www.)?youtu(be\.?c?o?m?|.be)\/?/.test(url)) {
       const videoCode = url.match(validYTLinkReg)
       return { type: 'youtube', value: videoCode?.[1] }
     }
