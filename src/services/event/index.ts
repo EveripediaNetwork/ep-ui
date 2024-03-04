@@ -49,6 +49,7 @@ type TEventByBlockchain = {
 
 type TEventSearch = {
   title: string
+  startDate?: string
 }
 
 export const eventApi = createApi({
@@ -85,10 +86,10 @@ export const eventApi = createApi({
         response.popularEvents,
     }),
     getEventByTitle: builder.query<TEvents[], TEventSearch>({
-      query: ({ title }: TEventSearch) => {
+      query: ({ title, startDate }: TEventSearch) => {
         return {
           document: GET_EVENT_BY_TITLE,
-          variables: { title },
+          variables: { title, startDate },
         }
       },
       transformResponse: (response: TGetWikiByEventResponse) =>

@@ -3,6 +3,7 @@ import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
 import { TEvents, getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
+import { dateFormater } from '@/lib/utils'
 
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const filterEvents = (
@@ -75,11 +76,14 @@ const EventSearchBar = ({
     const searchInput = messageInput.value.trim()
 
     const searchKey = searchInput.toLowerCase().trim()
-
+    const arg: { title: string; startDate?: string } = { title: searchKey }
+    if (searchDate) {
+      arg.startDate = dateFormater(searchDate)
+    }
     // const dateSearchResult = filterEvents(searchKey, searchDate, eventData)
     setIsLoading(true)
     store
-      .dispatch(getEventByTitle.initiate({ title: searchKey }))
+      .dispatch(getEventByTitle.initiate(arg))
       .then((response) => {
         if (response.data) {
           setEventData(response.data)
@@ -88,7 +92,7 @@ const EventSearchBar = ({
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false))
 
-    // setSearchDate(undefined)
+    setSearchDate(undefined)
     form.reset()
   }
   return (

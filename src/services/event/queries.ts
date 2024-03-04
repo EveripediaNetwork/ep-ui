@@ -90,8 +90,8 @@ export const GET_POPULAR_EVENTS = gql`
 `
 
 export const GET_EVENT_BY_TITLE = gql`
-  query GetWikiByTitle($title: String!) {
-    wikiEventsByTitle(title: $title) {
+  query GetWikiByTitle($title: String!, $startDate: String) {
+    wikiEventsByTitle(title: $title, startDate: $startDate) {
       id
       title
       summary
