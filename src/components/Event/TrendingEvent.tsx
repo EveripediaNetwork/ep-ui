@@ -30,7 +30,7 @@ const TrendingEvent = ({ events }: { events: TEvents[] }) => {
             }}
           >
             <CarouselContent className="">
-              {events.map(event => (
+              {events.map((event) => (
                 <CarouselItem
                   className="h-[350px] overflow-hidden basis-[80%] md:basis-1/2 xl:basis-[309px] rounded-xl relative ml-4"
                   key={event.id}
