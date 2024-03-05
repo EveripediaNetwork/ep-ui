@@ -42,12 +42,12 @@ const NetworkErrorNotification = dynamic(
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
-  const [showNetworkModal, setShowNetworkModal] = useState(false)
+
   const { chainId } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
@@ -66,12 +66,8 @@ export const WikiPublishButton = () => {
   } = useDisclosure()
 
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
-
-  useEffect(() => {
-    if (connectedChainId !== chainId && !networkSwitchAttempted) {
-      setShowNetworkModal(true)
-    }
-  }, [connectedChainId, chainId, networkSwitchAttempted])
+  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
+  const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
 
@@ -128,16 +124,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -245,7 +240,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)
@@ -331,11 +326,13 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
-      <NetworkErrorNotification
-        modalState={showNetworkModal}
-        setModalState={(state: boolean) => setShowNetworkModal(state)}
-        setNetworkSwitchAttempted={setNetworkSwitchAttempted}
-      />
+      {showModal && (
+        <NetworkErrorNotification
+          modalState={showNetworkModal}
+          setModalState={(state: boolean) => setShowNetworkModal(state)}
+          setNetworkSwitchAttempted={setNetworkSwitchAttempted}
+        />
+      )}
     </>
   )
 }
