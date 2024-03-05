@@ -268,11 +268,14 @@ const Rank = ({
   }
   const { t } = useTranslation('rank')
   return (
-    <Box minW={'full'} w="100%">
+    <Box
+    //  minW={'full'}
+    // w="100%"
+    >
       <RankHeader />
       <Flex
-        w="100%"
-        minW={'full'}
+        // w="100%"
+        // minW={'full'}
         pb={16}
         pt={4}
         flexWrap="wrap"
@@ -328,6 +331,7 @@ const Rank = ({
               display={'flex'}
               flexDir={'column'}
               alignItems={'center'}
+              w="100%"
             >
               <Flex
                 h={350}
