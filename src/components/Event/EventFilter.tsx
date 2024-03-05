@@ -72,13 +72,13 @@ const EventFilter = ({
           return fetchFilteredEventList([], today, dateFormater(nextMonth))
         } else {
           // Custom Range
-          const startDate = dateRange?.from || ''
-          const endDate = dateRange?.to || ''
+          const startDate = dateRange?.from
+          const endDate = dateRange?.to
 
           // Handle undefined or invalid custom range dates
           if (!startDate || !endDate) {
             console.error('Invalid custom range: missing start or end date')
-            return
+            return []
           }
 
           // Convert strings to Date objects (if necessary)
@@ -88,7 +88,7 @@ const EventFilter = ({
           // Ensure start date is before end date
           if (parsedStartDate >= parsedEndDate) {
             console.error('Invalid custom range: start date after end date')
-            return
+            return []
           }
 
           return fetchFilteredEventList(
@@ -102,7 +102,6 @@ const EventFilter = ({
       Promise.all(requests)
         .then((res) => {
           const [fetch1 = [], fetch2 = [], fetch3 = []] = res
-
           const result = [...fetch1, ...fetch2, ...fetch3]
 
           const uniqueArr = result.filter(
@@ -261,15 +260,64 @@ const EventFilter = ({
                 className="flex gap-2 mt-5 md:mt-3 flex-wrap"
               >
                 {eventFilter.filter.map((filter) => {
+                  const category =
+                    eventFilter.title === 'Event Type'
+                      ? 'eventType'
+                      : eventFilter.title.toLowerCase()
+                  if (filter === 'Custom Range') {
+                    return (
+                      <div key={filter} className="grid grid-2">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleFilterChange(
+                                  category as keyof Filters,
+                                  filter,
+                                )
+                              }
+                              className={`px-3 flex gap-2 items-center text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full ${
+                                filters[category as keyof Filters].includes(
+                                  filter,
+                                )
+                                  ? 'bg-brand-500 dark:bg-brand-800'
+                                  : ''
+                              }`}
+                            >
+                              <span>{filter}</span>
+                              <RiArrowUpDownLine />
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              initialFocus
+                              mode="range"
+                              defaultMonth={dateRange?.from}
+                              selected={dateRange}
+                              onSelect={setDateRange}
+                              numberOfMonths={2}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    )
+                  }
                   return (
-                    <span
-                      key={filter}
-                      className={
-                        'px-3 text-xs border bg-gray50 dark:bg-transparent border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full'
+                    <button
+                      onClick={() =>
+                        handleFilterChange(category as keyof Filters, filter)
                       }
+                      key={filter}
+                      type="button"
+                      className={`px-3 text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full ${
+                        filters[category as keyof Filters].includes(filter)
+                          ? 'bg-brand-500 dark:bg-brand-800'
+                          : ''
+                      }`}
                     >
                       {filter}
-                    </span>
+                    </button>
                   )
                 })}
               </div>

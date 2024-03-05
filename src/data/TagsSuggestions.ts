@@ -104,6 +104,10 @@ export const TagsSuggestions = [
     value: 'Solana',
   },
   {
+    label: 'Speakers',
+    value: 'Speakers',
+  },
+  {
     label: 'Stablecoins',
     value: 'Stablecoins',
   },

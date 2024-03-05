@@ -15,8 +15,6 @@ const EventDetailsContent = ({ event }: { event: Wiki }) => {
 
   const modifiedEventContent = { ...event, content }
 
-  console.log({ modifiedEventContent })
-
   return (
     <div className="">
       <MarkdownRender wiki={modifiedEventContent} />
