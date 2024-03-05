@@ -67,6 +67,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 3, md: '6' }}
+        minW="72px"
       >
         <Text color="rankingListText" width={'fit-content'}>
           {order === 'descending'
@@ -80,6 +81,8 @@ const RankingItem = ({
         fontSize="14px"
         pl={{ base: 0, md: '2' }}
         pr={{ base: 2, md: 6 }}
+        // maxW='350px'
+        minW="200px"
       >
         <Flex gap="2.5" alignItems="center">
           <Box
@@ -105,7 +108,7 @@ const RankingItem = ({
               overflow={'hidden'}
               textOverflow={'ellipsis'}
               whiteSpace={'nowrap'}
-              maxW={{ base: '70px', md: '200px' }}
+              maxW={{ base: '175px', md: '200px' }}
               overflowX={'hidden'}
             >
               {item.nftMarketData ? (
@@ -147,6 +150,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
+        minW="150px"
       >
         <Text color="rankingListText">{price}</Text>
       </Td>
@@ -155,6 +159,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
+        minW="150px"
       >
         <Flex gap="1">
           <Text color="rankingListText">{marketCap}</Text>
@@ -195,6 +200,8 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
+        maxW="350px"
+        minW="250px"
       >
         {item.linkedWikis?.founders ? (
           <Flex flexWrap="wrap">
@@ -209,7 +216,7 @@ const RankingItem = ({
                     color="brandLinkColor"
                   >
                     {founderName}
-                    {i !== arr.length - 1 && arr.length > 1 && ', '}
+                    {i !== arr.length - 1 && arr.length > 1 && ','} &nbsp;
                   </Link>
                 )
               })}
@@ -226,6 +233,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
+        minW="150px"
       >
         {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
@@ -236,12 +244,12 @@ const RankingItem = ({
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
-                        ,
+                        , &nbsp;
                       </Box>
                     )}
                     <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
-                        blockchain.slice(1).replace('-', ' ')}
+                        blockchain.slice(1).replace('-', '')}
                     </Link>
                   </React.Fragment>
                 )
@@ -256,6 +264,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
+        minW="150px"
       >
         {dateFounded ? (
           <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
