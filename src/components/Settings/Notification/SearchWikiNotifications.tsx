@@ -42,7 +42,6 @@ import {
 } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import {
   getWikiSummary,
   WikiSummarySize,
@@ -50,6 +49,7 @@ import {
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -67,8 +67,8 @@ const WikiSubscriptionButton = ({
   email?: string | null
 }) => {
   const toast = useToast()
-  const userAddress = getUserAddressFromCache()
-  const isWikiSubscribed = useIsWikiSubscribed(wiki.id, userAddress)
+  const { address: userAddress } = useAddress()
+  const isWikiSubscribed = useIsWikiSubscribed(wiki.id, userAddress as string)
   if (!isWikiSubscribed)
     return (
       <Button
@@ -80,7 +80,7 @@ const WikiSubscriptionButton = ({
         alignItems={{ base: 'center' }}
         justifyContent={{ base: 'center' }}
         fontWeight={500}
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation()
           SubscribeWikiHandler(email, wiki, userAddress, toast)
         }}
@@ -105,9 +105,9 @@ const WikiSubscriptionButton = ({
       alignItems={{ base: 'center' }}
       justifyContent={{ base: 'center' }}
       fontWeight={500}
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation()
-        RemoveWikiSubscriptionHandler(email, wiki.id, userAddress, toast)
+        RemoveWikiSubscriptionHandler(email, wiki.id, userAddress!, toast)
       }}
     >
       <Text display={{ base: 'none', md: 'block' }}>Remove</Text>
@@ -126,9 +126,10 @@ const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const { address } = useAddress()
   const { profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
-    getUserAddressFromCache(),
+    address as string,
   )
   const router = useRouter()
 
@@ -136,7 +137,7 @@ const SearchWikiNotifications = () => {
   const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
-  useEventListener('keydown', (event) => {
+  useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
     const el = event.target as Element | undefined
@@ -170,14 +171,14 @@ const SearchWikiNotifications = () => {
 
   const articlesSearchList = results.wikis
     .slice(0, ARTICLES_LIMIT)
-    .map((wiki) => {
+    .map(wiki => {
       const articleImage = `${config.pinataBaseUrl}${wiki.images?.[0].id}`
       const value = fillType(wiki, SEARCH_TYPES.WIKI)
       return (
         <AutoCompleteItem
           key={wiki.id}
           value={value}
-          getValue={(art) => art.title}
+          getValue={art => art.title}
           label={wiki.title}
           m={0}
           rounded="none"
@@ -232,8 +233,8 @@ const SearchWikiNotifications = () => {
         suggestWhenEmpty
         emptyState={!isLoading && noResults && emptyState}
         openOnFocus={query.length >= 3}
-        shouldRenderSuggestions={(q) => q.length >= 3}
-        onSelectOption={(option) => {
+        shouldRenderSuggestions={q => q.length >= 3}
+        onSelectOption={option => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
           logEvent({
@@ -247,7 +248,7 @@ const SearchWikiNotifications = () => {
         <form
           key={JSON.stringify(router.query.q) || ''}
           action=""
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault()
             router.push({
               pathname: '/settings/account',
@@ -272,7 +273,7 @@ const SearchWikiNotifications = () => {
                 placeholder="Search to add wikis to your list"
                 variant="unstyled"
                 value={query || router.query.q}
-                onChange={(e) => {
+                onChange={e => {
                   setQuery(() => {
                     return e.target.value
                   })

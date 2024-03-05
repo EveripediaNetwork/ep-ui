@@ -10,7 +10,6 @@ import {
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useTranslation } from 'next-i18next'
 import { GetStaticProps } from 'next'
@@ -108,9 +107,7 @@ const Settings = () => {
             <ProfileSettings settingsData={profileData} />
           )}
           {tab === 'notifications' && (
-            <NotificationSettings
-              address={userAddress ?? (getUserAddressFromCache() as string)}
-            />
+            <NotificationSettings address={userAddress as string} />
           )}
           {tab === 'advanced' && <AdvancedSettings />}
         </VStack>
