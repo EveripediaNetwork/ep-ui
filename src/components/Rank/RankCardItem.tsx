@@ -67,7 +67,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 3, md: '6' }}
-        minW="72px"
+        minW="65px"
       >
         <Text color="rankingListText" width={'fit-content'}>
           {order === 'descending'
@@ -159,7 +159,7 @@ const RankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 2, md: 6 }}
-        minW="150px"
+        minW="175px"
       >
         <Flex gap="1">
           <Text color="rankingListText">{marketCap}</Text>
