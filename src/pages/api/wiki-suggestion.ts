@@ -9,10 +9,14 @@ export default async function handler(
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  const { feedback } = req.body
+  const { feedback, contact } = req.body
 
   if (!feedback) {
     return res.status(400).json({ error: 'Feedback is required' })
+  }
+
+  if (!contact) {
+    return res.status(400).json({ error: 'Contact is required' })
   }
 
   const webHookURL = `https://discord.com/api/webhooks/${env.DISCORD_WEBHOOK_ID}/${env.DISCORD_WEBHOOK_TOKEN}`
@@ -26,7 +30,7 @@ export default async function handler(
         embeds: [
           {
             title: 'New Wiki Suggestion',
-            description: `Check out the latest Wiki suggestions <@855035222969679902> 
+            description: `Check out the latest Wiki suggestions from ${contact} <@855035222969679902> 
             ${feedback}`,
           },
         ],

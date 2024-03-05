@@ -2,6 +2,7 @@ import { Modal } from '@/components/Elements'
 import {
   Box,
   Button,
+  Input,
   ModalProps,
   Text,
   Textarea,
@@ -34,12 +35,17 @@ const SuggestWikiModal = ({
 }: Partial<ModalProps>) => {
   const { t } = useTranslation('common')
   const [input, setInput] = React.useState('')
+  const [email, setEmail] = React.useState('')
   const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState('')
   const handleInputChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const inputValue = e.target.value
     setInput(inputValue)
+  }
+  const handleEmailInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputValue = e.target.value
+    setEmail(inputValue)
   }
   const sumbitText = t('SuggestWiki')
   const sumbitWiki = async () => {
@@ -51,6 +57,7 @@ const SuggestWikiModal = ({
       },
       body: JSON.stringify({
         feedback: input,
+        contact: email,
       }),
     })
     const data = await response.json()
@@ -87,6 +94,15 @@ const SuggestWikiModal = ({
       {!isSubmitted ? (
         <Box mt={-2}>
           <Text fontSize="sm">{t('SuggestWikiText')}</Text>
+          <Box mt={4}>
+            <label htmlFor="email">Email</label>
+            <Input
+              mt={1}
+              value={email}
+              placeholder="mabel@braindao.com"
+              onChange={handleEmailInputChange}
+            />
+          </Box>
           <Textarea
             value={input}
             onChange={handleInputChange}
