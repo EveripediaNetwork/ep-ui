@@ -69,6 +69,7 @@ export const FoundersRankTableHead = ({
               fontSize="12px"
               textTransform="capitalize"
               color="rankingListTableHeading"
+              px={{ base: item.label === '#' ? 3 : 2, md: '6' }}
             >
               <Flex
                 alignItems="center"
