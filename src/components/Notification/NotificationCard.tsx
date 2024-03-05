@@ -42,9 +42,20 @@ interface NotificationCardProps {
 export const SubscribeWikiHandler = async (
   email: string | null | undefined,
   wiki: ActivityCardDetails | undefined,
-  userAddress: string,
+  userAddress: string | null,
   toast: (arg0: UseToastOptions) => void,
 ) => {
+  if (!userAddress) {
+    toast({
+      title: 'Subscription Failed',
+      description: 'Please login to continue.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    })
+    return
+  }
+
   if (!email) {
     toast({
       title: 'Subscription Failed',

@@ -15,7 +15,7 @@ import WalletDetails from './WalletDetails'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import {
   fetchRateAndCalculateTotalBalance,
   calculateTotalBalance,
@@ -28,13 +28,13 @@ import {
 import { useRouter } from 'next/router'
 import { ColorModeToggle } from '../Navbar/ColorModeToggle'
 import { LogOutBtn } from '../Navbar/Logout'
+import { useAddress } from '@/hooks/useAddress'
 import { ProfileLink } from '../Navbar/ProfileLink'
 import SettingsLink from '../Navbar/SettingsLink'
-import { useAccount } from 'wagmi'
 
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
-  const { address } = useAccount()
+  const { address } = useAddress()
   const { userBalance } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
@@ -63,6 +63,8 @@ export const WalletDrawerBody = () => {
       })
     }
   }, [walletDetails])
+
+  console.log(address)
 
   return (
     <>

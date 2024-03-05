@@ -1,6 +1,6 @@
 import { HStack, Icon, Link } from '@chakra-ui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { RiSettings5Fill } from 'react-icons/ri'
 
 const SettingsLink = ({ isInMobileMenu }: { isInMobileMenu?: boolean }) => {

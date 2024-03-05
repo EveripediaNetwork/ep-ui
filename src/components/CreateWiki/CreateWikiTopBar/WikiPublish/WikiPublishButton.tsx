@@ -3,7 +3,7 @@ import networkMap from '@/data/NetworkMap'
 import useConfetti from '@/hooks/useConfetti'
 import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import { useGetSignedHash } from '@/hooks/useGetSignedHash'
-import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { postWiki } from '@/services/wikis'
 import { useAppSelector } from '@/store/hook'
 import { store } from '@/store/store'
@@ -32,10 +32,10 @@ import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import ReactCanvasConfetti from 'react-canvas-confetti'
-import { useAccount } from 'wagmi'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -44,7 +44,7 @@ const NetworkErrorNotification = dynamic(
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const [showNetworkModal, setShowNetworkModal] = useState(false)

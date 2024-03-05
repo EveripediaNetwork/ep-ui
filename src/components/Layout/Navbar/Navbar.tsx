@@ -18,24 +18,20 @@ import {
 import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import dynamic from 'next/dynamic'
-import { useDispatch } from 'react-redux'
 import { setDrawerOpen } from '@/store/slices/app-slice'
-import { store } from '@/store/store'
 import Link from 'next/link'
 import DesktopNav from './DesktopNav'
 const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
 import Logo from '@/components/Elements/Logo/Logo'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState, store } from '@/store/store'
 import useLanguageChange from '@/hooks/useLanguageChange'
-import { useAccount } from 'wagmi'
-
-// const ProfileNavMenu = dynamic(() => import('./ProfileNavItem'))
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import MobileNav from './MobileNav'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
 import Image from 'next/image'
+import { useAddress } from '@/hooks/useAddress'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -53,15 +49,13 @@ const Navbar = () => {
     },
   })
   const loginButtonRef = useRef<HTMLButtonElement>(null)
-  // const [visibleMenu, setVisibleMenu] = useState<number | null>(null)
-  const [isHamburgerOpen, setHamburger] = useState<boolean>(false)
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
-
-  const { address } = useAccount()
+  const { address } = useAddress()
   const { userCanEdit } = useWhiteListValidator(address)
   const {
     isOpen: isSuggestWikiOpen,
@@ -128,7 +122,7 @@ const Navbar = () => {
           <DesktopNav />
         </HStack>
         <Suspense>
-          <NavSearch setHamburger={setHamburger} />
+          <NavSearch setHamburger={setIsHamburgerOpen} />
         </Suspense>
         <HStack
           ml={2}
@@ -219,7 +213,7 @@ const Navbar = () => {
           />
           <WalletNavMenu
             drawerOperations={drawerOperations}
-            setHamburger={setHamburger}
+            setHamburger={setIsHamburgerOpen}
           />
         </HStack>
         <HStack
@@ -230,10 +224,10 @@ const Navbar = () => {
         >
           <WalletNavMenu
             drawerOperations={drawerOperations}
-            setHamburger={setHamburger}
+            setHamburger={setIsHamburgerOpen}
           />
           <IconButton
-            onClick={() => setHamburger(!isHamburgerOpen)}
+            onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={
               isHamburgerOpen ? (
                 <CloseIcon w={4} h={4} />
@@ -249,7 +243,7 @@ const Navbar = () => {
       {drawerOperations.isOpen && (
         <WalletDrawer
           finalFocusRef={loginButtonRef}
-          setHamburger={setHamburger}
+          setHamburger={setIsHamburgerOpen}
           toggleOperations={drawerOperations}
         />
       )}
@@ -259,7 +253,7 @@ const Navbar = () => {
         style={{ margin: '0 -15px' }}
       >
         <MobileNav
-          setHamburger={setHamburger}
+          setHamburger={setIsHamburgerOpen}
           drawerOperations={drawerOperations}
         />
       </Collapse>

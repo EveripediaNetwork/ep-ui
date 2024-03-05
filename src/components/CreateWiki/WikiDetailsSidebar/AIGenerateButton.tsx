@@ -1,9 +1,9 @@
 import { WIKI_SUMMARY_GEN_RATE_LIMIT_INTERVAL } from '@/data/Constants'
-import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { Button, Tooltip } from '@chakra-ui/react'
 import React from 'react'
-import { useAccount } from 'wagmi'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 const AIGenerateButton = ({
   isGenerating,
@@ -14,7 +14,7 @@ const AIGenerateButton = ({
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false)
   const [timeLeft, setTimeLeft] = React.useState(0)
-  const { address: userAddress } = useAccount()
+  const { address: userAddress } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const { t } = useTranslation('wiki')
 
