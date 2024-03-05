@@ -223,12 +223,12 @@ const FounderRankingItem = ({
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
-                        ,
+                        , &nbsp;
                       </Box>
                     )}
                     <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
-                        blockchain.slice(1).replace('-', ' ')}
+                        blockchain.slice(1).replace('-', '')}
                     </Link>
                   </React.Fragment>
                 )
