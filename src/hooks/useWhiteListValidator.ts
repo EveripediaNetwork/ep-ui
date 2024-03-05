@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { provider } from '@/utils/WalletUtils/getProvider'
+import { publicClient } from '@/utils/WalletUtils/getProvider'
 
 const useWhiteListValidator = (address: string | null) => {
   const [userCanEdit, setUserCanEdit] = useState(false)
@@ -11,7 +11,7 @@ const useWhiteListValidator = (address: string | null) => {
       try {
         let data
         if (config.isProduction === 'true') {
-          data = await provider.readContract({
+          data = await publicClient.readContract({
             address: config.editorAddress as `0x${string}`,
             abi: EditorABI,
             functionName: 'isEditorWhitelisted',

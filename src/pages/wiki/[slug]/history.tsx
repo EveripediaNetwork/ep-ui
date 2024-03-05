@@ -10,9 +10,9 @@ import { Box, Flex, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 import { getActivityMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 interface HistoryPageProps {
   wikiHistory: Activity[]
@@ -21,7 +21,8 @@ interface HistoryPageProps {
 
 const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
   const { t } = useTranslation('history')
-  const isConnected = typeof getUserAddressFromCache() === 'string'
+  const { address } = useAddress()
+  const isConnected = typeof address === 'string'
 
   const isHistoryFullWidth = useBreakpointValue({ base: true, lg: false })
   return (
@@ -117,7 +118,7 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { notFound: true }
   const { data: wikiHistory, error: wikiHistoryError } = await store.dispatch(
