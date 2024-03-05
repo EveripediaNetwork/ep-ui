@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import React, { ChangeEvent, useCallback, useState } from 'react'
-import { Flex, Image, Input, useToast } from '@chakra-ui/react'
+import { Flex, Input, useToast, Image as ChakraImg } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useDispatch } from 'react-redux'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
@@ -42,6 +42,16 @@ const ImageInput = ({
     }
   }, [deleteImage, setHideDropzone])
 
+  const isImgUrl = (url: string) => {
+    const img = new Image()
+    img.src = url
+    console.log('img =>', img)
+    return new Promise((resolve) => {
+      img.onload = () => resolve(true)
+      img.onerror = () => resolve(false)
+    })
+  }
+
   const linkRecognizer = (url: string) => {
     const validYTLinkReg =
       /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
@@ -62,6 +72,16 @@ const ImageInput = ({
   const tryUploadImg = async (url: string) => {
     const imageUrl = url
     const FullUrl = `https://everipedia-cors.vercel.app/?url=${imageUrl}`
+    const isImageValid = await isImgUrl(FullUrl)
+    if (!isImageValid) {
+      removeImage()
+      toast({
+        title: 'Image could not be fetched. Ensure you have the right link',
+        status: 'error',
+        duration: 2000,
+      })
+      return
+    }
     const response = await fetch(FullUrl, {
       method: 'GET',
       headers: {},
@@ -198,7 +218,7 @@ const ImageInput = ({
             cropImage={() => setToCropImg(imgSrc)}
             removeImage={removeImage}
           >
-            <Image
+            <ChakraImg
               objectFit="cover"
               h="255px"
               w="full"
