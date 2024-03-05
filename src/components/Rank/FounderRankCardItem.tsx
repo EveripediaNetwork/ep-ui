@@ -70,8 +70,9 @@ const FounderRankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={{ base: 3, md: '6' }}
+        minW="65px"
       >
-        <Text color="rankingListText">
+        <Text color="rankingListText" width="fit-content">
           {order === 'descending'
             ? index + offset + 1
             : listingLimit + offset - index}
@@ -147,6 +148,7 @@ const FounderRankingItem = ({
         fontWeight={500}
         fontSize="14px"
         px={2}
+        minW="150px"
       >
         <Flex
           gap="2.5"
@@ -186,7 +188,12 @@ const FounderRankingItem = ({
       >
         <Text color="rankingListText">{marketCap}</Text>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        minW="150px"
+      >
         <Flex gap="1" minH={5} justifyContent={'center'} alignItems={'center'}>
           <Text color="rankingListText">{marketCapChange}</Text>
           {item.nftMarketData ? (
@@ -213,7 +220,12 @@ const FounderRankingItem = ({
           )}
         </Flex>
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        minW="150px"
+      >
         {item.linkedWikis?.blockchains ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
@@ -223,12 +235,12 @@ const FounderRankingItem = ({
                   <React.Fragment key={`blockchain${i}`}>
                     {i > 0 && (
                       <Box as="span" color="brandLinkColor">
-                        ,
+                        , &nbsp;
                       </Box>
                     )}
                     <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
                       {blockchain.charAt(0).toUpperCase() +
-                        blockchain.slice(1).replace('-', ' ')}
+                        blockchain.slice(1).replace('-', '')}
                     </Link>
                   </React.Fragment>
                 )
@@ -238,7 +250,12 @@ const FounderRankingItem = ({
           <Text>NA</Text>
         )}
       </Td>
-      <Td borderColor="rankingListBorder" fontWeight={500} fontSize="14px">
+      <Td
+        borderColor="rankingListBorder"
+        fontWeight={500}
+        fontSize="14px"
+        minW="155px"
+      >
         {dateFounded ? (
           <Link href={`/wiki/${item.id}/events`} color="brandLinkColor">
             <Text>{formatDate(dateFounded)}</Text>
