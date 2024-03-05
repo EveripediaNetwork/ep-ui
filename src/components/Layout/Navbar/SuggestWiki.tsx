@@ -7,6 +7,7 @@ import {
   Text,
   Textarea,
   VStack,
+  chakra,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
@@ -71,6 +72,7 @@ const SuggestWikiModal = ({
   }
   const onCloseModal = () => {
     setInput('')
+    setEmail('')
     setIsSubmitted(false)
     setError('')
     onClose()
@@ -95,7 +97,15 @@ const SuggestWikiModal = ({
         <Box mt={-2}>
           <Text fontSize="sm">{t('SuggestWikiText')}</Text>
           <Box mt={4}>
-            <label htmlFor="email">Email</label>
+            <chakra.label
+              htmlFor="email"
+              color={'#344054'}
+              _dark={{
+                color: 'whiteAlpha.800',
+              }}
+            >
+              Email (Optional)
+            </chakra.label>
             <Input
               mt={1}
               value={email}
