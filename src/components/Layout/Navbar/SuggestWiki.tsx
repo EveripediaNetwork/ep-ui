@@ -111,6 +111,9 @@ const SuggestWikiModal = ({
               value={email}
               placeholder="mabel@braindao.com"
               onChange={handleEmailInputChange}
+              _placeholder={{
+                color: 'formPlaceholder',
+              }}
             />
           </Box>
           <Textarea
@@ -124,6 +127,9 @@ const SuggestWikiModal = ({
             mt={{
               base: 2,
               md: 4,
+            }}
+            _placeholder={{
+              color: 'formPlaceholder',
             }}
           />
         </Box>

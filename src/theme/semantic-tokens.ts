@@ -433,5 +433,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.200',
       _dark: 'brand.800',
     },
+    formPlaceholder: {
+      default: 'gray.400',
+      _dark: 'whiteAlpha.400',
+    },
   },
 }
