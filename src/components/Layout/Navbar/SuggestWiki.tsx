@@ -2,10 +2,12 @@ import { Modal } from '@/components/Elements'
 import {
   Box,
   Button,
+  Input,
   ModalProps,
   Text,
   Textarea,
   VStack,
+  chakra,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
@@ -34,12 +36,17 @@ const SuggestWikiModal = ({
 }: Partial<ModalProps>) => {
   const { t } = useTranslation('common')
   const [input, setInput] = React.useState('')
+  const [email, setEmail] = React.useState('')
   const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState('')
   const handleInputChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const inputValue = e.target.value
     setInput(inputValue)
+  }
+  const handleEmailInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputValue = e.target.value
+    setEmail(inputValue)
   }
   const sumbitText = t('SuggestWiki')
   const sumbitWiki = async () => {
@@ -51,6 +58,7 @@ const SuggestWikiModal = ({
       },
       body: JSON.stringify({
         feedback: input,
+        contact: email,
       }),
     })
     const data = await response.json()
@@ -64,6 +72,7 @@ const SuggestWikiModal = ({
   }
   const onCloseModal = () => {
     setInput('')
+    setEmail('')
     setIsSubmitted(false)
     setError('')
     onClose()
@@ -87,6 +96,26 @@ const SuggestWikiModal = ({
       {!isSubmitted ? (
         <Box mt={-2}>
           <Text fontSize="sm">{t('SuggestWikiText')}</Text>
+          <Box mt={4}>
+            <chakra.label
+              htmlFor="email"
+              color={'#344054'}
+              _dark={{
+                color: 'whiteAlpha.800',
+              }}
+            >
+              Email (Optional)
+            </chakra.label>
+            <Input
+              mt={1}
+              value={email}
+              placeholder="mabel@braindao.com"
+              onChange={handleEmailInputChange}
+              _placeholder={{
+                color: 'formPlaceholder',
+              }}
+            />
+          </Box>
           <Textarea
             value={input}
             onChange={handleInputChange}
@@ -98,6 +127,9 @@ const SuggestWikiModal = ({
             mt={{
               base: 2,
               md: 4,
+            }}
+            _placeholder={{
+              color: 'formPlaceholder',
             }}
           />
         </Box>
