@@ -61,6 +61,9 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
       linkedWikis {
         speakers
       }
+      tags {
+        id
+      }
       images {
         id
         type

@@ -56,8 +56,8 @@ export const TagsSuggestions = [
     value: 'Founders',
   },
   {
-    label: 'Festivals',
-    value: 'Festivals',
+    label: 'Festival',
+    value: 'Festival',
   },
   {
     label: 'Games',

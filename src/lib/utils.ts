@@ -48,6 +48,7 @@ export const dateFormater = (date: Date) => {
 export const groupEventsByMonth = (events: TEvents[]) => {
   const eventsByMonth: { [key: string]: TEvents[] } = {}
 
+  // Group events by month and year
   events.forEach((event) => {
     const date = event?.events?.[0]?.date
     if (date) {
@@ -69,5 +70,22 @@ export const groupEventsByMonth = (events: TEvents[]) => {
     }
   })
 
-  return eventsByMonth
+  // Sort the keys (Month Year) in descending order and create a sorted object
+  const sortedKeys = Object.keys(eventsByMonth).sort((a, b) => {
+    const yearA = parseInt(a.split(' ')[1], 10)
+    const yearB = parseInt(b.split(' ')[1], 10)
+    const monthA = new Date(`${a.split(' ')[0]} 1 2000`).getMonth()
+    const monthB = new Date(`${b.split(' ')[0]} 1 2000`).getMonth()
+
+    if (yearA < yearB) return 1
+    if (yearA > yearB) return -1
+    return monthB - monthA
+  })
+
+  const sortedEventsByMonth: { [key: string]: TEvents[] } = {}
+  sortedKeys.forEach((key) => {
+    sortedEventsByMonth[key] = eventsByMonth[key]
+  })
+
+  return sortedEventsByMonth
 }

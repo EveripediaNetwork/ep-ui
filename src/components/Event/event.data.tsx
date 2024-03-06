@@ -13,7 +13,7 @@ export interface IEventData {
 }
 
 export const EventInterestData = [
-  'Blockchain',
+  'Blockchains',
   'crypto',
   'protocols',
   'Nfts',
