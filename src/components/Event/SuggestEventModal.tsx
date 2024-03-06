@@ -14,7 +14,7 @@ import { Input } from '../ui/input'
 import Image from 'next/image'
 import { useToast } from '@chakra-ui/toast'
 
-const SuggestEventModal = () => {
+const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
   const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [email, setEmail] = React.useState('')
   const [suggestion, setSuggestion] = React.useState('')
@@ -68,9 +68,18 @@ const SuggestEventModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
-          Suggest events
-        </span>
+        {showBtn ? (
+          <button
+            type="button"
+            className="bg-brand-500 text-sm text-white font-medium dark:bg-brand-800 rounded-md py-2 px-4"
+          >
+            Suggest event
+          </button>
+        ) : (
+          <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
+            Suggest events
+          </span>
+        )}
       </DialogTrigger>
 
       <DialogContent>
