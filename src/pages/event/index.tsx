@@ -3,7 +3,6 @@ import TrendingEvent from '@/components/Event/TrendingEvent'
 import EventBanner from '@/components/Event/EventBanner'
 import EventInterest from '@/components/Event/EventInterest'
 import EventSearchBar from '@/components/Event/EventSearchBar'
-import EventFilter from '@/components/Event/EventFilter'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { GetStaticProps } from 'next'
@@ -13,6 +12,7 @@ import EventList from '@/components/Event/EventList'
 import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
+import EventFilter from '@/components/Event/EventFilter'
 
 const EventPage = ({
   events,
