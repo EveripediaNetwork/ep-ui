@@ -36,6 +36,8 @@ import { useAccount } from 'wagmi'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import { useGetEventsQuery } from '@/services/event'
+import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -64,6 +66,10 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
+  const { refetch } = useGetEventsQuery({
+    offset: 0,
+    limit: EVENT_TEST_ITEM_PER_PAGE,
+  })
 
   const { t } = useTranslation('wiki')
 
@@ -258,6 +264,7 @@ export const WikiPublishButton = () => {
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
+        refetch()
       } else {
         await processWikiPublishError(wikiResult)
       }
