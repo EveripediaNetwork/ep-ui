@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import EventCard from './EventCard'
 import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
-import { Dialog, DialogTrigger } from '../ui/dialog'
 import SuggestEventModal from './SuggestEventModal'
 import { TEvents, getEvents } from '@/services/event'
 import { RiArrowLeftLine } from 'react-icons/ri'
@@ -103,14 +102,7 @@ const EventList = ({
                       ) : (
                         <div className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
                           <span>know any events not listed?</span>{' '}
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <span className="text-brand-500 dark:text-brand-800 cursor-pointer hover:underline">
-                                Suggest events
-                              </span>
-                            </DialogTrigger>
-                            <SuggestEventModal />
-                          </Dialog>
+                          <SuggestEventModal />
                         </div>
                       )}
                     </>
