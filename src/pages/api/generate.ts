@@ -51,7 +51,23 @@ export default async function handler(
         break
       }
       result += decoder.decode(value, { stream: true })
-      console.log('result', result)
+      if (result.includes('\n\n')) {
+        const messages = result.split('\n\n')
+        result = messages.pop() || ''
+
+        messages.forEach((msg) => {
+          const dataMatch = msg.match(/^data: (.*)$/m)
+          if (dataMatch) {
+            const data = JSON.parse(dataMatch[1])
+            console.log('data', data)
+            // const parsedData = generateOutputSchema.parse(data)
+            // if (parsedData.answer) {
+            //     console.log('parsedData', parsedData)
+            //   res.status(200).json(parsedData)
+            // }
+          }
+        })
+      }
     }
   } catch (error) {
     console.error('Error reading the stream: ', error)
