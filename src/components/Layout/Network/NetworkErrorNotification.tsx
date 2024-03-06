@@ -21,9 +21,11 @@ import detectEthereumProvider from '@metamask/detect-provider'
 const NetworkErrorNotification = ({
   modalState,
   setModalState,
+  setNetworkSwitchAttempted,
 }: {
   modalState: boolean
   setModalState: (state: boolean) => void
+  setNetworkSwitchAttempted: (state: boolean) => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
@@ -42,7 +44,7 @@ const NetworkErrorNotification = ({
       const provider = (await detectEthereumProvider({
         silent: true,
       })) as ProviderDataType
-      setDetectedProvider(provider as ProviderDataType)
+      setDetectedProvider(provider)
     }
 
     if (!detectedProvider) {
@@ -51,14 +53,16 @@ const NetworkErrorNotification = ({
   }, [detectedProvider, dispatch, isUserConnected])
 
   const handleSwitchNetwork = async () => {
+    setNetworkSwitchAttempted(true)
     try {
       await detectedProvider?.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId }],
       })
       setModalState(false)
+      return true // Indicates successful network switch
     } catch (switchError) {
-      const err = switchError as Record<string, number>
+      const err = switchError as Record<string, any>
       if (err.code === 4902) {
         try {
           await detectedProvider?.request({
@@ -72,19 +76,28 @@ const NetworkErrorNotification = ({
             ],
           })
           setModalState(false)
-        } catch (_addError) {
-          return null
+          return true // Indicates successful network addition
+        } catch (addError) {
+          // Optionally, return an error message or false to indicate failure
+          console.error('Error adding network:', addError)
+          return false // Indicates failure to add the network
         }
+      } else {
+        // Handle other errors, not just the 4902 error code
+        console.error('Error switching network:', switchError)
+        return false // Indicates failure to switch the network
       }
     }
-    return null
   }
 
   return (
     <AlertDialog
       motionPreset="slideInBottom"
       leastDestructiveRef={cancelRef}
-      onClose={() => setModalState(false)}
+      onClose={() => {
+        setModalState(false)
+        setNetworkSwitchAttempted(true)
+      }}
       isOpen={modalState}
       isCentered
       size="lg"
@@ -108,7 +121,10 @@ const NetworkErrorNotification = ({
               fontSize="3xl"
               fontWeight={600}
               as={RiCloseLine}
-              onClick={() => setModalState(false)}
+              onClick={() => {
+                setModalState(false)
+                setNetworkSwitchAttempted(true)
+              }}
             />
           </Flex>
           <Text mt="6" w="90%" lineHeight="2">
@@ -121,7 +137,10 @@ const NetworkErrorNotification = ({
           </Text>
           <Flex mt="6">
             <Text
-              onClick={() => setModalState(false)}
+              onClick={() => {
+                setModalState(false)
+                setNetworkSwitchAttempted(true)
+              }}
               color="primary"
               cursor="pointer"
               pt={2}

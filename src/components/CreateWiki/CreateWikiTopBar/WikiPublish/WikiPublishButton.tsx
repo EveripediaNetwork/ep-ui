@@ -47,7 +47,7 @@ export const WikiPublishButton = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
-  const [showNetworkModal, setShowNetworkModal] = useState(false)
+
   const { chainId } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
@@ -64,6 +64,10 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
+
+  const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
+  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
+  const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
 
@@ -209,11 +213,6 @@ export const WikiPublishButton = () => {
 
     if (!isValidWiki(toast, wiki)) return
 
-    // if (connectedChainId !== chainId) {
-    //   setShowNetworkModal(true)
-    //   return
-    // }
-
     logEvent({
       action: 'SUBMIT_WIKI',
       label: await getWikiSlug(wiki),
@@ -328,10 +327,13 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
-      <NetworkErrorNotification
-        modalState={showNetworkModal}
-        setModalState={(state: boolean) => setShowNetworkModal(state)}
-      />
+      {showModal && (
+        <NetworkErrorNotification
+          modalState={showNetworkModal}
+          setModalState={(state: boolean) => setShowNetworkModal(state)}
+          setNetworkSwitchAttempted={setNetworkSwitchAttempted}
+        />
+      )}
     </>
   )
 }
