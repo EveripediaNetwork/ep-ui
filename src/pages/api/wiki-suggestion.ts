@@ -15,10 +15,6 @@ export default async function handler(
     return res.status(400).json({ error: 'Feedback is required' })
   }
 
-  if (!contact) {
-    return res.status(400).json({ error: 'Contact is required' })
-  }
-
   const webHookURL = `https://discord.com/api/webhooks/${env.DISCORD_WEBHOOK_ID}/${env.DISCORD_WEBHOOK_TOKEN}`
 
   try {
@@ -30,7 +26,9 @@ export default async function handler(
         embeds: [
           {
             title: 'New Wiki Suggestion',
-            description: `Check out the latest Wiki suggestions from ${contact} <@855035222969679902> 
+            description: `Check out the latest Wiki suggestions from ${
+              contact ? `from ${contact}` : ''
+            } <@855035222969679902> 
             ${feedback}`,
           },
         ],

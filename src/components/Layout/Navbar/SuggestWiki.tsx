@@ -116,7 +116,7 @@ const SuggestWikiModal = ({
           <Textarea
             value={input}
             onChange={handleInputChange}
-            placeholder={t('details')}
+            placeholder={'write your wiki suggestions here...'}
             minH={{
               base: '100px',
               md: '200px',
