@@ -45,7 +45,6 @@ const ImageInput = ({
   const isImgUrl = (url: string) => {
     const img = new Image()
     img.src = url
-    console.log('img =>', img)
     return new Promise((resolve) => {
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
@@ -145,7 +144,6 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'youtube') {
-      console.log('youtube url', urlType.value)
       if (!urlType.value) {
         setImageSrc(undefined)
         toast({
@@ -186,7 +184,6 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'imageURL') {
-      console.log('image url', url)
       try {
         tryUploadImg(url)
       } catch (_error) {
