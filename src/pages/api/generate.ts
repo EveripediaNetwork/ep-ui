@@ -1,9 +1,5 @@
 import { env } from '@/env.mjs'
-// import {
-// GenerateOutput,
-// generateEventsSchema,
-//   generateOutputSchema,
-// } from '@/hooks/useStream/schema'
+import { generateOutputSchema } from '@/hooks/useStream/schema'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -23,6 +19,7 @@ export default async function handler(
       search: question,
     })
   }
+
   const requestObject = {
     enableStream: true,
     search: question,
@@ -39,38 +36,74 @@ export default async function handler(
       },
       body: JSON.stringify(requestObject),
     })
-    if (!response.body) {
-      return res.status(500).send('Something went wrong')
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
     }
+
+    if (!response.body) {
+      return res.status(500).send('Empty response body from the API')
+    }
+
     const reader = response.body.getReader()
     const decoder = new TextDecoder()
     let result = ''
+    let finalOutput = null
+
     while (true) {
       const { done, value } = await reader.read()
       if (done) {
         break
       }
-      result += decoder.decode(value, { stream: true })
-      if (result.includes('\n\n')) {
-        const messages = result.split('\n\n')
-        result = messages.pop() || ''
+      const chunk = decoder.decode(value)
+      result += chunk
 
-        messages.forEach((msg) => {
-          const dataMatch = msg.match(/^data: (.*)$/m)
-          if (dataMatch) {
-            const data = JSON.parse(dataMatch[1])
-            console.log('data', data)
-            // const parsedData = generateOutputSchema.parse(data)
-            // if (parsedData.answer) {
-            //     console.log('parsedData', parsedData)
-            //   res.status(200).json(parsedData)
-            // }
-          }
-        })
+      const lines = result.split('\n')
+      result = lines.pop() || ''
+      console.log('result: ', result)
+      for (const line of lines) {
+        const eventMatch = line.match(/^event: (.*)$/)
+        if (!eventMatch) continue
+
+        const event = eventMatch[1]
+        const dataMatch = line.match(/^data: (.*)$/)
+        if (!dataMatch) continue
+
+        const data = JSON.parse(dataMatch[1])
+
+        if (event === 'FINAL_OUTPUT') {
+          finalOutput = data
+          break
+        }
+      }
+
+      if (finalOutput) {
+        break
       }
     }
+
+    if (!finalOutput) {
+      return res.status(500).send('No final output received from the API')
+    }
+
+    const parsedData = generateOutputSchema.safeParse(finalOutput)
+
+    if (!parsedData.success) {
+      console.error('Error parsing the response:', parsedData.error)
+      return res.status(500).send('Error parsing the response')
+    }
+
+    const { search, answer, answerSources } = parsedData.data
+
+    return res.status(200).json({
+      search,
+      answer,
+      answerSources,
+    })
   } catch (error) {
-    console.error('Error reading the stream: ', error)
-    return res.status(500).send('Error reading the stream')
+    console.error('Error:', error)
+    return res
+      .status(500)
+      .send('An error occurred while processing the request')
   }
 }
