@@ -1,7 +1,4 @@
-import {
-  //  generateEventsSchema,
-  generateOutputSchema,
-} from './schema'
+import { generateOutputSchema } from './schema'
 import { useDispatch } from 'react-redux'
 import { setIsError, setIsLoading } from '@/store/slices/stream-slice'
 import {
@@ -25,7 +22,6 @@ const useStream = () => {
     question: string
     query?: string
   }) => {
-    // const ctrl = new AbortController()
     if (!question) return
 
     if (question === 'Ask me about crypto') {
@@ -38,29 +34,29 @@ const useStream = () => {
       dispatch(setCurrentMessage(question))
       dispatch(setIsLoading(true))
       dispatch(setIsError(false))
+
       await axios
-        .post('/api/generate', {
-          question: query ? query : question,
-        })
+        .post('/api/generate', { question: query ? query : question })
         .then((res) => {
-          const { chat, answer, answerSources, messageId } =
+          const { search, answer, answerSources, chat, messageId } =
             generateOutputSchema.parse(res.data)
+
           if (chat && !currentChatId) {
             dispatch(setCurrentChatId(chat.id))
           }
+
           dispatch(
             addMessage({
               id: String(messageId) || randomUUID(),
               answer: answer ?? 'Sorry, I could not find an answer to that.',
-              search: question,
+              search: search,
               answerSources,
             }),
           )
         })
         .catch((err) => {
-          setIsError(true)
-          console.log(err)
-          throw new Error(err)
+          dispatch(setIsError(true))
+          console.log('Error:', err.response.data)
         })
         .finally(() => {
           dispatch(setIsLoading(false))
@@ -68,9 +64,7 @@ const useStream = () => {
     }
   }
 
-  return {
-    askQuestion,
-  }
+  return { askQuestion }
 }
 
 export default useStream
