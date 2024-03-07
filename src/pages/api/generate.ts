@@ -32,7 +32,7 @@ export default async function handler(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-auth-key': `${env.NEXT_PUBLIC_BOT_API_KEY}`,
+        'x-auth-key': `${env.BOT_API_KEY}`,
       },
       body: JSON.stringify(requestObject),
     })
