@@ -46,7 +46,7 @@ const useStream = () => {
         dispatch(setCurrentMessage(question))
         dispatch(setIsLoading(true))
         dispatch(setIsError(false))
-        await fetchEventSource('http://localhost:3000/api/generate', {
+        await fetchEventSource('https://iqgpt.com/api/generate', {
           method: 'POST',
           signal: ctrl.signal,
           headers: {
