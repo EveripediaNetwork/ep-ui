@@ -98,8 +98,8 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 3,
-    label: 'Event',
-    href: '/event',
+    label: 'Events',
+    href: '/events',
     icon: RiHashtag,
   },
   {

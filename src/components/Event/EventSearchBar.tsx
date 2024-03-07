@@ -1,57 +1,9 @@
 import React, { useState } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { TEvents, getEventByTitle } from '@/services/event'
+import { getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-
-// biome-ignore lint/correctness/noUnusedVariables: <explanation>
-const filterEvents = (
-  searchKey: string,
-  date: Date | undefined,
-  eventData: TEvents[],
-): TEvents[] => {
-  const filteredEvents = eventData.filter((event) => {
-    const { title, location, linkedWikis, tags, events: dateObj } = event
-
-    // Filter by search key
-    const matchesSearchKey =
-      searchKey !== '' &&
-      (title.toLowerCase().includes(searchKey.toLowerCase()) ||
-        location?.toLowerCase().includes(searchKey.toLowerCase()) ||
-        linkedWikis?.speakers?.some((speaker) =>
-          speaker.toLowerCase().includes(searchKey.toLowerCase()),
-        ) ||
-        tags?.some((tag) =>
-          tag.id.toLowerCase().includes(searchKey.toLowerCase()),
-        ))
-
-    // If date is undefined, consider it as not applying date filtering
-    if (date === undefined) {
-      return matchesSearchKey
-    }
-
-    // Filter by date
-    const [startDateStr, endDateStr] = dateObj
-    const startDate = new Date(startDateStr.date)
-    const endDate = endDateStr.date
-      ? new Date(endDateStr.date)
-      : new Date(startDateStr.date)
-
-    const compareDate = new Date(date)
-    compareDate.setDate(compareDate.getDate() + 1)
-    compareDate.setUTCHours(0, 0, 0, 0)
-
-    const isDateInRange = compareDate >= startDate && compareDate <= endDate
-
-    console.log({ matchesSearchKey })
-    console.log({ isDateInRange })
-    // Return true if the event matches search key and (optionally) date criteria
-    return matchesSearchKey || isDateInRange
-  })
-
-  return filteredEvents
-}
 
 const EventSearchBar = ({
   setEventData,
@@ -91,10 +43,12 @@ const EventSearchBar = ({
       })
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false))
-
-    setSearchDate(undefined)
-    form.reset()
   }
+
+  // useEffect(() => {
+  //   if (searchDate) console.log(dateFormater(searchDate))
+  // }, [searchDate])
+
   return (
     <form
       onSubmit={submitHandler}
@@ -102,9 +56,12 @@ const EventSearchBar = ({
     >
       <div className="flex flex-1 divide-x rounded-l-lg divide-gray200 dark:divide-alpha-500 dark:bg-gray700 bg-white border-y border-l border-gray200 dark:border-alpha-300 px-3">
         <div className="flex gap-2 w-full items-center max-w-[523px] outline-none py-3 xl:py-4">
-          <span className="cursor-pointer text-gray500 dark:text-alpha-700 text-[12px] md:text-lg xl:text-2xl shrink-0">
+          <button
+            type="submit"
+            className="cursor-pointer text-gray500 dark:text-alpha-700 text-[12px] md:text-lg xl:text-2xl shrink-0"
+          >
             <RiSearchLine />
-          </span>
+          </button>
           <input
             name="search-input"
             placeholder="Search by events, name, location,  and more"
