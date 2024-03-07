@@ -40,7 +40,6 @@ const useStream = () => {
         .then((res) => {
           const { search, answer, answerSources, chat, messageId } =
             generateOutputSchema.parse(res.data)
-
           if (chat && !currentChatId) {
             dispatch(setCurrentChatId(chat.id))
           }
@@ -56,7 +55,7 @@ const useStream = () => {
         })
         .catch((err) => {
           dispatch(setIsError(true))
-          console.log('Error:', err.response.data)
+          console.log('Error:', err.response?.data)
         })
         .finally(() => {
           dispatch(setIsLoading(false))
