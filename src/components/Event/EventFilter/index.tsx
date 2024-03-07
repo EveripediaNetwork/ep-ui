@@ -23,6 +23,8 @@ const handleDateFilter = (
   dateKey: string,
   today: string,
   dateRange: DateRange | undefined,
+  // eventQuery?: string[],
+  // blockchainQuery?: string,
 ) => {
   switch (dateKey) {
     case 'Next Week':
@@ -77,7 +79,13 @@ const EventFilter = ({
               case 'blockchain':
                 return fetchEventByBlockchain(filters.blockchain)
               case 'date':
-                return handleDateFilter(filters.date, today, dateRange)
+                return handleDateFilter(
+                  filters.date,
+                  today,
+                  dateRange,
+                  // filters.eventType,
+                  // filters.blockchain,
+                )
               default:
                 return Promise.resolve([])
             }
