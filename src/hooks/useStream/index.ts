@@ -38,7 +38,7 @@ const useStream = () => {
       await axios
         .post('/api/generate', { question: query ? query : question })
         .then((res) => {
-          const { search, answer, answerSources, chat, messageId } =
+          const { answer, answerSources, chat, messageId } =
             generateOutputSchema.parse(res.data)
           if (chat && !currentChatId) {
             dispatch(setCurrentChatId(chat.id))
@@ -48,7 +48,7 @@ const useStream = () => {
             addMessage({
               id: String(messageId) || randomUUID(),
               answer: answer ?? 'Sorry, I could not find an answer to that.',
-              search: search,
+              search: question,
               answerSources,
             }),
           )
