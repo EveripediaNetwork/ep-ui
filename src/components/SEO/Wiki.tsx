@@ -3,6 +3,7 @@ import { NextSeo } from 'next-seo'
 import DOMPurify from 'isomorphic-dompurify'
 import React from 'react'
 import Head from 'next/head'
+
 interface WikiHeaderProps {
   slug: string
   title: string
@@ -15,6 +16,7 @@ interface WikiHeaderProps {
   avgRating?: number
   totalRatings?: number
 }
+
 type combinedStructuredDataType = {
   '@context': string
   '@type': string
@@ -37,10 +39,15 @@ type combinedStructuredDataType = {
     '@type': string
     '@id': string
   }
-  aggregateRating?: {
+  mediaObject?: {
     '@type': string
-    ratingValue: number
-    reviewCount: number
+    contentUrl: string
+    name: string
+    aggregateRating: {
+      '@type': string
+      ratingValue: string
+      reviewCount: string
+    }
   }
 }
 
@@ -80,11 +87,16 @@ export const WikiHeader = ({
     },
   }
 
-  if (avgRating && totalRatings) {
-    combinedStructuredData.aggregateRating = {
-      '@type': 'AggregateRating',
-      ratingValue: avgRating,
-      reviewCount: totalRatings,
+  if (totalRatings && avgRating) {
+    combinedStructuredData.mediaObject = {
+      '@type': 'MediaObject',
+      contentUrl: `${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`,
+      name: title,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: avgRating.toString(),
+        reviewCount: totalRatings.toString(),
+      },
     }
   }
 
