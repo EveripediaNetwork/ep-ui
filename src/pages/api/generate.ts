@@ -89,7 +89,7 @@ export default async function handler(
       return res.status(500).send('Error parsing the response')
     }
 
-    const { search, answer, answerSources, messageId, duration } =
+    const { search, answer, answerSources, messageId, duration, chat } =
       parsedData.data
     return res.status(200).json({
       search,
@@ -97,6 +97,7 @@ export default async function handler(
       answerSources,
       messageId,
       duration,
+      chat,
     })
   } catch (error) {
     console.error('Error:', error)
