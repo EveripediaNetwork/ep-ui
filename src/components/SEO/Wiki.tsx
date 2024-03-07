@@ -3,6 +3,7 @@ import { NextSeo } from 'next-seo'
 import DOMPurify from 'isomorphic-dompurify'
 import React from 'react'
 import Head from 'next/head'
+
 interface WikiHeaderProps {
   slug: string
   title: string
@@ -15,6 +16,41 @@ interface WikiHeaderProps {
   avgRating?: number
   totalRatings?: number
 }
+
+type combinedStructuredDataType = {
+  '@context': string
+  '@type': string
+  '@id': string
+  name: string
+  description: string
+  image: string[]
+  datePublished: string
+  dateModified: string
+  author: {
+    '@type': string
+    name: string
+  }
+  publisher: {
+    '@type': string
+    name: string
+    logo: string
+  }
+  mainEntityOfPage: {
+    '@type': string
+    '@id': string
+  }
+  mediaObject?: {
+    '@type': string
+    contentUrl: string
+    name: string
+    aggregateRating: {
+      '@type': string
+      ratingValue: string
+      reviewCount: string
+    }
+  }
+}
+
 export const WikiHeader = ({
   slug,
   title,
@@ -27,7 +63,7 @@ export const WikiHeader = ({
   avgRating,
   totalRatings,
 }: WikiHeaderProps) => {
-  const combinedStructuredData = JSON.stringify({
+  const combinedStructuredData: combinedStructuredDataType = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     '@id': `${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`,
@@ -49,17 +85,21 @@ export const WikiHeader = ({
       '@type': 'WebPage',
       '@id': `${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`,
     },
-    mediaObject: {
+  }
+
+  if (totalRatings && avgRating) {
+    combinedStructuredData.mediaObject = {
       '@type': 'MediaObject',
       contentUrl: `${env.NEXT_PUBLIC_DOMAIN}/wiki/${slug}`,
       name: title,
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: avgRating?.toString() || '0',
-        reviewCount: totalRatings?.toString() || '0',
+        ratingValue: avgRating.toString(),
+        reviewCount: totalRatings.toString(),
       },
-    },
-  })
+    }
+  }
+
   return (
     <>
       <NextSeo
@@ -81,7 +121,7 @@ export const WikiHeader = ({
           type="application/ld+json"
           // biome-ignore lint: reason=nextjs-no-xss
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(combinedStructuredData),
+            __html: DOMPurify.sanitize(JSON.stringify(combinedStructuredData)),
           }}
         />
       </Head>

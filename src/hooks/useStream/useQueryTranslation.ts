@@ -21,7 +21,9 @@ const useQueryTranslation = (query: string, wiki: Wiki) => {
       `
     case QueryType.ExplainLikeFive:
       return `
-      ${t('explainLikeFivePrompt')} ${wiki.title}
+      ${t('eli5Prompt1')} ${wiki.title} ${t('eli5Prompt2')} ${wiki.title} ${t(
+        'eli5Prompt3',
+      )}
       `
     default:
       return query

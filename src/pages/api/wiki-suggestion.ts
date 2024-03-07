@@ -9,7 +9,7 @@ export default async function handler(
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  const { feedback } = req.body
+  const { feedback, contact } = req.body
 
   if (!feedback) {
     return res.status(400).json({ error: 'Feedback is required' })
@@ -26,7 +26,9 @@ export default async function handler(
         embeds: [
           {
             title: 'New Wiki Suggestion',
-            description: `Check out the latest Wiki suggestions <@855035222969679902> 
+            description: `Check out the latest Wiki suggestions from ${
+              contact ? `from ${contact}` : ''
+            } <@855035222969679902> 
             ${feedback}`,
           },
         ],
