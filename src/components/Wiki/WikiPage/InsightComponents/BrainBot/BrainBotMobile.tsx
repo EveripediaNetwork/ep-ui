@@ -49,6 +49,7 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
         w={'full'}
         borderBottom={'1px'}
         borderColor={'brainBotBorder'}
+        onClick={() => setOpen(!open)}
       >
         <Box display={'flex'} gap={'8px'} alignItems={'center'}>
           <IconButton
@@ -57,7 +58,6 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
             minW={3}
             aria-label={'toggle brainBot'}
             icon={<RiArrowDownSLine />}
-            onClick={() => setOpen(!open)}
           />
           <Box
             bgColor={'brainBotAIBorder'}
