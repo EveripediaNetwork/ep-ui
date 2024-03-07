@@ -23,8 +23,8 @@ import { addSubscription, removeSubscription } from '@/services/notification'
 import { store } from '@/store/store'
 import { useIsWikiSubscribed } from '@/services/notification/utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 interface NotificationCardProps {
   title: string
@@ -42,9 +42,20 @@ interface NotificationCardProps {
 export const SubscribeWikiHandler = async (
   email: string | null | undefined,
   wiki: ActivityCardDetails | undefined,
-  userAddress: string,
+  userAddress: string | null,
   toast: (arg0: UseToastOptions) => void,
 ) => {
+  if (!userAddress) {
+    toast({
+      title: 'Subscription Failed',
+      description: 'Please login to continue.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    })
+    return
+  }
+
   if (!email) {
     toast({
       title: 'Subscription Failed',
@@ -107,11 +118,11 @@ const NotificationCard = ({
   type,
   defaultSubscribed,
 }: NotificationCardProps) => {
-  const userAddress = getUserAddressFromCache() as string
+  const { address: userAddress } = useAddress()
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
   )
-  const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress)
+  const isWikiSubscribed = useIsWikiSubscribed(wikiId, userAddress as string)
   const { t } = useTranslation('settings')
 
   const toast = useToast()
@@ -147,7 +158,7 @@ const NotificationCard = ({
             RemoveWikiSubscriptionHandler(
               profileData?.email,
               wikiId,
-              userAddress,
+              userAddress as string,
               toast,
             )
           }

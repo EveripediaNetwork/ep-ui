@@ -17,16 +17,17 @@ import {
 import { BiShareAlt } from 'react-icons/bi'
 import { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import ShareWikiModal from './CustomModals/ShareWikiModal'
 import SubscribeModal from './CustomModals/SubscribeModal'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 interface WikiActionBarProps {
   wiki?: Wiki | null
 }
 
 const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
+  const { address } = useAddress()
   const { t } = useTranslation('wiki')
   const {
     isOpen: isShareBoxOpen,
@@ -61,7 +62,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
     {
       label: t('edit'),
       icon: RiEdit2Line,
-      isDisabled: typeof getUserAddressFromCache() !== 'string',
+      isDisabled: typeof address !== 'string',
       disabledTooltip: 'Please login to edit',
       isActive: router.asPath === `/create-wiki?slug=${wiki?.id}`,
       handleClick: () => {
@@ -80,7 +81,7 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
       label: t('notify'),
       icon: RiNotificationLine,
       disabledTooltip: 'Please login to subscribe',
-      isDisabled: typeof getUserAddressFromCache() !== 'string',
+      isDisabled: typeof address !== 'string',
       handleClick: onSubscribeBoxOpen,
     },
     {
@@ -100,66 +101,62 @@ const WikiActionBar = ({ wiki }: WikiActionBarProps) => {
   }
 
   return (
-    <>
-      <VStack
-        borderRightWidth={{ base: 0, md: '1px' }}
-        borderBottomWidth={{ base: '1px', md: '0' }}
-        px={6}
-        pt={4}
-        pb={1}
-        maxW={{ base: 'unset', md: '120px' }}
-        borderColor="rankingListBorder"
+    <VStack
+      borderRightWidth={{ base: 0, md: '1px' }}
+      borderBottomWidth={{ base: '1px', md: '0' }}
+      px={6}
+      pt={4}
+      pb={1}
+      maxW={{ base: 'unset', md: '120px' }}
+      borderColor="rankingListBorder"
+    >
+      {isShareBoxOpen && (
+        <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
+      )}
+      {isSubscribeBoxOpen && wiki && (
+        <SubscribeModal
+          isOpen={isSubscribeBoxOpen}
+          onClose={onSubscribeBoxClose}
+          wiki={wiki}
+        />
+      )}
+      <Flex
+        direction={{ base: 'row', md: 'column' }}
+        gap={{ base: 6, sm: 8 }}
+        position="sticky"
+        top="50%"
+        transform={{ base: 'unset', md: 'translateY(-50%)' }}
+        justifyContent="center"
+        alignItems="center"
       >
-        {isShareBoxOpen && (
-          <ShareWikiModal isOpen={isShareBoxOpen} onClose={onShareBoxClose} />
-        )}
-        {isSubscribeBoxOpen && wiki && (
-          <SubscribeModal
-            isOpen={isSubscribeBoxOpen}
-            onClose={onSubscribeBoxClose}
-            wiki={wiki}
-          />
-        )}
-        <Flex
-          direction={{ base: 'row', md: 'column' }}
-          gap={{ base: 6, sm: 8 }}
-          position="sticky"
-          top="50%"
-          transform={{ base: 'unset', md: 'translateY(-50%)' }}
-          justifyContent="center"
-          alignItems="center"
-        >
-          {actionBarItems.map((item, index) => (
-            <Tooltip
-              isDisabled={!item.isDisabled}
-              placement="right"
-              label={item.disabledTooltip}
-              key={index}
+        {actionBarItems.map((item, index) => (
+          <Tooltip
+            isDisabled={!item.isDisabled}
+            placement="right"
+            label={item.disabledTooltip}
+            key={index}
+          >
+            <VStack
+              minW="28px"
+              cursor={
+                item.isDisabled || wiki === undefined
+                  ? 'not-allowed'
+                  : 'pointer'
+              }
+              color={actionIconColor(item)}
+              onClick={
+                !item.isDisabled && wiki !== undefined
+                  ? item.handleClick
+                  : undefined
+              }
             >
-              <VStack
-                minW="28px"
-                cursor={
-                  item.isDisabled || wiki === undefined
-                    ? 'not-allowed'
-                    : 'pointer'
-                }
-                color={actionIconColor(item)}
-                onClick={
-                  !item.isDisabled && wiki !== undefined
-                    ? item.handleClick
-                    : undefined
-                }
-              >
-                <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
-                <Text fontSize={{ base: '12px', sm: '14px' }}>
-                  {item.label}
-                </Text>
-              </VStack>
-            </Tooltip>
-          ))}
-        </Flex>
-      </VStack>
-    </>
+              <Icon fontSize={{ base: '16px', sm: '20px' }} as={item.icon} />
+              <Text fontSize={{ base: '12px', sm: '14px' }}>{item.label}</Text>
+            </VStack>
+          </Tooltip>
+        ))}
+      </Flex>
+    </VStack>
   )
 }
 

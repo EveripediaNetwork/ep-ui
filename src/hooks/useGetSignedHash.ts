@@ -53,7 +53,7 @@ export const useGetSignedHash = () => {
     formatUnits: 'gwei',
   })
   const gasPrice = useMemo(
-    () => parseFloat(feeData?.formatted.gasPrice || '0'),
+    () => parseFloat(feeData?.formatted.gasPrice ?? '0'),
     [feeData],
   )
 

@@ -42,7 +42,6 @@ import {
 } from '@/services/profile/utils'
 import { ActivityCardDetails } from '@everipedia/iq-utils'
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import {
   getWikiSummary,
   WikiSummarySize,
@@ -50,6 +49,7 @@ import {
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { useAddress } from '@/hooks/useAddress'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -67,8 +67,8 @@ const WikiSubscriptionButton = ({
   email?: string | null
 }) => {
   const toast = useToast()
-  const userAddress = getUserAddressFromCache()
-  const isWikiSubscribed = useIsWikiSubscribed(wiki.id, userAddress)
+  const { address: userAddress } = useAddress()
+  const isWikiSubscribed = useIsWikiSubscribed(wiki.id, userAddress as string)
   if (!isWikiSubscribed)
     return (
       <Button
@@ -107,7 +107,7 @@ const WikiSubscriptionButton = ({
       fontWeight={500}
       onClick={(e) => {
         e.stopPropagation()
-        RemoveWikiSubscriptionHandler(email, wiki.id, userAddress, toast)
+        RemoveWikiSubscriptionHandler(email, wiki.id, userAddress!, toast)
       }}
     >
       <Text display={{ base: 'none', md: 'block' }}>Remove</Text>
@@ -126,9 +126,10 @@ const SearchWikiNotifications = () => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const { address } = useAddress()
   const { profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
-    getUserAddressFromCache(),
+    address as string,
   )
   const router = useRouter()
 
