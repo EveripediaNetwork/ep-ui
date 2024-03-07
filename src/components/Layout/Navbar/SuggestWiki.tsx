@@ -109,7 +109,7 @@ const SuggestWikiModal = ({
             <Input
               mt={1}
               value={email}
-              placeholder="mabel@braindao.com"
+              placeholder="vitalik@ethereum.org"
               onChange={handleEmailInputChange}
               _placeholder={{
                 color: 'formPlaceholder',
