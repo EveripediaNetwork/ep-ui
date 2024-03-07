@@ -67,11 +67,13 @@ const CategoryCard = (props: CategoryCardProps) => {
             fontWeight={'600'}
             color={'careersHeadingColor'}
             my="10px"
+            suppressHydrationWarning={true}
           >
             {t(title)}
           </Heading>
           <LinkOverlay href={`/categories/${categoryId}`}>
             <Text
+              suppressHydrationWarning={true}
               maxWidth="300px"
               fontSize={'xs'}
               textAlign="center"
