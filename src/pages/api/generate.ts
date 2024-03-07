@@ -57,35 +57,31 @@ export default async function handler(
       }
       const chunk = decoder.decode(value)
       result += chunk
+    }
 
-      const lines = result.split('\n')
-      result = lines.pop() || ''
-      console.log('result: ', result)
-      for (const line of lines) {
-        const eventMatch = line.match(/^event: (.*)$/)
-        if (!eventMatch) continue
+    const lines = result.split('\n')
+    for (const line of lines) {
+      const eventMatch = line.match(/^event: (.*)$/)
+      if (!eventMatch) continue
 
-        const event = eventMatch[1]
-        const dataMatch = line.match(/^data: (.*)$/)
-        if (!dataMatch) continue
+      const event = eventMatch[1]
+      const dataLine = lines[lines.indexOf(line) + 1]
 
-        const data = JSON.parse(dataMatch[1])
+      if (dataLine?.startsWith('data: ')) {
+        const data = JSON.parse(dataLine.slice(6))
 
         if (event === 'FINAL_OUTPUT') {
           finalOutput = data
           break
         }
       }
-
-      if (finalOutput) {
-        break
-      }
     }
 
     if (!finalOutput) {
-      return res.status(500).send('No final output received from the API')
+      return res
+        .status(500)
+        .send('FINAL_OUTPUT event not found in the response')
     }
-
     const parsedData = generateOutputSchema.safeParse(finalOutput)
 
     if (!parsedData.success) {
@@ -93,12 +89,14 @@ export default async function handler(
       return res.status(500).send('Error parsing the response')
     }
 
-    const { search, answer, answerSources } = parsedData.data
-
+    const { search, answer, answerSources, messageId, duration } =
+      parsedData.data
     return res.status(200).json({
       search,
       answer,
       answerSources,
+      messageId,
+      duration,
     })
   } catch (error) {
     console.error('Error:', error)
