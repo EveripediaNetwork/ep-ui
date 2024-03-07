@@ -1,4 +1,5 @@
-# .husky/pre-commit
-. "$(dirname -- "$0")/common.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-yarn ...
+yarn format
+yarn lint
