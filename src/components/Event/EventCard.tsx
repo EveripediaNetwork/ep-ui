@@ -45,12 +45,12 @@ const EventCard = ({
       {isLoading ? (
         <LoadingEventState />
       ) : (
-        <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
+        <div className="border border-gray200 dark:border-alpha-300 group cursor-pointer bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
               <Link
                 href={`/event/${id}`}
-                className="font-semibold text-sm dark:text-alpha-900 w-fit hover:underline text-gray800"
+                className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800"
               >
                 {title}
               </Link>
