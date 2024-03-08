@@ -1,5 +1,5 @@
 import { Wiki } from '@everipedia/iq-utils'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export enum QueryType {
   AdditionalInfo = 'queryAdditionalInfo',
@@ -20,9 +20,9 @@ const useQueryTranslation = (query: string, wiki: Wiki) => {
       ${t('summarizeContentPrompt')} ${wiki.title}
       `
     case QueryType.ExplainLikeFive:
-      return `
-      ${t('explainLikeFivePrompt')} ${wiki.title}
-      `
+      return `${t('eli5Prompt1')} ${wiki.title} ${t('eli5Prompt2')} ${
+        wiki.title
+      }, ${t('eli5Prompt3')} ${wiki.title} ${t('eli5Prompt4')}`
     default:
       return query
   }

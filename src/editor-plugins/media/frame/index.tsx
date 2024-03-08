@@ -128,7 +128,7 @@ const MediaFrame = ({ editorContext }: { editorContext: PluginContext }) => {
                         src={
                           m.source !== 'YOUTUBE'
                             ? constructMediaUrl(m)
-                            : `https://i3.ytimg.com/vi/${m.name}/maxresdefault.jpg`
+                            : `https://i.ytimg.com/vi/${m.name}/hqdefault.jpg`
                         }
                         onClick={() => handleVideoClick(m)}
                         h="100%"

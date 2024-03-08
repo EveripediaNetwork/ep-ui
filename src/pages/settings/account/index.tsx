@@ -3,21 +3,20 @@ import { HStack, Heading, Box, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import SettingNavButton from '@/components/Settings/SettingNavButton'
 import { FaBell, FaPlusSquare, FaUserCircle } from 'react-icons/fa'
-import { useWeb3Token } from '@/hooks/useWeb3Token'
 import {
   UserProfileFetchOptions,
   useUserProfileData,
 } from '@/services/profile/utils'
-import { useAccount } from 'wagmi'
 import { profileApiClient } from '@/services/profile'
 import SettingsPageHeader from '@/components/SEO/SettingPage'
 import dynamic from 'next/dynamic'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
-import SignTokenMessage from './SignTokenMessage'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { useTranslation } from 'next-i18next'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { RootState } from '@/store/store'
+import { useSelector } from 'react-redux'
+import { useAddress } from '@/hooks/useAddress'
 
 const NotificationSettings = dynamic(
   () => import('@/components/Settings/NotificationSettings'),
@@ -32,8 +31,8 @@ const AdvancedSettings = dynamic(
 const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
-  const { token, reSignToken, error } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const { address: userAddress } = useAddress()
+  const token = useSelector((state: RootState) => state.user.token)
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
   )
@@ -46,8 +45,6 @@ const Settings = () => {
     }
   }, [userAddress, setAccount, token])
 
-  if (!token)
-    return <SignTokenMessage reopenSigningDialog={reSignToken} error={error} />
   return (
     <>
       <SettingsPageHeader username={userAddress} />
@@ -110,9 +107,7 @@ const Settings = () => {
             <ProfileSettings settingsData={profileData} />
           )}
           {tab === 'notifications' && (
-            <NotificationSettings
-              address={userAddress ?? (getUserAddressFromCache() as string)}
-            />
+            <NotificationSettings address={userAddress as string} />
           )}
           {tab === 'advanced' && <AdvancedSettings />}
         </VStack>

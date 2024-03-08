@@ -3,7 +3,7 @@ import networkMap from '@/data/NetworkMap'
 import useConfetti from '@/hooks/useConfetti'
 import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import { useGetSignedHash } from '@/hooks/useGetSignedHash'
-import { useWhiteListValidator } from '@/hooks/useWhiteListValidator'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { postWiki } from '@/services/wikis'
 import { useAppSelector } from '@/store/hook'
 import { store } from '@/store/store'
@@ -32,10 +32,10 @@ import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import ReactCanvasConfetti from 'react-canvas-confetti'
-import { useAccount } from 'wagmi'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
+import { useAddress } from '@/hooks/useAddress'
 import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 
@@ -46,10 +46,14 @@ const NetworkErrorNotification = dynamic(
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
-  const [showNetworkModal, setShowNetworkModal] = useState(false)
+  const { refetch } = useGetEventsQuery({
+    offset: 0,
+    limit: EVENT_TEST_ITEM_PER_PAGE,
+  })
+
   const { chainId } =
     config.alchemyChain === 'maticmum'
       ? networkMap.MUMBAI_TESTNET
@@ -66,10 +70,10 @@ export const WikiPublishButton = () => {
     onOpen: onWikiProcessModalOpen,
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
-  const { refetch } = useGetEventsQuery({
-    offset: 0,
-    limit: EVENT_TEST_ITEM_PER_PAGE,
-  })
+
+  const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
+  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
+  const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
 
@@ -215,11 +219,6 @@ export const WikiPublishButton = () => {
 
     if (!isValidWiki(toast, wiki)) return
 
-    // if (connectedChainId !== chainId) {
-    //   setShowNetworkModal(true)
-    //   return
-    // }
-
     logEvent({
       action: 'SUBMIT_WIKI',
       label: await getWikiSlug(wiki),
@@ -335,10 +334,13 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
-      <NetworkErrorNotification
-        modalState={showNetworkModal}
-        setModalState={(state: boolean) => setShowNetworkModal(state)}
-      />
+      {showModal && (
+        <NetworkErrorNotification
+          modalState={showNetworkModal}
+          setModalState={(state: boolean) => setShowNetworkModal(state)}
+          setNetworkSwitchAttempted={setNetworkSwitchAttempted}
+        />
+      )}
     </>
   )
 }

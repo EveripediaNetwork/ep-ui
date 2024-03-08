@@ -13,7 +13,7 @@ export const incrementWikiViewCount = async (slug: string) => {
   if (!slug) return
 
   const visitedWikis: { slug: string; timestamp: number }[] = JSON.parse(
-    localStorage.getItem('VISITED_WIKIS') || '[]',
+    localStorage.getItem('VISITED_WIKIS') ?? '[]',
   )
   const visitedWiki = visitedWikis.find((w) => w.slug === slug)
 

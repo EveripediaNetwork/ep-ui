@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { Modal } from '@/components/Elements'
-import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { useAccount } from 'wagmi'
 import { useToast } from '@chakra-ui/toast'
 import { profileApiClient } from '@/services/profile'
 import {
@@ -14,9 +12,11 @@ import {
   useUserProfileData,
 } from '@/services/profile/utils'
 import { Button, Text } from '@chakra-ui/react'
-import { store } from '@/store/store'
+import { RootState, store } from '@/store/store'
 import { getAllWikiSubscription } from '@/services/notification'
 import { useTranslation } from 'next-i18next'
+import { useSelector } from 'react-redux'
+import { useAddress } from '@/hooks/useAddress'
 
 interface SubscribeModalProps {
   isOpen: boolean
@@ -29,8 +29,8 @@ const SubscribeModal = ({ isOpen, onClose, wiki }: SubscribeModalProps) => {
   const SIGN_TOKEN_MESSAGE = t('signTokenMessage')
   const SUBSCRIBE_MESSAGE = t('subscribeMessage')
   const UNSUBSCRIBE_MESSAGE = t('unsubscribeMessage')
-  const { token } = useWeb3Token()
-  const { address: userAddress } = useAccount()
+  const token = useSelector((state: RootState) => state.user.token)
+  const { address: userAddress } = useAddress()
   const { profileData, setAccount, loading } = useUserProfileData(
     UserProfileFetchOptions.ONLY_EMAIL,
   )

@@ -26,7 +26,7 @@ export default async function handler(
         embeds: [
           {
             title: 'New Wiki Suggestion',
-            description: `Check out the latest Wiki suggestions ${
+            description: `Check out the latest Wiki suggestions from ${
               contact ? `from ${contact}` : ''
             } <@855035222969679902> 
             ${feedback}`,
