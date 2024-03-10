@@ -43,7 +43,7 @@ const TrendingEvent = ({ events }: { events: TEvents[] }) => {
                     sizes="80%, (min-width: 768px) 50%, 309px"
                   />
                   <Link
-                    href={`/event/${event.title
+                    href={`/events/${event.title
                       .toLowerCase()
                       .replace(/ /g, '-')}`}
                     className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5"
@@ -61,7 +61,7 @@ const TrendingEvent = ({ events }: { events: TEvents[] }) => {
                       </h5>
                     </div>
                     <Link
-                      href={`/event/${event.id}`}
+                      href={`/events/${event.id}`}
                       type="button"
                       className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] text-xs font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
                     >

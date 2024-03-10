@@ -36,7 +36,7 @@ const EventCard = ({
   const router = useRouter()
   return (
     <div
-      onKeyDown={() => router.push(`/event/${id}`)}
+      onKeyDown={() => router.push(`/events/${id}`)}
       className="flex gap-2 md:gap-6"
     >
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -49,7 +49,7 @@ const EventCard = ({
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
               <Link
-                href={`/event/${id}`}
+                href={`/events/${id}`}
                 className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800"
               >
                 {title}

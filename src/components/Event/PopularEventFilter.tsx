@@ -3,6 +3,7 @@ import { TEvents } from '@/services/event'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import {
   RiCalendar2Line,
@@ -15,6 +16,8 @@ const PopularEventFilter = ({
 }: {
   popularEvents: TEvents[]
 }) => {
+  const router = useRouter()
+
   return (
     <div className="">
       <div className="flex flex-col gap-1">
@@ -31,8 +34,12 @@ const PopularEventFilter = ({
       <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-[14px] py-[10px] md:px-5 md:py-[18px] lg:px-2 xl:px-3 lg:py-3 xl:py-5 mt-6 rounded-xl">
         {popularEvents.length > 0 ? (
           popularEvents.map((event) => (
-            <div key={event.id} className="flex gap-2">
-              <span className="relative shrink-0 rounded w-[84px] h-[58px] md:w-[113px] md:h-[79px] lg:w-[52px] lg:h-[40px] xl:w-[93px] xl:h-[69px]">
+            <div key={event.id} className="flex group gap-2">
+              {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+              <span
+                onClick={() => router.push(`/events/${event.id}`)}
+                className="relative cursor-pointer shrink-0 rounded w-[84px] h-[58px] md:w-[113px] md:h-[79px] lg:w-[52px] lg:h-[40px] xl:w-[93px] xl:h-[69px]"
+              >
                 <Image
                   src={getWikiImageUrl(event.images)}
                   alt="event image"
@@ -42,8 +49,8 @@ const PopularEventFilter = ({
               </span>
               <div className="flex flex-col gap-2 lg:gap-0 xl:gap-2">
                 <Link
-                  href={`/event/${event.id}`}
-                  className="font-semibold hover:underline text-gray800 dark:text-alpha-900 text-sm lg:text-[9px] leading-none xl:text-sm"
+                  href={`/events/${event.id}`}
+                  className="font-semibold group-hover:underline text-gray800 dark:text-alpha-900 text-sm lg:text-[9px] leading-none xl:text-sm"
                 >
                   {event.title}
                 </Link>
