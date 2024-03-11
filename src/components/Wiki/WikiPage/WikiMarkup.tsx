@@ -1,5 +1,11 @@
 import dynamic from 'next/dynamic'
-import { CommonMetaIds, Media, Wiki } from '@everipedia/iq-utils'
+import {
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  Media,
+  User,
+  Wiki,
+} from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
@@ -14,6 +20,7 @@ import WikiMainContent from './WikiMainContent'
 import WikiReferences from './WikiReferences'
 import WikiTableOfContents from './WikiTableOfContents'
 import WikiRating from './InsightComponents/WikiRating'
+import WikiCommitMessage from './InsightComponents/WikiCommitMessage'
 
 interface WikiLayoutProps {
   wiki: Wiki
@@ -26,10 +33,16 @@ const MobileMeta = (wiki: {
   media?: Media[]
   id: string
   categories: { id: string }[]
+  user: User
+  updated?: string
 }) => {
-  const { metadata, media, id, categories } = wiki
+  const { metadata, media, id, categories, user, updated } = wiki
   const twitterLink = metadata.find(
     (meta) => meta.id === CommonMetaIds.TWITTER_PROFILE,
+  )?.value
+
+  const commitMessage = wiki.metadata.find(
+    (meta) => meta.id === EditSpecificMetaIds.COMMIT_MESSAGE,
   )?.value
 
   return (
@@ -41,6 +54,11 @@ const MobileMeta = (wiki: {
       display={{ base: 'block', xl: 'none' }}
       spacing={6}
     >
+      <WikiCommitMessage
+        commitMessage={commitMessage}
+        user={user}
+        lastUpdated={updated}
+      />
       <WikiRating contentId={id} />
       {!!twitterLink && <TwitterTimeline url={twitterLink} />}
       <RelatedWikis wikiId={id} category={categories[0].id} />
@@ -97,6 +115,8 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
               media={wiki.media}
               id={wiki.id}
               categories={wiki.categories}
+              user={wiki.user}
+              updated={wiki.updated}
             />
           </chakra.div>
           <WikiReferences
