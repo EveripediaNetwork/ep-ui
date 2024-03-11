@@ -253,7 +253,7 @@ export const wikiApi = createApi({
         variables: { id, limit, offset },
       }),
       transformResponse: (response: GetWikisByTagResponse) => {
-        if (!response || !response.tagById) return []
+        if (!response?.tagById) return []
         return response.tagById.wikis
       },
     }),

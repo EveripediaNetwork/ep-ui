@@ -11,6 +11,7 @@ export interface UserState {
   totalBalance: number | null | undefined
   balanceBreakdown: TokenDetailsType[] | null
   hiiq: HiIQDetailsType | null | undefined
+  token: string | null
 }
 
 const initialState: UserState = {
@@ -19,6 +20,7 @@ const initialState: UserState = {
   totalBalance: null,
   balanceBreakdown: null,
   hiiq: null,
+  token: null,
 }
 
 const userSlice = createSlice({
@@ -53,6 +55,9 @@ const userSlice = createSlice({
       state.hiiq = action.payload
     },
     setStateToDefault: () => initialState,
+    setToken: (state, action: PayloadAction<string | null>) => {
+      state.token = action.payload
+    },
   },
 })
 
@@ -63,6 +68,7 @@ export const {
   updateHiIQDetails,
   setStateToDefault,
   updateUserAddress,
+  setToken,
 } = userSlice.actions
 
 export default userSlice.reducer

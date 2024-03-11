@@ -6,7 +6,6 @@ import React, {
   useRef,
 } from 'react'
 import { Flex, VStack, useToast } from '@chakra-ui/react'
-import { useAccount } from 'wagmi'
 import { useENSData } from '@/hooks/useENSData'
 import { usePostUserProfileMutation } from '@/services/profile'
 import { ProfileSettingsData, StrEntry } from '@/types/ProfileType'
@@ -26,6 +25,7 @@ import {
 import { ProfileMedia } from './ProfileMedia'
 import { ProfileSubmitButton } from './ProfileSubmitButton'
 import { ProfileWalletInfo } from './ProfileWalletInfo'
+import { useAddress } from '@/hooks/useAddress'
 
 interface ProfileSettingsProps {
   settingsData?: ProfileSettingsData
@@ -38,16 +38,16 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [inputUsername, setInputUsername] = useState<StrEntry>(strInitState)
   const [inputBio, setInputBio] = useState<StrEntry>(strInitState)
   const [inputEmail, setInputEmail] = useState<StrEntry>(strInitState)
-  const [website, setWebsite] = useState<string>('')
-  const [lens, setLens] = useState<string>('')
-  const [instagram, setInstagram] = useState<string>('')
-  const [twitter, setTwitter] = useState<string>('')
-  const [avatarIPFSHash, setAvatarIPFSHash] = useState<string>('')
-  const [bannerIPFSHash, setBannerIPFSHash] = useState<string>('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isAvatarLoading, setIsAvatarLoading] = useState<boolean>(false)
-  const [isBannerLoading, setIsBannerLoading] = useState<boolean>(false)
-  const { address: userAddress } = useAccount()
+  const [website, setWebsite] = useState('')
+  const [lens, setLens] = useState('')
+  const [instagram, setInstagram] = useState('')
+  const [twitter, setTwitter] = useState('')
+  const [avatarIPFSHash, setAvatarIPFSHash] = useState('')
+  const [bannerIPFSHash, setBannerIPFSHash] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isAvatarLoading, setIsAvatarLoading] = useState(false)
+  const [isBannerLoading, setIsBannerLoading] = useState(false)
+  const { address: userAddress } = useAddress()
   const [, userENSAddr] = useENSData(userAddress)
   const toast = useToast()
   const bioRef = useRef<HTMLTextAreaElement>(null)
@@ -124,7 +124,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
 
     // aggregate data from all states
     const data: Partial<ProfileSettingsData> = {
-      id: userAddress,
+      id: userAddress!,
       username: inputUsername.value,
       bio: inputBio.value,
       email: inputEmail.value,
@@ -162,7 +162,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
         <VStack flex="2" align="left" spacing={4}>
           <ProfileUsername
             ref={usernameRef}
-            userAddress={userAddress}
+            userAddress={userAddress!}
             userENSAddr={userENSAddr}
             inputUsername={inputUsername}
             setInputUsername={setInputUsername}
@@ -187,7 +187,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
             setInstagram={setInstagram}
             setLens={setLens}
           />
-          <ProfileWalletInfo userAddress={userAddress} />
+          <ProfileWalletInfo userAddress={userAddress!} />
         </VStack>
         <ProfileMedia
           setAvatarIPFSHash={setAvatarIPFSHash}

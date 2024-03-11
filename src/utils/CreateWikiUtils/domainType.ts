@@ -4,7 +4,7 @@ export const domain = {
   name: 'EP',
   version: '1',
   chainId: Number(config.chainId),
-  verifyingContract: config.wikiContractAddress,
+  verifyingContract: config.wikiContractAddress as `0x${string}`,
 }
 
 export const types = {
