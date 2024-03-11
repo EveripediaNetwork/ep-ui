@@ -169,7 +169,8 @@ const MediaModal = ({
                         imageURL={
                           media.source !== 'YOUTUBE'
                             ? constructMediaUrl(media)
-                            : `https://i3.ytimg.com/vi/${media.name}/maxresdefault.jpg`
+                            : //used by youtube currently
+                              `https://i.ytimg.com/vi/${media.name}/hqdefault.jpg`
                         }
                         boxSize="42"
                         borderRadius="lg"
