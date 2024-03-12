@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import CustomAvatar from 'boring-avatars'
 import {
   Avatar,
+  Box,
   Center,
   ChakraProps,
   CSSObject,
@@ -48,6 +49,8 @@ const DisplayAvatar = ({
     }
   }, [address, avatarIPFS, setAccount])
 
+  console.log()
+
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
@@ -56,18 +59,29 @@ const DisplayAvatar = ({
         borderRadius="full"
         {...(rest as Omit<NextChakraImageProps, 'src'>)}
         alt={alt || 'Avatar'}
+        rounded="50%"
       />
     )
   } else if (avatar) {
-    content = <Avatar boxSize={`${size}px`} src={avatar} name={alt} {...rest} />
+    content = (
+      <Avatar
+        boxSize={`${size}px`}
+        src={avatar}
+        name={alt}
+        {...rest}
+        rounded="50%"
+      />
+    )
   } else if (address && !avatar) {
     content = (
-      <CustomAvatar
-        size={size}
-        variant="pixel"
-        name={address}
-        colors={AvatarColorArray}
-      />
+      <Box w={`${size}px`} h={`${size}px`} rounded="full" overflow="hidden">
+        <CustomAvatar
+          size={size}
+          variant="pixel"
+          name={address}
+          colors={AvatarColorArray}
+        />
+      </Box>
     )
   } else {
     content = (
@@ -79,6 +93,7 @@ const DisplayAvatar = ({
         fontWeight={600}
         as={RiUserLine}
         title={alt}
+        rounded="50%"
       />
     )
   }
@@ -91,7 +106,6 @@ const DisplayAvatar = ({
           ...svgProps,
         },
       }}
-      borderRadius="full"
     >
       {content}
     </Center>
