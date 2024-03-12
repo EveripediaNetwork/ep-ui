@@ -49,8 +49,6 @@ const DisplayAvatar = ({
     }
   }, [address, avatarIPFS, setAccount])
 
-  console.log()
-
   if (avatarIPFS || fetchedAvatarIPFS) {
     content = (
       <Image
