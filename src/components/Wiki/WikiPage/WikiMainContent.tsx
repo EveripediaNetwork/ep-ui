@@ -182,14 +182,16 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
             }),
           })
 
-          const result = await response.json()
-          const translatedContent = result.content.join('\n\n')
-          setWikiContentState(translatedContent)
-          cachedWikiTranslation.current = {
-            [locale as SupportedWikiTranslations]: translatedContent,
-          }
+          if (response.status === 200) {
+            const result = await response.json()
+            const translatedContent = result.content.join('\n\n')
+            setWikiContentState(translatedContent)
+            cachedWikiTranslation.current = {
+              [locale as SupportedWikiTranslations]: translatedContent,
+            }
 
-          setContentLang(btnLocale)
+            setContentLang(btnLocale)
+          }
           setIsTranslating(false)
         } else {
           setWikiContentState(wikiData.content)
