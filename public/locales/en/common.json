@@ -112,5 +112,7 @@
   "Submit": "Submit",
   "details": "write your wiki suggestions here...",
   "Suggest Wiki": "Suggest Wiki",
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "loginDescription": "To login to IQ.wiki, you need to sign a token that will authenticate your account for access.",
+  "signToken": "Sign Token"
 }

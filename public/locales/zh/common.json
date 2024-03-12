@@ -124,5 +124,7 @@
   "Submit": "提交",
   "details": "详情",
   "Suggest Wiki": "建议 Wiki",
-  "signIn": "登录"
+  "signIn": "登录",
+  "loginDescription": "要登录到IQ.wiki，您需要签署一个令牌，该令牌将认证您的账户以获取访问权限。",
+  "signToken": "签名令牌"
 }

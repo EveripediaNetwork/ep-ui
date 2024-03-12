@@ -18,6 +18,7 @@ import {
   RiErrorWarningFill,
   RiWallet3Line,
 } from 'react-icons/ri'
+import { useTranslation } from 'next-i18next'
 
 export const ConnectorSignTokenModal = ({
   isOpen,
@@ -30,6 +31,7 @@ export const ConnectorSignTokenModal = ({
   openWalletDrawer?: () => void
   handleRedirect: () => void
 }) => {
+  const { t } = useTranslation()
   const router = useRouter()
   const { generateNewToken, fetchStoredToken } = useWeb3Token()
 
@@ -82,7 +84,7 @@ export const ConnectorSignTokenModal = ({
               _dark={{ color: '#ffffffea' }}
               fontSize={{ md: 'xl', base: 'lg' }}
             >
-              Sign Token
+              {t('signToken')}
             </Heading>
           </Flex>
           <CloseButton onClick={onClose} />
@@ -121,8 +123,7 @@ export const ConnectorSignTokenModal = ({
             mx="auto"
             fontSize={{ md: 'md', base: 'sm' }}
           >
-            To login to IQ.wiki, you need to sign a token that will authenticate
-            your account for access.
+            {t('loginDescription')}
           </Text>
           <Flex justifyContent="center" mt="3" pb="5">
             <ChakraButton
@@ -133,7 +134,7 @@ export const ConnectorSignTokenModal = ({
                 onClose()
               }}
             >
-              Sign Token
+              {t('signToken')}
             </ChakraButton>
           </Flex>
         </Box>
