@@ -73,7 +73,10 @@ const wikiStarRating = ({
             variant="unstyled"
             color={ratingValue <= (currHoverRating || 0) ? 'brand.500' : ''}
             aria-label={`rating-${ratingValue}`}
-            onMouseOver={() => setCurrHoverRating(i + 1)}
+            onMouseOver={() => {
+              if (loading) return null
+              setCurrHoverRating(i + 1)
+            }}
             onClick={() => {
               sendFeedback(ratingValue)
             }}
