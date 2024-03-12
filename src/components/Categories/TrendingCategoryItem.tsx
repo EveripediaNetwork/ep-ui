@@ -15,14 +15,14 @@ import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
 import { TrendingCategoryItemProps } from '@/types/CategoryDataTypes'
-import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
+import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
 
 const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
   const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
   const lang = useSelector((state: RootState) => state.app.language)
-  const translatedTimestamp = useTranslatedTimetamps(
+  const translatedTimestamp = useTranslatedTimestamps(
     'Edited',
     lang,
     lastModTimeStamp ?? '',
