@@ -16,12 +16,11 @@ import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
 import { TrendingCategoryItemProps } from '@/types/CategoryDataTypes'
 import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
-import { RootState } from '@/store/store'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '@/store/hook'
 
 const TrendingCategoryItem = (props: TrendingCategoryItemProps) => {
   const { wikiId, title, WikiImgObj, brief, editor, lastModTimeStamp } = props
-  const lang = useSelector((state: RootState) => state.app.language)
+  const lang = useAppSelector((state) => state.app.language)
   const translatedTimestamp = useTranslatedTimestamps(
     'Edited',
     lang,

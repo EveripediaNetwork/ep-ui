@@ -123,5 +123,9 @@
   "Glossary": "Glossary",
   "founders": "founders",
   "blockchains": "blockchains",
-  "days": "days"
+  "days": "days",
+  "averageRating": "Average Rating",
+  "howWasYourExperience": "How was your experience?",
+  "giveRating": "Give this wiki a quick rating to let us know!",
+  "noRating": "No ratings yet, be the first to rate!"
 }
