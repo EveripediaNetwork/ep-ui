@@ -111,8 +111,11 @@ const TrendingCard = ({
                 py={2}
                 px={4}
               >
-                <HStack>
-                  <Link href={`/wiki/${wiki.id}`}>
+                <Link
+                  href={`/wiki/${wiki.id}`}
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  <HStack>
                     <AspectRatio
                       ratio={WIKI_IMAGE_ASPECT_RATIO}
                       w={{
@@ -130,35 +133,36 @@ const TrendingCard = ({
                         imgH={IMAGE_BOX_SIZE}
                       />
                     </AspectRatio>
-                  </Link>
-                  <Flex
-                    direction="column"
-                    justifyContent="flex-start"
-                    textAlign="start"
-                  >
-                    <Text
-                      fontWeight="semibold"
-                      color="wikiFlagTextColor"
-                      fontSize="18px"
-                      overflow="hidden"
-                      onClick={() => router.push(`wiki/${wiki.id}`)}
+
+                    <Flex
+                      direction="column"
+                      justifyContent="flex-start"
+                      textAlign="start"
                     >
-                      {shortenText(wiki.title, 24)}
-                    </Text>
-                    <Text
-                      display={{ base: 'none', md: '-webkit-box' }}
-                      noOfLines={2}
-                      w="97%"
-                      textOverflow="ellipsis"
-                      overflow="hidden"
-                      fontSize="12px"
-                      fontWeight="500"
-                      color="homeDescriptionColor"
-                    >
-                      {wiki.summary}
-                    </Text>
-                  </Flex>
-                </HStack>
+                      <Text
+                        fontWeight="semibold"
+                        color="wikiFlagTextColor"
+                        fontSize="18px"
+                        overflow="hidden"
+                        onClick={() => router.push(`wiki/${wiki.id}`)}
+                      >
+                        {shortenText(wiki.title, 24)}
+                      </Text>
+                      <Text
+                        display={{ base: 'none', md: '-webkit-box' }}
+                        noOfLines={2}
+                        w="97%"
+                        textOverflow="ellipsis"
+                        overflow="hidden"
+                        fontSize="12px"
+                        fontWeight="500"
+                        color="homeDescriptionColor"
+                      >
+                        {wiki.summary}
+                      </Text>
+                    </Flex>
+                  </HStack>
+                </Link>
               </HStack>
             ))}
           </Flex>
