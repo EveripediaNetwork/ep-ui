@@ -91,10 +91,15 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const modifiedContentWiki = { ...wikiData, content }
 
   useEffect(() => {
+    /* Set content state after wiki content loads
+    to allow update of wiki content to translated content */
     setWikiContentState(wikiData.content)
   }, [wikiData.content])
 
   useEffect(() => {
+    /* When the lang changes from one locale to another,
+     change wiki content lang to 'en' to prevent entering
+     a state that breaks translation btn logic */
     if (isLocaleWikiTranslationSupported) {
       setContentLang('en')
       setWikiContentState(wikiData.content)
