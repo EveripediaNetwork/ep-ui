@@ -1,0 +1,21 @@
+{
+  "categorynftsDescription": "NFTs（非同质化代币）类别涵盖了所有NFT相关内容，从像Bored Ape Yacht Club这样的收藏品到像Axie Infinity这样的游戏，再到像Beeple这样的艺术家。",
+  "categorydefiDescription": "去中心化金融（DeFi）类别涵盖了从像Frax Finance这样的稳定币项目到像Yield Farming这样的概念，以及像Chainlink这样驱动DeFi的预言机。",
+  "categoryexchangesDescription": "交易所类别涵盖了所有加密货币交易所，包括中心化交易所像Binance或Coinbase和去中心化交易所像Uniswap或Quickswap。",
+  "categorycryptocurrenciesDescription": "这个加密货币类别涵盖了从比特币到IQ的所有加密货币。",
+  "categorydaosDescription": "DAOs类别涵盖了所有种类的去中心化自治组织，从DeFi DAOs像Olympus DAO到专注于知识的DAOs像BrainDAO。",
+  "categorypeopleDescription": "加密领域的人类别涵盖了从开发者到艺术家，从市场营销者到政策制定者以及介于两者之间的每个人，他们都在努力发展加密空间。",
+  "categorydappsDescription": "去中心化应用（dapps）类别涵盖了从像Fraxswap这样的时间加权平均市场制造商（TWAMM）到像Aave这样的DeFi借贷协议。",
+  "categoryorganizationsDescription": "组织类别涵盖了开发、实施或利用区块链技术的公司和其他组织。",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "去中心化金融",
+  "categoryexchangesTitle": "交易所",
+  "categorycryptocurrenciesTitle": "加密货币",
+  "categorydaosTitle": "DAOs",
+  "categorypeopleTitle": "加密领域的人",
+  "categorydappsTitle": "去中心化应用",
+  "categoryorganizationsTitle": "组织",
+  "categoryPopular": "流行",
+  "categoryNew": "新的",
+  "categoryWikis": "维基"
+}
