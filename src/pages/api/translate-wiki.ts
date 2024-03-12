@@ -1,4 +1,4 @@
-import { SupportedLanguages } from '@/store/slices/app-slice'
+import { SupportedLanguages } from '@/data/LanguageData'
 import { getWikiChunks } from '@/utils/WikiUtils/getWikiChunks'
 import { NextApiRequest, NextApiResponse } from 'next'
 import OpenAI from 'openai'
