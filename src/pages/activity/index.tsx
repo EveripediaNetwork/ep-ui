@@ -106,14 +106,21 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
       <Box bgColor="pageBg" my={-8} py={4}>
         <Flex direction={'column'} w="min(90%, 1100px)" mx="auto">
           <Box my={{ base: 8, md: 12 }}>
-            <Heading as="h1" size={{ md: 'lg', xl: 'xl' }} letterSpacing="wide">
+            <Heading
+              as="h1"
+              fontSize={{ md: '20px', xl: '24px' }}
+              letterSpacing="wide"
+            >
               {t('recentActivity')}
             </Heading>
-            <Text mt={{ base: 1, md: 2 }} fontSize={{ base: 'sm', lg: 'md' }}>
+            <Text
+              mt={{ base: 1 }}
+              fontSize={{ base: 'xs', md: 'sm', xl: 'md' }}
+            >
               {t('recentActivityDescription')}
             </Text>
           </Box>
-          <Box mt={6}>
+          <Box>
             <Box>
               <Flex flexDirection="column" overflow="hidden" gap={4}>
                 {LatestActivityData?.map((activity) =>
