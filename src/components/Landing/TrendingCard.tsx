@@ -116,23 +116,25 @@ const TrendingCard = ({
                   _hover={{ textDecoration: 'none' }}
                 >
                   <HStack>
-                    <AspectRatio
-                      ratio={WIKI_IMAGE_ASPECT_RATIO}
-                      w={{
-                        base: '50px',
-                        md: '60px',
-                        lg: '70px',
-                      }}
-                    >
-                      <Image
-                        src={getWikiImageUrl(wiki.images)}
-                        alt={wiki.title}
-                        borderRadius="md"
-                        overflow="hidden"
-                        imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
-                        imgH={IMAGE_BOX_SIZE}
-                      />
-                    </AspectRatio>
+                    <Box>
+                      <AspectRatio
+                        ratio={WIKI_IMAGE_ASPECT_RATIO}
+                        w={{
+                          base: '50px',
+                          md: '60px',
+                          lg: '70px',
+                        }}
+                      >
+                        <Image
+                          src={getWikiImageUrl(wiki.images)}
+                          alt={wiki.title}
+                          borderRadius="md"
+                          overflow="hidden"
+                          imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+                          imgH={IMAGE_BOX_SIZE}
+                        />
+                      </AspectRatio>
+                    </Box>
 
                     <Flex
                       direction="column"
