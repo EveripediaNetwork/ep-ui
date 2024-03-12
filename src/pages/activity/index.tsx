@@ -5,7 +5,7 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import { activitiesApi, getLatestActivities } from '@/services/activities'
 import { GetStaticProps } from 'next'
 import { store } from '@/store/store'
-import { FETCH_DELAY_TIME, ITEM_PER_PAGE } from '@/data/Constants'
+import { ITEM_PER_PAGE } from '@/data/Constants'
 import { Activity as ActivityType } from '@/types/ActivityDataType'
 import { useTranslation } from 'next-i18next'
 import { pageView } from '@/utils/googleAnalytics'
@@ -41,37 +41,35 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
 
   const fetchMoreActivities = () => {
     const updatedOffset = offset + ITEM_PER_PAGE
-    setTimeout(() => {
-      const fetchNewActivities = async () => {
-        const result = await store.dispatch(
-          getLatestActivities.initiate({
-            limit: ITEM_PER_PAGE,
-            offset: updatedOffset,
-          }),
-        )
-        if (result.data && result.data?.length > 0) {
-          pageView(`${router.asPath}?page=${updatedOffset}`)
-          const data: ActivityType[] = result.data.map((item) => ({
-            content: item.content,
-            datetime: item.datetime,
-            id: item.id,
-            ipfs: item.ipfs,
-            type: item.type,
-            wikiId: item.wikiId,
-          }))
-          const updatedActivities = getUpdatedActivities([
-            ...LatestActivityData,
-            ...data,
-          ])
-          setLatestActivityData(updatedActivities)
-          setOffset(updatedOffset)
-        } else {
-          setHasMore(false)
-          setLoading(false)
-        }
+    const fetchNewActivities = async () => {
+      const result = await store.dispatch(
+        getLatestActivities.initiate({
+          limit: ITEM_PER_PAGE,
+          offset: updatedOffset,
+        }),
+      )
+      if (result.data && result.data?.length > 0) {
+        pageView(`${router.asPath}?page=${updatedOffset}`)
+        const data: ActivityType[] = result.data.map((item) => ({
+          content: item.content,
+          datetime: item.datetime,
+          id: item.id,
+          ipfs: item.ipfs,
+          type: item.type,
+          wikiId: item.wikiId,
+        }))
+        const updatedActivities = getUpdatedActivities([
+          ...LatestActivityData,
+          ...data,
+        ])
+        setLatestActivityData(updatedActivities)
+        setOffset(updatedOffset)
+      } else {
+        setHasMore(false)
+        setLoading(false)
       }
-      fetchNewActivities()
-    }, FETCH_DELAY_TIME)
+    }
+    fetchNewActivities()
   }
 
   const [sentryRef] = useInfiniteScroll({
