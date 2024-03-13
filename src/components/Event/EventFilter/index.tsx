@@ -19,12 +19,51 @@ const defaultFilters: Filters = {
   blockchain: '',
 }
 
-const handleDateFilter = (
+const handleFilter = (
+  filter: Filters,
+  today: string,
+  dateRange?: DateRange | undefined,
+) => {
+  let startDate = today
+  let endDate
+
+  // Calculate start and end dates based on the dateKey or dateRange
+  switch (filter.date) {
+    case 'Next Week':
+      const nextWeek = new Date(today)
+      nextWeek.setDate(nextWeek.getDate() + 7)
+      endDate = dateFormater(nextWeek)
+      break
+    case 'Next Month':
+      const nextMonth = new Date(today)
+      nextMonth.setMonth(nextMonth.getMonth() + 1)
+      endDate = dateFormater(nextMonth)
+      break
+    default:
+      // When specific date ranges are provided
+      if (dateRange?.from && dateRange?.to) {
+        startDate = dateFormater(dateRange.from)
+        endDate = dateFormater(dateRange.to)
+      } else {
+        // Default case when no specific date filter is applied, might not need an end date
+        endDate = undefined
+      }
+      break
+  }
+
+  if (filter.eventType.length > 0) {
+    return fetchFilteredEventList(filter.eventType, startDate, endDate)
+  } else if (filter.blockchain) {
+    return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
+  } else {
+    fetchFilteredEventList([], startDate, endDate)
+  }
+}
+
+const _handleDateFilter = (
   dateKey: string,
   today: string,
   dateRange: DateRange | undefined,
-  // eventQuery?: string[],
-  // blockchainQuery?: string,
 ) => {
   switch (dateKey) {
     case 'Next Week':
@@ -75,17 +114,11 @@ const EventFilter = ({
           activeFilters.map((key) => {
             switch (key) {
               case 'eventType':
-                return fetchFilteredEventList(filters.eventType)
+                return handleFilter(filters, today)
               case 'blockchain':
-                return fetchEventByBlockchain(filters.blockchain)
+                return handleFilter(filters, today)
               case 'date':
-                return handleDateFilter(
-                  filters.date,
-                  today,
-                  dateRange,
-                  // filters.eventType,
-                  // filters.blockchain,
-                )
+                return handleFilter(filters, today)
               default:
                 return Promise.resolve([])
             }
@@ -98,14 +131,15 @@ const EventFilter = ({
         ).map((id) => {
           return mergedResults.find((event) => event.id === id)!
         })
-        setEventData(uniqueResults)
+        console.log({ uniqueResults })
       } catch (error) {
         console.error(error)
       } finally {
         setIsLoading(false)
       }
     } else {
-      setEventData(fetchedData)
+      console.log({ fetchedData })
+      // setEventData(fetchedData)
     }
   }
 

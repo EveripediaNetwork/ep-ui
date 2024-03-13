@@ -57,7 +57,9 @@ export const groupEventsByMonth = (events: TEvents[]) => {
         const monthNumeric = parseInt(dateParts[1], 10)
         const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
           'en-us',
-          { month: 'long' },
+          {
+            month: 'long',
+          },
         )
         const key = `${monthWord} ${dateParts[0]}`
 
@@ -70,16 +72,16 @@ export const groupEventsByMonth = (events: TEvents[]) => {
     }
   })
 
-  // Sort the keys (Month Year) in descending order and create a sorted object
+  // Sort the keys (Month Year) in ascending order and create a sorted object
   const sortedKeys = Object.keys(eventsByMonth).sort((a, b) => {
     const yearA = parseInt(a.split(' ')[1], 10)
     const yearB = parseInt(b.split(' ')[1], 10)
     const monthA = new Date(`${a.split(' ')[0]} 1 2000`).getMonth()
     const monthB = new Date(`${b.split(' ')[0]} 1 2000`).getMonth()
 
-    if (yearA < yearB) return 1
-    if (yearA > yearB) return -1
-    return monthB - monthA
+    if (yearA > yearB) return 1
+    if (yearA < yearB) return -1
+    return monthA - monthB
   })
 
   const sortedEventsByMonth: { [key: string]: TEvents[] } = {}

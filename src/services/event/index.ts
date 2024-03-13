@@ -29,6 +29,13 @@ type TEventArg = {
   offset?: number
   tagIds?: string[]
   startDate?: string
+  direction?: string
+  endDate?: string
+}
+
+type TEventByBlockchainArg = {
+  blockchain: string
+  startDate?: string
   endDate?: string
 }
 
@@ -95,11 +102,11 @@ export const eventApi = createApi({
       transformResponse: (response: TGetWikiByEventResponse) =>
         response.wikiEventsByTitle,
     }),
-    getEventByBlockchain: builder.query<TEvents[], string>({
-      query: (blockchain: string) => {
+    getEventByBlockchain: builder.query<TEvents[], TEventByBlockchainArg>({
+      query: ({ blockchain, startDate, endDate }: TEventByBlockchainArg) => {
         return {
           document: GET_EVENTS_BY_BLOCKCHAIN,
-          variables: { blockchain },
+          variables: { blockchain, startDate, endDate },
         }
       },
       transformResponse: (response: TEventByBlockchain) =>

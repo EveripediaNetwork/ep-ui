@@ -29,7 +29,7 @@ const EventPage = ({
     <div>
       <MainEventHeader />
       <EventBanner />
-      <div className="mb-[120px] px-4 md:px-10 dark:bg-gray800 border-t border-gray200 dark:border-alpha-300">
+      <div className="mb-[120px] px-4 md:px-10 pt-4 dark:bg-gray800">
         <EventSearchBar
           setSearchActive={setSearchActive}
           setEventData={setEventData}

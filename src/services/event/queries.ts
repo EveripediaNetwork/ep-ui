@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 
 export const GET_EVENTS = gql`
   query GetEvents($offset: Int, $limit: Int) {
-    events(offset: $offset, limit: $limit) {
+    events(offset: $offset, limit: $limit, order: DATE, direction: ASC) {
       id
       title
       summary
@@ -49,8 +49,16 @@ export const GET_EVENTS_BY_TAGS = gql`
 `
 
 export const GET_EVENTS_BY_BLOCKCHAIN = gql`
-  query GetEventsByBlockchain($blockchain: String) {
-    eventsByBlockchain(blockchain: $blockchain) {
+  query GetEventsByBlockchain(
+    $blockchain: String
+    $startDate: String
+    $endDate: String
+  ) {
+    eventsByBlockchain(
+      blockchain: $blockchain
+      startDate: $startDate
+      endDate: $endDate
+    ) {
       id
       title
       summary

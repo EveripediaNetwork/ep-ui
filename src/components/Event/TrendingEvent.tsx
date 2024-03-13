@@ -46,7 +46,7 @@ const TrendingEvent = ({ events }: { events: TEvents[] }) => {
                     href={`/events/${event.title
                       .toLowerCase()
                       .replace(/ /g, '-')}`}
-                    className="absolute left-0 h-full w-full flex flex-col justify-end px-2 py-5"
+                    className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
                   >
                     <div className="text-alpha-900">
                       {event.location && (

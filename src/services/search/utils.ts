@@ -55,9 +55,13 @@ export const fetchFilteredEventList = async (
   return data
 }
 
-export const fetchEventByBlockchain = async (blockchain: string) => {
+export const fetchEventByBlockchain = async (
+  blockchain: string,
+  startDate?: string,
+  endDate?: string,
+) => {
   const { data } = await store.dispatch(
-    getEventByBlockchain.initiate(blockchain),
+    getEventByBlockchain.initiate({ blockchain, startDate, endDate }),
   )
   return data
 }
