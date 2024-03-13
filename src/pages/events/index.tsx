@@ -13,6 +13,7 @@ import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
+import { dateFormater } from '@/lib/utils'
 
 const EventPage = ({
   events,
@@ -84,7 +85,11 @@ export default EventPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { data: events } = await store.dispatch(
-    getEvents.initiate({ offset: 0, limit: EVENT_TEST_ITEM_PER_PAGE }),
+    getEvents.initiate({
+      offset: 0,
+      limit: EVENT_TEST_ITEM_PER_PAGE,
+      startDate: dateFormater(new Date()),
+    }),
   )
   const { data: popularEvents } = await store.dispatch(
     getPopularEvents.initiate(),

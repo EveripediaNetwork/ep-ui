@@ -26,7 +26,13 @@ export const GET_EVENTS = gql`
 
 export const GET_EVENTS_BY_TAGS = gql`
   query GetEvents($tagIds: [String!], $startDate: String, $endDate: String) {
-    events(tagIds: $tagIds, startDate: $startDate, endDate: $endDate) {
+    events(
+      tagIds: $tagIds
+      startDate: $startDate
+      endDate: $endDate
+      order: DATE
+      direction: ASC
+    ) {
       id
       title
       summary
@@ -58,6 +64,8 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
       blockchain: $blockchain
       startDate: $startDate
       endDate: $endDate
+      order: DATE
+      direction: ASC
     ) {
       id
       title
