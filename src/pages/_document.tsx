@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import type { DocumentProps } from 'next/document'
 import i18nextConfig from '../../next-i18next.config'
@@ -26,8 +25,6 @@ class MyDocument extends Document<Props> {
             content="black-translucent"
           />
           <link rel="manifest" href="/manifest.json" />
-          <link rel="preconnect" href="https://i.ytimg.com" />
-          <link rel="preconnect" href="https://assets.auth.magic.link" />
         </Head>
         <body>
           <Main />

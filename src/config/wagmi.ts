@@ -10,7 +10,7 @@ import config from './index'
 
 const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
 
-export const { chains, publicClient, webSocketPublicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chainArray],
   [
     alchemyProvider({ apiKey: config.alchemyApiKey }),
