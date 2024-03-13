@@ -24,7 +24,6 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   let startDate
   let endDate
 
-  console.log({ filter })
   switch (filter.date) {
     case 'Next Week':
       startDate = dateFormater(today)
@@ -39,17 +38,14 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
       endDate = dateFormater(nextMonth)
       break
     default:
-      // When specific date ranges are provided
       if (dateRange?.from && dateRange?.to) {
         startDate = dateFormater(dateRange.from)
         endDate = dateFormater(dateRange.to)
       } else {
-        // Default case when no specific date filter is applied, might not need an end date
         endDate = undefined
       }
       break
   }
-  console.log({ startDate, endDate })
 
   if (filter.eventType.length > 0) {
     return fetchFilteredEventList(filter.eventType, startDate, endDate)
@@ -57,32 +53,6 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
     return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
   } else {
     return fetchFilteredEventList([], startDate, endDate)
-  }
-}
-
-const _handleDateFilter = (
-  dateKey: string,
-  today: string,
-  dateRange: DateRange | undefined,
-) => {
-  switch (dateKey) {
-    case 'Next Week':
-      const nextWeek = new Date()
-      nextWeek.setDate(nextWeek.getDate() + 7)
-      return fetchFilteredEventList([], today, dateFormater(nextWeek))
-    case 'Next Month':
-      const nextMonth = new Date()
-      nextMonth.setMonth(nextMonth.getMonth() + 1)
-      return fetchFilteredEventList([], today, dateFormater(nextMonth))
-    default:
-      if (dateRange?.from && dateRange?.to) {
-        return fetchFilteredEventList(
-          [],
-          dateFormater(dateRange.from),
-          dateFormater(dateRange.to),
-        )
-      }
-      return Promise.resolve([])
   }
 }
 
@@ -130,7 +100,6 @@ const EventFilter = ({
         ).map((id) => {
           return mergedResults.find((event) => event.id === id)!
         })
-        // console.log({ uniqueResults })
         setEventData(uniqueResults)
       } catch (error) {
         console.error(error)
@@ -138,7 +107,6 @@ const EventFilter = ({
         setIsLoading(false)
       }
     } else {
-      // console.log({ fetchedData })
       setEventData(fetchedData)
     }
   }
@@ -147,7 +115,6 @@ const EventFilter = ({
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters }
 
-      // Toggle the value for eventType or other filters
       if (filterCategory === 'eventType') {
         const isAlreadySelected = prevFilters.eventType.includes(value)
         updatedFilters.eventType = isAlreadySelected
@@ -158,10 +125,8 @@ const EventFilter = ({
         updatedFilters[filterCategory] = isRemovingFilter ? '' : value
       }
 
-      // Now, update the URL query parameters accordingly.
       const updatedQuery = { ...router.query }
 
-      // Handling eventType as a comma-separated string in the query
       if (filterCategory === 'eventType') {
         if (updatedFilters.eventType.length > 0) {
           updatedQuery[filterCategory] = updatedFilters.eventType.join(',')
@@ -169,15 +134,12 @@ const EventFilter = ({
           delete updatedQuery[filterCategory]
         }
       } else {
-        // Update or delete the query for non-array filters
         if (updatedFilters[filterCategory]) {
           updatedQuery[filterCategory] = updatedFilters[filterCategory]
         } else {
           delete updatedQuery[filterCategory]
         }
       }
-
-      // Apply the updated query to the URL
       router.push(
         { pathname: router.pathname, query: updatedQuery },
         undefined,

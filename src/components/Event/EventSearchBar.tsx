@@ -32,7 +32,6 @@ const EventSearchBar = ({
     if (searchDate) {
       arg.startDate = dateFormater(searchDate)
     }
-    // const dateSearchResult = filterEvents(searchKey, searchDate, eventData)
     setIsLoading(true)
     store
       .dispatch(getEventByTitle.initiate(arg))
