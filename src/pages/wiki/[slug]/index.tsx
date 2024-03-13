@@ -70,7 +70,7 @@ const Wiki = ({ wiki, average, totalRatings }: WikiProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const props = {
     ...(await serverSideTranslations(context.locale ?? 'en', [
       'revision',
