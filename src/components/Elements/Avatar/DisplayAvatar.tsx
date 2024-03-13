@@ -5,9 +5,9 @@ import {
   Box,
   Center,
   ChakraProps,
-  CSSObject,
   HTMLChakraProps,
   Icon,
+  SystemStyleObject,
 } from '@chakra-ui/react'
 import { AvatarColorArray } from '@/data/AvatarData'
 import { RiUserLine } from 'react-icons/ri'
@@ -21,7 +21,7 @@ import { Image, NextChakraImageProps } from '../Image/Image'
 
 type DisplayAvatarProps = ChakraProps & {
   address?: string | null
-  svgProps?: CSSObject
+  svgProps?: SystemStyleObject
   avatarIPFS?: string | null
   wrapperProps?: HTMLChakraProps<'span'>
   size?: number
