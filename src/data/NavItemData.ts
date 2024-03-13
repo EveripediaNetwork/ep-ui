@@ -22,6 +22,7 @@ import {
   RiSearchEyeFill,
   RiStarSFill,
   RiLightbulbFlashFill,
+  RiCodeBoxFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -147,13 +148,21 @@ export const NAV_ITEMS: NavItem[] = [
       },
       {
         id: 405,
+        label: 'IQ Code',
+        icon: RiCodeBoxFill,
+        href: 'https://iqcode.ai',
+        hasImage: true,
+        target: '_blank',
+      },
+      {
+        id: 406,
         label: 'Blog',
         icon: RiNewspaperFill,
         href: '/blog',
         hasImage: true,
       },
       {
-        id: 406,
+        id: 407,
         label: 'BrainDAO',
         icon: RiGroup2Fill,
         href: 'https://braindao.org',
