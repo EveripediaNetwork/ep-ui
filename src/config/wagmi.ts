@@ -1,10 +1,10 @@
 import { http, createConfig, fallback } from 'wagmi'
 import { polygon, polygonMumbai } from 'viem/chains'
 import { injected, walletConnect } from 'wagmi/connectors'
-import { dedicatedWalletConnector } from '@magiclabs/wagmi-connector'
 import { env } from '@/env.mjs'
 import config from '.'
 import { rpcs } from '@/utils/WalletUtils/getProvider'
+import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
 
 const chains =
   config.alchemyChain === 'matic'
