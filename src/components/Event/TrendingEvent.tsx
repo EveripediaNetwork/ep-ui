@@ -18,7 +18,7 @@ import { parseDateRange } from '@/lib/utils'
 const TrendingEvent = ({ events }: { events: TEvents[] }) => {
   return (
     <div className="mt-6 md:mt-[30px] max-w-[1296px] mx-auto ">
-      <h4 className="font-semibold text-xl ml-4">Trending Events</h4>
+      <h4 className="font-semibold text-xl 2xl:ml-4">Trending Events</h4>
 
       {events.length > 4 && (
         <div className="mt-2">
