@@ -12,14 +12,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { SelectSingleEventHandler } from 'react-day-picker'
+import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
 
 export function DatePickerDemo({
   date,
   onDateSelect,
 }: {
-  date: Date | undefined
-  onDateSelect: SelectSingleEventHandler
+  date: DateRange | undefined
+  onDateSelect: SelectRangeEventHandler
 }) {
   return (
     <Popover>
@@ -31,21 +31,35 @@ export function DatePickerDemo({
           )}
         >
           <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-700" />
-          {date ? (
+          {/* {date ? (
             format(date, 'PPP')
           ) : (
             <span className="text-gray500 dark:text-alpha-700">
               Select date
             </span>
+          )} */}
+          {date?.from ? (
+            date.to ? (
+              <>
+                {format(date.from, 'LLL dd, y')} -{' '}
+                {format(date.to, 'LLL dd, y')}
+              </>
+            ) : (
+              format(date.from, 'LLL dd, y')
+            )
+          ) : (
+            <span>Pick a date</span>
           )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
-          mode="single"
-          selected={date}
           onSelect={onDateSelect}
           initialFocus
+          mode="range"
+          defaultMonth={date?.from}
+          selected={date}
+          numberOfMonths={2}
         />
       </PopoverContent>
     </Popover>

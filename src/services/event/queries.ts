@@ -115,8 +115,14 @@ export const GET_POPULAR_EVENTS = gql`
 `
 
 export const GET_EVENT_BY_TITLE = gql`
-  query GetWikiByTitle($title: String!, $startDate: String) {
-    wikiEventsByTitle(title: $title, startDate: $startDate) {
+  query GetWikiByTitle($title: String!, $startDate: String, $endDate: String) {
+    wikiEventsByTitle(
+      title: $title
+      startDate: $startDate
+      endDate: $endDate
+      order: DATE
+      direction: ASC
+    ) {
       id
       title
       summary

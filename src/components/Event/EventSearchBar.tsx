@@ -4,6 +4,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import { getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
+import { DateRange } from 'react-day-picker'
 
 const EventSearchBar = ({
   setEventData,
@@ -14,7 +15,7 @@ const EventSearchBar = ({
   setSearchActive: Function
   setIsLoading: Function
 }) => {
-  const [searchDate, setSearchDate] = useState<Date>()
+  const [searchDate, setSearchDate] = useState<DateRange>()
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -28,9 +29,12 @@ const EventSearchBar = ({
     const searchInput = messageInput.value.trim()
 
     const searchKey = searchInput.toLowerCase().trim()
-    const arg: { title: string; startDate?: string } = { title: searchKey }
-    if (searchDate) {
-      arg.startDate = dateFormater(searchDate)
+    const arg: { title: string; startDate?: string; endDate?: string } = {
+      title: searchKey,
+    }
+    if (searchDate?.from && searchDate?.to) {
+      arg.startDate = dateFormater(searchDate.from)
+      arg.endDate = dateFormater(searchDate.to)
     }
     setIsLoading(true)
     store
