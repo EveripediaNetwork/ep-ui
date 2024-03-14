@@ -21,12 +21,12 @@ const PopularEventFilter = ({
   return (
     <div className="">
       <div className="flex flex-col gap-1">
-        <h2 className="font-semibold md:text-2xl lg:text-base xl:text-xl leading-none">
+        <h2 className="font-semibold md:text-xl lg:text-base xl:text-xl leading-none">
           Popular Events
         </h2>
         <p
           style={{ lineHeight: '14px' }}
-          className="text-sm md:text-base lg:text-[10px] xl:text-xs"
+          className="text-sm lg:text-[10px] xl:text-xs"
         >
           The most popular crypto events around the world.
         </p>
