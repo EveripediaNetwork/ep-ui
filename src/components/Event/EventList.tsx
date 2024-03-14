@@ -15,15 +15,15 @@ const EventList = ({
   eventData,
   setEventData,
   searchActive,
-  setSearchActive,
   isLoading,
+  clearState,
 }: {
   isLoading: boolean
   searchActive: boolean
   fetchedData: TEvents[]
   eventData: TEvents[]
   setEventData: Function
-  setSearchActive: Function
+  clearState: Function
 }) => {
   const router = useRouter()
   const hasQueryParams = Object.keys(router.query).length > 0
@@ -64,10 +64,9 @@ const EventList = ({
           <button
             type="button"
             onClick={() => {
-              setEventData(fetchedData)
               setOffset(fetchedData.length)
-              setSearchActive(false)
               setHasMore(true)
+              clearState()
             }}
             className="text-sm text-brand-500 flex gap-3 hover:underline items-center cursor-pointer dark:text-brand-800 md:text-base"
           >
@@ -108,7 +107,7 @@ const EventList = ({
                     </>
                   )}
                 </div>
-                <div className="grid gap-5 mt-3 md:mt-6 h-fit relative">
+                <div className="grid gap-5 mt-3 md:mt-6 xl:mt-10 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
                   {events.map((event) => (
                     <EventCard

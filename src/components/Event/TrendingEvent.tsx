@@ -17,11 +17,11 @@ import { parseDateRange } from '@/lib/utils'
 
 const TrendingEvent = ({ events }: { events: TEvents[] }) => {
   return (
-    <div className="mt-10 md:mt-20 max-w-[1296px] mx-auto ">
+    <div className="mt-6 md:mt-8 xl:mt-10 max-w-[1296px] mx-auto ">
       <h4 className="font-semibold text-xl">Trending Events</h4>
 
       {events.length > 4 && (
-        <div className="mt-8">
+        <div className="mt-2">
           <Carousel
             plugins={[Autoplay()]}
             opts={{
@@ -32,7 +32,7 @@ const TrendingEvent = ({ events }: { events: TEvents[] }) => {
             <CarouselContent className="">
               {events.map((event) => (
                 <CarouselItem
-                  className="h-[350px] overflow-hidden basis-[80%] md:basis-1/2 xl:basis-[309px] rounded-xl relative ml-4"
+                  className="h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
                   key={event.id}
                 >
                   <Image

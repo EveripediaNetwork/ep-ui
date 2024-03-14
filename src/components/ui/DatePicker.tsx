@@ -31,13 +31,7 @@ export function DatePickerDemo({
           )}
         >
           <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-700" />
-          {/* {date ? (
-            format(date, 'PPP')
-          ) : (
-            <span className="text-gray500 dark:text-alpha-700">
-              Select date
-            </span>
-          )} */}
+
           {date?.from ? (
             date.to ? (
               <>
@@ -48,7 +42,9 @@ export function DatePickerDemo({
               format(date.from, 'LLL dd, y')
             )
           ) : (
-            <span>Pick a date</span>
+            <span className="text-gray500 dark:text-alpha-700">
+              Select Date
+            </span>
           )}
         </Button>
       </PopoverTrigger>

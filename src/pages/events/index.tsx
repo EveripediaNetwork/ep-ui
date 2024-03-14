@@ -14,6 +14,7 @@ import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import { dateFormater } from '@/lib/utils'
+import { DateRange } from 'react-day-picker'
 
 const EventPage = ({
   events,
@@ -25,6 +26,15 @@ const EventPage = ({
   const [eventData, setEventData] = useState<TEvents[]>(events)
   const [searchActive, setSearchActive] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [searchDate, setSearchDate] = useState<DateRange>()
+  const [searchQuery, setSearchQuery] = useState<string>('')
+
+  const clearSearchState = () => {
+    setEventData(events)
+    setSearchActive(false)
+    setSearchDate(undefined)
+    setSearchQuery('')
+  }
 
   return (
     <div>
@@ -35,6 +45,10 @@ const EventPage = ({
           setSearchActive={setSearchActive}
           setEventData={setEventData}
           setIsLoading={setIsLoading}
+          searchDate={searchDate}
+          setSearchDate={setSearchDate}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
         {!searchActive && (
           <>
@@ -46,21 +60,21 @@ const EventPage = ({
             />
           </>
         )}
-        <div className="mt-10 xl:hidden">
+        <div className="mt-6 md:mt-8 xl:hidden">
           <EventFilter
             fetchedData={events}
             setIsLoading={setIsLoading}
             setEventData={setEventData}
           />
         </div>
-        <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-10 md:mt-24">
+        <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-6 md:mt-8 xl:mt-10">
           <EventList
             fetchedData={events}
             isLoading={isLoading}
-            setSearchActive={setSearchActive}
             searchActive={searchActive}
             eventData={eventData}
             setEventData={setEventData}
+            clearState={clearSearchState}
           />
           <div className="flex-1 flex flex-col gap-10 xl:max-w-[419px]">
             <div className="hidden xl:block">

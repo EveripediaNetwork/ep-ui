@@ -1,40 +1,38 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
 import { getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-import { DateRange } from 'react-day-picker'
+import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
 
 const EventSearchBar = ({
   setEventData,
   setSearchActive,
   setIsLoading,
+  searchDate,
+  setSearchDate,
+  searchQuery,
+  setSearchQuery,
 }: {
   setEventData: Function
   setSearchActive: Function
   setIsLoading: Function
+  searchDate: DateRange | undefined
+  setSearchDate: SelectRangeEventHandler
+  searchQuery: string
+  setSearchQuery: Function
 }) => {
-  const [searchDate, setSearchDate] = useState<DateRange>()
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSearchActive(true)
 
-    const form = e.currentTarget
-    const messageInput = form.elements.namedItem(
-      'search-input',
-    ) as HTMLInputElement
-
-    const searchInput = messageInput.value.trim()
-
-    const searchKey = searchInput.toLowerCase().trim()
     const arg: { title: string; startDate?: string; endDate?: string } = {
-      title: searchKey,
+      title: searchQuery,
     }
-    if (searchDate?.from && searchDate?.to) {
-      arg.startDate = dateFormater(searchDate.from)
-      arg.endDate = dateFormater(searchDate.to)
+    if (searchDate?.from || searchDate?.to) {
+      arg.startDate = searchDate?.from && dateFormater(searchDate.from)
+      arg.endDate = searchDate?.to && dateFormater(searchDate.to)
     }
     setIsLoading(true)
     store
@@ -46,6 +44,11 @@ const EventSearchBar = ({
       })
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false))
+  }
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    // Your logic here, e.g., logging the input's new value
+    setSearchQuery(event.target.value)
   }
 
   return (
@@ -61,6 +64,8 @@ const EventSearchBar = ({
             </button>
             <input
               name="search-input"
+              value={searchQuery}
+              onChange={handleChange}
               placeholder="Search by events, name, location,  and more"
               className="w-full bg-transparent text-[10px] md:text-sm outline-none"
             />
