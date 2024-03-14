@@ -104,7 +104,7 @@ const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.currentTarget.value)}
-                placeholder="mabel@braindao.com"
+                placeholder="vitalik@ethereum.org"
                 className="dark:placeholder:text-alpha-500 placeholder:text-gray400"
               />
             </div>
@@ -120,11 +120,7 @@ const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
               <Button
                 type="submit"
                 className="bg-brand-500 dark:bg-brand-800 py-1 h-auto px-20 disabled:cursor-not-allowed"
-                disabled={
-                  email.trim().length < 1 ||
-                  suggestion.trim().length < 1 ||
-                  loading
-                }
+                disabled={suggestion.trim().length < 1 || loading}
               >
                 {loading ? 'Submitting...' : 'Submit'}
               </Button>
