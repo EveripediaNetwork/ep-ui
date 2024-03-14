@@ -54,8 +54,10 @@ const EventDetailsPage = ({
                 <RelatedMediaGrid media={event.media} />
               )}
             </div>
-            <NearbyEventFilter />
-            <PopularEventFilter popularEvents={popularEvents} />
+            <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
+              <NearbyEventFilter />
+              <PopularEventFilter popularEvents={popularEvents} />
+            </div>
           </div>
         </div>
       </div>

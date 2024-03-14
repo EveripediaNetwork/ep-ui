@@ -58,12 +58,9 @@ const EventInterest = ({
     return data
   }
 
-  // Effect to initialize selectedTags from URL query parameters
   useEffect(() => {
-    // Check if the 'tags' query parameter exists and is an array or a string
     const tagsFromQuery = query.tags
     if (tagsFromQuery) {
-      // If 'tags' is a string, convert it to an array
       const tagsArray =
         typeof tagsFromQuery === 'string' ? [tagsFromQuery] : tagsFromQuery
       setSelectedTags(tagsArray)
