@@ -8,7 +8,6 @@ import {
 } from 'react-icons/ri'
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { useRouter } from 'next/router'
 import { LoadingEventState } from './LoadingState'
 type TEventDetails = {
   id: string
@@ -33,12 +32,8 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
-  const router = useRouter()
   return (
-    <div
-      onKeyDown={() => router.push(`/events/${id}`)}
-      className="flex gap-2 md:gap-6"
-    >
+    <Link href={`/events/${id}`} className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
         <RiArrowRightUpLine />
       </span>
@@ -48,12 +43,9 @@ const EventCard = ({
         <div className="border border-gray200 dark:border-alpha-300 group cursor-pointer bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
-              <Link
-                href={`/events/${id}`}
-                className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800"
-              >
+              <span className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800">
                 {title}
-              </Link>
+              </span>
               <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
                 {excerpt}
               </p>
@@ -119,7 +111,7 @@ const EventCard = ({
           </div>
         </div>
       )}
-    </div>
+    </Link>
   )
 }
 
