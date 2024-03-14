@@ -134,11 +134,19 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               </>
             )}
             <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
-            <WikiCommitMessage
-              commitMessage={commitMessage}
-              user={wiki.user}
-              lastUpdated={wiki.updated ?? dateTime}
-            />
+            <Box
+              display={{
+                base: 'none',
+                xl: 'block',
+              }}
+              w={'full'}
+            >
+              <WikiCommitMessage
+                commitMessage={commitMessage}
+                user={wiki.user}
+                lastUpdated={wiki.updated ?? dateTime}
+              />
+            </Box>
             <Flex
               w="100%"
               display={{ base: 'none', xl: 'block', md: 'none' }}
