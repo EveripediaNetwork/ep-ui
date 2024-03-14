@@ -14,19 +14,19 @@ export interface IEventData {
 
 export const EventInterestData = [
   'Blockchains',
-  'crypto',
-  'protocols',
-  'Nfts',
+  'BinanceSmartChain',
+  'Protocols',
+  'Conference',
+  'Cexes',
   'Ethereum',
-  'Technology',
-  'Metaverse',
-  'Games',
-  'collectibles',
+  'Festival',
+  'Forum',
+  'Hackaton',
   'Bitcoin',
   'AI',
   'DEXes',
-  'Artist',
-  'Non-fungible',
+  'Online',
+  'Polygon',
   'Solana',
 ]
 

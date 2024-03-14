@@ -86,7 +86,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 xl:col-span-2 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
           {event.tags.map((tag) => (
             <Link
-              href={`/events?eventType=${tag.id}`}
+              href={`/events?tags=${tag.id}`}
               key={tag.id}
               className="rounded-full px-2 py-1 border border-gray300 dark:border-alpha-300"
             >

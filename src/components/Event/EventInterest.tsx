@@ -19,11 +19,35 @@ const EventInterest = ({
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prevSelected) => {
+      let updatedTags: string[] = [...prevSelected]
       if (prevSelected.includes(tag)) {
-        return prevSelected.filter((t) => t !== tag)
+        updatedTags = prevSelected.filter((t) => t !== tag)
       } else {
-        return [...prevSelected, tag].slice(0, 4) // Limit to 4 tags
+        updatedTags = [...prevSelected, tag].slice(0, 4)
       }
+
+      const currentQueryParams = { ...query }
+      if (updatedTags.length > 0) {
+        currentQueryParams.tags = updatedTags
+        setIsLoading(true)
+        filterEventsByTags(updatedTags)
+          .then((res) => setEventData(res))
+          .catch((err) => console.log(err))
+          .finally(() => setIsLoading(false))
+      } else {
+        delete currentQueryParams.tags
+        setEventData(eventData)
+      }
+      router.replace(
+        {
+          pathname: pathname,
+          query: currentQueryParams,
+        },
+        undefined,
+        { shallow: true },
+      )
+
+      return updatedTags
     })
   }
 
@@ -34,31 +58,17 @@ const EventInterest = ({
     return data
   }
 
+  // Effect to initialize selectedTags from URL query parameters
   useEffect(() => {
-    const currentQueryParams = { ...query }
-    if (selectedTags.length > 0) {
-      currentQueryParams.tags = selectedTags
-    } else {
-      delete currentQueryParams.tags
+    // Check if the 'tags' query parameter exists and is an array or a string
+    const tagsFromQuery = query.tags
+    if (tagsFromQuery) {
+      // If 'tags' is a string, convert it to an array
+      const tagsArray =
+        typeof tagsFromQuery === 'string' ? [tagsFromQuery] : tagsFromQuery
+      setSelectedTags(tagsArray)
     }
-    router.replace(
-      {
-        pathname: pathname,
-        query: currentQueryParams,
-      },
-      undefined,
-      { shallow: true },
-    )
-    if (selectedTags.length > 0) {
-      setIsLoading(true)
-      filterEventsByTags(selectedTags)
-        .then((res) => setEventData(res))
-        .catch((err) => console.log(err))
-        .finally(() => setIsLoading(false))
-    } else {
-      setEventData(eventData)
-    }
-  }, [selectedTags])
+  }, [query.tags])
 
   return (
     <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-6 md:mt-[30px] rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-3 md:py-5 px-4 xl:px-[32px] xl:gap-32">

@@ -68,6 +68,10 @@ export const TagsSuggestions = [
     value: 'Glossary',
   },
   {
+    label: 'Hackathon',
+    value: 'Hackathon',
+  },
+  {
     label: 'Marketplaces',
     value: 'Marketplaces',
   },
