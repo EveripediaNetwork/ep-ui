@@ -61,7 +61,7 @@ const EventInterest = ({
   }, [selectedTags])
 
   return (
-    <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-6 md:mt-8 xl:mt-10 rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-5 xl:py-[40px] px-4 xl:px-[32px] xl:gap-32">
+    <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-6 md:mt-[30px] rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-3 md:py-5 px-4 xl:px-[32px] xl:gap-32">
       <div className="xl:max-w-[250px] flex flex-col gap-3 w-full">
         <h3 className="text-xl font-semibold text-gray800 dark:text-alpha-900">
           Interests

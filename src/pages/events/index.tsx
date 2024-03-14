@@ -60,14 +60,14 @@ const EventPage = ({
             />
           </>
         )}
-        <div className="mt-6 md:mt-8 xl:hidden">
+        <div className="mt-6 md:mt-[30px] xl:hidden">
           <EventFilter
             fetchedData={events}
             setIsLoading={setIsLoading}
             setEventData={setEventData}
           />
         </div>
-        <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-6 md:mt-8 xl:mt-10">
+        <div className="flex flex-col xl:flex-row gap-10 xl:gap-8 max-w-[1296px] mx-auto mt-6 md:mt-[30px]">
           <EventList
             fetchedData={events}
             isLoading={isLoading}

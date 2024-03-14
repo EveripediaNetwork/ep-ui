@@ -32,10 +32,19 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
       endDate = dateFormater(nextWeek)
       break
     case 'Next Month':
-      startDate = dateFormater(today)
-      const nextMonth = new Date(today)
-      nextMonth.setMonth(nextMonth.getMonth() + 1)
-      endDate = dateFormater(nextMonth)
+      const firstDayNextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        1,
+      )
+      startDate = dateFormater(firstDayNextMonth)
+
+      const lastDayNextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 2,
+        0,
+      )
+      endDate = dateFormater(lastDayNextMonth)
       break
     default:
       if (dateRange?.from && dateRange?.to) {
