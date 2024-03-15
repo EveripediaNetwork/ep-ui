@@ -118,7 +118,7 @@ const EventList = ({
                       excerpt={event.summary || ''}
                       location={'St. Moritz, Switzerland'}
                       date={event.events[0].date}
-                      tags={event.tags}
+                      tags={event.tags.filter((tag) => tag.id !== 'Events')}
                       speakers={event?.linkedWikis?.speakers || []}
                       images={event.images}
                     />

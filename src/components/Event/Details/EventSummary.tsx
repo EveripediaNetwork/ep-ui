@@ -84,15 +84,17 @@ const EventSummary = ({ event }: { event: Wiki }) => {
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
         <span className="col-span-1">Tags</span>
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 xl:col-span-2 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
-          {event.tags.map((tag) => (
-            <Link
-              href={`/events?tags=${tag.id}`}
-              key={tag.id}
-              className="rounded-full px-2 py-1 border border-gray300 dark:border-alpha-300"
-            >
-              {tag.id}
-            </Link>
-          ))}
+          {event.tags
+            .filter((tag) => tag.id !== 'Events')
+            .map((tag) => (
+              <Link
+                href={`/events?tags=${tag.id}`}
+                key={tag.id}
+                className="rounded-full px-2 py-1 border border-gray300 dark:border-alpha-300"
+              >
+                {tag.id}
+              </Link>
+            ))}
         </span>
       </span>
     </div>
