@@ -11,6 +11,7 @@ import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
 import { logEvent } from '@/utils/googleAnalytics'
+import { getEventByBlockchain, getEventsByTags } from '../event'
 
 export type Account = {
   id: string
@@ -43,12 +44,33 @@ export const fillType = (
   return { ...item, type }
 }
 
+export const fetchFilteredEventList = async (
+  ids: string[],
+  startDate?: string,
+  endDate?: string,
+) => {
+  const { data } = await store.dispatch(
+    getEventsByTags.initiate({ tagIds: ids, startDate, endDate }),
+  )
+  return data
+}
+
+export const fetchEventByBlockchain = async (
+  blockchain: string,
+  startDate?: string,
+  endDate?: string,
+) => {
+  const { data } = await store.dispatch(
+    getEventByBlockchain.initiate({ blockchain, startDate, endDate }),
+  )
+  return data
+}
+
 export const fetchWikisList = async (query: string) => {
   const { data } = await store.dispatch(getWikisByTitle.initiate(query))
   const { data: tagsData } = await store.dispatch(
     getTagWikis.initiate({ id: query }),
   )
-
   return [...(data || []), ...(tagsData || [])]
 }
 

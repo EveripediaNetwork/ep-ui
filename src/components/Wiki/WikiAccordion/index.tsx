@@ -60,6 +60,10 @@ const WikiAccordion = ({
           minW={3}
           aria-label={`toggle${title}`}
           icon={<RiArrowDownSLine />}
+          transform={
+            first === Styles.accordionUnDisplay ? '' : 'rotate(180deg)'
+          }
+          transition="all 0.3s ease"
         />
         <Text
           style={{
