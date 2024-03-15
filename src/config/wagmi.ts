@@ -1,6 +1,6 @@
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { configureChains, Connector } from 'wagmi'
+import { configureChains, Connector, createConfig } from 'wagmi'
 import { polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
@@ -10,7 +10,7 @@ import config from './index'
 
 const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
 
-export const { chains, publicClient, webSocketPublicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chainArray],
   [
     alchemyProvider({ apiKey: config.alchemyApiKey }),
@@ -19,7 +19,7 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains(
   ],
 )
 
-const rpcs: {
+export const rpcs: {
   [key: string]: string
 } = {
   maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
@@ -52,3 +52,10 @@ export const connectors = [
     },
   }) as unknown as Connector,
 ]
+
+export const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
+})

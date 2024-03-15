@@ -6,9 +6,9 @@ const server = z.object({
   OPENAI_API_KEY: z.string().optional(),
   PINATA_KEY: z.string().optional(),
   PINATA_SECRET: z.string().optional(),
-  BOT_AUTH_KEY: z.string(),
   DISCORD_WEBHOOK_ID: z.string(),
   DISCORD_WEBHOOK_TOKEN: z.string(),
+  BOT_API_KEY: z.string(),
 })
 
 const client = z.object({
@@ -73,7 +73,7 @@ const processEnv = {
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-  BOT_AUTH_KEY: process.env.BOT_AUTH_KEY,
+  BOT_API_KEY: process.env.BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
 }

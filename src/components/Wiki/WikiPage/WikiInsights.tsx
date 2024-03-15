@@ -7,7 +7,6 @@ import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { WikiDetails } from './InsightComponents/WikiDetails'
 import { RelatedWikis } from './InsightComponents/RelatedWikis'
 import ProfileStatistics from './InsightComponents/ProfileStatistics'
@@ -74,7 +73,6 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
       fetchNFTData()
     }
   }, [coingeckoLink, wikiIsNFT])
-  const userAddress = getUserAddressFromCache()
   return (
     <VStack
       borderLeftWidth={{ base: 0, xl: '1px' }}
@@ -120,7 +118,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               {<BrainBotMobile wiki={wiki} />}
             </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
-              <WikiRating contentId={wiki.id} userId={userAddress} />
+              <WikiRating contentId={wiki.id} />
             </Box>
             {!!coingeckoLink && (
               <>
@@ -136,11 +134,19 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               </>
             )}
             <NFTWidget categories={wiki.categories} metaData={wiki.metadata} />
-            <WikiCommitMessage
-              commitMessage={commitMessage}
-              user={wiki.user}
-              lastUpdated={wiki.updated ?? dateTime}
-            />
+            <Box
+              display={{
+                base: 'none',
+                xl: 'block',
+              }}
+              w={'full'}
+            >
+              <WikiCommitMessage
+                commitMessage={commitMessage}
+                user={wiki.user}
+                lastUpdated={wiki.updated ?? dateTime}
+              />
+            </Box>
             <Flex
               w="100%"
               display={{ base: 'none', xl: 'block', md: 'none' }}

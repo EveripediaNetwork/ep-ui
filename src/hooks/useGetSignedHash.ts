@@ -18,6 +18,7 @@ import { Dict } from '@chakra-ui/utils'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
+import config from '@/config'
 
 export const useGetSignedHash = () => {
   const {
@@ -45,13 +46,14 @@ export const useGetSignedHash = () => {
 
   const { refetch } = useWaitForTransaction({
     hash: txHash as `0x${string}`,
+    chainId: Number(config.chainId),
     confirmations: 2,
   })
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
   })
   const gasPrice = useMemo(
-    () => parseFloat(feeData?.formatted.gasPrice || '0'),
+    () => parseFloat(feeData?.formatted.gasPrice ?? '0'),
     [feeData],
   )
 
@@ -93,7 +95,7 @@ export const useGetSignedHash = () => {
       let timePassed = 0
       const _timer = setInterval(() => {
         if (timePassed >= 60 * 1000 && gasPrice > 250) {
-          setMsg(`A little congestion on the polygon chain is causing a delay in the 
+          setMsg(`A little congestion on the polygon chain is causing a delay in the
           creation of your wiki.This would be resolved in a little while.`)
         }
         try {

@@ -1,10 +1,13 @@
 /* eslint-disable no-useless-escape */
 import React, { ChangeEvent, useCallback, useState } from 'react'
-import { Flex, Image, Input, useToast } from '@chakra-ui/react'
+import { Flex, Input, useToast, Image as ChakraImg } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useDispatch } from 'react-redux'
 import { EditorMainImageWrapper } from '../Image/EditorMainImageWrapper'
 import ImageCrop from '../Image/ImageCrop'
+import { Media } from '@everipedia/iq-utils'
+
+const MAX_MEDIA = 25
 
 type ImageInputType = {
   imageUploading?: boolean
@@ -13,6 +16,7 @@ type ImageInputType = {
   deleteImage?: () => void
   showFetchedImage: boolean
   modalUpload?: boolean
+  media?: Media[]
 }
 
 const ImageInput = ({
@@ -22,6 +26,7 @@ const ImageInput = ({
   deleteImage,
   showFetchedImage,
   modalUpload,
+  media,
 }: ImageInputType) => {
   const [imgSrc, setImageSrc] = useState<string>()
   const [toCropImg, setToCropImg] = useState<ArrayBuffer | string | null>()
@@ -37,6 +42,15 @@ const ImageInput = ({
     }
   }, [deleteImage, setHideDropzone])
 
+  const isImgUrl = (url: string) => {
+    const img = new Image()
+    img.src = url
+    return new Promise((resolve) => {
+      img.onload = () => resolve(true)
+      img.onerror = () => resolve(false)
+    })
+  }
+
   const linkRecognizer = (url: string) => {
     const validYTLinkReg =
       /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
@@ -46,7 +60,8 @@ const ImageInput = ({
     if (!validLinkReg.test(url)) {
       return { type: null }
     }
-    if (/(https?:\/\/)?(www.)?youtu(be\.com|.be)\//.test(url)) {
+    // accomodate for typos in youtube links
+    if (/(https?:\/\/)?(www.)?youtu(be\.?c?o?m?|.be)\/?/.test(url)) {
       const videoCode = url.match(validYTLinkReg)
       return { type: 'youtube', value: videoCode?.[1] }
     }
@@ -56,6 +71,16 @@ const ImageInput = ({
   const tryUploadImg = async (url: string) => {
     const imageUrl = url
     const FullUrl = `https://everipedia-cors.vercel.app/?url=${imageUrl}`
+    const isImageValid = await isImgUrl(FullUrl)
+    if (!isImageValid) {
+      removeImage()
+      toast({
+        title: 'Image could not be fetched. Ensure you have the right link',
+        status: 'error',
+        duration: 2000,
+      })
+      return
+    }
     const response = await fetch(FullUrl, {
       method: 'GET',
       headers: {},
@@ -98,9 +123,16 @@ const ImageInput = ({
   const handleOnImageInputChanges = async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
+    if (media && media.length >= MAX_MEDIA) {
+      toast({
+        title: `You cannot upload more than ${MAX_MEDIA} media. You can delete some existing media to create more spaces`,
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
     const url = event.target.value
     const urlType = linkRecognizer(url)
-
     if (!urlType.type) {
       setImageSrc(undefined)
       toast({
@@ -112,6 +144,27 @@ const ImageInput = ({
     }
 
     if (urlType.type === 'youtube') {
+      if (!urlType.value) {
+        setImageSrc(undefined)
+        toast({
+          title: 'Invalid Youtube URL',
+          status: 'error',
+          duration: 3000,
+        })
+        return
+      }
+      const isVideoUnavailable = await fetch(`/api/checkVideo?url=${url}`)
+        .then((res) => res.json())
+        .then((data) => data.isUnavailable)
+      if (isVideoUnavailable) {
+        setImageSrc(undefined)
+        toast({
+          title: 'Video is unavailable, please check url and try again',
+          status: 'error',
+          duration: 3000,
+        })
+        return
+      }
       const videoID = urlType?.value
       dispatch({
         type: 'wiki/addMedia',
@@ -162,7 +215,7 @@ const ImageInput = ({
             cropImage={() => setToCropImg(imgSrc)}
             removeImage={removeImage}
           >
-            <Image
+            <ChakraImg
               objectFit="cover"
               h="255px"
               w="full"

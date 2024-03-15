@@ -1,0 +1,11 @@
+{
+  "wikis": "维基",
+  "edits": "编辑",
+  "CreateEmptyStateTitle": "创建你的第一个维基",
+  "createEmptyStateDescription": "开始创建你自己的维基。当你这么做时，它们会出现在这里！",
+  "editEmptyStateTitle": "编辑你的第一个维基",
+  "editEmptyStateDescription": "你还没有进行任何编辑，一旦你编辑了一个维基，它们会出现在这里。",
+  "createWikiBtn": "创建维基",
+  "settingBtnText": "设置",
+  "shareBtnText": "分享"
+}

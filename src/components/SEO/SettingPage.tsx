@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useTranslation } from 'next-i18next'
 
-const SettingsPageHeader = ({ username }: { username: string | undefined }) => {
+const SettingsPageHeader = ({ username }: { username: string | null }) => {
   const { t } = useTranslation('settings')
 
   return (

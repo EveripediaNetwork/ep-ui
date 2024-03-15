@@ -1,9 +1,4 @@
-import {
-  RiBankFill,
-  RiCalendarEventFill,
-  RiMapPinRangeFill,
-  RiScan2Fill,
-} from 'react-icons/ri'
+import { RiBankFill, RiCalendarEventFill, RiScan2Fill } from 'react-icons/ri'
 
 export interface IEventData {
   id: number
@@ -18,20 +13,21 @@ export interface IEventData {
 }
 
 export const EventInterestData = [
-  'Blockchain',
-  'crypto',
-  'protocols',
-  'Nfts',
+  'Blockchains',
+  'BinanceSmartChain',
+  'Protocols',
+  'Conference',
+  'Cexes',
   'Ethereum',
-  'Technology',
-  'Metaverse',
+  'Festival',
+  'Forum',
   'Games',
-  'collectibles',
+  'Hackaton',
   'Bitcoin',
   'AI',
   'DEXes',
-  'Artist',
-  'Non-fungible',
+  'Online',
+  'Polygon',
   'Solana',
 ]
 
@@ -434,18 +430,18 @@ export const eventFilterData = [
     title: 'Date',
     filter: ['Next Week', 'Next Month', 'Custom Range'],
   },
-  {
-    icon: <RiMapPinRangeFill />,
-    title: 'Location',
-    filter: [
-      'Asia',
-      'Africa',
-      'Europe',
-      'North America',
-      'South America',
-      'Austria/Ocenia',
-    ],
-  },
+  // {
+  //   icon: <RiMapPinRangeFill />,
+  //   title: 'Location',
+  //   filter: [
+  //     'Asia',
+  //     'Africa',
+  //     'Europe',
+  //     'North America',
+  //     'South America',
+  //     'Austria/Ocenia',
+  //   ],
+  // },
   {
     icon: <RiScan2Fill />,
     title: 'Event Type',
@@ -454,6 +450,13 @@ export const eventFilterData = [
   {
     icon: <RiBankFill />,
     title: 'Blockchain',
-    filter: ['Bitcoin', 'Ethereum', 'Polygon', 'Solana', 'Cardano'],
+    filter: [
+      'Bitcoin',
+      'Ethereum',
+      'Polygon',
+      'Solana',
+      'Cardano',
+      'Binance-coin',
+    ],
   },
 ]

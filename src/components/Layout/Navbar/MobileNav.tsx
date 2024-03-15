@@ -24,15 +24,16 @@ import { NavItem } from '@/types/NavItemType'
 import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
 import { ColorModeToggle } from './ColorModeToggle'
 import { LogOutBtn } from './Logout'
-import { useAccount } from 'wagmi'
 import SuggestWikiModal from './SuggestWiki'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
+import { ProfileLink } from './ProfileLink'
+import SettingsLink from './SettingsLink'
+import { useAddress } from '@/hooks/useAddress'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -40,10 +41,9 @@ type MobileNavType = {
 }
 
 const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
-  const userAddress = getUserAddressFromCache()
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
-  const { isConnected } = useAccount()
+  const { isConnected, address: userAddress } = useAddress()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
@@ -186,8 +186,12 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 </Box>
               )}
               <Menu>
-                <Flex gap="4" direction="column">
+                <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
+                  <VStack display={{ md: 'none' }}>
+                    <ProfileLink isInMobileMenu />
+                    <SettingsLink isInMobileMenu />
+                  </VStack>
                   {isConnected && <LogOutBtn isInMobileMenu />}
                 </Flex>
               </Menu>

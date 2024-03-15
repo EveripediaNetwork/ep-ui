@@ -8,7 +8,12 @@ const Newsletter = ({
   url,
   buttonTitle,
   ...rest
-}: { header: string; body: string; url: string; buttonTitle: string }) => {
+}: {
+  header: string
+  body: string
+  url: string
+  buttonTitle: string
+}) => {
   const buttonHandler = () => {
     logEvent({
       action: 'SUBSCRIBE_BUTTON',
@@ -18,11 +23,18 @@ const Newsletter = ({
     })
   }
   return (
-    <Stack align={{ base: 'center', lg: 'flex-start' }} spacing={4}>
+    <Stack
+      justifyContent={'space-between'}
+      align={{ base: 'center', lg: 'flex-start' }}
+      spacing={4}
+    >
       <Text fontSize="xl" fontWeight="bold" py={2}>
         {header}
       </Text>
-      <Text align={{ base: 'center', lg: 'start' }} maxW="600px">
+      <Text
+        align={{ base: 'center', lg: 'start' }}
+        maxW={{ base: '600px', '2xl': '500px' }}
+      >
         {body}
       </Text>
       <Button

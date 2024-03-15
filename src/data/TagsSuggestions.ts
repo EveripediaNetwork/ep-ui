@@ -28,12 +28,20 @@ export const TagsSuggestions = [
     value: 'Collectors',
   },
   {
+    label: 'Conference',
+    value: 'Conference',
+  },
+  {
     label: 'DEXes',
     value: 'DEXes',
   },
   {
     label: 'Developers',
     value: 'Developers',
+  },
+  {
+    label: 'Events',
+    value: 'Events',
   },
   {
     label: 'Entertainment',
@@ -52,12 +60,20 @@ export const TagsSuggestions = [
     value: 'Founders',
   },
   {
+    label: 'Festival',
+    value: 'Festival',
+  },
+  {
     label: 'Games',
     value: 'Games',
   },
   {
     label: 'Glossary',
     value: 'Glossary',
+  },
+  {
+    label: 'Hackathon',
+    value: 'Hackathon',
   },
   {
     label: 'Marketplaces',
@@ -70,6 +86,10 @@ export const TagsSuggestions = [
   {
     label: 'Organizations',
     value: 'Organizations',
+  },
+  {
+    label: 'Online',
+    value: 'Online',
   },
   {
     label: 'PeopleInDeFi',

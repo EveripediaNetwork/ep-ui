@@ -8,8 +8,8 @@ import {
   setCurrentMessage,
 } from '@/store/slices/chatbot-slice'
 import { randomUUID } from 'crypto'
-import axios from 'axios'
 import { useAppSelector } from '@/store/hook'
+import axios from 'axios'
 
 const useStream = () => {
   const dispatch = useDispatch()
@@ -34,14 +34,12 @@ const useStream = () => {
       dispatch(setCurrentMessage(question))
       dispatch(setIsLoading(true))
       dispatch(setIsError(false))
-      await axios
-        .post('/api/fetch-answer', {
-          question: query ? query : question,
-        })
-        .then((res) => {
-          const { chat, answer, answerSources, messageId } =
-            generateOutputSchema.parse(res.data)
 
+      await axios
+        .post('/api/generate', { question: query ? query : question })
+        .then((res) => {
+          const { answer, answerSources, chat, messageId } =
+            generateOutputSchema.parse(res.data)
           if (chat && !currentChatId) {
             dispatch(setCurrentChatId(chat.id))
           }
@@ -56,8 +54,8 @@ const useStream = () => {
           )
         })
         .catch((err) => {
-          console.log(err)
           dispatch(setIsError(true))
+          console.log('Error:', err.response?.data)
         })
         .finally(() => {
           dispatch(setIsLoading(false))
@@ -65,9 +63,7 @@ const useStream = () => {
     }
   }
 
-  return {
-    askQuestion,
-  }
+  return { askQuestion }
 }
 
 export default useStream

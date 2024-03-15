@@ -10,14 +10,17 @@ import { Wiki as WikiType } from '@everipedia/iq-utils'
 import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { averageRating } from '@/services/admin'
+import Head from 'next/head'
 
 interface WikiProps {
   wiki: WikiType
+  average?: number
+  totalRatings?: number
 }
 
-const Wiki = ({ wiki }: WikiProps) => {
+const Wiki = ({ wiki, average, totalRatings }: WikiProps) => {
   const scrollRef = React.useRef<HTMLDivElement>(null)
-
   const router = useRouter()
   const { slug } = router.query as { slug: string }
   const breakpoint = useBreakpointValue(
@@ -44,6 +47,9 @@ const Wiki = ({ wiki }: WikiProps) => {
 
   return (
     <>
+      <Head>
+        <link rel="preconnect" href="https://i.ytimg.com" />
+      </Head>
       {wiki && (
         <WikiHeader
           slug={slug}
@@ -53,6 +59,8 @@ const Wiki = ({ wiki }: WikiProps) => {
           title={`${wiki.title} - ${wiki?.categories[0]?.title}`}
           description={wiki.summary}
           mainImage={getWikiImageUrl(wiki.images)}
+          avgRating={average}
+          totalRatings={totalRatings}
         />
       )}
       <Box as="main" mt={-2} ref={scrollRef}>
@@ -93,6 +101,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
+  const { data: ratingData } = await store.dispatch(
+    averageRating.initiate(slug),
+  )
+  const average = ratingData?.average ?? null
+  const totalRatings = ratingData?.votes ?? null
+
   // TODO: probably can be async in the components
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
 
@@ -106,7 +120,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
   return {
-    props: { wiki: { ...wiki, ...data }, ...props },
+    props: {
+      wiki: { ...wiki, ...data },
+      average,
+      totalRatings,
+      ...props,
+    },
   }
 }
 

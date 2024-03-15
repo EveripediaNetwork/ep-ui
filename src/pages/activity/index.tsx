@@ -104,15 +104,22 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
     <>
       <ActivityHeader />
       <Box bgColor="pageBg" my={-8} py={4}>
-        <Box w="min(90%, 1100px)" mx="auto">
-          <Heading
-            my={{ base: 8, md: 12 }}
-            as="h1"
-            size={{ base: 'lg', md: '2xl' }}
-            letterSpacing="wide"
-          >
-            {t('recentActivity')}
-          </Heading>
+        <Flex direction={'column'} w="min(90%, 1100px)" mx="auto">
+          <Box my={{ base: 8, md: 12 }}>
+            <Heading
+              as="h1"
+              fontSize={{ md: '20px', xl: '24px' }}
+              letterSpacing="wide"
+            >
+              {t('recentActivity')}
+            </Heading>
+            <Text
+              mt={{ base: 1 }}
+              fontSize={{ base: 'xs', md: 'sm', xl: 'md' }}
+            >
+              {t('recentActivityDescription')}
+            </Text>
+          </Box>
           <Box>
             <Box>
               <Flex flexDirection="column" overflow="hidden" gap={4}>
@@ -131,7 +138,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
               </Center>
             )}
           </Box>
-        </Box>
+        </Flex>
       </Box>
     </>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import AccordionFAQItem from '../AccordionFAQItem'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { transformTextContent } from '@/utils/transformTextContent'
 
 const WhereToGetIQTokens = () => {

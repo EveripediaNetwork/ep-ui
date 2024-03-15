@@ -20,6 +20,7 @@
   "AI": "AI",
   "BinanceSmartChain": "BinanceSmartChain",
   "Blockchains": "Blockchains",
+  "Conference": "Conference",
   "CEXes": "CEXes",
   "Collections": "Collections",
   "Collectors": "Collectors",
@@ -46,5 +47,7 @@
   "Month": "Month",
   "Year": "Year",
   "All time": "All Time",
-  "iqEarned": "IQ Earned"
+  "iqEarned": "IQ Earned",
+  "Events": "Events",
+  "Speakers": "Speakers"
 }

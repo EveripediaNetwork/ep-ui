@@ -1,6 +1,5 @@
 import {
   RiSettings5Fill,
-  RiUserFill,
   RiCompass3Fill,
   RiBarChartFill,
   RiFoldersFill,
@@ -97,26 +96,24 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/rank',
     icon: RiHashtag,
   },
+  // {
+  //   id: 3,
+  //   label: 'Events',
+  //   href: '/events',
+  //   icon: RiHashtag,
+  // },
   {
-    id: 3,
+    id: 4,
     label: 'Activity',
     href: '/activity',
     icon: RiBarChartFill,
   },
   {
-    id: 4,
+    id: 5,
     label: 'About',
     href: '/about',
     icon: RiUserSearchFill,
-    target: '_blank',
   },
-  // {
-  //   id: 5,
-  //   label: 'IQ GPT',
-  //   href: 'https://iqgpt.com',
-  //   icon: RiSearchEyeFill,
-  //   target: '_blank',
-  // },
   {
     id: 6,
     label: 'More',
@@ -171,11 +168,6 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  // {
-  //   id: 6,
-  //   label: 'Events',
-  //   href: '/events',
-  // },
 ]
 
 export const NAV_ICON = {
@@ -224,50 +216,6 @@ export const MOBILE_NAV_ITEMS = ({
       icon: RiLightbulbFlashFill,
     })
   }
-  const accountAndLanguageItems = [
-    {
-      id: 7,
-      label: 'Account',
-      icon: RiUserFill,
-      href: '#',
-      subItem: address
-        ? [
-            {
-              id: 701,
-              label: 'Profile',
-              href: `/account/${address}`,
-              hasImage: false,
-            },
-            {
-              id: 703,
-              label: 'Settings',
-              href: '#',
-              hasImage: false,
-              subItem: [
-                {
-                  id: 7003,
-                  label: 'Profile Settings',
-                  href: '/settings/account?tab=profile',
-                  hasImage: false,
-                },
-                {
-                  id: 7004,
-                  label: 'Notification Settings',
-                  href: '/settings/account?tab=notifications',
-                  hasImage: false,
-                },
-                {
-                  id: 7006,
-                  label: 'Advanced Settings',
-                  href: '/settings/account?tab=advanced',
-                  hasImage: false,
-                },
-              ],
-            },
-          ]
-        : [],
-    },
-  ]
 
-  return [...filteredNavItems, ...accountAndLanguageItems]
+  return [...filteredNavItems]
 }

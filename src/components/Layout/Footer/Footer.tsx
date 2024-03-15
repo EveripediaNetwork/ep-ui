@@ -22,7 +22,6 @@ import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { languageData } from '@/data/LanguageData'
 import { useTranslation } from 'next-i18next'
-import Link from '@/components/Elements/LinkElements/Link'
 import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next'
 import { useSelector } from 'react-redux'
@@ -60,7 +59,7 @@ const Footer = () => {
         py={5}
       >
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={spacing} py={10}>
-          <GridItem mr={{ lg: 24 }}>
+          <GridItem mr={{ lg: 16, xl: 24 }}>
             <Newsletter
               buttonTitle={t('subscribeFooterBtn')}
               header={t('updatesFooterHeading')}
@@ -68,7 +67,7 @@ const Footer = () => {
               url="https://forms.gle/bmMce4r3JJckpSNJ7"
             />
           </GridItem>
-          <GridItem>
+          <GridItem mr={{ lg: 16, xl: 24 }}>
             <Newsletter
               buttonTitle={t('newsletterbuttonLabel')}
               header={t('newsletterSubscribeTitle')}
@@ -90,19 +89,6 @@ const Footer = () => {
               <Text py={3} pr={2}>
                 {' '}
                 © {thisYear} {`${t('copyRight')}`}
-                <Link target="_blank" href="https://braindao.org/">
-                  <Text as="span" _hover={{ textDecoration: 'underline' }}>
-                    BrainDAO
-                  </Text>
-                </Link>
-                <Text as="span" px="1">
-                  &{' '}
-                </Text>
-                <Link target="_blank" href="https://iq.braindao.org/">
-                  <Text as="span" _hover={{ textDecoration: 'underline' }}>
-                    IQ{' '}
-                  </Text>
-                </Link>
               </Text>
             </Flex>
           </Stack>

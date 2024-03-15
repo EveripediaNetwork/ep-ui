@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
 import { usePostFlagWikiMutation } from '@/services/wikis'
-import { getUserAddressFromCache } from '@/utils/WalletUtils/getUserAddressFromCache'
+import { useAddress } from '@/hooks/useAddress'
 
 interface WikiFlaggingSystemProps {
   id: string
@@ -38,14 +38,25 @@ const FlaggingSystemModal = ({
   const toast = useToast()
   const [flagContent, setFlagContent] = useState('')
   const [postFlagWiki] = usePostFlagWikiMutation()
+  const { address } = useAddress()
 
   const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    if (!address) {
+      toast({
+        title: "Please, login to report this wiki's content.",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+      return
+    }
+
     const postFlagWikiData = await postFlagWiki({
       report: flagContent,
       wikiId: id,
-      userId: getUserAddressFromCache(),
+      userId: address,
     })
 
     if (!Object.keys(postFlagWikiData).includes('error')) {
@@ -129,10 +140,11 @@ const FlaggingSystemModal = ({
 export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const { address } = useAddress()
 
   return (
     <>
-      {isOpen && getUserAddressFromCache() && (
+      {isOpen && address && (
         <FlaggingSystemModal onClose={onClose} isOpen={isOpen} id={id} />
       )}
       <Box
@@ -150,7 +162,7 @@ export const WikiFlaggingSystem = ({ id }: WikiFlaggingSystemProps) => {
             cursor="pointer"
             display="flex"
             onClick={() => {
-              if (getUserAddressFromCache()) {
+              if (address) {
                 onOpen()
               } else {
                 toast({

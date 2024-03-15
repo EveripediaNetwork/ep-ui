@@ -1,17 +1,46 @@
+import { useState, useEffect } from 'react'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { useContractRead } from 'wagmi'
+import { polygon } from 'viem/chains'
+import { createPublicClient, http } from 'viem'
 
-export const useWhiteListValidator = (address: string | undefined | null) => {
-  const { data: isEditorWhiteListed } = useContractRead({
-    address: config.editorAddress as `0x${string}`,
-    abi: EditorABI,
-    functionName: 'isEditorWhitelisted',
-    args: [address],
-  })
+export const publicClient: any = createPublicClient({
+  chain: polygon,
+  transport: http(),
+})
+
+const useWhiteListValidator = (address: string | null) => {
+  const [userCanEdit, setUserCanEdit] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let data
+        if (config.isProduction === 'true') {
+          data = await publicClient.readContract({
+            address: config.editorAddress as `0x${string}`,
+            abi: EditorABI,
+            functionName: 'isEditorWhitelisted',
+            args: [address],
+          })
+        } else {
+          data = true
+        }
+        setUserCanEdit(data)
+      } catch (error) {
+        console.error('Error fetching whitelist data:', error)
+      }
+    }
+
+    if (address !== null) {
+      fetchData()
+    } else {
+      setUserCanEdit(false)
+    }
+  }, [address])
 
   return {
-    userCanEdit: config.isProduction === 'true' ? isEditorWhiteListed : true,
+    userCanEdit,
   }
 }
 
