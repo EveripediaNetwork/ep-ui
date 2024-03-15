@@ -133,6 +133,7 @@ const EventList = ({
       </div>
       {!hasQueryParams &&
         !searchActive &&
+        eventData.length > 0 &&
         (hasMore ? (
           <button
             type="button"
