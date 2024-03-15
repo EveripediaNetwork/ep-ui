@@ -36,6 +36,8 @@ import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiD
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAddress } from '@/hooks/useAddress'
+import { useGetEventsQuery } from '@/services/event'
+import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -47,6 +49,10 @@ export const WikiPublishButton = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const { userCanEdit } = useWhiteListValidator(userAddress)
   const [connectedChainId, setConnectedChainId] = useState<string>()
+  const { refetch } = useGetEventsQuery({
+    offset: 0,
+    limit: EVENT_TEST_ITEM_PER_PAGE,
+  })
 
   const { chainId } =
     config.alchemyChain === 'maticmum'
@@ -257,6 +263,7 @@ export const WikiPublishButton = () => {
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
+        refetch()
       } else {
         await processWikiPublishError(wikiResult)
       }

@@ -28,6 +28,7 @@ import { nftLisitngAPI } from '@/services/nftlisting/index'
 import { nftStatsApi } from '@/services/nft-stats'
 import { editorApi } from '@/services/editor'
 import { notificationSubscriptionApi } from '@/services/notification'
+import { eventApi } from '@/services/event'
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +46,7 @@ export const store = configureStore({
     [rankingAPI.reducerPath]: rankingAPI.reducer,
     [MirrorApi.reducerPath]: MirrorApi.reducer,
     [wikiApi.reducerPath]: wikiApi.reducer,
+    [eventApi.reducerPath]: eventApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [glossaryApi.reducerPath]: glossaryApi.reducer,
     [activitiesApi.reducerPath]: activitiesApi.reducer,
@@ -78,7 +80,8 @@ export const store = configureStore({
       .concat(nftStatsApi.middleware)
       .concat(editorApi.middleware)
       .concat(notificationSubscriptionApi.middleware)
-      .concat(rankingAPI.middleware),
+      .concat(rankingAPI.middleware)
+      .concat(eventApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
