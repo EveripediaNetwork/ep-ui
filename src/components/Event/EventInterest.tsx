@@ -1,4 +1,5 @@
 import { EventInterestData } from '@/components/Event/event.data'
+import { dateFormater } from '@/lib/utils'
 import { TEvents, getEventsByTags } from '@/services/event'
 import { store } from '@/store/store'
 import { useRouter } from 'next/router'
@@ -53,7 +54,10 @@ const EventInterest = ({
 
   async function filterEventsByTags(filterTags: string[]) {
     const { data } = await store.dispatch(
-      getEventsByTags.initiate({ tagIds: filterTags }),
+      getEventsByTags.initiate({
+        tagIds: filterTags,
+        startDate: dateFormater(new Date()),
+      }),
     )
     return data
   }
