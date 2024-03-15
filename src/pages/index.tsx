@@ -36,7 +36,7 @@ import { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import EventOverview from '@/components/Landing/EventOverview'
+// import EventOverview from '@/components/Landing/EventOverview'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -84,7 +84,7 @@ export const Index = ({
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
         <CategoriesList />
-        <EventOverview />
+        {/* <EventOverview /> */}
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
