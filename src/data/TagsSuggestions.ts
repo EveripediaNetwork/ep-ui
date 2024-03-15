@@ -52,6 +52,10 @@ export const TagsSuggestions = [
     value: 'Ethereum',
   },
   {
+    label: 'Events',
+    value: 'Events',
+  },
+  {
     label: 'Founders',
     value: 'Founders',
   },
