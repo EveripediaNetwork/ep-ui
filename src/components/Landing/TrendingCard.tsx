@@ -111,54 +111,60 @@ const TrendingCard = ({
                 py={2}
                 px={4}
               >
-                <HStack>
-                  <Link href={`/wiki/${wiki.id}`}>
-                    <AspectRatio
-                      ratio={WIKI_IMAGE_ASPECT_RATIO}
-                      w={{
-                        base: '50px',
-                        md: '60px',
-                        lg: '70px',
-                      }}
+                <Link
+                  href={`/wiki/${wiki.id}`}
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  <HStack>
+                    <Box>
+                      <AspectRatio
+                        ratio={WIKI_IMAGE_ASPECT_RATIO}
+                        w={{
+                          base: '50px',
+                          md: '60px',
+                          lg: '70px',
+                        }}
+                      >
+                        <Image
+                          src={getWikiImageUrl(wiki.images)}
+                          alt={wiki.title}
+                          borderRadius="md"
+                          overflow="hidden"
+                          imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
+                          imgH={IMAGE_BOX_SIZE}
+                        />
+                      </AspectRatio>
+                    </Box>
+
+                    <Flex
+                      direction="column"
+                      justifyContent="flex-start"
+                      textAlign="start"
                     >
-                      <Image
-                        src={getWikiImageUrl(wiki.images)}
-                        alt={wiki.title}
-                        borderRadius="md"
+                      <Text
+                        fontWeight="semibold"
+                        color="wikiFlagTextColor"
+                        fontSize="18px"
                         overflow="hidden"
-                        imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
-                        imgH={IMAGE_BOX_SIZE}
-                      />
-                    </AspectRatio>
-                  </Link>
-                  <Flex
-                    direction="column"
-                    justifyContent="flex-start"
-                    textAlign="start"
-                  >
-                    <Text
-                      fontWeight="semibold"
-                      color="wikiFlagTextColor"
-                      fontSize="18px"
-                      overflow="hidden"
-                      onClick={() => router.push(`wiki/${wiki.id}`)}
-                    >
-                      {shortenText(wiki.title, 24)}
-                    </Text>
-                    <Text
-                      display={{ base: 'none', md: '-webkit-box' }}
-                      noOfLines={2}
-                      w="97%"
-                      textOverflow="ellipsis"
-                      overflow="hidden"
-                      fontSize="12px"
-                      fontWeight="500"
-                      color="homeDescriptionColor"
-                    >
-                      {wiki.summary}
-                    </Text>
-                  </Flex>
-                </HStack>
+                        onClick={() => router.push(`wiki/${wiki.id}`)}
+                      >
+                        {shortenText(wiki.title, 24)}
+                      </Text>
+                      <Text
+                        display={{ base: 'none', md: '-webkit-box' }}
+                        noOfLines={2}
+                        w="97%"
+                        textOverflow="ellipsis"
+                        overflow="hidden"
+                        fontSize="12px"
+                        fontWeight="500"
+                        color="homeDescriptionColor"
+                      >
+                        {wiki.summary}
+                      </Text>
+                    </Flex>
+                  </HStack>
+                </Link>
               </HStack>
             ))}
           </Flex>

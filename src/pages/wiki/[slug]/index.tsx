@@ -11,6 +11,7 @@ import { incrementWikiViewCount } from '@/services/wikis/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { averageRating } from '@/services/admin'
+import Head from 'next/head'
 
 interface WikiProps {
   wiki: WikiType
@@ -46,6 +47,9 @@ const Wiki = ({ wiki, average, totalRatings }: WikiProps) => {
 
   return (
     <>
+      <Head>
+        <link rel="preconnect" href="https://i.ytimg.com" />
+      </Head>
       {wiki && (
         <WikiHeader
           slug={slug}

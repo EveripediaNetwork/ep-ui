@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { publicClient } from '@/utils/WalletUtils/getProvider'
+import { polygon } from 'viem/chains'
+import { createPublicClient, http } from 'viem'
+
+export const publicClient: any = createPublicClient({
+  chain: polygon,
+  transport: http(),
+})
 
 const useWhiteListValidator = (address: string | null) => {
   const [userCanEdit, setUserCanEdit] = useState(false)

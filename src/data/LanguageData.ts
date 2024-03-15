@@ -12,4 +12,10 @@ export const languageData = [
     currency: 'krw',
     icon: '/KR.svg',
   },
+  {
+    name: 'Chinese',
+    locale: 'zh',
+    currency: 'cny',
+    icon: '/ZH.svg',
+  },
 ]
