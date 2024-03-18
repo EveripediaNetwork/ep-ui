@@ -197,7 +197,7 @@ const FounderRankingItem = ({
               <StatArrow
                 type={
                   item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
-                    0
+                  0
                     ? 'decrease'
                     : 'increase'
                 }
