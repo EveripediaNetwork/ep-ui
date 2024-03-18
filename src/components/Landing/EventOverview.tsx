@@ -27,7 +27,7 @@ const EventOverview = () => {
                   {t('eventDescription')}
                 </p>
                 <LinkButton
-                  href="/event"
+                  href="/events"
                   h="50px"
                   display={{ base: 'none', md: 'flex' }}
                   w={{ base: 32, lg: 40 }}
