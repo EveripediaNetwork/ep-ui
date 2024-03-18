@@ -49,15 +49,21 @@ const MediaModal = ({
 
   const uploadImageToIPFS = async (image: WikiImageObjectProps) => {
     const ipfsHash = await saveImage(image)
-    if (ipfsHash) {
-      dispatch({
-        type: 'wiki/updateMediaDetails',
-        payload: {
-          hash: ipfsHash,
-          id: image.id,
-        },
+    if (!ipfsHash || ipfsHash.length !== 46) {
+      toast({
+        title: 'Failed to upload image to IPFS',
+        status: 'error',
+        duration: 3000,
       })
+      return
     }
+    dispatch({
+      type: 'wiki/updateMediaDetails',
+      payload: {
+        hash: ipfsHash,
+        id: image.id,
+      },
+    })
   }
 
   const deleteMedia = (mediaId: string) => {
