@@ -6,6 +6,7 @@ import WikiAccordion from '../../WikiAccordion'
 import { useTranslation } from 'next-i18next'
 import WikiStarRating from './WikiStarRating'
 import { useAverageRatingQuery } from '@/services/admin'
+import { useAppSelector } from '@/store/hook'
 
 const WikiRating = ({
   contentId,
@@ -17,6 +18,18 @@ const WikiRating = ({
   const { data, isError, refetch } = useAverageRatingQuery(contentId)
   const average = data?.average
   const totalRatings = data?.votes
+  const locale = useAppSelector((state) => state.app.language)
+
+  const getTotalRatingsText = (totalRatings: number) => {
+    switch (locale) {
+      case 'en':
+        return `Based on over ${totalRatings} ratings`
+      case 'ko':
+        return `${totalRatings}개의 평가를 기반으로`
+      case 'zh':
+        return `基于超过${totalRatings}个评分`
+    }
+  }
 
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
@@ -39,7 +52,7 @@ const WikiRating = ({
                   fontSize="lg"
                   textColor="fadedText"
                 >
-                  Average Rating
+                  {t('averageRating')}
                 </Text>
                 <Box
                   fontSize="xs"
@@ -50,8 +63,8 @@ const WikiRating = ({
                   px="3"
                 >
                   {totalRatings
-                    ? `Based on over ${totalRatings} ratings`
-                    : 'No ratings yet, be the first to rate!'}
+                    ? getTotalRatingsText(totalRatings)
+                    : t('noRating')}
                 </Box>
               </VStack>
               {totalRatings ? (
@@ -74,10 +87,10 @@ const WikiRating = ({
           {!isRated ? (
             <VStack>
               <Text fontWeight={'semibold'} fontSize="lg" textColor="fadedText">
-                How was your experience?
+                {t('howWasYourExperience')}
               </Text>
               <Text fontSize="sm" textColor="fadedText" textAlign="center">
-                Give this wiki a quick rating to let us know!
+                {t('giveRating')}
               </Text>
               <WikiStarRating
                 contentId={contentId}

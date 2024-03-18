@@ -1,3 +1,4 @@
+import { SupportedLanguages } from '@/data/LanguageData'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 interface ILoadAppDetails {
@@ -23,7 +24,7 @@ export interface IAppSlice {
   loading: boolean
   marketPrice: number
   isDrawerOpen: boolean
-  language: 'en' | 'ko'
+  language: SupportedLanguages
 }
 
 const initialState: IAppSlice = {
