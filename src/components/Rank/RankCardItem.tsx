@@ -1,10 +1,12 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
+import { Image } from '../Elements/Image/Image'
+// import Image from 'next/image'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -32,22 +34,23 @@ const RankingItem = ({
   order,
   offset,
   listingLimit,
+  size = 40
 }: {
   index: number
   item: RankCardType
   order: SortOrder
   offset: number
   listingLimit: number
+  size?: number
 }) => {
   const marketCap = item.nftMarketData
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
-  const price = `$${
-    item.nftMarketData
-      ? priceFormatter(item.nftMarketData?.floor_price_usd)
-      : priceFormatter(item.tokenMarketData?.current_price)
-  }`
+  const price = `$${item.nftMarketData
+    ? priceFormatter(item.nftMarketData?.floor_price_usd)
+    : priceFormatter(item.tokenMarketData?.current_price)
+    }`
 
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
@@ -91,6 +94,7 @@ const RankingItem = ({
             h={{ base: '24px', md: '40px' }}
           >
             <Image
+              imgBoxSize={size}
               src={
                 item.nftMarketData
                   ? item.nftMarketData?.image
@@ -100,7 +104,6 @@ const RankingItem = ({
               w={{ base: '24px', md: '40px' }}
               h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
-              objectFit="cover"
             />
           </Box>
           <Box>

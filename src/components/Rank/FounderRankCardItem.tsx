@@ -1,20 +1,12 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import {
-  Box,
-  Flex,
-  Text,
-  Td,
-  Tr,
-  Image,
-  Stat,
-  StatArrow,
-} from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr, Stat, StatArrow } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
+import Image from 'next/image'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -101,12 +93,16 @@ const FounderRankingItem = ({
                         <Image
                           src={getWikiImageUrl(founder?.images)}
                           alt={founder?.title}
-                          width="36px"
-                          height="36px"
-                          borderRadius="50%"
-                          objectFit="cover"
-                          border="2px solid"
-                          borderColor="white"
+                          width={36}
+                          height={36}
+                          style={{
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            height: '36px',
+                            width: '36px',
+                            border: '2px solid',
+                            borderColor: 'white',
+                          }}
                         />
                       </Flex>
                     </React.Fragment>
@@ -201,7 +197,7 @@ const FounderRankingItem = ({
               <StatArrow
                 type={
                   item.nftMarketData?.floor_price_in_usd_24h_percentage_change <
-                  0
+                    0
                     ? 'decrease'
                     : 'increase'
                 }
