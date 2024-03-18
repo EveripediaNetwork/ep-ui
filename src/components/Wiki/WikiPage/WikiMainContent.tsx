@@ -19,7 +19,7 @@ interface WikiMainContentProps {
   wiki: Wiki
 }
 
-const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
+export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
   })

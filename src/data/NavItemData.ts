@@ -96,14 +96,20 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/rank',
     icon: RiHashtag,
   },
+  // {
+  //   id: 3,
+  //   label: 'Events',
+  //   href: '/events',
+  //   icon: RiHashtag,
+  // },
   {
-    id: 3,
+    id: 4,
     label: 'Activity',
     href: '/activity',
     icon: RiBarChartFill,
   },
   {
-    id: 4,
+    id: 5,
     label: 'About',
     href: '/about',
     icon: RiUserSearchFill,

@@ -1,4 +1,4 @@
-import { IEventData } from '@/components/Event/event.data'
+import { TEvents } from '@/services/event'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -37,28 +37,57 @@ export function parseDateRange(isoString: string) {
   }
 }
 
-export const groupEventsByMonth = (events: IEventData[]) => {
-  const eventsByMonth: { [key: string]: IEventData[] } = {}
+export const dateFormater = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Add 1 because months are 0-indexed, and pad with leading zero if necessary
+  const day = String(date.getDate()).padStart(2, '0')
 
-  // console.log(events)
-  if (events) {
-    events.forEach((event) => {
-      const dateParts = event.date.split('-')
-      const monthNumeric = parseInt(dateParts[1], 10)
-      const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
-        'en-us',
-        { month: 'long' },
-      )
+  return `${year}-${month}-${day}`
+}
 
-      const key = `${monthWord} ${dateParts[0]}`
+export const groupEventsByMonth = (events: TEvents[]) => {
+  const eventsByMonth: { [key: string]: TEvents[] } = {}
 
-      if (!eventsByMonth[key]) {
-        eventsByMonth[key] = []
+  // Group events by month and year
+  events.forEach((event) => {
+    const date = event?.events?.[0]?.date
+    if (date) {
+      const dateParts = date.split('-')
+      if (dateParts.length >= 2) {
+        const monthNumeric = parseInt(dateParts[1], 10)
+        const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
+          'en-us',
+          {
+            month: 'long',
+          },
+        )
+        const key = `${monthWord} ${dateParts[0]}`
+
+        if (!eventsByMonth[key]) {
+          eventsByMonth[key] = []
+        }
+
+        eventsByMonth[key].push(event)
       }
+    }
+  })
 
-      eventsByMonth[key].push(event)
-    })
-  }
+  // Sort the keys (Month Year) in ascending order and create a sorted object
+  const sortedKeys = Object.keys(eventsByMonth).sort((a, b) => {
+    const yearA = parseInt(a.split(' ')[1], 10)
+    const yearB = parseInt(b.split(' ')[1], 10)
+    const monthA = new Date(`${a.split(' ')[0]} 1 2000`).getMonth()
+    const monthB = new Date(`${b.split(' ')[0]} 1 2000`).getMonth()
 
-  return eventsByMonth
+    if (yearA > yearB) return 1
+    if (yearA < yearB) return -1
+    return monthA - monthB
+  })
+
+  const sortedEventsByMonth: { [key: string]: TEvents[] } = {}
+  sortedKeys.forEach((key) => {
+    sortedEventsByMonth[key] = eventsByMonth[key]
+  })
+
+  return sortedEventsByMonth
 }
