@@ -68,6 +68,17 @@ const MobileMeta = (wiki: {
 }
 
 export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
+  const referencesRaw =
+    getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ?? '[]'
+  let references
+
+  try {
+    references = JSON.parse(referencesRaw)
+  } catch (e) {
+    console.error('Failed to parse JSON:', e)
+    references = []
+  }
+
   return (
     <HStack align="stretch" justify="stretch">
       <Flex
@@ -119,12 +130,7 @@ export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
               updated={wiki.updated}
             />
           </chakra.div>
-          <WikiReferences
-            references={JSON.parse(
-              getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ??
-                '[]',
-            )}
-          />
+          <WikiReferences references={references} />
         </Box>
       </Flex>
       {wiki?.content.includes('# ') && <WikiTableOfContents />}
