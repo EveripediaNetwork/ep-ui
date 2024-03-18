@@ -29,7 +29,7 @@ export default async function handler(
         messages: [
           {
             role: 'system',
-            content: `A piece of markdown will be provided after the keyword 'START'. Translate the peiece of markdown text to ${targetLanguage}, using the following rules:
+            content: `A piece of markdown will be provided after the keyword 'START'. Translate the piece of markdown text to ${targetLanguage}, using the following rules:
   1. Do not translate names of people or organizations to ${targetLanguage}
   2. Any piece of characters that start and end with double asterisks(**) should be immediately fellowed by an empty space( ).
 
