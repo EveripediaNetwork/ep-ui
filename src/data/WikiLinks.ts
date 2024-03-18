@@ -127,7 +127,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Mirror',
     icon: MirrorIcon,
-    tests: [/https:\/\/mirror\.xyz\/\w+/],
+    tests: [/https:\/\/(?:\w+\.)?mirror\.xyz(?:\/\S*)?/],
   },
   {
     id: CommonMetaIds.MEDIUM_PROFILE,

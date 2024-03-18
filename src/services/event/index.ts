@@ -18,9 +18,10 @@ export type TEvents = {
   summary?: string
   events: { type: string; date: string }[]
   tags: { id: string }[]
-  linkedWikis?: {
-    speakers: string[]
-  }
+  speakerWikis?: {
+    id: string
+    images: Image[]
+  }[]
   images: Image[]
 }
 
