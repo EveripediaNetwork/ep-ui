@@ -120,5 +120,8 @@
   "Glossary": "术语表",
   "founders": "创始人",
   "blockchains": "区块链",
-  "days": "天"
+  "days": "天",
+  "averageRating": "平均评级",
+  "howWasYourExperience": "您的体验如何?",
+  "giveRating": "给这个维基一个快速评分让我们知道!"
 }
