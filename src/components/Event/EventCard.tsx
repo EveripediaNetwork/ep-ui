@@ -15,11 +15,19 @@ type TSpeaker = {
   id: string
   images: ImageType[]
 }
+
+type TEventsDate = {
+  type: string
+  date: string | null
+  multiDateStart: string | null
+  multiDateEnd: string | null
+}
+
 type TEventDetails = {
   id: string
   title: string
-  location: string
-  date: string
+  location?: string
+  date: TEventsDate
   tags: { id: string }[]
   excerpt: string
   speakers: TSpeaker[]
@@ -60,14 +68,24 @@ const EventCard = ({
                   <span className="text-brand-800 ">
                     <RiCalendar2Line />
                   </span>
-                  <span>{date && parseDateRange(date)}</span>
-                </span>
-                <span className="pl-2 flex gap-1 items-center">
-                  <span className="text-brand-800 ">
-                    <RiMapPinRangeLine />
+                  <span>
+                    {date.date
+                      ? parseDateRange(date.date)
+                      : date.multiDateStart && date.multiDateEnd
+                      ? parseDateRange(
+                          `${date.multiDateStart}/${date.multiDateEnd}`,
+                        )
+                      : ''}
                   </span>
-                  <span>{location}</span>
                 </span>
+                {location && (
+                  <span className="pl-2 flex gap-1 items-center">
+                    <span className="text-brand-800 ">
+                      <RiMapPinRangeLine />
+                    </span>
+                    <span>{location}</span>
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex gap-2 mb-2 items-center leading-none">
