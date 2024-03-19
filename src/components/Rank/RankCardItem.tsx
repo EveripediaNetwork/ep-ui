@@ -6,7 +6,6 @@ import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
 import { Image } from '../Elements/Image/Image'
-// import Image from 'next/image'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -47,11 +46,10 @@ const RankingItem = ({
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
-  const price = `$${
-    item.nftMarketData
+  const price = `$${item.nftMarketData
       ? priceFormatter(item.nftMarketData?.floor_price_usd)
       : priceFormatter(item.tokenMarketData?.current_price)
-  }`
+    }`
 
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
@@ -105,6 +103,7 @@ const RankingItem = ({
               w={{ base: '24px', md: '40px' }}
               h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
+              objectFit="cover"
             />
           </Box>
           <Box>
