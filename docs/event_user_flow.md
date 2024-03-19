@@ -18,5 +18,16 @@
 
 ![alt text](image-1.png)
 
-![alt text](image-2.png) 13. Select the link wikis dropdown to pick a speaker for the event by typing out the speaker wiki if it is available. 14. Select the link dropdown for the wiki details widget 15. Fill the event dates form
-![alt text](image-3.png) 16. Close widget, then publish event.
+![alt text](image-2.png)
+
+13. Select the link wikis dropdown to pick a speaker for the event by typing out the speaker wiki if it is available.
+
+14. Select the link dropdown for the wiki details widget
+
+15. Fill the event dates form if the event has a single date
+    ![alt text](image-3.png)
+16. If the event spans a range of dates select **_Date Range_** event type
+
+    ![alt text](image-4.png)
+
+17. Close widget, then publish event.
