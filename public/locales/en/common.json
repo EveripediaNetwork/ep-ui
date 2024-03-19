@@ -41,6 +41,7 @@
   "IQ Dashboard": "IQ Dashboard",
   "Glossary": "Glossary",
   "IQ GPT": "IQ GPT",
+
   "Blog": "Blog",
   "About": "About",
   "BrainDAO": "BrainDAO",
@@ -86,7 +87,8 @@
   "newsletterSubscribeBody": "The IQ Ecosystem Report will keep you updated on everything IQ.",
   "company": "Company",
   "branding": "Branding",
-  "NightMode": "Night Mode",
+  "DayMode": "Light Mode",
+  "NightMode": "Dark Mode",
   "Profile": "Profile",
   "Settings": "Settings",
   "Logout": "Logout",
@@ -113,5 +115,7 @@
   "Submit": "Submit",
   "details": "write your wiki suggestions here...",
   "Suggest Wiki": "Suggest Wiki",
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "loginDescription": "To login to IQ.wiki, you need to sign a token that will authenticate your account for access.",
+  "signToken": "Sign Token"
 }

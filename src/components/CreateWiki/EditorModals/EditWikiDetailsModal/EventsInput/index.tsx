@@ -157,7 +157,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
             >
               <Input
                 name="date"
-                type="month"
+                type={
+                  wiki.tags.some((tag) => tag.id === 'Events')
+                    ? 'date'
+                    : 'month'
+                }
                 placeholder="Select date"
                 fontSize={{ base: '12px', md: '14px' }}
                 onChange={(e) => {

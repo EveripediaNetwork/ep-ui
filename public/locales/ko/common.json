@@ -93,6 +93,7 @@
   "newsletterSubscribeBody": "IQ 생태계 보고서는 IQ에 대한 모든 정보를 계속 업데이트합니다.",
   "company": "회사",
   "branding": "브랜딩",
+  "DayMode": "주간 모드",
   "NightMode": "야간 모드",
   "Profile": "프로필",
   "Settings": "설정",
@@ -129,5 +130,7 @@
   "Submit": "제출",
   "details": "여기에 당신의 위키 제안을 적어주세요...",
   "Suggest Wiki": "위키 제안",
-  "signIn": "로그인"
+  "signIn": "로그인",
+  "loginDescription": "IQ.wiki에 로그인하려면 계정에 대한 접근을 인증할 토큰을 서명해야 합니다.",
+  "signToken": "토큰 서명"
 }

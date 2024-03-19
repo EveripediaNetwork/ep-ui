@@ -14,12 +14,14 @@ import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
+import { SupportedLanguages } from '@/data/LanguageData'
+import { languageData } from '@/data/LanguageData'
 
 interface WikiMainContentProps {
   wiki: Wiki
 }
 
-const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
+export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
   })
@@ -58,14 +60,21 @@ const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   )
 })
 
+const supportedWikiTranslations = languageData
+  .filter((lang) => lang.locale !== 'en')
+  .map((lang) => lang.locale)
+type SupportedWikiTranslations = Exclude<SupportedLanguages, 'en'>
+type WikiContentCache = Partial<Record<SupportedWikiTranslations, string>>
+
 const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [isTranslating, setIsTranslating] = useState(false)
-  const [contentLang, setContentLang] = useState<'en' | 'ko'>('en')
+  const [contentLang, setContentLang] = useState<'en' | 'ko' | 'zh'>('en')
   const [wikiContentState, setWikiContentState] = useState(wikiData.content)
-  const cachedWikiTranslation = useRef<string | null>(null)
+  const cachedWikiTranslation = useRef<WikiContentCache | null>(null)
   const { colorMode } = useColorMode()
   const locale = useSelector((state: RootState) => state.app.language)
-  const isLocaleKorean = locale === 'ko'
+  const isLocaleWikiTranslationSupported =
+    supportedWikiTranslations.includes(locale)
 
   const wikiContent = wikiContentState ?? wikiData.content
 
@@ -82,10 +91,22 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const modifiedContentWiki = { ...wikiData, content }
 
   useEffect(() => {
+    /* Set content state after wiki content loads
+    to allow update of wiki content to translated content */
     setWikiContentState(wikiData.content)
   }, [wikiData.content])
 
-  const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' }) => {
+  useEffect(() => {
+    /* When the lang changes from one locale to another,
+     change wiki content lang to 'en' to prevent entering
+     a state that breaks translation btn logic */
+    if (isLocaleWikiTranslationSupported) {
+      setContentLang('en')
+      setWikiContentState(wikiData.content)
+    }
+  }, [locale])
+
+  const SwitchBtn = ({ btnLocale }: { btnLocale: 'en' | 'ko' | 'zh' }) => {
     const commonStyles = {
       paddingX: 3,
       fontWeight: 'medium',
@@ -138,8 +159,16 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
 
       if (btnLocale !== contentLang) {
         if (contentLang === 'en') {
-          if (cachedWikiTranslation.current) {
-            setWikiContentState(cachedWikiTranslation.current)
+          if (
+            cachedWikiTranslation?.current?.[
+              btnLocale as SupportedWikiTranslations
+            ]
+          ) {
+            setWikiContentState(
+              cachedWikiTranslation.current[
+                btnLocale as SupportedWikiTranslations
+              ] as string,
+            )
             setContentLang(btnLocale)
             return
           }
@@ -154,14 +183,20 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
             body: JSON.stringify({
               title: wikiData.title,
               content: wikiData.content,
+              lang: btnLocale,
             }),
           })
 
-          const result = await response.json()
-          const translatedContent = result.content.join('\n\n')
-          setWikiContentState(translatedContent)
-          cachedWikiTranslation.current = translatedContent
-          setContentLang(btnLocale)
+          if (response.status === 200) {
+            const result = await response.json()
+            const translatedContent = result.content.join('\n\n')
+            setWikiContentState(translatedContent)
+            cachedWikiTranslation.current = {
+              [locale as SupportedWikiTranslations]: translatedContent,
+            }
+
+            setContentLang(btnLocale)
+          }
           setIsTranslating(false)
         } else {
           setWikiContentState(wikiData.content)
@@ -207,7 +242,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
       >
         {wikiData.title}
       </Heading>
-      {isLocaleKorean && (
+      {isLocaleWikiTranslationSupported && (
         <Box
           sx={{
             position: { base: 'unset', xl: 'absolute' },
@@ -228,7 +263,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
           }}
         >
           <SwitchBtn btnLocale="en" />
-          <SwitchBtn btnLocale="ko" />
+          <SwitchBtn btnLocale={locale} />
         </Box>
       )}
       <Box

@@ -17,6 +17,7 @@ import {
   MenuList,
   Flex,
 } from '@chakra-ui/react'
+import Image from 'next/image'
 import { MenuFooter, Newsletter } from '@/components/Layout/Footer'
 import { RiGlobalLine } from 'react-icons/ri'
 import { ChevronDownIcon } from '@chakra-ui/icons'
@@ -114,7 +115,15 @@ const Footer = () => {
                           value={langObj.locale}
                           isChecked={langObj.locale === lang}
                         >
-                          {langObj.name}
+                          <Flex gap="0.5rem">
+                            <Image
+                              src={langObj.icon}
+                              alt={langObj.name}
+                              width={24}
+                              height={24}
+                            />
+                            {langObj.name}
+                          </Flex>
                         </MenuItemOption>
                       ))}
                     </MenuOptionGroup>
