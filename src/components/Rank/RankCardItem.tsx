@@ -105,6 +105,7 @@ const RankingItem = ({
               h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
               objectFit="cover"
+              quality={70}
             />
           </Box>
           <Box>
