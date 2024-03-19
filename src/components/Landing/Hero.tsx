@@ -15,7 +15,7 @@ export const Hero = () => {
         textAlign="center"
         px={{ base: '8', md: '0' }}
         fontSize={{ base: '36', md: '48', xl: '60' }}
-        fontWeight={{ base: 'semibold', md: 'bold', xl: 'bold' }}
+        fontWeight={{ base: 'semibold', md: 'bold', xl: 'semibold' }}
       >
         {t('hero_heading1')}{' '}
         <chakra.span color="brandLinkColor"> {t('hero_heading2')} </chakra.span>{' '}
