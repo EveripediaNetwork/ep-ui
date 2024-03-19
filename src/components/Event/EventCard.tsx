@@ -38,7 +38,6 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
-  console.log({ speakers })
   return (
     <Link href={`/events/${id}`} className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
