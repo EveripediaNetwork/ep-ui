@@ -46,10 +46,11 @@ const RankingItem = ({
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
-  const price = `$${item.nftMarketData
+  const price = `$${
+    item.nftMarketData
       ? priceFormatter(item.nftMarketData?.floor_price_usd)
       : priceFormatter(item.tokenMarketData?.current_price)
-    }`
+  }`
 
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,

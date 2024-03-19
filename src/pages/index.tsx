@@ -12,13 +12,19 @@ import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 const CategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'), {
-  ssr: false
-}
+  () => import('@/components/Landing/CategoriesList'),
+  {
+    ssr: false,
+  },
 )
 import { getTags, tagsApi } from '@/services/tags'
-const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'), { ssr: false })
-const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'), { ssr: false })
+const DiscoverMore = dynamic(
+  () => import('@/components/Landing/DiscoverMore'),
+  { ssr: false },
+)
+const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'), {
+  ssr: false,
+})
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
