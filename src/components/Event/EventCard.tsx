@@ -61,7 +61,7 @@ const EventCard = ({
                   <span className="text-brand-800 ">
                     <RiCalendar2Line />
                   </span>
-                  <span>{parseDateRange(date)}</span>
+                  <span>{date && parseDateRange(date)}</span>
                 </span>
                 <span className="pl-2 flex gap-1 items-center">
                   <span className="text-brand-800 ">
