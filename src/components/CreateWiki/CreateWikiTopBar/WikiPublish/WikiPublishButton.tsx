@@ -257,9 +257,12 @@ export const WikiPublishButton = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
+      console.log({ finalWiki: finalWiki })
       const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
+
+      console.log(wikiResult)
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
