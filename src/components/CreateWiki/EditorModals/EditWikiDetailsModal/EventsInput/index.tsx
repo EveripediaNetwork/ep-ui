@@ -61,26 +61,14 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     e.preventDefault()
 
     const data = new FormData(e.currentTarget)
-    console.log(data.get('date'))
-    const date = data.get('date')
-      ? (data.get('date') as string)
-      : dateRange?.from && dateFormater(dateRange?.from)
+
+    const date = data.get('date') as string
     const title = data.get('title') as string
     const link = data.get('link') as string
     const description = data.get('description') as string
     const type = data.get('type') as string
     const multiDateStart = dateRange?.from && dateFormater(dateRange?.from)
     const multiDateEnd = dateRange?.to && dateFormater(dateRange.to)
-
-    console.log({
-      date,
-      title,
-      link,
-      description,
-      type,
-      multiDateStart,
-      multiDateEnd,
-    })
 
     const error = validateForm(
       title,

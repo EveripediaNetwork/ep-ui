@@ -262,7 +262,7 @@ export const WikiPublishButton = () => {
         postWiki.initiate({ data: finalWiki }),
       )
 
-      console.log(wikiResult)
+      console.log({ wikiResult })
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
