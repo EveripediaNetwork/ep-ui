@@ -1,11 +1,19 @@
-import { Box, useColorMode, Flex, Link, Icon, Text } from '@chakra-ui/react'
+import {
+  Box,
+  useColorMode,
+  Flex,
+  Link,
+  Icon,
+  Text,
+  HStack,
+} from '@chakra-ui/react'
 // import { useTranslation } from 'next-i18next'
 // import Logo from '@/components/Elements/Logo/Logo'
 import OneinchIcon from '../Icons/oneInch'
 import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
 import FraxIcon from '../Icons/frax'
-
+import { RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
 import { logEvent } from '@/utils/googleAnalytics'
 
 export const IQBar = () => {
@@ -33,7 +41,7 @@ export const IQBar = () => {
         py={4}
         // minH="180px"
       >
-        <Box
+        <HStack
           w="267px"
           h="100px"
           border={'1px'}
@@ -42,10 +50,27 @@ export const IQBar = () => {
           p={3}
           fontSize="sm"
           textColor="gray.600"
+          justifyContent="space-between"
         >
-          IQ Price
-        </Box>
-        <Box
+          <Box>
+            <Text fontSize="xs" color="gray.500">
+              IQ Price ($)
+            </Text>
+            <Text fontSize="2xl" fontWeight="bold" color="black">
+              0.018
+            </Text>
+            <Flex align="center" mt={1}>
+              <Icon as={RiArrowUpLine} color="green.500" boxSize={3} mr={1} />
+              <Text fontSize="xs" color="green.500">
+                49% high today
+              </Text>
+            </Flex>
+          </Box>
+          <Box rounded="full" border="1px" p="1" borderColor="gray.200">
+            <RiGlobalLine size="2em" color="brand.500" />
+          </Box>
+        </HStack>
+        <HStack
           w="267px"
           h="100px"
           border={'1px'}
@@ -54,9 +79,26 @@ export const IQBar = () => {
           p={3}
           fontSize="sm"
           textColor="gray.600"
+          justifyContent="space-between"
         >
-          Market Cap
-        </Box>
+          <Box>
+            <Text fontSize="xs" color="gray.500">
+              Market Cap ($)
+            </Text>
+            <Text fontSize="2xl" fontWeight="bold" color="black">
+              $136M
+            </Text>
+            <Flex align="center" mt={1}>
+              <Icon as={RiArrowUpLine} color="green.500" boxSize={3} mr={1} />
+              <Text fontSize="xs" color="green.500">
+                5% high today
+              </Text>
+            </Flex>
+          </Box>
+          <Box rounded="full" border="1px" p="1" borderColor="gray.200">
+            <RiGlobalLine size="2em" color="brand.500" />
+          </Box>
+        </HStack>
         <Box
           w="267px"
           h="100px"
