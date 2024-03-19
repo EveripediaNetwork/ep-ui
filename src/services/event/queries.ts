@@ -22,6 +22,12 @@ export const GET_EVENTS = gql`
       linkedWikis {
         speakers
       }
+      speakerWikis {
+        id
+        images {
+          id
+        }
+      }
       images {
         id
         type

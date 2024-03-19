@@ -18,4 +18,7 @@ export const languageData = [
     currency: 'cny',
     icon: '/ZH.svg',
   },
-]
+] as const
+
+const supportedLanguages = languageData.map((lang) => lang.locale)
+export type SupportedLanguages = typeof supportedLanguages[number]

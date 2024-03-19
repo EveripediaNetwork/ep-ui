@@ -22,7 +22,7 @@ import { Image } from '@/components/Elements/Image/Image'
 import { blurDataURL } from '@/data/blurPlaceholder'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
+import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 
 const WikiPreviewCard = ({
   wiki,
@@ -36,7 +36,7 @@ const WikiPreviewCard = ({
   const { updated, title, id } = wiki
   const [, userENSDomain] = useENSData(wiki.user?.id || '')
   const lang = useSelector((state: RootState) => state.app.language)
-  const translatedTimestamp = useTranslatedTimetamps(
+  const translatedTimestamp = useTranslatedTimestamps(
     'Edited',
     lang,
     updated ?? lastUpdated ?? '',

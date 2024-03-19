@@ -1,9 +1,10 @@
 import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { useTranslation } from 'next-i18next'
+import { SupportedLanguages } from '@/data/LanguageData'
 
-export const useTranslatedTimetamps = (
+export const useTranslatedTimestamps = (
   activity: 'New' | 'Edited',
-  locale: 'en' | 'ko',
+  locale: SupportedLanguages,
   timeStamp: string,
 ) => {
   const isCreated = activity === 'New'
@@ -49,14 +50,12 @@ export const useTranslatedTimetamps = (
         return `${t(isCreated ? 'Created' : 'Edited')} ${readAbleTimeStamp} ${t(
           'ago',
         )}`
-      case 'ko':
+      default:
         const timeStampRegex = /(\d)\s(\w+)/
         const match = readAbleTimeStamp.match(timeStampRegex)
         if (!match) return
         const [_, duration, unit] = match
         return handleActivity(unit, duration, activity)
-      default:
-        return ''
     }
   }
 

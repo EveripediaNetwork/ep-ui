@@ -129,5 +129,7 @@
   "Submit": "제출",
   "details": "여기에 당신의 위키 제안을 적어주세요...",
   "Suggest Wiki": "위키 제안",
-  "signIn": "로그인"
+  "signIn": "로그인",
+  "loginDescription": "IQ.wiki에 로그인하려면 계정에 대한 접근을 인증할 토큰을 서명해야 합니다.",
+  "signToken": "토큰 서명"
 }

@@ -9,6 +9,12 @@ import {
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
+import { Image as ImageType } from '@everipedia/iq-utils'
+
+type TSpeaker = {
+  id: string
+  images: ImageType[]
+}
 type TEventDetails = {
   id: string
   title: string
@@ -16,7 +22,7 @@ type TEventDetails = {
   date: string
   tags: { id: string }[]
   excerpt: string
-  speakers: string[]
+  speakers: TSpeaker[]
   images: { id: string; type: string }[]
   isLoading: boolean
 }
@@ -32,6 +38,7 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
+  console.log({ speakers })
   return (
     <Link href={`/events/${id}`} className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -64,25 +71,29 @@ const EventCard = ({
                 </span>
               </div>
             </div>
-            <div className="flex gap-3 mb-2 leading-none">
+            <div className="flex gap-2 mb-2 items-center leading-none">
               <div className="flex">
-                {/* {speakers?.map((speaker) => (
-                <div
-                  key={speaker}
-                  className="relative w-5 h-5 shrink-0 -mx-[2px] rounded-full border border-white dark:border-gray700"
-                >
-                  <Image src={speaker.imageSrc} alt="user-icon" fill />
-                </div>
-              ))} */}
+                {speakers?.map((speaker) => (
+                  <div
+                    key={speaker.id}
+                    className="relative w-5 h-5 shrink-0 overflow-hidden -mx-[2px] rounded-full border border-white dark:border-gray700"
+                  >
+                    <Image
+                      src={getWikiImageUrl(speaker.images)}
+                      alt="user-icon"
+                      fill
+                    />
+                  </div>
+                ))}
               </div>
               <span className="text-brand-500 dark:text-brand-800 flex gap-1 flex-wrap text-[10px] md:text-xs">
                 {speakers?.map((speaker, index) => (
                   <Link
-                    href={`/wiki/${speaker}`}
-                    key={speaker}
-                    className="hover:underline"
+                    href={`/wiki/${speaker.id}`}
+                    key={speaker.id}
+                    className="hover:underline capitalize"
                   >
-                    {speaker}
+                    {speaker.id}
                     {speakers.length !== index + 1 && ','}
                   </Link>
                 ))}

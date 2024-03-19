@@ -3,14 +3,14 @@ import { HStack, Link, Text, chakra } from '@chakra-ui/react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import ActivityCardTags from './ActivityCardTags'
 import { ActivityCardBottomProps } from '@/types/ActivityDataType'
-import { useTranslatedTimetamps } from '@/hooks/useTranslatedTimetamps'
+import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 
 const ActivityCardBottom = (props: ActivityCardBottomProps) => {
   const { editor, isNotifSubCard, lastModTimeStamp, activity, tags } = props
   const lang = useSelector((state: RootState) => state.app.language)
-  const translatedTimestamp = useTranslatedTimetamps(
+  const translatedTimestamp = useTranslatedTimestamps(
     activity,
     lang,
     lastModTimeStamp ?? '',
