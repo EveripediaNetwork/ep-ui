@@ -96,7 +96,7 @@ export const IQBar = () => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
-                  label: 'Binance',
+                  label: '1inch',
                   value: 1,
                 })
               }
@@ -116,7 +116,7 @@ export const IQBar = () => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
-                  label: 'Binance',
+                  label: 'upbit',
                   value: 1,
                 })
               }
