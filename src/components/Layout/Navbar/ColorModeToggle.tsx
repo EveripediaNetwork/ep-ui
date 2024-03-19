@@ -52,12 +52,13 @@ export const ColorModeToggle = ({
           flex="auto"
         >
           <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
-            {t('NightMode')}
+            {colorMode === 'light' ? t('DayMode') : t('NightMode')}
           </span>
           <Switch
             ml="auto"
             isChecked={colorMode === 'dark'}
             pointerEvents="none"
+            colorScheme={colorMode === 'dark' ? 'pink' : 'gray'}
           />
         </Flex>
       </Button>
