@@ -74,6 +74,8 @@ export const GET_WIKI_BY_ID = gql`
         type
         date
         link
+        multiDateStart
+        multiDateEnd
       }
       views
     }
