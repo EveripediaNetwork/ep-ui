@@ -37,6 +37,7 @@ const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import EventOverview from '@/components/Landing/EventOverview'
+import { IQBar } from '@/components/Landing/IQBar'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -72,9 +73,9 @@ export const Index = ({
       direction="column"
       mx="auto"
       w="full"
-      pt={{ base: 6, lg: 12 }}
     >
       <Hero />
+      <IQBar />
       <Box>
         <TrendingWikis
           trending={trending}
