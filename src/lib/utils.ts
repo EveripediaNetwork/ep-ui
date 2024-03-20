@@ -21,21 +21,23 @@ export function formatDate(date: Date) {
 }
 
 export function parseDateRange(isoString: string) {
-  if (!isoString) {
-    return 'Unknown'
-  }
-
   const dates = isoString.split('/')
   const start = new Date(dates[0])
   const end = dates.length > 1 ? new Date(dates[1]) : null
 
   const startFormatted = formatDate(start)
+  const endFormatted = end ? formatDate(end) : null
   const month = start.toLocaleString('en-US', { month: 'long' })
   const year = start.getFullYear()
 
   if (end) {
-    const endFormatted = formatDate(end)
-    return `${startFormatted}-${endFormatted}, ${month} ${year}`
+    const endMonth = end.toLocaleString('en-US', { month: 'long' })
+    const endYear = end.getFullYear()
+    if (month === endMonth) {
+      return `${startFormatted}-${endFormatted}, ${month} ${year}`
+    } else {
+      return `${startFormatted}, ${month} ${year} - ${endFormatted}, ${endMonth} ${endYear}`
+    }
   } else {
     return `${startFormatted}, ${month} ${year}`
   }
