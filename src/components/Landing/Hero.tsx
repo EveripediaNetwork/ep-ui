@@ -5,7 +5,12 @@ import { useTranslation } from 'next-i18next'
 export const Hero = () => {
   const { t } = useTranslation('home')
   return (
-    <VStack pt={{ base: 6, lg: 12 }} minH="300px" bg="gray.100">
+    <VStack
+      pt={{ base: 6, lg: 12 }}
+      minH="300px"
+      bg="gray.100"
+      _dark={{ bg: 'rgba(255, 255, 255, 0.04)' }}
+    >
       <Heading
         w={{
           base: '100%',
