@@ -226,7 +226,7 @@ export const WikiPublishButton = () => {
       value: 1,
     })
 
-    if (userAddress) {
+    if (isUserConnected && userAddress) {
       const ifWikiExists =
         isNewCreateWiki &&
         !override &&
