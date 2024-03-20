@@ -31,9 +31,13 @@ const ConnectorDetails = ({
       <>
         <Image boxSize="24px" src={imageLink} />
         <Text flex="1" as="strong" ml="15">
-          {connector.name === 'Magic' ? 'Email / Social Media' : connector.name}
+          {connector.name === 'Magic'
+            ? 'Email / Social Media'
+            : connector.name.toLowerCase() === 'injected'
+            ? 'Metamask'
+            : connector.name}
         </Text>
-        {connector.name === 'MetaMask' && !isClicked && (
+        {connector.type === 'injected' && !isClicked && (
           <Text fontSize="sm" fontWeight="medium" color="fadedText2">
             popular
           </Text>
