@@ -77,6 +77,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.500',
       _dark: 'brand.800',
     },
+    brandText: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
