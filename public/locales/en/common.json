@@ -41,6 +41,7 @@
   "IQ Dashboard": "IQ Dashboard",
   "Glossary": "Glossary",
   "IQ GPT": "IQ GPT",
+
   "Blog": "Blog",
   "About": "About",
   "BrainDAO": "BrainDAO",
@@ -86,7 +87,8 @@
   "newsletterSubscribeBody": "The IQ Ecosystem Report will keep you updated on everything IQ.",
   "company": "Company",
   "branding": "Branding",
-  "NightMode": "Night Mode",
+  "DayMode": "Light Mode",
+  "NightMode": "Dark Mode",
   "Profile": "Profile",
   "Settings": "Settings",
   "Logout": "Logout",
