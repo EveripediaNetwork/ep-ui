@@ -215,7 +215,7 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
-    console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
+    // console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
 
     if (!isValidWiki(toast, wiki)) return
 
@@ -257,12 +257,9 @@ export const WikiPublishButton = () => {
 
       prevEditedWiki.current = { wiki: finalWiki, isPublished: false }
 
-      console.log({ finalWiki: finalWiki })
       const wikiResult = await store.dispatch(
         postWiki.initiate({ data: finalWiki }),
       )
-
-      console.log({ wikiResult })
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))

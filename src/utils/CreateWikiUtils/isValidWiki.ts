@@ -4,6 +4,13 @@ import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { getWordCount } from '../DataTransform/getWordCount'
 import { isVerifiedContentLinks } from '../textUtils'
 
+type TReferenceObject = {
+  id: string
+  url: string
+  description: string
+  timestamp: number
+}
+
 const MINIMUM_WORDS = 100
 
 const checkErrors = (
@@ -27,6 +34,32 @@ const checkErrors = (
 const isMediaUploading = (wiki: Wiki) =>
   !wiki.media?.every((m) => !m.id.endsWith(MEDIA_POST_DEFAULT_ID))
 
+const isEventUrlPresent = (wiki: Wiki) => {
+  let isEventUrlValid = false
+
+  if (wiki.tags.some((tag) => tag.id === 'Events')) {
+    const data =
+      wiki.metadata.find((meta) => meta.id === 'references')?.value || ''
+
+    const references: TReferenceObject[] = JSON.parse(data)
+
+    isEventUrlValid = references.some(
+      (item) => item.description.toLowerCase() === 'event link',
+    )
+      ? false
+      : true
+  }
+  return isEventUrlValid
+}
+
+const isEventDatePresent = (wiki: Wiki) => {
+  let isEventDate = false
+  if (wiki.tags.some((tag) => tag.id === 'Events')) {
+    isEventDate = wiki.events?.length === 0
+  }
+  return isEventDate
+}
+
 const isSummaryExceedsLimit = (wiki: Wiki) =>
   !!(wiki.summary && wiki.summary.length > WIKI_SUMMARY_LIMIT)
 
@@ -48,6 +81,8 @@ const NO_WIKI_CATEGORIES_ERROR = 'Add one category to continue'
 const MEDIA_UPLOADING_ERROR = 'Some of media are still uploading, please wait'
 const EXTERNAL_LINKS_ERROR = 'Please remove all external links from the content'
 const NO_CITATION_EROR = 'Please add at least one citation'
+const NO_EVENT_URL_ERROR = `Please add a citation for the event with description "Event Link" `
+const NO_EVENT_ERROR = `Please open the "Edit Wiki Details Modal" and enter a valid event date`
 const CONTENT_WORDS_ERROR = (words: number) =>
   `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue. you have written ${words}`
 
@@ -64,5 +99,7 @@ export const isValidWiki = (toast: CreateToastFnReturn, wiki: Wiki) => {
     [SUMMARY_EXCEEDS_LIMIT_ERROR, () => isSummaryExceedsLimit(wiki)],
     [MEDIA_UPLOADING_ERROR, () => isMediaUploading(wiki)],
     [NO_CITATION_EROR, () => isCitationInvalid(wiki)],
+    [NO_EVENT_URL_ERROR, () => isEventUrlPresent(wiki)],
+    [NO_EVENT_ERROR, () => isEventDatePresent(wiki)],
   ])
 }
