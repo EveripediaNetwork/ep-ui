@@ -1,4 +1,5 @@
 import { parseDateRange } from '@/lib/utils'
+import { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Wiki } from '@everipedia/iq-utils'
 import Image from 'next/image'
@@ -25,11 +26,17 @@ const EventSummary = ({ event }: { event: Wiki }) => {
     selected_profiles.includes(item.id),
   )
 
-  const referenceElement = metadata.find(
-    (element) => element.id === 'references',
-  )
+  const data =
+    metadata.find((element) => element.id === 'references')?.value || ''
+  const references: TReferenceObject[] = JSON.parse(data)
+
   let url
-  if (referenceElement) url = JSON.parse(referenceElement.value)[0].url
+  if (
+    references.find((item) => item.description.toLowerCase() === 'event link')
+  )
+    url = references.find(
+      (item) => item.description.toLowerCase() === 'event link',
+    )?.url
 
   return (
     <div className="flex flex-col gap-4 border text-gray600 dark:text-alpha-900 border-gray200 dark:border-alpha-300 rounded-lg py-4 px-[14px] md:px-5 md:py-9 lg:py-[9px] lg:px-[7px] xl:py-4 xl:px-3">

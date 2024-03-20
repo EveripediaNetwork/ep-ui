@@ -4,7 +4,7 @@ import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { getWordCount } from '../DataTransform/getWordCount'
 import { isVerifiedContentLinks } from '../textUtils'
 
-type TReferenceObject = {
+export type TReferenceObject = {
   id: string
   url: string
   description: string
