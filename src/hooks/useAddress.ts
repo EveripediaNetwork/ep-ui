@@ -18,6 +18,7 @@ export const useAddress = () => {
 
     if (isInjectorConnected) {
       setIsConnected(isInjectorConnected)
+      return
     }
 
     setIsConnected(isWalletConnected && isConnectorConnected)
