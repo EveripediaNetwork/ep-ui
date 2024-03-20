@@ -21,6 +21,10 @@ export function formatDate(date: Date) {
 }
 
 export function parseDateRange(isoString: string) {
+  if (!isoString) {
+    return 'Unknown'
+  }
+
   const dates = isoString.split('/')
   const start = new Date(dates[0])
   const end = dates.length > 1 ? new Date(dates[1]) : null
