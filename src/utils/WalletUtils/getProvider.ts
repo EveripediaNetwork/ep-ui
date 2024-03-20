@@ -1,8 +1,14 @@
 import config from '@/config'
-import { rpcs } from '@/config/wagmi'
 import { env } from '@/env.mjs'
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
+
+export const rpcs: {
+  [key: string]: string
+} = {
+  maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
+  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
+}
 
 export const provider: any = createPublicClient({
   chain: mainnet,
