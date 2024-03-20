@@ -26,12 +26,18 @@ export function parseDateRange(isoString: string) {
   const end = dates.length > 1 ? new Date(dates[1]) : null
 
   const startFormatted = formatDate(start)
+  const endFormatted = end ? formatDate(end) : null
   const month = start.toLocaleString('en-US', { month: 'long' })
   const year = start.getFullYear()
 
   if (end) {
-    const endFormatted = formatDate(end)
-    return `${startFormatted}-${endFormatted}, ${month} ${year}`
+    const endMonth = end.toLocaleString('en-US', { month: 'long' })
+    const endYear = end.getFullYear()
+    if (month === endMonth) {
+      return `${startFormatted}-${endFormatted}, ${month} ${year}`
+    } else {
+      return `${startFormatted}, ${month} ${year} - ${endFormatted}, ${endMonth} ${endYear}`
+    }
   } else {
     return `${startFormatted}, ${month} ${year}`
   }
@@ -50,7 +56,7 @@ export const groupEventsByMonth = (events: TEvents[]) => {
 
   // Group events by month and year
   events.forEach((event) => {
-    const date = event?.events?.[0]?.date
+    const date = event?.events?.[0]?.date || event?.events?.[0]?.multiDateStart
     if (date) {
       const dateParts = date.split('-')
       if (dateParts.length >= 2) {

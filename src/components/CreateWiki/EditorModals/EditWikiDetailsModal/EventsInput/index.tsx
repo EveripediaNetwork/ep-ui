@@ -13,15 +13,25 @@ import { isValidUrl } from '@/utils/textUtils'
 import { BaseEvents, EventType, Wiki } from '@everipedia/iq-utils'
 import { EventsList } from './EventsList'
 import { useTranslation } from 'next-i18next'
+import { DatePickerDemo } from '@/components/ui/DatePicker'
+import { DateRange } from 'react-day-picker'
+import { dateFormater } from '@/lib/utils'
 
 const validateForm = (
-  date: string,
   title: string,
   link: string,
   description: string,
   type: string,
+  date?: string,
+  multiDateStart?: string,
+  multiDateEnd?: string,
 ) => {
-  if (!date) return 'Date is required'
+  if (!date) {
+    if (multiDateStart && multiDateEnd) {
+      return null
+    }
+    return 'Date is required'
+  }
   if (!title) return 'Title is required'
   if (!description) return 'Description is required'
   if (!type) return 'Event type is required'
@@ -42,6 +52,8 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [errMsg, setErrMsg] = React.useState<string | null>(null)
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
+  const [isMultiDate, setIsMultiDate] = useState<string>('')
+  const [dateRange, setDateRange] = useState<DateRange>()
   const formRef = React.useRef<HTMLFormElement>(null)
   const { t } = useTranslation('wiki')
 
@@ -55,8 +67,18 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     const link = data.get('link') as string
     const description = data.get('description') as string
     const type = data.get('type') as string
+    const multiDateStart = dateRange?.from && dateFormater(dateRange?.from)
+    const multiDateEnd = dateRange?.to && dateFormater(dateRange.to)
 
-    const error = validateForm(date, title, link, description, type)
+    const error = validateForm(
+      title,
+      link,
+      description,
+      type,
+      date,
+      multiDateStart,
+      multiDateEnd,
+    )
     if (error) {
       setErrMsg(error)
       return
@@ -70,10 +92,14 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         description,
         link,
         type,
+        multiDateStart,
+        multiDateEnd,
       },
     })
 
     formRef.current?.reset()
+    setDateRange(undefined)
+    setIsMultiDate('')
     setIsUpdate(false)
     if (wiki.events && wiki.events?.length >= 1) {
       setInputTitle(undefined)
@@ -109,7 +135,25 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         'type',
       ) as HTMLSelectElement
 
-      dateInput.value = data.date
+      console.log({ data })
+
+      if (data.type === EventType.MULTIDATE) {
+        setIsMultiDate('MULTIDATE')
+      } else {
+        setIsMultiDate('')
+      }
+
+      if (dateInput) {
+        dateInput.value = data.date
+      }
+
+      if (data.multiDateStart && data.multiDateEnd) {
+        setDateRange({
+          from: new Date(data.multiDateStart),
+          to: new Date(data.multiDateEnd),
+        })
+      }
+
       titleInput.value = data.title || ''
       linkInput.value = data.link || ''
       descriptionInput.value = data.description || ''
@@ -155,20 +199,29 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               gridTemplateColumns={{ base: '1fr', md: '0.8fr 1fr 1fr' }}
               gap="3"
             >
-              <Input
-                name="date"
-                type={
-                  wiki.tags.some((tag) => tag.id === 'Events')
-                    ? 'date'
-                    : 'month'
-                }
-                placeholder="Select date"
-                fontSize={{ base: '12px', md: '14px' }}
-                onChange={(e) => {
-                  const date = e.target.value
-                  handleIsUpdateCheck(date)
-                }}
-              />
+              {isMultiDate === 'MULTIDATE' ? (
+                <DatePickerDemo
+                  date={dateRange}
+                  onDateSelect={setDateRange}
+                  hideIcon={true}
+                  containerClassName="dark:bg-transparent border px-2 rounded-lg"
+                />
+              ) : (
+                <Input
+                  name="date"
+                  type={
+                    wiki.tags.some((tag) => tag.id === 'Events')
+                      ? 'date'
+                      : 'month'
+                  }
+                  placeholder="Select date"
+                  fontSize={{ base: '12px', md: '14px' }}
+                  onChange={(e) => {
+                    const date = e.target.value
+                    handleIsUpdateCheck(date)
+                  }}
+                />
+              )}
               <Input
                 name="title"
                 fontSize={{ base: '12px', md: '14px' }}
@@ -179,6 +232,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 name="type"
                 placeholder={t('eventType')}
                 fontSize={{ base: '12px', md: '14px' }}
+                onChange={(event) => setIsMultiDate(event.target.value)}
               >
                 <option
                   value={EventType.CREATED}
@@ -192,6 +246,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   {titleProps().value || 'Created'}
                 </option>
                 <option value={EventType.DEFAULT}>Default</option>
+                <option value={EventType.MULTIDATE}>Date Range</option>
               </Select>
             </SimpleGrid>
             <Input

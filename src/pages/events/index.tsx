@@ -13,7 +13,7 @@ import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
-import { dateFormater } from '@/lib/utils'
+// import { dateFormater } from '@/lib/utils'
 import { DateRange } from 'react-day-picker'
 
 const EventPage = ({
@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     getEvents.initiate({
       offset: 0,
       limit: EVENT_TEST_ITEM_PER_PAGE,
-      startDate: dateFormater(new Date()),
+      // startDate: dateFormater(new Date()),
     }),
   )
 

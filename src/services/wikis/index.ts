@@ -320,12 +320,14 @@ export const wikiApi = createApi({
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
-      query: ({ data }) => ({
-        document: POST_WIKI,
-        variables: {
-          data: JSON.stringify(data),
-        },
-      }),
+      query: ({ data }) => {
+        return {
+          document: POST_WIKI,
+          variables: {
+            data: JSON.stringify(data),
+          },
+        }
+      },
       transformResponse: (response: PostWikiResponse) =>
         response.pinJSON.IpfsHash,
     }),
