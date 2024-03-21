@@ -26,6 +26,7 @@ const EventList = ({
   clearState: Function
 }) => {
   const router = useRouter()
+  console.log(eventData)
   const hasQueryParams = Object.keys(router.query).length > 0
   const limit = EVENT_TEST_ITEM_PER_PAGE
   const [offset, setOffset] = useState(eventData?.length || 0)
@@ -78,7 +79,7 @@ const EventList = ({
         </span>
       )}
       <div className="flex flex-col gap-10 xl:gap-20">
-        {eventData && eventData.length > 0 ? (
+        {Object.entries(eventsByMonth).length > 0 ? (
           Object.entries(eventsByMonth).map(([monthYear, events], index) => (
             <div key={monthYear} className="flex flex-col gap-10">
               <div className="">
@@ -133,7 +134,7 @@ const EventList = ({
       </div>
       {!hasQueryParams &&
         !searchActive &&
-        eventData.length > 0 &&
+        Object.entries(eventsByMonth).length > 0 &&
         (hasMore ? (
           <button
             type="button"
