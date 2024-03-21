@@ -23,6 +23,13 @@ const wikiStarRating = ({
   const [hasSelectedRating, setHasSelectedRating] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
+  React.useEffect(() => {
+    const storedRating = localStorage.getItem(`wikiRating_${contentId}`)
+    if (storedRating) {
+      setIsRated(true)
+    }
+  }, [contentId, setIsRated])
+
   const sendFeedback = async (rating: number) => {
     setHasSelectedRating(true)
     setLoading(true)
@@ -33,6 +40,7 @@ const wikiStarRating = ({
     refetch?.()
     setLoading(false)
     setIsRated(true)
+    localStorage.setItem(`wikiRating_${contentId}`, rating.toString())
   }
 
   return isAvgRating ? (
