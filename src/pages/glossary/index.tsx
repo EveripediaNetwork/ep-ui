@@ -123,6 +123,7 @@ const Glossary: NextPage = () => {
               lg: `${shouldBeFixed ? '12' : '0'}`,
               xl: `${shouldBeFixed ? '56' : '0'}`,
             }}
+            py={{ base: '4', lg: '0' }}
             _dark={{
               bg: `${shouldBeFixed ? 'gray.800' : ''} `,
             }}
