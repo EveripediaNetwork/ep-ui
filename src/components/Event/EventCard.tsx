@@ -9,7 +9,7 @@ import {
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
-import { Image as ImageType } from '@everipedia/iq-utils'
+import { CommonMetaIds, Image as ImageType, MData } from '@everipedia/iq-utils'
 
 type TSpeaker = {
   id: string
@@ -26,7 +26,7 @@ type TEventsDate = {
 type TEventDetails = {
   id: string
   title: string
-  location?: string
+  location?: MData[]
   date: TEventsDate
   tags: { id: string }[]
   excerpt: string
@@ -46,6 +46,8 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
+  const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
+  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -81,12 +83,12 @@ const EventCard = ({
                       : ''}
                   </span>
                 </span>
-                {location && (
+                {eventLocation && (
                   <span className="pl-2 flex gap-1 items-center">
                     <span className="text-brand-800 ">
                       <RiMapPinRangeLine />
                     </span>
-                    <span>{location}</span>
+                    <span>{eventLocation?.country}</span>
                   </span>
                 )}
               </div>

@@ -116,7 +116,7 @@ const EventList = ({
                       key={event.id}
                       title={event.title}
                       excerpt={event.summary || ''}
-                      // location={'St. Moritz, Switzerland'}
+                      location={event.metadata}
                       date={event.events[0]}
                       tags={event.tags.filter((tag) => tag.id !== 'Events')}
                       speakers={event?.speakerWikis || []}

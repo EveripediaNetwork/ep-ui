@@ -1,7 +1,7 @@
 import { parseDateRange } from '@/lib/utils'
 import { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { Wiki } from '@everipedia/iq-utils'
+import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -27,7 +27,13 @@ const EventSummary = ({ event }: { event: Wiki }) => {
   )
 
   const data =
-    metadata.find((element) => element.id === 'references')?.value || ''
+    metadata.find((element) => element.id === CommonMetaIds.REFERENCES)
+      ?.value || ''
+  const locationMeta = metadata.find(
+    (element) => element.id === CommonMetaIds.LOCATION,
+  )
+
+  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   const references: TReferenceObject[] = JSON.parse(data)
 
   let url
@@ -57,12 +63,14 @@ const EventSummary = ({ event }: { event: Wiki }) => {
           Register/Get Tickets
         </Link>
       )}
-      {/* <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-        <span className="col-span-1">Location</span>
-        <span className="max-w-[163px] md:max-w-full lg:max-w-[119px] xl:col-span-2 xl:max-w-full">
-          Le Carrousel du Louvre (Paris, France)
+      {eventLocation && (
+        <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
+          <span className="col-span-1">Location</span>
+          <span className="max-w-[163px] md:max-w-full lg:max-w-[119px] xl:col-span-2 xl:max-w-full">
+            {eventLocation?.country}
+          </span>
         </span>
-      </span> */}
+      )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
         <span className="col-span-1">Date</span>
         <span className="xl:col-span-2">
