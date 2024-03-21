@@ -61,7 +61,7 @@ const Glossary: NextPage = () => {
         currentAlphabet === '#'
           ? /^\d/.test(result.title)
           : result.title.charAt(0).toLowerCase() ===
-            currentAlphabet.toLowerCase(),
+          currentAlphabet.toLowerCase(),
       ),
     )
     return filteredAlphabet
@@ -109,14 +109,18 @@ const Glossary: NextPage = () => {
           w="full"
           justifyContent="center"
           style={{
-            offset: `${
-              shouldBeFixed
-                ? -(heightOfElement || 284)
-                : -(heightOfElement ? heightOfElement + 228 : 512)
-            }`,
+            offset: `${shouldBeFixed
+              ? -(heightOfElement || 284)
+              : -(heightOfElement ? heightOfElement + 228 : 512)
+              }`,
           }}
         >
-          <Box backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}>
+          <Box
+            backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
+            _dark={{
+              bg: `${shouldBeFixed ? 'gray.800' : ''} `,
+            }}
+          >
             {shouldBeFixed && <GlossaryHero />}
             <Grid
               px={{ base: '4', lg: '32' }}
