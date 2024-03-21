@@ -15,12 +15,18 @@ export const GET_EVENTS = gql`
       events {
         type
         date
+        multiDateStart
+        multiDateEnd
       }
       tags {
         id
       }
       linkedWikis {
         speakers
+      }
+      metadata {
+        id
+        value
       }
       speakerWikis {
         id
@@ -51,6 +57,12 @@ export const GET_EVENTS_BY_TAGS = gql`
       events {
         type
         date
+        multiDateStart
+        multiDateEnd
+      }
+      metadata {
+        id
+        value
       }
       tags {
         id
@@ -85,9 +97,15 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
       events {
         type
         date
+        multiDateStart
+        multiDateEnd
       }
       linkedWikis {
         speakers
+      }
+      metadata {
+        id
+        value
       }
       tags {
         id
@@ -108,9 +126,15 @@ export const GET_POPULAR_EVENTS = gql`
       events {
         type
         date
+        multiDateStart
+        multiDateEnd
       }
       tags {
         id
+      }
+      metadata {
+        id
+        value
       }
       images {
         id
@@ -135,9 +159,15 @@ export const GET_EVENT_BY_TITLE = gql`
       events {
         type
         date
+        multiDateStart
+        multiDateEnd
       }
       tags {
         id
+      }
+      metadata {
+        id
+        value
       }
       linkedWikis {
         speakers

@@ -48,6 +48,7 @@ export const getDraftFromLocalStorage = () => {
   // if draft is not older than 24 hour, return wiki
   return wiki
 }
+
 export const removeDraftFromLocalStorage = () => {
   const slug = getCurrentSlug()
   if (slug) localStorage.removeItem(`draftData-${slug}`)
@@ -260,8 +261,15 @@ const wikiSlice = createSlice({
       return newState
     },
     addEvent(state, action) {
-      const { title, description, type, date, link } =
-        action.payload as BaseEvents
+      const {
+        title,
+        description,
+        type,
+        date,
+        link,
+        multiDateStart,
+        multiDateEnd,
+      } = action.payload as BaseEvents
 
       const index = state.events
         ? state.events?.findIndex((e) => e.date === date)
@@ -274,6 +282,8 @@ const wikiSlice = createSlice({
           link,
           date,
           type,
+          multiDateStart,
+          multiDateEnd,
         }
         const events = state.events ? [...state.events] : []
         events[index] = updatedEvent
@@ -293,6 +303,8 @@ const wikiSlice = createSlice({
         link,
         date,
         type,
+        multiDateStart,
+        multiDateEnd,
       }
       const events = state.events ? [...state.events, newEvent] : [newEvent]
       events.sort((a, b) => {

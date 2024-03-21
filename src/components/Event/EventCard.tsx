@@ -9,17 +9,25 @@ import {
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
-import { Image as ImageType } from '@everipedia/iq-utils'
+import { CommonMetaIds, Image as ImageType, MData } from '@everipedia/iq-utils'
 
 type TSpeaker = {
   id: string
   images: ImageType[]
 }
+
+type TEventsDate = {
+  type: string
+  date: string | null
+  multiDateStart: string | null
+  multiDateEnd: string | null
+}
+
 type TEventDetails = {
   id: string
   title: string
-  location: string
-  date: string
+  location?: MData[]
+  date: TEventsDate
   tags: { id: string }[]
   excerpt: string
   speakers: TSpeaker[]
@@ -38,9 +46,10 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
-  console.log({ speakers })
+  const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
+  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   return (
-    <Link href={`/events/${id}`} className="flex gap-2 md:gap-6">
+    <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
         <RiArrowRightUpLine />
       </span>
@@ -50,9 +59,12 @@ const EventCard = ({
         <div className="border border-gray200 dark:border-alpha-300 group cursor-pointer bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
-              <span className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800">
+              <Link
+                href={`/events/${id}`}
+                className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800"
+              >
                 {title}
-              </span>
+              </Link>
               <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
                 {excerpt}
               </p>
@@ -61,14 +73,24 @@ const EventCard = ({
                   <span className="text-brand-800 ">
                     <RiCalendar2Line />
                   </span>
-                  <span>{parseDateRange(date)}</span>
-                </span>
-                <span className="pl-2 flex gap-1 items-center">
-                  <span className="text-brand-800 ">
-                    <RiMapPinRangeLine />
+                  <span>
+                    {date.date
+                      ? parseDateRange(date.date)
+                      : date.multiDateStart && date.multiDateEnd
+                      ? parseDateRange(
+                          `${date.multiDateStart}/${date.multiDateEnd}`,
+                        )
+                      : ''}
                   </span>
-                  <span>{location}</span>
                 </span>
+                {eventLocation && (
+                  <span className="pl-2 flex gap-1 items-center">
+                    <span className="text-brand-800 ">
+                      <RiMapPinRangeLine />
+                    </span>
+                    <span>{eventLocation?.country}</span>
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex gap-2 mb-2 items-center leading-none">
@@ -122,7 +144,7 @@ const EventCard = ({
           </div>
         </div>
       )}
-    </Link>
+    </div>
   )
 }
 
