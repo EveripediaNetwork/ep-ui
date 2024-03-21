@@ -9,6 +9,7 @@ const server = z.object({
   DISCORD_WEBHOOK_ID: z.string(),
   DISCORD_WEBHOOK_TOKEN: z.string(),
   BOT_API_KEY: z.string(),
+  CMC_API_KEY: z.string(),
 })
 
 const client = z.object({
@@ -76,6 +77,7 @@ const processEnv = {
   BOT_API_KEY: process.env.BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
+  CMC_API_KEY: process.env.CMC_API_KEY,
 }
 
 // Don't touch the part below
