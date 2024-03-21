@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useConnect, useAccount, Connector } from 'wagmi'
+import { useConnect, useAccount, Connector, useAccountEffect } from 'wagmi'
 import { Box, Divider, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
@@ -19,9 +19,14 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const { t } = useTranslation('common')
   const { fetchStoredToken } = useWeb3Token()
   const { isConnected: isUserConnected, isConnecting: isUserConnecting } =
-    useAccount({
-      onConnect: () => triggerSignToken(),
-    })
+    useAccount()
+
+  useAccountEffect({
+    onConnect: async () => {
+      await triggerSignToken()
+    },
+  })
+
   const {
     isOpen: isErrorModalOpen,
     onOpen: openErrorModal,
@@ -35,27 +40,29 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const [connectorName, setConnectorName] = useState('')
 
   const { connect, connectors } = useConnect({
-    onError: (error) => {
-      logEvent({
-        action: 'LOGIN_ERROR',
-        label: error.message,
-        value: 0,
-        category: 'login_status',
-      })
-    },
-    onSuccess: (data) => {
-      logEvent({
-        action: 'LOGIN_SUCCESS',
-        label: data.account,
-        value: 1,
-        category: 'login_status',
-      })
-      openSignTokenModal()
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const w = window as any
-      w.gtag('config', env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-        user_id: data.account,
-      })
+    mutation: {
+      onError: (error) => {
+        logEvent({
+          action: 'LOGIN_ERROR',
+          label: error.message,
+          value: 0,
+          category: 'login_status',
+        })
+      },
+      onSuccess: (data) => {
+        logEvent({
+          action: 'LOGIN_SUCCESS',
+          label: data.accounts[0],
+          value: 1,
+          category: 'login_status',
+        })
+        openSignTokenModal()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const w = window as any
+        w.gtag('config', env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+          user_id: data.accounts[0],
+        })
+      },
     },
   })
 
@@ -75,7 +82,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   }: {
     connector: Connector
   }) => {
-    if (connector.ready) {
+    if (connector.id) {
       connect({ connector })
       return
     }
