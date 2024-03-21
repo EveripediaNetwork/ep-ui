@@ -13,7 +13,7 @@ export const Hero = () => {
     >
       <Heading
         w={{
-          base: '100%',
+          base: '90%',
           md: '80%',
           xl: '65%',
         }}
