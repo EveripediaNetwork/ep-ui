@@ -16,14 +16,13 @@ export const IQBar = () => {
     //TODO: fix on breakpoints, reduce min width, dark mode, API data
     <Flex
       position="relative"
-      // top={{ base: '-20px', md: '-30px', lg: '-60px' }}
-      top="-60px"
+      top={{ base: '-60px', md: '-80px', xl: '-60px' }}
       px={2}
       bg="white"
       textColor="gray.600"
-      w={{ base: '403px', md: '688px', xl: '1300px' }}
+      w={{ base: '390px', md: '688px', xl: '1220px' }}
       mx="auto"
-      rounded="xl"
+      rounded="lg"
       _dark={{ bg: 'gray.700', textColor: 'rgba(255, 255, 255, 0.92)' }}
     >
       <Flex
@@ -36,7 +35,7 @@ export const IQBar = () => {
         // minH="180px"
       >
         <HStack
-          w="267px"
+          w={{ base: '350px', md: '320px', xl: '250px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -59,11 +58,11 @@ export const IQBar = () => {
                 bg={'#E7F6EC'}
                 rounded="xl"
                 px={1}
+                color="green.500"
+                _dark={{ color: 'green.700' }}
               >
-                <Icon as={RiArrowUpLine} color="green.500" boxSize={3} />
-                <Text fontSize="xs" color="green.500">
-                  49.00%
-                </Text>
+                <Icon as={RiArrowUpLine} boxSize={3} />
+                <Text fontSize="xs">49.00%</Text>
               </Flex>
               <Text fontSize="xs" pl="8px">
                 high today
@@ -83,7 +82,7 @@ export const IQBar = () => {
           </Box>
         </HStack>
         <HStack
-          w="267px"
+          w={{ base: '350px', md: '320px', xl: '250px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -100,11 +99,17 @@ export const IQBar = () => {
               $136M
             </Text>
             <Flex align="center" mt={1}>
-              <Flex alignItems="center" gap={1} bg={'#E7F6EC'} rounded="xl">
-                <Icon as={RiArrowUpLine} color="green.500" boxSize={3} />
-                <Text fontSize="xs" color="green.500">
-                  5.00%
-                </Text>
+              <Flex
+                alignItems="center"
+                gap={1}
+                px={1}
+                bg={'#E7F6EC'}
+                rounded="xl"
+                color="green.500"
+                _dark={{ color: 'green.700' }}
+              >
+                <Icon as={RiArrowUpLine} boxSize={3} />
+                <Text fontSize="xs">5.00%</Text>
               </Flex>
               <Text fontSize="xs" pl="8px">
                 high today
@@ -123,7 +128,7 @@ export const IQBar = () => {
           </Box>
         </HStack>
         <Box
-          w="267px"
+          w={{ base: '350px', md: '320px', xl: '250px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -133,7 +138,7 @@ export const IQBar = () => {
           className="iq-get-iq"
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
-          <Text>Get IQ</Text>
+          <Text fontSize="xs">Exchanges (Get IQ)</Text>
           <Flex align="center" mt={2} gap={2}>
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
@@ -212,13 +217,13 @@ export const IQBar = () => {
           </Flex>
         </Box>
         <Box
-          w={{ base: '267px', xl: '420px' }}
+          w={{ base: '350px', xl: '380px' }}
+          h="100px"
           border={'1px'}
           borderColor="gray.200"
           rounded="xl"
           px={2}
-          fontSize="sm"
-          textColor="gray.600"
+          fontSize="xs"
           className="iq-historical-graph"
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
