@@ -59,8 +59,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
         wrap="wrap"
         alignItems="center"
         justifyContent={{ lg: 'start', '2xl': 'center' }}
-        gap={{ base: '3', '2xl': '10' }}
-        px={{ base: '4', lg: '32' }}
+        gap={{ base: '3', '2xl': '4' }}
       >
         {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
           return (

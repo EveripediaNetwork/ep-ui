@@ -6,7 +6,7 @@ import { GlossaryAlphabetsProps } from '@/types/GlossaryType'
 const GlossaryAlphabets = (props: GlossaryAlphabetsProps) => {
   const { item } = props
   return (
-    <GridItem w="100%" cursor="pointer" textAlign="center">
+    <GridItem w="100%" cursor="pointer">
       <Link activeClass="active" to={item} spy smooth duration={70}>
         <Text
           fontWeight="semibold"

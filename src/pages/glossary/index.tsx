@@ -129,7 +129,6 @@ const Glossary: NextPage = () => {
           >
             {shouldBeFixed && <GlossaryHero />}
             <Grid
-              px={{ base: '4', lg: '32' }}
               templateColumns={{
                 base: 'repeat(9,1fr)',
                 md: 'repeat(20,1fr)',
