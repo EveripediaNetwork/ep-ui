@@ -139,7 +139,7 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <Text fontSize="xs">Exchanges (Get IQ)</Text>
-          <Flex align="center" mt={2} gap={2}>
+          <Flex alignItems="center" justifyContent="space-evenly" mt={2}>
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
               isExternal
@@ -152,13 +152,14 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon boxSize="8" as={BinanceIcon} aria-label="binance" />
+              <Icon boxSize="9" as={BinanceIcon} aria-label="binance" />
             </Link>
             <Box
               borderLeft="1px solid"
               borderColor="gray.200"
               height="24px"
               mx={2}
+              _dark={{ borderColor: 'whiteAlpha.400' }}
             />
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
@@ -179,6 +180,7 @@ export const IQBar = () => {
               borderColor="gray.200"
               height="24px"
               mx={2}
+              _dark={{ borderColor: 'whiteAlpha.400' }}
             />
             <Link
               isExternal
@@ -199,6 +201,7 @@ export const IQBar = () => {
               borderColor="gray.200"
               height="24px"
               mx={2}
+              _dark={{ borderColor: 'whiteAlpha.400' }}
             />
             <Link
               href="https://frax.finance/"
@@ -217,7 +220,7 @@ export const IQBar = () => {
           </Flex>
         </Box>
         <Box
-          w={{ base: '350px', xl: '380px' }}
+          w={{ base: '350px', md: '320px', xl: '380px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
