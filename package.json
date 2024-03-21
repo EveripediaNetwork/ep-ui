@@ -119,6 +119,8 @@
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^10.1.2",
+    "use-google-maps-script": "^0.1.2",
+    "use-places-autocomplete": "^4.0.1",
     "uuid": "^8.3.2",
     "viem": "^0.3.19",
     "wagmi": "^1.0.1",
