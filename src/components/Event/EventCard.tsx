@@ -89,7 +89,7 @@ const EventCard = ({
             </div>
             <div className="flex gap-2 mb-2 items-center leading-none">
               <div className="flex">
-                {speakers?.map(speaker => (
+                {speakers?.map((speaker) => (
                   <div
                     key={speaker.id}
                     className="relative w-5 h-5 shrink-0 overflow-hidden -mx-[2px] rounded-full border border-white dark:border-gray700"
@@ -116,7 +116,7 @@ const EventCard = ({
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-2 md:gap-3">
-              {tags?.map(tag => (
+              {tags?.map((tag) => (
                 <div
                   key={tag.id}
                   className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"
