@@ -17,8 +17,12 @@ export const cgTokenDataApi = createApi({
   endpoints: (builder) => ({
     getCgTokenData: builder.query<
       {
-        prices?: number[][]
-        market_caps?: number[][]
+        prices?: {
+          name: number
+          amt: number
+        }[]
+        last_price?: number
+        last_market_cap?: number
         total_volumes?: number[][]
         status: boolean
         message: string
@@ -31,3 +35,5 @@ export const cgTokenDataApi = createApi({
 })
 
 export const { useGetCgTokenDataQuery } = cgTokenDataApi
+
+export const { getCgTokenData } = cgTokenDataApi.endpoints
