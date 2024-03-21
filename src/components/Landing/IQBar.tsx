@@ -241,7 +241,7 @@ export const IQBar = () => {
         <Box
           w={{ base: '350px', md: '320px', xl: '380px' }}
           h="100px"
-          border='1px'
+          border="1px"
           borderColor="gray.200"
           rounded="xl"
           px={2}

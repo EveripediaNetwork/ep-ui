@@ -4,7 +4,7 @@ import { Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
 
 const IQGraph = ({
   areaGraphData,
-  height = 90,
+  height = 70,
 }: { areaGraphData?: Dict<number>[] | undefined; height?: number }) => {
   return (
     <ResponsiveContainer width="100%" height={height}>
