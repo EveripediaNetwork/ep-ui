@@ -28,12 +28,18 @@ const GlossaryItem = ({
   return (
     <Stack w="full" my="7">
       {glossaryAlphabets.map((item, i) => (
-        <chakra.div key={i} id={item} pt="50px" mt="-20px">
+        <chakra.div
+          key={i}
+          id={item}
+          pt="50px"
+          mt="-20px"
+          display="flex"
+          flexDirection={{ base: 'column', lg: 'row' }}
+        >
           <Element name={item}>
             <Box
-              w="full"
+              w="fit-content"
               py="1"
-              bg="glossaryItemBg"
               my="4"
               px={{ base: 8, md: 10, lg: '32' }}
             >
@@ -44,12 +50,10 @@ const GlossaryItem = ({
           </Element>
 
           <Flex
-            justifyContent="center"
-            alignItems="center"
-            mb="-40px"
-            mt="30px"
             direction="column"
             gap="14"
+            px={{ base: '0', lg: '4' }}
+            w="full"
           >
             {glossary
               .sort((a, b) => {

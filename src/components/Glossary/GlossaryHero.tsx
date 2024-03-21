@@ -16,28 +16,26 @@ const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
-        px={{ base: 3, lg: 10 }}
+        mx={{ base: 3, lg: 32 }}
+        borderBottom="1px"
+        borderBottomColor="carouselArrowBorderColor"
         {...props}
       >
         <VStack
           w="full"
-          alignItems="center"
-          textAlign="center"
+          alignItems="start"
+          textAlign="start"
           spacing={3}
-          my={14}
+          my={{ base: '4', lg: '8' }}
         >
-          <Heading w="full" fontSize={{ base: '32', md: '42', lg: '4xl' }}>
+          <Heading w="full" fontSize={{ base: '16', md: '42', lg: '4xl' }}>
             <chakra.span color="brandLinkColor">
               {' '}
               {t('glossaryTitle1')}
             </chakra.span>{' '}
             {t('glossaryTitle2')}
           </Heading>
-          <Text
-            w={{ base: '90%', md: '80%', lg: '90%', xl: '80%', '2xl': '60%' }}
-            fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }}
-            ref={ref}
-          >
+          <Text fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} ref={ref}>
             {t('glossaryHero')}
           </Text>
         </VStack>

@@ -23,7 +23,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
   } = props
   return (
     <>
-      <Box w="full" mb={shouldBeFixed ? 5 : 0}>
+      <Box w="full" my={shouldBeFixed ? 5 : 0} px={{ base: '4', lg: '32' }}>
         <InputGroup size="md" w="full">
           <InputLeftElement
             ml={{ base: '15px', xl: 'unset' }}
@@ -52,6 +52,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
         alignItems="center"
         justifyContent={{ lg: 'start', '2xl': 'center' }}
         gap={{ base: '3', '2xl': '10' }}
+        px={{ base: '4', lg: '32' }}
       >
         {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
           return (

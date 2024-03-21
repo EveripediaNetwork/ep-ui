@@ -20,11 +20,10 @@ const GlossaryWikiCard = ({
   return (
     <LinkBox
       as="article"
-      borderWidth="1px"
-      borderColor="borderColorHover"
       overflow="hidden"
       borderRadius="12px"
-      w={{ base: '85%', md: '90%', lg: '70%' }}
+      mt="6"
+      w={{ base: 'full', md: '90%' }}
       p="3"
       _hover={{
         bgColor: 'tagHoverColor',
@@ -33,11 +32,7 @@ const GlossaryWikiCard = ({
       <Box cursor="pointer" w="full">
         <VStack pb="2" w="full" px="3">
           <LinkOverlay href={`/wiki/${wikiId}`} w="full">
-            <Heading
-              size={{ base: 'sm', lg: 'md' }}
-              my="10px"
-              color="brand.500"
-            >
+            <Heading size={{ base: 'sm', lg: 'md' }} my="10px" fontSize="36px">
               <Highlight
                 query={highlightText}
                 styles={{

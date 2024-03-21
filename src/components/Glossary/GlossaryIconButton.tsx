@@ -9,19 +9,26 @@ const GlossaryIconButton = ({
 }: GlosssaryIconButtonProps) => {
   return (
     <IconButton
-      width="full"
+      width="9"
+      height="9"
+      my="2"
       icon={
         isVisible ? (
-          <ChevronUpIcon fontSize="28px" color="linkColor" opacity="0.5" />
+          <ChevronUpIcon fontSize="28px" color="linkColor" />
         ) : (
-          <ChevronDownIcon fontSize="28px" color="linkColor" opacity="0.5" />
+          <ChevronDownIcon fontSize="28px" color="linkColor" />
         )
       }
       aria-label="Toggle Text"
       onClick={() => setIsVisible(!isVisible)}
+      alignSelf="center"
       size="xs"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       isRound
-      backgroundColor="transparent"
+      backgroundColor="blogPageBg"
+      _dark={{ bg: 'gray.700' }}
       _hover={{ backgroundColor: '#00000010' }}
       _focus={{ backgroundColor: '#00000010' }}
       _active={{ backgroundColor: '#00000010' }}

@@ -93,34 +93,51 @@ const Glossary: NextPage = () => {
         w="full"
         ref={newRef}
         alignItems="center"
-        borderTop="1px"
         mx="auto"
-        borderTopColor="carouselArrowBorderColor"
-        px={{ base: '9', lg: '32' }}
         top={shouldBeFixed ? '14' : '0'}
-        bg="blogPageBg"
         position={shouldBeFixed ? 'fixed' : 'relative'}
+        backgroundColor={shouldBeFixed ? 'blogPageBg' : ''}
+        _dark={{
+          bg: `${shouldBeFixed ? 'gray.700' : ''} `,
+        }}
         zIndex="sticky"
       >
-        <Box mx="auto" w="full" justifyContent="center" alignItems="center">
-          <Grid
-            templateColumns={{
-              base: 'repeat(9,1fr)',
-              md: 'repeat(20,1fr)',
-              lg: 'repeat(27,1fr)',
-            }}
-            gap={3}
-            py="4"
-          >
-            {glossaryAlphabetsData.map((item, i) => (
-              <GlossaryAlphabets
-                key={i}
-                item={item}
-                heightOfElement={heightOfElement}
-                shouldBeFixed={shouldBeFixed}
-              />
-            ))}
-          </Grid>
+        <Box
+          mx="auto"
+          display="flex"
+          flexDirection="column"
+          w="full"
+          justifyContent="center"
+          style={{
+            offset: `${
+              shouldBeFixed
+                ? -(heightOfElement || 284)
+                : -(heightOfElement ? heightOfElement + 228 : 512)
+            }`,
+          }}
+        >
+          <Box backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}>
+            {shouldBeFixed && <GlossaryHero />}
+            <Grid
+              px={{ base: '4', lg: '32' }}
+              templateColumns={{
+                base: 'repeat(9,1fr)',
+                md: 'repeat(20,1fr)',
+                lg: 'repeat(27,1fr)',
+              }}
+              gap={3}
+              py={{ base: '4', lg: '8' }}
+            >
+              {glossaryAlphabetsData.map((item, i) => (
+                <GlossaryAlphabets
+                  key={i}
+                  item={item}
+                  heightOfElement={heightOfElement}
+                  shouldBeFixed={shouldBeFixed}
+                />
+              ))}
+            </Grid>
+          </Box>
           {!shouldBeFixed ? (
             <GlossaryFilterSection
               setSearchText={setSearchText}
