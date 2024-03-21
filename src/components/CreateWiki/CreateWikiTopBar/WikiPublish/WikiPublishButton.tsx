@@ -215,7 +215,7 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
-    console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
+    // console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
 
     if (!isValidWiki(toast, wiki)) return
 

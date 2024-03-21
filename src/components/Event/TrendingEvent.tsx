@@ -50,7 +50,16 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                     </span>
                   )}
                   <h5 className="text-xl font-semibold">{event.title}</h5>
-                  <h5 className="">{parseDateRange(event.events[0].date)}</h5>
+                  <h5 className="">
+                    {event.events[0].date
+                      ? parseDateRange(event.events[0].date)
+                      : event.events[0].multiDateStart &&
+                        event.events[0].multiDateEnd
+                      ? parseDateRange(
+                          `${event.events[0].multiDateStart}/${event.events[0].multiDateEnd}`,
+                        )
+                      : ''}
+                  </h5>
                 </div>
                 <button
                   type="button"
