@@ -56,7 +56,7 @@ export const groupEventsByMonth = (events: TEvents[]) => {
 
   // Group events by month and year
   events.forEach((event) => {
-    const date = event?.events?.[0]?.date
+    const date = event?.events?.[0]?.date || event?.events?.[0]?.multiDateStart
     if (date) {
       const dateParts = date.split('-')
       if (dateParts.length >= 2) {

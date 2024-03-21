@@ -15,7 +15,7 @@ const EventOverview = () => {
 
   return (
     <>
-      {data && data.length > 0 && (
+      {data && data.length > 4 && (
         <div className="max-w-[1296px] mx-auto py-14 md:py-20 xl:py-24 px-4">
           <h2 className="text-2xl max-w-[350px] mx-auto md:max-w-full md:text-4xl font-semibold text-center">
             {t('homePageHeading')}

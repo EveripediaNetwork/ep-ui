@@ -26,7 +26,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         }}
       >
         <CarouselContent className="">
-          {events.map((event) => (
+          {events?.map((event) => (
             <CarouselItem
               className="h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
               key={event.id}
@@ -51,12 +51,12 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                   )}
                   <h5 className="text-xl font-semibold">{event.title}</h5>
                   <h5 className="">
-                    {event.events[0].date
-                      ? parseDateRange(event.events[0].date)
-                      : event.events[0].multiDateStart &&
-                        event.events[0].multiDateEnd
+                    {event?.events?.[0].date
+                      ? parseDateRange(event?.events?.[0].date)
+                      : event?.events?.[0].multiDateStart &&
+                        event?.events?.[0].multiDateEnd
                       ? parseDateRange(
-                          `${event.events[0].multiDateStart}/${event.events[0].multiDateEnd}`,
+                          `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
                         )
                       : ''}
                   </h5>
