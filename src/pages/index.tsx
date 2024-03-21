@@ -76,7 +76,7 @@ export const Index = ({
     >
       <Hero />
       <IQBar />
-      <Box>
+      <Box mt="-12">
         <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
