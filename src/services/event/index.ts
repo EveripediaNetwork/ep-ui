@@ -9,7 +9,7 @@ import {
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
 } from './queries'
-import { Image } from '@everipedia/iq-utils'
+import { Image, MData } from '@everipedia/iq-utils'
 
 export type TEventsDate = {
   type: string
@@ -30,6 +30,7 @@ export type TEvents = {
     images: Image[]
   }[]
   images: Image[]
+  metadata?: MData[]
 }
 
 type TEventArg = {

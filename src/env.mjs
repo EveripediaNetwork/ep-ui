@@ -34,6 +34,7 @@ const client = z.object({
   NEXT_PUBLIC_DOMAIN: z.string().url(),
   NEXT_PUBLIC_EP_API: z.string().url(),
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string(),
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
 })
 
 /**
@@ -77,6 +78,7 @@ const processEnv = {
   BOT_API_KEY: process.env.BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   CMC_API_KEY: process.env.CMC_API_KEY,
 }
 
