@@ -87,37 +87,42 @@ const Glossary: NextPage = () => {
   }
 
   return (
-    <Stack direction="column" w="full" pb="56">
+    <Stack
+      direction="column"
+      pb={{ base: '32', lg: '56' }}
+      w="min(90%, 1100px)"
+      mx="auto"
+    >
       <GlossaryHero ref={ref} />
-      <VStack
-        w="full"
-        ref={newRef}
-        alignItems="center"
-        mx="auto"
-        top={shouldBeFixed ? '14' : '0'}
-        position={shouldBeFixed ? 'fixed' : 'relative'}
-        backgroundColor={shouldBeFixed ? 'blogPageBg' : ''}
-        _dark={{
-          bg: `${shouldBeFixed ? 'gray.700' : ''} `,
-        }}
-        zIndex="sticky"
-      >
+      <VStack w="full" ref={newRef} alignItems="center" mx="auto">
         <Box
           mx="auto"
           display="flex"
           flexDirection="column"
           w="full"
           justifyContent="center"
+          top={shouldBeFixed ? '14' : '0'}
+          position={shouldBeFixed ? 'fixed' : 'relative'}
+          backgroundColor={shouldBeFixed ? 'blogPageBg' : ''}
+          _dark={{
+            bg: `${shouldBeFixed ? 'gray.700' : ''} `,
+          }}
+          zIndex="sticky"
           style={{
             offset: `${
               shouldBeFixed
                 ? -(heightOfElement || 284)
-                : -(heightOfElement ? heightOfElement + 228 : 512)
+                : -(heightOfElement ? heightOfElement + 500 : 1000)
             }`,
           }}
         >
           <Box
             backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
+            px={{
+              base: `${shouldBeFixed ? '4' : '0'}`,
+              lg: `${shouldBeFixed ? '12' : '0'}`,
+              xl: `${shouldBeFixed ? '56' : '0'}`,
+            }}
             _dark={{
               bg: `${shouldBeFixed ? 'gray.800' : ''} `,
             }}

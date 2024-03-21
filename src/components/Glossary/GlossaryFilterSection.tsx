@@ -23,7 +23,15 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
   } = props
   return (
     <>
-      <Box w="full" my={shouldBeFixed ? 5 : 0} px={{ base: '4', lg: '32' }}>
+      <Box
+        w="full"
+        my={shouldBeFixed ? 5 : 0}
+        px={{
+          base: `${shouldBeFixed ? '4' : '0'}`,
+          lg: `${shouldBeFixed ? 'auto' : '0'}`,
+          xl: `${shouldBeFixed ? '72' : '0'}`,
+        }}
+      >
         <InputGroup size="md" w="full">
           <InputLeftElement
             ml={{ base: '15px', xl: 'unset' }}

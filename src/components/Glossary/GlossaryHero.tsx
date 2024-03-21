@@ -16,7 +16,6 @@ const GlossaryHero = React.forwardRef<HTMLParagraphElement, ChakraProps>(
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
-        mx={{ base: 3, lg: 32 }}
         borderBottom="1px"
         borderBottomColor="carouselArrowBorderColor"
         {...props}

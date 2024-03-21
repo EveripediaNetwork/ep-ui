@@ -22,7 +22,7 @@ const GlossaryWikiCard = ({
       as="article"
       overflow="hidden"
       borderRadius="12px"
-      mt="6"
+      mt={{ base: '0', lg: '6' }}
       w={{ base: 'full', md: '90%' }}
       p="3"
       _hover={{
@@ -51,9 +51,9 @@ const GlossaryWikiCard = ({
               styles={{
                 px: '1',
                 py: '1',
-                bg: 'brand.700',
+                bg: 'brand.300',
                 color: 'black',
-                _dark: { bg: 'brand.300', color: 'white' },
+                _dark: { bg: 'brand.800', color: 'white' },
               }}
             >
               {summary.length > WIKI_SUMMARY_LIMIT

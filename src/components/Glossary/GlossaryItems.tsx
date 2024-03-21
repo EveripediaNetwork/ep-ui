@@ -26,23 +26,21 @@ const GlossaryItem = ({
   }
 
   return (
-    <Stack w="full" my="7">
+    <Stack w="full">
       {glossaryAlphabets.map((item, i) => (
         <chakra.div
           key={i}
           id={item}
-          pt="50px"
-          mt="-20px"
           display="flex"
           flexDirection={{ base: 'column', lg: 'row' }}
+          borderBottom="1px"
+          borderBottomColor="carouselArrowBorderColor"
+          gap={{ base: '4', lg: '32' }}
+          pb={{ base: '4', lg: '10' }}
+          pt={{ base: '4', lg: '6' }}
         >
           <Element name={item}>
-            <Box
-              w="fit-content"
-              py="1"
-              my="4"
-              px={{ base: 8, md: 10, lg: '32' }}
-            >
+            <Box w="fit-content" py="1">
               <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
                 {item}
               </Text>
@@ -51,7 +49,7 @@ const GlossaryItem = ({
 
           <Flex
             direction="column"
-            gap="14"
+            gap={{ base: '8', lg: '10' }}
             px={{ base: '0', lg: '4' }}
             w="full"
           >
