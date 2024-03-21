@@ -1,6 +1,7 @@
 import { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
+import CustomTooltip from './CustomTooltip'
 
 const IQGraph = ({
   areaGraphData,
@@ -16,7 +17,7 @@ const IQGraph = ({
           </linearGradient>
         </defs>
 
-        <Tooltip label={'tooltip'} />
+        <Tooltip content={<CustomTooltip />} />
         <Area
           className="area"
           type="monotone"
