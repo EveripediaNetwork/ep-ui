@@ -33,7 +33,7 @@ const PopularEventFilter = ({
       </div>
       <div className="border flex flex-col gap-8 bg-white border-gray200 dark:border-alpha-300 dark:bg-gray700 px-[14px] py-[10px] md:px-5 md:py-[18px] lg:px-2 xl:px-3 lg:py-3 xl:py-5 mt-6 rounded-xl">
         {popularEvents.length > 0 ? (
-          popularEvents.map(event => (
+          popularEvents.map((event) => (
             <div key={event.id} className="flex group gap-2">
               {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
               <span
