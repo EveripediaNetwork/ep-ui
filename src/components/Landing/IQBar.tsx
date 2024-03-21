@@ -8,14 +8,30 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { Logo } from '../Elements'
 import IQGraph from './IQGraph'
 import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
+import { useGetTokenStatsQuery } from '@/services/token-stats'
+import { fetchIqPriceChange } from '@/lib/utils'
 import * as Humanize from 'humanize-plus'
+import { useEffect, useState } from 'react'
 
 export const IQBar = () => {
-  const { data, isLoading, isError } = useGetCgTokenDataQuery()
+  const { data: iqData, isLoading, isError } = useGetCgTokenDataQuery()
+  const price = Humanize.formatNumber(iqData?.last_price ?? 0, 4)
+  const mcap = Humanize.compactInteger(iqData?.last_market_cap ?? 0, 2)
+  const { data: tokenStats } = useGetTokenStatsQuery({
+    tokenName: 'everipedia',
+  })
+  const mcapchange = tokenStats?.market_cap_percentage_change
+  const areaGraphData = iqData?.prices
+  const [priceChange, setPriceChange] = useState<number | null>(null)
 
-  const price = Humanize.formatNumber(data?.last_price ?? 0, 4)
-  const mcap = Humanize.compactInteger(data?.last_market_cap ?? 0, 2)
-  const areaGraphData = data?.prices
+  useEffect(() => {
+    const fetchData = async () => {
+      const priceChangePercentage = await fetchIqPriceChange()
+      setPriceChange(priceChangePercentage)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <Flex
@@ -73,24 +89,39 @@ export const IQBar = () => {
                 _dark={{ color: 'green.700' }}
               >
                 <Icon as={RiArrowUpLine} boxSize={3} />
-                <Text fontSize="xs">49.00%</Text>
+                <Text fontSize="xs">
+                  {Humanize.formatNumber(priceChange ?? 0, 2)}
+                </Text>
               </Flex>
               <Text fontSize="xs" pl="8px">
                 high today
               </Text>
             </Flex>
           </Box>
-          <Box
-            as="button"
-            aria-label="IQ"
-            border="1px"
-            borderColor="gray.200"
-            rounded="full"
-            p={1}
-            _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
+          <Link
+            href="https://iq.braindao.org/dashboard"
+            isExternal
+            onClick={() =>
+              logEvent({
+                category: 'Home',
+                action: 'Click',
+                label: 'IQ Dashboard',
+                value: 1,
+              })
+            }
           >
-            <Logo boxSize="2em" />
-          </Box>
+            <Box
+              as="button"
+              aria-label="IQ"
+              border="1px"
+              borderColor="gray.200"
+              rounded="full"
+              p={1}
+              _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
+            >
+              <Logo boxSize="2em" />
+            </Box>
+          </Link>
         </HStack>
         <HStack
           w={{ base: '350px', md: '320px', xl: '250px' }}
@@ -128,23 +159,38 @@ export const IQBar = () => {
                 _dark={{ color: 'green.700' }}
               >
                 <Icon as={RiArrowUpLine} boxSize={3} />
-                <Text fontSize="xs">5.00%</Text>
+                <Text fontSize="xs">
+                  {Humanize.formatNumber(mcapchange ?? 0, 2)}%
+                </Text>
               </Flex>
               <Text fontSize="xs" pl="8px">
                 high today
               </Text>
             </Flex>
           </Box>
-          <Box
-            as="button"
-            rounded="full"
-            border="1px"
-            p="1"
-            borderColor="gray.200"
-            _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
+          <Link
+            href="https://coinmarketcap.com/currencies/iq/"
+            isExternal
+            onClick={() =>
+              logEvent({
+                category: 'Home',
+                action: 'Click',
+                label: 'IQ CMC',
+                value: 1,
+              })
+            }
           >
-            <RiGlobalLine size="2em" color="#FF5CAA" />
-          </Box>
+            <Box
+              as="button"
+              rounded="full"
+              border="1px"
+              p="1"
+              borderColor="gray.200"
+              _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
+            >
+              <RiGlobalLine size="2em" color="#FF5CAA" />
+            </Box>
+          </Link>
         </HStack>
         <Box
           w={{ base: '350px', md: '320px', xl: '250px' }}
