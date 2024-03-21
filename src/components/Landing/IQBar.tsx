@@ -30,6 +30,7 @@ export const IQBar = () => {
   const { data: tokenStats } = useGetTokenStatsQuery({
     tokenName: 'everipedia',
   })
+  //TODO: add percentage change color coding
   const mcapchange = tokenStats?.market_cap_percentage_change
   const areaGraphData = iqData?.prices
   const [priceChange, setPriceChange] = useState<number | null>(null)
@@ -101,7 +102,7 @@ export const IQBar = () => {
               >
                 <Icon as={RiArrowUpLine} boxSize={3} />
                 <Text fontSize="xs">
-                  {Humanize.formatNumber(priceChange ?? 0, 2)}
+                  {Humanize.formatNumber(priceChange ?? 0, 2)}%
                 </Text>
               </Flex>
               <Text fontSize="xs" pl="8px">
@@ -311,7 +312,10 @@ export const IQBar = () => {
           className="iq-historical-graph"
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
-          <Text fontSize="xs"> IQ Historical Graph</Text>
+          <HStack justifyContent={'space-between'}>
+            <Text fontSize="xs"> IQ Historical Graph</Text>
+            <Text>{`$${price}`}</Text>
+          </HStack>
           {isError ? (
             <Text fontSize="sm" color="red.500">
               Error fetching graph data
