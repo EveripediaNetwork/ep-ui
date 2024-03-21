@@ -215,8 +215,6 @@ export const WikiPublishButton = () => {
   }
 
   const handleWikiPublish = async (override?: boolean) => {
-    // console.log('ℹ️ DEBUG SHOW NETWORK: ', { connectedChainId, chainId })
-
     if (!isValidWiki(toast, wiki)) return
 
     logEvent({
@@ -249,6 +247,8 @@ export const WikiPublishButton = () => {
         content: sanitizeContentToPublish(String(wiki.content)),
         metadata: wiki.metadata.filter((m) => m.value),
       }
+
+      console.log(finalWiki)
 
       if (finalWiki.id === CreateNewWikiSlug)
         finalWiki.id = await getWikiSlug(wiki)
