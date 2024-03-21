@@ -26,6 +26,7 @@ const EventList = ({
   clearState: Function
 }) => {
   const router = useRouter()
+  console.log(eventData)
   const hasQueryParams = Object.keys(router.query).length > 0
   const limit = EVENT_TEST_ITEM_PER_PAGE
   const [offset, setOffset] = useState(eventData?.length || 0)
@@ -78,7 +79,7 @@ const EventList = ({
         </span>
       )}
       <div className="flex flex-col gap-10 xl:gap-20">
-        {eventData && eventData.length > 0 ? (
+        {Object.entries(eventsByMonth).length > 0 ? (
           Object.entries(eventsByMonth).map(([monthYear, events], index) => (
             <div key={monthYear} className="flex flex-col gap-10">
               <div className="">
@@ -116,8 +117,8 @@ const EventList = ({
                       key={event.id}
                       title={event.title}
                       excerpt={event.summary || ''}
-                      location={'St. Moritz, Switzerland'}
-                      date={event.events[0].date}
+                      location={event.metadata}
+                      date={event.events[0]}
                       tags={event.tags.filter((tag) => tag.id !== 'Events')}
                       speakers={event?.speakerWikis || []}
                       images={event.images}
@@ -133,7 +134,7 @@ const EventList = ({
       </div>
       {!hasQueryParams &&
         !searchActive &&
-        eventData.length > 0 &&
+        Object.entries(eventsByMonth).length > 0 &&
         (hasMore ? (
           <button
             type="button"

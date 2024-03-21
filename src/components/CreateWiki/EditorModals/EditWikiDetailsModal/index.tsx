@@ -18,6 +18,7 @@ import CategoryInput from './CategoryInput'
 import LinkedWikisInput from './LinkedWikisInput'
 import EventsInput from './EventsInput'
 import { useTranslation } from 'next-i18next'
+import LocationInput from './LocationInput'
 
 const HighlightsModal = ({
   onClose = () => {},
@@ -59,6 +60,10 @@ const HighlightsModal = ({
             <TagsInput wiki={currentWiki} />
             <LinkedWikisInput wiki={currentWiki} />
             <LinksInput wiki={currentWiki} />
+            {currentWiki.tags.some((tag) => tag.id === 'Events') && (
+              <LocationInput />
+            )}
+
             <EventsInput wiki={currentWiki} />
           </Stack>
         </ModalBody>

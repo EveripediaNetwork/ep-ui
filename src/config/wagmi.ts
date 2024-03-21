@@ -1,61 +1,52 @@
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { configureChains, Connector, createConfig } from 'wagmi'
-import { polygon, polygonMumbai } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
-import { MagicAuthConnector } from '@magiclabs/wagmi-connector'
-import config from './index'
+import { http, createConfig, fallback } from 'wagmi'
+import { polygon, polygonMumbai } from 'viem/chains'
+import { injected, walletConnect } from 'wagmi/connectors'
+import { env } from '@/env.mjs'
+import config from '.'
+import { rpcs } from '@/utils/WalletUtils/getProvider'
+import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
 
-const chainArray = config.alchemyChain === 'matic' ? polygon : polygonMumbai
-
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [chainArray],
-  [
-    alchemyProvider({ apiKey: config.alchemyApiKey }),
-    infuraProvider({ apiKey: config.infuraId }),
-    publicProvider(),
-  ],
-)
-
-export const rpcs: {
-  [key: string]: string
-} = {
-  maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
-  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
-}
-
-export const connectors = [
-  new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
-  new WalletConnectConnector({
-    chains,
-    options: {
-      projectId: config.walletConnectProjectId,
-    },
-  }),
-  new MagicAuthConnector({
-    chains,
-    options: {
-      apiKey: config.magicLinkApiKey,
-      oauthOptions: {
-        providers: ['google', 'discord', 'facebook', 'twitter'],
-      },
-      customLogo: '/images/logos/braindao-logo.svg',
-      accentColor: '#ea3b87',
-      magicSdkConfiguration: {
-        network: {
-          rpcUrl: rpcs[config.alchemyChain],
-          chainId: Number(config.chainId),
-        },
-      },
-    },
-  }) as unknown as Connector,
-]
+const chains =
+  config.alchemyChain === 'matic'
+    ? ([polygon] as const)
+    : ([polygonMumbai] as const)
 
 export const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-  webSocketPublicClient,
+  chains,
+  ssr: true,
+  multiInjectedProviderDiscovery: false,
+  transports: {
+    [polygon.id]: fallback([
+      http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
+      http(`https://polygon-mainnet.infura.io/v3/${config.infuraId}`),
+    ]),
+    [polygonMumbai.id]: fallback([
+      http(`https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`),
+      http(`https://polygon-mumbai.infura.io/v3/${config.infuraId}`),
+    ]),
+  },
+  connectors: [
+    injected(),
+    walletConnect({
+      projectId: config.walletConnectProjectId,
+      relayUrl: 'wss://relay.walletconnect.org',
+    }),
+    dedicatedWalletConnector({
+      //@ts-ignore
+      chains,
+      options: {
+        apiKey: env.NEXT_PUBLIC_MAGIC_LINK_API_KEY,
+        accentColor: '#ea3b87',
+        oauthOptions: {
+          providers: ['google', 'facebook', 'twitter', 'discord'],
+        },
+        magicSdkConfiguration: {
+          network: {
+            rpcUrl: rpcs[config.alchemyChain],
+            chainId: Number(config.chainId),
+          },
+        },
+      },
+    }),
+  ],
 })

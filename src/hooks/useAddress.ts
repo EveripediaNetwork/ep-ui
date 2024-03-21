@@ -12,6 +12,14 @@ export const useAddress = () => {
   useEffect(() => {
     const isWalletConnected = !!localStorage.getItem('wagmi.wallet')
     const isConnectorConnected = !!localStorage.getItem('wagmi.connected')
+    const isInjectorConnected = !!localStorage.getItem(
+      'wagmi.injected.connected',
+    )
+
+    if (isInjectorConnected) {
+      setIsConnected(isInjectorConnected)
+      return
+    }
 
     setIsConnected(isWalletConnected && isConnectorConnected)
   }, [])

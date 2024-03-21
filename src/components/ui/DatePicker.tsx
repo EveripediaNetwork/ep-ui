@@ -3,7 +3,6 @@
 import * as React from 'react'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
-
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -17,9 +16,13 @@ import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
 export function DatePickerDemo({
   date,
   onDateSelect,
+  containerClassName,
+  hideIcon,
 }: {
   date: DateRange | undefined
   onDateSelect: SelectRangeEventHandler
+  containerClassName?: string
+  hideIcon?: boolean
 }) {
   return (
     <Popover>
@@ -28,9 +31,14 @@ export function DatePickerDemo({
           className={cn(
             'max-w-[183px] hidden md:flex xl:max-w-[428px] w-full justify-start text-left font-normal h-auto hover:bg-transparent rounded-none',
             !date && 'text-muted-foreground',
+            containerClassName,
           )}
         >
-          <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-700" />
+          {hideIcon ? (
+            ''
+          ) : (
+            <CalendarIcon className="mr-2 h-6 w-6 text-gray500 dark:text-alpha-700" />
+          )}
 
           {date?.from ? (
             date.to ? (

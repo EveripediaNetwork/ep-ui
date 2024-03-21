@@ -1,8 +1,8 @@
 import {
   useAccount,
-  useFeeData,
+  useEstimateFeesPerGas,
   useSignTypedData,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
 } from 'wagmi'
 import { submitVerifiableSignature } from '@/utils/WalletUtils/postSignature'
 import { removeDraftFromLocalStorage } from '@/store/slices/wiki.slice'
@@ -40,18 +40,22 @@ export const useGetSignedHash = () => {
   const {
     data: signData,
     error: signError,
-    isLoading: signing,
+    status,
     signTypedDataAsync,
   } = useSignTypedData()
 
-  const { refetch } = useWaitForTransaction({
+  const signing = status === 'pending'
+
+  const { refetch } = useWaitForTransactionReceipt({
     hash: txHash as `0x${string}`,
     chainId: Number(config.chainId),
     confirmations: 2,
   })
-  const { data: feeData } = useFeeData({
+
+  const { data: feeData } = useEstimateFeesPerGas({
     formatUnits: 'gwei',
   })
+
   const gasPrice = useMemo(
     () => parseFloat(feeData?.formatted.gasPrice ?? '0'),
     [feeData],
@@ -69,7 +73,7 @@ export const useGetSignedHash = () => {
         user: userAddress,
         deadline: deadline.current,
       },
-    } as Dict)
+    })
       .then((response) => {
         if (response) {
           setActiveStep(1)
@@ -101,7 +105,7 @@ export const useGetSignedHash = () => {
         try {
           const checkTrx = async () => {
             const trx = await refetch()
-            if (trx.error || trx.data?.status === 'reverted') {
+            if (trx.error) {
               setIsLoading('error')
               setMsg(defaultErrorMessage)
               logEvent({
@@ -112,7 +116,7 @@ export const useGetSignedHash = () => {
               })
               clearInterval(_timer)
             }
-            if (trx?.data && trx.data.status === 'success') {
+            if (trx?.data && trx.status === 'success') {
               setIsLoading(undefined)
               setActiveStep(3)
               setMsg(isNewCreateWiki ? successMessage : editedMessage)

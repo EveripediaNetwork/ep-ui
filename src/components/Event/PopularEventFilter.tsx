@@ -59,9 +59,14 @@ const PopularEventFilter = ({
                     <span className="text-brand-800 lg:text-[9px] xl:text-base">
                       <RiCalendar2Line />
                     </span>
-                    <span className="text-gray800 dark:text-alpha-900">
-                      {parseDateRange(event.events[0].date)}
-                    </span>
+                    {event.events?.[0].date
+                      ? parseDateRange(event.events?.[0].date)
+                      : event.events?.[0].multiDateStart &&
+                        event.events?.[0].multiDateEnd
+                      ? parseDateRange(
+                          `${event.events?.[0].multiDateStart}/${event.events?.[0].multiDateEnd}`,
+                        )
+                      : ''}
                   </span>
                   <span className="pl-1 xl:pr-2 flex gap-1 items-center">
                     <span className="text-brand-800 lg:text-[9px] xl:text-base">

@@ -9,20 +9,28 @@ import {
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
 } from './queries'
-import { Image } from '@everipedia/iq-utils'
+import { Image, MData } from '@everipedia/iq-utils'
+
+export type TEventsDate = {
+  type: string
+  date: string | null
+  multiDateStart: string | null
+  multiDateEnd: string | null
+}
 
 export type TEvents = {
   id: string
   title: string
   location?: string
   summary?: string
-  events: { type: string; date: string }[]
+  events: TEventsDate[]
   tags: { id: string }[]
   speakerWikis?: {
     id: string
     images: Image[]
   }[]
   images: Image[]
+  metadata?: MData[]
 }
 
 type TEventArg = {
