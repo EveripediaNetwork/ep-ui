@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type ResponseData = {
-  prices?: number[][]
-  market_caps?: number[][]
+  prices?: {
+    name: string
+    amt: number
+  }[]
+  last_price?: number
+  last_market_cap?: number
   total_volumes?: number[][]
   status: boolean
   message: string
@@ -19,14 +23,27 @@ export default async function handler(
     const result = await fetch(url)
     const response = await result.json()
 
+    const lastPrice = response.prices[response.prices.length - 1][1]
+    const lastMarketCap =
+      response.market_caps[response.market_caps.length - 1][1]
+
+    const transformedPrices = response.prices.map(
+      ([timestamp, price]: [number, number]) => ({
+        name: timestamp,
+        amt: price,
+      }),
+    )
+
     const data: ResponseData = {
-      prices: response.prices,
-      market_caps: response.market_caps,
+      prices: transformedPrices,
+      last_price: lastPrice,
+      last_market_cap: lastMarketCap,
       total_volumes: response.total_volumes,
       status: true,
       message: 'Data fetched successfully',
     }
 
+    // Set Cache-Control header to cache the response for 5 minutes (300 seconds)
     res.setHeader(
       'Cache-Control',
       'public, s-maxage=300, stale-while-revalidate',
