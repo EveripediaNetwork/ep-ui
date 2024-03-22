@@ -22,7 +22,6 @@ const GlossaryWikiCard = ({
       as="article"
       overflow="hidden"
       borderRadius="12px"
-      mt={{ base: '0', lg: '6' }}
       w={{ base: 'full', md: '90%' }}
       p="3"
       _hover={{
@@ -30,7 +29,7 @@ const GlossaryWikiCard = ({
       }}
     >
       <Box cursor="pointer" w="full">
-        <VStack pb="2" w="full" px="3">
+        <VStack w="full" px="3">
           <LinkOverlay href={`/wiki/${wikiId}`} w="full">
             <Heading size={{ base: 'sm', lg: 'md' }} my="10px" fontSize="36px">
               <Highlight

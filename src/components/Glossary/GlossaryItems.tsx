@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
+import { Stack, Text, Flex, chakra } from '@chakra-ui/react'
 import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
 import { GlossaryItemType } from '@/types/GlossaryType'
@@ -40,27 +40,20 @@ const GlossaryItem = ({
           pt={{ base: '4', lg: '10' }}
         >
           <Element name={item}>
-            <Box w="fit-content" py="1">
-              <Text
-                fontSize={{ base: 'xl', lg: '4xl' }}
-                fontWeight="bold"
-                fontFamily="sans-serif"
-                style={{
-                  WebkitTextStroke: '1px black',
-                  color: '#FFFFFFEB',
-                }}
-              >
-                {item}
-              </Text>
-            </Box>
+            <Text
+              fontSize={{ base: 'xl', lg: '4xl' }}
+              fontWeight="bold"
+              fontFamily="sans-serif"
+              style={{
+                WebkitTextStroke: '1px black',
+                color: '#FFFFFFEB',
+              }}
+            >
+              {item}
+            </Text>
           </Element>
 
-          <Flex
-            direction="column"
-            gap={{ base: '8', lg: '10' }}
-            px={{ base: '0', lg: '4' }}
-            w="full"
-          >
+          <Flex direction="column" gap="4" px={{ base: '0', lg: '4' }} w="full">
             {glossary
               .sort((a, b) => {
                 const aTitle = a.title.toLowerCase()
