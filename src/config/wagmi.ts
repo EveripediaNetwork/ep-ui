@@ -32,7 +32,6 @@ export const wagmiConfig = createConfig({
       relayUrl: 'wss://relay.walletconnect.org',
     }),
     dedicatedWalletConnector({
-      //@ts-ignore
       chains,
       options: {
         apiKey: env.NEXT_PUBLIC_MAGIC_LINK_API_KEY,
