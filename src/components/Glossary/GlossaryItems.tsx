@@ -41,7 +41,15 @@ const GlossaryItem = ({
         >
           <Element name={item}>
             <Box w="fit-content" py="1">
-              <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
+              <Text
+                fontSize={{ base: 'xl', lg: '4xl' }}
+                fontWeight="bold"
+                fontFamily="sans-serif"
+                style={{
+                  WebkitTextStroke: '1px black',
+                  color: '#FFFFFFEB',
+                }}
+              >
                 {item}
               </Text>
             </Box>

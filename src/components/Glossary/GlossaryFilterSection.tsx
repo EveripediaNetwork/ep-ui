@@ -45,7 +45,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
             />
           </InputLeftElement>
           <Input
-            type="tel"
+            type="text"
             placeholder="Search for words"
             value={searchText}
             onChange={(e) => searchPage(e.target.value)}
@@ -60,6 +60,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
         alignItems="center"
         justifyContent={{ lg: 'start', '2xl': 'center' }}
         gap={{ base: '3', '2xl': '4' }}
+        px={shouldBeFixed ? '4' : '0'}
       >
         {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
           return (

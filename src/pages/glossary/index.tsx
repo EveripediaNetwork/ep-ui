@@ -44,7 +44,7 @@ const Glossary: NextPage = () => {
   const shouldBeFixed =
     entry?.intersectionRatio !== undefined && !entry?.isIntersecting
 
-  const heightOfElement = (newEntry?.boundingClientRect.height || 310) + 68
+  const heightOfElement = (newEntry?.boundingClientRect.height || 390) + 68
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>()
   const [queryResult, setQueryResult] = useState<Wiki[]>()
@@ -111,35 +111,35 @@ const Glossary: NextPage = () => {
         >
           <Box
             backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
-            px={{
-              base: `${shouldBeFixed ? '4' : '0'}`,
-              lg: `${shouldBeFixed ? '12' : '0'}`,
-              xl: `${shouldBeFixed ? '64' : '0'}`,
-            }}
             py={{ base: '4', lg: '0' }}
             _dark={{
               bg: `${shouldBeFixed ? 'gray.800' : ''} `,
             }}
           >
-            {shouldBeFixed && <GlossaryHero />}
-            <Grid
-              templateColumns={{
-                base: 'repeat(9,1fr)',
-                md: 'repeat(20,1fr)',
-                lg: 'repeat(27,1fr)',
-              }}
-              gap={3}
-              py={{ base: '4', lg: '8' }}
+            <Box
+              w={shouldBeFixed ? 'min(90%, 1100px)' : ''}
+              mx={shouldBeFixed ? 'auto' : ''}
             >
-              {glossaryAlphabetsData.map((item, i) => (
-                <GlossaryAlphabets
-                  key={i}
-                  item={item}
-                  heightOfElement={heightOfElement}
-                  shouldBeFixed={shouldBeFixed}
-                />
-              ))}
-            </Grid>
+              {shouldBeFixed && <GlossaryHero />}
+              <Grid
+                templateColumns={{
+                  base: 'repeat(9,1fr)',
+                  md: 'repeat(20,1fr)',
+                  lg: 'repeat(27,1fr)',
+                }}
+                gap={3}
+                py={{ base: '4', lg: '8' }}
+              >
+                {glossaryAlphabetsData.map((item, i) => (
+                  <GlossaryAlphabets
+                    key={i}
+                    item={item}
+                    heightOfElement={heightOfElement}
+                    shouldBeFixed={shouldBeFixed}
+                  />
+                ))}
+              </Grid>
+            </Box>
           </Box>
           {!shouldBeFixed ? (
             <GlossaryFilterSection
