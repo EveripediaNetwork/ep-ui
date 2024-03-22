@@ -37,7 +37,7 @@ const GlossaryItem = ({
           borderBottomColor="carouselArrowBorderColor"
           gap={{ base: '4', lg: '32' }}
           pb={{ base: '4', lg: '10' }}
-          pt={{ base: '4', lg: '6' }}
+          pt={{ base: '4', lg: '10' }}
         >
           <Element name={item}>
             <Box w="fit-content" py="1">

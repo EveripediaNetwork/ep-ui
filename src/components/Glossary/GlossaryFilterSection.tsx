@@ -29,7 +29,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
         px={{
           base: `${shouldBeFixed ? '4' : '0'}`,
           lg: `${shouldBeFixed ? 'auto' : '0'}`,
-          xl: `${shouldBeFixed ? '72' : '0'}`,
+          xl: `${shouldBeFixed ? '64' : '0'}`,
         }}
       >
         <InputGroup size="md" w="full">

@@ -44,7 +44,7 @@ const Glossary: NextPage = () => {
   const shouldBeFixed =
     entry?.intersectionRatio !== undefined && !entry?.isIntersecting
 
-  const heightOfElement = (newEntry?.boundingClientRect.height || 96) + 68
+  const heightOfElement = (newEntry?.boundingClientRect.height || 310) + 68
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>()
   const [queryResult, setQueryResult] = useState<Wiki[]>()
@@ -108,20 +108,13 @@ const Glossary: NextPage = () => {
             bg: `${shouldBeFixed ? 'gray.700' : ''} `,
           }}
           zIndex="sticky"
-          style={{
-            offset: `${
-              shouldBeFixed
-                ? -(heightOfElement || 284)
-                : -(heightOfElement ? heightOfElement + 500 : 1000)
-            }`,
-          }}
         >
           <Box
             backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
             px={{
               base: `${shouldBeFixed ? '4' : '0'}`,
               lg: `${shouldBeFixed ? '12' : '0'}`,
-              xl: `${shouldBeFixed ? '56' : '0'}`,
+              xl: `${shouldBeFixed ? '64' : '0'}`,
             }}
             py={{ base: '4', lg: '0' }}
             _dark={{
