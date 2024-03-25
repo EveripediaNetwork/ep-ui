@@ -35,19 +35,19 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
-import { useAddress } from '@/hooks/useAddress'
 import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
+import { useAccount } from 'wagmi'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(userAddress)
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const { refetch } = useGetEventsQuery({
     offset: 0,
@@ -130,16 +130,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -245,10 +244,8 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
-
-      console.log(finalWiki)
 
       if (finalWiki.id === CreateNewWikiSlug)
         finalWiki.id = await getWikiSlug(wiki)

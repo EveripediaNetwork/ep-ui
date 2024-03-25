@@ -56,7 +56,7 @@ const Navbar = () => {
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
   const { address } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(address)
+  const { userCanEdit } = useWhiteListValidator()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
@@ -158,7 +158,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
+                {languageData.map(langObj => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"
