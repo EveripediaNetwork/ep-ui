@@ -20,24 +20,18 @@ const GlossaryWikiCard = ({
   return (
     <LinkBox
       as="article"
-      borderWidth="1px"
-      borderColor="borderColorHover"
       overflow="hidden"
       borderRadius="12px"
-      w={{ base: '85%', md: '90%', lg: '70%' }}
+      w={{ base: 'full', md: '90%' }}
       p="3"
       _hover={{
         bgColor: 'tagHoverColor',
       }}
     >
       <Box cursor="pointer" w="full">
-        <VStack pb="2" w="full" px="3">
+        <VStack w="full" px="3">
           <LinkOverlay href={`/wiki/${wikiId}`} w="full">
-            <Heading
-              size={{ base: 'sm', lg: 'md' }}
-              my="10px"
-              color="brand.500"
-            >
+            <Heading size={{ base: 'sm', lg: 'md' }} my="10px" fontSize="36px">
               <Highlight
                 query={highlightText}
                 styles={{
@@ -56,9 +50,9 @@ const GlossaryWikiCard = ({
               styles={{
                 px: '1',
                 py: '1',
-                bg: 'brand.700',
+                bg: 'brand.300',
                 color: 'black',
-                _dark: { bg: 'brand.300', color: 'white' },
+                _dark: { bg: 'brand.800', color: 'white' },
               }}
             >
               {summary.length > WIKI_SUMMARY_LIMIT

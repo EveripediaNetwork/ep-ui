@@ -22,8 +22,11 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
     setActiveIndex,
   } = props
   return (
-    <>
-      <Box w="full" mb={shouldBeFixed ? 5 : 0}>
+    <Box
+      w={shouldBeFixed ? 'min(90%, 1100px)' : 'full'}
+      mx={shouldBeFixed ? 'auto' : ''}
+    >
+      <Box my={shouldBeFixed ? 5 : 0}>
         <InputGroup size="md" w="full">
           <InputLeftElement
             ml={{ base: '15px', xl: 'unset' }}
@@ -37,7 +40,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
             />
           </InputLeftElement>
           <Input
-            type="tel"
+            type="text"
             placeholder="Search for words"
             value={searchText}
             onChange={(e) => searchPage(e.target.value)}
@@ -51,7 +54,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
         wrap="wrap"
         alignItems="center"
         justifyContent={{ lg: 'start', '2xl': 'center' }}
-        gap={{ base: '3', '2xl': '10' }}
+        gap={{ base: '3', '2xl': '4' }}
       >
         {COMMONLY_SEARCHED_WIKIS.slice(0, 5)?.map((word, i) => {
           return (
@@ -79,7 +82,7 @@ const GlossaryFilterSection = (props: GlossaryFilterSectionProps) => {
           )
         })}
       </Flex>
-    </>
+    </Box>
   )
 }
 
