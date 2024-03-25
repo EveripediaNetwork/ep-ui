@@ -1,40 +1,40 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import Logo from '@/components/Elements/Logo/Logo'
+import NavSearch from '@/components/Layout/Navbar/NavSearch'
+import { languageData } from '@/data/LanguageData'
+import { useAddress } from '@/hooks/useAddress'
+import useLanguageChange from '@/hooks/useLanguageChange'
+import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { setDrawerOpen } from '@/store/slices/app-slice'
+import { RootState, store } from '@/store/store'
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
   Box,
+  Button,
   Collapse,
   Flex,
-  IconButton,
-  useDisclosure,
   HStack,
-  Text,
+  IconButton,
   Menu,
   MenuButton,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
-  Button,
+  Text,
   chakra,
+  useDisclosure,
 } from '@chakra-ui/react'
-import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { languageData } from '@/data/LanguageData'
-import dynamic from 'next/dynamic'
-import { setDrawerOpen } from '@/store/slices/app-slice'
-import Link from 'next/link'
-import DesktopNav from './DesktopNav'
-const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
-import Logo from '@/components/Elements/Logo/Logo'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, store } from '@/store/store'
-import useLanguageChange from '@/hooks/useLanguageChange'
-import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import MobileNav from './MobileNav'
-const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
-import SuggestWikiModal from './SuggestWiki'
-import Image from 'next/image'
-import { useAddress } from '@/hooks/useAddress'
-import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import DesktopNav from './DesktopNav'
+import MobileNav from './MobileNav'
+import SuggestWikiModal from './SuggestWiki'
+const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
+const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -56,7 +56,7 @@ const Navbar = () => {
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
   const { address } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(address)
+  const { userCanEdit } = useWhiteListValidator()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,
