@@ -36,6 +36,16 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
       borderColor="borderColor"
       borderWidth="0.5px"
       borderStyle="solid"
+      cursor={'pointer'}
+      transition="all 0.3s"
+      role="group"
+      _hover={{
+        boxShadow: '3xl',
+        transform: 'scale(1.02)',
+        _dark: {
+          boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)',
+        },
+      }}
     >
       <Flex flexGrow={1} mx="auto">
         <ActivityCardImage

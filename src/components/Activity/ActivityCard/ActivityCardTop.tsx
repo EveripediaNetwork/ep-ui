@@ -55,6 +55,9 @@ const ActivityCardTop = (props: ActivityCardTopProps) => {
           onClick={() => router.push(link)}
           tabIndex={0}
           role="link"
+          _groupHover={{
+            textDecoration: 'underline',
+          }}
         >
           {title}
         </Heading>
