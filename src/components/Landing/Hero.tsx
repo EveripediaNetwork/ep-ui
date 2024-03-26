@@ -17,6 +17,7 @@ export const Hero = () => {
           md: '80%',
           xl: '65%',
         }}
+        minW={{ lg: '980px' }}
         textAlign="center"
         px={{ base: '8', md: '0' }}
         fontSize={{ base: '36', md: '48', xl: '60' }}
