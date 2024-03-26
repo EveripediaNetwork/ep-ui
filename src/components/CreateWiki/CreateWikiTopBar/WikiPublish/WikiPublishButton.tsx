@@ -76,8 +76,6 @@ export const WikiPublishButton = () => {
     getCookie('SWITCH_CHAIN') as string,
   ) as boolean
 
-  console.log(switchChainNotAllowed)
-
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
   const showModal =
     connectedChainId !== chainId &&
