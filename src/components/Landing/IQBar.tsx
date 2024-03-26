@@ -36,7 +36,7 @@ export const IQBar = () => {
   return (
     <Flex
       position="relative"
-      top={{ base: '-20px', sm: '-60px', md: '-80px', xl: '-60px' }}
+      top={{ base: '-140px', md: '-80px', xl: '-60px' }}
       px={-2}
       bg="white"
       textColor="gray.600"
