@@ -20,7 +20,7 @@ export const Hero = () => {
         minW={{ lg: '980px' }}
         textAlign="center"
         px={{ base: '8', md: '0' }}
-        fontSize={{ base: '36', md: '48', xl: '60' }}
+        fontSize={{ base: '26', md: '48', xl: '60' }}
         fontWeight={{ base: 'semibold', md: 'bold', xl: 'semibold' }}
       >
         {t('hero_heading1')}{' '}
