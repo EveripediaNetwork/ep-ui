@@ -17,7 +17,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>,
 ) {
   const url =
-    'https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=7'
+    'https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=30'
 
   try {
     const result = await fetch(url)
