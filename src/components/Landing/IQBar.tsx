@@ -82,14 +82,9 @@ export const IQBar = () => {
               <Flex
                 alignItems="center"
                 gap={1}
-                bg={'#E7F6EC'}
                 rounded="xl"
                 px={1}
-                color={priceChange && priceChange > 0 ? 'green.500' : 'red.500'}
-                _dark={{
-                  color:
-                    priceChange && priceChange > 0 ? 'green.700' : 'red.500',
-                }}
+                color={priceChange && priceChange > 0 ? 'green.600' : 'red.500'}
               >
                 <Icon
                   as={
@@ -160,12 +155,8 @@ export const IQBar = () => {
                 alignItems="center"
                 gap={1}
                 px={1}
-                bg={'#E7F6EC'}
                 rounded="xl"
-                color={mcapchange && mcapchange > 0 ? 'green.500' : 'red.500'}
-                _dark={{
-                  color: mcapchange && mcapchange > 0 ? 'green.700' : 'red.500',
-                }}
+                color={mcapchange && mcapchange > 0 ? 'green.600' : 'red.500'}
               >
                 <Icon
                   as={
@@ -310,7 +301,7 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <HStack justifyContent={'space-between'}>
-            <Text fontSize="xs"> IQ Historical Graph</Text>
+            <Text fontSize="xs"> IQ Historical Graph (in 1Month)</Text>
             <Text>{`$${price}`}</Text>
           </HStack>
           {isError ? (
