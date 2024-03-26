@@ -67,6 +67,8 @@ const NetworkErrorNotification = ({
       } else if (error.response?.data?.message) {
         errorMessage = error.response.data.message
       }
+
+      console.log(errorMessage)
       toast({
         title: errorMessage,
         status: 'error',
