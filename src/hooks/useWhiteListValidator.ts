@@ -15,6 +15,11 @@ const useWhiteListValidator = () => {
   const { address } = useAddress()
 
   useEffect(() => {
+    if (!address) {
+      setUserCanEdit(false)
+      return
+    }
+
     const fetchData = async () => {
       try {
         let data
