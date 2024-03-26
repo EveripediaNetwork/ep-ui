@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Link,
-  Icon,
-  Text,
-  HStack,
-  Spinner,
-  useColorMode,
-} from '@chakra-ui/react'
+import { Box, Flex, Link, Icon, Text, HStack, Spinner } from '@chakra-ui/react'
 import OneinchIcon from '../Icons/oneInch'
 import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
@@ -21,7 +12,6 @@ import { useGetTokenStatsQuery } from '@/services/token-stats'
 import { fetchIqPriceChange } from '@/lib/utils'
 import * as Humanize from 'humanize-plus'
 import { useEffect, useState } from 'react'
-import BinanceDarkIcon from '../Icons/binance-dark'
 
 export const IQBar = () => {
   const { data: iqData, isLoading, isError } = useGetCgTokenDataQuery()
@@ -30,11 +20,9 @@ export const IQBar = () => {
   const { data: tokenStats } = useGetTokenStatsQuery({
     tokenName: 'everipedia',
   })
-  //TODO: add percentage change color coding
   const mcapchange = tokenStats?.market_cap_percentage_change
   const areaGraphData = iqData?.prices
   const [priceChange, setPriceChange] = useState<number | null>(null)
-  const { colorMode } = useColorMode()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -242,11 +230,7 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon
-                boxSize="9"
-                as={colorMode === 'light' ? BinanceIcon : BinanceDarkIcon}
-                aria-label="binance"
-              />
+              <Icon boxSize="9" as={BinanceIcon} aria-label="binance" />
             </Link>
             <Box
               borderLeft="1px solid"
