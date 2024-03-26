@@ -37,10 +37,11 @@ export const IQBar = () => {
     <Flex
       position="relative"
       top={{ base: '-20px', sm: '-60px', md: '-80px', xl: '-60px' }}
-      px={2}
+      px={-2}
       bg="white"
       textColor="gray.600"
-      w={{ base: '390px', md: '688px', xl: '1220px' }}
+      maxW={{ base: 'min(78vw, 400px)', md: '670px', xl: '1210px' }}
+      minW={{ base: 'min(78vw, 400px)', md: '650px', xl: '1210px' }}
       mx="auto"
       rounded="lg"
       _dark={{ bg: 'gray.700', textColor: 'rgba(255, 255, 255, 0.92)' }}
@@ -50,11 +51,11 @@ export const IQBar = () => {
         justifyContent="center"
         mx="auto"
         flexWrap="wrap"
-        gap={4}
+        gap={3}
         py={4}
       >
         <HStack
-          w={{ base: '350px', md: '320px', xl: '250px' }}
+          minW={{ base: 'min(70vw, 360px)', md: '280px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -126,7 +127,7 @@ export const IQBar = () => {
           </Link>
         </HStack>
         <HStack
-          w={{ base: '350px', md: '320px', xl: '250px' }}
+          minW={{ base: 'min(70vw, 360px)', md: '320px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -197,7 +198,7 @@ export const IQBar = () => {
           </Link>
         </HStack>
         <Box
-          w={{ base: '350px', md: '320px', xl: '250px' }}
+          minW={{ base: 'min(70vw, 360px)', md: '280px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -289,7 +290,8 @@ export const IQBar = () => {
           </Flex>
         </Box>
         <Box
-          w={{ base: '350px', md: '320px', xl: '380px' }}
+          minW={{ base: 'min(70vw, 360px)', md: '320px', xl: '390px' }}
+          maxW={{ base: 'min(70vw, 360px)', md: '298px', xl: '390px' }}
           h="100px"
           border="1px"
           borderColor="gray.200"
@@ -301,7 +303,7 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <HStack justifyContent={'space-between'}>
-            <Text fontSize="xs"> IQ Historical Graph (in 1Month)</Text>
+            <Text fontSize="xs"> IQ Historical Graph (1Month)</Text>
             <Text>{`$${price}`}</Text>
           </HStack>
           {isError ? (
