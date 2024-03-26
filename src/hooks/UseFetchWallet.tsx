@@ -59,7 +59,9 @@ export const useFetchWalletBalance = (address: string | null) => {
     try {
       const maticBalanceBigNumber = await maticProvider.getBalance({ address })
       const maticBalance = parseInt(maticBalanceBigNumber, 16) / 10e17
+      console.log({ maticBalance })
       const IQBalance = await getUserIQBalance(address)
+      console.log({ IQBalance })
 
       const balances: WalletBalanceType[] = [
         {
