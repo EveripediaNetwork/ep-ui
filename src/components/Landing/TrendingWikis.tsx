@@ -28,8 +28,8 @@ const TrendingWikis = ({
       <Flex
         // alignItems={{ base: 'flex-start', md: 'center' }}
         // justifyContent={{ base: 'flex-start', md: 'center' }}
-        alignItems='center'
-        justifyContent='center'
+        alignItems="center"
+        justifyContent="center"
         maxW={{ base: '403px', md: '672px', xl: 'fit-content' }}
         mx="auto"
         flexWrap="wrap"
