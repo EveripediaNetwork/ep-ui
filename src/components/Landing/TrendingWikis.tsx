@@ -20,7 +20,6 @@ const TrendingWikis = ({
 
   return (
     <Box
-      mt={10}
       px={{ base: 3, md: 8 }}
       pb={{ base: 16, md: 20, lg: 24 }}
       pt={0}
@@ -38,6 +37,8 @@ const TrendingWikis = ({
       >
         <Flex
           gap={4}
+          alignItems="center"
+          justifyContent="center"
           w={{ base: '100%', md: 'auto' }}
           direction={{ base: 'column', md: 'row' }}
         >

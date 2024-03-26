@@ -40,8 +40,8 @@ export const IQBar = () => {
       px={-2}
       bg="white"
       textColor="gray.600"
-      maxW={{ base: 'min(78vw, 400px)', md: '670px', xl: '1210px' }}
-      minW={{ base: 'min(78vw, 400px)', md: '650px', xl: '1210px' }}
+      maxW={{ base: 'min(90vw, 400px)', md: '670px', xl: '1210px' }}
+      minW={{ base: 'min(90vw, 400px)', md: '650px', xl: '1210px' }}
       mx="auto"
       rounded="lg"
       _dark={{ bg: 'gray.700', textColor: 'rgba(255, 255, 255, 0.92)' }}
@@ -55,7 +55,7 @@ export const IQBar = () => {
         py={4}
       >
         <HStack
-          minW={{ base: 'min(70vw, 360px)', md: '280px', xl: '255px' }}
+          minW={{ base: 'min(80vw, 360px)', md: '280px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -127,7 +127,7 @@ export const IQBar = () => {
           </Link>
         </HStack>
         <HStack
-          minW={{ base: 'min(70vw, 360px)', md: '320px', xl: '255px' }}
+          minW={{ base: 'min(80vw, 360px)', md: '320px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -198,7 +198,7 @@ export const IQBar = () => {
           </Link>
         </HStack>
         <Box
-          minW={{ base: 'min(70vw, 360px)', md: '280px', xl: '255px' }}
+          minW={{ base: 'min(80vw, 360px)', md: '280px', xl: '255px' }}
           h="100px"
           border={'1px'}
           borderColor="gray.200"
@@ -290,8 +290,8 @@ export const IQBar = () => {
           </Flex>
         </Box>
         <Box
-          minW={{ base: 'min(70vw, 360px)', md: '320px', xl: '390px' }}
-          maxW={{ base: 'min(70vw, 360px)', md: '298px', xl: '390px' }}
+          minW={{ base: 'min(80vw, 360px)', md: '320px', xl: '390px' }}
+          maxW={{ base: 'min(80vw, 360px)', md: '298px', xl: '390px' }}
           h="100px"
           border="1px"
           borderColor="gray.200"

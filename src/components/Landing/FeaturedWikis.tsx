@@ -15,7 +15,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   return (
     <Flex pt="1" minH="500px">
       <Box
-        maxW={{ base: 'min(80vw, 400px)', md: '96', lg: '392' }}
+        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
         border="1px solid"
         borderColor={'gray.100'}
         rounded="lg"
