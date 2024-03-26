@@ -12,7 +12,7 @@ import OneinchIcon from '../Icons/oneInch'
 import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
 import FraxIcon from '../Icons/frax'
-import { RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
+import { RiArrowDownLine, RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
 import { logEvent } from '@/utils/googleAnalytics'
 import { Logo } from '../Elements'
 import IQGraph from './IQGraph'
@@ -97,17 +97,24 @@ export const IQBar = () => {
                 bg={'#E7F6EC'}
                 rounded="xl"
                 px={1}
-                color="green.500"
-                _dark={{ color: 'green.700' }}
+                color={priceChange && priceChange > 0 ? 'green.500' : 'red.500'}
+                _dark={{
+                  color:
+                    priceChange && priceChange > 0 ? 'green.700' : 'red.500',
+                }}
               >
-                <Icon as={RiArrowUpLine} boxSize={3} />
+                <Icon
+                  as={
+                    priceChange && priceChange > 0
+                      ? RiArrowUpLine
+                      : RiArrowDownLine
+                  }
+                  boxSize={3}
+                />
                 <Text fontSize="xs">
                   {Humanize.formatNumber(priceChange ?? 0, 2)}%
                 </Text>
               </Flex>
-              <Text fontSize="xs" pl="8px">
-                high today
-              </Text>
             </Flex>
           </Box>
           <Link
@@ -157,7 +164,7 @@ export const IQBar = () => {
               </Text>
             ) : (
               <Text fontSize="xl" fontWeight="semibold">
-                {`$ ${mcap}`}
+                {`$${mcap}`}
               </Text>
             )}
             <Flex align="center" mt={1}>
@@ -167,17 +174,23 @@ export const IQBar = () => {
                 px={1}
                 bg={'#E7F6EC'}
                 rounded="xl"
-                color="green.500"
-                _dark={{ color: 'green.700' }}
+                color={mcapchange && mcapchange > 0 ? 'green.500' : 'red.500'}
+                _dark={{
+                  color: mcapchange && mcapchange > 0 ? 'green.700' : 'red.500',
+                }}
               >
-                <Icon as={RiArrowUpLine} boxSize={3} />
+                <Icon
+                  as={
+                    mcapchange && mcapchange > 0
+                      ? RiArrowUpLine
+                      : RiArrowDownLine
+                  }
+                  boxSize={3}
+                />
                 <Text fontSize="xs">
                   {Humanize.formatNumber(mcapchange ?? 0, 2)}%
                 </Text>
               </Flex>
-              <Text fontSize="xs" pl="8px">
-                high today
-              </Text>
             </Flex>
           </Box>
           <Link
