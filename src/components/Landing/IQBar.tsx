@@ -1,4 +1,14 @@
-import { Box, Flex, Link, Icon, Text, HStack, Spinner } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Link,
+  Icon,
+  Text,
+  HStack,
+  Spinner,
+  Button,
+  IconButton,
+} from '@chakra-ui/react'
 import OneinchIcon from '../Icons/oneInch'
 import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
@@ -113,8 +123,8 @@ export const IQBar = () => {
               })
             }
           >
-            <Box
-              as="button"
+            <Button
+              variant="outline"
               aria-label="IQ"
               border="1px"
               borderColor="gray.200"
@@ -123,7 +133,7 @@ export const IQBar = () => {
               _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
             >
               <Logo boxSize="2em" />
-            </Box>
+            </Button>
           </Link>
         </HStack>
         <HStack
@@ -185,8 +195,8 @@ export const IQBar = () => {
               })
             }
           >
-            <Box
-              as="button"
+            <Button
+              variant="outline"
               rounded="full"
               border="1px"
               p="1"
@@ -194,7 +204,7 @@ export const IQBar = () => {
               _dark={{ borderColor: 'rgba(255, 255, 255, 0.24)' }}
             >
               <RiGlobalLine size="2em" color="#FF5CAA" />
-            </Box>
+            </Button>
           </Link>
         </HStack>
         <Box
@@ -222,7 +232,13 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon boxSize="9" as={BinanceIcon} aria-label="binance" />
+              <IconButton
+                variant="outline"
+                fontSize="xx-large"
+                isRound
+                icon={<BinanceIcon />}
+                aria-label="binance"
+              />
             </Link>
             <Box
               borderLeft="1px solid"
@@ -243,7 +259,13 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon boxSize="8" as={OneinchIcon} aria-label="binance" />
+              <IconButton
+                variant="outline"
+                fontSize="xx-large"
+                isRound
+                icon={<OneinchIcon />}
+                aria-label="One Inch"
+              />
             </Link>
             <Box
               borderLeft="1px solid"
@@ -264,7 +286,13 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon boxSize="8" as={UpbitIcon} aria-label="binance" />
+              <IconButton
+                variant="outline"
+                fontSize="xx-large"
+                isRound
+                icon={<UpbitIcon />}
+                aria-label="Upbit"
+              />
             </Link>
             <Box
               borderLeft="1px solid"
@@ -285,7 +313,13 @@ export const IQBar = () => {
                 })
               }
             >
-              <Icon boxSize="8" as={FraxIcon} aria-label="binance" />
+              <IconButton
+                variant="outline"
+                fontSize="xx-large"
+                isRound
+                icon={<FraxIcon />}
+                aria-label="Frax"
+              />
             </Link>
           </Flex>
         </Box>
