@@ -1,44 +1,43 @@
-import React, { useEffect, useMemo } from 'react'
-import dynamic from 'next/dynamic'
-import {
-  Flex,
-  Button,
-  Center,
-  Skeleton,
-  Box,
-  HStack,
-  Text,
-} from '@chakra-ui/react'
-import { getWiki, wikiApi } from '@/services/wikis'
-import { useRouter } from 'next/router'
-import { store } from '@/store/store'
-import { GetServerSideProps, NextPage } from 'next'
+import TxErrorAlert from '@/components/CreateWiki/TxError'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
-import { useAppSelector } from '@/store/hook'
-import {
-  Wiki,
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  EditorContentOverride,
-  CreateNewWikiSlug,
-} from '@everipedia/iq-utils'
-import {
-  getDraftFromLocalStorage,
-  removeDraftFromLocalStorage,
-} from '@/store/slices/wiki.slice'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
-import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import {
   CreateWikiProvider,
   useCreateWikiContext,
   useCreateWikiState,
 } from '@/hooks/useCreateWikiState'
-import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
-import TxErrorAlert from '@/components/CreateWiki/TxError'
-import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
-import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
+import { getWiki, wikiApi } from '@/services/wikis'
+import { useAppSelector } from '@/store/hook'
+import {
+  getDraftFromLocalStorage,
+  removeDraftFromLocalStorage,
+} from '@/store/slices/wiki.slice'
+import { store } from '@/store/store'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Skeleton,
+  Text,
+} from '@chakra-ui/react'
+import {
+  CommonMetaIds,
+  CreateNewWikiSlug,
+  EditSpecificMetaIds,
+  EditorContentOverride,
+  Wiki,
+} from '@everipedia/iq-utils'
+import { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo } from 'react'
+import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -217,11 +216,9 @@ const CreateWiki = () => {
   const wikiState = useCreateWikiState(router)
   const providerValue = useMemo(() => wikiState, [wikiState])
   return (
-    <WagmiWrapper>
-      <CreateWikiProvider value={providerValue}>
-        <CreateWikiContent />
-      </CreateWikiProvider>
-    </WagmiWrapper>
+    <CreateWikiProvider value={providerValue}>
+      <CreateWikiContent />
+    </CreateWikiProvider>
   )
 }
 
