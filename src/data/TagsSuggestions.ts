@@ -40,10 +40,6 @@ export const TagsSuggestions = [
     value: 'Developers',
   },
   {
-    label: 'Events',
-    value: 'Events',
-  },
-  {
     label: 'Entertainment',
     value: 'Entertainment',
   },
