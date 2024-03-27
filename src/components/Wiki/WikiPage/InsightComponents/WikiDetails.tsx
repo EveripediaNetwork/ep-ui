@@ -14,6 +14,7 @@ import {
   Box,
   Stack,
   Tooltip,
+  IconButton,
 } from '@chakra-ui/react'
 import { shortenAccount } from '@/utils/textUtils'
 import { SiIpfs } from 'react-icons/si'
@@ -61,7 +62,7 @@ export const WikiDetails = ({
         spacing={4}
         w="full"
       >
-        <HStack
+        {/* <HStack
           p={1}
           fontSize="sm"
           w="100%"
@@ -102,6 +103,45 @@ export const WikiDetails = ({
                 IQ
               </Box>
             </Box>
+          </Link>
+        </HStack> */}
+        <HStack
+          p={1}
+          fontSize="sm"
+          w="100%"
+          alignItems="center"
+          justifyContent="center"
+          bgColor="wikiCardItemBg"
+          rounded="lg"
+        >
+          <Text>Wiki Powered by</Text>
+          <Link
+            href="https://iq.braindao.org/dashboard"
+            isExternal
+            onClick={() =>
+              logEvent({
+                category: 'Wiki',
+                action: 'Click',
+                label: 'IQ Dashboard',
+                value: 1,
+              })
+            }
+          >
+            <IconButton
+              aria-label="IQ"
+              variant="outline"
+              rounded="md"
+              px={2}
+              py={1}
+              h="auto"
+              fontSize="sm"
+              icon={
+                <HStack spacing={1} px={2}>
+                  <Logo boxSize="1.5em" />
+                  <Box as="span">IQ</Box>
+                </HStack>
+              }
+            />
           </Link>
         </HStack>
         <AspectRatio
