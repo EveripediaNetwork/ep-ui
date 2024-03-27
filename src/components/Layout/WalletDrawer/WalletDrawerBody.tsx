@@ -35,9 +35,7 @@ import SettingsLink from '../Navbar/SettingsLink'
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
   const { address } = useAddress()
-  const { userBalance } = useFetchWalletBalance(
-    '0xfaf91ff28393cf9292a351dbea5fa6dcf34538d3',
-  )
+  const { userBalance } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
