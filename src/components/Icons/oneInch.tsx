@@ -1,15 +1,8 @@
 import { Icon, IconProps } from '@chakra-ui/react'
 
 const OneinchIcon = (props: IconProps) => (
-  <Icon
-    width="33"
-    height="36"
-    viewBox="0 0 33 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <g clip-path="url(#clip0_32707_78801)">
+  <Icon viewBox="0 0 33 36" {...props}>
+    <g clipPath="url(#clip0_32707_78801)">
       <path
         d="M7.94806 17.6302L8.79469 10.8713L1.45117 5.4546L8.16085 7.86951L9.74546 5.28623L15.5315 1.47144L28.2854 8.93746L28.9464 20.3289L23.2644 28.7186L18.7732 29.4498L21.0958 24.9326V20.5839L19.407 17.1876L17.6911 15.9802L15.0516 18.8713V21.9308L12.9916 23.9802L10.3748 24.3169L9.21575 25.0144L7.31422 24.3698L6.52191 21.3391L7.94806 19.2081V17.6302Z"
         fill="white"
