@@ -77,7 +77,7 @@ export const Index = ({
       <Hero />
       <IQBar />
       <Box
-        mt={{ base: '-20', md: '-15', lg: '0' }}
+        mt={{ base: '-20', md: '-15', xl: '-10' }}
         px={0}
         className="container"
       >
