@@ -29,6 +29,7 @@ import { nftStatsApi } from '@/services/nft-stats'
 import { editorApi } from '@/services/editor'
 import { notificationSubscriptionApi } from '@/services/notification'
 import { eventApi } from '@/services/event'
+import { cgTokenDataApi } from '@/services/cgTokenDetails'
 
 export const store = configureStore({
   reducer: {
@@ -61,6 +62,7 @@ export const store = configureStore({
     [editorApi.reducerPath]: editorApi.reducer,
     [notificationSubscriptionApi.reducerPath]:
       notificationSubscriptionApi.reducer,
+    [cgTokenDataApi.reducerPath]: cgTokenDataApi.reducer,
   },
   middleware: (gDM) =>
     gDM({ serializableCheck: true })
@@ -81,7 +83,8 @@ export const store = configureStore({
       .concat(editorApi.middleware)
       .concat(notificationSubscriptionApi.middleware)
       .concat(rankingAPI.middleware)
-      .concat(eventApi.middleware),
+      .concat(eventApi.middleware)
+      .concat(cgTokenDataApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
