@@ -9,6 +9,7 @@ const server = z.object({
   DISCORD_WEBHOOK_ID: z.string(),
   DISCORD_WEBHOOK_TOKEN: z.string(),
   BOT_API_KEY: z.string(),
+  CMC_API_KEY: z.string(),
   COINGECKO_API_KEY: z.string(),
 })
 
@@ -80,6 +81,7 @@ const processEnv = {
   COINGECKO_API_KEY: process.env.COINGECKO_API_KEY,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  CMC_API_KEY: process.env.CMC_API_KEY,
 }
 
 // Don't touch the part below

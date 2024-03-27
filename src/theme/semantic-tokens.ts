@@ -77,6 +77,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'brand.500',
       _dark: 'brand.800',
     },
+    brandText: {
+      default: 'brand.500',
+      _dark: 'brand.800',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
@@ -386,12 +390,12 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'gray.800',
     },
     aboutIqgptDesc: {
-      default: 'gray.600',
+      default: 'gray.100',
       _dark: 'gray.800',
     },
     aboutIqgptInfoBg: {
-      default: 'brand.50',
-      _dark: 'brand.200',
+      default: 'gray.100',
+      _dark: 'rgba(255, 255, 255, 0.04)',
     },
     aboutIqTokenText: {
       default: 'gray.700',
