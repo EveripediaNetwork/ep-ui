@@ -20,32 +20,42 @@ const TrendingWikis = ({
 
   return (
     <Box
-      mt={10}
       px={{ base: 3, md: 8 }}
       pb={{ base: 16, md: 20, lg: 24 }}
       pt={0}
       textAlign="center"
     >
       <Flex
+        // alignItems={{ base: 'flex-start', md: 'center' }}
+        // justifyContent={{ base: 'flex-start', md: 'center' }}
         alignItems="center"
         justifyContent="center"
-        maxW={{ base: '403px', md: 'fit-content' }}
+        maxW={{ base: '403px', md: '672px', xl: 'fit-content' }}
         mx="auto"
         flexWrap="wrap"
         gap={4}
         minH="500px"
+        direction={{ base: 'column', md: 'row' }}
       >
-        <TrendingCard
-          title={t('trendingWikisTitle')}
-          icon={RiBarChartFill}
-          wikis={trending}
-          isTrending
-        />
-        <TrendingCard
-          title={t('recentEditsTitle')}
-          icon={RiTimeFill}
-          wikis={recent}
-        />
+        <Flex
+          gap={4}
+          alignItems="center"
+          justifyContent="center"
+          w={{ base: '100%', md: 'auto' }}
+          direction={{ base: 'column', md: 'row' }}
+        >
+          <TrendingCard
+            title={t('trendingWikisTitle')}
+            icon={RiBarChartFill}
+            wikis={trending}
+            isTrending
+          />
+          <TrendingCard
+            title={t('recentEditsTitle')}
+            icon={RiTimeFill}
+            wikis={recent}
+          />
+        </Flex>
         <FeaturedWikis featuredWikis={featuredWikis} />
       </Flex>
     </Box>
