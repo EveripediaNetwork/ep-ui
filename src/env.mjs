@@ -10,6 +10,7 @@ const server = z.object({
   DISCORD_WEBHOOK_TOKEN: z.string(),
   BOT_API_KEY: z.string(),
   CMC_API_KEY: z.string(),
+  COINGECKO_API_KEY: z.string(),
 })
 
 const client = z.object({
@@ -77,6 +78,7 @@ const processEnv = {
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
   BOT_API_KEY: process.env.BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
+  COINGECKO_API_KEY: process.env.COINGECKO_API_KEY,
   DISCORD_WEBHOOK_ID: process.env.DISCORD_WEBHOOK_ID,
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   CMC_API_KEY: process.env.CMC_API_KEY,

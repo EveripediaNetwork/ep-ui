@@ -14,9 +14,7 @@ export const getTokenValue = (
 }
 
 export const getIqTokenValue = async () =>
-  fetch(
-    'https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=everipedia',
-  )
+  fetch('api/token-rate?vs_currencies=usd&ids=everipedia')
     .then((response) => response.json())
     .then((data) => {
       return +data.everipedia.usd

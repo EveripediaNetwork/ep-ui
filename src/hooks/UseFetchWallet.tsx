@@ -10,7 +10,7 @@ export const getUserIQBalance = async (userAddress: string) => {
   try {
     const response = await axios.post<{ result: string }>(
       `https://eth-${
-        env.NEXT_PUBLIC_IS_PRODUCTION === 'production' ? 'mainnet' : 'goerli'
+        env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? 'mainnet' : 'goerli'
       }.alchemyapi.io/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
       {
         jsonrpc: '2.0',
@@ -57,7 +57,9 @@ export const useFetchWalletBalance = (address: string | null) => {
     setIsLoading(true)
 
     try {
-      const maticBalanceBigNumber = await maticProvider.getBalance({ address })
+      const maticBalanceBigNumber = await maticProvider.getBalance({
+        address,
+      })
       const maticBalance = parseInt(maticBalanceBigNumber, 16) / 10e17
       const IQBalance = await getUserIQBalance(address)
 

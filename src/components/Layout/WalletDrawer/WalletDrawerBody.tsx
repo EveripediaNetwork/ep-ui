@@ -64,8 +64,6 @@ export const WalletDrawerBody = () => {
     }
   }, [walletDetails])
 
-  console.log(address)
-
   return (
     <>
       {address ? (
