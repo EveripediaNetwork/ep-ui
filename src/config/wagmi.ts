@@ -13,7 +13,6 @@ const chains =
 
 export const wagmiConfig = createConfig({
   chains,
-  ssr: true,
   multiInjectedProviderDiscovery: false,
   transports: {
     [polygon.id]: fallback([
