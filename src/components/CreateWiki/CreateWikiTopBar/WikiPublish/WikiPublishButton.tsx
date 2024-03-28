@@ -72,9 +72,10 @@ export const WikiPublishButton = () => {
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
 
-  const switchChainNotAllowed = JSON.parse(
-    getCookie('SWITCH_CHAIN') as string,
-  ) as boolean
+  const switchChainCookie = getCookie('SWITCH_CHAIN')
+  const switchChainNotAllowed = switchChainCookie
+    ? (JSON.parse(switchChainCookie as string) as boolean)
+    : false
 
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
   const showModal =
