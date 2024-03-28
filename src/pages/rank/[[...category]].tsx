@@ -275,7 +275,6 @@ const Rank = ({
       <RankHeader />
       <Flex
         // w="100%"
-        // minW={'full'}
         pb={16}
         pt={4}
         flexWrap="wrap"
@@ -369,7 +368,7 @@ const Rank = ({
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setTokensOffset(page)}
-                maxW={'90%'}
+                maxW={{ base: '90%', xl: '1296px' }}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -439,7 +438,7 @@ const Rank = ({
                 totalCount={totalStableCoins}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setStableCoinOffset(page)}
-                maxW={'90%'}
+                maxW={{ base: '90%', xl: '1296px' }}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -509,7 +508,7 @@ const Rank = ({
                 totalCount={totalAiTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setAiTokensOffset(page)}
-                maxW={'90%'}
+                maxW={{ base: '90%', xl: '1296px' }}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -584,7 +583,7 @@ const Rank = ({
                 totalCount={totalTokens}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setFoundersOffset(page)}
-                maxW={'90%'}
+                maxW={{ base: '90%', xl: '1296px' }}
               >
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -655,7 +654,7 @@ const Rank = ({
                 totalCount={totalNfts}
                 pageSize={LISTING_LIMIT}
                 onPageChange={(page) => setNftOffset(page)}
-                maxW={'90%'}
+                maxW={{ base: '90%', xl: '1296px' }}
               >
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
