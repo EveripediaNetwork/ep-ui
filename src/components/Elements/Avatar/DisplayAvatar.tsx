@@ -58,6 +58,7 @@ const DisplayAvatar = ({
         {...(rest as Omit<NextChakraImageProps, 'src'>)}
         alt={alt || 'Avatar'}
         rounded="50%"
+        quality={40}
       />
     )
   } else if (avatar) {

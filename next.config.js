@@ -28,6 +28,7 @@ const moduleExports = {
   images: {
     minimumCacheTTL: 31536000,
     domains: [
+      'assets.coingecko.com',
       'everipedia.org',
       'ipfs.everipedia.org',
       'gateway.pinata.cloud',
