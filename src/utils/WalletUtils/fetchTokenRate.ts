@@ -3,7 +3,8 @@ export const fetchTokenRate = async (
   versusCurrency = 'usd',
 ) => {
   const res = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${tokenName}&vs_currencies=${versusCurrency}`,
+    `api/token-rate?ids=${tokenName}&vs_currencies=${versusCurrency}`,
   )
-  return (await res.json())[tokenName][versusCurrency]
+  const data = await res.json()
+  return data[tokenName][versusCurrency]
 }
