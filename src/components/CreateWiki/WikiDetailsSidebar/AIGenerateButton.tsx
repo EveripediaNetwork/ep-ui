@@ -3,7 +3,6 @@ import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { Button, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
 
 const AIGenerateButton = ({
   isGenerating,
@@ -14,8 +13,8 @@ const AIGenerateButton = ({
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false)
   const [timeLeft, setTimeLeft] = React.useState(0)
-  const { address: userAddress } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(userAddress)
+
+  const { userCanEdit } = useWhiteListValidator()
   const { t } = useTranslation('wiki')
 
   React.useEffect(() => {
