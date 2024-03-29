@@ -8,6 +8,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import Head from 'next/head'
+import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 
 const Login = () => {
   const { t } = useTranslation('common')
@@ -27,7 +28,7 @@ const Login = () => {
   }
 
   return (
-    <>
+    <WagmiWrapper>
       <Head>
         <link rel="preconnect" href="https://assets.auth.magic.link" />
       </Head>
@@ -39,7 +40,7 @@ const Login = () => {
           <Connectors handleRedirect={handleRedirect} />
         </Box>
       </Container>
-    </>
+    </WagmiWrapper>
   )
 }
 

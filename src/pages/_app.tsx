@@ -37,7 +37,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
   }, [router.events])
 
   return (
-    // <WagmiWrapper>
     <StrictMode>
       <style jsx global>{`
         :root {
@@ -58,7 +57,6 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
-    // </WagmiWrapper>
   )
 }
 
