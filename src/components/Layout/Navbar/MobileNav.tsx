@@ -11,6 +11,7 @@ import {
   UseDisclosureReturn,
   useDisclosure,
   LinkBox,
+  Image,
 } from '@chakra-ui/react'
 import {
   RiInstagramFill,
@@ -33,7 +34,6 @@ import { useTranslation } from 'next-i18next'
 import { ProfileLink } from './ProfileLink'
 import SettingsLink from './SettingsLink'
 import { useAddress } from '@/hooks/useAddress'
-import { Image } from '@/components/Elements/Image/Image'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -137,10 +137,10 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               {MOBILE_NAV_ITEMS({
                 address: userAddress ?? undefined,
               })
-                .filter((i) => i.label !== 'Account' || userAddress)
-                .map((navItem) => (
+                .filter(i => i.label !== 'Account' || userAddress)
+                .map(navItem => (
                   <MobileNavItem
-                    handleClick={(item) => handleClick(item)}
+                    handleClick={item => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />
@@ -162,9 +162,8 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 <Image
                   src={langItem.src}
                   alt={langItem.label}
-                  width={24}
-                  height={24}
-                  sizes="24px"
+                  w={{ base: '24px' }}
+                  h={{ base: '24px' }}
                   style={{
                     marginRight: 12,
                   }}
