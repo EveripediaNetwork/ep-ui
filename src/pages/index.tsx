@@ -16,7 +16,7 @@ const CategoriesList = dynamic(
 )
 import { getTags, tagsApi } from '@/services/tags'
 // const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
-const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
+// const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
@@ -61,7 +61,7 @@ export const Index = ({
   // promotedWikis,
   // recentWikis,
   // popularTags,
-  leaderboards,
+  // leaderboards,
   rankings,
 }: // trending,
 HomePageProps) => {
@@ -91,7 +91,7 @@ HomePageProps) => {
         <CategoriesList />
         {/* <EventOverview /> */}
       </Box>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {/* {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />} */}
       {/* <DiscoverMore tagsData={popularTags} /> */}
     </Flex>
   )
@@ -109,12 +109,16 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     rangeType: DayRangeType.LAST_MONTH,
   })
 
+  console.log('Fetching promoted wikis...')
   const { data: promotedWikis, error: promotedWikisError } =
     await store.dispatch(getPromotedWikis.initiate())
+  console.log('Fetching recent wikis...')
   const { data: recent, error: recentError } = await store.dispatch(
     getWikis.initiate(),
   )
+  console.log('Fetching leaderboard...')
   const { data: leaderboard } = await store.dispatch(getLeaderboard.initiate())
+  console.log('Fetching tags data...')
   const { data: tagsData, error: tagsDataError } = await store.dispatch(
     getTags.initiate({
       startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
@@ -122,6 +126,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  console.log('Fetching NFT rankings...')
   const { data: NFTsList } = await store.dispatch(
     getNFTRanking.initiate({
       kind: 'NFT',
@@ -130,6 +135,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  console.log('Fetching token rankings...')
   const { data: TokensList } = await store.dispatch(
     getTokenRanking.initiate({
       kind: 'TOKEN',
@@ -137,6 +143,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       offset: 1,
     }),
   )
+  console.log('Fetching founders rankings...')
   const { data: foundersData } = await store.dispatch(
     getFoundersRanking.initiate({
       kind: 'TOKEN',
@@ -145,6 +152,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       founders: true,
     }),
   )
+  console.log('Fetching AI token rankings...')
   const { data: aiTokensList } = await store.dispatch(
     getAiTokenRanking.initiate({
       kind: 'TOKEN',
@@ -153,6 +161,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       category: 'AI',
     }),
   )
+  console.log('Fetching stable coin rankings...')
   const { data: stableCoinsList } = await store.dispatch(
     getStableCoinRanking.initiate({
       kind: 'TOKEN',
@@ -162,6 +171,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  console.log('Fetching today trending wikis...')
   const { data: todayTrending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
@@ -170,6 +180,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  console.log('Fetching week trending wikis...')
   const { data: weekTrending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
@@ -178,6 +189,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  console.log('Fetching month trending wikis...')
   const { data: monthTrending } = await store.dispatch(
     getTrendingWikis.initiate({
       amount: TRENDING_WIKIS_AMOUNT,
@@ -195,7 +207,15 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     store.dispatch(rankingAPI.util.getRunningQueriesThunk()),
   ])
 
+  console.log('Fetching complete.')
+
   if (promotedWikisError || tagsDataError || recentError) {
+    console.error(
+      'Error fetching data:',
+      promotedWikisError,
+      tagsDataError,
+      recentError,
+    )
     throw new Error(
       `Error fetching data. the error is: ${[
         JSON.stringify(tagsDataError?.message),
