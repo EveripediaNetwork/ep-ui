@@ -11,9 +11,9 @@ import {
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
-const CategoriesList = dynamic(
-  () => import('@/components/Landing/CategoriesList'),
-)
+// const CategoriesList = dynamic(
+//   () => import('@/components/Landing/CategoriesList'),
+// )
 import { getTags, tagsApi } from '@/services/tags'
 const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
 const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
@@ -88,7 +88,7 @@ export const Index = ({
         />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
-        <CategoriesList />
+        {/* <CategoriesList /> */}
         <EventOverview />
       </Box>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
