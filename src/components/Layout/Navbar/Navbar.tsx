@@ -9,28 +9,28 @@ import {
   Text,
   Menu,
   MenuButton,
-  MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
+  // MenuItemOption,
+  // MenuList,
+  // MenuOptionGroup,
   Button,
   chakra,
 } from '@chakra-ui/react'
 import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { languageData } from '@/data/LanguageData'
+// import { languageData } from '@/data/LanguageData'
 import dynamic from 'next/dynamic'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import Link from 'next/link'
 import DesktopNav from './DesktopNav'
 const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
 import Logo from '@/components/Elements/Logo/Logo'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, store } from '@/store/store'
-import useLanguageChange from '@/hooks/useLanguageChange'
+import { useDispatch } from 'react-redux'
+import { store } from '@/store/store'
+// import useLanguageChange from '@/hooks/useLanguageChange'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
 import MobileNav from './MobileNav'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 import SuggestWikiModal from './SuggestWiki'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { useAddress } from '@/hooks/useAddress'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
@@ -52,8 +52,8 @@ const Navbar = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
-  const lang = useSelector((state: RootState) => state.app.language)
-  const { handleLangChange } = useLanguageChange()
+  // const lang = useSelector((state: RootState) => state.app.language)
+  // const { handleLangChange } = useLanguageChange()
   const locale = router.locale
   const { address } = useAddress()
   const { userCanEdit } = useWhiteListValidator()
@@ -63,9 +63,9 @@ const Navbar = () => {
     onClose: onSuggestWikiClose,
   } = useDisclosure()
 
-  useEffect(() => {
-    if (locale && lang !== locale) handleLangChange(locale)
-  }, [router.locale])
+  // useEffect(() => {
+  //   if (locale && lang !== locale) handleLangChange(locale)
+  // }, [router.locale])
 
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()
@@ -156,7 +156,7 @@ const Navbar = () => {
             >
               <chakra.span textTransform={'uppercase'}>{locale}</chakra.span>
             </MenuButton>
-            <MenuList color="linkColor">
+            {/* <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
                 {languageData.map((langObj) => (
                   <MenuItemOption
@@ -177,7 +177,7 @@ const Navbar = () => {
                   </MenuItemOption>
                 ))}
               </MenuOptionGroup>
-            </MenuList>
+            </MenuList> */}
           </Menu>
           <Button
             variant="outline"

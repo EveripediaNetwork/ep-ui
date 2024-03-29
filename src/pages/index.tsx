@@ -62,7 +62,7 @@ export const Index = ({
   recentWikis,
   popularTags,
   leaderboards,
-  // rankings,
+  rankings,
   trending,
 }: HomePageProps) => {
   return (
@@ -86,7 +86,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis}
         />
-        {/* <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} /> */}
+        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
         <CategoriesList />
         <EventOverview />
