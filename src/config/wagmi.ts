@@ -1,6 +1,6 @@
 import { http, createConfig, fallback } from 'wagmi'
 import { polygon, polygonMumbai } from 'viem/chains'
-import { injected } from 'wagmi/connectors'
+import { injected, walletConnect } from 'wagmi/connectors'
 import { env } from '@/env.mjs'
 import config from '.'
 import { rpcs } from '@/utils/WalletUtils/getProvider'
@@ -26,7 +26,9 @@ export const wagmiConfig = createConfig({
   },
   connectors: [
     injected(),
-
+    walletConnect({
+      projectId: config.walletConnectProjectId,
+    }),
     dedicatedWalletConnector({
       //@ts-ignore
       chains,

@@ -110,7 +110,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     if (date) {
       const dateObj = new Date(date)
       const isExists = wiki.events?.some(
-        (event) => new Date(event.date).toISOString() === dateObj.toISOString(),
+        event => new Date(event.date).toISOString() === dateObj.toISOString(),
       )
 
       setIsUpdate(!!isExists)
@@ -134,8 +134,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
       const typeInput = formRef.current.elements.namedItem(
         'type',
       ) as HTMLSelectElement
-
-      console.log({ data })
 
       if (data.type === EventType.MULTIDATE) {
         setIsMultiDate('MULTIDATE')
@@ -210,13 +208,13 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 <Input
                   name="date"
                   type={
-                    wiki.tags.some((tag) => tag.id === 'Events')
+                    wiki.tags.some(tag => tag.id === 'Events')
                       ? 'date'
                       : 'month'
                   }
                   placeholder="Select date"
                   fontSize={{ base: '12px', md: '14px' }}
-                  onChange={(e) => {
+                  onChange={e => {
                     const date = e.target.value
                     handleIsUpdateCheck(date)
                   }}
@@ -232,14 +230,14 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 name="type"
                 placeholder={t('eventType')}
                 fontSize={{ base: '12px', md: '14px' }}
-                onChange={(event) => setIsMultiDate(event.target.value)}
+                onChange={event => setIsMultiDate(event.target.value)}
               >
                 <option
                   value={EventType.CREATED}
                   disabled={
                     !isUpdate &&
                     wiki?.events?.some(
-                      (event) => event.type === EventType.CREATED,
+                      event => event.type === EventType.CREATED,
                     )
                   }
                 >
