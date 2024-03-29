@@ -236,7 +236,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       popularTags: tagsData ?? [],
       leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
-      trending: { todayTrending, weekTrending, monthTrending },
+      trending: {
+        todayTrending: todayTrending || null,
+        weekTrending: weekTrending || null,
+        monthTrending: monthTrending || null,
+      },
     },
   }
 }

@@ -61,8 +61,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
-  const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
+  const [sortOrder, setSortOrder] = useState<SortOrder>('descending')
+  const [selectedRanking, setSelectedRanking] = useState<string | undefined>(
     'cryptocurrencies',
   )
   const { t } = useTranslation(['rank', 'common'])
@@ -97,7 +97,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setOrder(newSortOrder)
+        setSortOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
@@ -115,7 +115,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setOrder(newSortOrder)
+        setSortOrder(newSortOrder)
         setTokenItems(sortBy24hChange(newSortOrder, TokensListing))
         setAiTokenItems(sortBy24hChange(newSortOrder, aiTokensListing))
         setStableCoinItems(sortBy24hChange(newSortOrder, stableCoinsListing))
@@ -152,7 +152,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           mt={10}
           pl={0}
           overflowX={'auto'}
-          onChange={(index) => {
+          onChange={index => {
             setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
           }}
         >
