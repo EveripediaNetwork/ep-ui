@@ -20,7 +20,7 @@ const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
+// const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
   getAiTokenRanking,
@@ -62,7 +62,7 @@ export const Index = ({
   recentWikis,
   popularTags,
   leaderboards,
-  rankings,
+  // rankings,
   trending,
 }: HomePageProps) => {
   return (
@@ -86,7 +86,7 @@ export const Index = ({
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis}
         />
-        <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
+        {/* <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} /> */}
         <AboutIqgpt />
         <CategoriesList />
         <EventOverview />
