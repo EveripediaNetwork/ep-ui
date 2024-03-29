@@ -31,12 +31,15 @@ export const fetchWalletBalance = async (
 export const fetchRateAndCalculateTotalBalance = async (
   walletDetails: WalletBalanceType[],
 ) => {
+  // console.log({ isProd: env.NEXT_PUBLIC_IS_PRODUCTION })
   const prices = walletDetails.map(async (wallet) => {
     try {
       const tokenName: string | undefined =
         wallet.data?.symbol && tokenDetails[wallet.data?.symbol].name
+      // console.log({ tokenName })
       if (tokenName) {
         const rate = await fetchTokenRate(tokenName)
+        // console.log({ rate })
         return {
           price: rate * Number(wallet.data?.formatted),
           token: wallet.data?.symbol,

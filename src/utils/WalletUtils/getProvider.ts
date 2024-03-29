@@ -1,7 +1,7 @@
 import config from '@/config'
 import { env } from '@/env.mjs'
 import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
+import { mainnet, polygon, polygonMumbai } from 'viem/chains'
 
 export const rpcs: {
   [key: string]: string
@@ -16,8 +16,8 @@ export const provider: any = createPublicClient({
 })
 
 export const maticProvider: any = createPublicClient({
-  chain: mainnet,
+  chain: env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? polygon : polygonMumbai,
   transport: http(
-    env.NEXT_PUBLIC_IS_PRODUCTION === 'production' ? rpcs.matic : rpcs.maticmum,
+    env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? rpcs.matic : rpcs.maticmum,
   ),
 })

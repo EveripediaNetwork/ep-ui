@@ -27,8 +27,9 @@ const AboutIqgpt = () => {
           pl={'4px'}
           pr={'10px'}
           color={'brandLinkColor'}
-          bgColor={'aboutIqgptInfoBg'}
-          mixBlendMode={'multiply'}
+          bgColor={'brand.50'}
+          _dark={{ bgColor: 'brand.100' }}
+          // mixBlendMode={'multiply'}
         >
           <Center py={'2px'} px={'10px'} bgColor={'white'} rounded={'3xl'}>
             <Text fontSize={'14px'}>{t('IQGPTHeading1')}</Text>
@@ -57,7 +58,8 @@ const AboutIqgpt = () => {
               lineHeight={{ base: '32px', md: '40px' }}
               textAlign={'center'}
               fontSize={{ base: '24px', md: '30px', lg: '36px' }}
-              color="gray.800"
+              color="rgba(26, 32, 44, 1)"
+              _dark={{ color: 'whiteAlpha.900' }}
             >
               {t('IQGPTHeading3')}
             </Text>
@@ -65,7 +67,8 @@ const AboutIqgpt = () => {
           <Box pb={{ base: '10px', lg: '40px' }} px={{ base: 3 }}>
             <Text
               maxW={{ md: '588px', lg: '910px' }}
-              color={'aboutIqgptDesc'}
+              color="rgba(26, 32, 44, 1)"
+              _dark={{ color: 'whiteAlpha.900' }}
               fontSize={{ base: '14px', md: '16px' }}
             >
               {`${t('aboutIQGPTBody')}`}
