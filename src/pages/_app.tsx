@@ -14,6 +14,7 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
+// import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -36,6 +37,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
   }, [router.events])
 
   return (
+    // <WagmiWrapper>
     <StrictMode>
       <style jsx global>{`
         :root {
@@ -56,6 +58,7 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       </ReduxProvider>
       <ToastContainer />
     </StrictMode>
+    // </WagmiWrapper>
   )
 }
 
