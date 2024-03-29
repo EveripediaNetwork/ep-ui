@@ -20,7 +20,7 @@ const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-// const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
+const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
   getAiTokenRanking,
