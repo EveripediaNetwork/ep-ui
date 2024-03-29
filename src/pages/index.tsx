@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import {
   getPromotedWikis,
   getTrendingWikis,
@@ -10,17 +10,17 @@ import {
 } from '@/services/wikis'
 import { store } from '@/store/store'
 import { Wiki } from '@everipedia/iq-utils'
-import TrendingWikis from '@/components/Landing/TrendingWikis'
+// import TrendingWikis from '@/components/Landing/TrendingWikis'
 // const CategoriesList = dynamic(
 //   () => import('@/components/Landing/CategoriesList'),
 // )
 import { getTags, tagsApi } from '@/services/tags'
-const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
-const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
+// const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
+// const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
 import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
 import { RankCardType } from '@/types/RankDataTypes'
-const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
+// const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
   getAiTokenRanking,
@@ -33,15 +33,16 @@ import {
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { TrendingData } from '@/types/Home'
-const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
+// const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import EventOverview from '@/components/Landing/EventOverview'
-import { IQBar } from '@/components/Landing/IQBar'
+// import EventOverview from '@/components/Landing/EventOverview'
+// import { IQBar } from '@/components/Landing/IQBar'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
 
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 interface HomePageProps {
   promotedWikis: Wiki[]
   recentWikis: Wiki[]
@@ -57,14 +58,9 @@ interface HomePageProps {
   trending: TrendingData
 }
 
-export const Index = ({
-  promotedWikis,
-  recentWikis,
-  popularTags,
-  leaderboards,
-  rankings,
-  trending,
-}: HomePageProps) => {
+export const Index = () => {
+  console.log('Homepage is rendered')
+
   return (
     <Flex
       _dark={{
@@ -75,24 +71,24 @@ export const Index = ({
       w="full"
     >
       <Hero />
-      <IQBar />
+      {/* <IQBar /> */}
       <Box
         mt={{ base: '-20', md: '-15', xl: '-10' }}
         px={0}
         className="container"
       >
-        <TrendingWikis
+        {/* <TrendingWikis
           trending={trending}
           recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis}
         />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
-        {/* <CategoriesList /> */}
-        <EventOverview />
+        <CategoriesList />
+        <EventOverview /> */}
       </Box>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
-      <DiscoverMore tagsData={popularTags} />
+      {/* {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />} */}
+      {/* <DiscoverMore tagsData={popularTags} /> */}
     </Flex>
   )
 }

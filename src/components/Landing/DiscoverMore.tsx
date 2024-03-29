@@ -7,8 +7,8 @@ interface DiscoverMoreProps {
   tagsData: { id: string }[]
 }
 const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
-  if (!tagsData) return null
   const { t } = useTranslation('home')
+  if (!tagsData) return null
 
   return (
     <Box bgColor="gray.100" _dark={{ bgColor: 'whiteAlpha.50' }} p={8} pb={20}>
@@ -17,7 +17,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
           {t('DiscoverMoreHeading')}
         </Heading>
         <Wrap mt={8} spacing={4}>
-          {tagsData?.map((tag) => (
+          {tagsData?.map(tag => (
             <Link
               as="li"
               borderWidth="1px"
