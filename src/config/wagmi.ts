@@ -28,7 +28,6 @@ export const wagmiConfig = createConfig({
     injected(),
     walletConnect({
       projectId: config.walletConnectProjectId,
-      relayUrl: 'wss://relay.walletconnect.org',
     }),
     dedicatedWalletConnector({
       //@ts-ignore
