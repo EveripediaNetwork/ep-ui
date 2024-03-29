@@ -30,10 +30,10 @@ import SuggestWikiModal from './SuggestWiki'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { useTranslation } from 'next-i18next'
-import Image from 'next/image'
 import { ProfileLink } from './ProfileLink'
 import SettingsLink from './SettingsLink'
 import { useAddress } from '@/hooks/useAddress'
+import { Image } from '@/components/Elements/Image/Image'
 
 type MobileNavType = {
   drawerOperations: UseDisclosureReturn
@@ -135,12 +135,12 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
               pb={6}
             >
               {MOBILE_NAV_ITEMS({
-                address: userAddress || undefined,
+                address: userAddress ?? undefined,
               })
-                .filter((i) => i.label !== 'Account' || userAddress)
-                .map((navItem) => (
+                .filter(i => i.label !== 'Account' || userAddress)
+                .map(navItem => (
                   <MobileNavItem
-                    handleClick={(item) => handleClick(item)}
+                    handleClick={item => handleClick(item)}
                     key={navItem.label}
                     navItem={navItem}
                   />
@@ -164,6 +164,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                   alt={langItem.label}
                   width={24}
                   height={24}
+                  sizes="24px"
                   style={{
                     marginRight: 12,
                   }}
