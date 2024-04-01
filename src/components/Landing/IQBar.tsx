@@ -240,13 +240,6 @@ export const IQBar = () => {
                 aria-label="binance"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
               isExternal
@@ -267,13 +260,6 @@ export const IQBar = () => {
                 aria-label="One Inch"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
             <Link
               isExternal
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
@@ -294,13 +280,7 @@ export const IQBar = () => {
                 aria-label="Upbit"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
+
             <Link
               href="https://frax.finance/"
               isExternal
