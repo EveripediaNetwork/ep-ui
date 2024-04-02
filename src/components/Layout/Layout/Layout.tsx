@@ -3,6 +3,7 @@ import { Box, Stack } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import Navbar from '../Navbar/Navbar'
 import GoogleAnalyticsScripts from '../GoogleAnalyticsScripts'
+import { WagmiWrapper } from '../WagmiWrapper'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
@@ -16,7 +17,7 @@ const Layout = ({
   noFooter?: boolean
 }) => {
   return (
-    <>
+    <WagmiWrapper>
       <GoogleAnalyticsScripts />
       <Stack justify="space-between" minH="100vh" spacing={0}>
         <Navbar />
@@ -25,7 +26,7 @@ const Layout = ({
         </Box>
         <Suspense>{!noFooter && <Footer />}</Suspense>
       </Stack>
-    </>
+    </WagmiWrapper>
   )
 }
 
