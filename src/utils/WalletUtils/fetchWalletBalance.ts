@@ -14,11 +14,11 @@ export const fetchWalletBalance = async (
   arrayOfAddresses: ParamsType[],
 ) => {
   const results: Promise<BalanceType | ErrorType>[] = []
-  arrayOfAddresses.forEach((addr) => {
+  arrayOfAddresses.forEach(addr => {
     results.push(getBalance(addr))
   })
   const response = await Promise.all(results)
-  const convertedResult: ConvertedBalanceType[] = response.map((res) => ({
+  const convertedResult: ConvertedBalanceType[] = response.map(res => ({
     data: {
       formatted: res.data?.formatted,
       symbol: res.data?.symbol,
@@ -31,15 +31,12 @@ export const fetchWalletBalance = async (
 export const fetchRateAndCalculateTotalBalance = async (
   walletDetails: WalletBalanceType[],
 ) => {
-  // console.log({ isProd: env.NEXT_PUBLIC_IS_PRODUCTION })
-  const prices = walletDetails.map(async (wallet) => {
+  const prices = walletDetails.map(async wallet => {
     try {
       const tokenName: string | undefined =
         wallet.data?.symbol && tokenDetails[wallet.data?.symbol].name
-      // console.log({ tokenName })
       if (tokenName) {
         const rate = await fetchTokenRate(tokenName)
-        // console.log({ rate })
         return {
           price: rate * Number(wallet.data?.formatted),
           token: wallet.data?.symbol,
@@ -57,7 +54,7 @@ export const calculateTotalBalance = (
   arrayOfTokenDetails: TokenDetailsType[],
 ) => {
   let total = 0
-  arrayOfTokenDetails.forEach((details) => {
+  arrayOfTokenDetails.forEach(details => {
     if (details) {
       total += details.price
     }
