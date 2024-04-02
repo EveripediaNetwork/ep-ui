@@ -29,7 +29,6 @@ export const IQBar = () => {
     isLoading: cmcLoading,
     isError: cmcError,
   } = useGetCmcTokenDataQuery('IQ')
-  console.log('cmcData', cmcData)
   const { data: tokenStats } = useGetTokenStatsQuery({
     tokenName: 'everipedia',
   })
@@ -38,16 +37,6 @@ export const IQBar = () => {
   const mcapchange = tokenStats?.market_cap_percentage_change
   const areaGraphData = iqData?.prices
   const priceChange = cmcData?.IQ?.quote?.USD?.percent_change_24h
-  // const [priceChange, setPriceChange] = useState<number | null>(null)
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const priceChangePercentage = await fetchIqPriceChange()
-  //     setPriceChange(priceChangePercentage)
-  //   }
-
-  //   fetchData()
-  // }, [])
 
   return (
     <Flex
