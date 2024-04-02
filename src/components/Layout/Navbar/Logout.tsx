@@ -8,25 +8,29 @@ import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
-import { disconnect } from '@wagmi/core'
-import { wagmiConfig } from '@/config/wagmi'
-import { WagmiWrapper } from '../WagmiWrapper'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
   const dispatch = useDispatch()
-  const router = useRouter()
   const { t } = useTranslation('common')
+  const router = useRouter()
 
-  const handleLogOut = async () => {
+  const handleLogOut = () => {
     dispatch(setStateToDefault())
+    window.localStorage.removeItem('wagmi.store')
+    window.localStorage.removeItem('wagmi.recentConnectorId')
     deleteCookie(cookieNames.Enum['x-auth-token'])
-    await disconnect(wagmiConfig)
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith('wagmi')) {
+        localStorage.removeItem(key)
+      }
+    }
+    window.location.reload()
     router.push(router.asPath)
   }
 
   return (
-    <WagmiWrapper>
+    <>
       <Button
         minH={{ base: '35px', md: '48px' }}
         px={isInMobileMenu ? 0 : 3}
@@ -56,6 +60,6 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
           </span>
         </Flex>
       </Button>
-    </WagmiWrapper>
+    </>
   )
 }
