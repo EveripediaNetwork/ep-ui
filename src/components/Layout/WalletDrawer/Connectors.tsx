@@ -22,7 +22,12 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
     useAccount()
 
   useAccountEffect({
-    onConnect: async () => {
+    onConnect: async (data) => {
+      if (data.connector.switchChain) {
+        document.cookie = 'SWITCH_CHAIN=true;'
+      } else {
+        document.cookie = 'SWITCH_CHAIN=false'
+      }
       await triggerSignToken()
     },
   })

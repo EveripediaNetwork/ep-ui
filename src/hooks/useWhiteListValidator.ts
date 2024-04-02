@@ -3,16 +3,23 @@ import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 import { polygon } from 'viem/chains'
 import { createPublicClient, http } from 'viem'
+import { useAddress } from './useAddress'
 
 export const publicClient: any = createPublicClient({
   chain: polygon,
   transport: http(),
 })
 
-const useWhiteListValidator = (address: string | null) => {
+const useWhiteListValidator = () => {
   const [userCanEdit, setUserCanEdit] = useState(false)
+  const { address } = useAddress()
 
   useEffect(() => {
+    if (!address) {
+      setUserCanEdit(false)
+      return
+    }
+
     const fetchData = async () => {
       try {
         let data

@@ -1,4 +1,5 @@
 import { TEvents } from '@/services/event'
+import axios from 'axios'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -96,4 +97,25 @@ export const groupEventsByMonth = (events: TEvents[]) => {
   })
 
   return sortedEventsByMonth
+}
+
+export const fetchIqPriceChange = async () => {
+  try {
+    const res = await axios.get('/api/cmc-token-details', {
+      params: { tokenName: 'IQ' },
+    })
+    const response = res.data
+    const { data } = response.response
+    const tokenDetails = data.IQ
+
+    if (!tokenDetails) {
+      throw new Error('No data found')
+    }
+
+    const percent_change_24h = tokenDetails?.quote?.USD?.percent_change_24h
+    return percent_change_24h
+  } catch (error) {
+    console.error('Error fetching IQ price change', error)
+    return null
+  }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box, Text, Flex, chakra } from '@chakra-ui/react'
+import { Stack, Text, Flex, chakra } from '@chakra-ui/react'
 import { Element } from 'react-scroll'
 import GlossaryWikiCard from './GlossaryWikiCard'
 import { GlossaryItemType } from '@/types/GlossaryType'
@@ -26,31 +26,34 @@ const GlossaryItem = ({
   }
 
   return (
-    <Stack w="full" my="7">
+    <Stack w="full">
       {glossaryAlphabets.map((item, i) => (
-        <chakra.div key={i} id={item} pt="50px" mt="-20px">
+        <chakra.div
+          key={i}
+          id={item}
+          display="flex"
+          flexDirection={{ base: 'column', lg: 'row' }}
+          borderBottom="1px"
+          borderBottomColor="carouselArrowBorderColor"
+          gap={{ base: '4', lg: '32' }}
+          pb={{ base: '4', lg: '10' }}
+          pt={{ base: '4', lg: '10' }}
+        >
           <Element name={item}>
-            <Box
-              w="full"
-              py="1"
-              bg="glossaryItemBg"
-              my="4"
-              px={{ base: 8, md: 10, lg: '32' }}
+            <Text
+              fontSize={{ base: 'xl', lg: '4xl' }}
+              fontWeight="bold"
+              fontFamily="sans-serif"
+              style={{
+                WebkitTextStroke: '1px black',
+                color: '#FFFFFFEB',
+              }}
             >
-              <Text fontSize={{ base: 'xl', lg: '4xl' }} fontWeight="bold">
-                {item}
-              </Text>
-            </Box>
+              {item}
+            </Text>
           </Element>
 
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            mb="-40px"
-            mt="30px"
-            direction="column"
-            gap="14"
-          >
+          <Flex direction="column" gap="4" px={{ base: '0', lg: '4' }} w="full">
             {glossary
               .sort((a, b) => {
                 const aTitle = a.title.toLowerCase()

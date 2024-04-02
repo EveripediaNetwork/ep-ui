@@ -122,7 +122,7 @@ const Activity = ({ activities }: { activities: ActivityType[] }) => {
           </Box>
           <Box>
             <Box>
-              <Flex flexDirection="column" overflow="hidden" gap={4}>
+              <Flex flexDirection="column" overflow="" gap={4}>
                 {LatestActivityData?.map((activity) =>
                   renderActivityCard(activity),
                 )}
