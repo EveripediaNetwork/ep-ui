@@ -24,36 +24,34 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   }
 
   return (
-    <>
-      <Button
-        minH={{ base: '35px', md: '48px' }}
-        px={isInMobileMenu ? 0 : 3}
-        bgColor="transparent"
-        sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
-        onClick={isUserConnected ? handleLogOut : undefined}
-        cursor={isUserConnected ? 'pointer' : 'not-allowed'}
-        display={isUserConnected ? 'flex' : 'none'}
-        w="full"
+    <Button
+      minH={{ base: '35px', md: '48px' }}
+      px={isInMobileMenu ? 0 : 3}
+      bgColor="transparent"
+      sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
+      onClick={isUserConnected ? handleLogOut : undefined}
+      cursor={isUserConnected ? 'pointer' : 'not-allowed'}
+      display={isUserConnected ? 'flex' : 'none'}
+      w="full"
+    >
+      <Icon
+        fontSize="4xl"
+        color="linkColor"
+        fontWeight={600}
+        as={RiLogoutBoxRFill}
+        pr={3}
+      />
+      <Flex
+        ml={isInMobileMenu ? 2 : 'unset'}
+        fontSize="md"
+        fontWeight="semibold"
+        color="linkColor"
+        flex="auto"
       >
-        <Icon
-          fontSize="4xl"
-          color="linkColor"
-          fontWeight={600}
-          as={RiLogoutBoxRFill}
-          pr={3}
-        />
-        <Flex
-          ml={isInMobileMenu ? 2 : 'unset'}
-          fontSize="md"
-          fontWeight="semibold"
-          color="linkColor"
-          flex="auto"
-        >
-          <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
-            {t('Logout')}
-          </span>
-        </Flex>
-      </Button>
-    </>
+        <span style={isInMobileMenu ? { fontSize: 18 } : {}}>
+          {t('Logout')}
+        </span>
+      </Flex>
+    </Button>
   )
 }

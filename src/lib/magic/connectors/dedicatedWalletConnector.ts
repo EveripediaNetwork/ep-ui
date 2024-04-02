@@ -4,13 +4,24 @@ import type {
   MagicSDKAdditionalConfiguration,
   SDKBase,
 } from '@magic-sdk/provider'
-import { createConnector, normalizeChainId } from '@wagmi/core'
+import {
+  ChainNotConfiguredError,
+  ProviderNotFoundError,
+  createConnector,
+  normalizeChainId,
+} from '@wagmi/core'
 import {
   type MagicConnectorParams,
   type MagicOptions,
   magicConnector,
 } from './magicConnector'
-import { UserRejectedRequestError, getAddress } from 'viem'
+import {
+  ProviderRpcError,
+  SwitchChainError,
+  UserRejectedRequestError,
+  getAddress,
+  numberToHex,
+} from 'viem'
 import { createModal } from '../modal/view'
 
 interface UserDetails {
@@ -234,6 +245,47 @@ export function dedicatedWalletConnector({
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)
       config.emitter.emit('change', { chainId })
+    },
+
+    async switchChain({ chainId }) {
+      const chain = config.chains.find((chain) => chain.id === chainId)
+      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+
+      const provider = await getProvider()
+      const chainId_ = numberToHex(chain.id)
+
+      if (!provider) throw new SwitchChainError(new ProviderNotFoundError())
+
+      try {
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: chainId_ }],
+        })
+        return chain
+      } catch (error) {
+        // Indicates chain is not added to provider
+        if ((error as ProviderRpcError).code === 4902) {
+          try {
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: chainId_,
+                  chainName: chain.name,
+                  nativeCurrency: chain.nativeCurrency,
+                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
+                  blockExplorerUrls: [chain.blockExplorers?.default.url],
+                },
+              ],
+            })
+            return chain
+          } catch (error) {
+            throw new UserRejectedRequestError(error as Error)
+          }
+        }
+
+        throw new SwitchChainError(error as Error)
+      }
     },
 
     async onConnect(connectInfo) {
