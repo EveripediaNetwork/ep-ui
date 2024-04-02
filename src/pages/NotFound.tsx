@@ -2,10 +2,13 @@ import React from 'react'
 import { LinkButton } from '@/components/Elements'
 import { Flex, Box, Image, Text, Button } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const WikiNotFound = () => {
   const router = useRouter()
-  const isWiki = router.query.tags ? false : true
+  const isWiki = !router.query.tags
+
   return (
     <Flex
       w={{ base: '100%' }}
@@ -56,6 +59,14 @@ const WikiNotFound = () => {
       </Box>
     </Flex>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  }
 }
 
 export default WikiNotFound
