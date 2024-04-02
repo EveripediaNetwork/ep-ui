@@ -8,6 +8,8 @@ import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
+import { disconnect } from '@wagmi/core'
+import { wagmiConfig } from '@/config/wagmi'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
@@ -15,15 +17,11 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const router = useRouter()
   const { t } = useTranslation('common')
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     dispatch(setStateToDefault())
     deleteCookie(cookieNames.Enum['x-auth-token'])
     router.push(router.asPath)
-    for (const key of Object.keys(localStorage)) {
-      if (key.startsWith('wagmi')) {
-        localStorage.removeItem(key)
-      }
-    }
+    await disconnect(wagmiConfig)
   }
 
   return (
