@@ -30,6 +30,7 @@ import { editorApi } from '@/services/editor'
 import { notificationSubscriptionApi } from '@/services/notification'
 import { eventApi } from '@/services/event'
 import { cgTokenDataApi } from '@/services/cgTokenDetails'
+import { cmcTokenDataApi } from '@/services/cmcTokenDetails'
 
 export const store = configureStore({
   reducer: {
@@ -63,6 +64,7 @@ export const store = configureStore({
     [notificationSubscriptionApi.reducerPath]:
       notificationSubscriptionApi.reducer,
     [cgTokenDataApi.reducerPath]: cgTokenDataApi.reducer,
+    [cmcTokenDataApi.reducerPath]: cmcTokenDataApi.reducer,
   },
   middleware: (gDM) =>
     gDM({ serializableCheck: true })
@@ -84,7 +86,8 @@ export const store = configureStore({
       .concat(notificationSubscriptionApi.middleware)
       .concat(rankingAPI.middleware)
       .concat(eventApi.middleware)
-      .concat(cgTokenDataApi.middleware),
+      .concat(cgTokenDataApi.middleware)
+      .concat(cmcTokenDataApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
