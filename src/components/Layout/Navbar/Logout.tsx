@@ -8,8 +8,6 @@ import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 
-const disconnectEvent = new Event('disconnect-event')
-
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
   const dispatch = useDispatch()
@@ -18,7 +16,6 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const handleLogOut = () => {
     dispatch(setStateToDefault())
     deleteCookie(cookieNames.Enum['x-auth-token'])
-    document.dispatchEvent(disconnectEvent)
     for (const key of Object.keys(localStorage)) {
       if (key.startsWith('wagmi')) {
         localStorage.removeItem(key)
