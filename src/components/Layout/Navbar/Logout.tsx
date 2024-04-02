@@ -17,10 +17,13 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
 
   const handleLogOut = () => {
     dispatch(setStateToDefault())
-    window.localStorage.removeItem('wagmi.store')
-    window.localStorage.removeItem('wagmi.recentConnectorId')
     deleteCookie(cookieNames.Enum['x-auth-token'])
     router.push(router.asPath)
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith('wagmi')) {
+        localStorage.removeItem(key)
+      }
+    }
   }
 
   return (
