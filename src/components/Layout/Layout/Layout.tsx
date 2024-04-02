@@ -17,16 +17,18 @@ const Layout = ({
   noFooter?: boolean
 }) => {
   return (
-    <WagmiWrapper>
+    <>
       <GoogleAnalyticsScripts />
       <Stack justify="space-between" minH="100vh" spacing={0}>
-        <Navbar />
+        <WagmiWrapper>
+          <Navbar />
+        </WagmiWrapper>
         <Box as="main" pt={'70px'}>
           {children}
         </Box>
         <Suspense>{!noFooter && <Footer />}</Suspense>
       </Stack>
-    </WagmiWrapper>
+    </>
   )
 }
 

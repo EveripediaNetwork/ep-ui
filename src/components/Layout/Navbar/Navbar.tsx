@@ -35,7 +35,7 @@ import { useAddress } from '@/hooks/useAddress'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-// import { useDisconnect } from 'wagmi'
+import { useDisconnect } from 'wagmi'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -63,7 +63,7 @@ const Navbar = () => {
     onOpen: onSuggestWikiOpen,
     onClose: onSuggestWikiClose,
   } = useDisclosure()
-  // const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect()
 
   useEffect(() => {
     if (locale && lang !== locale) handleLangChange(locale)
@@ -77,11 +77,11 @@ const Navbar = () => {
     }
   }, [router.events, isOpen, onToggle])
 
-  // useEffect(() => {
-  //   document.addEventListener('disconnect-wallet', async () => {
-  //     disconnect()
-  //   })
-  // })
+  useEffect(() => {
+    document.addEventListener('disconnect-wallet', () => {
+      disconnect()
+    })
+  })
 
   return (
     <Box

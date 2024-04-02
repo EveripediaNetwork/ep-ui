@@ -7,18 +7,18 @@ import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
-import { useDisconnect } from 'wagmi'
+
+const disconnectEvent = new Event('disconnect-event')
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
-  const { disconnect } = useDisconnect()
 
   const handleLogOut = () => {
     dispatch(setStateToDefault())
     deleteCookie(cookieNames.Enum['x-auth-token'])
-    disconnect()
+    document.dispatchEvent(disconnectEvent)
     window.location.reload()
   }
 
