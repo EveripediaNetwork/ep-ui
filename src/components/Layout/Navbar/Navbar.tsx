@@ -56,7 +56,7 @@ const Navbar = () => {
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
   const { address } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(address)
+  const { userCanEdit } = useWhiteListValidator()
   const {
     isOpen: isSuggestWikiOpen,
     onOpen: onSuggestWikiOpen,

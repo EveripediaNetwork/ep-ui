@@ -58,15 +58,22 @@ const NetworkErrorNotification = ({
         title: 'Chain successfully switched 🎊',
         status: 'success',
       })
-    } catch (_) {
+      return true
+    } catch (error: any) {
       setModalState(false)
+      let errorMessage = '🚫 An error occurred while switching chain.'
+      if (error.message) {
+        errorMessage = error.message
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message
+      }
+
       toast({
-        title: 'Error switching chain 🎊',
+        title: errorMessage,
         status: 'error',
       })
+      return false
     }
-
-    return true
   }
 
   return (
