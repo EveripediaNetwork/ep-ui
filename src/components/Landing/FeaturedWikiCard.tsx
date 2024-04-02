@@ -11,7 +11,6 @@ import {
 import { useENSData } from '@/hooks/useENSData'
 import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Wiki } from '@everipedia/iq-utils'
-import { getReadableDate } from '@/utils/DataTransform/getFormattedDate'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { getUsername } from '@/utils/DataTransform/getUsername'
 import {
@@ -24,19 +23,34 @@ import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import Link from '@/components/Elements/LinkElements/Link'
 import { shortenText } from '@/utils/textUtils'
 import { useTranslation } from 'next-i18next'
+import { RootState } from '@/store/store'
+import { useSelector } from 'react-redux'
+import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 
 export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
   const [, ensName] = useENSData(wiki.user.id)
   const { t } = useTranslation('wiki')
+  const lang = useSelector((state: RootState) => state.app.language)
+
   const getLatestEdited = () => {
     let lastEditedTime = null
+
     if (wiki.updated) {
-      lastEditedTime = getReadableDate(wiki.updated)
+      lastEditedTime = useTranslatedTimestamps(
+        'Edited',
+        lang,
+        wiki.updated ?? '',
+      )?.replace(/ ago/g, '')
     } else if (wiki.created) {
-      lastEditedTime = getReadableDate(wiki.created)
+      lastEditedTime = useTranslatedTimestamps(
+        'New',
+        lang,
+        wiki.created ?? '',
+      )?.replace(/ ago/g, '')
     }
-    return lastEditedTime?.split(' ')[0]
+    return lastEditedTime
   }
+
   return (
     <LinkBox flex="none">
       <chakra.div mx="auto">
@@ -129,7 +143,7 @@ export const FeaturedWikiCard = ({ wiki }: { wiki: Wiki }) => {
                 fontSize="sm"
                 textAlign="right"
               >
-                {t('LastEdited')} {getLatestEdited()} {t('days')}
+                {t('Last')} {getLatestEdited()}
               </Text>
             </HStack>
           </Flex>

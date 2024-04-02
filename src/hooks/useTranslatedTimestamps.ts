@@ -51,7 +51,7 @@ export const useTranslatedTimestamps = (
           'ago',
         )}`
       default:
-        const timeStampRegex = /(\d)\s(\w+)/
+        const timeStampRegex = /(\d+)\s(\w+)/
         const match = readAbleTimeStamp.match(timeStampRegex)
         if (!match) return
         const [_, duration, unit] = match
