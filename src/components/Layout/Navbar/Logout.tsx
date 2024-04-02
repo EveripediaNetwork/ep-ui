@@ -19,6 +19,11 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
     dispatch(setStateToDefault())
     deleteCookie(cookieNames.Enum['x-auth-token'])
     document.dispatchEvent(disconnectEvent)
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith('wagmi')) {
+        localStorage.removeItem(key)
+      }
+    }
     window.location.reload()
   }
 
