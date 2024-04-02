@@ -12,21 +12,33 @@ export const useTranslatedTimestamps = (
   const readAbleTimeStamp = getReadableDate(timeStamp)
 
   const handleEditedCase = (unit: string, duration: string) => {
-    if (unit.includes('second')) return `${duration}${t('editedSecs')}`
-    if (unit.includes('minute')) return `${duration}${t('editedMins')}`
-    if (unit.includes('hour')) return `${duration}${t('editedHours')}`
-    if (unit.includes('day')) return `${duration}${t('editedDays')}`
-    if (unit.includes('month')) return `${duration}${t('editedMonths')}`
-    if (unit.includes('year')) return `${duration}${t('editedYears')}`
+    if (unit.includes('second'))
+      return `${t('edited')} ${duration} ${t('secsAgo')}`
+    if (unit.includes('minute'))
+      return `${t('edited')} ${duration} ${t('minsAgo')}`
+    if (unit.includes('hour'))
+      return `${t('edited')} ${duration} ${t('hoursAgo')}`
+    if (unit.includes('day'))
+      return `${t('edited')} ${duration} ${t('daysAgo')}`
+    if (unit.includes('month'))
+      return `${t('edited')} ${duration} ${t('monthsAgo')}`
+    if (unit.includes('year'))
+      return `${t('edited')} ${duration} ${t('yearsAgo')}`
   }
 
   const handleCreatedCase = (unit: string, duration: string) => {
-    if (unit.includes('second')) return `${duration}${t('createdSecs')}`
-    if (unit.includes('minute')) return `${duration}${t('createdMins')}`
-    if (unit.includes('hour')) return `${duration}${t('createdHours')}`
-    if (unit.includes('day')) return `${duration}${t('createdDays')}`
-    if (unit.includes('month')) return `${duration}${t('createdMonths')}`
-    if (unit.includes('year')) return `${duration}${t('createdYears')}`
+    if (unit.includes('second'))
+      return `${t('created')} ${duration} ${t('secsAgo')}`
+    if (unit.includes('minute'))
+      return `${t('created')} ${duration} ${t('minsAgo')}`
+    if (unit.includes('hour'))
+      return `${t('created')} ${duration} ${t('hoursAgo')}`
+    if (unit.includes('day'))
+      return `${t('created')} ${duration} ${t('daysAgo')}`
+    if (unit.includes('month'))
+      return `${t('created')} ${duration} ${t('monthsAgo')}`
+    if (unit.includes('year'))
+      return `${t('created')} ${duration} ${t('yearsAgo')}`
   }
 
   const handleActivity = (
