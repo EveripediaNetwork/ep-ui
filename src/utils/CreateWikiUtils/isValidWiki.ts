@@ -1,8 +1,49 @@
-import { Wiki } from '@everipedia/iq-utils'
 import { CreateToastFnReturn } from '@chakra-ui/toast'
 import { MEDIA_POST_DEFAULT_ID, WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { getWordCount } from '../DataTransform/getWordCount'
 import { isVerifiedContentLinks } from '../textUtils'
+import { Wiki, MediaSource, MediaType } from '@everipedia/iq-utils'
+
+const checkMedia = (wiki: Wiki) => {
+  if (!wiki.media) return true
+
+  const size = wiki.media.length
+  const contentCheck = wiki.media.every((m) => {
+    let isContentValid = true
+
+    if (
+      m.source === MediaSource.IPFS_IMG ||
+      m.source === MediaSource.IPFS_VID
+    ) {
+      isContentValid = m.id.length === 46
+    }
+
+    if (m.source === MediaSource.YOUTUBE) {
+      const validYTLinkReg =
+        /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/
+      isContentValid =
+        m.id === `https://www.youtube.com/watch?v=${m.name}` &&
+        validYTLinkReg.test(m.id)
+    }
+
+    if (m.source === MediaSource.VIMEO) {
+      isContentValid = m.id === `https://vimeo.com/${m.name}`
+    }
+
+    if (m.type && !Object.values(MediaType).includes(m.type)) {
+      isContentValid = false
+    }
+
+    return isContentValid
+  })
+
+  const wikiMediasWithIcon = wiki.media.filter((m) => m.type === MediaType.ICON)
+
+  const isValidMedia =
+    size <= 25 && contentCheck && wikiMediasWithIcon.length <= 1
+
+  return isValidMedia
+}
 
 export type TReferenceObject = {
   id: string
@@ -88,6 +129,17 @@ const CONTENT_WORDS_ERROR = (words: number) =>
 
 export const isValidWiki = (toast: CreateToastFnReturn, wiki: Wiki) => {
   const words = getWordCount(wiki.content || '')
+
+  const isMediaValid = checkMedia(wiki)
+  if (!isMediaValid) {
+    toast({
+      title: 'Media is invalid',
+      status: 'error',
+      duration: 3000,
+    })
+    return false
+  }
+
   return checkErrors(toast, [
     [NO_WIKI_TITLE_ERROR, () => !wiki.title],
     [TITLE_EXCEEDS_LIMIT_ERROR, () => wiki.title.length > 60],
