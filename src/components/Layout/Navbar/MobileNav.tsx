@@ -70,8 +70,8 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
 
   const langItem = {
     id: -1,
-    label: lang === 'en' ? 'ENG' : 'KOR',
-    src: lang === 'en' ? '/US.svg' : '/KR.svg',
+    label: lang === 'en' ? 'ENG' : lang === 'ko' ? 'KOR' : 'CHN',
+    src: lang === 'en' ? '/US.svg' : lang === 'ko' ? '/KR.svg' : '/ZH.svg',
     href: '#',
     subItem: [
       {
@@ -88,11 +88,18 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
         src: '/KR.svg',
         isLocale: true,
       },
+      {
+        id: 103,
+        label: 'CHN',
+        href: 'zh',
+        src: '/ZH.svg',
+        isLocale: true,
+      },
     ],
   }
 
   return (
-    <VStack justify="space-between" align="stretch" backgroundColor="subMenuBg">
+    <VStack justify="space-between" align="stretch" backgroundColor="subMenuBg" h="100vh">
       <Box borderTopWidth={1}>
         <NavSearch
           inputGroupProps={{
@@ -118,10 +125,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 : 'max(calc(100vh - 240px), 350px)',
               md: 'calc(100vh - 180px)',
             }}
-            maxH={{
-              base: '400px',
-              md: '500px',
-            }}
+           
           >
             <Box
               display={{ base: 'flex', xl: 'none' }}
