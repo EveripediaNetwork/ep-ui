@@ -45,6 +45,7 @@ const Newsletter = ({
         variant="solid"
         {...rest}
         onClick={buttonHandler}
+        _hover={{ bg: 'gray.200' }}
       >
         {buttonTitle}
       </Button>
