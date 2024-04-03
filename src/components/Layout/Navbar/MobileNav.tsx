@@ -227,7 +227,8 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
         )}
         <Center
           bg="subMenuBg"
-          h="110px"
+          h="65px"
+          mb={10}
           borderTopWidth="thin"
           borderTopColor="borderColor"
           color="homeDescriptionColor"
