@@ -99,7 +99,12 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   }
 
   return (
-    <VStack justify="space-between" align="stretch" backgroundColor="subMenuBg" h="100vh">
+    <VStack
+      justify="space-between"
+      align="stretch"
+      backgroundColor="subMenuBg"
+      h="100vh"
+    >
       <Box borderTopWidth={1}>
         <NavSearch
           inputGroupProps={{
@@ -125,7 +130,6 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 : 'max(calc(100vh - 240px), 350px)',
               md: 'calc(100vh - 180px)',
             }}
-           
           >
             <Box
               display={{ base: 'flex', xl: 'none' }}
