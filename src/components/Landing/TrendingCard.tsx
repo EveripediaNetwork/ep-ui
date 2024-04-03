@@ -132,6 +132,7 @@ const TrendingCard = ({
                           overflow="hidden"
                           imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
                           imgH={IMAGE_BOX_SIZE}
+                          quality={40}
                         />
                       </AspectRatio>
                     </Box>
