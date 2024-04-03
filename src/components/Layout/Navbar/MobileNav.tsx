@@ -103,7 +103,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
       justify="space-between"
       align="stretch"
       backgroundColor="subMenuBg"
-      h="100vh"
+      h="95vh"
     >
       <Box borderTopWidth={1}>
         <NavSearch
@@ -227,7 +227,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
         )}
         <Center
           bg="subMenuBg"
-          h="80px"
+          h="110px"
           borderTopWidth="thin"
           borderTopColor="borderColor"
           color="homeDescriptionColor"
