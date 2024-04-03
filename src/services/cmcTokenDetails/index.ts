@@ -1,7 +1,7 @@
 import { HYDRATE } from 'next-redux-wrapper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-interface cmcTokenData {
+type CmcTokenData = {
   [tokenName: string]: {
     id: number
     name: string
@@ -63,7 +63,7 @@ export const cmcTokenDataApi = createApi({
   refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getCmcTokenData: builder.query<cmcTokenData, string>({
+    getCmcTokenData: builder.query<CmcTokenData, string>({
       query: (tokenName) => `?tokenName=${tokenName}`,
       transformResponse: (response: any) => {
         if (response?.response?.data) {
