@@ -126,19 +126,10 @@ const NO_EVENT_URL_ERROR = `Please add a citation for the event with description
 const NO_EVENT_ERROR = `Please open the "Edit Wiki Details Modal" and enter a valid event date`
 const CONTENT_WORDS_ERROR = (words: number) =>
   `Add a minimum of ${MINIMUM_WORDS} words in the content section to continue. you have written ${words}`
+const MEDIA_ERROR = 'Media is invalid'
 
 export const isValidWiki = (toast: CreateToastFnReturn, wiki: Wiki) => {
   const words = getWordCount(wiki.content || '')
-
-  const isMediaValid = checkMedia(wiki)
-  if (!isMediaValid) {
-    toast({
-      title: 'Media is invalid',
-      status: 'error',
-      duration: 3000,
-    })
-    return false
-  }
 
   return checkErrors(toast, [
     [NO_WIKI_TITLE_ERROR, () => !wiki.title],
@@ -153,5 +144,6 @@ export const isValidWiki = (toast: CreateToastFnReturn, wiki: Wiki) => {
     [NO_CITATION_EROR, () => isCitationInvalid(wiki)],
     [NO_EVENT_URL_ERROR, () => isEventUrlPresent(wiki)],
     [NO_EVENT_ERROR, () => isEventDatePresent(wiki)],
+    [MEDIA_ERROR, () => !checkMedia(wiki)],
   ])
 }
