@@ -18,30 +18,23 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { Logo } from '../Elements'
 import IQGraph from './IQGraph'
 import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
-import { useGetTokenStatsQuery } from '@/services/token-stats'
-import { fetchIqPriceChange } from '@/lib/utils'
+import { useGetCmcTokenDataQuery } from '@/services/cmcTokenDetails'
 import * as Humanize from 'humanize-plus'
-import { useEffect, useState } from 'react'
 
 export const IQBar = () => {
   const { data: iqData, isLoading, isError } = useGetCgTokenDataQuery()
-  const price = Humanize.formatNumber(iqData?.last_price ?? 0, 4)
-  const mcap = Humanize.compactInteger(iqData?.last_market_cap ?? 0, 2)
-  const { data: tokenStats } = useGetTokenStatsQuery({
-    tokenName: 'everipedia',
-  })
-  const mcapchange = tokenStats?.market_cap_percentage_change
+  const {
+    data: cmcData,
+    isLoading: cmcLoading,
+    isError: cmcError,
+  } = useGetCmcTokenDataQuery('IQ')
+  const price = Humanize.formatNumber(cmcData?.IQ?.quote.USD.price ?? 0, 4)
+  const mcap = Humanize.compactInteger(
+    cmcData?.IQ?.quote?.USD?.market_cap ?? 0,
+    2,
+  )
   const areaGraphData = iqData?.prices
-  const [priceChange, setPriceChange] = useState<number | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const priceChangePercentage = await fetchIqPriceChange()
-      setPriceChange(priceChangePercentage)
-    }
-
-    fetchData()
-  }, [])
+  const iqChange = cmcData?.IQ?.quote?.USD?.percent_change_24h
 
   return (
     <Flex
@@ -78,9 +71,9 @@ export const IQBar = () => {
         >
           <Box>
             <Text fontSize="xs">IQ Price</Text>
-            {isLoading ? (
+            {cmcLoading ? (
               <Spinner size="sm" />
-            ) : isError ? (
+            ) : cmcError ? (
               <Text fontSize="sm" color="red.500">
                 Error fetching price
               </Text>
@@ -95,18 +88,16 @@ export const IQBar = () => {
                 gap={1}
                 rounded="xl"
                 px={1}
-                color={priceChange && priceChange > 0 ? 'green.600' : 'red.500'}
+                color={iqChange && iqChange <= 0 ? 'red.500' : 'green.600'}
               >
                 <Icon
                   as={
-                    priceChange && priceChange > 0
-                      ? RiArrowUpLine
-                      : RiArrowDownLine
+                    iqChange && iqChange > 0 ? RiArrowUpLine : RiArrowDownLine
                   }
                   boxSize={3}
                 />
                 <Text fontSize="xs">
-                  {Humanize.formatNumber(priceChange ?? 0, 2)}%
+                  {Humanize.formatNumber(iqChange ?? 0, 2)}%
                 </Text>
               </Flex>
             </Flex>
@@ -167,18 +158,16 @@ export const IQBar = () => {
                 gap={1}
                 px={1}
                 rounded="xl"
-                color={mcapchange && mcapchange > 0 ? 'green.600' : 'red.500'}
+                color={iqChange && iqChange <= 0 ? 'red.500' : 'green.600'}
               >
                 <Icon
                   as={
-                    mcapchange && mcapchange > 0
-                      ? RiArrowUpLine
-                      : RiArrowDownLine
+                    iqChange && iqChange > 0 ? RiArrowUpLine : RiArrowDownLine
                   }
                   boxSize={3}
                 />
                 <Text fontSize="xs">
-                  {Humanize.formatNumber(mcapchange ?? 0, 2)}%
+                  {Humanize.formatNumber(iqChange ?? 0, 2)}%
                 </Text>
               </Flex>
             </Flex>
