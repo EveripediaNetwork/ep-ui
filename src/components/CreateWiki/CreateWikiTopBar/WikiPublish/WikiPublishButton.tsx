@@ -248,8 +248,6 @@ export const WikiPublishButton = () => {
         metadata: wiki.metadata.filter((m) => m.value),
       }
 
-      console.log(finalWiki)
-
       if (finalWiki.id === CreateNewWikiSlug)
         finalWiki.id = await getWikiSlug(wiki)
 
