@@ -202,13 +202,15 @@ export const IQBar = () => {
           border={'1px'}
           borderColor="gray.200"
           rounded="xl"
+          display="flex"
+          flexDirection="column"
           p={3}
           fontSize="sm"
           className="iq-get-iq"
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
-          <Text fontSize="xs">Exchanges (Get IQ)</Text>
-          <Flex alignItems="center" justifyContent="space-evenly" mt={2}>
+          <Text fontSize="xs">Exchanges</Text>
+          <Flex alignItems="center" justifyContent="center" mt={2}>
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
               isExternal
@@ -225,6 +227,7 @@ export const IQBar = () => {
                 variant="outline"
                 fontSize="xx-large"
                 isRound
+                border="none"
                 icon={<BinanceIcon />}
                 aria-label="binance"
               />
@@ -252,6 +255,7 @@ export const IQBar = () => {
                 variant="outline"
                 fontSize="xx-large"
                 isRound
+                border="none"
                 icon={<OneinchIcon />}
                 aria-label="One Inch"
               />
@@ -279,6 +283,7 @@ export const IQBar = () => {
                 variant="outline"
                 fontSize="xx-large"
                 isRound
+                border="none"
                 icon={<UpbitIcon />}
                 aria-label="Upbit"
               />
@@ -306,6 +311,7 @@ export const IQBar = () => {
                 variant="outline"
                 fontSize="xx-large"
                 isRound
+                border="none"
                 icon={<FraxIcon />}
                 aria-label="Frax"
               />
@@ -326,7 +332,7 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <HStack justifyContent={'space-between'}>
-            <Text fontSize="xs"> IQ Historical Graph (1Month)</Text>
+            <Text fontSize="xs"> IQ Historical Graph (1 Month)</Text>
             <Text>{`$${price}`}</Text>
           </HStack>
           {isError ? (

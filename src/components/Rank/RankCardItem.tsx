@@ -1,10 +1,15 @@
 import React from 'react'
 import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Td, Tr, chakra } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import { SortOrder } from '@/types/RankDataTypes'
+import { Image } from '../Elements/Image/Image'
+
+type CryptoFormatResult =
+  | string
+  | { numberOfZeros: number; significantFigures: string }
 
 const MAX_LINKED_WIKIS = 3
 
@@ -26,28 +31,49 @@ const priceFormatter = Intl.NumberFormat('en', {
   maximumFractionDigits: 4,
 }).format
 
+function cryptoFormatter(num: number): CryptoFormatResult {
+  const priceFormatter = Intl.NumberFormat('en', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4,
+  }).format
+
+  if (priceFormatter(num) === '0.00') {
+    const parts = String(num).split('.')
+    const decimalPart = parts[1]
+    const firstNonZeroIndex =
+      decimalPart.length - decimalPart.replace(/^0+/, '').length
+    const significantFigures = decimalPart.substr(firstNonZeroIndex, 3)
+
+    return {
+      numberOfZeros: firstNonZeroIndex,
+      significantFigures: significantFigures,
+    }
+  }
+  return priceFormatter(num)
+}
+
 const RankingItem = ({
   index,
   item,
   order,
   offset,
   listingLimit,
+  size = 40,
 }: {
   index: number
   item: RankCardType
   order: SortOrder
   offset: number
   listingLimit: number
+  size?: number
 }) => {
   const marketCap = item.nftMarketData
     ? marketCapFormatter(item.nftMarketData?.market_cap_usd)
     : marketCapFormatter(item.tokenMarketData?.market_cap)
 
-  const price = `$${
-    item.nftMarketData
-      ? priceFormatter(item.nftMarketData?.floor_price_usd)
-      : priceFormatter(item.tokenMarketData?.current_price)
-  }`
+  const price = item.nftMarketData
+    ? priceFormatter(item.nftMarketData?.floor_price_usd)
+    : cryptoFormatter(item.tokenMarketData?.current_price)
 
   const dateFounded = item?.events?.find(
     (event) => event.type === EventType.CREATED,
@@ -91,6 +117,7 @@ const RankingItem = ({
             h={{ base: '24px', md: '40px' }}
           >
             <Image
+              imgBoxSize={size}
               src={
                 item.nftMarketData
                   ? item.nftMarketData?.image
@@ -101,6 +128,7 @@ const RankingItem = ({
               h={{ base: '24px', md: '40px' }}
               borderRadius="50%"
               objectFit="cover"
+              quality={70}
             />
           </Box>
           <Box>
@@ -152,7 +180,14 @@ const RankingItem = ({
         px={{ base: 2, md: 6 }}
         minW="150px"
       >
-        <Text color="rankingListText">{price}</Text>
+        {typeof price !== 'string' ? (
+          <Text>
+            $0.0<chakra.sub>{price.numberOfZeros}</chakra.sub>
+            {price.significantFigures}{' '}
+          </Text>
+        ) : (
+          <Text color="rankingListText">{`$${price}`}</Text>
+        )}
       </Td>
       <Td
         borderColor="rankingListBorder"

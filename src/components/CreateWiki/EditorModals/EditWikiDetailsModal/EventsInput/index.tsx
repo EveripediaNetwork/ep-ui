@@ -135,8 +135,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         'type',
       ) as HTMLSelectElement
 
-      console.log({ data })
-
       if (data.type === EventType.MULTIDATE) {
         setIsMultiDate('MULTIDATE')
       } else {
@@ -204,7 +202,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                   date={dateRange}
                   onDateSelect={setDateRange}
                   hideIcon={true}
-                  containerClassName="dark:bg-transparent border px-2 rounded-lg"
+                  containerClassName="dark:bg-transparent border px-2 rounded-lg text-gray500 dark:text-alpha-700"
                 />
               ) : (
                 <Input
