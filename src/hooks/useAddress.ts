@@ -1,7 +1,7 @@
 import { setToken } from '@/store/slices/user-slice'
 import { cookieNames } from '@/types/cookies'
 import { verify } from '@everipedia/web3-signer'
-import { getCookie } from 'cookies-next'
+import { deleteCookie, getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -33,7 +33,15 @@ export const useAddress = () => {
   const decodedToken = decodeURI(encodedToken)
 
   try {
-    const { address } = verify(decodedToken)
+    const { address, body } = verify(decodedToken)
+    const expirationTime = new Date(body['expiration-time']).getTime()
+
+    if (expirationTime < Date.now()) {
+      deleteCookie(cookieNames.Enum['x-auth-token'])
+
+      window.location.reload()
+      return { address: null, isConnected }
+    }
 
     dispatch(setToken(decodedToken))
 

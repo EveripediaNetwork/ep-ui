@@ -45,8 +45,8 @@ export const ConnectorSignTokenModal = ({
       return
     }
 
-    const token = await generateNewToken()
-    window.postMessage({ type: 'iqwiki-token-pass', token }, '*')
+    await generateNewToken()
+
     logEvent({
       action: 'SIGN_ATTEMPT',
       label: 'SIGN_TOKEN',
