@@ -1,7 +1,7 @@
 import { Icon, IconProps } from '@chakra-ui/react'
 
 const UpbitIcon = (props: IconProps) => (
-  <Icon viewBox="0 0 33 36" {...props}>
+  <Icon viewBox="0 0 32 32" {...props}>
     <mask
       id="mask0_32707_78793"
       mask-type="luminance"
