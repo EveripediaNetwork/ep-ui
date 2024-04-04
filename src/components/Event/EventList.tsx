@@ -26,7 +26,6 @@ const EventList = ({
   clearState: Function
 }) => {
   const router = useRouter()
-  console.log(eventData)
   const hasQueryParams = Object.keys(router.query).length > 0
   const limit = EVENT_TEST_ITEM_PER_PAGE
   const [offset, setOffset] = useState(eventData?.length || 0)

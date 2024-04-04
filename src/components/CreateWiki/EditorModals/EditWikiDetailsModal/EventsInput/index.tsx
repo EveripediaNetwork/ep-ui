@@ -135,8 +135,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         'type',
       ) as HTMLSelectElement
 
-      console.log({ data })
-
       if (data.type === EventType.MULTIDATE) {
         setIsMultiDate('MULTIDATE')
       } else {
