@@ -35,9 +35,10 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
-import { useAddress } from '@/hooks/useAddress'
 import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
+import { useAccount } from 'wagmi'
+import { getCookie } from 'cookies-next'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -46,8 +47,8 @@ const NetworkErrorNotification = dynamic(
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAddress()
-  const { userCanEdit } = useWhiteListValidator(userAddress)
+  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
   const { refetch } = useGetEventsQuery({
     offset: 0,
@@ -71,8 +72,16 @@ export const WikiPublishButton = () => {
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
 
+  const switchChainCookie = getCookie('SWITCH_CHAIN')
+  const switchChainNotAllowed = switchChainCookie
+    ? (JSON.parse(switchChainCookie as string) as boolean)
+    : false
+
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
-  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
+  const showModal =
+    connectedChainId !== chainId &&
+    !networkSwitchAttempted &&
+    switchChainNotAllowed
   const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')

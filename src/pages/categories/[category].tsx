@@ -40,6 +40,16 @@ type CategoryPageProps = NextPage & {
   newWikis: Wiki[]
 }
 
+export const SeenItAll = () => {
+  const { t } = useTranslation('common')
+
+  return (
+    <Center mt="10">
+      <Text fontWeight="semibold">{t('seenItAll')}</Text>
+    </Center>
+  )
+}
+
 // TODO: load page 4 or 5 times. probably useInfiniteData doing rerenderings bcs of state changing. review
 // TODO: i added a new param to allow inject directly data, instead of using an effect. it can be fixed in all places
 const CategoryPage = ({
@@ -68,7 +78,7 @@ const CategoryPage = ({
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
-  const { t } = useTranslation(['category', 'common'])
+  const { t } = useTranslation('category')
   return (
     <>
       {categoryData && (
@@ -125,9 +135,7 @@ const CategoryPage = ({
                   <Spinner size="xl" />
                 </Center>
               ) : (
-                <Center mt="10">
-                  <Text fontWeight="semibold">{t('seenItAll')}</Text>
-                </Center>
+                <SeenItAll />
               )}
             </>
           ) : (

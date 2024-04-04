@@ -46,6 +46,7 @@ export const Image = ({
   imgBoxSize,
   imgW,
   imgH,
+  quality = 95,
   ...rest
 }: NextChakraImageProps) => (
   <Box
@@ -56,7 +57,7 @@ export const Image = ({
     position="relative"
   >
     <NextImage
-      quality={95}
+      quality={quality}
       style={{
         objectFit,
         objectPosition: 'top',
