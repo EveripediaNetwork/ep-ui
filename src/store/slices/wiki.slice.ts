@@ -82,6 +82,7 @@ const initialState: Wiki = {
   media: [],
   views: 0,
   events: [],
+  linkedWikis: { founders: [], blockchains: [], speakers: [] },
 }
 
 const wikiSlice = createSlice({
@@ -248,15 +249,12 @@ const wikiSlice = createSlice({
             )
           : [],
       }
-      if (!newLinkedWikis[linkType] || newLinkedWikis[linkType]?.length === 0)
-        delete newLinkedWikis[linkType]
+
       const newState: Wiki = {
         ...state,
         linkedWikis: newLinkedWikis,
       }
-      if (Object.keys(newLinkedWikis).length === 0) {
-        delete newState.linkedWikis
-      }
+
       saveDraftInLocalStorage(newState)
       return newState
     },

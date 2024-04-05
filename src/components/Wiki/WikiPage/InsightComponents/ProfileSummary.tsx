@@ -195,41 +195,43 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             ))}
           </ProfileListItem>
         )}
-        {wiki.linkedWikis?.founders && (
-          <ProfileListItem
-            title={t('Founders')}
-            lengthyArr={wiki.linkedWikis?.founders}
-          >
-            <Flex alignItems="start" flexWrap="wrap" gap="1">
-              {wiki.linkedWikis?.founders.map((founder, i) => (
-                <Link
-                  w="max-content"
-                  key={i}
-                  href={`/wiki/${founder}`}
-                  rel="noopener nofollow"
-                >
-                  <Tag fontSize="10px" py="1">
-                    {getFounderName(founder)}
-                  </Tag>
-                </Link>
-              ))}
-            </Flex>
-          </ProfileListItem>
-        )}
-        {wiki.linkedWikis?.blockchains && (
-          <ProfileListItem
-            title={t('Blockchains')}
-            lengthyArr={wiki.linkedWikis?.blockchains}
-          >
-            <Flex alignItems="start" flexWrap="wrap" gap="1">
-              {wiki.linkedWikis?.blockchains.map((item, i) => (
-                <Link w="max-content" key={i} href={`/wiki/${item}`}>
-                  <Tag py="1">{item}</Tag>
-                </Link>
-              ))}
-            </Flex>
-          </ProfileListItem>
-        )}
+        {wiki.linkedWikis?.founders &&
+          wiki.linkedWikis?.founders?.length > 0 && (
+            <ProfileListItem
+              title={t('Founders')}
+              lengthyArr={wiki.linkedWikis?.founders}
+            >
+              <Flex alignItems="start" flexWrap="wrap" gap="1">
+                {wiki.linkedWikis?.founders.map((founder, i) => (
+                  <Link
+                    w="max-content"
+                    key={i}
+                    href={`/wiki/${founder}`}
+                    rel="noopener nofollow"
+                  >
+                    <Tag fontSize="10px" py="1">
+                      {getFounderName(founder)}
+                    </Tag>
+                  </Link>
+                ))}
+              </Flex>
+            </ProfileListItem>
+          )}
+        {wiki.linkedWikis?.blockchains &&
+          wiki.linkedWikis?.blockchains?.length > 0 && (
+            <ProfileListItem
+              title={t('Blockchains')}
+              lengthyArr={wiki.linkedWikis?.blockchains}
+            >
+              <Flex alignItems="start" flexWrap="wrap" gap="1">
+                {wiki.linkedWikis?.blockchains.map((item, i) => (
+                  <Link w="max-content" key={i} href={`/wiki/${item}`}>
+                    <Tag py="1">{item}</Tag>
+                  </Link>
+                ))}
+              </Flex>
+            </ProfileListItem>
+          )}
       </WikiAccordion>
     </VStack>
   )
