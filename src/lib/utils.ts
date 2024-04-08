@@ -119,3 +119,18 @@ export const fetchIqPriceChange = async () => {
     return null
   }
 }
+
+export const getFormattedAmount = (
+  value: number,
+  currency = 'USD',
+  minDecimals = 2,
+  maxDecimals = 2,
+) => {
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: minDecimals,
+    maximumFractionDigits: maxDecimals,
+  })
+  return currencyFormatter.format(value)
+}
