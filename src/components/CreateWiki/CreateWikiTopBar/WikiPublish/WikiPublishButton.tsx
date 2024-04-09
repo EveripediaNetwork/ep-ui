@@ -4,7 +4,7 @@ import useConfetti from '@/hooks/useConfetti'
 import { useCreateWikiContext } from '@/hooks/useCreateWikiState'
 import { useGetSignedHash } from '@/hooks/useGetSignedHash'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
-import { postWiki } from '@/services/wikis'
+import { postWiki, useGetWikiQuery } from '@/services/wikis'
 import { useAppSelector } from '@/store/hook'
 import { store } from '@/store/store'
 import { ProviderDataType } from '@/types/ProviderDataType'
@@ -39,6 +39,7 @@ import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import { useAccount } from 'wagmi'
 import { getCookie } from 'cookies-next'
+import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -46,6 +47,7 @@ const NetworkErrorNotification = dynamic(
 
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
+  const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { userCanEdit } = useWhiteListValidator()
@@ -225,6 +227,17 @@ export const WikiPublishButton = () => {
 
   const handleWikiPublish = async (override?: boolean) => {
     if (!isValidWiki(toast, wiki)) return
+
+    if (data && wiki) {
+      if (isWikiEdited(data, wiki)) {
+        toast({
+          title: 'You are yet to make any changes to the current wiki',
+          status: 'error',
+          duration: 30000,
+        })
+        return
+      }
+    }
 
     logEvent({
       action: 'SUBMIT_WIKI',
