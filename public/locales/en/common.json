@@ -90,6 +90,7 @@
   "DayMode": "Light Mode",
   "NightMode": "Dark Mode",
   "Profile": "Profile",
+  "Admin": "Admin",
   "Settings": "Settings",
   "Logout": "Logout",
   "SearchWikiPlaceholder": "Search wikis, categories, tags and users",
