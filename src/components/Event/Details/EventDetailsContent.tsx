@@ -6,8 +6,8 @@ const EventDetailsContent = ({ event }: { event: Wiki }) => {
   let content = event?.content.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
-  content.match(matchRegex)?.forEach((match) => {
-    const widgetContent = match.match(new RegExp(matchRegex, 'g'))?.[1]
+  content.match(new RegExp(matchRegex, 'g'))?.forEach((match) => {
+    const widgetContent = match.match(matchRegex)?.[1]
     if (widgetContent) {
       content = content.replaceAll(match, widgetContent)
     }
