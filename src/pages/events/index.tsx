@@ -13,7 +13,6 @@ import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
-// import { dateFormater } from '@/lib/utils'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
 

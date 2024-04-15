@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import EventCard from './EventCard'
-import { groupEventsByMonth } from '@/lib/utils'
+import { dateFormater, groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
 import SuggestEventModal from './SuggestEventModal'
 import { TEvents, getEvents } from '@/services/event'
@@ -34,9 +34,15 @@ const EventList = ({
 
   const handleViewMore = async () => {
     setIsFetching(true)
-    setOffset((prevOffset) => prevOffset + limit) // Increase offset to fetch next set of events
+    setOffset(prevOffset => prevOffset + limit) // Increase offset to fetch next set of events
     store
-      .dispatch(getEvents.initiate({ offset: offset, limit }))
+      .dispatch(
+        getEvents.initiate({
+          offset: offset,
+          limit,
+          startDate: dateFormater(new Date()),
+        }),
+      )
       .then(({ data }) => {
         if (data) {
           if (data.length > 0) {
@@ -47,7 +53,7 @@ const EventList = ({
           }
         }
       })
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
       .finally(() => {
         setIsFetching(false)
       })
@@ -109,7 +115,7 @@ const EventList = ({
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 xl:mt-10 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  {events.map((event) => (
+                  {events.map(event => (
                     <EventCard
                       isLoading={isLoading}
                       id={event.id}
@@ -118,7 +124,7 @@ const EventList = ({
                       excerpt={event.summary || ''}
                       location={event.metadata}
                       date={event.events[0]}
-                      tags={event.tags.filter((tag) => tag.id !== 'Events')}
+                      tags={event.tags.filter(tag => tag.id !== 'Events')}
                       speakers={event?.speakerWikis || []}
                       images={event.images}
                     />
